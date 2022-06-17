@@ -28,13 +28,13 @@ using namespace KDDockWidgets::Controllers;
 
 SideBar_qtquick::SideBar_qtquick(Controllers::SideBar *controller, QWidget *parent)
     : View_qtquick(controller, Type::SideBar, parent)
-    , m_controller(controller)
+    , SideBarViewInterface(controller)
 {
 }
 
 void SideBar_qtquick::init()
 {
-    if (m_controller->isVertical())
+    if (m_sideBar->isVertical())
         m_layout = new QVBoxLayout(this);
     else
         m_layout = new QHBoxLayout(this);
@@ -55,7 +55,7 @@ void SideBar_qtquick::addDockWidget_Impl(Controllers::DockWidget *dw)
     connect(dw, &Controllers::DockWidget::removedFromSideBar, button, &QObject::deleteLater);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
     connect(button, &SideBarButton::clicked, this, [this, dw] {
-        m_controller->onButtonClicked(dw);
+        m_sideBar->onButtonClicked(dw);
     });
 
     const int count = m_layout->count();
@@ -69,7 +69,7 @@ void SideBar_qtquick::removeDockWidget_Impl(Controllers::DockWidget *)
 
 bool SideBar_qtquick::isVertical() const
 {
-    return m_controller->isVertical();
+    return m_sideBar->isVertical();
 }
 
 SideBarButton *SideBar_qtquick::createButton(Controllers::DockWidget *dw, SideBar_qtquick *parent) const

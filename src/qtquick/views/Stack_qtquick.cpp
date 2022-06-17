@@ -24,8 +24,8 @@ using namespace KDDockWidgets::Views;
 
 Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::Stack, parent)
+    , StackViewInterface(controller)
     , m_dockWidgetModel(new DockWidgetModel(this))
-    , m_stack(controller)
 {
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
             [this] {

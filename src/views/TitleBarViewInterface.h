@@ -15,13 +15,17 @@
 
 namespace KDDockWidgets {
 
-namespace Views {
+namespace Controllers {
+class TitleBar;
+}
 
+namespace Views {
 
 /// @brief The interface that TitleBar views should implement
 class DOCKS_EXPORT TitleBarViewInterface
 {
 public:
+    explicit TitleBarViewInterface(Controllers::TitleBar *);
     virtual ~TitleBarViewInterface();
     virtual void updateMaximizeButton() = 0;
 #ifdef DOCKS_DEVELOPER_MODE
@@ -29,6 +33,8 @@ public:
     virtual bool isCloseButtonVisible() const = 0;
     virtual bool isCloseButtonEnabled() const = 0;
 #endif
+protected:
+    Controllers::TitleBar *const m_titleBar;
 };
 
 }

@@ -28,7 +28,7 @@ using namespace KDDockWidgets::Views;
 
 TitleBar_qtquick::TitleBar_qtquick(Controllers::TitleBar *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::TitleBar, parent)
-    , m_controller(controller)
+    , Views::TitleBarViewInterface(controller)
 {
     setFixedHeight(30);
 }
@@ -40,12 +40,12 @@ TitleBar_qtquick::~TitleBar_qtquick()
 void TitleBar_qtquick::init()
 {
     // QML inteface signals
-    connect(m_controller, &Controllers::TitleBar::titleChanged, this, &TitleBar_qtquick::titleChanged);
-    connect(m_controller, &Controllers::TitleBar::iconChanged, this, &TitleBar_qtquick::iconChanged);
-    connect(m_controller, &Controllers::TitleBar::isFocusedChanged, this, &TitleBar_qtquick::isFocusedChanged);
-    connect(m_controller, &Controllers::TitleBar::closeButtonEnabledChanged, this, &TitleBar_qtquick::closeButtonEnabledChanged);
-    connect(m_controller, &Controllers::TitleBar::floatButtonVisibleChanged, this, &TitleBar_qtquick::floatButtonVisibleChanged);
-    connect(m_controller, &Controllers::TitleBar::floatButtonToolTipChanged, this, &TitleBar_qtquick::floatButtonToolTipChanged);
+    connect(m_titleBar, &Controllers::TitleBar::titleChanged, this, &TitleBar_qtquick::titleChanged);
+    connect(m_titleBar, &Controllers::TitleBar::iconChanged, this, &TitleBar_qtquick::iconChanged);
+    connect(m_titleBar, &Controllers::TitleBar::isFocusedChanged, this, &TitleBar_qtquick::isFocusedChanged);
+    connect(m_titleBar, &Controllers::TitleBar::closeButtonEnabledChanged, this, &TitleBar_qtquick::closeButtonEnabledChanged);
+    connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, this, &TitleBar_qtquick::floatButtonVisibleChanged);
+    connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, this, &TitleBar_qtquick::floatButtonToolTipChanged);
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
@@ -115,75 +115,75 @@ void TitleBar_qtquick::updateMaximizeButton()
 
 bool TitleBar_qtquick::isFocused() const
 {
-    return m_controller->isFocused();
+    return m_titleBar->isFocused();
 }
 
 bool TitleBar_qtquick::floatButtonVisible() const
 {
-    return m_controller->floatButtonVisible();
+    return m_titleBar->floatButtonVisible();
 }
 
 bool TitleBar_qtquick::closeButtonEnabled() const
 {
-    return m_controller->closeButtonEnabled();
+    return m_titleBar->closeButtonEnabled();
 }
 
 QString TitleBar_qtquick::floatButtonToolTip() const
 {
-    return m_controller->floatButtonToolTip();
+    return m_titleBar->floatButtonToolTip();
 }
 
 bool TitleBar_qtquick::hasIcon() const
 {
-    return m_controller->hasIcon();
+    return m_titleBar->hasIcon();
 }
 
 QString TitleBar_qtquick::title() const
 {
-    return m_controller->title();
+    return m_titleBar->title();
 }
 
 void TitleBar_qtquick::setCloseButtonEnabled(bool is)
 {
-    m_controller->setCloseButtonEnabled(is);
+    m_titleBar->setCloseButtonEnabled(is);
 }
 
 void TitleBar_qtquick::setFloatButtonVisible(bool is)
 {
-    m_controller->setFloatButtonVisible(is);
+    m_titleBar->setFloatButtonVisible(is);
 }
 
 bool TitleBar_qtquick::onDoubleClicked()
 {
-    return m_controller->onDoubleClicked();
+    return m_titleBar->onDoubleClicked();
 }
 
 void TitleBar_qtquick::onCloseClicked()
 {
-    m_controller->onCloseClicked();
+    m_titleBar->onCloseClicked();
 }
 
 void TitleBar_qtquick::onFloatClicked()
 {
-    m_controller->onFloatClicked();
+    m_titleBar->onFloatClicked();
 }
 
 void TitleBar_qtquick::onMaximizeClicked()
 {
-    m_controller->onMaximizeClicked();
+    m_titleBar->onMaximizeClicked();
 }
 
 void TitleBar_qtquick::onMinimizeClicked()
 {
-    m_controller->onMinimizeClicked();
+    m_titleBar->onMinimizeClicked();
 }
 
 void TitleBar_qtquick::onAutoHideClicked()
 {
-    m_controller->onAutoHideClicked();
+    m_titleBar->onAutoHideClicked();
 }
 
 void TitleBar_qtquick::toggleMaximized()
 {
-    m_controller->toggleMaximized();
+    m_titleBar->toggleMaximized();
 }

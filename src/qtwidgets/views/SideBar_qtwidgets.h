@@ -58,9 +58,6 @@ class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>, public Si
 public:
     explicit SideBar_qtwidgets(Controllers::SideBar *, QWidget *parent);
 
-    /// @brief Returns the controller
-    Controllers::SideBar *controller() const;
-
 protected:
     void addDockWidget_Impl(Controllers::DockWidget *dock) override;
     void removeDockWidget_Impl(Controllers::DockWidget *dock) override;
@@ -71,7 +68,6 @@ protected:
 private:
     void init() override;
 
-    Controllers::SideBar *const m_controller;
     QBoxLayout *m_layout = nullptr;
 };
 }

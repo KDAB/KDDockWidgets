@@ -28,13 +28,13 @@ using namespace KDDockWidgets::Controllers;
 
 SideBar_qtwidgets::SideBar_qtwidgets(Controllers::SideBar *controller, QWidget *parent)
     : View_qtwidgets(controller, Type::SideBar, parent)
-    , m_controller(controller)
+    , SideBarViewInterface(controller)
 {
 }
 
 void SideBar_qtwidgets::init()
 {
-    if (m_controller->isVertical())
+    if (m_sideBar->isVertical())
         m_layout = new QVBoxLayout(this);
     else
         m_layout = new QHBoxLayout(this);
@@ -42,11 +42,6 @@ void SideBar_qtwidgets::init()
     m_layout->setSpacing(1);
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->addStretch();
-}
-
-Controllers::SideBar *SideBar_qtwidgets::controller() const
-{
-    return m_controller;
 }
 
 void SideBar_qtwidgets::addDockWidget_Impl(Controllers::DockWidget *dw)
@@ -60,7 +55,7 @@ void SideBar_qtwidgets::addDockWidget_Impl(Controllers::DockWidget *dw)
     connect(dw, &Controllers::DockWidget::removedFromSideBar, button, &QObject::deleteLater);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
     connect(button, &SideBarButton::clicked, this, [this, dw] {
-        m_controller->onButtonClicked(dw);
+        m_sideBar->onButtonClicked(dw);
     });
 
     const int count = m_layout->count();
@@ -79,7 +74,7 @@ SideBarButton *SideBar_qtwidgets::createButton(Controllers::DockWidget *dw, Side
 
 SideBarButton::SideBarButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent)
     : QToolButton(parent)
-    , m_sideBar(parent->controller())
+    , m_sideBar(parent->sideBar())
     , m_dockWidget(dw)
 {
 }

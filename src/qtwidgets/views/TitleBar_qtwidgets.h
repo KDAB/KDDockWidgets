@@ -21,10 +21,6 @@ class QHBoxLayout;
 class QLabel;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets::Controllers {
-class TitleBar;
-}
-
 namespace KDDockWidgets::Views {
 
 class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>, public Views::TitleBarViewInterface
@@ -61,7 +57,6 @@ private:
     void updateMinimizeButton();
     void updateAutoHideButton();
 
-    Controllers::TitleBar *const m_controller;
     QHBoxLayout *const m_layout;
     QAbstractButton *m_closeButton = nullptr;
     QAbstractButton *m_floatButton = nullptr;

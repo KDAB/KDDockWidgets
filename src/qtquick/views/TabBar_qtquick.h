@@ -67,7 +67,6 @@ private:
     QQuickItem *tabAt(int index) const;
     QQuickItem *listView() const;
     QPointer<QQuickItem> m_tabBarQmlItem;
-    Controllers::TabBar *const m_controller;
 };
 }
 

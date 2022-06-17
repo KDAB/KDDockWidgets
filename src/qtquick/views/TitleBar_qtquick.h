@@ -91,7 +91,6 @@ private:
     QQuickItem *closeButton() const;
 
     QPointer<QQuickItem> m_titleBarQmlItem;
-    Controllers::TitleBar *const m_controller;
 };
 
 }

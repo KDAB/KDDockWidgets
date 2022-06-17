@@ -17,6 +17,7 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class DockWidget;
+class SideBar;
 }
 
 namespace Views {
@@ -25,9 +26,15 @@ namespace Views {
 class DOCKS_EXPORT SideBarViewInterface
 {
 public:
+    explicit SideBarViewInterface(Controllers::SideBar *);
     virtual ~SideBarViewInterface();
     virtual void addDockWidget_Impl(Controllers::DockWidget *dock) = 0;
     virtual void removeDockWidget_Impl(Controllers::DockWidget *dock) = 0;
+
+    Controllers::SideBar *sideBar() const;
+
+protected:
+    Controllers::SideBar *const m_sideBar;
 };
 
 }

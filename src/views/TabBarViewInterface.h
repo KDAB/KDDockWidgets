@@ -21,6 +21,7 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class DockWidget;
+class TabBar;
 }
 
 namespace Views {
@@ -29,6 +30,7 @@ namespace Views {
 class DOCKS_EXPORT TabBarViewInterface
 {
 public:
+    explicit TabBarViewInterface(Controllers::TabBar *);
     virtual ~TabBarViewInterface();
     virtual bool tabsAreMovable() const = 0;
     virtual int tabAt(QPoint localPt) const = 0;
@@ -36,6 +38,9 @@ public:
     virtual QRect rectForTab(int index) const = 0;
     virtual Controllers::DockWidget *currentDockWidget() const = 0;
     virtual QString text(int index) const = 0;
+
+protected:
+    Controllers::TabBar *const m_tabBar;
 };
 
 }

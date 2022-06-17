@@ -22,10 +22,6 @@ class QAbstractButton;
 class QHBoxLayout;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets::Controllers {
-class Stack;
-}
-
 namespace KDDockWidgets {
 namespace Views {
 
@@ -71,7 +67,6 @@ private:
     QHBoxLayout *m_cornerWidgetLayout = nullptr;
     QAbstractButton *m_floatButton = nullptr;
     QAbstractButton *m_closeButton = nullptr;
-    Controllers::Stack *const m_stack;
 
     Q_DISABLE_COPY(Stack_qtwidgets)
 };

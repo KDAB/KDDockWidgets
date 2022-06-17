@@ -28,7 +28,7 @@ using namespace KDDockWidgets::Views;
 
 TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::TabBar, parent)
-    , m_controller(controller)
+    , TabBarViewInterface(controller)
 {
 }
 
@@ -118,9 +118,9 @@ bool TabBar_qtquick::event(QEvent *ev)
             auto me = static_cast<QMouseEvent *>(ev);
             m_tabBarQmlItem->setProperty("currentIndex", tabAt(me->pos()));
             if (ev->type() == QEvent::MouseButtonPress)
-                m_controller->onMousePress(me->pos());
+                m_tabBar->onMousePress(me->pos());
             else
-                m_controller->onMouseDoubleClick(me->pos());
+                m_tabBar->onMouseDoubleClick(me->pos());
         }
 
         break;

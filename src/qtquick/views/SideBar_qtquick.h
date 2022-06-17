@@ -51,7 +51,7 @@ private:
 
 namespace Views {
 
-class DOCKS_EXPORT SideBar_qtquick : public View_qtquick<QQuickItem>, public SideBar
+class DOCKS_EXPORT SideBar_qtquick : public View_qtquick<QQuickItem>, public SideBarViewInterface
 {
     Q_OBJECT
 public:
@@ -60,14 +60,13 @@ public:
     void init() override;
     bool isVertical() const; // TODOm3: Move to a potential base class
 
-    void addDockWidget_Impl(Controllers::DockWidget *dock) override;
-    void removeDockWidget_Impl(Controllers::DockWidget *dock) override;
+    void addDockWidget_Impl(Controllers::DockWidget *) override;
+    void removeDockWidget_Impl(Controllers::DockWidget *) override;
 
     // virtual so users can provide their own buttons
     virtual SideBarButton *createButton(Controllers::DockWidget *dw, SideBar_qtquick *parent) const;
 
 private:
-    Controllers::SideBar *const m_controller;
     QBoxLayout *m_layout = nullptr;
 };
 }

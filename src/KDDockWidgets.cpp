@@ -12,11 +12,6 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "kddockwidgets/views/SideBarViewInterface.h"
-#include "kddockwidgets/views/TabBarViewInterface.h"
-#include "kddockwidgets/views/TitleBarViewInterface.h"
-#include "kddockwidgets/views/StackViewInterface.h"
-
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform_qtwidgets.h"
 #endif
@@ -44,12 +39,4 @@ void KDDockWidgets::initFrontend(FrontendType type)
 #endif
         break;
     }
-}
-
-namespace KDDockWidgets::Views {
-// Fix -Wweak-vtables warnings
-SideBarViewInterface::~SideBarViewInterface() = default;
-StackViewInterface::~StackViewInterface() = default;
-TabBarViewInterface::~TabBarViewInterface() = default;
-TitleBarViewInterface::~TitleBarViewInterface() = default;
 }

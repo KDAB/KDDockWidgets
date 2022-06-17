@@ -21,6 +21,7 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class DockWidget;
+class Stack;
 }
 
 namespace Views {
@@ -29,6 +30,7 @@ namespace Views {
 class DOCKS_EXPORT StackViewInterface
 {
 public:
+    explicit StackViewInterface(Controllers::Stack *);
     virtual ~StackViewInterface();
     virtual bool isPositionDraggable(QPoint p) const = 0;
     virtual void setTabBarAutoHide(bool is) = 0;
@@ -43,6 +45,9 @@ public:
                                   const QIcon &icon, const QString &title) = 0;
     virtual void setCurrentDockWidget(int index) = 0;
     virtual void setDocumentMode(bool) = 0;
+
+protected:
+    Controllers::Stack *const m_stack;
 };
 
 }
