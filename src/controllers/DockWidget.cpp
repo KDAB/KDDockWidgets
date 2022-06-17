@@ -43,7 +43,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-DockWidget::DockWidget(View *view, const QString &name, Options options,
+DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions options,
                        LayoutSaverOptions layoutSaverOptions)
     : Controller(Type::DockWidget, view)
     , d(new Private(name, options, layoutSaverOptions, this))
@@ -84,7 +84,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
         return;
     }
 
-    if ((other->options() & DockWidget::Option_NotDockable) || (options() & DockWidget::Option_NotDockable)) {
+    if ((other->options() & DockWidgetOption_NotDockable) || (options() & DockWidgetOption_NotDockable)) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
         return;
     }
@@ -136,7 +136,7 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
         return;
     }
 
-    if ((other->options() & DockWidget::Option_NotDockable) || (options() & DockWidget::Option_NotDockable)) {
+    if ((other->options() & DockWidgetOption_NotDockable) || (options() & DockWidgetOption_NotDockable)) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
         return;
     }
@@ -275,7 +275,7 @@ QRect DockWidget::frameGeometry() const
     return geometry();
 }
 
-DockWidget::Options DockWidget::options() const
+DockWidgetOptions DockWidget::options() const
 {
     return d->options;
 }
@@ -285,9 +285,9 @@ DockWidget::LayoutSaverOptions DockWidget::layoutSaverOptions() const
     return d->layoutSaverOptions;
 }
 
-void DockWidget::setOptions(Options options)
+void DockWidget::setOptions(DockWidgetOptions options)
 {
-    if ((d->options & Option_NotDockable) != (options & Option_NotDockable)) {
+    if ((d->options & DockWidgetOption_NotDockable) != (options & DockWidgetOption_NotDockable)) {
         qWarning() << Q_FUNC_INFO << "Option_NotDockable not allowed to change. Pass via ctor only.";
         return;
     }
@@ -749,7 +749,7 @@ void DockWidget::Private::close()
         }
     }
 
-    if (!m_isMovingToSideBar && (options & DockWidget::Option_DeleteOnClose)) {
+    if (!m_isMovingToSideBar && (options & DockWidgetOption_DeleteOnClose)) {
         Q_EMIT q->aboutToDeleteOnClose();
         q->deleteLater();
     }
@@ -942,7 +942,7 @@ void DockWidget::Private::forceClose()
     close();
 }
 
-DockWidget::Private::Private(const QString &dockName, DockWidget::Options options_,
+DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_,
                              LayoutSaverOptions layoutSaverOptions_, DockWidget *qq)
 
     : name(dockName)

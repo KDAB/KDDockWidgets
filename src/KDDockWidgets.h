@@ -66,6 +66,19 @@ enum MainWindowOption {
 Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 Q_ENUM_NS(MainWindowOptions)
 
+///@brief DockWidget options to pass at construction time
+enum DockWidgetOption {
+    DockWidgetOption_None = 0, ///< No option, the default
+    DockWidgetOption_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programmatically
+    DockWidgetOption_NotDockable = 2, ///< The DockWidget can't be docked, it's always floating
+    DockWidgetOption_DeleteOnClose = 4, ///< Deletes the DockWidget when closed
+    DockWidgetOption_MDINestable = 8 ///< EXPERIMENTAL. When this dock widget is being shown in a MDI area it will also allow other dock widgets to be dropped to its sides and tabbed
+                                     /// Usually Each MDI "window" corresponds to one DockWidget, with this option each "window" will have a layout with 1 or more dock widgets
+                                     /// Run "examples/qtwidgets_mdi_with_docking -n" to see it in action
+};
+Q_DECLARE_FLAGS(DockWidgetOptions, DockWidgetOption)
+Q_ENUM_NS(DockWidgetOptions);
+
 enum class FrontendType
 {
     QtWidgets = 1,

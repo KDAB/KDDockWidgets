@@ -55,7 +55,7 @@ public:
 };
 
 DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName,
-                                       Controllers::DockWidget::Options options,
+                                       DockWidgetOptions options,
                                        Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
                                        Qt::WindowFlags windowFlags, QQmlEngine *engine)
     : View_qtquick(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget, nullptr, windowFlags)

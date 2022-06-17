@@ -69,7 +69,7 @@ public:
     /// @brief Creates a dock widget. This is only used by MainWindow's persistent widget feature.
     /// In all other cases users will instantiate DockWidget directly
     virtual View *createDockWidget(const QString &uniqueName,
-                                   Controllers::DockWidget::Options options = {},
+                                   DockWidgetOptions options = {},
                                    Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                                    Qt::WindowFlags windowFlags = {}) const = 0;
 

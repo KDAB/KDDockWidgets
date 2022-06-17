@@ -52,11 +52,11 @@ public:
     ViewFactory_qtquick() = default;
     ~ViewFactory_qtquick() override;
     View *createDockWidget(const QString &uniqueName,
-                           Controllers::DockWidget::Options options = {},
+                           DockWidgetOptions options = {},
                            Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                            Qt::WindowFlags windowFlags = {}) const override;
     virtual View *createDockWidget(const QString &uniqueName,
-                                   QQmlEngine *, Controllers::DockWidget::Options options = {},
+                                   QQmlEngine *, DockWidgetOptions options = {},
                                    Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                                    Qt::WindowFlags windowFlags = {}) const;
     View *createFrame(Controllers::Frame *, View *parent) const override;

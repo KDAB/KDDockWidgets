@@ -49,7 +49,7 @@ ViewFactory_qtquick::~ViewFactory_qtquick()
 }
 
 View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
-                                            Controllers::DockWidget::Options options,
+                                            DockWidgetOptions options,
                                             Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
                                             Qt::WindowFlags windowFlags) const
 {
@@ -58,7 +58,7 @@ View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
 
 View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
                                             QQmlEngine *qmlEngine,
-                                            Controllers::DockWidget::Options options,
+                                            DockWidgetOptions options,
                                             Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
                                             Qt::WindowFlags windowFlags) const
 {

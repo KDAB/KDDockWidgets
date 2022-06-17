@@ -557,7 +557,7 @@ QRect FloatingWindow::dragRect() const
     return rect;
 }
 
-bool FloatingWindow::allDockWidgetsHave(DockWidget::Option option) const
+bool FloatingWindow::allDockWidgetsHave(DockWidgetOption option) const
 {
     const Controllers::Frame::List frames = this->frames();
     return std::all_of(frames.begin(), frames.end(), [option](Controllers::Frame *frame) {
@@ -565,7 +565,7 @@ bool FloatingWindow::allDockWidgetsHave(DockWidget::Option option) const
     });
 }
 
-bool FloatingWindow::anyDockWidgetsHas(DockWidget::Option option) const
+bool FloatingWindow::anyDockWidgetsHas(DockWidgetOption option) const
 {
     const Controllers::Frame::List frames = this->frames();
     return std::any_of(frames.begin(), frames.end(), [option](Controllers::Frame *frame) {

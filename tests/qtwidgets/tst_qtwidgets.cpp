@@ -49,7 +49,7 @@ using namespace Layouting;
 
 /// Helper function so we don't write such a big line everywhere
 inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
-                                              Controllers::DockWidget::Options opts = {},
+                                              DockWidgetOptions opts = {},
                                               Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {})
 {
     return Config::self().viewFactory()->createDockWidget(uniqueName, opts, layoutSaverOptions)->asDockWidgetController();
@@ -57,7 +57,7 @@ inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
 
 
 inline Controllers::DockWidget *createDockWidget(const QString &name, QWidget *w,
-                                                 Controllers::DockWidget::Options options = {},
+                                                 DockWidgetOptions options = {},
                                                  Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                                                  bool show = true,
                                                  const QString &affinityName = {})
@@ -361,7 +361,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
 
     auto createSheet = [](int id) -> Controllers::DockWidget * {
-        auto dock = newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidget::Option_MDINestable);
+        auto dock = newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetOption_MDINestable);
         auto btn = new QPushButton(QStringLiteral("Sheet %1").arg(id));
         auto btnw = std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(btn));
         dock->setGuestView(btnw);
@@ -530,7 +530,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
     m->setPersistentCentralView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
 
     auto createSheet = [](int id) -> Controllers::DockWidget * {
-        auto dock = newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), Controllers::DockWidget::Option_MDINestable);
+        auto dock = newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetOption_MDINestable);
         dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QPushButton(QStringLiteral("Sheet %1").arg(id)))));
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
 
@@ -740,7 +740,7 @@ void TestQtWidgets::tst_deleteOnCloseWhenOnSideBar()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    QPointer<Controllers::DockWidget> dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), Controllers::DockWidget::Option_DeleteOnClose);
+    QPointer<Controllers::DockWidget> dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), DockWidgetOption_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
 
     dock1->moveToSideBar();
@@ -1467,11 +1467,11 @@ void TestQtWidgets::tst_deleteOnClose()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) {
-        return createDockWidget(name, Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), Controllers::DockWidget::Option_DeleteOnClose);
+        return createDockWidget(name, Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), DockWidgetOption_DeleteOnClose);
     });
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), Controllers::DockWidget::Option_DeleteOnClose);
+    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), DockWidgetOption_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
     m->moveToSideBar(dock1);
     m->overlayOnSideBar(dock1);

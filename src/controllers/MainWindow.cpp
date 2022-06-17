@@ -165,7 +165,7 @@ void MainWindow::addDockWidgetAsTab(Controllers::DockWidget *widget)
         return;
     }
 
-    if (widget->options() & Controllers::DockWidget::Option_NotDockable) {
+    if (widget->options() & DockWidgetOption_NotDockable) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << widget;
         return;
     }
@@ -189,7 +189,7 @@ void MainWindow::addDockWidgetAsTab(Controllers::DockWidget *widget)
 void MainWindow::addDockWidget(Controllers::DockWidget *dw, Location location,
                                Controllers::DockWidget *relativeTo, InitialOption option)
 {
-    if (dw->options() & Controllers::DockWidget::Option_NotDockable) {
+    if (dw->options() & DockWidgetOption_NotDockable) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << dw;
         return;
     }

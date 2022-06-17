@@ -66,7 +66,7 @@ inline int widgetMinLength(Controllers::Frame *frame, Qt::Orientation o)
 }
 
 /// Helper function so we don't write such a big line everywhere
-inline Controllers::DockWidget *newDockWidget(const QString &uniqueName, Controllers::DockWidget::Options opts = {})
+inline Controllers::DockWidget *newDockWidget(const QString &uniqueName, DockWidgetOptions opts = {})
 {
     return Config::self().viewFactory()->createDockWidget(uniqueName, opts)->asDockWidgetController();
 }
@@ -701,7 +701,7 @@ void TestDocks::tst_nonDockable()
     {
         EnsureTopLevelsDeleted e;
         // Test that when using Option_NotDockable we don't get a dock/undock icon
-        auto dock = newDockWidget("1", Controllers::DockWidget::Option_NotDockable);
+        auto dock = newDockWidget("1", DockWidgetOption_NotDockable);
         dock->show();
 
         Controllers::TitleBar *tb = dock->titleBar();
@@ -3248,13 +3248,13 @@ void TestDocks::tst_restoreNonClosable()
 
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }), Controllers::DockWidget::Option_NotClosable);
-        QCOMPARE(dock1->options(), Controllers::DockWidget::Option_NotClosable);
+        auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }), DockWidgetOption_NotClosable);
+        QCOMPARE(dock1->options(), DockWidgetOption_NotClosable);
 
         LayoutSaver saver;
         const QByteArray saved = saver.serializeLayout();
         QVERIFY(saver.restoreLayout(saved));
-        QCOMPARE(dock1->options(), Controllers::DockWidget::Option_NotClosable);
+        QCOMPARE(dock1->options(), DockWidgetOption_NotClosable);
     }
 
     {
@@ -3262,16 +3262,16 @@ void TestDocks::tst_restoreNonClosable()
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
 
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
-        auto dock2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }), Controllers::DockWidget::Option_NotClosable);
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }), DockWidgetOption_NotClosable);
         auto dock3 = createDockWidget("3", Platform::instance()->tests_createFocusableView({ true }));
 
         m->addDockWidget(dock1, Location_OnLeft);
         m->addDockWidget(dock2, Location_OnLeft);
         m->addDockWidget(dock3, Location_OnLeft);
 
-        QCOMPARE(dock2->options(), Controllers::DockWidget::Option_NotClosable);
+        QCOMPARE(dock2->options(), DockWidgetOption_NotClosable);
         dock2->setFloating(true);
-        QCOMPARE(dock2->options(), Controllers::DockWidget::Option_NotClosable);
+        QCOMPARE(dock2->options(), DockWidgetOption_NotClosable);
 
         Controllers::TitleBar *tb = dock2->dptr()->frame()->actualTitleBar();
         QVERIFY(tb->isVisible());
@@ -3281,7 +3281,7 @@ void TestDocks::tst_restoreNonClosable()
         const QByteArray saved = saver.serializeLayout();
 
         QVERIFY(saver.restoreLayout(saved));
-        QCOMPARE(dock2->options(), Controllers::DockWidget::Option_NotClosable);
+        QCOMPARE(dock2->options(), DockWidgetOption_NotClosable);
 
         tb = dock2->dptr()->frame()->actualTitleBar();
         QVERIFY(tb->isVisible());
@@ -3426,7 +3426,7 @@ void TestDocks::tst_restoreWithNonClosableWidget()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithNonClosableWidget");
-    auto dock1 = createDockWidget("1", Platform::instance()->tests_createNonClosableView(), Controllers::DockWidget::Option_NotClosable);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createNonClosableView(), DockWidgetOption_NotClosable);
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitter();
 
@@ -3854,7 +3854,7 @@ void TestDocks::tst_notClosable()
 {
     {
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), Controllers::DockWidget::Option_NotClosable);
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), DockWidgetOption_NotClosable);
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         dock1->addDockWidgetAsTab(dock2);
 
@@ -3867,13 +3867,13 @@ void TestDocks::tst_notClosable()
         QVERIFY(!titleBarFrame->isCloseButtonVisible());
         QVERIFY(!titleBarFrame->isCloseButtonEnabled());
 
-        dock1->setOptions(Controllers::DockWidget::Option_None);
+        dock1->setOptions(DockWidgetOption_None);
         QVERIFY(titlebarFW->isCloseButtonVisible());
         QVERIFY(titlebarFW->isCloseButtonEnabled());
         QVERIFY(!titleBarFrame->isCloseButtonVisible());
         QVERIFY(!titleBarFrame->isCloseButtonEnabled());
 
-        dock1->setOptions(Controllers::DockWidget::Option_NotClosable);
+        dock1->setOptions(DockWidgetOption_NotClosable);
         QVERIFY(titlebarFW->isCloseButtonVisible());
         QVERIFY(!titlebarFW->isCloseButtonEnabled());
         QVERIFY(!titleBarFrame->isCloseButtonVisible());
@@ -3883,7 +3883,7 @@ void TestDocks::tst_notClosable()
     {
         // Now dock dock1 into dock1 instead
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), Controllers::DockWidget::Option_NotClosable);
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), DockWidgetOption_NotClosable);
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
         dock2->dptr()->morphIntoFloatingWindow();
@@ -5950,7 +5950,7 @@ void TestDocks::tst_deleteOnClose()
     {
         EnsureTopLevelsDeleted e;
         // Tests that DockWidget::close() deletes itself if Option_DeleteOnClose is set
-        QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), Controllers::DockWidget::Option_DeleteOnClose);
+        QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), DockWidgetOption_DeleteOnClose);
         dock1->show();
         dock1->close();
 
@@ -5961,7 +5961,7 @@ void TestDocks::tst_deleteOnClose()
         // Tests that if it's closed via LayoutSaver it's also destroyed when having Option_DeleteOnClose
         EnsureTopLevelsDeleted e;
 
-        QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), Controllers::DockWidget::Option_DeleteOnClose, {}, /*show=*/false);
+        QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), DockWidgetOption_DeleteOnClose, {}, /*show=*/false);
         QPointer<Controllers::DockWidget> dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), {}, {}, /*show=*/false);
         LayoutSaver saver;
         const QByteArray saved = saver.serializeLayout();

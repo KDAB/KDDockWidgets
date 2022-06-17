@@ -66,7 +66,7 @@ public:
      * when visible, or stays without a parent when hidden.
      */
     explicit DockWidget_qtquick(const QString &uniqueName,
-                                Controllers::DockWidget::Options = {},
+                                DockWidgetOptions = {},
                                 Controllers::DockWidget::LayoutSaverOptions = {},
                                 Qt::WindowFlags = Qt::Tool,
                                 QQmlEngine *engine = nullptr);

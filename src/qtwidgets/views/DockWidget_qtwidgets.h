@@ -54,7 +54,7 @@ public:
      * to different main windows.
      */
     explicit DockWidget_qtwidgets(const QString &uniqueName,
-                                  Controllers::DockWidget::Options options = {},
+                                  DockWidgetOptions options = {},
                                   Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                                   Qt::WindowFlags windowFlags = Qt::Tool);
 

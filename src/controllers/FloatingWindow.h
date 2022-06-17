@@ -149,10 +149,10 @@ public:
     QRect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
-    bool allDockWidgetsHave(Controllers::DockWidget::Option) const;
+    bool allDockWidgetsHave(DockWidgetOption) const;
 
     ///@brief Returns whether at least one dock widget has the specified option set
-    bool anyDockWidgetsHas(DockWidget::Option) const;
+    bool anyDockWidgetsHas(DockWidgetOption) const;
 
     ///@brief Returns whether all dock widgets have the specified  layout saver option set
     bool allDockWidgetsHave(DockWidget::LayoutSaverOption) const;

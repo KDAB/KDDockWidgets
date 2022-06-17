@@ -169,14 +169,14 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
     static int count = 0;
 
     // Passing options is optional, we just want to illustrate Option_NotClosable here
-    KDDockWidgets::Controllers::DockWidget::Options options = KDDockWidgets::Controllers::DockWidget::Option_None;
+    KDDockWidgets::DockWidgetOptions options = KDDockWidgets::DockWidgetOption_None;
     KDDockWidgets::Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::None;
 
     if (count == 0 && m_dockWidget0IsNonClosable)
-        options |= KDDockWidgets::Controllers::DockWidget::Option_NotClosable;
+        options |= KDDockWidgets::DockWidgetOption_NotClosable;
 
     if (count == 9 && m_dockWidget9IsNonDockable)
-        options |= KDDockWidgets::Controllers::DockWidget::Option_NotDockable;
+        options |= KDDockWidgets::DockWidgetOption_NotDockable;
 
     if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
         layoutSaverOptions |= KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::Skip;
@@ -197,7 +197,7 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
     auto myWidgetw = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(myWidget));
     dock->setGuestView(myWidgetw);
 
-    if (dock->options() & KDDockWidgets::Controllers::DockWidget::Option_NotDockable) {
+    if (dock->options() & KDDockWidgets::DockWidgetOption_NotDockable) {
         dock->setTitle(QStringLiteral("DockWidget #%1 (%2)").arg(count).arg("non dockable"));
     } else {
         dock->setTitle(QStringLiteral("DockWidget #%1").arg(count));

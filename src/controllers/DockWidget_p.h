@@ -55,7 +55,7 @@ public:
         Controllers::DockWidget *const dw;
     };
 
-    Private(const QString &dockName, DockWidget::Options options_,
+    Private(const QString &dockName, DockWidgetOptions options_,
             LayoutSaverOptions layoutSaverOptions_, DockWidget *qq);
 
     void init()
@@ -184,7 +184,7 @@ public:
     QIcon tabBarIcon;
     std::shared_ptr<ViewWrapper> guest;
     DockWidget *const q;
-    DockWidget::Options options;
+    DockWidgetOptions options;
     const LayoutSaverOptions layoutSaverOptions;
     QAction *const toggleAction;
     QAction *const floatAction;

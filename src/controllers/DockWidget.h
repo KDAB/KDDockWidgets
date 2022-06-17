@@ -58,23 +58,9 @@ class TitleBar;
 class DOCKS_EXPORT DockWidget : public Controller
 {
     Q_OBJECT
-    Q_PROPERTY(KDDockWidgets::Controllers::DockWidget::Options options READ options WRITE setOptions NOTIFY
-                   optionsChanged)
+    Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY optionsChanged)
 public:
     typedef QVector<DockWidget *> List;
-
-    ///@brief DockWidget options to pass at construction time
-    enum Option {
-        Option_None = 0, ///< No option, the default
-        Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programmatically
-        Option_NotDockable = 2, ///< The DockWidget can't be docked, it's always floating
-        Option_DeleteOnClose = 4, ///< Deletes the DockWidget when closed
-        Option_MDINestable = 8 ///< EXPERIMENTAL. When this dock widget is being shown in a MDI area it will also allow other dock widgets to be dropped to its sides and tabbed
-                               /// Usually Each MDI "window" corresponds to one DockWidget, with this option each "window" will have a layout with 1 or more dock widgets
-                               /// Run "examples/qtwidgets_mdi_with_docking -n" to see it in action
-    };
-    Q_DECLARE_FLAGS(Options, Option)
-    Q_ENUM(Options);
 
     /// @brief Options which will affect LayoutSaver save/restore
     enum class LayoutSaverOption
@@ -104,7 +90,7 @@ public:
      * when visible, or stays without a parent when hidden.
      */
     explicit DockWidget(View *view, const QString &uniqueName,
-                        Options options = Options(),
+                        DockWidgetOptions options = {},
                         LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
 
     ///@brief destructor
@@ -223,7 +209,7 @@ public:
      * @brief Returns the dock widget's options which control behaviour.
      * @sa setOptions(), optionsChanged()
      */
-    Options options() const;
+    DockWidgetOptions options() const;
 
     /// @brief returns the per-dockwidget options which will affect LayoutSaver
     /// These are the options which were passed to the constructor
@@ -231,12 +217,12 @@ public:
 
     /**
      * @brief Setter for the options.
-     * Only Option_NotClosable is allowed to change after construction. For the other options use
+     * Only DockWidetOption_NotClosable is allowed to change after construction. For the other options use
      * the constructor only.
      *
      * @sa options(), optionsChanged()
      */
-    void setOptions(Options);
+    void setOptions(DockWidgetOptions);
 
     /**
      * @brief returns if this dock widget is tabbed into another
@@ -475,7 +461,7 @@ Q_SIGNALS:
 
     ///@brief emitted when the options change
     ///@sa setOptions(), options()
-    void optionsChanged(KDDockWidgets::Controllers::DockWidget::Options);
+    void optionsChanged(KDDockWidgets::DockWidgetOptions);
 
     ///@brief emitted when isFocused changes
     ///@sa isFocused

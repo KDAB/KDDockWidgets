@@ -43,7 +43,7 @@ void Stack_qtwidgets::init()
     // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
     connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
         if (auto dw = dockwidgetAt(index)) {
-            if (dw->options() & Controllers::DockWidget::Option_NotClosable) {
+            if (dw->options() & DockWidgetOption_NotClosable) {
                 qWarning() << "QTabWidget::tabCloseRequested: Refusing to close dock widget with Option_NotClosable option. name=" << dw->uniqueName();
             } else {
                 dw->view()->close();

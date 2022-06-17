@@ -598,7 +598,7 @@ int Frame::currentTabIndex() const
 bool Frame::anyNonClosable() const
 {
     for (auto dw : dockWidgets()) {
-        if ((dw->options() & DockWidget::Option_NotClosable) && !DockRegistry::self()->isProcessingAppQuitEvent())
+        if ((dw->options() & DockWidgetOption_NotClosable) && !DockRegistry::self()->isProcessingAppQuitEvent())
             return true;
     }
 
@@ -608,7 +608,7 @@ bool Frame::anyNonClosable() const
 bool Frame::anyNonDockable() const
 {
     for (auto dw : dockWidgets()) {
-        if (dw->options() & DockWidget::Option_NotDockable)
+        if (dw->options() & DockWidgetOption_NotDockable)
             return true;
     }
 
@@ -860,7 +860,7 @@ MainWindow *Frame::mainWindow() const
 }
 
 ///@brief Returns whether all dock widgets have the specified option set
-bool Frame::allDockWidgetsHave(DockWidget::Option option) const
+bool Frame::allDockWidgetsHave(DockWidgetOption option) const
 {
     const DockWidget::List docks = dockWidgets();
     return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
@@ -869,7 +869,7 @@ bool Frame::allDockWidgetsHave(DockWidget::Option option) const
 }
 
 ///@brief Returns whether at least one dock widget has the specified option set
-bool Frame::anyDockWidgetsHas(DockWidget::Option option) const
+bool Frame::anyDockWidgetsHas(DockWidgetOption option) const
 {
     const DockWidget::List docks = dockWidgets();
     return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {

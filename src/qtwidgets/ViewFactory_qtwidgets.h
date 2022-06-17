@@ -53,7 +53,7 @@ public:
     ~ViewFactory_qtwidgets() override;
 
     View *createDockWidget(const QString &uniqueName,
-                           Controllers::DockWidget::Options = {},
+                           DockWidgetOptions = {},
                            Controllers::DockWidget::LayoutSaverOptions = {},
                            Qt::WindowFlags = {}) const override;
 

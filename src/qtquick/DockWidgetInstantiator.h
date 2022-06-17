@@ -98,7 +98,7 @@ Q_SIGNALS:
     void hidden();
     void iconChanged();
     void guestViewChanged(QQuickItem *);
-    void optionsChanged(KDDockWidgets::Controllers::DockWidget::Options);
+    void optionsChanged(KDDockWidgets::DockWidgetOptions);
     void isFocusedChanged(bool);
     void isOverlayedChanged(bool);
     void isFloatingChanged(bool);

@@ -161,7 +161,7 @@ bool TitleBar::supportsFloatingButton() const
 
     if (DockWidget *dw = singleDockWidget()) {
         // Don't show the dock/undock button if the window is not dockable
-        if (dw->options() & DockWidget::Option_NotDockable)
+        if (dw->options() & DockWidgetOption_NotDockable)
             return false;
     }
 
