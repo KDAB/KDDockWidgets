@@ -47,7 +47,7 @@ class DOCKS_EXPORT DockRegistry : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(
-        Controllers::Frame *frameInMDIResize READ frameInMDIResize NOTIFY frameInMDIResizeChanged)
+        QObject *frameViewInMDIResize READ frameViewInMDIResize NOTIFY frameInMDIResizeChanged)
 public:
     enum class DockByNameFlag
     {
@@ -233,6 +233,9 @@ public:
 
     ///@brief Returns the Frame which is being resized in a MDI layout. nullptr if none
     Controllers::Frame *frameInMDIResize() const;
+
+    /// Returns the Frame view, for QtQuick
+    QObject *frameViewInMDIResize() const;
 
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen

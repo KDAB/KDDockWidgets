@@ -224,6 +224,14 @@ Controllers::Frame *DockRegistry::frameInMDIResize() const
     return nullptr;
 }
 
+QObject *DockRegistry::frameViewInMDIResize() const
+{
+    if (auto frame = frameInMDIResize())
+        return frame->view()->asQObject();
+
+    return nullptr;
+}
+
 Controllers::MainWindow::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
     Controllers::MainWindow::List result;
