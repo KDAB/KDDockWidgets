@@ -14,7 +14,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "views/TitleBar.h"
+#include "views/TitleBarViewInterface.h"
 #include "View_qtquick.h"
 
 namespace KDDockWidgets {
@@ -26,7 +26,7 @@ class TitleBar;
 
 namespace Views {
 
-class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick, public Views::TitleBar
+class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick, public Views::TitleBarViewInterface
 {
     Q_OBJECT
     // These properties is just for the unit-tests

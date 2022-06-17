@@ -26,10 +26,10 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that Frame views should implement
-class DOCKS_EXPORT Frame
+class DOCKS_EXPORT FrameViewInterface
 {
 public:
-    virtual ~Frame();
+    virtual ~FrameViewInterface();
     virtual void renameTab(int index, const QString &) = 0;
     virtual void changeTabIcon(int index, const QIcon &) = 0;
     virtual void removeWidget_impl(Controllers::DockWidget *) = 0;

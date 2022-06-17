@@ -17,7 +17,7 @@
 #include "private/WindowBeingDragged_p.h"
 #include "DockWidget_p.h"
 
-#include "views/Stack.h"
+#include "views/StackViewInterface.h"
 #include "controllers/TabBar.h"
 #include "controllers/Frame.h"
 #include "controllers/FloatingWindow.h"
@@ -54,7 +54,7 @@ void Stack::setCurrentDockWidget(DockWidget *dw)
 
 bool Stack::isPositionDraggable(QPoint p) const
 {
-    return dynamic_cast<Views::Stack *>(view())->isPositionDraggable(p);
+    return dynamic_cast<Views::StackViewInterface *>(view())->isPositionDraggable(p);
 }
 
 Controllers::DockWidget *Stack::currentDockWidget() const
@@ -203,12 +203,12 @@ bool Stack::onMouseDoubleClick(QPoint localPos)
 
 void Stack::setTabBarAutoHide(bool is)
 {
-    dynamic_cast<Views::Stack *>(view())->setTabBarAutoHide(is);
+    dynamic_cast<Views::StackViewInterface *>(view())->setTabBarAutoHide(is);
 }
 
 void Stack::renameTab(int index, const QString &text)
 {
-    dynamic_cast<Views::Stack *>(view())->renameTab(index, text);
+    dynamic_cast<Views::StackViewInterface *>(view())->renameTab(index, text);
 }
 
 Controllers::TabBar *Stack::tabBar() const
@@ -218,45 +218,45 @@ Controllers::TabBar *Stack::tabBar() const
 
 int Stack::currentIndex() const
 {
-    return dynamic_cast<Views::Stack *>(view())->currentIndex();
+    return dynamic_cast<Views::StackViewInterface *>(view())->currentIndex();
 }
 
 int Stack::numDockWidgets() const
 {
-    return dynamic_cast<Views::Stack *>(view())->numDockWidgets();
+    return dynamic_cast<Views::StackViewInterface *>(view())->numDockWidgets();
 }
 
 void Stack::changeTabIcon(int index, const QIcon &icon)
 {
-    dynamic_cast<Views::Stack *>(view())->changeTabIcon(index, icon);
+    dynamic_cast<Views::StackViewInterface *>(view())->changeTabIcon(index, icon);
 }
 
 Controllers::DockWidget *Stack::dockwidgetAt(int index) const
 {
-    return dynamic_cast<Views::Stack *>(view())->dockwidgetAt(index);
+    return dynamic_cast<Views::StackViewInterface *>(view())->dockwidgetAt(index);
 }
 
 int Stack::indexOfDockWidget(const DockWidget *dw) const
 {
-    return dynamic_cast<Views::Stack *>(view())->indexOfDockWidget(dw);
+    return dynamic_cast<Views::StackViewInterface *>(view())->indexOfDockWidget(dw);
 }
 
 void Stack::removeDockWidget(DockWidget *dw)
 {
-    dynamic_cast<Views::Stack *>(view())->removeDockWidget(dw);
+    dynamic_cast<Views::StackViewInterface *>(view())->removeDockWidget(dw);
 }
 
 bool Stack::insertDockWidget(int index, DockWidget *dw, const QIcon &icon, const QString &title)
 {
-    return dynamic_cast<Views::Stack *>(view())->insertDockWidget(index, dw, icon, title);
+    return dynamic_cast<Views::StackViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
 }
 
 void Stack::setCurrentDockWidget(int index)
 {
-    dynamic_cast<Views::Stack *>(view())->setCurrentDockWidget(index);
+    dynamic_cast<Views::StackViewInterface *>(view())->setCurrentDockWidget(index);
 }
 
 void Stack::setDocumentMode(bool is)
 {
-    dynamic_cast<Views::Stack *>(view())->setDocumentMode(is);
+    dynamic_cast<Views::StackViewInterface *>(view())->setDocumentMode(is);
 }

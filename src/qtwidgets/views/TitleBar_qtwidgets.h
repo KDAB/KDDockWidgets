@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
-#include "kddockwidgets/views/TitleBar.h"
+#include "kddockwidgets/views/TitleBarViewInterface.h"
 
 #include <QToolButton>
 
@@ -27,7 +27,7 @@ class TitleBar;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>, public Views::TitleBar
+class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>, public Views::TitleBarViewInterface
 {
     Q_OBJECT
 public:

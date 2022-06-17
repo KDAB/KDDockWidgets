@@ -26,10 +26,10 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that Stack views should implement
-class DOCKS_EXPORT Stack
+class DOCKS_EXPORT StackViewInterface
 {
 public:
-    virtual ~Stack();
+    virtual ~StackViewInterface();
     virtual bool isPositionDraggable(QPoint p) const = 0;
     virtual void setTabBarAutoHide(bool is) = 0;
     virtual void renameTab(int index, const QString &) = 0;

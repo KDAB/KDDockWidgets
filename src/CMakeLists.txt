@@ -98,7 +98,7 @@ set(KDDW_BACKEND_SRCS
     Controller.h
     Platform.cpp
     Platform.h
-    views/ClassicIndicatorWindow.cpp
+    views/ClassicIndicatorWindowViewInterface.cpp
     views/MainWindowMDI.cpp
     views/MainWindowMDI.h
     views/MainWindowViewInterface.cpp

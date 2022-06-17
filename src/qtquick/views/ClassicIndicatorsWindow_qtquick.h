@@ -13,7 +13,7 @@
 #define KD_CLASSICINDICATORS_WINDOW_QTQUICK_H
 #pragma once
 
-#include "views/ClassicIndicatorWindow.h"
+#include "views/ClassicIndicatorWindowViewInterface.h"
 
 #include <QQuickView>
 
@@ -23,7 +23,7 @@ namespace Controllers {
 class ClassicIndicators;
 }
 
-class IndicatorWindow_qtquick : public QQuickView, public Views::ClassicIndicatorWindow
+class IndicatorWindow_qtquick : public QQuickView, public Views::ClassicIndicatorWindowViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(bool innerLeftIndicatorVisible READ innerLeftIndicatorVisible NOTIFY indicatorsVisibleChanged)

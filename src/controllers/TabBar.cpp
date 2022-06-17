@@ -14,7 +14,7 @@
 #include "Controller.h"
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"
-#include "views/TabBar.h"
+#include "views/TabBarViewInterface.h"
 #include "Platform.h"
 
 #include "private/DragController_p.h"
@@ -38,7 +38,7 @@ Controllers::TabBar::~TabBar()
 
 bool Controllers::TabBar::tabsAreMovable() const
 {
-    return dynamic_cast<Views::TabBar *>(view())->tabsAreMovable();
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->tabsAreMovable();
 }
 
 bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
@@ -55,7 +55,7 @@ bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
         return defaultResult;
     }
 
-    const int index = dynamic_cast<Views::TabBar *>(view())->tabAt(view()->mapFromGlobal(pos));
+    const int index = dynamic_cast<Views::TabBarViewInterface *>(view())->tabAt(view()->mapFromGlobal(pos));
     if (index == -1)
         return defaultResult;
 
@@ -86,7 +86,7 @@ Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(int index) const
 
 Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) const
 {
-    return dockWidgetAt(dynamic_cast<Views::TabBar *>(view())->tabAt(localPos));
+    return dockWidgetAt(dynamic_cast<Views::TabBarViewInterface *>(view())->tabAt(localPos));
 }
 
 std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
@@ -179,20 +179,20 @@ Frame *Controllers::TabBar::frame() const
 
 void Controllers::TabBar::moveTabTo(int from, int to)
 {
-    dynamic_cast<Views::TabBar *>(view())->moveTabTo(from, to);
+    dynamic_cast<Views::TabBarViewInterface *>(view())->moveTabTo(from, to);
 }
 
 QString Controllers::TabBar::text(int index) const
 {
-    return dynamic_cast<Views::TabBar *>(view())->text(index);
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->text(index);
 }
 
 QRect Controllers::TabBar::rectForTab(int index) const
 {
-    return dynamic_cast<Views::TabBar *>(view())->rectForTab(index);
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->rectForTab(index);
 }
 
 DockWidget *Controllers::TabBar::currentDockWidget() const
 {
-    return dynamic_cast<Views::TabBar *>(view())->currentDockWidget();
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->currentDockWidget();
 }

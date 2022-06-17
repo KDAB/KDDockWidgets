@@ -20,10 +20,10 @@ namespace Views {
 
 /// @brief The window that will hold the classic indicators
 /// This is a window so it can be over the window that is being dragged
-class DOCKS_EXPORT ClassicIndicatorWindow
+class DOCKS_EXPORT ClassicIndicatorWindowViewInterface
 {
 public:
-    virtual ~ClassicIndicatorWindow();
+    virtual ~ClassicIndicatorWindowViewInterface();
 
     virtual void setObjectName(const QString &) = 0;
     virtual DropLocation hover(QPoint) = 0;

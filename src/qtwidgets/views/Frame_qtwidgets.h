@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
-#include "views/Frame.h"
+#include "views/FrameViewInterface.h"
 
 namespace KDDockWidgets::Controllers {
 class Frame;
@@ -20,7 +20,7 @@ class Frame;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT Frame_qtwidgets : public View_qtwidgets<QWidget>, public Frame
+class DOCKS_EXPORT Frame_qtwidgets : public View_qtwidgets<QWidget>, public FrameViewInterface
 {
     Q_OBJECT
 public:

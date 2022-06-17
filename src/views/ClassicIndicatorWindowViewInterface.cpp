@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "ClassicIndicatorWindow.h"
+#include "ClassicIndicatorWindowViewInterface.h"
 
 using namespace KDDockWidgets::Views;
 
-ClassicIndicatorWindow::~ClassicIndicatorWindow()
+ClassicIndicatorWindowViewInterface::~ClassicIndicatorWindowViewInterface()
 {
 }

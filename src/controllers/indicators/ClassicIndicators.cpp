@@ -12,7 +12,7 @@
 #include "ClassicIndicators.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "views/ClassicIndicatorWindow.h"
+#include "views/ClassicIndicatorWindowViewInterface.h"
 
 #include "controllers/DropArea.h"
 #include "private/DragController_p.h"
@@ -25,7 +25,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-static Views::ClassicIndicatorWindow *createIndicatorWindow(ClassicIndicators *classicIndicators)
+static Views::ClassicIndicatorWindowViewInterface *createIndicatorWindow(ClassicIndicators *classicIndicators)
 {
     auto window = Config::self().viewFactory()->createClassicIndicatorWindow(classicIndicators);
     window->setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));

@@ -17,7 +17,7 @@
 #include "Controller.h"
 #include "View.h"
 #include "Platform.h"
-#include "views/Frame.h"
+#include "views/FrameViewInterface.h"
 
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"
@@ -150,57 +150,57 @@ void Frame::setLayout(Layout *dt)
 
 void Frame::renameTab(int index, const QString &title)
 {
-    dynamic_cast<Views::Frame *>(view())->renameTab(index, title);
+    dynamic_cast<Views::FrameViewInterface *>(view())->renameTab(index, title);
 }
 
 void Frame::changeTabIcon(int index, const QIcon &icon)
 {
-    dynamic_cast<Views::Frame *>(view())->changeTabIcon(index, icon);
+    dynamic_cast<Views::FrameViewInterface *>(view())->changeTabIcon(index, icon);
 }
 
 void Frame::removeWidget_impl(DockWidget *dw)
 {
-    dynamic_cast<Views::Frame *>(view())->removeWidget_impl(dw);
+    dynamic_cast<Views::FrameViewInterface *>(view())->removeWidget_impl(dw);
 }
 
 int Frame::indexOfDockWidget_impl(const DockWidget *dw)
 {
-    return dynamic_cast<Views::Frame *>(view())->indexOfDockWidget_impl(dw);
+    return dynamic_cast<Views::FrameViewInterface *>(view())->indexOfDockWidget_impl(dw);
 }
 
 int Frame::currentIndex_impl() const
 {
-    return dynamic_cast<Views::Frame *>(view())->currentIndex_impl();
+    return dynamic_cast<Views::FrameViewInterface *>(view())->currentIndex_impl();
 }
 
 void Frame::setCurrentTabIndex_impl(int index)
 {
-    dynamic_cast<Views::Frame *>(view())->setCurrentTabIndex_impl(index);
+    dynamic_cast<Views::FrameViewInterface *>(view())->setCurrentTabIndex_impl(index);
 }
 
 void Frame::setCurrentDockWidget_impl(DockWidget *dw)
 {
-    dynamic_cast<Views::Frame *>(view())->setCurrentDockWidget_impl(dw);
+    dynamic_cast<Views::FrameViewInterface *>(view())->setCurrentDockWidget_impl(dw);
 }
 
 void Frame::insertDockWidget_impl(DockWidget *dw, int index)
 {
-    dynamic_cast<Views::Frame *>(view())->insertDockWidget_impl(dw, index);
+    dynamic_cast<Views::FrameViewInterface *>(view())->insertDockWidget_impl(dw, index);
 }
 
 Controllers::DockWidget *Frame::dockWidgetAt_impl(int index) const
 {
-    return dynamic_cast<Views::Frame *>(view())->dockWidgetAt_impl(index);
+    return dynamic_cast<Views::FrameViewInterface *>(view())->dockWidgetAt_impl(index);
 }
 
 Controllers::DockWidget *Frame::currentDockWidget_impl() const
 {
-    return dynamic_cast<Views::Frame *>(view())->currentDockWidget_impl();
+    return dynamic_cast<Views::FrameViewInterface *>(view())->currentDockWidget_impl();
 }
 
 int Frame::nonContentsHeight() const
 {
-    return dynamic_cast<Views::Frame *>(view())->nonContentsHeight();
+    return dynamic_cast<Views::FrameViewInterface *>(view())->nonContentsHeight();
 }
 
 Controllers::Stack *Frame::tabWidget() const
@@ -851,7 +851,7 @@ QRect Frame::dragRect() const
     if (rect.isValid())
         return rect;
 
-    return dynamic_cast<Views::Frame *>(view())->dragRect();
+    return dynamic_cast<Views::FrameViewInterface *>(view())->dragRect();
 }
 
 MainWindow *Frame::mainWindow() const

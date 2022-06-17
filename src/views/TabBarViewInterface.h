@@ -26,10 +26,10 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that TabBar views should implement
-class DOCKS_EXPORT TabBar
+class DOCKS_EXPORT TabBarViewInterface
 {
 public:
-    virtual ~TabBar();
+    virtual ~TabBarViewInterface();
     virtual bool tabsAreMovable() const = 0;
     virtual int tabAt(QPoint localPt) const = 0;
     virtual void moveTabTo(int from, int to) = 0;

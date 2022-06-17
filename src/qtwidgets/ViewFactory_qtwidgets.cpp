@@ -39,7 +39,7 @@
 #include "qtwidgets/views/MDILayout_qtwidgets.h"
 #include "qtwidgets/views/RubberBand_qtwidgets.h"
 
-#include "views/ClassicIndicatorWindow.h"
+#include "views/ClassicIndicatorWindowViewInterface.h"
 
 #include <QToolButton>
 
@@ -185,7 +185,7 @@ View *ViewFactory_qtwidgets::createSegmentedDropIndicatorOverlayView(Controllers
     return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
-Views::ClassicIndicatorWindow *ViewFactory_qtwidgets::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const
+Views::ClassicIndicatorWindowViewInterface *ViewFactory_qtwidgets::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const
 {
     return new IndicatorWindow_qtwidgets(classicIndicators);
 }

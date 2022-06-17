@@ -22,7 +22,7 @@
 #pragma once
 
 #include "View_qtquick.h"
-#include "views/TabBar.h"
+#include "views/TabBarViewInterface.h"
 
 #include <QPointer>
 #include <QHash>
@@ -38,7 +38,7 @@ class TabWidget;
 
 class DOCKS_EXPORT TabBar_qtquick
     : public View_qtquick,
-      public TabBar
+      public TabBarViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY tabBarQmlItemChanged)

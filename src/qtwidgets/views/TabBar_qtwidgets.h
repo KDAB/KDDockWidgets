@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
-#include "views/TabBar.h"
+#include "views/TabBarViewInterface.h"
 
 #include <QTabBar>
 
@@ -27,7 +27,7 @@ class DockWidget;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>, public TabBar
+class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>, public TabBarViewInterface
 {
     Q_OBJECT
 public:

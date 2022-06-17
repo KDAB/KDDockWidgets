@@ -13,7 +13,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
-#include "views/Stack.h"
+#include "views/StackViewInterface.h"
 
 #include <QTabWidget>
 
@@ -29,7 +29,7 @@ class Stack;
 namespace KDDockWidgets {
 namespace Views {
 
-class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public Stack
+class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public StackViewInterface
 {
     Q_OBJECT
 public:

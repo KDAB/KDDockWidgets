@@ -12,12 +12,11 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "kddockwidgets/views/SideBar.h"
-#include "kddockwidgets/views/Frame.h"
-#include "kddockwidgets/views/TabBar.h"
-#include "kddockwidgets/views/TitleBar.h"
-#include "kddockwidgets/views/Stack.h"
-#include "kddockwidgets/views/Frame.h"
+#include "kddockwidgets/views/SideBarViewInterface.h"
+#include "kddockwidgets/views/FrameViewInterface.h"
+#include "kddockwidgets/views/TabBarViewInterface.h"
+#include "kddockwidgets/views/TitleBarViewInterface.h"
+#include "kddockwidgets/views/StackViewInterface.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform_qtwidgets.h"
@@ -50,10 +49,9 @@ void KDDockWidgets::initFrontend(FrontendType type)
 
 namespace KDDockWidgets::Views {
 // Fix -Wweak-vtables warnings
-SideBar::~SideBar() = default;
-Stack::~Stack() = default;
-TabBar::~TabBar() = default;
-TitleBar::~TitleBar() = default;
-
-Frame::~Frame() = default;
+SideBarViewInterface::~SideBarViewInterface() = default;
+StackViewInterface::~StackViewInterface() = default;
+TabBarViewInterface::~TabBarViewInterface() = default;
+TitleBarViewInterface::~TitleBarViewInterface() = default;
+FrameViewInterface::~FrameViewInterface() = default;
 }

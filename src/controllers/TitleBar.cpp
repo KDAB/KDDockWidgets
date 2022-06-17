@@ -17,7 +17,7 @@
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 
-#include "views/TitleBar.h"
+#include "views/TitleBarViewInterface.h"
 #include "ViewWrapper.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/TabBar.h"
@@ -55,7 +55,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     init();
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, [this] {
-        dynamic_cast<Views::TitleBar *>(view())->updateMaximizeButton();
+        dynamic_cast<Views::TitleBarViewInterface *>(view())->updateMaximizeButton();
     });
     connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);
 }
@@ -195,17 +195,17 @@ bool TitleBar::supportsAutoHideButton() const
 #ifdef DOCKS_DEVELOPER_MODE
 bool TitleBar::isFloatButtonVisible() const
 {
-    return dynamic_cast<Views::TitleBar *>(view())->isFloatButtonVisible();
+    return dynamic_cast<Views::TitleBarViewInterface *>(view())->isFloatButtonVisible();
 }
 
 bool TitleBar::isCloseButtonVisible() const
 {
-    return dynamic_cast<Views::TitleBar *>(view())->isCloseButtonVisible();
+    return dynamic_cast<Views::TitleBarViewInterface *>(view())->isCloseButtonVisible();
 }
 
 bool TitleBar::isCloseButtonEnabled() const
 {
-    return dynamic_cast<Views::TitleBar *>(view())->isCloseButtonEnabled();
+    return dynamic_cast<Views::TitleBarViewInterface *>(view())->isCloseButtonEnabled();
 }
 #endif
 

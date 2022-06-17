@@ -14,7 +14,7 @@
 
 #include "View_qtwidgets.h"
 #include "kddockwidgets/docks_export.h"
-#include "views/SideBar.h"
+#include "views/SideBarViewInterface.h"
 
 #include <QToolButton>
 #include <QPointer>
@@ -52,7 +52,7 @@ private:
 
 namespace Views {
 
-class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>, public SideBar
+class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>, public SideBarViewInterface
 {
     Q_OBJECT
 public:

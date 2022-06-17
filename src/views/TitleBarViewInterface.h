@@ -19,10 +19,10 @@ namespace Views {
 
 
 /// @brief The interface that TitleBar views should implement
-class DOCKS_EXPORT TitleBar
+class DOCKS_EXPORT TitleBarViewInterface
 {
 public:
-    virtual ~TitleBar();
+    virtual ~TitleBarViewInterface();
     virtual void updateMaximizeButton() = 0;
 #ifdef DOCKS_DEVELOPER_MODE
     virtual bool isFloatButtonVisible() const = 0;

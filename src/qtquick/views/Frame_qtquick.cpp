@@ -17,7 +17,6 @@
  */
 
 #include "Frame_qtquick.h"
-#include "views/Frame.h"
 
 #include "kddockwidgets/controllers/Frame.h"
 #include "kddockwidgets/controllers/DockWidget.h"

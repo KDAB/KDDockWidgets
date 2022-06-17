@@ -13,7 +13,7 @@
 #define KD_CLASSICINDICATORS_WINDOW_QTWIDGETS_H
 #pragma once
 
-#include "views/ClassicIndicatorWindow.h"
+#include "views/ClassicIndicatorWindowViewInterface.h"
 
 #include <QImage>
 #include <QWidget>
@@ -27,7 +27,7 @@ namespace Controllers {
 class ClassicIndicators;
 }
 
-class IndicatorWindow_qtwidgets : public QWidget, public Views::ClassicIndicatorWindow
+class IndicatorWindow_qtwidgets : public QWidget, public Views::ClassicIndicatorWindowViewInterface
 {
     Q_OBJECT
 public:

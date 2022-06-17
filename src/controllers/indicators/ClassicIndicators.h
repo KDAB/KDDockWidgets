@@ -19,7 +19,7 @@ namespace KDDockWidgets {
 class Indicator;
 
 namespace Views {
-class ClassicIndicatorWindow;
+class ClassicIndicatorWindowViewInterface;
 }
 
 namespace Controllers {
@@ -48,7 +48,7 @@ private:
     void updateWindowPosition();
 
     View *const m_rubberBand;
-    Views::ClassicIndicatorWindow *const m_indicatorWindow;
+    Views::ClassicIndicatorWindowViewInterface *const m_indicatorWindow;
 };
 
 }

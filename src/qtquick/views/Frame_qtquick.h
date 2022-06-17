@@ -15,7 +15,7 @@
 #pragma once
 
 #include "View_qtquick.h"
-#include "views/Frame.h"
+#include "views/FrameViewInterface.h"
 #include "TitleBar_qtquick.h"
 
 class QQuickItem;
@@ -31,7 +31,7 @@ namespace Views {
 
 class Stack_qtquick;
 
-class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public Frame
+class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public FrameViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)

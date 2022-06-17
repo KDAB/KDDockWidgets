@@ -22,10 +22,10 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that SideBar views should implement
-class DOCKS_EXPORT SideBar
+class DOCKS_EXPORT SideBarViewInterface
 {
 public:
-    virtual ~SideBar();
+    virtual ~SideBarViewInterface();
     virtual void addDockWidget_Impl(Controllers::DockWidget *dock) = 0;
     virtual void removeDockWidget_Impl(Controllers::DockWidget *dock) = 0;
 };

@@ -21,7 +21,7 @@
 #pragma once
 
 #include "View_qtquick.h"
-#include "views/Stack.h"
+#include "views/StackViewInterface.h"
 
 #include <QAbstractListModel>
 #include <QVector>
@@ -40,7 +40,7 @@ class DockWidgetModel;
 
 class DOCKS_EXPORT Stack_qtquick
     : public View_qtquick,
-      public Stack
+      public StackViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)

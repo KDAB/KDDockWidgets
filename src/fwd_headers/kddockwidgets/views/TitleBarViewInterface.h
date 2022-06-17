@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../views/SideBar.h"
+#include "../../../views/TitleBarViewInterface.h"
