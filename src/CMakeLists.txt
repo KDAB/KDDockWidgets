@@ -395,10 +395,10 @@ endif()
 if (KDDockWidgets_DEVELOPER_MODE)
   find_package(Qt${Qt_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test)
+
 endif()
 
-
-target_link_libraries(kddockwidgets PUBLIC kdbindings)
+target_link_libraries(kddockwidgets PRIVATE kdbindings)
 
 if(WIN32)
   target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate dwmapi)
@@ -441,7 +441,7 @@ if(WIN32)
   endif()
 endif()
 
-install(TARGETS kdbindings kddockwidgets
+install(TARGETS kddockwidgets
         EXPORT kddockwidgetsTargets
         RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}

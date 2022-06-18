@@ -17,6 +17,7 @@
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "DockRegistry.h"
 #include "Config.h"
+#include "Window.h"
 #include "private/View_p.h"
 
 #include <QMouseEvent>

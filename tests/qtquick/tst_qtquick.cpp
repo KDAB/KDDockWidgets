@@ -17,6 +17,7 @@
 #include "kddockwidgets/controllers/MainWindow.h"
 
 #include "../utils.h"
+#include "Window.h"
 
 #include <QtTest/QtTest>
 #include <QQmlApplicationEngine>

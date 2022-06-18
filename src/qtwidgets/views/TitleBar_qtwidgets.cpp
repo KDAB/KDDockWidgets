@@ -19,6 +19,7 @@
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/private/DockRegistry.h"
 #include "qtwidgets/ViewFactory_qtwidgets.h"
+#include "Window.h"
 
 #include <QPainter>
 #include <QStyle>

@@ -14,6 +14,7 @@
 #include "kddockwidgets/ViewFactory.h"
 #include "Platform.h"
 #include "ViewGuard.h"
+#include "Window.h"
 #include "kddockwidgets/controllers/DropArea.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 

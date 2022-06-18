@@ -25,6 +25,7 @@
 #include "kddockwidgets/controllers/Frame.h"
 #include "kddockwidgets/controllers/SideBar.h"
 
+#include "Window.h"
 #include "DockRegistry.h"
 #include "private/Logging_p.h"
 

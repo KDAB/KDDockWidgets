@@ -30,24 +30,24 @@ option(KDDockWidgets_FUZZER "Builds the fuzzer" ON)
 # tst_docks
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-target_link_libraries(tst_docks kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+target_link_libraries(tst_docks kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_docks)
 
 # tst_qtwidgets
 if (KDDW_FRONTEND_QTWIDGETS)
   add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-  target_link_libraries(tst_qtwidgets kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+  target_link_libraries(tst_qtwidgets kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
   set_compiler_flags(tst_qtwidgets)
 endif()
 
 if (KDDW_FRONTEND_QTQUICK)
   add_executable(tst_qtquick qtquick/tst_qtquick.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-  target_link_libraries(tst_qtquick kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+  target_link_libraries(tst_qtquick kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
   set_compiler_flags(tst_qtquick)
 endif()
 
 add_executable(tst_multisplitter tst_multisplitter.cpp)
-target_link_libraries(tst_multisplitter kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+target_link_libraries(tst_multisplitter kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_multisplitter)
 if(KDDockWidgets_FUZZER)
   add_subdirectory(fuzzer)
@@ -58,31 +58,31 @@ add_executable(tests_launcher tests_launcher.cpp)
 target_link_libraries(tests_launcher Qt${Qt_VERSION_MAJOR}::Core)
 
 add_executable(tst_viewguard tst_viewguard.cpp)
-target_link_libraries(tst_viewguard kddockwidgets)
+target_link_libraries(tst_viewguard kddockwidgets kdbindings)
 
 add_executable(tst_view tst_view.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_view kddockwidgets)
+target_link_libraries(tst_view kddockwidgets kdbindings)
 
 add_executable(tst_viewwrapper tst_viewwrapper.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_viewwrapper kddockwidgets)
+target_link_libraries(tst_viewwrapper kddockwidgets kdbindings)
 
 add_executable(tst_frame controllers/tst_frame.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_frame kddockwidgets)
+target_link_libraries(tst_frame kddockwidgets kdbindings)
 
 add_executable(tst_titlebar controllers/tst_titlebar.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_titlebar kddockwidgets)
+target_link_libraries(tst_titlebar kddockwidgets kdbindings)
 
 add_executable(tst_stack controllers/tst_stack.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_stack kddockwidgets)
+target_link_libraries(tst_stack kddockwidgets kdbindings)
 
 add_executable(tst_tabbar controllers/tst_tabbar.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_tabbar kddockwidgets)
+target_link_libraries(tst_tabbar kddockwidgets kdbindings)
 
 add_executable(tst_separator controllers/tst_separator.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_separator kddockwidgets)
+target_link_libraries(tst_separator kddockwidgets kdbindings)
 
 add_executable(tst_floatingwindow controllers/tst_floatingwindow.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_floatingwindow kddockwidgets)
+target_link_libraries(tst_floatingwindow kddockwidgets kdbindings)
 
 add_executable(tst_dockwidget controllers/tst_dockwidget.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_dockwidget kddockwidgets)
+target_link_libraries(tst_dockwidget kddockwidgets kdbindings)

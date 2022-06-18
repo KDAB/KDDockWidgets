@@ -20,10 +20,6 @@
 #include <vector>
 #include <memory.h>
 
-#ifdef DOCKS_DEVELOPER_MODE
-#include "private/multisplitter/Item_p.h"
-#endif
-
 namespace KDDockWidgets {
 
 namespace Controllers {
@@ -111,7 +107,7 @@ public:
         bool isVisible = false;
         QSize sizeHint = {};
         QSize minSize = { 0, 0 };
-        QSize maxSize = Layouting::Item::hardcodedMaximumSize;
+        QSize maxSize = QSize(16777215, 16777215);
         QSize size = { 1000, 1000 };
         bool createWindow = false;
     };

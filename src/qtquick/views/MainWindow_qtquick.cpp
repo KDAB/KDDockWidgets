@@ -13,6 +13,7 @@
 #include "kddockwidgets/controllers/Layout.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 #include "kddockwidgets/private/DockRegistry.h"
+#include "Window.h"
 
 #include <QDebug>
 
