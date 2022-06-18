@@ -148,7 +148,7 @@ bool Platform_qtwidgets::inDisallowedDragView(QPoint globalPos) const
         return false;
 
     // User might have a line edit on the toolbar.
-    // TODO: Not so elegant fix, we should make the user's tabbar implement some virtual method...
+    // Not so elegant fix, we should make the user's tabbar implement some virtual method...
     return qobject_cast<QAbstractButton *>(widget) || qobject_cast<QLineEdit *>(widget);
 }
 

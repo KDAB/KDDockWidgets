@@ -614,7 +614,7 @@ void Item::setIsVisible(bool is)
 
     if (is && m_guest) {
         m_guest->setGeometry(mapToRoot(rect()));
-        m_guest->setVisible(true); // TODO: Only set visible when apply*() ?
+        m_guest->setVisible(true); // Only set visible when apply*() ?
     }
 
     updateObjectName();
@@ -651,9 +651,9 @@ bool Item::checkSanity()
             return false;
         }
 
-#if 0
+#if 0 // if guest is explicitly hidden we're not hiding the item yet. And probably won't
         if (!m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
-            // TODO: if guest is explicitly hidden we're not hiding the item yet
+
             qWarning() << Q_FUNC_INFO << "Guest widget isn't visible" << this
                        << m_guest->asQObject();
             return false;

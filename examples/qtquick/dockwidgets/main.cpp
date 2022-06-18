@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 
     // Access the main area we created in QML with DockingArea {}
     auto mainArea = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst();
-    mainArea->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop); // TODOm3: Don't require the ctrl
+    mainArea->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop); // TODOm2: Don't require the ctrl
 
     return app.exec();
 }
