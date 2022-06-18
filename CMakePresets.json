@@ -357,6 +357,116 @@
                 "CXX": "clang++",
                 "CCACHE_DISABLE" : "ON"
             }
+        },
+        {
+            "name": "ci-dev-qtwidgets-qt5",
+            "displayName": "ci-dev-qtwidgets-qt5",
+            "description": "Qt5 QtWidgets dev-mode build",
+            "binaryDir": "${sourceDir}/build-ci-dev-qtwidgets-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "ci-dev-qtquick-qt5",
+            "displayName": "ci-dev-qtquick-qt5",
+            "description": "Qt5 QtQuick dev-mode build",
+            "binaryDir": "${sourceDir}/build-ci-dev-qtquick-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_QTQUICK": "ON"
+            }
+        },
+        {
+            "name": "ci-qtwidgets-qt5",
+            "displayName": "ci-qtwidgets-qt5",
+            "description": "Qt5 QtWidgets release build",
+            "binaryDir": "${sourceDir}/build-ci-qtwidgets-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "ci-qtquick-qt5",
+            "displayName": "ci-qtquick-qt5",
+            "description": "Qt5 QtQuick release build",
+            "binaryDir": "${sourceDir}/build-ci-qtquick-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QTQUICK": "ON"
+            }
+        },
+        {
+            "name": "ci-dev-qtwidgets-qt6",
+            "displayName": "ci-dev-qtwidgets-qt6",
+            "description": "Qt6 dev-mode",
+            "binaryDir": "${sourceDir}/build-ci-dev-qtwidgets-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_QT6": "ON"
+            }
+        },
+        {
+            "name": "ci-dev-qtquick-qt6",
+            "displayName": "ci-dev-qtquick-qt6",
+            "description": "Qt6 dev-mode",
+            "binaryDir": "${sourceDir}/build-ci-dev-qtquick-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_QT6": "ON"
+            }
+        },
+        {
+            "name": "ci-qtwidgets-qt6",
+            "description": "Qt6 QtWidgets release build",
+            "displayName": "ci-qtwidgets-qt6",
+            "binaryDir": "${sourceDir}/build-ci-qtwidgets-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QT6": "ON"
+            }
+        },
+        {
+            "name": "ci-qtquick-qt6",
+            "description": "Qt6 QtQuick release build",
+            "displayName": "ci-qtquick-qt6",
+            "binaryDir": "${sourceDir}/build-ci-qtquick-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QT6": "ON",
+                "KDDockWidgets_QTQUICK": "ON"
+            }
+        },
+        {
+            "name": "ci-static",
+            "inherits":["static"],
+            "binaryDir": "${sourceDir}/build-ci-static"
+        },
+        {
+            "name": "ci-static-qtquick",
+            "inherits":["static-qtquick"],
+            "binaryDir": "${sourceDir}/build-ci-static-qtquick"
+        },
+        {
+            "name": "ci-python",
+            "inherits":["python"],
+            "binaryDir": "${sourceDir}/build-python"
         }
     ],
     "buildPresets": [
