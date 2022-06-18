@@ -60,11 +60,6 @@
 #  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
 #  Default=true
 #
-# -DKDDockWidgets_FUZZER=[true|false]
-#  Build the fuzzer.
-#  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
-#  Default=true
-#
 # -DKDDockWidgets_CODE_COVERAGE=[true|false]
 #  Enable coverage reporting.
 #  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
