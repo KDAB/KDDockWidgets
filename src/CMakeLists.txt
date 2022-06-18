@@ -228,6 +228,7 @@ set(KDDW_PUBLIC_HEADERS
     Window.h
     ViewFactory.h
     Qt5Qt6Compat_p.h
+    Platform.h
 )
 
 set(KDDW_PRIVATE_HEADERS
