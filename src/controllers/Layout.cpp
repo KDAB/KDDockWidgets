@@ -345,3 +345,16 @@ Layouting::ItemContainer *Layout::rootItem() const
 {
     return m_rootItem;
 }
+
+
+void Layout::onCloseEvent(QCloseEvent *e)
+{
+    e->accept(); // Accepted by default (will close unless ignored)
+
+    const Controllers::Frame::List frames = this->frames();
+    for (Controllers::Frame *frame : frames) {
+        Platform::instance()->sendEvent(frame->view(), e);
+        if (!e->isAccepted())
+            break; // Stop when the first frame prevents closing
+    }
+}

@@ -229,6 +229,8 @@ protected:
      */
     QList<Controllers::Frame *> framesFrom(View *frameOrMultiSplitter) const;
 
+    void onCloseEvent(QCloseEvent *);
+
 private:
     bool onResize(QSize newSize);
     bool m_inResizeEvent = false;

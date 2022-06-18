@@ -133,8 +133,6 @@ public:
 
     Layouting::ItemBoxContainer *rootItem() const;
 
-    void onCloseEvent(QCloseEvent *);
-
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Controllers::MainWindow;
