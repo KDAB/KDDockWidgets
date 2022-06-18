@@ -24,6 +24,7 @@
 #include "private/DragController_p.h"
 #include "private/LayoutSaver_p.h"
 #include "DockWidget_p.h"
+#include "DropArea.h"
 
 #include "private/multisplitter/Item_p.h"
 #include "View.h"
@@ -231,6 +232,11 @@ void FloatingWindow::maybeCreateResizeHandler()
         view()->setFlag(Qt::FramelessWindowHint, true);
         setWidgetResizeHandler(new WidgetResizeHandler(/*topLevel=*/true, view()));
     }
+}
+
+DropArea *FloatingWindow::dropArea() const
+{
+    return m_dropArea;
 }
 
 std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()

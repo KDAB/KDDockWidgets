@@ -23,9 +23,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "controllers/Frame.h"
 #include "controllers/Layout.h"
-#include "controllers/DropIndicatorOverlay.h"
 
 class TestQtWidgets;
 class TestDocks;
@@ -39,6 +37,7 @@ namespace Controllers {
 class Frame;
 class DockWidget;
 class Separator;
+class DropIndicatorOverlay;
 
 /**
  * MultiSplitter is simply a wrapper around Layouting::Item in which the hosted widgets are
@@ -63,7 +62,7 @@ public:
     DropLocation hover(WindowBeingDragged *draggedWindow, QPoint globalPos);
     ///@brief Called when a user drops a widget via DND
     bool drop(WindowBeingDragged *droppedWindow, QPoint globalPos);
-    Controllers::Frame::List frames() const;
+    QList<Controllers::Frame *> frames() const;
 
     Layouting::Item *centralFrame() const;
     DropIndicatorOverlay *dropIndicatorOverlay() const

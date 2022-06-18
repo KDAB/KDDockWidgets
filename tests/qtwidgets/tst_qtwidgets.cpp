@@ -30,6 +30,7 @@
 #include "kddockwidgets/controllers/Frame.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/controllers/SideBar.h"
 
 #include "qtwidgets/MDIArea.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"

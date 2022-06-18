@@ -20,7 +20,6 @@
 #define KD_DOCKWIDGET_WIDGETS_H
 #pragma once
 
-#include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/views/DockWidgetViewInterface.h"
 #include "View_qtwidgets.h"
 

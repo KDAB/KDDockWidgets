@@ -13,7 +13,7 @@
 
 #include "View_qtquick.h"
 #include "kddockwidgets/docks_export.h"
-#include "views/SideBar.h"
+#include "kddockwidgets/views/SideBarViewInterface.h"
 
 #include <QToolButton>
 #include <QPointer>

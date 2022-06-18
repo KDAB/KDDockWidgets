@@ -133,7 +133,7 @@ private:
     QPoint m_pressPos;
     QPoint m_offset;
 
-    Draggable::List m_draggables;
+    QVector<Draggable *> m_draggables;
     Draggable *m_draggable = nullptr;
     QPointer<QObject> m_draggableGuard; // Just so we know if the draggable was destroyed for some reason
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;

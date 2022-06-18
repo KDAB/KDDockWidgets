@@ -16,6 +16,8 @@
 #include "kddockwidgets/ViewFactory.h"
 #include "private/Utils_p.h"
 
+#include "controllers/Layout.h"
+#include "controllers/DropArea.h"
 #include "controllers/DockWidget_p.h"
 #include "controllers/Frame.h"
 #include "controllers/FloatingWindow.h"

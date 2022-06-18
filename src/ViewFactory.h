@@ -12,11 +12,9 @@
 #ifndef KDDOCKWIDGETS_ViewFactory_H
 #define KDDOCKWIDGETS_ViewFactory_H
 
+#include "View.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "View.h"
-#include "controllers/Stack.h"
-#include "controllers/TitleBar.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +33,7 @@ class FloatingWindow;
 class MainWindow;
 class ClassicIndicators;
 class SegmentedIndicators;
+class TitleBar;
 }
 
 namespace Views {

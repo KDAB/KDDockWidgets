@@ -21,6 +21,7 @@
 #include "multisplitter/Item_p.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/Layout.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include <algorithm>
 

@@ -12,6 +12,8 @@
 #include "MainWindowInstantiator.h"
 #include "kddockwidgets/views/MainWindow_qtquick.h"
 #include "qtquick/views/MainWindowMDI_qtquick.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include "DockWidgetInstantiator.h"
 

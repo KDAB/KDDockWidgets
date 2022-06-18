@@ -19,6 +19,8 @@
 #include "controllers/Frame.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/SideBar.h"
+#include "controllers/DropArea.h"
+#include "controllers/MainWindow.h"
 #include "private/Utils_p.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Position_p.h"

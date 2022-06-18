@@ -13,7 +13,6 @@
 #define KD_WINDOWBEINGDRAGGED_P_H
 
 #include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
 #include "View.h"
 
 #include <QPointer>
@@ -45,10 +44,7 @@ public:
     virtual ~WindowBeingDragged();
     void init();
 
-    Controllers::FloatingWindow *floatingWindow() const
-    {
-        return m_floatingWindow;
-    }
+    Controllers::FloatingWindow *floatingWindow() const;
 
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);

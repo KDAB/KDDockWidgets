@@ -12,9 +12,6 @@
 #ifndef KD_DOCKREGISTRY_P_H
 #define KD_DOCKREGISTRY_P_H
 
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/Frame.h"
-#include "kddockwidgets/controllers/MainWindow.h"
 #include "kddockwidgets/Window.h"
 
 #include <QVector>
@@ -89,24 +86,24 @@ public:
     bool isSane() const;
 
     ///@brief returns all DockWidget instances
-    const Controllers::DockWidget::List dockwidgets() const;
+    const QVector<Controllers::DockWidget *> dockwidgets() const;
 
     ///@brief overload returning only the ones with the specified names
-    const Controllers::DockWidget::List dockWidgets(const QStringList &names);
+    const QVector<Controllers::DockWidget *> dockWidgets(const QStringList &names);
 
     ///@brief returns all closed DockWidget instances
-    const Controllers::DockWidget::List closedDockwidgets() const;
+    const QVector<Controllers::DockWidget *> closedDockwidgets() const;
 
     ///@brief returns all MainWindow instances
-    const Controllers::MainWindow::List mainwindows() const;
+    const QVector<Controllers::MainWindow *> mainwindows() const;
 
     /// @brief returns all MainWindow instances
     /// Exactly the same as mainwindows(), but with better terminology for QtQuick
     /// as we're phasing out the "MainWindow" name there
-    const Controllers::MainWindow::List mainDockingAreas() const;
+    const QVector<Controllers::MainWindow *> mainDockingAreas() const;
 
     ///@brief overload returning only the ones with the specified names
-    const Controllers::MainWindow::List mainWindows(const QStringList &names);
+    const QVector<Controllers::MainWindow *> mainWindows(const QStringList &names);
 
     ///@brief returns the list of Layout instances
     const QVector<Controllers::Layout *> layouts() const;
@@ -157,8 +154,8 @@ public:
     /**
      * @brief clear Overload that only clears the specified dockWidgets and main windows.
      */
-    void clear(const Controllers::DockWidget::List &dockWidgets,
-               const Controllers::MainWindow::List &mainWindows,
+    void clear(const QVector<Controllers::DockWidget *> &dockWidgets,
+               const QVector<Controllers::MainWindow *> &mainWindows,
                const QStringList &affinities);
 
     /**
@@ -196,7 +193,7 @@ public:
     /**
      * @brief Returns all main windows which match at least one of the @p affinities
      */
-    Controllers::MainWindow::List mainWindowsWithAffinity(const QStringList &affinities) const;
+    QVector<Controllers::MainWindow *> mainWindowsWithAffinity(const QStringList &affinities) const;
 
     /// @brief Returns the Layout where the specified item is in
     Controllers::Layout *layoutForItem(const Layouting::Item *) const;
@@ -259,8 +256,8 @@ private:
     void setFocusedDockWidget(Controllers::DockWidget *);
 
     bool m_isProcessingAppQuitEvent = false;
-    Controllers::DockWidget::List m_dockWidgets;
-    Controllers::MainWindow::List m_mainWindows;
+    QVector<Controllers::DockWidget *> m_dockWidgets;
+    QVector<Controllers::MainWindow *> m_mainWindows;
     QList<Controllers::Frame *> m_frames;
     QVector<Controllers::FloatingWindow *> m_floatingWindows;
     QVector<Controllers::Layout *> m_layouts;

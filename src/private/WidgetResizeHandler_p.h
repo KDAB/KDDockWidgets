@@ -15,7 +15,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
 #include "Window.h"
 
 #include <QPoint>

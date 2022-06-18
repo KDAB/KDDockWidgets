@@ -19,6 +19,8 @@
 #include "Frame_qtquick.h"
 
 #include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/controllers/TitleBar.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/controllers/DockWidget_p.h"
 

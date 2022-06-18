@@ -10,6 +10,7 @@
 */
 
 #include "DockWidget_qtwidgets.h"
+#include "controllers/DockWidget.h"
 
 #include <QCloseEvent>
 #include <QVBoxLayout>

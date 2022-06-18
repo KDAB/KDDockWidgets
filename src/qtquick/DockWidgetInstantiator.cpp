@@ -11,6 +11,7 @@
 
 #include "DockWidgetInstantiator.h"
 #include "private/DockRegistry_p.h"
+#include "kddockwidgets/controllers/DockWidget.h"
 #include "ViewFactory_qtquick.h"
 #include "Config.h"
 

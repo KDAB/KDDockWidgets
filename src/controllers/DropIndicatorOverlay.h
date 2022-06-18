@@ -14,7 +14,6 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "controllers/Frame.h"
 #include "Controller.h"
 
 namespace KDDockWidgets {
@@ -22,6 +21,7 @@ namespace KDDockWidgets {
 namespace Controllers {
 
 class DropArea;
+class Frame;
 
 class DOCKS_EXPORT DropIndicatorOverlay : public Controller
 {

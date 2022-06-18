@@ -15,8 +15,6 @@
 #include "DockWidget.h"
 #include "private/DockRegistry_p.h"
 #include "private/Position_p.h"
-#include "controllers/FloatingWindow.h"
-#include "controllers/SideBar.h"
 #include "ViewWrapper.h"
 #include "Action.h"
 

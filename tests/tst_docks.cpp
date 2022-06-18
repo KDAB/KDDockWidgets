@@ -23,6 +23,7 @@
 #include "Action.h"
 #include "kddockwidgets/controllers/MDILayout.h"
 #include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/controllers/DockWidget_p.h"
 #include "kddockwidgets/controllers/Separator.h"

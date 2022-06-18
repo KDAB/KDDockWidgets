@@ -16,7 +16,7 @@
 #include <kddockwidgets/Platform_qtquick.h>
 #include <kddockwidgets/private/DockRegistry_p.h>
 #include <kddockwidgets/ViewFactory.h>
-
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include <QQmlApplicationEngine>
 #include <QGuiApplication>

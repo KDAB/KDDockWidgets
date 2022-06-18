@@ -21,6 +21,7 @@
 #include "kddockwidgets/controllers/DropArea.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/controllers/TitleBar.h"
 
 #include "private/WidgetResizeHandler_p.h"
 #include "qtquick/Platform_qtquick.h"

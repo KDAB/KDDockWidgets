@@ -14,6 +14,7 @@
 
 #include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include "../utils.h"
 

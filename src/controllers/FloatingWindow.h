@@ -18,7 +18,6 @@
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "Frame.h"
 #include "private/Draggable_p.h"
-#include "controllers/DropArea.h"
 #include "kddockwidgets/docks_export.h"
 
 class QAbstractNativeEventFilter;
@@ -49,10 +48,7 @@ public:
 
     const QVector<DockWidget *> dockWidgets() const;
     const Controllers::Frame::List frames() const;
-    DropArea *dropArea() const
-    {
-        return m_dropArea;
-    }
+    DropArea *dropArea() const;
 
     int userType() const;
 

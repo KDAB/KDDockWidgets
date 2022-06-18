@@ -10,6 +10,7 @@
 */
 
 #include "DockWidgetViewInterface.h"
+#include "kddockwidgets/controllers/Frame.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/controllers/DockWidget_p.h"
 

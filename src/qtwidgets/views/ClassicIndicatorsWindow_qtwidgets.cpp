@@ -11,6 +11,7 @@
 
 #include "ClassicIndicatorsWindow_qtwidgets.h"
 #include "kddockwidgets/controllers/indicators/ClassicIndicators.h"
+#include "kddockwidgets/controllers/Frame.h"
 #include "private/Utils_p.h"
 
 using namespace KDDockWidgets;

@@ -19,7 +19,6 @@
 #ifndef KD_DOCKWIDGET_QUICK_H
 #define KD_DOCKWIDGET_QUICK_H
 
-#include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/views/DockWidgetViewInterface.h"
 #include "View_qtquick.h"
 

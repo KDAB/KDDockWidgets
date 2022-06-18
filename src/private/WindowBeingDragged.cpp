@@ -20,6 +20,7 @@
 #include "kddockwidgets/controllers/Stack.h"
 #include "kddockwidgets/controllers/Frame.h"
 #include "kddockwidgets/controllers/Layout.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
 
 #include <QPixmap>
 #include <QPainter>
@@ -189,6 +190,12 @@ QPixmap WindowBeingDragged::pixmap() const
 {
     return {};
 }
+
+Controllers::FloatingWindow *WindowBeingDragged::floatingWindow() const
+{
+    return m_floatingWindow;
+}
+
 
 WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
     : WindowBeingDragged(draggable)
