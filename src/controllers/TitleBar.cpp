@@ -320,7 +320,7 @@ void TitleBar::onCloseClicked()
                 qWarning() << Q_FUNC_INFO << "Frame with no dock widgets";
             }
         } else {
-            if (m_frame->isTheOnlyFrame() && !m_frame->isInMainWindow()) {
+            if (m_frame->isTheOnlyFrame() && m_frame->isInFloatingWindow()) {
                 m_frame->view()->closeRootView();
             } else {
                 m_frame->view()->close();

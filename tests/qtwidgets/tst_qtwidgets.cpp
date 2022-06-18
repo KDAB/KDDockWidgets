@@ -35,6 +35,7 @@
 #include "qtwidgets/views/MDIArea_qtwidgets.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/ViewWrapper_qtwidgets.h"
+#include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "Platform.h"
 
 #include <QObject>
@@ -133,6 +134,7 @@ private Q_SLOTS:
     void tst_mdi_mixed_with_docking2();
     void tst_mdi_mixed_with_docking_setMDISize();
     void tst_deleteOnClose();
+    void tstCloseNestedMdi();
 
     // But these are fine to be widget only:
     void tst_tabsNotClickable();
@@ -1485,6 +1487,27 @@ void TestQtWidgets::tst_deleteOnClose()
     QVERIFY(!dock1.data());
 
     saver.restoreLayout(saved);
+}
+
+void TestQtWidgets::tstCloseNestedMdi()
+{
+    // Tests a bug where closing a mdi dock widget would close its main window too
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
+    QPointer<Controllers::MainWindow> p = m.get();
+
+    auto mdi = new KDDockWidgets::Views::MDIArea_qtwidgets();
+    m->setPersistentCentralView(mdi->asWrapper());
+
+    auto dock1 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
+    dock1->setWidget(new QPushButton("1"));
+
+    mdi->addDockWidget(dock1, {});
+
+    dock1->dockWidget()->titleBar()->onCloseClicked();
+    QVERIFY(p);
+    QVERIFY(m->isVisible());
 }
 
 void TestQtWidgets::initTestCase()
