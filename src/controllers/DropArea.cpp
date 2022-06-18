@@ -13,6 +13,7 @@
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "DockRegistry.h"
+#include "Platform.h"
 #include "private/Draggable_p.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
@@ -650,4 +651,16 @@ bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
 {
     setRootItem(new Layouting::ItemBoxContainer(view()));
     return Layout::deserialize(l);
+}
+
+void DropArea::onCloseEvent(QCloseEvent *e)
+{
+    e->accept(); // Accepted by default (will close unless ignored)
+
+    const Controllers::Frame::List frames = this->frames();
+    for (Controllers::Frame *frame : frames) {
+        Platform::instance()->sendEvent(frame->view(), e);
+        if (!e->isAccepted())
+            break; // Stop when the first frame prevents closing
+    }
 }
