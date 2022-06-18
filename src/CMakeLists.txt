@@ -328,11 +328,21 @@ target_include_directories(kddockwidgets
   PUBLIC
     $<INSTALL_INTERFACE:${DOCKS_INCLUDES_INSTALL_PATH}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtwidgets>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtquick>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+if (KDDW_FRONTEND_QTWIDGETS)
+  target_include_directories(kddockwidgets
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtwidgets>
+  )
+endif()
+
+if (KDDW_FRONTEND_QTQUICK)
+  target_include_directories(kddockwidgets
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtquick>
+  )
+endif()
 
 target_compile_definitions(kddockwidgets
   PRIVATE
