@@ -1,5 +1,10 @@
 [![Build Status](https://travis-ci.com/KDAB/KDDockWidgets.svg?branch=master)](https://travis-ci.com/KDAB/KDDockWidgets)
 
+
+> ⚠️⚠️: 2.0 is under development, there might be API breaks before release.  
+> Stick with version 1.6 if you're using QtWidgets. However, if you're using  
+> QtQuick it's better to base on 2.0, as 1.6 won't be receiving much QtQuick development.
+
 KDDockWidgets
 =============
 `KDDockWidgets` is a Qt dock widget library written by KDAB, suitable for replacing
