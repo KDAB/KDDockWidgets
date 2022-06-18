@@ -313,7 +313,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *accep
         // With Wayland we delay the floating window until we drop it.
         // Ofc, we could just dock the dockwidget without the temporary FloatingWindow, but this way we reuse
         // 99% of the rest of the code, without adding more wayland special cases
-        droppedWindow = draggedWindow->draggable()->makeWindow()->floatingWindow();
+        droppedWindow = draggedWindow ? draggedWindow->draggable()->makeWindow()->floatingWindow() : nullptr;
         if (!droppedWindow) {
             // Doesn't happen
             qWarning() << Q_FUNC_INFO << "Wayland: Expected window" << draggedWindow;
