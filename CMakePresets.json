@@ -256,6 +256,106 @@
                 "CXX": "clang++",
                 "CCACHE_DISABLE": "ON"
             }
+        },
+        {
+            "name": "ci-dev-qt5",
+            "displayName": "ci-dev-qt5",
+            "description": "Qt5 dev-mode build",
+            "binaryDir": "${sourceDir}/ci-dev-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+            }
+        },
+        {
+            "name": "ci-release-qt5",
+            "displayName": "ci-release-qt5",
+            "description": "Qt5 non dev-mode build",
+            "binaryDir": "${sourceDir}/ci-release-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+            }
+        },
+        {
+            "name": "ci-qtwidgets-qt5",
+            "displayName": "ci-qtwidgets-qt5",
+            "description": "Qt5 build which excludes QtQuick",
+            "binaryDir": "${sourceDir}/ci-qtwidgets-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_FRONTENDS": "qtwidgets"
+            }
+        },
+        {
+            "name": "ci-qtquick-qt5",
+            "displayName": "ci-qtquick-qt5",
+            "description": "Qt5 build which excludes QtWidgets",
+            "binaryDir": "${sourceDir}/ci-qtquick-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_FRONTENDS": "qtquick"
+            }
+        },
+        {
+            "name": "ci-dev-qt6",
+            "displayName": "ci-dev-qt6",
+            "description": "Qt6 dev-mode",
+            "binaryDir": "${sourceDir}/ci-dev-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick",
+                "KDDockWidgets_QT6": "ON"
+            }
+        },
+        {
+            "name": "ci-release-qt6",
+            "description": "Qt6 non dev-mode",
+            "displayName": "ci-release-qt6",
+            "binaryDir": "${sourceDir}/ci-release-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QT6": "ON",
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+            }
+        },
+        {
+            "name": "ci-qtwidgets-qt6",
+            "description": "Qt6 build which excludes QtQuick",
+            "displayName": "ci-qtwidgets-qt6",
+            "binaryDir": "${sourceDir}/ci-qtwidgets-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QT6": "ON",
+                "KDDockWidgets_FRONTENDS": "qtwidgets"
+            }
+        },
+        {
+            "name": "ci-qtquick-qt6",
+            "description": "Qt6 build which excludes QtWidgets",
+            "displayName": "ci-qtquick-qt6",
+            "binaryDir": "${sourceDir}/ci-qtquick-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QT6": "ON",
+                "KDDockWidgets_FRONTENDS": "qtquick"
+            }
         }
     ],
     "buildPresets": [
