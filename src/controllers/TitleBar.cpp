@@ -499,7 +499,7 @@ Controllers::DockWidget *TitleBar::singleDockWidget() const
 bool TitleBar::isFloating() const
 {
     if (m_floatingWindow)
-        return m_floatingWindow->hasSingleDockWidget(); // Debatable! Maybe it's always floating.
+        return true;
 
     if (m_frame)
         return m_frame->isFloating();

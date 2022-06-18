@@ -145,6 +145,7 @@ private Q_SLOTS:
     void tst_fairResizeAfterRemoveWidget();
     void tst_invalidJSON_data();
     void tst_invalidJSON();
+    void tst_unfloatTabbedFloatingWidgets();
 
     void tst_invalidPlaceholderPosition_data();
     void tst_invalidPlaceholderPosition();

@@ -6263,6 +6263,23 @@ void TestDocks::tst_persistentCentralWidget()
     QVERIFY(saver.restoreLayout(saved));
 }
 
+void TestDocks::tst_unfloatTabbedFloatingWidgets()
+{
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock0 = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock0, Location_OnLeft);
+    dock0->addDockWidgetAsTab(dock1);
+
+    dock0->titleBar()->onFloatClicked();
+    QVERIFY(dock0->titleBar()->isFloating());
+    QVERIFY(!dock0->mainWindow());
+
+    dock0->titleBar()->onFloatClicked();
+    QVERIFY(!dock0->titleBar()->isFloating());
+    QVERIFY(dock0->mainWindow());
+}
+
 int main(int argc, char *argv[])
 {
     int exitCode = 0;

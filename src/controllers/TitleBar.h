@@ -41,7 +41,7 @@ public:
     void setTitle(const QString &title);
     QString title() const;
 
-    ///@brief Returns true if the dock widget which has this title bar is floating
+    ///@brief Returns true if this title-bar is the title bar of a floating window
     bool isFloating() const;
 
     ///@brief the list of dockwidgets under this TitleBar.
