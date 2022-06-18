@@ -135,6 +135,7 @@ private Q_SLOTS:
     void tst_mdi_mixed_with_docking_setMDISize();
     void tst_deleteOnClose();
     void tstCloseNestedMdi();
+    void tstCloseNestedMDIPropagates();
 
     // But these are fine to be widget only:
     void tst_tabsNotClickable();
@@ -1509,6 +1510,35 @@ void TestQtWidgets::tstCloseNestedMdi()
     QVERIFY(p);
     QVERIFY(m->isVisible());
 }
+
+void TestQtWidgets::tstCloseNestedMDIPropagates()
+{
+    auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
+    QPointer<Controllers::MainWindow> p = m.get();
+
+    auto mdi = new KDDockWidgets::Views::MDIArea_qtwidgets();
+    m->setPersistentCentralView(mdi->asWrapper());
+
+    auto dock1 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
+    auto nonClosableWidget = Platform::instance()->tests_createNonClosableView();
+    dock1->dockWidget()->setGuestView(nonClosableWidget->asWrapper());
+    mdi->addDockWidget(dock1, {});
+
+    auto dock2 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock2"));
+    auto nonClosableWidget2 = Platform::instance()->tests_createNonClosableView();
+    dock2->dockWidget()->setGuestView(nonClosableWidget2->asWrapper());
+    dock2->show();
+
+    Platform::instance()->tests_waitForEvent(dock1->controller(), QEvent::Show);
+    QVERIFY(dock1->isVisible());
+    QVERIFY(dock2->isVisible());
+
+    m->close();
+
+    QVERIFY(dock2->isVisible());
+    QVERIFY(dock1->isVisible());
+}
+
 
 void TestQtWidgets::initTestCase()
 {

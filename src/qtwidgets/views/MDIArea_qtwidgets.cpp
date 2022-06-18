@@ -11,6 +11,8 @@
 
 #include "MDIArea_qtwidgets.h"
 
+#include "private/View_p.h"
+
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/views/DockWidgetViewInterface.h"
 #include "kddockwidgets/controllers/DockWidget.h"
@@ -49,6 +51,10 @@ MDIArea_qtwidgets::MDIArea_qtwidgets(QWidget *parent)
 
     auto vlay = new QVBoxLayout(this);
     vlay->addWidget(View_qtwidgets::asQWidget(d->layout));
+
+    View::d->closeRequested.connect([this](QCloseEvent *ev) {
+        d->layout->onCloseEvent(ev);
+    });
 
     // TODOm3: for qtquick:
     // QWidgetAdapter::makeItemFillParent(d->layout);
