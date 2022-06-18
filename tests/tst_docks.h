@@ -146,6 +146,7 @@ private Q_SLOTS:
     void tst_invalidJSON_data();
     void tst_invalidJSON();
     void tst_unfloatTabbedFloatingWidgets();
+    void tst_unfloatTabbedFloatingWidgets2();
 
     void tst_invalidPlaceholderPosition_data();
     void tst_invalidPlaceholderPosition();

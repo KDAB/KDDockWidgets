@@ -363,9 +363,17 @@ void TitleBar::onFloatClicked()
             // Case 2: Multiple dockwidgets are tabbed together and floating
             // TODO: Just reuse the whole frame and put it back. The frame currently doesn't remember the position in the main window
             // so use an hack for now
-            for (auto dock : qAsConst(dockWidgets)) {
-                dock->setFloating(true);
-                dock->setFloating(false);
+
+            if (!dockWidgets.isEmpty()) { // could be empty during destruction, maybe
+                if (!dockWidgets.constFirst()->hasPreviousDockedLocation()) {
+                    // Don't attempt, there's no previous docked location
+                    return;
+                }
+
+                for (auto dock : qAsConst(dockWidgets)) {
+                    dock->setFloating(true);
+                    dock->setFloating(false);
+                }
             }
         }
     } else {
