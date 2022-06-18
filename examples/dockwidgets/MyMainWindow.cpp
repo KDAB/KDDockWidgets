@@ -14,7 +14,6 @@
 
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/LayoutSaver.h>
-#include <kddockwidgets/controllers/MainWindow.h>
 
 #include <QMenu>
 #include <QMenuBar>
@@ -103,7 +102,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
 
     auto layoutEqually = fileMenu->addAction(QStringLiteral("Layout Equally"));
     connect(layoutEqually, &QAction::triggered,
-            mainWindow(), &KDDockWidgets::Controllers::MainWindow::layoutEqually);
+            this, [this] { this->layoutEqually(); });
 
     auto quitAction = fileMenu->addAction(QStringLiteral("Quit"));
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
@@ -115,7 +114,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         KDDockWidgets::Config::self().setDropIndicatorsInhibited(!checked);
     });
 
-    mainWindow()->setAffinities({ affinityName });
+    setAffinities({ affinityName });
     createDockWidgets();
 
     if (options & KDDockWidgets::MainWindowOption_HasCentralWidget) {
@@ -134,21 +133,19 @@ void MyMainWindow::createDockWidgets()
 
     const int numDockWidgets = m_dockWidget9IsNonDockable ? 10 : 9;
 
-
     // Create 9 KDDockWidget::DockWidget and the respective widgets they're hosting (MyWidget instances)
     for (int i = 0; i < numDockWidgets; i++)
         m_dockwidgets << newDockWidget();
 
-    auto controller = mainWindow();
     // MainWindow::addDockWidget() attaches a dock widget to the main window:
-    controller->addDockWidget(m_dockwidgets.at(0), KDDockWidgets::Location_OnTop);
+    addDockWidget(m_dockwidgets.at(0), KDDockWidgets::Location_OnTop);
 
     // Here, for finer granularity we specify right of dockwidgets[0]:
-    controller->addDockWidget(m_dockwidgets.at(1), KDDockWidgets::Location_OnRight, m_dockwidgets.at(0));
+    addDockWidget(m_dockwidgets.at(1), KDDockWidgets::Location_OnRight, m_dockwidgets.at(0));
 
-    controller->addDockWidget(m_dockwidgets.at(2), KDDockWidgets::Location_OnLeft);
-    controller->addDockWidget(m_dockwidgets.at(3), KDDockWidgets::Location_OnBottom);
-    controller->addDockWidget(m_dockwidgets.at(4), KDDockWidgets::Location_OnBottom);
+    addDockWidget(m_dockwidgets.at(2), KDDockWidgets::Location_OnLeft);
+    addDockWidget(m_dockwidgets.at(3), KDDockWidgets::Location_OnBottom);
+    addDockWidget(m_dockwidgets.at(4), KDDockWidgets::Location_OnBottom);
 
     // Tab two dock widgets together
     m_dockwidgets[3]->addDockWidgetAsTab(m_dockwidgets.at(5));
@@ -160,11 +157,11 @@ void MyMainWindow::createDockWidgets()
     // Floating windows also support nesting, here we add 8 to the bottom of the group
     m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets.at(8), KDDockWidgets::Location_OnBottom);
 
-    auto floatingWindow = m_dockwidgets.at(6)->window();
+    auto floatingWindow = m_dockwidgets.at(6)->rootView();
     floatingWindow->move(100, 100);
 }
 
-KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
+KDDockWidgets::Views::DockWidget_qtwidgets *MyMainWindow::newDockWidget()
 {
     static int count = 0;
 
@@ -181,9 +178,8 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
     if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
         layoutSaverOptions |= KDDockWidgets::LayoutSaverOption::Skip;
 
-    auto dockView = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
-    auto dock = dockView->dockWidget();
-    dock->setAffinities(mainWindow()->affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
+    auto dock = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
+    dock->setAffinities(affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
     if (count == 1)
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
@@ -194,8 +190,7 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
         myWidget->setMaximumSize(200, 200);
     }
 
-    auto myWidgetw = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(myWidget));
-    dock->setGuestView(myWidgetw);
+    dock->setWidget(myWidget);
 
     if (dock->options() & KDDockWidgets::DockWidgetOption_NotDockable) {
         dock->setTitle(QStringLiteral("DockWidget #%1 (%2)").arg(count).arg("non dockable"));
@@ -203,7 +198,7 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
         dock->setTitle(QStringLiteral("DockWidget #%1").arg(count));
     }
 
-    dock->view()->resize(QSize(600, 600));
+    dock->resize(QSize(600, 600));
     m_toggleMenu->addAction(dock->toggleAction());
     dock->toggleAction()->setShortcut(QStringLiteral("ctrl+%1").arg(count));
 

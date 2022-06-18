@@ -136,4 +136,29 @@ void DockWidgetViewInterface::setOptions(DockWidgetOptions opts)
     m_dockWidget->setOptions(opts);
 }
 
+void DockWidgetViewInterface::setIcon(const QIcon &icon, IconPlaces places)
+{
+    m_dockWidget->setIcon(icon, places);
+}
+
+QIcon DockWidgetViewInterface::icon(IconPlace place) const
+{
+    return m_dockWidget->icon(place);
+}
+
+void DockWidgetViewInterface::setAffinities(const QStringList &affinities)
+{
+    m_dockWidget->setAffinities(affinities);
+}
+
+void DockWidgetViewInterface::setAffinityName(const QString &name)
+{
+    m_dockWidget->setAffinityName(name);
+}
+
+QStringList DockWidgetViewInterface::affinities() const
+{
+    return m_dockWidget->affinities();
+}
+
 } // namespace

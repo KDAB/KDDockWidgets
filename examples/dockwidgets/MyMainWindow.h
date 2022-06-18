@@ -27,12 +27,12 @@ public:
 
 private:
     void createDockWidgets();
-    KDDockWidgets::Controllers::DockWidget *newDockWidget();
+    KDDockWidgets::Views::DockWidget_qtwidgets *newDockWidget();
     QMenu *m_toggleMenu = nullptr;
     const bool m_dockWidget0IsNonClosable;
     const bool m_dockWidget9IsNonDockable;
     const bool m_restoreIsRelative;
     const bool m_maxSizeForDockWidget8;
     const bool m_dockwidget5DoesntCloseBeforeRestore;
-    KDDockWidgets::Controllers::DockWidget::List m_dockwidgets;
+    QVector<KDDockWidgets::Views::DockWidget_qtwidgets *> m_dockwidgets;
 };

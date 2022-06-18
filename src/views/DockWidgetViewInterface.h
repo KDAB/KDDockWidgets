@@ -48,6 +48,12 @@ public:
     void show();
     void raise();
     void moveToSideBar();
+    void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
+    QIcon icon(IconPlace place = IconPlace::TitleBar) const;
+
+    void setAffinities(const QStringList &);
+    void setAffinityName(const QString &name);
+    QStringList affinities() const;
 
     void addDockWidgetAsTab(DockWidgetViewInterface *other,
                             KDDockWidgets::InitialOption initialOption = {});
