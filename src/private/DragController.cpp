@@ -890,10 +890,10 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
                             }
                         }
                     }
-#endif // QtWidgets A window belonging to another app is below the cursor
-                    qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
-                    return nullptr;
                 }
+#endif // QtWidgets A window belonging to another app is below the cursor
+                qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
+                return nullptr;
             }
         }
 #endif // Q_OS_WIN
