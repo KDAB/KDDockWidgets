@@ -143,6 +143,7 @@ if(KDDockWidgets_QT6)
 else()
   set(Qt_VERSION_MAJOR 5)
   set(QT_MIN_VERSION "5.15")
+  set(KDDockWidgets_LIBRARY_QTID "")
 endif()
 
 # BEGIN frontend enabling
