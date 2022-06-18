@@ -219,34 +219,50 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/kddockwidgets_qtquick.qrc
 )
 
-set(DOCKS_INSTALLABLE_INCLUDES
+set(KDDW_PUBLIC_HEADERS
     docks_export.h
     Config.h
-    ViewFactory.h
-    # DockWidget.h
     KDDockWidgets.h
-    Qt5Qt6Compat_p.h
     FocusScope.h
-    # QWidgetAdapter.h
     LayoutSaver.h
-    # MainWindowMDI.h
-    # MainWindow.h
+    Action.h
+    Controller.h
+    View.h
+    ViewWrapper.h
+    Window.h
+    ViewFactory.h
 )
 
-set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
+set(KDDW_PRIVATE_HEADERS
     private/DragController_p.h
     private/Draggable_p.h
-    private/DropIndicatorOverlay.h
-    # private/FloatingWindow_p.h
-    # private/Frame_p.h
     private/LayoutSaver_p.h
-    # private/Layout.h
-    # private/SideBar_p.h
-    private/TitleBar_p.h
     private/WindowBeingDragged_p.h
     private/WidgetResizeHandler_p.h
-    private/DockRegistry.h
-    # private/TabWidget_p.h
+    DockRegistry.h # No ABI guarantees for now, so copy to private/
+)
+
+set(KDDW_CONTROLLER_HEADERS
+    controllers/DockWidget.h
+    controllers/DockWidget_p.h
+    controllers/DropIndicatorOverlay.h
+    controllers/DropArea.h
+    controllers/FloatingWindow.h
+    controllers/Frame.h
+    controllers/Layout.h
+    controllers/MDILayout.h
+    controllers/SideBar.h
+    controllers/TabBar.h
+    controllers/MainWindow.h
+    controllers/Separator.h
+    controllers/Stack.h
+    controllers/TitleBar.h
+)
+
+set(KDDW_INDICATOR_HEADERS
+    controllers/indicators/NullIndicators.h
+    controllers/indicators/ClassicIndicators.h
+    controllers/indicators/SegmentedIndicators.h
 )
 
 set(DOCKSLIBS_SRCS ${KDDW_BACKEND_SRCS})
@@ -277,7 +293,7 @@ ecm_generate_headers(camelcase_HEADERS
     # MainWindowMDI
 )
 
-add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
+add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${KDDW_PUBLIC_HEADERS})
 
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
 set_target_properties(kddockwidgets PROPERTIES OUTPUT_NAME "kddockwidgets${KDDockWidgets_LIBRARY_QTID}")
@@ -425,19 +441,89 @@ if(MSVC AND NOT KDDockWidgets_STATIC)
   install(FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>" DESTINATION ${INSTALL_LIBRARY_DIR} CONFIGURATIONS Debug RelWithDebInfo)
 endif()
 
-install(FILES ${camelcase_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-install(FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-install(FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
+# install(FILES ${camelcase_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+install(FILES ${KDDW_PRIVATE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
+install(FILES ${KDDW_CONTROLLER_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/controllers)
+install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/controllers/indicators)
 install(FILES private/multisplitter/Item_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
-install(FILES private/indicators/ClassicIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
-# install(FILES private/indicators/SegmentedIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
 
-if(KDDockWidgets_QTQUICK)
-  install(FILES ${DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/quick)
-  install(FILES private/multisplitter/Separator_quick.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
-  install(FILES private/multisplitter/Widget_quick.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
-else()
-  install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/widgets)
+if (KDDW_FRONTEND_QTWIDGETS)
+
+  SET(KDDW_QTWIDGET_HEADERS
+    qtwidgets/MDIArea.h
+    qtwidgets/Platform_qtwidgets.h
+    qtwidgets/ViewFactory_qtwidgets.h
+    qtwidgets/Window_qtwidgets.h
+  )
+
+  SET(KDDW_QTWIDGET_VIEW_HEADERS
+    qtwidgets/views/DockWidget_qtwidgets.h
+    qtwidgets/views/Separator_qtwidgets.h
+    qtwidgets/views/RubberBand_qtwidgets.h
+    qtwidgets/views/SideBar_qtwidgets.h
+    qtwidgets/views/FloatingWindow_qtwidgets.h
+    qtwidgets/views/View_qtwidgets.h
+    qtwidgets/views/MainWindowMDI_qtwidgets.h
+    qtwidgets/views/ViewWrapper_qtwidgets.h
+    qtwidgets/views/MDILayout_qtwidgets.h
+    qtwidgets/views/DropArea_qtwidgets.h
+    qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h
+    qtwidgets/views/Stack_qtwidgets.h
+    qtwidgets/views/Frame_qtwidgets.h
+    qtwidgets/views/TabBar_qtwidgets.h
+    qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h
+    qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h
+    qtwidgets/views/MainWindow_qtwidgets.h
+    qtwidgets/views/TitleBar_qtwidgets.h
+  )
+
+  install(FILES ${KDDW_QTWIDGET_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+  install(FILES ${KDDW_QTWIDGET_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/views)
+
+endif()
+
+if (KDDW_FRONTEND_QTQUICK)
+
+  SET(KDDW_QTQUICK_HEADERS
+    qtquick/ViewFactory_qtquick.h
+    qtquick/DockWidgetInstantiator.h
+    qtquick/Window_qtquick.h
+    qtquick/Platform_qtquick.h
+    qtquick/LayoutSaverInstantiator.h
+    qtquick/MainWindowInstantiator.h
+  )
+
+  SET(KDDW_QTQUICK_VIEW_HEADERS
+    qtquick/views/ClassicIndicatorsWindow_qtquick.h
+    qtquick/views/View_qtquick.h
+    qtquick/views/Separator_qtquick.h
+    qtquick/views/MainWindowMDI_qtquick.h
+    qtquick/views/RubberBand_qtquick.h
+    qtquick/views/MainWindow_qtquick.h
+    qtquick/views/Separator_quick.h
+    qtquick/views/FloatingWindow_qtquick.h
+    qtquick/views/SideBar_qtquick.h
+    qtquick/views/TabBar_qtquick.h
+    qtquick/views/DockWidget_qtquick.h
+    qtquick/views/Stack_qtquick.h
+    qtquick/views/MDILayout_qtquick.h
+    qtquick/views/DropArea_qtquick.h
+    qtquick/views/Frame_qtquick.h
+    qtquick/views/TitleBar_qtquick.h
+    qtquick/views/ViewWrapper_qtquick.h
+  )
+
+  install(FILES ${KDDW_QTQUICK_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+  install(FILES ${KDDW_QTQUICK_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/views)
+endif()
+
+if (KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
+  SET(KDDW_QT_HEADERS
+    qtcommon/Platform_qt.h
+    qtcommon/Window_qt.h
+  )
+  install(FILES ${KDDW_QT_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 endif()
 
 # Generate library version files

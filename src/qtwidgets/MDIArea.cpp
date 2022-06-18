@@ -18,6 +18,7 @@
 #include "kddockwidgets/controllers/DropArea.h"
 
 #include "qtwidgets/views/View_qtwidgets.h"
+#include "Config.h"
 
 #include <QVBoxLayout>
 

@@ -19,6 +19,7 @@
 #include "kddockwidgets/controllers/Stack.h"
 #include "kddockwidgets/controllers/TabBar.h"
 #include "kddockwidgets/controllers/TitleBar.h"
+#include "Config.h"
 
 #include <QPainter>
 #include <QTabBar>

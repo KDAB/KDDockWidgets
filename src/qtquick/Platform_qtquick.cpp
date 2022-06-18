@@ -14,6 +14,7 @@
 #include "Config.h"
 #include "QmlTypes.h"
 
+#include "Helpers_p.h"
 #include "Window_qtquick.h"
 #include "views/View_qtquick.h"
 #include "qtquick/Window_qtquick.h"
@@ -56,6 +57,7 @@ inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
 }
 
 Platform_qtquick::Platform_qtquick()
+    : m_qquickHelpers(new QtQuickHelpers())
 {
     init();
 }
@@ -78,6 +80,7 @@ void Platform_qtquick::init()
 
 Platform_qtquick::~Platform_qtquick()
 {
+    delete m_qquickHelpers;
 }
 
 const char *Platform_qtquick::name() const
@@ -160,7 +163,7 @@ void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
 
     auto dr = DockRegistry::self(); // make sure our QML types are registered
     QQmlContext *context = qmlEngine->rootContext();
-    context->setContextProperty(QStringLiteral("_kddwHelpers"), &m_qquickHelpers);
+    context->setContextProperty(QStringLiteral("_kddwHelpers"), m_qquickHelpers);
     context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
     context->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
     context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), Config::self().viewFactory());

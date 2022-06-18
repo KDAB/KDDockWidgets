@@ -13,12 +13,12 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/Platform_qt.h"
-#include "Helpers_p.h"
 
 class QQmlEngine;
 
 namespace KDDockWidgets {
 
+class QtQuickHelpers;
 class ViewFactory_qtquick;
 
 /// @brief implements functions specific to a particular platform
@@ -59,7 +59,7 @@ public:
 private:
     void init();
     QQmlEngine *m_qmlEngine = nullptr;
-    QtQuickHelpers m_qquickHelpers;
+    QtQuickHelpers *const m_qquickHelpers;
 };
 
 inline Platform_qtquick *plat()

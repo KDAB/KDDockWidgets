@@ -16,6 +16,7 @@
 #include "qtwidgets/ViewFactory_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "DockRegistry.h"
+#include "Config.h"
 
 #include <QMouseEvent>
 #include <QTabBar>

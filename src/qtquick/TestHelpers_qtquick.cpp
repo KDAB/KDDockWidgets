@@ -14,6 +14,7 @@
 #include "views/View_qtquick.h"
 #include "kddockwidgets/views/MainWindow_qtquick.h"
 #include "kddockwidgets/controllers/MainWindow.h"
+#include "Helpers_p.h"
 
 #include <QGuiApplication>
 #include <QQmlEngine>
@@ -55,6 +56,7 @@ TestView_qtquick::~TestView_qtquick() = default;
 
 Platform_qtquick::Platform_qtquick(int &argc, char **argv)
     : Platform_qt(argc, argv)
+    , m_qquickHelpers(new QtQuickHelpers())
 {
     new QGuiApplication(argc, argv);
     init();

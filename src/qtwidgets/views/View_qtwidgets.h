@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "kddockwidgets/private/Utils_p.h"
 #include "kddockwidgets/Controller.h"
 #include "kddockwidgets/View.h"
 #include "kddockwidgets/Window_qtwidgets.h"
@@ -22,6 +21,7 @@
 #include <QResizeEvent>
 #include <QSizePolicy>
 #include <QWidget>
+#include <QApplication>
 
 #include <memory>
 
@@ -213,7 +213,8 @@ public:
     void raiseAndActivate() override
     {
         Base::window()->raise();
-        if (!isWayland())
+        const bool isWayland = qApp->platformName() == QLatin1String("wayland");
+        if (!isWayland)
             Base::window()->activateWindow();
     }
 
