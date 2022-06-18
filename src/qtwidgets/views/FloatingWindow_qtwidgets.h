@@ -49,9 +49,8 @@ protected:
 #endif
 
 private:
-    Controllers::FloatingWindow *const m_controller;
-    QVBoxLayout *const m_vlayout;
-    KDBindings::ConnectionHandle m_screenChangedConnection;
+    class Private;
+    Private *const d;
 
     void updateMargins();
     Q_DISABLE_COPY(FloatingWindow_qtwidgets)

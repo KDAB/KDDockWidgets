@@ -38,17 +38,31 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
+class FloatingWindow_qtwidgets::Private
+{
+public:
+    Private(FloatingWindow_qtwidgets *q, Controllers::FloatingWindow *controller)
+        : m_vlayout(new QVBoxLayout(q))
+        , m_controller(controller)
+    {
+    }
+
+    QVBoxLayout *const m_vlayout;
+    Controllers::FloatingWindow *const m_controller;
+    KDBindings::ConnectionHandle m_screenChangedConnection;
+};
+
 FloatingWindow_qtwidgets::FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller,
                                                    QMainWindow *parent, Qt::WindowFlags windowFlags)
     : View_qtwidgets<QWidget>(controller, Type::FloatingWindow, parent, windowFlags)
-    , m_controller(controller)
-    , m_vlayout(new QVBoxLayout(this))
+    , d(new Private(this, controller))
 {
 }
 
 FloatingWindow_qtwidgets::~FloatingWindow_qtwidgets()
 {
-    m_screenChangedConnection.disconnect();
+    d->m_screenChangedConnection.disconnect();
+    delete d;
 }
 
 void FloatingWindow_qtwidgets::paintEvent(QPaintEvent *ev)
@@ -71,7 +85,7 @@ void FloatingWindow_qtwidgets::paintEvent(QPaintEvent *ev)
 bool FloatingWindow_qtwidgets::event(QEvent *ev)
 {
     if (ev->type() == QEvent::WindowStateChange) {
-        Q_EMIT m_controller->windowStateChanged(static_cast<QWindowStateChangeEvent *>(ev));
+        Q_EMIT d->m_controller->windowStateChanged(static_cast<QWindowStateChangeEvent *>(ev));
     } else if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
         if ((windowFlags() & Qt::Tool) == Qt::Tool) {
             if (Config::self().flags() & Config::Flag_DoubleClickMaximizes) {
@@ -79,8 +93,8 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
                 // Just avoid this combination: Flag_NativeTitleBar + Qt::Tool + Flag_DoubleClickMaximizes
             } else {
                 // Double clicking a Qt::Tool title-bar. Triggers a redocking.
-                if (m_controller->titleBar()->isFloating()) { // redocking nested floating windows aren't supported
-                    m_controller->titleBar()->onFloatClicked();
+                if (d->m_controller->titleBar()->isFloating()) { // redocking nested floating windows aren't supported
+                    d->m_controller->titleBar()->onFloatClicked();
                     return true;
                 }
             }
@@ -88,15 +102,15 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
             // A normal Qt::Window window. The OS handles the double click.
             // In general this will maximize the window, that's the native behaviour.
         }
-    } else if (ev->type() == QEvent::Show && !m_screenChangedConnection.isActive()) {
+    } else if (ev->type() == QEvent::Show && !d->m_screenChangedConnection.isActive()) {
         // We connect after QEvent::Show, so we have a QWindow. Qt doesn't offer much API to
         // intercept screen events
-        m_screenChangedConnection = window()->screenChanged.connect([this] {
+        d->m_screenChangedConnection = window()->screenChanged.connect([this] {
             Q_EMIT DockRegistry::self()->windowChangedScreen(window());
         });
     } else if (ev->type() == QEvent::ActivationChange) {
         // Since QWidget is missing a signal for window activation
-        Q_EMIT m_controller->activatedChanged();
+        Q_EMIT d->m_controller->activatedChanged();
     } else if (ev->type() == QEvent::StatusTip && QWidget::parent()) {
         // show status tips in the main window
         return QWidget::parent()->event(ev); // TODOm3: Move to base class
@@ -107,10 +121,10 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
 
 void FloatingWindow_qtwidgets::init()
 {
-    m_vlayout->setSpacing(0);
+    d->m_vlayout->setSpacing(0);
     updateMargins();
-    m_vlayout->addWidget(View_qtwidgets::asQWidget(m_controller->titleBar()));
-    m_vlayout->addWidget(View_qtwidgets::asQWidget(m_controller->dropArea()));
+    d->m_vlayout->addWidget(View_qtwidgets::asQWidget(d->m_controller->titleBar()));
+    d->m_vlayout->addWidget(View_qtwidgets::asQWidget(d->m_controller->dropArea()));
 
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Window::Ptr w) {
         if (isInWindow(w))
@@ -120,12 +134,12 @@ void FloatingWindow_qtwidgets::init()
 
 void FloatingWindow_qtwidgets::updateMargins()
 {
-    m_vlayout->setContentsMargins(QMargins(4, 4, 4, 4) * logicalDpiFactor(this));
+    d->m_vlayout->setContentsMargins(QMargins(4, 4, 4, 4) * logicalDpiFactor(this));
 }
 
 Controllers::FloatingWindow *FloatingWindow_qtwidgets::floatingWindow() const
 {
-    return m_controller;
+    return d->m_controller;
 }
 
 #if defined(Q_OS_WIN)
