@@ -94,8 +94,31 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     if (!widget)
         return false;
 
-    if (m_isTopLevelWindowResizer && (!widget->isRootView() || !widget->equals(mTarget)))
+    if (!(e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::MouseMove))
         return false;
+
+    if (m_isTopLevelWindowResizer) {
+        if (!widget->isRootView() || !widget->equals(mTarget))
+            return false;
+    } else if (isMDI()) {
+        // Each Frame has a WidgetResizeHandler instance.
+        // mTarget is the Frame we want to resize.
+        // but 'o' might not be mTarget, because we're using a global event filter.
+        // The global event filter is required because we allow the cursor to be outside the frame, a few pixels
+        // so we have a nice resize margin.
+        // Here we deal with the case where our mTarget, let's say "Frame 1" is on top of "Frame 2" but cursor
+        // is near "Frame 2"'s margins, and would show resize cursor.
+        // We only want to continue if the cursor is near the margins of our own frame (mTarget)
+
+        auto frame = widget->firstParentOfType(Type::Frame);
+        if (frame && !frame->view()->equals(mTarget)) {
+            auto frameParent = frame->view()->aboutToBeDestroyed() ? nullptr : frame->view()->parentView();
+            auto targetParent = mTarget->aboutToBeDestroyed() ? nullptr : mTarget->parentView();
+            const bool areSiblings = frameParent && frameParent->equals(targetParent);
+            if (areSiblings)
+                return false;
+        }
+    }
 
     switch (e->type()) {
     case QEvent::MouseButtonPress: {
