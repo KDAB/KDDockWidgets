@@ -112,6 +112,8 @@ KDDockWidgets::Location DropIndicatorOverlayInterface::multisplitterLocationFor(
         return KDDockWidgets::Location_None;
     case DropLocation_Inner:
     case DropLocation_Outter:
+    case DropLocation_Horizontal:
+    case DropLocation_Vertical:
         qWarning() << Q_FUNC_INFO << "Unexpected drop location" << dropLoc;
         break;
     }
@@ -161,7 +163,8 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
     }
 
     if (auto dropIndicatorAllowedFunc = Config::self().dropIndicatorAllowedFunc()) {
-        if (!dropIndicatorAllowedFunc(dropLoc, source, target))
+        DropArea *dropArea = DragController::instance()->dropAreaUnderCursor();
+        if (!dropIndicatorAllowedFunc(dropLoc, source, target, dropArea))
             return false;
     }
 

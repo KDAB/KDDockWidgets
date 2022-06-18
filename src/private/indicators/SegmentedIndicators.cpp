@@ -148,17 +148,22 @@ void SegmentedIndicators::updateSegments()
 {
     m_segments.clear();
 
-    const bool needsOutterIndicators = dropIndicatorVisible(DropLocation_Outter);
-    const bool needsInnerIndicators = dropIndicatorVisible(DropLocation_Inner);
+    const auto outterSegments = segmentsForRect(rect(), /*inner=*/false);
 
-    if (needsInnerIndicators) {
-        const bool useOffset = needsOutterIndicators;
-        m_segments = segmentsForRect(hoveredFrameRect(), /*inner=*/true, useOffset);
+    for (auto indicator : {DropLocation_OutterLeft, DropLocation_OutterRight, DropLocation_OutterTop, DropLocation_OutterBottom}) {
+        if (dropIndicatorVisible(indicator)) {
+            m_segments.insert(indicator, outterSegments.value(indicator));
+        }
     }
 
-    if (needsOutterIndicators) {
-        auto segments = segmentsForRect(rect(), /*inner=*/false);
-        m_segments.insert(segments);
+    const bool hasOutter = !m_segments.isEmpty();
+    const bool useOffset = hasOutter;
+    const auto innerSegments = segmentsForRect(hoveredFrameRect(), /*inner=*/true, useOffset);
+
+    for (auto indicator : {DropLocation_Left, DropLocation_Top, DropLocation_Right, DropLocation_Bottom, DropLocation_Center}) {
+        if (dropIndicatorVisible(indicator)) {
+            m_segments.insert(indicator, innerSegments.value(indicator));
+        }
     }
 
     update();

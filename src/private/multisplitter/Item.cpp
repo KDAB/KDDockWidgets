@@ -979,6 +979,32 @@ ItemBoxContainer::~ItemBoxContainer()
     delete d;
 }
 
+int ItemBoxContainer::numSideBySide_recursive(Qt::Orientation o) const
+{
+    int num = 0;
+    if (d->m_orientation == o) {
+        // Example: Container is horizontal and we want to know how many layouted horizontally
+        for (Item *child : m_children) {
+            if (ItemBoxContainer *container = child->asBoxContainer()) {
+                num += container->numSideBySide_recursive(o);
+            } else if (!child->isPlaceholder()) {
+                num++;
+            }
+        }
+    } else {
+        // Example: Container is vertical and we want to know how many layouted horizontally
+        for (Item *child : m_children) {
+            if (ItemBoxContainer *container = child->asBoxContainer()) {
+                num = qMax(num, container->numSideBySide_recursive(o));
+            } else if (!child->isPlaceholder()) {
+                num = qMax(num, 1);
+            }
+        }
+    }
+
+    return num;
+}
+
 bool ItemBoxContainer::checkSanity()
 {
     d->m_checkSanityScheduled = false;

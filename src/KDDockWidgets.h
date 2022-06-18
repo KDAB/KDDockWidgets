@@ -249,7 +249,9 @@ enum DropLocation
     DropLocation_OutterRight = 128,
     DropLocation_OutterBottom = 256,
     DropLocation_Inner = DropLocation_Left | DropLocation_Right | DropLocation_Top | DropLocation_Bottom,
-    DropLocation_Outter = DropLocation_OutterLeft | DropLocation_OutterRight | DropLocation_OutterTop | DropLocation_OutterBottom
+    DropLocation_Outter = DropLocation_OutterLeft | DropLocation_OutterRight | DropLocation_OutterTop | DropLocation_OutterBottom,
+    DropLocation_Horizontal = DropLocation_Left | DropLocation_Right | DropLocation_OutterLeft | DropLocation_OutterRight,
+    DropLocation_Vertical = DropLocation_Top | DropLocation_Bottom | DropLocation_OutterTop | DropLocation_OutterBottom
 };
 Q_ENUM_NS(DropLocation)
 

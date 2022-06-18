@@ -34,6 +34,7 @@ namespace KDDockWidgets {
 class DockWidgetBase;
 class MainWindowBase;
 class FrameworkWidgetFactory;
+class DropArea;
 
 typedef KDDockWidgets::DockWidgetBase *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::MainWindowBase *(*MainWindowFactoryFunc)(const QString &name);
@@ -47,11 +48,13 @@ typedef KDDockWidgets::MainWindowBase *(*MainWindowFactoryFunc)(const QString &n
 /// @param location The drop indicator location to allow or disallow
 /// @param source The dock widgets being dragged
 /// @param target The dock widgets within an existing docked tab group
+/// @param dropArea The target drop area. Can belong to a MainWindow or a FloatingWindow.
 /// @return true if the docking is allowed.
 /// @sa setDropIndicatorAllowedFunc
 typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
                                          const QVector<DockWidgetBase *> &source,
-                                         const QVector<DockWidgetBase *> &target);
+                                         const QVector<DockWidgetBase *> &target,
+                                         DropArea *dropArea);
 
 /// @deprecated Use DropIndicatorAllowedFunc instead.
 /// @brief Function to allow the user more granularity to disallow dock widgets to tab together
@@ -237,9 +240,9 @@ public:
      * {
      *    // disallows dockFoo to be tabbed with dockBar.
      *    return !(source.contains(dockFoo) && target.contains(dockBar));
-     * }
+     * };
      *
-     * KDDockWidgets::Config::self()->setTabbingAllowedFunc(func);
+     * KDDockWidgets::Config::self().setTabbingAllowedFunc(func);
      *
      * @endcode
      */
@@ -262,13 +265,14 @@ public:
      *
      * auto func = [] (KDDockWidgets::DropLocation loc,
      *                 const KDDockWidgets::DockWidgetBase::List &source,
-     *                 const KDDockWidgets::DockWidgetBase::List &target)
+     *                 const KDDockWidgets::DockWidgetBase::List &target,
+     *                 KDDockWidgets::DropArea *)
      * {
      *    // disallows dockFoo to be docked to outer areas
      *    return !((loc & KDDockWidgets::DropLocation_Outter) && source.contains(dockFoo));
-     * }
+     * };
      *
-     * KDDockWidgets::Config::self()->setDropIndicatorAllowedFunc(func);
+     * KDDockWidgets::Config::self().setDropIndicatorAllowedFunc(func);
      *
      * @endcode
      *
