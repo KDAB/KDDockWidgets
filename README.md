@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.com/KDAB/KDDockWidgets.svg?branch=master)](https://travis-ci.com/KDAB/KDDockWidgets)
 
+> ⚠️⚠️: Please use 1.6 branch instead.
+
 KDDockWidgets
 =============
 `KDDockWidgets` is a Qt dock widget library written by KDAB, suitable for replacing
