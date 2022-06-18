@@ -261,7 +261,7 @@
             "name": "ci-dev-qt5",
             "displayName": "ci-dev-qt5",
             "description": "Qt5 dev-mode build",
-            "binaryDir": "${sourceDir}/ci-dev-qt5",
+            "binaryDir": "${sourceDir}/build-ci-dev-qt5",
             "generator": "Ninja",
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
@@ -273,7 +273,7 @@
             "name": "ci-release-qt5",
             "displayName": "ci-release-qt5",
             "description": "Qt5 non dev-mode build",
-            "binaryDir": "${sourceDir}/ci-release-qt5",
+            "binaryDir": "${sourceDir}/build-ci-release-qt5",
             "generator": "Ninja",
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
@@ -285,7 +285,7 @@
             "name": "ci-qtwidgets-qt5",
             "displayName": "ci-qtwidgets-qt5",
             "description": "Qt5 build which excludes QtQuick",
-            "binaryDir": "${sourceDir}/ci-qtwidgets-qt5",
+            "binaryDir": "${sourceDir}/build-ci-qtwidgets-qt5",
             "generator": "Ninja",
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
@@ -297,7 +297,7 @@
             "name": "ci-qtquick-qt5",
             "displayName": "ci-qtquick-qt5",
             "description": "Qt5 build which excludes QtWidgets",
-            "binaryDir": "${sourceDir}/ci-qtquick-qt5",
+            "binaryDir": "${sourceDir}/build-ci-qtquick-qt5",
             "generator": "Ninja",
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
@@ -309,7 +309,7 @@
             "name": "ci-dev-qt6",
             "displayName": "ci-dev-qt6",
             "description": "Qt6 dev-mode",
-            "binaryDir": "${sourceDir}/ci-dev-qt6",
+            "binaryDir": "${sourceDir}/build-ci-dev-qt6",
             "generator": "Ninja",
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
@@ -322,7 +322,7 @@
             "name": "ci-release-qt6",
             "description": "Qt6 non dev-mode",
             "displayName": "ci-release-qt6",
-            "binaryDir": "${sourceDir}/ci-release-qt6",
+            "binaryDir": "${sourceDir}/build-ci-release-qt6",
             "generator": "Ninja",
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
@@ -335,7 +335,7 @@
             "name": "ci-qtwidgets-qt6",
             "description": "Qt6 build which excludes QtQuick",
             "displayName": "ci-qtwidgets-qt6",
-            "binaryDir": "${sourceDir}/ci-qtwidgets-qt6",
+            "binaryDir": "${sourceDir}/build-ci-qtwidgets-qt6",
             "generator": "Ninja",
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
@@ -348,7 +348,7 @@
             "name": "ci-qtquick-qt6",
             "description": "Qt6 build which excludes QtWidgets",
             "displayName": "ci-qtquick-qt6",
-            "binaryDir": "${sourceDir}/ci-qtquick-qt6",
+            "binaryDir": "${sourceDir}/build-ci-qtquick-qt6",
             "generator": "Ninja",
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
