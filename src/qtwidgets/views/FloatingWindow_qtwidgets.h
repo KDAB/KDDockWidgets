@@ -13,8 +13,6 @@
 
 #include "View_qtwidgets.h"
 
-#include "kdbindings/signal.h"
-
 QT_BEGIN_NAMESPACE
 class QVBoxLayout;
 class QMainWindow;
