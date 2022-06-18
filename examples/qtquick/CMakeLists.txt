@@ -10,9 +10,12 @@
 
 add_subdirectory(dockwidgets)
 set_compiler_flags(qtquick_dockwidgets)
+set_target_properties(qtquick_dockwidgets PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
 
 add_subdirectory(mdi)
 set_compiler_flags(qtquick_mdi)
+set_target_properties(qtquick_mdi PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
 
 add_subdirectory(customtitlebar)
 set_compiler_flags(qtquick_customtitlebar)
+set_target_properties(qtquick_customtitlebar PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )

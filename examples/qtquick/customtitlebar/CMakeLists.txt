@@ -31,8 +31,6 @@ add_executable(qtquick_customtitlebar
     ${RESOURCES_EXAMPLE_SRC}
 )
 
-set_target_properties(qtquick_customtitlebar PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
-
 target_link_libraries(qtquick_customtitlebar
   PRIVATE
     KDAB::kddockwidgets

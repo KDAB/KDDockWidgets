@@ -32,8 +32,6 @@ add_executable(qtwidgets_dockwidgets
     ${RESOURCES_EXAMPLE_SRC}
 )
 
-set_target_properties(qtwidgets_dockwidgets PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
-
 target_link_libraries(qtwidgets_dockwidgets
   PRIVATE
     KDAB::kddockwidgets

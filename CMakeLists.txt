@@ -358,6 +358,11 @@ if(KDDockWidgets_EXAMPLES)
     set_compiler_flags(qtwidgets_dockwidgets)
     set_compiler_flags(qtwidgets_minimal)
     set_compiler_flags(qtwidgets_mdi_with_docking)
+
+    set_target_properties(qtwidgets_dockwidgets PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
+    set_target_properties(qtwidgets_mdi_with_docking PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
+    set_target_properties(qtwidgets_mdi PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
+    set_target_properties(qtwidgets_minimal PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
   endif()
 endif()
 
