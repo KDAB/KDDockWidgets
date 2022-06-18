@@ -111,4 +111,5 @@ void View_qtwidgets<T>::setMinimumSize(QSize sz)
 
 namespace KDDockWidgets::Views {
 template class View_qtwidgets<QWidget>;
+template class View_qtwidgets<QMainWindow>;
 }
