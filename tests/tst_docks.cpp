@@ -2815,8 +2815,11 @@ void TestDocks::tst_preventClose()
     fw->view()->close();
     QVERIFY(dock1->isVisible());
 
-    dock1->deleteLater();
-    QVERIFY(Platform::instance()->tests_waitForDeleted(dock1));
+    // Put into a main window
+    auto m = createMainWindow();
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnRight);
+    m->close();
+    QVERIFY(dock1->isVisible());
 }
 
 void TestDocks::tst_propagateMinSize()

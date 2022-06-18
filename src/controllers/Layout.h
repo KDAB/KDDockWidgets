@@ -203,6 +203,8 @@ public:
 
     Layouting::ItemContainer *rootItem() const;
 
+    void onCloseEvent(QCloseEvent *);
+
 protected:
     void setRootItem(Layouting::ItemContainer *root);
     /**
@@ -228,8 +230,6 @@ protected:
      * If frameOrMultiSplitter is a MultiSplitter then it returns a list of all frames it contains
      */
     QList<Controllers::Frame *> framesFrom(View *frameOrMultiSplitter) const;
-
-    void onCloseEvent(QCloseEvent *);
 
 private:
     bool onResize(QSize newSize);
