@@ -25,8 +25,9 @@ class MDILayout;
 }
 
 namespace Views {
+
 class DockWidgetViewInterface;
-}
+
 /**
  * @brief MDIArea allows to host dock widget in MDI mode.
  * This is an alternative to using a full blown MainWindowMDI.
@@ -36,12 +37,12 @@ class DockWidgetViewInterface;
  *
  * See examples/mdi_with_docking/.
  */
-class DOCKS_EXPORT MDIArea : public Views::View_qtwidgets<QWidget>
+class DOCKS_EXPORT MDIArea_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit MDIArea(QWidget *parent = nullptr);
-    ~MDIArea();
+    explicit MDIArea_qtwidgets(QWidget *parent = nullptr);
+    ~MDIArea_qtwidgets();
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
     void addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption = {});
@@ -65,6 +66,8 @@ private:
     class Private;
     Private *const d;
 };
+
+}
 
 }
 

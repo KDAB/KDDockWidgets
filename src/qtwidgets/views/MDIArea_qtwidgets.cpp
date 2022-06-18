@@ -24,8 +24,9 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Views;
 
-class MDIArea::Private
+class MDIArea_qtwidgets::Private
 {
 public:
     Private(View *parent)
@@ -41,7 +42,7 @@ public:
     MDILayout *const layout;
 };
 
-MDIArea::MDIArea(QWidget *parent)
+MDIArea_qtwidgets::MDIArea_qtwidgets(QWidget *parent)
     : Views::View_qtwidgets<QWidget>(nullptr, Type::MDIArea, parent)
     , d(new Private(this))
 {
@@ -53,12 +54,12 @@ MDIArea::MDIArea(QWidget *parent)
     // QWidgetAdapter::makeItemFillParent(d->layout);
 }
 
-MDIArea::~MDIArea()
+MDIArea_qtwidgets::~MDIArea_qtwidgets()
 {
     delete d;
 }
 
-void MDIArea::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption)
+void MDIArea_qtwidgets::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption)
 {
     if (dw->options() & DockWidgetOption_MDINestable) {
         // We' wrap it with a drop area, so we can drag other dock widgets over this one and dock
@@ -74,35 +75,35 @@ void MDIArea::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initial
     d->layout->addDockWidget(dw, localPt, addingOption);
 }
 
-void MDIArea::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
+void MDIArea_qtwidgets::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
 {
     d->layout->moveDockWidget(dw, pos);
 }
 
-void MDIArea::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
+void MDIArea_qtwidgets::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
 {
     d->layout->resizeDockWidget(dw, size);
 }
 
-void MDIArea::addDockWidget(Views::DockWidgetViewInterface *dwView, QPoint localPt, InitialOption addingOption)
+void MDIArea_qtwidgets::addDockWidget(Views::DockWidgetViewInterface *dwView, QPoint localPt, InitialOption addingOption)
 {
     auto dw = dwView ? dwView->dockWidget() : nullptr;
     addDockWidget(dw, localPt, addingOption);
 }
 
-void MDIArea::moveDockWidget(Views::DockWidgetViewInterface *dwView, QPoint pos)
+void MDIArea_qtwidgets::moveDockWidget(Views::DockWidgetViewInterface *dwView, QPoint pos)
 {
     auto dw = dwView ? dwView->dockWidget() : nullptr;
     moveDockWidget(dw, pos);
 }
 
-void MDIArea::resizeDockWidget(Views::DockWidgetViewInterface *dwView, QSize size)
+void MDIArea_qtwidgets::resizeDockWidget(Views::DockWidgetViewInterface *dwView, QSize size)
 {
     auto dw = dwView ? dwView->dockWidget() : nullptr;
     resizeDockWidget(dw, size);
 }
 
-QList<Controllers::Frame *> MDIArea::frames() const
+QList<Controllers::Frame *> MDIArea_qtwidgets::frames() const
 {
     return d->layout->frames();
 }

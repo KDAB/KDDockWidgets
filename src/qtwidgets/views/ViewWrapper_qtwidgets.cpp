@@ -81,7 +81,7 @@ static Controller *controllerForWidget(QWidget *widget)
             break;
 
         case Type::MDIArea:
-            if (auto view = qobject_cast<MDIArea *>(widget))
+            if (auto view = qobject_cast<MDIArea_qtwidgets *>(widget))
                 return view->controller();
             break;
         case Type::SideBar:
@@ -225,7 +225,7 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     case Type::RubberBand:
         return qobject_cast<RubberBand_qtwidgets *>(m_widget);
     case Type::MDIArea:
-        return qobject_cast<MDIArea *>(m_widget);
+        return qobject_cast<MDIArea_qtwidgets *>(m_widget);
     case Type::LayoutItem:
     case Type::None:
         qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";

@@ -83,7 +83,7 @@ int main(int argc, char **argv)
     auto mdiWidget3 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MDI widget3"), options);
     mdiWidget3->setWidget(new MyWidget3());
 
-    auto mdiArea = new KDDockWidgets::MDIArea();
+    auto mdiArea = new KDDockWidgets::Views::MDIArea_qtwidgets();
     mainWindow.setPersistentCentralWidget(mdiArea);
 
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
