@@ -28,7 +28,11 @@
       "TODOm3",
       "TODOm4"
     ],
-    "testMate.cpp.test.executables": "{build-dev}/**/*{tst}*"
+    "testMate.cpp.test.executables": "{build-dev}/**/*{tst}*",
+    "todo-tree.filtering.excludeGlobs": [
+      "**/ECM",
+      "**/3rdparty"
+    ]
   },
   "launch": {
     "version": "0.2.0",
@@ -87,7 +91,7 @@
         "name": "msvc-qtwidgets_dockwidgets",
         "type": "cppvsdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_dockwidgets,
+        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_dockwidgets",
         "args": [],
         "cwd": "${workspaceFolder}",
         "stopAtEntry": false,

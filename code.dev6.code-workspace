@@ -16,6 +16,10 @@
     "todo-tree.tree.scanMode": "workspace only",
     "todo-tree.tree.disableCompactFolders": false,
     "todo-tree.tree.showBadges": true,
+    "todo-tree.filtering.excludeGlobs": [
+      "**/ECM",
+      "**/3rdparty"
+    ],
     "todo-tree.general.tags": [
       "BUG",
       "HACK",
@@ -87,7 +91,7 @@
         "name": "msvc-qtwidgets_dockwidgets",
         "type": "cppvsdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev6/bin/examples/qtwidgets_dockwidgets,
+        "program": "${workspaceFolder}/build-dev6/bin/examples/qtwidgets_dockwidgets",
         "args": [],
         "cwd": "${workspaceFolder}",
         "stopAtEntry": false,
