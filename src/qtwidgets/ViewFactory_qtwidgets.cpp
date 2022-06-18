@@ -55,7 +55,7 @@ ViewFactory_qtwidgets::~ViewFactory_qtwidgets()
 
 View *ViewFactory_qtwidgets::createDockWidget(const QString &uniqueName,
                                               DockWidgetOptions options,
-                                              Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
+                                              LayoutSaverOptions layoutSaverOptions,
                                               Qt::WindowFlags windowFlags) const
 {
     return new Views::DockWidget_qtwidgets(uniqueName, options, layoutSaverOptions, windowFlags);

@@ -55,7 +55,7 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
 
 Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest,
                                                                 DockWidgetOptions options,
-                                                                Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
+                                                                LayoutSaverOptions layoutSaverOptions,
                                                                 bool show,
                                                                 const QString &affinityName)
 {

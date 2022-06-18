@@ -240,7 +240,7 @@ void Frame::onDockWidgetTitleChanged()
         if (auto dw = qobject_cast<DockWidget *>(sender())) {
             int index = indexOfDockWidget(dw);
             renameTab(index, dw->title());
-            changeTabIcon(index, dw->icon(DockWidget::IconPlace::TabBar));
+            changeTabIcon(index, dw->icon(IconPlace::TabBar));
         }
     }
 }
@@ -877,7 +877,7 @@ bool Frame::anyDockWidgetsHas(DockWidgetOption option) const
     });
 }
 
-bool Frame::allDockWidgetsHave(DockWidget::LayoutSaverOption option) const
+bool Frame::allDockWidgetsHave(LayoutSaverOption option) const
 {
     const DockWidget::List docks = dockWidgets();
     return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
@@ -885,7 +885,7 @@ bool Frame::allDockWidgetsHave(DockWidget::LayoutSaverOption option) const
     });
 }
 
-bool Frame::anyDockWidgetsHas(DockWidget::LayoutSaverOption option) const
+bool Frame::anyDockWidgetsHas(LayoutSaverOption option) const
 {
     const DockWidget::List docks = dockWidgets();
     return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {

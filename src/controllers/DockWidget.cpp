@@ -280,7 +280,7 @@ DockWidgetOptions DockWidget::options() const
     return d->options;
 }
 
-DockWidget::LayoutSaverOptions DockWidget::layoutSaverOptions() const
+LayoutSaverOptions DockWidget::layoutSaverOptions() const
 {
     return d->layoutSaverOptions;
 }

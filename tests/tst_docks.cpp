@@ -5018,8 +5018,8 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
-    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
-    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, LayoutSaverOption::Skip);
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {}, LayoutSaverOption::Skip);
     auto dock4 = createDockWidget("4", Platform::instance()->tests_createView({ true }), {}, {}, /*show=*/false);
 
     m->addDockWidget(dock1, Location_OnBottom);
@@ -5044,7 +5044,7 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore()
     QVERIFY(!dock3->isOpen());
     QVERIFY(!dock3->isInMainWindow());
 
-    auto dock5 = createDockWidget("5", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock5 = createDockWidget("5", Platform::instance()->tests_createView({ true }), {}, LayoutSaverOption::Skip);
 
     dock4->show();
     dock5->show();
@@ -5060,8 +5060,8 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore2()
     // Meaning the whole window should be skipped
 
     EnsureTopLevelsDeleted e;
-    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
-    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, LayoutSaverOption::Skip);
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {}, LayoutSaverOption::Skip);
 
     dock2->close();
     dock3->close();
@@ -5089,7 +5089,7 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore3()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
-    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, LayoutSaverOption::Skip);
     dock1->close();
     dock2->close();
 
@@ -5115,7 +5115,7 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore4()
     auto m = createMainWindow({ 1000, 1000 }, {});
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
-                                  Controllers::DockWidget::LayoutSaverOption::Skip);
+                                  LayoutSaverOption::Skip);
 
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnBottom);

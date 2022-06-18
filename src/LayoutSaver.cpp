@@ -608,7 +608,7 @@ bool LayoutSaver::Private::matchesAffinity(const QStringList &affinities) const
 
 void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames)
 {
-    // Widgets with the DockWidget::LayoutSaverOption::Skip flag skip restore completely.
+    // Widgets with the LayoutSaverOptions::Skip flag skip restore completely.
     // If they were visible before they need to remain visible now.
     // If they were previously docked we need to float them, as the main window they were on will
     // be loading a new layout.
@@ -829,7 +829,7 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
 
             if (dockWidget->skipsRestore()) {
                 if (auto fw = dockWidget->floatingWindow()) {
-                    if (fw->allDockWidgetsHave(Controllers::DockWidget::LayoutSaverOption::Skip)) {
+                    if (fw->allDockWidgetsHave(LayoutSaverOption::Skip)) {
                         // All dock widgets in this floating window skips float, so we can honour it for all.
                         doClose = false;
                     }

@@ -67,7 +67,7 @@ public:
      */
     explicit DockWidget_qtquick(const QString &uniqueName,
                                 DockWidgetOptions = {},
-                                Controllers::DockWidget::LayoutSaverOptions = {},
+                                LayoutSaverOptions = {},
                                 Qt::WindowFlags = Qt::Tool,
                                 QQmlEngine *engine = nullptr);
 

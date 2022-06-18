@@ -55,7 +55,7 @@ public:
      */
     explicit DockWidget_qtwidgets(const QString &uniqueName,
                                   DockWidgetOptions options = {},
-                                  Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                  LayoutSaverOptions layoutSaverOptions = {},
                                   Qt::WindowFlags windowFlags = Qt::Tool);
 
     ///@brief destructor

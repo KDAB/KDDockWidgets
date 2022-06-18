@@ -83,7 +83,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
     }
 
     QPointer<Frame> oldFrame = dock->d->frame();
-    insertDockWidget(index, dock, dock->icon(DockWidget::IconPlace::TabBar), dock->title());
+    insertDockWidget(index, dock, dock->icon(IconPlace::TabBar), dock->title());
     setCurrentDockWidget(index);
 
     if (oldFrame && oldFrame->beingDeletedLater()) {

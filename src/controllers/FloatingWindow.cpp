@@ -573,7 +573,7 @@ bool FloatingWindow::anyDockWidgetsHas(DockWidgetOption option) const
     });
 }
 
-bool FloatingWindow::allDockWidgetsHave(DockWidget::LayoutSaverOption option) const
+bool FloatingWindow::allDockWidgetsHave(LayoutSaverOption option) const
 {
     const Controllers::Frame::List frames = this->frames();
     return std::all_of(frames.begin(), frames.end(), [option](Controllers::Frame *frame) {
@@ -581,7 +581,7 @@ bool FloatingWindow::allDockWidgetsHave(DockWidget::LayoutSaverOption option) co
     });
 }
 
-bool FloatingWindow::anyDockWidgetsHas(DockWidget::LayoutSaverOption option) const
+bool FloatingWindow::anyDockWidgetsHas(LayoutSaverOption option) const
 {
     const Controllers::Frame::List frames = this->frames();
     return std::any_of(frames.begin(), frames.end(), [option](Controllers::Frame *frame) {

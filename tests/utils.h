@@ -116,7 +116,7 @@ std::unique_ptr<Controllers::MainWindow> createMainWindow(QVector<DockDescriptor
 
 Controllers::DockWidget *createDockWidget(const QString &name, View *guest,
                                           DockWidgetOptions options = {},
-                                          Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                          LayoutSaverOptions layoutSaverOptions = {},
                                           bool show = true, const QString &affinityName = {});
 
 Controllers::DockWidget *createDockWidget(const QString &name);

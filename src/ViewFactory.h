@@ -70,7 +70,7 @@ public:
     /// In all other cases users will instantiate DockWidget directly
     virtual View *createDockWidget(const QString &uniqueName,
                                    DockWidgetOptions options = {},
-                                   Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                   LayoutSaverOptions layoutSaverOptions = {},
                                    Qt::WindowFlags windowFlags = {}) const = 0;
 
 

@@ -79,6 +79,24 @@ enum DockWidgetOption {
 Q_DECLARE_FLAGS(DockWidgetOptions, DockWidgetOption)
 Q_ENUM_NS(DockWidgetOptions);
 
+/// @brief Options which will affect LayoutSaver save/restore
+enum class LayoutSaverOption
+{
+    None = 0, ///< Just use the defaults
+    Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for floating windows.
+};
+Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
+
+enum class IconPlace
+{
+    TitleBar = 1,
+    TabBar = 2,
+    ToggleAction = 4,
+    All = ToggleAction | TitleBar | TabBar
+};
+Q_ENUM_NS(IconPlace)
+Q_DECLARE_FLAGS(IconPlaces, IconPlace)
+
 enum class FrontendType
 {
     QtWidgets = 1,

@@ -251,10 +251,10 @@ public:
     bool anyDockWidgetsHas(DockWidgetOption) const;
 
     ///@brief Returns whether all dock widgets have the specified  layout saver option set
-    bool allDockWidgetsHave(DockWidget::LayoutSaverOption) const;
+    bool allDockWidgetsHave(LayoutSaverOption) const;
 
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
-    bool anyDockWidgetsHas(DockWidget::LayoutSaverOption) const;
+    bool anyDockWidgetsHas(LayoutSaverOption) const;
 
     /// @brief Usually we do resize via the native window manager, but if a widget is docked like
     /// in MDI mode, or in overlayed mode then we allow the user to resize with mouse

@@ -61,24 +61,6 @@ class DOCKS_EXPORT DockWidget : public Controller
 public:
     typedef QVector<DockWidget *> List;
 
-    /// @brief Options which will affect LayoutSaver save/restore
-    enum class LayoutSaverOption
-    {
-        None = 0, ///< Just use the defaults
-        Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for floating windows.
-    };
-    Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
-
-    enum class IconPlace
-    {
-        TitleBar = 1,
-        TabBar = 2,
-        ToggleAction = 4,
-        All = ToggleAction | TitleBar | TabBar
-    };
-    Q_ENUM(IconPlace)
-    Q_DECLARE_FLAGS(IconPlaces, IconPlace)
-
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
@@ -212,7 +194,7 @@ public:
 
     /// @brief returns the per-dockwidget options which will affect LayoutSaver
     /// These are the options which were passed to the constructor
-    KDDockWidgets::Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions() const;
+    KDDockWidgets::LayoutSaverOptions layoutSaverOptions() const;
 
     /**
      * @brief Setter for the options.

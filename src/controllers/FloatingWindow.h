@@ -155,10 +155,10 @@ public:
     bool anyDockWidgetsHas(DockWidgetOption) const;
 
     ///@brief Returns whether all dock widgets have the specified  layout saver option set
-    bool allDockWidgetsHave(DockWidget::LayoutSaverOption) const;
+    bool allDockWidgetsHave(LayoutSaverOption) const;
 
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
-    bool anyDockWidgetsHas(DockWidget::LayoutSaverOption) const;
+    bool anyDockWidgetsHas(LayoutSaverOption) const;
 
     /// @brief Adds the dock widget to the specified location
     void addDockWidget(DockWidget *, KDDockWidgets::Location location,

@@ -54,7 +54,7 @@ public:
 
     View *createDockWidget(const QString &uniqueName,
                            DockWidgetOptions = {},
-                           Controllers::DockWidget::LayoutSaverOptions = {},
+                           LayoutSaverOptions = {},
                            Qt::WindowFlags = {}) const override;
 
     View *createFrame(Controllers::Frame *, View *parent) const override;

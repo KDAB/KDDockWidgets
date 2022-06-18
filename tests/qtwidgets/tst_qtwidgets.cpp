@@ -50,7 +50,7 @@ using namespace Layouting;
 /// Helper function so we don't write such a big line everywhere
 inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
                                               DockWidgetOptions opts = {},
-                                              Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {})
+                                              LayoutSaverOptions layoutSaverOptions = {})
 {
     return Config::self().viewFactory()->createDockWidget(uniqueName, opts, layoutSaverOptions)->asDockWidgetController();
 }
@@ -58,7 +58,7 @@ inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
 
 inline Controllers::DockWidget *createDockWidget(const QString &name, QWidget *w,
                                                  DockWidgetOptions options = {},
-                                                 Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                                 LayoutSaverOptions layoutSaverOptions = {},
                                                  bool show = true,
                                                  const QString &affinityName = {})
 {

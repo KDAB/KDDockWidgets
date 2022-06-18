@@ -170,7 +170,7 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
 
     // Passing options is optional, we just want to illustrate Option_NotClosable here
     KDDockWidgets::DockWidgetOptions options = KDDockWidgets::DockWidgetOption_None;
-    KDDockWidgets::Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::None;
+    KDDockWidgets::LayoutSaverOptions layoutSaverOptions = KDDockWidgets::LayoutSaverOption::None;
 
     if (count == 0 && m_dockWidget0IsNonClosable)
         options |= KDDockWidgets::DockWidgetOption_NotClosable;
@@ -179,7 +179,7 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
         options |= KDDockWidgets::DockWidgetOption_NotDockable;
 
     if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
-        layoutSaverOptions |= KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::Skip;
+        layoutSaverOptions |= KDDockWidgets::LayoutSaverOption::Skip;
 
     auto dockView = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
     auto dock = dockView->dockWidget();

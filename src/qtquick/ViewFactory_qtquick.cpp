@@ -50,7 +50,7 @@ ViewFactory_qtquick::~ViewFactory_qtquick()
 
 View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
                                             DockWidgetOptions options,
-                                            Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
+                                            LayoutSaverOptions layoutSaverOptions,
                                             Qt::WindowFlags windowFlags) const
 {
     return createDockWidget(uniqueName, /*engine=*/nullptr, options, layoutSaverOptions, windowFlags);
@@ -59,7 +59,7 @@ View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
 View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
                                             QQmlEngine *qmlEngine,
                                             DockWidgetOptions options,
-                                            Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
+                                            LayoutSaverOptions layoutSaverOptions,
                                             Qt::WindowFlags windowFlags) const
 {
     return new Views::DockWidget_qtquick(uniqueName, options, layoutSaverOptions, windowFlags, qmlEngine);
