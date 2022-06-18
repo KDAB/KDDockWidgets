@@ -14,6 +14,7 @@
 #include "private/Logging_p.h"
 #include "private/Position_p.h"
 #include "private/Utils_p.h"
+#include "private/Platform_p.h"
 #include "private/WidgetResizeHandler_p.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/multisplitter/Item_p.h"
@@ -46,7 +47,7 @@ DockRegistry::DockRegistry(QObject *parent)
     , d(new Private())
 {
     qGuiApp->installEventFilter(this);
-    d->m_connection = Platform::instance()->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
+    d->m_connection = Platform::instance()->d->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
 }
 
 DockRegistry::~DockRegistry()

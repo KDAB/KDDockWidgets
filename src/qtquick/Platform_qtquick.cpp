@@ -20,6 +20,7 @@
 #include "qtquick/Window_qtquick.h"
 #include "DockRegistry.h"
 #include "private/DragController_p.h"
+#include "private/Platform_p.h"
 #include "ViewFactory_qtquick.h"
 
 #include <QQmlEngine>
@@ -74,7 +75,7 @@ void Platform_qtquick::init()
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
         ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtquick(obj) : nullptr;
-        focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
+        d->focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
     });
 }
 

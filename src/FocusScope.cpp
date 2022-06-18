@@ -22,6 +22,7 @@
 #include "controllers/DockWidget.h"
 #include "controllers/Frame.h"
 #include "DockRegistry.h"
+#include "private/Platform_p.h"
 
 #include <QPointer>
 
@@ -36,7 +37,7 @@ public:
         , m_thisView(thisView)
     {
         auto plat = Platform::instance();
-        m_connection = plat->focusedViewChanged.connect(&Private::onFocusedViewChanged, this);
+        m_connection = plat->d->focusedViewChanged.connect(&Private::onFocusedViewChanged, this);
 
         onFocusedViewChanged(plat->focusedView());
         m_inCtor = false;

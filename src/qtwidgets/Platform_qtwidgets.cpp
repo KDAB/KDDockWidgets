@@ -16,7 +16,7 @@
 #include "DebugWindow.h"
 #include "views/ViewWrapper_qtwidgets.h"
 #include "views/View_qtwidgets.h"
-
+#include "private/Platform_p.h"
 #include "ViewFactory_qtwidgets.h"
 
 #include <QScreen>
@@ -56,7 +56,7 @@ void Platform_qtwidgets::init()
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
         ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtwidgets(obj) : nullptr;
-        focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
+        d->focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
     });
 }
 

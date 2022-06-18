@@ -10,6 +10,7 @@
 */
 
 #include "Platform.h"
+#include "private/Platform_p.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform_qtwidgets.h"
@@ -24,6 +25,8 @@
 #include <qglobal.h>
 #include <QDebug>
 
+#include "kdbindings/signal.h"
+
 using namespace KDDockWidgets;
 
 static Platform *s_platform = nullptr;
@@ -34,6 +37,7 @@ Platform::WarningObserver *Platform::s_warningObserver = nullptr;
 #endif
 
 Platform::Platform()
+    : d(new Private())
 {
     Q_ASSERT(!s_platform);
     s_platform = this;
@@ -42,6 +46,7 @@ Platform::Platform()
 Platform::~Platform()
 {
     s_platform = nullptr;
+    delete d;
 }
 
 Platform *Platform::instance()

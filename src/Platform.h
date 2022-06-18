@@ -15,8 +15,6 @@
 #include "ViewWrapper.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "kdbindings/signal.h"
-
 #include <QEvent>
 
 #include <vector>
@@ -206,8 +204,8 @@ protected:
 #endif
 
 public:
-    /// @brief This signal is emitted when the currently focused view changes
-    KDBindings::Signal<std::shared_ptr<ViewWrapper>> focusedViewChanged;
+    class Private;
+    Private *const d;
 
 protected:
     Platform();
