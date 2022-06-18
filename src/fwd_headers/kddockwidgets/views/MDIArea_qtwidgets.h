@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../qtwidgets/MDIArea.h"
+#include "../../../qtwidgets/views/MDIArea_qtwidgets.h"

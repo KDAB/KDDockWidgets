@@ -136,7 +136,7 @@ SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/views/MainWindow_qtwidgets.cpp
     qtwidgets/views/MainWindow_qtwidgets.h
     qtwidgets/views/MainWindowMDI_qtwidgets.cpp
-    qtwidgets/views/MainWindowMDI_qtwidgets.h
+    qtwidgets/views/MDIArea_qtwidgets.cpp
     qtwidgets/views/RubberBand_qtwidgets.cpp
     qtwidgets/views/RubberBand_qtwidgets.h
     qtwidgets/views/Separator_qtwidgets.cpp
@@ -155,8 +155,6 @@ SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.cpp
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h
     qtwidgets/TestHelpers_qtwidgets.cpp
-    qtwidgets/MDIArea.cpp
-    qtwidgets/MDIArea.h
     qtwidgets/ViewFactory_qtwidgets.cpp
     qtwidgets/ViewFactory_qtwidgets.h
     qtwidgets/DebugWindow.cpp
@@ -471,7 +469,6 @@ install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PAT
 if (KDDW_FRONTEND_QTWIDGETS)
 
   SET(KDDW_QTWIDGET_HEADERS
-    qtwidgets/MDIArea.h
     qtwidgets/Platform_qtwidgets.h
     qtwidgets/ViewFactory_qtwidgets.h
   )
@@ -486,6 +483,7 @@ if (KDDW_FRONTEND_QTWIDGETS)
     qtwidgets/views/MainWindowMDI_qtwidgets.h
     qtwidgets/views/ViewWrapper_qtwidgets.h
     qtwidgets/views/MDILayout_qtwidgets.h
+    qtwidgets/views/MDIArea_qtwidgets.h
     qtwidgets/views/DropArea_qtwidgets.h
     qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h
     qtwidgets/views/Stack_qtwidgets.h

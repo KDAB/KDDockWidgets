@@ -23,7 +23,7 @@
 #include "qtwidgets/views/TitleBar_qtwidgets.h"
 #include "qtwidgets/views/RubberBand_qtwidgets.h"
 #include "qtwidgets/Window_qtwidgets.h"
-#include "qtwidgets/MDIArea.h"
+#include "qtwidgets/views/MDIArea_qtwidgets.h"
 
 #include "kddockwidgets/controllers/MDILayout.h"
 #include "kddockwidgets/controllers/DropArea.h"

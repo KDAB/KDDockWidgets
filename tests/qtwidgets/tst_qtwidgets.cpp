@@ -32,7 +32,7 @@
 #include "kddockwidgets/controllers/MainWindow.h"
 #include "kddockwidgets/controllers/SideBar.h"
 
-#include "qtwidgets/MDIArea.h"
+#include "qtwidgets/views/MDIArea_qtwidgets.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/ViewWrapper_qtwidgets.h"
 #include "Platform.h"

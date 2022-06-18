@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "MDIArea.h"
+#include "MDIArea_qtwidgets.h"
 
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/views/DockWidgetViewInterface.h"

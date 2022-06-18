@@ -30,7 +30,7 @@
 
 #include "kddockwidgets/controllers/DropArea.h"
 #include "kddockwidgets/controllers/MDILayout.h"
-// #include "MDIArea.h"
+// #include "views/MDIArea_qtwidgets.h"
 
 #include <QDebug>
 
