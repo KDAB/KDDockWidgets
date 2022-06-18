@@ -13,7 +13,7 @@
 #define KD_MAINWINDOW_MDI_QTQUICK_H
 #pragma once
 
-#include "kddockwidgets/views/MainWindowMDI.h"
+#include "kddockwidgets/views/MainWindowMDIViewInterface.h"
 #include "kddockwidgets/views/MainWindow_qtquick.h"
 
 namespace KDDockWidgets {
@@ -21,11 +21,11 @@ namespace KDDockWidgets {
 namespace Views {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI_qtquick : public Views::MainWindow_qtquick, public Views::MainWindowMDI
+class DOCKS_EXPORT MainWindowMDI_qtquick : public Views::MainWindow_qtquick, public Views::MainWindowMDIViewInterface
 {
     Q_OBJECT
 public:
-    using Views::MainWindowMDI::addDockWidget;
+    using Views::MainWindowMDIViewInterface::addDockWidget;
 
     ///@brief Constructor. See base class documentation
     explicit MainWindowMDI_qtquick(const QString &uniqueName, QQuickItem *parent = nullptr,

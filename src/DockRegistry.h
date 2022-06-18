@@ -38,7 +38,7 @@ class Frame;
 }
 
 namespace Views {
-class MainWindowMDI;
+class MainWindowMDIViewInterface;
 }
 
 class MainWindowMDI;

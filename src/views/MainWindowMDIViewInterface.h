@@ -26,14 +26,14 @@ class MDILayout;
 namespace Views {
 
 /// @brief Interface for MainWindowMDI views
-class DOCKS_EXPORT MainWindowMDI
+class DOCKS_EXPORT MainWindowMDIViewInterface
 {
 public:
-    explicit MainWindowMDI(Controllers::MDILayout *);
+    explicit MainWindowMDIViewInterface(Controllers::MDILayout *);
 
     ///@brief Constructor. See base class documentation
-    explicit MainWindowMDI(const QString &uniqueName, QWidget *parent = nullptr,
-                           Qt::WindowFlags flags = Qt::WindowFlags());
+    explicit MainWindowMDIViewInterface(const QString &uniqueName, QWidget *parent = nullptr,
+                                        Qt::WindowFlags flags = Qt::WindowFlags());
 
 
     ///@brief Docks @p dockWidget

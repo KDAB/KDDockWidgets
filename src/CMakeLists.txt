@@ -98,8 +98,7 @@ set(KDDW_BACKEND_SRCS
     Platform.cpp
     Platform.h
     views/ClassicIndicatorWindowViewInterface.cpp
-    views/MainWindowMDI.cpp
-    views/MainWindowMDI.h
+    views/MainWindowMDIViewInterface.cpp
     views/MainWindowViewInterface.cpp
     views/MainWindowViewInterface.h
     views/FrameViewInterface.cpp
@@ -264,7 +263,7 @@ set(KDDW_VIEWINTERFACE_HEADERS
   views/TabBarViewInterface.h
   views/TitleBarViewInterface.h
   views/DockWidgetViewInterface.h
-  views/MainWindowMDI.h # TODOm2
+  views/MainWindowMDIViewInterface.h
   views/MainWindowViewInterface.h
   views/FrameViewInterface.h
 )

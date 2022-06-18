@@ -20,7 +20,7 @@
 #define KD_MAINWINDOW_MDI_QTWIDGETS_H
 #pragma once
 
-#include "kddockwidgets/views/MainWindowMDI.h"
+#include "kddockwidgets/views/MainWindowMDIViewInterface.h"
 #include "kddockwidgets/views/MainWindow_qtwidgets.h"
 
 namespace KDDockWidgets {
@@ -28,11 +28,11 @@ namespace KDDockWidgets {
 namespace Views {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI_qtwidgets : public Views::MainWindow_qtwidgets, public Views::MainWindowMDI
+class DOCKS_EXPORT MainWindowMDI_qtwidgets : public Views::MainWindow_qtwidgets, public Views::MainWindowMDIViewInterface
 {
     Q_OBJECT
 public:
-    using Views::MainWindowMDI::addDockWidget;
+    using Views::MainWindowMDIViewInterface::addDockWidget;
 
     ///@brief Constructor. See base class documentation
     explicit MainWindowMDI_qtwidgets(const QString &uniqueName, QWidget *parent = nullptr,
