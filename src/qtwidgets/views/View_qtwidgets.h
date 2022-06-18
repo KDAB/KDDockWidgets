@@ -13,7 +13,6 @@
 
 #include "kddockwidgets/Controller.h"
 #include "kddockwidgets/View.h"
-#include "kddockwidgets/Window_qtwidgets.h"
 #include "kddockwidgets/views/ViewWrapper_qtwidgets.h"
 
 #include <QDebug>
@@ -366,16 +365,7 @@ public:
         return {};
     }
 
-    std::shared_ptr<Window> window() const override
-    {
-        if (QWidget *root = QWidget::window()) {
-            if (root->window()) {
-                return std::shared_ptr<Window>(new Window_qtwidgets(root));
-            }
-        }
-
-        return {};
-    }
+    std::shared_ptr<Window> window() const override;
 
     std::shared_ptr<ViewWrapper> rootView() const override
     {

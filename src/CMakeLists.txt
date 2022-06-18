@@ -112,15 +112,12 @@ set(KDDW_BACKEND_SRCS
     views/SideBarViewInterface.cpp
 
     qtcommon/Platform_qt.cpp
-    qtcommon/Platform_qt.h
     qtcommon/Window_qt.cpp
-    qtcommon/Window_qt.h
     kddockwidgets_resources.qrc
 )
 
 SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/Window_qtwidgets.cpp
-    qtwidgets/Window_qtwidgets.h
     qtwidgets/Platform_qtwidgets.cpp
     qtwidgets/Platform_qtwidgets.h
     qtwidgets/views/View_qtwidgets.cpp
@@ -446,7 +443,6 @@ install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/
 install(FILES ${KDDW_PRIVATE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
 install(FILES ${KDDW_CONTROLLER_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/controllers)
 install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/controllers/indicators)
-install(FILES private/multisplitter/Item_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
 
 if (KDDW_FRONTEND_QTWIDGETS)
 
@@ -454,7 +450,6 @@ if (KDDW_FRONTEND_QTWIDGETS)
     qtwidgets/MDIArea.h
     qtwidgets/Platform_qtwidgets.h
     qtwidgets/ViewFactory_qtwidgets.h
-    qtwidgets/Window_qtwidgets.h
   )
 
   SET(KDDW_QTWIDGET_VIEW_HEADERS
@@ -488,7 +483,6 @@ if (KDDW_FRONTEND_QTQUICK)
   SET(KDDW_QTQUICK_HEADERS
     qtquick/ViewFactory_qtquick.h
     qtquick/DockWidgetInstantiator.h
-    qtquick/Window_qtquick.h
     qtquick/Platform_qtquick.h
     qtquick/LayoutSaverInstantiator.h
     qtquick/MainWindowInstantiator.h
@@ -521,7 +515,6 @@ endif()
 if (KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
   SET(KDDW_QT_HEADERS
     qtcommon/Platform_qt.h
-    qtcommon/Window_qt.h
   )
   install(FILES ${KDDW_QT_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 endif()

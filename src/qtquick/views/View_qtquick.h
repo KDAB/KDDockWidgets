@@ -14,7 +14,6 @@
 #include "kddockwidgets/Controller.h"
 #include "kddockwidgets/View.h"
 #include "ViewWrapper_qtquick.h"
-#include "kddockwidgets/Window_qtquick.h"
 
 #include <QDebug>
 #include <QEvent>

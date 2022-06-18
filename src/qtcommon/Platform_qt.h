@@ -13,9 +13,10 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/Platform.h"
-#include "kddockwidgets/Window_qt.h"
 
 namespace KDDockWidgets {
+
+class Window;
 
 /// @brief Baseclass platform for Qt based platform
 /// Useful since QtWidgets and QtQuick share some similarities

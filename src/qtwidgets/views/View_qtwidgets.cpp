@@ -10,6 +10,7 @@
 */
 
 #include "View_qtwidgets.h"
+#include "../Window_qtwidgets.h"
 
 #include <QTabBar>
 #include <QTabWidget>
@@ -17,6 +18,7 @@
 #include <QRubberBand>
 #include <QLineEdit>
 
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 template<>
@@ -59,4 +61,20 @@ View_qtwidgets<QLineEdit>::View_qtwidgets(KDDockWidgets::Controller *controller,
     : QLineEdit(parent)
     , View(controller, type, this)
 {
+}
+
+template<class T>
+std::shared_ptr<Window> View_qtwidgets<T>::window() const
+{
+    if (QWidget *root = QWidget::window()) {
+        if (root->window()) {
+            return std::shared_ptr<Window>(new Window_qtwidgets(root));
+        }
+    }
+
+    return {};
+}
+
+namespace KDDockWidgets::Views {
+template class View_qtwidgets<QWidget>;
 }

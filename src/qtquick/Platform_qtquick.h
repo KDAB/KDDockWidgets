@@ -33,7 +33,7 @@ public:
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
     ViewFactory *createDefaultViewFactory() override;
     ViewFactory_qtquick *viewFactory() const;
-    Window::Ptr windowAt(QPoint globalPos) const override;
+    std::shared_ptr<Window> windowAt(QPoint globalPos) const override;
     using Platform_qt::screenNumberFor;
     int screenNumberFor(View *) const override;
     QSize screenSizeFor(View *) const override;
