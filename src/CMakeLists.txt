@@ -228,6 +228,7 @@ set(KDDW_PUBLIC_HEADERS
     ViewWrapper.h
     Window.h
     ViewFactory.h
+    Qt5Qt6Compat_p.h
 )
 
 set(KDDW_PRIVATE_HEADERS
@@ -254,6 +255,18 @@ set(KDDW_CONTROLLER_HEADERS
     controllers/Separator.h
     controllers/Stack.h
     controllers/TitleBar.h
+)
+
+set(KDDW_VIEWINTERFACE_HEADERS
+  views/StackViewInterface.h
+  views/SideBarViewInterface.h
+  views/ClassicIndicatorWindowViewInterface.h
+  views/TabBarViewInterface.h
+  views/TitleBarViewInterface.h
+  views/DockWidgetViewInterface.h
+  views/MainWindowMDI.h # TODOm2
+  views/MainWindowViewInterface.h
+  views/FrameViewInterface.h
 )
 
 set(KDDW_INDICATOR_HEADERS
@@ -442,6 +455,7 @@ endif()
 install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 install(FILES ${KDDW_PRIVATE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
 install(FILES ${KDDW_CONTROLLER_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/controllers)
+install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/views)
 install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/controllers/indicators)
 
 if (KDDW_FRONTEND_QTWIDGETS)
