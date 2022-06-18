@@ -10,7 +10,7 @@
 */
 
 #include "View.h"
-
+#include "private/View_p.h"
 #include "private/multisplitter/Item_p.h"
 
 #include "controllers/FloatingWindow.h"
@@ -35,7 +35,8 @@ static qint64 s_nextId = 1;
 }
 
 View::View(Controller *controller, Type type, QObject *thisObj)
-    : m_controller(controller)
+    : d(new Private())
+    , m_controller(controller)
     , m_thisObj(thisObj)
     , m_id(QString::number(KDDockWidgets::s_nextId++))
     , m_type(type)
@@ -45,7 +46,7 @@ View::View(Controller *controller, Type type, QObject *thisObj)
 View::~View()
 {
     m_inDtor = true;
-    beingDestroyed.emit();
+    d->beingDestroyed.emit();
 
     if (!freed() && !is(Type::ViewWrapper)) {
         // TODOm3
@@ -55,6 +56,8 @@ View::~View()
         // and destroy its controller, which was the old behaviour.
         delete m_controller;
     }
+
+    delete d;
 }
 
 QString View::id() const
@@ -397,4 +400,10 @@ std::shared_ptr<Window> View::transientWindow() const
         return w->transientParent();
 
     return {};
+}
+
+bool View::onResize(QSize newSize)
+{
+    d->resized.emit(newSize);
+    return false;
 }

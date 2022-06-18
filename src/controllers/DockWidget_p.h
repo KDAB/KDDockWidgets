@@ -17,6 +17,7 @@
 #include "private/Position_p.h"
 #include "ViewWrapper.h"
 #include "Action.h"
+#include "private/View_p.h"
 
 #include <QCoreApplication>
 #include <QString>
@@ -59,7 +60,7 @@ public:
     void init()
     {
         updateTitle();
-        q->view()->closeRequested.connect([this](QCloseEvent *ev) {
+        q->view()->d->closeRequested.connect([this](QCloseEvent *ev) {
             onCloseEvent(ev);
         });
     }

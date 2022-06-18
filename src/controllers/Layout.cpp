@@ -15,6 +15,7 @@
 #include "Platform.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "private/Utils_p.h"
+#include "private/View_p.h"
 
 #include "controllers/Layout.h"
 #include "controllers/DropArea.h"
@@ -32,11 +33,11 @@ using namespace KDDockWidgets::Controllers;
 Layout::Layout(Type type, View *view)
     : Controller(type, view)
 {
-    view->layoutInvalidated.connect([this] {
+    view->d->layoutInvalidated.connect([this] {
         updateSizeConstraints();
     });
 
-    view->resized.connect(&Layout::onResize, this);
+    view->d->resized.connect(&Layout::onResize, this);
 }
 
 Layout::~Layout()

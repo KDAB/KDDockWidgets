@@ -15,6 +15,7 @@
 #include "kddockwidgets/views/MainWindow_qtquick.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 #include "Helpers_p.h"
+#include "private/View_p.h"
 
 #include <QGuiApplication>
 #include <QQmlEngine>
@@ -109,7 +110,7 @@ View *Platform_qtquick::tests_createNonClosableView(View *parent)
     CreateViewOptions opts;
     opts.isVisible = true;
     auto view = tests_createView(opts, parent);
-    view->closeRequested.connect([](QCloseEvent *ev) {
+    view->d->closeRequested.connect([](QCloseEvent *ev) {
         ev->ignore();
     });
 

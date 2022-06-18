@@ -11,6 +11,7 @@
 
 #include "View_qtwidgets.h"
 #include "../Window_qtwidgets.h"
+#include "private/View_p.h"
 
 #include <QTabBar>
 #include <QTabWidget>
@@ -73,6 +74,39 @@ std::shared_ptr<Window> View_qtwidgets<T>::window() const
     }
 
     return {};
+}
+
+template<class T>
+void View_qtwidgets<T>::setMaximumSize(QSize sz)
+{
+    if (sz != QWidget::maximumSize()) {
+        T::setMaximumSize(sz);
+        d->layoutInvalidated.emit();
+    }
+}
+
+template<class T>
+bool View_qtwidgets<T>::event(QEvent *e)
+{
+    if (e->type() == QEvent::LayoutRequest)
+        d->layoutInvalidated.emit();
+
+    return T::event(e);
+}
+
+template<class T>
+void View_qtwidgets<T>::closeEvent(QCloseEvent *ev)
+{
+    d->closeRequested.emit(ev);
+}
+
+template<class T>
+void View_qtwidgets<T>::setMinimumSize(QSize sz)
+{
+    if (sz != QWidget::minimumSize()) {
+        QWidget::setMinimumSize(sz);
+        d->layoutInvalidated.emit();
+    }
 }
 
 namespace KDDockWidgets::Views {

@@ -10,6 +10,7 @@
 */
 
 #include "main.h"
+#include "private/View_p.h"
 
 TEST_CASE("View::setParent()")
 {
@@ -173,7 +174,7 @@ TEST_CASE("View::closeRequested")
 
     auto rootView = createViewAndWindow({});
     bool signalArrived = false;
-    KDBindings::ScopedConnection connection = rootView->closeRequested.connect([&signalArrived](QCloseEvent *ev) {
+    KDBindings::ScopedConnection connection = rootView->d->closeRequested.connect([&signalArrived](QCloseEvent *ev) {
         signalArrived = true;
         CHECK(ev->isAccepted());
     });

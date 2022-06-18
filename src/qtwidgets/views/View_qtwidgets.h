@@ -71,13 +71,7 @@ public:
         return Base::minimumSizeHint();
     }
 
-    void setMinimumSize(QSize sz) override
-    {
-        if (sz != QWidget::minimumSize()) {
-            QWidget::setMinimumSize(sz);
-            layoutInvalidated.emit();
-        }
-    }
+    void setMinimumSize(QSize sz) override;
 
     QSize maxSizeHint() const override
     {
@@ -120,13 +114,7 @@ public:
         Base::setGeometry(geo);
     }
 
-    void setMaximumSize(QSize sz) override
-    {
-        if (sz != QWidget::maximumSize()) {
-            Base::setMaximumSize(sz);
-            layoutInvalidated.emit();
-        }
-    }
+    void setMaximumSize(QSize sz) override;
 
     bool isVisible() const override
     {
@@ -469,23 +457,13 @@ public:
     }
 
 protected:
-    bool event(QEvent *e) override
-    {
-        if (e->type() == QEvent::LayoutRequest)
-            layoutInvalidated.emit();
-
-        return Base::event(e);
-    }
+    bool event(QEvent *e) override;
+    void closeEvent(QCloseEvent *ev) override;
 
     void resizeEvent(QResizeEvent *ev) override
     {
         if (!onResize(ev->size()))
             Base::resizeEvent(ev);
-    }
-
-    void closeEvent(QCloseEvent *ev) override
-    {
-        closeRequested.emit(ev);
     }
 
 private:

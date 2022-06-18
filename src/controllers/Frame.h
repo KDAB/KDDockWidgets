@@ -347,6 +347,8 @@ public:
     int nonContentsHeight() const;
 
 private:
+    class Private;
+    Private *const d;
     bool m_inCtor = true; // Needs to be initialized early, as pointed out by UBSAN
 protected:
     bool m_inDtor = false;
@@ -369,7 +371,6 @@ private:
     bool m_updatingTitleBar = false;
     bool m_beingDeleted = false;
     int m_userType = 0;
-    KDBindings::ScopedConnection m_visibleWidgetCountChangedConnection;
 };
 
 }

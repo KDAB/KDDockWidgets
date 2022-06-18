@@ -19,8 +19,6 @@
 #include <QRect>
 #include <QObject>
 
-#include "kdbindings/signal.h"
-
 #include <memory>
 
 namespace Layouting {
@@ -178,11 +176,7 @@ public:
     virtual void setCursor(Qt::CursorShape) = 0;
     virtual void setMouseTracking(bool) = 0;
 
-    virtual bool onResize(QSize newSize)
-    {
-        resized.emit(newSize);
-        return false;
-    }
+    virtual bool onResize(QSize newSize);
 
     virtual bool onFocusInEvent(QFocusEvent *)
     {
@@ -273,20 +267,12 @@ public:
     Controller *firstParentOfType(KDDockWidgets::Type) const;
 
 public:
-    /// @brief signal emitted once ~View starts
-    KDBindings::Signal<> beingDestroyed;
-
-    /// @brief signal emitted when something tried to close this view
-    KDBindings::Signal<QCloseEvent *> closeRequested;
-
-    /// @brief signal emitted when constraints change, for example min/max sizes
-    KDBindings::Signal<> layoutInvalidated;
-
-    /// @brief signal emitted when the view is resized
-    KDBindings::Signal<QSize> resized;
+    class Private;
+    Private *const d;
 
 protected:
-    virtual void free_impl();
+    virtual void
+    free_impl();
 
     Controller *const m_controller;
     QObject *const m_thisObj;

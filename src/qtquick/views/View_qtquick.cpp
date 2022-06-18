@@ -11,6 +11,7 @@
 
 #include "View_qtquick.h"
 #include "private/Utils_p.h"
+#include "private/View_p.h"
 #include "ViewWrapper_qtquick.h"
 #include "private/multisplitter/Item_p.h"
 #include "kddockwidgets/Window_qtquick.h"
@@ -230,7 +231,7 @@ void View_qtquick::move(int x, int y)
 bool View_qtquick::event(QEvent *ev)
 {
     if (ev->type() == QEvent::Close)
-        closeRequested.emit(static_cast<QCloseEvent *>(ev));
+        View::d->closeRequested.emit(static_cast<QCloseEvent *>(ev));
 
     return QQuickItem::event(ev);
 }
@@ -268,7 +269,7 @@ bool View_qtquick::close(QQuickItem *item)
 {
     if (auto viewqtquick = qobject_cast<View_qtquick *>(item)) {
         QCloseEvent ev;
-        viewqtquick->closeRequested.emit(&ev);
+        viewqtquick->View::d->closeRequested.emit(&ev);
 
         if (ev.isAccepted()) {
             viewqtquick->setVisible(false);
@@ -459,7 +460,7 @@ void View_qtquick::setMaximumSize(QSize sz)
     if (maximumSize() != sz) {
         setProperty("kddockwidgets_max_size", sz);
         updateGeometry();
-        layoutInvalidated.emit();
+        View::d->layoutInvalidated.emit();
     }
 }
 
@@ -772,7 +773,7 @@ void View_qtquick::setMinimumSize(QSize sz)
     if (minSize() != sz) {
         setProperty("kddockwidgets_min_size", sz);
         updateGeometry();
-        layoutInvalidated.emit();
+        View::d->layoutInvalidated.emit();
     }
 }
 

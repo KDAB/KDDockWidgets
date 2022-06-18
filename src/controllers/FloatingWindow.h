@@ -214,6 +214,10 @@ Q_SIGNALS:
     void numFramesChanged();
     void windowStateChanged(QWindowStateChangeEvent *);
 
+private:
+    class Private;
+    Private *const d;
+
 protected:
     QPointer<DropArea> m_dropArea;
     Controllers::TitleBar *const m_titleBar;
@@ -225,12 +229,12 @@ private:
     void onVisibleFrameCountChanged(int count);
     void onCloseEvent(QCloseEvent *);
     void updateSizeConstraints();
+
     bool m_disableSetVisible = false;
     bool m_deleteScheduled = false;
     bool m_inDtor = false;
     bool m_updatingTitleBarVisibility = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
-    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
     Qt::WindowState windowStateOverride() const;
 #ifdef Q_OS_WIN

@@ -28,6 +28,9 @@
 
 #include "private/multisplitter/Item_p.h"
 #include "View.h"
+#include "private/View_p.h"
+
+#include "kdbindings/signal.h"
 
 #include <QCloseEvent>
 #include <QScopedValueRollback>
@@ -44,6 +47,12 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
+
+class FloatingWindow::Private
+{
+public:
+    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
+};
 
 /** static */
 Qt::WindowFlags FloatingWindow::s_windowFlagsOverride = {};
@@ -108,6 +117,7 @@ MainWindow *actualParent(MainWindow *candidate)
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     : Controller(Type::FloatingWindow, Config::self().viewFactory()->createFloatingWindow(this, actualParent(parent), windowFlagsToUse()))
     , Draggable(view(), KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
+    , d(new Private())
     , m_dropArea(new DropArea(view(), MainWindowOption_None))
     , m_titleBar(new Controllers::TitleBar(this))
 {
@@ -137,17 +147,17 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
 
     updateTitleBarVisibility();
 
-    m_visibleWidgetCountConnection = m_dropArea->visibleWidgetCountChanged.connect([this](int count) {
+    d->m_visibleWidgetCountConnection = m_dropArea->visibleWidgetCountChanged.connect([this](int count) {
         onFrameCountChanged(count);
         numFramesChanged();
         onVisibleFrameCountChanged(count);
     });
 
-    view()->closeRequested.connect([this](QCloseEvent *ev) {
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) {
         onCloseEvent(ev);
     });
 
-    view()->layoutInvalidated.connect([this] {
+    view()->d->layoutInvalidated.connect([this] {
         updateSizeConstraints();
     });
 
@@ -224,6 +234,7 @@ FloatingWindow::~FloatingWindow()
 
     DockRegistry::self()->unregisterFloatingWindow(this);
     delete m_titleBar;
+    delete d;
 }
 
 void FloatingWindow::maybeCreateResizeHandler()

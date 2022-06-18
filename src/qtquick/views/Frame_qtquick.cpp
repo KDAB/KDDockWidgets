@@ -61,7 +61,7 @@ void Frame_qtquick::init()
             this, SLOT(updateConstriants()));
 
     connect(this, &View_qtquick::geometryUpdated, this, [this] {
-        layoutInvalidated.emit();
+        View::d->layoutInvalidated.emit();
     });
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
@@ -100,7 +100,7 @@ void Frame_qtquick::updateConstriants()
     setProperty("kddockwidgets_min_size", minSize());
     setProperty("kddockwidgets_max_size", maximumSize());
 
-    layoutInvalidated.emit();
+    View::d->layoutInvalidated.emit();
 }
 
 void Frame_qtquick::removeWidget_impl(Controllers::DockWidget *dw)

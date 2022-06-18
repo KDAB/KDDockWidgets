@@ -17,6 +17,8 @@
 #include "ItemFreeContainer_p.h"
 #include "kdbindings/signal.h"
 #include "Window.h"
+#include "../View_p.h"
+
 
 #include <QEvent>
 #include <QDebug>
@@ -201,7 +203,7 @@ void Item::setGuestView(View *guest)
         connect(newWidget, &QObject::destroyed, this, &Item::onWidgetDestroyed);
 
         m_layoutInvalidatedConnection->disconnect();
-        m_layoutInvalidatedConnection = guest->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
+        m_layoutInvalidatedConnection = guest->d->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
 
         if (m_sizingInfo.geometry.isEmpty()) {
             // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize

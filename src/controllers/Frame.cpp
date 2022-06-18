@@ -27,14 +27,18 @@
 #include "controllers/Layout.h"
 #include "controllers/MainWindow.h"
 
-#include "private/Logging_p.h"
-#include "private/Utils_p.h"
 #include "DockRegistry.h"
 #include "DockWidget_p.h"
+
+#include "private/Logging_p.h"
+#include "private/Utils_p.h"
+#include "private/View_p.h"
 #include "private/LayoutSaver_p.h"
 #include "private/Position_p.h"
 #include "private/WidgetResizeHandler_p.h"
 #include "private/multisplitter/Item_p.h"
+
+#include "kdbindings/signal.h"
 
 #include <QCloseEvent>
 #include <QTimer>
@@ -47,6 +51,12 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 namespace KDDockWidgets {
+
+class Frame::Private
+{
+public:
+    KDBindings::ScopedConnection m_visibleWidgetCountChangedConnection;
+};
 
 static FrameOptions actualOptions(FrameOptions options)
 {
@@ -71,6 +81,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 Frame::Frame(View *parent, FrameOptions options, int userType)
     : Controller(Type::Frame, Config::self().viewFactory()->createFrame(this, parent))
     , FocusScope(view())
+    , d(new Private())
     , m_tabWidget(new Controllers::Stack(this, tabWidgetOptions(options)))
     , m_titleBar(new Controllers::TitleBar(this))
     , m_options(actualOptions(options))
@@ -85,7 +96,7 @@ Frame::Frame(View *parent, FrameOptions options, int userType)
 
     setLayout(parent ? parent->asLayout() : nullptr);
     view()->init();
-    view()->closeRequested.connect([this](QCloseEvent *ev) {
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) {
         onCloseEvent(ev);
     });
 
@@ -108,6 +119,7 @@ Frame::~Frame()
     setLayout(nullptr);
     delete m_titleBar;
     delete m_tabWidget;
+    delete d;
 }
 
 void Frame::onCloseEvent(QCloseEvent *e)
@@ -138,8 +150,8 @@ void Frame::setLayout(Layout *dt)
             m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, view());
 
         // We keep the connect result so we don't dereference m_layout at shutdown
-        m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass. It's a KDBindings bug.
-        m_visibleWidgetCountChangedConnection = m_layout->visibleWidgetCountChanged.connect(&Frame::updateTitleBarVisibility, this);
+        d->m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass. It's a KDBindings bug.
+        d->m_visibleWidgetCountChangedConnection = m_layout->visibleWidgetCountChanged.connect(&Frame::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();

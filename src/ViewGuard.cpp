@@ -11,6 +11,7 @@
 
 #include "ViewGuard.h"
 #include "View.h"
+#include "private/View_p.h"
 
 using namespace KDDockWidgets;
 
@@ -81,7 +82,7 @@ void ViewGuard::setView(View *view)
     v = view;
 
     if (v) {
-        m_onDestroy = v->beingDestroyed.connect([this] {
+        m_onDestroy = v->d->beingDestroyed.connect([this] {
             v = nullptr;
         });
     }

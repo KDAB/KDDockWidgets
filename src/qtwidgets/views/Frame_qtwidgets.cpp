@@ -20,6 +20,7 @@
 #include "kddockwidgets/controllers/TabBar.h"
 #include "kddockwidgets/controllers/TitleBar.h"
 #include "Config.h"
+#include "private/View_p.h"
 
 #include <QPainter>
 #include <QTabBar>
@@ -44,7 +45,7 @@ public:
         if (m_frameWidget->inDtor())
             return;
         QVBoxLayout::invalidate();
-        m_frameWidget->layoutInvalidated.emit();
+        m_frameWidget->d->layoutInvalidated.emit();
     }
 
     Frame_qtwidgets *const m_frameWidget;
