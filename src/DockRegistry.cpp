@@ -26,6 +26,8 @@
 #include "kddockwidgets/controllers/DockWidget_p.h"
 #include "kddockwidgets/controllers/DropArea.h"
 
+#include "kdbindings/signal.h"
+
 #include <QPointer>
 #include <QDebug>
 #include <QGuiApplication>
@@ -33,16 +35,24 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
+class DockRegistry::Private
+{
+public:
+    KDBindings::ConnectionHandle m_connection;
+};
+
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
+    , d(new Private())
 {
     qGuiApp->installEventFilter(this);
-    m_connection = Platform::instance()->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
+    d->m_connection = Platform::instance()->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
 }
 
 DockRegistry::~DockRegistry()
 {
-    m_connection.disconnect();
+    d->m_connection.disconnect();
+    delete d;
 }
 
 void DockRegistry::maybeDelete()

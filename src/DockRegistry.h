@@ -18,8 +18,6 @@
 #include <QObject>
 #include <QPointer>
 
-#include "kdbindings/signal.h"
-
 /**
  * DockRegistry is a singleton that knows about all DockWidgets.
  * It's used so we can restore layouts.
@@ -255,6 +253,9 @@ private:
     void maybeDelete();
     void setFocusedDockWidget(Controllers::DockWidget *);
 
+    class Private;
+    Private *const d;
+
     bool m_isProcessingAppQuitEvent = false;
     QVector<Controllers::DockWidget *> m_dockWidgets;
     QVector<Controllers::MainWindow *> m_mainWindows;
@@ -262,7 +263,6 @@ private:
     QVector<Controllers::FloatingWindow *> m_floatingWindows;
     QVector<Controllers::Layout *> m_layouts;
     QPointer<Controllers::DockWidget> m_focusedDockWidget;
-    KDBindings::ConnectionHandle m_connection;
 
     ///@brief Dock widget id remapping, used by LayoutSaver
     ///
