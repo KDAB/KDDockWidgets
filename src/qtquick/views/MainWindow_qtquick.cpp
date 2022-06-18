@@ -12,7 +12,7 @@
 #include "MainWindow_qtquick.h"
 #include "kddockwidgets/controllers/Layout.h"
 #include "kddockwidgets/controllers/MainWindow.h"
-#include "kddockwidgets/private/DockRegistry_p.h"
+#include "kddockwidgets/private/DockRegistry.h"
 
 #include <QDebug>
 

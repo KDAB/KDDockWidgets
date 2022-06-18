@@ -17,7 +17,7 @@
 #include "controllers/DropArea.h"
 #include "private/DragController_p.h"
 #include "private/Logging_p.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "private/Utils_p.h"
 
 #include "controllers/Frame.h"

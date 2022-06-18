@@ -15,7 +15,7 @@
 #include "kddockwidgets/controllers/TitleBar.h"
 #include "qtwidgets/ViewFactory_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 
 #include <QMouseEvent>
 #include <QTabBar>

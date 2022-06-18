@@ -10,7 +10,7 @@
 */
 
 #include "DragController_p.h"
-#include "DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "Logging_p.h"
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"

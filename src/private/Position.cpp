@@ -16,7 +16,7 @@
  */
 
 #include "Position_p.h"
-#include "DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "LayoutSaver_p.h"
 #include "multisplitter/Item_p.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"

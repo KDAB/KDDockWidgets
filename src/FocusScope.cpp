@@ -21,7 +21,7 @@
 #include "ViewGuard.h"
 #include "controllers/DockWidget.h"
 #include "controllers/Frame.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 
 #include <QPointer>
 

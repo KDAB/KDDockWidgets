@@ -13,7 +13,7 @@
 #define KD_DOCKWIDGET_BASE_P_H
 
 #include "DockWidget.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "private/Position_p.h"
 #include "ViewWrapper.h"
 #include "Action.h"

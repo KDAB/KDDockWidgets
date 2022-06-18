@@ -19,7 +19,7 @@
 
 #include "MainWindow.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "controllers/MDILayout.h"
 #include "controllers/DropArea.h"
 #include "private/Utils_p.h"

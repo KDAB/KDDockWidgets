@@ -17,7 +17,7 @@
 
 #include "DockWidgetInstantiator.h"
 
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 
 using namespace KDDockWidgets;
 

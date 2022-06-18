@@ -9,14 +9,14 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "Config.h"
-#include "Logging_p.h"
-#include "Position_p.h"
-#include "Utils_p.h"
-#include "WidgetResizeHandler_p.h"
-#include "WindowBeingDragged_p.h"
-#include "multisplitter/Item_p.h"
+#include "private/Logging_p.h"
+#include "private/Position_p.h"
+#include "private/Utils_p.h"
+#include "private/WidgetResizeHandler_p.h"
+#include "private/WindowBeingDragged_p.h"
+#include "private/multisplitter/Item_p.h"
 
 #include "Platform.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"

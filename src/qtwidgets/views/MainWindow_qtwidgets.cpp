@@ -25,7 +25,7 @@
 #include "kddockwidgets/controllers/Frame.h"
 #include "kddockwidgets/controllers/SideBar.h"
 
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "private/Logging_p.h"
 
 #include <QPainter>

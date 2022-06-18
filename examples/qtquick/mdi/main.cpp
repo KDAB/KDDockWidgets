@@ -14,7 +14,7 @@
 #include <kddockwidgets/views/DockWidget_qtquick.h>
 #include <kddockwidgets/views/MainWindowMDI_qtquick.h>
 #include <kddockwidgets/Platform_qtquick.h>
-#include <kddockwidgets/private/DockRegistry_p.h>
+#include <kddockwidgets/private/DockRegistry.h>
 #include <kddockwidgets/ViewFactory.h>
 #include "kddockwidgets/controllers/MainWindow.h"
 

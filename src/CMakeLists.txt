@@ -32,13 +32,12 @@ set(KDDW_BACKEND_SRCS
     ViewFactory.h
     LayoutSaver.cpp
     LayoutSaver.h
+    DockRegistry.cpp
     private/LayoutSaver_p.h
     private/Position.cpp
     private/Position_p.h
     private/Logging.cpp
     private/Logging_p.h
-    private/DockRegistry.cpp
-    private/DockRegistry_p.h
     private/Draggable.cpp
     private/Draggable_p.h
     private/WindowBeingDragged.cpp
@@ -246,7 +245,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/TitleBar_p.h
     private/WindowBeingDragged_p.h
     private/WidgetResizeHandler_p.h
-    private/DockRegistry_p.h
+    private/DockRegistry.h
     # private/TabWidget_p.h
 )
 

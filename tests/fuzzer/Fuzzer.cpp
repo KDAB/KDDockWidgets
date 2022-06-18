@@ -13,7 +13,7 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 #include "Fuzzer.h"
-#include "DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "DockWidget.h"
 #include "MainWindow.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"

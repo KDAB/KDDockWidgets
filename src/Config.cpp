@@ -20,7 +20,7 @@
 #include "Platform.h"
 #include "View.h"
 #include "private/multisplitter/Item_p.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "private/Utils_p.h"
 #include "private/DragController_p.h"
 #include "kddockwidgets/ViewFactory.h"

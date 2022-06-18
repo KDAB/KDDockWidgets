@@ -18,7 +18,7 @@
 #include "private/WindowBeingDragged_p.h"
 #include "private/Utils_p.h"
 #include "private/WidgetResizeHandler_p.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "private/DragController_p.h"

@@ -12,7 +12,7 @@
 #include "DropIndicatorOverlay.h"
 
 #include "kddockwidgets/controllers/DropArea.h"
-#include "DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "DragController_p.h"
 #include "Config.h"
 #include "Platform.h"

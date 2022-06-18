@@ -11,7 +11,7 @@
 
 #include "DockWidget.h"
 #include "DockWidget_p.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "private/LayoutSaver_p.h"
 #include "private/Logging_p.h"
 #include "controllers/MDILayout.h"

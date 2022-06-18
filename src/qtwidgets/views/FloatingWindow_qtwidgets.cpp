@@ -15,7 +15,7 @@
 #include "kddockwidgets/controllers/TitleBar.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "kddockwidgets/controllers/DropArea.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"

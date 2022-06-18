@@ -16,7 +16,7 @@
 
 #ifdef KDDockWidgets_XLIB
 
-#include "DockRegistry_p.h"
+#include "DockRegistry.h"
 
 #include <QtGui/qpa/qplatformnativeinterface.h>
 

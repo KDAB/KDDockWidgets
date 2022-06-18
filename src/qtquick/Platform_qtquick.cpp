@@ -17,7 +17,7 @@
 #include "Window_qtquick.h"
 #include "views/View_qtquick.h"
 #include "qtquick/Window_qtquick.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "private/DragController_p.h"
 #include "ViewFactory_qtquick.h"
 

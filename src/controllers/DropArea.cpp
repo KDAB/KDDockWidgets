@@ -12,7 +12,7 @@
 #include "DropArea.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 #include "private/Draggable_p.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"

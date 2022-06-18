@@ -17,7 +17,7 @@
 #include "controllers/Frame.h"
 
 #include "private/DragController_p.h"
-#include "private/DockRegistry_p.h"
+#include "DockRegistry.h"
 
 
 using namespace KDDockWidgets;
