@@ -1000,7 +1000,7 @@ int ItemBoxContainer::numSideBySide_recursive(Qt::Orientation o) const
         for (Item *child : m_children) {
             if (ItemBoxContainer *container = child->asBoxContainer()) {
                 num += container->numSideBySide_recursive(o);
-            } else {
+            } else if (!child->isPlaceholder()) {
                 num++;
             }
         }
@@ -1009,7 +1009,7 @@ int ItemBoxContainer::numSideBySide_recursive(Qt::Orientation o) const
         for (Item *child : m_children) {
             if (ItemBoxContainer *container = child->asBoxContainer()) {
                 num = qMax(num, container->numSideBySide_recursive(o));
-            } else {
+            } else if (!child->isPlaceholder()) {
                 num = qMax(num, 1);
             }
         }
