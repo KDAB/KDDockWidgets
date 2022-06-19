@@ -70,35 +70,6 @@ public:
         m_connection.disconnect();
     }
 
-    void init()
-    {
-
-        m_layout->setSpacing(0);
-        updateMargins();
-
-        if (m_supportsAutoHide) {
-            m_layout->addWidget(View_qtwidgets::asQWidget(m_controller->sideBar(SideBarLocation::West)->view()));
-            auto innerVLayout = new QVBoxLayout();
-            innerVLayout->setSpacing(0);
-            innerVLayout->setContentsMargins(0, 0, 0, 0);
-            innerVLayout->addWidget(View_qtwidgets::asQWidget(m_controller->sideBar(SideBarLocation::North)));
-            innerVLayout->addWidget(View_qtwidgets::asQWidget(m_controller->layout()));
-            innerVLayout->addWidget(View_qtwidgets::asQWidget(m_controller->sideBar(SideBarLocation::South)));
-            m_layout->addLayout(innerVLayout);
-            m_layout->addWidget(View_qtwidgets::asQWidget(m_controller->sideBar(SideBarLocation::East)));
-        } else {
-            m_layout->addWidget(qobject_cast<QWidget *>(m_controller->layout()->view()->asQObject()));
-        }
-
-        q->setCentralWidget(m_centralWidget);
-
-        q->create();
-        m_connection = q->window()->screenChanged.connect([this] {
-            updateMargins(); // logical dpi might have changed
-            Q_EMIT DockRegistry::self()->windowChangedScreen(q->window());
-        });
-    }
-
     void updateMargins()
     {
         const qreal factor = Views::logicalDpiFactor(q);
@@ -128,7 +99,42 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
     , d(new Private(this))
 {
     MainWindowViewInterface::init(uniqueName);
-    d->init();
+
+    d->m_layout->setSpacing(0);
+    d->updateMargins();
+
+    if (d->m_supportsAutoHide) {
+        d->m_layout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::West)->view()));
+        auto innerVLayout = new QVBoxLayout();
+        innerVLayout->setSpacing(0);
+        innerVLayout->setContentsMargins(0, 0, 0, 0);
+        innerVLayout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::North)));
+        innerVLayout->addWidget(View_qtwidgets::asQWidget(d->m_controller->layout()));
+        innerVLayout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::South)));
+        d->m_layout->addLayout(innerVLayout);
+        d->m_layout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::East)));
+    } else {
+        d->m_layout->addWidget(qobject_cast<QWidget *>(d->m_controller->layout()->view()->asQObject()));
+    }
+
+    setCentralWidget(d->m_centralWidget);
+
+    const bool isWindow = !parentWidget() || (flags & Qt::Window);
+    if (isWindow) {
+        // Update our margins when logical dpi changes.
+        // QWidget doesn't have any screenChanged signal, so we need to use QWindow::screenChanged.
+        // Note #1: Someone might be using this main window embedded into another main window, in which case it will
+        // never have a QWindow, so guard it with isWindow.
+        // Note #2: We don't use QWidget::isWindow() as that will always be true since QMainWindow sets it. Anyone wanting
+        // or not wanting this immediate create() needs to pass a parent/flag pair that makes sense. For example, some people
+        // might want to add this main window into a layout and avoid the create(), so they pass a parent, with null flag.
+
+        create(); // ensure QWindow exists
+        d->m_connection = window()->screenChanged.connect([this] {
+            d->updateMargins(); // logical dpi might have changed
+            Q_EMIT DockRegistry::self()->windowChangedScreen(window());
+        });
+    }
 }
 
 MainWindow_qtwidgets::~MainWindow_qtwidgets()
