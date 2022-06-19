@@ -652,3 +652,8 @@ bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
     setRootItem(new Layouting::ItemBoxContainer(view()));
     return Layout::deserialize(l);
 }
+
+int DropArea::numSideBySide_recursive(Qt::Orientation o) const
+{
+    return m_rootItem->numSideBySide_recursive(o);
+}

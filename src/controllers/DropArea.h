@@ -131,6 +131,10 @@ public:
     /// @brief overload that just resizes widgets within a sub-tree
     void layoutEqually(Layouting::ItemBoxContainer *);
 
+    /// @brief Returns the number of items layed out horizontally or vertically
+    /// But honours nesting
+    int numSideBySide_recursive(Qt::Orientation) const;
+
     Layouting::ItemBoxContainer *rootItem() const;
 
 private:

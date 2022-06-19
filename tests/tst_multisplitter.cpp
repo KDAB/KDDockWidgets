@@ -97,6 +97,7 @@ private Q_SLOTS:
     void tst_maxSizeHonouredWhenAnotherRemoved();
     void tst_simplify();
     void tst_adjacentLayoutBorders();
+    void tst_numSideBySide_recursive();
 };
 
 static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
@@ -1767,6 +1768,40 @@ void TestMultiSplitter::tst_adjacentLayoutBorders()
     root->insertItem(item5, Location_OnRight);
     borders4 = item4->adjacentLayoutBorders();
     QCOMPARE(borders4, LayoutBorderLocation_South);
+}
+
+void TestMultiSplitter::tst_numSideBySide_recursive()
+{
+    auto root = createRoot();
+    QVERIFY(root->isVertical());
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 0);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 0);
+
+    auto item1 = createItem();
+    root->insertItem(item1, Location_OnRight);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 1);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 1);
+
+
+    auto item2 = createItem();
+    root->insertItem(item2, Location_OnTop);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 2);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 1);
+
+    auto item3 = createItem();
+    root->insertItem(item3, Location_OnTop);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 3);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 1);
+
+    auto item1Child = createItem();
+    ItemBoxContainer::insertItemRelativeTo(item1Child, item1, Location_OnLeft);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 3);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 2);
+
+    auto item1Child1Child = createItem();
+    ItemBoxContainer::insertItemRelativeTo(item1Child1Child, item1Child, Location_OnBottom);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 4);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 2);
 }
 
 int main(int argc, char **argv)
