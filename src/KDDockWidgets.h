@@ -128,7 +128,8 @@ Q_ENUM_NS(AddingOption)
 enum class InitialVisibilityOption
 {
     StartVisible = 0, ///< The dock widget is made visible when docked
-    StartHidden ///< Don't show the dock widget when adding it
+    StartHidden, ///< Don't show the dock widget when adding it
+    PreserveCurrentTab ///< When adding as tabbed, don't change the current index
 };
 Q_ENUM_NS(InitialVisibilityOption)
 
@@ -174,6 +175,11 @@ struct InitialOption
     bool startsHidden() const
     {
         return visibility == InitialVisibilityOption::StartHidden;
+    }
+
+    bool preservesCurrentTab() const
+    {
+        return visibility == InitialVisibilityOption::PreserveCurrentTab;
     }
 
     int preferredLength(Qt::Orientation o) const

@@ -229,9 +229,16 @@ public:
     void setAsCurrentTab();
 
     /**
-     * @brief Returns which tab index this dock widget occupies in the tab widget it's contained in
+     * @brief Returns the tab index this dock widget occupies
+     * Note that dock widgets are almost always tabbed, even if you don't see the tab bar.
+     * A single floating dock widget is still tabbed on a tab widget with a single tab.
      */
     int tabIndex() const;
+
+    /**
+     * @brief Returns the index of the current tab of the tab group this dock widget is in.
+     */
+    int currentTabIndex() const;
 
     /**
      * @brief Sets an icon to show on title bars and tab bars.

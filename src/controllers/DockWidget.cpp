@@ -336,6 +336,14 @@ int DockWidget::tabIndex() const
     return 0;
 }
 
+int DockWidget::currentTabIndex() const
+{
+    if (Frame *frame = d->frame())
+        return frame->currentTabIndex();
+
+    return 0;
+}
+
 void DockWidget::setIcon(const QIcon &icon, IconPlaces places)
 {
     if (places & IconPlace::TitleBar)
