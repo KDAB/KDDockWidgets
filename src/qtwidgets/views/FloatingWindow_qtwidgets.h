@@ -41,6 +41,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *) override;
     bool event(QEvent *ev) override;
+    bool eventFilter(QObject *o, QEvent *ev) override;
     void init() override;
 #if defined(Q_OS_WIN)
     bool nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override;

@@ -212,7 +212,7 @@ public:
 Q_SIGNALS:
     void activatedChanged();
     void numFramesChanged();
-    void windowStateChanged(QWindowStateChangeEvent *);
+    void windowStateChanged();
 
 private:
     class Private;
