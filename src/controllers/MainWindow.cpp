@@ -128,6 +128,7 @@ public:
     Controllers::DockWidget *m_persistentCentralDockWidget = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
     const bool m_supportsAutoHide;
+    int m_overlayMargin = 1;
 };
 
 MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions options)
@@ -299,7 +300,7 @@ QRect MainWindow::Private::rectForOverlay(Controllers::Frame *frame, SideBarLoca
     const QMargins centerWidgetMargins = q->centerWidgetMargins();
 
     QRect rect;
-    const int margin = 1;
+    const int margin = m_overlayMargin;
     switch (location) {
     case SideBarLocation::North:
     case SideBarLocation::South: {
@@ -841,4 +842,19 @@ QRect MainWindow::centralAreaGeometry() const
 {
     auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
     return v->centralAreaGeometry();
+}
+
+int MainWindow::overlayMargin() const
+{
+    return d->m_overlayMargin;
+}
+
+void MainWindow::setOverlayMargin(int margin)
+{
+    if (margin == d->m_overlayMargin)
+        return;
+
+
+    d->m_overlayMargin = margin;
+    Q_EMIT overlayMarginChanged(margin);
 }

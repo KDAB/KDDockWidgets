@@ -187,6 +187,13 @@ public:
     /// if all dock widgets were closed (0 or more)
     bool closeDockWidgets(bool force = false);
 
+    /// @brief Returns the margin used by overlay docks. Default: 1
+    int overlayMargin() const;
+
+    /// @brief Sets the margin used by overlay docks.
+    /// Does not modify currently overlayed docks
+    void setOverlayMargin(int margin);
+
     /// @brief Sets the content's margins
     void setContentsMargins(int, int, int, int);
 
@@ -228,6 +235,8 @@ Q_SIGNALS:
     /// Note that we're using the "Frame" nomenculature instead of "DockWidget" here, as DockWidgets
     /// can be tabbed together, in which case this signal isn't emitted.
     void frameCountChanged(int);
+
+    void overlayMarginChanged(int margin);
 
 private:
     void init(const QString &name);
