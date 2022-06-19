@@ -332,7 +332,7 @@ QRect MainWindow::Private::rectForOverlay(Controllers::Frame *frame, SideBarLoca
         rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight - centerWidgetMargins.top() - centerWidgetMargins.bottom());
         rect.moveTop(sb->view()->mapTo(q->view(), QPoint(0, 0)).y() + topSideBarHeight - 1);
         if (location == SideBarLocation::East) {
-            rect.moveLeft(centralAreaGeo.width() - rect.width() - sb->width() - centerWidgetMargins.right() - margin);
+            rect.moveLeft(centralAreaGeo.x() + centralAreaGeo.width() - rect.width() - sb->width() - centerWidgetMargins.right() - margin);
         } else {
             rect.moveLeft(margin + centralAreaGeo.x() + centerWidgetMargins.left() + sb->width());
         }
