@@ -124,6 +124,10 @@ int main(int argc, char **argv)
                                               QCoreApplication::translate("main", "DockWidget #5 won't be closed before a restore. Illustrates LayoutSaverOption::DontCloseBeforeRestore"));
     parser.addOption(dontCloseBeforeRestore);
 
+    QCommandLineOption blockCloseEvent("block-close-event",
+                                       QCoreApplication::translate("main", "DockWidget #0 will block close events"));
+    parser.addOption(blockCloseEvent);
+
     QCommandLineOption showButtonsInTabBarIfTitleBarHidden("show-buttons-in-tabbar-if-titlebar-hidden",
                                                            QCoreApplication::translate("main", "If we're not using title bars we'll still show the close and float button in the tab bar"));
     parser.addOption(showButtonsInTabBarIfTitleBarHidden);
@@ -289,6 +293,7 @@ int main(int argc, char **argv)
     const bool maxSizeForDockWidget8 = parser.isSet(maxSizeOption);
     const bool dontCloseDockWidget5BeforeRestore = parser.isSet(dontCloseBeforeRestore);
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
+    const bool dock0BlocksCloseEvent = parser.isSet(blockCloseEvent);
 
 #ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
     const bool usesDockableMainWindows = parser.isSet(dockableMainWindows);
@@ -298,7 +303,7 @@ int main(int argc, char **argv)
 
     MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0,
                             nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8,
-                            dontCloseDockWidget5BeforeRestore);
+                            dontCloseDockWidget5BeforeRestore, dock0BlocksCloseEvent);
     mainWindow.setWindowTitle("Main Window 1");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
@@ -317,7 +322,7 @@ int main(int argc, char **argv)
         auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
                                             nonClosableDockWidget0, nonDockableDockWidget9,
                                             restoreIsRelative, maxSizeForDockWidget8,
-                                            dontCloseDockWidget5BeforeRestore, affinity);
+                                            dontCloseDockWidget5BeforeRestore, dock0BlocksCloseEvent, affinity);
         if (affinity.isEmpty())
             mainWindow2->setWindowTitle("Main Window 2");
         else
@@ -331,7 +336,7 @@ int main(int argc, char **argv)
         const QString affinity = QStringLiteral("Inner-DockWidgets-2");
         auto dockableMainWindow = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
                                                    false, false, restoreIsRelative, false,
-                                                   false, affinity);
+                                                   false, false, affinity);
 
         dockableMainWindow->setAffinities({ affinity });
         dockableMainWindow->setStyleSheet(QStringLiteral("background: yellow"));

@@ -15,6 +15,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QLineEdit>
+#include <QCloseEvent>
 
 static QHash<QString, QImage> s_images; /// clazy:exclude=non-pod-global-static
 
@@ -68,6 +69,20 @@ void MyWidget::drawLogo(QPainter &p)
     QRect targetLogoRect(0,0, width, height);
     targetLogoRect.moveCenter(rect().center() + QPoint(0, -int(size().height() * 0.00)));
     p.drawImage(targetLogoRect, m_logo, m_logo.rect());
+}
+
+void MyWidget::blockCloseEvent()
+{
+    m_blocksCloseEvent = true;
+}
+
+void MyWidget::closeEvent(QCloseEvent *ev)
+{
+    if (m_blocksCloseEvent) {
+        ev->ignore();
+    } else {
+        QWidget::closeEvent(ev);
+    }
 }
 
 MyWidget1::MyWidget1(MyWidget::QWidget *parent)
