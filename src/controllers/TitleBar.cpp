@@ -19,6 +19,7 @@
 
 #include "views/TitleBarViewInterface.h"
 #include "ViewWrapper.h"
+#include "controllers/DockWidget_p.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
@@ -371,10 +372,22 @@ void TitleBar::onFloatClicked()
                     return;
                 }
 
+                int i = 0;
+                DockWidget *current = nullptr;
                 for (auto dock : qAsConst(dockWidgets)) {
+
+                    if (!current && dock->isCurrentTab())
+                        current = dock;
+
                     dock->setFloating(true);
+                    dock->dptr()->m_lastPosition->m_tabIndex = i;
                     dock->setFloating(false);
+                    ++i;
                 }
+
+                // Restore the current tab
+                if (current)
+                    current->setAsCurrentTab();
             }
         }
     } else {
