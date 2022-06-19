@@ -116,6 +116,8 @@ KDDockWidgets::Location DropIndicatorOverlay::multisplitterLocationFor(DropLocat
         return KDDockWidgets::Location_None;
     case DropLocation_Inner:
     case DropLocation_Outter:
+    case DropLocation_Horizontal:
+    case DropLocation_Vertical:
         qWarning() << Q_FUNC_INFO << "Unexpected drop location" << dropLoc;
         break;
     }

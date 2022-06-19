@@ -76,6 +76,8 @@ static QString iconName(DropLocation loc, bool active)
     case DropLocation_None:
     case DropLocation_Inner:
     case DropLocation_Outter:
+    case DropLocation_Horizontal:
+    case DropLocation_Vertical:
         return QString();
     }
 
@@ -191,6 +193,8 @@ Indicator *IndicatorWindow_qtwidgets::indicatorForLocation(DropLocation loc) con
     case DropLocation_None:
     case DropLocation_Outter:
     case DropLocation_Inner:
+    case DropLocation_Horizontal:
+    case DropLocation_Vertical:
         return nullptr;
     }
 
