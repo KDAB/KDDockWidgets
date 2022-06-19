@@ -60,20 +60,12 @@ public:
     bool isFloating() const;
     void setFloating(bool);
 
-    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::DockWidgetInstantiator *other,
-                                        KDDockWidgets::InitialVisibilityOption = {});
-    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other,
+    Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *other,
                                         KDDockWidgets::InitialVisibilityOption = {});
 
-    Q_INVOKABLE void addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget *other,
+    Q_INVOKABLE void addDockWidgetToContainingWindow(QQuickItem *other,
                                                      KDDockWidgets::Location location,
-                                                     KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
-                                                     QSize initialSize = {},
-                                                     KDDockWidgets::InitialVisibilityOption = {});
-
-    Q_INVOKABLE void addDockWidgetToContainingWindow(KDDockWidgets::DockWidgetInstantiator *other,
-                                                     KDDockWidgets::Location location,
-                                                     KDDockWidgets::DockWidgetInstantiator *relativeTo = nullptr,
+                                                     QQuickItem *relativeTo = nullptr,
                                                      QSize initialSize = {},
                                                      KDDockWidgets::InitialVisibilityOption = {});
 

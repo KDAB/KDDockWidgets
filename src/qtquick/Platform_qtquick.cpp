@@ -23,6 +23,9 @@
 #include "private/Platform_p.h"
 #include "ViewFactory_qtquick.h"
 
+#include "views/DockWidget_qtquick.h"
+#include "DockWidgetInstantiator.h"
+
 #include <QQmlEngine>
 #include <QQuickStyle>
 #include <QQuickWindow>
@@ -218,4 +221,19 @@ void Platform_qtquick::ungrabMouse()
                 grabber->ungrabMouse();
         }
     }
+}
+
+Controllers::DockWidget *Platform_qtquick::dockWidgetForItem(QQuickItem *item)
+{
+    if (!item)
+        return nullptr;
+
+    if (auto dwView = qobject_cast<Views::DockWidget_qtquick *>(item))
+        return dwView->dockWidget();
+
+    if (auto dwi = qobject_cast<DockWidgetInstantiator *>(item))
+        if (auto view = dwi->dockWidget())
+            return view->dockWidget();
+
+    return nullptr;
 }

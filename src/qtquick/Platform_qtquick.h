@@ -15,11 +15,16 @@
 #include "kddockwidgets/Platform_qt.h"
 
 class QQmlEngine;
+class QQuickItem;
 
 namespace KDDockWidgets {
 
 class QtQuickHelpers;
 class ViewFactory_qtquick;
+
+namespace Controllers {
+class DockWidget;
+}
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
@@ -44,6 +49,8 @@ public:
     bool inDisallowedDragView(QPoint globalPos) const override;
     void ungrabMouse() override;
     static Platform_qtquick *instance();
+
+    static Controllers::DockWidget *dockWidgetForItem(QQuickItem *);
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtquick(int &argc, char **argv);

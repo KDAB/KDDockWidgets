@@ -109,6 +109,13 @@ ApplicationWindow {
                 color: "black"
             }
         }
+        KDDW.DockWidget {
+            id: dock7
+            uniqueName: "dock7"
+            Rectangle {
+                color: "green"
+            }
+        }
 
         Component.onCompleted: {
             // Add dock4 to the Bottom location
@@ -122,6 +129,10 @@ ApplicationWindow {
             // See MainWindowInstantiator_p.h for the API
             addDockWidget(dock6, KDDW.KDDockWidgets.Location_OnLeft, null,
                                  Qt.size(500, 100), KDDW.KDDockWidgets.StartHidden);
+
+
+            // dock7 will be tabbed with dock7:
+            dock5.addDockWidgetAsTab(dock7);
         }
     }
 

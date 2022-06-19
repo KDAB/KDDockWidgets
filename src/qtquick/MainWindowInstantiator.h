@@ -53,14 +53,9 @@ public:
     bool isMDI() const;
 
     /// @brief See KDDockWidgets::MainWindowBase::addDockWidget()
-    Q_INVOKABLE void addDockWidget(KDDockWidgets::Controllers::DockWidget *dockWidget,
+    Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget,
                                    KDDockWidgets::Location location,
-                                   KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
-                                   QSize initialSize = {}, KDDockWidgets::InitialVisibilityOption = {});
-
-    Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetInstantiator *dockWidget,
-                                   KDDockWidgets::Location location,
-                                   KDDockWidgets::DockWidgetInstantiator *relativeTo = nullptr,
+                                   QQuickItem *relativeTo = nullptr,
                                    QSize initialSize = {}, KDDockWidgets::InitialVisibilityOption = {});
 
     Q_INVOKABLE void layoutEqually();

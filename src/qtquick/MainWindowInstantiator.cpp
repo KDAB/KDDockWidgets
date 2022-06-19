@@ -18,6 +18,7 @@
 #include "DockWidgetInstantiator.h"
 
 #include "DockRegistry.h"
+#include "Platform_qtquick.h"
 
 using namespace KDDockWidgets;
 
@@ -62,24 +63,18 @@ bool MainWindowInstantiator::isMDI() const
     return m_mainWindow && m_mainWindow->isMDI();
 }
 
-void MainWindowInstantiator::addDockWidget(Controllers::DockWidget *dockWidget, Location location,
-                                           Controllers::DockWidget *relativeTo, QSize initialSize,
+void MainWindowInstantiator::addDockWidget(QQuickItem *dockWidget, Location location,
+                                           QQuickItem *relativeTo, QSize initialSize,
                                            InitialVisibilityOption option)
 {
-    if (!m_mainWindow) {
-        qWarning() << Q_FUNC_INFO << "No MainWindow created yet";
+    if (!dockWidget || !m_mainWindow)
         return;
-    }
 
-    m_mainWindow->addDockWidget(dockWidget, location, relativeTo, { option, initialSize });
-}
+    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    Controllers::DockWidget *relativeToDw = Platform_qtquick::dockWidgetForItem(relativeTo);
 
-void MainWindowInstantiator::addDockWidget(DockWidgetInstantiator *dockWidget, Location location,
-                                           DockWidgetInstantiator *relativeTo, QSize initialSize,
-                                           InitialVisibilityOption option)
-{
-    addDockWidget(dockWidget ? dockWidget->controller() : nullptr, location,
-                  relativeTo ? relativeTo->controller() : nullptr, initialSize, option);
+    m_mainWindow->addDockWidget(dw, location,
+                                relativeToDw, { option, initialSize });
 }
 
 void MainWindowInstantiator::layoutEqually()

@@ -14,6 +14,8 @@
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "ViewFactory_qtquick.h"
 #include "Config.h"
+#include "Platform_qtquick.h"
+#include "controllers/DockWidget.h"
 
 using namespace KDDockWidgets;
 
@@ -91,41 +93,31 @@ void DockWidgetInstantiator::setFloating(bool is)
     m_isFloating = is;
 }
 
-void DockWidgetInstantiator::addDockWidgetAsTab(DockWidgetInstantiator *other,
+void DockWidgetInstantiator::addDockWidgetAsTab(QQuickItem *other,
                                                 InitialVisibilityOption option)
 {
-    if (m_dockWidget)
-        m_dockWidget->addDockWidgetAsTab(other ? other->controller() : nullptr, option);
+    if (!other || !m_dockWidget)
+        return;
+
+    Controllers::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
+    m_dockWidget->addDockWidgetAsTab(otherDockWidget, option);
 }
 
-void DockWidgetInstantiator::addDockWidgetAsTab(Controllers::DockWidget *other,
-                                                InitialVisibilityOption option)
-{
-    if (m_dockWidget)
-        m_dockWidget->addDockWidgetAsTab(other, option);
-}
-
-void DockWidgetInstantiator::addDockWidgetToContainingWindow(Controllers::DockWidget *other,
+void DockWidgetInstantiator::addDockWidgetToContainingWindow(QQuickItem *other,
                                                              Location location,
-                                                             Controllers::DockWidget *relativeTo,
+                                                             QQuickItem *relativeTo,
                                                              QSize initialSize,
                                                              InitialVisibilityOption option)
 {
-    if (m_dockWidget)
-        m_dockWidget->addDockWidgetToContainingWindow(other, location, relativeTo,
-                                                      InitialOption(option, initialSize));
-}
+    if (!other || !m_dockWidget)
+        return;
 
-void DockWidgetInstantiator::addDockWidgetToContainingWindow(DockWidgetInstantiator *other,
-                                                             Location location,
-                                                             DockWidgetInstantiator *relativeTo,
-                                                             QSize initialSize,
-                                                             InitialVisibilityOption option)
-{
-    if (m_dockWidget)
-        m_dockWidget->addDockWidgetToContainingWindow(
-            other ? other->controller() : nullptr, location,
-            relativeTo ? relativeTo->controller() : nullptr, InitialOption(option, initialSize));
+    Controllers::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
+    Controllers::DockWidget *relativeToDockWidget = Platform_qtquick::dockWidgetForItem(relativeTo);
+
+    m_dockWidget->addDockWidgetToContainingWindow(
+        otherDockWidget, location,
+        relativeToDockWidget, InitialOption(option, initialSize));
 }
 
 void DockWidgetInstantiator::setAsCurrentTab()
