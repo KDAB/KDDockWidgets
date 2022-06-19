@@ -30,6 +30,8 @@
 #include "controllers/indicators/NullIndicators.h"
 #include "controllers/indicators/SegmentedIndicators.h"
 
+#include "Window.h"
+
 #include <algorithm>
 
 using namespace KDDockWidgets;
@@ -356,8 +358,14 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *accep
     }
 
     if (result) {
-        // Window receiving the drop gets raised:
-        view()->raiseAndActivate();
+        // Window receiving the drop gets raised
+        // Window receiving the drop gets raised.
+        // Exception: Under EGLFS we don't raise the fullscreen main window, as then all floating windows would
+        // go behind. It's also unneeded to raise, as it's fullscreen.
+
+        const bool isEGLFSRootWindow = isEGLFS() && (view()->window()->isFullScreen() || window()->isMaximized());
+        if (!isEGLFSRootWindow)
+            view()->raiseAndActivate();
 
         if (needToFocusNewlyDroppedWidgets) {
             // Let's also focus the newly dropped dock widget

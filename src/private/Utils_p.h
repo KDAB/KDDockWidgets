@@ -46,6 +46,11 @@ inline bool isXCB()
     return qGuiApp->platformName() == QLatin1String("xcb");
 }
 
+inline bool isEGLFS()
+{
+    return qApp->platformName() == QLatin1String("eglfs");
+}
+
 inline bool isLeftButtonPressed()
 {
     return qGuiApp->mouseButtons() & Qt::LeftButton;

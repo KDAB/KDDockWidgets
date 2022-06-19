@@ -107,6 +107,8 @@ public:
     bool containsView(Controller *) const;
     bool containsView(View *) const;
 
+    /// @brief Returns whether this window is fullscreen currently
+    virtual bool isFullScreen() const = 0;
 
     /// @brief Returns whether this window can't be shrinked to a size that would violate the layout's min size
     /// This is true for QtWidgets where the layout constraings propagate up to the window

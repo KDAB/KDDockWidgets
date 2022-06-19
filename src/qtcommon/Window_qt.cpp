@@ -162,3 +162,8 @@ void Window_qt::setVisible(bool is)
 {
     m_window->setVisible(is);
 }
+
+bool Window_qt::isFullScreen() const
+{
+    return m_window->windowStates() & Qt::WindowFullScreen;
+}

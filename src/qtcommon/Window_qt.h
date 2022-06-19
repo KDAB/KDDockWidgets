@@ -54,6 +54,8 @@ public:
     QPoint fromNativePixels(QPoint) const override;
     void startSystemMove() override;
 
+    bool isFullScreen() const override;
+
 protected:
     QPointer<QWindow> m_window;
 
