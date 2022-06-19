@@ -336,8 +336,10 @@ if(KDDockWidgets_PYTHON_BINDINGS)
   if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR KDDockWidgets_STATIC)
     message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
   endif()
-endif()
-if(KDDockWidgets_PYTHON_BINDINGS)
+  if(CMAKE_UNITY_BUILD)
+    message(FATAL_ERROR "** Python Bindings are disabled in Unity builds. "
+                        "Try again with CMAKE_UNITY_BUILD=OFF")
+  endif()
   add_subdirectory(python)
 endif()
 
