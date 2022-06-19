@@ -44,11 +44,17 @@ public:
     bool tabsAreMovable() const override;
     int tabAt(QPoint localPos) const override;
 
+Q_SIGNALS:
+    void dockWidgetInserted(int index);
+    void dockWidgetRemoved(int index);
+
 protected:
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseDoubleClickEvent(QMouseEvent *e) override;
     bool event(QEvent *) override;
+    void tabInserted(int index) override;
+    void tabRemoved(int index) override;
 
 private:
     Controllers::TabBar *const m_controller;

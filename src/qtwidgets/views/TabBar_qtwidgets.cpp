@@ -130,3 +130,15 @@ bool TabBar_qtwidgets::tabsAreMovable() const
 {
     return isMovable();
 }
+
+void TabBar_qtwidgets::tabInserted(int index)
+{
+    QTabBar::tabInserted(index);
+    Q_EMIT dockWidgetInserted(index);
+}
+
+void TabBar_qtwidgets::tabRemoved(int index)
+{
+    QTabBar::tabRemoved(index);
+    Q_EMIT dockWidgetRemoved(index);
+}
