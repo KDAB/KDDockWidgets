@@ -110,7 +110,13 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         // is near "Frame 2"'s margins, and would show resize cursor.
         // We only want to continue if the cursor is near the margins of our own frame (mTarget)
 
-        auto frame = widget->firstParentOfType(Type::Frame);
+        auto f = widget->firstParentOfType(Type::Frame);
+        auto frame = f ? f->view()->asFrameController() : nullptr;
+        if (frame && frame->isMDIWrapper()) {
+            // We don't care about the inner Option_MDINestable helper frame
+            frame = frame->mdiFrame();
+        }
+
         if (frame && !frame->view()->equals(mTarget)) {
             auto frameParent = frame->view()->aboutToBeDestroyed() ? nullptr : frame->view()->parentView();
             auto targetParent = mTarget->aboutToBeDestroyed() ? nullptr : mTarget->parentView();
