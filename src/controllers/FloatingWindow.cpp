@@ -657,6 +657,11 @@ QRect FloatingWindow::normalGeometry() const
     return view()->normalGeometry();
 }
 
+Qt::WindowState FloatingWindow::lastWindowManagerState() const
+{
+    return m_lastWindowManagerState;
+}
+
 int FloatingWindow::userType() const
 {
     if (Controllers::Frame *f = singleFrame())
@@ -720,4 +725,9 @@ void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
     } else if (geometry.top() > scrGeom.bottom()) {
         geometry.moveBottom(scrGeom.bottom());
     }
+}
+
+void FloatingWindow::setLastWindowManagerState(Qt::WindowState state)
+{
+    m_lastWindowManagerState = state;
 }
