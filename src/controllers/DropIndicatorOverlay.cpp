@@ -165,7 +165,8 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
     }
 
     if (auto dropIndicatorAllowedFunc = Config::self().dropIndicatorAllowedFunc()) {
-        if (!dropIndicatorAllowedFunc(dropLoc, source, target))
+        DropArea *dropArea = DragController::instance()->dropAreaUnderCursor();
+        if (!dropIndicatorAllowedFunc(dropLoc, source, target, dropArea))
             return false;
     }
 

@@ -98,6 +98,9 @@ public:
 
     Controllers::FloatingWindow *floatingWindowBeingDragged() const;
 
+    /// @brief Returns the current drop area under the mouse
+    Controllers::DropArea *dropAreaUnderCursor() const;
+
     ///@brief Returns the window being dragged
     WindowBeingDragged *windowBeingDragged() const;
 
@@ -128,7 +131,6 @@ private:
     DragController(QObject * = nullptr);
     StateBase *activeState() const;
     ViewWrapper::Ptr qtTopLevelUnderCursor() const;
-    Controllers::DropArea *dropAreaUnderCursor() const;
     Draggable *draggableForQObject(QObject *o) const;
     QPoint m_pressPos;
     QPoint m_offset;

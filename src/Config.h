@@ -33,6 +33,7 @@ namespace KDDockWidgets {
 namespace Controllers {
 class DockWidget;
 class MainWindow;
+class DropArea;
 }
 
 class ViewFactory;
@@ -49,11 +50,13 @@ typedef KDDockWidgets::Controllers::MainWindow *(*MainWindowFactoryFunc)(const Q
 /// @param location The drop indicator location to allow or disallow
 /// @param source The dock widgets being dragged
 /// @param target The dock widgets within an existing docked tab group
+/// @param dropArea The target drop area. Can belong to a MainWindow or a FloatingWindow.
 /// @return true if the docking is allowed.
 /// @sa setDropIndicatorAllowedFunc
 typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
                                          const QVector<Controllers::DockWidget *> &source,
-                                         const QVector<Controllers::DockWidget *> &target);
+                                         const QVector<Controllers::DockWidget *> &target,
+                                         Controllers::DropArea *dropArea);
 
 /// @deprecated Use DropIndicatorAllowedFunc instead.
 /// @brief Function to allow the user more granularity to disallow dock widgets to tab together
@@ -261,7 +264,8 @@ public:
      *
      * auto func = [] (KDDockWidgets::DropLocation loc,
      *                 const KDDockWidgets::Controllers::DockWidget::List &source,
-     *                 const KDDockWidgets::Controllers::DockWidget::List &target)
+     *                 const KDDockWidgets::Controllers::DockWidget::List &target,
+     *                 KDDockWidgets::Controllers::DropArea *)
      * {
      *    // disallows dockFoo to be docked to outter areas
      *    return !((loc & KDDockWidgets::DropLocation_Outter) && source.contains(dockFoo));
