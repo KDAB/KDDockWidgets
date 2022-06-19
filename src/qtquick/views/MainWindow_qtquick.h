@@ -74,6 +74,14 @@ public:
                                    const QString &relativeToDockId = {},
                                    KDDockWidgets::InitialOption = {});
 
+#ifdef Q_MOC_RUN
+    Q_INVOKABLE bool closeDockWidgets(bool force = false);
+    Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
+    Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
+    Q_INVOKABLE void layoutEqually();
+    Q_INVOKABLE bool anySideBarIsVisible() const;
+#endif
+
 protected:
     QMargins centerWidgetMargins() const override;
     QRect centralAreaGeometry() const override;

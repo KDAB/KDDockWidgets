@@ -48,13 +48,11 @@ public:
     void setAffinities(const QStringList &names);
     MainWindowOptions options() const;
     bool isMDI() const;
-
-    // controllers/MainWindow.h public Q_INVOKABLE interface:
-    Q_INVOKABLE bool closeDockWidgets(bool force = false);
-    Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
-    Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
-    Q_INVOKABLE void layoutEqually();
-    Q_INVOKABLE bool anySideBarIsVisible() const;
+    bool closeDockWidgets(bool force = false);
+    bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
+    void clearSideBarOverlay(bool deleteFrame = true);
+    void layoutEqually();
+    bool anySideBarIsVisible() const;
 
     void addDockWidgetAsTab(DockWidgetViewInterface *dockwidget);
     void addDockWidget(DockWidgetViewInterface *dockWidget,
