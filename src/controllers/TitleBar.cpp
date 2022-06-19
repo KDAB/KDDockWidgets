@@ -23,6 +23,7 @@
 #include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
 #include "controllers/MDILayout.h"
+#include "controllers/Stack.h"
 
 #include "kddockwidgets/ViewFactory.h"
 
@@ -535,4 +536,21 @@ void TitleBar::updateFloatButton()
 QString TitleBar::floatButtonToolTip() const
 {
     return m_floatButtonToolTip;
+}
+
+TabBar *TitleBar::tabBar() const
+{
+    if (m_floatingWindow && m_floatingWindow->hasSingleFrame()) {
+        if (Frame *frame = m_floatingWindow->singleFrame()) {
+            return frame->tabWidget()->tabBar();
+        } else {
+            // Shouldn't happen
+            qWarning() << Q_FUNC_INFO << "Expected a frame";
+        }
+
+    } else if (m_frame) {
+        return m_frame->tabWidget()->tabBar();
+    }
+
+    return nullptr;
 }

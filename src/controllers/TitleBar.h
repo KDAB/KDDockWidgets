@@ -23,6 +23,7 @@ namespace KDDockWidgets::Controllers {
 
 class Frame;
 class FloatingWindow;
+class TabBar;
 
 class DOCKS_EXPORT TitleBar : public Controller, public Draggable
 {
@@ -88,6 +89,10 @@ public:
     ///@brief If this title bar belongs to a dock widget docked into the main window, returns the main window
     /// Returns nullptr otherwise
     MainWindow *mainWindow() const;
+
+    ///@brief Returns the tab bar which is under this title bar.
+    /// It's only nullptr for the case of having a Floating Window with more than one nested Frame
+    TabBar *tabBar() const;
 
     void focusInEvent(QFocusEvent *);
 
