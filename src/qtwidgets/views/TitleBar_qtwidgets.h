@@ -43,7 +43,6 @@ protected:
     QSize sizeHint() const override;
     void focusInEvent(QFocusEvent *) override;
 
-private:
     friend class KDDockWidgets::Controllers::TitleBar;
     int buttonAreaWidth() const;
     QRect iconRect() const;
