@@ -43,6 +43,7 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
         || msg.contains(QLatin1String("Testing::"))
         || msg.contains(QLatin1String("outside any known screen, using primary screen"))
         || msg.contains(QLatin1String("Populating font family aliases took"))
+        || msg.contains(QLatin1String("QSGThreadedRenderLoop: expose event received for window"))
 
         // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in Qt.
         || (msg.contains(QLatin1String("TypeError: Cannot read property")) && msg.contains(QLatin1String("Material")));
