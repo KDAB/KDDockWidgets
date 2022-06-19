@@ -24,6 +24,8 @@
 
 #include <QMainWindow>
 
+class QHBoxLayout;
+
 namespace KDDockWidgets {
 
 namespace Controllers {
@@ -69,6 +71,11 @@ public:
 
     void setPersistentCentralWidget(QWidget *widget);
     QWidget *persistentCentralWidget() const;
+
+    ///@brief returns the internal layout
+    /// this is rarely needed unless you want to layout other widgets next to the
+    /// main dock widget layout
+    QHBoxLayout *internalLayout() const;
 
 protected:
     QRect centralAreaGeometry() const override;

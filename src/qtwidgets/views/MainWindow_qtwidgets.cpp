@@ -85,9 +85,7 @@ public:
     QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
 };
 
-MyCentralWidget::~MyCentralWidget()
-{
-}
+MyCentralWidget::~MyCentralWidget() = default;
 
 MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
                                            MainWindowOptions options,
@@ -184,4 +182,9 @@ QWidget *MainWindow_qtwidgets::persistentCentralWidget() const
 {
     auto view = m_mainWindow->persistentCentralView();
     return view ? qobject_cast<QWidget *>(view->asQObject()) : nullptr;
+}
+
+QHBoxLayout *MainWindow_qtwidgets::internalLayout() const
+{
+    return d->m_layout;
 }
