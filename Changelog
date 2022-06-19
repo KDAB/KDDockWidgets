@@ -8,9 +8,13 @@
  - Moved DropIndicatorOverlayInterface::DropLocation enum to KDDockWidgets namespace scope
  - Added Config::setDropIndicatorAllowedFunc() and corresponding example
    (kddockwidgets_example --hide-certain-docking-indicators)
-
-* v1.5.1 (unreleased)
+ - Fixed case where unfloating wouldn't restore to the main window (#44 and #96)
+ - Fixed MainWindow not propagating close events to docked widgets
  - X11: Improved detecting which window is under the cursor, by using native X11 API
+ - X11: Fixed dragging a maximized floating window. Its size is now restored to normal size when the drag starts.
+ - Added DockWidgetBase::currentTabIndex()
+ - Added InitialVisibilityOption::PreserveCurrentTab
+ - Added MainWindow::internalLayout() for advanced customization
 
 * v1.5.0 (24 November 2021)
  - Install the Python bindings to "site-packages"
