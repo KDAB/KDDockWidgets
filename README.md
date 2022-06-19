@@ -71,13 +71,15 @@ Screen capture
 ![Screen capture](./screencap.gif?raw=true "The docking system in action")
 
 
-Building
-========
+Building and requirements
+=========================
 
 To build KDDockWidgets you'll need:
 
   - CMake
+  - Qt 5.15.x or Qt6 >= 6.2
   - Ninja (Other generators might work but are untested)
+  - C++17 capable compiler
   - Qt Widgets module
   - Qt X11Extras module if on Linux/X11
   - Qt Quick and QuickControls2 modules if using the QtQuick support
@@ -161,12 +163,6 @@ not so they can change internal business logic.
 
 We don't promise or test binary compatibility. It's advised that you recompile
 your application whenever updating KDDW.
-
-
-Supported Qt versions and toolchains
-====================================
-KDDockWidgets requires a C++17 capable compiler and Qt 5.15.x or Qt6 >= 6.2
-For QtQuick support see [README-QtQuick.md](README-QtQuick.md).
 
 
 Styling
