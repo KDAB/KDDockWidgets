@@ -2714,7 +2714,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     auto fw2 = createFloatingWindow();
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
-    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outter right instead of Left
     QCOMPARE(fw2->frames().size(), 3);
     QVERIFY(fw2->dropArea()->checkSanity());
 
