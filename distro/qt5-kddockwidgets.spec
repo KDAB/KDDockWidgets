@@ -18,7 +18,7 @@ BuildRequires:  libqt5-qtbase-devel libqt5-qtbase-private-headers-devel libqt5-q
 %endif
 
 %if %{defined fedora}
-BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtbase-private-devel qt5-qtx11extras-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtbase-private-devel qt5-qtx11extras-devel desktop-file-utils util-linux
 %endif
 
 %if %{defined rhel}
