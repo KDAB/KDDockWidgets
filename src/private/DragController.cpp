@@ -583,6 +583,7 @@ bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
 bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
+    qCDebug(state) << Q_FUNC_INFO << mimeData << dropArea << q->m_windowBeingDragged.get();
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
@@ -599,12 +600,14 @@ bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropAr
 
 bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
 {
+    qCDebug(state) << Q_FUNC_INFO;
     dropArea->removeHover();
     return true;
 }
 
 bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
 {
+    qCDebug(state) << Q_FUNC_INFO;
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
@@ -986,14 +989,18 @@ static DropArea *deepestDropAreaInTopLevel(WidgetType *topLevel, QPoint globalPo
 DropArea *DragController::dropAreaUnderCursor() const
 {
     WidgetType *topLevel = qtTopLevelUnderCursor();
-    if (!topLevel)
+    if (!topLevel) {
+        qCDebug(state) << Q_FUNC_INFO << "No drop area under cursor";
         return nullptr;
+    }
 
     const QStringList affinities = m_windowBeingDragged->floatingWindow()->affinities();
 
     if (auto fw = qobject_cast<FloatingWindow *>(topLevel)) {
-        if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
+        if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities)) {
+            qCDebug(state) << Q_FUNC_INFO << "Found drop area in floating window";
             return fw->dropArea();
+        }
     }
 
     if (topLevel->objectName() == QStringLiteral("_docks_IndicatorWindow")) {
@@ -1002,6 +1009,7 @@ DropArea *DragController::dropAreaUnderCursor() const
     }
 
     if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos(), affinities)) {
+        qCDebug(state) << Q_FUNC_INFO << "Found drop area" << dt << dt->window();
         return dt;
     }
 
