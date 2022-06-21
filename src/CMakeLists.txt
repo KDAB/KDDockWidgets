@@ -59,8 +59,7 @@ set(KDDW_BACKEND_SRCS
     controllers/DropIndicatorOverlay.h
     controllers/FloatingWindow.cpp
     controllers/FloatingWindow.h
-    controllers/Frame.cpp
-    controllers/Frame.h
+    controllers/Group.cpp
     controllers/Layout.cpp
     controllers/Layout.h
     controllers/MainWindow.cpp
@@ -101,10 +100,10 @@ set(KDDW_BACKEND_SRCS
     views/MainWindowMDIViewInterface.cpp
     views/MainWindowViewInterface.cpp
     views/MainWindowViewInterface.h
-    views/FrameViewInterface.cpp
+    views/GroupViewInterface.cpp
     views/DockWidgetViewInterface.cpp
     views/DockWidgetViewInterface.h
-    views/FrameViewInterface.h
+    views/GroupViewInterface.h
     views/StackViewInterface.cpp
     views/TabBarViewInterface.cpp
     views/TitleBarViewInterface.cpp
@@ -131,8 +130,7 @@ SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/views/DropArea_qtwidgets.h
     qtwidgets/views/MDILayout_qtwidgets.cpp
     qtwidgets/views/MDILayout_qtwidgets.h
-    qtwidgets/views/Frame_qtwidgets.cpp
-    qtwidgets/views/Frame_qtwidgets.h
+    qtwidgets/views/Group_qtwidgets.cpp
     qtwidgets/views/MainWindow_qtwidgets.cpp
     qtwidgets/views/MainWindow_qtwidgets.h
     qtwidgets/views/MainWindowMDI_qtwidgets.cpp
@@ -186,8 +184,7 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/views/DockWidget_qtquick.h
   qtquick/views/FloatingWindow_qtquick.cpp
   qtquick/views/FloatingWindow_qtquick.h
-  qtquick/views/Frame_qtquick.cpp
-  qtquick/views/Frame_qtquick.h
+  qtquick/views/Group_qtquick.cpp
   qtquick/views/MainWindow_qtquick.cpp
   qtquick/views/MainWindow_qtquick.h
   qtquick/views/MainWindowMDI_qtquick.cpp
@@ -244,7 +241,7 @@ set(KDDW_CONTROLLER_HEADERS
     controllers/DropIndicatorOverlay.h
     controllers/DropArea.h
     controllers/FloatingWindow.h
-    controllers/Frame.h
+    controllers/Group.h
     controllers/Layout.h
     controllers/MDILayout.h
     controllers/SideBar.h
@@ -264,7 +261,7 @@ set(KDDW_VIEWINTERFACE_HEADERS
   views/DockWidgetViewInterface.h
   views/MainWindowMDIViewInterface.h
   views/MainWindowViewInterface.h
-  views/FrameViewInterface.h
+  views/GroupViewInterface.h
 )
 
 set(KDDW_INDICATOR_HEADERS
@@ -487,7 +484,7 @@ if (KDDW_FRONTEND_QTWIDGETS)
     qtwidgets/views/DropArea_qtwidgets.h
     qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h
     qtwidgets/views/Stack_qtwidgets.h
-    qtwidgets/views/Frame_qtwidgets.h
+    qtwidgets/views/Group_qtwidgets.h
     qtwidgets/views/TabBar_qtwidgets.h
     qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h
@@ -525,7 +522,7 @@ if (KDDW_FRONTEND_QTQUICK)
     qtquick/views/Stack_qtquick.h
     qtquick/views/MDILayout_qtquick.h
     qtquick/views/DropArea_qtquick.h
-    qtquick/views/Frame_qtquick.h
+    qtquick/views/Group_qtquick.h
     qtquick/views/TitleBar_qtquick.h
     qtquick/views/ViewWrapper_qtquick.h
   )

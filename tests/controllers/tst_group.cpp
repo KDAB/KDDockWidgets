@@ -9,4 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../../qtwidgets/views/Frame_qtwidgets.h"
+#include "../main.h"
+#include "kddockwidgets/controllers/Group.h"
+
+TEST_CASE("Group ctor")
+{
+    auto frame = new Controllers::Frame(nullptr, {});
+    CHECK(frame->view()->is(Type::Frame));
+    CHECK(frame->view()->asWrapper()->is(Type::Frame));
+    delete frame;
+}

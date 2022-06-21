@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../../qtquick/views/Frame_qtquick.h"
+#include "../../../../qtquick/views/Group_qtquick.h"

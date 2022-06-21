@@ -16,9 +16,9 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "Frame_qtquick.h"
+#include "Group_qtquick.h"
 
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/Stack.h"
 #include "kddockwidgets/controllers/TitleBar.h"
 #include "kddockwidgets/controllers/DockWidget.h"
@@ -150,7 +150,7 @@ void Frame_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
             // would to be called while the Frame hadn't been deleted yet it would count with that frame unless hacks.
             // Also the unit-tests are full of waitForDeleted() due to deleteLater.
 
-            // Ideally we would just remove the deleteLater from frame.cpp, but QTabWidget::insertTab()
+            // Ideally we would just remove the deleteLater from Group.cpp, but QTabWidget::insertTab()
             // would crash, as it accesses the old tab-widget we're stealing from
 
             delete oldFrame;

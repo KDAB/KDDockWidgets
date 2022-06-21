@@ -25,7 +25,7 @@
 #include "qtquick/views/FloatingWindow_qtquick.h"
 #include "qtquick/views/DockWidget_qtquick.h"
 #include "qtquick/views/DropArea_qtquick.h"
-#include "qtquick/views/Frame_qtquick.h"
+#include "qtquick/views/Group_qtquick.h"
 #include "qtquick/views/View_qtquick.h"
 #include "qtquick/views/RubberBand_qtquick.h"
 #include "qtquick/views/Separator_qtquick.h"

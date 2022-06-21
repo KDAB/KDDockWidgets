@@ -14,7 +14,7 @@
 #include "private/multisplitter/Item_p.h"
 
 #include "controllers/FloatingWindow.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "controllers/Stack.h"
 #include "controllers/TitleBar.h"
 #include "controllers/TabBar.h"

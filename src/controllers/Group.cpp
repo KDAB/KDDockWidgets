@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Frame.h"
+#include "Group.h"
 
 #include "kddockwidgets/Config.h"
 #include "kddockwidgets/ViewFactory.h"
@@ -17,7 +17,7 @@
 #include "Controller.h"
 #include "View.h"
 #include "Platform.h"
-#include "views/FrameViewInterface.h"
+#include "views/GroupViewInterface.h"
 
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"

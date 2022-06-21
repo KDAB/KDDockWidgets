@@ -13,7 +13,7 @@
 #include "private/multisplitter/ItemFreeContainer_p.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "controllers/DockWidget_p.h"
 
 using namespace KDDockWidgets;

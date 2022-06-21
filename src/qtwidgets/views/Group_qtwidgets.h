@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
-#include "views/FrameViewInterface.h"
+#include "views/GroupViewInterface.h"
 
 namespace KDDockWidgets::Controllers {
 class Frame;

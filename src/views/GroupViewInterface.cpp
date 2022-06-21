@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "FrameViewInterface.h"
-#include "controllers/Frame.h"
+#include "GroupViewInterface.h"
+#include "controllers/Group.h"
 
 namespace KDDockWidgets {
 

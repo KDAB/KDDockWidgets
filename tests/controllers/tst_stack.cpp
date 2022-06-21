@@ -10,7 +10,7 @@
 */
 
 #include "../main.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/Stack.h"
 
 TEST_CASE("Stack ctor")

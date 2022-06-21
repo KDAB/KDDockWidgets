@@ -13,7 +13,7 @@
 
 #include "private/DragController_p.h"
 
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/TitleBar.h"
 

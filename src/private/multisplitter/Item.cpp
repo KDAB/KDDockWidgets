@@ -13,7 +13,7 @@
 #include "View.h"
 #include "Config.h"
 #include "kddockwidgets/controllers/Separator.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "ItemFreeContainer_p.h"
 #include "kdbindings/signal.h"
 #include "Window.h"

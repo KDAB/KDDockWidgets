@@ -13,7 +13,7 @@
 #include "MainWindow.h"
 #include "private/Logging_p.h"
 #include "TitleBar.h"
-#include "Frame.h"
+#include "Group.h"
 #include "Platform.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Utils_p.h"

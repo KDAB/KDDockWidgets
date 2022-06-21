@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../controllers/Frame.h"
+#include "../../../controllers/Group.h"

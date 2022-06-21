@@ -22,7 +22,7 @@
 
 #include "kddockwidgets/controllers/DropArea.h"
 #include "kddockwidgets/controllers/MainWindow.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/SideBar.h"
 
 #include "Window.h"

@@ -11,7 +11,7 @@
 
 #include "FloatingWindow_qtwidgets.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/TitleBar.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 

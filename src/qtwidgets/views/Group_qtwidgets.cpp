@@ -9,13 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Frame_qtwidgets.h"
+#include "Group_qtwidgets.h"
 
 #include "qtwidgets/views/View_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 
 #include "kddockwidgets/controllers/Layout.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/Stack.h"
 #include "kddockwidgets/controllers/TabBar.h"
 #include "kddockwidgets/controllers/TitleBar.h"

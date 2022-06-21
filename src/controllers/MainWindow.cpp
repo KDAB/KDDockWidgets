@@ -30,7 +30,7 @@
 #include "private/multisplitter/Item_p.h"
 #include "Platform.h"
 #include "controllers/DockWidget_p.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "controllers/SideBar.h"
 #include "kddockwidgets/views/MainWindowViewInterface.h"
 

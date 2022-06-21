@@ -13,7 +13,7 @@
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "qtwidgets/views/DropArea_qtwidgets.h"
 #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
-#include "qtwidgets/views/Frame_qtwidgets.h"
+#include "qtwidgets/views/Group_qtwidgets.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/MDILayout_qtwidgets.h"
 #include "qtwidgets/views/Separator_qtwidgets.h"

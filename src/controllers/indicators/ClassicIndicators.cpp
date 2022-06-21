@@ -20,7 +20,7 @@
 #include "DockRegistry.h"
 #include "private/Utils_p.h"
 
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;

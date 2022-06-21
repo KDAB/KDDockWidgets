@@ -14,7 +14,7 @@
 #include "Platform.h"
 
 #include "controllers/DropArea.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 
 #include "private/DragController_p.h"
 #include "DockRegistry.h"

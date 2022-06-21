@@ -11,7 +11,7 @@
 
 #include "../main.h"
 #include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 
 TEST_CASE("TitleBar Ctor")
 {

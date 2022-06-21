@@ -29,7 +29,7 @@
 #include "private/Utils_p.h"
 
 #include "controllers/Layout.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"

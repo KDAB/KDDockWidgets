@@ -20,7 +20,7 @@
 #include "Platform.h"
 #include "ViewGuard.h"
 #include "controllers/DockWidget.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "DockRegistry.h"
 #include "private/Platform_p.h"
 

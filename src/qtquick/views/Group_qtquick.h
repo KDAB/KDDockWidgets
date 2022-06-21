@@ -15,7 +15,7 @@
 #pragma once
 
 #include "View_qtquick.h"
-#include "views/FrameViewInterface.h"
+#include "views/GroupViewInterface.h"
 #include "TitleBar_qtquick.h"
 
 class QQuickItem;

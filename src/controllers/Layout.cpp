@@ -20,7 +20,7 @@
 #include "controllers/Layout.h"
 #include "controllers/DropArea.h"
 #include "controllers/DockWidget_p.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/MainWindow.h"
 

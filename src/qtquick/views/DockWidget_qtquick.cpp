@@ -15,10 +15,10 @@
 #include "kddockwidgets/controllers/TitleBar.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/controllers/DockWidget_p.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "qtquick/Platform_qtquick.h"
 #include "qtquick/views/TitleBar_qtquick.h"
-#include "qtquick/views/Frame_qtquick.h"
+#include "qtquick/views/Group_qtquick.h"
 #include "qtquick/ViewFactory_qtquick.h"
 
 #include <Config.h>

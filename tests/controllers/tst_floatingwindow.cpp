@@ -11,7 +11,7 @@
 
 #include "../main.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "Config.h"

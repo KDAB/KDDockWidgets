@@ -20,7 +20,7 @@
 #include "private/multisplitter/Item_p.h"
 #include "private/WindowBeingDragged_p.h"
 
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"

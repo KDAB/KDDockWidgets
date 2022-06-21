@@ -12,7 +12,7 @@
 #pragma once
 
 #include "../Controller.h"
-#include "Frame.h"
+#include "Group.h"
 #include "../private/Draggable_p.h"
 #include "DockWidget.h"
 

@@ -23,7 +23,7 @@
 #include "kddockwidgets/controllers/MDILayout.h"
 #include "kddockwidgets/controllers/DropArea.h"
 #include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/DockWidget_p.h"
 

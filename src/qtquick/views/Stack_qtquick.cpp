@@ -14,7 +14,7 @@
 #include "kddockwidgets/ViewFactory.h"
 
 #include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/TabBar.h"
 
 #include <QDebug>

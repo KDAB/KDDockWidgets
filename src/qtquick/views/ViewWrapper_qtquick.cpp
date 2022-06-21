@@ -15,7 +15,7 @@
 
 #include "qtquick/views/DockWidget_qtquick.h"
 #include "qtquick/views/FloatingWindow_qtquick.h"
-#include "qtquick/views/Frame_qtquick.h"
+#include "qtquick/views/Group_qtquick.h"
 #include "kddockwidgets/views/MainWindow_qtquick.h"
 #include "qtquick/views/Separator_qtquick.h"
 #include "private/multisplitter/Item_p.h"

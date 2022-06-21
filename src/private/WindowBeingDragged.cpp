@@ -18,7 +18,7 @@
 
 #include "kddockwidgets/controllers/TitleBar.h"
 #include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "kddockwidgets/controllers/Layout.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
 

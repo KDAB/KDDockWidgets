@@ -19,7 +19,7 @@
 
 #include "views/StackViewInterface.h"
 #include "controllers/TabBar.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "controllers/FloatingWindow.h"
 
 #include <QDebug>
@@ -92,7 +92,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
         // would to be called while the Frame hadn't been deleted yet it would count with that frame unless hacks.
         // Also the unit-tests are full of waitForDeleted() due to deleteLater.
 
-        // Ideally we would just remove the deleteLater from frame.cpp, but QStack::insertTab()
+        // Ideally we would just remove the deleteLater from Group.cpp, but QStack::insertTab()
         // would crash, as it accesses the old tab-widget we're stealing from
 
         delete oldFrame;

@@ -16,7 +16,7 @@
 #include "private/Logging_p.h"
 #include "controllers/MDILayout.h"
 #include "controllers/TitleBar.h"
-#include "controllers/Frame.h"
+#include "controllers/Group.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/SideBar.h"
 #include "controllers/DropArea.h"
