@@ -185,7 +185,7 @@ FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometr
         DropArea *dropAreaMDIWrapper = dwMDIWrapper->d->mdiDropAreaWrapper();
 
         if (dropAreaMDIWrapper->hasSingleFrame()) {
-            Controllers::Group *innerFrame = dropAreaMDIWrapper->frames().constFirst();
+            Controllers::Group *innerFrame = dropAreaMDIWrapper->groups().constFirst();
             if (innerFrame->hasSingleDockWidget()) {
                 // When pressing the unfloat button, the dock widgets gets docked to the previous
                 // position it was at. Controllers::DockWidget::Private::m_lastPosition stores that location,
@@ -259,9 +259,9 @@ std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
 
 Controllers::DockWidget *FloatingWindow::singleDockWidget() const
 {
-    const Controllers::Group::List frames = this->frames();
-    if (frames.size() == 1) {
-        Controllers::Group *group = frames.first();
+    const Controllers::Group::List groups = this->groups();
+    if (groups.size() == 1) {
+        Controllers::Group *group = groups.first();
         if (group->hasSingleDockWidget())
             return group->dockWidgetAt(0);
     }
@@ -274,10 +274,10 @@ const Controllers::DockWidget::List FloatingWindow::dockWidgets() const
     return m_dropArea->dockWidgets();
 }
 
-const Controllers::Group::List FloatingWindow::frames() const
+const Controllers::Group::List FloatingWindow::groups() const
 {
     Q_ASSERT(m_dropArea);
-    return m_dropArea->frames();
+    return m_dropArea->groups();
 }
 
 QSize FloatingWindow::maxSizeHint() const
@@ -289,13 +289,13 @@ QSize FloatingWindow::maxSizeHint() const
         return result;
     }
 
-    const Controllers::Group::List frames = this->frames();
-    if (frames.size() == 1) {
+    const Controllers::Group::List groups = this->groups();
+    if (groups.size() == 1) {
         // Let's honour max-size when we have a single-frame.
         // multi-frame cases are more complicated and we're not sure if we want the window to
         // bounce around. single-frame is the most common case, like floating a dock widget, so
         // let's do that first, it's also easy.
-        Controllers::Group *group = frames[0];
+        Controllers::Group *group = groups[0];
         if (group->dockWidgetCount() == 1) { // We don't support if there's tabbing
             const QSize waste = (view()->minSize() - group->view()->minSize()).expandedTo(QSize(0, 0));
             result = group->view()->maxSizeHint() + waste;
@@ -365,7 +365,7 @@ bool FloatingWindow::isInDragArea(QPoint globalPoint) const
 
 bool FloatingWindow::anyNonClosable() const
 {
-    for (Controllers::Group *group : frames()) {
+    for (Controllers::Group *group : groups()) {
         if (group->anyNonClosable())
             return true;
     }
@@ -374,7 +374,7 @@ bool FloatingWindow::anyNonClosable() const
 
 bool FloatingWindow::anyNonDockable() const
 {
-    for (Controllers::Group *group : frames()) {
+    for (Controllers::Group *group : groups()) {
         if (group->anyNonDockable())
             return true;
     }
@@ -388,20 +388,20 @@ bool FloatingWindow::hasSingleFrame() const
 
 bool FloatingWindow::hasSingleDockWidget() const
 {
-    const Controllers::Group::List frames = this->frames();
-    if (frames.size() != 1)
+    const Controllers::Group::List groups = this->groups();
+    if (groups.size() != 1)
         return false;
 
-    Controllers::Group *group = frames.first();
+    Controllers::Group *group = groups.first();
     return group->dockWidgetCount() == 1;
 }
 
 Controllers::Group *FloatingWindow::singleFrame() const
 {
-    const Controllers::Group::List frames = this->frames();
+    const Controllers::Group::List groups = this->groups();
 
-    return frames.isEmpty() ? nullptr
-                            : frames.first();
+    return groups.isEmpty() ? nullptr
+                            : groups.first();
 }
 
 bool FloatingWindow::beingDeleted() const
@@ -409,7 +409,7 @@ bool FloatingWindow::beingDeleted() const
     if (m_deleteScheduled || m_inDtor)
         return true;
 
-    for (Controllers::Group *f : frames()) {
+    for (Controllers::Group *f : groups()) {
         if (f->beingDeletedLater())
             return true;
     }
@@ -459,14 +459,14 @@ void FloatingWindow::updateTitleBarVisibility()
 
     bool visible = true;
 
-    for (Controllers::Group *group : frames())
+    for (Controllers::Group *group : groups())
         group->updateTitleBarVisibility();
 
     if (KDDockWidgets::usesClientTitleBar()) {
         const auto flags = Config::self().flags();
         if ((flags & Config::Flag_HideTitleBarWhenTabsVisible) && !(flags & Config::Flag_AlwaysTitleBarWhenFloating)) {
             if (hasSingleFrame()) {
-                visible = !frames().first()->hasTabsVisible();
+                visible = !groups().first()->hasTabsVisible();
             }
         }
 
@@ -480,8 +480,8 @@ void FloatingWindow::updateTitleBarVisibility()
 
 QStringList FloatingWindow::affinities() const
 {
-    auto frames = this->frames();
-    return frames.isEmpty() ? QStringList() : frames.constFirst()->affinities();
+    auto groups = this->groups();
+    return groups.isEmpty() ? QStringList() : groups.constFirst()->affinities();
 }
 
 void FloatingWindow::updateTitleAndIcon()
@@ -489,7 +489,7 @@ void FloatingWindow::updateTitleAndIcon()
     QString title;
     QIcon icon;
     if (hasSingleFrame()) {
-        const Controllers::Group *group = frames().constFirst();
+        const Controllers::Group *group = groups().constFirst();
         title = group->title();
         icon = group->icon();
     } else {
@@ -561,7 +561,7 @@ QRect FloatingWindow::dragRect() const
         rect = m_titleBar->rect();
         rect.moveTopLeft(m_titleBar->view()->mapToGlobal(QPoint(0, 0)));
     } else if (hasSingleFrame()) {
-        rect = frames().constFirst()->dragRect();
+        rect = groups().constFirst()->dragRect();
     } else {
         qWarning() << Q_FUNC_INFO << "Expected a title bar";
     }
@@ -571,32 +571,32 @@ QRect FloatingWindow::dragRect() const
 
 bool FloatingWindow::allDockWidgetsHave(DockWidgetOption option) const
 {
-    const Controllers::Group::List frames = this->frames();
-    return std::all_of(frames.begin(), frames.end(), [option](Controllers::Group *group) {
+    const Controllers::Group::List groups = this->groups();
+    return std::all_of(groups.begin(), groups.end(), [option](Controllers::Group *group) {
         return group->allDockWidgetsHave(option);
     });
 }
 
 bool FloatingWindow::anyDockWidgetsHas(DockWidgetOption option) const
 {
-    const Controllers::Group::List frames = this->frames();
-    return std::any_of(frames.begin(), frames.end(), [option](Controllers::Group *group) {
+    const Controllers::Group::List groups = this->groups();
+    return std::any_of(groups.begin(), groups.end(), [option](Controllers::Group *group) {
         return group->anyDockWidgetsHas(option);
     });
 }
 
 bool FloatingWindow::allDockWidgetsHave(LayoutSaverOption option) const
 {
-    const Controllers::Group::List frames = this->frames();
-    return std::all_of(frames.begin(), frames.end(), [option](Controllers::Group *group) {
+    const Controllers::Group::List groups = this->groups();
+    return std::all_of(groups.begin(), groups.end(), [option](Controllers::Group *group) {
         return group->allDockWidgetsHave(option);
     });
 }
 
 bool FloatingWindow::anyDockWidgetsHas(LayoutSaverOption option) const
 {
-    const Controllers::Group::List frames = this->frames();
-    return std::any_of(frames.begin(), frames.end(), [option](Controllers::Group *group) {
+    const Controllers::Group::List groups = this->groups();
+    return std::any_of(groups.begin(), groups.end(), [option](Controllers::Group *group) {
         return group->anyDockWidgetsHas(option);
     });
 }

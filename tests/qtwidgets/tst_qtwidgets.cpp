@@ -472,7 +472,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     QVERIFY(dropArea2.isNull());
     QVERIFY(dwWrapper2.isNull());
 
-    auto mdiFrames = mdiArea->frames();
+    auto mdiFrames = mdiArea->groups();
     QCOMPARE(mdiFrames.count(), 1);
     mdiFrame1 = mdiFrames.first();
     QVERIFY(mdiFrame1->isMDI());
@@ -482,7 +482,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     mdiTitleBar1->makeWindow();
 
     QVERIFY(Platform::instance()->tests_waitForDeleted(mdiFrame1));
-    QCOMPARE(mdiArea->frames().size(), 0);
+    QCOMPARE(mdiArea->groups().size(), 0);
 
     // Dock again:
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
@@ -498,8 +498,8 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     drag(mdiWidget1->view(), globalDest);
 
-    QCOMPARE(mdiArea->frames().count(), 2);
-    auto mdiTitleBar = mdiArea->frames().first()->titleBar();
+    QCOMPARE(mdiArea->groups().count(), 2);
+    auto mdiTitleBar = mdiArea->groups().first()->titleBar();
     QVERIFY(mdiTitleBar->isVisible());
 
     QVERIFY(!mdiWidget3->isFloating());
@@ -507,11 +507,11 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     mdiTitleBar->onFloatClicked();
     QVERIFY(mdiWidget3->isFloating());
 
-    QVERIFY(Platform::instance()->tests_waitForDeleted(mdiArea->frames().constFirst()));
-    QCOMPARE(mdiArea->frames().size(), 1);
+    QVERIFY(Platform::instance()->tests_waitForDeleted(mdiArea->groups().constFirst()));
+    QCOMPARE(mdiArea->groups().size(), 1);
 
     QVERIFY(!mdiWidget2->isFloating());
-    Controllers::Group *lastMdiFrame = mdiArea->frames().constFirst();
+    Controllers::Group *lastMdiFrame = mdiArea->groups().constFirst();
     QVERIFY(lastMdiFrame->titleBar()->isVisible());
     QVERIFY(!lastMdiFrame->titleBar()->isFloating());
     lastMdiFrame->titleBar()->onFloatClicked();
@@ -547,7 +547,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
 
-    Controllers::Group *group1 = mdiArea->frames().at(0);
+    Controllers::Group *group1 = mdiArea->groups().at(0);
 
     const QSize sz1 = group1->view()->size();
     const QSize increment(200, 200);
@@ -1459,7 +1459,7 @@ void TestQtWidgets::tst_complex()
 
     // Cleanup
     qDeleteAll(docks);
-    qDeleteAll(DockRegistry::self()->frames());
+    qDeleteAll(DockRegistry::self()->groups());
 }
 
 

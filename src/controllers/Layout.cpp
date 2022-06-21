@@ -149,8 +149,8 @@ void Layout::dumpLayout() const
 void Layout::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *item, int tabIndex)
 {
     if (item->isPlaceholder()) {
-        auto newFrame = new Controllers::Group(view());
-        item->restore(newFrame->view());
+        auto newGroup = new Controllers::Group(view());
+        item->restore(newGroup->view());
     }
 
     auto group = item->asFrameController();
@@ -165,9 +165,9 @@ void Layout::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *it
     group->setVisible(true);
 }
 
-void Layout::unrefOldPlaceholders(const Controllers::Group::List &framesBeingAdded) const
+void Layout::unrefOldPlaceholders(const Controllers::Group::List &groupsBeingAdded) const
 {
-    for (Controllers::Group *group : framesBeingAdded) {
+    for (Controllers::Group *group : groupsBeingAdded) {
         for (Controllers::DockWidget *dw : group->dockWidgets()) {
             dw->d->lastPosition()->removePlaceholders(this);
         }
@@ -224,25 +224,25 @@ Layouting::Item *Layout::itemForFrame(const Controllers::Group *group) const
 Controllers::DockWidget::List Layout::dockWidgets() const
 {
     Controllers::DockWidget::List dockWidgets;
-    const Controllers::Group::List frames = this->frames();
-    for (Controllers::Group *group : frames)
+    const Controllers::Group::List groups = this->groups();
+    for (Controllers::Group *group : groups)
         dockWidgets << group->dockWidgets();
 
     return dockWidgets;
 }
 
-Controllers::Group::List Layout::framesFrom(View *frameOrMultiSplitter) const
+Controllers::Group::List Layout::groupsFrom(View *groupOrMultiSplitter) const
 {
-    if (auto group = frameOrMultiSplitter->asFrameController())
+    if (auto group = groupOrMultiSplitter->asFrameController())
         return { group };
 
-    if (auto msw = frameOrMultiSplitter->asDropAreaController())
-        return msw->frames();
+    if (auto msw = groupOrMultiSplitter->asDropAreaController())
+        return msw->groups();
 
     return {};
 }
 
-Controllers::Group::List Layout::frames() const
+Controllers::Group::List Layout::groups() const
 {
     const Layouting::Item::List items = m_rootItem->items_recursive();
 
@@ -279,14 +279,14 @@ void Layout::updateSizeConstraints()
 
 bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 {
-    QHash<QString, View *> frames;
-    for (const LayoutSaver::Group &group : qAsConst(l.frames)) {
+    QHash<QString, View *> groups;
+    for (const LayoutSaver::Group &group : qAsConst(l.groups)) {
         Controllers::Group *f = Controllers::Group::deserialize(group);
         Q_ASSERT(!group.id.isEmpty());
-        frames.insert(group.id, f->view());
+        groups.insert(group.id, f->view());
     }
 
-    m_rootItem->fillFromVariantMap(l.layout, frames);
+    m_rootItem->fillFromVariantMap(l.layout, groups);
 
     updateSizeConstraints();
 
@@ -316,11 +316,11 @@ LayoutSaver::MultiSplitter Layout::serialize() const
     LayoutSaver::MultiSplitter l;
     l.layout = m_rootItem->toVariantMap();
     const Layouting::Item::List items = m_rootItem->items_recursive();
-    l.frames.reserve(items.size());
+    l.groups.reserve(items.size());
     for (Layouting::Item *item : items) {
         if (!item->isContainer()) {
             if (auto group = item->asFrameController()) {
-                l.frames.insert(group->view()->id(), group->serialize());
+                l.groups.insert(group->view()->id(), group->serialize());
             }
         }
     }
@@ -351,8 +351,8 @@ void Layout::onCloseEvent(QCloseEvent *e)
 {
     e->accept(); // Accepted by default (will close unless ignored)
 
-    const Controllers::Group::List frames = this->frames();
-    for (Controllers::Group *group : frames) {
+    const Controllers::Group::List groups = this->groups();
+    for (Controllers::Group *group : groups) {
         Platform::instance()->sendEvent(group->view(), e);
         if (!e->isAccepted())
             break; // Stop when the first frame prevents closing

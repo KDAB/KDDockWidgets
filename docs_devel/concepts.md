@@ -59,7 +59,7 @@ A visual separator between two widgets, which allows the user to resize dock wid
 ## FloatingWindow
 
 When a dock widget isn't embedded into a window it's said to be floating. It's its own
-top-level native window. This class ties all the previous together. It contains one layout, which contains multiple frames.
+top-level native window. This class ties all the previous together. It contains one layout, which contains multiple groups.
 
 
 ## MainWindow

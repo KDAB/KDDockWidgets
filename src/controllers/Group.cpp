@@ -277,7 +277,7 @@ void Group::addWidget(Group *group, InitialOption addingOption)
 void Group::addWidget(FloatingWindow *floatingWindow, InitialOption addingOption)
 {
     Q_ASSERT(floatingWindow);
-    for (Group *f : floatingWindow->frames())
+    for (Group *f : floatingWindow->groups())
         addWidget(f, addingOption);
 }
 
@@ -338,7 +338,7 @@ FloatingWindow *Group::detachTab(DockWidget *dockWidget)
     const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
     newFrame->addWidget(dockWidget);
 
-    // We're potentially already dead at this point, as frames with 0 tabs auto-destruct. Don't access members from this point.
+    // We're potentially already dead at this point, as groups with 0 tabs auto-destruct. Don't access members from this point.
 
     auto floatingWindow = new FloatingWindow(newFrame, {});
     r.moveTopLeft(globalPoint);
@@ -468,7 +468,7 @@ void Group::updateTitleBarVisibility()
     } else if ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && hasTabsVisible()) {
         visible = false;
     } else if (FloatingWindow *fw = floatingWindow()) {
-        // If there's nested frames then show each Frame's title bar
+        // If there's nested groups then show each Frame's title bar
         visible = !fw->hasSingleFrame();
     } else if (isMDIWrapper()) {
         auto dropArea = this->mdiDropAreaWrapper();
@@ -513,7 +513,7 @@ Controllers::TitleBar *Group::titleBar() const
 Controllers::TitleBar *Group::actualTitleBar() const
 {
     if (FloatingWindow *fw = floatingWindow()) {
-        // If there's nested frames then show each Frame's title bar
+        // If there's nested groups then show each Frame's title bar
         if (fw->hasSingleFrame())
             return fw->titleBar();
     } else if (auto mdiDropArea = mdiDropAreaWrapper()) {

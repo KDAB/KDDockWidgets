@@ -103,7 +103,7 @@ DropArea::~DropArea()
     qCDebug(creation) << "~DropArea";
 }
 
-Controllers::Group::List DropArea::frames() const
+Controllers::Group::List DropArea::groups() const
 {
     const Layouting::Item::List children = m_rootItem->items_recursive();
     Controllers::Group::List groups;
@@ -138,8 +138,8 @@ Controllers::Group *DropArea::groupContainingPos(QPoint globalPos) const
 
 void DropArea::updateFloatingActions()
 {
-    const Controllers::Group::List frames = this->frames();
-    for (Controllers::Group *group : frames)
+    const Controllers::Group::List groups = this->groups();
+    for (Controllers::Group *group : groups)
         group->updateFloatingActions();
 }
 
@@ -216,8 +216,8 @@ bool DropArea::containsDockWidget(Controllers::DockWidget *dw) const
 
 bool DropArea::hasSingleFloatingFrame() const
 {
-    const Controllers::Group::List frames = this->frames();
-    return frames.size() == 1 && frames.first()->isFloating();
+    const Controllers::Group::List groups = this->groups();
+    return groups.size() == 1 && groups.first()->isFloating();
 }
 
 bool DropArea::hasSingleFrame() const
@@ -548,8 +548,8 @@ void DropArea::addWidget(View *w, Location location,
 
     Layouting::Item *newItem = nullptr;
 
-    Controllers::Group::List frames = framesFrom(w);
-    unrefOldPlaceholders(frames);
+    Controllers::Group::List groups = groupsFrom(w);
+    unrefOldPlaceholders(groups);
     auto dw = w->asDockWidgetController();
     auto thisView = view();
 

@@ -58,9 +58,9 @@ public:
     void moveDockWidget(Views::DockWidgetViewInterface *, QPoint pos);
     void resizeDockWidget(Views::DockWidgetViewInterface *, QSize size);
 
-    /// @brief Returns the list of frames in this MDI Area
+    /// @brief Returns the list of groups in this MDI Area
     /// Each Frame object represents a 'window' emebedded in the MDI Area
-    QList<Controllers::Group *> frames() const;
+    QList<Controllers::Group *> groups() const;
 
 private:
     class Private;

@@ -48,7 +48,7 @@ class DOCKS_EXPORT DockRegistry : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(
-        QObject *frameViewInMDIResize READ frameViewInMDIResize NOTIFY frameInMDIResizeChanged)
+        QObject *groupViewInMDIResize READ groupViewInMDIResize NOTIFY groupInMDIResizeChanged)
 public:
     enum class DockByNameFlag
     {
@@ -113,7 +113,7 @@ public:
     const QVector<Controllers::Layout *> layouts() const;
 
     ///@brief returns a list of all Frame instances
-    const QList<Controllers::Group *> frames() const;
+    const QList<Controllers::Group *> groups() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
@@ -236,14 +236,14 @@ public:
     Controllers::Group *groupInMDIResize() const;
 
     /// Returns the Frame view, for QtQuick
-    QObject *frameViewInMDIResize() const;
+    QObject *groupViewInMDIResize() const;
 
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen
     void windowChangedScreen(std::shared_ptr<Window>);
 
     /// @brief emitted when the MDI frame that's being resized changed
-    void frameInMDIResizeChanged();
+    void groupInMDIResizeChanged();
 
     /// @brief emitted whenever Config::dropIndicatorsInhibited changes
     void dropIndicatorsInhibitedChanged(bool inhibited);

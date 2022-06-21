@@ -175,7 +175,7 @@ public:
     /**
      * @brief Returns this list of Frame objects contained in this layout
      */
-    QList<Controllers::Group *> frames() const;
+    QList<Controllers::Group *> groups() const;
 
     /// @brief Returns the list of dock widgets contained in this layout
     QVector<Controllers::DockWidget *> dockWidgets() const;
@@ -214,7 +214,7 @@ protected:
     void setLayoutMinimumSize(QSize);
 
     /**
-     * @brief Removes unneeded placeholder items when adding new frames.
+     * @brief Removes unneeded placeholder items when adding new groups.
      *
      * A floating frame A might have a placeholder in the main window (for example to remember its
      * position on the Left), but then the user might attach it to the right, so the left
@@ -222,14 +222,14 @@ protected:
      * placeholder, otherwise it's unrefed while we're adding causing a segfault. So what this does
      * is making the unrefing happen a bit earlier.
      */
-    void unrefOldPlaceholders(const QList<Controllers::Group *> &framesBeingAdded) const;
+    void unrefOldPlaceholders(const QList<Controllers::Group *> &groupsBeingAdded) const;
 
     /**
-     * @brief returns the frames contained in @p frameOrMultiSplitter
-     * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
-     * If frameOrMultiSplitter is a MultiSplitter then it returns a list of all frames it contains
+     * @brief returns the groups contained in @p groupOrMultiSplitter-
+     * If groupOrMultiSplitter- is a Frame, it returns a list of 1 element, with that frame
+     * If groupOrMultiSplitter- is a MultiSplitter then it returns a list of all groups it contains
      */
-    QList<Controllers::Group *> framesFrom(View *frameOrMultiSplitter) const;
+    QList<Controllers::Group *> groupsFrom(View *groupOrMultiSplitter) const;
 
 private:
     bool onResize(QSize newSize);

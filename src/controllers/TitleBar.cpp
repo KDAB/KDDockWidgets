@@ -499,7 +499,7 @@ Controllers::DockWidget::List TitleBar::dockWidgets() const
 {
     if (m_floatingWindow) {
         DockWidget::List result;
-        for (Group *f : m_floatingWindow->frames()) {
+        for (Group *f : m_floatingWindow->groups()) {
             result << f->dockWidgets();
         }
         return result;

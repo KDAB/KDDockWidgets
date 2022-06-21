@@ -225,8 +225,8 @@ Controllers::Group *DockRegistry::groupInMDIResize() const
             continue;
 
         Layout *layout = mw->layout();
-        const QList<Controllers::Group *> frames = layout->frames();
-        for (Controllers::Group *group : frames) {
+        const QList<Controllers::Group *> groups = layout->groups();
+        for (Controllers::Group *group : groups) {
             if (WidgetResizeHandler *wrh = group->resizeHandler()) {
                 if (wrh->isResizing())
                     return group;
@@ -237,7 +237,7 @@ Controllers::Group *DockRegistry::groupInMDIResize() const
     return nullptr;
 }
 
-QObject *DockRegistry::frameViewInMDIResize() const
+QObject *DockRegistry::groupViewInMDIResize() const
 {
     if (auto group = groupInMDIResize())
         return group->view()->asQObject();
@@ -521,7 +521,7 @@ const QVector<Controllers::Layout *> DockRegistry::layouts() const
     return m_layouts;
 }
 
-const Controllers::Group::List DockRegistry::frames() const
+const Controllers::Group::List DockRegistry::groups() const
 {
     return m_groups;
 }

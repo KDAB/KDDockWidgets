@@ -186,7 +186,7 @@ struct LayoutSaver::MultiSplitter
     bool skipsRestore() const;
 
     QVariantMap layout;
-    QHash<QString, LayoutSaver::Group> frames;
+    QHash<QString, LayoutSaver::Group> groups;
 };
 
 struct LayoutSaver::FloatingWindow

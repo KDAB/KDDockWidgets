@@ -250,7 +250,7 @@ QString DockWidget::title() const
         auto dropAreaGuest = d->guest ? guestView()->asDropAreaController() : nullptr;
         Q_ASSERT(dropAreaGuest);
         if (dropAreaGuest->hasSingleFrame()) {
-            return dropAreaGuest->frames().constFirst()->title();
+            return dropAreaGuest->groups().constFirst()->title();
         } else {
             return qGuiApp->applicationName();
         }

@@ -46,7 +46,7 @@
   - FloatingWindow now honours the dockwidget's max-size, if there's a single
     dock widget docked. Tabbed cases are more difficult since QStackedLayout doesn't
     propagate size constraints.
-  - Added MainWindowBase::frameCountChanged()
+  - Added MainWindowBase::groupCountChanged()
   - Introduced Config::setDropIndicatorsInhibited(), which allows you to disable support
   for drop indicators while dragging.
   - Fixed embedding the main window into a non-kddw main window (#204, #168)

@@ -47,7 +47,7 @@ public:
     bool isWindow() const override;
 
     const QVector<DockWidget *> dockWidgets() const;
-    const Controllers::Group::List frames() const;
+    const Controllers::Group::List groups() const;
     DropArea *dropArea() const;
 
     int userType() const;

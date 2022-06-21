@@ -664,7 +664,7 @@ void TestDocks::tst_restoreNonExistingDockWidget()
     QVERIFY(restorer.restoreLayout(saved));
     auto da = m->dropArea();
     QVERIFY(m->dropArea()->checkSanity());
-    QCOMPARE(da->frames().size(), 0);
+    QCOMPARE(da->groups().size(), 0);
 
     QVERIFY(dock2->isOpen());
     QVERIFY(dock2->isFloating());
@@ -2077,7 +2077,7 @@ void TestDocks::tst_crash2()
         }
 
         qDeleteAll(docks);
-        qDeleteAll(DockRegistry::self()->frames());
+        qDeleteAll(DockRegistry::self()->groups());
     }
 
     {
@@ -2112,7 +2112,7 @@ void TestDocks::tst_crash2()
         layout->checkSanity();
 
         qDeleteAll(docks);
-        qDeleteAll(DockRegistry::self()->frames());
+        qDeleteAll(DockRegistry::self()->groups());
     }
 }
 
@@ -2138,7 +2138,7 @@ void TestDocks::tst_closeAllDockWidgets()
     nestDockWidget(dock6, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
 
     QVERIFY(oldFWHeight <= fw->height());
-    QCOMPARE(fw->frames().size(), 2);
+    QCOMPARE(fw->groups().size(), 2);
 
     QVERIFY(dock3->window()->equals(fw->view()));
     QVERIFY(dock4->window()->equals(m->view()));
@@ -2475,7 +2475,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     auto fw = createFloatingWindow();
     auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
-    QCOMPARE(fw->frames().size(), 2);
+    QCOMPARE(fw->groups().size(), 2);
     QVERIFY(fw->dropArea()->checkSanity());
 
     auto fw2 = createFloatingWindow();
@@ -2490,8 +2490,8 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     dragFloatingWindowTo(fw, dragDestPos);
     QVERIFY(fw2->dropArea()->checkSanity());
 
-    QCOMPARE(fw2->frames().size(), 1);
-    auto f2 = fw2->frames().constFirst();
+    QCOMPARE(fw2->groups().size(), 1);
+    auto f2 = fw2->groups().constFirst();
     QCOMPARE(f2->dockWidgetCount(), 3);
     QVERIFY(Platform::instance()->tests_waitForDeleted(fw));
     delete fw2;
@@ -2709,13 +2709,13 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     auto fw = createFloatingWindow();
     auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop); // No we stack on top, unlike in previous test
-    QCOMPARE(fw->frames().size(), 2);
+    QCOMPARE(fw->groups().size(), 2);
 
     auto fw2 = createFloatingWindow();
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outter right instead of Left
-    QCOMPARE(fw2->frames().size(), 3);
+    QCOMPARE(fw2->groups().size(), 3);
     QVERIFY(fw2->dropArea()->checkSanity());
 
     fw2->deleteLater();
@@ -2731,7 +2731,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
     auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
-    QCOMPARE(fw->frames().size(), 2);
+    QCOMPARE(fw->groups().size(), 2);
 
     auto fw2 = createFloatingWindow();
     fw2->setObjectName("fw2");
@@ -2739,7 +2739,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
     QVERIFY(fw2->dropArea()->checkSanity());
     dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
-    QCOMPARE(fw2->frames().size(), 3);
+    QCOMPARE(fw2->groups().size(), 3);
 
     QVERIFY(fw2->dropArea()->checkSanity());
 
@@ -3577,13 +3577,13 @@ void TestDocks::tst_restoreWithCentralFrameWithTabs()
     m->addDockWidgetAsTab(dock1);
     m->addDockWidgetAsTab(dock2);
 
-    QCOMPARE(DockRegistry::self()->frames().size(), 1);
+    QCOMPARE(DockRegistry::self()->groups().size(), 1);
 
     LayoutSaver saver;
     const QByteArray saved = saver.serializeLayout();
     QVERIFY(saver.restoreLayout(saved));
 
-    QCOMPARE(DockRegistry::self()->frames().size(), 1);
+    QCOMPARE(DockRegistry::self()->groups().size(), 1);
 }
 
 void TestDocks::tst_restoreWithPlaceholder()
@@ -3865,7 +3865,7 @@ void TestDocks::tst_notClosable()
         auto fw = dock1->floatingWindow();
         QVERIFY(fw);
         Controllers::TitleBar *titlebarFW = fw->titleBar();
-        Controllers::TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
+        Controllers::TitleBar *titleBarFrame = fw->groups().at(0)->titleBar();
         QVERIFY(titlebarFW->isCloseButtonVisible());
         QVERIFY(!titlebarFW->isCloseButtonEnabled());
         QVERIFY(!titleBarFrame->isCloseButtonVisible());
@@ -3896,7 +3896,7 @@ void TestDocks::tst_notClosable()
         auto fw = dock1->floatingWindow();
         QVERIFY(fw);
         Controllers::TitleBar *titlebarFW = fw->titleBar();
-        Controllers::TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
+        Controllers::TitleBar *titleBarFrame = fw->groups().at(0)->titleBar();
 
         QVERIFY(titlebarFW->isCloseButtonVisible());
         QVERIFY(!titleBarFrame->isCloseButtonVisible());

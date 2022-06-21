@@ -148,7 +148,7 @@ inline View *draggableFor(View *view)
         if (auto group = dw->d->group())
             draggable = group->titleBar()->view();
     } else if (auto fw = view->asFloatingWindowController()) {
-        Controllers::Group *group = fw->hasSingleFrame() ? static_cast<Controllers::Group *>(fw->frames().first())
+        Controllers::Group *group = fw->hasSingleFrame() ? static_cast<Controllers::Group *>(fw->groups().first())
                                                          : nullptr;
 
         if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && group && group->hasTabsVisible()) {

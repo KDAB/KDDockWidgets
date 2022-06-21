@@ -146,7 +146,7 @@ void MainWindow::init(const QString &name)
 
     setUniqueName(name);
 
-    d->m_visibleWidgetCountConnection = d->m_layout->visibleWidgetCountChanged.connect(&MainWindow::frameCountChanged, this);
+    d->m_visibleWidgetCountConnection = d->m_layout->visibleWidgetCountChanged.connect(&MainWindow::groupCountChanged, this);
     view()->d->closeRequested.connect([this](QCloseEvent *ev) {
         d->m_layout->onCloseEvent(ev);
     });
@@ -700,7 +700,7 @@ bool MainWindow::closeDockWidgets(bool force)
             // The dock widget was closed and this frame is empty, delete immediately instead of
             // waiting. I'm not a big fan of deleting stuff later, as state becomes inconsistent
 
-            // Empty frames are historically deleted later since they are triggered by mouse click
+            // Empty groups are historically deleted later since they are triggered by mouse click
             // on the title bar, and the title bar is inside the frame.
             // When doing it programmatically we can delete immediately.
 

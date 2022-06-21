@@ -127,14 +127,14 @@ void from_json(const nlohmann::json &json, LayoutSaver::Group &f)
 void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
 {
     json["layout"] = s.layout;
-    auto &frames = json["frames"];
-    for (const auto &frame : qAsConst(s.frames)) {
-        frames[frame.id.toStdString()] = frame;
+    auto &groups = json["frames"];
+    for (const auto &frame : qAsConst(s.groups)) {
+        groups[frame.id.toStdString()] = frame;
     }
 }
 void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
 {
-    s.frames.clear();
+    s.groups.clear();
     s.layout = json.value("layout", QVariantMap());
     auto it = json.find("frames");
     if (it == json.end())
@@ -149,7 +149,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
     for (const auto &kv : frms.items()) {
         QString key = QString::fromStdString(kv.key());
         auto group = kv.value().get<LayoutSaver::Group>();
-        s.frames.insert(key, group);
+        s.groups.insert(key, group);
     }
 }
 
@@ -643,7 +643,7 @@ void LayoutSaver::Private::deleteEmptyFrames()
     // After a restore it can happen that some DockWidgets didn't exist, so weren't restored.
     // Delete their frame now.
 
-    for (auto group : m_dockRegistry->frames()) {
+    for (auto group : m_dockRegistry->groups()) {
         if (!group->beingDeletedLater() && group->isEmpty() && !group->isCentralFrame())
             delete group;
     }
@@ -986,7 +986,7 @@ bool LayoutSaver::MultiSplitter::isValid() const
 
 bool LayoutSaver::MultiSplitter::hasSingleDockWidget() const
 {
-    return frames.size() == 1 && frames.cbegin()->hasSingleDockWidget();
+    return groups.size() == 1 && groups.cbegin()->hasSingleDockWidget();
 }
 
 LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() const
@@ -994,12 +994,12 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() cons
     if (!hasSingleDockWidget())
         return {};
 
-    return frames.cbegin()->singleDockWidget();
+    return groups.cbegin()->singleDockWidget();
 }
 
 bool LayoutSaver::MultiSplitter::skipsRestore() const
 {
-    return std::all_of(frames.cbegin(), frames.cend(), [](const LayoutSaver::Group &frame) {
+    return std::all_of(groups.cbegin(), groups.cend(), [](const LayoutSaver::Group &frame) {
         return frame.skipsRestore();
     });
 }
