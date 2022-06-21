@@ -71,7 +71,7 @@ void WidgetResizeHandler::setResizeGap(int gap)
 
 bool WidgetResizeHandler::isMDI() const
 {
-    Controllers::Group *group = mTarget->asFrameController();
+    Controllers::Group *group = mTarget->asGroupController();
     return group && group->isMDI();
 }
 
@@ -111,7 +111,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         // We only want to continue if the cursor is near the margins of our own frame (mTarget)
 
         auto f = widget->firstParentOfType(Type::Frame);
-        auto group = f ? f->view()->asFrameController() : nullptr;
+        auto group = f ? f->view()->asGroupController() : nullptr;
         if (group && group->isMDIWrapper()) {
             // We don't care about the inner Option_MDINestable helper frame
             group = group->mdiFrame();
@@ -158,7 +158,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             // Usually in KDDW all geometry changes are done in the layout items, which propagate to the widgets
             // When resizing a MDI however, we're resizing the widget directly. So update the corresponding layout
             // item when we're finished.
-            auto group = mTarget->asFrameController();
+            auto group = mTarget->asGroupController();
             group->mdiLayoutWidget()->setDockWidgetGeometry(group, group->geometry());
         }
         updateCursor(CursorPosition_Undefined);

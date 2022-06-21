@@ -304,7 +304,7 @@ public:
     QPoint mapFromParent(QPoint) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
-    KDDockWidgets::Controllers::Group *asFrameController() const;
+    KDDockWidgets::Controllers::Group *asGroupController() const;
     KDDockWidgets::View *guestView() const
     {
         return m_guest;

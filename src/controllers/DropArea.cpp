@@ -111,7 +111,7 @@ Controllers::Group::List DropArea::groups() const
     for (const Layouting::Item *child : children) {
         if (auto view = child->guestView()) {
             if (!view->freed()) {
-                if (auto group = view->asFrameController()) {
+                if (auto group = view->asGroupController()) {
                     groups << group;
                 }
             }
@@ -125,7 +125,7 @@ Controllers::Group *DropArea::groupContainingPos(QPoint globalPos) const
 {
     const Layouting::Item::List &items = this->items();
     for (Layouting::Item *item : items) {
-        auto group = item->asFrameController();
+        auto group = item->asGroupController();
         if (!group || !group->isVisible()) {
             continue;
         }
@@ -146,7 +146,7 @@ void DropArea::updateFloatingActions()
 Layouting::Item *DropArea::centralFrame() const
 {
     for (Layouting::Item *item : this->items()) {
-        if (auto group = item->asFrameController()) {
+        if (auto group = item->asGroupController()) {
             if (group->isCentralFrame())
                 return item;
         }
@@ -499,7 +499,7 @@ bool DropArea::validateInputs(View *widget, Location location,
         return false;
     }
 
-    Layouting::Item *item = itemForFrame(widget->asFrameController());
+    Layouting::Item *item = itemForFrame(widget->asGroupController());
 
     if (containsItem(item)) {
         qWarning() << "DropArea::addWidget: Already contains" << widget;
@@ -530,7 +530,7 @@ void DropArea::addWidget(View *w, Location location,
                          InitialOption option)
 {
 
-    auto group = w->asFrameController();
+    auto group = w->asGroupController();
     if (itemForFrame(group) != nullptr) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders

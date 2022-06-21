@@ -208,7 +208,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
-    QPointer<Controllers::Group> centralFrame = dropArea->centralFrame()->asFrameController();
+    QPointer<Controllers::Group> centralFrame = dropArea->centralFrame()->asGroupController();
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);

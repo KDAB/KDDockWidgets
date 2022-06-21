@@ -67,7 +67,7 @@ void DockRegistry::onFocusedViewChanged(std::shared_ptr<ViewWrapper> view)
 {
     auto p = view;
     while (p && !p->isNull()) {
-        if (auto group = p->asFrameController()) {
+        if (auto group = p->asGroupController()) {
             // Special case: The focused widget is inside the frame but not inside the dockwidget.
             // For example, it's a line edit in the QTabBar. We still need to send the signal for
             // the current dw in the tab group

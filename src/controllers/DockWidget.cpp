@@ -1012,7 +1012,7 @@ Controllers::Group *DockWidget::Private::group() const
 {
     auto p = q->view()->parentView();
     while (p) {
-        if (auto group = p->asFrameController())
+        if (auto group = p->asGroupController())
             return group;
         p = p->parentView();
     }

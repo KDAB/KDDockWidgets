@@ -591,7 +591,7 @@ void TestDocks::tst_restoreCentralFrame()
     QCOMPARE(layout->count(), 1);
     Item *item = m->dropArea()->centralFrame();
     QVERIFY(item);
-    auto group = item->asFrameController();
+    auto group = item->asGroupController();
     QCOMPARE(group->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!group->titleBar()->isVisible());
 
@@ -602,7 +602,7 @@ void TestDocks::tst_restoreCentralFrame()
     QCOMPARE(layout->count(), 1);
     item = m->dropArea()->centralFrame();
     QVERIFY(item);
-    group = item->asFrameController();
+    group = item->asGroupController();
     QCOMPARE(group->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!group->titleBar()->isVisible());
 }
@@ -793,7 +793,7 @@ void TestDocks::tst_dockInternal()
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dropArea = m->dropArea();
 
-    auto centralFrame = dropArea->items()[0]->asFrameController();
+    auto centralFrame = dropArea->items()[0]->asGroupController();
     nestDockWidget(dock1, dropArea, centralFrame, KDDockWidgets::Location_OnRight);
 
     QVERIFY(dock1->width() < dropArea->layoutWidth() - centralFrame->width());

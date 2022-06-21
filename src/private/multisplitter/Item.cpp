@@ -188,7 +188,7 @@ void Item::setGuestView(View *guest)
 
     if (m_guest) {
         m_guest->setParent(m_hostWidget);
-        if (Controllers::Group *group = asFrameController())
+        if (Controllers::Group *group = asGroupController())
             group->setLayoutItem(this);
 
         newWidget->installEventFilter(this);
@@ -219,9 +219,9 @@ void Item::setGuestView(View *guest)
     updateObjectName();
 }
 
-KDDockWidgets::Controllers::Group *Item::asFrameController() const
+KDDockWidgets::Controllers::Group *Item::asGroupController() const
 {
-    return m_guest ? m_guest->asFrameController() : nullptr;
+    return m_guest ? m_guest->asGroupController() : nullptr;
 }
 
 void Item::updateWidgetGeometries()

@@ -153,7 +153,7 @@ void Layout::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *it
         item->restore(newGroup->view());
     }
 
-    auto group = item->asFrameController();
+    auto group = item->asGroupController();
     Q_ASSERT(group);
 
     if (tabIndex != -1 && group->dockWidgetCount() >= tabIndex) {
@@ -233,7 +233,7 @@ Controllers::DockWidget::List Layout::dockWidgets() const
 
 Controllers::Group::List Layout::groupsFrom(View *groupOrMultiSplitter) const
 {
-    if (auto group = groupOrMultiSplitter->asFrameController())
+    if (auto group = groupOrMultiSplitter->asGroupController())
         return { group };
 
     if (auto msw = groupOrMultiSplitter->asDropAreaController())
@@ -250,7 +250,7 @@ Controllers::Group::List Layout::groups() const
     result.reserve(items.size());
 
     for (Layouting::Item *item : items) {
-        if (auto group = item->asFrameController()) {
+        if (auto group = item->asGroupController()) {
             result.push_back(group);
         }
     }
@@ -319,7 +319,7 @@ LayoutSaver::MultiSplitter Layout::serialize() const
     l.groups.reserve(items.size());
     for (Layouting::Item *item : items) {
         if (!item->isContainer()) {
-            if (auto group = item->asFrameController()) {
+            if (auto group = item->asGroupController()) {
                 l.groups.insert(group->view()->id(), group->serialize());
             }
         }
