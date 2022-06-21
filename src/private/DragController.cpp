@@ -580,6 +580,14 @@ bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
     return true;
 }
 
+bool StateDraggingWayland::handleMouseMove(QPoint)
+{
+    // Wayland uses QDrag to drag stuff while other platforms use mouse.
+    // So override handleMouseMove() just so the regular mouse stuff doesn't run.
+
+    return false;
+}
+
 bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
