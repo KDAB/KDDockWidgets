@@ -350,8 +350,8 @@ void AddDockWidgetAsTab::generateRandomParams()
 
     Controllers::DockWidget *dw2 = nullptr;
 
-    if (auto frame = dw->d->frame()) {
-        auto toExclude = frame->dockWidgets();
+    if (auto group = dw->d->group()) {
+        auto toExclude = group->dockWidgets();
         for (auto dockWidget : DockRegistry::self()->dockwidgets()) {
             if (dockWidget->window() == dw->window())
                 toExclude.push_back(dockWidget);

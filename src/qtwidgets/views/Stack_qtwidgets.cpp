@@ -98,9 +98,9 @@ void Stack_qtwidgets::mousePressEvent(QMouseEvent *ev)
 {
     QTabWidget::mousePressEvent(ev);
 
-    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !m_stack->frame()->isFocused()) {
+    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !m_stack->group()->isFocused()) {
         // User clicked on the tab widget itself
-        m_stack->frame()->FocusScope::focus(Qt::MouseFocusReason);
+        m_stack->group()->FocusScope::focus(Qt::MouseFocusReason);
     }
 }
 
@@ -173,12 +173,12 @@ void Stack_qtwidgets::setupTabBarButtons()
     m_cornerWidgetLayout->addWidget(m_closeButton);
 
     connect(m_floatButton, &QAbstractButton::clicked, this, [this] {
-        Controllers::TitleBar *tb = m_stack->frame()->titleBar();
+        Controllers::TitleBar *tb = m_stack->group()->titleBar();
         tb->onFloatClicked();
     });
 
     connect(m_closeButton, &QAbstractButton::clicked, this, [this] {
-        Controllers::TitleBar *tb = m_stack->frame()->titleBar();
+        Controllers::TitleBar *tb = m_stack->group()->titleBar();
         tb->onCloseClicked();
     });
 

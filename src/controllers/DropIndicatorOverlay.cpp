@@ -64,17 +64,17 @@ QRect DropIndicatorOverlay::hoveredFrameRect() const
     return m_hoveredFrameRect;
 }
 
-void DropIndicatorOverlay::setHoveredFrame(Controllers::Group *frame)
+void DropIndicatorOverlay::setHoveredFrame(Controllers::Group *group)
 {
-    if (frame == m_hoveredFrame)
+    if (group == m_hoveredFrame)
         return;
 
     if (m_hoveredFrame)
         disconnect(m_hoveredFrame, &QObject::destroyed, this, &DropIndicatorOverlay::onFrameDestroyed);
 
-    m_hoveredFrame = frame;
+    m_hoveredFrame = group;
     if (m_hoveredFrame) {
-        connect(frame, &QObject::destroyed, this, &DropIndicatorOverlay::onFrameDestroyed);
+        connect(group, &QObject::destroyed, this, &DropIndicatorOverlay::onFrameDestroyed);
         setHoveredFrameRect(m_hoveredFrame->view()->geometry());
     } else {
         setHoveredFrameRect(QRect());

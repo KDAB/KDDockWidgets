@@ -27,11 +27,11 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-Stack::Stack(Group *frame, StackOptions options)
-    : Controller(Type::Stack, Config::self().viewFactory()->createStack(this, frame->view()))
+Stack::Stack(Group *group, StackOptions options)
+    : Controller(Type::Stack, Config::self().viewFactory()->createStack(this, group->view()))
     , Draggable(view(), Config::self().flags() & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
     , m_tabBar(new TabBar(this))
-    , m_frame(frame)
+    , m_group(group)
     , m_options(options)
 {
     view()->init();
@@ -82,7 +82,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
         return false;
     }
 
-    QPointer<Group> oldFrame = dock->d->frame();
+    QPointer<Group> oldFrame = dock->d->group();
     insertDockWidget(index, dock, dock->icon(IconPlace::TabBar), dock->title());
     setCurrentDockWidget(index);
 
@@ -106,9 +106,9 @@ bool Stack::contains(DockWidget *dw) const
     return indexOfDockWidget(dw) != -1;
 }
 
-Group *Stack::frame() const
+Group *Stack::group() const
 {
-    return m_frame;
+    return m_group;
 }
 
 std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
@@ -124,11 +124,11 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
         }
     }
 
-    QRect r = m_frame->view()->geometry();
+    QRect r = m_group->view()->geometry();
 
     const QPoint globalPoint = view()->mapToGlobal(QPoint(0, 0));
 
-    auto floatingWindow = new FloatingWindow(m_frame, {});
+    auto floatingWindow = new FloatingWindow(m_group, {});
     r.moveTopLeft(globalPoint);
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();
@@ -148,25 +148,25 @@ bool Stack::isWindow() const
 
 Controllers::DockWidget *Stack::singleDockWidget() const
 {
-    if (m_frame->hasSingleDockWidget())
-        return m_frame->dockWidgets().first();
+    if (m_group->hasSingleDockWidget())
+        return m_group->dockWidgets().first();
 
     return nullptr;
 }
 
 bool Stack::isMDI() const
 {
-    return m_frame && m_frame->isMDI();
+    return m_group && m_group->isMDI();
 }
 
 void Stack::onTabInserted()
 {
-    m_frame->onDockWidgetCountChanged();
+    m_group->onDockWidgetCountChanged();
 }
 
 void Stack::onTabRemoved()
 {
-    m_frame->onDockWidgetCountChanged();
+    m_group->onDockWidgetCountChanged();
 }
 
 void Stack::onCurrentTabChanged(int index)
@@ -182,18 +182,18 @@ bool Stack::onMouseDoubleClick(QPoint localPos)
     if (!(Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) || tabBar()->dockWidgetAt(localPos))
         return false;
 
-    Group *frame = this->frame();
+    Group *group = this->group();
 
     // When using MainWindowOption_HasCentralFrame. The central frame is never detachable.
-    if (frame->isCentralFrame())
+    if (group->isCentralFrame())
         return false;
 
-    if (FloatingWindow *fw = frame->floatingWindow()) {
+    if (FloatingWindow *fw = group->floatingWindow()) {
         if (!fw->hasSingleFrame()) {
             makeWindow();
             return true;
         }
-    } else if (frame->isInMainWindow()) {
+    } else if (group->isInMainWindow()) {
         makeWindow();
         return true;
     }

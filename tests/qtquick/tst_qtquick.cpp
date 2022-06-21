@@ -108,7 +108,7 @@ void TestQtQuick::tst_hoverShowsDropIndicators()
     auto fw = floatingDockWidget->floatingWindow();
     dragFloatingWindowTo(fw, mainWindowCenterPos);
 
-    QCOMPARE(dock0->dptr()->frame()->dockWidgetCount(), 2);
+    QCOMPARE(dock0->dptr()->group()->dockWidgetCount(), 2);
 }
 
 int main(int argc, char *argv[])

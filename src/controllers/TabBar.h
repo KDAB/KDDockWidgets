@@ -63,7 +63,7 @@ public:
     /// @reimp
     bool isMDI() const override;
 
-    Group *frame() const;
+    Group *group() const;
 
     void moveTabTo(int from, int to);
     QString text(int index) const;

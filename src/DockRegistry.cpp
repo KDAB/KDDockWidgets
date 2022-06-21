@@ -67,11 +67,11 @@ void DockRegistry::onFocusedViewChanged(std::shared_ptr<ViewWrapper> view)
 {
     auto p = view;
     while (p && !p->isNull()) {
-        if (auto frame = p->asFrameController()) {
+        if (auto group = p->asFrameController()) {
             // Special case: The focused widget is inside the frame but not inside the dockwidget.
             // For example, it's a line edit in the QTabBar. We still need to send the signal for
             // the current dw in the tab group
-            if (auto dw = frame->currentDockWidget()) {
+            if (auto dw = group->currentDockWidget()) {
                 setFocusedDockWidget(dw);
             }
 
@@ -218,7 +218,7 @@ Controllers::SideBar *DockRegistry::sideBarForDockWidget(const Controllers::Dock
     return nullptr;
 }
 
-Controllers::Group *DockRegistry::frameInMDIResize() const
+Controllers::Group *DockRegistry::groupInMDIResize() const
 {
     for (auto mw : m_mainWindows) {
         if (!mw->isMDI())
@@ -226,10 +226,10 @@ Controllers::Group *DockRegistry::frameInMDIResize() const
 
         Layout *layout = mw->layout();
         const QList<Controllers::Group *> frames = layout->frames();
-        for (Controllers::Group *frame : frames) {
-            if (WidgetResizeHandler *wrh = frame->resizeHandler()) {
+        for (Controllers::Group *group : frames) {
+            if (WidgetResizeHandler *wrh = group->resizeHandler()) {
                 if (wrh->isResizing())
-                    return frame;
+                    return group;
             }
         }
     }
@@ -239,8 +239,8 @@ Controllers::Group *DockRegistry::frameInMDIResize() const
 
 QObject *DockRegistry::frameViewInMDIResize() const
 {
-    if (auto frame = frameInMDIResize())
-        return frame->view()->asQObject();
+    if (auto group = groupInMDIResize())
+        return group->view()->asQObject();
 
     return nullptr;
 }
@@ -345,14 +345,14 @@ void DockRegistry::unregisterLayout(Controllers::Layout *layout)
     m_layouts.removeOne(layout);
 }
 
-void DockRegistry::registerFrame(Controllers::Group *frame)
+void DockRegistry::registerGroup(Controllers::Group *group)
 {
-    m_frames << frame;
+    m_groups << group;
 }
 
-void DockRegistry::unregisterFrame(Controllers::Group *frame)
+void DockRegistry::unregisterGroup(Controllers::Group *group)
 {
-    m_frames.removeOne(frame);
+    m_groups.removeOne(group);
 }
 
 Controllers::DockWidget *DockRegistry::focusedDockWidget() const
@@ -523,7 +523,7 @@ const QVector<Controllers::Layout *> DockRegistry::layouts() const
 
 const Controllers::Group::List DockRegistry::frames() const
 {
-    return m_frames;
+    return m_groups;
 }
 
 const QVector<Controllers::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted) const
@@ -692,9 +692,9 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
     } else if (event->type() == QEvent::MouseButtonPress) {
         // When clicking on a MDI Frame we raise the window
         if (Controller *c = View::firstParentOfType(watched, Type::Frame)) {
-            auto frame = static_cast<Group *>(c);
-            if (frame->isMDI())
-                frame->view()->raise();
+            auto group = static_cast<Group *>(c);
+            if (group->isMDI())
+                group->view()->raise();
         }
 
         // The following code is for hididng the overlay
@@ -742,7 +742,7 @@ bool DockRegistry::onDockWidgetPressed(Controllers::DockWidget *dw, QMouseEvent 
 
     if (Controllers::DockWidget *overlayedDockWidget = mainWindow->overlayedDockWidget()) {
         ev->ignore();
-        Platform::instance()->sendEvent(overlayedDockWidget->d->frame()->view(), ev);
+        Platform::instance()->sendEvent(overlayedDockWidget->d->group()->view(), ev);
 
         if (ev->isAccepted()) {
             // The Frame accepted it. It means the user is resizing it. We allow for 4px outside for better resize.

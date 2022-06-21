@@ -166,8 +166,8 @@ QObject *DockWidget_qtquick::actualTitleBarView() const
 
 QQuickItem *DockWidget_qtquick::frameVisualItem() const
 {
-    if (Controllers::Group *frame = this->frame()) {
-        if (auto view = asView_qtquick(frame->view()))
+    if (Controllers::Group *group = this->group()) {
+        if (auto view = asView_qtquick(group->view()))
             return view->visualItem();
     }
 
@@ -176,8 +176,8 @@ QQuickItem *DockWidget_qtquick::frameVisualItem() const
 
 void DockWidget_qtquick::onGeometryUpdated()
 {
-    if (auto frame = this->frame()) {
-        if (auto view = frame->view()) {
+    if (auto group = this->group()) {
+        if (auto view = group->view()) {
             auto frameView = static_cast<Group_qtquick *>(asView_qtquick(view));
             frameView->updateConstriants();
             frameView->updateGeometry();

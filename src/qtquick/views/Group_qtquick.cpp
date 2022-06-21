@@ -57,7 +57,7 @@ Group_qtquick::~Group_qtquick()
 
 void Group_qtquick::init()
 {
-    connect(m_frame->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
+    connect(m_group->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
     connect(this, &View_qtquick::geometryUpdated, this, [this] {
@@ -65,12 +65,12 @@ void Group_qtquick::init()
     });
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
-    connect(m_frame, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
-    connect(m_frame, &Controllers::Group::currentDockWidgetChanged, this, &Group_qtquick::currentDockWidgetChanged);
-    connect(m_frame, &Controllers::Group::actualTitleBarChanged, this, &Group_qtquick::actualTitleBarChanged);
+    connect(m_group, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
+    connect(m_group, &Controllers::Group::currentDockWidgetChanged, this, &Group_qtquick::currentDockWidgetChanged);
+    connect(m_group, &Controllers::Group::actualTitleBarChanged, this, &Group_qtquick::actualTitleBarChanged);
 
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
-        for (auto dw : m_frame->dockWidgets()) {
+        for (auto dw : m_group->dockWidgets()) {
             auto dwView = static_cast<DockWidget_qtquick *>(asView_qtquick(dw->view()));
             dwView->frameGeometryChanged(geometry());
         }
@@ -93,7 +93,7 @@ void Group_qtquick::init()
 
 void Group_qtquick::updateConstriants()
 {
-    m_frame->onDockWidgetCountChanged();
+    m_group->onDockWidgetCountChanged();
 
     // QtQuick doesn't have layouts, so we need to do constraint propagation manually
 
@@ -121,17 +121,17 @@ int Group_qtquick::currentIndex_impl() const
 
 void Group_qtquick::setCurrentTabIndex_impl(int index)
 {
-    setCurrentDockWidget_impl(m_frame->dockWidgetAt(index));
+    setCurrentDockWidget_impl(m_group->dockWidgetAt(index));
 }
 
 void Group_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
-    m_frame->tabWidget()->setCurrentDockWidget(dw);
+    m_group->tabWidget()->setCurrentDockWidget(dw);
 }
 
 void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
-    QPointer<Controllers::Group> oldFrame = dw->d->frame();
+    QPointer<Controllers::Group> oldFrame = dw->d->group();
     if (stackView()->insertDockWidget(index, dw, {}, {})) {
 
         asView_qtquick(dw->view())->setParent(m_stackLayout);
@@ -191,7 +191,7 @@ void Group_qtquick::setStackLayout(QQuickItem *stackLayout)
 
 QSize Group_qtquick::minSize() const
 {
-    const QSize contentsSize = m_frame->dockWidgetsMinSize();
+    const QSize contentsSize = m_group->dockWidgetsMinSize();
     return contentsSize + QSize(0, nonContentsHeight());
 }
 
@@ -217,7 +217,7 @@ int Group_qtquick::nonContentsHeight() const
 
 Stack_qtquick *Group_qtquick::stackView() const
 {
-    if (auto stack = m_frame->tabWidget())
+    if (auto stack = m_group->tabWidget())
         return qobject_cast<Stack_qtquick *>(asQQuickItem(stack->view()));
 
     return nullptr;
@@ -231,7 +231,7 @@ QRect Group_qtquick::dragRect() const
 
 KDDockWidgets::Views::TitleBar_qtquick *Group_qtquick::titleBar() const
 {
-    if (auto tb = m_frame->titleBar()) {
+    if (auto tb = m_group->titleBar()) {
         return dynamic_cast<KDDockWidgets::Views::TitleBar_qtquick *>(tb->view());
     }
 
@@ -240,7 +240,7 @@ KDDockWidgets::Views::TitleBar_qtquick *Group_qtquick::titleBar() const
 
 KDDockWidgets::Views::TitleBar_qtquick *Group_qtquick::actualTitleBar() const
 {
-    if (auto tb = m_frame->actualTitleBar()) {
+    if (auto tb = m_group->actualTitleBar()) {
         return dynamic_cast<KDDockWidgets::Views::TitleBar_qtquick *>(tb->view());
     }
 
@@ -262,7 +262,7 @@ bool Group_qtquick::event(QEvent *e)
 
     if (e->type() == QEvent::ParentChange) {
         auto p = parentView();
-        m_frame->setLayout(p ? p->asLayout() : nullptr);
+        m_group->setLayout(p ? p->asLayout() : nullptr);
     }
 
     return View_qtquick::event(e);

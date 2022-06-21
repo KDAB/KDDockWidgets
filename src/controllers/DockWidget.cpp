@@ -98,10 +98,10 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
         return;
     }
 
-    Controllers::Group *frame = d->frame();
+    Controllers::Group *group = d->group();
 
-    if (frame) {
-        if (frame->containsDockWidget(other)) {
+    if (group) {
+        if (group->containsDockWidget(other)) {
             qWarning() << Q_FUNC_INFO << "Already contains" << other;
             return;
         }
@@ -109,7 +109,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
         if (view()->isRootView()) {
             // Doesn't have a frame yet
             d->morphIntoFloatingWindow();
-            frame = d->frame();
+            group = d->group();
         } else {
             // Doesn't happen
             qWarning() << Q_FUNC_INFO << "null frame";
@@ -118,7 +118,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
     }
 
     other->view()->setParent(nullptr);
-    frame->addWidget(other, option);
+    group->addWidget(other, option);
 }
 
 void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
@@ -203,15 +203,15 @@ bool DockWidget::setFloating(bool floats)
     if (floats) {
         d->saveTabIndex();
         if (isTabbed()) {
-            auto frame = d->frame();
-            if (!frame) {
+            auto group = d->group();
+            if (!group) {
                 qWarning() << "DockWidget::setFloating: Tabbed but no frame exists"
                            << this;
                 Q_ASSERT(false);
                 return false;
             }
 
-            frame->detachTab(this);
+            group->detachTab(this);
         } else {
             titleBar()->makeWindow();
         }
@@ -270,7 +270,7 @@ void DockWidget::setTitle(const QString &title)
 
 QRect DockWidget::frameGeometry() const
 {
-    if (Controllers::Group *f = d->frame())
+    if (Controllers::Group *f = d->group())
         return f->view()->geometry();
 
     // Means the dock widget isn't visible. Just fallback to its own geometry
@@ -304,8 +304,8 @@ void DockWidget::setOptions(DockWidgetOptions options)
 
 bool DockWidget::isTabbed() const
 {
-    if (Controllers::Group *frame = d->frame()) {
-        return frame->alwaysShowsTabs() || frame->dockWidgetCount() > 1;
+    if (Controllers::Group *group = d->group()) {
+        return group->alwaysShowsTabs() || group->dockWidgetCount() > 1;
     } else {
         if (!isFloating())
             qWarning() << "DockWidget::isTabbed() Couldn't find any tab widget.";
@@ -315,8 +315,8 @@ bool DockWidget::isTabbed() const
 
 bool DockWidget::isCurrentTab() const
 {
-    if (Controllers::Group *frame = d->frame()) {
-        return frame->currentIndex() == frame->indexOfDockWidget(const_cast<DockWidget *>(this));
+    if (Controllers::Group *group = d->group()) {
+        return group->currentIndex() == group->indexOfDockWidget(const_cast<DockWidget *>(this));
     } else {
         return true;
     }
@@ -324,22 +324,22 @@ bool DockWidget::isCurrentTab() const
 
 void DockWidget::setAsCurrentTab()
 {
-    if (Controllers::Group *frame = d->frame())
-        frame->setCurrentDockWidget(this);
+    if (Controllers::Group *group = d->group())
+        group->setCurrentDockWidget(this);
 }
 
 int DockWidget::tabIndex() const
 {
-    if (Controllers::Group *frame = d->frame())
-        return frame->indexOfDockWidget(this);
+    if (Controllers::Group *group = d->group())
+        return group->indexOfDockWidget(this);
 
     return 0;
 }
 
 int DockWidget::currentTabIndex() const
 {
-    if (Group *frame = d->frame())
-        return frame->currentTabIndex();
+    if (Group *group = d->group())
+        return group->currentTabIndex();
 
     return 0;
 }
@@ -379,7 +379,7 @@ void DockWidget::forceClose()
 
 Controllers::TitleBar *DockWidget::titleBar() const
 {
-    if (Controllers::Group *f = d->frame())
+    if (Controllers::Group *f = d->group())
         return f->actualTitleBar();
 
     return nullptr;
@@ -416,9 +416,9 @@ void DockWidget::raise()
     if (auto fw = floatingWindow()) {
         fw->view()->raise();
         fw->view()->activateWindow();
-    } else if (Controllers::Group *frame = d->frame()) {
-        if (frame->isMDI())
-            frame->view()->raise();
+    } else if (Controllers::Group *group = d->group()) {
+        if (group->isMDI())
+            group->view()->raise();
     }
 }
 
@@ -441,7 +441,7 @@ MainWindow *DockWidget::mainWindow() const
 
 bool DockWidget::isFocused() const
 {
-    auto f = d->frame();
+    auto f = d->group();
     return f && f->isFocused() && isCurrentTab();
 }
 
@@ -547,12 +547,12 @@ Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
             }
         }
 
-        auto frame = new Controllers::Group();
-        frame->addWidget(q);
-        geo.setSize(geo.size().boundedTo(frame->view()->maxSizeHint()));
-        geo.setSize(geo.size().expandedTo(frame->view()->minSize()));
+        auto group = new Controllers::Group();
+        group->addWidget(q);
+        geo.setSize(geo.size().boundedTo(group->view()->maxSizeHint()));
+        geo.setSize(geo.size().expandedTo(group->view()->minSize()));
         Controllers::FloatingWindow::ensureRectIsOnScreen(geo);
-        auto floatingWindow = new Controllers::FloatingWindow(frame, geo);
+        auto floatingWindow = new Controllers::FloatingWindow(group, geo);
 
         Layouting::AtomicSanityChecks checks(floatingWindow->dropArea()->rootItem());
         floatingWindow->view()->show();
@@ -685,9 +685,9 @@ void DockWidget::Private::updateToggleAction()
 {
     QScopedValueRollback<bool> recursionGuard(m_updatingToggleAction, true); // Guard against recursiveness
 
-    if ((q->isVisible() || frame()) && !toggleAction->isChecked()) {
+    if ((q->isVisible() || group()) && !toggleAction->isChecked()) {
         toggleAction->setChecked(true);
-    } else if ((!q->isVisible() && !frame()) && toggleAction->isChecked()) {
+    } else if ((!q->isVisible() && !group()) && toggleAction->isChecked()) {
         toggleAction->setChecked(false);
     }
 }
@@ -749,10 +749,10 @@ void DockWidget::Private::close()
     saveTabIndex();
 
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
-    if (Controllers::Group *frame = this->frame()) {
+    if (Controllers::Group *group = this->group()) {
         q->QObject::setParent(nullptr);
         q->view()->setParent(nullptr);
-        frame->removeWidget(q);
+        group->removeWidget(q);
 
         if (Controllers::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
             sb->removeDockWidget(q);
@@ -792,10 +792,10 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
     if (m_lastPosition->wasFloating())
         return; // Nothing to do, it was floating before, now it'll just get visible
 
-    Controllers::Group *frame = this->frame();
+    Controllers::Group *group = this->group();
 
-    if (frame && frame->view()->equals(DockRegistry::self()->layoutForItem(layoutItem)->view())) {
-        // There's a frame already. Means the DockWidget was hidden instead of closed.
+    if (group && group->view()->equals(DockRegistry::self()->layoutForItem(layoutItem)->view())) {
+        // There's a group already. Means the DockWidget was hidden instead of closed.
         // Nothing to do, the dock widget will simply be shown
         return;
     }
@@ -813,8 +813,8 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
 
 int DockWidget::Private::currentTabIndex() const
 {
-    Controllers::Group *frame = this->frame();
-    return frame ? frame->indexOfDockWidget(q) : 0;
+    Controllers::Group *group = this->group();
+    return group ? group->indexOfDockWidget(q) : 0;
 }
 
 void DockWidget::Private::saveTabIndex()
@@ -837,7 +837,7 @@ void DockWidget::onShown(bool spontaneous)
     d->onDockWidgetShown();
     Q_EMIT shown();
 
-    if (Controllers::Group *f = d->frame()) {
+    if (Controllers::Group *f = d->group()) {
         if (!spontaneous) {
             f->onDockWidgetShown(this);
         }
@@ -854,7 +854,7 @@ void DockWidget::onHidden(bool spontaneous)
     d->onDockWidgetHidden();
     Q_EMIT hidden();
 
-    if (Controllers::Group *f = d->frame()) {
+    if (Controllers::Group *f = d->group()) {
         if (!spontaneous) {
             f->onDockWidgetHidden(this);
         }
@@ -864,8 +864,8 @@ void DockWidget::onHidden(bool spontaneous)
 void DockWidget::onResize(QSize)
 {
     if (isOverlayed()) {
-        if (auto frame = d->frame()) {
-            d->m_lastOverlayedSize = frame->view()->size();
+        if (auto group = d->group()) {
+            d->m_lastOverlayedSize = group->view()->size();
         } else {
             qWarning() << Q_FUNC_INFO << "Overlayed dock widget without frame shouldn't happen";
         }
@@ -927,9 +927,9 @@ void DockWidget::setMDISize(QSize size)
 
 void DockWidget::setMDIZ(int z)
 {
-    if (Group *frame = d->frame()) {
-        if (frame->isMDI())
-            frame->view()->setZOrder(z);
+    if (Group *group = d->group()) {
+        if (group->isMDI())
+            group->view()->setZOrder(z);
     }
 }
 
@@ -1008,12 +1008,12 @@ Position::Ptr &DockWidget::Private::lastPosition()
     return m_lastPosition;
 }
 
-Controllers::Group *DockWidget::Private::frame() const
+Controllers::Group *DockWidget::Private::group() const
 {
     auto p = q->view()->parentView();
     while (p) {
-        if (auto frame = p->asFrameController())
-            return frame;
+        if (auto group = p->asFrameController())
+            return group;
         p = p->parentView();
     }
     return nullptr;

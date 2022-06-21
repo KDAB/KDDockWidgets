@@ -73,7 +73,7 @@ static Qt::WindowFlags windowFlagsToUse()
     return Qt::Tool;
 }
 
-static MainWindow *hackFindParentHarder(Controllers::Group *frame, MainWindow *candidateParent)
+static MainWindow *hackFindParentHarder(Controllers::Group *group, MainWindow *candidateParent)
 {
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows) {
         return nullptr;
@@ -95,7 +95,7 @@ static MainWindow *hackFindParentHarder(Controllers::Group *frame, MainWindow *c
     if (windows.size() == 1) {
         return windows.first();
     } else {
-        const QStringList affinities = frame ? frame->affinities() : QStringList();
+        const QStringList affinities = group ? group->affinities() : QStringList();
         const MainWindow::List mainWindows = DockRegistry::self()->mainWindowsWithAffinity(affinities);
 
         if (mainWindows.isEmpty()) {
@@ -166,22 +166,22 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
-FloatingWindow::FloatingWindow(Controllers::Group *frame, QRect suggestedGeometry, MainWindow *parent)
-    : FloatingWindow({}, hackFindParentHarder(frame, parent))
+FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometry, MainWindow *parent)
+    : FloatingWindow({}, hackFindParentHarder(group, parent))
 {
     QScopedValueRollback<bool> guard(m_disableSetVisible, true);
 
-    if (frame->hasNestedMDIDockWidgets()) {
+    if (group->hasNestedMDIDockWidgets()) {
         // When using DockWidget::MDINestable, the docked MDI widget is wrapped by a drop area so we can drop things into it.
         // When floating it, we can delete that helper drop area, as FloatingWindow already has one
 
-        if (frame->dockWidgetCount() == 0) {
+        if (group->dockWidgetCount() == 0) {
             // doesn't happen
             qWarning() << Q_FUNC_INFO << "Unexpected empty frame";
             return;
         }
 
-        DockWidget *dwMDIWrapper = frame->dockWidgetAt(0);
+        DockWidget *dwMDIWrapper = group->dockWidgetAt(0);
         DropArea *dropAreaMDIWrapper = dwMDIWrapper->d->mdiDropAreaWrapper();
 
         if (dropAreaMDIWrapper->hasSingleFrame()) {
@@ -213,7 +213,7 @@ FloatingWindow::FloatingWindow(Controllers::Group *frame, QRect suggestedGeometr
         // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
         // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
         // So disable the setVisible(true) call while in the ctor.
-        m_dropArea->addWidget(frame->view(), KDDockWidgets::Location_OnTop, {});
+        m_dropArea->addWidget(group->view(), KDDockWidgets::Location_OnTop, {});
     }
 
     if (!suggestedGeometry.isNull())
@@ -261,9 +261,9 @@ Controllers::DockWidget *FloatingWindow::singleDockWidget() const
 {
     const Controllers::Group::List frames = this->frames();
     if (frames.size() == 1) {
-        Controllers::Group *frame = frames.first();
-        if (frame->hasSingleDockWidget())
-            return frame->dockWidgetAt(0);
+        Controllers::Group *group = frames.first();
+        if (group->hasSingleDockWidget())
+            return group->dockWidgetAt(0);
     }
 
     return nullptr;
@@ -295,10 +295,10 @@ QSize FloatingWindow::maxSizeHint() const
         // multi-frame cases are more complicated and we're not sure if we want the window to
         // bounce around. single-frame is the most common case, like floating a dock widget, so
         // let's do that first, it's also easy.
-        Controllers::Group *frame = frames[0];
-        if (frame->dockWidgetCount() == 1) { // We don't support if there's tabbing
-            const QSize waste = (view()->minSize() - frame->view()->minSize()).expandedTo(QSize(0, 0));
-            result = frame->view()->maxSizeHint() + waste;
+        Controllers::Group *group = frames[0];
+        if (group->dockWidgetCount() == 1) { // We don't support if there's tabbing
+            const QSize waste = (view()->minSize() - group->view()->minSize()).expandedTo(QSize(0, 0));
+            result = group->view()->maxSizeHint() + waste;
         }
     }
 
@@ -365,8 +365,8 @@ bool FloatingWindow::isInDragArea(QPoint globalPoint) const
 
 bool FloatingWindow::anyNonClosable() const
 {
-    for (Controllers::Group *frame : frames()) {
-        if (frame->anyNonClosable())
+    for (Controllers::Group *group : frames()) {
+        if (group->anyNonClosable())
             return true;
     }
     return false;
@@ -374,8 +374,8 @@ bool FloatingWindow::anyNonClosable() const
 
 bool FloatingWindow::anyNonDockable() const
 {
-    for (Controllers::Group *frame : frames()) {
-        if (frame->anyNonDockable())
+    for (Controllers::Group *group : frames()) {
+        if (group->anyNonDockable())
             return true;
     }
     return false;
@@ -392,8 +392,8 @@ bool FloatingWindow::hasSingleDockWidget() const
     if (frames.size() != 1)
         return false;
 
-    Controllers::Group *frame = frames.first();
-    return frame->dockWidgetCount() == 1;
+    Controllers::Group *group = frames.first();
+    return group->dockWidgetCount() == 1;
 }
 
 Controllers::Group *FloatingWindow::singleFrame() const
@@ -459,8 +459,8 @@ void FloatingWindow::updateTitleBarVisibility()
 
     bool visible = true;
 
-    for (Controllers::Group *frame : frames())
-        frame->updateTitleBarVisibility();
+    for (Controllers::Group *group : frames())
+        group->updateTitleBarVisibility();
 
     if (KDDockWidgets::usesClientTitleBar()) {
         const auto flags = Config::self().flags();
@@ -489,9 +489,9 @@ void FloatingWindow::updateTitleAndIcon()
     QString title;
     QIcon icon;
     if (hasSingleFrame()) {
-        const Controllers::Group *frame = frames().constFirst();
-        title = frame->title();
-        icon = frame->icon();
+        const Controllers::Group *group = frames().constFirst();
+        title = group->title();
+        icon = group->icon();
     } else {
         title = qGuiApp->applicationName();
     }
@@ -572,32 +572,32 @@ QRect FloatingWindow::dragRect() const
 bool FloatingWindow::allDockWidgetsHave(DockWidgetOption option) const
 {
     const Controllers::Group::List frames = this->frames();
-    return std::all_of(frames.begin(), frames.end(), [option](Controllers::Group *frame) {
-        return frame->allDockWidgetsHave(option);
+    return std::all_of(frames.begin(), frames.end(), [option](Controllers::Group *group) {
+        return group->allDockWidgetsHave(option);
     });
 }
 
 bool FloatingWindow::anyDockWidgetsHas(DockWidgetOption option) const
 {
     const Controllers::Group::List frames = this->frames();
-    return std::any_of(frames.begin(), frames.end(), [option](Controllers::Group *frame) {
-        return frame->anyDockWidgetsHas(option);
+    return std::any_of(frames.begin(), frames.end(), [option](Controllers::Group *group) {
+        return group->anyDockWidgetsHas(option);
     });
 }
 
 bool FloatingWindow::allDockWidgetsHave(LayoutSaverOption option) const
 {
     const Controllers::Group::List frames = this->frames();
-    return std::all_of(frames.begin(), frames.end(), [option](Controllers::Group *frame) {
-        return frame->allDockWidgetsHave(option);
+    return std::all_of(frames.begin(), frames.end(), [option](Controllers::Group *group) {
+        return group->allDockWidgetsHave(option);
     });
 }
 
 bool FloatingWindow::anyDockWidgetsHas(LayoutSaverOption option) const
 {
     const Controllers::Group::List frames = this->frames();
-    return std::any_of(frames.begin(), frames.end(), [option](Controllers::Group *frame) {
-        return frame->anyDockWidgetsHas(option);
+    return std::any_of(frames.begin(), frames.end(), [option](Controllers::Group *group) {
+        return group->anyDockWidgetsHas(option);
     });
 }
 

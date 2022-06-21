@@ -72,8 +72,8 @@ public:
     void registerLayout(Controllers::Layout *);
     void unregisterLayout(Controllers::Layout *);
 
-    void registerFrame(Controllers::Group *);
-    void unregisterFrame(Controllers::Group *);
+    void registerGroup(Controllers::Group *);
+    void unregisterGroup(Controllers::Group *);
 
     Q_INVOKABLE KDDockWidgets::Controllers::DockWidget *focusedDockWidget() const;
 
@@ -233,7 +233,7 @@ public:
     Controllers::SideBar *sideBarForDockWidget(const Controllers::DockWidget *) const;
 
     ///@brief Returns the Frame which is being resized in a MDI layout. nullptr if none
-    Controllers::Group *frameInMDIResize() const;
+    Controllers::Group *groupInMDIResize() const;
 
     /// Returns the Frame view, for QtQuick
     QObject *frameViewInMDIResize() const;
@@ -265,7 +265,7 @@ private:
     bool m_isProcessingAppQuitEvent = false;
     QVector<Controllers::DockWidget *> m_dockWidgets;
     QVector<Controllers::MainWindow *> m_mainWindows;
-    QList<Controllers::Group *> m_frames;
+    QList<Controllers::Group *> m_groups;
     QVector<Controllers::FloatingWindow *> m_floatingWindows;
     QVector<Controllers::Layout *> m_layouts;
     QPointer<Controllers::DockWidget> m_focusedDockWidget;

@@ -80,8 +80,8 @@ public:
 
     bool titleBarIsFocusable() const;
 
-    ///@brief getter for m_frame
-    Controllers::Group *frame() const;
+    ///@brief getter for m_group
+    Controllers::Group *group() const;
 
     ///@brief getter for m_floatingWindow
     FloatingWindow *floatingWindow() const;
@@ -145,7 +145,7 @@ private:
     QString m_title;
     QIcon m_icon;
 
-    Controllers::Group *const m_frame;
+    Controllers::Group *const m_group;
     FloatingWindow *const m_floatingWindow;
     const bool m_supportsAutoHide;
     bool m_closeButtonEnabled = true;

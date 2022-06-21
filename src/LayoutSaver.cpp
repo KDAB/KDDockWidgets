@@ -148,8 +148,8 @@ void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
 
     for (const auto &kv : frms.items()) {
         QString key = QString::fromStdString(kv.key());
-        auto frame = kv.value().get<LayoutSaver::Group>();
-        s.frames.insert(key, frame);
+        auto group = kv.value().get<LayoutSaver::Group>();
+        s.frames.insert(key, group);
     }
 }
 
@@ -643,9 +643,9 @@ void LayoutSaver::Private::deleteEmptyFrames()
     // After a restore it can happen that some DockWidgets didn't exist, so weren't restored.
     // Delete their frame now.
 
-    for (auto frame : m_dockRegistry->frames()) {
-        if (!frame->beingDeletedLater() && frame->isEmpty() && !frame->isCentralFrame())
-            delete frame;
+    for (auto group : m_dockRegistry->frames()) {
+        if (!group->beingDeletedLater() && group->isEmpty() && !group->isCentralFrame())
+            delete group;
     }
 }
 

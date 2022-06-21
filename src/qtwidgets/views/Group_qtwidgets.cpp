@@ -35,20 +35,20 @@ class VBoxLayout : public QVBoxLayout // clazy:exclude=missing-qobject-macro
 public:
     explicit VBoxLayout(Group_qtwidgets *parent)
         : QVBoxLayout(parent)
-        , m_frameWidget(parent)
+        , m_groupWidget(parent)
     {
     }
     ~VBoxLayout() override;
 
     void invalidate() override
     {
-        if (m_frameWidget->inDtor())
+        if (m_groupWidget->inDtor())
             return;
         QVBoxLayout::invalidate();
-        m_frameWidget->d->layoutInvalidated.emit();
+        m_groupWidget->d->layoutInvalidated.emit();
     }
 
-    Group_qtwidgets *const m_frameWidget;
+    Group_qtwidgets *const m_groupWidget;
 };
 
 VBoxLayout::~VBoxLayout() = default;
@@ -64,13 +64,13 @@ void Group_qtwidgets::init()
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
-    vlayout->addWidget(asQWidget(m_frame->titleBar()));
-    auto tabWidget = m_frame->tabWidget();
-    vlayout->addWidget(asQWidget(m_frame->tabWidget()));
+    vlayout->addWidget(asQWidget(m_group->titleBar()));
+    auto tabWidget = m_group->tabWidget();
+    vlayout->addWidget(asQWidget(m_group->tabWidget()));
 
-    tabWidget->setTabBarAutoHide(!m_frame->alwaysShowsTabs());
+    tabWidget->setTabBarAutoHide(!m_group->alwaysShowsTabs());
 
-    if (m_frame->isOverlayed())
+    if (m_group->isOverlayed())
         setAutoFillBackground(true);
 }
 
@@ -83,60 +83,60 @@ void Group_qtwidgets::free_impl()
 
 void Group_qtwidgets::renameTab(int index, const QString &text)
 {
-    m_frame->tabWidget()->renameTab(index, text);
+    m_group->tabWidget()->renameTab(index, text);
 }
 
 void Group_qtwidgets::changeTabIcon(int index, const QIcon &icon)
 {
-    m_frame->tabWidget()->changeTabIcon(index, icon);
+    m_group->tabWidget()->changeTabIcon(index, icon);
 }
 
 int Group_qtwidgets::nonContentsHeight() const
 {
-    Controllers::TitleBar *tb = m_frame->titleBar();
-    QWidget *tabBar = asQWidget(m_frame->tabBar());
+    Controllers::TitleBar *tb = m_group->titleBar();
+    QWidget *tabBar = asQWidget(m_group->tabBar());
 
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
 }
 
 int Group_qtwidgets::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
 {
-    return m_frame->tabWidget()->indexOfDockWidget(dw);
+    return m_group->tabWidget()->indexOfDockWidget(dw);
 }
 
 void Group_qtwidgets::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
-    m_frame->tabWidget()->setCurrentDockWidget(dw);
+    m_group->tabWidget()->setCurrentDockWidget(dw);
 }
 
 int Group_qtwidgets::currentIndex_impl() const
 {
-    return m_frame->tabWidget()->currentIndex();
+    return m_group->tabWidget()->currentIndex();
 }
 
 void Group_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
-    m_frame->tabWidget()->insertDockWidget(dw, index);
+    m_group->tabWidget()->insertDockWidget(dw, index);
 }
 
 void Group_qtwidgets::removeWidget_impl(Controllers::DockWidget *dw)
 {
-    m_frame->tabWidget()->removeDockWidget(dw);
+    m_group->tabWidget()->removeDockWidget(dw);
 }
 
 void Group_qtwidgets::setCurrentTabIndex_impl(int index)
 {
-    m_frame->tabWidget()->setCurrentDockWidget(index);
+    m_group->tabWidget()->setCurrentDockWidget(index);
 }
 
 KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::currentDockWidget_impl() const
 {
-    return m_frame->tabWidget()->dockwidgetAt(m_frame->tabWidget()->currentIndex());
+    return m_group->tabWidget()->dockwidgetAt(m_group->tabWidget()->currentIndex());
 }
 
 KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::dockWidgetAt_impl(int index) const
 {
-    return m_frame->tabWidget()->dockwidgetAt(index);
+    return m_group->tabWidget()->dockwidgetAt(index);
 }
 
 bool Group_qtwidgets::event(QEvent *e)
@@ -146,7 +146,7 @@ bool Group_qtwidgets::event(QEvent *e)
 
     if (e->type() == QEvent::ParentChange) {
         auto p = parentView();
-        m_frame->setLayout(p ? p->asLayout() : nullptr);
+        m_group->setLayout(p ? p->asLayout() : nullptr);
     }
 
     return QWidget::event(e);
@@ -157,7 +157,7 @@ void Group_qtwidgets::paintEvent(QPaintEvent *)
     if (freed())
         return;
 
-    if (!m_frame->isFloating()) {
+    if (!m_group->isFloating()) {
         QPainter p(this);
         p.setRenderHint(QPainter::Antialiasing);
 
@@ -165,7 +165,7 @@ void Group_qtwidgets::paintEvent(QPaintEvent *)
         const qreal halfPenWidth = penWidth / 2;
         const QRectF rectf = QWidget::rect();
 
-        const bool isOverlayed = m_frame->isOverlayed();
+        const bool isOverlayed = m_group->isOverlayed();
         const QColor penColor = isOverlayed ? QColor(0x666666)
                                             : QColor(184, 184, 184, 184);
         QPen pen(penColor);
@@ -187,18 +187,18 @@ QSize Group_qtwidgets::maxSizeHint() const
         return {};
 
     // waste due to QTabWidget margins, tabbar etc.
-    const QSize waste = minSize() - m_frame->dockWidgetsMinSize();
-    return waste + m_frame->biggestDockWidgetMaxSize();
+    const QSize waste = minSize() - m_group->dockWidgetsMinSize();
+    return waste + m_group->biggestDockWidgetMaxSize();
 }
 
 QRect Group_qtwidgets::dragRect() const
 {
-    QRect rect = m_frame->dragRect();
+    QRect rect = m_group->dragRect();
     if (rect.isValid())
         return rect;
 
     if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) {
-        auto tabBar = qobject_cast<QTabBar *>(asQWidget(m_frame->tabBar()));
+        auto tabBar = qobject_cast<QTabBar *>(asQWidget(m_group->tabBar()));
         rect.setHeight(tabBar->height());
         rect.setWidth(QWidget::width() - tabBar->width());
         rect.moveTopLeft(QPoint(tabBar->width(), tabBar->y()));

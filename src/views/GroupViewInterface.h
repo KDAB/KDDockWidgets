@@ -46,10 +46,10 @@ public:
     virtual QRect dragRect() const = 0;
 
     bool isMDI() const;
-    Controllers::Group *frame() const;
+    Controllers::Group *group() const;
 
 protected:
-    Controllers::Group *const m_frame;
+    Controllers::Group *const m_group;
 };
 
 }

@@ -170,7 +170,7 @@ public:
     /**
      * @brief returns the Item that holds @p frame in this layout
      */
-    Layouting::Item *itemForFrame(const Controllers::Group *frame) const;
+    Layouting::Item *itemForFrame(const Controllers::Group *group) const;
 
     /**
      * @brief Returns this list of Frame objects contained in this layout

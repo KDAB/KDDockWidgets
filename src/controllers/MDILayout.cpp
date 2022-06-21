@@ -37,39 +37,39 @@ void MDILayout::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initi
         return;
     }
 
-    auto frame = qobject_cast<Controllers::Group *>(dw->d->frame());
-    if (itemForFrame(frame) != nullptr) {
+    auto group = qobject_cast<Controllers::Group *>(dw->d->group());
+    if (itemForFrame(group) != nullptr) {
         // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
-        frame->view()->setParent(nullptr);
-        frame->setLayoutItem(nullptr);
+        group->view()->setParent(nullptr);
+        group->setLayoutItem(nullptr);
     }
 
     Layouting::Item *newItem = new Layouting::Item(view());
-    if (frame) {
-        newItem->setGuestView(frame->view());
+    if (group) {
+        newItem->setGuestView(group->view());
     } else {
-        frame = new Controllers::Group();
-        frame->addWidget(dw, addingOption);
+        group = new Controllers::Group();
+        group->addWidget(dw, addingOption);
 
-        newItem->setGuestView(frame->view());
+        newItem->setGuestView(group->view());
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
     m_rootItem->addDockWidget(newItem, localPt);
 
     if (addingOption.startsHidden()) {
-        delete frame;
+        delete group;
     }
 }
 
-void MDILayout::setDockWidgetGeometry(Controllers::Group *frame, QRect geometry)
+void MDILayout::setDockWidgetGeometry(Controllers::Group *group, QRect geometry)
 {
-    if (!frame)
+    if (!group)
         return;
 
-    Layouting::Item *item = itemForFrame(frame);
+    Layouting::Item *item = itemForFrame(group);
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << frame;
+        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << group;
         return;
     }
 
@@ -78,17 +78,17 @@ void MDILayout::setDockWidgetGeometry(Controllers::Group *frame, QRect geometry)
 
 void MDILayout::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
 {
-    moveDockWidget(dw->d->frame(), pos);
+    moveDockWidget(dw->d->group(), pos);
 }
 
-void MDILayout::moveDockWidget(Controllers::Group *frame, QPoint pos)
+void MDILayout::moveDockWidget(Controllers::Group *group, QPoint pos)
 {
-    if (!frame)
+    if (!group)
         return;
 
-    Layouting::Item *item = itemForFrame(frame);
+    Layouting::Item *item = itemForFrame(group);
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << frame;
+        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << group;
         return;
     }
 
@@ -99,20 +99,20 @@ void MDILayout::moveDockWidget(Controllers::Group *frame, QPoint pos)
 
 void MDILayout::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
 {
-    resizeDockWidget(dw->d->frame(), size);
+    resizeDockWidget(dw->d->group(), size);
 }
 
-void MDILayout::resizeDockWidget(Controllers::Group *frame, QSize size)
+void MDILayout::resizeDockWidget(Controllers::Group *group, QSize size)
 {
-    if (!frame)
+    if (!group)
         return;
 
-    Layouting::Item *item = itemForFrame(frame);
+    Layouting::Item *item = itemForFrame(group);
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << frame << frame->isMDI()
-                   << frame->isMDIWrapper();
+        qWarning() << Q_FUNC_INFO << "Group not found in the layout" << group << group->isMDI()
+                   << group->isMDIWrapper();
         return;
     }
 
-    item->setSize(size.expandedTo(frame->view()->minSize()));
+    item->setSize(size.expandedTo(group->view()->minSize()));
 }

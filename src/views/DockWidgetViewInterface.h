@@ -30,7 +30,7 @@ public:
     explicit DockWidgetViewInterface(Controllers::DockWidget *);
     virtual ~DockWidgetViewInterface();
 
-    Controllers::Group *frame() const;
+    Controllers::Group *group() const;
     Controllers::DockWidget *dockWidget() const;
     Controllers::TitleBar *actualTitleBar() const;
 

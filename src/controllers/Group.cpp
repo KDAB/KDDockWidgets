@@ -79,7 +79,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 }
 
 Group::Group(View *parent, FrameOptions options, int userType)
-    : Controller(Type::Frame, Config::self().viewFactory()->createFrame(this, parent))
+    : Controller(Type::Frame, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
     , d(new Private())
     , m_tabWidget(new Controllers::Stack(this, tabWidgetOptions(options)))
@@ -88,7 +88,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     , m_userType(userType)
 {
     s_dbg_numFrames++;
-    DockRegistry::self()->registerFrame(this);
+    DockRegistry::self()->registerGroup(this);
 
     connect(this, &Group::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
     connect(m_tabWidget, &Controllers::Stack::currentTabChanged,
@@ -113,7 +113,7 @@ Group::~Group()
     delete m_resizeHandler;
     m_resizeHandler = nullptr;
 
-    DockRegistry::self()->unregisterFrame(this);
+    DockRegistry::self()->unregisterGroup(this);
 
     // Run some disconnects() too, so we don't receive signals during destruction:
     setLayout(nullptr);
@@ -262,14 +262,14 @@ void Group::addWidget(DockWidget *dockWidget, InitialOption addingOption)
     insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
 }
 
-void Group::addWidget(Group *frame, InitialOption addingOption)
+void Group::addWidget(Group *group, InitialOption addingOption)
 {
-    if (frame->isEmpty()) {
-        qWarning() << "Frame::addWidget: frame is empty." << frame;
+    if (group->isEmpty()) {
+        qWarning() << "Frame::addWidget: frame is empty." << group;
         return;
     }
 
-    const auto &docks = frame->dockWidgets();
+    const auto &docks = group->dockWidgets();
     for (DockWidget *dockWidget : docks)
         addWidget(dockWidget, addingOption);
 }
@@ -746,7 +746,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
         return nullptr;
 
     const FrameOptions options = FrameOptions(f.options);
-    Group *frame = nullptr;
+    Group *group = nullptr;
     const bool isPersistentCentralFrame = options & FrameOption::FrameOption_IsCentralFrame;
 
     if (isPersistentCentralFrame) {
@@ -759,8 +759,8 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
                        << "an associated window name";
         } else {
             if (MainWindow *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
-                frame = mw->dropArea()->m_centralFrame;
-                if (!frame) {
+                group = mw->dropArea()->m_centralFrame;
+                if (!group) {
                     // Doesn't happen...
                     qWarning() << "Main window" << f.mainWindowUniqueName << "doesn't have central frame";
                 }
@@ -772,44 +772,44 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
         }
     }
 
-    if (!frame)
-        frame = new Group(nullptr, options);
+    if (!group)
+        group = new Group(nullptr, options);
 
-    frame->setObjectName(f.objectName);
+    group->setObjectName(f.objectName);
 
     for (const auto &savedDock : qAsConst(f.dockWidgets)) {
         if (DockWidget *dw = DockWidget::deserialize(savedDock)) {
-            frame->addWidget(dw);
+            group->addWidget(dw);
         }
     }
 
-    frame->setCurrentTabIndex(f.currentTabIndex);
-    frame->view()->setGeometry(f.geometry);
+    group->setCurrentTabIndex(f.currentTabIndex);
+    group->view()->setGeometry(f.geometry);
 
-    return frame;
+    return group;
 }
 
 LayoutSaver::Group Group::serialize() const
 {
-    LayoutSaver::Group frame;
-    frame.isNull = false;
+    LayoutSaver::Group group;
+    group.isNull = false;
 
     const DockWidget::List docks = dockWidgets();
 
-    frame.objectName = objectName();
-    frame.geometry = geometry();
-    frame.options = options();
-    frame.currentTabIndex = currentTabIndex();
-    frame.id = view()->id(); // for coorelation purposes
+    group.objectName = objectName();
+    group.geometry = geometry();
+    group.options = options();
+    group.currentTabIndex = currentTabIndex();
+    group.id = view()->id(); // for coorelation purposes
 
     if (MainWindow *mw = mainWindow()) {
-        frame.mainWindowUniqueName = mw->uniqueName();
+        group.mainWindowUniqueName = mw->uniqueName();
     }
 
     for (DockWidget *dock : docks)
-        frame.dockWidgets.push_back(dock->d->serialize());
+        group.dockWidgets.push_back(dock->d->serialize());
 
-    return frame;
+    return group;
 }
 
 void Group::scheduleDeleteLater()
@@ -933,7 +933,7 @@ bool Group::isMDIWrapper() const
 Group *Group::mdiFrame() const
 {
     if (auto dwWrapper = mdiDockWidgetWrapper()) {
-        return dwWrapper->d->frame();
+        return dwWrapper->d->group();
     }
 
     return nullptr;

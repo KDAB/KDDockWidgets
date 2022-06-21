@@ -89,13 +89,13 @@ public:
         auto dockView = Config::self().viewFactory()->createDockWidget(QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
         auto dw = dockView->asDockWidgetController();
         dw->dptr()->m_isPersistentCentralDockWidget = true;
-        Controllers::Group *frame = dropArea()->m_centralFrame;
-        if (!frame) {
+        Controllers::Group *group = dropArea()->m_centralFrame;
+        if (!group) {
             qWarning() << Q_FUNC_INFO << "Expected central frame";
             return nullptr;
         }
 
-        frame->addWidget(dw);
+        group->addWidget(dw);
         return dw;
     }
 
@@ -107,7 +107,7 @@ public:
     void onResized(QSize)
     {
         if (m_overlayedDockWidget)
-            updateOverlayGeometry(m_overlayedDockWidget->d->frame()->size());
+            updateOverlayGeometry(m_overlayedDockWidget->d->group()->size());
     }
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
@@ -290,7 +290,7 @@ CursorPositions MainWindow::Private::allowedResizeSides(SideBarLocation loc) con
     return CursorPosition_Undefined;
 }
 
-QRect MainWindow::Private::rectForOverlay(Controllers::Group *frame, SideBarLocation location) const
+QRect MainWindow::Private::rectForOverlay(Controllers::Group *group, SideBarLocation location) const
 {
     Controllers::SideBar *sb = q->sideBar(location);
     if (!sb)
@@ -311,7 +311,7 @@ QRect MainWindow::Private::rectForOverlay(Controllers::Group *frame, SideBarLoca
                                                                                : 0;
         const int rightSideBarWidth = (rightSideBar && rightSideBar->isVisible()) ? rightSideBar->width()
                                                                                   : 0;
-        rect.setHeight(qMax(300, frame->view()->minSize().height()));
+        rect.setHeight(qMax(300, group->view()->minSize().height()));
         rect.setWidth(centralAreaGeo.width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
         rect.moveLeft(margin + leftSideBarWidth);
         if (location == SideBarLocation::South) {
@@ -329,7 +329,7 @@ QRect MainWindow::Private::rectForOverlay(Controllers::Group *frame, SideBarLoca
                                                                              : 0;
         const int bottomSideBarHeight = (bottomSideBar && bottomSideBar->isVisible()) ? bottomSideBar->height()
                                                                                       : 0;
-        rect.setWidth(qMax(300, frame->view()->minSize().width()));
+        rect.setWidth(qMax(300, group->view()->minSize().width()));
         rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight - centerWidgetMargins.top() - centerWidgetMargins.bottom());
         rect.moveTop(sb->view()->mapTo(q->view(), QPoint(0, 0)).y() + topSideBarHeight - 1);
         if (location == SideBarLocation::East) {
@@ -392,7 +392,7 @@ static SideBarLocation sideBarLocationForBorder(Layouting::LayoutBorderLocations
 
 SideBarLocation MainWindow::Private::preferredSideBar(Controllers::DockWidget *dw) const
 {
-    Layouting::Item *item = q->layout()->itemForFrame(dw->d->frame());
+    Layouting::Item *item = q->layout()->itemForFrame(dw->d->group());
     if (!item) {
         qWarning() << Q_FUNC_INFO << "No item for dock widget";
         return SideBarLocation::None;
@@ -465,16 +465,16 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
         return;
     }
 
-    const QRect defaultGeometry = rectForOverlay(m_overlayedDockWidget->d->frame(), sb->location());
+    const QRect defaultGeometry = rectForOverlay(m_overlayedDockWidget->d->group(), sb->location());
     QRect newGeometry = defaultGeometry;
 
-    Controllers::Group *frame = m_overlayedDockWidget->d->frame();
+    Controllers::Group *group = m_overlayedDockWidget->d->group();
 
     if (suggestedSize.isValid() && !suggestedSize.isEmpty()) {
         // Let's try to honour the suggested overlay size
         switch (sb->location()) {
         case SideBarLocation::North: {
-            const int maxHeight = q->height() - frame->pos().y() - 10; // gap
+            const int maxHeight = q->height() - group->pos().y() - 10; // gap
             newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
             break;
         }
@@ -493,7 +493,7 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
             break;
         }
         case SideBarLocation::West: {
-            const int maxWidth = q->width() - frame->pos().x() - 10; // gap
+            const int maxWidth = q->width() - group->pos().x() - 10; // gap
             newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
             break;
         }
@@ -503,7 +503,7 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
         }
     }
 
-    m_overlayedDockWidget->d->frame()->view()->setGeometry(newGeometry);
+    m_overlayedDockWidget->d->group()->view()->setGeometry(newGeometry);
 }
 
 void MainWindow::Private::clearSideBars()
@@ -585,14 +585,14 @@ void MainWindow::overlayOnSideBar(Controllers::DockWidget *dw)
     // We only support one overlay at a time, remove any existing overlay
     clearSideBarOverlay();
 
-    auto frame = new Controllers::Group(nullptr, FrameOption_IsOverlayed);
-    frame->view()->setParent(view());
+    auto group = new Controllers::Group(nullptr, FrameOption_IsOverlayed);
+    group->view()->setParent(view());
     d->m_overlayedDockWidget = dw;
-    frame->addWidget(dw);
+    group->addWidget(dw);
     d->updateOverlayGeometry(dw->d->lastPosition()->lastOverlayedGeometry(sb->location()).size());
 
-    frame->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
-    frame->view()->show();
+    group->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
+    group->view()->show();
 
     Q_EMIT dw->isOverlayedChanged(true);
 }
@@ -611,24 +611,24 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
     if (!d->m_overlayedDockWidget)
         return;
 
-    Controllers::Group *frame = d->m_overlayedDockWidget->d->frame();
-    if (!frame) { // prophylactic check
+    Controllers::Group *group = d->m_overlayedDockWidget->d->group();
+    if (!group) { // prophylactic check
         d->m_overlayedDockWidget = nullptr;
         return;
     }
 
     const SideBarLocation loc = d->m_overlayedDockWidget->sideBarLocation();
     d->m_overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(
-        loc, frame->geometry());
+        loc, group->geometry());
 
-    frame->unoverlay();
+    group->unoverlay();
 
     if (deleteFrame) {
         d->m_overlayedDockWidget->QObject::setParent(nullptr);
         d->m_overlayedDockWidget->view()->setParent(nullptr);
         Q_EMIT d->m_overlayedDockWidget->isOverlayedChanged(false);
         d->m_overlayedDockWidget = nullptr;
-        delete frame;
+        delete group;
     } else {
         // No cleanup, just unset. When we drag the overlay it becomes a normal floating window
         // meaning we reuse Frame. Don't delete it.
@@ -687,7 +687,7 @@ bool MainWindow::closeDockWidgets(bool force)
 
     const auto dockWidgets = d->m_layout->dockWidgets();
     for (Controllers::DockWidget *dw : dockWidgets) {
-        Controllers::Group *frame = dw->d->frame();
+        Controllers::Group *group = dw->d->group();
 
         if (force) {
             dw->forceClose();
@@ -696,7 +696,7 @@ bool MainWindow::closeDockWidgets(bool force)
             allClosed = allClosed && closed;
         }
 
-        if (frame->beingDeletedLater()) {
+        if (group->beingDeletedLater()) {
             // The dock widget was closed and this frame is empty, delete immediately instead of
             // waiting. I'm not a big fan of deleting stuff later, as state becomes inconsistent
 
@@ -704,7 +704,7 @@ bool MainWindow::closeDockWidgets(bool force)
             // on the title bar, and the title bar is inside the frame.
             // When doing it programmatically we can delete immediately.
 
-            delete frame;
+            delete group;
         }
     }
 

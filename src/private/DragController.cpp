@@ -480,7 +480,7 @@ void StateInternalMDIDragging::onEntry()
 
     // Raise the dock widget being dragged
     if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
-        if (Controllers::Group *f = tb->frame())
+        if (Controllers::Group *f = tb->group())
             f->view()->raise();
     }
 
@@ -503,28 +503,28 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
         return false;
     }
 
-    Controllers::Group *frame = tb->frame();
-    if (!frame) {
+    Controllers::Group *group = tb->group();
+    if (!group) {
         // Doesn't happen.
-        qWarning() << Q_FUNC_INFO << "null frame.";
+        qWarning() << Q_FUNC_INFO << "null group.";
         Q_EMIT q->dragCanceled();
         return false;
     }
 
-    const QSize parentSize = frame->view()->parentSize();
-    const QPoint oldPos = frame->mapToGlobal(QPoint(0, 0));
+    const QSize parentSize = group->view()->parentSize();
+    const QPoint oldPos = group->mapToGlobal(QPoint(0, 0));
     const QPoint delta = globalPos - oldPos;
-    const QPoint newLocalPos = frame->pos() + delta - q->m_offset;
+    const QPoint newLocalPos = group->pos() + delta - q->m_offset;
 
     // Let's not allow the MDI window to go outside of its parent
 
     QPoint newLocalPosBounded = { qMax(0, newLocalPos.x()), qMax(0, newLocalPos.y()) };
-    newLocalPosBounded.setX(qMin(newLocalPosBounded.x(), parentSize.width() - frame->width()));
-    newLocalPosBounded.setY(qMin(newLocalPosBounded.y(), parentSize.height() - frame->height()));
+    newLocalPosBounded.setX(qMin(newLocalPosBounded.x(), parentSize.width() - group->width()));
+    newLocalPosBounded.setY(qMin(newLocalPosBounded.y(), parentSize.height() - group->height()));
 
-    auto layout = frame->mdiLayoutWidget();
+    auto layout = group->mdiLayoutWidget();
     Q_ASSERT(layout);
-    layout->moveDockWidget(frame, newLocalPosBounded);
+    layout->moveDockWidget(group, newLocalPosBounded);
 
     // Check if we need to pop out the MDI window (make it float)
     // If we drag the window against an edge, and move behind the edge some threshold, we float it

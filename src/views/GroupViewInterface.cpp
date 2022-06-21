@@ -16,7 +16,7 @@ namespace KDDockWidgets {
 
 namespace Views {
 GroupViewInterface::GroupViewInterface(Controllers::Group *controller)
-    : m_frame(controller)
+    : m_group(controller)
 {
 }
 
@@ -24,12 +24,12 @@ GroupViewInterface::~GroupViewInterface() = default;
 
 bool GroupViewInterface::isMDI() const
 {
-    return m_frame->isMDI();
+    return m_group->isMDI();
 }
 
-Controllers::Group *GroupViewInterface::frame() const
+Controllers::Group *GroupViewInterface::group() const
 {
-    return m_frame;
+    return m_group;
 }
 
 } // namespace

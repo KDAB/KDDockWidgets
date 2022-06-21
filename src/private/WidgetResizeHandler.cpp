@@ -71,8 +71,8 @@ void WidgetResizeHandler::setResizeGap(int gap)
 
 bool WidgetResizeHandler::isMDI() const
 {
-    Controllers::Group *frame = mTarget->asFrameController();
-    return frame && frame->isMDI();
+    Controllers::Group *group = mTarget->asFrameController();
+    return group && group->isMDI();
 }
 
 bool WidgetResizeHandler::isResizing() const
@@ -111,16 +111,16 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         // We only want to continue if the cursor is near the margins of our own frame (mTarget)
 
         auto f = widget->firstParentOfType(Type::Frame);
-        auto frame = f ? f->view()->asFrameController() : nullptr;
-        if (frame && frame->isMDIWrapper()) {
+        auto group = f ? f->view()->asFrameController() : nullptr;
+        if (group && group->isMDIWrapper()) {
             // We don't care about the inner Option_MDINestable helper frame
-            frame = frame->mdiFrame();
+            group = group->mdiFrame();
         }
 
-        if (frame && !frame->view()->equals(mTarget)) {
-            auto frameParent = frame->view()->aboutToBeDestroyed() ? nullptr : frame->view()->parentView();
+        if (group && !group->view()->equals(mTarget)) {
+            auto groupParent = group->view()->aboutToBeDestroyed() ? nullptr : group->view()->parentView();
             auto targetParent = mTarget->aboutToBeDestroyed() ? nullptr : mTarget->parentView();
-            const bool areSiblings = frameParent && frameParent->equals(targetParent);
+            const bool areSiblings = groupParent && groupParent->equals(targetParent);
             if (areSiblings)
                 return false;
         }
@@ -158,8 +158,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             // Usually in KDDW all geometry changes are done in the layout items, which propagate to the widgets
             // When resizing a MDI however, we're resizing the widget directly. So update the corresponding layout
             // item when we're finished.
-            auto frame = mTarget->asFrameController();
-            frame->mdiLayoutWidget()->setDockWidgetGeometry(frame, frame->geometry());
+            auto group = mTarget->asFrameController();
+            group->mdiLayoutWidget()->setDockWidgetGeometry(group, group->geometry());
         }
         updateCursor(CursorPosition_Undefined);
         auto mouseEvent = static_cast<QMouseEvent *>(e);
@@ -178,9 +178,9 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             break;
 
         if (isMDI()) {
-            const Controllers::Group *frameBeingResized = DockRegistry::self()->frameInMDIResize();
-            const bool otherFrameBeingResized = frameBeingResized && frameBeingResized->view() != mTarget;
-            if (otherFrameBeingResized) {
+            const Controllers::Group *groupBeingResized = DockRegistry::self()->groupInMDIResize();
+            const bool otherGroupBeingResized = groupBeingResized && groupBeingResized->view() != mTarget;
+            if (otherGroupBeingResized) {
                 // only one at a time!
                 return false;
             }

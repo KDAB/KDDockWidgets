@@ -35,7 +35,7 @@ class DOCKS_EXPORT FloatingWindow : public Controller, public Draggable
     Q_OBJECT
 public:
     explicit FloatingWindow(QRect suggestedGeometry, MainWindow *parent = nullptr);
-    explicit FloatingWindow(Controllers::Group *frame, QRect suggestedGeometry, MainWindow *parent = nullptr);
+    explicit FloatingWindow(Controllers::Group *group, QRect suggestedGeometry, MainWindow *parent = nullptr);
     virtual ~FloatingWindow() override;
 
     bool deserialize(const LayoutSaver::FloatingWindow &);

@@ -211,8 +211,8 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         if (auto fw = tb->floatingWindow()) {
             // case #1: we're dragging the whole floating window by its titlebar
             m_floatingWindow = fw;
-        } else if (Controllers::Group *frame = tb->frame()) {
-            m_frame = frame;
+        } else if (Controllers::Group *group = tb->group()) {
+            m_group = group;
         } else {
             qWarning() << Q_FUNC_INFO << "Shouldn't happen. TitleBar of what ?";
         }
@@ -225,7 +225,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
             m_dockWidget = tabBar->currentDockWidget();
     } else if (auto stack = draggable->asView()->asStackController()) {
         if (Platform::instance()->isQtWidgets())
-            m_frame = stack->frame();
+            m_group = stack->group();
     } else {
         qWarning() << "Unknown draggable" << draggable << "please fix";
     }
@@ -243,8 +243,8 @@ QPixmap WindowBeingDraggedWayland::pixmap() const
 
     if (m_floatingWindow) {
         m_floatingWindow->view()->render(&p);
-    } else if (m_frame) {
-        m_frame->view()->render(&p);
+    } else if (m_group) {
+        m_group->view()->render(&p);
     } else if (m_dockWidget) {
         m_dockWidget->view()->render(&p);
     }
@@ -256,8 +256,8 @@ QStringList WindowBeingDraggedWayland::affinities() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::affinities();
-    else if (m_frame)
-        return m_frame->affinities();
+    else if (m_group)
+        return m_group->affinities();
     else if (m_dockWidget)
         return { m_dockWidget->affinities() };
 
@@ -268,8 +268,8 @@ QVector<Controllers::DockWidget *> WindowBeingDraggedWayland::dockWidgets() cons
 {
     if (m_floatingWindow)
         return WindowBeingDragged::dockWidgets();
-    else if (m_frame)
-        return m_frame->dockWidgets();
+    else if (m_group)
+        return m_group->dockWidgets();
     else if (m_dockWidget)
         return { m_dockWidget };
 
@@ -280,8 +280,8 @@ QSize WindowBeingDraggedWayland::size() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::size();
-    else if (m_frame)
-        return m_frame->size();
+    else if (m_group)
+        return m_group->size();
     else if (m_dockWidget)
         return m_dockWidget->size();
 
@@ -293,8 +293,8 @@ QSize WindowBeingDraggedWayland::minSize() const
 {
     if (m_floatingWindow) {
         return WindowBeingDragged::minSize();
-    } else if (m_frame) {
-        return m_frame->view()->minSize();
+    } else if (m_group) {
+        return m_group->view()->minSize();
     } else if (m_dockWidget) {
         return m_dockWidget->view()->minSize();
     }
@@ -307,8 +307,8 @@ QSize WindowBeingDraggedWayland::maxSize() const
 {
     if (m_floatingWindow) {
         return WindowBeingDragged::maxSize();
-    } else if (m_frame) {
-        return m_frame->view()->maxSizeHint();
+    } else if (m_group) {
+        return m_group->view()->maxSizeHint();
     } else if (m_dockWidget) {
         return m_dockWidget->view()->maximumSize();
     }

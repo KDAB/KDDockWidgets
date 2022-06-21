@@ -118,7 +118,7 @@ std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
     if (!dock)
         return {};
 
-    FloatingWindow *floatingWindow = frame()->detachTab(dock);
+    FloatingWindow *floatingWindow = group()->detachTab(dock);
     if (!floatingWindow)
         return {};
 
@@ -136,11 +136,11 @@ bool Controllers::TabBar::isWindow() const
 void Controllers::TabBar::onMousePress(QPoint localPos)
 {
     m_lastPressedDockWidget = dockWidgetAt(localPos);
-    Group *frame = this->frame();
-    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !frame->isFocused()) {
+    Group *group = this->group();
+    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !group->isFocused()) {
         // User clicked on a tab which was already focused
         // A tab changing also counts as a change of scope
-        frame->FocusScope::focus(Qt::MouseFocusReason);
+        group->FocusScope::focus(Qt::MouseFocusReason);
     }
 }
 
@@ -168,13 +168,13 @@ Controllers::DockWidget *Controllers::TabBar::singleDockWidget() const
 
 bool Controllers::TabBar::isMDI() const
 {
-    Group *f = frame();
+    Group *f = group();
     return f && f->isMDI();
 }
 
-Group *Controllers::TabBar::frame() const
+Group *Controllers::TabBar::group() const
 {
-    return m_tabWidget->frame();
+    return m_tabWidget->group();
 }
 
 void Controllers::TabBar::moveTabTo(int from, int to)

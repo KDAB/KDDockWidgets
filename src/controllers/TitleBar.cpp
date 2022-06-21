@@ -37,20 +37,20 @@ using namespace KDDockWidgets::Controllers;
 TitleBar::TitleBar(Group *parent)
     : Controller(Type::TitleBar, Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
-    , m_frame(parent)
+    , m_group(parent)
     , m_floatingWindow(nullptr)
     , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
 {
     init();
-    connect(m_frame, &Group::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
-    connect(m_frame, &Group::isFocusedChanged, this, &TitleBar::isFocusedChanged);
-    connect(m_frame, &Group::isInMainWindowChanged, this, &TitleBar::updateAutoHideButton);
+    connect(m_group, &Group::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
+    connect(m_group, &Group::isFocusedChanged, this, &TitleBar::isFocusedChanged);
+    connect(m_group, &Group::isInMainWindowChanged, this, &TitleBar::updateAutoHideButton);
 }
 
 TitleBar::TitleBar(FloatingWindow *parent)
     : Controller(Type::TitleBar, Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
-    , m_frame(nullptr)
+    , m_group(nullptr)
     , m_floatingWindow(parent)
     , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
 {
@@ -92,8 +92,8 @@ MainWindow *TitleBar::mainWindow() const
     if (m_floatingWindow)
         return nullptr;
 
-    if (m_frame)
-        return m_frame->mainWindow();
+    if (m_group)
+        return m_group->mainWindow();
 
     qWarning() << Q_FUNC_INFO << "null frame and null floating window";
     return nullptr;
@@ -191,7 +191,7 @@ bool TitleBar::supportsMinimizeButton() const
 bool TitleBar::supportsAutoHideButton() const
 {
     // Only dock widgets docked into the MainWindow can minimize
-    return m_supportsAutoHide && m_frame && (m_frame->isInMainWindow() || m_frame->isOverlayed());
+    return m_supportsAutoHide && m_group && (m_group->isInMainWindow() || m_group->isOverlayed());
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
@@ -216,9 +216,9 @@ bool TitleBar::hasIcon() const
     return !m_icon.isNull();
 }
 
-Controllers::Group *TitleBar::frame() const
+Controllers::Group *TitleBar::group() const
 {
-    return m_frame;
+    return m_group;
 }
 
 Controllers::FloatingWindow *TitleBar::floatingWindow() const
@@ -228,11 +228,11 @@ Controllers::FloatingWindow *TitleBar::floatingWindow() const
 
 void TitleBar::focusInEvent(QFocusEvent *ev)
 {
-    if (!m_frame || !(Config::self().flags() & Config::Flag_TitleBarIsFocusable))
+    if (!m_group || !(Config::self().flags() & Config::Flag_TitleBarIsFocusable))
         return;
 
     // For some reason QWidget::setFocusProxy() isn't working, so forward manually
-    m_frame->FocusScope::focus(ev->reason());
+    m_group->FocusScope::focus(ev->reason());
 }
 
 void TitleBar::updateButtons()
@@ -247,7 +247,7 @@ void TitleBar::updateButtons()
 void TitleBar::updateCloseButton()
 {
 
-    const bool anyNonClosable = frame() ? frame()->anyNonClosable()
+    const bool anyNonClosable = group() ? group()->anyNonClosable()
                                         : (floatingWindow() ? floatingWindow()->anyNonClosable()
                                                             : false);
 
@@ -267,7 +267,7 @@ void TitleBar::toggleMaximized()
 
 bool TitleBar::isOverlayed() const
 {
-    return m_frame && m_frame->isOverlayed();
+    return m_group && m_group->isOverlayed();
 }
 
 void TitleBar::setCloseButtonEnabled(bool enabled)
@@ -313,19 +313,19 @@ void TitleBar::onCloseClicked()
 {
     const bool closeOnlyCurrentTab = Config::self().flags() & Config::Flag_CloseOnlyCurrentTab;
 
-    if (m_frame) {
+    if (m_group) {
         if (closeOnlyCurrentTab) {
-            if (auto dw = m_frame->currentDockWidget()) {
+            if (auto dw = m_group->currentDockWidget()) {
                 dw->view()->close();
             } else {
                 // Doesn't happen
                 qWarning() << Q_FUNC_INFO << "Frame with no dock widgets";
             }
         } else {
-            if (m_frame->isTheOnlyFrame() && m_frame->isInFloatingWindow()) {
-                m_frame->view()->closeRootView();
+            if (m_group->isTheOnlyFrame() && m_group->isInFloatingWindow()) {
+                m_group->view()->closeRootView();
             } else {
-                m_frame->view()->close();
+                m_group->view()->close();
             }
         }
     } else if (m_floatingWindow) {
@@ -423,13 +423,13 @@ void TitleBar::onMinimizeClicked()
 
 void TitleBar::onAutoHideClicked()
 {
-    if (!m_frame) {
+    if (!m_group) {
         // Doesn't happen
         qWarning() << Q_FUNC_INFO << "Minimize not supported on floating windows";
         return;
     }
 
-    const auto &dockwidgets = m_frame->dockWidgets();
+    const auto &dockwidgets = m_group->dockWidgets();
     for (DockWidget *dw : dockwidgets) {
         if (dw->isOverlayed()) {
             // restore
@@ -455,8 +455,8 @@ std::unique_ptr<KDDockWidgets::WindowBeingDragged> TitleBar::makeWindow()
 
         qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar"
                    << this << view()->rootView()->isVisible();
-        if (m_frame) {
-            qWarning() << "this=" << this << "; actual=" << m_frame->actualTitleBar();
+        if (m_group) {
+            qWarning() << "this=" << this << "; actual=" << m_group->actualTitleBar();
         } else if (m_floatingWindow) {
             qWarning() << "Has floating window with titlebar=" << m_floatingWindow->titleBar()
                        << "; fw->isVisible=" << m_floatingWindow->isVisible();
@@ -472,16 +472,16 @@ std::unique_ptr<KDDockWidgets::WindowBeingDragged> TitleBar::makeWindow()
     }
 
     if (FloatingWindow *fw = floatingWindow()) { // Already floating
-        if (m_frame->isTheOnlyFrame()) { // We don't detach. This one drags the entire window instead.
+        if (m_group->isTheOnlyFrame()) { // We don't detach. This one drags the entire window instead.
             qCDebug(hovering) << "TitleBar::makeWindow no detach needed";
             return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
         }
     }
 
-    QRect r = m_frame->view()->geometry();
-    r.moveTopLeft(m_frame->mapToGlobal(QPoint(0, 0)));
+    QRect r = m_group->view()->geometry();
+    r.moveTopLeft(m_group->mapToGlobal(QPoint(0, 0)));
 
-    auto floatingWindow = new Controllers::FloatingWindow(m_frame, {});
+    auto floatingWindow = new Controllers::FloatingWindow(m_group, {});
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();
 
@@ -505,8 +505,8 @@ Controllers::DockWidget::List TitleBar::dockWidgets() const
         return result;
     }
 
-    if (m_frame)
-        return m_frame->dockWidgets();
+    if (m_group)
+        return m_group->dockWidgets();
 
     qWarning() << "TitleBar::dockWidget: shouldn't happen";
     return {};
@@ -523,8 +523,8 @@ bool TitleBar::isFloating() const
     if (m_floatingWindow)
         return true;
 
-    if (m_frame)
-        return m_frame->isFloating();
+    if (m_group)
+        return m_group->isFloating();
 
     qWarning() << "TitleBar::isFloating: shouldn't happen";
     return false;
@@ -532,8 +532,8 @@ bool TitleBar::isFloating() const
 
 bool TitleBar::isFocused() const
 {
-    if (m_frame)
-        return m_frame->isFocused();
+    if (m_group)
+        return m_group->isFocused();
     else if (m_floatingWindow)
         return m_floatingWindow->view()->isActiveWindow();
 
@@ -554,15 +554,15 @@ QString TitleBar::floatButtonToolTip() const
 TabBar *TitleBar::tabBar() const
 {
     if (m_floatingWindow && m_floatingWindow->hasSingleFrame()) {
-        if (Group *frame = m_floatingWindow->singleFrame()) {
-            return frame->tabWidget()->tabBar();
+        if (Group *group = m_floatingWindow->singleFrame()) {
+            return group->tabWidget()->tabBar();
         } else {
             // Shouldn't happen
             qWarning() << Q_FUNC_INFO << "Expected a frame";
         }
 
-    } else if (m_frame) {
-        return m_frame->tabWidget()->tabBar();
+    } else if (m_group) {
+        return m_group->tabWidget()->tabBar();
     }
 
     return nullptr;

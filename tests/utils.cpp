@@ -218,10 +218,10 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
 
 void KDDockWidgets::Tests::nestDockWidget(Controllers::DockWidget *dock, DropArea *dropArea, Controllers::Group *relativeTo, Location location)
 {
-    auto frame = new Controllers::Group();
-    frame->addWidget(dock);
-    dock->d->frame()->setObjectName(dock->objectName());
+    auto group = new Controllers::Group();
+    group->addWidget(dock);
+    dock->d->group()->setObjectName(dock->objectName());
 
-    dropArea->addWidget(frame->view(), location, relativeTo);
+    dropArea->addWidget(group->view(), location, relativeTo);
     QVERIFY(dropArea->checkSanity());
 }

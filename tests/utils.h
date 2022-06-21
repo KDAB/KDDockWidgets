@@ -59,14 +59,14 @@ struct DockDescriptor
     KDDockWidgets::InitialVisibilityOption option;
 };
 
-inline QPoint dragPointForWidget(Controllers::Group *frame, int index)
+inline QPoint dragPointForWidget(Controllers::Group *group, int index)
 {
-    if (frame->hasSingleDockWidget()) {
+    if (group->hasSingleDockWidget()) {
         Q_ASSERT(index == 0);
-        return frame->titleBar()->mapToGlobal(QPoint(5, 5));
+        return group->titleBar()->mapToGlobal(QPoint(5, 5));
     } else {
-        QRect rect = frame->tabWidget()->tabBar()->rectForTab(index);
-        return frame->tabWidget()->tabBar()->view()->mapToGlobal(rect.center());
+        QRect rect = group->tabWidget()->tabBar()->rectForTab(index);
+        return group->tabWidget()->tabBar()->view()->mapToGlobal(rect.center());
     }
 }
 
@@ -145,14 +145,14 @@ inline View *draggableFor(View *view)
 {
     View *draggable = nullptr;
     if (auto dw = view->asDockWidgetController()) {
-        if (auto frame = dw->d->frame())
-            draggable = frame->titleBar()->view();
+        if (auto group = dw->d->group())
+            draggable = group->titleBar()->view();
     } else if (auto fw = view->asFloatingWindowController()) {
-        Controllers::Group *frame = fw->hasSingleFrame() ? static_cast<Controllers::Group *>(fw->frames().first())
+        Controllers::Group *group = fw->hasSingleFrame() ? static_cast<Controllers::Group *>(fw->frames().first())
                                                          : nullptr;
 
-        if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) {
-            draggable = frame->tabWidget()->view();
+        if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && group && group->hasTabsVisible()) {
+            draggable = group->tabWidget()->view();
         } else {
             draggable = fw->titleBar()->view();
         }

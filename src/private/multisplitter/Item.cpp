@@ -188,8 +188,8 @@ void Item::setGuestView(View *guest)
 
     if (m_guest) {
         m_guest->setParent(m_hostWidget);
-        if (Controllers::Group *frame = asFrameController())
-            frame->setLayoutItem(this);
+        if (Controllers::Group *group = asFrameController())
+            group->setLayoutItem(this);
 
         newWidget->installEventFilter(this);
 

@@ -27,7 +27,7 @@ class DOCKS_EXPORT Stack : public Controller, public Draggable
 {
     Q_OBJECT
 public:
-    explicit Stack(Group *frame, StackOptions);
+    explicit Stack(Group *group, StackOptions);
     virtual ~Stack() override;
 
     /**
@@ -96,7 +96,7 @@ public:
     Controllers::TabBar *tabBar() const;
 
     ///@brief getter for the frame
-    Group *frame() const;
+    Group *group() const;
 
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
@@ -123,7 +123,7 @@ public: // TODOm3
 
 private:
     TabBar *const m_tabBar;
-    Group *const m_frame;
+    Group *const m_group;
     const StackOptions m_options;
 
     Q_DISABLE_COPY(Stack)
