@@ -206,10 +206,10 @@ Controllers::FloatingWindow *View::asFloatingWindowController() const
     return nullptr;
 }
 
-Controllers::Frame *View::asFrameController() const
+Controllers::Group *View::asFrameController() const
 {
     if (m_controller && m_controller->is(Type::Frame))
-        return qobject_cast<Controllers::Frame *>(m_controller);
+        return qobject_cast<Controllers::Group *>(m_controller);
 
     return nullptr;
 }

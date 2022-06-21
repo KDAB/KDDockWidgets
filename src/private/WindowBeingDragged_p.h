@@ -24,7 +24,7 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 namespace Controllers {
-class Frame;
+class Group;
 class FloatingWindow;
 class Layout;
 }
@@ -99,7 +99,7 @@ public:
     // These two are set for Wayland only, where we can't make the floating window immediately (no way to position it)
     // So we're dragging either a frame with multiple dock widgets or a single tab, keep them here.
     // It's important to know what we're dragging, so drop rubber band respect min/max sizes.
-    QPointer<Controllers::Frame> m_frame;
+    QPointer<Controllers::Group> m_frame;
     QPointer<Controllers::DockWidget> m_dockWidget;
 };
 

@@ -23,7 +23,7 @@ class QQuickItem;
 namespace KDDockWidgets {
 
 namespace Controllers {
-class Frame;
+class Group;
 class DockWidget;
 }
 
@@ -31,7 +31,7 @@ namespace Views {
 
 class Stack_qtquick;
 
-class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public GroupViewInterface
+class DOCKS_EXPORT Group_qtquick : public View_qtquick, public GroupViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)
@@ -42,8 +42,8 @@ class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public GroupViewInterfac
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
 
 public:
-    explicit Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent = nullptr);
-    ~Frame_qtquick() override;
+    explicit Group_qtquick(Controllers::Group *controller, QQuickItem *parent = nullptr);
+    ~Group_qtquick() override;
 
     /// @reimp
     QSize minSize() const override;

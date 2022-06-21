@@ -128,7 +128,7 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     }
 
     KDDockWidgets::Location multisplitterLocation = locationToMultisplitterLocation(location);
-    Controllers::Frame *relativeToFrame = nullptr;
+    Controllers::Group *relativeToFrame = nullptr;
 
     switch (location) {
     case DropLocation_Left:

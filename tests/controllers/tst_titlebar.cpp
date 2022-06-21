@@ -15,7 +15,7 @@
 
 TEST_CASE("TitleBar Ctor")
 {
-    auto frame = new Controllers::Frame(nullptr, {});
+    auto frame = new Controllers::Group(nullptr, {});
     auto tb = new Controllers::TitleBar(frame);
     CHECK(tb->view()->is(Type::TitleBar));
     CHECK(tb->view()->asWrapper()->is(Type::TitleBar));

@@ -20,7 +20,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets::Controllers {
 class FloatingWindow;
-class Frame;
+class Group;
 }
 
 namespace KDDockWidgets::Views {

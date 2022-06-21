@@ -91,7 +91,7 @@ void to_json(nlohmann::json &json, const typename Type::List &list)
     }
 }
 
-void to_json(nlohmann::json &json, const LayoutSaver::Frame &f)
+void to_json(nlohmann::json &json, const LayoutSaver::Group &f)
 {
     json["id"] = f.id;
     json["isNull"] = f.isNull;
@@ -102,7 +102,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::Frame &f)
     json["mainWindowUniqueName"] = f.mainWindowUniqueName;
     json["dockWidgets"] = dockWidgetNames(f.dockWidgets);
 }
-void from_json(const nlohmann::json &json, LayoutSaver::Frame &f)
+void from_json(const nlohmann::json &json, LayoutSaver::Group &f)
 {
     f.id = json.value("id", QString());
     f.isNull = json.value("isNull", true);
@@ -145,11 +145,10 @@ void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
     auto &frms = *it;
     if (!frms.is_object())
         qWarning() << Q_FUNC_INFO << "Unexpected not object";
-    ;
 
     for (const auto &kv : frms.items()) {
         QString key = QString::fromStdString(kv.key());
-        auto frame = kv.value().get<LayoutSaver::Frame>();
+        auto frame = kv.value().get<LayoutSaver::Group>();
         s.frames.insert(key, frame);
     }
 }
@@ -852,7 +851,7 @@ bool LayoutSaver::Layout::containsDockWidget(const QString &uniqueName) const
         != allDockWidgets.cend();
 }
 
-bool LayoutSaver::Frame::isValid() const
+bool LayoutSaver::Group::isValid() const
 {
     if (isNull)
         return true;
@@ -882,19 +881,19 @@ bool LayoutSaver::Frame::isValid() const
     return true;
 }
 
-bool LayoutSaver::Frame::hasSingleDockWidget() const
+bool LayoutSaver::Group::hasSingleDockWidget() const
 {
     return dockWidgets.size() == 1;
 }
 
-bool LayoutSaver::Frame::skipsRestore() const
+bool LayoutSaver::Group::skipsRestore() const
 {
     return std::all_of(dockWidgets.cbegin(), dockWidgets.cend(), [](LayoutSaver::DockWidget::Ptr dw) {
         return dw->skipsRestore();
     });
 }
 
-LayoutSaver::DockWidget::Ptr LayoutSaver::Frame::singleDockWidget() const
+LayoutSaver::DockWidget::Ptr LayoutSaver::Group::singleDockWidget() const
 {
     if (!hasSingleDockWidget())
         return {};
@@ -1000,7 +999,7 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() cons
 
 bool LayoutSaver::MultiSplitter::skipsRestore() const
 {
-    return std::all_of(frames.cbegin(), frames.cend(), [](const LayoutSaver::Frame &frame) {
+    return std::all_of(frames.cbegin(), frames.cend(), [](const LayoutSaver::Group &frame) {
         return frame.skipsRestore();
     });
 }

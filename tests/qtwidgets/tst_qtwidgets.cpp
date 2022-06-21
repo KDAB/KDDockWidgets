@@ -208,7 +208,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
-    QPointer<Controllers::Frame> centralFrame = dropArea->centralFrame()->asFrameController();
+    QPointer<Controllers::Group> centralFrame = dropArea->centralFrame()->asFrameController();
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);
@@ -322,8 +322,8 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
 
-    Controllers::Frame *frameMDI1 = mdiWidget1->d->frame();
-    Controllers::Frame *frame1 = dock1->d->frame();
+    Controllers::Group *frameMDI1 = mdiWidget1->d->frame();
+    Controllers::Group *frame1 = dock1->d->frame();
     QVERIFY(!frame1->isMDI());
     QVERIFY(frameMDI1->isMDI());
     QVERIFY(!frame1->mdiLayoutWidget());
@@ -385,11 +385,11 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
 
-    Controllers::Frame *frame1 = mdiWidget1->d->frame();
-    Controllers::Frame *mdiFrame1 = frame1->mdiFrame();
+    Controllers::Group *frame1 = mdiWidget1->d->frame();
+    Controllers::Group *mdiFrame1 = frame1->mdiFrame();
 
-    QPointer<Controllers::Frame> frame2 = mdiWidget2->d->frame();
-    QPointer<Controllers::Frame> mdiFrame2 = frame2->mdiFrame();
+    QPointer<Controllers::Group> frame2 = mdiWidget2->d->frame();
+    QPointer<Controllers::Group> mdiFrame2 = frame2->mdiFrame();
     QPointer<DropArea> dropArea2 = frame2->mdiDropAreaWrapper();
 
     QPointer<DropArea> dropArea1 = frame1->mdiDropAreaWrapper();
@@ -437,7 +437,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     QCOMPARE(dropArea1->visibleCount(), 1);
     QVERIFY(mdiTb1->isVisible());
     QCOMPARE(mdiWidget3->titleBar(), mdiTb1);
-    Controllers::Frame *frame3 = mdiWidget3->d->frame();
+    Controllers::Group *frame3 = mdiWidget3->d->frame();
     QVERIFY(!frame3->titleBar()->isVisible());
 
     mdiWidget3->close();
@@ -511,7 +511,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     QCOMPARE(mdiArea->frames().size(), 1);
 
     QVERIFY(!mdiWidget2->isFloating());
-    Controllers::Frame *lastMdiFrame = mdiArea->frames().constFirst();
+    Controllers::Group *lastMdiFrame = mdiArea->frames().constFirst();
     QVERIFY(lastMdiFrame->titleBar()->isVisible());
     QVERIFY(!lastMdiFrame->titleBar()->isFloating());
     lastMdiFrame->titleBar()->onFloatClicked();
@@ -547,7 +547,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
 
-    Controllers::Frame *frame1 = mdiArea->frames().at(0);
+    Controllers::Group *frame1 = mdiArea->frames().at(0);
 
     const QSize sz1 = frame1->view()->size();
     const QSize increment(200, 200);
@@ -878,7 +878,7 @@ void TestQtWidgets::tst_overlayedGeometryIsSaved()
     m1->moveToSideBar(dw1, SideBarLocation::North);
     m1->overlayOnSideBar(dw1);
 
-    Controllers::Frame *frame = dw1->dptr()->frame();
+    Controllers::Group *frame = dw1->dptr()->frame();
     QVERIFY(frame->isOverlayed());
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::North);
     QVERIFY(frame->height() > 0);
@@ -1171,7 +1171,7 @@ void TestQtWidgets::tst_maxSizePropagates()
     QCOMPARE(dock1->view()->maximumSize(), w->maximumSize());
 
     // Now let's see if our Frame also has proper size-constraints
-    Controllers::Frame *frame = dock1->dptr()->frame();
+    Controllers::Group *frame = dock1->dptr()->frame();
     QCOMPARE(frame->view()->maxSizeHint().expandedTo(w->maximumSize()), frame->view()->maxSizeHint());
 }
 
@@ -1294,7 +1294,7 @@ void TestQtWidgets::tst_maxSizePropagates2()
     m1->addDockWidget(dock4, Location_OnBottom, dock3);
     m1->addDockWidget(dock1, Location_OnLeft, dock4);
 
-    Controllers::Frame *frame1 = dock1->dptr()->frame();
+    Controllers::Group *frame1 = dock1->dptr()->frame();
 
     Layouting::ItemBoxContainer *root = m1->multiSplitter()->rootItem();
     Item *item1 = root->itemForWidget(frame1->view());
@@ -1349,7 +1349,7 @@ void TestQtWidgets::tst_fixedSizePolicy()
     EnsureTopLevelsDeleted e;
     auto button = new QPushButton("one");
     auto dock1 = createDockWidget("dock1", button);
-    Controllers::Frame *frame = dock1->dptr()->frame();
+    Controllers::Group *frame = dock1->dptr()->frame();
 
     // Just a precondition from the test. If QPushButton ever changes, replace with a QWidget and set fixed size policy
     QCOMPARE(button->sizePolicy().verticalPolicy(), QSizePolicy::Fixed);

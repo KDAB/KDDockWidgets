@@ -20,14 +20,14 @@
 
 namespace KDDockWidgets::Controllers {
 
-class Frame;
+class Group;
 class TabBar;
 
 class DOCKS_EXPORT Stack : public Controller, public Draggable
 {
     Q_OBJECT
 public:
-    explicit Stack(Frame *frame, StackOptions);
+    explicit Stack(Group *frame, StackOptions);
     virtual ~Stack() override;
 
     /**
@@ -96,7 +96,7 @@ public:
     Controllers::TabBar *tabBar() const;
 
     ///@brief getter for the frame
-    Frame *frame() const;
+    Group *frame() const;
 
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
@@ -123,7 +123,7 @@ public: // TODOm3
 
 private:
     TabBar *const m_tabBar;
-    Frame *const m_frame;
+    Group *const m_frame;
     const StackOptions m_options;
 
     Q_DISABLE_COPY(Stack)

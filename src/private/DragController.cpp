@@ -480,7 +480,7 @@ void StateInternalMDIDragging::onEntry()
 
     // Raise the dock widget being dragged
     if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
-        if (Controllers::Frame *f = tb->frame())
+        if (Controllers::Group *f = tb->frame())
             f->view()->raise();
     }
 
@@ -503,7 +503,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
         return false;
     }
 
-    Controllers::Frame *frame = tb->frame();
+    Controllers::Group *frame = tb->frame();
     if (!frame) {
         // Doesn't happen.
         qWarning() << Q_FUNC_INFO << "null frame.";

@@ -33,7 +33,7 @@ using namespace KDDockWidgets::Views;
 class VBoxLayout : public QVBoxLayout // clazy:exclude=missing-qobject-macro
 {
 public:
-    explicit VBoxLayout(Frame_qtwidgets *parent)
+    explicit VBoxLayout(Group_qtwidgets *parent)
         : QVBoxLayout(parent)
         , m_frameWidget(parent)
     {
@@ -48,18 +48,18 @@ public:
         m_frameWidget->d->layoutInvalidated.emit();
     }
 
-    Frame_qtwidgets *const m_frameWidget;
+    Group_qtwidgets *const m_frameWidget;
 };
 
 VBoxLayout::~VBoxLayout() = default;
 
-Frame_qtwidgets::Frame_qtwidgets(Controllers::Frame *controller, QWidget *parent)
+Group_qtwidgets::Group_qtwidgets(Controllers::Group *controller, QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::Frame, parent)
     , GroupViewInterface(controller)
 {
 }
 
-void Frame_qtwidgets::init()
+void Group_qtwidgets::init()
 {
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
@@ -74,24 +74,24 @@ void Frame_qtwidgets::init()
         setAutoFillBackground(true);
 }
 
-void Frame_qtwidgets::free_impl()
+void Group_qtwidgets::free_impl()
 {
     // TODOm3: just use the base class impl, which uses deleteLater()
     // do it once there's no state here
     delete this;
 }
 
-void Frame_qtwidgets::renameTab(int index, const QString &text)
+void Group_qtwidgets::renameTab(int index, const QString &text)
 {
     m_frame->tabWidget()->renameTab(index, text);
 }
 
-void Frame_qtwidgets::changeTabIcon(int index, const QIcon &icon)
+void Group_qtwidgets::changeTabIcon(int index, const QIcon &icon)
 {
     m_frame->tabWidget()->changeTabIcon(index, icon);
 }
 
-int Frame_qtwidgets::nonContentsHeight() const
+int Group_qtwidgets::nonContentsHeight() const
 {
     Controllers::TitleBar *tb = m_frame->titleBar();
     QWidget *tabBar = asQWidget(m_frame->tabBar());
@@ -99,47 +99,47 @@ int Frame_qtwidgets::nonContentsHeight() const
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
 }
 
-int Frame_qtwidgets::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
+int Group_qtwidgets::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
 {
     return m_frame->tabWidget()->indexOfDockWidget(dw);
 }
 
-void Frame_qtwidgets::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
+void Group_qtwidgets::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
     m_frame->tabWidget()->setCurrentDockWidget(dw);
 }
 
-int Frame_qtwidgets::currentIndex_impl() const
+int Group_qtwidgets::currentIndex_impl() const
 {
     return m_frame->tabWidget()->currentIndex();
 }
 
-void Frame_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
+void Group_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
     m_frame->tabWidget()->insertDockWidget(dw, index);
 }
 
-void Frame_qtwidgets::removeWidget_impl(Controllers::DockWidget *dw)
+void Group_qtwidgets::removeWidget_impl(Controllers::DockWidget *dw)
 {
     m_frame->tabWidget()->removeDockWidget(dw);
 }
 
-void Frame_qtwidgets::setCurrentTabIndex_impl(int index)
+void Group_qtwidgets::setCurrentTabIndex_impl(int index)
 {
     m_frame->tabWidget()->setCurrentDockWidget(index);
 }
 
-KDDockWidgets::Controllers::DockWidget *Frame_qtwidgets::currentDockWidget_impl() const
+KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::currentDockWidget_impl() const
 {
     return m_frame->tabWidget()->dockwidgetAt(m_frame->tabWidget()->currentIndex());
 }
 
-KDDockWidgets::Controllers::DockWidget *Frame_qtwidgets::dockWidgetAt_impl(int index) const
+KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::dockWidgetAt_impl(int index) const
 {
     return m_frame->tabWidget()->dockwidgetAt(index);
 }
 
-bool Frame_qtwidgets::event(QEvent *e)
+bool Group_qtwidgets::event(QEvent *e)
 {
     if (freed())
         return QWidget::event(e);
@@ -152,7 +152,7 @@ bool Frame_qtwidgets::event(QEvent *e)
     return QWidget::event(e);
 }
 
-void Frame_qtwidgets::paintEvent(QPaintEvent *)
+void Group_qtwidgets::paintEvent(QPaintEvent *)
 {
     if (freed())
         return;
@@ -181,7 +181,7 @@ void Frame_qtwidgets::paintEvent(QPaintEvent *)
     }
 }
 
-QSize Frame_qtwidgets::maxSizeHint() const
+QSize Group_qtwidgets::maxSizeHint() const
 {
     if (freed())
         return {};
@@ -191,7 +191,7 @@ QSize Frame_qtwidgets::maxSizeHint() const
     return waste + m_frame->biggestDockWidgetMaxSize();
 }
 
-QRect Frame_qtwidgets::dragRect() const
+QRect Group_qtwidgets::dragRect() const
 {
     QRect rect = m_frame->dragRect();
     if (rect.isValid())

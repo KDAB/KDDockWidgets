@@ -29,7 +29,7 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 namespace Controllers {
-class Frame;
+class Group;
 class TitleBar;
 }
 

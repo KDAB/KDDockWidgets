@@ -19,7 +19,7 @@
 namespace KDDockWidgets {
 
 namespace Controllers {
-class Frame;
+class Group;
 class DockWidget;
 class MDILayout;
 }
@@ -60,7 +60,7 @@ public:
 
     /// @brief Returns the list of frames in this MDI Area
     /// Each Frame object represents a 'window' emebedded in the MDI Area
-    QList<Controllers::Frame *> frames() const;
+    QList<Controllers::Group *> frames() const;
 
 private:
     class Private;

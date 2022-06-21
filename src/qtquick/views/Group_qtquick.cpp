@@ -40,13 +40,13 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
+Group_qtquick::Group_qtquick(Controllers::Group *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::Frame, parent)
     , GroupViewInterface(controller)
 {
 }
 
-Frame_qtquick::~Frame_qtquick()
+Group_qtquick::~Group_qtquick()
 {
     // The QML item must be deleted with deleteLater(), as we might be currently with its mouse
     // handler in the stack. QML doesn't support it being deleted in that case.
@@ -55,7 +55,7 @@ Frame_qtquick::~Frame_qtquick()
     m_visualItem->deleteLater();
 }
 
-void Frame_qtquick::init()
+void Group_qtquick::init()
 {
     connect(m_frame->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
@@ -65,9 +65,9 @@ void Frame_qtquick::init()
     });
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
-    connect(m_frame, &Controllers::Frame::isMDIChanged, this, &Frame_qtquick::isMDIChanged);
-    connect(m_frame, &Controllers::Frame::currentDockWidgetChanged, this, &Frame_qtquick::currentDockWidgetChanged);
-    connect(m_frame, &Controllers::Frame::actualTitleBarChanged, this, &Frame_qtquick::actualTitleBarChanged);
+    connect(m_frame, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
+    connect(m_frame, &Controllers::Group::currentDockWidgetChanged, this, &Group_qtquick::currentDockWidgetChanged);
+    connect(m_frame, &Controllers::Group::actualTitleBarChanged, this, &Group_qtquick::actualTitleBarChanged);
 
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
         for (auto dw : m_frame->dockWidgets()) {
@@ -91,7 +91,7 @@ void Frame_qtquick::init()
     m_visualItem->setParent(this);
 }
 
-void Frame_qtquick::updateConstriants()
+void Group_qtquick::updateConstriants()
 {
     m_frame->onDockWidgetCountChanged();
 
@@ -103,35 +103,35 @@ void Frame_qtquick::updateConstriants()
     View::d->layoutInvalidated.emit();
 }
 
-void Frame_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
+void Group_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
 {
     stackView()->removeDockWidget(dw);
     disconnect(m_connections.take(dw));
 }
 
-int Frame_qtquick::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
+int Group_qtquick::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
 {
     return stackView()->indexOfDockWidget(dw);
 }
 
-int Frame_qtquick::currentIndex_impl() const
+int Group_qtquick::currentIndex_impl() const
 {
     return stackView()->currentIndex();
 }
 
-void Frame_qtquick::setCurrentTabIndex_impl(int index)
+void Group_qtquick::setCurrentTabIndex_impl(int index)
 {
     setCurrentDockWidget_impl(m_frame->dockWidgetAt(index));
 }
 
-void Frame_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
+void Group_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
     m_frame->tabWidget()->setCurrentDockWidget(dw);
 }
 
-void Frame_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
+void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
-    QPointer<Controllers::Frame> oldFrame = dw->d->frame();
+    QPointer<Controllers::Group> oldFrame = dw->d->frame();
     if (stackView()->insertDockWidget(index, dw, {}, {})) {
 
         asView_qtquick(dw->view())->setParent(m_stackLayout);
@@ -158,28 +158,28 @@ void Frame_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
     }
 }
 
-Controllers::DockWidget *Frame_qtquick::dockWidgetAt_impl(int index) const
+Controllers::DockWidget *Group_qtquick::dockWidgetAt_impl(int index) const
 {
     return stackView()->dockwidgetAt(index);
 }
 
-Controllers::DockWidget *Frame_qtquick::currentDockWidget_impl() const
+Controllers::DockWidget *Group_qtquick::currentDockWidget_impl() const
 {
     return stackView()->currentDockWidget();
 }
 
-void Frame_qtquick::renameTab(int, const QString &)
+void Group_qtquick::renameTab(int, const QString &)
 {
     // Not needed for QtQuick. Our model reacts to titleChanged()
 }
 
-void Frame_qtquick::changeTabIcon(int index, const QIcon &)
+void Group_qtquick::changeTabIcon(int index, const QIcon &)
 {
     Q_UNUSED(index);
     qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
-void Frame_qtquick::setStackLayout(QQuickItem *stackLayout)
+void Group_qtquick::setStackLayout(QQuickItem *stackLayout)
 {
     if (m_stackLayout || !stackLayout) {
         qWarning() << Q_FUNC_INFO << "Shouldn't happen";
@@ -189,33 +189,33 @@ void Frame_qtquick::setStackLayout(QQuickItem *stackLayout)
     m_stackLayout = stackLayout;
 }
 
-QSize Frame_qtquick::minSize() const
+QSize Group_qtquick::minSize() const
 {
     const QSize contentsSize = m_frame->dockWidgetsMinSize();
     return contentsSize + QSize(0, nonContentsHeight());
 }
 
-QSize Frame_qtquick::maximumSize() const
+QSize Group_qtquick::maximumSize() const
 {
     return View_qtquick::maximumSize();
 }
 
-QObject *Frame_qtquick::tabWidgetObj() const
+QObject *Group_qtquick::tabWidgetObj() const
 {
     return stackView();
 }
 
-QQuickItem *Frame_qtquick::visualItem() const
+QQuickItem *Group_qtquick::visualItem() const
 {
     return m_visualItem;
 }
 
-int Frame_qtquick::nonContentsHeight() const
+int Group_qtquick::nonContentsHeight() const
 {
     return m_visualItem->property("nonContentsHeight").toInt();
 }
 
-Stack_qtquick *Frame_qtquick::stackView() const
+Stack_qtquick *Group_qtquick::stackView() const
 {
     if (auto stack = m_frame->tabWidget())
         return qobject_cast<Stack_qtquick *>(asQQuickItem(stack->view()));
@@ -223,13 +223,13 @@ Stack_qtquick *Frame_qtquick::stackView() const
     return nullptr;
 }
 
-QRect Frame_qtquick::dragRect() const
+QRect Group_qtquick::dragRect() const
 {
     qFatal("Not implemented");
     return {};
 }
 
-KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::titleBar() const
+KDDockWidgets::Views::TitleBar_qtquick *Group_qtquick::titleBar() const
 {
     if (auto tb = m_frame->titleBar()) {
         return dynamic_cast<KDDockWidgets::Views::TitleBar_qtquick *>(tb->view());
@@ -238,7 +238,7 @@ KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::titleBar() const
     return nullptr;
 }
 
-KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::actualTitleBar() const
+KDDockWidgets::Views::TitleBar_qtquick *Group_qtquick::actualTitleBar() const
 {
     if (auto tb = m_frame->actualTitleBar()) {
         return dynamic_cast<KDDockWidgets::Views::TitleBar_qtquick *>(tb->view());
@@ -247,13 +247,13 @@ KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::actualTitleBar() const
     return nullptr;
 }
 
-int Frame_qtquick::userType() const
+int Group_qtquick::userType() const
 {
     /// TODOm3
     return 0;
 }
 
-bool Frame_qtquick::event(QEvent *e)
+bool Group_qtquick::event(QEvent *e)
 {
     // TODOm3: Move to controller. Too much logic to be here, and it's duplicated
     // with QtWidgets

@@ -21,7 +21,7 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class DockWidget;
-class Frame;
+class Group;
 }
 
 namespace Views {
@@ -30,7 +30,7 @@ namespace Views {
 class DOCKS_EXPORT GroupViewInterface
 {
 public:
-    explicit GroupViewInterface(Controllers::Frame *);
+    explicit GroupViewInterface(Controllers::Group *);
     virtual ~GroupViewInterface();
     virtual void renameTab(int index, const QString &) = 0;
     virtual void changeTabIcon(int index, const QIcon &) = 0;
@@ -46,10 +46,10 @@ public:
     virtual QRect dragRect() const = 0;
 
     bool isMDI() const;
-    Controllers::Frame *frame() const;
+    Controllers::Group *frame() const;
 
 protected:
-    Controllers::Frame *const m_frame;
+    Controllers::Group *const m_frame;
 };
 
 }

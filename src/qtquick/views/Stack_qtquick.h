@@ -29,7 +29,7 @@
 namespace KDDockWidgets {
 namespace Controllers {
 class DockWidget;
-class Frame;
+class Group;
 class TabBar;
 }
 

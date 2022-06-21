@@ -136,7 +136,7 @@ bool Controllers::TabBar::isWindow() const
 void Controllers::TabBar::onMousePress(QPoint localPos)
 {
     m_lastPressedDockWidget = dockWidgetAt(localPos);
-    Frame *frame = this->frame();
+    Group *frame = this->frame();
     if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !frame->isFocused()) {
         // User clicked on a tab which was already focused
         // A tab changing also counts as a change of scope
@@ -168,11 +168,11 @@ Controllers::DockWidget *Controllers::TabBar::singleDockWidget() const
 
 bool Controllers::TabBar::isMDI() const
 {
-    Frame *f = frame();
+    Group *f = frame();
     return f && f->isMDI();
 }
 
-Frame *Controllers::TabBar::frame() const
+Group *Controllers::TabBar::frame() const
 {
     return m_tabWidget->frame();
 }

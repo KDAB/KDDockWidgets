@@ -89,7 +89,7 @@ public:
         auto dockView = Config::self().viewFactory()->createDockWidget(QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
         auto dw = dockView->asDockWidgetController();
         dw->dptr()->m_isPersistentCentralDockWidget = true;
-        Controllers::Frame *frame = dropArea()->m_centralFrame;
+        Controllers::Group *frame = dropArea()->m_centralFrame;
         if (!frame) {
             qWarning() << Q_FUNC_INFO << "Expected central frame";
             return nullptr;
@@ -112,7 +112,7 @@ public:
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
 
-    QRect rectForOverlay(Controllers::Frame *, SideBarLocation) const;
+    QRect rectForOverlay(Controllers::Group *, SideBarLocation) const;
     SideBarLocation preferredSideBar(Controllers::DockWidget *) const;
     void updateOverlayGeometry(QSize suggestedSize);
     void clearSideBars();
@@ -290,7 +290,7 @@ CursorPositions MainWindow::Private::allowedResizeSides(SideBarLocation loc) con
     return CursorPosition_Undefined;
 }
 
-QRect MainWindow::Private::rectForOverlay(Controllers::Frame *frame, SideBarLocation location) const
+QRect MainWindow::Private::rectForOverlay(Controllers::Group *frame, SideBarLocation location) const
 {
     Controllers::SideBar *sb = q->sideBar(location);
     if (!sb)
@@ -468,7 +468,7 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
     const QRect defaultGeometry = rectForOverlay(m_overlayedDockWidget->d->frame(), sb->location());
     QRect newGeometry = defaultGeometry;
 
-    Controllers::Frame *frame = m_overlayedDockWidget->d->frame();
+    Controllers::Group *frame = m_overlayedDockWidget->d->frame();
 
     if (suggestedSize.isValid() && !suggestedSize.isEmpty()) {
         // Let's try to honour the suggested overlay size
@@ -585,7 +585,7 @@ void MainWindow::overlayOnSideBar(Controllers::DockWidget *dw)
     // We only support one overlay at a time, remove any existing overlay
     clearSideBarOverlay();
 
-    auto frame = new Controllers::Frame(nullptr, FrameOption_IsOverlayed);
+    auto frame = new Controllers::Group(nullptr, FrameOption_IsOverlayed);
     frame->view()->setParent(view());
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
@@ -611,7 +611,7 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
     if (!d->m_overlayedDockWidget)
         return;
 
-    Controllers::Frame *frame = d->m_overlayedDockWidget->d->frame();
+    Controllers::Group *frame = d->m_overlayedDockWidget->d->frame();
     if (!frame) { // prophylactic check
         d->m_overlayedDockWidget = nullptr;
         return;
@@ -687,7 +687,7 @@ bool MainWindow::closeDockWidgets(bool force)
 
     const auto dockWidgets = d->m_layout->dockWidgets();
     for (Controllers::DockWidget *dw : dockWidgets) {
-        Controllers::Frame *frame = dw->d->frame();
+        Controllers::Group *frame = dw->d->frame();
 
         if (force) {
             dw->forceClose();

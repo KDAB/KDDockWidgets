@@ -27,7 +27,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-Stack::Stack(Frame *frame, StackOptions options)
+Stack::Stack(Group *frame, StackOptions options)
     : Controller(Type::Stack, Config::self().viewFactory()->createStack(this, frame->view()))
     , Draggable(view(), Config::self().flags() & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
     , m_tabBar(new TabBar(this))
@@ -82,7 +82,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
         return false;
     }
 
-    QPointer<Frame> oldFrame = dock->d->frame();
+    QPointer<Group> oldFrame = dock->d->frame();
     insertDockWidget(index, dock, dock->icon(IconPlace::TabBar), dock->title());
     setCurrentDockWidget(index);
 
@@ -106,7 +106,7 @@ bool Stack::contains(DockWidget *dw) const
     return indexOfDockWidget(dw) != -1;
 }
 
-Frame *Stack::frame() const
+Group *Stack::frame() const
 {
     return m_frame;
 }
@@ -182,7 +182,7 @@ bool Stack::onMouseDoubleClick(QPoint localPos)
     if (!(Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) || tabBar()->dockWidgetAt(localPos))
         return false;
 
-    Frame *frame = this->frame();
+    Group *frame = this->frame();
 
     // When using MainWindowOption_HasCentralFrame. The central frame is never detachable.
     if (frame->isCentralFrame())

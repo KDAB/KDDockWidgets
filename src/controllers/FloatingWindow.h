@@ -25,7 +25,7 @@ class QAbstractNativeEventFilter;
 namespace KDDockWidgets::Controllers {
 
 class DropArea;
-class Frame;
+class Group;
 class Layout;
 class MainWindow;
 class TitleBar;
@@ -35,7 +35,7 @@ class DOCKS_EXPORT FloatingWindow : public Controller, public Draggable
     Q_OBJECT
 public:
     explicit FloatingWindow(QRect suggestedGeometry, MainWindow *parent = nullptr);
-    explicit FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometry, MainWindow *parent = nullptr);
+    explicit FloatingWindow(Controllers::Group *frame, QRect suggestedGeometry, MainWindow *parent = nullptr);
     virtual ~FloatingWindow() override;
 
     bool deserialize(const LayoutSaver::FloatingWindow &);
@@ -47,7 +47,7 @@ public:
     bool isWindow() const override;
 
     const QVector<DockWidget *> dockWidgets() const;
-    const Controllers::Frame::List frames() const;
+    const Controllers::Group::List frames() const;
     DropArea *dropArea() const;
 
     int userType() const;
@@ -101,7 +101,7 @@ public:
     bool hasSingleDockWidget() const;
 
     /// @brief If this floating window has only one Frame, it's returned, otherwise nullptr
-    Controllers::Frame *singleFrame() const;
+    Controllers::Group *singleFrame() const;
 
     /**
      * @brief Returns whether a deleteLater has already been issued

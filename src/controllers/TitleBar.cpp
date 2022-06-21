@@ -34,7 +34,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 
-TitleBar::TitleBar(Frame *parent)
+TitleBar::TitleBar(Group *parent)
     : Controller(Type::TitleBar, Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
     , m_frame(parent)
@@ -42,9 +42,9 @@ TitleBar::TitleBar(Frame *parent)
     , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
 {
     init();
-    connect(m_frame, &Frame::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
-    connect(m_frame, &Frame::isFocusedChanged, this, &TitleBar::isFocusedChanged);
-    connect(m_frame, &Frame::isInMainWindowChanged, this, &TitleBar::updateAutoHideButton);
+    connect(m_frame, &Group::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
+    connect(m_frame, &Group::isFocusedChanged, this, &TitleBar::isFocusedChanged);
+    connect(m_frame, &Group::isInMainWindowChanged, this, &TitleBar::updateAutoHideButton);
 }
 
 TitleBar::TitleBar(FloatingWindow *parent)
@@ -216,7 +216,7 @@ bool TitleBar::hasIcon() const
     return !m_icon.isNull();
 }
 
-Controllers::Frame *TitleBar::frame() const
+Controllers::Group *TitleBar::frame() const
 {
     return m_frame;
 }
@@ -331,7 +331,7 @@ void TitleBar::onCloseClicked()
     } else if (m_floatingWindow) {
 
         if (closeOnlyCurrentTab) {
-            if (Frame *f = m_floatingWindow->singleFrame()) {
+            if (Group *f = m_floatingWindow->singleFrame()) {
                 if (DockWidget *dw = f->currentDockWidget()) {
                     dw->view()->close();
                 } else {
@@ -499,7 +499,7 @@ Controllers::DockWidget::List TitleBar::dockWidgets() const
 {
     if (m_floatingWindow) {
         DockWidget::List result;
-        for (Frame *f : m_floatingWindow->frames()) {
+        for (Group *f : m_floatingWindow->frames()) {
             result << f->dockWidgets();
         }
         return result;
@@ -554,7 +554,7 @@ QString TitleBar::floatButtonToolTip() const
 TabBar *TitleBar::tabBar() const
 {
     if (m_floatingWindow && m_floatingWindow->hasSingleFrame()) {
-        if (Frame *frame = m_floatingWindow->singleFrame()) {
+        if (Group *frame = m_floatingWindow->singleFrame()) {
             return frame->tabWidget()->tabBar();
         } else {
             // Shouldn't happen

@@ -153,7 +153,7 @@ inline QVariantList dockWidgetNames(const LayoutSaver::DockWidget::List &list)
     return result;
 }
 
-struct LayoutSaver::Frame
+struct LayoutSaver::Group
 {
     bool isValid() const;
 
@@ -186,7 +186,7 @@ struct LayoutSaver::MultiSplitter
     bool skipsRestore() const;
 
     QVariantMap layout;
-    QHash<QString, LayoutSaver::Frame> frames;
+    QHash<QString, LayoutSaver::Group> frames;
 };
 
 struct LayoutSaver::FloatingWindow

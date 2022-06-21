@@ -59,7 +59,7 @@ public:
                                    QQmlEngine *, DockWidgetOptions options = {},
                                    LayoutSaverOptions layoutSaverOptions = {},
                                    Qt::WindowFlags windowFlags = {}) const;
-    View *createFrame(Controllers::Frame *, View *parent) const override;
+    View *createFrame(Controllers::Group *, View *parent) const override;
     View *createTitleBar(Controllers::TitleBar *, View *parent) const override;
     View *createStack(Controllers::Stack *, View *parent) const override;
     View *createTabBar(Controllers::TabBar *tabBar, View *parent) const override;

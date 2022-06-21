@@ -37,7 +37,7 @@ void MDILayout::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initi
         return;
     }
 
-    auto frame = qobject_cast<Controllers::Frame *>(dw->d->frame());
+    auto frame = qobject_cast<Controllers::Group *>(dw->d->frame());
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
         frame->view()->setParent(nullptr);
@@ -48,7 +48,7 @@ void MDILayout::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initi
     if (frame) {
         newItem->setGuestView(frame->view());
     } else {
-        frame = new Controllers::Frame();
+        frame = new Controllers::Group();
         frame->addWidget(dw, addingOption);
 
         newItem->setGuestView(frame->view());
@@ -62,7 +62,7 @@ void MDILayout::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initi
     }
 }
 
-void MDILayout::setDockWidgetGeometry(Controllers::Frame *frame, QRect geometry)
+void MDILayout::setDockWidgetGeometry(Controllers::Group *frame, QRect geometry)
 {
     if (!frame)
         return;
@@ -81,7 +81,7 @@ void MDILayout::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
     moveDockWidget(dw->d->frame(), pos);
 }
 
-void MDILayout::moveDockWidget(Controllers::Frame *frame, QPoint pos)
+void MDILayout::moveDockWidget(Controllers::Group *frame, QPoint pos)
 {
     if (!frame)
         return;
@@ -102,7 +102,7 @@ void MDILayout::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
     resizeDockWidget(dw->d->frame(), size);
 }
 
-void MDILayout::resizeDockWidget(Controllers::Frame *frame, QSize size)
+void MDILayout::resizeDockWidget(Controllers::Group *frame, QSize size)
 {
     if (!frame)
         return;

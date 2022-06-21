@@ -42,7 +42,7 @@ class MDILayout;
 class DropArea;
 class DockWidget;
 class FloatingWindow;
-class Frame;
+class Group;
 class Layout;
 class Stack;
 class TabBar;
@@ -236,7 +236,7 @@ public:
     /// @brief if this view is a FloatingWindow, then returns its controller
     /// Mostly to save the call sites from having too many casts
     Controllers::FloatingWindow *asFloatingWindowController() const;
-    Controllers::Frame *asFrameController() const;
+    Controllers::Group *asFrameController() const;
     Controllers::TitleBar *asTitleBarController() const;
     Controllers::TabBar *asTabBarController() const;
     Controllers::Stack *asStackController() const;

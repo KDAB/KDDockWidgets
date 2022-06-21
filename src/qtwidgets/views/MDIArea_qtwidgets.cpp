@@ -109,7 +109,7 @@ void MDIArea_qtwidgets::resizeDockWidget(Views::DockWidgetViewInterface *dwView,
     resizeDockWidget(dw, size);
 }
 
-QList<Controllers::Frame *> MDIArea_qtwidgets::frames() const
+QList<Controllers::Group *> MDIArea_qtwidgets::frames() const
 {
     return d->layout->frames();
 }

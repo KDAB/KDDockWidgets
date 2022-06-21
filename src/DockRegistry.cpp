@@ -218,15 +218,15 @@ Controllers::SideBar *DockRegistry::sideBarForDockWidget(const Controllers::Dock
     return nullptr;
 }
 
-Controllers::Frame *DockRegistry::frameInMDIResize() const
+Controllers::Group *DockRegistry::frameInMDIResize() const
 {
     for (auto mw : m_mainWindows) {
         if (!mw->isMDI())
             continue;
 
         Layout *layout = mw->layout();
-        const QList<Controllers::Frame *> frames = layout->frames();
-        for (Controllers::Frame *frame : frames) {
+        const QList<Controllers::Group *> frames = layout->frames();
+        for (Controllers::Group *frame : frames) {
             if (WidgetResizeHandler *wrh = frame->resizeHandler()) {
                 if (wrh->isResizing())
                     return frame;
@@ -345,12 +345,12 @@ void DockRegistry::unregisterLayout(Controllers::Layout *layout)
     m_layouts.removeOne(layout);
 }
 
-void DockRegistry::registerFrame(Controllers::Frame *frame)
+void DockRegistry::registerFrame(Controllers::Group *frame)
 {
     m_frames << frame;
 }
 
-void DockRegistry::unregisterFrame(Controllers::Frame *frame)
+void DockRegistry::unregisterFrame(Controllers::Group *frame)
 {
     m_frames.removeOne(frame);
 }
@@ -521,7 +521,7 @@ const QVector<Controllers::Layout *> DockRegistry::layouts() const
     return m_layouts;
 }
 
-const Controllers::Frame::List DockRegistry::frames() const
+const Controllers::Group::List DockRegistry::frames() const
 {
     return m_frames;
 }
@@ -692,7 +692,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
     } else if (event->type() == QEvent::MouseButtonPress) {
         // When clicking on a MDI Frame we raise the window
         if (Controller *c = View::firstParentOfType(watched, Type::Frame)) {
-            auto frame = static_cast<Frame *>(c);
+            auto frame = static_cast<Group *>(c);
             if (frame->isMDI())
                 frame->view()->raise();
         }

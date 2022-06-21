@@ -30,7 +30,7 @@ namespace KDDockWidgets {
 class View;
 
 namespace Controllers {
-class Frame;
+class Group;
 class Separator;
 }
 
@@ -304,7 +304,7 @@ public:
     QPoint mapFromParent(QPoint) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
-    KDDockWidgets::Controllers::Frame *asFrameController() const;
+    KDDockWidgets::Controllers::Group *asFrameController() const;
     KDDockWidgets::View *guestView() const
     {
         return m_guest;

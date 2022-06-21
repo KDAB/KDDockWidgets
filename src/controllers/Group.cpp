@@ -52,7 +52,7 @@ using namespace KDDockWidgets::Controllers;
 
 namespace KDDockWidgets {
 
-class Frame::Private
+class Group::Private
 {
 public:
     KDBindings::ScopedConnection m_visibleWidgetCountChangedConnection;
@@ -78,7 +78,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 
 }
 
-Frame::Frame(View *parent, FrameOptions options, int userType)
+Group::Group(View *parent, FrameOptions options, int userType)
     : Controller(Type::Frame, Config::self().viewFactory()->createFrame(this, parent))
     , FocusScope(view())
     , d(new Private())
@@ -90,9 +90,9 @@ Frame::Frame(View *parent, FrameOptions options, int userType)
     s_dbg_numFrames++;
     DockRegistry::self()->registerFrame(this);
 
-    connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
+    connect(this, &Group::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
     connect(m_tabWidget, &Controllers::Stack::currentTabChanged,
-            this, &Frame::onCurrentTabChanged);
+            this, &Group::onCurrentTabChanged);
 
     setLayout(parent ? parent->asLayout() : nullptr);
     view()->init();
@@ -103,7 +103,7 @@ Frame::Frame(View *parent, FrameOptions options, int userType)
     m_inCtor = false;
 }
 
-Frame::~Frame()
+Group::~Group()
 {
     m_inDtor = true;
     s_dbg_numFrames--;
@@ -122,7 +122,7 @@ Frame::~Frame()
     delete d;
 }
 
-void Frame::onCloseEvent(QCloseEvent *e)
+void Group::onCloseEvent(QCloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
     e->accept(); // Accepted by default (will close unless ignored)
@@ -134,7 +134,7 @@ void Frame::onCloseEvent(QCloseEvent *e)
     }
 }
 
-void Frame::setLayout(Layout *dt)
+void Group::setLayout(Layout *dt)
 {
     if (dt == m_layout)
         return;
@@ -151,7 +151,7 @@ void Frame::setLayout(Layout *dt)
 
         // We keep the connect result so we don't dereference m_layout at shutdown
         d->m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass. It's a KDBindings bug.
-        d->m_visibleWidgetCountChangedConnection = m_layout->visibleWidgetCountChanged.connect(&Frame::updateTitleBarVisibility, this);
+        d->m_visibleWidgetCountChangedConnection = m_layout->visibleWidgetCountChanged.connect(&Group::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();
@@ -160,72 +160,72 @@ void Frame::setLayout(Layout *dt)
     Q_EMIT isMDIChanged();
 }
 
-void Frame::renameTab(int index, const QString &title)
+void Group::renameTab(int index, const QString &title)
 {
     dynamic_cast<Views::GroupViewInterface *>(view())->renameTab(index, title);
 }
 
-void Frame::changeTabIcon(int index, const QIcon &icon)
+void Group::changeTabIcon(int index, const QIcon &icon)
 {
     dynamic_cast<Views::GroupViewInterface *>(view())->changeTabIcon(index, icon);
 }
 
-void Frame::removeWidget_impl(DockWidget *dw)
+void Group::removeWidget_impl(DockWidget *dw)
 {
     dynamic_cast<Views::GroupViewInterface *>(view())->removeWidget_impl(dw);
 }
 
-int Frame::indexOfDockWidget_impl(const DockWidget *dw)
+int Group::indexOfDockWidget_impl(const DockWidget *dw)
 {
     return dynamic_cast<Views::GroupViewInterface *>(view())->indexOfDockWidget_impl(dw);
 }
 
-int Frame::currentIndex_impl() const
+int Group::currentIndex_impl() const
 {
     return dynamic_cast<Views::GroupViewInterface *>(view())->currentIndex_impl();
 }
 
-void Frame::setCurrentTabIndex_impl(int index)
+void Group::setCurrentTabIndex_impl(int index)
 {
     dynamic_cast<Views::GroupViewInterface *>(view())->setCurrentTabIndex_impl(index);
 }
 
-void Frame::setCurrentDockWidget_impl(DockWidget *dw)
+void Group::setCurrentDockWidget_impl(DockWidget *dw)
 {
     dynamic_cast<Views::GroupViewInterface *>(view())->setCurrentDockWidget_impl(dw);
 }
 
-void Frame::insertDockWidget_impl(DockWidget *dw, int index)
+void Group::insertDockWidget_impl(DockWidget *dw, int index)
 {
     dynamic_cast<Views::GroupViewInterface *>(view())->insertDockWidget_impl(dw, index);
 }
 
-Controllers::DockWidget *Frame::dockWidgetAt_impl(int index) const
+Controllers::DockWidget *Group::dockWidgetAt_impl(int index) const
 {
     return dynamic_cast<Views::GroupViewInterface *>(view())->dockWidgetAt_impl(index);
 }
 
-Controllers::DockWidget *Frame::currentDockWidget_impl() const
+Controllers::DockWidget *Group::currentDockWidget_impl() const
 {
     return dynamic_cast<Views::GroupViewInterface *>(view())->currentDockWidget_impl();
 }
 
-int Frame::nonContentsHeight() const
+int Group::nonContentsHeight() const
 {
     return dynamic_cast<Views::GroupViewInterface *>(view())->nonContentsHeight();
 }
 
-Controllers::Stack *Frame::tabWidget() const
+Controllers::Stack *Group::tabWidget() const
 {
     return m_tabWidget;
 }
 
-Controllers::TabBar *Frame::tabBar() const
+Controllers::TabBar *Group::tabBar() const
 {
     return m_tabWidget->tabBar();
 }
 
-void Frame::updateTitleAndIcon()
+void Group::updateTitleAndIcon()
 {
     if (DockWidget *dw = currentDockWidget()) {
         m_titleBar->setTitle(dw->title());
@@ -244,7 +244,7 @@ void Frame::updateTitleAndIcon()
     }
 }
 
-void Frame::onDockWidgetTitleChanged()
+void Group::onDockWidgetTitleChanged()
 {
     updateTitleAndIcon();
 
@@ -257,12 +257,12 @@ void Frame::onDockWidgetTitleChanged()
     }
 }
 
-void Frame::addWidget(DockWidget *dockWidget, InitialOption addingOption)
+void Group::addWidget(DockWidget *dockWidget, InitialOption addingOption)
 {
     insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
 }
 
-void Frame::addWidget(Frame *frame, InitialOption addingOption)
+void Group::addWidget(Group *frame, InitialOption addingOption)
 {
     if (frame->isEmpty()) {
         qWarning() << "Frame::addWidget: frame is empty." << frame;
@@ -274,14 +274,14 @@ void Frame::addWidget(Frame *frame, InitialOption addingOption)
         addWidget(dockWidget, addingOption);
 }
 
-void Frame::addWidget(FloatingWindow *floatingWindow, InitialOption addingOption)
+void Group::addWidget(FloatingWindow *floatingWindow, InitialOption addingOption)
 {
     Q_ASSERT(floatingWindow);
-    for (Frame *f : floatingWindow->frames())
+    for (Group *f : floatingWindow->frames())
         addWidget(f, addingOption);
 }
 
-void Frame::insertWidget(DockWidget *dockWidget, int index, InitialOption addingOption)
+void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption addingOption)
 {
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
@@ -313,18 +313,18 @@ void Frame::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
         }
     }
 
-    connect(dockWidget, &DockWidget::titleChanged, this, &Frame::onDockWidgetTitleChanged);
-    connect(dockWidget, &DockWidget::iconChanged, this, &Frame::onDockWidgetTitleChanged);
+    connect(dockWidget, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
+    connect(dockWidget, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
 }
 
-void Frame::removeWidget(DockWidget *dw)
+void Group::removeWidget(DockWidget *dw)
 {
-    disconnect(dw, &DockWidget::titleChanged, this, &Frame::onDockWidgetTitleChanged);
-    disconnect(dw, &DockWidget::iconChanged, this, &Frame::onDockWidgetTitleChanged);
+    disconnect(dw, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
+    disconnect(dw, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
     removeWidget_impl(dw);
 }
 
-FloatingWindow *Frame::detachTab(DockWidget *dockWidget)
+FloatingWindow *Group::detachTab(DockWidget *dockWidget)
 {
     if (m_inCtor || m_inDtor)
         return nullptr;
@@ -334,7 +334,7 @@ FloatingWindow *Frame::detachTab(DockWidget *dockWidget)
     QRect r = dockWidget->geometry();
     removeWidget(dockWidget);
 
-    auto newFrame = new Frame();
+    auto newFrame = new Group();
     const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
     newFrame->addWidget(dockWidget);
 
@@ -348,7 +348,7 @@ FloatingWindow *Frame::detachTab(DockWidget *dockWidget)
     return floatingWindow;
 }
 
-int Frame::indexOfDockWidget(const DockWidget *dw)
+int Group::indexOfDockWidget(const DockWidget *dw)
 {
     if (m_inCtor || m_inDtor)
         return -1;
@@ -356,7 +356,7 @@ int Frame::indexOfDockWidget(const DockWidget *dw)
     return indexOfDockWidget_impl(dw);
 }
 
-int Frame::currentIndex() const
+int Group::currentIndex() const
 {
     if (m_inCtor || m_inDtor)
         return -1;
@@ -364,7 +364,7 @@ int Frame::currentIndex() const
     return currentIndex_impl();
 }
 
-void Frame::setCurrentTabIndex(int index)
+void Group::setCurrentTabIndex(int index)
 {
     if (m_inCtor || m_inDtor)
         return;
@@ -372,7 +372,7 @@ void Frame::setCurrentTabIndex(int index)
     setCurrentTabIndex_impl(index);
 }
 
-void Frame::setCurrentDockWidget(DockWidget *dw)
+void Group::setCurrentDockWidget(DockWidget *dw)
 {
     if (m_inCtor || m_inDtor)
         return;
@@ -380,7 +380,7 @@ void Frame::setCurrentDockWidget(DockWidget *dw)
     setCurrentDockWidget_impl(dw);
 }
 
-void Frame::insertDockWidget(DockWidget *dw, int index)
+void Group::insertDockWidget(DockWidget *dw, int index)
 {
     if (m_inCtor || m_inDtor)
         return;
@@ -388,7 +388,7 @@ void Frame::insertDockWidget(DockWidget *dw, int index)
     insertDockWidget_impl(dw, index);
 }
 
-Controllers::DockWidget *Frame::dockWidgetAt(int index) const
+Controllers::DockWidget *Group::dockWidgetAt(int index) const
 {
     if (m_inCtor || m_inDtor)
         return nullptr;
@@ -396,7 +396,7 @@ Controllers::DockWidget *Frame::dockWidgetAt(int index) const
     return dockWidgetAt_impl(index);
 }
 
-Controllers::DockWidget *Frame::currentDockWidget() const
+Controllers::DockWidget *Group::currentDockWidget() const
 {
     if (m_inCtor || m_inDtor)
         return nullptr;
@@ -404,7 +404,7 @@ Controllers::DockWidget *Frame::currentDockWidget() const
     return currentDockWidget_impl();
 }
 
-int Frame::dockWidgetCount() const
+int Group::dockWidgetCount() const
 {
     if (m_inCtor || m_inDtor)
         return 0;
@@ -412,7 +412,7 @@ int Frame::dockWidgetCount() const
     return m_tabWidget->numDockWidgets();
 }
 
-void Frame::onDockWidgetCountChanged()
+void Group::onDockWidgetCountChanged()
 {
     qCDebug(docking) << "Frame::onDockWidgetCountChanged:" << this << "; widgetCount=" << dockWidgetCount();
     if (isEmpty() && !isCentralFrame()) {
@@ -432,7 +432,7 @@ void Frame::onDockWidgetCountChanged()
     Q_EMIT numDockWidgetsChanged();
 }
 
-void Frame::onCurrentTabChanged(int index)
+void Group::onCurrentTabChanged(int index)
 {
     if (index != -1) {
         if (auto dock = dockWidgetAt(index)) {
@@ -443,17 +443,17 @@ void Frame::onCurrentTabChanged(int index)
     }
 }
 
-void Frame::isFocusedChangedCallback()
+void Group::isFocusedChangedCallback()
 {
     Q_EMIT isFocusedChanged();
 }
 
-void Frame::focusedWidgetChangedCallback()
+void Group::focusedWidgetChangedCallback()
 {
     Q_EMIT focusedWidgetChanged();
 }
 
-void Frame::updateTitleBarVisibility()
+void Group::updateTitleBarVisibility()
 {
     if (m_updatingTitleBar || m_beingDeleted) {
         // To break a cyclic dependency
@@ -493,24 +493,24 @@ void Frame::updateTitleBarVisibility()
     }
 }
 
-void Frame::updateFloatingActions()
+void Group::updateFloatingActions()
 {
     const QVector<DockWidget *> widgets = dockWidgets();
     for (DockWidget *dw : widgets)
         dw->d->updateFloatAction();
 }
 
-bool Frame::containsMouse(QPoint globalPos) const
+bool Group::containsMouse(QPoint globalPos) const
 {
     return rect().contains(view()->mapFromGlobal(globalPos));
 }
 
-Controllers::TitleBar *Frame::titleBar() const
+Controllers::TitleBar *Group::titleBar() const
 {
     return m_titleBar;
 }
 
-Controllers::TitleBar *Frame::actualTitleBar() const
+Controllers::TitleBar *Group::actualTitleBar() const
 {
     if (FloatingWindow *fw = floatingWindow()) {
         // If there's nested frames then show each Frame's title bar
@@ -525,17 +525,17 @@ Controllers::TitleBar *Frame::actualTitleBar() const
     return titleBar();
 }
 
-QString Frame::title() const
+QString Group::title() const
 {
     return m_titleBar->title();
 }
 
-QIcon Frame::icon() const
+QIcon Group::icon() const
 {
     return m_titleBar->icon();
 }
 
-const Controllers::DockWidget::List Frame::dockWidgets() const
+const Controllers::DockWidget::List Group::dockWidgets() const
 {
     if (m_inCtor || m_inDtor)
         return {};
@@ -549,7 +549,7 @@ const Controllers::DockWidget::List Frame::dockWidgets() const
     return dockWidgets;
 }
 
-bool Frame::containsDockWidget(DockWidget *dockWidget) const
+bool Group::containsDockWidget(DockWidget *dockWidget) const
 {
     const int count = dockWidgetCount();
     for (int i = 0, e = count; i != e; ++i) {
@@ -559,7 +559,7 @@ bool Frame::containsDockWidget(DockWidget *dockWidget) const
     return false;
 }
 
-FloatingWindow *Frame::floatingWindow() const
+FloatingWindow *Group::floatingWindow() const
 {
     // Returns the first FloatingWindow* parent in the hierarchy.
     // However, if there's a MainWindow in the hierarchy it stops, which can
@@ -584,7 +584,7 @@ FloatingWindow *Frame::floatingWindow() const
     return nullptr;
 }
 
-void Frame::restoreToPreviousPosition()
+void Group::restoreToPreviousPosition()
 {
     if (hasSingleDockWidget()) {
         qWarning() << Q_FUNC_INFO << "Invalid usage, there's no tabs";
@@ -605,12 +605,12 @@ void Frame::restoreToPreviousPosition()
     m_layoutItem->restore(view());
 }
 
-int Frame::currentTabIndex() const
+int Group::currentTabIndex() const
 {
     return currentIndex();
 }
 
-bool Frame::anyNonClosable() const
+bool Group::anyNonClosable() const
 {
     for (auto dw : dockWidgets()) {
         if ((dw->options() & DockWidgetOption_NotClosable) && !DockRegistry::self()->isProcessingAppQuitEvent())
@@ -620,7 +620,7 @@ bool Frame::anyNonClosable() const
     return false;
 }
 
-bool Frame::anyNonDockable() const
+bool Group::anyNonDockable() const
 {
     for (auto dw : dockWidgets()) {
         if (dw->options() & DockWidgetOption_NotDockable)
@@ -630,7 +630,7 @@ bool Frame::anyNonDockable() const
     return false;
 }
 
-void Frame::onDockWidgetShown(DockWidget *w)
+void Group::onDockWidgetShown(DockWidget *w)
 {
     if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
         if (!isVisible()) {
@@ -642,7 +642,7 @@ void Frame::onDockWidgetShown(DockWidget *w)
     }
 }
 
-void Frame::onDockWidgetHidden(DockWidget *w)
+void Group::onDockWidgetHidden(DockWidget *w)
 {
     if (!isCentralFrame() && hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
         if (isVisible()) {
@@ -654,7 +654,7 @@ void Frame::onDockWidgetHidden(DockWidget *w)
     }
 }
 
-void Frame::setLayoutItem(Layouting::Item *item)
+void Group::setLayoutItem(Layouting::Item *item)
 {
     if (item == m_layoutItem)
         return;
@@ -675,22 +675,22 @@ void Frame::setLayoutItem(Layouting::Item *item)
     }
 }
 
-Layouting::Item *Frame::layoutItem() const
+Layouting::Item *Group::layoutItem() const
 {
     return m_layoutItem;
 }
 
-int Frame::dbg_numFrames()
+int Group::dbg_numFrames()
 {
     return s_dbg_numFrames;
 }
 
-bool Frame::beingDeletedLater() const
+bool Group::beingDeletedLater() const
 {
     return m_beingDeleted;
 }
 
-bool Frame::hasTabsVisible() const
+bool Group::hasTabsVisible() const
 {
     if (m_beingDeleted)
         return false;
@@ -698,7 +698,7 @@ bool Frame::hasTabsVisible() const
     return alwaysShowsTabs() || dockWidgetCount() > 1;
 }
 
-QStringList Frame::affinities() const
+QStringList Group::affinities() const
 {
     if (isEmpty()) {
         return {};
@@ -707,22 +707,22 @@ QStringList Frame::affinities() const
     }
 }
 
-bool Frame::isTheOnlyFrame() const
+bool Group::isTheOnlyFrame() const
 {
     return m_layout && m_layout->visibleCount() == 1;
 }
 
-bool Frame::isOverlayed() const
+bool Group::isOverlayed() const
 {
     return m_options & FrameOption_IsOverlayed;
 }
 
-void Frame::unoverlay()
+void Group::unoverlay()
 {
     m_options &= ~FrameOption_IsOverlayed;
 }
 
-bool Frame::isFloating() const
+bool Group::isFloating() const
 {
     if (isInMainWindow() || isMDI())
         return false;
@@ -730,23 +730,23 @@ bool Frame::isFloating() const
     return isTheOnlyFrame();
 }
 
-bool Frame::isInFloatingWindow() const
+bool Group::isInFloatingWindow() const
 {
     return floatingWindow() != nullptr;
 }
 
-bool Frame::isInMainWindow() const
+bool Group::isInMainWindow() const
 {
     return mainWindow() != nullptr;
 }
 
-Frame *Frame::deserialize(const LayoutSaver::Frame &f)
+Group *Group::deserialize(const LayoutSaver::Group &f)
 {
     if (!f.isValid())
         return nullptr;
 
     const FrameOptions options = FrameOptions(f.options);
-    Frame *frame = nullptr;
+    Group *frame = nullptr;
     const bool isPersistentCentralFrame = options & FrameOption::FrameOption_IsCentralFrame;
 
     if (isPersistentCentralFrame) {
@@ -773,7 +773,7 @@ Frame *Frame::deserialize(const LayoutSaver::Frame &f)
     }
 
     if (!frame)
-        frame = new Frame(nullptr, options);
+        frame = new Group(nullptr, options);
 
     frame->setObjectName(f.objectName);
 
@@ -789,9 +789,9 @@ Frame *Frame::deserialize(const LayoutSaver::Frame &f)
     return frame;
 }
 
-LayoutSaver::Frame Frame::serialize() const
+LayoutSaver::Group Group::serialize() const
 {
-    LayoutSaver::Frame frame;
+    LayoutSaver::Group frame;
     frame.isNull = false;
 
     const DockWidget::List docks = dockWidgets();
@@ -812,7 +812,7 @@ LayoutSaver::Frame Frame::serialize() const
     return frame;
 }
 
-void Frame::scheduleDeleteLater()
+void Group::scheduleDeleteLater()
 {
     qCDebug(creation) << Q_FUNC_INFO << this;
     m_beingDeleted = true;
@@ -822,7 +822,7 @@ void Frame::scheduleDeleteLater()
     });
 }
 
-QSize Frame::dockWidgetsMinSize() const
+QSize Group::dockWidgetsMinSize() const
 {
     QSize size = Layouting::Item::hardcodedMinimumSize;
     for (DockWidget *dw : dockWidgets())
@@ -831,7 +831,7 @@ QSize Frame::dockWidgetsMinSize() const
     return size;
 }
 
-QSize Frame::biggestDockWidgetMaxSize() const
+QSize Group::biggestDockWidgetMaxSize() const
 {
     QSize size = Layouting::Item::hardcodedMaximumSize;
     for (DockWidget *dw : dockWidgets()) {
@@ -855,7 +855,7 @@ QSize Frame::biggestDockWidgetMaxSize() const
     return size;
 }
 
-QRect Frame::dragRect() const
+QRect Group::dragRect() const
 {
     QRect rect;
     if (m_titleBar->view()->isVisible()) {
@@ -869,13 +869,13 @@ QRect Frame::dragRect() const
     return dynamic_cast<Views::GroupViewInterface *>(view())->dragRect();
 }
 
-MainWindow *Frame::mainWindow() const
+MainWindow *Group::mainWindow() const
 {
     return m_layout ? m_layout->mainWindow() : nullptr;
 }
 
 ///@brief Returns whether all dock widgets have the specified option set
-bool Frame::allDockWidgetsHave(DockWidgetOption option) const
+bool Group::allDockWidgetsHave(DockWidgetOption option) const
 {
     const DockWidget::List docks = dockWidgets();
     return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
@@ -884,7 +884,7 @@ bool Frame::allDockWidgetsHave(DockWidgetOption option) const
 }
 
 ///@brief Returns whether at least one dock widget has the specified option set
-bool Frame::anyDockWidgetsHas(DockWidgetOption option) const
+bool Group::anyDockWidgetsHas(DockWidgetOption option) const
 {
     const DockWidget::List docks = dockWidgets();
     return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
@@ -892,7 +892,7 @@ bool Frame::anyDockWidgetsHas(DockWidgetOption option) const
     });
 }
 
-bool Frame::allDockWidgetsHave(LayoutSaverOption option) const
+bool Group::allDockWidgetsHave(LayoutSaverOption option) const
 {
     const DockWidget::List docks = dockWidgets();
     return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
@@ -900,7 +900,7 @@ bool Frame::allDockWidgetsHave(LayoutSaverOption option) const
     });
 }
 
-bool Frame::anyDockWidgetsHas(LayoutSaverOption option) const
+bool Group::anyDockWidgetsHas(LayoutSaverOption option) const
 {
     const DockWidget::List docks = dockWidgets();
     return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
@@ -908,7 +908,7 @@ bool Frame::anyDockWidgetsHas(LayoutSaverOption option) const
     });
 }
 
-void Frame::setAllowedResizeSides(CursorPositions sides)
+void Group::setAllowedResizeSides(CursorPositions sides)
 {
     if (sides) {
         delete m_resizeHandler;
@@ -920,17 +920,17 @@ void Frame::setAllowedResizeSides(CursorPositions sides)
     }
 }
 
-bool Frame::isMDI() const
+bool Group::isMDI() const
 {
     return mdiLayoutWidget() != nullptr;
 }
 
-bool Frame::isMDIWrapper() const
+bool Group::isMDIWrapper() const
 {
     return mdiDropAreaWrapper() != nullptr;
 }
 
-Frame *Frame::mdiFrame() const
+Group *Group::mdiFrame() const
 {
     if (auto dwWrapper = mdiDockWidgetWrapper()) {
         return dwWrapper->d->frame();
@@ -939,7 +939,7 @@ Frame *Frame::mdiFrame() const
     return nullptr;
 }
 
-Controllers::DockWidget *Frame::mdiDockWidgetWrapper() const
+Controllers::DockWidget *Group::mdiDockWidgetWrapper() const
 {
     if (auto dropArea = mdiDropAreaWrapper())
         return dropArea->view()->parentView()->asDockWidgetController();
@@ -947,7 +947,7 @@ Controllers::DockWidget *Frame::mdiDockWidgetWrapper() const
     return nullptr;
 }
 
-DropArea *Frame::mdiDropAreaWrapper() const
+DropArea *Group::mdiDropAreaWrapper() const
 {
     auto p = view()->parentView();
     auto dropArea = p ? p->asDropAreaController() : nullptr;
@@ -956,12 +956,12 @@ DropArea *Frame::mdiDropAreaWrapper() const
     return nullptr;
 }
 
-MDILayout *Frame::mdiLayoutWidget() const
+MDILayout *Group::mdiLayoutWidget() const
 {
     return m_layout ? m_layout->asMDILayout() : nullptr;
 }
 
-bool Frame::hasNestedMDIDockWidgets() const
+bool Group::hasNestedMDIDockWidgets() const
 {
     if (!isMDI() || dockWidgetCount() == 0)
         return false;
@@ -974,12 +974,12 @@ bool Frame::hasNestedMDIDockWidgets() const
     return dockWidgetAt(0)->d->isMDIWrapper();
 }
 
-int Frame::userType() const
+int Group::userType() const
 {
     return m_userType;
 }
 
-WidgetResizeHandler *Frame::resizeHandler() const
+WidgetResizeHandler *Group::resizeHandler() const
 {
     return m_resizeHandler;
 }

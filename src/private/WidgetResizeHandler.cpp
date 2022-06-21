@@ -71,7 +71,7 @@ void WidgetResizeHandler::setResizeGap(int gap)
 
 bool WidgetResizeHandler::isMDI() const
 {
-    Controllers::Frame *frame = mTarget->asFrameController();
+    Controllers::Group *frame = mTarget->asFrameController();
     return frame && frame->isMDI();
 }
 
@@ -178,7 +178,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             break;
 
         if (isMDI()) {
-            const Controllers::Frame *frameBeingResized = DockRegistry::self()->frameInMDIResize();
+            const Controllers::Group *frameBeingResized = DockRegistry::self()->frameInMDIResize();
             const bool otherFrameBeingResized = frameBeingResized && frameBeingResized->view() != mTarget;
             if (otherFrameBeingResized) {
                 // only one at a time!

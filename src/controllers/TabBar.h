@@ -21,7 +21,7 @@
 namespace KDDockWidgets::Controllers {
 
 class Stack;
-class Frame;
+class Group;
 
 class DOCKS_EXPORT TabBar : public Controller, public Draggable
 {
@@ -63,7 +63,7 @@ public:
     /// @reimp
     bool isMDI() const override;
 
-    Frame *frame() const;
+    Group *frame() const;
 
     void moveTabTo(int from, int to);
     QString text(int index) const;

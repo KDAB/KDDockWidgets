@@ -141,7 +141,7 @@ public:
      *
      * It's nullptr immediately after creation.
      */
-    Controllers::Frame *frame() const;
+    Controllers::Group *frame() const;
 
     ///@brief If this dock widget is floating, then it saves its geometry
     void saveLastFloatingGeometry();

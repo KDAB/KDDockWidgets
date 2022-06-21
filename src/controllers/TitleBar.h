@@ -21,7 +21,7 @@
 
 namespace KDDockWidgets::Controllers {
 
-class Frame;
+class Group;
 class FloatingWindow;
 class TabBar;
 
@@ -29,7 +29,7 @@ class DOCKS_EXPORT TitleBar : public Controller, public Draggable
 {
     Q_OBJECT
 public:
-    explicit TitleBar(Frame *parent);
+    explicit TitleBar(Group *parent);
     explicit TitleBar(FloatingWindow *parent);
     virtual ~TitleBar() override;
 
@@ -81,7 +81,7 @@ public:
     bool titleBarIsFocusable() const;
 
     ///@brief getter for m_frame
-    Controllers::Frame *frame() const;
+    Controllers::Group *frame() const;
 
     ///@brief getter for m_floatingWindow
     FloatingWindow *floatingWindow() const;
@@ -145,7 +145,7 @@ private:
     QString m_title;
     QIcon m_icon;
 
-    Controllers::Frame *const m_frame;
+    Controllers::Group *const m_frame;
     FloatingWindow *const m_floatingWindow;
     const bool m_supportsAutoHide;
     bool m_closeButtonEnabled = true;

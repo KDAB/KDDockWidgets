@@ -47,7 +47,7 @@ static Controller *controllerForItem(QQuickItem *item)
         // Using a for+switch pattern so that compiler reminds us if new enumerators are added to enum
         switch (Type(i)) {
         case Type::Frame:
-            if (auto view = qobject_cast<Frame_qtquick *>(item))
+            if (auto view = qobject_cast<Group_qtquick *>(item))
                 return view->controller();
             break;
         case Type::TitleBar:
@@ -259,7 +259,7 @@ bool ViewWrapper_qtquick::is(Type t) const
     switch (t) {
 
     case Type::Frame:
-        return qobject_cast<Views::Frame_qtquick *>(m_item);
+        return qobject_cast<Views::Group_qtquick *>(m_item);
     case Type::TitleBar:
         return qobject_cast<Views::TitleBar_qtquick *>(m_item);
     case Type::TabBar:

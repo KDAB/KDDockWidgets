@@ -64,7 +64,7 @@ QRect DropIndicatorOverlay::hoveredFrameRect() const
     return m_hoveredFrameRect;
 }
 
-void DropIndicatorOverlay::setHoveredFrame(Controllers::Frame *frame)
+void DropIndicatorOverlay::setHoveredFrame(Controllers::Group *frame)
 {
     if (frame == m_hoveredFrame)
         return;
@@ -180,7 +180,7 @@ void DropIndicatorOverlay::onFrameDestroyed()
     setHoveredFrame(nullptr);
 }
 
-void DropIndicatorOverlay::onHoveredFrameChanged(Controllers::Frame *)
+void DropIndicatorOverlay::onHoveredFrameChanged(Controllers::Group *)
 {
 }
 

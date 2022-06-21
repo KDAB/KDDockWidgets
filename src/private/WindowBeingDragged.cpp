@@ -211,7 +211,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         if (auto fw = tb->floatingWindow()) {
             // case #1: we're dragging the whole floating window by its titlebar
             m_floatingWindow = fw;
-        } else if (Controllers::Frame *frame = tb->frame()) {
+        } else if (Controllers::Group *frame = tb->frame()) {
             m_frame = frame;
         } else {
             qWarning() << Q_FUNC_INFO << "Shouldn't happen. TitleBar of what ?";

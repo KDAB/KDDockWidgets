@@ -21,7 +21,7 @@ DockWidgetViewInterface::DockWidgetViewInterface(Controllers::DockWidget *contro
 {
 }
 
-Controllers::Frame *DockWidgetViewInterface::frame() const
+Controllers::Group *DockWidgetViewInterface::frame() const
 {
     return m_dockWidget->dptr()->frame();
 }
@@ -33,7 +33,7 @@ Controllers::DockWidget *DockWidgetViewInterface::dockWidget() const
 
 Controllers::TitleBar *DockWidgetViewInterface::actualTitleBar() const
 {
-    if (Controllers::Frame *frame = this->frame())
+    if (Controllers::Group *frame = this->frame())
         return frame->actualTitleBar();
     return nullptr;
 }

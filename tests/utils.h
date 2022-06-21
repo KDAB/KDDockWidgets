@@ -59,7 +59,7 @@ struct DockDescriptor
     KDDockWidgets::InitialVisibilityOption option;
 };
 
-inline QPoint dragPointForWidget(Controllers::Frame *frame, int index)
+inline QPoint dragPointForWidget(Controllers::Group *frame, int index)
 {
     if (frame->hasSingleDockWidget()) {
         Q_ASSERT(index == 0);
@@ -121,7 +121,7 @@ Controllers::DockWidget *createDockWidget(const QString &name, View *guest,
 
 Controllers::DockWidget *createDockWidget(const QString &name);
 
-void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea, Controllers::Frame *relativeTo,
+void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea, Controllers::Group *relativeTo,
                     KDDockWidgets::Location location);
 
 
@@ -148,7 +148,7 @@ inline View *draggableFor(View *view)
         if (auto frame = dw->d->frame())
             draggable = frame->titleBar()->view();
     } else if (auto fw = view->asFloatingWindowController()) {
-        Controllers::Frame *frame = fw->hasSingleFrame() ? static_cast<Controllers::Frame *>(fw->frames().first())
+        Controllers::Group *frame = fw->hasSingleFrame() ? static_cast<Controllers::Group *>(fw->frames().first())
                                                          : nullptr;
 
         if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) {

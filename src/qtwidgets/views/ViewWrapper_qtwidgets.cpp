@@ -44,7 +44,7 @@ static Controller *controllerForWidget(QWidget *widget)
         // Using a for+switch pattern so that compiler reminds us if new enumerators are added to enum
         switch (Type(i)) {
         case Type::Frame:
-            if (auto view = qobject_cast<Frame_qtwidgets *>(widget))
+            if (auto view = qobject_cast<Group_qtwidgets *>(widget))
                 return view->controller();
             break;
         case Type::TitleBar:
@@ -201,7 +201,7 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     switch (t) {
 
     case Type::Frame:
-        return qobject_cast<Views::Frame_qtwidgets *>(m_widget);
+        return qobject_cast<Views::Group_qtwidgets *>(m_widget);
     case Type::TitleBar:
         return qobject_cast<Views::TitleBar_qtwidgets *>(m_widget);
     case Type::TabBar:

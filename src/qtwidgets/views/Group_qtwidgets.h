@@ -15,16 +15,16 @@
 #include "views/GroupViewInterface.h"
 
 namespace KDDockWidgets::Controllers {
-class Frame;
+class Group;
 }
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT Frame_qtwidgets : public View_qtwidgets<QWidget>, public GroupViewInterface
+class DOCKS_EXPORT Group_qtwidgets : public View_qtwidgets<QWidget>, public GroupViewInterface
 {
     Q_OBJECT
 public:
-    explicit Frame_qtwidgets(Controllers::Frame *controller, QWidget *parent = nullptr);
+    explicit Group_qtwidgets(Controllers::Group *controller, QWidget *parent = nullptr);
     void init() override;
 
     void renameTab(int index, const QString &) override;

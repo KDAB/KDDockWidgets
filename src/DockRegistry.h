@@ -34,7 +34,7 @@ class Layout;
 class SideBar;
 class MainWindow;
 class DockWidget;
-class Frame;
+class Group;
 }
 
 namespace Views {
@@ -72,8 +72,8 @@ public:
     void registerLayout(Controllers::Layout *);
     void unregisterLayout(Controllers::Layout *);
 
-    void registerFrame(Controllers::Frame *);
-    void unregisterFrame(Controllers::Frame *);
+    void registerFrame(Controllers::Group *);
+    void unregisterFrame(Controllers::Group *);
 
     Q_INVOKABLE KDDockWidgets::Controllers::DockWidget *focusedDockWidget() const;
 
@@ -113,7 +113,7 @@ public:
     const QVector<Controllers::Layout *> layouts() const;
 
     ///@brief returns a list of all Frame instances
-    const QList<Controllers::Frame *> frames() const;
+    const QList<Controllers::Group *> frames() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
@@ -233,7 +233,7 @@ public:
     Controllers::SideBar *sideBarForDockWidget(const Controllers::DockWidget *) const;
 
     ///@brief Returns the Frame which is being resized in a MDI layout. nullptr if none
-    Controllers::Frame *frameInMDIResize() const;
+    Controllers::Group *frameInMDIResize() const;
 
     /// Returns the Frame view, for QtQuick
     QObject *frameViewInMDIResize() const;
@@ -265,7 +265,7 @@ private:
     bool m_isProcessingAppQuitEvent = false;
     QVector<Controllers::DockWidget *> m_dockWidgets;
     QVector<Controllers::MainWindow *> m_mainWindows;
-    QList<Controllers::Frame *> m_frames;
+    QList<Controllers::Group *> m_frames;
     QVector<Controllers::FloatingWindow *> m_floatingWindows;
     QVector<Controllers::Layout *> m_layouts;
     QPointer<Controllers::DockWidget> m_focusedDockWidget;

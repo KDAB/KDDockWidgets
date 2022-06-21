@@ -40,7 +40,7 @@ namespace Controllers {
 
 class MDILayout;
 class DropArea;
-class Frame;
+class Group;
 class Layout;
 class SideBar;
 class DockWidget;

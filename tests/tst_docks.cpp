@@ -60,7 +60,7 @@ inline int widgetMinLength(View *view, Qt::Orientation o)
     return lengthForSize(sz, o);
 }
 
-inline int widgetMinLength(Controllers::Frame *frame, Qt::Orientation o)
+inline int widgetMinLength(Controllers::Group *frame, Qt::Orientation o)
 {
     const QSize sz = frame->view()->minSize();
     return lengthForSize(sz, o);
@@ -72,7 +72,7 @@ inline Controllers::DockWidget *newDockWidget(const QString &uniqueName, DockWid
     return Config::self().viewFactory()->createDockWidget(uniqueName, opts)->asDockWidgetController();
 }
 
-static Controllers::DockWidget *createAndNestDockWidget(DropArea *dropArea, Controllers::Frame *relativeTo,
+static Controllers::DockWidget *createAndNestDockWidget(DropArea *dropArea, Controllers::Group *relativeTo,
                                                         KDDockWidgets::Location location)
 {
     static int count = 0;
@@ -1625,7 +1625,7 @@ void TestDocks::tst_clear()
 {
     // Tests MultiSplitterLayout::clear()
     EnsureTopLevelsDeleted e;
-    QCOMPARE(Controllers::Frame::dbg_numFrames(), 0);
+    QCOMPARE(Controllers::Group::dbg_numFrames(), 0);
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
@@ -1639,7 +1639,7 @@ void TestDocks::tst_clear()
     QVERIFY(Platform::instance()->tests_waitForDeleted(fw3));
     dock3->close();
 
-    QCOMPARE(Controllers::Frame::dbg_numFrames(), 3);
+    QCOMPARE(Controllers::Group::dbg_numFrames(), 3);
 
     auto layout = m->multiSplitter();
     layout->clearLayout();
@@ -1685,7 +1685,7 @@ void TestDocks::tst_startClosed()
     Controllers::DropArea *layout = dropArea;
 
     m->addDockWidget(dock1, Location_OnTop);
-    Controllers::Frame *frame1 = dock1->dptr()->frame();
+    Controllers::Group *frame1 = dock1->dptr()->frame();
     dock1->close();
     Platform::instance()->tests_waitForDeleted(frame1);
 
@@ -1748,8 +1748,8 @@ void TestDocks::tst_refUnrefItem()
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
     auto dropArea = m->dropArea();
     auto layout = dropArea;
-    QPointer<Controllers::Frame> frame1 = dock1->dptr()->frame();
-    QPointer<Controllers::Frame> frame2 = dock2->dptr()->frame();
+    QPointer<Controllers::Group> frame1 = dock1->dptr()->frame();
+    QPointer<Controllers::Group> frame2 = dock2->dptr()->frame();
     QPointer<Item> item1 = layout->itemForFrame(frame1);
     QPointer<Item> item2 = layout->itemForFrame(frame2);
     QVERIFY(item1.data());
@@ -1790,7 +1790,7 @@ void TestDocks::tst_refUnrefItem()
     auto dock4 = createDockWidget("dock4", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock4, KDDockWidgets::Location_OnLeft);
 
-    QPointer<Controllers::Frame> frame4 = dock4->dptr()->frame();
+    QPointer<Controllers::Group> frame4 = dock4->dptr()->frame();
     QPointer<Item> item4 = layout->itemForFrame(frame4);
     dock4->close();
     Platform::instance()->tests_waitForDeleted(frame4);
@@ -2239,7 +2239,7 @@ void TestDocks::tst_stealFrame()
 
     // 2. MainWindow #1 steals a widget from MainWindow2 and vice-versa, but adds as tabs
     dock1->addDockWidgetAsTab(dock3);
-    QPointer<Controllers::Frame> f2 = dock2->dptr()->frame();
+    QPointer<Controllers::Group> f2 = dock2->dptr()->frame();
     dock4->addDockWidgetAsTab(dock2);
     QVERIFY(Platform::instance()->tests_waitForDeleted(f2.data()));
     QVERIFY(!f2.data());
@@ -2267,7 +2267,7 @@ void TestDocks::tst_stealFrame()
     QCOMPARE(dropArea1->placeholderCount(), 0);
 
     // 5. And also steal a side-by-side one into the tab
-    QPointer<Controllers::Frame> f4 = dock4->dptr()->frame();
+    QPointer<Controllers::Group> f4 = dock4->dptr()->frame();
     dock1->addDockWidgetAsTab(dock4);
     QVERIFY(Platform::instance()->tests_waitForDeleted(f4.data()));
     QCOMPARE(dropArea1->count(), 1);
@@ -2421,7 +2421,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
-        QPointer<Controllers::Frame> frame1 = dock1->dptr()->frame();
+        QPointer<Controllers::Group> frame1 = dock1->dptr()->frame();
         dock1->setFloating(true);
         QVERIFY(dock1->isFloating());
         auto fw = dock1->floatingWindow();
@@ -3033,7 +3033,7 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
 
     auto fw = dock1->floatingWindow();
 
-    QPointer<Controllers::Frame> frame2 = dock2->dptr()->frame();
+    QPointer<Controllers::Group> frame2 = dock2->dptr()->frame();
 
     const int oldWidth1 = dock1->dptr()->frame()->width();
     const int oldWidth2 = dock2->dptr()->frame()->width();
@@ -3744,7 +3744,7 @@ void TestDocks::tst_restoreWithDockFactory()
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
     QVERIFY(!saved.isEmpty());
-    QPointer<Controllers::Frame> f1 = dock1->dptr()->frame();
+    QPointer<Controllers::Group> f1 = dock1->dptr()->frame();
     delete dock1;
     Platform::instance()->tests_waitForDeleted(f1);
     QVERIFY(!f1);
@@ -4180,7 +4180,7 @@ void TestDocks::tst_availableSizeWithPlaceholders()
 
     QCOMPARE(layout1->layoutSize(), layout3->layoutSize());
 
-    Controllers::Frame *f10 = docks1.at(0).createdDock->dptr()->frame();
+    Controllers::Group *f10 = docks1.at(0).createdDock->dptr()->frame();
     Item *item10 = layout1->itemForFrame(f10);
     Item *item30 = layout3->itemForFrame(docks2.at(0).createdDock->dptr()->frame());
 
@@ -4526,7 +4526,7 @@ void TestDocks::tst_stuckSeparator()
     LayoutSaver restorer;
     QVERIFY(restorer.restoreFromFile(absoluteLayoutFileName));
 
-    Controllers::Frame *frame25 = dw25->dptr()->frame();
+    Controllers::Group *frame25 = dw25->dptr()->frame();
     ItemBoxContainer *root = m1->multiSplitter()->rootItem();
     Item *item25 = root->itemForWidget(frame25->view());
     ItemBoxContainer *container25 = item25->parentBoxContainer();
@@ -4578,7 +4578,7 @@ void TestDocks::tst_dockNotFillingSpace()
     m->addDockWidget(d2, Location_OnBottom);
     m->addDockWidget(d3, Location_OnBottom);
 
-    Controllers::Frame *frame2 = d2->dptr()->frame();
+    Controllers::Group *frame2 = d2->dptr()->frame();
     d1->close();
     d2->close();
     Platform::instance()->tests_waitForDeleted(frame2);
@@ -5002,7 +5002,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QCOMPARE(layout->placeholderCount(), 0);
 
     // Detach dock2
-    QPointer<Controllers::Frame> f2 = dock2->dptr()->frame();
+    QPointer<Controllers::Group> f2 = dock2->dptr()->frame();
     f2->detachTab(dock2);
     QVERIFY(!f2.data());
     QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
@@ -5163,7 +5163,7 @@ void TestDocks::tst_closeOnlyCurrentTab()
         Controllers::TitleBar *tb = dock1->titleBar();
         QVERIFY(tb->isVisible());
         dock1->setAsCurrentTab();
-        Controllers::Frame *frame = dock1->dptr()->frame();
+        Controllers::Group *frame = dock1->dptr()->frame();
         QCOMPARE(frame->currentIndex(), 0);
 
         tb->onCloseClicked();
@@ -5187,7 +5187,7 @@ void TestDocks::tst_closeOnlyCurrentTab()
         m->addDockWidget(dock2, Location_OnRight);
 
         dock2->addDockWidgetAsTab(dock3);
-        Controllers::Frame *frame = dock2->dptr()->frame();
+        Controllers::Group *frame = dock2->dptr()->frame();
         QCOMPARE(frame->currentIndex(), 1);
         Controllers::TitleBar *tb = frame->titleBar();
         QVERIFY(tb->isVisible());
@@ -5212,7 +5212,7 @@ void TestDocks::tst_tabWidgetCurrentIndex()
 
     Controllers::DockWidget *currentDw = nullptr;
     auto frame = dock1->dptr()->frame();
-    connect(frame, &Controllers::Frame::currentDockWidgetChanged, this, [&currentDw](Controllers::DockWidget *dw) {
+    connect(frame, &Controllers::Group::currentDockWidgetChanged, this, [&currentDw](Controllers::DockWidget *dw) {
         currentDw = dw;
     });
 
@@ -5543,7 +5543,7 @@ void TestDocks::tst_close()
 
     // 1.4 close a FloatingWindow, via DockWidget::close
     QPointer<Controllers::FloatingWindow> window = dock1->dptr()->morphIntoFloatingWindow();
-    QPointer<Controllers::Frame> frame1 = dock1->dptr()->frame();
+    QPointer<Controllers::Group> frame1 = dock1->dptr()->frame();
     QVERIFY(dock1->isVisible());
     QVERIFY(dock1->window()->isVisible());
     QVERIFY(frame1->isVisible());
@@ -5860,7 +5860,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     auto fw1 = dock1->floatingWindow();
     fw1->view()->setGeometry(QRect(500, 500, 400, 400));
     QVERIFY(dock1);
-    QPointer<Controllers::Frame> frame1 = dock1->dptr()->frame();
+    QPointer<Controllers::Group> frame1 = dock1->dptr()->frame();
 
     auto titlebar1 = fw1->titleBar();
     auto dock2 = createDockWidget("doc2");
@@ -5872,7 +5872,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     drag(titlebar1->view(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
 
     // It morphed into a FloatingWindow
-    QPointer<Controllers::Frame> frame2 = dock2->dptr()->frame();
+    QPointer<Controllers::Group> frame2 = dock2->dptr()->frame();
     if (!dock2->floatingWindow()) {
         qWarning() << "dock2->floatingWindow()=" << dock2->floatingWindow();
         QVERIFY(false);
@@ -5999,7 +5999,7 @@ void TestDocks::tst_toggleAction()
     auto root = m->multiSplitter()->rootItem();
     QCOMPARE(root->visibleCount_recursive(), 3);
     QVERIFY(dock2->toggleAction()->isChecked());
-    QPointer<Controllers::Frame> frame2 = dock2->dptr()->frame();
+    QPointer<Controllers::Group> frame2 = dock2->dptr()->frame();
     dock2->toggleAction()->toggle();
     QVERIFY(!dock2->toggleAction()->isChecked());
 
@@ -6033,7 +6033,7 @@ void TestDocks::tst_redocksToPreviousTabIndex()
     QCOMPARE(dock0->tabIndex(), 0);
     QCOMPARE(dock1->tabIndex(), 1);
 
-    Controllers::Frame *frame = dock0->dptr()->frame();
+    Controllers::Group *frame = dock0->dptr()->frame();
     auto tb = dock0->dptr()->frame()->tabWidget()->tabBar();
     tb->moveTabTo(0, 1);
 
@@ -6078,7 +6078,7 @@ void TestDocks::tst_toggleTabbed()
     QVERIFY(dock1->isOpen());
     QVERIFY(dock1->toggleAction()->isChecked());
     QVERIFY(dock1->isCurrentTab());
-    Controllers::Frame *frame = dock1->dptr()->frame();
+    Controllers::Group *frame = dock1->dptr()->frame();
     Controllers::Stack *tw = frame->tabWidget();
     QCOMPARE(tw->currentIndex(), 0);
     QCOMPARE(tw->numDockWidgets(), 1);
@@ -6099,12 +6099,12 @@ void TestDocks::tst_toggleTabbed2()
 
     dock0->setAsCurrentTab();
 
-    Controllers::Frame *frame1 = dock1->dptr()->frame();
+    Controllers::Group *frame1 = dock1->dptr()->frame();
     QCOMPARE(frame1->currentDockWidget(), dock0);
     QCOMPARE(frame1->currentIndex(), 0);
 
     dock0->setFloating(true);
-    Controllers::Frame *frame0 = dock0->dptr()->frame();
+    Controllers::Group *frame0 = dock0->dptr()->frame();
 
     QCOMPARE(frame0->currentIndex(), 0);
     QCOMPARE(frame1->currentIndex(), 0);
@@ -6160,7 +6160,7 @@ void TestDocks::tst_redockToMDIRestoresPosition()
     const QPoint initialPoint = QPoint(500, 500);
     layout->addDockWidget(dock0, initialPoint, {});
 
-    Controllers::Frame *frame = dock0->DockWidget::d->frame();
+    Controllers::Group *frame = dock0->DockWidget::d->frame();
     QCOMPARE(frame->view()->pos(), initialPoint);
 
     const QSize initialSize = frame->size();
@@ -6218,7 +6218,7 @@ void TestDocks::tst_closeTabOfCentralFrame()
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_closeTabOfCentralFrame");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
-    Controllers::Frame *frame = dock1->dptr()->frame();
+    Controllers::Group *frame = dock1->dptr()->frame();
     QVERIFY(frame->options() & FrameOption_IsCentralFrame);
     QVERIFY(frame->isVisible());
     dock1->close();

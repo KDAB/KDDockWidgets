@@ -42,7 +42,7 @@ class Separator;
 namespace KDDockWidgets {
 
 namespace Controllers {
-class Frame;
+class Group;
 class FloatingWindow;
 class DockWidget;
 class MainWindow;
@@ -144,7 +144,7 @@ public:
     /**
      * @brief  Returns true if this layout contains the specified frame.
      */
-    bool containsFrame(const Controllers::Frame *) const;
+    bool containsFrame(const Controllers::Group *) const;
 
     /**
      * @brief Returns the number of Item objects in this layout.
@@ -170,12 +170,12 @@ public:
     /**
      * @brief returns the Item that holds @p frame in this layout
      */
-    Layouting::Item *itemForFrame(const Controllers::Frame *frame) const;
+    Layouting::Item *itemForFrame(const Controllers::Group *frame) const;
 
     /**
      * @brief Returns this list of Frame objects contained in this layout
      */
-    QList<Controllers::Frame *> frames() const;
+    QList<Controllers::Group *> frames() const;
 
     /// @brief Returns the list of dock widgets contained in this layout
     QVector<Controllers::DockWidget *> dockWidgets() const;
@@ -222,14 +222,14 @@ protected:
      * placeholder, otherwise it's unrefed while we're adding causing a segfault. So what this does
      * is making the unrefing happen a bit earlier.
      */
-    void unrefOldPlaceholders(const QList<Controllers::Frame *> &framesBeingAdded) const;
+    void unrefOldPlaceholders(const QList<Controllers::Group *> &framesBeingAdded) const;
 
     /**
      * @brief returns the frames contained in @p frameOrMultiSplitter
      * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
      * If frameOrMultiSplitter is a MultiSplitter then it returns a list of all frames it contains
      */
-    QList<Controllers::Frame *> framesFrom(View *frameOrMultiSplitter) const;
+    QList<Controllers::Group *> framesFrom(View *frameOrMultiSplitter) const;
 
 private:
     bool onResize(QSize newSize);

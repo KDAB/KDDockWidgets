@@ -39,22 +39,22 @@ class Stack;
 class TabBar;
 class TitleBar;
 
-class DOCKS_EXPORT Frame : public Controller, public FocusScope
+class DOCKS_EXPORT Group : public Controller, public FocusScope
 {
     Q_OBJECT
 public:
-    typedef QList<Frame *> List;
+    typedef QList<Group *> List;
 
-    explicit Frame(View *parent = nullptr, FrameOptions = FrameOption_None, int userType = 0);
-    virtual ~Frame() override;
+    explicit Group(View *parent = nullptr, FrameOptions = FrameOption_None, int userType = 0);
+    virtual ~Group() override;
 
-    static Frame *deserialize(const LayoutSaver::Frame &);
-    LayoutSaver::Frame serialize() const;
+    static Group *deserialize(const LayoutSaver::Group &);
+    LayoutSaver::Group serialize() const;
 
     ///@brief Adds a widget into the Frame's TabWidget
     void addWidget(DockWidget *, InitialOption = {});
     ///@overload
-    void addWidget(Frame *, InitialOption = {});
+    void addWidget(Group *, InitialOption = {});
     ///@overload
     void addWidget(FloatingWindow *floatingWindow, InitialOption = {});
 
@@ -276,7 +276,7 @@ public:
     DropArea *mdiDropAreaWrapper() const;
 
     /// @brief If this frame is an MDI wrapper, returns the MDI frame. That is the frame you actually drag inside the MDI area
-    Frame *mdiFrame() const;
+    Group *mdiFrame() const;
 
     /// @brief Returns the MDI layout. Or nullptr if this frame isn't in a MDI layout
     MDILayout *mdiLayoutWidget() const;
@@ -357,7 +357,7 @@ protected:
     Controllers::TitleBar *const m_titleBar;
 
 private:
-    Q_DISABLE_COPY(Frame)
+    Q_DISABLE_COPY(Group)
     friend class ::TestDocks;
     friend class KDDockWidgets::Controllers::Stack;
 

@@ -123,7 +123,7 @@ public:
     struct DockWidget;
     struct Position;
     struct MultiSplitter;
-    struct Frame;
+    struct Group;
     struct Placeholder;
     struct ScalingInfo;
     struct ScreenInfo;

@@ -44,7 +44,7 @@ namespace Controllers {
 
 class MainWindow;
 class FloatingWindow;
-class Frame;
+class Group;
 class Layout;
 class TitleBar;
 

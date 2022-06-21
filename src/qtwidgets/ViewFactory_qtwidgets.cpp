@@ -62,9 +62,9 @@ View *ViewFactory_qtwidgets::createDockWidget(const QString &uniqueName,
 }
 
 
-View *ViewFactory_qtwidgets::createFrame(Controllers::Frame *controller, View *parent = nullptr) const
+View *ViewFactory_qtwidgets::createFrame(Controllers::Group *controller, View *parent = nullptr) const
 {
-    return new Views::Frame_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::Group_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, View *parent) const

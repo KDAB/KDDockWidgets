@@ -263,7 +263,7 @@ void IndicatorWindow_qtwidgets::updatePositions()
     m_outterBottom->move(r.center().x() - halfIndicatorWidth, r.y() + height() - indicatorWidth - OUTTER_INDICATOR_MARGIN);
     m_outterTop->move(r.center().x() - halfIndicatorWidth, r.y() + OUTTER_INDICATOR_MARGIN);
     m_outterRight->move(r.x() + width() - indicatorWidth - OUTTER_INDICATOR_MARGIN, r.center().y() - halfIndicatorWidth);
-    Controllers::Frame *hoveredFrame = classicIndicators->hoveredFrame();
+    Controllers::Group *hoveredFrame = classicIndicators->hoveredFrame();
     if (hoveredFrame) {
         QRect hoveredRect = hoveredFrame->view()->geometry();
         m_center->move(r.topLeft() + hoveredRect.center() - QPoint(halfIndicatorWidth, halfIndicatorWidth));
