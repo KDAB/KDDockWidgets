@@ -771,6 +771,9 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
                     return true;
                 break;
             }
+        } else if (e->type() == QEvent::DragEnter && isDragging()) {
+            // We're dragging a window. Be sure user code doesn't accept DragEnter events.
+            return true;
         }
     }
 
