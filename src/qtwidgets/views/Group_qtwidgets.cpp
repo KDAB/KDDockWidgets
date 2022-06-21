@@ -55,7 +55,7 @@ VBoxLayout::~VBoxLayout() = default;
 
 Frame_qtwidgets::Frame_qtwidgets(Controllers::Frame *controller, QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::Frame, parent)
-    , FrameViewInterface(controller)
+    , GroupViewInterface(controller)
 {
 }
 

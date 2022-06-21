@@ -31,7 +31,7 @@ namespace Views {
 
 class Stack_qtquick;
 
-class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public FrameViewInterface
+class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public GroupViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)

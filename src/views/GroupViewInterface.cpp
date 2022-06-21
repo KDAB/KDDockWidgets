@@ -15,19 +15,19 @@
 namespace KDDockWidgets {
 
 namespace Views {
-FrameViewInterface::FrameViewInterface(Controllers::Frame *controller)
+GroupViewInterface::GroupViewInterface(Controllers::Frame *controller)
     : m_frame(controller)
 {
 }
 
-FrameViewInterface::~FrameViewInterface() = default;
+GroupViewInterface::~GroupViewInterface() = default;
 
-bool FrameViewInterface::isMDI() const
+bool GroupViewInterface::isMDI() const
 {
     return m_frame->isMDI();
 }
 
-Controllers::Frame *FrameViewInterface::frame() const
+Controllers::Frame *GroupViewInterface::frame() const
 {
     return m_frame;
 }

@@ -20,7 +20,7 @@ class Frame;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT Frame_qtwidgets : public View_qtwidgets<QWidget>, public FrameViewInterface
+class DOCKS_EXPORT Frame_qtwidgets : public View_qtwidgets<QWidget>, public GroupViewInterface
 {
     Q_OBJECT
 public:

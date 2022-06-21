@@ -42,7 +42,7 @@ using namespace KDDockWidgets::Views;
 
 Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::Frame, parent)
-    , FrameViewInterface(controller)
+    , GroupViewInterface(controller)
 {
 }
 

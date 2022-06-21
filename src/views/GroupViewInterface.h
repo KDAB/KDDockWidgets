@@ -27,11 +27,11 @@ class Frame;
 namespace Views {
 
 /// @brief The interface that Frame views should implement
-class DOCKS_EXPORT FrameViewInterface
+class DOCKS_EXPORT GroupViewInterface
 {
 public:
-    explicit FrameViewInterface(Controllers::Frame *);
-    virtual ~FrameViewInterface();
+    explicit GroupViewInterface(Controllers::Frame *);
+    virtual ~GroupViewInterface();
     virtual void renameTab(int index, const QString &) = 0;
     virtual void changeTabIcon(int index, const QIcon &) = 0;
     virtual void removeWidget_impl(Controllers::DockWidget *) = 0;
