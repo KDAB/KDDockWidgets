@@ -67,7 +67,6 @@ public:
     void onButtonClicked(DockWidget *dw);
 
 private:
-    void onDockWidgetDestroyed(QObject *dw);
     void updateSize();
 
     MainWindow *const m_mainWindow;

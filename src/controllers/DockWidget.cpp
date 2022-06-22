@@ -58,6 +58,7 @@ DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions option
 
 DockWidget::~DockWidget()
 {
+    Q_EMIT aboutToDelete(this);
     DockRegistry::self()->unregisterDockWidget(this);
     delete d;
 }

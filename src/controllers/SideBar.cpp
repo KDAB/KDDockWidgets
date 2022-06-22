@@ -42,7 +42,7 @@ void SideBar::addDockWidget(DockWidget *dw)
         return;
     }
 
-    connect(dw, &QObject::destroyed, this, &SideBar::onDockWidgetDestroyed);
+    connect(dw, &DockWidget::aboutToDelete, this, &SideBar::removeDockWidget);
 
     m_dockWidgets << dw;
     dynamic_cast<Views::SideBarViewInterface *>(view())->addDockWidget_Impl(dw);
@@ -56,7 +56,7 @@ void SideBar::removeDockWidget(DockWidget *dw)
         return;
     }
 
-    disconnect(dw, &QObject::destroyed, this, &SideBar::onDockWidgetDestroyed);
+    disconnect(dw, &DockWidget::aboutToDelete, this, &SideBar::removeDockWidget);
     m_dockWidgets.removeOne(dw);
     dynamic_cast<Views::SideBarViewInterface *>(view())->removeDockWidget_Impl(dw);
     Q_EMIT dw->removedFromSideBar();
@@ -71,11 +71,6 @@ bool SideBar::containsDockWidget(DockWidget *dw) const
 void SideBar::onButtonClicked(DockWidget *dw)
 {
     toggleOverlay(dw);
-}
-
-void SideBar::onDockWidgetDestroyed(QObject *dw)
-{
-    removeDockWidget(static_cast<DockWidget *>(dw));
 }
 
 void SideBar::updateSize()
