@@ -11,7 +11,7 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FUZZER": "OFF",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy;gtk"
             },
             "warnings": {
                 "uninitialized": true
@@ -29,7 +29,7 @@
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FUZZER": "OFF",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy;gtk"
             },
             "warnings": {
                 "uninitialized": true

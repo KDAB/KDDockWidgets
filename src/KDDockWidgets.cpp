@@ -24,6 +24,10 @@
 #include "dummy/Platform_dummy.h"
 #endif
 
+#ifdef KDDW_FRONTEND_GTK
+#include "gtk/Platform_gtk.h"
+#endif
+
 #include <QDebug>
 
 void KDDockWidgets::initFrontend(FrontendType type)
@@ -40,6 +44,10 @@ void KDDockWidgets::initFrontend(FrontendType type)
     case FrontendType::QtQuick:
 #ifdef KDDW_FRONTEND_QTQUICK
         new Platform_qtquick();
+#endif
+    case FrontendType::Gtk:
+#ifdef KDDW_FRONTEND_GTK
+        new Platform_gtk();
 #endif
         break;
     case FrontendType::Dummy:

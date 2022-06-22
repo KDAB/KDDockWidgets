@@ -210,6 +210,10 @@ set(KDDW_FRONTEND_DUMMY_SRCS dummy/ViewFactory_dummy.cpp dummy/Platform_dummy.cp
                              dummy/views/View_dummy.cpp dummy/TestHelpers_dummy.cpp
 )
 
+set(KDDW_FRONTEND_GTK_SRCS gtk/Platform_gtk.cpp gtk/TestHelpers_gtk.cpp gtk/ViewFactory_gtk.cpp gtk/Window_gtk.cpp
+                           gtk/views/View_gtk.cpp
+)
+
 set(KDDW_PUBLIC_HEADERS
     docks_export.h
     Config.h
@@ -286,7 +290,11 @@ if(KDDW_FRONTEND_DUMMY)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_DUMMY_SRCS})
 endif()
 
-# Generate C/C++ CamelCase forwarding headers (only public includes)
+if(KDDW_FRONTEND_GTK)
+    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_GTK_SRCS})
+endif()
+
+#Generate C/C++ CamelCase forwarding headers (only public includes)
 include(ECMGenerateHeaders)
 ecm_generate_headers(
     camelcase_HEADERS
@@ -406,6 +414,18 @@ if(KDDW_FRONTEND_DUMMY)
     # TODOm3: Remove Qt
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Gui)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_DUMMY)
+endif()
+
+if(KDDW_FRONTEND_GTK)
+    target_link_libraries(kddockwidgets PUBLIC PkgConfig::GTK PkgConfig::GTKMM)
+endif()
+
+if(KDDW_FRONTEND_GTK)
+    target_link_libraries(kddockwidgets PRIVATE PkgConfig::GTK PkgConfig::GTKMM)
+endif()
+
+if(KDDockWidgets_CODE_COVERAGE)
+    target_link_libraries(kddockwidgets PUBLIC coverage_options)
 endif()
 
 if(KDDockWidgets_CODE_COVERAGE)

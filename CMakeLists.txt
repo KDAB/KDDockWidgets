@@ -147,7 +147,7 @@ endif()
 
 # BEGIN frontend enabling
 if(KDDockWidgets_FRONTENDS)
-    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;dummy")
+    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;dummy;gtk")
 
     foreach(frontend ${KDDockWidgets_FRONTENDS})
         if(NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
@@ -175,6 +175,14 @@ if(KDDockWidgets_FRONTENDS)
         find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Gui)
         set(KDDW_FRONTEND_DUMMY ON)
     endif()
+
+    # gtk
+    if("gtk" IN_LIST KDDockWidgets_FRONTENDS)
+        find_package(PkgConfig REQUIRED)
+        pkg_check_modules(GTK REQUIRED IMPORTED_TARGET gtk+-3.0)
+        pkg_check_modules(GTKMM REQUIRED IMPORTED_TARGET gtkmm-3.0)
+        set(KDDW_FRONTEND_GTK ON)
+    endif()
 else()
     set(ENABLED_FRONTENDS "")
     message("No frontends specified explicitly.")
@@ -191,6 +199,15 @@ else()
     if(Qt${Qt_VERSION_MAJOR}Quick_FOUND AND Qt${Qt_VERSION_MAJOR}QuickControls2_FOUND)
         list(APPEND ENABLED_FRONTENDS "qtquick")
         set(KDDW_FRONTEND_QTQUICK ON)
+    endif()
+
+    #gtk
+    find_package(PkgConfig)
+    if(PkgConfig_Found)
+        pkg_check_modules(GTK IMPORTED_TARGET gtk+-3.0)
+    endif()
+    if(Gtk_Found)
+        set(KDDW_FRONTEND_GTK ON)
     endif()
 
     if(NOT ENABLED_FRONTENDS)
@@ -220,6 +237,10 @@ endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} quick quickcontrols2")
+endif()
+
+if(KDDW_FRONTEND_GTK)
+    add_definitions(-DKDDW_FRONTEND_GTK)
 endif()
 
 if(NOT WIN32

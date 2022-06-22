@@ -25,6 +25,10 @@
 #include "dummy/Platform_dummy.h"
 #endif
 
+#ifdef KDDW_FRONTEND_GTK
+#include "gtk/Platform_gtk.h"
+#endif
+
 #include "Config.h"
 
 #include <qglobal.h>
@@ -117,6 +121,10 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     case FrontendType::Dummy:
 #ifdef KDDW_FRONTEND_DUMMY
         platform = new Platform_dummy(argc, argv);
+        break;
+    case FrontendType::Gtk:
+#ifdef KDDW_FRONTEND_GTK
+        platform = new Platform_gtk(argc, argv);
 #endif
         break;
     }
@@ -146,6 +154,8 @@ void Platform::tests_deinitPlatform()
     delete plat;
 }
 
+#endif
+
 /**static*/
 std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 {
@@ -169,6 +179,10 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
     types.push_back(FrontendType::QtWidgets);
+#endif
+
+#ifdef KDDW_FRONTEND_GTK
+    types.push_back(FrontendType::Gtk);
 #endif
 
     return types;
