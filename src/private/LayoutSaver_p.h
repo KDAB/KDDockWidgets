@@ -160,7 +160,7 @@ struct LayoutSaver::Group
     bool hasSingleDockWidget() const;
     bool skipsRestore() const;
 
-    /// @brief in case this frame only has one frame, returns the name of that dock widget
+    /// @brief in case this group only has one group, returns the name of that dock widget
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
 
     bool isNull = true;
@@ -170,8 +170,8 @@ struct LayoutSaver::Group
     int currentTabIndex;
     QString id; // for coorelation purposes
 
-    /// Might be empty if not in a main window. Used so we don't create a frame when restoring
-    /// the persistent central frame, that's never deleted when restoring
+    /// Might be empty if not in a main window. Used so we don't create a group when restoring
+    /// the persistent central group, that's never deleted when restoring
     QString mainWindowUniqueName;
 
     LayoutSaver::DockWidget::List dockWidgets;
@@ -325,7 +325,7 @@ public:
 
     template<typename T>
     void deserializeWindowGeometry(const T &saved, Window::Ptr);
-    void deleteEmptyFrames();
+    void deleteEmptyGroups();
     void clearRestoredProperty();
 
     std::unique_ptr<QSettings> settings() const;

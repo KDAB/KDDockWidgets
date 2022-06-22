@@ -48,7 +48,7 @@ class ClassicIndicatorWindowViewInterface;
  * or ViewFactory_qtquick (for QtQuick).
  *
  * Sub-classing ViewFactory allows for fine-grained customization and
- * styling of some non-public widgets, such as titlebars, dock widget frame and
+ * styling of some non-public widgets, such as titlebars, dock widget group and
  * tab widgets.
  *
  * To set your own factory see Config::setViewFactory()
@@ -74,7 +74,7 @@ public:
 
 
     ///@brief Called by the framework to create a Frame view
-    ///       Override to provide your own Frame sub-class. A frame is the
+    ///       Override to provide your own Frame sub-class. A group is the
     ///       widget that holds the titlebar and tab-widget which holds the
     ///       DockWidgets.
     ///@param parent just forward to Frame's constructor

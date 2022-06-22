@@ -177,7 +177,7 @@ FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometr
 
         if (group->dockWidgetCount() == 0) {
             // doesn't happen
-            qWarning() << Q_FUNC_INFO << "Unexpected empty frame";
+            qWarning() << Q_FUNC_INFO << "Unexpected empty group";
             return;
         }
 
@@ -199,7 +199,7 @@ FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometr
         m_dropArea->addMultiSplitter(dropAreaMDIWrapper, Location_OnTop);
         dwMDIWrapper->setVisible(false);
         if (!DragController::instance()->isIdle()) {
-            // We're dragging a MDI window and we reached the border, detaching it, and making it float. We can't delete the wrapper frame just yet,
+            // We're dragging a MDI window and we reached the border, detaching it, and making it float. We can't delete the wrapper group just yet,
             // as that would delete the title bar which is currently being dragged. Delete it once the drag finishes
             QObject::connect(DragController::instance(), &DragController::currentStateChanged, dwMDIWrapper, [dwMDIWrapper] {
                 if (DragController::instance()->isIdle())
@@ -291,9 +291,9 @@ QSize FloatingWindow::maxSizeHint() const
 
     const Controllers::Group::List groups = this->groups();
     if (groups.size() == 1) {
-        // Let's honour max-size when we have a single-frame.
-        // multi-frame cases are more complicated and we're not sure if we want the window to
-        // bounce around. single-frame is the most common case, like floating a dock widget, so
+        // Let's honour max-size when we have a single-group.
+        // multi-group cases are more complicated and we're not sure if we want the window to
+        // bounce around. single-group is the most common case, like floating a dock widget, so
         // let's do that first, it's also easy.
         Controllers::Group *group = groups[0];
         if (group->dockWidgetCount() == 1) { // We don't support if there's tabbing

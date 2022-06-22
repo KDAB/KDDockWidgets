@@ -242,7 +242,7 @@ Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen
     void windowChangedScreen(std::shared_ptr<Window>);
 
-    /// @brief emitted when the MDI frame that's being resized changed
+    /// @brief emitted when the MDI group that's being resized changed
     void groupInMDIResizeChanged();
 
     /// @brief emitted whenever Config::dropIndicatorsInhibited changes

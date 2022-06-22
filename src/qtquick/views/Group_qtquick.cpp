@@ -147,7 +147,7 @@ void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
         if (oldFrame && oldFrame->beingDeletedLater()) {
             // give it a push and delete it immediately.
             // Having too many deleteLater() puts us in an inconsistent state. For example if LayoutSaver::saveState()
-            // would to be called while the Frame hadn't been deleted yet it would count with that frame unless hacks.
+            // would to be called while the Frame hadn't been deleted yet it would count with that group unless hacks.
             // Also the unit-tests are full of waitForDeleted() due to deleteLater.
 
             // Ideally we would just remove the deleteLater from Group.cpp, but QTabWidget::insertTab()

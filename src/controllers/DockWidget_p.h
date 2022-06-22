@@ -134,9 +134,9 @@ public:
     std::shared_ptr<LayoutSaver::DockWidget> serialize() const;
 
     /**
-     * @brief the Frame which contains this dock widgets.
+     * @brief the Group which contains this dock widgets.
      *
-     * A frame wraps a docked DockWidget, giving it a TabWidget so it can accept other dock widgets.
+     * A group wraps a docked DockWidget, giving it a TabWidget so it can accept other dock widgets.
      * Frame is also the actual class that goes into a LayoutWidget.
      *
      * It's nullptr immediately after creation.

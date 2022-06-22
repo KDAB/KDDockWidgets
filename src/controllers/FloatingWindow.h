@@ -84,18 +84,18 @@ public:
     bool anyNonDockable() const;
 
     /**
-     * @brief checks if this FloatingWindow only has one frame.
-     * If true it means there's no side-by-side dock widgets here. There's only 1 frame.
-     * Note that despite having only 1 frame it can still have multiple DockWidgets,
-     * as they can be tabbed into the single frame.
-     * @return true if this FloatingWindow has a single frame.
+     * @brief checks if this FloatingWindow only has one group.
+     * If true it means there's no side-by-side dock widgets here. There's only 1 group.
+     * Note that despite having only 1 group it can still have multiple DockWidgets,
+     * as they can be tabbed into the single group.
+     * @return true if this FloatingWindow has a single group.
      */
     bool hasSingleFrame() const;
 
     /**
      * @brief checks if this FloatingWindow only has one dockwidget.
-     * This is a more specific case than hasSingleFrame(), it implies not only a single frame,
-     * but that frame must only have 1 dock widget.
+     * This is a more specific case than hasSingleFrame(), it implies not only a single group,
+     * but that group must only have 1 dock widget.
      * @return true if this FloatingWindow only has one dockwidget.
      */
     bool hasSingleDockWidget() const;

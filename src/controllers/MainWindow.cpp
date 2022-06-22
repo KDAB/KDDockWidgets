@@ -91,7 +91,7 @@ public:
         dw->dptr()->m_isPersistentCentralDockWidget = true;
         Controllers::Group *group = dropArea()->m_centralFrame;
         if (!group) {
-            qWarning() << Q_FUNC_INFO << "Expected central frame";
+            qWarning() << Q_FUNC_INFO << "Expected central group";
             return nullptr;
         }
 
@@ -697,11 +697,11 @@ bool MainWindow::closeDockWidgets(bool force)
         }
 
         if (group->beingDeletedLater()) {
-            // The dock widget was closed and this frame is empty, delete immediately instead of
+            // The dock widget was closed and this group is empty, delete immediately instead of
             // waiting. I'm not a big fan of deleting stuff later, as state becomes inconsistent
 
             // Empty groups are historically deleted later since they are triggered by mouse click
-            // on the title bar, and the title bar is inside the frame.
+            // on the title bar, and the title bar is inside the group.
             // When doing it programmatically we can delete immediately.
 
             delete group;

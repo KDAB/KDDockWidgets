@@ -111,7 +111,7 @@ int main(int argc, char **argv)
     QCommandLineOption maxSizeOption("g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200."));
     parser.addOption(maxSizeOption);
 
-    QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central frame"));
+    QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central group"));
 
     QCommandLineOption autoHideSupport("w", QCoreApplication::translate("main", "Enables auto-hide/minimization to side-bar support"));
     parser.addOption(autoHideSupport);

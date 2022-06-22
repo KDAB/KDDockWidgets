@@ -95,7 +95,7 @@ public:
      */
     Controllers::TabBar *tabBar() const;
 
-    ///@brief getter for the frame
+    ///@brief getter for the group
     Group *group() const;
 
     // Draggable interface

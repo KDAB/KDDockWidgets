@@ -73,7 +73,7 @@ void TitleBar::init()
     });
 
     updateButtons();
-    QTimer::singleShot(0, this, &TitleBar::updateAutoHideButton); // have to wait after the frame is
+    QTimer::singleShot(0, this, &TitleBar::updateAutoHideButton); // have to wait after the group is
                                                                   // constructed
 }
 
@@ -95,7 +95,7 @@ MainWindow *TitleBar::mainWindow() const
     if (m_group)
         return m_group->mainWindow();
 
-    qWarning() << Q_FUNC_INFO << "null frame and null floating window";
+    qWarning() << Q_FUNC_INFO << "null group and null floating window";
     return nullptr;
 }
 
@@ -363,7 +363,7 @@ void TitleBar::onFloatClicked()
             dockWidgets[0]->setFloating(false);
         } else {
             // Case 2: Multiple dockwidgets are tabbed together and floating
-            // TODO: Just reuse the whole frame and put it back. The frame currently doesn't remember the position in the main window
+            // TODO: Just reuse the whole group and put it back. The group currently doesn't remember the position in the main window
             // so use an hack for now
 
             if (!dockWidgets.isEmpty()) { // could be empty during destruction, maybe
@@ -558,7 +558,7 @@ TabBar *TitleBar::tabBar() const
             return group->tabWidget()->tabBar();
         } else {
             // Shouldn't happen
-            qWarning() << Q_FUNC_INFO << "Expected a frame";
+            qWarning() << Q_FUNC_INFO << "Expected a group";
         }
 
     } else if (m_group) {

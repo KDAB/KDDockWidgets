@@ -107,12 +107,12 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
         }
     } else {
         if (view()->isRootView()) {
-            // Doesn't have a frame yet
+            // Doesn't have a group yet
             d->morphIntoFloatingWindow();
             group = d->group();
         } else {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "null frame";
+            qWarning() << Q_FUNC_INFO << "null group";
             return;
         }
     }
@@ -205,7 +205,7 @@ bool DockWidget::setFloating(bool floats)
         if (isTabbed()) {
             auto group = d->group();
             if (!group) {
-                qWarning() << "DockWidget::setFloating: Tabbed but no frame exists"
+                qWarning() << "DockWidget::setFloating: Tabbed but no group exists"
                            << this;
                 Q_ASSERT(false);
                 return false;
@@ -867,7 +867,7 @@ void DockWidget::onResize(QSize)
         if (auto group = d->group()) {
             d->m_lastOverlayedSize = group->view()->size();
         } else {
-            qWarning() << Q_FUNC_INFO << "Overlayed dock widget without frame shouldn't happen";
+            qWarning() << Q_FUNC_INFO << "Overlayed dock widget without group shouldn't happen";
         }
     }
 }

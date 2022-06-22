@@ -51,17 +51,17 @@ public:
     static Group *deserialize(const LayoutSaver::Group &);
     LayoutSaver::Group serialize() const;
 
-    ///@brief Adds a widget into the Frame's TabWidget
+    ///@brief Adds a widget into the Group's TabWidget
     void addWidget(DockWidget *, InitialOption = {});
     ///@overload
     void addWidget(Group *, InitialOption = {});
     ///@overload
     void addWidget(FloatingWindow *floatingWindow, InitialOption = {});
 
-    ///@brief Inserts a widget into the Frame's TabWidget at @p index
+    ///@brief Inserts a widget into the Group's TabWidget at @p index
     void insertWidget(DockWidget *, int index, InitialOption = {});
 
-    ///@brief removes a dockwidget from the frame
+    ///@brief removes a dockwidget from the group
     void removeWidget(DockWidget *);
 
     ///@brief detaches this dock widget
@@ -88,7 +88,7 @@ public:
     ///@brief Returns the current dock widget
     DockWidget *currentDockWidget() const;
 
-    /// @brief returns the number of dock widgets inside the frame
+    /// @brief returns the number of dock widgets inside the group
     int dockWidgetCount() const;
 
     /// @brief returns the tab widget
@@ -108,7 +108,7 @@ public:
 
     bool isTheOnlyFrame() const;
 
-    ///@brief Returns whether this frame is overlayed on top of the MainWindow (auto-hide feature);
+    ///@brief Returns whether this group is overlayed on top of the MainWindow (auto-hide feature);
     bool isOverlayed() const;
 
     ///@brief clears the FrameOption_IsOverlayed flag.
@@ -116,37 +116,37 @@ public:
     void unoverlay();
 
     /**
-     * @brief Returns whether this frame is floating. A floating frame isn't attached to any other MainWindow,
-     * and if it's attached to a FloatingWindow then it's considered floating if it's the only frame in that Window.
-     * A floating frame can have multiple dock widgets (tabbed), in which case each DockWidget::isFloating() returns false,
+     * @brief Returns whether this group is floating. A floating group isn't attached to any other MainWindow,
+     * and if it's attached to a FloatingWindow then it's considered floating if it's the only group in that Window.
+     * A floating group can have multiple dock widgets (tabbed), in which case each DockWidget::isFloating() returns false,
      * in which case you can use isInFloatingWindow() which would still return true
      */
     bool isFloating() const;
 
     /**
-     * @brief Returns whether this frame is in a FloatingWindow, as opposed to MainWindow.
+     * @brief Returns whether this group is in a FloatingWindow, as opposed to MainWindow.
      *
      * After setup it's equivalent to !isInMainWindow().
      */
     bool isInFloatingWindow() const;
 
     /**
-     * @brief Returns whether this frame is docked inside a MainWindow.
+     * @brief Returns whether this group is docked inside a MainWindow.
      */
     bool isInMainWindow() const;
 
     /**
-     * @brief returns if this widget is the central frame
-     * MainWindow supports a mode where the middle frame is persistent even if no dock widget is there.
+     * @brief returns if this widget is the central group
+     * MainWindow supports a mode where the middle group is persistent even if no dock widget is there.
      *
-     * @return whether this widget is the central frame in a main window
+     * @return whether this widget is the central group in a main window
      */
     bool isCentralFrame() const
     {
         return m_options & FrameOption_IsCentralFrame;
     }
 
-    /// @brief Returns whether you can DND dock widgets over this frame and tab into it
+    /// @brief Returns whether you can DND dock widgets over this group and tab into it
     bool isDockable() const
     {
         return !(m_options & FrameOption_NonDockable);
@@ -156,7 +156,7 @@ public:
      * @brief whether the tab widget will always show tabs, even if there's only 1 dock widget
      *
      * While technically a non-floating dock widget is always tabbed, the user won't see the tabs
-     * as in most cases there's only 1 widget tabbed. But for the main window central frame it's
+     * as in most cases there's only 1 widget tabbed. But for the main window central group it's
      * often wanted to see tabs even if there's only 1 widget, where each widget represents a "document".
      *
      * @return whether the tab widget will always show tabs, even if there's only 1 dock widget
@@ -166,23 +166,23 @@ public:
         return m_options & FrameOption_AlwaysShowsTabs;
     }
 
-    /// @brief returns whether the dockwidget @p w is inside this frame
+    /// @brief returns whether the dockwidget @p w is inside this group
     bool containsDockWidget(DockWidget *w) const;
 
-    ///@brief returns the FloatingWindow this frame is in, if any
+    ///@brief returns the FloatingWindow this group is in, if any
     FloatingWindow *floatingWindow() const;
 
     /**
-     * @brief Returns the main window this frame is in.
+     * @brief Returns the main window this group is in.
      * nullptr if not inside a main window.
      */
     MainWindow *mainWindow() const;
 
     /**
-     * @brief Puts the Frame back in its previous main window position
+     * @brief Puts the Group back in its previous main window position
      *
      * Usually DockWidget::Private::restoreToPreviousPosition() is used, but
-     * when we have a floating frame with tabs we just reuse the frame instead of
+     * when we have a floating group with tabs we just reuse the group instead of
      * moving the tabbed dock widgets one by one.
      */
     void restoreToPreviousPosition();
@@ -260,28 +260,28 @@ public:
     /// in MDI mode, or in overlayed mode then we allow the user to resize with mouse
     void setAllowedResizeSides(CursorPositions sides);
 
-    /// @brief Returns whether this frame is in a MDI layout
+    /// @brief Returns whether this group is in a MDI layout
     /// Usually no, unless you're using an MDI main window
     bool isMDI() const;
 
-    /// @brief Returns whether this frame was created automatically just for the purpose of supporting DockWidget::Option_MDINestable
+    /// @brief Returns whether this group was created automatically just for the purpose of supporting DockWidget::Option_MDINestable
     bool isMDIWrapper() const;
 
-    /// @brief If this is an MDI wrapper frame, return the DockWidget MDI wrapper
+    /// @brief If this is an MDI wrapper group, return the DockWidget MDI wrapper
     /// @sa isMDIWrapper
     DockWidget *mdiDockWidgetWrapper() const;
 
-    /// @brief If this is an MDI wrapper frame, return the DropArea MDI wrapper
+    /// @brief If this is an MDI wrapper group, return the DropArea MDI wrapper
     /// @sa isMDIWrapper
     DropArea *mdiDropAreaWrapper() const;
 
-    /// @brief If this frame is an MDI wrapper, returns the MDI frame. That is the frame you actually drag inside the MDI area
+    /// @brief If this group is an MDI wrapper, returns the MDI group. That is the group you actually drag inside the MDI area
     Group *mdiFrame() const;
 
-    /// @brief Returns the MDI layout. Or nullptr if this frame isn't in a MDI layout
+    /// @brief Returns the MDI layout. Or nullptr if this group isn't in a MDI layout
     MDILayout *mdiLayoutWidget() const;
 
-    /// @brief If this frame is a MDI frame (isMDI() == true), returns whether it contains nested dock widgets (DockWidget::Option_MDINestable)
+    /// @brief If this group is a MDI group (isMDI() == true), returns whether it contains nested dock widgets (DockWidget::Option_MDINestable)
     /// @sa isMDI()
     bool hasNestedMDIDockWidgets() const;
 
@@ -293,7 +293,7 @@ public:
 
     void renameTab(int index, const QString &);
     void changeTabIcon(int index, const QIcon &);
-    /// @brief Sets the Layout which this frame is in
+    /// @brief Sets the Layout which this group is in
     void setLayout(Layout *);
 
     void onDockWidgetCountChanged();

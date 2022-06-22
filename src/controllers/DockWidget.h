@@ -175,10 +175,10 @@ public:
     void setTitle(const QString &title);
 
     /**
-     * @brief Returns the size of the dock widget's parent frame.
+     * @brief Returns the size of the dock widget's parent group.
      *
      * This will always be bigger than the DockWidget's size, as there's margins and a title bar.
-     * Also, a frame can contain more than 1 dock widget (tabbed), meaning the geometry will account
+     * Also, a group can contain more than 1 dock widget (tabbed), meaning the geometry will account
      * for the tab bar and title bar.
      *
      * The position of the rect is in layout coordinates. 0,0 is the top-left of the layout
@@ -210,7 +210,7 @@ public:
      *
      * Technically a docked DockWidget always lives in a tab widget, but from the user's perspective
      * it's not tabbed when there's only 1 dock widget, as there are no tabs displayed. Unless
-     * the frame is using Option_AlwaysShowsTabs, in which case this method will return true regardless
+     * the group is using Option_AlwaysShowsTabs, in which case this method will return true regardless
      * if being the single one.
      */
     bool isTabbed() const;

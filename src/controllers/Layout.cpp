@@ -355,6 +355,6 @@ void Layout::onCloseEvent(QCloseEvent *e)
     for (Controllers::Group *group : groups) {
         Platform::instance()->sendEvent(group->view(), e);
         if (!e->isAccepted())
-            break; // Stop when the first frame prevents closing
+            break; // Stop when the first group prevents closing
     }
 }

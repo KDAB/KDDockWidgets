@@ -128,8 +128,8 @@ void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
 {
     json["layout"] = s.layout;
     auto &groups = json["frames"];
-    for (const auto &frame : qAsConst(s.groups)) {
-        groups[frame.id.toStdString()] = frame;
+    for (const auto &group : qAsConst(s.groups)) {
+        groups[group.id.toStdString()] = group;
     }
 }
 void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
@@ -439,7 +439,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         ~FrameCleanup()
         {
-            m_saver->d->deleteEmptyFrames();
+            m_saver->d->deleteEmptyGroups();
         }
 
         LayoutSaver *const m_saver;
@@ -638,10 +638,10 @@ void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout
     }
 }
 
-void LayoutSaver::Private::deleteEmptyFrames()
+void LayoutSaver::Private::deleteEmptyGroups()
 {
     // After a restore it can happen that some DockWidgets didn't exist, so weren't restored.
-    // Delete their frame now.
+    // Delete their group now.
 
     for (auto group : m_dockRegistry->groups()) {
         if (!group->beingDeletedLater() && group->isEmpty() && !group->isCentralFrame())
@@ -999,8 +999,8 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() cons
 
 bool LayoutSaver::MultiSplitter::skipsRestore() const
 {
-    return std::all_of(groups.cbegin(), groups.cend(), [](const LayoutSaver::Group &frame) {
-        return frame.skipsRestore();
+    return std::all_of(groups.cbegin(), groups.cend(), [](const LayoutSaver::Group &group) {
+        return group.skipsRestore();
     });
 }
 

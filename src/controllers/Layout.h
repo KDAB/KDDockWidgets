@@ -142,7 +142,7 @@ public:
     bool containsItem(const Layouting::Item *) const;
 
     /**
-     * @brief  Returns true if this layout contains the specified frame.
+     * @brief  Returns true if this layout contains the specified group.
      */
     bool containsFrame(const Controllers::Group *) const;
 
@@ -168,12 +168,12 @@ public:
     int placeholderCount() const;
 
     /**
-     * @brief returns the Item that holds @p frame in this layout
+     * @brief returns the Item that holds @p group in this layout
      */
     Layouting::Item *itemForFrame(const Controllers::Group *group) const;
 
     /**
-     * @brief Returns this list of Frame objects contained in this layout
+     * @brief Returns this list of Group objects contained in this layout
      */
     QList<Controllers::Group *> groups() const;
 
@@ -216,9 +216,9 @@ protected:
     /**
      * @brief Removes unneeded placeholder items when adding new groups.
      *
-     * A floating frame A might have a placeholder in the main window (for example to remember its
+     * A floating group A might have a placeholder in the main window (for example to remember its
      * position on the Left), but then the user might attach it to the right, so the left
-     * placeholder is no longer need. Right before adding the frame to the right we remove the left
+     * placeholder is no longer need. Right before adding the group to the right we remove the left
      * placeholder, otherwise it's unrefed while we're adding causing a segfault. So what this does
      * is making the unrefing happen a bit earlier.
      */
@@ -226,7 +226,7 @@ protected:
 
     /**
      * @brief returns the groups contained in @p groupOrMultiSplitter-
-     * If groupOrMultiSplitter- is a Frame, it returns a list of 1 element, with that frame
+     * If groupOrMultiSplitter- is a Group, it returns a list of 1 element, with that group
      * If groupOrMultiSplitter- is a MultiSplitter then it returns a list of all groups it contains
      */
     QList<Controllers::Group *> groupsFrom(View *groupOrMultiSplitter) const;

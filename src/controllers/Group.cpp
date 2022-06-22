@@ -69,7 +69,7 @@ static FrameOptions actualOptions(FrameOptions options)
 static StackOptions tabWidgetOptions(FrameOptions options)
 {
     if (options & FrameOption_NonDockable) {
-        /// If we can't tab things into this Frame then let's not draw the QTabWidget frame either
+        /// If we can't tab things into this Frame then let's not draw the QTabWidget group either
         return StackOption_DocumentMode;
     }
 
@@ -240,7 +240,7 @@ void Group::updateTitleAndIcon()
         setObjectName(dw->uniqueName());
 
     } else if (currentTabIndex() != -1) {
-        qWarning() << Q_FUNC_INFO << "Invalid dock widget for frame." << currentTabIndex();
+        qWarning() << Q_FUNC_INFO << "Invalid dock widget for group." << currentTabIndex();
     }
 }
 
@@ -265,7 +265,7 @@ void Group::addWidget(DockWidget *dockWidget, InitialOption addingOption)
 void Group::addWidget(Group *group, InitialOption addingOption)
 {
     if (group->isEmpty()) {
-        qWarning() << "Frame::addWidget: frame is empty." << group;
+        qWarning() << "Group::addWidget: group is empty." << group;
         return;
     }
 
@@ -286,7 +286,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
         if (!dockWidget->isPersistentCentralDockWidget())
-            qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
+            qWarning() << "Group::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
         return;
     }
     if (m_layoutItem)
@@ -303,7 +303,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
             setObjectName(dockWidget->uniqueName());
 
             if (!m_layoutItem) {
-                // When adding the 1st dock widget of a fresh frame, let's give the frame the size
+                // When adding the 1st dock widget of a fresh group, let's give the group the size
                 // of the dock widget, so that when adding it to the main window, the main window can
                 // use that size as the initial suggested size.
                 view()->resize(dockWidget->size());
@@ -488,7 +488,7 @@ void Group::updateTitleBarVisibility()
 
     if (auto fw = floatingWindow()) {
         // Update the floating window which might be using Flag_HideTitleBarWhenTabsVisible
-        // In that case it might not show title bar depending on the number of tabs that the frame has
+        // In that case it might not show title bar depending on the number of tabs that the group has
         fw->updateTitleBarVisibility();
     }
 }
@@ -513,7 +513,7 @@ Controllers::TitleBar *Group::titleBar() const
 Controllers::TitleBar *Group::actualTitleBar() const
 {
     if (FloatingWindow *fw = floatingWindow()) {
-        // If there's nested groups then show each Frame's title bar
+        // If there's nested groups then show each Group's title bar
         if (fw->hasSingleFrame())
             return fw->titleBar();
     } else if (auto mdiDropArea = mdiDropAreaWrapper()) {
@@ -597,7 +597,7 @@ void Group::restoreToPreviousPosition()
     }
 
     if (!m_layoutItem->isPlaceholder()) {
-        // Maybe in this case just fold the frame into the placeholder, which probably has other dockwidgets which were added meanwhile. TODO
+        // Maybe in this case just fold the group into the placeholder, which probably has other dockwidgets which were added meanwhile. TODO
         qCDebug(placeholder) << Q_FUNC_INFO << "Previous position isn't a placeholder";
         return;
     }
@@ -750,19 +750,19 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
     const bool isPersistentCentralFrame = options & FrameOption::FrameOption_IsCentralFrame;
 
     if (isPersistentCentralFrame) {
-        // Don't create a new Frame if we're restoring the Persistent Central frame (the one created
+        // Don't create a new Group if we're restoring the Persistent Central group (the one created
         // by MainWindowOption_HasCentralFrame). It already exists.
 
         if (f.mainWindowUniqueName.isEmpty()) {
             // Can happen with older serialization formats
-            qWarning() << Q_FUNC_INFO << "Frame is the persistent central frame but doesn't have"
+            qWarning() << Q_FUNC_INFO << "Frame is the persistent central group but doesn't have"
                        << "an associated window name";
         } else {
             if (MainWindow *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
                 group = mw->dropArea()->m_centralFrame;
                 if (!group) {
                     // Doesn't happen...
-                    qWarning() << "Main window" << f.mainWindowUniqueName << "doesn't have central frame";
+                    qWarning() << "Main window" << f.mainWindowUniqueName << "doesn't have central group";
                 }
             } else {
                 // Doesn't happen...
@@ -967,7 +967,7 @@ bool Group::hasNestedMDIDockWidgets() const
         return false;
 
     if (dockWidgetCount() != 1) {
-        qWarning() << Q_FUNC_INFO << "Expected a single dock widget wrapper as frame child";
+        qWarning() << Q_FUNC_INFO << "Expected a single dock widget wrapper as group child";
         return false;
     }
 

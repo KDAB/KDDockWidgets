@@ -89,7 +89,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
     if (oldFrame && oldFrame->beingDeletedLater()) {
         // give it a push and delete it immediately.
         // Having too many deleteLater() puts us in an inconsistent state. For example if LayoutSaver::saveState()
-        // would to be called while the Frame hadn't been deleted yet it would count with that frame unless hacks.
+        // would to be called while the Frame hadn't been deleted yet it would count with that group unless hacks.
         // Also the unit-tests are full of waitForDeleted() due to deleteLater.
 
         // Ideally we would just remove the deleteLater from Group.cpp, but QStack::insertTab()
@@ -177,14 +177,14 @@ void Stack::onCurrentTabChanged(int index)
 bool Stack::onMouseDoubleClick(QPoint localPos)
 {
     // User clicked the empty space of the tab widget and we don't have title bar
-    // We float the entire frame.
+    // We float the entire group.
 
     if (!(Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) || tabBar()->dockWidgetAt(localPos))
         return false;
 
     Group *group = this->group();
 
-    // When using MainWindowOption_HasCentralFrame. The central frame is never detachable.
+    // When using MainWindowOption_HasCentralFrame. The central group is never detachable.
     if (group->isCentralFrame())
         return false;
 

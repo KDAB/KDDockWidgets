@@ -63,7 +63,7 @@ public:
     ~MainWindow() override;
 
     /**
-     * @brief Docks a DockWidget into the central frame, tabbed.
+     * @brief Docks a DockWidget into the central group, tabbed.
      * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralFrame option.
      * @param dockwidget The dockwidget to dock.
      *
@@ -89,7 +89,7 @@ public:
      * @brief Sets a persistent central widget. It can't be detached.
      *
      * Requires passing MainWindowOption_HasCentralWidget in the CTOR.
-     * This is similar to the central frame concept of MainWindowOption_HasCentralFrame,
+     * This is similar to the central group concept of MainWindowOption_HasCentralFrame,
      * with the difference that it won't show a tabs.
      *
      * @param widget The QWidget (or QQuickItem if built with QtQuick support) that you
