@@ -3,7 +3,7 @@
         <file>views/qml/DockWidget.qml</file>
         <file>views/qml/DropArea.qml</file>
         <file>views/qml/FloatingWindow.qml</file>
-        <file>views/qml/Frame.qml</file>
+        <file>views/qml/Group.qml</file>
         <file>views/qml/MainWindowMDI.qml</file>
         <file>views/qml/ResizeHandlerHelper.qml</file>
         <file>views/qml/RubberBand.qml</file>

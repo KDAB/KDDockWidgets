@@ -179,7 +179,7 @@ QUrl ViewFactory_qtquick::dockwidgetFilename() const
 
 QUrl ViewFactory_qtquick::groupFilename() const
 {
-    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/Frame.qml"));
+    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/Group.qml"));
 }
 
 QUrl ViewFactory_qtquick::floatingWindowFilename() const
