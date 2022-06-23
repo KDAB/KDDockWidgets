@@ -19,7 +19,7 @@ class DOCKS_EXPORT Window_qtquick : public Window_qt
 public:
     using Window_qt::Window_qt;
     ~Window_qtquick();
-    std::shared_ptr<ViewWrapper> rootView() const override;
+    std::shared_ptr<View> rootView() const override;
     Window::Ptr transientParent() const override;
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;

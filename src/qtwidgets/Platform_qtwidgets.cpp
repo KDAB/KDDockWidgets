@@ -56,7 +56,7 @@ void Platform_qtwidgets::init()
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
         ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtwidgets(obj) : nullptr;
-        d->focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
+        d->focusedViewChanged.emit(std::shared_ptr<View>(wrapper));
     });
 }
 
@@ -74,11 +74,11 @@ bool Platform_qtwidgets::hasActivePopup() const
     return qApp->activePopupWidget() != nullptr;
 }
 
-std::shared_ptr<ViewWrapper> Platform_qtwidgets::qobjectAsView(QObject *obj) const
+std::shared_ptr<View> Platform_qtwidgets::qobjectAsView(QObject *obj) const
 {
     if (auto w = qobject_cast<QWidget *>(obj)) {
         ViewWrapper *wrapper = new Views::ViewWrapper_qtwidgets(w);
-        return std::shared_ptr<ViewWrapper>(wrapper);
+        return std::shared_ptr<View>(wrapper);
     }
 
     return nullptr;

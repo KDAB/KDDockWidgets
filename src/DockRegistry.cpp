@@ -63,7 +63,7 @@ void DockRegistry::maybeDelete()
         delete this;
 }
 
-void DockRegistry::onFocusedViewChanged(std::shared_ptr<ViewWrapper> view)
+void DockRegistry::onFocusedViewChanged(std::shared_ptr<View> view)
 {
     auto p = view;
     while (p && !p->isNull()) {

@@ -26,7 +26,7 @@ public:
     Platform_qt();
     ~Platform_qt() override;
 
-    std::shared_ptr<ViewWrapper> focusedView() const override;
+    std::shared_ptr<View> focusedView() const override;
     QVector<std::shared_ptr<Window>> windows() const override;
     std::shared_ptr<Window> qobjectAsWindow(QObject *) const override;
     virtual std::shared_ptr<Window> windowFromQWindow(QWindow *) const = 0;

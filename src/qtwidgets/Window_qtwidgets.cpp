@@ -38,13 +38,13 @@ Window_qtwidgets::Window_qtwidgets(QWidget *topLevel)
     setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidget *>(topLevel));
 }
 
-std::shared_ptr<ViewWrapper> Window_qtwidgets::rootView() const
+std::shared_ptr<View> Window_qtwidgets::rootView() const
 {
     if (!m_window)
         return {};
 
     if (QWidget *widget = m_window->property("kddockwidgets_qwidget").value<QWidget *>())
-        return std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(widget));
+        return std::shared_ptr<View>(new Views::ViewWrapper_qtwidgets(widget));
 
     qWarning() << Q_FUNC_INFO << "Window does not have a root";
     return nullptr;

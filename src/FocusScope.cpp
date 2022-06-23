@@ -52,14 +52,14 @@ public:
     ~Private() override;
 
     void setIsFocused(bool);
-    void onFocusedViewChanged(std::shared_ptr<ViewWrapper> view);
-    bool isInFocusScope(std::shared_ptr<ViewWrapper> view) const;
+    void onFocusedViewChanged(std::shared_ptr<View> view);
+    bool isInFocusScope(std::shared_ptr<View> view) const;
 
     FocusScope *const q;
     View *const m_thisView;
     bool m_isFocused = false;
     bool m_inCtor = true;
-    std::shared_ptr<ViewWrapper> m_lastFocusedInScope;
+    std::shared_ptr<View> m_lastFocusedInScope;
     KDBindings::ConnectionHandle m_connection;
 };
 
@@ -115,7 +115,7 @@ void FocusScope::Private::setIsFocused(bool is)
     }
 }
 
-void FocusScope::Private::onFocusedViewChanged(std::shared_ptr<ViewWrapper> view)
+void FocusScope::Private::onFocusedViewChanged(std::shared_ptr<View> view)
 {
     if (!view || view->isNull()) {
         setIsFocused(false);
@@ -133,9 +133,9 @@ void FocusScope::Private::onFocusedViewChanged(std::shared_ptr<ViewWrapper> view
     }
 }
 
-bool FocusScope::Private::isInFocusScope(std::shared_ptr<ViewWrapper> view) const
+bool FocusScope::Private::isInFocusScope(std::shared_ptr<View> view) const
 {
-    auto p = (view && !view->isNull()) ? view : std::shared_ptr<ViewWrapper>();
+    auto p = (view && !view->isNull()) ? view : std::shared_ptr<View>();
     while (p) {
         if (p->handle() == m_thisView->handle())
             return true;

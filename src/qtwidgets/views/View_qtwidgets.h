@@ -345,40 +345,40 @@ public:
         return QWidget::hasFocus();
     }
 
-    std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const override
+    std::shared_ptr<View> childViewAt(QPoint localPos) const override
     {
         if (QWidget *child = QWidget::childAt(localPos))
-            return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(child));
+            return std::shared_ptr<View>(new ViewWrapper_qtwidgets(child));
 
         return {};
     }
 
     std::shared_ptr<Window> window() const override;
 
-    std::shared_ptr<ViewWrapper> rootView() const override
+    std::shared_ptr<View> rootView() const override
     {
         if (auto w = QWidget::window()) {
             ViewWrapper *wrapper = new ViewWrapper_qtwidgets(w);
-            return std::shared_ptr<ViewWrapper>(wrapper);
+            return std::shared_ptr<View>(wrapper);
         }
 
         return {};
     }
 
-    std::shared_ptr<ViewWrapper> parentView() const override
+    std::shared_ptr<View> parentView() const override
     {
         if (QWidget *p = QWidget::parentWidget()) {
             ViewWrapper *wrapper = new ViewWrapper_qtwidgets(p);
-            return std::shared_ptr<ViewWrapper>(wrapper);
+            return std::shared_ptr<View>(wrapper);
         }
 
         return {};
     }
 
-    std::shared_ptr<ViewWrapper> asWrapper() override
+    std::shared_ptr<View> asWrapper() override
     {
         ViewWrapper *wrapper = new ViewWrapper_qtwidgets(this);
-        return std::shared_ptr<ViewWrapper>(wrapper);
+        return std::shared_ptr<View>(wrapper);
     }
 
     void setObjectName(const QString &name) override

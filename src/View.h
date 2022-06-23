@@ -87,7 +87,7 @@ public:
 
     /// @brief Returns whether this view represents the same GUI element as the other
     bool equals(const View *other) const;
-    bool equals(const std::shared_ptr<ViewWrapper> &) const;
+    bool equals(const std::shared_ptr<View> &) const;
 
     /// @brief Returns a handle for the GUI element
     /// This value only makes sense to the frontend. For example, for QtQuick it might be a
@@ -204,11 +204,11 @@ public:
     static QSize hardcodedMinimumSize();
     static QSize boundedMaxSize(QSize min, QSize max);
 
-    virtual std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const = 0;
+    virtual std::shared_ptr<View> childViewAt(QPoint localPos) const = 0;
 
     /// @brief Returns the top-level gui element which this view is inside
     /// It's the root view of the window.
-    virtual std::shared_ptr<ViewWrapper> rootView() const = 0;
+    virtual std::shared_ptr<View> rootView() const = 0;
 
     /// @brief Returns the window this view is inside
     /// For the Qt frontend, this wraps a QWindow.
@@ -219,10 +219,10 @@ public:
     std::shared_ptr<Window> transientWindow() const;
 
     /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
-    virtual std::shared_ptr<ViewWrapper> parentView() const = 0;
+    virtual std::shared_ptr<View> parentView() const = 0;
 
     /// @brief Returns this view, but as a wrapper
-    virtual std::shared_ptr<ViewWrapper> asWrapper() = 0;
+    virtual std::shared_ptr<View> asWrapper() = 0;
 
     /// @brief Returns whether the view is of the specified type
     /// Virtual so it can be overridden by ViewWrapper. When we're wrapping an existing GUI element

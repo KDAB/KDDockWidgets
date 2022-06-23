@@ -255,7 +255,7 @@ private:
     friend class FocusScope;
     explicit DockRegistry(QObject *parent = nullptr);
     bool onDockWidgetPressed(Controllers::DockWidget *dw, QMouseEvent *);
-    void onFocusedViewChanged(std::shared_ptr<ViewWrapper> view);
+    void onFocusedViewChanged(std::shared_ptr<View> view);
     void maybeDelete();
     void setFocusedDockWidget(Controllers::DockWidget *);
 

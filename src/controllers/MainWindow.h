@@ -97,8 +97,8 @@ public:
      *
      * Example: examples/qtwidgets_dockwidgets --central-widget
      */
-    void setPersistentCentralView(std::shared_ptr<ViewWrapper> widget);
-    std::shared_ptr<ViewWrapper> persistentCentralView() const;
+    void setPersistentCentralView(std::shared_ptr<View> widget);
+    std::shared_ptr<View> persistentCentralView() const;
 
     /// @brief Returns the main window options that were passed via constructor.
     MainWindowOptions options() const;

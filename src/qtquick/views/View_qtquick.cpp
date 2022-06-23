@@ -347,7 +347,7 @@ void View_qtquick::setSize(int w, int h)
     QQuickItem::setSize(QSizeF(w, h));
 }
 
-std::shared_ptr<ViewWrapper> View_qtquick::rootView() const
+std::shared_ptr<View> View_qtquick::rootView() const
 {
     if (Window::Ptr window = View_qtquick::window())
         return window->rootView();
@@ -691,14 +691,14 @@ std::shared_ptr<Window> View_qtquick::window() const
     return {};
 }
 
-std::shared_ptr<ViewWrapper> View_qtquick::childViewAt(QPoint p) const
+std::shared_ptr<View> View_qtquick::childViewAt(QPoint p) const
 {
     auto child = QQuickItem::childAt(p.x(), p.y());
     return child ? asQQuickWrapper(child) : nullptr;
 }
 
 /*static*/
-std::shared_ptr<ViewWrapper> View_qtquick::parentViewFor(const QQuickItem *item)
+std::shared_ptr<View> View_qtquick::parentViewFor(const QQuickItem *item)
 {
     auto p = item->parentItem();
     if (QQuickWindow *window = item->window()) {
@@ -711,15 +711,15 @@ std::shared_ptr<ViewWrapper> View_qtquick::parentViewFor(const QQuickItem *item)
     return p ? asQQuickWrapper(p) : nullptr;
 }
 
-std::shared_ptr<ViewWrapper> View_qtquick::parentView() const
+std::shared_ptr<View> View_qtquick::parentView() const
 {
     return parentViewFor(this);
 }
 
-std::shared_ptr<ViewWrapper> View_qtquick::asWrapper()
+std::shared_ptr<View> View_qtquick::asWrapper()
 {
     ViewWrapper *wrapper = new ViewWrapper_qtquick(this);
-    return std::shared_ptr<ViewWrapper>(wrapper);
+    return std::shared_ptr<View>(wrapper);
 }
 
 void View_qtquick::setObjectName(const QString &name)

@@ -117,10 +117,10 @@ public:
      * call setWidget(A) followed by setWidget(B) then A will have to be deleted by you, while B is
      * owned by the dock widget.
      */
-    virtual void setGuestView(std::shared_ptr<ViewWrapper> guest);
+    virtual void setGuestView(std::shared_ptr<View> guest);
 
     /// @brief Like widget() but returns a view
-    std::shared_ptr<ViewWrapper> guestView() const;
+    std::shared_ptr<View> guestView() const;
 
     /**
      * @brief Returns whether the dock widget is floating.

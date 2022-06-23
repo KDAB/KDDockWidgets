@@ -147,7 +147,7 @@ void ViewWrapper_qtquick::setGeometry(QRect rect)
     ViewWrapper_qtquick::move(rect.topLeft().x(), rect.topLeft().y());
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::childViewAt(QPoint p) const
+std::shared_ptr<View> ViewWrapper_qtquick::childViewAt(QPoint p) const
 {
     auto child = m_item->childAt(p.x(), p.y());
     return child ? asQQuickWrapper(child) : nullptr;
@@ -297,7 +297,7 @@ bool ViewWrapper_qtquick::is(Type t) const
     return false;
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::rootView() const
+std::shared_ptr<View> ViewWrapper_qtquick::rootView() const
 {
     if (Window::Ptr window = this->window())
         return window->rootView();
@@ -306,7 +306,7 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::rootView() const
     return {};
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::parentView() const
+std::shared_ptr<View> ViewWrapper_qtquick::parentView() const
 {
     return View_qtquick::parentViewFor(m_item);
 }

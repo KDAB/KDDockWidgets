@@ -46,10 +46,10 @@ inline QQuickItem *asQQuickItem(Controller *controller)
     return asQQuickItem(controller->view());
 }
 
-inline std::shared_ptr<ViewWrapper> asQQuickWrapper(QQuickItem *item)
+inline std::shared_ptr<View> asQQuickWrapper(QQuickItem *item)
 {
     auto wrapper = new ViewWrapper_qtquick(item);
-    return std::shared_ptr<ViewWrapper>(wrapper);
+    return std::shared_ptr<View>(wrapper);
 }
 
 
@@ -136,11 +136,11 @@ public:
     bool isMaximized() const override;
 
     std::shared_ptr<Window> window() const override;
-    std::shared_ptr<ViewWrapper> childViewAt(QPoint p) const override;
-    std::shared_ptr<ViewWrapper> rootView() const override;
-    std::shared_ptr<ViewWrapper> parentView() const override;
+    std::shared_ptr<View> childViewAt(QPoint p) const override;
+    std::shared_ptr<View> rootView() const override;
+    std::shared_ptr<View> parentView() const override;
 
-    std::shared_ptr<ViewWrapper> asWrapper() override;
+    std::shared_ptr<View> asWrapper() override;
 
     void setObjectName(const QString &name) override;
     void grabMouse() override;
@@ -165,7 +165,7 @@ public:
 
     /// @brief Convenience to create a QQuickItem
     static QQuickItem *createItem(QQmlEngine *engine, const QString &filename);
-    static std::shared_ptr<ViewWrapper> parentViewFor(const QQuickItem *);
+    static std::shared_ptr<View> parentViewFor(const QQuickItem *);
 
 Q_SIGNALS:
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change

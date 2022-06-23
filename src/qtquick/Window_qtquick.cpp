@@ -39,7 +39,7 @@ inline View *topMostKDDWView(QQuickItem *parent)
     return nullptr;
 }
 
-std::shared_ptr<ViewWrapper> Window_qtquick::rootView() const
+std::shared_ptr<View> Window_qtquick::rootView() const
 {
     if (auto quickwindow = qobject_cast<QQuickWindow *>(m_window)) {
         auto contentItem = quickwindow->contentItem();

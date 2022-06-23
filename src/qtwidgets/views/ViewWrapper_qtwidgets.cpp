@@ -238,26 +238,26 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     return false;
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::rootView() const
+std::shared_ptr<View> ViewWrapper_qtwidgets::rootView() const
 {
     if (auto w = m_widget->window())
-        return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(w));
+        return std::shared_ptr<View>(new ViewWrapper_qtwidgets(w));
 
     return {};
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
+std::shared_ptr<View> ViewWrapper_qtwidgets::parentView() const
 {
     if (auto p = m_widget->parentWidget())
-        return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(p));
+        return std::shared_ptr<View>(new ViewWrapper_qtwidgets(p));
 
     return {};
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::childViewAt(QPoint localPos) const
+std::shared_ptr<View> ViewWrapper_qtwidgets::childViewAt(QPoint localPos) const
 {
     if (QWidget *child = m_widget->childAt(localPos))
-        return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(child));
+        return std::shared_ptr<View>(new ViewWrapper_qtwidgets(child));
 
     return {};
 }

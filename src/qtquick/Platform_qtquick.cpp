@@ -78,7 +78,7 @@ void Platform_qtquick::init()
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
         ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtquick(obj) : nullptr;
-        d->focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
+        d->focusedViewChanged.emit(std::shared_ptr<View>(wrapper));
     });
 }
 
@@ -92,11 +92,11 @@ const char *Platform_qtquick::name() const
     return "qtquick";
 }
 
-std::shared_ptr<ViewWrapper> Platform_qtquick::qobjectAsView(QObject *obj) const
+std::shared_ptr<View> Platform_qtquick::qobjectAsView(QObject *obj) const
 {
     if (auto w = qobject_cast<QQuickItem *>(obj)) {
         ViewWrapper *wrapper = new Views::ViewWrapper_qtquick(w);
-        return std::shared_ptr<ViewWrapper>(wrapper);
+        return std::shared_ptr<View>(wrapper);
     }
 
     return nullptr;

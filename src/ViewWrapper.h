@@ -28,7 +28,7 @@ class DropArea;
 class DOCKS_EXPORT ViewWrapper : public View
 {
 public:
-    using Ptr = std::shared_ptr<ViewWrapper>;
+    using Ptr = std::shared_ptr<View>;
 
     explicit ViewWrapper(Controller *controller, QObject *thisObj); // TODOm4: Remove thisObj argument once all calls to asQWidget() are removed
 
@@ -58,7 +58,7 @@ public:
     void releaseKeyboard() override;
     void render(QPainter *p) override;
     void setMouseTracking(bool) override;
-    std::shared_ptr<ViewWrapper> asWrapper() override;
+    std::shared_ptr<View> asWrapper() override;
 };
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) // In Qt6 we can't delete it

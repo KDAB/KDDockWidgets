@@ -101,7 +101,7 @@ MainWindow *TitleBar::mainWindow() const
 
 bool TitleBar::isMDI() const
 {
-    ViewWrapper::Ptr p = view()->asWrapper();
+    auto p = view()->asWrapper();
     while (p) {
         if (p->is(Type::MDILayout))
             return true;

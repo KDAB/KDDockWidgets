@@ -154,12 +154,12 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
     }
 }
 
-std::shared_ptr<ViewWrapper> DockWidget::guestView() const
+std::shared_ptr<View> DockWidget::guestView() const
 {
     return d->guest;
 }
 
-void DockWidget::setGuestView(std::shared_ptr<ViewWrapper> guest)
+void DockWidget::setGuestView(std::shared_ptr<View> guest)
 {
     if ((guest && guest->equals(d->guest)) || (!guest && !d->guest))
         return;

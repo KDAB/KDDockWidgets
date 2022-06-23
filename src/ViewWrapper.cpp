@@ -155,7 +155,7 @@ void ViewWrapper::setMouseTracking(bool)
     qFatal("Not implemented");
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper::asWrapper()
+std::shared_ptr<View> ViewWrapper::asWrapper()
 {
     // could be implemented with a weak pointer, but we have no use case
     qFatal("Don't call on wrappers");

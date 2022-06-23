@@ -45,7 +45,7 @@ public:
     /// @brief Returns the root view of this window
     /// For example, for QtWidgets, this would be the top-level QWidget
     /// represented by this QWindow
-    virtual std::shared_ptr<ViewWrapper> rootView() const = 0;
+    virtual std::shared_ptr<View> rootView() const = 0;
 
     /// @brief Returns the size of this window
     virtual QSize size() const = 0;

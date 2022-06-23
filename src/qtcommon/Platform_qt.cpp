@@ -106,7 +106,7 @@ Platform_qt::~Platform_qt()
 {
 }
 
-std::shared_ptr<ViewWrapper> Platform_qt::focusedView() const
+std::shared_ptr<View> Platform_qt::focusedView() const
 {
     return qobjectAsView(qGuiApp->focusObject());
 }

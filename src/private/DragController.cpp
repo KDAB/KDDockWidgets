@@ -829,7 +829,7 @@ StateBase *DragController::activeState() const
 }
 
 #if defined(Q_OS_WIN)
-static std::shared_ptr<ViewWrapper> qtTopLevelForHWND(HWND hwnd)
+static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 {
     const Window::List windows = Platform::instance()->windows();
     for (Window::Ptr window : windows) {
@@ -974,7 +974,7 @@ static DropArea *deepestDropAreaInTopLevel(ViewWrapper::Ptr topLevel, QPoint glo
                                            const QStringList &affinities)
 {
     const auto localPos = topLevel->mapFromGlobal(globalPos);
-    ViewWrapper::Ptr view = topLevel->childViewAt(localPos);
+    auto view = topLevel->childViewAt(localPos);
 
     while (view) {
         if (auto dt = view->asDropAreaController()) {

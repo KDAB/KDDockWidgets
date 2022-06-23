@@ -42,11 +42,11 @@ public:
     QSize maximumSize() const override;
     void setSize(int width, int height) override;
     bool is(Type) const override;
-    std::shared_ptr<ViewWrapper> childViewAt(QPoint) const override;
+    std::shared_ptr<View> childViewAt(QPoint) const override;
     QVector<std::shared_ptr<View>> childViews() const override;
     std::shared_ptr<Window> window() const override;
-    std::shared_ptr<ViewWrapper> rootView() const override;
-    std::shared_ptr<ViewWrapper> parentView() const override;
+    std::shared_ptr<View> rootView() const override;
+    std::shared_ptr<View> parentView() const override;
     void setParent(View *) override; // TODOm3: Rename to setParentView
     void grabMouse() override;
     void releaseMouse() override;

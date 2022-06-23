@@ -43,11 +43,11 @@ public:
     void setSize(int width, int height) override;
     bool is(Type) const override;
     std::shared_ptr<Window> window() const override;
-    std::shared_ptr<ViewWrapper> rootView() const override;
-    std::shared_ptr<ViewWrapper> parentView() const override;
+    std::shared_ptr<View> rootView() const override;
+    std::shared_ptr<View> parentView() const override;
     void setParent(View *) override;
     bool close() override;
-    std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const override;
+    std::shared_ptr<View> childViewAt(QPoint localPos) const override;
     QVector<std::shared_ptr<View>> childViews() const override;
     void grabMouse() override;
     void releaseMouse() override;

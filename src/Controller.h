@@ -76,7 +76,7 @@ public:
     int x() const;
     int y() const;
     bool close();
-    std::shared_ptr<ViewWrapper> window() const;
+    std::shared_ptr<View> window() const;
     void show() const;
     bool inDtor() const;
 

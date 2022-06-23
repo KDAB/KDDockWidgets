@@ -34,7 +34,7 @@ public:
     Platform_qtquick();
     ~Platform_qtquick() override;
     const char *name() const override;
-    std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const override;
+    std::shared_ptr<View> qobjectAsView(QObject *) const override;
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
     ViewFactory *createDefaultViewFactory() override;
     ViewFactory_qtquick *viewFactory() const;

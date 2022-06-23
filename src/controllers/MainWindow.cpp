@@ -799,7 +799,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     return m;
 }
 
-void MainWindow::setPersistentCentralView(std::shared_ptr<ViewWrapper> widget)
+void MainWindow::setPersistentCentralView(std::shared_ptr<View> widget)
 {
     if (!d->supportsPersistentCentralWidget()) {
         qWarning() << "MainWindow::setPersistentCentralWidget() requires MainWindowOption_HasCentralWidget";
@@ -813,7 +813,7 @@ void MainWindow::setPersistentCentralView(std::shared_ptr<ViewWrapper> widget)
     }
 }
 
-std::shared_ptr<ViewWrapper> MainWindow::persistentCentralView() const
+std::shared_ptr<View> MainWindow::persistentCentralView() const
 {
     if (auto dw = d->m_persistentCentralDockWidget)
         return dw->guestView();
