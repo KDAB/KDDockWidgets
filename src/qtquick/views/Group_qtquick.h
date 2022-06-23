@@ -51,7 +51,7 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
-    /// @brief Returns the QQuickItem which represents this frame on the screen
+    /// @brief Returns the QQuickItem which represents this group on the screen
     QQuickItem *visualItem() const override;
 
     QRect dragRect() const override;
