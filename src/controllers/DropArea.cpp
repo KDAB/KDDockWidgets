@@ -84,7 +84,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
             }
 
             if (visibleCount() > 0) {
-                // The title of our MDI frame will need to change to the app name if we have more than 1 dock widget nested
+                // The title of our MDI group will need to change to the app name if we have more than 1 dock widget nested
                 Q_EMIT dw->titleChanged(dw->title());
             } else {
                 // Our wrapeper isn't needed anymore
@@ -185,7 +185,7 @@ void DropArea::addDockWidget(Controllers::DockWidget *dw, Location location,
         Controllers::Group *oldFrame = dw->d->group();
         if (oldFrame->hasSingleDockWidget()) {
             Q_ASSERT(oldFrame->containsDockWidget(dw));
-            // The frame only has this dock widget, and the frame is already in the layout. So move the frame instead
+            // The group only has this dock widget, and the group is already in the layout. So move the group instead
             group = oldFrame;
         } else {
             group = new Controllers::Group();
@@ -294,14 +294,14 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 
     hover(droppedWindow, globalPos);
     auto droploc = m_dropIndicatorOverlay->currentDropLocation();
-    Controllers::Group *acceptingFrame = m_dropIndicatorOverlay->hoveredFrame();
-    if (!(acceptingFrame || isOutterLocation(droploc))) {
-        qWarning() << "DropArea::drop: asserted with frame=" << acceptingFrame
+    Controllers::Group *acceptingGroup = m_dropIndicatorOverlay->hoveredFrame();
+    if (!(acceptingGroup || isOutterLocation(droploc))) {
+        qWarning() << "DropArea::drop: asserted with group=" << acceptingGroup
                    << "; Location=" << droploc;
         return false;
     }
 
-    return drop(droppedWindow, acceptingFrame, droploc);
+    return drop(droppedWindow, acceptingGroup, droploc);
 }
 
 bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *acceptingFrame,
@@ -420,16 +420,16 @@ void DropArea::removeHover()
 }
 
 template<typename T>
-bool DropArea::validateAffinity(T *window, Controllers::Group *acceptingFrame) const
+bool DropArea::validateAffinity(T *window, Controllers::Group *acceptingGroup) const
 {
     if (!DockRegistry::self()->affinitiesMatch(window->affinities(), affinities())) {
         return false;
     }
 
-    if (acceptingFrame) {
-        // We're dropping into another frame (as tabbed), so also check the affinity of the frame
+    if (acceptingGroup) {
+        // We're dropping into another group (as tabbed), so also check the affinity of the group
         // not only of the main window, which might be more forgiving
-        if (!DockRegistry::self()->affinitiesMatch(window->affinities(), acceptingFrame->affinities())) {
+        if (!DockRegistry::self()->affinitiesMatch(window->affinities(), acceptingGroup->affinities())) {
             return false;
         }
     }
@@ -455,17 +455,17 @@ Controllers::Group *DropArea::createCentralFrame(MainWindowOptions options)
 {
     Controllers::Group *group = nullptr;
     if (options & MainWindowOption_HasCentralFrame) {
-        FrameOptions frameOptions = FrameOption_IsCentralFrame;
+        FrameOptions groupOptions = FrameOption_IsCentralFrame;
         const bool hasPersistentCentralWidget = (options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
         if (hasPersistentCentralWidget) {
-            frameOptions |= FrameOption_NonDockable;
+            groupOptions |= FrameOption_NonDockable;
         } else {
             // With a persistent central widget we don't allow detaching it
-            frameOptions |= FrameOption_AlwaysShowsTabs;
+            groupOptions |= FrameOption_AlwaysShowsTabs;
         }
 
-        group = new Controllers::Group(nullptr, frameOptions);
-        group->setObjectName(QStringLiteral("central frame"));
+        group = new Controllers::Group(nullptr, groupOptions);
+        group->setObjectName(QStringLiteral("central group"));
     }
 
     return group;

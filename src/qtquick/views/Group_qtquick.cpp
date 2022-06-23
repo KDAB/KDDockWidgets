@@ -72,12 +72,12 @@ void Group_qtquick::init()
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
         for (auto dw : m_group->dockWidgets()) {
             auto dwView = static_cast<DockWidget_qtquick *>(asView_qtquick(dw->view()));
-            dwView->frameGeometryChanged(geometry());
+            dwView->groupGeometryChanged(geometry());
         }
     });
 
     QQmlComponent component(plat()->qmlEngine(),
-                            plat()->viewFactory()->frameFilename());
+                            plat()->viewFactory()->groupFilename());
 
     m_visualItem = static_cast<QQuickItem *>(component.create());
 
@@ -86,7 +86,7 @@ void Group_qtquick::init()
         return;
     }
 
-    m_visualItem->setProperty("frameCpp", QVariant::fromValue(this));
+    m_visualItem->setProperty("groupCpp", QVariant::fromValue(this));
     m_visualItem->setParentItem(this);
     m_visualItem->setParent(this);
 }

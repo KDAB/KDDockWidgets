@@ -19,7 +19,7 @@ MouseArea {
     id: root
     required property int resizeMargin
     required property bool resizeAllowed
-    required property QtObject frameCpp
+    required property QtObject groupCpp
     required property int cursorPosition
 
     hoverEnabled: true
@@ -45,10 +45,10 @@ MouseArea {
 
     enabled: resizeAllowed
 
-    onFrameCppChanged: {
-        if (frameCpp) {
+    onGroupCppChanged: {
+        if (groupCpp) {
             // When Frame is in MDI mode, we need to detect when the mouse over the edges
-            frameCpp.redirectMouseEvents(this)
+            groupCpp.redirectMouseEvents(this)
         }
     }
 }

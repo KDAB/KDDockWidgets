@@ -146,7 +146,7 @@ void TestDocks::tst_restoreSimple()
     const QPoint dock2FloatingPoint = QPoint(150, 150);
     dock2->view()->window()->setFramePosition(dock2FloatingPoint);
     QVERIFY(dock2->isVisible());
-    QTest::qWait(1000); // Wait for frame to settle
+    QTest::qWait(1000); // Wait for group to settle
 
     const QPoint dock3FloatingPoint = QPoint(200, 200);
     dock3->view()->window()->setFramePosition(dock3FloatingPoint);
@@ -1754,16 +1754,16 @@ void TestDocks::tst_refUnrefItem()
     QPointer<Item> item2 = layout->itemForFrame(group2);
     QVERIFY(item1.data());
     QVERIFY(item2.data());
-    QCOMPARE(item1->refCount(), 2); // 2 - the item and its frame, which can be persistent
+    QCOMPARE(item1->refCount(), 2); // 2 - the item and its group, which can be persistent
     QCOMPARE(item2->refCount(), 2);
 
-    // 1. Delete a dock widget directly. It should delete its frame and also the Item
+    // 1. Delete a dock widget directly. It should delete its group and also the Item
     delete dock1;
     Platform::instance()->tests_waitForDeleted(group1);
     QVERIFY(!group1.data());
     QVERIFY(!item1.data());
 
-    // 2. Delete dock3, but neither the frame or the item is deleted, since there were two tabs to begin with
+    // 2. Delete dock3, but neither the group or the item is deleted, since there were two tabs to begin with
     auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
     QCOMPARE(item2->refCount(), 2);
     dock2->addDockWidgetAsTab(dock3);
@@ -1809,7 +1809,7 @@ void TestDocks::tst_placeholderCount()
     EnsureTopLevelsDeleted e;
     // Tests MultiSplitterLayout::count(),visibleCount() and placeholdercount()
 
-    // 1. MainWindow with just the initial frame.
+    // 1. MainWindow with just the initial group.
     auto m = createMainWindow();
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
@@ -1820,13 +1820,13 @@ void TestDocks::tst_placeholderCount()
     QCOMPARE(layout->visibleCount(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
 
-    // 2. MainWindow with central frame and left widget
+    // 2. MainWindow with central group and left widget
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->visibleCount(), 2);
     QCOMPARE(layout->placeholderCount(), 0);
 
-    // 3. Add another dockwidget, this time tabbed in the center. It won't increase count, as it reuses an existing frame.
+    // 3. Add another dockwidget, this time tabbed in the center. It won't increase count, as it reuses an existing group.
     m->addDockWidgetAsTab(dock2);
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->visibleCount(), 2);
@@ -1864,7 +1864,7 @@ void TestDocks::tst_availableLengthForOrientation()
     EnsureTopLevelsDeleted e;
 
     // 1. Test a completely empty window, it's available space is its size minus the static separators thickness
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
     auto dropArea = m->dropArea();
     Controllers::DropArea *layout = dropArea;
 
@@ -1893,9 +1893,9 @@ void TestDocks::tst_availableLengthForOrientation()
 void TestDocks::tst_closeShowWhenNoCentralFrame()
 {
     EnsureTopLevelsDeleted e;
-    // Tests a crash I got when hiding and showing and no central frame
+    // Tests a crash I got when hiding and showing and no central group
 
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
     QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->close();
@@ -1946,7 +1946,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
     // should have been deleted and anchors properly positioned
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
     Controllers::DropArea *layout = m->multiSplitter();
 
     QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
@@ -1978,7 +1978,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
 void TestDocks::tst_placeholdersAreRemovedProperly()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
     Controllers::DropArea *layout = m->multiSplitter();
     QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     QPointer<Controllers::DockWidget> dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
@@ -2179,7 +2179,7 @@ void TestDocks::tst_toggleMiddleDockCrash()
     // tests some crash I got
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
     Controllers::DropArea *layout = m->multiSplitter();
     QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     QPointer<Controllers::DockWidget> dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
@@ -3219,7 +3219,7 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     QCOMPARE(dock1->geometry(), oldGeo);
     QVERIFY(dock1->view()->parentView()->equals(oldParent));
 
-    // 2. Check that the parent frame also is hidden now
+    // 2. Check that the parent group also is hidden now
     // auto fw1 = dock1->window();
     setVisible(dock1, false);
     QVERIFY(!dock1->dptr()->group());
@@ -4243,10 +4243,10 @@ void TestDocks::tst_positionWhenShown()
     auto window = createMainWindow();
     auto dock1 = newDockWidget("1");
     dock1->show();
-    QTest::qWait(1000); // Wait for frame to settle
+    QTest::qWait(1000); // Wait for group to settle
     const QPoint desiredPos = QPoint(100, 100);
     dock1->view()->window()->setFramePosition(desiredPos);
-    QTest::qWait(1000); // Wait for frame to settle
+    QTest::qWait(1000); // Wait for group to settle
     QCOMPARE(dock1->view()->window()->framePosition(), desiredPos);
 
     dock1->close();
@@ -4612,7 +4612,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     saver.restoreLayout(saved);
     QCOMPARE(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
 
-    // Adjsut to what we got without the frame
+    // Adjsut to what we got without the group
     targetPos = dock1->window()->geometry().topLeft();
 
     // Now dock it:
@@ -5618,9 +5618,9 @@ void TestDocks::tst_close()
     delete dock1;
 
 
-    // 2. Test that closing the single frame of a main window doesn't close the main window itself
+    // 2. Test that closing the single group of a main window doesn't close the main window itself
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
         QPointer<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
@@ -5631,9 +5631,9 @@ void TestDocks::tst_close()
         delete dock1;
     }
 
-    // 2.1 Test closing the frame instead
+    // 2.1 Test closing the group instead
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
         QPointer<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
@@ -5645,7 +5645,7 @@ void TestDocks::tst_close()
         delete dock1;
     }
 
-    // 2.2 Repeat, but with a central frame
+    // 2.2 Repeat, but with a central group
     {
         auto m = createMainWindow(QSize(800, 500));
         QPointer<MainWindow> mainWindowPtr = m.get();
@@ -5683,7 +5683,7 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
     nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnRight);
     nestDockWidget(dock2, dropArea, nullptr, KDDockWidgets::Location_OnLeft);
 
-    // Calculate again, as the window frame has disappeared
+    // Calculate again, as the window group has disappeared
     min1 = widgetMinLength(dock1->view(), Qt::Horizontal);
     min2 = widgetMinLength(dock2->view(), Qt::Horizontal);
 

@@ -257,7 +257,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View 
             setGuestView(guest);
             m_guest->setParent(hostWidget());
         } else if (hostWidget()) {
-            qWarning() << Q_FUNC_INFO << "Couldn't find frame to restore for" << this;
+            qWarning() << Q_FUNC_INFO << "Couldn't find group to restore for" << this;
         }
     }
 }

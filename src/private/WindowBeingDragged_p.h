@@ -97,7 +97,7 @@ public:
     QVector<Controllers::DockWidget *> dockWidgets() const override;
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no way to position it)
-    // So we're dragging either a frame with multiple dock widgets or a single tab, keep them here.
+    // So we're dragging either a group with multiple dock widgets or a single tab, keep them here.
     // It's important to know what we're dragging, so drop rubber band respect min/max sizes.
     QPointer<Controllers::Group> m_group;
     QPointer<Controllers::DockWidget> m_dockWidget;

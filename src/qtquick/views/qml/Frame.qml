@@ -18,15 +18,15 @@ import com.kdab.dockwidgets 2.0
 Rectangle {
     id: root
 
-    property QtObject frameCpp
-    readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
+    property QtObject groupCpp
+    readonly property QtObject titleBarCpp: groupCpp ? groupCpp.titleBar : null
     readonly property int nonContentsHeight: (titleBar.item ? titleBar.item.heightWhenVisible : 0) + tabbar.implicitHeight + (2 * contentsMargin) + titleBarContentsMargin
     property int contentsMargin: isMDI ? 2 : 1
     property int titleBarContentsMargin: 1
     property bool hasCustomMouseEventRedirector: false
     property int mouseResizeMargin: 8
-    readonly property bool isMDI: frameCpp && frameCpp.isMDI
-    readonly property bool resizeAllowed: root.isMDI && !_kddwDragController.isDragging && _kddwDockRegistry && (!_kddwDockRegistry.groupViewInMDIResize || _kddwDockRegistry.groupViewInMDIResize === frameCpp)
+    readonly property bool isMDI: groupCpp && groupCpp.isMDI
+    readonly property bool resizeAllowed: root.isMDI && !_kddwDragController.isDragging && _kddwDockRegistry && (!_kddwDockRegistry.groupViewInMDIResize || _kddwDockRegistry.groupViewInMDIResize === groupCpp)
     property alias tabBarHeight: tabbar.height
 
     anchors.fill: parent
@@ -38,15 +38,15 @@ Rectangle {
         width: 1
     }
 
-    onFrameCppChanged: {
-        if (frameCpp) {
-            frameCpp.setStackLayout(stackLayout);
+    onGroupCppChanged: {
+        if (groupCpp) {
+            groupCpp.setStackLayout(stackLayout);
         }
     }
 
     onNonContentsHeightChanged: {
-        if (frameCpp)
-            frameCpp.geometryUpdated();
+        if (groupCpp)
+            groupCpp.geometryUpdated();
     }
 
     ResizeHandlerHelper {
@@ -58,7 +58,7 @@ Rectangle {
 
         width: resizeMargin
         z: 100
-        frameCpp: root.frameCpp
+        groupCpp: root.groupCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Left
@@ -73,7 +73,7 @@ Rectangle {
 
         width: resizeMargin
         z: 100
-        frameCpp: root.frameCpp
+        groupCpp: root.groupCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Right
@@ -88,7 +88,7 @@ Rectangle {
 
         height: resizeMargin
         z: 100
-        frameCpp: root.frameCpp
+        groupCpp: root.groupCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Top
@@ -103,7 +103,7 @@ Rectangle {
 
         height: resizeMargin
         z: 100
-        frameCpp: root.frameCpp
+        groupCpp: root.groupCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Bottom
@@ -118,7 +118,7 @@ Rectangle {
         height: width
         width: resizeMargin
         z: 101
-        frameCpp: root.frameCpp
+        groupCpp: root.groupCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Bottom | KDDockWidgets.CursorPosition_Right
@@ -133,7 +133,7 @@ Rectangle {
         height: width
         width: resizeMargin
         z: 101
-        frameCpp: root.frameCpp
+        groupCpp: root.groupCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Left
@@ -148,7 +148,7 @@ Rectangle {
         height: width
         width: resizeMargin
         z: 101
-        frameCpp: root.frameCpp
+        groupCpp: root.groupCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Right
@@ -163,7 +163,7 @@ Rectangle {
         height: width
         width: resizeMargin
         z: 101
-        frameCpp: root.frameCpp
+        groupCpp: root.groupCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Left | KDDockWidgets.CursorPosition_Bottom
@@ -172,7 +172,7 @@ Rectangle {
     Loader {
         id: titleBar
         readonly property QtObject titleBarCpp: root.titleBarCpp
-        source: frameCpp ? _kddw_widgetFactory.titleBarFilename()
+        source: groupCpp ? _kddw_widgetFactory.titleBarFilename()
                          : ""
 
         anchors {
@@ -186,9 +186,9 @@ Rectangle {
     }
 
     Connections {
-        target: frameCpp
+        target: groupCpp
         function onCurrentIndexChanged() {
-            tabbar.currentIndex = frameCpp.currentIndex;
+            tabbar.currentIndex = groupCpp.currentIndex;
         }
     }
 
@@ -204,7 +204,7 @@ Rectangle {
     TabBar {
         id: tabbar
 
-        readonly property QtObject tabBarCpp: root.frameCpp ? root.frameCpp.tabWidget.tabBar
+        readonly property QtObject tabBarCpp: root.groupCpp ? root.groupCpp.tabWidget.tabBar
                                                             : null
 
         visible: count > 1
@@ -223,8 +223,8 @@ Rectangle {
         width: parent ? parent.width : 0
 
         onCurrentIndexChanged: {
-            if (root && root.frameCpp)
-                root.frameCpp.tabWidget.setCurrentDockWidget(currentIndex);
+            if (root && root.groupCpp)
+                root.groupCpp.tabWidget.setCurrentDockWidget(currentIndex);
         }
 
         onTabBarCppChanged: {
@@ -238,7 +238,7 @@ Rectangle {
         }
 
         Repeater {
-            model: root.frameCpp ? root.frameCpp.tabWidget.dockWidgetModel : 0
+            model: root.groupCpp ? root.groupCpp.tabWidget.dockWidgetModel : 0
             TabButton {
                 readonly property int tabIndex: index
                 text: title

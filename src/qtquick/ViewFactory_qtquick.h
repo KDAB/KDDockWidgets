@@ -74,7 +74,7 @@ public:
 
     Q_INVOKABLE virtual QUrl titleBarFilename() const;
     virtual QUrl dockwidgetFilename() const;
-    virtual QUrl frameFilename() const;
+    virtual QUrl groupFilename() const;
     virtual QUrl floatingWindowFilename() const;
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;

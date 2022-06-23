@@ -16,8 +16,8 @@
 
 TEST_CASE("TabBar ctor")
 {
-    Controllers::Group frame(nullptr, {});
-    Controllers::Stack stack(&frame, {});
+    Controllers::Group group(nullptr, {});
+    Controllers::Stack stack(&group, {});
     Controllers::TabBar tabBar(&stack);
     CHECK(tabBar.view()->is(Type::TabBar));
     CHECK(tabBar.view()->asWrapper()->is(Type::TabBar));

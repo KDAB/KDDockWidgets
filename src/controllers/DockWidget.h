@@ -184,7 +184,7 @@ public:
      * The position of the rect is in layout coordinates. 0,0 is the top-left of the layout
      * holding the widgets.
      */
-    QRect frameGeometry() const;
+    QRect groupGeometry() const;
 
     /**
      * @brief Returns the dock widget's options which control behaviour.

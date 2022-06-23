@@ -93,9 +93,9 @@ public:
     /// QObject so we don't include private headers in public headers
     QObject *actualTitleBarView() const;
 
-    /// @brief Returns the visual item which represents Frame in the screen
-    /// Equivalent to Frame::visualItem().
-    QQuickItem *frameVisualItem() const;
+    /// @brief Returns the visual item which represents Group in the screen
+    /// Equivalent to Group::visualItem().
+    QQuickItem *groupVisualItem() const;
 
     /// @brief Called by QtQuick when min-size changes
     Q_INVOKABLE void onGeometryUpdated();
@@ -112,9 +112,9 @@ public:
     Q_INVOKABLE void moveToSideBar();
 #endif
 Q_SIGNALS:
-    /// @brief The geometry of the frame container this dock widget is in changed
+    /// @brief The geometry of the group container this dock widget is in changed
     /// For example, when dragging a dockwidget
-    void frameGeometryChanged(QRect);
+    void groupGeometryChanged(QRect);
     void actualTitleBarChanged();
     void isFocusedChanged();
     void isFloatingChanged();

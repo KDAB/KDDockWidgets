@@ -932,7 +932,7 @@ void TestQtWidgets::tst_embeddedMainWindow()
 
     auto layout = dropArea;
     QVERIFY(Platform::instance()->tests_waitForDeleted(fw));
-    QCOMPARE(layout->count(), 2); // 2, as it has the central frame
+    QCOMPARE(layout->count(), 2); // 2, as it has the central group
     QCOMPARE(layout->visibleCount(), 2);
     layout->checkSanity();
 

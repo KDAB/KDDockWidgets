@@ -269,7 +269,7 @@ void DockWidget::setTitle(const QString &title)
     }
 }
 
-QRect DockWidget::frameGeometry() const
+QRect DockWidget::groupGeometry() const
 {
     if (Controllers::Group *f = d->group())
         return f->view()->geometry();
