@@ -83,40 +83,58 @@ void MainWindowInstantiator::layoutEqually()
         m_mainWindow->layoutEqually();
 }
 
-void MainWindowInstantiator::layoutParentContainerEqually(Controllers::DockWidget *dw)
+void MainWindowInstantiator::layoutParentContainerEqually(QQuickItem *dockWidget)
 {
-    if (m_mainWindow)
-        m_mainWindow->layoutParentContainerEqually(dw);
+    if (!m_mainWindow || !dockWidget)
+        return;
+
+    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    m_mainWindow->layoutParentContainerEqually(dw);
 }
 
-void MainWindowInstantiator::moveToSideBar(Controllers::DockWidget *dw)
+void MainWindowInstantiator::moveToSideBar(QQuickItem *dockWidget)
 {
-    if (m_mainWindow)
-        m_mainWindow->moveToSideBar(dw);
+    if (!m_mainWindow || !dockWidget)
+        return;
+
+    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    m_mainWindow->moveToSideBar(dw);
 }
 
-void MainWindowInstantiator::moveToSideBar(Controllers::DockWidget *dw, SideBarLocation loc)
+void MainWindowInstantiator::moveToSideBar(QQuickItem *dockWidget, SideBarLocation loc)
 {
-    if (m_mainWindow)
-        m_mainWindow->moveToSideBar(dw, loc);
+    if (!m_mainWindow || !dockWidget)
+        return;
+
+    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    m_mainWindow->moveToSideBar(dw, loc);
 }
 
-void MainWindowInstantiator::restoreFromSideBar(Controllers::DockWidget *dw)
+void MainWindowInstantiator::restoreFromSideBar(QQuickItem *dockWidget)
 {
-    if (m_mainWindow)
-        m_mainWindow->restoreFromSideBar(dw);
+    if (!m_mainWindow || !dockWidget)
+        return;
+
+    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    m_mainWindow->restoreFromSideBar(dw);
 }
 
-void MainWindowInstantiator::overlayOnSideBar(Controllers::DockWidget *dw)
+void MainWindowInstantiator::overlayOnSideBar(QQuickItem *dockWidget)
 {
-    if (m_mainWindow)
-        m_mainWindow->overlayOnSideBar(dw);
+    if (!m_mainWindow || !dockWidget)
+        return;
+
+    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    m_mainWindow->overlayOnSideBar(dw);
 }
 
-void MainWindowInstantiator::toggleOverlayOnSideBar(Controllers::DockWidget *dw)
+void MainWindowInstantiator::toggleOverlayOnSideBar(QQuickItem *dockWidget)
 {
-    if (m_mainWindow)
-        m_mainWindow->toggleOverlayOnSideBar(dw);
+    if (!m_mainWindow || !dockWidget)
+        return;
+
+    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    m_mainWindow->toggleOverlayOnSideBar(dw);
 }
 
 void MainWindowInstantiator::clearSideBarOverlay(bool deleteFrame)

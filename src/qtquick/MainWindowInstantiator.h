@@ -20,16 +20,12 @@
 
 namespace KDDockWidgets {
 
-class MainWindowQuick;
-class DockWidgetInstantiator;
-
 namespace Controllers {
-class DockWidget;
 class MainWindow;
 class SideBar;
 }
 
-/// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindowQuick's ctor
+/// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindow's ctor
 /// So instead, user instantiates a MainWindowWrapper in QML and calls init.
 class DOCKS_EXPORT MainWindowInstantiator
     : public QQuickItem
@@ -59,14 +55,13 @@ public:
                                    QSize initialSize = {}, KDDockWidgets::InitialVisibilityOption = {});
 
     Q_INVOKABLE void layoutEqually();
-    Q_INVOKABLE void layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget *dockWidget);
-    Q_INVOKABLE void moveToSideBar(KDDockWidgets::Controllers::DockWidget *);
-    Q_INVOKABLE void moveToSideBar(KDDockWidgets::Controllers::DockWidget *, KDDockWidgets::SideBarLocation);
-    Q_INVOKABLE void restoreFromSideBar(KDDockWidgets::Controllers::DockWidget *);
-    Q_INVOKABLE void overlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
-    Q_INVOKABLE void toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
+    Q_INVOKABLE void layoutParentContainerEqually(QQuickItem *dockWidget);
+    Q_INVOKABLE void moveToSideBar(QQuickItem *);
+    Q_INVOKABLE void moveToSideBar(QQuickItem *, KDDockWidgets::SideBarLocation);
+    Q_INVOKABLE void restoreFromSideBar(QQuickItem *);
+    Q_INVOKABLE void overlayOnSideBar(QQuickItem *);
+    Q_INVOKABLE void toggleOverlayOnSideBar(QQuickItem *);
     Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
-    // Q_INVOKABLE KDDockWidgets::SideBar *sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget *) const;
     Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
 
