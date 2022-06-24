@@ -25,11 +25,13 @@ namespace Layouting {
 class Item;
 }
 
+QT_BEGIN_NAMESPACE
 class QCloseEvent;
 class QFocusEvent;
 class QSizePolicy;
 class QScreen;
 class QPainter;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

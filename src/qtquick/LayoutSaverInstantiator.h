@@ -15,11 +15,12 @@
 
 #include "LayoutSaver.h"
 
-QT_BEGIN_NAMESPACE
 #include <QObject>
-QT_END_NAMESPACE
 
+
+QT_BEGIN_NAMESPACE
 class QQuickItem;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
