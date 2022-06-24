@@ -59,9 +59,13 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
+#ifdef Q_MOC_RUN
+    Q_INVOKABLE bool closeDockWidgets(bool force = false);
+    Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
+    Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
+    Q_INVOKABLE void layoutEqually();
+    Q_INVOKABLE bool anySideBarIsVisible() const;
 
-    /// controllers/MainWindow.h public API as invokables. Since controllers will cease to be a QObject.
-    /// See controllers/MainWindow.h for respective documentation
     Q_INVOKABLE void moveToSideBar(const QString &dockId);
     Q_INVOKABLE void moveToSideBar(const QString &dockId, KDDockWidgets::SideBarLocation);
     Q_INVOKABLE void restoreFromSideBar(const QString &dockId);
@@ -74,12 +78,6 @@ public:
                                    const QString &relativeToDockId = {},
                                    KDDockWidgets::InitialOption = {});
 
-#ifdef Q_MOC_RUN
-    Q_INVOKABLE bool closeDockWidgets(bool force = false);
-    Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
-    Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
-    Q_INVOKABLE void layoutEqually();
-    Q_INVOKABLE bool anySideBarIsVisible() const;
 #endif
 
 protected:

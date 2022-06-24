@@ -13,6 +13,8 @@
 #include "DockWidgetViewInterface.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 
+#include "DockRegistry.h"
+
 namespace KDDockWidgets::Views {
 
 MainWindowViewInterface::MainWindowViewInterface(Controllers::MainWindow *controller)
@@ -132,6 +134,84 @@ void MainWindowViewInterface::layoutParentContainerEqually(DockWidgetViewInterfa
 {
     auto dw = dockView ? dockView->dockWidget() : nullptr;
     m_mainWindow->layoutParentContainerEqually(dw);
+}
+
+
+void MainWindowViewInterface::moveToSideBar(const QString &dockId)
+{
+    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+        return m_mainWindow->moveToSideBar(dw);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
+    }
+}
+
+void MainWindowViewInterface::moveToSideBar(const QString &dockId, KDDockWidgets::SideBarLocation loc)
+{
+    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+        return m_mainWindow->moveToSideBar(dw, loc);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
+    }
+}
+
+void MainWindowViewInterface::restoreFromSideBar(const QString &dockId)
+{
+    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+        return m_mainWindow->restoreFromSideBar(dw);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
+    }
+}
+
+void MainWindowViewInterface::overlayOnSideBar(const QString &dockId)
+{
+    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+        return m_mainWindow->overlayOnSideBar(dw);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
+    }
+}
+
+void MainWindowViewInterface::toggleOverlayOnSideBar(const QString &dockId)
+{
+    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+        return m_mainWindow->toggleOverlayOnSideBar(dw);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
+    }
+}
+
+void MainWindowViewInterface::layoutParentContainerEqually(const QString &dockId)
+{
+    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+        return m_mainWindow->layoutParentContainerEqually(dw);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
+    }
+}
+
+void MainWindowViewInterface::addDockWidgetAsTab(const QString &dockId)
+{
+    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+        return m_mainWindow->addDockWidgetAsTab(dw);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
+    }
+}
+
+void MainWindowViewInterface::addDockWidget(const QString &dockId,
+                                            KDDockWidgets::Location location,
+                                            const QString &relativeToDockId,
+                                            KDDockWidgets::InitialOption initialOption)
+{
+    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+        auto relativeTo = relativeToDockId.isEmpty() ? nullptr
+                                                     : DockRegistry::self()->dockByName(relativeToDockId);
+        return m_mainWindow->addDockWidget(dw, location, relativeTo, initialOption);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
+    }
 }
 
 }

@@ -69,6 +69,18 @@ public:
     void toggleOverlayOnSideBar(DockWidgetViewInterface *);
     void layoutParentContainerEqually(DockWidgetViewInterface *);
 
+    void moveToSideBar(const QString &dockId);
+    void moveToSideBar(const QString &dockId, KDDockWidgets::SideBarLocation);
+    void restoreFromSideBar(const QString &dockId);
+    void overlayOnSideBar(const QString &dockId);
+    void toggleOverlayOnSideBar(const QString &dockId);
+    void layoutParentContainerEqually(const QString &dockId);
+    void addDockWidgetAsTab(const QString &dockId);
+    void addDockWidget(const QString &dockId,
+                       KDDockWidgets::Location,
+                       const QString &relativeToDockId = {},
+                       KDDockWidgets::InitialOption = {});
+
 protected:
     void init(const QString &name);
     Controllers::MainWindow *const m_mainWindow;
