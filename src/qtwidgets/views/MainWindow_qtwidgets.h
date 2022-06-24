@@ -24,7 +24,9 @@
 
 #include <QMainWindow>
 
+QT_BEGIN_NAMESPACE
 class QHBoxLayout;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

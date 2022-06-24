@@ -16,7 +16,9 @@
 #include <QVector>
 #include <QPoint>
 
+QT_BEGIN_NAMESPACE
 class QRect;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 class Config;

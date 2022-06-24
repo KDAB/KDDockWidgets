@@ -13,9 +13,11 @@
 
 #include "kddockwidgets/docks_export.h"
 
+QT_BEGIN_NAMESPACE
 class QPoint;
 class QIcon;
 class QString;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

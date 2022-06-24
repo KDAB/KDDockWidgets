@@ -14,8 +14,10 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
+QT_BEGIN_NAMESPACE
 class QMargins;
 class QRect;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

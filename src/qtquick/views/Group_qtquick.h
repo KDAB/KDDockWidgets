@@ -18,7 +18,9 @@
 #include "views/GroupViewInterface.h"
 #include "TitleBar_qtquick.h"
 
+QT_BEGIN_NAMESPACE
 class QQuickItem;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

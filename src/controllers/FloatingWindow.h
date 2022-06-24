@@ -20,7 +20,9 @@
 #include "private/Draggable_p.h"
 #include "kddockwidgets/docks_export.h"
 
+QT_BEGIN_NAMESPACE
 class QAbstractNativeEventFilter;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets::Controllers {
 

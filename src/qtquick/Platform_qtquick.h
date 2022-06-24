@@ -14,8 +14,10 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/Platform_qt.h"
 
+QT_BEGIN_NAMESPACE
 class QQmlEngine;
 class QQuickItem;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

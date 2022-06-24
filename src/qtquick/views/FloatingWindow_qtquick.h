@@ -14,7 +14,9 @@
 
 #include "View_qtquick.h"
 
+QT_BEGIN_NAMESPACE
 class QQuickView;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

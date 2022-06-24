@@ -17,7 +17,9 @@
 
 #include "kdbindings/signal.h"
 
+QT_BEGIN_NAMESPACE
 class QScreen;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
