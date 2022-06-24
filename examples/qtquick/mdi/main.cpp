@@ -52,9 +52,9 @@ int main(int argc, char *argv[])
     auto mainAreaView = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst()->view();
     auto mainAreaMDI = static_cast<KDDockWidgets::Views::MainWindowMDI_qtquick *>(mainAreaView);
 
-    mainAreaMDI->addDockWidget(dw1->dockWidget(), QPoint(10, 10));
-    mainAreaMDI->addDockWidget(dw2->dockWidget(), QPoint(50, 50));
-    mainAreaMDI->addDockWidget(dw3->dockWidget(), QPoint(90, 90));
+    mainAreaMDI->addDockWidget(dw1, QPoint(10, 10));
+    mainAreaMDI->addDockWidget(dw2, QPoint(50, 50));
+    mainAreaMDI->addDockWidget(dw3, QPoint(90, 90));
 
     return app.exec();
 }

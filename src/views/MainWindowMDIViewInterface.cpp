@@ -10,6 +10,7 @@
 */
 
 #include "MainWindowMDIViewInterface.h"
+#include "DockWidgetViewInterface.h"
 #include "controllers/MDILayout.h"
 
 using namespace KDDockWidgets;
@@ -21,12 +22,16 @@ MainWindowMDIViewInterface::MainWindowMDIViewInterface(Controllers::MDILayout *l
 {
 }
 
-void MainWindowMDIViewInterface::addDockWidget(DockWidget *dockWidget, QPoint localPos, InitialOption addingOption)
+void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget,
+                                               QPoint localPos, InitialOption addingOption)
 {
-    m_mdiLayout->addDockWidget(dockWidget, localPos, addingOption);
+    Controllers::DockWidget *dw = dockWidget ? dockWidget->dockWidget() : nullptr;
+    m_mdiLayout->addDockWidget(dw, localPos, addingOption);
 }
 
-void MainWindowMDIViewInterface::addDockWidget(DockWidget *dockWidget, QPointF localPos, InitialOption addingOption)
+void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget,
+                                               QPointF localPos, InitialOption addingOption)
 {
-    MainWindowMDIViewInterface::addDockWidget(dockWidget, localPos.toPoint(), addingOption);
+    Controllers::DockWidget *dw = dockWidget ? dockWidget->dockWidget() : nullptr;
+    m_mdiLayout->addDockWidget(dw, localPos.toPoint(), addingOption);
 }

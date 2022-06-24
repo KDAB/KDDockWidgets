@@ -59,9 +59,9 @@ int main(int argc, char **argv)
     // widget3->blockCloseEvent();
 
     // # 3. Dock them
-    mainWindow.addDockWidget(dock1->dockWidget(), QPoint(10, 10));
-    mainWindow.addDockWidget(dock2->dockWidget(), QPoint(50, 50));
-    mainWindow.addDockWidget(dock3->dockWidget(), QPoint(90, 90));
+    mainWindow.addDockWidget(dock1, QPoint(10, 10));
+    mainWindow.addDockWidget(dock2, QPoint(50, 50));
+    mainWindow.addDockWidget(dock3, QPoint(90, 90));
 
     return app.exec();
 }

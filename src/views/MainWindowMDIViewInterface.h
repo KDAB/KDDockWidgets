@@ -25,6 +25,8 @@ class MDILayout;
 
 namespace Views {
 
+class DockWidgetViewInterface;
+
 /// @brief Interface for MainWindowMDI views
 class DOCKS_EXPORT MainWindowMDIViewInterface
 {
@@ -38,11 +40,11 @@ public:
 
     ///@brief Docks @p dockWidget
     /// The widget will be placed at the specified position
-    void addDockWidget(Controllers::DockWidget *dockWidget,
+    void addDockWidget(DockWidgetViewInterface *dockWidget,
                        QPoint localPos, InitialOption addingOption = {});
 
     ///@brief Convenience overload
-    void addDockWidget(Controllers::DockWidget *dockWidget,
+    void addDockWidget(DockWidgetViewInterface *dockWidget,
                        QPointF localPos, InitialOption addingOption = {});
 
 private:
