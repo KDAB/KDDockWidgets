@@ -12,6 +12,7 @@
 #include "View_qtwidgets.h"
 #include "../Window_qtwidgets.h"
 #include "private/View_p.h"
+#include "ViewWrapper_qtwidgets.h"
 
 #include <QTabBar>
 #include <QTabWidget>
@@ -107,6 +108,62 @@ void View_qtwidgets<T>::setMinimumSize(QSize sz)
         QWidget::setMinimumSize(sz);
         d->layoutInvalidated.emit();
     }
+}
+
+
+template<class T>
+std::shared_ptr<View> View_qtwidgets<T>::childViewAt(QPoint localPos) const
+{
+    if (QWidget *child = QWidget::childAt(localPos))
+        return std::shared_ptr<View>(new ViewWrapper_qtwidgets(child));
+
+    return {};
+}
+
+template<class T>
+std::shared_ptr<View> View_qtwidgets<T>::rootView() const
+{
+    if (auto w = QWidget::window()) {
+        View *wrapper = new ViewWrapper_qtwidgets(w);
+        return std::shared_ptr<View>(wrapper);
+    }
+
+    return {};
+}
+
+template<class T>
+std::shared_ptr<View> View_qtwidgets<T>::parentView() const
+{
+    if (QWidget *p = QWidget::parentWidget()) {
+        View *wrapper = new ViewWrapper_qtwidgets(p);
+        return std::shared_ptr<View>(wrapper);
+    }
+
+    return {};
+}
+
+template<class T>
+std::shared_ptr<View> View_qtwidgets<T>::asWrapper()
+{
+    View *wrapper = new ViewWrapper_qtwidgets(this);
+    return std::shared_ptr<View>(wrapper);
+}
+
+/* static */
+template<class T>
+QVector<std::shared_ptr<View>> View_qtwidgets<T>::childViewsFor(const QWidget *parent)
+{
+    QVector<std::shared_ptr<View>> result;
+    const QObjectList children = parent->children();
+    result.reserve(children.size());
+    for (QObject *child : children) {
+        if (auto widget = qobject_cast<QWidget *>(child)) {
+            View *wrapper = new ViewWrapper_qtwidgets(widget);
+            result.push_back(std::shared_ptr<View>(wrapper));
+        }
+    }
+
+    return result;
 }
 
 namespace KDDockWidgets::Views {

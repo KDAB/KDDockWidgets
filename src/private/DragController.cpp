@@ -867,8 +867,8 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 
 #endif
 
-static ViewWrapper::Ptr qtTopLevelUnderCursor_impl(QPoint globalPos, const Window::List &windows,
-                                                   View *rootViewBeingDragged)
+static std::shared_ptr<View> qtTopLevelUnderCursor_impl(QPoint globalPos, const Window::List &windows,
+                                                        View *rootViewBeingDragged)
 {
     for (auto i = windows.size() - 1; i >= 0; --i) {
         Window::Ptr window = windows.at(i);
@@ -889,7 +889,7 @@ static ViewWrapper::Ptr qtTopLevelUnderCursor_impl(QPoint globalPos, const Windo
     return nullptr;
 }
 
-ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
+std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
 {
     QPoint globalPos = QCursor::pos();
 
@@ -970,7 +970,7 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
     return nullptr;
 }
 
-static DropArea *deepestDropAreaInTopLevel(ViewWrapper::Ptr topLevel, QPoint globalPos,
+static DropArea *deepestDropAreaInTopLevel(std::shared_ptr<View> topLevel, QPoint globalPos,
                                            const QStringList &affinities)
 {
     const auto localPos = topLevel->mapFromGlobal(globalPos);
@@ -989,7 +989,7 @@ static DropArea *deepestDropAreaInTopLevel(ViewWrapper::Ptr topLevel, QPoint glo
 
 DropArea *DragController::dropAreaUnderCursor() const
 {
-    ViewWrapper::Ptr topLevel = qtTopLevelUnderCursor();
+    std::shared_ptr<View> topLevel = qtTopLevelUnderCursor();
     if (!topLevel)
         return nullptr;
 

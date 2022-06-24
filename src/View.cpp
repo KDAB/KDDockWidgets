@@ -23,7 +23,6 @@
 #include "controllers/MDILayout.h"
 
 #include "Platform.h"
-#include "ViewWrapper.h"
 #include "Window.h"
 
 #include <QScreen>

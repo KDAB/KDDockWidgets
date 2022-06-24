@@ -11,7 +11,6 @@
 
 #include "Controller.h"
 #include "View.h"
-#include "ViewWrapper.h"
 
 #include <QDebug>
 

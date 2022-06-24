@@ -711,6 +711,13 @@ std::shared_ptr<View> View_qtquick::parentViewFor(const QQuickItem *item)
     return p ? asQQuickWrapper(p) : nullptr;
 }
 
+/* static */
+std::shared_ptr<View> View_qtquick::asQQuickWrapper(QQuickItem *item)
+{
+    auto wrapper = new ViewWrapper_qtquick(item);
+    return std::shared_ptr<View>(wrapper);
+}
+
 std::shared_ptr<View> View_qtquick::parentView() const
 {
     return parentViewFor(this);

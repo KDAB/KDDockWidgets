@@ -33,7 +33,6 @@ class QPainter;
 
 namespace KDDockWidgets {
 
-class ViewWrapper;
 class Controller;
 class Window;
 

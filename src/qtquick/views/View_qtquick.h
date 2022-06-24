@@ -13,7 +13,6 @@
 
 #include "kddockwidgets/Controller.h"
 #include "kddockwidgets/View.h"
-#include "ViewWrapper_qtquick.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -45,14 +44,6 @@ inline QQuickItem *asQQuickItem(Controller *controller)
 
     return asQQuickItem(controller->view());
 }
-
-inline std::shared_ptr<View> asQQuickWrapper(QQuickItem *item)
-{
-    auto wrapper = new ViewWrapper_qtquick(item);
-    return std::shared_ptr<View>(wrapper);
-}
-
-
 
 class DOCKS_EXPORT View_qtquick : public QQuickItem,
                                   public View
@@ -166,6 +157,7 @@ public:
     /// @brief Convenience to create a QQuickItem
     static QQuickItem *createItem(QQmlEngine *engine, const QString &filename);
     static std::shared_ptr<View> parentViewFor(const QQuickItem *);
+    static std::shared_ptr<View> asQQuickWrapper(QQuickItem *item);
 
 Q_SIGNALS:
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change

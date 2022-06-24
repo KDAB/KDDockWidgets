@@ -392,7 +392,6 @@ if(KDDockWidgets_TESTS)
     add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
 
     add_test(NAME tst_view COMMAND tst_view)
-    add_test(NAME tst_viewwrapper COMMAND tst_viewwrapper)
     add_test(NAME tst_viewguard COMMAND tst_viewguard)
     add_test(NAME tst_group COMMAND tst_group)
     add_test(NAME tst_titlebar COMMAND tst_titlebar)

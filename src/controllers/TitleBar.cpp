@@ -18,7 +18,6 @@
 #include "private/Logging_p.h"
 
 #include "views/TitleBarViewInterface.h"
-#include "ViewWrapper.h"
 #include "controllers/DockWidget_p.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/TabBar.h"

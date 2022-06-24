@@ -24,7 +24,6 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 class View;
-class ViewWrapper;
 
 enum class Type
 {

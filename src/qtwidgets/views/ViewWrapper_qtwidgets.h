@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "kddockwidgets/ViewWrapper.h"
+#include "../../ViewWrapper.h"
 
 #include <QWidget>
 #include <QPointer>

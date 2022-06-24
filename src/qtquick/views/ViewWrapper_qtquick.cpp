@@ -150,7 +150,7 @@ void ViewWrapper_qtquick::setGeometry(QRect rect)
 std::shared_ptr<View> ViewWrapper_qtquick::childViewAt(QPoint p) const
 {
     auto child = m_item->childAt(p.x(), p.y());
-    return child ? asQQuickWrapper(child) : nullptr;
+    return child ? View_qtquick::asQQuickWrapper(child) : nullptr;
 }
 
 std::shared_ptr<Window> ViewWrapper_qtquick::window() const
@@ -413,7 +413,7 @@ QVector<std::shared_ptr<View>> ViewWrapper_qtquick::childViews() const
     QVector<std::shared_ptr<View>> result;
     const auto childItems = m_item->childItems();
     for (QQuickItem *child : childItems) {
-        result << asQQuickWrapper(child);
+        result << View_qtquick::asQQuickWrapper(child);
     }
 
     return result;

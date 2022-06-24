@@ -13,7 +13,6 @@
 
 #include "kddockwidgets/Controller.h"
 #include "kddockwidgets/View.h"
-#include "kddockwidgets/views/ViewWrapper_qtwidgets.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -345,41 +344,15 @@ public:
         return QWidget::hasFocus();
     }
 
-    std::shared_ptr<View> childViewAt(QPoint localPos) const override
-    {
-        if (QWidget *child = QWidget::childAt(localPos))
-            return std::shared_ptr<View>(new ViewWrapper_qtwidgets(child));
-
-        return {};
-    }
+    std::shared_ptr<View> childViewAt(QPoint localPos) const override;
 
     std::shared_ptr<Window> window() const override;
 
-    std::shared_ptr<View> rootView() const override
-    {
-        if (auto w = QWidget::window()) {
-            ViewWrapper *wrapper = new ViewWrapper_qtwidgets(w);
-            return std::shared_ptr<View>(wrapper);
-        }
+    std::shared_ptr<View> rootView() const override;
 
-        return {};
-    }
+    std::shared_ptr<View> parentView() const override;
 
-    std::shared_ptr<View> parentView() const override
-    {
-        if (QWidget *p = QWidget::parentWidget()) {
-            ViewWrapper *wrapper = new ViewWrapper_qtwidgets(p);
-            return std::shared_ptr<View>(wrapper);
-        }
-
-        return {};
-    }
-
-    std::shared_ptr<View> asWrapper() override
-    {
-        ViewWrapper *wrapper = new ViewWrapper_qtwidgets(this);
-        return std::shared_ptr<View>(wrapper);
-    }
+    std::shared_ptr<View> asWrapper() override;
 
     void setObjectName(const QString &name) override
     {
@@ -436,20 +409,7 @@ public:
         return asQWidget(controller->view());
     }
 
-    static QVector<std::shared_ptr<View>> childViewsFor(const QWidget *parent)
-    {
-        QVector<std::shared_ptr<View>> result;
-        const QObjectList children = parent->children();
-        result.reserve(children.size());
-        for (QObject *child : children) {
-            if (auto widget = qobject_cast<QWidget *>(child)) {
-                ViewWrapper *wrapper = new ViewWrapper_qtwidgets(widget);
-                result.push_back(ViewWrapper::Ptr(wrapper));
-            }
-        }
-
-        return result;
-    }
+    static QVector<std::shared_ptr<View>> childViewsFor(const QWidget *parent);
 
     QVector<std::shared_ptr<View>> childViews() const override
     {

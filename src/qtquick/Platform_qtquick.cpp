@@ -22,6 +22,7 @@
 #include "private/DragController_p.h"
 #include "private/Platform_p.h"
 #include "ViewFactory_qtquick.h"
+#include "views/ViewWrapper_qtquick.h"
 
 #include "views/DockWidget_qtquick.h"
 #include "DockWidgetInstantiator.h"

@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "ViewWrapper.h"
+#include "View.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include <QEvent>

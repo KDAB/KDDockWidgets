@@ -11,6 +11,7 @@
 
 #include "DockWidget_qtwidgets.h"
 #include "controllers/DockWidget.h"
+#include "ViewWrapper_qtwidgets.h"
 
 #include <QCloseEvent>
 #include <QVBoxLayout>

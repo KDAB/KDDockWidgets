@@ -91,7 +91,6 @@ set(KDDW_BACKEND_SRCS
     ViewGuard.cpp
     ViewGuard.h
     ViewWrapper.cpp
-    ViewWrapper.h
     Controller.cpp
     Controller.h
     Platform.cpp
@@ -219,7 +218,6 @@ set(KDDW_PUBLIC_HEADERS
     Action.h
     Controller.h
     View.h
-    ViewWrapper.h
     Window.h
     ViewFactory.h
     Qt5Qt6Compat_p.h

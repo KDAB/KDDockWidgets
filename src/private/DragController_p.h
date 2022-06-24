@@ -13,7 +13,6 @@
 #define KD_DRAGCONTROLLER_P_H
 
 #include "kddockwidgets/docks_export.h"
-#include "ViewWrapper.h"
 
 #include "WindowBeingDragged_p.h"
 
@@ -130,7 +129,7 @@ private:
 
     DragController(QObject * = nullptr);
     StateBase *activeState() const;
-    ViewWrapper::Ptr qtTopLevelUnderCursor() const;
+    std::shared_ptr<View> qtTopLevelUnderCursor() const;
     Draggable *draggableForQObject(QObject *o) const;
     QPoint m_pressPos;
     QPoint m_offset;

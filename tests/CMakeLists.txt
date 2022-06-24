@@ -61,9 +61,6 @@ target_link_libraries(tst_viewguard kddockwidgets kdbindings)
 add_executable(tst_view tst_view.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_view kddockwidgets kdbindings)
 
-add_executable(tst_viewwrapper tst_viewwrapper.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_viewwrapper kddockwidgets kdbindings)
-
 add_executable(tst_group controllers/tst_group.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_group kddockwidgets kdbindings)
 

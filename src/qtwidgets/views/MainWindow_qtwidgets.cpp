@@ -19,7 +19,7 @@
 #include "MainWindow_qtwidgets.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-
+#include "ViewWrapper_qtwidgets.h"
 #include "kddockwidgets/controllers/DropArea.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 #include "kddockwidgets/controllers/Group.h"

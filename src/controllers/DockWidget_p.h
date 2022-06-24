@@ -15,7 +15,6 @@
 #include "DockWidget.h"
 #include "DockRegistry.h"
 #include "private/Position_p.h"
-#include "ViewWrapper.h"
 #include "Action.h"
 #include "private/View_p.h"
 
