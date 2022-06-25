@@ -27,3 +27,9 @@ TEST_CASE("Platform::name")
     auto plat = Platform::instance();
     CHECK(!std::string(plat->name()).empty());
 }
+
+TEST_CASE("Platform::createDefaultViewFactory")
+{
+    auto plat = Platform::instance();
+    REQUIRE(plat->createDefaultViewFactory());
+}
