@@ -395,6 +395,7 @@ if(KDDockWidgets_TESTS)
 
     add_test(NAME tst_view COMMAND tst_view)
     add_test(NAME tst_viewguard COMMAND tst_viewguard)
+    add_test(NAME tst_window COMMAND tst_window)
     add_test(NAME tst_group COMMAND tst_group)
     add_test(NAME tst_titlebar COMMAND tst_titlebar)
     add_test(NAME tst_stack COMMAND tst_stack)
