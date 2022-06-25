@@ -160,6 +160,7 @@ void TitleBar_qtwidgets::init()
     connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, m_floatButton, &QWidget::setVisible);
     connect(m_titleBar, &Controllers::TitleBar::autoHideButtonChanged, this, &TitleBar_qtwidgets::updateAutoHideButton);
     connect(m_titleBar, &Controllers::TitleBar::minimizeButtonChanged, this, &TitleBar_qtwidgets::updateMinimizeButton);
+    connect(m_titleBar, &Controllers::TitleBar::maximizeButtonChanged, this, &TitleBar_qtwidgets::updateMaximizeButton);
 
     m_floatButton->setVisible(m_titleBar->floatButtonVisible());
     m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());

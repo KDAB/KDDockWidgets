@@ -170,40 +170,6 @@ public:
     ///@brief Returns the contents margins
     QMargins contentMargins() const;
 
-    ///@brief Allows the user to override QWindow::isMaximized()
-    /// Needed to workaround window managers that don't support maximizing/minimizing Qt::Tool windows.
-    /// By default this just calls QWindow::isMaximized()
-    /// @sa QTBUG-95478
-    virtual bool isMaximizedOverride() const;
-
-    ///@brief Allows the user to override QWindow::isMinimized()
-    /// Needed to workaround window managers that don't support maximizing/minimizing Qt::Tool windows.
-    /// By default this just calls QWindow::isMinimized()
-    /// @sa QTBUG-95478
-    virtual bool isMinimizedOverride() const;
-
-    ///@brief By default equivalent to QWindow::showMaximized()
-    /// But allows the user to override it and workaround exotic window manager bugs
-    /// @sa QTBUG-95478
-    virtual void showMaximized();
-
-    ///@brief By default equivalent to QWindow::showNormal()
-    /// But allows the user to override it and workaround exotic window manager bugs
-    /// @sa QTBUG-95478
-    virtual void showNormal();
-
-    ///@brief By default equivalent to QWindow::showMinimized()
-    /// But allows the user to override it and workaround exotic window manager bugs
-    /// @sa QTBUG-95478
-    virtual void showMinimized();
-
-    ///@brief By default equivalent to QWidget::normalGeometry()
-    /// Derived classes can implement something different here, to workaround window manager issues with Qt::Tool
-    /// Also useful for QtQuick to eventually preserve normal geometry upon save/restore of a maximized window. As
-    /// QWindow has no notion of normal geometry, so we need to implement it here.
-    /// @sa QTBUG-95478
-    virtual QRect normalGeometry() const;
-
     // The state reported by QWidget is not always the same as what the
     // window manager thinks, due to the async nature. This method
     // returns the last state reported by the window manager itself.

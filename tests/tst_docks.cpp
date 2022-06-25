@@ -629,7 +629,7 @@ void TestDocks::tst_restoreFloatingMinimizedState()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
-    dock1->floatingWindow()->showMinimized();
+    dock1->floatingWindow()->view()->showMinimized();
 
     QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), Qt::WindowMinimized);
 

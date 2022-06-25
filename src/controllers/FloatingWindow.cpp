@@ -441,9 +441,9 @@ Qt::WindowState FloatingWindow::windowStateOverride() const
 {
     Qt::WindowState state = Qt::WindowNoState;
 
-    if (isMaximizedOverride())
+    if (view()->isMaximized())
         state = Qt::WindowMaximized;
-    else if (isMinimizedOverride())
+    else if (view()->isMinimized())
         state = Qt::WindowMinimized;
 
     return state;
@@ -521,11 +521,11 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
         updateTitleBarVisibility();
 
         if (fw.windowState & Qt::WindowMaximized) {
-            showMaximized();
+            view()->showMaximized();
         } else if (fw.windowState & Qt::WindowMinimized) {
-            showMinimized();
+            view()->showMinimized();
         } else {
-            showNormal();
+            view()->showNormal();
         }
 
         return true;
@@ -539,7 +539,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     LayoutSaver::FloatingWindow fw;
 
     fw.geometry = geometry();
-    fw.normalGeometry = normalGeometry();
+    fw.normalGeometry = view()->normalGeometry();
     fw.isVisible = isVisible();
     fw.multiSplitterLayout = dropArea()->serialize();
     fw.screenIndex = Platform::instance()->screenNumberFor(view());
@@ -625,36 +625,6 @@ MainWindow *FloatingWindow::mainWindow() const
 QMargins FloatingWindow::contentMargins() const
 {
     return { 4, 4, 4, 4 };
-}
-
-bool FloatingWindow::isMaximizedOverride() const
-{
-    return view()->isMaximized();
-}
-
-bool FloatingWindow::isMinimizedOverride() const
-{
-    return view()->isMinimized();
-}
-
-void FloatingWindow::showMaximized()
-{
-    view()->showMaximized();
-}
-
-void FloatingWindow::showNormal()
-{
-    view()->showNormal();
-}
-
-void FloatingWindow::showMinimized()
-{
-    view()->showMinimized();
-}
-
-QRect FloatingWindow::normalGeometry() const
-{
-    return view()->normalGeometry();
 }
 
 Qt::WindowState FloatingWindow::lastWindowManagerState() const

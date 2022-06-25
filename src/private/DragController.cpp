@@ -318,11 +318,11 @@ void StateDragging::onEntry()
 
         auto fw = q->m_windowBeingDragged->floatingWindow();
 #ifdef Q_OS_LINUX
-        if (fw->isMaximizedOverride()) {
+        if (fw->view()->isMaximized()) {
             // When dragging a maximized window on linux we need to restore its normal size
             // On Windows this works already. On macOS I don't see this feature at all
 
-            const QRect normalGeometry = fw->normalGeometry();
+            const QRect normalGeometry = fw->view()->normalGeometry();
 
             // distance to the left edge of the window:
             const int leftOffset = q->m_offset.x();
@@ -332,7 +332,7 @@ void StateDragging::onEntry()
 
             const bool leftEdgeIsNearest = leftOffset <= rightOffset;
 
-            fw->showNormal();
+            fw->view()->showNormal();
 
             if (!normalGeometry.contains(q->m_pressPos)) {
                 if ((leftEdgeIsNearest && leftOffset > normalGeometry.width()) || (!leftEdgeIsNearest && rightOffset > normalGeometry.width())) {

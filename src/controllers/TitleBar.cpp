@@ -264,7 +264,7 @@ void TitleBar::updateMaximizeButton()
     TitleBarButtonType type = TitleBarButtonType::Maximize;
 
     if (auto fw = floatingWindow()) {
-        type = fw->isMaximizedOverride() ? TitleBarButtonType::Normal
+        type = fw->view()->isMaximized() ? TitleBarButtonType::Normal
                                          : TitleBarButtonType::Maximize;
 
         visible = supportsMaximizeButton();
@@ -288,10 +288,10 @@ void TitleBar::toggleMaximized()
     if (!m_floatingWindow)
         return;
 
-    if (m_floatingWindow->isMaximizedOverride())
-        m_floatingWindow->showNormal();
+    if (m_floatingWindow->view()->isMaximized())
+        m_floatingWindow->view()->showNormal();
     else
-        m_floatingWindow->showMaximized();
+        m_floatingWindow->view()->showMaximized();
 }
 
 bool TitleBar::isOverlayed() const
@@ -447,7 +447,7 @@ void TitleBar::onMinimizeClicked()
         return;
     }
 
-    m_floatingWindow->showMinimized();
+    m_floatingWindow->view()->showMinimized();
 }
 
 void TitleBar::onAutoHideClicked()
