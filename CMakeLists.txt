@@ -192,6 +192,8 @@ include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 add_definitions(-DQT_NO_KEYWORDS)
 
+option(KDockWidgets_PRETTY_QTWIDGETS_HEADERS "Install DockWidget.h and MainWindow.h as synonyms to the *_qtwidgets.h counterparts." ${KDDW_FRONTEND_QTWIDGETS})
+
 
 if (KDDW_FRONTEND_QTWIDGETS)
   add_definitions(-DKDDW_FRONTEND_QTWIDGETS)

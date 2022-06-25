@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <kddockwidgets/views/DockWidget_qtwidgets.h>
-#include <kddockwidgets/views/MainWindow_qtwidgets.h>
+#include <kddockwidgets/DockWidget.h>
+#include <kddockwidgets/MainWindow.h>
 
 class MyMainWindow : public KDDockWidgets::Views::MainWindow_qtwidgets
 {
