@@ -32,8 +32,9 @@ public:
     explicit Stack_qtwidgets(Controllers::Stack *controller,
                              QWidget *parent = nullptr);
 
-    Controllers::Stack *stack() const;
-    QTabBar *tabBar() const; // TODOm3: tabBarView
+
+    /// @brief Returns the QTabBar associated with this QTabWidget
+    QTabBar *tabBar() const;
 
     int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
@@ -42,6 +43,9 @@ public:
     bool isPositionDraggable(QPoint p) const override;
     void init() override;
     void setDocumentMode(bool) override;
+
+    /// @brief Returns the controller
+    Controllers::Stack *stack() const;
 
 public: // TODOm3: make protected
     void mouseDoubleClickEvent(QMouseEvent *) override;
