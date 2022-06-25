@@ -108,11 +108,6 @@ QQuickItem *TitleBar_qtquick::closeButton() const
                              : nullptr;
 }
 
-void TitleBar_qtquick::updateMaximizeButton()
-{
-    qFatal("Not implemented");
-}
-
 bool TitleBar_qtquick::isFocused() const
 {
     return m_titleBar->isFocused();

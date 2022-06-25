@@ -48,9 +48,7 @@ protected:
     QRect iconRect() const;
     void updateMargins();
 
-    // TODOm3:
-    void updateMaximizeButton() override;
-
+    void updateMaximizeButton(bool visible, bool enabled, TitleBarButtonType);
     void updateAutoHideButton(bool visible, bool enabled, TitleBarButtonType);
     void updateMinimizeButton(bool visible, bool enabled);
 

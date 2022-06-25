@@ -126,17 +126,17 @@ Q_SIGNALS:
     /// @brief Emitted to tell the views to update their minimize button
     void minimizeButtonChanged(bool visible, bool enabled);
 
-protected:
-    virtual void updateMaximizeButton()
-    {
-    }
+    /// @brief Emitted to tell the views to update their maximize button
+    void maximizeButtonChanged(bool visible, bool enabled, TitleBarButtonType);
 
+protected:
     bool isOverlayed() const;
 
 private:
     friend class ::TestDocks;
 
     void updateAutoHideButton();
+    void updateMaximizeButton();
 
     void updateFloatButton();
     void updateCloseButton();

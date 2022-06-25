@@ -54,7 +54,6 @@ protected:
     QQuickItem *titleBarQmlItem() const;
     QQuickItem *titleBarMouseArea() const;
     void setTitleBarQmlItem(QQuickItem *);
-    void updateMaximizeButton() override;
 
     // QML interface
     bool isFocused() const;

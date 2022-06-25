@@ -55,9 +55,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
 {
     init();
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
-    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, [this] {
-        dynamic_cast<Views::TitleBarViewInterface *>(view())->updateMaximizeButton();
-    });
+    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
     connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);
 }
 
@@ -257,6 +255,22 @@ void TitleBar::updateAutoHideButton()
     }
 
     Q_EMIT autoHideButtonChanged(visible, enabled, type);
+}
+
+void TitleBar::updateMaximizeButton()
+{
+    bool visible = false;
+    bool enabled = true;
+    TitleBarButtonType type = TitleBarButtonType::Maximize;
+
+    if (auto fw = floatingWindow()) {
+        type = fw->isMaximizedOverride() ? TitleBarButtonType::Normal
+                                         : TitleBarButtonType::Maximize;
+
+        visible = supportsMaximizeButton();
+    }
+
+    Q_EMIT maximizeButtonChanged(visible, enabled, type);
 }
 
 void TitleBar::updateCloseButton()

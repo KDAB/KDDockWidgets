@@ -136,8 +136,6 @@ void TitleBar_qtwidgets::init()
     connect(m_minimizeButton, &QAbstractButton::clicked, m_titleBar, &Controllers::TitleBar::onMinimizeClicked);
     connect(m_autoHideButton, &QAbstractButton::clicked, m_titleBar, &Controllers::TitleBar::onAutoHideClicked);
 
-    updateMaximizeButton();
-
     m_minimizeButton->setToolTip(tr("Minimize"));
     m_closeButton->setToolTip(tr("Close"));
 
@@ -210,18 +208,14 @@ void TitleBar_qtwidgets::updateAutoHideButton(bool visible, bool enabled, TitleB
     m_autoHideButton->setEnabled(enabled);
 }
 
-void TitleBar_qtwidgets::updateMaximizeButton()
+void TitleBar_qtwidgets::updateMaximizeButton(bool visible, bool enabled, TitleBarButtonType type)
 {
-    if (auto fw = m_titleBar->floatingWindow()) {
+    m_maximizeButton->setEnabled(enabled);
+    m_maximizeButton->setVisible(visible);
+    if (visible) {
         auto factory = Config::self().viewFactory();
-        const TitleBarButtonType iconType = fw->isMaximizedOverride() ? TitleBarButtonType::Normal
-                                                                      : TitleBarButtonType::Maximize;
-        m_maximizeButton->setIcon(factory->iconForButtonType(iconType, devicePixelRatioF()));
-
-        m_maximizeButton->setVisible(m_titleBar->supportsMaximizeButton());
-        m_maximizeButton->setToolTip(fw->isMaximizedOverride() ? tr("Restore") : tr("Maximize"));
-    } else {
-        m_maximizeButton->setVisible(false);
+        m_maximizeButton->setIcon(factory->iconForButtonType(type, devicePixelRatioF()));
+        m_maximizeButton->setToolTip(type == TitleBarButtonType::Normal ? tr("Restore") : tr("Maximize"));
     }
 }
 
