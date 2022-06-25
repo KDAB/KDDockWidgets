@@ -137,7 +137,6 @@ void TitleBar_qtwidgets::init()
     connect(m_autoHideButton, &QAbstractButton::clicked, m_titleBar, &Controllers::TitleBar::onAutoHideClicked);
 
     updateMaximizeButton();
-    updateMinimizeButton();
 
     m_minimizeButton->setToolTip(tr("Minimize"));
     m_closeButton->setToolTip(tr("Close"));
@@ -162,6 +161,7 @@ void TitleBar_qtwidgets::init()
     connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, m_floatButton, &QWidget::setToolTip);
     connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, m_floatButton, &QWidget::setVisible);
     connect(m_titleBar, &Controllers::TitleBar::autoHideButtonChanged, this, &TitleBar_qtwidgets::updateAutoHideButton);
+    connect(m_titleBar, &Controllers::TitleBar::minimizeButtonChanged, this, &TitleBar_qtwidgets::updateMinimizeButton);
 
     m_floatButton->setVisible(m_titleBar->floatButtonVisible());
     m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
@@ -194,9 +194,10 @@ void TitleBar_qtwidgets::paintEvent(QPaintEvent *)
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
 }
 
-void TitleBar_qtwidgets::updateMinimizeButton()
+void TitleBar_qtwidgets::updateMinimizeButton(bool visible, bool enabled)
 {
-    m_minimizeButton->setVisible(m_titleBar->supportsMinimizeButton());
+    m_minimizeButton->setEnabled(enabled);
+    m_minimizeButton->setVisible(visible);
 }
 
 void TitleBar_qtwidgets::updateAutoHideButton(bool visible, bool enabled, TitleBarButtonType type)

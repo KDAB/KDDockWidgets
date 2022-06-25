@@ -123,11 +123,11 @@ Q_SIGNALS:
     /// @brief Emitted to tell the views to update their auto-hide button
     void autoHideButtonChanged(bool visible, bool enabled, TitleBarButtonType);
 
+    /// @brief Emitted to tell the views to update their minimize button
+    void minimizeButtonChanged(bool visible, bool enabled);
+
 protected:
     virtual void updateMaximizeButton()
-    {
-    }
-    virtual void updateMinimizeButton()
     {
     }
 

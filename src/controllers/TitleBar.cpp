@@ -239,7 +239,9 @@ void TitleBar::updateButtons()
     updateCloseButton();
     updateFloatButton();
     updateMaximizeButton();
-    updateMinimizeButton();
+
+    Q_EMIT minimizeButtonChanged(supportsMinimizeButton(), true);
+
     updateAutoHideButton();
 }
 
