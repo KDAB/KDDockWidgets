@@ -52,6 +52,26 @@ public:
 #endif
 protected:
     void init();
-};
 
+    // Platform interface
+public:
+    std::shared_ptr<View> focusedView() const override;
+    std::shared_ptr<View> qobjectAsView(QObject *) const override;
+    std::shared_ptr<Window> qobjectAsWindow(QObject *) const override;
+    QVector<std::shared_ptr<Window>> windows() const override;
+    void sendEvent(View *, QEvent *) const override;
+    int screenNumberFor(std::shared_ptr<Window>) const override;
+    bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout) const override;
+    bool tests_waitForResize(View *, int timeout) const override;
+    bool tests_waitForResize(Controller *, int timeout) const override;
+    bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout) const override;
+    bool tests_waitForEvent(View *, QEvent::Type type, int timeout) const override;
+    bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type, int timeout) const override;
+    bool tests_waitForDeleted(View *, int timeout) const override;
+    bool tests_waitForDeleted(QObject *, int timeout) const override;
+    void tests_sendEvent(std::shared_ptr<Window> window, QEvent *ev) const override;
+    void tests_wait(int ms) override;
+    void installMessageHandler() override;
+    void uninstallMessageHandler() override;
+};
 }

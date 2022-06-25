@@ -123,4 +123,68 @@ Controllers::MainWindow *Platform_dummy::createMainWindow(const QString &,
 }
 
 
+bool Platform_dummy::tests_waitForWindowActive(std::shared_ptr<Window>, int timeout) const
+{
+    ( void )timeout;
+    return false;
+}
+
+bool Platform_dummy::tests_waitForResize(View *, int timeout) const
+{
+    ( void )timeout;
+    return false;
+}
+
+bool Platform_dummy::tests_waitForResize(Controller *, int timeout) const
+{
+    ( void )timeout;
+    return false;
+}
+
+bool Platform_dummy::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout) const
+{
+    ( void )w;
+    ( void )type;
+    ( void )timeout;
+    return false;
+}
+
+bool Platform_dummy::tests_waitForEvent(View *, QEvent::Type type, int timeout) const
+{
+    ( void )type;
+    ( void )timeout;
+    return false;
+}
+
+bool Platform_dummy::tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type, int timeout) const
+{
+    ( void )type;
+    ( void )timeout;
+    return false;
+}
+
+bool Platform_dummy::tests_waitForDeleted(View *, int timeout) const
+{
+    ( void )timeout;
+    return false;
+}
+
+bool Platform_dummy::tests_waitForDeleted(QObject *, int timeout) const
+{
+    ( void )timeout;
+    return false;
+}
+
+void Platform_dummy::tests_sendEvent(std::shared_ptr<Window> window, QEvent *ev) const
+{
+    ( void )window;
+    ( void )ev;
+}
+
+void Platform_dummy::tests_wait(int ms)
+{
+    ( void )ms;
+}
+
+
 #endif

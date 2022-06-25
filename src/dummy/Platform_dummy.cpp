@@ -31,6 +31,30 @@ void Platform_dummy::init()
 {
 }
 
+std::shared_ptr<View> Platform_dummy::focusedView() const
+{
+    return {};
+}
+
+std::shared_ptr<View> Platform_dummy::qobjectAsView(QObject *) const
+{
+    return {};
+}
+
+std::shared_ptr<Window> Platform_dummy::qobjectAsWindow(QObject *) const
+{
+    return {};
+}
+
+QVector<std::shared_ptr<Window>> Platform_dummy::windows() const
+{
+    return {};
+}
+
+void Platform_dummy::sendEvent(View *, QEvent *) const
+{
+}
+
 Platform_dummy::~Platform_dummy()
 {
 }
@@ -58,6 +82,19 @@ Window::Ptr Platform_dummy::windowAt(QPoint) const
 int Platform_dummy::screenNumberFor(View *) const
 {
     return -1;
+}
+
+int Platform_dummy::screenNumberFor(std::shared_ptr<Window>) const
+{
+    return {};
+}
+
+void Platform_dummy::installMessageHandler()
+{
+}
+
+void Platform_dummy::uninstallMessageHandler()
+{
 }
 
 QSize Platform_dummy::screenSizeFor(View *) const
