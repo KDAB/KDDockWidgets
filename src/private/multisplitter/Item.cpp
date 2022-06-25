@@ -704,7 +704,7 @@ void Item::setGeometry(QRect rect)
         }
 
         const QSize minSz = minSize();
-        if (rect.width() < minSz.width() || rect.height() < minSz.height()) {
+        if (!s_silenceSanityChecks && (rect.width() < minSz.width() || rect.height() < minSz.height())) {
             if (auto r = root())
                 r->dumpLayout();
             qWarning() << Q_FUNC_INFO << this << "Constraints not honoured."

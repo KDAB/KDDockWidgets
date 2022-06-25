@@ -13,9 +13,11 @@
 #include "kddockwidgets/controllers/Layout.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 #include "kddockwidgets/private/DockRegistry.h"
+#include "private/multisplitter/Item_p.h"
 #include "Window.h"
 
 #include <QDebug>
+#include <QTimer>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
@@ -67,6 +69,20 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
     connect(layoutView, &View_qtquick::geometryUpdated, this, [this] {
         d->onLayoutGeometryUpdated();
     });
+
+    {
+        // This block silences a benign layouting constraints warning.
+        // During initialization, QtQuick will evaluate the width and height bindings separately,
+        // meaning our first Layout::setSize() might have height=0 still, as we're processing the width binding.
+
+        auto timer = new QTimer(this);
+        timer->setSingleShot(true);
+        timer->start();
+        Layouting::Item::s_silenceSanityChecks = true;
+        timer->callOnTimeout([] {
+            Layouting::Item::s_silenceSanityChecks = false;
+        });
+    }
 }
 
 MainWindow_qtquick::~MainWindow_qtquick()
