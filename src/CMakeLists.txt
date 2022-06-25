@@ -209,6 +209,16 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/kddockwidgets_qtquick.qrc
 )
 
+
+SET(KDDW_FRONTEND_DUMMY_SRCS
+    dummy/ViewFactory_dummy.cpp
+    dummy/Platform_dummy.cpp
+    dummy/Window_dummy.cpp
+    dummy/views/View_dummy.cpp
+    dummy/TestHelpers_dummy.cpp
+)
+
+
 set(KDDW_PUBLIC_HEADERS
     docks_export.h
     Config.h
@@ -276,6 +286,10 @@ endif()
 
 if (KDDW_FRONTEND_QTQUICK)
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_QTQUICK_SRCS})
+endif()
+
+if (KDDW_FRONTEND_DUMMY)
+  set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_DUMMY_SRCS})
 endif()
 
 #Generate C/C++ CamelCase forwarding headers (only public includes)

@@ -186,6 +186,11 @@ else()
     message("* ${frontend}")
   endforeach()
 endif()
+
+if (KDDockWidgets_DEVELOPER_MODE)
+  set(KDDW_FRONTEND_DUMMY ON)
+endif()
+
 # END frontend enabling
 
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
