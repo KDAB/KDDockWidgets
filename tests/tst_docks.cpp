@@ -3422,7 +3422,15 @@ void TestDocks::tst_restoreAfterResize()
     QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreAfterResize.json")));
     m->view()->resize(QSize(1000, 1000));
     QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreAfterResize.json")));
-    QCOMPARE(oldContentsSize, layout->layoutSize());
+
+    if (oldContentsSize != layout->layoutSize()) {
+        // Hard to reproduce but sometimes happens. Added a wait to see if it's timing related
+        qDebug() << Q_FUNC_INFO << "Unexpected layout size" << layout->layoutSize()
+                 << "expected=" << oldContentsSize;
+        QTest::qWait(1000);
+        QCOMPARE(oldContentsSize, layout->layoutSize());
+    }
+
     QCOMPARE(oldWindowSize, m->size());
 }
 
