@@ -279,7 +279,7 @@ public:
     Group *mdiFrame() const;
 
     /// @brief Returns the MDI layout. Or nullptr if this group isn't in a MDI layout
-    MDILayout *mdiLayoutWidget() const;
+    MDILayout *mdiLayout() const;
 
     /// @brief If this group is a MDI group (isMDI() == true), returns whether it contains nested dock widgets (DockWidget::Option_MDINestable)
     /// @sa isMDI()

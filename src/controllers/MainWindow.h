@@ -216,7 +216,7 @@ public:
 
     ///@internal
     ///@brief Returns the MDI layout. Or nullptr if this isn't a MDI main window
-    MDILayout *mdiLayoutWidget() const;
+    MDILayout *mdiLayout() const;
 
     /// @brief Returns the unique name that was passed via constructor.
     ///        Used internally by the save/restore mechanism.

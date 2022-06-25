@@ -159,7 +159,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             // When resizing a MDI however, we're resizing the widget directly. So update the corresponding layout
             // item when we're finished.
             auto group = mTarget->asGroupController();
-            group->mdiLayoutWidget()->setDockWidgetGeometry(group, group->geometry());
+            group->mdiLayout()->setDockWidgetGeometry(group, group->geometry());
         }
         updateCursor(CursorPosition_Undefined);
         auto mouseEvent = static_cast<QMouseEvent *>(e);

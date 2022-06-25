@@ -922,7 +922,7 @@ void Group::setAllowedResizeSides(CursorPositions sides)
 
 bool Group::isMDI() const
 {
-    return mdiLayoutWidget() != nullptr;
+    return mdiLayout() != nullptr;
 }
 
 bool Group::isMDIWrapper() const
@@ -956,7 +956,7 @@ DropArea *Group::mdiDropAreaWrapper() const
     return nullptr;
 }
 
-MDILayout *Group::mdiLayoutWidget() const
+MDILayout *Group::mdiLayout() const
 {
     return m_layout ? m_layout->asMDILayout() : nullptr;
 }

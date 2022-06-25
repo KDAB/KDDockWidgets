@@ -19,8 +19,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KDDOCKWIDGETS_LAYOUTWIDGET_P_H
-#define KDDOCKWIDGETS_LAYOUTWIDGET_P_H
+#ifndef KDDOCKWIDGETS_LAYOUT_P_H
+#define KDDOCKWIDGETS_LAYOUT_P_H
 
 #pragma once
 

@@ -326,8 +326,8 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     Controllers::Group *group1 = dock1->d->group();
     QVERIFY(!group1->isMDI());
     QVERIFY(groupMDI1->isMDI());
-    QVERIFY(!group1->mdiLayoutWidget());
-    QVERIFY(groupMDI1->mdiLayoutWidget());
+    QVERIFY(!group1->mdiLayout());
+    QVERIFY(groupMDI1->mdiLayout());
 
     QVERIFY(!dock1->titleBar()->isMDI());
 

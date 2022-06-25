@@ -54,7 +54,7 @@ void MDIDockingAreaInstantiator::addDockWidget(QQuickItem *dockWidget,
 
     Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
 
-    m_mainWindow->mdiLayoutWidget()->addDockWidget(dw, localPos, addingOption);
+    m_mainWindow->mdiLayout()->addDockWidget(dw, localPos, addingOption);
 }
 
 bool MDIDockingAreaInstantiator::closeDockWidgets(bool force)

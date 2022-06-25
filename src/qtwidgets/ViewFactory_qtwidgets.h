@@ -33,7 +33,6 @@ namespace KDDockWidgets {
 class DropIndicatorOverlay;
 
 namespace Controllers {
-class MDILayoutWidget;
 class DropArea;
 class Separator;
 class TabBar;

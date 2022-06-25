@@ -522,7 +522,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     newLocalPosBounded.setX(qMin(newLocalPosBounded.x(), parentSize.width() - group->width()));
     newLocalPosBounded.setY(qMin(newLocalPosBounded.y(), parentSize.height() - group->height()));
 
-    auto layout = group->mdiLayoutWidget();
+    auto layout = group->mdiLayout();
     Q_ASSERT(layout);
     layout->moveDockWidget(group, newLocalPosBounded);
 

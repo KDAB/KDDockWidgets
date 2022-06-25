@@ -136,7 +136,7 @@ public:
      * @brief the Group which contains this dock widgets.
      *
      * A group wraps a docked DockWidget, giving it a TabWidget so it can accept other dock widgets.
-     * Frame is also the actual class that goes into a LayoutWidget.
+     * Frame is also the actual class that goes into a Layout.
      *
      * It's nullptr immediately after creation.
      */

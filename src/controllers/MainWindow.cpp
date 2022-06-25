@@ -38,7 +38,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-static Layout *createLayoutWidget(MainWindow *mainWindow, MainWindowOptions options)
+static Layout *createLayout(MainWindow *mainWindow, MainWindowOptions options)
 {
     if (options & MainWindowOption_MDI)
         return new MDILayout(mainWindow->view());
@@ -140,7 +140,7 @@ MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions 
 void MainWindow::init(const QString &name)
 {
     d->init();
-    d->m_layout = createLayoutWidget(this, d->m_options);
+    d->m_layout = createLayout(this, d->m_options);
 
     d->m_persistentCentralDockWidget = d->createPersistentCentralDockWidget(d->name);
 
@@ -231,7 +231,7 @@ Layout *MainWindow::layout() const
     return d->m_layout;
 }
 
-MDILayout *MainWindow::mdiLayoutWidget() const
+MDILayout *MainWindow::mdiLayout() const
 {
     return d->m_layout->asMDILayout();
 }

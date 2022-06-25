@@ -20,7 +20,7 @@ using namespace KDDockWidgets::Controllers;
 
 MainWindowMDI_qtquick::MainWindowMDI_qtquick(const QString &uniqueName, QQuickItem *parent, Qt::WindowFlags flags)
     : Views::MainWindow_qtquick(uniqueName, MainWindowOption_MDI, parent, flags)
-    , Views::MainWindowMDIViewInterface(mainWindow()->mdiLayoutWidget())
+    , Views::MainWindowMDIViewInterface(mainWindow()->mdiLayout())
 {
 }
 
