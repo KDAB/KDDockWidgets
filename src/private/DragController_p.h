@@ -256,6 +256,7 @@ public:
     ~StateDraggingWayland() override;
     void onEntry() override;
     bool handleMouseButtonRelease(QPoint globalPos) override;
+    bool handleMouseMove(QPoint globalPos) override;
     bool handleDragEnter(QDragEnterEvent *, DropArea *) override;
     bool handleDragMove(QDragMoveEvent *, DropArea *) override;
     bool handleDragLeave(DropArea *) override;

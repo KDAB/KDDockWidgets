@@ -580,9 +580,18 @@ bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
     return true;
 }
 
+bool StateDraggingWayland::handleMouseMove(QPoint)
+{
+    // Wayland uses QDrag to drag stuff while other platforms use mouse.
+    // So override handleMouseMove() just so the regular mouse stuff doesn't run.
+
+    return false;
+}
+
 bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
+    qCDebug(state) << Q_FUNC_INFO << mimeData << dropArea << q->m_windowBeingDragged.get();
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
@@ -599,12 +608,14 @@ bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropAr
 
 bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
 {
+    qCDebug(state) << Q_FUNC_INFO;
     dropArea->removeHover();
     return true;
 }
 
 bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
 {
+    qCDebug(state) << Q_FUNC_INFO;
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
@@ -768,6 +779,9 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
                     return true;
                 break;
             }
+        } else if (e->type() == QEvent::DragEnter && isDragging()) {
+            // We're dragging a window. Be sure user code doesn't accept DragEnter events.
+            return true;
         }
     }
 
@@ -986,14 +1000,18 @@ static DropArea *deepestDropAreaInTopLevel(WidgetType *topLevel, QPoint globalPo
 DropArea *DragController::dropAreaUnderCursor() const
 {
     WidgetType *topLevel = qtTopLevelUnderCursor();
-    if (!topLevel)
+    if (!topLevel) {
+        qCDebug(state) << Q_FUNC_INFO << "No drop area under cursor";
         return nullptr;
+    }
 
     const QStringList affinities = m_windowBeingDragged->floatingWindow()->affinities();
 
     if (auto fw = qobject_cast<FloatingWindow *>(topLevel)) {
-        if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
+        if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities)) {
+            qCDebug(state) << Q_FUNC_INFO << "Found drop area in floating window";
             return fw->dropArea();
+        }
     }
 
     if (topLevel->objectName() == QStringLiteral("_docks_IndicatorWindow")) {
@@ -1002,6 +1020,7 @@ DropArea *DragController::dropAreaUnderCursor() const
     }
 
     if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos(), affinities)) {
+        qCDebug(state) << Q_FUNC_INFO << "Found drop area" << dt << dt->window();
         return dt;
     }
 
