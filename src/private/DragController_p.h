@@ -261,6 +261,7 @@ public:
     bool handleDragMove(QDragMoveEvent *, Controllers::DropArea *) override;
     bool handleDragLeave(Controllers::DropArea *) override;
     bool handleDrop(QDropEvent *, Controllers::DropArea *) override;
+    bool handleMouseMove(QPoint globalPos) override;
     bool m_inQDrag = false;
 };
 

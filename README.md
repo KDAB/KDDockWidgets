@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.com/KDAB/KDDockWidgets.svg?branch=master)](https://travis-ci.com/KDAB/KDDockWidgets)
 
 
-> ⚠️⚠️: 2.0 is under development, there might be API breaks before release.  
-> Stick with version 1.6 if you're using QtWidgets. However, if you're using  
+> ⚠️⚠️: 2.0 is under development, there might be API breaks before release.
+> Stick with version 1.6 if you're using QtWidgets. However, if you're using
 > QtQuick it's better to base on 2.0, as 1.6 won't be receiving much QtQuick development.
 
 KDDockWidgets
@@ -76,19 +76,29 @@ Screen capture
 ![Screen capture](./screencap.gif?raw=true "The docking system in action")
 
 
-Trying out the examples
-=======================
-A full demo that showcases most of the features lives in [examples/dockwidgets](examples/dockwidgets).
+Building and requirements
+=========================
 
-A simpler example can be found in [examples/minimal](examples/minimal),
-which might be more indicated to learn the API, as it's less overwhelming than the full demo.
+To build KDDockWidgets you'll need:
 
-Open a terminal capable of building Qt5 applications.
+  - CMake
+  - Qt 5.15.x or Qt6 >= 6.2
+  - Ninja (Other generators might work but are untested)
+  - C++17 capable compiler
+  - Qt Widgets module
+  - Qt X11Extras module if on Linux/X11
+  - Qt Quick and QuickControls2 modules if using the QtQuick support
+  - Qt private development headers, for instance, for Qt5:
+    - SUSE: libqt5-qtbase-private-headers-devel
+    - Ubuntu, debian-based: qtbase5-private-dev
+    - Fedora, redhat-based: qt5-qtbase-private-devel
+    - others: consult your distro
+
+
+Open a terminal capable of building Qt applications.
 Make sure you have cmake, ninja, compiler, Qt, etc in PATH.
 
 Adapt the instructions to suit your cmake generator and operating system.
-Build and install the KDDockWidgets framework (see the "Building" section
-below for more info):
 
 ```
 $ cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/path/where/to/install ../path/to/kddockwidgets
@@ -110,14 +120,23 @@ and `/usr/local/KDAB/KDDockWidgets-<version>` on non-Windows.
 
 You can change the installation location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
 
-Building
-========
-On Linux distributions make sure to install the qt5 private development packages:
 
-- SUSE: libqt5-qtbase-private-headers-devel
-- Ubuntu, debian-based: qtbase5-private-dev
-- Fedora, redhat-based: qt5-qtbase-private-devel
-- others: consult your distro
+Trying out the examples
+=======================
+A full demo that showcases most of the features lives in [examples/dockwidgets](examples/dockwidgets).
+
+A simpler example can be found in [examples/minimal](examples/minimal),
+which might be more indicated to learn the API, as it's less overwhelming than the full demo.
+
+To build and run the example:
+
+```
+$ cd path/to/kddockwidgets/examples/dockwidgets/
+$ cmake -G Ninja -DCMAKE_PREFIX_PATH=/path/where/kddw/is/installed
+$ cmake --build .
+$ ./kddockwidgets_example
+```
+
 
 Using
 =====
@@ -158,12 +177,6 @@ not so they can change internal business logic.
 
 We don't promise or test binary compatibility. It's advised that you recompile
 your application whenever updating KDDW.
-
-
-Supported Qt versions and toolchains
-====================================
-KDDockWidgets requires a C++17 capable compiler and Qt 5.15.x or Qt6 >= 6.2
-For QtQuick support see [README-QtQuick.md](README-QtQuick.md).
 
 
 Styling
