@@ -18,9 +18,22 @@ ApplicationWindow {
     width: 1000
     height: 1200
 
-    KDDW.DockingArea {
+    KDDW.MDIDockingArea {
+        id: dockingArea
         anchors.fill: parent
         uniqueName: "MyMainLayout"
-        options: KDDW.KDDockWidgets.MainWindowOption_MDI
+    }
+
+    KDDW.DockWidget {
+        id: greenDock
+        uniqueName: "greenDock"
+        Rectangle {
+            color: "green"
+            anchors.fill: parent
+        }
+    }
+
+    Component.onCompleted: {
+        dockingArea.addDockWidget(greenDock, Qt.point(200, 200));
     }
 }

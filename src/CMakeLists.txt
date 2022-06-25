@@ -172,7 +172,7 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/LayoutSaverInstantiator.cpp
   qtquick/LayoutSaverInstantiator.h
   qtquick/MainWindowInstantiator.cpp
-  qtquick/MainWindowInstantiator.h
+  qtquick/MDIDockingAreaInstantiator.cpp
   qtquick/DockWidgetInstantiator.cpp
   qtquick/DockWidgetInstantiator.h
   qtquick/QmlTypes.cpp
@@ -503,6 +503,7 @@ if (KDDW_FRONTEND_QTQUICK)
     qtquick/Platform_qtquick.h
     qtquick/LayoutSaverInstantiator.h
     qtquick/MainWindowInstantiator.h
+    qtquick/MDIDockingAreaInstantiator.h
   )
 
   SET(KDDW_QTQUICK_VIEW_HEADERS

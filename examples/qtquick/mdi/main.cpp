@@ -49,6 +49,9 @@ int main(int argc, char *argv[])
     auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
     dw3->setGuestItem(QStringLiteral("qrc:/Guest3.qml"));
 
+
+    // See main.qml for how to add dock widgets from QML.
+    // Here's a low level C++ example just for educational purposes:
     auto mainAreaView = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst();
     auto mainAreaMDI = static_cast<KDDockWidgets::Views::MainWindowMDI_qtquick *>(mainAreaView);
 

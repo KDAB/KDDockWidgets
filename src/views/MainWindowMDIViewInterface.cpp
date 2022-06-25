@@ -32,6 +32,5 @@ void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidg
 void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget,
                                                QPointF localPos, InitialOption addingOption)
 {
-    Controllers::DockWidget *dw = dockWidget ? dockWidget->dockWidget() : nullptr;
-    m_mdiLayout->addDockWidget(dw, localPos.toPoint(), addingOption);
+    addDockWidget(dockWidget, localPos.toPoint(), addingOption);
 }

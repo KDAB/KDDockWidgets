@@ -12,6 +12,7 @@
 #include "QmlTypes.h"
 #include "DockWidgetInstantiator.h"
 #include "MainWindowInstantiator.h"
+#include "MDIDockingAreaInstantiator.h"
 #include "LayoutSaverInstantiator.h"
 
 #include <QQmlEngine>
@@ -20,6 +21,7 @@
 void KDDockWidgets::registerQmlTypes()
 {
     qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 2, 0, "DockingArea");
+    qmlRegisterType<MDIDockingAreaInstantiator>("com.kdab.dockwidgets", 2, 0, "MDIDockingArea");
     qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 2, 0, "DockWidget");
     qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 2, 0, "LayoutSaver");
 
