@@ -51,7 +51,8 @@ protected:
     // TODOm3:
     void updateMaximizeButton() override;
     void updateMinimizeButton();
-    void updateAutoHideButton();
+
+    void updateAutoHideButton(bool visible, bool enabled, TitleBarButtonType);
 
     QHBoxLayout *const m_layout;
     QAbstractButton *m_closeButton = nullptr;

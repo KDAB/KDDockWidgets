@@ -161,6 +161,8 @@ void TitleBar_qtwidgets::init()
 
     connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, m_floatButton, &QWidget::setToolTip);
     connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, m_floatButton, &QWidget::setVisible);
+    connect(m_titleBar, &Controllers::TitleBar::autoHideButtonChanged, this, &TitleBar_qtwidgets::updateAutoHideButton);
+
     m_floatButton->setVisible(m_titleBar->floatButtonVisible());
     m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
 
@@ -197,22 +199,14 @@ void TitleBar_qtwidgets::updateMinimizeButton()
     m_minimizeButton->setVisible(m_titleBar->supportsMinimizeButton());
 }
 
-void TitleBar_qtwidgets::updateAutoHideButton()
+void TitleBar_qtwidgets::updateAutoHideButton(bool visible, bool enabled, TitleBarButtonType type)
 {
-    if (Config::self().flags() & Config::Flag_AutoHideSupport) {
-        auto factory = Config::self().viewFactory();
-        if (const Controllers::Group *f = m_titleBar->group()) {
-            if (f->isInMainWindow()) {
-                m_autoHideButton->setIcon(factory->iconForButtonType(TitleBarButtonType::AutoHide, devicePixelRatioF()));
-                m_autoHideButton->setToolTip(tr("Auto-hide"));
-            } else if (f->isOverlayed()) {
-                m_autoHideButton->setIcon(factory->iconForButtonType(TitleBarButtonType::UnautoHide, devicePixelRatioF()));
-                m_autoHideButton->setToolTip(tr("Disable auto-hide"));
-            }
-        }
-    }
-
-    m_autoHideButton->setVisible(m_titleBar->supportsAutoHideButton());
+    m_autoHideButton->setToolTip(type == TitleBarButtonType::AutoHide ? tr("Auto-hide")
+                                                                      : tr("Disable auto-hide"));
+    auto factory = Config::self().viewFactory();
+    m_autoHideButton->setIcon(factory->iconForButtonType(type, devicePixelRatioF()));
+    m_autoHideButton->setVisible(visible);
+    m_autoHideButton->setEnabled(enabled);
 }
 
 void TitleBar_qtwidgets::updateMaximizeButton()

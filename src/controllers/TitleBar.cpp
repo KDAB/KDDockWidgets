@@ -243,6 +243,20 @@ void TitleBar::updateButtons()
     updateAutoHideButton();
 }
 
+void TitleBar::updateAutoHideButton()
+{
+    const bool visible = m_supportsAutoHide;
+    const bool enabled = true;
+    TitleBarButtonType type = TitleBarButtonType::AutoHide;
+
+    if (const Controllers::Group *g = group()) {
+        if (g->isOverlayed())
+            type = TitleBarButtonType::UnautoHide;
+    }
+
+    Q_EMIT autoHideButtonChanged(visible, enabled, type);
+}
+
 void TitleBar::updateCloseButton()
 {
 

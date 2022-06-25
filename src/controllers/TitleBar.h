@@ -120,6 +120,9 @@ Q_SIGNALS:
     void floatButtonVisibleChanged(bool);
     void floatButtonToolTipChanged(const QString &);
 
+    /// @brief Emitted to tell the views to update their auto-hide button
+    void autoHideButtonChanged(bool visible, bool enabled, TitleBarButtonType);
+
 protected:
     virtual void updateMaximizeButton()
     {
@@ -127,14 +130,13 @@ protected:
     virtual void updateMinimizeButton()
     {
     }
-    virtual void updateAutoHideButton()
-    {
-    }
 
     bool isOverlayed() const;
 
 private:
     friend class ::TestDocks;
+
+    void updateAutoHideButton();
 
     void updateFloatButton();
     void updateCloseButton();
