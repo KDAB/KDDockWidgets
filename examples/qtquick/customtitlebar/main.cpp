@@ -15,7 +15,8 @@
 #include <kddockwidgets/Platform_qtquick.h>
 #include <kddockwidgets/ViewFactory_qtquick.h>
 #include <kddockwidgets/private/DockRegistry.h>
-#include "kddockwidgets/controllers/MainWindow.h"
+#include <kddockwidgets/views/MainWindow_qtquick.h>
+
 
 #include <QQuickView>
 #include <QGuiApplication>
@@ -70,7 +71,7 @@ int main(int argc, char *argv[])
 
     // Access the main area we created in QML with DockingArea {}
     auto mainArea = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst();
-    mainArea->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop);
+    mainArea->addDockWidget(dw2, KDDockWidgets::Location_OnTop);
 
     return app.exec();
 }

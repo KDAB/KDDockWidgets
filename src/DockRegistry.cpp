@@ -19,7 +19,7 @@
 #include "private/WindowBeingDragged_p.h"
 #include "private/multisplitter/Item_p.h"
 #include "Window.h"
-
+#include "views/MainWindowViewInterface.h"
 #include "Platform.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/SideBar.h"
@@ -511,9 +511,18 @@ const Controllers::MainWindow::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
-const Controllers::MainWindow::List DockRegistry::mainDockingAreas() const
+const QList<Views::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
 {
-    return m_mainWindows;
+    QList<Views::MainWindowViewInterface *> areas;
+
+    for (auto mw : m_mainWindows) {
+        if (View *view = mw->view()) {
+            auto viewInterface = dynamic_cast<Views::MainWindowViewInterface *>(view);
+            areas << viewInterface;
+        }
+    }
+
+    return areas;
 }
 
 const QVector<Controllers::Layout *> DockRegistry::layouts() const

@@ -20,11 +20,10 @@ namespace Controllers {
 class DropArea;
 }
 
-
 /// @brief The base class for view wrappers
 /// A view wrapper is a view that doesn't own the native GUI element(QWidget, QQuickItem etc.)
-/// It just adds View API to an existing GUI element
-/// Useful for GUI elements that are not created by KDDW.
+/// It just adds View API to an existing GUI element. Useful for GUI elements that are not created by KDDW.
+/// this is optional
 class DOCKS_EXPORT ViewWrapper : public View
 {
 public:

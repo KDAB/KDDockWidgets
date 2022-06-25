@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
     dw3->setGuestItem(QStringLiteral("qrc:/Guest3.qml"));
 
-    auto mainAreaView = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst()->view();
+    auto mainAreaView = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst();
     auto mainAreaMDI = static_cast<KDDockWidgets::Views::MainWindowMDI_qtquick *>(mainAreaView);
 
     mainAreaMDI->addDockWidget(dw1, QPoint(10, 10));

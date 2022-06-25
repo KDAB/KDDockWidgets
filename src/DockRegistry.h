@@ -39,6 +39,7 @@ class Group;
 
 namespace Views {
 class MainWindowMDIViewInterface;
+class MainWindowViewInterface;
 }
 
 class MainWindowMDI;
@@ -102,9 +103,9 @@ public:
     const QVector<Controllers::MainWindow *> mainwindows() const;
 
     /// @brief returns all MainWindow instances
-    /// Exactly the same as mainwindows(), but with better terminology for QtQuick
+    /// Like mainwindows(), but with better suited for QtQuick and better terminology
     /// as we're phasing out the "MainWindow" name there
-    const QVector<Controllers::MainWindow *> mainDockingAreas() const;
+    const QList<Views::MainWindowViewInterface *> mainDockingAreas() const;
 
     ///@brief overload returning only the ones with the specified names
     const QVector<Controllers::MainWindow *> mainWindows(const QStringList &names);
