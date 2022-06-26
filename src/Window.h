@@ -102,7 +102,7 @@ public:
     /// @brief Returns the screen this window is on
     virtual QScreen *screen() const = 0;
 
-    /// Deletes the underlying window
+    /// Deletes the underlying window. Only used during tests.
     virtual void destroy() = 0;
 
     /// @brief Returns whether this window is fullscreen currently
@@ -119,10 +119,23 @@ public:
     // too small window.
     virtual bool supportsHonouringLayoutMinSize() const = 0;
 
-    /// @brief Returns the Window's minimum size
+    /// @brief Returns the window's minimum size
     virtual QSize minSize() const = 0;
+
+    /// @brief Returns the window's maximum size
     virtual QSize maxSize() const = 0;
+
+    /// @brief Receives a point in native global space and returns in logical global space.
+    /// This is relevant only when there's HDPI scaling applied.
+    /// By native it's meant that it corresponds to physical pixels, which is what win32 API deals with.
+    /// By logical it's meant that there might be an HDPI factor applied.
+    /// Both returned and received points are in global space (screen space).
+    /// Implement if your frontend will run on Windows, otherwise it's unused.
     virtual QPoint fromNativePixels(QPoint) const = 0;
+
+    /// @brief Starts a native window move
+    /// Only needed on Windows. The difference between a a native move and a client move is that we can
+    /// get aerosnap on the edges of the screen.
     virtual void startSystemMove();
 
     /// @brief Returns the client size of this window.
