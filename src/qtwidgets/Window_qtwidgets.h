@@ -26,6 +26,7 @@ public:
     void setGeometry(QRect) const override;
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
+    void destroy() override;
 };
 
 }

@@ -154,6 +154,10 @@ public:
     /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
     static void tests_deinitPlatform();
 
+    /// @brief Creates a Window. For the sole purpose of unit-testing Window.
+    /// The created window should be visible.
+    virtual std::shared_ptr<Window> tests_createWindow() = 0;
+
     /// @brief Creates a view with the specified parent
     /// If the parent is null then a new window is created and the returned view will be the root view
     virtual View *tests_createView(CreateViewOptions, View *parent = nullptr) = 0;

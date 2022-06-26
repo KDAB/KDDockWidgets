@@ -11,11 +11,29 @@
 
 #include "main.h"
 #include "private/View_p.h"
+#include "Platform.h"
 
 TEST_CASE("Window CTOR")
 {
-    auto rootView = createViewAndWindow({});
-    auto window = rootView->window();
-
+    auto window = Platform::instance()->tests_createWindow();
     REQUIRE(window);
+    CHECK(window->isVisible());
+
+    window->destroy();
+}
+
+
+TEST_CASE("Window::setVisible")
+{
+    auto window = Platform::instance()->tests_createWindow();
+    REQUIRE(window);
+    CHECK(window->isVisible());
+
+    window->setVisible(false);
+    CHECK(!window->isVisible());
+
+    window->setVisible(true);
+    CHECK(window->isVisible());
+
+    window->destroy();
 }

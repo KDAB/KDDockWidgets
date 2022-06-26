@@ -144,4 +144,13 @@ Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqu
     return view->mainWindow();
 }
 
+std::shared_ptr<Window> Platform_qtquick::tests_createWindow()
+{
+    CreateViewOptions viewOpts;
+    viewOpts.isVisible = true;
+    auto mainWindow = createMainWindow(QStringLiteral("testWindow"), viewOpts);
+    return mainWindow->view()->window();
+}
+
+
 #endif

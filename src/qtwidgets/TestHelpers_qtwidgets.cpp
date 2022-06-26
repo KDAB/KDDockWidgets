@@ -15,6 +15,7 @@
 #include "views/View_qtwidgets.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
+#include "Window_qtwidgets.h"
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -163,6 +164,12 @@ Controllers::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uni
     return view->mainWindow();
 }
 
+std::shared_ptr<Window> Platform_qtwidgets::tests_createWindow()
+{
+    auto window = new Window_qtwidgets(new QWidget());
+    window->setVisible(true);
+    return std::shared_ptr<Window>(window);
+}
 
 #endif
 

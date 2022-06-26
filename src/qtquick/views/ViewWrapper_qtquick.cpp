@@ -172,8 +172,10 @@ void ViewWrapper_qtquick::setVisible(bool is)
 {
     if (isRootView()) {
         if (QWindow *w = m_item->window()) {
-            if (!w->isVisible()) {
+            if (is && !w->isVisible()) {
                 w->show();
+            } else if (!is && w->isVisible()) {
+                w->hide();
             }
         }
     }

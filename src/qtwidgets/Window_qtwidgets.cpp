@@ -85,3 +85,13 @@ bool Window_qtwidgets::supportsHonouringLayoutMinSize() const
     // QWidget's QLayout does this for us and propagates the min-size up to QWindow
     return true;
 }
+
+void Window_qtwidgets::destroy()
+{
+    if (auto v = rootView()) {
+        // deleting the QWidget deletes its QWindow
+        delete static_cast<Views::ViewWrapper_qtwidgets *>(v.get())->widget();
+    } else {
+        Window_qt::destroy();
+    }
+}

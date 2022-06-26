@@ -50,6 +50,7 @@ public:
     View *tests_createView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createNonClosableView(View *parent = nullptr) override;
+    std::shared_ptr<Window> tests_createWindow() override;
     Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
                                               MainWindowOptions options = MainWindowOption_HasCentralFrame,
                                               View *parent = nullptr, Qt::WindowFlags = {}) const override;

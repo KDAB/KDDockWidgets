@@ -59,6 +59,7 @@ public:
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     View *tests_createView(CreateViewOptions, View *parent = nullptr) override;
+    std::shared_ptr<Window> tests_createWindow() override;
     View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createNonClosableView(View *parent = nullptr) override;
     Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,

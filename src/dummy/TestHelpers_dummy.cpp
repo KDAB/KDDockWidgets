@@ -186,5 +186,9 @@ void Platform_dummy::tests_wait(int ms)
     ( void )ms;
 }
 
+std::shared_ptr<Window> Platform_dummy::tests_createWindow()
+{
+    return {};
+}
 
 #endif
