@@ -43,3 +43,52 @@ TEST_CASE("Window::handle")
     CHECK(window->handle());
     window->destroy();
 }
+
+TEST_CASE("Window::resize, size")
+{
+    auto window = Platform::instance()->tests_createWindow();
+    const QSize newSize(501, 502);
+    window->resize(newSize.width(), newSize.height());
+
+    Platform::instance()->tests_wait(100);
+
+    CHECK_EQ(window->size(), newSize);
+
+    window->destroy();
+}
+
+TEST_CASE("Window::activate")
+{
+    auto window = Platform::instance()->tests_createWindow();
+    // CHECK(window->isActive());
+
+    // TODO
+
+    window->destroy();
+}
+
+TEST_CASE("Window::equals")
+{
+    auto window1 = Platform::instance()->tests_createWindow();
+    auto window2 = Platform::instance()->tests_createWindow();
+
+    CHECK(window1->equals(window1));
+    CHECK(!window1->equals(window2));
+    CHECK(!window1->equals({}));
+
+    window1->destroy();
+    window2->destroy();
+}
+
+TEST_CASE("Window::geometry")
+{
+    auto window = Platform::instance()->tests_createWindow();
+
+    const QRect geo = QRect(10, 10, 1000, 1000);
+    window->setGeometry(geo);
+
+    Platform::instance()->tests_wait(100);
+    CHECK_EQ(window->geometry(), geo);
+
+    window->destroy();
+}
