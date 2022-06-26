@@ -126,9 +126,6 @@ public:
     ///@brief returns whether if there's at least one floating window
     Q_INVOKABLE bool hasFloatingWindows() const;
 
-    ///@brief Returns the window with the specified id
-    std::shared_ptr<Window> windowForHandle(WId id) const;
-
     ///@brief returns the FloatingWindow with handle @p windowHandle
     Controllers::FloatingWindow *floatingWindowForHandle(std::shared_ptr<Window> windowHandle) const;
 

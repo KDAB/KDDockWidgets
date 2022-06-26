@@ -572,17 +572,6 @@ bool DockRegistry::hasFloatingWindows() const
     });
 }
 
-Window::Ptr DockRegistry::windowForHandle(WId id) const
-{
-    const Window::List windows = Platform::instance()->windows();
-    for (Window::Ptr w : windows) {
-        if (w->isVisible() && w->handle() == id) {
-            return w;
-        }
-    }
-    return nullptr;
-}
-
 Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr windowHandle) const
 {
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {

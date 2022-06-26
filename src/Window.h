@@ -127,11 +127,6 @@ public:
     virtual QPoint fromNativePixels(QPoint) const = 0;
     virtual void startSystemMove();
 
-    int minWidth() const;
-    int minHeight() const;
-    int maxWidth() const;
-    int maxHeight() const;
-
     /// @brief Returns the client size of this window.
     QSize size() const;
 
@@ -151,6 +146,10 @@ public:
 private:
     bool containsView(Controller *) const;
     bool containsView(View *) const;
+    int minWidth() const;
+    int minHeight() const;
+    int maxWidth() const;
+    int maxHeight() const;
 };
 
 inline bool operator==(Window::Ptr w1, Window::Ptr w2)
