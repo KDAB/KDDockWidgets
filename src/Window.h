@@ -148,6 +148,12 @@ public:
     /// This ignores any frame (native decos the window has)
     void setPosition(QPoint targetPos);
 
+    /// Convenience API
+    /// @sa minSize, maxSize
+    int minWidth() const;
+    int minHeight() const;
+    int maxWidth() const;
+    int maxHeight() const;
 
     /// @brief Signal emitted when a window changes screen
     /// Like for example QWindow::screenChanged() for Qt.
@@ -157,10 +163,6 @@ public:
 private:
     bool containsView(Controller *) const;
     bool containsView(View *) const;
-    int minWidth() const;
-    int minHeight() const;
-    int maxWidth() const;
-    int maxHeight() const;
 };
 
 inline bool operator==(Window::Ptr w1, Window::Ptr w2)
