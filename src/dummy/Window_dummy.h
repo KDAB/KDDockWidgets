@@ -24,6 +24,28 @@ public:
     void setGeometry(QRect) const override;
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
-};
 
+    void setWindowState(Qt::WindowState) override;
+    QRect geometry() const override;
+    void setProperty(const char *name, const QVariant &value) override;
+    QVariant property(const char *name) const override;
+    bool isVisible() const override;
+    WId handle() const override;
+    bool equals(std::shared_ptr<Window> other) const override;
+    QSize size() const override;
+    void setPosition(QPoint targetPos) override;
+    void setFramePosition(QPoint targetPos) override;
+    QRect frameGeometry() const override;
+    void resize(int width, int height) override;
+    bool isActive() const override;
+    Qt::WindowState windowState() const override;
+    QPoint mapFromGlobal(QPoint globalPos) const override;
+    QPoint mapToGlobal(QPoint localPos) const override;
+    QScreen *screen() const override;
+    void destroy() override;
+    QSize minSize() const override;
+    QSize maxSize() const override;
+    QPoint fromNativePixels(QPoint) const override;
+    bool isFullScreen() const override;
+};
 }
