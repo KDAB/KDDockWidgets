@@ -22,7 +22,6 @@ TEST_CASE("Window CTOR")
     window->destroy();
 }
 
-
 TEST_CASE("Window::setVisible")
 {
     auto window = Platform::instance()->tests_createWindow();
@@ -35,5 +34,12 @@ TEST_CASE("Window::setVisible")
     window->setVisible(true);
     CHECK(window->isVisible());
 
+    window->destroy();
+}
+
+TEST_CASE("Window::handle")
+{
+    auto window = Platform::instance()->tests_createWindow();
+    CHECK(window->handle());
     window->destroy();
 }
