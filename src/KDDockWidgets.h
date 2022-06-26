@@ -346,24 +346,6 @@ enum StackOption {
 Q_DECLARE_FLAGS(StackOptions, StackOption)
 Q_ENUM_NS(StackOptions)
 
-///@internal
-inline QString locationStr(Location loc)
-{
-    switch (loc) {
-    case KDDockWidgets::Location_None:
-        return QStringLiteral("none");
-    case KDDockWidgets::Location_OnLeft:
-        return QStringLiteral("left");
-    case KDDockWidgets::Location_OnTop:
-        return QStringLiteral("top");
-    case KDDockWidgets::Location_OnRight:
-        return QStringLiteral("right");
-    case KDDockWidgets::Location_OnBottom:
-        return QStringLiteral("bottom");
-    }
-
-    return QString();
-}
 
 /// @brief Initializes the desired frontend
 void DOCKS_EXPORT initFrontend(FrontendType);

@@ -12,6 +12,7 @@
 #pragma once
 
 #include "View.h"
+#include "KDDockWidgets_p.h"
 
 #include <QVector>
 
@@ -34,7 +35,7 @@ public:
     using List = QVector<Ptr>;
 
     virtual ~Window();
-    virtual void setWindowState(Qt::WindowState) = 0;
+    virtual void setWindowState(WindowState) = 0;
 
     /// @brief Returns the geometry of the client area of the window
     /// This excludes any native window frame and title bar.
@@ -85,7 +86,7 @@ public:
     virtual std::shared_ptr<View> rootView() const = 0;
 
     /// @brief Returns the window state
-    virtual Qt::WindowState windowState() const = 0;
+    virtual WindowState windowState() const = 0;
 
     /// @brief Returns the parent of this window, if any
     /// Popups and utility windows usually have a parent window

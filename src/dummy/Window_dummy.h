@@ -25,7 +25,7 @@ public:
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
 
-    void setWindowState(Qt::WindowState) override;
+    void setWindowState(WindowState) override;
     QRect geometry() const override;
     bool isVisible() const override;
     WId handle() const override;
@@ -34,7 +34,7 @@ public:
     QRect frameGeometry() const override;
     void resize(int width, int height) override;
     bool isActive() const override;
-    Qt::WindowState windowState() const override;
+    WindowState windowState() const override;
     QPoint mapFromGlobal(QPoint globalPos) const override;
     QPoint mapToGlobal(QPoint localPos) const override;
     QScreen *screen() const override;

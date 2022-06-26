@@ -34,14 +34,14 @@ Window_qt::~Window_qt()
     QObject::disconnect(m_connection);
 }
 
-void Window_qt::setWindowState(Qt::WindowState state)
+void Window_qt::setWindowState(WindowState state)
 {
-    m_window->setWindowState(state);
+    m_window->setWindowState(( Qt::WindowState )state);
 }
 
-Qt::WindowState Window_qt::windowState() const
+WindowState Window_qt::windowState() const
 {
-    return m_window->windowState();
+    return WindowState(m_window->windowState());
 }
 
 QRect Window_qt::geometry() const

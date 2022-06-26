@@ -205,7 +205,7 @@ void View_qtquick::updateNormalGeometry()
         normalGeometry = pw->normalGeometry();
     }
 
-    if (!normalGeometry.isValid() && isNormalWindowState(window->windowState())) {
+    if (!normalGeometry.isValid() && isNormalWindowState(WindowState(window->windowState()))) {
         normalGeometry = window->geometry();
     }
 

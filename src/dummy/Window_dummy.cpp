@@ -47,7 +47,7 @@ bool Window_dummy::supportsHonouringLayoutMinSize() const
     return false;
 }
 
-void Window_dummy::setWindowState(Qt::WindowState)
+void Window_dummy::setWindowState(WindowState)
 {
 }
 
@@ -89,7 +89,7 @@ bool Window_dummy::isActive() const
     return {};
 }
 
-Qt::WindowState Window_dummy::windowState() const
+WindowState Window_dummy::windowState() const
 {
     return {};
 }

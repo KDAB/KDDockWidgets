@@ -13,6 +13,7 @@
 
 #include "../Controller.h"
 
+#include "KDDockWidgets_p.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
@@ -173,8 +174,8 @@ public:
     // The state reported by QWidget is not always the same as what the
     // window manager thinks, due to the async nature. This method
     // returns the last state reported by the window manager itself.
-    Qt::WindowState lastWindowManagerState() const;
-    void setLastWindowManagerState(Qt::WindowState);
+    WindowState lastWindowManagerState() const;
+    void setLastWindowManagerState(WindowState);
 
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
     /// Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
@@ -195,7 +196,7 @@ private:
 protected:
     QPointer<DropArea> m_dropArea;
     Controllers::TitleBar *const m_titleBar;
-    Qt::WindowState m_lastWindowManagerState = Qt::WindowNoState;
+    WindowState m_lastWindowManagerState = WindowState::None;
 
 private:
     Q_DISABLE_COPY(FloatingWindow)
@@ -211,7 +212,7 @@ private:
     bool m_updatingTitleBarVisibility = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
-    Qt::WindowState windowStateOverride() const;
+    WindowState windowStateOverride() const;
 #ifdef Q_OS_WIN
     int m_lastHitTest = 0;
 #endif

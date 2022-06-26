@@ -186,7 +186,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
     mw.screenSize = json.value("screenSize", QSize(800, 600));
     mw.isVisible = json.value("isVisible", false);
     mw.affinities = json.value("affinities", QStringList());
-    mw.windowState = ( Qt::WindowState )json.value("windowState", 0);
+    mw.windowState = ( WindowState )json.value("windowState", 0);
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
     if (json.find("affinityName") != json.end()) {
@@ -233,7 +233,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
     window.screenIndex = json.value("screenIndex", 0);
     window.screenSize = json.value("screenSize", QSize(800, 600));
     window.isVisible = json.value("isVisible", false);
-    window.windowState = ( Qt::WindowState )json.value("windowState", 0);
+    window.windowState = ( WindowState )json.value("windowState", 0);
     window.affinities = json.value("affinities", QStringList());
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
@@ -488,7 +488,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
             Window::Ptr window = mainWindow->view()->window();
             d->deserializeWindowGeometry(mw, window);
-            if (mw.windowState != Qt::WindowNoState) {
+            if (mw.windowState != WindowState::None) {
                 if (auto w = mainWindow->view()->window()) {
                     w->setWindowState(mw.windowState);
                 }

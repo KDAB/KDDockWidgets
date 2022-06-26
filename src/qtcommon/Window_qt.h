@@ -26,7 +26,7 @@ class DOCKS_EXPORT Window_qt : public Window
 public:
     explicit Window_qt(QWindow *);
     ~Window_qt() override;
-    void setWindowState(Qt::WindowState) override;
+    void setWindowState(WindowState) override;
     QRect geometry() const override;
     void setGeometry(QRect) const override;
     bool isVisible() const override;
@@ -37,7 +37,7 @@ public:
     void setFramePosition(QPoint targetPos) override;
     void resize(int width, int height) override;
     bool isActive() const override;
-    Qt::WindowState windowState() const override;
+    WindowState windowState() const override;
 
     QRect frameGeometry() const override;
     QWindow *qtWindow() const;

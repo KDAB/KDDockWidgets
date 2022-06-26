@@ -417,7 +417,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
     }
 
 #ifdef Q_OS_LINUX
-    if (fw->lastWindowManagerState() == Qt::WindowMaximized) {
+    if (fw->lastWindowManagerState() == WindowState::Maximized) {
         // The window was maximized, we dragged it, which triggers a show normal.
         // But we can only start moving the window *after* the (async) window manager acknowledges.
         // See QTBUG-102430.

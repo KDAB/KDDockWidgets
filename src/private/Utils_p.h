@@ -12,6 +12,7 @@
 #ifndef KD_UTILS_P_H
 #define KD_UTILS_P_H
 
+#include "KDDockWidgets_p.h"
 #include "kddockwidgets/Config.h"
 #include "kddockwidgets/View.h"
 
@@ -103,9 +104,9 @@ inline bool usesUtilityWindows()
     return !dontUse;
 }
 
-inline bool isNormalWindowState(Qt::WindowStates states)
+inline bool isNormalWindowState(WindowStates states)
 {
-    return !(states & Qt::WindowMaximized) && !(states & Qt::WindowFullScreen);
+    return !(states & WindowState::Maximized) && !(states & WindowState::FullScreen);
 }
 
 inline bool windowManagerHasTranslucency()

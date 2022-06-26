@@ -12,6 +12,7 @@
 #ifndef KD_LAYOUTSAVER_P_H
 #define KD_LAYOUTSAVER_P_H
 
+#include "KDDockWidgets_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "Window.h"
@@ -213,7 +214,7 @@ struct LayoutSaver::FloatingWindow
 
     // The instance that was created during a restore:
     Controllers::FloatingWindow *floatingWindowInstance = nullptr;
-    Qt::WindowState windowState = Qt::WindowNoState;
+    KDDockWidgets::WindowState windowState = KDDockWidgets::WindowState::None;
 };
 
 struct LayoutSaver::MainWindow
@@ -236,7 +237,7 @@ public:
     int screenIndex;
     QSize screenSize; // for relative-size restoring
     bool isVisible;
-    Qt::WindowState windowState = Qt::WindowNoState;
+    KDDockWidgets::WindowState windowState = KDDockWidgets::WindowState::None;
 
     ScalingInfo scalingInfo;
 };

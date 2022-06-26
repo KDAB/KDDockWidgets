@@ -151,7 +151,7 @@ bool FloatingWindow_qtwidgets::eventFilter(QObject *, QEvent *ev)
         // Only emit windowStateChanged once the window manager tells us the state has actually changed
         // See also QTBUG-102430
         if (ev->spontaneous()) {
-            d->m_controller->setLastWindowManagerState(windowHandle()->windowState());
+            d->m_controller->setLastWindowManagerState(WindowState(windowHandle()->windowState()));
             Q_EMIT d->m_controller->windowStateChanged();
         }
     }

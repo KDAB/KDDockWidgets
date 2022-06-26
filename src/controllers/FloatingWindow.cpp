@@ -437,14 +437,14 @@ void FloatingWindow::onVisibleFrameCountChanged(int count)
     setVisible(count > 0);
 }
 
-Qt::WindowState FloatingWindow::windowStateOverride() const
+WindowState FloatingWindow::windowStateOverride() const
 {
-    Qt::WindowState state = Qt::WindowNoState;
+    WindowState state = WindowState::None;
 
     if (view()->isMaximized())
-        state = Qt::WindowMaximized;
+        state = WindowState::Maximized;
     else if (view()->isMinimized())
-        state = Qt::WindowMinimized;
+        state = WindowState::Minimized;
 
     return state;
 }
@@ -520,9 +520,9 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
     if (dropArea()->deserialize(fw.multiSplitterLayout)) {
         updateTitleBarVisibility();
 
-        if (fw.windowState & Qt::WindowMaximized) {
+        if (int(fw.windowState) & int(WindowState::Maximized)) {
             view()->showMaximized();
-        } else if (fw.windowState & Qt::WindowMinimized) {
+        } else if (int(fw.windowState) & int(WindowState::Minimized)) {
             view()->showMinimized();
         } else {
             view()->showNormal();
@@ -627,7 +627,7 @@ QMargins FloatingWindow::contentMargins() const
     return { 4, 4, 4, 4 };
 }
 
-Qt::WindowState FloatingWindow::lastWindowManagerState() const
+WindowState FloatingWindow::lastWindowManagerState() const
 {
     return m_lastWindowManagerState;
 }
@@ -697,7 +697,7 @@ void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
     }
 }
 
-void FloatingWindow::setLastWindowManagerState(Qt::WindowState state)
+void FloatingWindow::setLastWindowManagerState(WindowState state)
 {
     m_lastWindowManagerState = state;
 }

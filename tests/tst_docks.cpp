@@ -614,15 +614,15 @@ void TestDocks::tst_restoreMaximizedState()
 
     m->view()->showMaximized();
 
-    QCOMPARE(m->view()->window()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(m->view()->window()->windowState(), WindowState::Maximized);
     LayoutSaver saver;
 
     const QByteArray saved = saver.serializeLayout();
     m->view()->showNormal();
-    QVERIFY(m->view()->window()->windowState() != Qt::WindowMaximized);
+    QVERIFY(m->view()->window()->windowState() != WindowState::Maximized);
 
     saver.restoreLayout(saved);
-    QCOMPARE(m->view()->window()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(m->view()->window()->windowState(), WindowState::Maximized);
 }
 
 void TestDocks::tst_restoreFloatingMinimizedState()
@@ -631,13 +631,13 @@ void TestDocks::tst_restoreFloatingMinimizedState()
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     dock1->floatingWindow()->view()->showMinimized();
 
-    QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), Qt::WindowMinimized);
+    QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), WindowState::Minimized);
 
     LayoutSaver saver;
     const QByteArray saved = saver.serializeLayout();
 
     saver.restoreLayout(saved);
-    QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), Qt::WindowMinimized);
+    QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), WindowState::Minimized);
 }
 
 void TestDocks::tst_restoreNonExistingDockWidget()

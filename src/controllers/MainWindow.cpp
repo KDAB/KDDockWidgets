@@ -786,7 +786,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.multiSplitterLayout = layout()->serialize();
     m.affinities = d->affinities;
     m.windowState = window ? window->windowState()
-                           : Qt::WindowNoState;
+                           : WindowState::None;
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
         if (Controllers::SideBar *sb = sideBar(loc)) {
