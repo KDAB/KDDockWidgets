@@ -49,12 +49,6 @@ QRect Window_qt::geometry() const
     return m_window->geometry();
 }
 
-void Window_qt::setProperty(const char *name, const QVariant &value)
-{
-    Q_ASSERT(m_window);
-    m_window->setProperty(name, value);
-}
-
 bool Window_qt::isVisible() const
 {
     return m_window->isVisible();
@@ -116,11 +110,6 @@ QScreen *Window_qt::screen() const
 void Window_qt::destroy()
 {
     delete m_window;
-}
-
-QVariant Window_qt::property(const char *name) const
-{
-    return m_window->property(name);
 }
 
 QSize Window_qt::minSize() const
