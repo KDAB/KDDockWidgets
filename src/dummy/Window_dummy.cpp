@@ -80,15 +80,6 @@ bool Window_dummy::equals(std::shared_ptr<Window>) const
     return {};
 }
 
-QSize Window_dummy::size() const
-{
-    return {};
-}
-
-void Window_dummy::setPosition(QPoint)
-{
-}
-
 void Window_dummy::setFramePosition(QPoint)
 {
 }

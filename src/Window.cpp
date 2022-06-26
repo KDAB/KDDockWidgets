@@ -62,3 +62,15 @@ bool Window::containsView(Controller *c) const
 
     return containsView(c->view());
 }
+
+QSize Window::size() const
+{
+    return geometry().size();
+}
+
+void Window::setPosition(QPoint pos)
+{
+    QRect geo = geometry();
+    geo.moveTopLeft(pos);
+    setGeometry(geo);
+}

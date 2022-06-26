@@ -83,11 +83,6 @@ void Window_qt::setFramePosition(QPoint targetPos)
     m_window->setFramePosition(targetPos);
 }
 
-void Window_qt::setPosition(QPoint targetPos)
-{
-    m_window->setPosition(targetPos);
-}
-
 QRect Window_qt::frameGeometry() const
 {
     return m_window->frameGeometry();
@@ -101,11 +96,6 @@ void Window_qt::resize(int width, int height)
 bool Window_qt::isActive() const
 {
     return m_window->isActive();
-}
-
-QSize Window_qt::size() const
-{
-    return m_window->size();
 }
 
 QPoint Window_qt::mapFromGlobal(QPoint globalPos) const

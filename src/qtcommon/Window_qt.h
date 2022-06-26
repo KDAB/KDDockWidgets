@@ -38,12 +38,10 @@ public:
     QVariant property(const char *name) const override;
     bool equals(std::shared_ptr<Window> other) const override;
     void setFramePosition(QPoint targetPos) override;
-    void setPosition(QPoint targetPos) override;
     void resize(int width, int height) override;
     bool isActive() const override;
     Qt::WindowState windowState() const override;
 
-    QSize size() const override;
     QRect frameGeometry() const override;
     QWindow *qtWindow() const;
 

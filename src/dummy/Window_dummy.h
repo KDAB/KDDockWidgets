@@ -32,8 +32,6 @@ public:
     bool isVisible() const override;
     WId handle() const override;
     bool equals(std::shared_ptr<Window> other) const override;
-    QSize size() const override;
-    void setPosition(QPoint targetPos) override;
     void setFramePosition(QPoint targetPos) override;
     QRect frameGeometry() const override;
     void resize(int width, int height) override;
