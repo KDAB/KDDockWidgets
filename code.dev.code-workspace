@@ -78,12 +78,12 @@
         "cwd": "${workspaceFolder}"
       },
       {
-        "name": "tst_docks",
+        "name": "tst_qtwidgets",
         "type": "lldb",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/tst_docks",
+        "program": "${workspaceFolder}/build-dev/bin/tst_qtwidgets",
         "args": [
-          "tst_addMDIDockWidget"
+          "tst_mainWindowAlwaysHasCentralWidget"
         ],
         "cwd": "${workspaceFolder}"
       },

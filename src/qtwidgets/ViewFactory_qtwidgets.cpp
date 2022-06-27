@@ -64,7 +64,7 @@ View *ViewFactory_qtwidgets::createDockWidget(const QString &uniqueName,
 
 View *ViewFactory_qtwidgets::createGroup(Controllers::Group *controller, View *parent = nullptr) const
 {
-    return new Views::Group_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::Group_qtwidgets(controller, Views::View_qt::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, View *parent) const
@@ -74,12 +74,12 @@ View *ViewFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, Vie
 
 View *ViewFactory_qtwidgets::createTabBar(Controllers::TabBar *tabBar, View *parent) const
 {
-    return new Views::TabBar_qtwidgets(tabBar, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::TabBar_qtwidgets(tabBar, Views::View_qt::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createStack(Controllers::Stack *controller, View *parent) const
 {
-    return new Views::Stack_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::Stack_qtwidgets(controller, Views::View_qt::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createSeparator(Controllers::Separator *controller, View *parent) const
@@ -90,19 +90,19 @@ View *ViewFactory_qtwidgets::createSeparator(Controllers::Separator *controller,
 View *ViewFactory_qtwidgets::createFloatingWindow(Controllers::FloatingWindow *controller,
                                                   Controllers::MainWindow *parent, Qt::WindowFlags windowFlags) const
 {
-    auto mainwindow = qobject_cast<QMainWindow *>(Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    auto mainwindow = qobject_cast<QMainWindow *>(Views::View_qt::asQWidget(parent ? parent->view() : nullptr));
     return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
 }
 
 View *ViewFactory_qtwidgets::createRubberBand(View *parent) const
 {
-    return new Views::RubberBand_qtwidgets(Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::RubberBand_qtwidgets(Views::View_qt::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createSideBar(Controllers::SideBar *controller,
                                            View *parent) const
 {
-    return new Views::SideBar_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::SideBar_qtwidgets(controller, Views::View_qt::asQWidget(parent));
 }
 
 QAbstractButton *ViewFactory_qtwidgets::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const
@@ -177,12 +177,12 @@ View *ViewFactory_qtwidgets::createMDILayout(Controllers::MDILayout *controller,
 
 View *ViewFactory_qtwidgets::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent) const
 {
-    return new Views::ClassicIndicatorsOverlay_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::ClassicIndicatorsOverlay_qtwidgets(controller, Views::View_qt::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent) const
 {
-    return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller, Views::View_qt::asQWidget(parent));
 }
 
 Views::ClassicIndicatorWindowViewInterface *ViewFactory_qtwidgets::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const

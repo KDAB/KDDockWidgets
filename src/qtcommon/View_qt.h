@@ -13,6 +13,15 @@
 
 #include "kddockwidgets/View.h"
 
+QT_BEGIN_NAMESPACE
+class QWidget;
+class QQuickItem;
+QT_END_NAMESPACE
+
+namespace KDDockWidgets {
+class Controller;
+}
+
 namespace KDDockWidgets::Views {
 
 class DOCKS_EXPORT View_qt : public View
@@ -25,6 +34,15 @@ public:
 
     /// TODOm3: Rename to asQObject once View::asQObject is gone
     static QObject *asObject(View *);
+
+#ifdef KDDW_FRONTEND_QTWIDGETS
+    static QWidget *asQWidget(View *);
+    static QWidget *asQWidget(Controller *);
+#endif
+
+#ifdef KDDW_FRONTEND_QTQUICK
+    static QQuickItem *asQQuickItem(View *);
+#endif
 
 protected:
     QObject *const m_thisObj;

@@ -182,7 +182,7 @@ public:
             return;
         }
 
-        if (auto qwidget = Views::View_qtwidgets<QWidget>::asQWidget(parent)) {
+        if (auto qwidget = View_qt::asQWidget(parent)) {
             widget->QWidget::setParent(qwidget);
         } else {
             qWarning() << Q_FUNC_INFO << "parent is not a widget, you have a bug";
@@ -230,7 +230,7 @@ public:
 
     QPoint mapTo(View *someAncestor, QPoint pos) const override
     {
-        return QWidget::mapTo(Views::View_qtwidgets<QWidget>::asQWidget(someAncestor), pos);
+        return QWidget::mapTo(View_qt::asQWidget(someAncestor), pos);
     }
 
     void setSizePolicy(SizePolicy h, SizePolicy v) override
@@ -391,21 +391,6 @@ public:
     QVariant property(const char *name) const override
     {
         return QWidget::property(name);
-    }
-
-    static QWidget *asQWidget(View *view)
-    {
-        if (!view)
-            return nullptr;
-
-        return qobject_cast<QWidget *>(View_qt::asObject(view));
-    }
-
-    static QWidget *asQWidget(Controller *controller)
-    {
-        if (!controller)
-            return nullptr;
-        return asQWidget(controller->view());
     }
 
     static QVector<std::shared_ptr<View>> childViewsFor(const QWidget *parent);

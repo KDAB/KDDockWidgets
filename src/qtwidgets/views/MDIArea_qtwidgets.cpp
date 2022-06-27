@@ -50,7 +50,7 @@ MDIArea_qtwidgets::MDIArea_qtwidgets(QWidget *parent)
 {
 
     auto vlay = new QVBoxLayout(this);
-    vlay->addWidget(View_qtwidgets::asQWidget(d->layout));
+    vlay->addWidget(View_qt::asQWidget(d->layout));
 
     View::d->closeRequested.connect([this](QCloseEvent *ev) {
         d->layout->onCloseEvent(ev);

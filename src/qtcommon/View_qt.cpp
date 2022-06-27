@@ -1,4 +1,13 @@
 #include "View_qt.h"
+#include "kddockwidgets/Controller.h"
+
+#ifdef KDDW_FRONTEND_QTWIDGETS
+#include <QWidget>
+#endif
+
+#ifdef KDDW_FRONTEND_QTQUICK
+#include <QQuickItem>
+#endif
 
 using namespace KDDockWidgets::Views;
 
@@ -23,3 +32,32 @@ QObject *View_qt::asObject(View *view)
 
     return nullptr;
 }
+
+#ifdef KDDW_FRONTEND_QTWIDGETS
+
+/*static */
+QWidget *View_qt::asQWidget(View *view)
+{
+    return qobject_cast<QWidget *>(asObject(view));
+}
+
+/*static */
+QWidget *View_qt::asQWidget(Controller *controller)
+{
+    if (!controller)
+        return nullptr;
+
+    return asQWidget(controller->view());
+}
+
+#endif
+
+#ifdef KDDW_FRONTEND_QTQUICK
+
+/*static */
+QQuickItem *View_qt::asQQuickItem(View *view)
+{
+    return qobject_cast<QQuickItem *>(asObject(view));
+}
+
+#endif

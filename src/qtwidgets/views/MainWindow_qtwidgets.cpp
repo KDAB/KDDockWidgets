@@ -102,17 +102,17 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
     d->updateMargins();
 
     if (d->m_supportsAutoHide) {
-        d->m_layout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::West)->view()));
+        d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::West)->view()));
         auto innerVLayout = new QVBoxLayout();
         innerVLayout->setSpacing(0);
         innerVLayout->setContentsMargins(0, 0, 0, 0);
-        innerVLayout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::North)));
-        innerVLayout->addWidget(View_qtwidgets::asQWidget(d->m_controller->layout()));
-        innerVLayout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::South)));
+        innerVLayout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::North)));
+        innerVLayout->addWidget(View_qt::asQWidget(d->m_controller->layout()));
+        innerVLayout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::South)));
         d->m_layout->addLayout(innerVLayout);
-        d->m_layout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::East)));
+        d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::East)));
     } else {
-        d->m_layout->addWidget(Views::View_qtwidgets<QWidget>::asQWidget(d->m_controller->layout()->view()));
+        d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->layout()->view()));
     }
 
     setCentralWidget(d->m_centralWidget);
@@ -181,7 +181,7 @@ void MainWindow_qtwidgets::setPersistentCentralWidget(QWidget *widget)
 QWidget *MainWindow_qtwidgets::persistentCentralWidget() const
 {
     auto view = m_mainWindow->persistentCentralView();
-    return Views::View_qtwidgets<QWidget>::asQWidget(view.get());
+    return View_qt::asQWidget(view.get());
 }
 
 QHBoxLayout *MainWindow_qtwidgets::internalLayout() const

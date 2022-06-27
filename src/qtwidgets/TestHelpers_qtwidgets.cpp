@@ -121,7 +121,7 @@ void Platform_qtwidgets::tests_deinitPlatform_impl()
 
 View *Platform_qtwidgets::tests_createView(CreateViewOptions opts, View *parent)
 {
-    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
+    QWidget *parentWidget = Views::View_qt::asQWidget(parent);
 
     auto newWidget = new TestView_qtwidgets(opts, parentWidget);
     if (opts.isVisible)
@@ -132,7 +132,7 @@ View *Platform_qtwidgets::tests_createView(CreateViewOptions opts, View *parent)
 
 View *Platform_qtwidgets::tests_createFocusableView(CreateViewOptions opts, View *parent)
 {
-    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
+    QWidget *parentWidget = Views::View_qt::asQWidget(parent);
 
     auto newWidget = new FocusableTestView_qtwidgets(opts, parentWidget);
     if (opts.isVisible)
@@ -143,7 +143,7 @@ View *Platform_qtwidgets::tests_createFocusableView(CreateViewOptions opts, View
 
 View *Platform_qtwidgets::tests_createNonClosableView(View *parent)
 {
-    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
+    QWidget *parentWidget = Views::View_qt::asQWidget(parent);
     auto newWidget = new NonClosableTestView_qtwidgets(parentWidget);
 
     return newWidget;

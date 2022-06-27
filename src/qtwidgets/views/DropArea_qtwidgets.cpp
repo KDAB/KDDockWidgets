@@ -17,7 +17,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 DropArea_qtwidgets::DropArea_qtwidgets(Controllers::DropArea *dropArea, View *parent)
-    : Views::View_qtwidgets<QWidget>(dropArea, Type::DropArea, Views::View_qtwidgets<QWidget>::asQWidget(parent))
+    : Views::View_qtwidgets<QWidget>(dropArea, Type::DropArea, View_qt::asQWidget(parent))
     , m_dropArea(dropArea)
 {
     Q_ASSERT(dropArea);

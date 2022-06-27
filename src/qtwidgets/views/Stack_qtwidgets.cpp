@@ -77,12 +77,12 @@ int Stack_qtwidgets::numDockWidgets() const
 
 void Stack_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
 {
-    removeTab(indexOf(View_qtwidgets::asQWidget(dw)));
+    removeTab(indexOf(View_qt::asQWidget(dw)));
 }
 
 int Stack_qtwidgets::indexOfDockWidget(const Controllers::DockWidget *dw) const
 {
-    return indexOf(View_qtwidgets::asQWidget(dw->view()));
+    return indexOf(View_qt::asQWidget(dw->view()));
 }
 
 void Stack_qtwidgets::mouseDoubleClickEvent(QMouseEvent *ev)
@@ -122,7 +122,7 @@ void Stack_qtwidgets::setCurrentDockWidget(int index)
 bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw,
                                        const QIcon &icon, const QString &title)
 {
-    insertTab(index, View_qtwidgets::asQWidget(dw), icon, title);
+    insertTab(index, View_qt::asQWidget(dw), icon, title);
     return true;
 }
 
@@ -229,7 +229,7 @@ void Stack_qtwidgets::showContextMenu(QPoint pos)
 
 QTabBar *Stack_qtwidgets::tabBar() const
 {
-    return static_cast<QTabBar *>(View_qtwidgets::asQWidget((m_stack->tabBar())));
+    return static_cast<QTabBar *>(View_qt::asQWidget((m_stack->tabBar())));
 }
 
 void Stack_qtwidgets::setDocumentMode(bool is)
