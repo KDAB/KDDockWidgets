@@ -295,12 +295,6 @@ View *Item::hostWidget() const
     return m_hostWidget;
 }
 
-QObject *Item::host() const
-{
-    return m_hostWidget ? m_hostWidget->asQObject()
-                        : nullptr;
-}
-
 void Item::restore(View *guest)
 {
     if (isVisible() || m_guest) {
@@ -639,11 +633,11 @@ bool Item::checkSanity()
     }
 
     if (m_guest) {
-        if (m_guest->parent() != hostWidget()->asQObject()) {
+        if (m_guest->parentView() && !m_guest->parentView()->equals(hostWidget())) {
             if (root())
                 root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest. guest.parent="
-                       << m_guest->parent() << "; host=" << hostWidget()->asQObject()
+            qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest."
+                       << "; host=" << hostWidget()->asQObject()
                        << "; guest.asObj=" << m_guest->asQObject()
                        << "; this=" << this
                        << "; item.parentContainer=" << parentContainer()
@@ -1141,9 +1135,8 @@ bool ItemBoxContainer::checkSanity()
         Item *item = visibleChildren.at(i);
         const int expectedSeparatorPos = mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
-        if (separator->view()->parent() != host()) {
-            qWarning() << Q_FUNC_INFO << "Invalid host widget for separator"
-                       << separator->view()->parent() << host() << this;
+        if (!View::equals(separator->view()->parentView().get(), hostWidget())) {
+            qWarning() << Q_FUNC_INFO << "Invalid host widget for separator" << this;
             return false;
         }
 
@@ -1178,9 +1171,8 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        if (separator->view()->parent() != host()) {
-            qWarning() << Q_FUNC_INFO << "Unexpected host widget in separator"
-                       << separator->view()->parent() << "; expected=" << host();
+        if (separator->view()->parentView() && !separator->view()->parentView()->equals(hostWidget())) {
+            qWarning() << Q_FUNC_INFO << "Unexpected host widget in separator";
             return false;
         }
 

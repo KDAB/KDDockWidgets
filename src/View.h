@@ -62,7 +62,6 @@ public:
 
     virtual void init() {};
     QObject *asQObject() const;
-    QObject *parent() const;
 
     /// @brief Returns this view's controller
     Controller *controller() const;
@@ -89,6 +88,7 @@ public:
     /// @brief Returns whether this view represents the same GUI element as the other
     bool equals(const View *other) const;
     bool equals(const std::shared_ptr<View> &) const;
+    static bool equals(const View *one, const View *two);
 
     /// @brief Returns a handle for the GUI element
     /// This value only makes sense to the frontend. For example, for QtQuick it might be a

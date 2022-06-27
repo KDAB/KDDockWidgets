@@ -1150,9 +1150,9 @@ void TestDocks::tst_closeReparentsToNull()
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto fw1 = dock1->window();
-    QVERIFY(dock1->view()->parent() != nullptr);
+    QVERIFY(dock1->view()->parentView() != nullptr);
     dock1->close();
-    QVERIFY(dock1->view()->parent() == nullptr);
+    QVERIFY(dock1->view()->parentView() == nullptr);
     delete dock1;
 }
 

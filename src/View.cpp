@@ -74,11 +74,6 @@ QObject *View::asQObject() const
     return m_thisObj;
 }
 
-QObject *View::parent() const
-{
-    return m_thisObj->parent();
-}
-
 void View::free()
 {
     if (m_freed) {
@@ -405,4 +400,16 @@ bool View::onResize(QSize newSize)
 {
     d->resized.emit(newSize);
     return false;
+}
+
+/** static */
+bool View::equals(const View *one, const View *two)
+{
+    if ((one && !two) || (!one && two))
+        return false;
+
+    if (!one && !two)
+        return true;
+
+    return one->equals(two);
 }

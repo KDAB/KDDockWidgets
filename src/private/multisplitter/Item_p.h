@@ -318,7 +318,6 @@ public:
     int minLength(Qt::Orientation) const;
     int maxLengthHint(Qt::Orientation) const;
 
-    QObject *host() const;
     KDDockWidgets::View *hostWidget() const;
     void restore(KDDockWidgets::View *guestView);
 
