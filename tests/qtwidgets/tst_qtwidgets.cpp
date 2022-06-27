@@ -111,7 +111,7 @@ inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 
     auto lay = new QVBoxLayout(window);
     lay->setContentsMargins(100, 100, 100, 100);
-    lay->addWidget(qobject_cast<QWidget *>(mainwindow->view()->asQObject()));
+    lay->addWidget(dynamic_cast<QWidget *>(mainwindow->view()));
 
     window->show();
     window->resize(sz);
@@ -204,7 +204,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
 
     auto m = createMainWindow();
 
-    QWidget *central = qobject_cast<Views::MainWindow_qtwidgets *>(m->view()->asQObject())->centralWidget();
+    QWidget *central = dynamic_cast<Views::MainWindow_qtwidgets *>(m->view())->centralWidget();
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
@@ -598,7 +598,7 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     auto lay = new QVBoxLayout(&container);
     auto m = Platform::instance()->createMainWindow("MyMainWindow_tst_addToSmallMainWindow8", {},
                                                     MainWindowOption_None);
-    auto qmainwindow = qobject_cast<Views::MainWindow_qtwidgets *>(m->view()->asQObject());
+    auto qmainwindow = dynamic_cast<Views::MainWindow_qtwidgets *>(m->view());
     lay->addWidget(qmainwindow);
     container.resize(100, 100);
     Platform::instance()->tests_waitForEvent(&container, QEvent::Resize);
