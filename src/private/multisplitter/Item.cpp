@@ -637,8 +637,6 @@ bool Item::checkSanity()
             if (root())
                 root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest."
-                       << "; host=" << hostView()->asQObject()
-                       << "; guest.asObj=" << m_guest->asQObject()
                        << "; this=" << this
                        << "; item.parentContainer=" << parentContainer()
                        << "; item.root.parent=" << (root() ? root()->parent() : nullptr);
@@ -648,8 +646,7 @@ bool Item::checkSanity()
 #if 0 // if guest is explicitly hidden we're not hiding the item yet. And probably won't
         if (!m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
 
-            qWarning() << Q_FUNC_INFO << "Guest widget isn't visible" << this
-                       << m_guest->asQObject();
+            qWarning() << Q_FUNC_INFO << "Guest widget isn't visible" << this;
             return false;
         }
 #endif

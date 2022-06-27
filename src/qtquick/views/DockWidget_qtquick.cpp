@@ -116,7 +116,7 @@ void DockWidget_qtquick::setGuestItem(QQuickItem *item)
 QQuickItem *DockWidget_qtquick::guestItem() const
 {
     if (auto guest = m_dockWidget->guestView())
-        return qobject_cast<QQuickItem *>(guest->asQObject());
+        return dynamic_cast<QQuickItem *>(guest.get());
 
     return nullptr;
 }

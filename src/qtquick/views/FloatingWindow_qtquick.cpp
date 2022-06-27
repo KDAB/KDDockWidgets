@@ -70,7 +70,7 @@ public:
             // Mimic QWidget behaviour: The non-client mouse events go to the QWidget not the QWindow. In our case the QQuickItem.
             // I mean, they also go to QWindow, but for our QtWidgets impl we process them at the QWidget level, so use the same approach
             // so we maintain a single code path for processing mouse events
-            qGuiApp->sendEvent(m_view->asQObject(), ev);
+            Platform::instance()->sendEvent(m_view, ev);
             return true;
         }
 
