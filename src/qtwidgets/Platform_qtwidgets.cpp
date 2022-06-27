@@ -106,7 +106,7 @@ Window::Ptr Platform_qtwidgets::windowAt(QPoint globalPos) const
 
 int Platform_qtwidgets::screenNumberFor(View *view) const
 {
-    if (auto widget = qobject_cast<QWidget *>(view->asQObject())) {
+    if (auto widget = Views::View_qtwidgets<QWidget>::asQWidget(view)) {
         if (QWindow *qtwindow = widget->window()->windowHandle())
             return screenNumberForQWindow(qtwindow);
     }
@@ -116,7 +116,7 @@ int Platform_qtwidgets::screenNumberFor(View *view) const
 
 QSize Platform_qtwidgets::screenSizeFor(View *view) const
 {
-    if (auto widget = qobject_cast<QWidget *>(view->asQObject())) {
+    if (auto widget = Views::View_qtwidgets<QWidget>::asQWidget(view)) {
         if (QScreen *screen = widget->screen()) {
             return screen->size();
         }

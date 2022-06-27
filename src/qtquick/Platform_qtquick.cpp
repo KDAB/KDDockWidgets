@@ -11,6 +11,7 @@
 
 #include "Platform_qtquick.h"
 #include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/View_qt.h"
 #include "Config.h"
 #include "QmlTypes.h"
 
@@ -125,7 +126,7 @@ Window::Ptr Platform_qtquick::windowAt(QPoint globalPos) const
 
 int Platform_qtquick::screenNumberFor(View *view) const
 {
-    if (auto item = qobject_cast<QQuickItem *>(view->asQObject())) {
+    if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asObject(view))) {
         if (QWindow *qtwindow = item->window())
             return screenNumberForQWindow(qtwindow);
     }
@@ -135,7 +136,7 @@ int Platform_qtquick::screenNumberFor(View *view) const
 
 QSize Platform_qtquick::screenSizeFor(View *view) const
 {
-    if (auto item = qobject_cast<QQuickItem *>(view->asQObject())) {
+    if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asObject(view))) {
         if (QWindow *qtwindow = item->window())
             if (QScreen *screen = qtwindow->screen())
                 return screen->size();

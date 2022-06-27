@@ -34,7 +34,7 @@ inline QQuickItem *asQQuickItem(View *view)
     if (!view)
         return nullptr;
 
-    return qobject_cast<QQuickItem *>(view->asQObject());
+    return qobject_cast<QQuickItem *>(View_qt::asObject(view));
 }
 
 inline QQuickItem *asQQuickItem(Controller *controller)

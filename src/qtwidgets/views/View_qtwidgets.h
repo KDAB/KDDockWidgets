@@ -182,11 +182,10 @@ public:
             return;
         }
 
-        if (auto qwidget = qobject_cast<QWidget *>(parent->asQObject())) {
+        if (auto qwidget = Views::View_qtwidgets<QWidget>::asQWidget(parent)) {
             widget->QWidget::setParent(qwidget);
         } else {
-            qWarning() << Q_FUNC_INFO << "parent is not a widget, you have a bug"
-                       << parent->asQObject();
+            qWarning() << Q_FUNC_INFO << "parent is not a widget, you have a bug";
             Q_ASSERT(false);
         }
     }
@@ -231,7 +230,7 @@ public:
 
     QPoint mapTo(View *someAncestor, QPoint pos) const override
     {
-        return QWidget::mapTo(qobject_cast<QWidget *>(someAncestor->asQObject()), pos);
+        return QWidget::mapTo(Views::View_qtwidgets<QWidget>::asQWidget(someAncestor), pos);
     }
 
     void setSizePolicy(SizePolicy h, SizePolicy v) override
@@ -399,7 +398,7 @@ public:
         if (!view)
             return nullptr;
 
-        return qobject_cast<QWidget *>(view->asQObject());
+        return qobject_cast<QWidget *>(View_qt::asObject(view));
     }
 
     static QWidget *asQWidget(Controller *controller)

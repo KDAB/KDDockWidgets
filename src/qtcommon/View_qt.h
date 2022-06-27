@@ -23,6 +23,9 @@ public:
 
     QObject *thisObject() const;
 
+    /// TODOm3: Rename to asQObject once View::asQObject is gone
+    static QObject *asObject(View *);
+
 protected:
     QObject *const m_thisObj;
 };

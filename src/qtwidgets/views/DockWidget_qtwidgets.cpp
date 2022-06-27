@@ -64,7 +64,7 @@ void DockWidget_qtwidgets::init()
 {
     connect(m_dockWidget, &Controllers::DockWidget::guestViewChanged, this, [this] {
         if (auto guest = dockWidget()->guestView()) {
-            d->layout->addWidget(static_cast<QWidget *>(guest->asQObject()));
+            d->layout->addWidget(Views::View_qtwidgets<QWidget>::asQWidget(guest.get()));
         }
     });
 }
@@ -97,7 +97,7 @@ void DockWidget_qtwidgets::resizeEvent(QResizeEvent *e)
 QWidget *DockWidget_qtwidgets::widget() const
 {
     if (auto guest = m_dockWidget->guestView())
-        return qobject_cast<QWidget *>(guest->asQObject());
+        return Views::View_qtwidgets<QWidget>::asQWidget(guest.get());
 
     return nullptr;
 }

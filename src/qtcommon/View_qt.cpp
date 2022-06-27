@@ -14,3 +14,12 @@ QObject *View_qt::thisObject() const
 {
     return m_thisObj;
 }
+
+/*static*/
+QObject *View_qt::asObject(View *view)
+{
+    if (auto viewqt = dynamic_cast<View_qt *>(view))
+        return viewqt->thisObject();
+
+    return nullptr;
+}

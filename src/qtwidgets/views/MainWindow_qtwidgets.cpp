@@ -112,7 +112,7 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
         d->m_layout->addLayout(innerVLayout);
         d->m_layout->addWidget(View_qtwidgets::asQWidget(d->m_controller->sideBar(SideBarLocation::East)));
     } else {
-        d->m_layout->addWidget(qobject_cast<QWidget *>(d->m_controller->layout()->view()->asQObject()));
+        d->m_layout->addWidget(Views::View_qtwidgets<QWidget>::asQWidget(d->m_controller->layout()->view()));
     }
 
     setCentralWidget(d->m_centralWidget);
@@ -181,7 +181,7 @@ void MainWindow_qtwidgets::setPersistentCentralWidget(QWidget *widget)
 QWidget *MainWindow_qtwidgets::persistentCentralWidget() const
 {
     auto view = m_mainWindow->persistentCentralView();
-    return view ? qobject_cast<QWidget *>(view->asQObject()) : nullptr;
+    return Views::View_qtwidgets<QWidget>::asQWidget(view.get());
 }
 
 QHBoxLayout *MainWindow_qtwidgets::internalLayout() const

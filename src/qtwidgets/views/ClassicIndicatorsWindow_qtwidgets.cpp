@@ -12,6 +12,7 @@
 #include "ClassicIndicatorsWindow_qtwidgets.h"
 #include "kddockwidgets/controllers/indicators/ClassicIndicators.h"
 #include "kddockwidgets/controllers/Group.h"
+#include "View_qtwidgets.h"
 #include "private/Utils_p.h"
 
 using namespace KDDockWidgets;
@@ -128,7 +129,7 @@ static QWidget *parentForIndicatorWindow(ClassicIndicators *classicIndicators_)
 {
     // On Wayland it can't be a top-level, as we have no way of positioning it
 
-    return isWayland() ? qobject_cast<QWidget *>(classicIndicators_->view()->asQObject())
+    return isWayland() ? Views::View_qtwidgets<QWidget>::asQWidget(classicIndicators_->view())
                        : nullptr;
 }
 
