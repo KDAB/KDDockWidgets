@@ -61,34 +61,6 @@ public:
     virtual ~View();
 
     virtual void init() {};
-    QObject *asQObject() const;
-
-    /// @brief Returns this view's controller
-    Controller *controller() const;
-
-    ///@brief returns an id for corelation purposes for saving layouts
-    QString id() const;
-
-    ///@brief Returns the type of this view
-    Type type() const;
-
-    /// @brief Deletes this view.
-    /// The default impl will just do a normal C++ "delete", but derived classes are free
-    /// to implement other ways, for example QObject::deleteLater(), which is recommended for Qt.
-    /// @sa free_impl()
-    void free();
-
-    /// @brief Returns whether free() has already been called
-    bool freed() const;
-
-    /// @brief Returns whether the DTOR is currently running. freed() might be true while inDtor false,
-    /// as the implementation of free() is free to delay it (with deleteLater() for example)
-    bool inDtor() const;
-
-    /// @brief Returns whether this view represents the same GUI element as the other
-    bool equals(const View *other) const;
-    bool equals(const std::shared_ptr<View> &) const;
-    static bool equals(const View *one, const View *two);
 
     /// @brief Returns a handle for the GUI element
     /// This value only makes sense to the frontend. For example, for QtQuick it might be a
@@ -126,9 +98,7 @@ public:
     virtual bool isVisible() const = 0;
     virtual void setVisible(bool) = 0;
     virtual void move(int x, int y) = 0;
-    void move(QPoint);
     virtual void setSize(int width, int height) = 0;
-    void setSize(QSize);
     virtual void setWidth(int width) = 0;
     virtual void setHeight(int height) = 0;
     virtual void show() = 0;
@@ -144,9 +114,6 @@ public:
     virtual void setSizePolicy(SizePolicy, SizePolicy) = 0;
     virtual SizePolicy verticalSizePolicy() const = 0;
     virtual SizePolicy horizontalSizePolicy() const = 0;
-    void closeRootView();
-    QRect windowGeometry() const;
-    QSize parentSize() const;
     virtual bool close() = 0;
     virtual void setFlag(Qt::WindowType, bool = true) = 0;
     virtual void setAttribute(Qt::WidgetAttribute, bool enable = true) = 0;
@@ -170,7 +137,6 @@ public:
     virtual void grabMouse() = 0;
     virtual void releaseMouse() = 0;
     virtual void releaseKeyboard() = 0;
-    QScreen *screen() const;
     virtual void setFocus(Qt::FocusReason) = 0;
     virtual void setFocusPolicy(Qt::FocusPolicy) = 0;
     virtual void setWindowOpacity(double) = 0;
@@ -189,22 +155,6 @@ public:
     virtual QString objectName() const = 0;
     virtual void render(QPainter *) = 0;
 
-    /// @brief Returns the views's geometry, but always in global space
-    QRect globalGeometry() const;
-
-    QPoint pos() const;
-    QSize size() const;
-    QRect rect() const;
-    int x() const;
-    int y() const;
-    int height() const;
-    int width() const;
-    void resize(QSize);
-    void resize(int w, int h);
-
-    static QSize hardcodedMinimumSize();
-    static QSize boundedMaxSize(QSize min, QSize max);
-
     virtual std::shared_ptr<View> childViewAt(QPoint localPos) const = 0;
 
     /// @brief Returns the top-level gui element which this view is inside
@@ -215,9 +165,6 @@ public:
     /// For the Qt frontend, this wraps a QWindow.
     /// Like QWidget::window()
     virtual std::shared_ptr<Window> window() const = 0;
-
-    /// @brief Convenience. See Window::transientWindow().
-    std::shared_ptr<Window> transientWindow() const;
 
     /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
     virtual std::shared_ptr<View> parentView() const = 0;
@@ -233,6 +180,65 @@ public:
     /// @brief Sets the z order
     /// Not supported on all platforms
     virtual void setZOrder(int) {};
+
+    /// @Returns a list of child views
+    virtual QVector<std::shared_ptr<View>> childViews() const = 0;
+
+    QObject *asQObject() const;
+
+    /// @brief Returns this view's controller
+    Controller *controller() const;
+
+    ///@brief returns an id for corelation purposes for saving layouts
+    QString id() const;
+
+    ///@brief Returns the type of this view
+    Type type() const;
+
+    /// @brief Deletes this view.
+    /// The default impl will just do a normal C++ "delete", but derived classes are free
+    /// to implement other ways, for example QObject::deleteLater(), which is recommended for Qt.
+    /// @sa free_impl()
+    void free();
+
+    /// @brief Returns whether free() has already been called
+    bool freed() const;
+
+    /// @brief Returns whether the DTOR is currently running. freed() might be true while inDtor false,
+    /// as the implementation of free() is free to delay it (with deleteLater() for example)
+    bool inDtor() const;
+
+    /// @brief Returns whether this view represents the same GUI element as the other
+    bool equals(const View *other) const;
+    bool equals(const std::shared_ptr<View> &) const;
+    static bool equals(const View *one, const View *two);
+
+    QScreen *screen() const;
+
+    /// @brief Returns the views's geometry, but always in global space
+    QRect globalGeometry() const;
+
+    QPoint pos() const;
+    QSize size() const;
+    QRect rect() const;
+    int x() const;
+    int y() const;
+    int height() const;
+    int width() const;
+    void resize(QSize);
+    void resize(int w, int h);
+    void move(QPoint);
+    void setSize(QSize);
+
+    /// @brief Convenience. See Window::transientWindow().
+    std::shared_ptr<Window> transientWindow() const;
+
+    void closeRootView();
+    QRect windowGeometry() const;
+    QSize parentSize() const;
+
+    static QSize hardcodedMinimumSize();
+    static QSize boundedMaxSize(QSize min, QSize max);
 
     /// @brief if this view is a FloatingWindow, then returns its controller
     /// Mostly to save the call sites from having too many casts
@@ -256,9 +262,6 @@ public:
     /// If false, it doesn't mean anything, as not all controllers are using this.
     void setAboutToBeDestroyed();
     bool aboutToBeDestroyed() const;
-
-    /// @Returns a list of child views
-    virtual QVector<std::shared_ptr<View>> childViews() const = 0;
 
     /// @brief Returns the controller of the first parent view of the specified type
     /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
