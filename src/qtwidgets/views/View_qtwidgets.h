@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/Controller.h"
-#include "kddockwidgets/View.h"
+#include "kddockwidgets/View_qt.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -26,7 +26,7 @@
 namespace KDDockWidgets::Views {
 
 template<typename Base>
-class DOCKS_EXPORT View_qtwidgets : public Base, public View
+class DOCKS_EXPORT View_qtwidgets : public Base, public View_qt
 {
 public:
     using View::close;

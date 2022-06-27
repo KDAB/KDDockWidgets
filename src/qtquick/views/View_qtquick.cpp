@@ -109,7 +109,7 @@ View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type,
                            QQuickItem *parent,
                            Qt::WindowFlags flags)
     : QQuickItem(actualParentItem(parent, flags))
-    , View(controller, type, this)
+    , View_qt(controller, type, this)
     , m_windowFlags(flags)
 {
     if (parent && flagsAreTopLevelFlags(flags)) {

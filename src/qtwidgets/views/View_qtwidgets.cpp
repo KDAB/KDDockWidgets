@@ -26,42 +26,42 @@ using namespace KDDockWidgets::Views;
 template<>
 View_qtwidgets<QWidget>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags windowFlags)
     : QWidget(parent, windowFlags)
-    , View(controller, type, this)
+    , View_qt(controller, type, this)
 {
 }
 
 template<>
 View_qtwidgets<QTabBar>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
     : QTabBar(parent)
-    , View(controller, type, this)
+    , View_qt(controller, type, this)
 {
 }
 
 template<>
 View_qtwidgets<QTabWidget>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
     : QTabWidget(parent)
-    , View(controller, type, this)
+    , View_qt(controller, type, this)
 {
 }
 
 template<>
 View_qtwidgets<QMainWindow>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
     : QMainWindow(parent)
-    , View(controller, type, this)
+    , View_qt(controller, type, this)
 {
 }
 
 template<>
 View_qtwidgets<QRubberBand>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
     : QRubberBand(QRubberBand::Rectangle, parent)
-    , View(controller, type, this)
+    , View_qt(controller, type, this)
 {
 }
 
 template<>
 View_qtwidgets<QLineEdit>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
     : QLineEdit(parent)
-    , View(controller, type, this)
+    , View_qt(controller, type, this)
 {
 }
 

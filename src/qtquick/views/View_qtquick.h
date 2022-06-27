@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/Controller.h"
-#include "kddockwidgets/View.h"
+#include "kddockwidgets/View_qt.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -46,7 +46,7 @@ inline QQuickItem *asQQuickItem(Controller *controller)
 }
 
 class DOCKS_EXPORT View_qtquick : public QQuickItem,
-                                  public View
+                                  public View_qt
 {
     Q_OBJECT
 public:

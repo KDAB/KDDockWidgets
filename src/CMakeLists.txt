@@ -110,6 +110,7 @@ set(KDDW_BACKEND_SRCS
 
     qtcommon/Platform_qt.cpp
     qtcommon/Window_qt.cpp
+    qtcommon/View_qt.cpp
     kddockwidgets_resources.qrc
 )
 
@@ -561,6 +562,7 @@ endif()
 if (KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
   SET(KDDW_QT_HEADERS
     qtcommon/Platform_qt.h
+    qtcommon/View_qt.h
   )
   install(FILES ${KDDW_QT_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 endif()
