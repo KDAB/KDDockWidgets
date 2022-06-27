@@ -563,7 +563,7 @@ void DropArea::addWidget(View *w, Location location,
         group->addWidget(dw, option);
     } else if (auto ms = w->asDropAreaController()) {
         newItem = ms->m_rootItem;
-        newItem->setHostWidget(thisView);
+        newItem->setHostView(thisView);
 
         if (auto fw = ms->floatingWindow()) {
             newItem->setSize_recursive(fw->size());

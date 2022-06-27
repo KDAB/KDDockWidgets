@@ -318,7 +318,7 @@ public:
     int minLength(Qt::Orientation) const;
     int maxLengthHint(Qt::Orientation) const;
 
-    KDDockWidgets::View *hostWidget() const;
+    KDDockWidgets::View *hostView() const;
     void restore(KDDockWidgets::View *guestView);
 
     QVector<int> pathFromRoot() const;
@@ -334,7 +334,7 @@ public:
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(QRect rect);
     virtual void dumpLayout(int level = 0);
-    virtual void setHostWidget(KDDockWidgets::View *);
+    virtual void setHostView(KDDockWidgets::View *);
     virtual QVariantMap toVariantMap() const;
     virtual void fillFromVariantMap(const QVariantMap &map, const QHash<QString, KDDockWidgets::View *> &widgets);
 
@@ -554,7 +554,7 @@ private:
     void positionItems(SizingInfo::List &sizes);
     Item *itemAt(QPoint p) const;
     Item *itemAt_recursive(QPoint p) const;
-    void setHostWidget(KDDockWidgets::View *) override;
+    void setHostView(KDDockWidgets::View *) override;
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;
     void setLength_recursive(int length, Qt::Orientation) override;

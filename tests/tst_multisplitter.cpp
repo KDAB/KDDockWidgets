@@ -107,7 +107,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
         return false;
 
     const QVariantMap serialized = root->toVariantMap();
-    ItemBoxContainer root2(root->hostWidget());
+    ItemBoxContainer root2(root->hostView());
 
     QHash<QString, View *> widgets;
     const Item::List originalItems = root->items_recursive();
@@ -862,7 +862,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         auto root1 = createRoot();
         Item *item1 = createItem();
         root1->insertItem(item1, Location_OnRight);
-        auto host1 = root1->hostWidget();
+        auto host1 = root1->hostView();
 
         auto root2 = createRoot();
         Item *item2 = createItem();
@@ -870,11 +870,11 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnBottom);
 
-        QVERIFY(root1->hostWidget()->equals(host1));
-        QVERIFY(item2->hostWidget()->equals(host1));
+        QVERIFY(root1->hostView()->equals(host1));
+        QVERIFY(item2->hostView()->equals(host1));
         const auto &items = root1->items_recursive();
         for (Item *item : items) {
-            QVERIFY(item->hostWidget()->equals(host1));
+            QVERIFY(item->hostView()->equals(host1));
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());
@@ -887,7 +887,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         Item *item2 = createItem();
         root1->insertItem(item1, Location_OnLeft);
         root1->insertItem(item2, Location_OnRight);
-        auto host1 = root1->hostWidget();
+        auto host1 = root1->hostView();
 
         auto root2 = createRoot();
         Item *item12 = createItem();
@@ -895,10 +895,10 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnTop);
 
-        QVERIFY(root1->hostWidget()->equals(host1));
-        QVERIFY(item2->hostWidget()->equals(host1));
+        QVERIFY(root1->hostView()->equals(host1));
+        QVERIFY(item2->hostView()->equals(host1));
         for (Item *item : root1->items_recursive()) {
-            QVERIFY(item->hostWidget()->equals(host1));
+            QVERIFY(item->hostView()->equals(host1));
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());

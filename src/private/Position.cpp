@@ -94,7 +94,7 @@ void Position::removePlaceholders(const Controllers::Layout *ms)
 {
     auto layoutView = ms->view();
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [layoutView](const std::unique_ptr<ItemRef> &itemref) {
-                             return layoutView && layoutView->equals(itemref->item->hostWidget());
+                             return layoutView && layoutView->equals(itemref->item->hostView());
                          }),
                          m_placeholders.end());
 }

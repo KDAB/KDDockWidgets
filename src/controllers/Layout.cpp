@@ -52,7 +52,7 @@ Layout::~Layout()
 void Layout::viewAboutToBeDeleted()
 {
     if (view()) {
-        if (view()->equals(m_rootItem->hostWidget())) {
+        if (view()->equals(m_rootItem->hostView())) {
             delete m_rootItem;
             m_rootItem = nullptr;
         }

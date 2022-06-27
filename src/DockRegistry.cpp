@@ -261,10 +261,10 @@ Controllers::MainWindow::List DockRegistry::mainWindowsWithAffinity(const QStrin
 
 Controllers::Layout *DockRegistry::layoutForItem(const Layouting::Item *item) const
 {
-    if (!item->hostWidget())
+    if (!item->hostView())
         return nullptr;
 
-    return item->hostWidget()->asLayout();
+    return item->hostView()->asLayout();
 }
 
 bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const

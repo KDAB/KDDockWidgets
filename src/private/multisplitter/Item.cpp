@@ -255,8 +255,8 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View 
     if (!guestId.isEmpty()) {
         if (View *guest = widgets.value(guestId)) {
             setGuestView(guest);
-            m_guest->setParent(hostWidget());
-        } else if (hostWidget()) {
+            m_guest->setParent(hostView());
+        } else if (hostView()) {
             qWarning() << Q_FUNC_INFO << "Couldn't find group to restore for" << this;
         }
     }
@@ -290,7 +290,7 @@ int Item::refCount() const
     return m_refCount;
 }
 
-View *Item::hostWidget() const
+View *Item::hostView() const
 {
     return m_hostWidget;
 }
@@ -340,7 +340,7 @@ QVector<int> Item::pathFromRoot() const
     return path;
 }
 
-void Item::setHostWidget(View *host)
+void Item::setHostView(View *host)
 {
     if (m_hostWidget != host) {
         m_hostWidget = host;
@@ -418,7 +418,7 @@ void Item::connectParent(ItemContainer *parent)
         m_minSizeChangedHandle = minSizeChanged.connect(&ItemContainer::onChildMinSizeChanged, parent);
         m_visibleChangedHandle = visibleChanged.connect(&ItemContainer::onChildVisibleChanged, parent);
 
-        setHostWidget(parent->hostWidget());
+        setHostView(parent->hostView());
         updateWidgetGeometries();
 
         visibleChanged.emit(this, isVisible());
@@ -633,11 +633,11 @@ bool Item::checkSanity()
     }
 
     if (m_guest) {
-        if (m_guest->parentView() && !m_guest->parentView()->equals(hostWidget())) {
+        if (m_guest->parentView() && !m_guest->parentView()->equals(hostView())) {
             if (root())
                 root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest."
-                       << "; host=" << hostWidget()->asQObject()
+                       << "; host=" << hostView()->asQObject()
                        << "; guest.asObj=" << m_guest->asQObject()
                        << "; this=" << this
                        << "; item.parentContainer=" << parentContainer()
@@ -777,7 +777,7 @@ bool Item::eventFilter(QObject *widget, QEvent *e)
     if (e->type() != QEvent::ParentChange)
         return false;
 
-    QObject *host = hostWidget() ? hostWidget()->asQObject() : nullptr;
+    QObject *host = hostView() ? hostView()->asQObject() : nullptr;
     if (widget->parent() != host) {
         // Frame was detached into floating window. Turn into placeholder
         Q_ASSERT(isVisible());
@@ -1016,7 +1016,7 @@ bool ItemBoxContainer::checkSanity()
 {
     d->m_checkSanityScheduled = false;
 
-    if (!hostWidget()) {
+    if (!hostView()) {
         /// This is a dummy ItemBoxContainer, just return true
         return true;
     }
@@ -1135,7 +1135,7 @@ bool ItemBoxContainer::checkSanity()
         Item *item = visibleChildren.at(i);
         const int expectedSeparatorPos = mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
-        if (!View::equals(separator->view()->parentView().get(), hostWidget())) {
+        if (!View::equals(separator->view()->parentView().get(), hostView())) {
             qWarning() << Q_FUNC_INFO << "Invalid host widget for separator" << this;
             return false;
         }
@@ -1171,7 +1171,7 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        if (separator->view()->parentView() && !separator->view()->parentView()->equals(hostWidget())) {
+        if (separator->view()->parentView() && !separator->view()->parentView()->equals(hostView())) {
             qWarning() << Q_FUNC_INFO << "Unexpected host widget in separator";
             return false;
         }
@@ -1293,7 +1293,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 
     const auto index = m_children.indexOf(leaf);
     Q_ASSERT(index != -1);
-    auto container = new ItemBoxContainer(hostWidget(), this);
+    auto container = new ItemBoxContainer(hostView(), this);
     container->setParentContainer(nullptr);
     container->setParentContainer(this);
 
@@ -1374,7 +1374,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
     } else {
         // Inserting directly in a container ? Only if it's root.
         Q_ASSERT(isRoot());
-        auto container = new ItemBoxContainer(hostWidget(), this);
+        auto container = new ItemBoxContainer(hostView(), this);
         container->setGeometry(rect());
         container->setChildren(m_children, d->m_orientation);
         m_children.clear();
@@ -1686,12 +1686,12 @@ Item *ItemBoxContainer::itemAt_recursive(QPoint p) const
     return nullptr;
 }
 
-void ItemBoxContainer::setHostWidget(View *host)
+void ItemBoxContainer::setHostView(View *host)
 {
-    Item::setHostWidget(host);
+    Item::setHostView(host);
     d->deleteSeparators_recursive();
     for (Item *item : qAsConst(m_children)) {
-        item->setHostWidget(host);
+        item->setHostView(host);
     }
 
     d->updateSeparators_recursive();
@@ -2106,7 +2106,7 @@ int ItemBoxContainer::length() const
 
 void ItemBoxContainer::dumpLayout(int level)
 {
-    if (level == 0 && hostWidget()) {
+    if (level == 0 && hostView()) {
 
         const auto screens = qGuiApp->screens();
         for (auto screen : screens) {
@@ -3056,7 +3056,7 @@ QVector<int> ItemBoxContainer::Private::requiredSeparatorPositions() const
 
 void ItemBoxContainer::Private::updateSeparators()
 {
-    if (!q->hostWidget())
+    if (!q->hostView())
         return;
 
     const QVector<int> positions = requiredSeparatorPositions();
@@ -3076,7 +3076,7 @@ void ItemBoxContainer::Private::updateSeparators()
                 newSeparators.push_back(separator);
                 m_separators.removeOne(separator);
             } else {
-                separator = new Controllers::Separator(q->hostWidget());
+                separator = new Controllers::Separator(q->hostView());
                 separator->init(q, m_orientation);
                 newSeparators.push_back(separator);
             }
@@ -3289,15 +3289,15 @@ void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
     for (const QVariant &childV : childrenV) {
         const QVariantMap childMap = childV.toMap();
         const bool isContainer = childMap.value(QStringLiteral("isContainer")).toBool();
-        Item *child = isContainer ? new ItemBoxContainer(hostWidget(), this)
-                                  : new Item(hostWidget(), this);
+        Item *child = isContainer ? new ItemBoxContainer(hostView(), this)
+                                  : new Item(hostView(), this);
         child->fillFromVariantMap(childMap, widgets);
         m_children.push_back(child);
     }
 
     if (isRoot()) {
         updateChildPercentages_recursive();
-        if (hostWidget()) {
+        if (hostView()) {
             d->updateSeparators_recursive();
             d->updateWidgets_recursive();
         }
@@ -3315,13 +3315,13 @@ void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
 
 bool ItemBoxContainer::Private::isDummy() const
 {
-    return q->hostWidget() == nullptr;
+    return q->hostView() == nullptr;
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
 bool ItemBoxContainer::test_suggestedRect()
 {
-    auto itemToDrop = new Item(hostWidget());
+    auto itemToDrop = new Item(hostView());
 
     const Item::List children = visibleChildren();
     for (Item *relativeTo : children) {
