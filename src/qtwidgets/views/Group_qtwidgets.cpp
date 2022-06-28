@@ -139,19 +139,6 @@ KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::dockWidgetAt_impl(int i
     return m_group->tabWidget()->dockwidgetAt(index);
 }
 
-bool Group_qtwidgets::event(QEvent *e)
-{
-    if (freed())
-        return QWidget::event(e);
-
-    if (e->type() == QEvent::ParentChange) {
-        auto p = parentView();
-        m_group->setLayout(p ? p->asLayout() : nullptr);
-    }
-
-    return QWidget::event(e);
-}
-
 void Group_qtwidgets::paintEvent(QPaintEvent *)
 {
     if (freed())

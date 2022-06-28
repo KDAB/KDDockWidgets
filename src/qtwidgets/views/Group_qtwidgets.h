@@ -44,9 +44,6 @@ protected:
     void free_impl() override;
     void paintEvent(QPaintEvent *) override;
     QSize maxSizeHint() const override;
-
-private:
-    bool event(QEvent *) override;
 };
 
 }

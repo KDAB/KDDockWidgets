@@ -67,6 +67,7 @@ void DockWidget::init()
 {
     d->init();
     view()->setAttribute(Qt::WA_PendingMoveEvent, false);
+    view()->d->parentChanged.connect(&Private::onParentChanged, d);
 }
 
 void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
@@ -823,14 +824,14 @@ void DockWidget::Private::saveTabIndex()
     m_lastPosition->saveTabIndex(currentTabIndex(), q->isFloating());
 }
 
-void DockWidget::onParentChanged()
+void DockWidget::Private::onParentChanged()
 {
-    Q_EMIT parentViewChanged();
+    Q_EMIT q->parentViewChanged();
 
-    d->updateToggleAction();
-    d->updateFloatAction();
+    updateToggleAction();
+    updateFloatAction();
 
-    Q_EMIT actualTitleBarChanged();
+    Q_EMIT q->actualTitleBarChanged();
 }
 
 void DockWidget::onShown(bool spontaneous)

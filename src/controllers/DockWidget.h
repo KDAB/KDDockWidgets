@@ -484,7 +484,6 @@ Q_SIGNALS:
     void aboutToDelete(KDDockWidgets::Controllers::DockWidget *);
 
 public: // TODOm3 make private
-    void onParentChanged();
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
 

@@ -252,18 +252,3 @@ int Group_qtquick::userType() const
     /// TODOm3
     return 0;
 }
-
-bool Group_qtquick::event(QEvent *e)
-{
-    // TODOm3: Move to controller. Too much logic to be here, and it's duplicated
-    // with QtWidgets
-    if (freed())
-        return View_qtquick::event(e);
-
-    if (e->type() == QEvent::ParentChange) {
-        auto p = parentView();
-        m_group->setLayout(p ? p->asLayout() : nullptr);
-    }
-
-    return View_qtquick::event(e);
-}

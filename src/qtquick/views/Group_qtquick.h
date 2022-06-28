@@ -66,7 +66,6 @@ public:
 
 
 protected:
-    bool event(QEvent *) override;
     void removeWidget_impl(Controllers::DockWidget *) override;
     int indexOfDockWidget_impl(const Controllers::DockWidget *) override;
     int currentIndex_impl() const override;

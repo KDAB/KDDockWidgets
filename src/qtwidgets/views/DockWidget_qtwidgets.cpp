@@ -77,9 +77,7 @@ void DockWidget_qtwidgets::setWidget(QWidget *widget)
 
 bool DockWidget_qtwidgets::event(QEvent *e)
 {
-    if (e->type() == QEvent::ParentChange) {
-        m_dockWidget->onParentChanged();
-    } else if (e->type() == QEvent::Show) {
+    if (e->type() == QEvent::Show) {
         m_dockWidget->onShown(e->spontaneous());
     } else if (e->type() == QEvent::Hide) {
         m_dockWidget->onHidden(e->spontaneous());

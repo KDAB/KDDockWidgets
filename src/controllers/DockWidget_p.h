@@ -126,6 +126,7 @@ public:
     void maybeRestoreToPreviousPosition();
     int currentTabIndex() const;
     void onCloseEvent(QCloseEvent *e);
+    void onParentChanged();
 
     /**
      * @brief Serializes this dock widget into an intermediate form

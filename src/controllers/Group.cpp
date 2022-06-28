@@ -100,6 +100,11 @@ Group::Group(View *parent, FrameOptions options, int userType)
         onCloseEvent(ev);
     });
 
+    view()->d->parentChanged.connect([this] {
+        auto p = view()->parentView();
+        setLayout(p ? p->asLayout() : nullptr);
+    });
+
     m_inCtor = false;
 }
 

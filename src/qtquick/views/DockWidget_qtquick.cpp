@@ -123,10 +123,7 @@ QQuickItem *DockWidget_qtquick::guestItem() const
 
 bool DockWidget_qtquick::event(QEvent *e)
 {
-    if (e->type() == QEvent::ParentChange) {
-        dockWidget()->onParentChanged();
-        Q_EMIT dockWidget()->actualTitleBarChanged();
-    } else if (e->type() == QEvent::Show) {
+    if (e->type() == QEvent::Show) {
         dockWidget()->onShown(e->spontaneous());
     } else if (e->type() == QEvent::Hide) {
         dockWidget()->onHidden(e->spontaneous());
