@@ -14,6 +14,7 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "View.h"
+#include "ViewGuard.h"
 
 #include <QPointer>
 
@@ -80,7 +81,7 @@ protected:
     QPointer<Controllers::FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
     View *m_draggableView = nullptr;
-    QPointer<QObject> m_guard;
+    ViewGuard m_guard;
 };
 
 struct WindowBeingDraggedWayland : public WindowBeingDragged

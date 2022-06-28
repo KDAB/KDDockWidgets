@@ -61,7 +61,7 @@ WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggabl
     : m_floatingWindow(fw)
     , m_draggable(bestDraggable(draggable))
     , m_draggableView(m_draggable ? m_draggable->asView() : nullptr)
-    , m_guard(m_draggableView ? m_draggableView->asQObject() : nullptr)
+    , m_guard(m_draggableView)
 {
     init();
 
@@ -76,7 +76,7 @@ WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggabl
 WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
     : m_draggable(draggable)
     , m_draggableView(m_draggable->asView())
-    , m_guard(m_draggableView ? m_draggableView->asQObject() : nullptr)
+    , m_guard(m_draggableView)
 {
     if (!isWayland()) {
         qWarning() << Q_FUNC_INFO << "Wrong ctor called."; // Doesn't happen
@@ -91,6 +91,7 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
 WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw)
     : m_floatingWindow(fw)
     , m_draggable(nullptr)
+    , m_guard(nullptr)
 {
 }
 
