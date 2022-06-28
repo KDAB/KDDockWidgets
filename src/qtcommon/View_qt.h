@@ -20,6 +20,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 class Controller;
+class EventFilter;
 }
 
 namespace KDDockWidgets::Views {
@@ -45,6 +46,8 @@ public:
 #endif
 
 protected:
+    class EventFilter;
+    EventFilter *const m_eventFilter;
     QObject *const m_thisObj;
 };
 

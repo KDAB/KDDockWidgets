@@ -29,5 +29,8 @@ public:
 
     /// @brief signal emitted when the view is resized
     KDBindings::Signal<QSize> resized;
+
+    /// @brief signal emitted when the view's parent has changed
+    KDBindings::Signal<> parentChanged;
 };
 }
