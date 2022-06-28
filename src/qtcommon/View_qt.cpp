@@ -55,8 +55,10 @@ QObject *View_qt::thisObject() const
 
 void View_qt::setObjectName(const QString &name)
 {
-    if (m_thisObj)
+    if (m_thisObj) {
         m_thisObj->setObjectName(name);
+        d->debugNameChanged.emit();
+    }
 }
 
 /*static*/

@@ -185,6 +185,7 @@ void Item::setGuestView(View *guest)
 
     m_guest = guest;
     m_parentChangedConnection->disconnect();
+    m_guestDebugNameChangedConnection->disconnect();
 
     if (m_guest) {
         m_guest->setParent(m_hostWidget);
@@ -205,7 +206,8 @@ void Item::setGuestView(View *guest)
             setMaxSizeHint(guest->maxSizeHint());
         }
 
-        connect(newWidget, &QObject::objectNameChanged, this, &Item::updateObjectName);
+        m_guestDebugNameChangedConnection = m_guest->d->debugNameChanged.connect(&Item::updateObjectName, this);
+
         connect(newWidget, &QObject::destroyed, this, &Item::onWidgetDestroyed);
 
         m_layoutInvalidatedConnection->disconnect();
@@ -805,6 +807,7 @@ void Item::onWidgetDestroyed()
 {
     m_guest = nullptr;
     m_parentChangedConnection->disconnect();
+    m_guestDebugNameChangedConnection->disconnect();
 
     if (m_refCount) {
         turnIntoPlaceholder();
