@@ -79,7 +79,7 @@ protected:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<Controllers::FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
-    View *m_draggableWidget;
+    View *m_draggableView = nullptr;
     QPointer<QObject> m_guard;
 };
 

@@ -60,8 +60,8 @@ static Draggable *bestDraggable(Draggable *draggable)
 WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggable *draggable)
     : m_floatingWindow(fw)
     , m_draggable(bestDraggable(draggable))
-    , m_draggableWidget(m_draggable ? m_draggable->asView() : nullptr)
-    , m_guard(m_draggableWidget ? m_draggableWidget->asQObject() : nullptr)
+    , m_draggableView(m_draggable ? m_draggable->asView() : nullptr)
+    , m_guard(m_draggableView ? m_draggableView->asQObject() : nullptr)
 {
     init();
 
@@ -75,8 +75,8 @@ WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggabl
 
 WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
     : m_draggable(draggable)
-    , m_draggableWidget(m_draggable->asView())
-    , m_guard(m_draggableWidget ? m_draggableWidget->asQObject() : nullptr)
+    , m_draggableView(m_draggable->asView())
+    , m_guard(m_draggableView ? m_draggableView->asQObject() : nullptr)
 {
     if (!isWayland()) {
         qWarning() << Q_FUNC_INFO << "Wrong ctor called."; // Doesn't happen
@@ -120,11 +120,11 @@ void WindowBeingDragged::grabMouse(bool grab)
     if (!m_guard)
         return;
 
-    qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab << m_draggableWidget;
+    qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab << m_draggableView;
     if (grab)
-        DragController::instance()->grabMouseFor(m_draggableWidget);
+        DragController::instance()->grabMouseFor(m_draggableView);
     else
-        DragController::instance()->releaseMouse(m_draggableWidget);
+        DragController::instance()->releaseMouse(m_draggableView);
 }
 
 QStringList WindowBeingDragged::affinities() const
@@ -165,7 +165,7 @@ bool WindowBeingDragged::contains(Controllers::Layout *layout) const
     if (m_floatingWindow)
         return m_floatingWindow->layout() == layout;
 
-    if (auto fw = m_draggableWidget->rootView()->asFloatingWindowController()) {
+    if (auto fw = m_draggableView->rootView()->asFloatingWindowController()) {
         // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
         return fw->layout() == layout && fw->hasSingleFrame();
     }
