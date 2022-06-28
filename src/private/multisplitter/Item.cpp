@@ -180,7 +180,6 @@ void Item::setGuestView(View *guest)
     QObject *oldWidget = m_guest ? m_guest->asQObject() : nullptr;
 
     if (oldWidget) {
-        oldWidget->removeEventFilter(this);
         disconnect(oldWidget, nullptr, this, nullptr);
     }
 

@@ -94,9 +94,9 @@ View *ViewFactory_dummy::createFloatingWindow(Controllers::FloatingWindow *contr
     return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
 }
 
-View *ViewFactory_dummy::createRubberBand(View *parent) const
+View *ViewFactory_dummy::createRubberBand(View *) const
 {
-    return new Views::RubberBand_qtwidgets(parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr);
+    return nullptr;
 }
 
 View *ViewFactory_dummy::createSideBar(Controllers::SideBar *controller,
