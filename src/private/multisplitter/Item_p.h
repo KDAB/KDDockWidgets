@@ -416,8 +416,7 @@ public:
     const List childItems() const;
     bool isEmpty() const;
     bool contains(const Item *item) const;
-    Item *itemForObject(const QObject *) const;
-    Item *itemForWidget(const KDDockWidgets::View *w) const;
+    Item *itemForView(const KDDockWidgets::View *) const;
     Item::List visibleChildren(bool includeBeingInserted = false) const;
     Item::List items_recursive() const;
     bool contains_recursive(const Item *item) const;

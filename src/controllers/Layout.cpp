@@ -218,7 +218,7 @@ Layouting::Item *Layout::itemForFrame(const Controllers::Group *group) const
     if (!group)
         return nullptr;
 
-    return m_rootItem->itemForWidget(group->view());
+    return m_rootItem->itemForView(group->view());
 }
 
 Controllers::DockWidget::List Layout::dockWidgets() const

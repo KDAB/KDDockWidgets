@@ -1297,7 +1297,7 @@ void TestQtWidgets::tst_maxSizePropagates2()
     Controllers::Group *group1 = dock1->dptr()->group();
 
     Layouting::ItemBoxContainer *root = m1->multiSplitter()->rootItem();
-    Item *item1 = root->itemForWidget(group1->view());
+    Item *item1 = root->itemForView(group1->view());
     auto vertSep1 = root->separators().constFirst();
     const int min1 = root->minPosForSeparator_global(vertSep1);
 

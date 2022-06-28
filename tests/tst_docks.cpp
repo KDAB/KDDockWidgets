@@ -4536,7 +4536,7 @@ void TestDocks::tst_stuckSeparator()
 
     Controllers::Group *group25 = dw25->dptr()->group();
     ItemBoxContainer *root = m1->multiSplitter()->rootItem();
-    Item *item25 = root->itemForWidget(group25->view());
+    Item *item25 = root->itemForView(group25->view());
     ItemBoxContainer *container25 = item25->parentBoxContainer();
     QVector<Controllers::Separator *> separators = container25->separators();
     QCOMPARE(separators.size(), 1);

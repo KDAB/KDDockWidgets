@@ -3646,26 +3646,11 @@ bool ItemContainer::contains(const Item *item) const
     return m_children.contains(const_cast<Item *>(item));
 }
 
-Item *ItemContainer::itemForObject(const QObject *o) const
+Item *ItemContainer::itemForView(const View *w) const
 {
     for (Item *item : qAsConst(m_children)) {
         if (item->isContainer()) {
-            if (Item *result = item->asContainer()->itemForObject(o))
-                return result;
-        } else if (auto guest = item->guestView()) {
-            if (guest && guest->asQObject() == o)
-                return item;
-        }
-    }
-
-    return nullptr;
-}
-
-Item *ItemContainer::itemForWidget(const View *w) const
-{
-    for (Item *item : qAsConst(m_children)) {
-        if (item->isContainer()) {
-            if (Item *result = item->asContainer()->itemForWidget(w))
+            if (Item *result = item->asContainer()->itemForView(w))
                 return result;
         } else if (item->guestView() == w) {
             return item;
