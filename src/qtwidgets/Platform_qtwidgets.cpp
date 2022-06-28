@@ -23,6 +23,7 @@
 #include <QApplication>
 #include <QLineEdit>
 #include <QAbstractButton>
+#include <QStyleFactory>
 
 #include <memory.h>
 
@@ -36,7 +37,44 @@ static_assert(SizePolicy::Preferred == SizePolicy(QSizePolicy::Preferred), "Enum
 static_assert(SizePolicy::Expanding == SizePolicy(QSizePolicy::Expanding), "Enums dont match");
 
 
+class Platform_qtwidgets::GlobalEventFilter : public QObject
+{
+public:
+    GlobalEventFilter()
+    {
+        if (qGuiApp)
+            qGuiApp->installEventFilter(this);
+    }
+
+    bool eventFilter(QObject *o, QEvent *ev) override
+    {
+        if (!o->isWidgetType()) // QWindow is not receiving it
+            return false;
+
+        if (auto w = qobject_cast<QWidget *>(o)) {
+            if (w->isWindow()) {
+                if (ev->type() == QEvent::WindowActivate) {
+                    auto wrapper = new Views::ViewWrapper_qtwidgets(w);
+                    Platform::instance()->d->windowActivated.emit(std::shared_ptr<View>(wrapper));
+                }
+
+                if (ev->type() == QEvent::WindowDeactivate) {
+                    auto wrapper = new Views::ViewWrapper_qtwidgets(w);
+                    Platform::instance()->d->windowDeactivated.emit(std::shared_ptr<View>(wrapper));
+                }
+            }
+        }
+
+        return false;
+    }
+
+    ~GlobalEventFilter() override;
+};
+
+Platform_qtwidgets::GlobalEventFilter::~GlobalEventFilter() = default;
+
 Platform_qtwidgets::Platform_qtwidgets()
+    : m_globalEventFilter(new GlobalEventFilter())
 {
     init();
 }
@@ -62,6 +100,7 @@ void Platform_qtwidgets::init()
 
 Platform_qtwidgets::~Platform_qtwidgets()
 {
+    delete m_globalEventFilter;
 }
 
 const char *Platform_qtwidgets::name() const
@@ -157,3 +196,17 @@ void Platform_qtwidgets::ungrabMouse()
     if (QWidget *grabber = QWidget::mouseGrabber())
         grabber->releaseMouse();
 }
+
+#ifdef DOCKS_DEVELOPER_MODE
+
+Platform_qtwidgets::Platform_qtwidgets(int &argc, char **argv)
+    : Platform_qt(argc, argv)
+    , m_globalEventFilter(new Platform_qtwidgets::GlobalEventFilter())
+{
+    qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
+    new QApplication(argc, argv);
+    qApp->setStyle(QStyleFactory::create(QStringLiteral("fusion")));
+    init();
+}
+
+#endif

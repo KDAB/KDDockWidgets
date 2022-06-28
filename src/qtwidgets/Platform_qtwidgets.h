@@ -57,6 +57,8 @@ public:
 #endif
 protected:
     void init();
+    class GlobalEventFilter;
+    GlobalEventFilter *const m_globalEventFilter;
 };
 
 }

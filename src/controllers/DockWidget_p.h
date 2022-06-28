@@ -56,6 +56,8 @@ public:
     Private(const QString &dockName, DockWidgetOptions options_,
             LayoutSaverOptions layoutSaverOptions_, DockWidget *qq);
 
+    ~Private() override;
+
     void init()
     {
         updateTitle();
@@ -113,7 +115,8 @@ public:
     void forceClose();
     QPoint defaultCenterPosForFloating();
 
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    void onWindowActivated(std::shared_ptr<View> rootView);
+    void onWindowDeactivated(std::shared_ptr<View> rootView);
 
     void updateTitle();
     void toggle(bool enabled);
@@ -197,6 +200,8 @@ public:
     QSize m_lastOverlayedSize = QSize(0, 0);
     int m_userType = 0;
     bool m_willUpdateActions = false;
+    KDBindings::ScopedConnection m_windowActivatedConnection;
+    KDBindings::ScopedConnection m_windowDeactivatedConnection;
 };
 
 }

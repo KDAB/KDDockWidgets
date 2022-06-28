@@ -12,6 +12,7 @@
 #include "Platform_qt.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/Window_qt.h"
+#include "private/Platform_p.h"
 
 #include <QWindow>
 #include <QDebug>

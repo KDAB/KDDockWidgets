@@ -14,11 +14,19 @@
 #include "../Platform.h"
 #include "kdbindings/signal.h"
 
+#include <memory>
+
 namespace KDDockWidgets {
 class Platform::Private
 {
 public:
     /// @brief This signal is emitted when the currently focused view changes
     KDBindings::Signal<std::shared_ptr<View>> focusedViewChanged;
+
+    /// @brief Emitted whenever a window gets activated (gets keyboard focus)
+    /// Not really used within the framework. Implement only if you want your application to react
+    /// to window activations and use a different style depending on activation state.
+    KDBindings::Signal<std::shared_ptr<View>> windowActivated;
+    KDBindings::Signal<std::shared_ptr<View>> windowDeactivated;
 };
 }

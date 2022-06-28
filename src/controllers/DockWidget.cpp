@@ -24,6 +24,7 @@
 #include "private/Utils_p.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Position_p.h"
+#include "private/Platform_p.h"
 #include "Platform.h"
 #include "private/multisplitter/Item_p.h"
 
@@ -54,6 +55,9 @@ DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions option
 
     if (name.isEmpty())
         qWarning() << Q_FUNC_INFO << "Name can't be null";
+
+    d->m_windowActivatedConnection = Platform::instance()->d->windowActivated.connect(&DockWidget::Private::onWindowActivated, d);
+    d->m_windowDeactivatedConnection = Platform::instance()->d->windowDeactivated.connect(&DockWidget::Private::onWindowDeactivated, d);
 }
 
 DockWidget::~DockWidget()
@@ -639,6 +643,8 @@ DockWidget::Private *DockWidget::dptr() const
     return d;
 }
 
+DockWidget::Private::~Private() = default;
+
 QPoint DockWidget::Private::defaultCenterPosForFloating()
 {
     MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
@@ -650,15 +656,18 @@ QPoint DockWidget::Private::defaultCenterPosForFloating()
     return mw->geometry().center();
 }
 
-bool DockWidget::Private::eventFilter(QObject *watched, QEvent *event)
+void DockWidget::Private::onWindowActivated(std::shared_ptr<View> rootView)
 {
-    const bool isWindowActivate = event->type() == QEvent::WindowActivate;
-    const bool isWindowDeactivate = event->type() == QEvent::WindowDeactivate;
-    if ((isWindowActivate || isWindowDeactivate) && watched == q->view()->rootView()->asQObject())
-        Q_EMIT q->windowActiveAboutToChange(isWindowActivate);
-
-    return QObject::eventFilter(watched, event);
+    if (View::equals(rootView.get(), q->view()->rootView().get()))
+        Q_EMIT q->windowActiveAboutToChange(true);
 }
+
+void DockWidget::Private::onWindowDeactivated(std::shared_ptr<View> rootView)
+{
+    if (View::equals(rootView.get(), q->view()->rootView().get()))
+        Q_EMIT q->windowActiveAboutToChange(false);
+}
+
 
 void DockWidget::Private::updateTitle()
 {

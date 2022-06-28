@@ -98,15 +98,6 @@ public:
 
 }
 
-Platform_qtwidgets::Platform_qtwidgets(int &argc, char **argv)
-    : Platform_qt(argc, argv)
-{
-    qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
-    new QApplication(argc, argv);
-    qApp->setStyle(QStyleFactory::create(QStringLiteral("fusion")));
-    init();
-}
-
 void Platform_qtwidgets::tests_initPlatform_impl()
 {
     Platform_qt::tests_initPlatform_impl();
