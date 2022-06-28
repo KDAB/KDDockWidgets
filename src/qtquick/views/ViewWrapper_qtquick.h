@@ -27,7 +27,6 @@ public:
     explicit ViewWrapper_qtquick(QObject *widget);
     explicit ViewWrapper_qtquick(QQuickItem *widget);
 
-    void setObjectName(const QString &name) override;
     QRect geometry() const override;
     void setGeometry(QRect) override;
     void move(int x, int y) override;

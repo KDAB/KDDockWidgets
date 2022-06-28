@@ -115,11 +115,6 @@ ViewWrapper_qtquick::ViewWrapper_qtquick(QQuickItem *item)
 {
 }
 
-void ViewWrapper_qtquick::setObjectName(const QString &name)
-{
-    m_item->setObjectName(name);
-}
-
 QRect ViewWrapper_qtquick::geometry() const
 {
     if (isRootView()) {

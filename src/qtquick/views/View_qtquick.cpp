@@ -731,11 +731,6 @@ std::shared_ptr<View> View_qtquick::asWrapper()
     return std::shared_ptr<View>(wrapper);
 }
 
-void View_qtquick::setObjectName(const QString &name)
-{
-    QQuickItem::setObjectName(name);
-}
-
 void View_qtquick::grabMouse()
 {
     QQuickItem::grabMouse();

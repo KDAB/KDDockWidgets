@@ -115,11 +115,6 @@ ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QWidget *widget)
 {
 }
 
-void ViewWrapper_qtwidgets::setObjectName(const QString &name)
-{
-    m_widget->setObjectName(name);
-}
-
 QRect ViewWrapper_qtwidgets::geometry() const
 {
     return m_widget->geometry();

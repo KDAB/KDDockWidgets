@@ -133,7 +133,6 @@ public:
 
     std::shared_ptr<View> asWrapper() override;
 
-    void setObjectName(const QString &name) override;
     void grabMouse() override;
     void releaseMouse() override;
     void releaseKeyboard() override;

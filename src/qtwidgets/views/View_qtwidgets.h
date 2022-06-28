@@ -353,11 +353,6 @@ public:
 
     std::shared_ptr<View> asWrapper() override;
 
-    void setObjectName(const QString &name) override
-    {
-        QWidget::setObjectName(name);
-    }
-
     void grabMouse() override
     {
         QWidget::grabMouse();

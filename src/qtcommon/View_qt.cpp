@@ -53,6 +53,12 @@ QObject *View_qt::thisObject() const
     return m_thisObj;
 }
 
+void View_qt::setObjectName(const QString &name)
+{
+    if (m_thisObj)
+        m_thisObj->setObjectName(name);
+}
+
 /*static*/
 QObject *View_qt::asObject(View *view)
 {

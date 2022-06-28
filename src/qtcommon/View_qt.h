@@ -33,6 +33,8 @@ public:
 
     QObject *thisObject() const;
 
+    void setObjectName(const QString &name) override;
+
     /// TODOm3: Rename to asQObject once View::asQObject is gone
     static QObject *asObject(View *);
 
