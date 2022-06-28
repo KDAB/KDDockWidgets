@@ -22,11 +22,21 @@ namespace KDDockWidgets {
 class QtQuickHelpers : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(
+        QObject *groupViewInMDIResize READ groupViewInMDIResize NOTIFY groupInMDIResizeChanged)
+
+Q_SIGNALS:
+    /// @brief emitted when the MDI group that's being resized changed
+    void groupInMDIResizeChanged();
+
 public:
-    using QObject::QObject;
+    QtQuickHelpers();
 
     Q_INVOKABLE qreal logicalDpiFactor(const QQuickItem *item) const;
+
+    QObject *groupViewInMDIResize() const;
 };
+
 }
 
 #endif

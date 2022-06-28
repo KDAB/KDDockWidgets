@@ -237,14 +237,6 @@ Controllers::Group *DockRegistry::groupInMDIResize() const
     return nullptr;
 }
 
-QObject *DockRegistry::groupViewInMDIResize() const
-{
-    if (auto group = groupInMDIResize())
-        return group->view()->asQObject();
-
-    return nullptr;
-}
-
 Controllers::MainWindow::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
     Controllers::MainWindow::List result;

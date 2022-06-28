@@ -48,8 +48,7 @@ struct WindowBeingDragged;
 class DOCKS_EXPORT DockRegistry : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(
-        QObject *groupViewInMDIResize READ groupViewInMDIResize NOTIFY groupInMDIResizeChanged)
+
 public:
     enum class DockByNameFlag
     {
@@ -230,11 +229,8 @@ public:
     ///@brief Overload that returns the SideBar itself
     Controllers::SideBar *sideBarForDockWidget(const Controllers::DockWidget *) const;
 
-    ///@brief Returns the Frame which is being resized in a MDI layout. nullptr if none
+    ///@brief Returns the Group which is being resized in a MDI layout. nullptr if none
     Controllers::Group *groupInMDIResize() const;
-
-    /// Returns the Frame view, for QtQuick
-    QObject *groupViewInMDIResize() const;
 
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen

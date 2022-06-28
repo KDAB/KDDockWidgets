@@ -57,9 +57,9 @@ TestView_qtquick::~TestView_qtquick() = default;
 
 Platform_qtquick::Platform_qtquick(int &argc, char **argv)
     : Platform_qt(argc, argv)
-    , m_qquickHelpers(new QtQuickHelpers())
 {
     new QGuiApplication(argc, argv);
+    m_qquickHelpers = new QtQuickHelpers();
     init();
 }
 
