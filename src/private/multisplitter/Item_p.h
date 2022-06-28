@@ -382,7 +382,6 @@ private:
     friend class ItemBoxContainer;
     friend class ItemFreeContainer;
     void turnIntoPlaceholder();
-    bool eventFilter(QObject *o, QEvent *event) override;
     int m_refCount = 0;
     void updateObjectName();
     void onWidgetDestroyed();
@@ -393,6 +392,7 @@ private:
     KDBindings::ConnectionHandle m_minSizeChangedHandle;
     KDBindings::ConnectionHandle m_visibleChangedHandle;
     KDBindings::ScopedConnection m_layoutInvalidatedConnection;
+    KDBindings::ScopedConnection m_parentChangedConnection;
 };
 
 /// @brief And Item which can contain other Items

@@ -185,13 +185,20 @@ void Item::setGuestView(View *guest)
     }
 
     m_guest = guest;
+    m_parentChangedConnection->disconnect();
 
     if (m_guest) {
         m_guest->setParent(m_hostWidget);
         if (Controllers::Group *group = asGroupController())
             group->setLayoutItem(this);
 
-        newWidget->installEventFilter(this);
+        m_parentChangedConnection = m_guest->d->parentChanged.connect([this] {
+            if (!View::equals(m_guest->parentView().get(), hostView())) {
+                // Frame was detached into floating window. Turn into placeholder
+                Q_ASSERT(isVisible());
+                turnIntoPlaceholder();
+            }
+        });
 
         {
             QScopedValueRollback<bool> guard(m_isSettingGuest, true);
@@ -769,22 +776,6 @@ Item::~Item()
     m_visibleChangedHandle.disconnect();
 }
 
-bool Item::eventFilter(QObject *widget, QEvent *e)
-{
-    if (e->type() != QEvent::ParentChange)
-        return false;
-
-    QObject *host = hostView() ? hostView()->asQObject() : nullptr;
-    if (widget->parent() != host) {
-        // Frame was detached into floating window. Turn into placeholder
-        Q_ASSERT(isVisible());
-        turnIntoPlaceholder();
-    }
-
-    return false;
-}
-
-
 void Item::turnIntoPlaceholder()
 {
     Q_ASSERT(!isContainer());
@@ -814,6 +805,7 @@ void Item::updateObjectName()
 void Item::onWidgetDestroyed()
 {
     m_guest = nullptr;
+    m_parentChangedConnection->disconnect();
 
     if (m_refCount) {
         turnIntoPlaceholder();
