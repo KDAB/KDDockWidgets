@@ -31,18 +31,21 @@ public:
         return false;
     }
 
-
     View_qt *const q;
 };
 
 View_qt::View_qt(Controller *controller, Type type, QObject *thisObj)
     : View(controller, type, thisObj)
-    , m_eventFilter(new EventFilter(this, thisObj))
+    , m_eventFilter(thisObj ? new EventFilter(this, thisObj) : nullptr)
     , m_thisObj(thisObj)
 {
 }
 
-View_qt::~View_qt() = default;
+View_qt::~View_qt()
+{
+    delete m_eventFilter;
+}
+
 View_qt::EventFilter::~EventFilter() = default;
 
 QObject *View_qt::thisObject() const
