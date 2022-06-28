@@ -394,6 +394,7 @@ private:
     KDBindings::ScopedConnection m_layoutInvalidatedConnection;
     KDBindings::ScopedConnection m_parentChangedConnection;
     KDBindings::ScopedConnection m_guestDebugNameChangedConnection;
+    KDBindings::ScopedConnection m_guestDestroyedConnection;
 };
 
 /// @brief And Item which can contain other Items

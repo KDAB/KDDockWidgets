@@ -176,16 +176,12 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
 void Item::setGuestView(View *guest)
 {
     Q_ASSERT(!guest || !m_guest);
-    QObject *newWidget = guest ? guest->asQObject() : nullptr;
-    QObject *oldWidget = m_guest ? m_guest->asQObject() : nullptr;
-
-    if (oldWidget) {
-        disconnect(oldWidget, nullptr, this, nullptr);
-    }
 
     m_guest = guest;
     m_parentChangedConnection->disconnect();
     m_guestDebugNameChangedConnection->disconnect();
+    m_guestDestroyedConnection->disconnect();
+    m_layoutInvalidatedConnection->disconnect();
 
     if (m_guest) {
         m_guest->setParent(m_hostWidget);
@@ -207,10 +203,8 @@ void Item::setGuestView(View *guest)
         }
 
         m_guestDebugNameChangedConnection = m_guest->d->debugNameChanged.connect(&Item::updateObjectName, this);
+        m_guestDestroyedConnection = m_guest->d->beingDestroyed.connect(&Item::onWidgetDestroyed, this);
 
-        connect(newWidget, &QObject::destroyed, this, &Item::onWidgetDestroyed);
-
-        m_layoutInvalidatedConnection->disconnect();
         m_layoutInvalidatedConnection = guest->d->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
 
         if (m_sizingInfo.geometry.isEmpty()) {
@@ -808,6 +802,7 @@ void Item::onWidgetDestroyed()
     m_guest = nullptr;
     m_parentChangedConnection->disconnect();
     m_guestDebugNameChangedConnection->disconnect();
+    m_guestDestroyedConnection->disconnect();
 
     if (m_refCount) {
         turnIntoPlaceholder();
