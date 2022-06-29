@@ -118,6 +118,16 @@
         "externalConsole": false
       },
       {
+        "name": "msvc-qtquick_dockwidgets",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev6/bin/examples/qtquick_dockwidgets.exe",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
         "name": "msvc-tst_docks",
         "type": "cppvsdbg",
         "request": "launch",
