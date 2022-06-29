@@ -118,6 +118,7 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
 void Platform::tests_deinitPlatform()
 {
     auto plat = Platform::instance();
+    plat->d->m_inDestruction = true;
 
     plat->tests_deinitPlatform_impl();
     delete plat;

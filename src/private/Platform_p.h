@@ -28,5 +28,12 @@ public:
     /// to window activations and use a different style depending on activation state.
     KDBindings::Signal<std::shared_ptr<View>> windowActivated;
     KDBindings::Signal<std::shared_ptr<View>> windowDeactivated;
+
+    bool inDestruction() const
+    {
+        return m_inDestruction;
+    }
+
+    bool m_inDestruction = false;
 };
 }

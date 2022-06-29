@@ -18,7 +18,8 @@
 #include "kdbindings/signal.h"
 #include "Window.h"
 #include "../View_p.h"
-
+#include "Platform.h"
+#include "../Platform_p.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -1001,6 +1002,13 @@ int ItemBoxContainer::numSideBySide_recursive(Qt::Orientation o) const
 bool ItemBoxContainer::checkSanity()
 {
     d->m_checkSanityScheduled = false;
+
+    auto plat = Platform::instance();
+    if (!plat || plat->d->inDestruction()) {
+        // checkSanity() can be called with deleteLater(), so check if we still
+        // have a platform
+        return true;
+    }
 
     if (!hostView()) {
         /// This is a dummy ItemBoxContainer, just return true
