@@ -15,8 +15,8 @@ using namespace KDDockWidgets::Views;
 class View_qt::EventFilter : public QObject
 {
 public:
-    explicit EventFilter(View_qt *q, QObject *target)
-        : q(q)
+    explicit EventFilter(View_qt *view, QObject *target)
+        : q(view)
     {
         target->installEventFilter(this);
     }
