@@ -131,6 +131,11 @@ if (KDDockWidgets_XLib)
   add_definitions(-DKDDockWidgets_XLIB)
 endif()
 
+if (MSVC AND MSVC_TOOLSET_VERSION LESS 142)
+  message(FATAL_ERROR "VS 2019 is the minimum required toolset")
+endif()
+
+
 if(KDDockWidgets_QT6)
   set(Qt_VERSION_MAJOR 6)
   set(QT_MIN_VERSION "6.2.0")

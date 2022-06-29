@@ -84,7 +84,7 @@ To build KDDockWidgets you'll need:
   - CMake
   - Qt 5.15.x or Qt6 >= 6.2
   - Ninja (Other generators might work but are untested)
-  - C++17 capable compiler
+  - C++17 capable compiler. Minimum VS2019 on Windows.
   - Qt Widgets module
   - Qt X11Extras module if on Linux/X11
   - Qt Quick and QuickControls2 modules if using the QtQuick support
