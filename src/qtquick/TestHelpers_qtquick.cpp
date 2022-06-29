@@ -74,6 +74,12 @@ void Platform_qtquick::tests_initPlatform_impl()
 void Platform_qtquick::tests_deinitPlatform_impl()
 {
     delete m_qmlEngine;
+    auto windows = qGuiApp->topLevelWindows();
+    while (!windows.isEmpty()) {
+        delete windows.first();
+        windows = qGuiApp->topLevelWindows();
+    }
+
     Platform_qt::tests_deinitPlatform_impl();
 }
 
