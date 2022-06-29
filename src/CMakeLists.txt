@@ -152,7 +152,6 @@ SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.cpp
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h
-    qtwidgets/TestHelpers_qtwidgets.cpp
     qtwidgets/ViewFactory_qtwidgets.cpp
     qtwidgets/ViewFactory_qtwidgets.h
     qtwidgets/DebugWindow.cpp
@@ -167,7 +166,6 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/Platform_qtquick.cpp
   qtquick/Platform_qtquick.h
   qtquick/Helpers.cpp
-  qtquick/TestHelpers_qtquick.cpp
   qtquick/ViewFactory_qtquick.cpp
   qtquick/ViewFactory_qtquick.h
   qtquick/LayoutSaverInstantiator.cpp
@@ -209,6 +207,17 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/views/ClassicIndicatorsWindow_qtquick.h
   qtquick/kddockwidgets_qtquick.qrc
 )
+
+if (KDDockWidgets_DEVELOPER_MODE)
+  SET(KDDW_FRONTEND_QTQUICK_SRCS
+    ${KDDW_FRONTEND_QTQUICK_SRCS}
+    qtquick/TestHelpers_qtquick.cpp
+  )
+
+  SET(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS}
+    qtwidgets/TestHelpers_qtwidgets.cpp
+  )
+endif()
 
 
 SET(KDDW_FRONTEND_DUMMY_SRCS
