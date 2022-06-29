@@ -24,6 +24,7 @@
 #include <Windows.h>
 #endif
 
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 Separator *Separator::s_separatorBeingDragged = nullptr;
