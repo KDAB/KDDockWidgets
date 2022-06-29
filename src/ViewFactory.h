@@ -108,8 +108,6 @@ public:
                                        Controllers::MainWindow *parent = nullptr,
                                        Qt::WindowFlags windowFlags = {}) const = 0;
 
-    /// @brief Creates the view that will parent the classic drop indicators rubber band overlay
-    virtual View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const = 0;
 
     /// @brief Creates the window that will show the actual drop indicators. They need a higher z-order, so this
     /// is actually a separate window, not parented to the main window

@@ -22,7 +22,6 @@
 #include "kddockwidgets/controllers/indicators/SegmentedIndicators.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 
-#include "qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h"
 #include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"
 #include "qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h"
 #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
@@ -173,11 +172,6 @@ View *ViewFactory_qtwidgets::createDropArea(Controllers::DropArea *controller, V
 View *ViewFactory_qtwidgets::createMDILayout(Controllers::MDILayout *controller, View *parent) const
 {
     return new Views::MDILayout_qtwidgets(controller, parent);
-}
-
-View *ViewFactory_qtwidgets::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent) const
-{
-    return new Views::ClassicIndicatorsOverlay_qtwidgets(controller, Views::View_qt::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent) const

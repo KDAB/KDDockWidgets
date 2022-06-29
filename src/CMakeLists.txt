@@ -146,8 +146,6 @@ SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/views/Stack_qtwidgets.cpp
     qtwidgets/views/Stack_qtwidgets.h
     qtwidgets/views/SideBar_qtwidgets.cpp
-    qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.cpp
-    qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h
     qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.cpp
     qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.cpp
@@ -509,7 +507,6 @@ if (KDDW_FRONTEND_QTWIDGETS)
     qtwidgets/views/MDILayout_qtwidgets.h
     qtwidgets/views/MDIArea_qtwidgets.h
     qtwidgets/views/DropArea_qtwidgets.h
-    qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h
     qtwidgets/views/Stack_qtwidgets.h
     qtwidgets/views/Group_qtwidgets.h
     qtwidgets/views/TabBar_qtwidgets.h

@@ -187,11 +187,6 @@ QUrl ViewFactory_qtquick::floatingWindowFilename() const
     return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/FloatingWindow.qml"));
 }
 
-View *ViewFactory_qtquick::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *, View *) const
-{
-    return nullptr;
-}
-
 View *ViewFactory_qtquick::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *, View *) const
 {
     return nullptr;
