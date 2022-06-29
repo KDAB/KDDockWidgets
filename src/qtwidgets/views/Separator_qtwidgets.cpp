@@ -20,6 +20,7 @@
 #include <QPainter>
 #include <QStyleOption>
 
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 Separator_qtwidgets::Separator_qtwidgets(Controllers::Separator *controller, View *parent)
