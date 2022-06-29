@@ -20,11 +20,12 @@
 #include <QElapsedTimer>
 #include <QScreen>
 
-#include <QtTest/QTest>
 
 using namespace KDDockWidgets;
 
 #ifdef DOCKS_DEVELOPER_MODE
+
+#include <QtTest/QTest>
 
 namespace KDDockWidgets::Tests {
 
