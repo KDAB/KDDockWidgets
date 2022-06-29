@@ -63,7 +63,7 @@ build_script:
   - cmd: cmake --build . --target install
   - sh: sudo cmake --build . --target install
   - cmd: set PATH=.\bin;%PATH%
-  - ctest --test-dir .
+  - ctest --test-dir . -V
 
 # to disable automatic builds
 #build: off
