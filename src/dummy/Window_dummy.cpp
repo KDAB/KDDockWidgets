@@ -56,6 +56,15 @@ QRect Window_dummy::geometry() const
     return {};
 }
 
+void Window_dummy::setProperty(const char *, const QVariant &)
+{
+}
+
+QVariant Window_dummy::property(const char *) const
+{
+    return {};
+}
+
 bool Window_dummy::isVisible() const
 {
     return {};

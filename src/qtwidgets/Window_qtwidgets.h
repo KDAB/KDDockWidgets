@@ -27,9 +27,6 @@ public:
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
     void destroy() override;
-
-private:
-    QWidget *m_widget = nullptr;
 };
 
 }
