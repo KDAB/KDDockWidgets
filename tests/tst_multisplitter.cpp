@@ -39,10 +39,12 @@ public Q_SLOTS:
     void initTestCase()
     {
         s_testObject = this;
+        Platform::instance()->installMessageHandler();
     }
 
     void cleanupTestCase()
     {
+        Platform::instance()->uninstallMessageHandler();
     }
 
 private Q_SLOTS:

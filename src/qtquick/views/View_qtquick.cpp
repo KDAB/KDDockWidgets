@@ -15,6 +15,7 @@
 #include "ViewWrapper_qtquick.h"
 #include "private/multisplitter/Item_p.h"
 #include "kddockwidgets/Window_qtquick.h"
+#include "qtquick/Platform_qtquick.h"
 
 #include <qpa/qplatformwindow.h>
 #include <QGuiApplication>
@@ -825,6 +826,9 @@ QQuickItem *View_qtquick::createQQuickItem(const QString &filename, QQuickItem *
         engine = qmlEngine(p);
         p = p->parentItem();
     }
+
+    if (!engine)
+        engine = Platform_qtquick::instance()->qmlEngine();
 
     if (!engine) {
         qWarning() << Q_FUNC_INFO << "No engine found";
