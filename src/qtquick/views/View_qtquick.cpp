@@ -169,6 +169,9 @@ void View_qtquick::itemChange(QQuickItem::ItemChange change, const QQuickItem::I
 {
     QQuickItem::itemChange(change, data);
 
+    if (freed())
+        return;
+
     // Emulate the QWidget behaviour as QQuickItem doesn't receive some QEvents.
     switch (change) {
     case QQuickItem::ItemParentHasChanged: {
