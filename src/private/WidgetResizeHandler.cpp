@@ -47,6 +47,21 @@
 
 using namespace KDDockWidgets;
 
+#ifdef Q_OS_WIN
+namespace KDDockWidgets {
+Window::Ptr windowForHandle(WId id) 
+{
+    const Window::List windows = Platform::instance()->windows();
+    for (Window::Ptr w : windows) {
+        if (w->isVisible() && w->handle() == id) {
+            return w;
+        }
+    }
+    return nullptr;
+}
+}
+#endif
+
 bool WidgetResizeHandler::s_disableAllHandlers = false;
 WidgetResizeHandler::WidgetResizeHandler(bool isTopLevelResizer, View *target)
     : QObject(target->asQObject())
@@ -675,7 +690,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
         return false;
     }
 
-    Window::Ptr window = DockRegistry::self()->windowForHandle(WId(msg->hwnd));
+    Window::Ptr window = KDDockWidgets::windowForHandle(WId(msg->hwnd));
     if (!window)
         return false;
 
