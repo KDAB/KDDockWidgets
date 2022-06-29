@@ -105,6 +105,8 @@ void Platform_qtwidgets::tests_initPlatform_impl()
 
 void Platform_qtwidgets::tests_deinitPlatform_impl()
 {
+    tests_wait(500); // Some windows are currently being destroyed
+
     qDeleteAll(qApp->topLevelWidgets());
 
     Platform_qt::tests_deinitPlatform_impl();

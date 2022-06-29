@@ -100,6 +100,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
 DropArea::~DropArea()
 {
     m_inDestructor = true;
+    delete m_dropIndicatorOverlay;
     qCDebug(creation) << "~DropArea";
 }
 
