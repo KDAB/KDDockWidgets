@@ -88,6 +88,13 @@
         "cwd": "${workspaceFolder}"
       },
       {
+        "name": "tst_floatingwindow",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/tst_floatingwindow",
+        "cwd": "${workspaceFolder}"
+      },
+      {
         "name": "msvc-qtwidgets_dockwidgets",
         "type": "cppvsdbg",
         "request": "launch",
