@@ -27,6 +27,12 @@
 
 #include <memory.h>
 
+#if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
+static void initResources()
+{
+    Q_INIT_RESOURCE(kddockwidgets_resources);
+}
+#endif
 
 using namespace KDDockWidgets;
 
@@ -82,7 +88,7 @@ Platform_qtwidgets::Platform_qtwidgets()
 void Platform_qtwidgets::init()
 {
 #if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
-    Q_INIT_RESOURCE(kddockwidgets_resources);
+    initResources();
 #endif
 
 #ifdef DOCKS_DEVELOPER_MODE

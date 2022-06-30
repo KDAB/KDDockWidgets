@@ -37,6 +37,14 @@
 #include <QGuiApplication>
 #include <QQmlContext>
 
+#if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
+static void initResources()
+{
+    Q_INIT_RESOURCE(kddockwidgets_resources);
+    Q_INIT_RESOURCE(kddockwidgets_qtquick);
+}
+#endif
+
 using namespace KDDockWidgets;
 
 inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
@@ -71,8 +79,7 @@ Platform_qtquick::Platform_qtquick()
 void Platform_qtquick::init()
 {
 #if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
-    Q_INIT_RESOURCE(kddockwidgets_resources);
-    Q_INIT_RESOURCE(kddockwidgets_qtquick);
+    initResources();
 #endif
 
     KDDockWidgets::registerQmlTypes();

@@ -471,7 +471,7 @@ if(WIN32)
   endif()
 endif()
 
-install(TARGETS kddockwidgets
+install(TARGETS kddockwidgets kdbindings
         EXPORT kddockwidgetsTargets
         RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
