@@ -116,10 +116,10 @@ set(KDDW_BACKEND_SRCS
 
 SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/Window_qtwidgets.cpp
-    qtwidgets/Platform_qtwidgets.cpp
-    qtwidgets/Platform_qtwidgets.h
     qtwidgets/views/View_qtwidgets.cpp
     qtwidgets/views/View_qtwidgets.h
+    qtwidgets/Platform_qtwidgets.cpp
+    qtwidgets/Platform_qtwidgets.h
     qtwidgets/views/ViewWrapper_qtwidgets.cpp
     qtwidgets/views/ViewWrapper_qtwidgets.h
     qtwidgets/views/FloatingWindow_qtwidgets.cpp

@@ -26,7 +26,7 @@ set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../dockwidgets/resources_e
 
 add_executable(qtwidgets_minimal
     main.cpp
-    ../dockwidgets/MyWidget.cpp
+    MyWidget.cpp
     ${RESOURCES_EXAMPLE_SRC}
 )
 
