@@ -618,7 +618,7 @@ int Group::currentTabIndex() const
 bool Group::anyNonClosable() const
 {
     for (auto dw : dockWidgets()) {
-        if ((dw->options() & DockWidgetOption_NotClosable) && !DockRegistry::self()->isProcessingAppQuitEvent())
+        if ((dw->options() & DockWidgetOption_NotClosable) && !Platform::instance()->isProcessingAppQuitEvent())
             return true;
     }
 

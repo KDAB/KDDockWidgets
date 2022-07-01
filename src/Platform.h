@@ -100,6 +100,13 @@ public:
     /// @brief Releases the mouse grab, if any
     virtual void ungrabMouse() = 0;
 
+    /**
+     * @brief Returns whether we're processing a QEvent::Quit
+     *
+     * Used internally to know if we should let Qt close a NonClosable dock widget at shutdown time.
+     */
+    virtual bool isProcessingAppQuitEvent() const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions

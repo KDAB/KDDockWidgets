@@ -34,6 +34,8 @@ public:
 
     void sendEvent(View *, QEvent *) const override;
 
+    bool isProcessingAppQuitEvent() const override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     static bool isGammaray();
     explicit Platform_qt(int &argc, char **argv);
@@ -55,6 +57,10 @@ public:
 #endif
 protected:
     int screenNumberForQWindow(QWindow *) const;
+
+private:
+    class GlobalEventFilter;
+    GlobalEventFilter *const m_globalEventFilter;
 };
 
 }

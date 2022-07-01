@@ -120,11 +120,6 @@ void DockRegistry::checkSanityAll(bool dumpLayout)
     }
 }
 
-bool DockRegistry::isProcessingAppQuitEvent() const
-{
-    return m_isProcessingAppQuitEvent;
-}
-
 bool DockRegistry::affinitiesMatch(const QStringList &affinities1, const QStringList &affinities2) const
 {
     if (affinities1.isEmpty() && affinities2.isEmpty())
@@ -666,12 +661,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
     if (!view)
         return false;
 
-    if (event->type() == QEvent::Quit && !m_isProcessingAppQuitEvent) {
-        m_isProcessingAppQuitEvent = true;
-        qGuiApp->sendEvent(qApp, event);
-        m_isProcessingAppQuitEvent = false;
-        return true;
-    } else if (event->type() == QEvent::Expose) {
+    if (event->type() == QEvent::Expose) {
         if (auto window = Platform::instance()->qobjectAsWindow(watched)) {
             if (Controllers::FloatingWindow *fw = floatingWindowForHandle(window)) {
                 // This floating window was exposed

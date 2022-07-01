@@ -185,13 +185,6 @@ public:
     void checkSanityAll(bool dumpDebug = false);
 
     /**
-     * @brief Returns whether we're processing a QEvent::Quit
-     *
-     * Used internally to know if we should let Qt close a NonClosable dock widget at shutdown time.
-     */
-    bool isProcessingAppQuitEvent() const;
-
-    /**
      * @brief Returns all main windows which match at least one of the @p affinities
      */
     QVector<Controllers::MainWindow *> mainWindowsWithAffinity(const QStringList &affinities) const;
@@ -256,7 +249,6 @@ private:
     class Private;
     Private *const d;
 
-    bool m_isProcessingAppQuitEvent = false;
     QVector<Controllers::DockWidget *> m_dockWidgets;
     QVector<Controllers::MainWindow *> m_mainWindows;
     QList<Controllers::Group *> m_groups;

@@ -98,7 +98,39 @@ EventFilter::~EventFilter() = default;
 }
 #endif
 
+class Platform_qt::GlobalEventFilter : public QObject
+{
+public:
+    GlobalEventFilter()
+    {
+        if (qGuiApp)
+            qGuiApp->installEventFilter(this);
+    }
+
+    bool eventFilter(QObject *o, QEvent *ev) override
+    {
+        auto view = Platform::instance()->qobjectAsView(o);
+        if (!view)
+            return false;
+
+        if (ev->type() == QEvent::Quit && !m_isProcessingAppQuitEvent) {
+            m_isProcessingAppQuitEvent = true;
+            qGuiApp->sendEvent(qApp, ev);
+            m_isProcessingAppQuitEvent = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    ~GlobalEventFilter() override;
+    bool m_isProcessingAppQuitEvent = false;
+};
+
+Platform_qt::GlobalEventFilter::~GlobalEventFilter() = default;
+
 Platform_qt::Platform_qt()
+    : m_globalEventFilter(new GlobalEventFilter())
 {
     if (!qGuiApp)
         qWarning() << "Please call KDDockWidgets::initPlatform() after QGuiApplication";
@@ -106,6 +138,7 @@ Platform_qt::Platform_qt()
 
 Platform_qt::~Platform_qt()
 {
+    delete m_globalEventFilter;
 }
 
 std::shared_ptr<View> Platform_qt::focusedView() const
@@ -275,6 +308,7 @@ bool Platform_qt::isGammaray()
 }
 
 Platform_qt::Platform_qt(int &argc, char **argv)
+    : m_globalEventFilter(new GlobalEventFilter())
 {
     // This CTOR is called before we have a QApplication
 
@@ -298,3 +332,8 @@ void Platform_qt::tests_wait(int ms)
 }
 
 #endif
+
+bool Platform_qt::isProcessingAppQuitEvent() const
+{
+    return m_globalEventFilter->m_isProcessingAppQuitEvent;
+}
