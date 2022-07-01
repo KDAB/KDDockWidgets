@@ -11,6 +11,7 @@
 
 #include "Platform.h"
 #include "private/Platform_p.h"
+#include "EventFilterInterface.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform_qtwidgets.h"
@@ -30,6 +31,8 @@
 using namespace KDDockWidgets;
 
 static Platform *s_platform = nullptr;
+
+EventFilterInterface::~EventFilterInterface() = default;
 
 #ifdef DOCKS_DEVELOPER_MODE
 QString Platform::s_expectedWarning = {};
@@ -153,3 +156,15 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 }
 
 #endif
+
+void Platform::installGlobalEventFilter(EventFilterInterface *filter)
+{
+    d->m_globalEventFilters.push_back(filter);
+}
+
+void Platform::removeGlobalEventFilter(EventFilterInterface *filter)
+{
+    d->m_globalEventFilters.erase(std::remove(d->m_globalEventFilters.begin(),
+                                              d->m_globalEventFilters.end(), filter),
+                                  d->m_globalEventFilters.end());
+}

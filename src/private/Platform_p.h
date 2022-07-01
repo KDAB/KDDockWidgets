@@ -15,8 +15,12 @@
 #include "kdbindings/signal.h"
 
 #include <memory>
+#include <vector>
 
 namespace KDDockWidgets {
+
+class EventFilterInterface;
+
 class Platform::Private
 {
 public:
@@ -35,5 +39,8 @@ public:
     }
 
     bool m_inDestruction = false;
+
+    std::vector<EventFilterInterface *> m_globalEventFilters;
 };
+
 }

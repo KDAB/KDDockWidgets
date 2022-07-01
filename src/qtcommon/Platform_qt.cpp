@@ -12,6 +12,7 @@
 #include "Platform_qt.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/Window_qt.h"
+#include "kddockwidgets/EventFilterInterface.h"
 #include "private/Platform_p.h"
 
 #include <QWindow>
@@ -101,7 +102,8 @@ EventFilter::~EventFilter() = default;
 class Platform_qt::GlobalEventFilter : public QObject
 {
 public:
-    GlobalEventFilter()
+    GlobalEventFilter(Platform_qt *qq)
+        : q(qq)
     {
         if (qGuiApp)
             qGuiApp->installEventFilter(this);
@@ -109,6 +111,9 @@ public:
 
     bool eventFilter(QObject *o, QEvent *ev) override
     {
+        if (ev->type() == QEvent::Expose)
+            return handleExpose(o);
+
         auto view = Platform::instance()->qobjectAsView(o);
         if (!view)
             return false;
@@ -123,14 +128,32 @@ public:
         return false;
     }
 
+    bool handleExpose(QObject *o)
+    {
+        if (q->d->m_globalEventFilters.empty())
+            return false;
+
+        auto window = Platform::instance()->qobjectAsWindow(o);
+        if (!window)
+            return false;
+
+        for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
+            if (filter->onExposeEvent(window))
+                return true;
+        }
+
+        return false;
+    }
+
     ~GlobalEventFilter() override;
     bool m_isProcessingAppQuitEvent = false;
+    Platform_qt *const q;
 };
 
 Platform_qt::GlobalEventFilter::~GlobalEventFilter() = default;
 
 Platform_qt::Platform_qt()
-    : m_globalEventFilter(new GlobalEventFilter())
+    : m_globalEventFilter(new GlobalEventFilter(this))
 {
     if (!qGuiApp)
         qWarning() << "Please call KDDockWidgets::initPlatform() after QGuiApplication";
@@ -308,7 +331,7 @@ bool Platform_qt::isGammaray()
 }
 
 Platform_qt::Platform_qt(int &argc, char **argv)
-    : m_globalEventFilter(new GlobalEventFilter())
+    : m_globalEventFilter(new GlobalEventFilter(this))
 {
     // This CTOR is called before we have a QApplication
 

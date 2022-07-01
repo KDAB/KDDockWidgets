@@ -14,6 +14,7 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/View.h"
+#include "kddockwidgets/EventFilterInterface.h"
 
 #include <QVector>
 #include <QObject>
@@ -45,7 +46,7 @@ class MainWindowViewInterface;
 class MainWindowMDI;
 struct WindowBeingDragged;
 
-class DOCKS_EXPORT DockRegistry : public QObject
+class DOCKS_EXPORT DockRegistry : public QObject, public EventFilterInterface
 {
     Q_OBJECT
 
@@ -245,6 +246,8 @@ private:
     void onFocusedViewChanged(std::shared_ptr<View> view);
     void maybeDelete();
     void setFocusedDockWidget(Controllers::DockWidget *);
+
+    bool onExposeEvent(std::shared_ptr<Window>) override;
 
     class Private;
     Private *const d;

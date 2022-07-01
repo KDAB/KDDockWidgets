@@ -48,11 +48,14 @@ DockRegistry::DockRegistry(QObject *parent)
     , d(new Private())
 {
     qGuiApp->installEventFilter(this);
+    Platform::instance()->installGlobalEventFilter(this);
+
     d->m_connection = Platform::instance()->d->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
 }
 
 DockRegistry::~DockRegistry()
 {
+    Platform::instance()->removeGlobalEventFilter(this);
     d->m_connection.disconnect();
     delete d;
 }
@@ -661,15 +664,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
     if (!view)
         return false;
 
-    if (event->type() == QEvent::Expose) {
-        if (auto window = Platform::instance()->qobjectAsWindow(watched)) {
-            if (Controllers::FloatingWindow *fw = floatingWindowForHandle(window)) {
-                // This floating window was exposed
-                m_floatingWindows.removeOne(fw);
-                m_floatingWindows.append(fw);
-            }
-        }
-    } else if (event->type() == QEvent::MouseButtonPress) {
+    if (event->type() == QEvent::MouseButtonPress) {
         // When clicking on a MDI Frame we raise the window
         if (Controller *c = View::firstParentOfType(watched, Type::Frame)) {
             auto group = static_cast<Group *>(c);
@@ -733,6 +728,17 @@ bool DockRegistry::onDockWidgetPressed(Controllers::DockWidget *dw, QMouseEvent 
             mainWindow->clearSideBarOverlay();
             return false;
         }
+    }
+
+    return false;
+}
+
+bool DockRegistry::onExposeEvent(Window::Ptr window)
+{
+    if (Controllers::FloatingWindow *fw = floatingWindowForHandle(window)) {
+        // This floating window was exposed
+        m_floatingWindows.removeOne(fw);
+        m_floatingWindows.append(fw);
     }
 
     return false;
