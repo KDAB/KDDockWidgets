@@ -157,9 +157,30 @@ public:
 
         auto view = Platform::instance()->qobjectAsView(watched);
 
-        for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
-            if (filter->onMouseButtonPress(view.get(), ev))
-                return true;
+        // Make a copy, as there could be reentrancy and filters getting removed while event being processed
+        const auto filters = qAsConst(q->d->m_globalEventFilters);
+
+        for (EventFilterInterface *filter : filters) {
+
+            if (std::find(q->d->m_globalEventFilters.cbegin(), q->d->m_globalEventFilters.cend(), filter) == q->d->m_globalEventFilters.cend())
+                continue;
+
+            switch (ev->type()) {
+            case QEvent::MouseButtonPress:
+                if (filter->onMouseButtonPress(view.get(), ev))
+                    return true;
+                break;
+            case QEvent::MouseButtonRelease:
+                if (filter->onMouseButtonRelease(view.get(), ev))
+                    return true;
+                break;
+            case QEvent::MouseMove:
+                if (filter->onMouseButtonMove(view.get(), ev))
+                    return true;
+                break;
+            default:
+                break;
+            }
         }
 
         return false;

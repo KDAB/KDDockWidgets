@@ -72,6 +72,12 @@ WidgetResizeHandler::WidgetResizeHandler(bool isTopLevelResizer, View *target)
 
 WidgetResizeHandler::~WidgetResizeHandler()
 {
+    if (m_isTopLevelWindowResizer) {
+        if (mTargetGuard)
+            mTarget->removeViewEventFilter(this);
+    } else {
+        Platform::instance()->removeGlobalEventFilter(this);
+    }
 }
 
 void WidgetResizeHandler::setAllowedResizeSides(CursorPositions sides)
@@ -100,13 +106,9 @@ int WidgetResizeHandler::widgetResizeHandlerMargin()
     return 4; // pixels
 }
 
-bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
+bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
 {
-    if (s_disableAllHandlers)
-        return false;
-
-    auto widget = Platform::instance()->qobjectAsView(o);
-    if (!widget)
+    if (s_disableAllHandlers || !widget)
         return false;
 
     if (!(e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::MouseMove))
@@ -146,22 +148,21 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (mTarget->isMaximized())
             break;
 
-        auto mouseEvent = static_cast<QMouseEvent *>(e);
-        auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
+        auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(e));
         updateCursor(cursorPos);
         if (cursorPos == CursorPosition_Undefined)
             return false;
 
         const int m = widgetResizeHandlerMargin();
         const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(m, m, m, m));
-        const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
-        if (!widgetRect.contains(cursorPoint) || mouseEvent->button() != Qt::LeftButton)
+        const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(e));
+        if (!widgetRect.contains(cursorPoint) || e->button() != Qt::LeftButton)
             return false;
 
         m_resizingInProgress = true;
         if (isMDI())
             Q_EMIT DockRegistry::self()->groupInMDIResizeChanged();
-        mNewPosition = Qt5Qt6Compat::eventGlobalPos(mouseEvent);
+        mNewPosition = Qt5Qt6Compat::eventGlobalPos(e);
         mCursorPos = cursorPos;
 
         return true;
@@ -177,9 +178,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             group->mdiLayout()->setDockWidgetGeometry(group, group->geometry());
         }
         updateCursor(CursorPosition_Undefined);
-        auto mouseEvent = static_cast<QMouseEvent *>(e);
-
-        if (mTarget->isMaximized() || !m_resizingInProgress || mouseEvent->button() != Qt::LeftButton)
+        if (mTarget->isMaximized() || !m_resizingInProgress || e->button() != Qt::LeftButton)
             break;
 
         mTarget->releaseMouse();
@@ -201,12 +200,11 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             }
         }
 
-        auto mouseEvent = static_cast<QMouseEvent *>(e);
-        m_resizingInProgress = m_resizingInProgress && (mouseEvent->buttons() & Qt::LeftButton);
+        m_resizingInProgress = m_resizingInProgress && (e->buttons() & Qt::LeftButton);
         const bool state = m_resizingInProgress;
         if (m_isTopLevelWindowResizer)
-            m_resizingInProgress = ((o == mTarget->asQObject()) && m_resizingInProgress);
-        const bool consumed = mouseMoveEvent(mouseEvent);
+            m_resizingInProgress = widget->equals(mTarget) && m_resizingInProgress;
+        const bool consumed = mouseMoveEvent(e);
         m_resizingInProgress = state;
         return consumed;
     }
@@ -214,6 +212,21 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         break;
     }
     return false;
+}
+
+bool WidgetResizeHandler::onMouseButtonPress(View *view, QMouseEvent *ev)
+{
+    return onMouseEvent(view, ev);
+}
+
+bool WidgetResizeHandler::onMouseButtonRelease(View *view, QMouseEvent *ev)
+{
+    return onMouseEvent(view, ev);
+}
+
+bool WidgetResizeHandler::onMouseButtonMove(View *view, QMouseEvent *ev)
+{
+    return onMouseEvent(view, ev);
 }
 
 bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
@@ -459,11 +472,13 @@ void WidgetResizeHandler::setTarget(View *w)
 {
     if (w) {
         mTarget = w;
+        mTargetGuard = w;
         mTarget->setMouseTracking(true);
+
         if (m_isTopLevelWindowResizer) {
-            mTarget->asQObject()->installEventFilter(this);
+            mTarget->installViewEventFilter(this);
         } else {
-            qGuiApp->installEventFilter(this);
+            Platform::instance()->installGlobalEventFilter(this);
         }
     } else {
         qWarning() << "Target widget is null!";

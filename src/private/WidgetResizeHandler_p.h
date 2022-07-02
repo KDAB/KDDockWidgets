@@ -15,7 +15,9 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "kddockwidgets/docks_export.h"
+#include "EventFilterInterface.h"
 #include "Window.h"
+#include "ViewGuard.h"
 
 #include <QPoint>
 #include <QPointer>
@@ -32,7 +34,7 @@ namespace Controllers {
 class FloatingWindow;
 }
 
-class DOCKS_EXPORT WidgetResizeHandler : public QObject
+class DOCKS_EXPORT WidgetResizeHandler : public QObject, public EventFilterInterface
 {
     Q_OBJECT
 public:
@@ -139,10 +141,13 @@ public:
 #endif
     static bool s_disableAllHandlers;
 
-protected:
-    bool eventFilter(QObject *o, QEvent *e) override;
-
 private:
+    // EventFilterInterface:
+    bool onMouseButtonPress(View *, QMouseEvent *) override;
+    bool onMouseButtonRelease(View *, QMouseEvent *) override;
+    bool onMouseButtonMove(View *, QMouseEvent *) override;
+
+    bool onMouseEvent(View *, QMouseEvent *e);
     void setTarget(View *w);
     bool mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
@@ -150,6 +155,7 @@ private:
     void restoreMouseCursor();
     CursorPosition cursorPosition(QPoint) const;
     View *mTarget = nullptr;
+    ViewGuard mTargetGuard = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
     bool m_resizingInProgress = false;
