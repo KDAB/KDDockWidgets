@@ -14,6 +14,8 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/Platform.h"
 
+class QCoreApplication;
+
 namespace KDDockWidgets {
 
 class Window;
@@ -38,7 +40,7 @@ public:
 
 #ifdef DOCKS_DEVELOPER_MODE
     static bool isGammaray();
-    explicit Platform_qt(int &argc, char **argv);
+    explicit Platform_qt(QCoreApplication *);
     bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const override;
     bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const override;
@@ -54,6 +56,10 @@ public:
 
     void installMessageHandler() override;
     void uninstallMessageHandler() override;
+
+    /// @brief if "-platform" wasn't passed it picks the offscreen QPA to run the tests
+    static void maybeSetOffscreenQPA(int argc, char **argv);
+
 #endif
 protected:
     int screenNumberForQWindow(QWindow *) const;

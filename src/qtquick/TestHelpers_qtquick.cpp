@@ -53,13 +53,18 @@ private:
 
 TestView_qtquick::~TestView_qtquick() = default;
 
+inline QCoreApplication *createCoreApplication(int &argc, char **argv)
+{
+    Platform_qt::maybeSetOffscreenQPA(argc, argv);
+    return new QGuiApplication(argc, argv);
+}
+
 }
 
 Platform_qtquick::Platform_qtquick(int &argc, char **argv)
-    : Platform_qt(argc, argv)
+    : Platform_qt(createCoreApplication(argc, argv))
+    , m_qquickHelpers(new QtQuickHelpers())
 {
-    new QGuiApplication(argc, argv);
-    m_qquickHelpers = new QtQuickHelpers();
     init();
 }
 

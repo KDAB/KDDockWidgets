@@ -330,12 +330,20 @@ bool Platform_qt::isGammaray()
     return is;
 }
 
-Platform_qt::Platform_qt(int &argc, char **argv)
+Platform_qt::Platform_qt(QCoreApplication *)
     : m_globalEventFilter(new GlobalEventFilter(this))
 {
-    // This CTOR is called before we have a QApplication
+}
 
+void Platform_qt::tests_wait(int ms)
+{
+    QTest::qWait(ms);
+}
+
+void Platform_qt::maybeSetOffscreenQPA(int argc, char **argv)
+{
     bool qpaPassed = false;
+
     for (int i = 1; i < argc; ++i) {
         if (qstrcmp(argv[i], "-platform") == 0) {
             qpaPassed = true;
@@ -347,11 +355,6 @@ Platform_qt::Platform_qt(int &argc, char **argv)
         // Use offscreen by default as it's less annoying, doesn't create visible windows
         qputenv("QT_QPA_PLATFORM", "offscreen");
     }
-}
-
-void Platform_qt::tests_wait(int ms)
-{
-    QTest::qWait(ms);
 }
 
 #endif

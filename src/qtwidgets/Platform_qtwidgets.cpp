@@ -205,12 +205,17 @@ void Platform_qtwidgets::ungrabMouse()
 
 #ifdef DOCKS_DEVELOPER_MODE
 
+inline QCoreApplication *createCoreApplication(int &argc, char **argv)
+{
+    Platform_qt::maybeSetOffscreenQPA(argc, argv);
+    return new QApplication(argc, argv);
+}
+
 Platform_qtwidgets::Platform_qtwidgets(int &argc, char **argv)
-    : Platform_qt(argc, argv)
+    : Platform_qt(createCoreApplication(argc, argv))
     , m_globalEventFilter(new Platform_qtwidgets::GlobalEventFilter())
 {
     qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
-    new QApplication(argc, argv);
     qApp->setStyle(QStyleFactory::create(QStringLiteral("fusion")));
     init();
 }

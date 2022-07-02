@@ -69,7 +69,7 @@ public:
 private:
     void init();
     QQmlEngine *m_qmlEngine = nullptr;
-    QtQuickHelpers *m_qquickHelpers = nullptr;
+    QtQuickHelpers *const m_qquickHelpers;
 };
 
 inline Platform_qtquick *plat()
