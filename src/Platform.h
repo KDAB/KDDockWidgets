@@ -108,6 +108,13 @@ public:
      */
     virtual bool isProcessingAppQuitEvent() const = 0;
 
+    /// @brief Installs a global event filter
+    /// Events will be forwarded to the specified EventFilterInterface
+    void installGlobalEventFilter(EventFilterInterface *);
+
+    /// @brief Removes a global event filter
+    void removeGlobalEventFilter(EventFilterInterface *);
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions
@@ -184,13 +191,6 @@ public:
 
     virtual void installMessageHandler() = 0;
     virtual void uninstallMessageHandler() = 0;
-
-    /// @brief Installs a global event filter
-    /// Events will be forwarded to the specified EventFilterInterface
-    void installGlobalEventFilter(EventFilterInterface *);
-
-    /// @brief Removes a global event filter
-    void removeGlobalEventFilter(EventFilterInterface *);
 
     /// @brief Creates a main window. This is not API that the user will use, but used
     /// internally by some tools that need a main window
