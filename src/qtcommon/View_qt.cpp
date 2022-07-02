@@ -1,6 +1,7 @@
 #include "View_qt.h"
 #include "private/View_p.h"
 #include "kddockwidgets/Controller.h"
+#include "EventFilterInterface.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include <QWidget>
@@ -23,10 +24,37 @@ public:
 
     ~EventFilter() override;
 
-    bool eventFilter(QObject *, QEvent *ev) override
+    bool eventFilter(QObject *, QEvent *e) override
     {
-        if (ev->type() == QEvent::ParentChange)
+        if (e->type() == QEvent::ParentChange)
             q->d->parentChanged.emit();
+
+        if (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::MouseMove)
+            return handleMouseEvent(static_cast<QMouseEvent *>(e));
+
+        return false;
+    }
+
+    bool handleMouseEvent(QMouseEvent *ev)
+    {
+        for (EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
+            switch (ev->type()) {
+            case QEvent::MouseButtonPress:
+                if (filter->onMouseButtonPress(q->asWrapper(), ev))
+                    return true;
+                break;
+            case QEvent::MouseButtonRelease:
+                if (filter->onMouseButtonRelease(q->asWrapper(), ev))
+                    return true;
+                break;
+            case QEvent::MouseMove:
+                if (filter->onMouseButtonMove(q->asWrapper(), ev))
+                    return true;
+                break;
+            default:
+                break;
+            }
+        }
 
         return false;
     }

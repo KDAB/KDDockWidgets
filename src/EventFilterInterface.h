@@ -36,6 +36,18 @@ public:
     {
         return false;
     }
+
+    /// @brief OVerride to handle when a view receives a mouse press event
+    virtual bool onMouseButtonRelease(std::shared_ptr<View>, QMouseEvent *)
+    {
+        return false;
+    }
+
+    /// @brief OVerride to handle when a view receives a mouse press event
+    virtual bool onMouseButtonMove(std::shared_ptr<View>, QMouseEvent *)
+    {
+        return false;
+    }
 };
 
 }
