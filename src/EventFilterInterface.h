@@ -13,6 +13,8 @@
 
 #include <memory>
 
+class QMouseEvent;
+
 namespace KDDockWidgets {
 
 class Window;
@@ -25,6 +27,12 @@ public:
 
     /// @brief Override to handle expose events for a certain window
     virtual bool onExposeEvent(std::shared_ptr<Window>)
+    {
+        return false;
+    }
+
+    /// @brief OVerride to handle when a view receives a mouse press event
+    virtual bool onMouseButtonPress(std::shared_ptr<View>, QMouseEvent *)
     {
         return false;
     }

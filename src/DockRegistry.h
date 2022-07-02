@@ -236,9 +236,6 @@ Q_SIGNALS:
     /// @brief emitted whenever Config::dropIndicatorsInhibited changes
     void dropIndicatorsInhibitedChanged(bool inhibited);
 
-protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
-
 private:
     friend class FocusScope;
     explicit DockRegistry(QObject *parent = nullptr);
@@ -247,7 +244,9 @@ private:
     void maybeDelete();
     void setFocusedDockWidget(Controllers::DockWidget *);
 
+    // EventFilterInterface:
     bool onExposeEvent(std::shared_ptr<Window>) override;
+    bool onMouseButtonPress(std::shared_ptr<View>, QMouseEvent *) override;
 
     class Private;
     Private *const d;

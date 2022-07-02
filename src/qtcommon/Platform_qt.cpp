@@ -105,14 +105,19 @@ public:
     GlobalEventFilter(Platform_qt *qq)
         : q(qq)
     {
-        if (qGuiApp)
+        if (qGuiApp) {
             qGuiApp->installEventFilter(this);
+        } else {
+            qWarning() << Q_FUNC_INFO << "Expected a qGuiApp!";
+        }
     }
 
     bool eventFilter(QObject *o, QEvent *ev) override
     {
         if (ev->type() == QEvent::Expose)
             return handleExpose(o);
+        else if (ev->type() == QEvent::MouseButtonPress)
+            return handleMouseButtonPress(o, static_cast<QMouseEvent *>(ev));
 
         auto view = Platform::instance()->qobjectAsView(o);
         if (!view)
@@ -139,6 +144,21 @@ public:
 
         for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
             if (filter->onExposeEvent(window))
+                return true;
+        }
+
+        return false;
+    }
+
+    bool handleMouseButtonPress(QObject *watched, QMouseEvent *ev)
+    {
+        if (q->d->m_globalEventFilters.empty())
+            return false;
+
+        auto view = Platform::instance()->qobjectAsView(watched);
+
+        for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
+            if (filter->onMouseButtonPress(view, ev))
                 return true;
         }
 

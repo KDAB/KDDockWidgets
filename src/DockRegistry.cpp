@@ -47,7 +47,6 @@ DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
     , d(new Private())
 {
-    qGuiApp->installEventFilter(this);
     Platform::instance()->installGlobalEventFilter(this);
 
     d->m_connection = Platform::instance()->d->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
@@ -658,46 +657,44 @@ void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
     }
 }
 
-bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
+bool DockRegistry::onMouseButtonPress(std::shared_ptr<View> view, QMouseEvent *event)
 {
-    auto view = Platform::instance()->qobjectAsView(watched);
     if (!view)
         return false;
 
-    if (event->type() == QEvent::MouseButtonPress) {
-        // When clicking on a MDI Frame we raise the window
-        if (Controller *c = View::firstParentOfType(watched, Type::Frame)) {
-            auto group = static_cast<Group *>(c);
-            if (group->isMDI())
-                group->view()->raise();
-        }
-
-        // The following code is for hididng the overlay
-        if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
-            return false;
-
-        if (view->is(Type::Frame)) {
-            // break recursion
-            return false;
-        }
-
-        auto p = view;
-        while (p) {
-            if (auto dw = p->asDockWidgetController())
-                return onDockWidgetPressed(dw, static_cast<QMouseEvent *>(event));
-
-            if (auto layout = p->asLayout()) {
-                if (auto mw = layout->mainWindow()) {
-                    // The user clicked somewhere in the main window's drop area, but outside of the
-                    // overlayed dock widget
-                    mw->clearSideBarOverlay();
-                    return false;
-                }
-            }
-
-            p = p->parentView();
-        }
+    // When clicking on a MDI Frame we raise the window
+    if (Controller *c = view->firstParentOfType(Type::Frame)) {
+        auto group = static_cast<Group *>(c);
+        if (group->isMDI())
+            group->view()->raise();
     }
+
+    // The following code is for hididng the overlay
+    if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
+        return false;
+
+    if (view->is(Type::Frame)) {
+        // break recursion
+        return false;
+    }
+
+    auto p = view;
+    while (p) {
+        if (auto dw = p->asDockWidgetController())
+            return onDockWidgetPressed(dw, event);
+
+        if (auto layout = p->asLayout()) {
+            if (auto mw = layout->mainWindow()) {
+                // The user clicked somewhere in the main window's drop area, but outside of the
+                // overlayed dock widget
+                mw->clearSideBarOverlay();
+                return false;
+            }
+        }
+
+        p = p->parentView();
+    }
+
 
     return false;
 }
