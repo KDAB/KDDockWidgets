@@ -31,19 +31,19 @@ public:
         return false;
     }
 
-    /// @brief OVerride to handle when a view receives a mouse press event
+    /// @brief Override to handle when a view receives a mouse press event
     virtual bool onMouseButtonPress(View *, QMouseEvent *)
     {
         return false;
     }
 
-    /// @brief OVerride to handle when a view receives a mouse press event
+    /// @brief Override to handle when a view receives a mouse press event
     virtual bool onMouseButtonRelease(View *, QMouseEvent *)
     {
         return false;
     }
 
-    /// @brief OVerride to handle when a view receives a mouse press event
+    /// @brief Override to handle when a view receives a mouse press event
     virtual bool onMouseButtonMove(View *, QMouseEvent *)
     {
         return false;
