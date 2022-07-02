@@ -246,7 +246,7 @@ private:
 
     // EventFilterInterface:
     bool onExposeEvent(std::shared_ptr<Window>) override;
-    bool onMouseButtonPress(std::shared_ptr<View>, QMouseEvent *) override;
+    bool onMouseButtonPress(View *, QMouseEvent *) override;
 
     class Private;
     Private *const d;

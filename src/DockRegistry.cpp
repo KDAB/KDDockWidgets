@@ -657,7 +657,7 @@ void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
     }
 }
 
-bool DockRegistry::onMouseButtonPress(std::shared_ptr<View> view, QMouseEvent *event)
+bool DockRegistry::onMouseButtonPress(View *view, QMouseEvent *event)
 {
     if (!view)
         return false;
@@ -678,7 +678,7 @@ bool DockRegistry::onMouseButtonPress(std::shared_ptr<View> view, QMouseEvent *e
         return false;
     }
 
-    auto p = view;
+    auto p = view->asWrapper();
     while (p) {
         if (auto dw = p->asDockWidgetController())
             return onDockWidgetPressed(dw, event);

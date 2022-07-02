@@ -158,7 +158,7 @@ public:
         auto view = Platform::instance()->qobjectAsView(watched);
 
         for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
-            if (filter->onMouseButtonPress(view, ev))
+            if (filter->onMouseButtonPress(view.get(), ev))
                 return true;
         }
 

@@ -40,15 +40,15 @@ public:
         for (EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
             switch (ev->type()) {
             case QEvent::MouseButtonPress:
-                if (filter->onMouseButtonPress(q->asWrapper(), ev))
+                if (filter->onMouseButtonPress(q, ev))
                     return true;
                 break;
             case QEvent::MouseButtonRelease:
-                if (filter->onMouseButtonRelease(q->asWrapper(), ev))
+                if (filter->onMouseButtonRelease(q, ev))
                     return true;
                 break;
             case QEvent::MouseMove:
-                if (filter->onMouseButtonMove(q->asWrapper(), ev))
+                if (filter->onMouseButtonMove(q, ev))
                     return true;
                 break;
             default:
