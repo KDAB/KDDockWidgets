@@ -413,3 +413,15 @@ bool View::equals(const View *one, const View *two)
 
     return one->equals(two);
 }
+
+void View::installViewEventFilter(EventFilterInterface *filter)
+{
+    d->m_viewEventFilters.push_back(filter);
+}
+
+void View::removeViewEventFilter(EventFilterInterface *filter)
+{
+    d->m_viewEventFilters.erase(std::remove(d->m_viewEventFilters.begin(),
+                                            d->m_viewEventFilters.end(), filter),
+                                d->m_viewEventFilters.end());
+}

@@ -35,6 +35,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+class EventFilterInterface;
 class Controller;
 class Window;
 
@@ -121,6 +122,14 @@ public:
     virtual Qt::WindowFlags flags() const = 0;
     virtual void setWindowTitle(const QString &title) = 0;
     virtual void setWindowIcon(const QIcon &) = 0;
+
+    /// @brief Installs an event filter in this view to intercept the event it receives
+    /// Analogue to QObject::installEventFilter() in the Qt world
+    /// @sa removeViewEventFilter
+    void installViewEventFilter(EventFilterInterface *);
+
+    /// @brief Removes the event filter
+    void removeViewEventFilter(EventFilterInterface *);
 
     // TODOm3: Move these to Window instead
     virtual void showNormal() = 0;

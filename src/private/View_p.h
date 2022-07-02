@@ -14,7 +14,12 @@
 #include "../View.h"
 #include "kdbindings/signal.h"
 
+#include <vector>
+
 namespace KDDockWidgets {
+
+class EventFilterInterface;
+
 class View::Private
 {
 public:
@@ -36,5 +41,8 @@ public:
     /// @brief signal emitted when the view's debug name has changed
     /// Used for debug only
     KDBindings::Signal<> debugNameChanged;
+
+    /// List of event filters
+    std::vector<EventFilterInterface *> m_viewEventFilters;
 };
 }
