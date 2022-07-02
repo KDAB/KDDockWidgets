@@ -24,9 +24,6 @@ namespace KDDockWidgets::Views {
 class DOCKS_EXPORT ViewWrapper_qtquick : public ViewWrapper
 {
 public:
-    explicit ViewWrapper_qtquick(QObject *widget);
-    explicit ViewWrapper_qtquick(QQuickItem *widget);
-
     QRect geometry() const override;
     void setGeometry(QRect) override;
     void move(int x, int y) override;
@@ -68,7 +65,12 @@ public:
     const View *unwrap() const;
     View *unwrap();
 
+    static std::shared_ptr<View> create(QObject *widget);
+    static std::shared_ptr<View> create(QQuickItem *widget);
+
 private:
+    explicit ViewWrapper_qtquick(QObject *widget);
+    explicit ViewWrapper_qtquick(QQuickItem *widget);
     QPointer<QQuickItem> m_item;
 };
 

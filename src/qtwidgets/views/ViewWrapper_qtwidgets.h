@@ -24,9 +24,6 @@ namespace KDDockWidgets::Views {
 class DOCKS_EXPORT ViewWrapper_qtwidgets : public ViewWrapper
 {
 public:
-    explicit ViewWrapper_qtwidgets(QObject *widget);
-    explicit ViewWrapper_qtwidgets(QWidget *widget);
-
     QRect geometry() const override;
     void setGeometry(QRect) override;
     void move(int x, int y) override;
@@ -66,7 +63,12 @@ public:
     SizePolicy verticalSizePolicy() const override;
     QWidget *widget() const;
 
+    static std::shared_ptr<View> create(QObject *widget);
+    static std::shared_ptr<View> create(QWidget *widget);
+
 private:
+    explicit ViewWrapper_qtwidgets(QObject *widget);
+    explicit ViewWrapper_qtwidgets(QWidget *widget);
     QPointer<QWidget> m_widget;
 };
 

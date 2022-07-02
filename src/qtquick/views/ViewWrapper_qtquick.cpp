@@ -12,6 +12,7 @@
 #include "ViewWrapper_qtquick.h"
 #include "qtquick/views/RubberBand_qtquick.h"
 #include "qtquick/views/View_qtquick.h"
+#include "private/View_p.h"
 
 #include "qtquick/views/DockWidget_qtquick.h"
 #include "qtquick/views/FloatingWindow_qtquick.h"
@@ -458,4 +459,23 @@ SizePolicy ViewWrapper_qtquick::horizontalSizePolicy() const
         return view->horizontalSizePolicy();
     }
     return {};
+}
+
+/*static*/
+std::shared_ptr<View> ViewWrapper_qtquick::create(QObject *item)
+{
+    return create(qobject_cast<QQuickItem *>(item));
+}
+
+/*static*/
+std::shared_ptr<View> ViewWrapper_qtquick::create(QQuickItem *item)
+{
+    if (!item)
+        return {};
+
+    auto wrapper = new ViewWrapper_qtquick(item);
+    auto sharedptr = std::shared_ptr<View>(wrapper);
+    wrapper->d->m_thisWeakPtr = sharedptr;
+
+    return sharedptr;
 }

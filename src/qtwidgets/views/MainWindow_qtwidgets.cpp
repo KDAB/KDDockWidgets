@@ -170,12 +170,7 @@ void MainWindow_qtwidgets::setContentsMargins(int left, int top, int right, int 
 
 void MainWindow_qtwidgets::setPersistentCentralWidget(QWidget *widget)
 {
-    if (widget) {
-        auto wrapper = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(widget));
-        m_mainWindow->setPersistentCentralView(wrapper);
-    } else {
-        m_mainWindow->setPersistentCentralView({});
-    }
+    m_mainWindow->setPersistentCentralView(Views::ViewWrapper_qtwidgets::create(widget));
 }
 
 QWidget *MainWindow_qtwidgets::persistentCentralWidget() const

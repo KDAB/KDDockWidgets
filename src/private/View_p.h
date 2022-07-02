@@ -15,6 +15,7 @@
 #include "kdbindings/signal.h"
 
 #include <vector>
+#include <memory>
 
 namespace KDDockWidgets {
 
@@ -44,5 +45,8 @@ public:
 
     /// List of event filters
     std::vector<EventFilterInterface *> m_viewEventFilters;
+
+    /// If this view is wrapped in a shared ptr, this weak ptr allows us to promote to shared ptr
+    std::weak_ptr<View> m_thisWeakPtr;
 };
 }

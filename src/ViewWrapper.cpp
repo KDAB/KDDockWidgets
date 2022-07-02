@@ -10,6 +10,7 @@
 */
 
 #include "ViewWrapper.h"
+#include "private/View_p.h"
 
 #include <QDebug>
 
@@ -157,7 +158,9 @@ void ViewWrapper::setMouseTracking(bool)
 
 std::shared_ptr<View> ViewWrapper::asWrapper()
 {
-    // could be implemented with a weak pointer, but we have no use case
-    qFatal("Don't call on wrappers");
+    if (auto sharedptr = d->m_thisWeakPtr.lock())
+        return sharedptr;
+
+    qFatal("No shared ptr. Shouldn't happen.");
     return {};
 }

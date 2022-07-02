@@ -10,6 +10,7 @@
 */
 
 #include "ViewWrapper_qtwidgets.h"
+#include "private/View_p.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "qtwidgets/views/DropArea_qtwidgets.h"
 #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
@@ -102,6 +103,25 @@ static Controller *controllerForWidget(QWidget *widget)
     }
 
     return nullptr;
+}
+
+/*static*/
+std::shared_ptr<View> ViewWrapper_qtwidgets::create(QObject *widget)
+{
+    return create(qobject_cast<QWidget *>(widget));
+}
+
+/*static*/
+std::shared_ptr<View> ViewWrapper_qtwidgets::create(QWidget *widget)
+{
+    if (!widget)
+        return {};
+
+    auto wrapper = new ViewWrapper_qtwidgets(widget);
+    auto sharedptr = std::shared_ptr<View>(wrapper);
+    wrapper->d->m_thisWeakPtr = sharedptr;
+
+    return sharedptr;
 }
 
 ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QObject *widget)

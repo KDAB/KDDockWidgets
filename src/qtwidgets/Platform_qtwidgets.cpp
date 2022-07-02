@@ -60,13 +60,11 @@ public:
         if (auto w = qobject_cast<QWidget *>(o)) {
             if (w->isWindow()) {
                 if (ev->type() == QEvent::WindowActivate) {
-                    auto wrapper = new Views::ViewWrapper_qtwidgets(w);
-                    Platform::instance()->d->windowActivated.emit(std::shared_ptr<View>(wrapper));
+                    Platform::instance()->d->windowActivated.emit(Views::ViewWrapper_qtwidgets::create(w));
                 }
 
                 if (ev->type() == QEvent::WindowDeactivate) {
-                    auto wrapper = new Views::ViewWrapper_qtwidgets(w);
-                    Platform::instance()->d->windowDeactivated.emit(std::shared_ptr<View>(wrapper));
+                    Platform::instance()->d->windowDeactivated.emit(Views::ViewWrapper_qtwidgets::create(w));
                 }
             }
         }
@@ -99,8 +97,7 @@ void Platform_qtwidgets::init()
 #endif
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
-        ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtwidgets(obj) : nullptr;
-        d->focusedViewChanged.emit(std::shared_ptr<View>(wrapper));
+        d->focusedViewChanged.emit(Views::ViewWrapper_qtwidgets::create(obj));
     });
 }
 
@@ -121,12 +118,7 @@ bool Platform_qtwidgets::hasActivePopup() const
 
 std::shared_ptr<View> Platform_qtwidgets::qobjectAsView(QObject *obj) const
 {
-    if (auto w = qobject_cast<QWidget *>(obj)) {
-        ViewWrapper *wrapper = new Views::ViewWrapper_qtwidgets(w);
-        return std::shared_ptr<View>(wrapper);
-    }
-
-    return nullptr;
+    return Views::ViewWrapper_qtwidgets::create(obj);
 }
 
 std::shared_ptr<Window> Platform_qtwidgets::windowFromQWindow(QWindow *qwindow) const

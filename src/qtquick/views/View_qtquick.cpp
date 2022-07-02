@@ -720,8 +720,7 @@ std::shared_ptr<View> View_qtquick::parentViewFor(const QQuickItem *item)
 /* static */
 std::shared_ptr<View> View_qtquick::asQQuickWrapper(QQuickItem *item)
 {
-    auto wrapper = new ViewWrapper_qtquick(item);
-    return std::shared_ptr<View>(wrapper);
+    return ViewWrapper_qtquick::create(item);
 }
 
 std::shared_ptr<View> View_qtquick::parentView() const
@@ -731,8 +730,7 @@ std::shared_ptr<View> View_qtquick::parentView() const
 
 std::shared_ptr<View> View_qtquick::asWrapper()
 {
-    ViewWrapper *wrapper = new ViewWrapper_qtquick(this);
-    return std::shared_ptr<View>(wrapper);
+    return ViewWrapper_qtquick::create(this);
 }
 
 void View_qtquick::grabMouse()

@@ -71,8 +71,7 @@ void DockWidget_qtwidgets::init()
 
 void DockWidget_qtwidgets::setWidget(QWidget *widget)
 {
-    auto wrapper = widget ? new ViewWrapper_qtwidgets(widget) : nullptr;
-    m_dockWidget->setGuestView(std::shared_ptr<View>(wrapper));
+    m_dockWidget->setGuestView(ViewWrapper_qtwidgets::create(widget));
 }
 
 bool DockWidget_qtwidgets::event(QEvent *e)
