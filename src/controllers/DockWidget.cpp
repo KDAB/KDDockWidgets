@@ -1004,8 +1004,6 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
 
     toggleAction->setCheckable(true);
     floatAction->setCheckable(true);
-
-    qGuiApp->installEventFilter(this);
 }
 
 void DockWidget::Private::addPlaceholderItem(Layouting::Item *item)
