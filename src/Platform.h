@@ -119,6 +119,10 @@ public:
     /// This name will be used as title of floating dock widgets which contain more than 1 group
     virtual QString applicationName() const = 0;
 
+    /// @brief Returns the organization name
+    /// Used in the path for storing config
+    virtual QString organizationName() const = 0;
+
     /// @brief Sets the mouse cursor to the specified shape, this has an application-wide effect
     /// Call restoreMouseCursor() to set the previous cursor shape
     virtual void setMouseCursor(Qt::CursorShape) = 0;

@@ -652,7 +652,7 @@ void LayoutSaver::Private::deleteEmptyGroups()
 
 std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
 {
-    auto settings = std::unique_ptr<QSettings>(new QSettings(qGuiApp->organizationName(),
+    auto settings = std::unique_ptr<QSettings>(new QSettings(Platform::instance()->organizationName(),
                                                              Platform::instance()->applicationName()));
     settings->beginGroup(QStringLiteral("KDDockWidgets::LayoutSaver"));
 

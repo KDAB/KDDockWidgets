@@ -39,6 +39,7 @@ public:
     bool isProcessingAppQuitEvent() const override;
 
     QString applicationName() const override;
+    QString organizationName() const override;
 
     void setMouseCursor(Qt::CursorShape) override;
     void restoreMouseCursor() override;

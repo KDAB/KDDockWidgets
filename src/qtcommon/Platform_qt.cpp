@@ -410,6 +410,11 @@ QString Platform_qt::applicationName() const
     return qGuiApp->applicationName();
 }
 
+QString Platform_qt::organizationName() const
+{
+    return qGuiApp->organizationName();
+}
+
 void Platform_qt::setMouseCursor(Qt::CursorShape shape)
 {
     qGuiApp->setOverrideCursor(shape);
