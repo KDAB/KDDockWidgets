@@ -907,7 +907,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
 {
     QPoint globalPos = QCursor::pos();
 
-    if (qGuiApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
+    if (KDDockWidgets::isWindows()) { // So -platform offscreen on Windows doesn't use this
 #if defined(Q_OS_WIN)
         POINT globalNativePos;
         if (!GetCursorPos(&globalNativePos))

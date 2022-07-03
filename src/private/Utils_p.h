@@ -53,6 +53,11 @@ inline bool isEGLFS()
     return Platform::instance()->displayType() == Platform::DisplayType::QtEGLFS;
 }
 
+inline bool isWindows()
+{
+    return Platform::instance()->displayType() == Platform::DisplayType::Windows;
+}
+
 inline bool isLeftButtonPressed()
 {
     return Platform::instance()->isLeftMouseButtonPressed();

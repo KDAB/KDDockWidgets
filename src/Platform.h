@@ -43,7 +43,8 @@ public:
         X11 = 1,
         Wayland = 2,
         QtOffscreen = 3,
-        QtEGLFS = 4
+        QtEGLFS = 4,
+        Windows = 5
     };
 
     virtual ~Platform();
