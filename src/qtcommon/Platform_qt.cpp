@@ -14,6 +14,7 @@
 #include "kddockwidgets/Window_qt.h"
 #include "kddockwidgets/EventFilterInterface.h"
 #include "private/Platform_p.h"
+#include "private/Utils_p.h"
 
 #include <QWindow>
 #include <QDebug>
@@ -116,8 +117,8 @@ public:
     {
         if (ev->type() == QEvent::Expose)
             return handleExpose(o);
-        else if (ev->type() == QEvent::MouseButtonPress)
-            return handleMouseButtonPress(o, static_cast<QMouseEvent *>(ev));
+        else if (QMouseEvent *me = mouseEvent(ev))
+            return handleMouseEvent(o, me);
 
         auto view = Platform::instance()->qobjectAsView(o);
         if (!view)
@@ -150,7 +151,7 @@ public:
         return false;
     }
 
-    bool handleMouseButtonPress(QObject *watched, QMouseEvent *ev)
+    bool handleMouseEvent(QObject *watched, QMouseEvent *ev)
     {
         if (q->d->m_globalEventFilters.empty())
             return false;

@@ -52,7 +52,7 @@ public:
                     return true;
                 break;
             case QEvent::MouseButtonDblClick:
-                if (filter->onMouseButtonMove(q, ev))
+                if (filter->onMouseDoubleClick(q, ev))
                     return true;
                 break;
             default:
