@@ -49,7 +49,7 @@ using namespace KDDockWidgets;
 
 #ifdef Q_OS_WIN
 namespace KDDockWidgets {
-Window::Ptr windowForHandle(WId id) 
+Window::Ptr windowForHandle(WId id)
 {
     const Window::List windows = Platform::instance()->windows();
     for (Window::Ptr w : windows) {
@@ -531,7 +531,7 @@ void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
     if (m_isTopLevelWindowResizer)
         mTarget->setCursor(cursor);
     else
-        qGuiApp->setOverrideCursor(cursor);
+        Platform::instance()->setMouseCursor(cursor);
 }
 
 void WidgetResizeHandler::restoreMouseCursor()
@@ -539,7 +539,7 @@ void WidgetResizeHandler::restoreMouseCursor()
     if (m_isTopLevelWindowResizer)
         mTarget->setCursor(Qt::ArrowCursor);
     else
-        qGuiApp->restoreOverrideCursor();
+        Platform::instance()->restoreMouseCursor();
 }
 
 CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const

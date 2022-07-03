@@ -40,6 +40,9 @@ public:
 
     QString applicationName() const override;
 
+    void setMouseCursor(Qt::CursorShape) override;
+    void restoreMouseCursor() override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     static bool isGammaray();
     explicit Platform_qt(QCoreApplication *);
