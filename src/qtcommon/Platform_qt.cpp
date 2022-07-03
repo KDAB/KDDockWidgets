@@ -424,3 +424,20 @@ void Platform_qt::restoreMouseCursor()
 {
     qGuiApp->restoreOverrideCursor();
 }
+
+Platform::DisplayType Platform_qt::displayType() const
+{
+    if (qGuiApp->platformName() == QLatin1String("wayland"))
+        return DisplayType::Wayland;
+
+    if (qGuiApp->platformName() == QLatin1String("offscreen"))
+        return DisplayType::QtOffscreen;
+
+    if (qGuiApp->platformName() == QLatin1String("xcb"))
+        return DisplayType::X11;
+
+    if (qGuiApp->platformName() == QLatin1String("eglfs"))
+        return DisplayType::QtEGLFS;
+
+    return DisplayType::Other;
+}

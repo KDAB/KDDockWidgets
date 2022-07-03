@@ -36,6 +36,16 @@ class Window;
 class DOCKS_EXPORT Platform
 {
 public:
+    /// @brief Enum describing the graphics stack type
+    enum class DisplayType
+    {
+        Other = 0,
+        X11 = 1,
+        Wayland = 2,
+        QtOffscreen = 3,
+        QtEGLFS = 4
+    };
+
     virtual ~Platform();
     /// @brief Returns the name of the platform, only "qtwidgets" and "qtquick"
     virtual const char *name() const = 0;
@@ -129,6 +139,9 @@ public:
 
     /// @brief Undoes the call to setMouseCursor()
     virtual void restoreMouseCursor() = 0;
+
+    /// @brief Returns the type of graphics stack being used
+    virtual DisplayType displayType() const = 0;
 
 #ifdef DOCKS_DEVELOPER_MODE
 

@@ -15,6 +15,7 @@
 #include "KDDockWidgets_p.h"
 #include "kddockwidgets/Config.h"
 #include "kddockwidgets/View.h"
+#include "kddockwidgets/Platform.h"
 
 #include <QScreen>
 #include <QWindow>
@@ -34,22 +35,22 @@ namespace KDDockWidgets {
 
 inline bool isWayland()
 {
-    return qGuiApp->platformName() == QLatin1String("wayland");
+    return Platform::instance()->displayType() == Platform::DisplayType::Wayland;
 }
 
 inline bool isOffscreen()
 {
-    return qGuiApp->platformName() == QLatin1String("offscreen");
+    return Platform::instance()->displayType() == Platform::DisplayType::QtOffscreen;
 }
 
 inline bool isXCB()
 {
-    return qGuiApp->platformName() == QLatin1String("xcb");
+    return Platform::instance()->displayType() == Platform::DisplayType::X11;
 }
 
 inline bool isEGLFS()
 {
-    return qApp->platformName() == QLatin1String("eglfs");
+    return Platform::instance()->displayType() == Platform::DisplayType::QtEGLFS;
 }
 
 inline bool isLeftButtonPressed()
