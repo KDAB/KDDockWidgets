@@ -258,7 +258,7 @@ QString DockWidget::title() const
         if (dropAreaGuest->hasSingleFrame()) {
             return dropAreaGuest->groups().constFirst()->title();
         } else {
-            return qGuiApp->applicationName();
+            return Platform::instance()->applicationName();
         }
     }
 

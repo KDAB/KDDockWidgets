@@ -404,3 +404,8 @@ bool Platform_qt::isProcessingAppQuitEvent() const
 {
     return m_globalEventFilter->m_isProcessingAppQuitEvent;
 }
+
+QString Platform_qt::applicationName() const
+{
+    return qGuiApp->applicationName();
+}

@@ -495,7 +495,7 @@ void FloatingWindow::updateTitleAndIcon()
         title = group->title();
         icon = group->icon();
     } else {
-        title = qGuiApp->applicationName();
+        title = Platform::instance()->applicationName();
     }
     m_titleBar->setTitle(title);
     m_titleBar->setIcon(icon);

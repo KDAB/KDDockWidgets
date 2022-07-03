@@ -27,6 +27,7 @@
 #include "private/Logging_p.h"
 #include "private/Position_p.h"
 #include "private/Utils_p.h"
+#include "Platform.h"
 
 #include "controllers/Layout.h"
 #include "controllers/Group.h"
@@ -652,7 +653,7 @@ void LayoutSaver::Private::deleteEmptyGroups()
 std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
 {
     auto settings = std::unique_ptr<QSettings>(new QSettings(qGuiApp->organizationName(),
-                                                             qGuiApp->applicationName()));
+                                                             Platform::instance()->applicationName()));
     settings->beginGroup(QStringLiteral("KDDockWidgets::LayoutSaver"));
 
     return settings;

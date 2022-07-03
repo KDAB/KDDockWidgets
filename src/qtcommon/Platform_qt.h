@@ -38,6 +38,8 @@ public:
 
     bool isProcessingAppQuitEvent() const override;
 
+    QString applicationName() const override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     static bool isGammaray();
     explicit Platform_qt(QCoreApplication *);

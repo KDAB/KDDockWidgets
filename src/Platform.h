@@ -115,6 +115,10 @@ public:
     /// @brief Removes a global event filter
     void removeGlobalEventFilter(EventFilterInterface *);
 
+    /// @brief Returns the application name
+    /// This name will be used as title of floating dock widgets which contain more than 1 group
+    virtual QString applicationName() const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions
