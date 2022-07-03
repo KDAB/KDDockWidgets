@@ -45,6 +45,7 @@ public:
     void restoreMouseCursor() override;
 
     DisplayType displayType() const override;
+    bool isLeftMouseButtonPressed() const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     static bool isGammaray();

@@ -55,7 +55,7 @@ inline bool isEGLFS()
 
 inline bool isLeftButtonPressed()
 {
-    return qGuiApp->mouseButtons() & Qt::LeftButton;
+    return Platform::instance()->isLeftMouseButtonPressed();
 }
 
 inline bool usesNativeTitleBar()

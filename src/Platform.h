@@ -143,6 +143,9 @@ public:
     /// @brief Returns the type of graphics stack being used
     virtual DisplayType displayType() const = 0;
 
+    /// @brief Returns whether the left mouse button is pressed
+    virtual bool isLeftMouseButtonPressed() const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions

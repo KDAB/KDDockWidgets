@@ -441,3 +441,8 @@ Platform::DisplayType Platform_qt::displayType() const
 
     return DisplayType::Other;
 }
+
+bool Platform_qt::isLeftMouseButtonPressed() const
+{
+    return qGuiApp->mouseButtons() & Qt::LeftButton;
+}
