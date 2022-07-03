@@ -51,6 +51,10 @@ public:
                 if (filter->onMouseButtonMove(q, ev))
                     return true;
                 break;
+            case QEvent::MouseButtonDblClick:
+                if (filter->onMouseButtonMove(q, ev))
+                    return true;
+                break;
             default:
                 break;
             }

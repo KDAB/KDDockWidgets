@@ -48,6 +48,12 @@ public:
     {
         return false;
     }
+
+    /// @brief Override to handle when a view receives a mouse double click event
+    virtual bool onMouseDoubleClick(View *, QMouseEvent *)
+    {
+        return false;
+    }
 };
 
 }

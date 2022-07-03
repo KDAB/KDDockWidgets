@@ -178,6 +178,10 @@ public:
                 if (filter->onMouseButtonMove(view.get(), ev))
                     return true;
                 break;
+            case QEvent::MouseButtonDblClick:
+                if (filter->onMouseDoubleClick(view.get(), ev))
+                    return true;
+                break;
             default:
                 break;
             }
