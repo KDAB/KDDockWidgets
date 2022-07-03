@@ -61,14 +61,14 @@ public:
     void grabMouse(View *target)
     {
         m_target = target;
-        m_guard = target->asQObject();
+        m_guard = target;
         qGuiApp->installEventFilter(this);
     }
 
     void releaseMouse()
     {
         // Ungrab harder if QtQuick.
-        // QtQuick has the habit og grabbing the MouseArea internally, then doesn't ungrab it since
+        // QtQuick has the habit of grabbing the MouseArea internally, then doesn't ungrab it since
         // we're consuming the events. So explicitly ungrab if any QQuickWindow::mouseGrabberItem()
         // is still set. Done via platform now, so it's generic. Should be a no-op for QtWidgets.
         Platform::instance()->ungrabMouse();
@@ -95,7 +95,7 @@ public:
 
     bool m_reentrancyGuard = false;
     View *m_target = nullptr;
-    QPointer<QObject> m_guard;
+    ViewGuard m_guard = nullptr;
 };
 
 FallbackMouseGrabber::~FallbackMouseGrabber()
