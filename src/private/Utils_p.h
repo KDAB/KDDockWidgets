@@ -162,6 +162,21 @@ inline bool isNonClientMouseEvent(const QEvent *e)
     return false;
 }
 
+inline bool isDnDEvent(const QEvent *e)
+{
+    switch (e->type()) {
+    case QEvent::DragEnter:
+    case QEvent::DragLeave:
+    case QEvent::DragMove:
+    case QEvent::Drop:
+        return true;
+    default:
+        break;
+    }
+
+    return false;
+}
+
 /// @brief Returns whether we support the specified scalling factor
 /// This is a workaround against a bug in older Qt (QTBUG-86170).
 /// Mostly affects Linux. Unless you're using Qt::HighDpiScaleFactorRoundingPolicy::PassThrough, in which case it will affect other OSes too.

@@ -14,6 +14,7 @@
 #include <memory>
 
 class QMouseEvent;
+class QEvent;
 
 namespace KDDockWidgets {
 
@@ -59,6 +60,12 @@ public:
     /// receives all mouse event types, if you return true here then the specialized counterparts won't be called
     /// Example, if true is returned here for a mouse press, then onMouseButtonPress() won't be called
     virtual bool onMouseEvent(View *, QMouseEvent *)
+    {
+        return false;
+    }
+
+    /// @brief Override to handle drag enter, drag leave, drag move and drop events
+    virtual bool onDnDEvent(View *, QEvent *)
     {
         return false;
     }

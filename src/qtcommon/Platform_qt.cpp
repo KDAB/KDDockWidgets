@@ -119,6 +119,8 @@ public:
             return handleExpose(o);
         else if (QMouseEvent *me = mouseEvent(ev))
             return handleMouseEvent(o, me);
+        else if (isDnDEvent(ev))
+            return handleDnDEvent(o, ev);
 
         auto view = Platform::instance()->qobjectAsView(o);
         if (!view)
@@ -129,6 +131,20 @@ public:
             qGuiApp->sendEvent(qApp, ev);
             m_isProcessingAppQuitEvent = false;
             return true;
+        }
+
+        return false;
+    }
+
+    bool handleDnDEvent(QObject *o, QEvent *ev)
+    {
+        if (q->d->m_globalEventFilters.empty())
+            return false;
+
+        auto view = Platform::instance()->qobjectAsView(o);
+        for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
+            if (filter->onDnDEvent(view.get(), ev))
+                return true;
         }
 
         return false;
