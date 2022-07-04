@@ -51,9 +51,9 @@ install:
 
 before_build:
   - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-  - cmd: set PATH=C:\Qt\6.2\msvc2019_64\bin;C:\Qt\5.15\msvc2019_64\bin;%PATH%
+  - cmd: set PATH=C:\Qt\6.3\msvc2019_64\bin;C:\Qt\5.15\msvc2019_64\bin;%PATH%
   - sh: export QT_QUICK_BACKEND=software
-  - sh: if [ "`uname -s`" = "Darwin" ]; then export PATH=$HOME/Qt/6.1/macos/bin:$HOME/Qt/5.15/clang_64/bin:$PATH; else export PATH=$HOME/Qt/6.2/gcc_64/bin:$HOME/Qt/5.15/gcc_64/bin:$PATH; fi
+  - sh: if [ "`uname -s`" = "Darwin" ]; then export PATH=$HOME/Qt/6.3/macos/bin:$HOME/Qt/5.15/clang_64/bin:$PATH; else export PATH=$HOME/Qt/6.3/gcc_64/bin:$HOME/Qt/5.15/gcc_64/bin:$PATH; fi
 
 build_script:
   - mkdir build
