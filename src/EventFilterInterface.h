@@ -54,6 +54,14 @@ public:
     {
         return false;
     }
+
+    /// @brief Provided for convenience, aggregates all other overloads
+    /// receives all mouse event types, if you return true here then the specialized counterparts won't be called
+    /// Example, if true is returned here for a mouse press, then onMouseButtonPress() won't be called
+    virtual bool onMouseEvent(View *, QMouseEvent *)
+    {
+        return false;
+    }
 };
 
 }

@@ -38,7 +38,8 @@ class DOCKS_EXPORT WidgetResizeHandler : public QObject, public EventFilterInter
 {
     Q_OBJECT
 public:
-    enum Feature {
+    enum Feature
+    {
         Feature_None = 0,
         Feature_NativeShadow = 1,
         Feature_NativeResize = 2,
@@ -143,11 +144,7 @@ public:
 
 private:
     // EventFilterInterface:
-    bool onMouseButtonPress(View *, QMouseEvent *) override;
-    bool onMouseButtonRelease(View *, QMouseEvent *) override;
-    bool onMouseButtonMove(View *, QMouseEvent *) override;
-
-    bool onMouseEvent(View *, QMouseEvent *e);
+    bool onMouseEvent(View *, QMouseEvent *) override;
     void setTarget(View *w);
     bool mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);

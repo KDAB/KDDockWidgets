@@ -163,8 +163,12 @@ public:
 
         for (EventFilterInterface *filter : filters) {
 
+            // Filter might have been deleted meanwhile
             if (std::find(q->d->m_globalEventFilters.cbegin(), q->d->m_globalEventFilters.cend(), filter) == q->d->m_globalEventFilters.cend())
                 continue;
+
+            if (filter->onMouseEvent(view.get(), ev))
+                return true;
 
             switch (ev->type()) {
             case QEvent::MouseButtonPress:

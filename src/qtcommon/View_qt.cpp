@@ -38,6 +38,10 @@ public:
     bool handleMouseEvent(QMouseEvent *ev)
     {
         for (EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
+
+            if (filter->onMouseEvent(q, ev))
+                return true;
+
             switch (ev->type()) {
             case QEvent::MouseButtonPress:
                 if (filter->onMouseButtonPress(q, ev))

@@ -214,21 +214,6 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
     return false;
 }
 
-bool WidgetResizeHandler::onMouseButtonPress(View *view, QMouseEvent *ev)
-{
-    return onMouseEvent(view, ev);
-}
-
-bool WidgetResizeHandler::onMouseButtonRelease(View *view, QMouseEvent *ev)
-{
-    return onMouseEvent(view, ev);
-}
-
-bool WidgetResizeHandler::onMouseButtonMove(View *view, QMouseEvent *ev)
-{
-    return onMouseEvent(view, ev);
-}
-
 bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 {
     const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(e);
