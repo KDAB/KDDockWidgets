@@ -1,8 +1,8 @@
 #
 # This file is part of KDDockWidgets.
 #
-# SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-# Author: Sergio Martins <sergio.martins@kdab.com>
+# SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group
+# company <info@kdab.com> Author: Sergio Martins <sergio.martins@kdab.com>
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 #
@@ -25,30 +25,35 @@ include_directories(../src)
 include_directories(../src/private)
 add_definitions(-DQT_NO_KEYWORDS)
 
-# Will enable it once needed
-# option(KDDockWidgets_FUZZER "Builds the fuzzer" ON)
+# Will enable it once needed option(KDDockWidgets_FUZZER "Builds the fuzzer" ON)
 
 # tst_docks
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-target_link_libraries(tst_docks kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+target_link_libraries(tst_docks kdbindings kddockwidgets
+                      Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_docks)
 
 # tst_qtwidgets
-if (KDDW_FRONTEND_QTWIDGETS)
-  add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-  target_link_libraries(tst_qtwidgets kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+if(KDDW_FRONTEND_QTWIDGETS)
+  add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS}
+                               ${TESTING_RESOURCES})
+  target_link_libraries(tst_qtwidgets kdbindings kddockwidgets
+                        Qt${Qt_VERSION_MAJOR}::Test)
   set_compiler_flags(tst_qtwidgets)
 endif()
 
-if (KDDW_FRONTEND_QTQUICK)
-  add_executable(tst_qtquick qtquick/tst_qtquick.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-  target_link_libraries(tst_qtquick kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
+if(KDDW_FRONTEND_QTQUICK)
+  add_executable(tst_qtquick qtquick/tst_qtquick.cpp ${TESTING_SRCS}
+                             ${TESTING_RESOURCES})
+  target_link_libraries(tst_qtquick kddockwidgets kdbindings
+                        Qt${Qt_VERSION_MAJOR}::Test)
   set_compiler_flags(tst_qtquick)
 endif()
 
 add_executable(tst_multisplitter tst_multisplitter.cpp)
-target_link_libraries(tst_multisplitter kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
+target_link_libraries(tst_multisplitter kddockwidgets kdbindings
+                      Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_multisplitter)
 
 # tests_launcher
@@ -82,8 +87,10 @@ target_link_libraries(tst_tabbar kddockwidgets kdbindings)
 add_executable(tst_separator controllers/tst_separator.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_separator kddockwidgets kdbindings)
 
-add_executable(tst_floatingwindow controllers/tst_floatingwindow.cpp ${TESTING_RESOURCES})
+add_executable(tst_floatingwindow controllers/tst_floatingwindow.cpp
+                                  ${TESTING_RESOURCES})
 target_link_libraries(tst_floatingwindow kddockwidgets kdbindings)
 
-add_executable(tst_dockwidget controllers/tst_dockwidget.cpp ${TESTING_RESOURCES})
+add_executable(tst_dockwidget controllers/tst_dockwidget.cpp
+                              ${TESTING_RESOURCES})
 target_link_libraries(tst_dockwidget kddockwidgets kdbindings)

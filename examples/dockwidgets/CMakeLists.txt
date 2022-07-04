@@ -1,8 +1,8 @@
 #
 # This file is part of KDDockWidgets.
 #
-# SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-# Author: Sergio Martins <sergio.martins@kdab.com>
+# SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group
+# company <info@kdab.com> Author: Sergio Martins <sergio.martins@kdab.com>
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 #
@@ -17,23 +17,15 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIRS ON)
 
 if(NOT TARGET kddockwidgets)
-  # This will look for Qt, do find_package yourself manually before
-  # if you want to look for a specific Qt version for instance.
+  # This will look for Qt, do find_package yourself manually before if you want
+  # to look for a specific Qt version for instance.
   find_package(KDDockWidgets REQUIRED)
 endif()
 
 set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
 
-add_executable(qtwidgets_dockwidgets
-    main.cpp
-    MyViewFactory.cpp
-    MyMainWindow.cpp
-    MyWidget.cpp
-    ${RESOURCES_EXAMPLE_SRC}
-)
+add_executable(
+  qtwidgets_dockwidgets main.cpp MyViewFactory.cpp MyMainWindow.cpp
+                        MyWidget.cpp ${RESOURCES_EXAMPLE_SRC})
 
-target_link_libraries(qtwidgets_dockwidgets
-  PRIVATE
-    KDAB::kddockwidgets
-)
-
+target_link_libraries(qtwidgets_dockwidgets PRIVATE KDAB::kddockwidgets)
