@@ -48,7 +48,7 @@ using namespace KDDockWidgets::Controllers;
 
 namespace KDDockWidgets {
 ///@brief Custom mouse grabber, for platforms that don't support grabbing the mouse
-class FallbackMouseGrabber : public QObject /// clazy:exclude=missing-qobject-macro
+class FallbackMouseGrabber : public QObject, public EventFilterInterface /// clazy:exclude=missing-qobject-macro
 {
 public:
     FallbackMouseGrabber(QObject *parent)
@@ -62,7 +62,7 @@ public:
     {
         m_target = target;
         m_guard = target;
-        qGuiApp->installEventFilter(this);
+        Platform::instance()->installGlobalEventFilter(this);
     }
 
     void releaseMouse()
@@ -75,22 +75,18 @@ public:
 
         m_target = nullptr;
         m_guard.clear();
-        qGuiApp->removeEventFilter(this);
+        Platform::instance()->removeGlobalEventFilter(this);
     }
 
-    bool eventFilter(QObject *, QEvent *ev) override
+    bool onMouseEvent(View *, QMouseEvent *me) override
     {
         if (m_reentrancyGuard || !m_guard)
             return false;
 
-        if (QMouseEvent *me = mouseEvent(ev)) {
-            m_reentrancyGuard = true;
-            Platform::instance()->sendEvent(m_target, me);
-            m_reentrancyGuard = false;
-            return true;
-        }
-
-        return false;
+        m_reentrancyGuard = true;
+        Platform::instance()->sendEvent(m_target, me);
+        m_reentrancyGuard = false;
+        return true;
     }
 
     bool m_reentrancyGuard = false;
