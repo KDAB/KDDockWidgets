@@ -281,6 +281,16 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 {
     Controllers::FloatingWindow *floatingWindow = droppedWindow->floatingWindow();
 
+    if (!floatingWindow) {
+        qWarning() << Q_FUNC_INFO << "Expected floating window controller";
+        return false;
+    }
+
+    if (!floatingWindow->view()) {
+        qWarning() << Q_FUNC_INFO << "Expected floating window view";
+        return false;
+    }
+
     if (floatingWindow->view()->equals(window())) {
         qWarning() << "Refusing to drop onto itself"; // Doesn't happen
         return false;
