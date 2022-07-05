@@ -567,9 +567,9 @@ void StateDraggingWayland::onEntry()
     drag.setMimeData(mimeData);
     drag.setPixmap(q->m_windowBeingDragged->pixmap());
 
-    qGuiApp->installEventFilter(q);
+    Platform::instance()->installGlobalEventFilter(q);
     const Qt::DropAction result = drag.exec();
-    qGuiApp->removeEventFilter(q);
+    Platform::instance()->removeGlobalEventFilter(q);
     if (result == Qt::IgnoreAction)
         Q_EMIT q->dragCanceled();
 }
@@ -750,6 +750,41 @@ WindowBeingDragged *DragController::windowBeingDragged() const
     return m_windowBeingDragged.get();
 }
 
+bool DragController::onDnDEvent(View *view, QEvent *e)
+{
+    if (!isWayland())
+        return false;
+
+    // Wayland is very different. It uses QDrag for the dragging of a window.
+    if (view) {
+        if (auto dropArea = view->asDropAreaController()) {
+            switch (int(e->type())) {
+            case QEvent::DragEnter:
+                if (activeState()->handleDragEnter(static_cast<QDragEnterEvent *>(e), dropArea))
+                    return true;
+                break;
+            case QEvent::DragLeave:
+                if (activeState()->handleDragLeave(dropArea))
+                    return true;
+                break;
+            case QEvent::DragMove:
+                if (activeState()->handleDragMove(static_cast<QDragMoveEvent *>(e), dropArea))
+                    return true;
+                break;
+            case QEvent::Drop:
+                if (activeState()->handleDrop(static_cast<QDropEvent *>(e), dropArea))
+                    return true;
+                break;
+            }
+        }
+    } else if (e->type() == QEvent::DragEnter && isDragging()) {
+        // We're dragging a window. Be sure user code doesn't accept DragEnter events.
+        return true;
+    }
+
+    return false;
+}
+
 bool DragController::eventFilter(QObject *o, QEvent *e)
 {
     if (m_nonClientDrag && e->type() == QEvent::Move) {
@@ -757,35 +792,6 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o;
         activeState()->handleMouseMove(QCursor::pos());
         return MinimalStateMachine::eventFilter(o, e);
-    }
-
-    if (isWayland()) {
-        // Wayland is very different. It uses QDrag for the dragging of a window.
-        if (auto view = Platform::instance()->qobjectAsView(o)) {
-            if (auto dropArea = view->asDropAreaController()) {
-                switch (int(e->type())) {
-                case QEvent::DragEnter:
-                    if (activeState()->handleDragEnter(static_cast<QDragEnterEvent *>(e), dropArea))
-                        return true;
-                    break;
-                case QEvent::DragLeave:
-                    if (activeState()->handleDragLeave(dropArea))
-                        return true;
-                    break;
-                case QEvent::DragMove:
-                    if (activeState()->handleDragMove(static_cast<QDragMoveEvent *>(e), dropArea))
-                        return true;
-                    break;
-                case QEvent::Drop:
-                    if (activeState()->handleDrop(static_cast<QDropEvent *>(e), dropArea))
-                        return true;
-                    break;
-                }
-            }
-        } else if (e->type() == QEvent::DragEnter && isDragging()) {
-            // We're dragging a window. Be sure user code doesn't accept DragEnter events.
-            return true;
-        }
     }
 
     QMouseEvent *me = mouseEvent(e);

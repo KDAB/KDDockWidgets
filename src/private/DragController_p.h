@@ -15,6 +15,7 @@
 #include "kddockwidgets/docks_export.h"
 
 #include "WindowBeingDragged_p.h"
+#include "EventFilterInterface.h"
 
 #include <QPoint>
 #include <QMimeData>
@@ -69,12 +70,13 @@ private:
     State *m_currentState = nullptr;
 };
 
-class DOCKS_EXPORT DragController : public MinimalStateMachine
+class DOCKS_EXPORT DragController : public MinimalStateMachine, public EventFilterInterface
 {
     Q_OBJECT
     Q_PROPERTY(bool isDragging READ isDragging NOTIFY isDraggingChanged)
 public:
-    enum State {
+    enum State
+    {
         State_None = 0,
         State_PreDrag,
         State_Dragging
@@ -131,6 +133,8 @@ private:
     StateBase *activeState() const;
     std::shared_ptr<View> qtTopLevelUnderCursor() const;
     Draggable *draggableForQObject(QObject *o) const;
+    bool onDnDEvent(View *, QEvent *) override;
+
     QPoint m_pressPos;
     QPoint m_offset;
 
