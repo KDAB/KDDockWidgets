@@ -168,6 +168,7 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
 void MainWindowBase::addDockWidget(DockWidgetBase *dw, Location location,
                                    DockWidgetBase *relativeTo, InitialOption option)
 {
+    Q_ASSERT(dw);
     if (dw->options() & DockWidgetBase::Option_NotDockable) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << dw;
         return;
