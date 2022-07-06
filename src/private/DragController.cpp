@@ -680,13 +680,13 @@ DragController *DragController::instance()
 void DragController::registerDraggable(Draggable *drg)
 {
     m_draggables << drg;
-    drg->asView()->asQObject()->installEventFilter(this);
+    drg->asView()->installViewEventFilter(this);
 }
 
 void DragController::unregisterDraggable(Draggable *drg)
 {
     m_draggables.removeOne(drg);
-    drg->asView()->asQObject()->removeEventFilter(this);
+    drg->asView()->removeViewEventFilter(this);
 }
 
 bool DragController::isDragging() const
@@ -785,42 +785,41 @@ bool DragController::onDnDEvent(View *view, QEvent *e)
     return false;
 }
 
-bool DragController::eventFilter(QObject *o, QEvent *e)
+bool DragController::onMoveEvent(View *)
 {
-    if (m_nonClientDrag && e->type() == QEvent::Move) {
+    if (m_nonClientDrag) {
         // On Windows, non-client mouse moves are only sent at the end, so we must fake it:
-        qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o;
+        qCDebug(mouseevents) << "DragController::onMoveEvent";
         activeState()->handleMouseMove(QCursor::pos());
-        return MinimalStateMachine::eventFilter(o, e);
     }
 
-    QMouseEvent *me = mouseEvent(e);
-    if (!me)
-        return MinimalStateMachine::eventFilter(o, e);
+    return false;
+}
 
-    auto w = Platform::instance()->qobjectAsView(o);
+bool DragController::onMouseEvent(View *w, QMouseEvent *me)
+{
     if (!w)
-        return MinimalStateMachine::eventFilter(o, e);
+        return false;
 
-    qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o
+    qCDebug(mouseevents) << "DragController::onMouseEvent e=" << me->type()
                          << "; m_nonClientDrag=" << m_nonClientDrag;
 
-    switch (e->type()) {
+    switch (me->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = w->asFloatingWindowController()) {
             if (KDDockWidgets::usesNativeTitleBar() || fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
                 m_nonClientDrag = true;
-                return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
+                return activeState()->handleMouseButtonPress(draggableForQObject(w->asQObject()), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
             }
         }
-        return MinimalStateMachine::eventFilter(o, e);
+        return false;
     }
     case QEvent::MouseButtonPress:
         // For top-level windows that support native dragging all goes through the NonClient* events.
         // This also forbids dragging a FloatingWindow simply by pressing outside of the title area, in the background
         if (!KDDockWidgets::usesNativeDraggingAndResizing() || !w->isRootView()) {
             Q_ASSERT(activeState());
-            return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
+            return activeState()->handleMouseButtonPress(draggableForQObject(w->asQObject()), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
         } else
             break;
     case QEvent::MouseButtonRelease:
@@ -836,7 +835,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         break;
     }
 
-    return MinimalStateMachine::eventFilter(o, e);
+    return false;
 }
 
 StateBase *DragController::activeState() const

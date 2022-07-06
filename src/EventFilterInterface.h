@@ -69,6 +69,12 @@ public:
     {
         return false;
     }
+
+    /// @brief Override to handle a move event
+    virtual bool onMoveEvent(View *)
+    {
+        return false;
+    }
 };
 
 }

@@ -1,4 +1,5 @@
 #include "View_qt.h"
+#include "private/Utils_p.h"
 #include "private/View_p.h"
 #include "kddockwidgets/Controller.h"
 #include "EventFilterInterface.h"
@@ -29,8 +30,20 @@ public:
         if (e->type() == QEvent::ParentChange)
             q->d->parentChanged.emit();
 
-        if (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::MouseMove)
-            return handleMouseEvent(static_cast<QMouseEvent *>(e));
+        if (auto me = mouseEvent(e))
+            return handleMouseEvent(me);
+        else if (e->type() == QEvent::Move)
+            return handleMoveEvent();
+
+        return false;
+    }
+
+    bool handleMoveEvent()
+    {
+        for (EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
+            if (filter->onMoveEvent(q))
+                return true;
+        }
 
         return false;
     }

@@ -121,6 +121,8 @@ public:
             return handleMouseEvent(o, me);
         else if (isDnDEvent(ev))
             return handleDnDEvent(o, ev);
+        else if (ev->type() == QEvent::Move)
+            return handleMoveEvent(o, ev);
 
         auto view = Platform::instance()->qobjectAsView(o);
         if (!view)
@@ -131,6 +133,20 @@ public:
             qGuiApp->sendEvent(qApp, ev);
             m_isProcessingAppQuitEvent = false;
             return true;
+        }
+
+        return false;
+    }
+
+    bool handleMoveEvent(QObject *o, QEvent *)
+    {
+        if (q->d->m_globalEventFilters.empty())
+            return false;
+
+        auto view = Platform::instance()->qobjectAsView(o);
+        for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
+            if (filter->onMoveEvent(view.get()))
+                return true;
         }
 
         return false;

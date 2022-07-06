@@ -117,9 +117,6 @@ Q_SIGNALS:
     void dropped();
     void isDraggingChanged();
 
-protected:
-    bool eventFilter(QObject *, QEvent *) override;
-
 private:
     friend class StateBase;
     friend class StateNone;
@@ -134,6 +131,8 @@ private:
     std::shared_ptr<View> qtTopLevelUnderCursor() const;
     Draggable *draggableForQObject(QObject *o) const;
     bool onDnDEvent(View *, QEvent *) override;
+    bool onMoveEvent(View *) override;
+    bool onMouseEvent(View *, QMouseEvent *) override;
 
     QPoint m_pressPos;
     QPoint m_offset;
