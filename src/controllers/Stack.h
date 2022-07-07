@@ -18,6 +18,8 @@
 
 #include <QPointer>
 
+#include "kdbindings/signal.h"
+
 namespace KDDockWidgets::Controllers {
 
 class Group;
@@ -56,7 +58,11 @@ public:
 
     bool insertDockWidget(int index, DockWidget *, const QIcon &, const QString &title);
 
+    /// Sets whether the tab bar should be hidden when there's only 1 tab shown
+    /// Default is true.
+    /// See Config::Flag_AlwaysShowTabs to change this behaviour
     void setTabBarAutoHide(bool);
+    bool tabBarAutoHide() const;
 
     ///@brief rename's the tab's text
     void renameTab(int index, const QString &);
@@ -110,6 +116,9 @@ public:
     /// @brief Enables document mode. Default is false.
     void setDocumentMode(bool);
 
+    /// Emitted when the tabBarAutoHide boolean member changes
+    KDBindings::Signal<bool> tabBarAutoHideChanged;
+
 Q_SIGNALS:
     void currentTabChanged(int index);
     void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
@@ -124,6 +133,7 @@ public: // TODOm3
 private:
     TabBar *const m_tabBar;
     Group *const m_group;
+    bool m_tabBarAutoHide = true;
     const StackOptions m_options;
 
     Q_DISABLE_COPY(Stack)

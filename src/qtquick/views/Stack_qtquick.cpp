@@ -41,6 +41,9 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
 
 void Stack_qtquick::init()
 {
+    m_tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect([this] {
+        Q_EMIT tabBarAutoHideChanged();
+    });
     Q_EMIT tabBarChanged();
 }
 
@@ -102,11 +105,6 @@ bool Stack_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, con
     return m_dockWidgetModel->insert(dw, index);
 }
 
-void Stack_qtquick::setTabBarAutoHide(bool)
-{
-    qWarning() << Q_FUNC_INFO << "Not implemented";
-}
-
 void Stack_qtquick::renameTab(int index, const QString &)
 {
     Q_UNUSED(index);
@@ -136,6 +134,11 @@ int Stack_qtquick::currentIndex() const
                    << "; count=" << m_dockWidgetModel->count();
 
     return index;
+}
+
+bool Stack_qtquick::tabBarAutoHide() const
+{
+    return m_stack->tabBarAutoHide();
 }
 
 DockWidgetModel *Stack_qtquick::dockWidgetModel() const

@@ -56,10 +56,15 @@ void Stack_qtwidgets::init()
         }
     });
 
+    QTabWidget::setTabBarAutoHide(m_stack->tabBarAutoHide());
     connect(this, &QTabWidget::currentChanged, this, [this](int index) {
         m_stack->onCurrentTabChanged(index);
         Q_EMIT m_stack->currentTabChanged(index);
         Q_EMIT m_stack->currentDockWidgetChanged(m_stack->currentDockWidget());
+    });
+
+    m_tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect([this](bool is) {
+        QTabWidget::setTabBarAutoHide(is);
     });
 
     if (!QTabWidget::tabBar()->isVisible())
@@ -124,11 +129,6 @@ bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw,
 {
     insertTab(index, View_qt::asQWidget(dw), icon, title);
     return true;
-}
-
-void Stack_qtwidgets::setTabBarAutoHide(bool b)
-{
-    QTabWidget::setTabBarAutoHide(b);
 }
 
 void Stack_qtwidgets::renameTab(int index, const QString &text)

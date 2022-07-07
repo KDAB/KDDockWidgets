@@ -35,7 +35,6 @@ public:
     explicit StackViewInterface(Controllers::Stack *);
     virtual ~StackViewInterface();
     virtual bool isPositionDraggable(QPoint p) const = 0;
-    virtual void setTabBarAutoHide(bool is) = 0;
     virtual void renameTab(int index, const QString &) = 0;
     virtual int currentIndex() const = 0;
     virtual int numDockWidgets() const = 0;

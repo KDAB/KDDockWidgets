@@ -203,7 +203,16 @@ bool Stack::onMouseDoubleClick(QPoint localPos)
 
 void Stack::setTabBarAutoHide(bool is)
 {
-    dynamic_cast<Views::StackViewInterface *>(view())->setTabBarAutoHide(is);
+    if (is == m_tabBarAutoHide)
+        return;
+
+    m_tabBarAutoHide = is;
+    tabBarAutoHideChanged.emit(is);
+}
+
+bool Stack::tabBarAutoHide() const
+{
+    return m_tabBarAutoHide;
 }
 
 void Stack::renameTab(int index, const QString &text)

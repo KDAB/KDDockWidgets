@@ -17,6 +17,8 @@
 
 #include <QTabWidget>
 
+#include "kdbindings/signal.h"
+
 QT_BEGIN_NAMESPACE
 class QAbstractButton;
 class QHBoxLayout;
@@ -54,7 +56,6 @@ public: // TODOm3: make protected
     void tabRemoved(int index) override;
     void setCurrentDockWidget(int index) override;
     bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &, const QString &title) override;
-    void setTabBarAutoHide(bool) override;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &) override;
     Controllers::DockWidget *dockwidgetAt(int index) const override;
@@ -71,6 +72,7 @@ private:
     QHBoxLayout *m_cornerWidgetLayout = nullptr;
     QAbstractButton *m_floatButton = nullptr;
     QAbstractButton *m_closeButton = nullptr;
+    KDBindings::ScopedConnection m_tabBarAutoHideChanged;
 
     Q_DISABLE_COPY(Stack_qtwidgets)
 };
