@@ -162,7 +162,7 @@ QSize Platform_qtwidgets::screenSizeFor(View *view) const
     return {};
 }
 
-int Platform_qtwidgets::startDragDistance() const
+int Platform_qtwidgets::startDragDistance_impl() const
 {
     return QApplication::startDragDistance();
 }

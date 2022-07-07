@@ -12,6 +12,7 @@
 #include "main.h"
 #include "private/View_p.h"
 #include "Platform.h"
+#include "Config.h"
 
 #include <string>
 
@@ -32,4 +33,15 @@ TEST_CASE("Platform::createDefaultViewFactory")
 {
     auto plat = Platform::instance();
     REQUIRE(plat->createDefaultViewFactory());
+}
+
+TEST_CASE("Platform::startDragDistance")
+{
+    auto plat = Platform::instance();
+    const int defaultDistance = plat->startDragDistance();
+    CHECK_GE(defaultDistance, -1);
+
+    const int newDistance = defaultDistance + 1;
+    Config::self().setStartDragDistance(newDistance);
+    CHECK_EQ(plat->startDragDistance(), newDistance);
 }

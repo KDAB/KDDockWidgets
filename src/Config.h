@@ -86,7 +86,8 @@ public:
     ///@warning Only the default is supported on all platforms. Not all options work with all window managers,
     ///         Qt does its best to abstract the differences however that's only a best effort. This is true specially
     ///         for any option that changes window flags.
-    enum Flag {
+    enum Flag
+    {
         Flag_None = 0, ///< No option set
         Flag_NativeTitleBar = 1, ///< Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise.
         Flag_AeroSnapWithClientDecos = 2, ///< Deprecated. This is now default and cannot be turned off. Moving a window on Windows 10 uses native moving, as that works well across screens with different HDPI settings. There's no reason to use manual client/Qt window moving.
@@ -113,7 +114,8 @@ public:
     Q_DECLARE_FLAGS(Flags, Flag)
 
     ///@brief List of customizable widgets
-    enum CustomizableWidget {
+    enum CustomizableWidget
+    {
         CustomizableWidget_None = 0, ///< None
         CustomizableWidget_TitleBar, ///< The title bar
         CustomizableWidget_DockWidget, ///< The dock widget
@@ -128,7 +130,8 @@ public:
     ///@internal
     /// Internal flags for additional tuning.
     ///@warning Not for public consumption, support will be limited.
-    enum InternalFlag {
+    enum InternalFlag
+    {
         InternalFlag_None = 0, ///< The default
         InternalFlag_NoAeroSnap = 1, ///< Only for development. Disables Aero-snap.
         InternalFlag_DontUseParentForFloatingWindows = 2, ///< FloatingWindows won't have a parent top-level.
@@ -318,6 +321,16 @@ public:
     /// by default this value is 250px. Use -1 to disable
     void setMDIPopupThreshold(int);
     int mdiPopupThreshold() const;
+
+    /// @brief Sets how many pixels the mouse needs to travel before a drag is actually started
+    /// Calling this is usually unneeded and just provided as a means to override Platform::startDragDistance()
+    /// , which already has a reasonable default 4 pixels
+    void setStartDragDistance(int);
+
+    /// @brief Returns the value set by setStartDragDistance()
+    /// Returns -1 if setStartDragDistance() wasn't call, in which case the Platform::startDragDistance()
+    /// will be used
+    int startDragDistance() const;
 
 private:
     Q_DISABLE_COPY(Config)

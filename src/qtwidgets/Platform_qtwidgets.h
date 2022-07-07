@@ -37,7 +37,7 @@ public:
     int screenNumberFor(View *) const override;
     QSize screenSizeFor(View *) const override;
 
-    int startDragDistance() const override;
+    int startDragDistance_impl() const override;
     View *createView(View *parent = nullptr) const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
     bool usesFallbackMouseGrabber() const override;

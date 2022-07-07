@@ -56,6 +56,7 @@ public:
     CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
     qreal m_draggedWindowOpacity = Q_QNAN;
     int m_mdiPopupThreshold = 250;
+    int m_startDragDistance = -1;
     bool m_dropIndicatorsInhibited = false;
 };
 
@@ -307,6 +308,16 @@ void Config::setDropIndicatorsInhibited(bool inhibit) const
 bool Config::dropIndicatorsInhibited() const
 {
     return d->m_dropIndicatorsInhibited;
+}
+
+void Config::setStartDragDistance(int pixels)
+{
+    d->m_startDragDistance = pixels;
+}
+
+int Config::startDragDistance() const
+{
+    return d->m_startDragDistance;
 }
 
 }

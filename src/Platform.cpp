@@ -74,6 +74,16 @@ bool Platform::isQtQuick() const
 
 int Platform::startDragDistance() const
 {
+    const int userRequestedDistance = Config::self().startDragDistance();
+    if (userRequestedDistance > -1)
+        return userRequestedDistance;
+
+    return startDragDistance_impl();
+}
+
+int Platform::startDragDistance_impl() const
+{
+    // Override this method in derived classes for some different value if needed
     return 4;
 }
 
