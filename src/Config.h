@@ -43,7 +43,7 @@ typedef KDDockWidgets::Controllers::MainWindow *(*MainWindowFactoryFunc)(const Q
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
 ///
-/// By default, widgets can be dropped to the outter and inner left/right/top/bottom
+/// By default, widgets can be dropped to the outer and inner left/right/top/bottom
 /// and center. The client app can however provide a lambda via setDropIndicatorAllowedFunc
 /// to block (by returning false) any specific locations they desire.
 ///
@@ -255,7 +255,7 @@ public:
     /**
      * @brief Allows the client app to disallow certain docking indicators.
      *
-     * For example, let's assume the app doesn't want to show outter indicators for a certain
+     * For example, let's assume the app doesn't want to show outer indicators for a certain
      * dock widget.
      *
      * @code
@@ -267,7 +267,7 @@ public:
      *                 const KDDockWidgets::Controllers::DockWidget::List &target,
      *                 KDDockWidgets::Controllers::DropArea *)
      * {
-     *    // disallows dockFoo to be docked to outter areas
+     *    // disallows dockFoo to be docked to outer areas
      *    return !((loc & KDDockWidgets::DropLocation_Outter) && source.contains(dockFoo));
      * };
      *

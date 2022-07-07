@@ -218,7 +218,7 @@ public:
 
     /// @brief halts the test during the specified number of milliseconds
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your test
-    /// and see what's goign on
+    /// and see what's going on
     virtual void tests_wait(int ms) = 0;
 
     virtual void installMessageHandler() = 0;
