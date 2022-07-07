@@ -44,7 +44,8 @@ namespace KDDockWidgets {
 
 namespace Tests {
 
-enum ButtonAction {
+enum ButtonAction
+{
     ButtonAction_None,
     ButtonAction_Press = 1,
     ButtonAction_Release = 2
@@ -65,8 +66,8 @@ inline QPoint dragPointForWidget(Controllers::Group *group, int index)
         Q_ASSERT(index == 0);
         return group->titleBar()->mapToGlobal(QPoint(5, 5));
     } else {
-        QRect rect = group->tabWidget()->tabBar()->rectForTab(index);
-        return group->tabWidget()->tabBar()->view()->mapToGlobal(rect.center());
+        QRect rect = group->stack()->tabBar()->rectForTab(index);
+        return group->stack()->tabBar()->view()->mapToGlobal(rect.center());
     }
 }
 
@@ -152,7 +153,7 @@ inline View *draggableFor(View *view)
                                                          : nullptr;
 
         if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && group && group->hasTabsVisible()) {
-            draggable = group->tabWidget()->view();
+            draggable = group->stack()->view();
         } else {
             draggable = fw->titleBar()->view();
         }

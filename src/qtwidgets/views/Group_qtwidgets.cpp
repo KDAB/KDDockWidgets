@@ -65,8 +65,8 @@ void Group_qtwidgets::init()
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
     vlayout->addWidget(asQWidget(m_group->titleBar()));
-    auto tabWidget = m_group->tabWidget();
-    vlayout->addWidget(asQWidget(m_group->tabWidget()));
+    auto tabWidget = m_group->stack();
+    vlayout->addWidget(asQWidget(m_group->stack()));
 
     tabWidget->setTabBarAutoHide(!m_group->alwaysShowsTabs());
 
@@ -83,12 +83,12 @@ void Group_qtwidgets::free_impl()
 
 void Group_qtwidgets::renameTab(int index, const QString &text)
 {
-    m_group->tabWidget()->renameTab(index, text);
+    m_group->stack()->renameTab(index, text);
 }
 
 void Group_qtwidgets::changeTabIcon(int index, const QIcon &icon)
 {
-    m_group->tabWidget()->changeTabIcon(index, icon);
+    m_group->stack()->changeTabIcon(index, icon);
 }
 
 int Group_qtwidgets::nonContentsHeight() const
@@ -101,42 +101,42 @@ int Group_qtwidgets::nonContentsHeight() const
 
 int Group_qtwidgets::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
 {
-    return m_group->tabWidget()->indexOfDockWidget(dw);
+    return m_group->stack()->indexOfDockWidget(dw);
 }
 
 void Group_qtwidgets::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
-    m_group->tabWidget()->setCurrentDockWidget(dw);
+    m_group->stack()->setCurrentDockWidget(dw);
 }
 
 int Group_qtwidgets::currentIndex_impl() const
 {
-    return m_group->tabWidget()->currentIndex();
+    return m_group->stack()->currentIndex();
 }
 
 void Group_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
-    m_group->tabWidget()->insertDockWidget(dw, index);
+    m_group->stack()->insertDockWidget(dw, index);
 }
 
 void Group_qtwidgets::removeWidget_impl(Controllers::DockWidget *dw)
 {
-    m_group->tabWidget()->removeDockWidget(dw);
+    m_group->stack()->removeDockWidget(dw);
 }
 
 void Group_qtwidgets::setCurrentTabIndex_impl(int index)
 {
-    m_group->tabWidget()->setCurrentDockWidget(index);
+    m_group->stack()->setCurrentDockWidget(index);
 }
 
 KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::currentDockWidget_impl() const
 {
-    return m_group->tabWidget()->dockwidgetAt(m_group->tabWidget()->currentIndex());
+    return m_group->stack()->dockwidgetAt(m_group->stack()->currentIndex());
 }
 
 KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::dockWidgetAt_impl(int index) const
 {
-    return m_group->tabWidget()->dockwidgetAt(index);
+    return m_group->stack()->dockwidgetAt(index);
 }
 
 void Group_qtwidgets::paintEvent(QPaintEvent *)

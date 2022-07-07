@@ -268,7 +268,7 @@ int main(int argc, char **argv)
 
     if (parser.isSet(hideCertainDockingIndicators)) {
         // Here we exemplify adding a restriction to "Dock Widget 8"
-        // Dock widget 8 will only be allowed to dock to the outter areas
+        // Dock widget 8 will only be allowed to dock to the outer areas
         auto func = [](KDDockWidgets::DropLocation location,
                        const KDDockWidgets::Controllers::DockWidget::List &source,
                        const KDDockWidgets::Controllers::DockWidget::List &target,

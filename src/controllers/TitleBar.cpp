@@ -584,14 +584,14 @@ TabBar *TitleBar::tabBar() const
 {
     if (m_floatingWindow && m_floatingWindow->hasSingleFrame()) {
         if (Group *group = m_floatingWindow->singleFrame()) {
-            return group->tabWidget()->tabBar();
+            return group->stack()->tabBar();
         } else {
             // Shouldn't happen
             qWarning() << Q_FUNC_INFO << "Expected a group";
         }
 
     } else if (m_group) {
-        return m_group->tabWidget()->tabBar();
+        return m_group->stack()->tabBar();
     }
 
     return nullptr;

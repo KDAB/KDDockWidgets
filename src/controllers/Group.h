@@ -92,7 +92,7 @@ public:
     int dockWidgetCount() const;
 
     /// @brief returns the tab widget
-    Controllers::Stack *tabWidget() const;
+    Controllers::Stack *stack() const;
     Controllers::TabBar *tabBar() const;
 
     void updateTitleAndIcon();

@@ -2506,7 +2506,7 @@ void TestDocks::tst_tabTitleChanges()
 
     dw1->addDockWidgetAsTab(dw2);
 
-    Controllers::TabBar *tb = dw1->dptr()->group()->tabWidget()->tabBar();
+    Controllers::TabBar *tb = dw1->dptr()->group()->stack()->tabBar();
     QCOMPARE(tb->text(0), QStringLiteral("1"));
     dw1->setTitle(QStringLiteral("other"));
     QCOMPARE(tb->text(0), QStringLiteral("other"));
@@ -2714,7 +2714,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     auto fw2 = createFloatingWindow();
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
-    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outter right instead of Left
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
     QCOMPARE(fw2->groups().size(), 3);
     QVERIFY(fw2->dropArea()->checkSanity());
 
@@ -4672,7 +4672,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
 
     auto group2 = dock2->dptr()->group();
 
-    Controllers::Stack *tb2 = group2->tabWidget();
+    Controllers::Stack *tb2 = group2->stack();
     QCOMPARE(tb2->currentIndex(), 1); // Was the last to be added
 
     auto tabBar2 = tb2->tabBar();
@@ -5224,16 +5224,16 @@ void TestDocks::tst_tabWidgetCurrentIndex()
         currentDw = dw;
     });
 
-    QCOMPARE(group->tabWidget()->currentIndex(), 0);
+    QCOMPARE(group->stack()->currentIndex(), 0);
     dock1->addDockWidgetAsTab(dock2);
 
-    QCOMPARE(group->tabWidget()->currentIndex(), 1);
+    QCOMPARE(group->stack()->currentIndex(), 1);
     QCOMPARE(group->currentDockWidget(), currentDw);
     QCOMPARE(dock2, currentDw);
 
     dock2->close();
 
-    QCOMPARE(group->tabWidget()->currentIndex(), 0);
+    QCOMPARE(group->stack()->currentIndex(), 0);
     QCOMPARE(dock1, currentDw);
 }
 
@@ -5257,7 +5257,7 @@ void TestDocks::tst_doubleClickTabToDetach()
     auto group = dock1->dptr()->group();
     QCOMPARE(group->currentIndex(), 1);
 
-    auto tb = group->tabWidget()->view();
+    auto tb = group->stack()->view();
     Tests::doubleClickOn(tb->mapToGlobal(QPoint(20, 20)), group->view()->window());
 
     QVERIFY(dock1->isFloating());
@@ -5803,7 +5803,7 @@ void TestDocks::tst_dragBySingleTab()
     auto group1 = dock1->dptr()->group();
 
     QPoint globalPressPos = dragPointForWidget(group1, 0);
-    Controllers::TabBar *tabBar = group1->tabWidget()->tabBar();
+    Controllers::TabBar *tabBar = group1->stack()->tabBar();
     QVERIFY(tabBar);
     SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing in this case
     drag(tabBar->view(), globalPressPos, QPoint(0, 0));
@@ -5847,7 +5847,7 @@ void TestDocks::tst_dragByTabBar()
 
     dock2->addDockWidgetAsTab(dock3);
     if (documentMode)
-        dock2->dptr()->group()->tabWidget()->setDocumentMode(true);
+        dock2->dptr()->group()->stack()->setDocumentMode(true);
 
     auto fw = dock2->floatingWindow();
     fw->view()->move(m->pos() + QPoint(500, 500));
@@ -5894,7 +5894,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // 2.3 Detach tab1 to empty space
     QPoint globalPressPos = dragPointForWidget(group2.data(), 0);
-    Controllers::TabBar *tabBar = group2->tabWidget()->tabBar();
+    Controllers::TabBar *tabBar = group2->stack()->tabBar();
     QVERIFY(tabBar);
     drag(tabBar->view(), globalPressPos, group2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
 
@@ -5913,7 +5913,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // 2.5 Detach and drop to the same place, should tab again
     globalPressPos = dragPointForWidget(group2.data(), 0);
-    tabBar = group2->tabWidget()->tabBar();
+    tabBar = group2->stack()->tabBar();
 
     finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
     drag(tabBar->view(), globalPressPos, finalPoint);
@@ -6042,7 +6042,7 @@ void TestDocks::tst_redocksToPreviousTabIndex()
     QCOMPARE(dock1->tabIndex(), 1);
 
     Controllers::Group *group = dock0->dptr()->group();
-    auto tb = dock0->dptr()->group()->tabWidget()->tabBar();
+    auto tb = dock0->dptr()->group()->stack()->tabBar();
     tb->moveTabTo(0, 1);
 
     if (!Platform::instance()->isQtQuick()) {
@@ -6087,7 +6087,7 @@ void TestDocks::tst_toggleTabbed()
     QVERIFY(dock1->toggleAction()->isChecked());
     QVERIFY(dock1->isCurrentTab());
     Controllers::Group *group = dock1->dptr()->group();
-    Controllers::Stack *tw = group->tabWidget();
+    Controllers::Stack *tw = group->stack();
     QCOMPARE(tw->currentIndex(), 0);
     QCOMPARE(tw->numDockWidgets(), 1);
     QCOMPARE(tw->currentDockWidget(), dock1);

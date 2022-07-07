@@ -57,7 +57,7 @@ Group_qtquick::~Group_qtquick()
 
 void Group_qtquick::init()
 {
-    connect(m_group->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
+    connect(m_group->stack(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
     connect(this, &View_qtquick::geometryUpdated, this, [this] {
@@ -126,7 +126,7 @@ void Group_qtquick::setCurrentTabIndex_impl(int index)
 
 void Group_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
-    m_group->tabWidget()->setCurrentDockWidget(dw);
+    m_group->stack()->setCurrentDockWidget(dw);
 }
 
 void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
@@ -217,7 +217,7 @@ int Group_qtquick::nonContentsHeight() const
 
 Stack_qtquick *Group_qtquick::stackView() const
 {
-    if (auto stack = m_group->tabWidget())
+    if (auto stack = m_group->stack())
         return qobject_cast<Stack_qtquick *>(asQQuickItem(stack->view()));
 
     return nullptr;

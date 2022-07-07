@@ -220,7 +220,7 @@ int Group::nonContentsHeight() const
     return dynamic_cast<Views::GroupViewInterface *>(view())->nonContentsHeight();
 }
 
-Controllers::Stack *Group::tabWidget() const
+Controllers::Stack *Group::stack() const
 {
     return m_tabWidget;
 }
