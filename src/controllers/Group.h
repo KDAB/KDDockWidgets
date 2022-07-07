@@ -353,7 +353,7 @@ private:
 protected:
     bool m_inDtor = false;
 
-    Controllers::Stack *const m_tabWidget;
+    Controllers::Stack *const m_stack;
     Controllers::TitleBar *const m_titleBar;
 
 private:

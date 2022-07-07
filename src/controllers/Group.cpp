@@ -82,7 +82,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     : Controller(Type::Frame, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
     , d(new Private())
-    , m_tabWidget(new Controllers::Stack(this, tabWidgetOptions(options)))
+    , m_stack(new Controllers::Stack(this, tabWidgetOptions(options)))
     , m_titleBar(new Controllers::TitleBar(this))
     , m_options(actualOptions(options))
     , m_userType(userType)
@@ -91,7 +91,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     DockRegistry::self()->registerGroup(this);
 
     connect(this, &Group::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
-    connect(m_tabWidget, &Controllers::Stack::currentTabChanged,
+    connect(m_stack, &Controllers::Stack::currentTabChanged,
             this, &Group::onCurrentTabChanged);
 
     setLayout(parent ? parent->asLayout() : nullptr);
@@ -123,7 +123,7 @@ Group::~Group()
     // Run some disconnects() too, so we don't receive signals during destruction:
     setLayout(nullptr);
     delete m_titleBar;
-    delete m_tabWidget;
+    delete m_stack;
     delete d;
 }
 
@@ -222,12 +222,12 @@ int Group::nonContentsHeight() const
 
 Controllers::Stack *Group::stack() const
 {
-    return m_tabWidget;
+    return m_stack;
 }
 
 Controllers::TabBar *Group::tabBar() const
 {
-    return m_tabWidget->tabBar();
+    return m_stack->tabBar();
 }
 
 void Group::updateTitleAndIcon()
@@ -414,7 +414,7 @@ int Group::dockWidgetCount() const
     if (m_inCtor || m_inDtor)
         return 0;
 
-    return m_tabWidget->numDockWidgets();
+    return m_stack->numDockWidgets();
 }
 
 void Group::onDockWidgetCountChanged()
