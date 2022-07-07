@@ -41,6 +41,9 @@ int main(int argc, char *argv[])
     QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Hide titlebars when tabs are visible"));
     parser.addOption(noTitleBars);
 
+    QCommandLineOption alwaysTabs("z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
+    parser.addOption(alwaysTabs);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
@@ -86,6 +89,9 @@ int main(int argc, char *argv[])
 
     if (parser.isSet(noTitleBars))
         flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
+
+    if (parser.isSet(alwaysTabs))
+        flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
 
     // Set any required flags. The defaults are usually fine.
     KDDockWidgets::Config::self().setFlags(flags);

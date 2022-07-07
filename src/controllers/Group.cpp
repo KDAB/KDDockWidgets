@@ -95,6 +95,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
             this, &Group::onCurrentTabChanged);
 
     setLayout(parent ? parent->asLayout() : nullptr);
+    m_stack->setTabBarAutoHide(!alwaysShowsTabs());
     view()->init();
     view()->d->closeRequested.connect([this](QCloseEvent *ev) {
         onCloseEvent(ev);

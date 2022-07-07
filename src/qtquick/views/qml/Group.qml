@@ -207,7 +207,7 @@ Rectangle {
         readonly property QtObject tabBarCpp: root.groupCpp ? root.groupCpp.tabWidget.tabBar
                                                             : null
 
-        visible: count > 1
+        visible: tabBarCpp ? (tabBarCpp.tabBarAutoHide ? count > 1 : true) : count > 1
         height: visible ? implicitHeight : 0
 
         anchors {

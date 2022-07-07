@@ -65,10 +65,8 @@ void Group_qtwidgets::init()
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
     vlayout->addWidget(asQWidget(m_group->titleBar()));
-    auto tabWidget = m_group->stack();
-    vlayout->addWidget(asQWidget(m_group->stack()));
 
-    tabWidget->setTabBarAutoHide(!m_group->alwaysShowsTabs());
+    vlayout->addWidget(asQWidget(m_group->stack()));
 
     if (m_group->isOverlayed())
         setAutoFillBackground(true);
