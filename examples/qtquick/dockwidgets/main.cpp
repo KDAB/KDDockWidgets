@@ -38,6 +38,8 @@ int main(int argc, char *argv[])
     parser.setApplicationDescription("KDDockWidgets example application");
     parser.addHelpOption();
 
+    QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Hide titlebars when tabs are visible"));
+    parser.addOption(noTitleBars);
 
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
@@ -81,6 +83,9 @@ int main(int argc, char *argv[])
     // These are debug-only/development flags, which you can ignore.
     KDDockWidgets::Config::self().setInternalFlags(internalFlags);
 #endif
+
+    if (parser.isSet(noTitleBars))
+        flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
 
     // Set any required flags. The defaults are usually fine.
     KDDockWidgets::Config::self().setFlags(flags);
