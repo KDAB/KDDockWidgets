@@ -27,6 +27,8 @@
 #include <QPointer>
 #include <QHash>
 
+#include "kdbindings/signal.h"
+
 namespace KDDockWidgets::Controllers {
 class TabBar;
 }
@@ -42,6 +44,7 @@ class DOCKS_EXPORT TabBar_qtquick
 {
     Q_OBJECT
     Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY tabBarQmlItemChanged)
+    Q_PROPERTY(bool tabBarAutoHide READ tabBarAutoHide NOTIFY tabBarAutoHideChanged)
 public:
     explicit TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent = nullptr);
     int tabAt(QPoint localPos) const override;
@@ -56,17 +59,24 @@ public:
     Controllers::DockWidget *currentDockWidget() const override;
     bool tabsAreMovable() const override;
 
+    /// Returns whether the tab bar should hide when there's only 1 tab visible
+    /// Default true, unless Flag_HideTitleBarWhenTabsVisible
+    bool tabBarAutoHide() const;
+
 Q_SIGNALS:
     void tabBarQmlItemChanged();
+    void tabBarAutoHideChanged();
 
 protected:
     bool event(QEvent *ev) override;
+    void init() override;
 
 private:
     QHash<int, QQuickItem *> qmlTabs() const;
     QQuickItem *tabAt(int index) const;
     QQuickItem *listView() const;
     QPointer<QQuickItem> m_tabBarQmlItem;
+    KDBindings::ScopedConnection m_tabBarAutoHideChanged;
 };
 }
 

@@ -30,6 +30,7 @@ Controllers::TabBar::TabBar(Stack *tabWidget)
     , Draggable(view())
     , m_tabWidget(tabWidget)
 {
+    view()->init();
 }
 
 Controllers::TabBar::~TabBar()
@@ -175,6 +176,11 @@ bool Controllers::TabBar::isMDI() const
 Group *Controllers::TabBar::group() const
 {
     return m_tabWidget->group();
+}
+
+Stack *TabBar::stack() const
+{
+    return m_tabWidget;
 }
 
 void Controllers::TabBar::moveTabTo(int from, int to)

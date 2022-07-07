@@ -64,6 +64,7 @@ public:
     bool isMDI() const override;
 
     Group *group() const;
+    Stack *stack() const;
 
     void moveTabTo(int from, int to);
     QString text(int index) const;

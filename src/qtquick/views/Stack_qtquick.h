@@ -47,8 +47,6 @@ class DOCKS_EXPORT Stack_qtquick
     Q_OBJECT
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
     Q_PROPERTY(QObject *tabBar READ tabBarViewObj NOTIFY tabBarChanged)
-    Q_PROPERTY(bool tabBarAutoHide READ tabBarAutoHide NOTIFY tabBarAutoHideChanged)
-
 public:
     explicit Stack_qtquick(Controllers::Stack *controller,
                            QQuickItem *parent = nullptr);

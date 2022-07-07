@@ -19,6 +19,7 @@
 
 #include "TabBar_qtquick.h"
 #include "kddockwidgets/controllers/TabBar.h"
+#include "kddockwidgets/controllers/Stack.h"
 
 #include <QMetaObject>
 #include <QMouseEvent>
@@ -30,6 +31,13 @@ TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *pare
     : View_qtquick(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
 {
+}
+
+void TabBar_qtquick::init()
+{
+    m_tabBarAutoHideChanged = m_tabBar->stack()->tabBarAutoHideChanged.connect([this] {
+        Q_EMIT tabBarAutoHideChanged();
+    });
 }
 
 QHash<int, QQuickItem *> TabBar_qtquick::qmlTabs() const
@@ -170,4 +178,9 @@ Controllers::DockWidget *TabBar_qtquick::currentDockWidget() const
 bool TabBar_qtquick::tabsAreMovable() const
 {
     return false;
+}
+
+bool TabBar_qtquick::tabBarAutoHide() const
+{
+    return m_tabBar->stack()->tabBarAutoHide();
 }
