@@ -32,7 +32,8 @@
     "todo-tree.filtering.excludeGlobs": [
       "**/ECM",
       "**/3rdparty"
-    ]
+    ],
+    "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json"
   },
   "launch": {
     "version": "0.2.0",
