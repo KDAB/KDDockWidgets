@@ -8,11 +8,14 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring
+
 import unittest
 import importlib
 import inspect
 
 from config import TstConfig
+
 
 class TestImportModules(unittest.TestCase):
     def test_importModules(self):
@@ -24,6 +27,7 @@ class TestImportModules(unittest.TestCase):
         symbols = ['MainWindow', 'DockWidget']
         for symbol in symbols:
             self.assertIn(symbol, moduleSymbols)
+
 
 if __name__ == '__main__':
     TstConfig.initLibraryPath()
