@@ -9,6 +9,7 @@
 
 from conans import ConanFile, CMake, tools
 
+
 class KDDockWidgetsConan(ConanFile):
     name = "kddockwidgets"
     version = "1.5.0"
@@ -20,7 +21,7 @@ class KDDockWidgetsConan(ConanFile):
     url = "https://github.com/KDAB/KDDockWidgets"
     description = "Advanced Dock Widget Framework for Qt"
     generators = "cmake"
-    topics = ("qt", "dockwidget" , "kdab")
+    topics = ("qt", "dockwidget", "kdab")
     settings = "os", "compiler", "build_type", "arch"
     options = {
         "qt_version": "ANY",
@@ -65,4 +66,5 @@ class KDDockWidgetsConan(ConanFile):
         self.env_info.CMAKE_PREFIX_PATH.append(self.package_folder)
 
     def package_id(self):
-        self.info.requires["qt"].minor_mode() # Check only the major and minor version!
+        # Check only the major and minor version!
+        self.info.requires["qt"].minor_mode()
