@@ -14,7 +14,22 @@ repos:
   rev: v14.0.0
   hooks:
   - id: clang-format
+- repo: https://github.com/PyCQA/pylint
+  rev: v2.12.2
+  hooks:
+  - id: pylint
+    exclude: ^(.cmake-format.py|conan/conanfile.py)
+    additional_dependencies: ["PySide2", "PySide6"]
+- repo: https://github.com/pre-commit/mirrors-autopep8
+  rev: v1.6.0
+  hooks:
+  - id: autopep8
 - repo: https://github.com/codespell-project/codespell
   rev: v2.1.0
   hooks:
   - id: codespell
+- repo: https://github.com/cheshirekow/cmake-format-precommit
+  rev: v0.6.13
+  hooks:
+  - id: cmake-lint
+  - id: cmake-format

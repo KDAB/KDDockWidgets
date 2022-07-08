@@ -20,6 +20,6 @@ SKIP Doxyfile.cmake
 SKIP /KDDockWidgetsConfig.cmake.in
 #skip more files
 SKIP CMakePresets.json
+SKIP \.cmake-format\.py
 #skip the borrowed code in the cmake subdir
 SKIP /cmake/InstallLocation.cmake|/cmake/ECM/|/cmake/KDAB/
-
