@@ -116,6 +116,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/DragController_p.h
     private/Draggable_p.h
     private/DropArea_p.h
+    private/DropAreaWithCentralFrame_p.h
     private/DropIndicatorOverlayInterface_p.h
     private/FloatingWindow_p.h
     private/Frame_p.h
