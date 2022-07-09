@@ -13,8 +13,10 @@
 
 #include <memory>
 
+QT_BEGIN_NAMESPACE
 class QMouseEvent;
 class QEvent;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
