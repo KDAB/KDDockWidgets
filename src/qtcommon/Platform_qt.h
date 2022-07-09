@@ -14,7 +14,9 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/Platform.h"
 
+QT_BEGIN_NAMESPACE
 class QCoreApplication;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
