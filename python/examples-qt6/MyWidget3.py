@@ -22,7 +22,7 @@ class MyWidget3(MyWidget):
         self.triangle = QtGui.QImage(":/assets/tri.png")
 
     def paintEvent(self, event):
-        del event  # unsed at this time
+        del event  # unused at this time
         p = QtGui.QPainter(self)
         p.fillRect(self.rect(), QtGui.QColor(0xD5, 0xD5, 0xD5))
         p.drawImage(self.background.rect(),
