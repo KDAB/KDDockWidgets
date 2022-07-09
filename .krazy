@@ -8,7 +8,7 @@ EXTRA kdabcopyright-reuse,kdabcontactus,fosslicense-reuse
 
 #exclude checks now being done by clazy or clang-tools
 EXCLUDE strings,explicit,normalize,passbyvalue,operators,nullstrcompare,nullstrassign,doublequote_chars,qobject,sigsandslots,staticobjects,dpointer,inline,postfixop
-exclude spelling as codespell is much, much better tool
+#exclude spelling as codespell is much, much better tool
 EXCLUDE spelling
 #exclude more checks
 EXCLUDE style
@@ -20,6 +20,6 @@ SKIP Doxyfile.cmake
 SKIP /KDDockWidgetsConfig.cmake.in
 #skip more files
 SKIP CMakePresets.json
+SKIP \.cmake-format\.py
 #skip the borrowed code in the cmake subdir
 SKIP /cmake/InstallLocation.cmake|/cmake/ECM/|/cmake/KDAB/
-

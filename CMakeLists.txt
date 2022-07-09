@@ -1,8 +1,8 @@
 #
 # This file is part of KDDockWidgets.
 #
-# SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group
-# company <info@kdab.com> Author: Sergio Martins <sergio.martins@kdab.com>
+# SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# Author: Sergio Martins <sergio.martins@kdab.com>
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 #
@@ -59,34 +59,34 @@ cmake_minimum_required(VERSION 3.7)
 # Allow using a non-KDAB install location.
 set(KDAB_INSTALL
     True
-    CACHE INTERNAL "Install to default KDAB Location")
+    CACHE INTERNAL "Install to default KDAB Location"
+)
 
 if(DEFINED CMAKE_INSTALL_PREFIX)
-  if(NOT "${CMAKE_INSTALL_PREFIX}" STREQUAL "")
-    set(KDAB_INSTALL
-        False
-        CACHE INTERNAL "Install to non-KDAB Location")
-  endif()
+    if(NOT "${CMAKE_INSTALL_PREFIX}" STREQUAL "")
+        set(KDAB_INSTALL
+            False
+            CACHE INTERNAL "Install to non-KDAB Location"
+        )
+    endif()
 endif()
 
 if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
-  project(KDDockWidgets LANGUAGES CXX)
+    project(KDDockWidgets LANGUAGES CXX)
 else()
-  project(
-    KDDockWidgets
-    DESCRIPTION "An advanced docking system for Qt"
-    HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
-    LANGUAGES CXX)
+    project(
+        KDDockWidgets
+        DESCRIPTION "An advanced docking system for Qt"
+        HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
+        LANGUAGES CXX
+    )
 endif()
 
 set(KDDockWidgets_VERSION_MAJOR 2)
 set(KDDockWidgets_VERSION_MINOR 0)
 set(KDDockWidgets_VERSION_PATCH 9)
-set(KDDockWidgets_VERSION
-    ${KDDockWidgets_VERSION_MAJOR}.${KDDockWidgets_VERSION_MINOR}.${KDDockWidgets_VERSION_PATCH}
-)
-set(PROJECT_VERSION ${KDDockWidgets_VERSION}) # PROJECT_VERSION is needed by
-                                              # some ECM modules
+set(KDDockWidgets_VERSION ${KDDockWidgets_VERSION_MAJOR}.${KDDockWidgets_VERSION_MINOR}.${KDDockWidgets_VERSION_PATCH})
+set(PROJECT_VERSION ${KDDockWidgets_VERSION}) # PROJECT_VERSION is needed by some ECM modules
 set(KDDockWidgets_SOVERSION "2.0")
 
 include(FeatureSummary)
@@ -98,19 +98,14 @@ option(KDDockWidgets_STATIC "Build statically" OFF)
 option(KDDockWidgets_TESTS "Build the tests" OFF)
 option(KDDockWidgets_EXAMPLES "Build the examples" ON)
 option(KDDockWidgets_DOCS "Build the API documentation" OFF)
-option(KDDockWidgets_WERROR
-       "Use -Werror (will be true for developer-mode unconditionally)" OFF)
-option(
-  KDDockWidgets_X11EXTRAS
-  "On Linux, link against QtX11Extras so we can detect if the compositor supports transparency. Not applicable to other platforms or Qt6."
-  ON)
-option(
-  KDDockWidgets_XLib
-  "On Linux, link against XLib, for a more robust window z-order detection."
-  OFF)
+option(KDDockWidgets_WERROR "Use -Werror (will be true for developer-mode unconditionally)" OFF)
+option(KDDockWidgets_X11EXTRAS
+       "Link against QtX11Extras to detect if the compositor supports transparency. Not applicable on non-Linux or Qt6."
+       ON
+)
+option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
-option(KDDockWidgets_FRONTENDS
-       "Semicolon separated list of frontends to enable" "")
+option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
@@ -118,102 +113,93 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 
 # Set a default build type if none was specified
 set(default_build_type "Release")
-
 if(EXISTS "${CMAKE_SOURCE_DIR}/.git" OR KDDockWidgets_DEVELOPER_MODE)
-  set(default_build_type "Debug")
+    set(default_build_type "Debug")
 endif()
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(
-    STATUS "Setting build type to ${default_build_type} as none was specified.")
-  set(CMAKE_BUILD_TYPE
-      "${default_build_type}"
-      CACHE STRING "Choose the type of build." FORCE)
+    message(STATUS "Setting build type to ${default_build_type} as none was specified.")
+    set(CMAKE_BUILD_TYPE
+        "${default_build_type}"
+        CACHE STRING "Choose the type of build." FORCE
+    )
 
-  # Set the possible values of build type for cmake-gui
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release"
-                                               "MinSizeRel" "RelWithDebInfo")
+    # Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
 if(KDDockWidgets_XLib)
-  add_definitions(-DKDDockWidgets_XLIB)
+    add_definitions(-DKDDockWidgets_XLIB)
 endif()
 
 if(MSVC AND MSVC_TOOLSET_VERSION LESS 142)
-  message(FATAL_ERROR "VS 2019 is the minimum required toolset")
+    message(FATAL_ERROR "VS 2019 is the minimum required toolset")
 endif()
 
 if(KDDockWidgets_QT6)
-  set(Qt_VERSION_MAJOR 6)
-  set(QT_MIN_VERSION "6.2.0")
-  set(KDDockWidgets_LIBRARY_QTID "-qt6")
+    set(Qt_VERSION_MAJOR 6)
+    set(QT_MIN_VERSION "6.2.0")
+    set(KDDockWidgets_LIBRARY_QTID "-qt6")
 else()
-  set(Qt_VERSION_MAJOR 5)
-  set(QT_MIN_VERSION "5.15")
-  set(KDDockWidgets_LIBRARY_QTID "")
+    set(Qt_VERSION_MAJOR 5)
+    set(QT_MIN_VERSION "5.15")
+    set(KDDockWidgets_LIBRARY_QTID "")
 endif()
 
 # BEGIN frontend enabling
 if(KDDockWidgets_FRONTENDS)
-  set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick")
+    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick")
 
-  foreach(frontend ${KDDockWidgets_FRONTENDS})
-    if(NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
-      message(FATAL_ERROR "Unknown frontend ${frontend}")
-    endif()
-  endforeach()
+    foreach(frontend ${KDDockWidgets_FRONTENDS})
+        if(NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
+            message(FATAL_ERROR "Unknown frontend ${frontend}")
+        endif()
+    endforeach()
 endif()
 
 if(KDDockWidgets_FRONTENDS)
-  # qtwidgets
-  if("qtwidgets" IN_LIST KDDockWidgets_FRONTENDS)
-    find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED
-                 COMPONENTS Widgets)
-    set(KDDW_FRONTEND_QTWIDGETS ON)
-  endif()
+    # qtwidgets
+    if("qtwidgets" IN_LIST KDDockWidgets_FRONTENDS)
+        find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Widgets)
+        set(KDDW_FRONTEND_QTWIDGETS ON)
+    endif()
 
-  # qtquick
-  if("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
-    find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED
-                 COMPONENTS Quick QuickControls2)
-    set(KDDW_FRONTEND_QTQUICK ON)
-  endif()
+    # qtquick
+    if("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
+        find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
+        set(KDDW_FRONTEND_QTQUICK ON)
+    endif()
 else()
-  set(ENABLED_FRONTENDS "")
-  message("No frontends specified explicitly.")
+    set(ENABLED_FRONTENDS "")
+    message("No frontends specified explicitly.")
 
-  # qtwidgets
-  find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE
-               COMPONENTS Widgets Quick QuickControls2)
+    # qtwidgets
+    find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE COMPONENTS Widgets Quick QuickControls2)
 
-  if(Qt${Qt_VERSION_MAJOR}Widgets_FOUND)
-    list(APPEND ENABLED_FRONTENDS "qtwidgets")
-    set(KDDW_FRONTEND_QTWIDGETS ON)
-  endif()
+    if(Qt${Qt_VERSION_MAJOR}Widgets_FOUND)
+        list(APPEND ENABLED_FRONTENDS "qtwidgets")
+        set(KDDW_FRONTEND_QTWIDGETS ON)
+    endif()
 
-  # qtquick
-  if(Qt${Qt_VERSION_MAJOR}Quick_FOUND
-     AND Qt${Qt_VERSION_MAJOR}QuickControls2_FOUND)
-    list(APPEND ENABLED_FRONTENDS "qtquick")
-    set(KDDW_FRONTEND_QTQUICK ON)
-  endif()
+    # qtquick
+    if(Qt${Qt_VERSION_MAJOR}Quick_FOUND AND Qt${Qt_VERSION_MAJOR}QuickControls2_FOUND)
+        list(APPEND ENABLED_FRONTENDS "qtquick")
+        set(KDDW_FRONTEND_QTQUICK ON)
+    endif()
 
-  if(NOT ENABLED_FRONTENDS)
-    message(
-      FATAL_ERROR
-        "Failed to enable any frontends. Please install the required libraries and try again."
-    )
-  endif()
+    if(NOT ENABLED_FRONTENDS)
+        message(FATAL_ERROR "Failed to enable any frontends. Please install the required libraries and try again.")
+    endif()
 
-  message("Following frontends have been enabled:")
+    message("Following frontends have been enabled:")
 
-  foreach(frontend ${ENABLED_FRONTENDS})
-    message("* ${frontend}")
-  endforeach()
+    foreach(frontend ${ENABLED_FRONTENDS})
+        message("* ${frontend}")
+    endforeach()
 endif()
 
 if(KDDockWidgets_DEVELOPER_MODE)
-  set(KDDW_FRONTEND_DUMMY ON)
+    set(KDDW_FRONTEND_DUMMY ON)
 endif()
 
 # END frontend enabling
@@ -221,42 +207,43 @@ include(KDQtInstallPaths) # to set QT_INSTALL_FOO variables
 
 add_definitions(-DQT_NO_KEYWORDS)
 
-option(
-  KDockWidgets_PRETTY_QTWIDGETS_HEADERS
-  "Install DockWidget.h and MainWindow.h as synonyms to the *_qtwidgets.h counterparts."
-  ${KDDW_FRONTEND_QTWIDGETS})
+option(KDockWidgets_PRETTY_QTWIDGETS_HEADERS
+       "Install DockWidget.h and MainWindow.h as synonyms to the *_qtwidgets.h counterparts."
+       ${KDDW_FRONTEND_QTWIDGETS}
+)
 
 if(KDDW_FRONTEND_QTWIDGETS)
-  add_definitions(-DKDDW_FRONTEND_QTWIDGETS)
-  set(KDDockWidgets_DEPS "widgets")
+    add_definitions(-DKDDW_FRONTEND_QTWIDGETS)
+    set(KDDockWidgets_DEPS "widgets")
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
-  add_definitions(-DKDDW_FRONTEND_QTQUICK)
-  set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} quick quickcontrols2")
+    add_definitions(-DKDDW_FRONTEND_QTQUICK)
+    set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} quick quickcontrols2")
 endif()
 
 if(NOT WIN32
    AND NOT APPLE
    AND NOT EMSCRIPTEN
    AND NOT KDDockWidgets_QT6
-   AND KDDockWidgets_X11EXTRAS)
-  set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} x11extras")
+   AND KDDockWidgets_X11EXTRAS
+)
+    set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} x11extras")
 endif()
 
 # Always build the test harness in developer-mode
 if(KDDockWidgets_DEVELOPER_MODE)
-  set(KDDockWidgets_TESTS ON)
-  set(KDDockWidgets_WERROR ON)
-  include(ECMEnableSanitizers)
+    set(KDDockWidgets_TESTS ON)
+    set(KDDockWidgets_WERROR ON)
+    include(ECMEnableSanitizers)
 
-  # find_package(doctest REQUIRED) TODOm3
+    # find_package(doctest REQUIRED) TODOm3
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(IS_CLANG_BUILD TRUE)
+    set(IS_CLANG_BUILD TRUE)
 else()
-  set(IS_CLANG_BUILD FALSE)
+    set(IS_CLANG_BUILD FALSE)
 endif()
 
 set(CMAKE_CXX_STANDARD 17)
@@ -270,238 +257,230 @@ set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
+# Sets compiler flags for the specified target, taking platform into consideration.
 macro(set_compiler_flags targetName)
-  if(KDDockWidgets_DEVELOPER_MODE)
-    target_compile_definitions(
-      ${targetName}
-      PUBLIC DOCKS_DEVELOPER_MODE
-      PRIVATE QT_FORCE_ASSERTS)
+    if(KDDockWidgets_DEVELOPER_MODE)
+        target_compile_definitions(
+            ${targetName}
+            PUBLIC DOCKS_DEVELOPER_MODE
+            PRIVATE QT_FORCE_ASSERTS
+        )
 
-    if(NOT MSVC)
-      target_compile_options(${targetName} PRIVATE -Wall -Wextra)
+        if(NOT MSVC)
+            target_compile_options(${targetName} PRIVATE -Wall -Wextra)
+        endif()
+
+        if(APPLE)
+            target_compile_options(${targetName} PRIVATE -Wweak-vtables)
+        endif()
     endif()
 
-    if(APPLE)
-      target_compile_options(${targetName} PRIVATE -Wweak-vtables)
+    # Enable -Werror
+    if(KDDockWidgets_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts these too
+        target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
     endif()
-  endif()
-
-  # Enable -Werror
-  if(KDDockWidgets_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts
-                                                            # these too
-    target_compile_options(
-      ${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
-  endif()
 endmacro()
 
 if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND NOT APPLE)
    OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND NOT APPLE)
-   OR (CMAKE_CXX_COMPILER_ID STREQUAL "Intel" AND NOT WIN32))
-  # Linker warnings should be treated as errors
-  set(CMAKE_SHARED_LINKER_FLAGS
-      "-Wl,--fatal-warnings ${CMAKE_SHARED_LINKER_FLAGS}")
-  set(CMAKE_MODULE_LINKER_FLAGS
-      "-Wl,--fatal-warnings ${CMAKE_MODULE_LINKER_FLAGS}")
+   OR (CMAKE_CXX_COMPILER_ID STREQUAL "Intel" AND NOT WIN32)
+)
+    # Linker warnings should be treated as errors
+    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--fatal-warnings ${CMAKE_SHARED_LINKER_FLAGS}")
+    set(CMAKE_MODULE_LINKER_FLAGS "-Wl,--fatal-warnings ${CMAKE_MODULE_LINKER_FLAGS}")
 
-  string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" compileflags)
+    string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" compileflags)
 
-  if("${CMAKE_CXX_FLAGS} ${${compileflags}}" MATCHES "-fsanitize")
-    set(sanitizers_enabled TRUE)
-  else()
-    set(sanitizers_enabled FALSE)
-  endif()
-
-  if(APPLE OR LINUX)
-    # cannot enable this for clang + sanitizers
-    if(NOT sanitizers_enabled OR NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-      # Do not allow undefined symbols, even in non-symbolic shared libraries
-      set(CMAKE_SHARED_LINKER_FLAGS
-          "-Wl,--no-undefined ${CMAKE_SHARED_LINKER_FLAGS}")
-      set(CMAKE_MODULE_LINKER_FLAGS
-          "-Wl,--no-undefined ${CMAKE_MODULE_LINKER_FLAGS}")
+    if("${CMAKE_CXX_FLAGS} ${${compileflawithgs}}" MATCHES "-fsanitize")
+        set(sanitizers_enabled TRUE)
+    else()
+        set(sanitizers_enabled FALSE)
     endif()
-  endif()
+
+    if(APPLE OR LINUX)
+        # cannot enable this for clang + sanitizers
+        if(NOT sanitizers_enabled OR NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+            # Do not allow undefined symbols, even in non-symbolic shared libraries
+            set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined ${CMAKE_SHARED_LINKER_FLAGS}")
+            set(CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined ${CMAKE_MODULE_LINKER_FLAGS}")
+        endif()
+    endif()
 endif()
 
 if(KDDockWidgets_STATIC)
-  set(KDDockWidgets_LIBRARY_MODE "STATIC")
+    set(KDDockWidgets_LIBRARY_MODE "STATIC")
 else()
-  set(KDDockWidgets_LIBRARY_MODE "SHARED")
+    set(KDDockWidgets_LIBRARY_MODE "SHARED")
 endif()
 
 if(KDAB_INSTALL)
-  if(UNIX)
-    set(CMAKE_INSTALL_PREFIX
-        "/usr/local/KDAB/KDDockWidgets-${KDDockWidgets_VERSION}"
-        CACHE INTERNAL "Install to default KDAB Location")
-  elseif(WIN32)
-    set(CMAKE_INSTALL_PREFIX
-        "C:\\KDAB\\KDDockWidgets-${KDDockWidgets_VERSION}"
-        CACHE INTERNAL "Install to default KDAB Location")
-  endif()
+    if(UNIX)
+        set(CMAKE_INSTALL_PREFIX
+            "/usr/local/KDAB/KDDockWidgets-${KDDockWidgets_VERSION}"
+            CACHE INTERNAL "Install to default KDAB Location"
+        )
+    elseif(WIN32)
+        set(CMAKE_INSTALL_PREFIX
+            "C:\\KDAB\\KDDockWidgets-${KDDockWidgets_VERSION}"
+            CACHE INTERNAL "Install to default KDAB Location"
+        )
+    endif()
 endif()
 
 # setup default install locations
 include(InstallLocation)
 
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
-  set(KDDockWidgets_IS_ROOT_PROJECT TRUE)
+    set(KDDockWidgets_IS_ROOT_PROJECT TRUE)
 
-  message(
-    STATUS
-      "Building KDDockWidgets ${KDDockWidgets_VERSION} in ${CMAKE_BUILD_TYPE} mode. Installing to ${CMAKE_INSTALL_PREFIX}"
-  )
+    message(STATUS "Building KDDockWidgets ${KDDockWidgets_VERSION} in ${CMAKE_BUILD_TYPE} mode. "
+                   "Installing to ${CMAKE_INSTALL_PREFIX}"
+    )
 
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
-  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 
-  install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
-  install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
+    install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
+    install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
-  # Generate .pri file for qmake users TODO: ECM does not support Qt6 yet
-  if(Qt_VERSION_MAJOR EQUAL 5
-     AND CMAKE_VERSION VERSION_GREATER "3.11.99"
-     AND NOT CMAKE_CONFIGURATION_TYPES) # Not working with VS generator or older
-                                        # cmake versions
-    include(ECMGeneratePriFile)
-    set(PROJECT_VERSION_STRING ${KDDockWidgets_VERSION})
-    ecm_generate_pri_file(
-      BASE_NAME
-      KDDockWidgets
-      LIB_NAME
-      kddockwidgets
-      DEPS
-      ${KDDockWidgets_DEPS}
-      FILENAME_VAR
-      pri_filename
-      INCLUDE_INSTALL_DIR
-      ${CMAKE_INSTALL_INCLUDEDIR})
-    install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
-  endif()
+    # Generate .pri file for qmake users
+    # TODO: ECM does not support Qt6 yet, nor with VS generator or older cmake versions
+    if(Qt_VERSION_MAJOR EQUAL 5
+       AND CMAKE_VERSION VERSION_GREATER "3.11.99"
+       AND NOT CMAKE_CONFIGURATION_TYPES
+    )
+        include(ECMGeneratePriFile)
+        set(PROJECT_VERSION_STRING ${KDDockWidgets_VERSION})
+        ecm_generate_pri_file(
+            BASE_NAME
+            KDDockWidgets
+            LIB_NAME
+            kddockwidgets
+            DEPS
+            ${KDDockWidgets_DEPS}
+            FILENAME_VAR
+            pri_filename
+            INCLUDE_INSTALL_DIR
+            ${CMAKE_INSTALL_INCLUDEDIR}
+        )
+        install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+    endif()
 else()
-  # Always disable tests, examples, docs when used as a submodule
-  set(KDDockWidgets_IS_ROOT_PROJECT FALSE)
-  set(KDDockWidgets_TESTS FALSE)
-  set(KDDockWidgets_EXAMPLES FALSE)
-  set(KDDockWidgets_DOCS FALSE)
+    # Always disable tests, examples, docs when used as a submodule
+    set(KDDockWidgets_IS_ROOT_PROJECT FALSE)
+    set(KDDockWidgets_TESTS FALSE)
+    set(KDDockWidgets_EXAMPLES FALSE)
+    set(KDDockWidgets_DOCS FALSE)
 endif()
 
 if(KDDockWidgets_TESTS)
-  enable_testing()
+    enable_testing()
 endif()
 
 add_subdirectory(src)
 
 if(KDDockWidgets_PYTHON_BINDINGS)
-  if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR KDDockWidgets_STATIC)
-    message(
-      FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
-  endif()
+    if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR KDDockWidgets_STATIC)
+        message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
+    endif()
 
-  if(CMAKE_UNITY_BUILD)
-    message(FATAL_ERROR "** Python Bindings are disabled in Unity builds. "
-                        "Try again with CMAKE_UNITY_BUILD=OFF")
-  endif()
+    if(CMAKE_UNITY_BUILD)
+        message(FATAL_ERROR "** Python Bindings are disabled in Unity builds. Try again with CMAKE_UNITY_BUILD=OFF")
+    endif()
 
-  add_subdirectory(python)
+    add_subdirectory(python)
 endif()
 
 if(KDDockWidgets_EXAMPLES)
-  if(KDDW_FRONTEND_QTQUICK)
-    add_subdirectory(examples/qtquick)
-  endif()
+    if(KDDW_FRONTEND_QTQUICK)
+        add_subdirectory(examples/qtquick)
+    endif()
 
-  if(KDDW_FRONTEND_QTWIDGETS)
-    add_subdirectory(examples/dockwidgets)
-    add_subdirectory(examples/minimal)
-    add_subdirectory(examples/mdi)
-    add_subdirectory(examples/mdi_with_docking)
-    set_compiler_flags(qtwidgets_dockwidgets)
-    set_compiler_flags(qtwidgets_minimal)
-    set_compiler_flags(qtwidgets_mdi_with_docking)
+    if(KDDW_FRONTEND_QTWIDGETS)
+        add_subdirectory(examples/dockwidgets)
+        add_subdirectory(examples/minimal)
+        add_subdirectory(examples/mdi)
+        add_subdirectory(examples/mdi_with_docking)
+        set_compiler_flags(qtwidgets_dockwidgets)
+        set_compiler_flags(qtwidgets_minimal)
+        set_compiler_flags(qtwidgets_mdi_with_docking)
 
-    set_target_properties(
-      qtwidgets_dockwidgets
-      PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-                 "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/")
-    set_target_properties(
-      qtwidgets_mdi_with_docking
-      PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-                 "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/")
-    set_target_properties(
-      qtwidgets_mdi PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-                               "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/")
-    set_target_properties(
-      qtwidgets_minimal
-      PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-                 "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/")
-  endif()
+        set_target_properties(
+            qtwidgets_dockwidgets PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
+        )
+        set_target_properties(
+            qtwidgets_mdi_with_docking PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+                                                  "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
+        )
+        set_target_properties(
+            qtwidgets_mdi PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
+        )
+        set_target_properties(
+            qtwidgets_minimal PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
+        )
+    endif()
 endif()
 
 if(KDDockWidgets_TESTS)
-  if(KDDockWidgets_DEVELOPER_MODE)
-    add_subdirectory(tests)
+    if(KDDockWidgets_DEVELOPER_MODE)
+        add_subdirectory(tests)
 
-    # tst_docks.exe is pretty big (160 tests), so split it in more runs so we
-    # can use threads.
-    add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
-    add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
-    add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
-    add_test(NAME tst_docks3 COMMAND tests_launcher 3 5)
-    add_test(NAME tst_docks4 COMMAND tests_launcher 4 5)
-    add_test(NAME tst_docks5 COMMAND tests_launcher 5 5)
-    add_test(NAME tst_docks6 COMMAND tests_launcher 6 5)
-    add_test(NAME tst_docks7 COMMAND tests_launcher 7 5)
-    add_test(NAME tst_docks8 COMMAND tests_launcher 8 5)
-    add_test(NAME tst_docks9 COMMAND tests_launcher 9 5)
-    add_test(NAME tst_docks10 COMMAND tests_launcher 10 5)
-    add_test(NAME tst_docks11 COMMAND tests_launcher 10 5)
-    add_test(NAME tst_docks12 COMMAND tests_launcher 11 5)
-    add_test(NAME tst_docks13 COMMAND tests_launcher 12 5)
-    add_test(NAME tst_docks14 COMMAND tests_launcher 13 5)
-    add_test(NAME tst_docks15 COMMAND tests_launcher 14 5)
-    add_test(NAME tst_docks16 COMMAND tests_launcher 15 5)
-    add_test(NAME tst_docks17 COMMAND tests_launcher 16 5)
-    add_test(NAME tst_docks18 COMMAND tests_launcher 17 5)
-    add_test(NAME tst_docks19 COMMAND tests_launcher 18 5)
-    add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
-    add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for
-                                                           # rounding leftovers
+        # tst_docks.exe is pretty big (160 tests), so split it in more runs so we
+        # can use threads.
+        add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
+        add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
+        add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
+        add_test(NAME tst_docks3 COMMAND tests_launcher 3 5)
+        add_test(NAME tst_docks4 COMMAND tests_launcher 4 5)
+        add_test(NAME tst_docks5 COMMAND tests_launcher 5 5)
+        add_test(NAME tst_docks6 COMMAND tests_launcher 6 5)
+        add_test(NAME tst_docks7 COMMAND tests_launcher 7 5)
+        add_test(NAME tst_docks8 COMMAND tests_launcher 8 5)
+        add_test(NAME tst_docks9 COMMAND tests_launcher 9 5)
+        add_test(NAME tst_docks10 COMMAND tests_launcher 10 5)
+        add_test(NAME tst_docks11 COMMAND tests_launcher 10 5)
+        add_test(NAME tst_docks12 COMMAND tests_launcher 11 5)
+        add_test(NAME tst_docks13 COMMAND tests_launcher 12 5)
+        add_test(NAME tst_docks14 COMMAND tests_launcher 13 5)
+        add_test(NAME tst_docks15 COMMAND tests_launcher 14 5)
+        add_test(NAME tst_docks16 COMMAND tests_launcher 15 5)
+        add_test(NAME tst_docks17 COMMAND tests_launcher 16 5)
+        add_test(NAME tst_docks18 COMMAND tests_launcher 17 5)
+        add_test(NAME tst_docks19 COMMAND tests_launcher 18 5)
+        add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
+        add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
 
-    add_test(NAME tst_view COMMAND tst_view)
-    add_test(NAME tst_window COMMAND tst_window)
-    add_test(NAME tst_platform COMMAND tst_platform)
-    add_test(NAME tst_viewguard COMMAND tst_viewguard)
-    add_test(NAME tst_group COMMAND tst_group)
-    add_test(NAME tst_titlebar COMMAND tst_titlebar)
-    add_test(NAME tst_stack COMMAND tst_stack)
-    add_test(NAME tst_tabbar COMMAND tst_tabbar)
-    add_test(NAME tst_separator COMMAND tst_separator)
-    add_test(NAME tst_floatingwindow COMMAND tst_floatingwindow)
-    add_test(NAME tst_dockwidget COMMAND tst_dockwidget)
-    add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
+        add_test(NAME tst_view COMMAND tst_view)
+        add_test(NAME tst_window COMMAND tst_window)
+        add_test(NAME tst_platform COMMAND tst_platform)
+        add_test(NAME tst_viewguard COMMAND tst_viewguard)
+        add_test(NAME tst_group COMMAND tst_group)
+        add_test(NAME tst_titlebar COMMAND tst_titlebar)
+        add_test(NAME tst_stack COMMAND tst_stack)
+        add_test(NAME tst_tabbar COMMAND tst_tabbar)
+        add_test(NAME tst_separator COMMAND tst_separator)
+        add_test(NAME tst_floatingwindow COMMAND tst_floatingwindow)
+        add_test(NAME tst_dockwidget COMMAND tst_dockwidget)
+        add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
 
-    if(KDDW_FRONTEND_QTWIDGETS)
-      add_test(NAME tst_qtwidgets COMMAND tst_qtwidgets)
+        if(KDDW_FRONTEND_QTWIDGETS)
+            add_test(NAME tst_qtwidgets COMMAND tst_qtwidgets)
+        endif()
+
+        if(KDDW_FRONTEND_QTQUICK)
+            add_test(NAME tst_qtquick COMMAND tst_qtquick)
+        endif()
     endif()
-
-    if(KDDW_FRONTEND_QTQUICK)
-      add_test(NAME tst_qtquick COMMAND tst_qtquick)
-    endif()
-  endif()
 endif()
 
 if(KDDockWidgets_DOCS)
-  add_subdirectory(docs) # needs to go last, in case there are build source
-                         # files
+    add_subdirectory(docs) # needs to go last, in case there are build source files
 endif()
 
 if(KDDockWidgets_IS_ROOT_PROJECT)
-  # Add uninstall target (not for submodules since parent projects typically
-  # have uninstall too)
-  include(ECMUninstallTarget)
+    # Add uninstall target (not for submodules since parent projects typically have uninstall too)
+    include(ECMUninstallTarget)
 endif()
 
-feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES
-                         FATAL_ON_MISSING_REQUIRED_PACKAGES)
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

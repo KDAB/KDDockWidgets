@@ -9,19 +9,19 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-import PyKDDockWidgets
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring
 
-from PySide2 import QtWidgets, QtGui, QtCore
-    
+from PySide2 import QtGui, QtCore
 from MyWidget import MyWidget
+
 
 class MyWidget2(MyWidget):
 
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         super().__init__("", ":/assets/KDAB_bubble_blue.png", parent)
 
-    def paintEvent(self, ev):
+    def paintEvent(self, event):
+        del event  # unused at this time
         p = QtGui.QPainter(self)
-        p.fillRect(self.rect(), QtCore.Qt.white);
+        p.fillRect(self.rect(), QtCore.Qt.white)
         self.drawLogo(p)
-

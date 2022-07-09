@@ -9,16 +9,26 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-from PyKDDockWidgets import KDDockWidgets
-from MyMainWindow import MyMainWindow
-
-from PySide2 import QtWidgets, QtCore
+''' KDDockWidgets example (Qt5) '''
 
 import sys
+
+from MyMainWindow import MyMainWindow
+from PySide2 import QtWidgets, QtCore
+
 try:
+    # pylint: disable=unused-import
     import rc_assets
-except:
-    exit("Oops.. rc_assets needs to be generated first.\nPlease run:\n rcc -g python -o rc_assets.py ../../examples/dockwidgets/resources_example.qrc\n(Make sure to use the rcc from the Qt5 version used to generate the bindings!)")
+except ImportError:
+    sys.exit(
+        '''
+Oops.. rc_assets needs to be generated first.
+Please run:
+ rcc -g python -o rc_assets.py ../../examples/dockwidgets/resources_example.qrc
+ (Make sure to use the rcc from the Qt5 version used to generate the bindings!)
+ On some systems rcc might be invoked as rcc-qt5.
+'''
+    )
 
 if __name__ == "__main__":
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
@@ -35,4 +45,3 @@ if __name__ == "__main__":
     mainWindow.show()
 
     app.exec_()
-
