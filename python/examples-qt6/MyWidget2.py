@@ -21,7 +21,7 @@ class MyWidget2(MyWidget):
         super().__init__("", ":/assets/KDAB_bubble_blue.png", parent)
 
     def paintEvent(self, event):
-        del event  # unsed at this time
+        del event  # unused at this time
         p = QtGui.QPainter(self)
         p.fillRect(self.rect(), QtCore.Qt.white)
         self.drawLogo(p)

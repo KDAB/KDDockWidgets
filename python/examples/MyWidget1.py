@@ -20,7 +20,7 @@ class MyWidget1(MyWidget):
         super().__init__(":/assets/triangles.png", ":/assets/KDAB_bubble_white.png", parent)
 
     def paintEvent(self, event):
-        del event  # unsed at this time
+        del event  # unused at this time
         p = QtGui.QPainter(self)
         p.fillRect(self.rect(), QtGui.QColor(0xCC, 0xCC, 0xCC))
         p.drawImage(self.background.rect(),
