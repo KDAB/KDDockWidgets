@@ -195,7 +195,7 @@ bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, Q
         return false;
 
     q->m_draggable = draggable;
-    q->m_draggableGuard = draggable->asView()->asQObject();
+    q->m_draggableGuard = draggable->asView();
     q->m_pressPos = globalPos;
     q->m_offset = draggable->mapToWindow(pos);
     Q_EMIT q->mousePressed();
@@ -214,7 +214,7 @@ StatePreDrag::~StatePreDrag() = default;
 
 void StatePreDrag::onEntry()
 {
-    qCDebug(state) << "StatePreDrag entered" << q->m_draggableGuard.data();
+    qCDebug(state) << "StatePreDrag entered" << q->m_draggableGuard;
     WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
 }
 

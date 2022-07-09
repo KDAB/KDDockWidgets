@@ -75,8 +75,7 @@ class DOCKS_EXPORT DragController : public MinimalStateMachine, public EventFilt
     Q_OBJECT
     Q_PROPERTY(bool isDragging READ isDragging NOTIFY isDraggingChanged)
 public:
-    enum State
-    {
+    enum State {
         State_None = 0,
         State_PreDrag,
         State_Dragging
@@ -139,7 +138,7 @@ private:
 
     QVector<Draggable *> m_draggables;
     Draggable *m_draggable = nullptr;
-    QPointer<QObject> m_draggableGuard; // Just so we know if the draggable was destroyed for some reason
+    ViewGuard m_draggableGuard = nullptr; // Just so we know if the draggable was destroyed for some reason
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;
     Controllers::DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;
