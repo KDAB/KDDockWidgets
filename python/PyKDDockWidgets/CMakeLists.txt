@@ -35,65 +35,47 @@ set(PyKDDockWidgets_include_paths
 )
 
 # A list of paths where shiboken should look for typesystem
-set(PyKDDockWidgets_typesystem_paths
-    # PySide path, this variable was exposed by FindPySide2.cmake
+set(PyKDDockWidgets_typesystem_paths # PySide path, this variable was exposed by FindPySide2.cmake
     ${PYSIDE_TYPESYSTEMS}
 )
 
 # Include flags/path that will be set in 'target_include_directories'
-set(PyKDDockWidgets_target_include_directories
-    ${CMAKE_SOURCE_DIR}/src
-)
+set(PyKDDockWidgets_target_include_directories ${CMAKE_SOURCE_DIR}/src)
 
 # Libraries that will be necessary to link the target, this will used in the command 'target_link_libraries'
-set(PyKDDockWidgets_target_link_libraries
-    KDAB::kddockwidgets
-    Qt${Qt_VERSION_MAJOR}::Core
-    Qt${Qt_VERSION_MAJOR}::Gui
-    Qt${Qt_VERSION_MAJOR}::Widgets
-    ${Python3_LIBRARIES}
+set(PyKDDockWidgets_target_link_libraries KDAB::kddockwidgets Qt${Qt_VERSION_MAJOR}::Core Qt${Qt_VERSION_MAJOR}::Gui
+                                          Qt${Qt_VERSION_MAJOR}::Widgets ${Python3_LIBRARIES}
 )
 
 # changes on these files should trigger a new generation
 set(PyKDDockWidgets_DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
-    ${CMAKE_SOURCE_DIR}/src/DockWidgetBase.h
-    ${CMAKE_SOURCE_DIR}/src/DockWidget.h
-    ${CMAKE_SOURCE_DIR}/src/MainWindowBase.h
-    ${CMAKE_SOURCE_DIR}/src/MainWindow.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h ${CMAKE_SOURCE_DIR}/src/DockWidgetBase.h
+    ${CMAKE_SOURCE_DIR}/src/DockWidget.h ${CMAKE_SOURCE_DIR}/src/MainWindowBase.h ${CMAKE_SOURCE_DIR}/src/MainWindow.h
     ${CMAKE_SOURCE_DIR}/src/LayoutSaver.h
 )
 
 create_python_bindings(
-  "KDDockWidgets"
-  "${PyKDDockWidgets_typesystem_paths}"
-  "${PyKDDockWidgets_include_paths}"
-  "${PyKDDockWidgets_SRC}"
-  "${PyKDDockWidgets_target_include_directories}"
-  "${PyKDDockWidgets_target_link_libraries}"
-  ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/typesystem_kddockwidgets.xml
-  "${PyKDDockWidgets_DEPENDS}"
-  ${CMAKE_CURRENT_BINARY_DIR}
+    "KDDockWidgets"
+    "${PyKDDockWidgets_typesystem_paths}"
+    "${PyKDDockWidgets_include_paths}"
+    "${PyKDDockWidgets_SRC}"
+    "${PyKDDockWidgets_target_include_directories}"
+    "${PyKDDockWidgets_target_link_libraries}"
+    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/typesystem_kddockwidgets.xml
+    "${PyKDDockWidgets_DEPENDS}"
+    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # Make module import from build dir work
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/__init__.py.cmake ${CMAKE_CURRENT_BINARY_DIR}/__init__.py @ONLY)
 
 # install
-install(
-  FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/__init__.py
-    $<TARGET_FILE:KDAB::kddockwidgets>
-  DESTINATION
-    ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/__init__.py $<TARGET_FILE:KDAB::kddockwidgets>
+        DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}
 )
 if(NOT WIN32)
-  install(
-    FILES
-        $<TARGET_LINKER_FILE:KDAB::kddockwidgets>
-        $<TARGET_SONAME_FILE:KDAB::kddockwidgets>
-    DESTINATION
-        ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}
-  )
+    install(FILES $<TARGET_LINKER_FILE:KDAB::kddockwidgets> $<TARGET_SONAME_FILE:KDAB::kddockwidgets>
+            DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}
+    )
 endif()

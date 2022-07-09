@@ -47,6 +47,7 @@ mylayout.json
 *.cbp
 *.pyc
 /python/examples/rc_assets.py
+/python/examples-qt6/rc_assets.py
 *.pri
 /docks-w
 kddockwidgets_minimal_example
