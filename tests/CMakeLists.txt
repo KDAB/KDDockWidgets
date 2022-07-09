@@ -14,7 +14,7 @@
 # 2. tests_launcher - helper executable to paralelize the execution of tests
 
 if(POLICY CMP0043)
-  cmake_policy(SET CMP0043 NEW)
+    cmake_policy(SET CMP0043 NEW)
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src)
@@ -38,12 +38,12 @@ target_link_libraries(tst_docks kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_docks)
 
 if(NOT ${PROJECT_NAME}_QTQUICK)
-  add_executable(tst_multisplitter tst_multisplitter.cpp)
-  target_link_libraries(tst_multisplitter kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
-  set_compiler_flags(tst_multisplitter)
-  if(KDDockWidgets_FUZZER)
-    add_subdirectory(fuzzer)
-  endif()
+    add_executable(tst_multisplitter tst_multisplitter.cpp)
+    target_link_libraries(tst_multisplitter kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+    set_compiler_flags(tst_multisplitter)
+    if(KDDockWidgets_FUZZER)
+        add_subdirectory(fuzzer)
+    endif()
 endif()
 
 # tests_launcher
