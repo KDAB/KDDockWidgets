@@ -291,7 +291,7 @@ if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND NOT APPLE)
 
     string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" compileflags)
 
-    if("${CMAKE_CXX_FLAGS} ${${compileflawithgs}}" MATCHES "-fsanitize")
+    if("${CMAKE_CXX_FLAGS} ${${compileflags}}" MATCHES "-fsanitize")
         set(sanitizers_enabled TRUE)
     else()
         set(sanitizers_enabled FALSE)
