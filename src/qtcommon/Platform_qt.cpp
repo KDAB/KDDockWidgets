@@ -15,6 +15,7 @@
 #include "kddockwidgets/EventFilterInterface.h"
 #include "private/Platform_p.h"
 #include "private/Utils_p.h"
+#include "qtcommon/View_qt.h"
 
 #include <QWindow>
 #include <QDebug>
@@ -289,7 +290,7 @@ int Platform_qt::screenNumberForQWindow(QWindow *window) const
 
 void Platform_qt::sendEvent(View *view, QEvent *ev) const
 {
-    qGuiApp->sendEvent(view->asQObject(), ev);
+    qGuiApp->sendEvent(Views::View_qt::asObject(view), ev);
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
@@ -318,12 +319,12 @@ bool Platform_qt::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout)
 
 bool Platform_qt::tests_waitForEvent(View *view, QEvent::Type type, int timeout) const
 {
-    return tests_waitForEvent(view->asQObject(), type, timeout);
+    return tests_waitForEvent(Views::View_qt::asObject(view), type, timeout);
 }
 
 bool Platform_qt::tests_waitForResize(View *view, int timeout) const
 {
-    return tests_waitForEvent(view->asQObject(), QEvent::Resize, timeout);
+    return tests_waitForEvent(Views::View_qt::asObject(view), QEvent::Resize, timeout);
 }
 
 bool Platform_qt::tests_waitForResize(Controller *c, int timeout) const
@@ -339,7 +340,7 @@ bool Platform_qt::tests_waitForEvent(std::shared_ptr<Window> window, QEvent::Typ
 
 bool Platform_qt::tests_waitForDeleted(View *view, int timeout) const
 {
-    QObject *o = view ? view->asQObject() : nullptr;
+    QObject *o = view ? Views::View_qt::asObject(view) : nullptr;
     if (!o)
         return true;
 
