@@ -69,11 +69,6 @@ Type View::type() const
     return m_type;
 }
 
-QObject *View::asQObject() const
-{
-    return m_thisObj;
-}
-
 void View::free()
 {
     if (m_freed) {
@@ -352,9 +347,9 @@ bool View::aboutToBeDestroyed() const
 
 
 /** static */
-Controller *View::firstParentOfType(const QObject *child, KDDockWidgets::Type type)
+Controller *View::firstParentOfType(View *view, KDDockWidgets::Type type)
 {
-    auto p = Platform::instance()->qobjectAsView(const_cast<QObject *>(child));
+    auto p = view->asWrapper();
     while (p) {
         if (p->is(type))
             return p->controller();
@@ -371,7 +366,7 @@ Controller *View::firstParentOfType(const QObject *child, KDDockWidgets::Type ty
 
 Controller *View::firstParentOfType(KDDockWidgets::Type type) const
 {
-    return View::firstParentOfType(asQObject(), type);
+    return View::firstParentOfType(const_cast<View *>(this), type);
 }
 
 QRect View::globalGeometry() const

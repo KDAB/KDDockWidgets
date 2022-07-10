@@ -193,8 +193,6 @@ public:
     /// @Returns a list of child views
     virtual QVector<std::shared_ptr<View>> childViews() const = 0;
 
-    QObject *asQObject() const;
-
     /// @brief Returns this view's controller
     Controller *controller() const;
 
@@ -280,7 +278,7 @@ public:
 
     /// @brief Returns the controller of the first parent view of the specified type
     /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
-    static Controller *firstParentOfType(const QObject *child, KDDockWidgets::Type);
+    static Controller *firstParentOfType(View *view, KDDockWidgets::Type);
 
     /// @overload
     Controller *firstParentOfType(KDDockWidgets::Type) const;
