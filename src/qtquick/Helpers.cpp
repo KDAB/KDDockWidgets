@@ -33,7 +33,7 @@ qreal QtQuickHelpers::logicalDpiFactor(const QQuickItem *) const
 QObject *QtQuickHelpers::groupViewInMDIResize() const
 {
     if (auto group = DockRegistry::self()->groupInMDIResize())
-        return Views::View_qt::asObject(group->view());
+        return Views::View_qt::asQObject(group->view());
 
     return nullptr;
 }

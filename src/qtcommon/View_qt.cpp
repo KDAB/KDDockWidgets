@@ -111,7 +111,7 @@ void View_qt::setObjectName(const QString &name)
 }
 
 /*static*/
-QObject *View_qt::asObject(View *view)
+QObject *View_qt::asQObject(View *view)
 {
     if (auto viewqt = dynamic_cast<View_qt *>(view))
         return viewqt->thisObject();
@@ -124,7 +124,7 @@ QObject *View_qt::asObject(View *view)
 /*static */
 QWidget *View_qt::asQWidget(View *view)
 {
-    return qobject_cast<QWidget *>(asObject(view));
+    return qobject_cast<QWidget *>(asQObject(view));
 }
 
 /*static */
@@ -143,7 +143,7 @@ QWidget *View_qt::asQWidget(Controller *controller)
 /*static */
 QQuickItem *View_qt::asQQuickItem(View *view)
 {
-    return qobject_cast<QQuickItem *>(asObject(view));
+    return qobject_cast<QQuickItem *>(asQObject(view));
 }
 
 #endif

@@ -35,8 +35,7 @@ public:
 
     void setObjectName(const QString &name) override;
 
-    /// TODOm3: Rename to asQObject once View::asQObject is gone
-    static QObject *asObject(View *);
+    static QObject *asQObject(View *);
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
     static QWidget *asQWidget(View *);

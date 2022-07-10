@@ -127,7 +127,7 @@ Window::Ptr Platform_qtquick::windowAt(QPoint globalPos) const
 
 int Platform_qtquick::screenNumberFor(View *view) const
 {
-    if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asObject(view))) {
+    if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
             return screenNumberForQWindow(qtwindow);
     }
@@ -137,7 +137,7 @@ int Platform_qtquick::screenNumberFor(View *view) const
 
 QSize Platform_qtquick::screenSizeFor(View *view) const
 {
-    if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asObject(view))) {
+    if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
             if (QScreen *screen = qtwindow->screen())
                 return screen->size();
