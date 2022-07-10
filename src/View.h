@@ -272,6 +272,12 @@ public:
     void setAboutToBeDestroyed();
     bool aboutToBeDestroyed() const;
 
+    /// optional, for debug purposes
+    virtual QDebug toQDebug(QDebug &deb) const
+    {
+        return deb;
+    }
+
     /// @brief Returns the controller of the first parent view of the specified type
     /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
     static Controller *firstParentOfType(const QObject *child, KDDockWidgets::Type);
@@ -297,5 +303,15 @@ private:
     const QString m_id;
     const Type m_type;
 };
+
+/// for debug purposes
+inline QDebug operator<<(QDebug deb, View *view)
+{
+    if (!view)
+        return deb;
+
+    view->toQDebug(deb);
+    return deb;
+}
 
 }

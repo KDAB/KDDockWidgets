@@ -47,6 +47,14 @@ public:
     static QQuickItem *asQQuickItem(View *);
 #endif
 
+
+    /// for debug purposes
+    QDebug toQDebug(QDebug &deb) const override
+    {
+        deb << m_thisObj;
+        return deb;
+    }
+
 protected:
     class EventFilter;
     EventFilter *const m_eventFilter;

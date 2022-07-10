@@ -213,3 +213,12 @@ TEST_CASE("View::hasFocus")
     CHECK(child1->hasFocus());
     CHECK(child1->equals(Platform::instance()->focusedView()));
 }
+
+TEST_CASE("View::operator qDebug")
+{
+    View *view = nullptr;
+    qDebug() << "Null view=" << view;
+
+    view = createViewAndWindow({});
+    qDebug() << "rootView=" << view;
+}

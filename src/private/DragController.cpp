@@ -930,7 +930,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                 const QRect windowGeometry = tl->windowGeometry();
 
                 if (windowGeometry.contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl->asQObject();
+                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
                     return tl;
                 }
             } else {
@@ -1025,7 +1025,7 @@ DropArea *DragController::dropAreaUnderCursor() const
     }
 
     if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos(), affinities)) {
-        qCDebug(state) << Q_FUNC_INFO << "Found drop area" << dt << dt->view()->rootView()->asQObject();
+        qCDebug(state) << Q_FUNC_INFO << "Found drop area" << dt << dt->view()->rootView().get();
         return dt;
     }
 

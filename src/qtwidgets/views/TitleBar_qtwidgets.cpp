@@ -104,7 +104,6 @@ TitleBar_qtwidgets::TitleBar_qtwidgets(Controllers::TitleBar *controller, View *
 
 void TitleBar_qtwidgets::init()
 {
-    qCDebug(creation) << "TitleBarWidget" << this;
     if (m_titleBar->titleBarIsFocusable())
         setFocusPolicy(Qt::StrongFocus);
 
