@@ -20,7 +20,6 @@
 #include "ViewGuard.h"
 
 #include <QPoint>
-#include <QPointer>
 #include <QDebug>
 #include <QAbstractNativeEventFilter>
 
@@ -38,8 +37,7 @@ class DOCKS_EXPORT WidgetResizeHandler : public QObject, public EventFilterInter
 {
     Q_OBJECT
 public:
-    enum Feature
-    {
+    enum Feature {
         Feature_None = 0,
         Feature_NativeShadow = 1,
         Feature_NativeResize = 2,
@@ -178,14 +176,14 @@ class NCHITTESTEventFilter : public QAbstractNativeEventFilter
 public:
     explicit NCHITTESTEventFilter(View *fw)
         : m_floatingWindow(fw)
-        , m_guard(fw->asQObject())
+        , m_guard(fw)
     {
     }
     bool nativeEventFilter(const QByteArray &eventType, void *message,
                            Qt5Qt6Compat::qintptr *result) override;
 
     View *m_floatingWindow;
-    QPointer<QObject> m_guard;
+    ViewGuard m_guard = nullptr;
 };
 
 #endif // Q_OS_WIN

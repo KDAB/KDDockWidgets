@@ -23,6 +23,7 @@
 #include "controllers/FloatingWindow.h"
 
 #include <QDebug>
+#include <QPointer>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;

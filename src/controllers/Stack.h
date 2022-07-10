@@ -16,8 +16,6 @@
 #include "Group.h"
 #include "TabBar.h"
 
-#include <QPointer>
-
 #include "kdbindings/signal.h"
 
 namespace KDDockWidgets::Controllers {

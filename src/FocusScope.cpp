@@ -24,8 +24,6 @@
 #include "DockRegistry.h"
 #include "private/Platform_p.h"
 
-#include <QPointer>
-
 using namespace KDDockWidgets;
 
 // Our Private inherits from QObject since FocusScope can't (Since Frame is already QObject)
