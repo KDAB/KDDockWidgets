@@ -45,6 +45,8 @@ Draggable::~Draggable()
 {
     if (d->thisView && d->enabled)
         DragController::instance()->unregisterDraggable(this);
+
+    delete d->widgetResizeHandler;
     delete d;
 }
 
