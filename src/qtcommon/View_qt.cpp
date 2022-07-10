@@ -84,7 +84,7 @@ public:
 };
 
 View_qt::View_qt(Controller *controller, Type type, QObject *thisObj)
-    : View(controller, type, thisObj)
+    : View(controller, type)
     , m_eventFilter(thisObj ? new EventFilter(this, thisObj) : nullptr)
     , m_thisObj(thisObj)
 {
@@ -98,6 +98,11 @@ View_qt::~View_qt()
 View_qt::EventFilter::~EventFilter() = default;
 
 QObject *View_qt::thisObject() const
+{
+    return m_thisObj;
+}
+
+KDDockWidgets::HANDLE View_qt::handle() const
 {
     return m_thisObj;
 }

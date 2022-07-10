@@ -21,7 +21,7 @@ using namespace KDDockWidgets::Views;
 
 View_dummy::View_dummy(KDDockWidgets::Controller *controller, Type type,
                        void * /*parent*/, Qt::WindowFlags) // replace void with your type
-    : View(controller, type, nullptr) // TODO pass parent
+    : View(controller, type)
 {
 }
 

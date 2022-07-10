@@ -33,10 +33,9 @@ namespace KDDockWidgets {
 static qint64 s_nextId = 1;
 }
 
-View::View(Controller *controller, Type type, QObject *thisObj)
+View::View(Controller *controller, Type type)
     : d(new Private())
     , m_controller(controller)
-    , m_thisObj(thisObj)
     , m_id(QString::number(KDDockWidgets::s_nextId++))
     , m_type(type)
 {
@@ -328,11 +327,6 @@ QScreen *View::screen() const
         return window->screen();
 
     return nullptr;
-}
-
-HANDLE View::handle() const
-{
-    return m_thisObj;
 }
 
 void View::setAboutToBeDestroyed()
