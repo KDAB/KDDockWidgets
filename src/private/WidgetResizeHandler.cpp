@@ -627,7 +627,7 @@ bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *
         return false;
     const WId wid = WId(msg->hwnd);
 
-    auto child = Platform::instance()->qobjectAsView(QWidget::find(wid));
+    auto child = Platform_qt::instance()->qobjectAsView(QWidget::find(wid));
 
     if (!child || !m_floatingWindow->equals(child->rootView()))
         return false;

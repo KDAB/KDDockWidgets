@@ -32,7 +32,6 @@ public:
 
     std::shared_ptr<View> focusedView() const override;
     QVector<std::shared_ptr<Window>> windows() const override;
-    std::shared_ptr<Window> qobjectAsWindow(QObject *) const override;
     virtual std::shared_ptr<Window> windowFromQWindow(QWindow *) const = 0;
     int screenNumberFor(std::shared_ptr<Window>) const override;
 
@@ -48,6 +47,14 @@ public:
 
     DisplayType displayType() const override;
     bool isLeftMouseButtonPressed() const override;
+
+    /// @brief Returns the specified QObject casted to View
+    /// Nullptr if it's not a view. TODOm3: This is shared between the
+    /// QtQuick and QWidgets impl, but will be remove once we started removing Qt from backend
+    virtual std::shared_ptr<View> qobjectAsView(QObject *) const = 0;
+    std::shared_ptr<Window> qobjectAsWindow(QObject *) const;
+
+    static Platform_qt *instance();
 
 #ifdef DOCKS_DEVELOPER_MODE
     static bool isGammaray();

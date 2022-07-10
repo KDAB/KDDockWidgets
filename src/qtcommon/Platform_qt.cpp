@@ -125,7 +125,7 @@ public:
         else if (ev->type() == QEvent::Move)
             return handleMoveEvent(o, ev);
 
-        auto view = Platform::instance()->qobjectAsView(o);
+        auto view = Platform_qt::instance()->qobjectAsView(o);
         if (!view)
             return false;
 
@@ -144,7 +144,7 @@ public:
         if (q->d->m_globalEventFilters.empty())
             return false;
 
-        auto view = Platform::instance()->qobjectAsView(o);
+        auto view = Platform_qt::instance()->qobjectAsView(o);
         for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
             if (filter->onMoveEvent(view.get()))
                 return true;
@@ -158,7 +158,7 @@ public:
         if (q->d->m_globalEventFilters.empty())
             return false;
 
-        auto view = Platform::instance()->qobjectAsView(o);
+        auto view = Platform_qt::instance()->qobjectAsView(o);
         for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
             if (filter->onDnDEvent(view.get(), ev))
                 return true;
@@ -172,7 +172,7 @@ public:
         if (q->d->m_globalEventFilters.empty())
             return false;
 
-        auto window = Platform::instance()->qobjectAsWindow(o);
+        auto window = Platform_qt::instance()->qobjectAsWindow(o);
         if (!window)
             return false;
 
@@ -189,7 +189,7 @@ public:
         if (q->d->m_globalEventFilters.empty())
             return false;
 
-        auto view = Platform::instance()->qobjectAsView(watched);
+        auto view = Platform_qt::instance()->qobjectAsView(watched);
 
         // Make a copy, as there could be reentrancy and filters getting removed while event being processed
         const auto filters = qAsConst(q->d->m_globalEventFilters);
@@ -487,4 +487,10 @@ Platform::DisplayType Platform_qt::displayType() const
 bool Platform_qt::isLeftMouseButtonPressed() const
 {
     return qGuiApp->mouseButtons() & Qt::LeftButton;
+}
+
+/*static*/
+Platform_qt *Platform_qt::instance()
+{
+    return static_cast<Platform_qt *>(Platform::instance());
 }

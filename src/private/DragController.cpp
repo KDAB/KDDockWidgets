@@ -868,7 +868,7 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
                         continue;
                     }
                     if (hwnd == ( HWND )widget->winId()) {
-                        return Platform::instance()->qobjectAsView(widget);
+                        return Platform_qt::instance()->qobjectAsView(widget);
                     }
                 }
             }
@@ -943,7 +943,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                             if (hwnd == GetParent(HWND(topLevel->window()->winId()))) {
                                 if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
                                     qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
-                                    return Platform::instance()->qobjectAsView(topLevel);
+                                    return Platform_qt::instance()->qobjectAsView(topLevel);
                                 }
                             }
                         }

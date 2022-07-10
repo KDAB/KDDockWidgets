@@ -37,8 +37,7 @@ class DOCKS_EXPORT Platform
 {
 public:
     /// @brief Enum describing the graphics stack type
-    enum class DisplayType
-    {
+    enum class DisplayType {
         Other = 0,
         X11 = 1,
         Wayland = 2,
@@ -60,12 +59,6 @@ public:
 
     /// @brief Returns the focused view, if any
     virtual std::shared_ptr<View> focusedView() const = 0;
-
-    /// @brief Returns the specified QObject casted to View
-    /// Nullptr if it's not a view. TODOm3: This is shared between the
-    /// QtQuick and QWidgets impl, but will be remove once we started removing Qt from backend
-    virtual std::shared_ptr<View> qobjectAsView(QObject *) const = 0;
-    virtual std::shared_ptr<Window> qobjectAsWindow(QObject *) const = 0;
 
     /// @brief Returns all windows
     virtual QVector<std::shared_ptr<Window>> windows() const = 0;

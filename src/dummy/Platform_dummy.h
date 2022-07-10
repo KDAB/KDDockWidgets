@@ -57,8 +57,6 @@ protected:
     // Platform interface
 public:
     std::shared_ptr<View> focusedView() const override;
-    std::shared_ptr<View> qobjectAsView(QObject *) const override;
-    std::shared_ptr<Window> qobjectAsWindow(QObject *) const override;
     QVector<std::shared_ptr<Window>> windows() const override;
     void sendEvent(View *, QEvent *) const override;
     int screenNumberFor(std::shared_ptr<Window>) const override;

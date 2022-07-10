@@ -36,16 +36,6 @@ std::shared_ptr<View> Platform_dummy::focusedView() const
     return {};
 }
 
-std::shared_ptr<View> Platform_dummy::qobjectAsView(QObject *) const
-{
-    return {};
-}
-
-std::shared_ptr<Window> Platform_dummy::qobjectAsWindow(QObject *) const
-{
-    return {};
-}
-
 QVector<std::shared_ptr<Window>> Platform_dummy::windows() const
 {
     return {};
