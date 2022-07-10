@@ -64,8 +64,7 @@ Window::Ptr windowForHandle(WId id)
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
 WidgetResizeHandler::WidgetResizeHandler(bool isTopLevelResizer, View *target)
-    : QObject(target->asQObject())
-    , m_isTopLevelWindowResizer(isTopLevelResizer)
+    : m_isTopLevelWindowResizer(isTopLevelResizer)
 {
     setTarget(target);
 }
