@@ -128,7 +128,7 @@ private:
     DragController(QObject * = nullptr);
     StateBase *activeState() const;
     std::shared_ptr<View> qtTopLevelUnderCursor() const;
-    Draggable *draggableForQObject(QObject *o) const;
+    Draggable *draggableForView(View *) const;
     bool onDnDEvent(View *, QEvent *) override;
     bool onMoveEvent(View *) override;
     bool onMouseEvent(View *, QMouseEvent *) override;
