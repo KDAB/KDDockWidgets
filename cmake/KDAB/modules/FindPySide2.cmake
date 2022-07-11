@@ -58,7 +58,11 @@ else()
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     if(NOT PYSIDE2_BASEDIR)
-        message(FATAL_ERROR "The PySide2 module could not be imported. Make sure you have it installed by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\"")
+        message(
+            FATAL_ERROR
+                "The PySide2 module could not be imported. Make sure you have it installed "
+                "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+        )
     endif()
 
     set(PYSIDE_BASEDIR ${PYSIDE2_BASEDIR} CACHE PATH "Top level install of PySide2" FORCE)

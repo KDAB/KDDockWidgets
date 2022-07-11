@@ -11,7 +11,8 @@
 #  SHIBOKEN_BUILD_TYPE         - Tells if Shiboken was compiled in Release or Debug mode.
 
 # You can install Shiboken from Qt repository with
-# pip3 install --index-url=https://download.qt.io/official_releases/QtForPython --trusted-host download.qt.io shiboken2-generator
+# pip3 install --index-url=https://download.qt.io/official_releases/QtForPython \
+#     --trusted-host download.qt.io shiboken2-generator
 
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
@@ -51,7 +52,11 @@ else()
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     if(NOT SHIBOKEN_GENERATOR_BASEDIR)
-        message(FATAL_ERROR "The shiboken2_generator module could not be imported. Make sure you have it installed by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\"")
+        message(
+            FATAL_ERROR
+            "The shiboken2_generator module could not be imported. Make sure you have it installed "
+            "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+        )
     endif()
     execute_process(
         COMMAND ${Python3_EXECUTABLE} -c "if True:
@@ -66,7 +71,11 @@ else()
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     if(NOT SHIBOKEN_BASEDIR)
-        message(FATAL_ERROR "The shiboken2 module could not be imported. Make sure you have it installed by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\"")
+        message(
+            FATAL_ERROR
+            "The shiboken2 module could not be imported. Make sure you have it installed "
+            "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+        )
     endif()
     execute_process(
         COMMAND ${Python3_EXECUTABLE} -c "if True:
