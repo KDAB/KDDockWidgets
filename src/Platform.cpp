@@ -21,7 +21,9 @@
 #include "qtquick/Platform_qtquick.h"
 #endif
 
+#ifdef KDDW_FRONTEND_DUMMY
 #include "dummy/Platform_dummy.h"
+#endif
 
 #include "Config.h"
 
@@ -113,7 +115,9 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
 #endif
         break;
     case FrontendType::Dummy:
+#ifdef KDDW_FRONTEND_DUMMY
         platform = new Platform_dummy(argc, argv);
+#endif
         break;
     }
 

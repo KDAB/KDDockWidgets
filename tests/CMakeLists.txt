@@ -46,6 +46,12 @@ if(KDDW_FRONTEND_QTQUICK)
     set_compiler_flags(tst_qtquick)
 endif()
 
+if(KDDW_FRONTEND_DUMMY)
+    add_executable(tst_dummyplatform tst_dummyplatform.cpp ${TESTING_RESOURCES})
+    target_link_libraries(tst_dummyplatform kddockwidgets kdbindings)
+    set_compiler_flags(tst_dummyplatform)
+endif()
+
 add_executable(tst_multisplitter tst_multisplitter.cpp)
 target_link_libraries(tst_multisplitter kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_multisplitter)
@@ -65,9 +71,6 @@ target_link_libraries(tst_window kddockwidgets kdbindings)
 
 add_executable(tst_platform tst_platform.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_platform kddockwidgets kdbindings)
-
-add_executable(tst_dummyplatform tst_dummyplatform.cpp ${TESTING_RESOURCES})
-target_link_libraries(tst_dummyplatform kddockwidgets kdbindings)
 
 add_executable(tst_group controllers/tst_group.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_group kddockwidgets kdbindings)

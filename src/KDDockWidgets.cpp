@@ -20,7 +20,9 @@
 #include "qtquick/Platform_qtquick.h"
 #endif
 
+#ifdef KDDW_FRONTEND_DUMMY
 #include "dummy/Platform_dummy.h"
+#endif
 
 #include <QDebug>
 
@@ -41,7 +43,9 @@ void KDDockWidgets::initFrontend(FrontendType type)
 #endif
         break;
     case FrontendType::Dummy:
+#ifdef KDDW_FRONTEND_DUMMY
         new Platform_dummy();
+#endif
         break;
     }
 }
