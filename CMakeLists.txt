@@ -148,7 +148,7 @@ endif()
 
 # BEGIN frontend enabling
 if(KDDockWidgets_FRONTENDS)
-    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick")
+    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;dummy")
 
     foreach(frontend ${KDDockWidgets_FRONTENDS})
         if(NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
@@ -168,6 +168,13 @@ if(KDDockWidgets_FRONTENDS)
     if("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
         find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
         set(KDDW_FRONTEND_QTQUICK ON)
+    endif()
+
+    # dummy
+    if("dummy" IN_LIST KDDockWidgets_FRONTENDS)
+        # For now dummy still depends on Qt
+        find_package(Qt6 6.3 NO_MODULE REQUIRED COMPONENTS Widgets)
+        set(KDDW_FRONTEND_DUMMY ON)
     endif()
 else()
     set(ENABLED_FRONTENDS "")
@@ -220,6 +227,12 @@ endif()
 if(KDDW_FRONTEND_QTQUICK)
     add_definitions(-DKDDW_FRONTEND_QTQUICK)
     set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} quick quickcontrols2")
+endif()
+
+if(KDDW_FRONTEND_DUMMY)
+    add_definitions(-DKDDW_FRONTEND_DUMMY)
+    # TODOm3: Remove this lien
+    set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} widgets")
 endif()
 
 if(NOT WIN32

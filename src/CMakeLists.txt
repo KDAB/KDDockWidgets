@@ -392,6 +392,15 @@ if(KDDW_FRONTEND_QTQUICK)
     target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate)
 endif()
 
+if(KDDW_FRONTEND_DUMMY)
+    # TODOm3: Remove Qt
+    target_link_libraries(
+        kddockwidgets
+        PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets
+        PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate
+    )
+endif()
+
 if(KDDockWidgets_CODE_COVERAGE)
     target_link_libraries(kddockwidgets PUBLIC coverage_options)
 endif()
