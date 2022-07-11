@@ -47,8 +47,7 @@ class DockRegistry;
 /// There's some granularity that we don't want to expose to all users but want to allow some users
 /// to use. We might make more options public once they've proven themselves, so for now they are
 /// internal
-enum class InternalRestoreOption
-{
+enum class InternalRestoreOption {
     None = 0,
     SkipMainWindowGeometry = 1, ///< Don't reposition the main window's geometry when restoring.
     RelativeFloatingWindowGeometry =

@@ -50,30 +50,26 @@ enum Side {
 };
 Q_ENUM_NS(Side)
 
-enum class GrowthStrategy
-{
+enum class GrowthStrategy {
     BothSidesEqually,
     Side1Only,
     Side2Only
 };
 
-enum class SeparatorOption
-{
+enum class SeparatorOption {
     None = 0,
     LazyResize
 };
 Q_DECLARE_FLAGS(SeparatorOptions, SeparatorOption)
 
-enum class ChildrenResizeStrategy
-{
+enum class ChildrenResizeStrategy {
     Percentage, ///< Resizes the container in a way that all children will keep occupying the same percentage
     Side1SeparatorMove, ///< When resizing a container, it takes/adds space from Side1 children first
     Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
 Q_ENUM_NS(ChildrenResizeStrategy)
 
-enum class NeighbourSqueezeStrategy
-{
+enum class NeighbourSqueezeStrategy {
     AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
     ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the next neighbour is squezed, and so forth
 };

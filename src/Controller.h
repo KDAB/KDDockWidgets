@@ -25,8 +25,7 @@ namespace KDDockWidgets {
 
 class View;
 
-enum class Type
-{
+enum class Type {
     FIRST = 1, // Keep first
     None = 0,
     Frame = 1,
@@ -64,7 +63,7 @@ public:
     /// @brief Returns whether this controller is of the specified type
     bool is(Type) const;
 
-    // View convienence methods to save 1 indirection
+    // View convenience methods to save 1 indirection
     bool isVisible() const;
     void setVisible(bool);
     QRect rect() const;

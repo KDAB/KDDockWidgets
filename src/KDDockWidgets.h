@@ -80,15 +80,13 @@ Q_DECLARE_FLAGS(DockWidgetOptions, DockWidgetOption)
 Q_ENUM_NS(DockWidgetOptions);
 
 /// @brief Options which will affect LayoutSaver save/restore
-enum class LayoutSaverOption
-{
+enum class LayoutSaverOption {
     None = 0, ///< Just use the defaults
     Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for floating windows.
 };
 Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
 
-enum class IconPlace
-{
+enum class IconPlace {
     TitleBar = 1,
     TabBar = 2,
     ToggleAction = 4,
@@ -97,8 +95,7 @@ enum class IconPlace
 Q_ENUM_NS(IconPlace)
 Q_DECLARE_FLAGS(IconPlaces, IconPlace)
 
-enum class FrontendType
-{
+enum class FrontendType {
     QtWidgets = 1,
     QtQuick
 };
@@ -108,8 +105,7 @@ Q_ENUM_NS(FrontendType)
 ///@brief Describes some sizing strategies for the layouting engine.
 /// This is internal. The public API for dealing with sizing is InitialOption.
 ///@sa InitialOption
-enum class DefaultSizeMode
-{
+enum class DefaultSizeMode {
     ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
     Fair, ///< Gives an equal relative size as the items that are already in the layout
     FairButFloor, ///< Equal to fair, but if the item we're adding is smaller than the fair suggestion, then that small size is used.
@@ -125,8 +121,7 @@ enum AddingOption {
 };
 Q_ENUM_NS(AddingOption)
 
-enum class InitialVisibilityOption
-{
+enum class InitialVisibilityOption {
     StartVisible = 0, ///< The dock widget is made visible when docked
     StartHidden, ///< Don't show the dock widget when adding it
     PreserveCurrentTab ///< When adding as tabbed, don't change the current index
@@ -233,16 +228,14 @@ enum RestoreOption {
 Q_DECLARE_FLAGS(RestoreOptions, RestoreOption)
 Q_ENUM_NS(RestoreOptions)
 
-enum class DropIndicatorType
-{
+enum class DropIndicatorType {
     Classic, ///< The default
     Segmented, ///< Segmented indicators
     None ///< Don't show any drop indicators while dragging
 };
 Q_ENUM_NS(DropIndicatorType)
 
-enum class SizePolicy
-{
+enum class SizePolicy {
     Fixed = 0,
     Minimum = 1,
     Maximum = 4,
@@ -261,8 +254,7 @@ Q_DECLARE_FLAGS(SuggestedGeometryHints, SuggestedGeometryHint)
 Q_ENUM_NS(SuggestedGeometryHint)
 
 /// @brief Each main window supports 4 sidebars
-enum class SideBarLocation
-{
+enum class SideBarLocation {
     None,
     North,
     East,
@@ -271,8 +263,7 @@ enum class SideBarLocation
 };
 
 ///@brief describes a type of button you can have in the title bar
-enum class TitleBarButtonType
-{
+enum class TitleBarButtonType {
     Close,
     Float,
     Minimize,

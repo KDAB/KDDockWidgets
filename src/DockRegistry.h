@@ -51,8 +51,7 @@ class DOCKS_EXPORT DockRegistry : public QObject, public EventFilterInterface
     Q_OBJECT
 
 public:
-    enum class DockByNameFlag
-    {
+    enum class DockByNameFlag {
         None = 0,
         ConsultRemapping = 1,
         CreateIfNotFound = 2 ///< Creates the dock widget via the user's widget factory in case it doesn't exist

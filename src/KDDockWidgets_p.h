@@ -36,8 +36,7 @@ inline QString locationStr(Location loc)
     return QString();
 }
 
-enum class WindowState
-{
+enum class WindowState {
     None = 0,
     Minimized = 1,
     Maximized = 2,
