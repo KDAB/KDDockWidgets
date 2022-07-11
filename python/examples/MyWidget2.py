@@ -15,6 +15,7 @@ from PySide2 import QtGui, QtCore
 from MyWidget import MyWidget
 
 
+# pylint: disable=too-few-public-methods
 class MyWidget2(MyWidget):
 
     def __init__(self, parent=None):

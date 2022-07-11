@@ -15,6 +15,7 @@ from PySide6 import QtGui
 from MyWidget import MyWidget
 
 
+# pylint: disable=too-few-public-methods
 class MyWidget1(MyWidget):
     def __init__(self, parent=None):
         super().__init__(":/assets/triangles.png", ":/assets/KDAB_bubble_white.png", parent)
