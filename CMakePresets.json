@@ -11,7 +11,7 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FUZZER": "OFF",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
             },
             "warnings": {
                 "uninitialized": true
@@ -29,7 +29,7 @@
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FUZZER": "OFF",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
             },
             "warnings": {
                 "uninitialized": true
@@ -61,7 +61,7 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_WERROR": "ON",
                 "KDDockWidgets_EXAMPLES": "OFF",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
             },
             "environment": {
                 "CXX": "clazy",
