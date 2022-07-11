@@ -31,6 +31,7 @@
 #include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)
+#include "kddockwidgets/Platform_qt.h"
 #include <QWidget>
 #endif
 

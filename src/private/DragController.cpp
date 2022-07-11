@@ -32,9 +32,11 @@
 #include <QCursor>
 #include <QWindow>
 #include <QDrag>
+#include <QObject>
 #include <QScopedValueRollback>
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
+#include "kddockwidgets/Platform_qt.h"
 #include <QWidget>
 #include <QApplication>
 #endif
@@ -930,7 +932,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                 const QRect windowGeometry = tl->windowGeometry();
 
                 if (windowGeometry.contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
+                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl.get();
                     return tl;
                 }
             } else {
