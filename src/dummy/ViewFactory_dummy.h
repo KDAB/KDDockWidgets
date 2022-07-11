@@ -40,7 +40,7 @@ class MainWindow;
 }
 
 /**
- * @brief The default ViewFactory for QtWidgets frontend.
+ * @brief The default ViewFactory for Dummy frontend
  */
 class DOCKS_EXPORT ViewFactory_dummy : public ViewFactory
 {

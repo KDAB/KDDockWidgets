@@ -22,21 +22,21 @@
 #include "kddockwidgets/controllers/indicators/SegmentedIndicators.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 
-#include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"
-#include "qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h"
-#include "qtwidgets/views/FloatingWindow_qtwidgets.h"
-#include "qtwidgets/views/DockWidget_qtwidgets.h"
-#include "qtwidgets/views/DropArea_qtwidgets.h"
-#include "qtwidgets/views/Group_qtwidgets.h"
-#include "qtwidgets/views/View_qtwidgets.h"
-#include "qtwidgets/views/Separator_qtwidgets.h"
-#include "qtwidgets/views/TitleBar_qtwidgets.h"
-#include "qtwidgets/views/TabBar_qtwidgets.h"
-#include "qtwidgets/views/SideBar_qtwidgets.h"
-#include "qtwidgets/views/Stack_qtwidgets.h"
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
-#include "qtwidgets/views/MDILayout_qtwidgets.h"
-#include "qtwidgets/views/RubberBand_qtwidgets.h"
+// #include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"
+// #include "qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h"
+// #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
+// #include "qtwidgets/views/DockWidget_qtwidgets.h"
+// #include "qtwidgets/views/DropArea_qtwidgets.h"
+// #include "qtwidgets/views/Group_qtwidgets.h"
+// #include "qtwidgets/views/View_qtwidgets.h"
+// #include "qtwidgets/views/Separator_qtwidgets.h"
+// #include "qtwidgets/views/TitleBar_qtwidgets.h"
+// #include "qtwidgets/views/TabBar_qtwidgets.h"
+// #include "qtwidgets/views/SideBar_qtwidgets.h"
+// #include "qtwidgets/views/Stack_qtwidgets.h"
+// #include "qtwidgets/views/MainWindow_qtwidgets.h"
+// #include "qtwidgets/views/MDILayout_qtwidgets.h"
+// #include "qtwidgets/views/RubberBand_qtwidgets.h"
 
 #include "views/ClassicIndicatorWindowViewInterface.h"
 
@@ -52,45 +52,44 @@ ViewFactory_dummy::~ViewFactory_dummy()
 {
 }
 
-View *ViewFactory_dummy::createDockWidget(const QString &uniqueName,
-                                          DockWidgetOptions options,
-                                          LayoutSaverOptions layoutSaverOptions,
-                                          Qt::WindowFlags windowFlags) const
+View *ViewFactory_dummy::createDockWidget(const QString &,
+                                          DockWidgetOptions,
+                                          LayoutSaverOptions,
+                                          Qt::WindowFlags) const
 {
-    return new Views::DockWidget_qtwidgets(uniqueName, options, layoutSaverOptions, windowFlags);
+    return {};
 }
 
 
-View *ViewFactory_dummy::createGroup(Controllers::Group *controller, View *parent = nullptr) const
+View *ViewFactory_dummy::createGroup(Controllers::Group *, View * = nullptr) const
 {
-    return new Views::Group_qtwidgets(controller, Views::View_qt::asQWidget(parent));
+    return {};
 }
 
-View *ViewFactory_dummy::createTitleBar(Controllers::TitleBar *titleBar, View *parent) const
+View *ViewFactory_dummy::createTitleBar(Controllers::TitleBar *, View *) const
 {
-    return new Views::TitleBar_qtwidgets(titleBar, parent);
+    return {};
 }
 
-View *ViewFactory_dummy::createTabBar(Controllers::TabBar *tabBar, View *parent) const
+View *ViewFactory_dummy::createTabBar(Controllers::TabBar *, View *) const
 {
-    return new Views::TabBar_qtwidgets(tabBar, Views::View_qt::asQWidget(parent));
+    return {};
 }
 
-View *ViewFactory_dummy::createStack(Controllers::Stack *controller, View *parent) const
+View *ViewFactory_dummy::createStack(Controllers::Stack *, View *) const
 {
-    return new Views::Stack_qtwidgets(controller, Views::View_qt::asQWidget(parent));
+    return {};
 }
 
-View *ViewFactory_dummy::createSeparator(Controllers::Separator *controller, View *parent) const
+View *ViewFactory_dummy::createSeparator(Controllers::Separator *, View *) const
 {
-    return new Views::Separator_qtwidgets(controller, parent);
+    return {};
 }
 
-View *ViewFactory_dummy::createFloatingWindow(Controllers::FloatingWindow *controller,
-                                              Controllers::MainWindow *parent, Qt::WindowFlags windowFlags) const
+View *ViewFactory_dummy::createFloatingWindow(Controllers::FloatingWindow *,
+                                              Controllers::MainWindow *, Qt::WindowFlags) const
 {
-    auto mainwindow = qobject_cast<QMainWindow *>(Views::View_qt::asQWidget(parent ? parent->view() : nullptr));
-    return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
+    return {};
 }
 
 View *ViewFactory_dummy::createRubberBand(View *) const
@@ -98,88 +97,39 @@ View *ViewFactory_dummy::createRubberBand(View *) const
     return nullptr;
 }
 
-View *ViewFactory_dummy::createSideBar(Controllers::SideBar *controller,
-                                       View *parent) const
+View *ViewFactory_dummy::createSideBar(Controllers::SideBar *,
+                                       View *) const
 {
-    return new Views::SideBar_qtwidgets(controller, Views::View_qt::asQWidget(parent));
+    return {};
 }
 
-QAbstractButton *ViewFactory_dummy::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const
+QAbstractButton *ViewFactory_dummy::createTitleBarButton(QWidget *, TitleBarButtonType) const
 {
-    if (!parent) {
-        qWarning() << Q_FUNC_INFO << "Parent not provided";
-        return nullptr;
-    }
-
-    auto button = new Views::Button(parent);
-    button->setIcon(iconForButtonType(type, parent->devicePixelRatioF()));
-
-    return button;
+    return nullptr;
 }
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets
-QIcon ViewFactory_dummy::iconForButtonType(TitleBarButtonType type, qreal dpr) const
+QIcon ViewFactory_dummy::iconForButtonType(TitleBarButtonType, qreal) const
 {
-    QString iconName;
-    switch (type) {
-    case TitleBarButtonType::AutoHide:
-        iconName = QStringLiteral("auto-hide");
-        break;
-    case TitleBarButtonType::UnautoHide:
-        iconName = QStringLiteral("unauto-hide");
-        break;
-    case TitleBarButtonType::Close:
-        iconName = QStringLiteral("close");
-        break;
-    case TitleBarButtonType::Minimize:
-        iconName = QStringLiteral("min");
-        break;
-    case TitleBarButtonType::Maximize:
-        iconName = QStringLiteral("max");
-        break;
-    case TitleBarButtonType::Normal:
-        // We're using the same icon as dock/float
-        iconName = QStringLiteral("dock-float");
-        break;
-    case TitleBarButtonType::Float:
-        iconName = QStringLiteral("dock-float");
-        break;
-    }
-
-    if (iconName.isEmpty())
-        return {};
-
-    QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
-    if (!scalingFactorIsSupported(dpr))
-        return icon;
-
-    // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
-    // Simply add the high-res files and Qt will pick them when needed
-
-    if (scalingFactorIsSupported(1.5))
-        icon.addFile(QStringLiteral(":/img/%1-1.5x.png").arg(iconName));
-
-    icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
-
-    return icon;
+    return {};
 }
 
-View *ViewFactory_dummy::createDropArea(Controllers::DropArea *controller, View *parent) const
+View *ViewFactory_dummy::createDropArea(Controllers::DropArea *, View *) const
 {
-    return new Views::DropArea_qtwidgets(controller, parent);
+    return {};
 }
 
-View *ViewFactory_dummy::createMDILayout(Controllers::MDILayout *controller, View *parent) const
+View *ViewFactory_dummy::createMDILayout(Controllers::MDILayout *, View *) const
 {
-    return new Views::MDILayout_qtwidgets(controller, parent);
+    return {};
 }
 
-View *ViewFactory_dummy::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent) const
+View *ViewFactory_dummy::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *, View *) const
 {
-    return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller, Views::View_qt::asQWidget(parent));
+    return {};
 }
 
-Views::ClassicIndicatorWindowViewInterface *ViewFactory_dummy::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const
+Views::ClassicIndicatorWindowViewInterface *ViewFactory_dummy::createClassicIndicatorWindow(Controllers::ClassicIndicators *) const
 {
-    return new IndicatorWindow_qtwidgets(classicIndicators);
+    return {};
 }
