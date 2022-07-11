@@ -87,6 +87,39 @@ void Platform_dummy::uninstallMessageHandler()
 {
 }
 
+bool Platform_dummy::isProcessingAppQuitEvent() const
+{
+    return {};
+}
+
+QString Platform_dummy::applicationName() const
+{
+    return {};
+}
+
+QString Platform_dummy::organizationName() const
+{
+    return {};
+}
+
+void Platform_dummy::setMouseCursor(Qt::CursorShape)
+{
+}
+
+void Platform_dummy::restoreMouseCursor()
+{
+}
+
+Platform::DisplayType Platform_dummy::displayType() const
+{
+    return {};
+}
+
+bool Platform_dummy::isLeftMouseButtonPressed() const
+{
+    return {};
+}
+
 QSize Platform_dummy::screenSizeFor(View *) const
 {
     return {};

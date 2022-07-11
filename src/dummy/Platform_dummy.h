@@ -72,5 +72,12 @@ public:
     void tests_wait(int ms) override;
     void installMessageHandler() override;
     void uninstallMessageHandler() override;
+    bool isProcessingAppQuitEvent() const override;
+    QString applicationName() const override;
+    QString organizationName() const override;
+    void setMouseCursor(Qt::CursorShape) override;
+    void restoreMouseCursor() override;
+    DisplayType displayType() const override;
+    bool isLeftMouseButtonPressed() const override;
 };
 }
