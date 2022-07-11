@@ -314,7 +314,8 @@
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
                 "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_FRONTENDS": "dummy"
+                "KDDockWidgets_FRONTENDS": "dummy",
+                "KDDockWidgets_QT6": "ON"
             }
         },
         {
