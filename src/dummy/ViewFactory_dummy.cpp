@@ -40,8 +40,6 @@
 
 #include "views/ClassicIndicatorWindowViewInterface.h"
 
-#include <QToolButton>
-
 
 // clazy:excludeall=ctor-missing-parent-argument
 

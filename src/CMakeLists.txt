@@ -103,11 +103,11 @@ set(KDDW_BACKEND_SRCS
     views/TabBarViewInterface.cpp
     views/TitleBarViewInterface.cpp
     views/SideBarViewInterface.cpp
-    qtcommon/Platform_qt.cpp
-    qtcommon/Window_qt.cpp
-    qtcommon/View_qt.cpp
     kddockwidgets_resources.qrc
 )
+
+# Sources shared by Qt frontends (QtWidgets and QtQuick)
+set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window_qt.cpp qtcommon/View_qt.cpp)
 
 set(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/Window_qtwidgets.cpp
@@ -274,6 +274,10 @@ if(KDDW_FRONTEND_QTQUICK)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_QTQUICK_SRCS})
 endif()
 
+if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
+    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_QTCOMMON_SRCS})
+endif()
+
 if(KDDW_FRONTEND_DUMMY)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_DUMMY_SRCS})
 endif()
@@ -394,11 +398,7 @@ endif()
 
 if(KDDW_FRONTEND_DUMMY)
     # TODOm3: Remove Qt
-    target_link_libraries(
-        kddockwidgets
-        PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets
-        PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate
-    )
+    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Gui)
 endif()
 
 if(KDDockWidgets_CODE_COVERAGE)
