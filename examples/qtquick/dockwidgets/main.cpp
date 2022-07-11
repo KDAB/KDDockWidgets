@@ -44,15 +44,18 @@ int main(int argc, char *argv[])
     QCommandLineOption alwaysTabs("z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
     parser.addOption(alwaysTabs);
 
+#ifdef Q_OS_WIN
+    QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
+    parser.addOption(nativeTitleBar);
+#endif
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
-    QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
     QCommandLineOption noDropIndicators("no-drop-indicators", QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
 
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
-    parser.addOption(nativeTitleBar);
     parser.addOption(noDropIndicators);
 
 #if defined(Q_OS_WIN)
@@ -73,9 +76,7 @@ int main(int argc, char *argv[])
     if (parser.isSet(noParentForFloating))
         internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseParentForFloatingWindows;
 
-    if (parser.isSet(nativeTitleBar))
-        flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
-    else if (parser.isSet(noDropIndicators))
+    if (parser.isSet(noDropIndicators))
         KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
 #if defined(Q_OS_WIN)
@@ -85,6 +86,12 @@ int main(int argc, char *argv[])
 
     // These are debug-only/development flags, which you can ignore.
     KDDockWidgets::Config::self().setInternalFlags(internalFlags);
+#endif
+
+#if defined(Q_OS_WIN)
+    // On Linux the title bar doesn't send us NonClient mouse events
+    if (parser.isSet(nativeTitleBar))
+        flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
 #endif
 
     if (parser.isSet(noTitleBars))
