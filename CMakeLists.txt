@@ -173,7 +173,7 @@ if(KDDockWidgets_FRONTENDS)
     # dummy
     if("dummy" IN_LIST KDDockWidgets_FRONTENDS)
         # For now dummy still depends on Qt
-        find_package(Qt6 6.3 NO_MODULE REQUIRED COMPONENTS Widgets)
+        find_package(Qt6 6.3 NO_MODULE REQUIRED COMPONENTS Gui)
         set(KDDW_FRONTEND_DUMMY ON)
     endif()
 else()
@@ -227,8 +227,6 @@ endif()
 
 if(KDDW_FRONTEND_DUMMY)
     add_definitions(-DKDDW_FRONTEND_DUMMY)
-    # TODOm3: Remove this lien
-    set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} widgets")
 endif()
 
 if(NOT WIN32

@@ -398,7 +398,7 @@ endif()
 
 if(KDDW_FRONTEND_DUMMY)
     # TODOm3: Remove Qt
-    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Gui)
+    target_link_libraries(kddockwidgets PUBLIC Qt6::Gui)
 endif()
 
 if(KDDockWidgets_CODE_COVERAGE)
