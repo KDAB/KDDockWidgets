@@ -11,7 +11,8 @@
 #  SHIBOKEN_BUILD_TYPE         - Tells if Shiboken was compiled in Release or Debug mode.
 
 # You can install Shiboken from Qt repository with
-# pip3 install --index-url=https://download.qt.io/official_releases/QtForPython --trusted-host download.qt.io shiboken6-generator
+# pip3 install --index-url=https://download.qt.io/official_releases/QtForPython \
+#     --trusted-host download.qt.io shiboken6-generator
 
 set(SHIBOKEN_FOUND FALSE)
 
@@ -28,7 +29,11 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 if(NOT SHIBOKEN_GENERATOR_BASEDIR)
-  message(FATAL_ERROR "The shiboken6_generator module could not be imported. Make sure you have it installed by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\"")
+    message(
+        FATAL_ERROR
+            "The shiboken6_generator module could not be imported. Make sure you have it installed "
+            "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+    )
 endif()
 execute_process(
     COMMAND ${Python3_EXECUTABLE} -c "if True:
@@ -43,7 +48,11 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 if(NOT SHIBOKEN_BASEDIR)
-  message(FATAL_ERROR "The shiboken6 module could not be imported. Make sure you have it installed by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\"")
+    message(
+        FATAL_ERROR
+            "The shiboken6 module could not be imported. Make sure you have it installed "
+            "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+    )
 endif()
 execute_process(
     COMMAND ${Python3_EXECUTABLE} -c "if True:
@@ -142,7 +151,7 @@ if(SHIBOKEN_FOUND)
     message(STATUS "Shiboken binary:            ${SHIBOKEN_BINARY}")
     message(STATUS "Shiboken version:           ${SHIBOKEN_VERSION}")
 
-    # Create shiboke2 target
+    # Create shiboken2 target
     add_library(Shiboken6::libshiboken SHARED IMPORTED GLOBAL)
     if(MSVC)
         set_property(TARGET Shiboken6::libshiboken PROPERTY
@@ -161,7 +170,8 @@ if(SHIBOKEN_FOUND)
     set_property(TARGET Shiboken6::shiboken PROPERTY IMPORTED_LOCATION ${SHIBOKEN_BINARY})
 endif()
 
-find_package_handle_standard_args(Shiboken6
+find_package_handle_standard_args(
+    Shiboken6
     REQUIRED_VARS SHIBOKEN_BASEDIR SHIBOKEN_INCLUDE_DIR SHIBOKEN_LIBRARY SHIBOKEN_BINARY
     VERSION_VAR SHIBOKEN_VERSION
 )
