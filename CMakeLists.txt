@@ -173,7 +173,7 @@ if(KDDockWidgets_FRONTENDS)
     # dummy
     if("dummy" IN_LIST KDDockWidgets_FRONTENDS)
         # For now dummy still depends on Qt
-        find_package(Qt6 6.3 NO_MODULE REQUIRED COMPONENTS Gui)
+        find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Gui)
         set(KDDW_FRONTEND_DUMMY ON)
     endif()
 else()
