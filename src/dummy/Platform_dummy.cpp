@@ -79,14 +79,6 @@ int Platform_dummy::screenNumberFor(std::shared_ptr<Window>) const
     return {};
 }
 
-void Platform_dummy::installMessageHandler()
-{
-}
-
-void Platform_dummy::uninstallMessageHandler()
-{
-}
-
 bool Platform_dummy::isProcessingAppQuitEvent() const
 {
     return {};
@@ -143,3 +135,15 @@ bool Platform_dummy::inDisallowedDragView(QPoint) const
 void Platform_dummy::ungrabMouse()
 {
 }
+
+#ifdef DOCKS_DEVELOPER_MODE
+
+void Platform_dummy::installMessageHandler()
+{
+}
+
+void Platform_dummy::uninstallMessageHandler()
+{
+}
+
+#endif

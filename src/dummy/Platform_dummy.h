@@ -60,6 +60,7 @@ public:
     QVector<std::shared_ptr<Window>> windows() const override;
     void sendEvent(View *, QEvent *) const override;
     int screenNumberFor(std::shared_ptr<Window>) const override;
+#ifdef DOCKS_DEVELOPER_MODE
     bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout) const override;
     bool tests_waitForResize(View *, int timeout) const override;
     bool tests_waitForResize(Controller *, int timeout) const override;
@@ -72,6 +73,7 @@ public:
     void tests_wait(int ms) override;
     void installMessageHandler() override;
     void uninstallMessageHandler() override;
+#endif
     bool isProcessingAppQuitEvent() const override;
     QString applicationName() const override;
     QString organizationName() const override;
