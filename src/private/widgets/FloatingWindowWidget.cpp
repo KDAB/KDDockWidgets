@@ -86,7 +86,7 @@ bool FloatingWindowWidget::event(QEvent *ev)
     return FloatingWindow::event(ev);
 }
 
-bool FloatingWindowWidget::eventFilter(QObject *, QEvent *ev)
+bool FloatingWindowWidget::eventFilter(QObject *o, QEvent *ev)
 {
     if (ev->type() == QEvent::WindowStateChange) {
 
@@ -102,9 +102,8 @@ bool FloatingWindowWidget::eventFilter(QObject *, QEvent *ev)
         }
     }
 
-    return false;
+    return FloatingWindow::eventFilter(o, ev);
 }
-
 
 void FloatingWindowWidget::init()
 {

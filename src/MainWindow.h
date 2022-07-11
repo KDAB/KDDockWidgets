@@ -58,7 +58,7 @@ public:
     QMargins centerWidgetMargins() const override;
 
     //@brief sets the margins for the contents widgets
-    void setCenterWidgetMargins(const QMargins &margins);
+    void setCenterWidgetMargins(QMargins);
 
     ///@brief returns the internal layout
     /// this is rarely needed unless you want to layout other widgets next to the
