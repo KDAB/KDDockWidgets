@@ -94,13 +94,18 @@ public:
         }
     };
 
+    enum class Mode {
+        LocalEventFilter = 1, ///< The event filter is set only on the widget being resized, this is the default for floating windows
+        GlobalEventFilter = 2 ///< The event filter is app-wide, used for embedded MDI windows, for example
+    };
+
     /**
      * @brief CTOR
      * @param isTopLevelResizer If true, then this resize handler is for top-level widgets (aka windows)
      *        if false, they are docked (like for example resizing docked MDI widgets, or the sidebar overlay)
      * @param target The target widget that will be resized. Also acts as parent QObject.
      */
-    explicit WidgetResizeHandler(bool isTopLevelResizer, QWidgetOrQuick *target);
+    explicit WidgetResizeHandler(Mode, QWidgetOrQuick *target);
     ~WidgetResizeHandler() override;
 
     /**

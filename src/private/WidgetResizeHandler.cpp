@@ -41,9 +41,9 @@
 using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
-WidgetResizeHandler::WidgetResizeHandler(bool isTopLevelResizer, QWidgetOrQuick *target)
+WidgetResizeHandler::WidgetResizeHandler(Mode mode, QWidgetOrQuick *target)
     : QObject(target)
-    , m_isTopLevelWindowResizer(isTopLevelResizer)
+    , m_isTopLevelWindowResizer(mode == Mode::LocalEventFilter)
 {
     setTarget(target);
 }
