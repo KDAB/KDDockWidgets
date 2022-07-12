@@ -41,9 +41,10 @@
 using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
-WidgetResizeHandler::WidgetResizeHandler(Mode mode, QWidgetOrQuick *target)
+WidgetResizeHandler::WidgetResizeHandler(EventFilterMode filterMode, WindowMode windowMode, QWidgetOrQuick *target)
     : QObject(target)
-    , m_isTopLevelWindowResizer(mode == Mode::LocalEventFilter)
+    , m_usesGlobalEventFilter(filterMode == EventFilterMode::Global)
+    , m_isTopLevelWindowResizer(windowMode == WindowMode::TopLevel)
 {
     setTarget(target);
 }
@@ -431,10 +432,10 @@ void WidgetResizeHandler::setTarget(QWidgetOrQuick *w)
     if (w) {
         mTarget = w;
         mTarget->setMouseTracking(true);
-        if (m_isTopLevelWindowResizer) {
-            mTarget->installEventFilter(this);
-        } else {
+        if (m_usesGlobalEventFilter) {
             qApp->installEventFilter(this);
+        } else {
+            mTarget->installEventFilter(this);
         }
     } else {
         qWarning() << "Target widget is null!";
