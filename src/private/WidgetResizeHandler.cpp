@@ -88,10 +88,31 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     if (!widget)
         return false;
 
+    auto me = mouseEvent(e);
+    if (!me)
+        return false;
+
     if (m_isTopLevelWindowResizer) {
-        if (!widget->isTopLevel() || o != mTarget)
+        // Case #1.0: Resizing FloatingWindow
+
+        if (!widget->isTopLevel() || o != mTarget) {
+            if (m_usesGlobalEventFilter) {
+                // Case #1.1: FloatingWindows on EGLFS
+                // EGLFS doesn't support storing mouse cursor shape per window, so we need to use global filter
+                // do detect mouse leaving the window
+                if (!m_resizingInProgress) {
+                    const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(me);
+                    updateCursor(cursorPosition(globalPos));
+                }
+            }
+
+            // Case #1.2: FloatingWindows on all other platforms
+            // Not needed to mess with the cursor, it gets set when moving over another window.
             return false;
+        }
     } else if (isMDI()) {
+        // Case #2: Resizing an embedded MDI "Window"
+
         // Each Frame has a WidgetResizeHandler instance.
         // mTarget is the Frame we want to resize.
         // but 'o' might not be mTarget, because we're using a global event filter.
