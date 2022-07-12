@@ -55,12 +55,10 @@ static QRect rectFromVariantMap(const QVariantMap &map)
     return { map["x"].toInt(), map["y"].toInt(), sz.width(), sz.height() };
 }
 
-class Fuzzer : public QObject
-             , WarningObserver
+class Fuzzer : public QObject, WarningObserver
 {
     Q_OBJECT
 public:
-
     enum Option {
         Option_None = 0,
         Option_NoQuit = 1, ///< Don't quit when the tests finish. So we can debug in gammaray
@@ -75,7 +73,8 @@ public:
         bool singleMainWindow;
     };
 
-    struct DockWidgetDescriptor {
+    struct DockWidgetDescriptor
+    {
         typedef QVector<DockWidgetDescriptor> List;
         QString name;
         QSize minSize; // the minSize of the hosted widget
@@ -112,7 +111,8 @@ public:
         }
     };
 
-    struct MainWindowDescriptor {
+    struct MainWindowDescriptor
+    {
         typedef QVector<MainWindowDescriptor> List;
         QString name;
         QRect geometry;
@@ -139,7 +139,8 @@ public:
         }
     };
 
-    struct Layout {
+    struct Layout
+    {
         typedef QVector<Layout> List;
         MainWindowDescriptor::List mainWindows;
         DockWidgetDescriptor::List dockWidgets;
@@ -184,7 +185,8 @@ public:
         }
     };
 
-    struct Test {
+    struct Test
+    {
         typedef QVector<Test> List;
         Layout initialLayout;
         Operations::OperationBase::List operations;
@@ -238,9 +240,9 @@ public:
 
     Testing::AddDockWidgetParams getRandomAddDockWidgetParams();
 
-    KDDockWidgets::MainWindowBase* getRandomMainWindow();
-    KDDockWidgets::DockWidgetBase* getRandomDockWidget(const DockWidgetBase::List &excluding = {});
-    KDDockWidgets::DockWidgetBase* getRandomRelativeTo(MainWindowBase *mainWindow,
+    KDDockWidgets::MainWindowBase *getRandomMainWindow();
+    KDDockWidgets::DockWidgetBase *getRandomDockWidget(const DockWidgetBase::List &excluding = {});
+    KDDockWidgets::DockWidgetBase *getRandomRelativeTo(MainWindowBase *mainWindow,
                                                        DockWidgetBase *excluding);
 
     KDDockWidgets::Location getRandomLocation();

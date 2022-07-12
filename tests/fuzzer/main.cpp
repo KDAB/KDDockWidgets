@@ -88,7 +88,7 @@ int main(int argc, char **argv)
         if (filesToLoad.isEmpty()) {
             do {
                 fuzzer.fuzz({ 1, 10, true });
-            } while(loops);
+            } while (loops);
         } else {
             fuzzer.fuzz(filesToLoad);
         }

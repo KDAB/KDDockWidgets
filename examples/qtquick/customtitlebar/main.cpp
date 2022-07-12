@@ -22,7 +22,6 @@
 class CustomFrameworkWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
 {
 public:
-
     ~CustomFrameworkWidgetFactory() override;
 
     QUrl titleBarFilename() const override

@@ -27,7 +27,7 @@ public:
 
 private:
     void createDockWidgets();
-    KDDockWidgets::DockWidgetBase* newDockWidget();
+    KDDockWidgets::DockWidgetBase *newDockWidget();
     QMenu *m_toggleMenu = nullptr;
     const bool m_dockWidget0IsNonClosable;
     const bool m_dockWidget9IsNonDockable;

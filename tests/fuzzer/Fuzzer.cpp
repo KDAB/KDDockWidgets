@@ -29,7 +29,7 @@ using namespace KDDockWidgets::Testing::Operations;
 
 #define OPERATIONS_PER_TEST 200
 
-static MainWindow* createMainWindow(const Fuzzer::MainWindowDescriptor &mwd)
+static MainWindow *createMainWindow(const Fuzzer::MainWindowDescriptor &mwd)
 {
     auto mainWindow = new MainWindow(mwd.name, mwd.mainWindowOption);
 
@@ -39,7 +39,7 @@ static MainWindow* createMainWindow(const Fuzzer::MainWindowDescriptor &mwd)
     return mainWindow;
 }
 
-static DockWidget* createDockWidget(const Fuzzer::DockWidgetDescriptor &dwd)
+static DockWidget *createDockWidget(const Fuzzer::DockWidgetDescriptor &dwd)
 {
     auto dockWidget = new DockWidget(dwd.name);
 
@@ -216,7 +216,7 @@ Testing::AddDockWidgetParams Fuzzer::getRandomAddDockWidgetParams()
     }
 
     if (getRandomBool()) {
-        if (auto rt =  getRandomRelativeTo(params.mainWindow(), params.dockWidget())) {
+        if (auto rt = getRandomRelativeTo(params.mainWindow(), params.dockWidget())) {
             params.relativeToName = rt->uniqueName();
         }
     }
@@ -257,7 +257,7 @@ DockWidgetBase *Fuzzer::getRandomRelativeTo(MainWindowBase *mainWindow, DockWidg
 
     DockWidgetBase::List candidates;
 
-    for (DockWidgetBase *dw : docks)  {
+    for (DockWidgetBase *dw : docks) {
         if (dw != excluding && dw->window() == mainWindow)
             candidates << dw;
     }
@@ -280,7 +280,7 @@ QPoint Fuzzer::getRandomPos()
     std::uniform_int_distribution<> posDistrib(0, 500);
     const int x = posDistrib(m_randomEngine);
     const int y = posDistrib(m_randomEngine);
-    return {x, y};
+    return { x, y };
 }
 
 OperationBase::Ptr Fuzzer::getRandomOperation()
@@ -338,7 +338,8 @@ void Fuzzer::fuzz(const QStringList &jsonFiles)
 void Fuzzer::fuzz(const QString &jsonFile)
 {
     m_currentJsonFile = jsonFile;
-    qDebug() << "\n" << Q_FUNC_INFO << jsonFile;
+    qDebug() << "\n"
+             << Q_FUNC_INFO << jsonFile;
     QFile file(jsonFile);
     if (file.open(QIODevice::ReadOnly)) {
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());

@@ -285,7 +285,7 @@ LayoutWidget *DockRegistry::layoutForItem(const Layouting::Item *item) const
 bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const
 {
     if (LayoutWidget *layout = layoutForItem(item)) {
-        return layout->isInMainWindow(/*honoursNesting=*/ true);
+        return layout->isInMainWindow(/*honoursNesting=*/true);
     }
 
     return false;

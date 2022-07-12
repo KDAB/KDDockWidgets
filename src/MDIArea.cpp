@@ -15,10 +15,10 @@
 #include "private/DropAreaWithCentralFrame_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "DockWidget.h"
-# include <QVBoxLayout>
+#include "DockWidget.h"
+#include <QVBoxLayout>
 #else
-# include "DockWidgetQuick.h"
+#include "DockWidgetQuick.h"
 #endif
 
 #include <QGuiApplication>

@@ -38,8 +38,7 @@
 
 using namespace KDDockWidgets::Debug;
 
-enum Role
-{
+enum Role {
     ObjRole = Qt::UserRole
 };
 

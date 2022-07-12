@@ -27,7 +27,6 @@ class DOCKS_EXPORT DropIndicatorOverlayInterface : public QWidgetAdapter
     Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
     Q_PROPERTY(KDDockWidgets::DropLocation currentDropLocation READ currentDropLocation NOTIFY currentDropLocationChanged)
 public:
-
     explicit DropIndicatorOverlayInterface(DropArea *dropArea);
     void setHoveredFrame(Frame *);
     void setWindowBeingDragged(bool);

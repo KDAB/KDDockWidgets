@@ -41,8 +41,7 @@ Q_NAMESPACE
 class MultiSplitter;
 class DropArea;
 
-enum Location
-{
+enum Location {
     Location_None,
     Location_OnLeft, ///> Left docking location
     Location_OnTop, ///> Top docking location
@@ -51,8 +50,7 @@ enum Location
 };
 Q_ENUM_NS(Location)
 
-enum MainWindowOption
-{
+enum MainWindowOption {
     MainWindowOption_None = 0, ///> No option set
     MainWindowOption_HasCentralFrame = 1, ///> Makes the MainWindow always have a central frame, for tabbing documents
     MainWindowOption_MDI = 2, ///> The layout will be MDI. DockWidgets can have arbitrary positions, not restricted by any layout
@@ -64,10 +62,9 @@ Q_ENUM_NS(MainWindowOptions)
 
 ///@internal
 ///@brief Describes some sizing strategies for the layouting engine.
-///This is internal. The public API for dealing with sizing is InitialOption.
+/// This is internal. The public API for dealing with sizing is InitialOption.
 ///@sa InitialOption
-enum class DefaultSizeMode
-{
+enum class DefaultSizeMode {
     ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
     Fair, ///< Gives an equal relative size as the items that are already in the layout
     FairButFloor, ///< Equal to fair, but if the item we're adding is smaller than the fair suggestion, then that small size is used.
@@ -76,16 +73,14 @@ enum class DefaultSizeMode
 Q_ENUM_NS(DefaultSizeMode)
 
 ///@brief Only here for source-compat with v1.2. Do not use.
-///Use InitialVisibilityOption instead.
-enum AddingOption
-{
+/// Use InitialVisibilityOption instead.
+enum AddingOption {
     AddingOption_None = 0,
     AddingOption_StartHidden
 };
 Q_ENUM_NS(AddingOption)
 
-enum class InitialVisibilityOption
-{
+enum class InitialVisibilityOption {
     StartVisible = 0, ///< The dock widget is made visible when docked
     StartHidden, ///< Don't show the dock widget when adding it
     PreserveCurrentTab ///< When adding as tabbed, don't change the current index
@@ -93,15 +88,15 @@ enum class InitialVisibilityOption
 Q_ENUM_NS(InitialVisibilityOption)
 
 /**
-     * @brief Struct describing the preferred dock widget size and visibility when adding it to a layout
-     *
-     * You can pass this to MainWindowBase::addDockWidget() to give an hint of your preferred size
-     * and visibility.
-     *
-     * See below the documentation for InitialOption::visibility and InitialOption::preferredSize.
-     *
-     * @sa MainWindowBase::addDockWidget()
-     */
+ * @brief Struct describing the preferred dock widget size and visibility when adding it to a layout
+ *
+ * You can pass this to MainWindowBase::addDockWidget() to give an hint of your preferred size
+ * and visibility.
+ *
+ * See below the documentation for InitialOption::visibility and InitialOption::preferredSize.
+ *
+ * @sa MainWindowBase::addDockWidget()
+ */
 struct InitialOption
 {
     // Implicit ctors for convenience:
@@ -153,22 +148,22 @@ struct InitialOption
     }
 
     /**
-         * @brief Allows a dock widget to be docked as hidden.
-         *
-         * Next time you call DockWidget::show() it will be shown at that place. This avoids
-         * flickering, as no show()/hide() workarounds are needed.
-         */
+     * @brief Allows a dock widget to be docked as hidden.
+     *
+     * Next time you call DockWidget::show() it will be shown at that place. This avoids
+     * flickering, as no show()/hide() workarounds are needed.
+     */
     InitialVisibilityOption visibility = InitialVisibilityOption::StartVisible;
 
     /**
-         * @brief Allows to control the size a dock widget should get when docked.
-         *
-         * If an invalid or empty size is passed then KDDW's default heuristics are applied.
-         *
-         * Note that usually only the width or the height will be honoured: For example, when adding a
-         * dock widget to the left then only the preferred width will be taken into account, as the
-         * height will simply fill the whole layout.
-         */
+     * @brief Allows to control the size a dock widget should get when docked.
+     *
+     * If an invalid or empty size is passed then KDDW's default heuristics are applied.
+     *
+     * Note that usually only the width or the height will be honoured: For example, when adding a
+     * dock widget to the left then only the preferred width will be taken into account, as the
+     * height will simply fill the whole layout.
+     */
     QSize preferredSize;
 
 private:
@@ -185,17 +180,15 @@ private:
     DefaultSizeMode sizeMode = DefaultSizeMode::Fair;
 };
 
-enum RestoreOption
-{
+enum RestoreOption {
     RestoreOption_None = 0,
     RestoreOption_RelativeToMainWindow = 1, ///< Skips restoring the main window geometry and the restored dock widgets will use relative sizing.
-        ///< Loading layouts won't change the main window geometry and just use whatever the user has at the moment.
+                                            ///< Loading layouts won't change the main window geometry and just use whatever the user has at the moment.
 };
 Q_DECLARE_FLAGS(RestoreOptions, RestoreOption)
 Q_ENUM_NS(RestoreOptions)
 
-enum class DropIndicatorType
-{
+enum class DropIndicatorType {
     Classic, ///< The default
     Segmented, ///< Segmented indicators
     None ///< Don't show any drop indicators while dragging
@@ -203,8 +196,7 @@ enum class DropIndicatorType
 Q_ENUM_NS(DropIndicatorType)
 
 ///@internal
-enum SuggestedGeometryHint
-{
+enum SuggestedGeometryHint {
     SuggestedGeometryHint_None,
     SuggestedGeometryHint_PreserveCenter = 1,
     SuggestedGeometryHint_GeometryIsFromDocked = 2
@@ -213,8 +205,7 @@ Q_DECLARE_FLAGS(SuggestedGeometryHints, SuggestedGeometryHint)
 Q_ENUM_NS(SuggestedGeometryHint)
 
 /// @brief Each main window supports 4 sidebars
-enum class SideBarLocation
-{
+enum class SideBarLocation {
     None,
     North,
     East,
@@ -223,8 +214,7 @@ enum class SideBarLocation
 };
 
 ///@brief describes a type of button you can have in the title bar
-enum class TitleBarButtonType
-{
+enum class TitleBarButtonType {
     Close,
     Float,
     Minimize,
@@ -236,8 +226,7 @@ enum class TitleBarButtonType
 Q_ENUM_NS(TitleBarButtonType)
 
 ///@brief Enum describing the different drop indicator types
-enum DropLocation
-{
+enum DropLocation {
     DropLocation_None = 0,
     DropLocation_Left = 1,
     DropLocation_Top = 2,
@@ -262,8 +251,7 @@ inline Qt5Qt6Compat::qhashtype qHash(SideBarLocation loc, Qt5Qt6Compat::qhashtyp
 }
 
 ///@internal
-enum CursorPosition
-{
+enum CursorPosition {
     CursorPosition_Undefined = 0,
     CursorPosition_Left = 1,
     CursorPosition_Right = 2,
@@ -282,8 +270,7 @@ Q_ENUM_NS(CursorPosition)
 
 
 ///@internal
-enum FrameOption
-{
+enum FrameOption {
     FrameOption_None = 0,
     FrameOption_AlwaysShowsTabs = 1,
     FrameOption_IsCentralFrame = 2,
@@ -294,8 +281,7 @@ Q_DECLARE_FLAGS(FrameOptions, FrameOption)
 Q_ENUM_NS(FrameOptions)
 
 ///@internal
-enum TabWidgetOption
-{
+enum TabWidgetOption {
     TabWidgetOption_None = 0,
     TabWidgetOption_DocumentMode = 1 ///> Enables QTabWidget::documentMode()
 };

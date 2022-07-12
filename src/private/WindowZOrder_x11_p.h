@@ -24,7 +24,7 @@
 
 namespace KDDockWidgets {
 
-static void travelTree(WId current, Display *disp, QVector<QWindow*> &remaining, QVector<QWindow*> &result)
+static void travelTree(WId current, Display *disp, QVector<QWindow *> &remaining, QVector<QWindow *> &result)
 {
     if (remaining.isEmpty())
         return;
@@ -33,7 +33,7 @@ static void travelTree(WId current, Display *disp, QVector<QWindow*> &remaining,
     unsigned int nchildren;
 
     if (!XQueryTree(disp, current, &root, &parent,
-                   &children, &nchildren)) {
+                    &children, &nchildren)) {
         return;
     }
 
@@ -65,10 +65,10 @@ static Display *x11Display()
 
 /// @brief returns the KDDW top-level windows (MainWindow and floating widgets) ordered by z-order
 /// The front of the vector has stuff with lower Z
-static QVector<QWindow*> orderedWindows(bool &ok)
+static QVector<QWindow *> orderedWindows(bool &ok)
 {
     ok = true;
-    QVector<QWindow*> windows = DockRegistry::self()->topLevels();
+    QVector<QWindow *> windows = DockRegistry::self()->topLevels();
     if (windows.isEmpty())
         return {};
 
@@ -86,7 +86,7 @@ static QVector<QWindow*> orderedWindows(bool &ok)
 namespace KDDockWidgets {
 /// Dummy which is never called, just so code compiles on Windows without
 /// adding more #ifdefery
-static QVector<QWindow*> orderedWindows(bool &ok)
+static QVector<QWindow *> orderedWindows(bool &ok)
 {
     Q_UNUSED(ok);
     Q_UNREACHABLE();

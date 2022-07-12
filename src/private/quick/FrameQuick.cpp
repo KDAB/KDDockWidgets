@@ -34,8 +34,8 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options, int userTyp
     connect(m_tabWidget->asWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
-    connect(m_tabWidget->asWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase*)), /// clazy:exclude=old-style-connect
-            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase*)));
+    connect(m_tabWidget->asWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)), /// clazy:exclude=old-style-connect
+            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)));
 
     connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
 

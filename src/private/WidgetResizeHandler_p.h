@@ -36,8 +36,7 @@ class DOCKS_EXPORT WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:
-    enum Feature
-    {
+    enum Feature {
         Feature_None = 0,
         Feature_NativeShadow = 1,
         Feature_NativeResize = 2,

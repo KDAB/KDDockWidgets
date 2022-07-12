@@ -34,9 +34,9 @@
 
 // Or we can have a createDockWidget() in the factory
 #ifdef KDDOCKWIDGETS_QTQUICK
-# include "DockWidgetQuick.h"
+#include "DockWidgetQuick.h"
 #else
-# include "DockWidget.h"
+#include "DockWidget.h"
 #endif
 
 #include <QCloseEvent>
@@ -77,7 +77,7 @@ public:
         return (m_options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
     }
 
-    DockWidgetBase* createPersistentCentralDockWidget(const QString &uniqueName) const
+    DockWidgetBase *createPersistentCentralDockWidget(const QString &uniqueName) const
     {
         if (!supportsPersistentCentralWidget())
             return nullptr;
@@ -732,7 +732,7 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
     }
 
     // Commented-out for now, we don't want to restore the popup/overlay. popups are perishable
-    //if (!mw.overlayedDockWidget.isEmpty())
+    // if (!mw.overlayedDockWidget.isEmpty())
     //    overlayOnSideBar(DockRegistry::self()->dockByName(mw.overlayedDockWidget));
 
     return success;

@@ -109,7 +109,7 @@ QQuickItem *TabBarQuick::tabAt(int index) const
         return nullptr;
 
     QQuickItem *item = nullptr;
-    QMetaObject::invokeMethod(view, "itemAtIndex", Q_RETURN_ARG(QQuickItem*, item),
+    QMetaObject::invokeMethod(view, "itemAtIndex", Q_RETURN_ARG(QQuickItem *, item),
                               Q_ARG(int, index));
 
     return item;

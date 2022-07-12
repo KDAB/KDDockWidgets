@@ -239,7 +239,7 @@ QString DockWidgetBase::title() const
 {
     if (d->isMDIWrapper()) {
         // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real dock widget we're hosting.
-        auto dropAreaGuest = qobject_cast<DropArea*>(widget());
+        auto dropAreaGuest = qobject_cast<DropArea *>(widget());
         Q_ASSERT(dropAreaGuest);
         if (dropAreaGuest->hasSingleFrame()) {
             return dropAreaGuest->frames().constFirst()->title();
@@ -553,17 +553,17 @@ MDILayoutWidget *DockWidgetBase::Private::mdiLayout() const
 {
     auto p = const_cast<QObject *>(q->parent());
     while (p) {
-        if (qobject_cast<const QWindow*>(p)) {
+        if (qobject_cast<const QWindow *>(p)) {
             // Ignore QObject hierarchies spanning though multiple windows
             return nullptr;
         }
 
-        if (qobject_cast<LayoutWidget*>(p)) {
+        if (qobject_cast<LayoutWidget *>(p)) {
             // We found a layout
-            if (auto mdiLayout = qobject_cast<MDILayoutWidget*>(p)) {
+            if (auto mdiLayout = qobject_cast<MDILayoutWidget *>(p)) {
                 // And it's MDI
                 return mdiLayout;
-            } else if (auto dropArea = qobject_cast<DropArea*>(p)) {
+            } else if (auto dropArea = qobject_cast<DropArea *>(p)) {
                 // It's a DropArea. But maybe it's a drop area that's just helping
                 // making the MDI windows accept drops (Option_MDINestable)
                 if (!dropArea->isMDIWrapper())
@@ -603,16 +603,15 @@ DockWidgetBase *DockWidgetBase::Private::mdiDockWidgetWrapper() const
 
     auto p = const_cast<QObject *>(q->parent());
     while (p) {
-        if (qobject_cast<const QWindow*>(p)) {
+        if (qobject_cast<const QWindow *>(p)) {
             // Ignore QObject hierarchies spanning though multiple windows
             return nullptr;
         }
 
-        if (qobject_cast<LayoutWidget*>(p)) {
-            if (auto dropArea = qobject_cast<DropArea*>(p)) {
+        if (qobject_cast<LayoutWidget *>(p)) {
+            if (auto dropArea = qobject_cast<DropArea *>(p)) {
                 if (dropArea->isMDIWrapper())
                     return dropArea->mdiDockWidgetWrapper();
-
             }
 
             return nullptr;
@@ -981,8 +980,8 @@ DockWidgetBase::Private::Private(const QString &dockName, DockWidgetBase::Option
     q->connect(toggleAction, &QAction::toggled, q, [this](bool enabled) {
         if (!m_updatingToggleAction) { // guard against recursiveness
             toggleAction->blockSignals(true); // and don't emit spurious toggle. Like when a dock
-                // widget is inserted into a tab widget it might get
-                // hide events, ignore those. The Dock Widget is open.
+                                              // widget is inserted into a tab widget it might get
+                                              // hide events, ignore those. The Dock Widget is open.
             m_processingToggleAction = true;
             toggle(enabled);
             toggleAction->blockSignals(false);

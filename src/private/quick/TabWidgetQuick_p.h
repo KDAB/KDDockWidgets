@@ -79,8 +79,7 @@ class DockWidgetModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    enum Role
-    {
+    enum Role {
         Role_Title = Qt::UserRole
     };
 

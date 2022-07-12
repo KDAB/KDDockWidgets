@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     mainWindow.addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
 
     // 5. dock4 is docked at the bottom, with 200px height
-    const QSize preferredSize(QSize(/*ignored*/0, 200));
+    const QSize preferredSize(QSize(/*ignored*/ 0, 200));
     mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
 
 

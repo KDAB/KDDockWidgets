@@ -25,8 +25,7 @@ typedef Separator *(*SeparatorFactoryFunc)(Layouting::Widget *parent);
 class DOCKS_EXPORT_FOR_UNIT_TESTS Config
 {
 public:
-    enum class Flag
-    {
+    enum class Flag {
         None = 0,
         LazyResize = 1
     };
@@ -46,7 +45,7 @@ public:
     int separatorThickness() const;
 
     ///@brief setter for @ref separatorThickness
-    ///Note: Only use this function at startup before creating any Item
+    /// Note: Only use this function at startup before creating any Item
     void setSeparatorThickness(int value);
 
     ///@brief sets the function used internally to create the separators

@@ -68,7 +68,7 @@ void TitleBar::init()
 
     updateButtons();
     QTimer::singleShot(0, this, &TitleBar::updateAutoHideButton); // have to wait after the frame is
-        // constructed
+                                                                  // constructed
 }
 
 TitleBar::~TitleBar()
@@ -105,7 +105,7 @@ bool TitleBar::isMDI() const
 {
     QObject *p = const_cast<TitleBar *>(this);
     while (p) {
-        if (qobject_cast<const QWindow*>(p)) {
+        if (qobject_cast<const QWindow *>(p)) {
             // Ignore QObject hierarchies spanning though multiple windows
             return false;
         }

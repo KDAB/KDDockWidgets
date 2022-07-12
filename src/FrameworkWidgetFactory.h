@@ -129,7 +129,7 @@ public:
     virtual DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea *dropArea) const = 0;
 
     ///@brief Called internally by the framework to create a RubberBand to show as drop zone
-    ///Returns a rubber band
+    /// Returns a rubber band
     virtual QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const = 0;
 
     ///@brief Called internally by the framework to create a SideBar

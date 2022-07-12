@@ -869,7 +869,7 @@ Frame *Frame::mdiFrame() const
         return dwWrapper->d->frame();
     }
 
-   return nullptr;
+    return nullptr;
 }
 
 DockWidgetBase *Frame::mdiDockWidgetWrapper() const

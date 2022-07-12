@@ -53,7 +53,7 @@ class LayoutWidget;
  *
  * Do not use instantiate directly in user code. Use DockWidget instead.
  */
-#ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
+#ifndef PYTHON_BINDINGS // Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
 class DOCKS_EXPORT DockWidgetBase : public QWidgetAdapter
 #else
 class DOCKS_EXPORT DockWidgetBase : public QWidget
@@ -71,8 +71,7 @@ public:
     typedef QVector<DockWidgetBase *> List;
 
     ///@brief DockWidget options to pass at construction time
-    enum Option
-    {
+    enum Option {
         Option_None = 0, ///< No option, the default
         Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programmatically
         Option_NotDockable = 2, ///< The DockWidget can't be docked, it's always floating
@@ -85,15 +84,13 @@ public:
     Q_ENUM(Options);
 
     /// @brief Options which will affect LayoutSaver save/restore
-    enum class LayoutSaverOption
-    {
+    enum class LayoutSaverOption {
         None = 0, ///< Just use the defaults
         Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for floating windows.
     };
     Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
 
-    enum class IconPlace
-    {
+    enum class IconPlace {
         TitleBar = 1,
         TabBar = 2,
         ToggleAction = 4,
@@ -383,8 +380,8 @@ public:
     MainWindowBase *mainWindow() const;
 
     ///@brief Returns whether This or any child of this dock widget is focused
-    ///Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This includes
-    ///variant includes children.
+    /// Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This includes
+    /// variant includes children.
     ///@sa isFocusedChanged()
     bool isFocused() const;
 
@@ -444,9 +441,9 @@ public:
     void setFloatingGeometry(QRect geo);
 
     ///@brief Allows the user to set a type on this dock widget
-    ///The type is opaque and will not be interpreted by KDDockWidgets.
-    ///This type is passed to FrameWorkWidgetFactory::createTitleBar(), which the user can override
-    ///and return different TitleBar subclasses, depending on the type.
+    /// The type is opaque and will not be interpreted by KDDockWidgets.
+    /// This type is passed to FrameWorkWidgetFactory::createTitleBar(), which the user can override
+    /// and return different TitleBar subclasses, depending on the type.
     void setUserType(int userType);
     int userType() const;
 
@@ -460,7 +457,7 @@ public:
     void setMDIZ(int z);
 
     ///@brief Returns whether this dock widget is the main window persistent central widget
-    ///This only applies when using MainWindowOption_HasCentralWidget
+    /// This only applies when using MainWindowOption_HasCentralWidget
     bool isPersistentCentralDockWidget() const;
 
 Q_SIGNALS:
@@ -502,12 +499,12 @@ Q_SIGNALS:
     void isFloatingChanged(bool);
 
     ///@brief emitted when this dock widget is removed from a side-bar.
-    ///Only relevant for the auto-hide/sidebar feature
+    /// Only relevant for the auto-hide/sidebar feature
     void removedFromSideBar();
 
     ///@brief Emitted when the top-level window this dock widget is in is activated or deactivated
-    ///This is convenience to replace tracking dockWidget->window(), since the window changes when
-    ///docking and undocking
+    /// This is convenience to replace tracking dockWidget->window(), since the window changes when
+    /// docking and undocking
     ///
     /// It's called 'aboutTo' because it's done in an event filter and the target window doesn't
     /// have it's 'activeWindow' property updated yet at this point.
@@ -524,7 +521,7 @@ protected:
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
 
-#ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
+#ifndef PYTHON_BINDINGS // Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
     void onCloseEvent(QCloseEvent *e) override;
     bool onResize(QSize newSize) override;
 #endif
