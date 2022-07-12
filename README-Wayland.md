@@ -1,12 +1,12 @@
+# KDDockWidgets and Wayland
+
 Wayland support is done and has been tested on KDE (Kwin) and weston.
 
-Limitations
-============
+## Limitations
 
 Wayland works very differently than traditional desktops and imposes us some,
 limitations. Here's a list of different behaviours which KDDockWidgets will have
 when running on Wayland:
-
 
 - A title bar can either be used for drag&dock or for moving the window around.
 
@@ -27,8 +27,6 @@ when running on Wayland:
 
 - Kwin specific:
   - The pixmap that's shown during a drag can't be bigger than 250x250. Might be a bug.
-
-
 
 All in all it's pretty decent and usable. Any further improvements should be done at the server or
 protocol level now.

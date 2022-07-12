@@ -38,3 +38,10 @@ repos:
     exclude: (.py.cmake|Doxyfile.cmake)
   - id: cmake-format
     exclude: (.py.cmake|Doxyfile.cmake)
+- repo: https://github.com/markdownlint/markdownlint
+  rev: v0.11.0
+  hooks:
+  - id: markdownlint
+    entry: mdl
+    language: ruby
+    files: \.(md|mdown|markdown)$
