@@ -176,11 +176,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         m_resizingInProgress = m_resizingInProgress && (mouseEvent->buttons() & Qt::LeftButton);
-        const bool state = m_resizingInProgress;
-        if (m_isTopLevelWindowResizer)
-            m_resizingInProgress = ((o == mTarget) && m_resizingInProgress);
+
         const bool consumed = mouseMoveEvent(mouseEvent);
-        m_resizingInProgress = state;
         return consumed;
     }
     default:
