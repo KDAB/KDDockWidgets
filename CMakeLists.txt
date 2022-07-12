@@ -107,7 +107,6 @@ option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
 option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 
@@ -335,7 +334,7 @@ if(KDAB_INSTALL)
 endif()
 
 # setup default install locations
-include(InstallLocation)
+include(KDInstallLocation)
 
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     set(KDDockWidgets_IS_ROOT_PROJECT TRUE)
@@ -352,18 +351,15 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
     # Generate .pri file for qmake users
-    # TODO: ECM does not support Qt6 yet, nor with VS generator or older cmake versions
-    if(Qt_VERSION_MAJOR EQUAL 5
-       AND CMAKE_VERSION VERSION_GREATER "3.11.99"
-       AND NOT CMAKE_CONFIGURATION_TYPES
-    )
+    # (except for older cmake versions and when using the VS generator)
+    if(CMAKE_VERSION VERSION_GREATER "3.11.99" AND NOT CMAKE_CONFIGURATION_TYPES)
         include(ECMGeneratePriFile)
         set(PROJECT_VERSION_STRING ${KDDockWidgets_VERSION})
         ecm_generate_pri_file(
             BASE_NAME
             KDDockWidgets
             LIB_NAME
-            kddockwidgets
+            kddockwidgets${${PROJECT_NAME}_LIBRARY_QTID}
             DEPS
             ${KDDockWidgets_DEPS}
             FILENAME_VAR

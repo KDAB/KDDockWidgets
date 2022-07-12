@@ -153,7 +153,8 @@ void Group::setLayout(Layout *dt)
 
     if (m_layout) {
         if (isMDI())
-            m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, view());
+            m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
+                                                      WidgetResizeHandler::WindowMode::MDI, view());
 
         // We keep the connect result so we don't dereference m_layout at shutdown
         d->m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass. It's a KDBindings bug.
@@ -918,7 +919,7 @@ void Group::setAllowedResizeSides(CursorPositions sides)
 {
     if (sides) {
         delete m_resizeHandler;
-        m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, view());
+        m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global, WidgetResizeHandler::WindowMode::MDI, view());
         m_resizeHandler->setAllowedResizeSides(sides);
     } else {
         delete m_resizeHandler;

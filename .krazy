@@ -22,4 +22,4 @@ SKIP /KDDockWidgetsConfig.cmake.in
 SKIP CMakePresets.json
 SKIP \.cmake-format\.py
 #skip the borrowed code in the cmake subdir
-SKIP /cmake/InstallLocation.cmake|/cmake/ECM/|/cmake/KDAB/
+SKIP /cmake/ECM/|/cmake/KDAB/
