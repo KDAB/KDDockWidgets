@@ -94,13 +94,23 @@ public:
         }
     };
 
+    enum class EventFilterMode {
+        Local = 1, ///< The event filter is set only on the widget being resized, this is the default for floating windows
+        Global = 2 ///< The event filter is app-wide, used for embedded MDI windows, for example
+    };
+
+    enum class WindowMode {
+        TopLevel = 1, ///< For resizing Floating Windows
+        MDI = 2, ///< For resizing MDI "Windows"
+    };
+
     /**
      * @brief CTOR
      * @param isTopLevelResizer If true, then this resize handler is for top-level widgets (aka windows)
      *        if false, they are docked (like for example resizing docked MDI widgets, or the sidebar overlay)
      * @param target The target widget that will be resized. Also acts as parent QObject.
      */
-    explicit WidgetResizeHandler(bool isTopLevelResizer, QWidgetOrQuick *target);
+    explicit WidgetResizeHandler(EventFilterMode, WindowMode, QWidgetOrQuick *target);
     ~WidgetResizeHandler() override;
 
     /**
@@ -153,6 +163,7 @@ private:
     CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
     bool m_resizingInProgress = false;
+    const bool m_usesGlobalEventFilter;
     const bool m_isTopLevelWindowResizer;
     int m_resizeGap = 10;
     CursorPositions mAllowedResizeSides = CursorPosition_All;

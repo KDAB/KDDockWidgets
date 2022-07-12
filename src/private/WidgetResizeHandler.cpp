@@ -41,9 +41,10 @@
 using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
-WidgetResizeHandler::WidgetResizeHandler(bool isTopLevelResizer, QWidgetOrQuick *target)
+WidgetResizeHandler::WidgetResizeHandler(EventFilterMode filterMode, WindowMode windowMode, QWidgetOrQuick *target)
     : QObject(target)
-    , m_isTopLevelWindowResizer(isTopLevelResizer)
+    , m_usesGlobalEventFilter(filterMode == EventFilterMode::Global)
+    , m_isTopLevelWindowResizer(windowMode == WindowMode::TopLevel)
 {
     setTarget(target);
 }
@@ -87,10 +88,31 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     if (!widget)
         return false;
 
+    auto me = mouseEvent(e);
+    if (!me)
+        return false;
+
     if (m_isTopLevelWindowResizer) {
-        if (!widget->isTopLevel() || o != mTarget)
+        // Case #1.0: Resizing FloatingWindow
+
+        if (!widget->isTopLevel() || o != mTarget) {
+            if (m_usesGlobalEventFilter) {
+                // Case #1.1: FloatingWindows on EGLFS
+                // EGLFS doesn't support storing mouse cursor shape per window, so we need to use global filter
+                // do detect mouse leaving the window
+                if (!m_resizingInProgress) {
+                    const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(me);
+                    updateCursor(cursorPosition(globalPos));
+                }
+            }
+
+            // Case #1.2: FloatingWindows on all other platforms
+            // Not needed to mess with the cursor, it gets set when moving over another window.
             return false;
+        }
     } else if (isMDI()) {
+        // Case #2: Resizing an embedded MDI "Window"
+
         // Each Frame has a WidgetResizeHandler instance.
         // mTarget is the Frame we want to resize.
         // but 'o' might not be mTarget, because we're using a global event filter.
@@ -175,11 +197,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         m_resizingInProgress = m_resizingInProgress && (mouseEvent->buttons() & Qt::LeftButton);
-        const bool state = m_resizingInProgress;
-        if (m_isTopLevelWindowResizer)
-            m_resizingInProgress = ((o == mTarget) && m_resizingInProgress);
+
         const bool consumed = mouseMoveEvent(mouseEvent);
-        m_resizingInProgress = state;
         return consumed;
     }
     default:
@@ -431,10 +450,10 @@ void WidgetResizeHandler::setTarget(QWidgetOrQuick *w)
     if (w) {
         mTarget = w;
         mTarget->setMouseTracking(true);
-        if (m_isTopLevelWindowResizer) {
-            mTarget->installEventFilter(this);
-        } else {
+        if (m_usesGlobalEventFilter) {
             qApp->installEventFilter(this);
+        } else {
+            mTarget->installEventFilter(this);
         }
     } else {
         qWarning() << "Target widget is null!";
@@ -486,18 +505,18 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 
 void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 {
-    if (m_isTopLevelWindowResizer)
-        mTarget->setCursor(cursor);
-    else
+    if (m_usesGlobalEventFilter)
         qApp->setOverrideCursor(cursor);
+    else
+        mTarget->setCursor(cursor);
 }
 
 void WidgetResizeHandler::restoreMouseCursor()
 {
-    if (m_isTopLevelWindowResizer)
-        mTarget->setCursor(Qt::ArrowCursor);
-    else
+    if (m_usesGlobalEventFilter)
         qApp->restoreOverrideCursor();
+    else
+        mTarget->setCursor(Qt::ArrowCursor);
 }
 
 CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const

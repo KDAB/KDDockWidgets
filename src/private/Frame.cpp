@@ -610,7 +610,7 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
 
     if (m_layoutWidget) {
         if (isMDI())
-            m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, this);
+            m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global, WidgetResizeHandler::WindowMode::MDI, this);
 
         // We keep the connect result so we don't dereference m_layoutWidget at shutdown
         m_visibleWidgetCountChangedConnection =
@@ -845,7 +845,7 @@ void Frame::setAllowedResizeSides(CursorPositions sides)
 {
     if (sides) {
         delete m_resizeHandler;
-        m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, this);
+        m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global, WidgetResizeHandler::WindowMode::MDI, this);
         m_resizeHandler->setAllowedResizeSides(sides);
     } else {
         delete m_resizeHandler;

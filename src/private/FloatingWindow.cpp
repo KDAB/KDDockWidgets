@@ -230,7 +230,13 @@ void FloatingWindow::maybeCreateResizeHandler()
 {
     if (!KDDockWidgets::usesNativeDraggingAndResizing()) {
         setFlag(Qt::FramelessWindowHint, true);
-        setWidgetResizeHandler(new WidgetResizeHandler(/*topLevel=*/true, this));
+        // EGLFS can't have different mouse cursors per window, needs global filter hack to unset when cursor leaves
+        const auto filterMode = isEGLFS() ? WidgetResizeHandler::EventFilterMode::Global
+                                          : WidgetResizeHandler::EventFilterMode::Local;
+
+        setWidgetResizeHandler(new WidgetResizeHandler(filterMode,
+                                                       WidgetResizeHandler::WindowMode::TopLevel,
+                                                       this));
     }
 }
 
