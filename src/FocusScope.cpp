@@ -30,7 +30,7 @@
 using namespace KDDockWidgets;
 
 // Our Private inherits from QObject since FocusScope can't (Since Frame is already QObject)
-class FocusScope::Private : public QObject //clazy:exclude=missing-qobject-macro (breaks unity build with earlier cmake due to including .moc here.)
+class FocusScope::Private : public QObject // clazy:exclude=missing-qobject-macro (breaks unity build with earlier cmake due to including .moc here.)
 {
 public:
     Private(FocusScope *qq, QWidgetAdapter *thisWidget)

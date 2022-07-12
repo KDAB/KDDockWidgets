@@ -96,12 +96,13 @@ static int run_tests(const QStringList &subset)
     return p.exitCode();
 }
 
-int main(int argv, char**argc)
+int main(int argv, char **argc)
 {
     QCoreApplication app(argv, argc);
 
     if (app.arguments().size() != 3) {
-        qWarning() << "Usage:" << app.arguments().constFirst() << "<subsetNumber>" << "<subsetPercentage>";
+        qWarning() << "Usage:" << app.arguments().constFirst() << "<subsetNumber>"
+                   << "<subsetPercentage>";
         return -1;
     }
 

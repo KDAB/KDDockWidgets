@@ -36,7 +36,6 @@ OperationBase::OperationBase(KDDockWidgets::Testing::Operations::OperationType t
     : m_operationType(type)
     , m_fuzzer(fuzzer)
 {
-
 }
 
 OperationBase::~OperationBase()
@@ -323,7 +322,7 @@ void AddDockWidget::execute_impl()
 {
     auto fw = m_params.dockWidget()->floatingWindow();
     m_params.mainWindow()->addDockWidget(m_params.dockWidget(), m_params.location,
-                                          m_params.relativeTo(), m_params.addingOption);
+                                         m_params.relativeTo(), m_params.addingOption);
     if (fw && fw->beingDeleted())
         Testing::waitForDeleted(fw);
 }
@@ -331,7 +330,7 @@ void AddDockWidget::execute_impl()
 QVariantMap AddDockWidget::paramsToVariantMap() const
 {
     return m_params.isNull() ? QVariantMap()
-                             :  m_params.toVariantMap();
+                             : m_params.toVariantMap();
 }
 
 void AddDockWidget::fillParamsFromVariantMap(const QVariantMap &map)
@@ -455,7 +454,7 @@ bool RestoreLayout::hasParams() const
 
 void RestoreLayout::updateDescription()
 {
-     m_description = QStringLiteral("RestoreLayout");
+    m_description = QStringLiteral("RestoreLayout");
 }
 
 void RestoreLayout::execute_impl()

@@ -65,7 +65,7 @@ void MyWidget::drawLogo(QPainter &p)
                                                   : int(maxHeight / ratio);
 
     const int height = int(width * ratio);
-    QRect targetLogoRect(0,0, width, height);
+    QRect targetLogoRect(0, 0, width, height);
     targetLogoRect.moveCenter(rect().center() + QPoint(0, -int(size().height() * 0.00)));
     p.drawImage(targetLogoRect, m_logo, m_logo.rect());
 }

@@ -34,44 +34,38 @@ class Separator;
 class Widget;
 struct LengthOnSide;
 
-enum Side
-{
+enum Side {
     Side1,
     Side2
 };
 Q_ENUM_NS(Side)
 
-enum class GrowthStrategy
-{
+enum class GrowthStrategy {
     BothSidesEqually,
     Side1Only,
     Side2Only
 };
 
-enum class SeparatorOption
-{
+enum class SeparatorOption {
     None = 0,
     LazyResize
 };
 Q_DECLARE_FLAGS(SeparatorOptions, SeparatorOption)
 
-enum class ChildrenResizeStrategy
-{
+enum class ChildrenResizeStrategy {
     Percentage, ///< Resizes the container in a way that all children will keep occupying the same percentage
     Side1SeparatorMove, ///< When resizing a container, it takes/adds space from Side1 children first
     Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
 Q_ENUM_NS(ChildrenResizeStrategy)
 
-enum class NeighbourSqueezeStrategy
-{
+enum class NeighbourSqueezeStrategy {
     AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
     ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the next neighbour is squezed, and so forth
 };
 Q_ENUM_NS(NeighbourSqueezeStrategy)
 
-enum LayoutBorderLocation
-{
+enum LayoutBorderLocation {
     LayoutBorderLocation_None = 0,
     LayoutBorderLocation_North = 1,
     LayoutBorderLocation_East = 2,
@@ -264,7 +258,7 @@ public:
     bool isRoot() const;
 
     ///@brief Returns whether the item is touching the layout's borders.
-    ///Returns Location_None if it's not touching a border.
+    /// Returns Location_None if it's not touching a border.
     LayoutBorderLocations adjacentLayoutBorders() const;
 
     virtual int visibleCount_recursive() const;
@@ -500,15 +494,15 @@ private:
     void layoutEqually(SizingInfo::List &sizes);
 
     ///@brief Grows the side1Neighbour to the right and the side2Neighbour to the left
-    ///So they occupy the empty space that's between them (or bottom/top if Qt::Vertical).
-    ///This is useful when an Item is removed. Its neighbours will occupy its space.
-    ///side1Neighbour or side2Neighbour are allowed to be null, in which case the non-null one
-    ///will occupy the entire space.
+    /// So they occupy the empty space that's between them (or bottom/top if Qt::Vertical).
+    /// This is useful when an Item is removed. Its neighbours will occupy its space.
+    /// side1Neighbour or side2Neighbour are allowed to be null, in which case the non-null one
+    /// will occupy the entire space.
     void growNeighbours(Item *side1Neighbour, Item *side2Neighbour);
 
     ///@brief grows an item by @p amount. It calculates how much to grow on side1 and on side2
-    ///Then calls growItem(item, side1Growth, side2Growth) which will effectively grow it,
-    ///and shrink the neighbours which are donating the size.
+    /// Then calls growItem(item, side1Growth, side2Growth) which will effectively grow it,
+    /// and shrink the neighbours which are donating the size.
     void growItem(Item *, int amount, GrowthStrategy,
                   NeighbourSqueezeStrategy neighbourSqueezeStrategy,
                   bool accountForNewSeparator = false,

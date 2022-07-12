@@ -87,7 +87,7 @@ public:
     bool hasIcon() const;
 
     ///@brief returns whether any of the DockWidgets this TitleBar controls has a child focus
-    ///Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This works more
+    /// Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This works more
     /// like QtQuick's FocusScope
     bool isFocused() const;
 
@@ -99,8 +99,8 @@ public:
 
 
     ///@brief Returns the tab bar which is under this title bar.
-    ///It's only nullptr for the case of having a Floating Window with more than one nested Frame
-    TabBar* tabBar() const;
+    /// It's only nullptr for the case of having a Floating Window with more than one nested Frame
+    TabBar *tabBar() const;
 
     ///@brief getter for m_frame
     Frame *frame() const
@@ -115,7 +115,7 @@ public:
     }
 
     ///@brief If this title bar belongs to a dock widget docked into the main window, returns the main window
-    ///Returns nullptr otherwise
+    /// Returns nullptr otherwise
     MainWindowBase *mainWindow() const;
 
     /// @brief Returns if this title bar belongs to a dock widget which is in MDI mode (inside a MDI area)

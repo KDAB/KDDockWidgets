@@ -367,15 +367,15 @@ inline bool scalingFactorIsSupported(qreal factor)
 #endif
 }
 
-template <typename T>
-inline T* firstParentOfType(const QObject *child)
+template<typename T>
+inline T *firstParentOfType(const QObject *child)
 {
     auto p = const_cast<QObject *>(child);
     while (p) {
         if (auto candidate = qobject_cast<T *>(p))
             return candidate;
 
-        if (qobject_cast<const QWindow*>(p)) {
+        if (qobject_cast<const QWindow *>(p)) {
             // Ignore QObject hierarchies spanning though multiple windows
             return nullptr;
         }
@@ -393,16 +393,16 @@ inline T* firstParentOfType(const QObject *child)
     return nullptr;
 }
 
-template <typename T>
-inline T* lastParentOfType(const QObject *child)
+template<typename T>
+inline T *lastParentOfType(const QObject *child)
 {
     auto p = const_cast<QObject *>(child);
-    T* result = nullptr;
+    T *result = nullptr;
     while (p) {
         if (auto candidate = qobject_cast<T *>(p))
             result = candidate;
 
-        if (qobject_cast<const QWindow*>(p)) {
+        if (qobject_cast<const QWindow *>(p)) {
             // Ignore QObject hierarchies spanning though multiple windows
             return result;
         }

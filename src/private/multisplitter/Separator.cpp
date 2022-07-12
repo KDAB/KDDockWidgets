@@ -19,7 +19,7 @@
 #include <QGuiApplication>
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include <QWidget>
+#include <QWidget>
 #endif
 
 #ifdef Q_OS_WIN
@@ -210,7 +210,7 @@ void Separator::init(ItemBoxContainer *parentContainer, Qt::Orientation orientat
     d->parentContainer = parentContainer;
     d->orientation = orientation;
     d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(rubberBandIsTopLevel() ? nullptr : d->m_hostWidget)
-                                                                                          : nullptr;
+                                                : nullptr;
     asWidget()->setVisible(true);
 }
 

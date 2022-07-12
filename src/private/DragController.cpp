@@ -330,8 +330,7 @@ void StateDragging::onEntry()
             fw->showNormal();
 
             if (!normalGeometry.contains(q->m_pressPos)) {
-                if ((leftEdgeIsNearest && leftOffset > normalGeometry.width()) ||
-                    (!leftEdgeIsNearest && rightOffset > normalGeometry.width())) {
+                if ((leftEdgeIsNearest && leftOffset > normalGeometry.width()) || (!leftEdgeIsNearest && rightOffset > normalGeometry.width())) {
                     // Case #1: The window isn't under the cursor anymore
                     // Let's just put its middle under the cursor
                     q->m_offset.setX(normalGeometry.width() / 2);
@@ -343,7 +342,7 @@ void StateDragging::onEntry()
             }
         } else
 #endif
-        if (!fw->geometry().contains(q->m_pressPos)) {
+            if (!fw->geometry().contains(q->m_pressPos)) {
             // The window shrunk when the drag started, this can happen if it has max-size constraints
             // we make the floating window smaller. Has the downside that it might not be under the mouse
             // cursor anymore, so make the change
@@ -952,7 +951,7 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
 #endif // Q_OS_WIN
     } else if (linksToXLib() && isXCB()) {
         bool ok = false;
-        const QVector<QWindow*> orderedWindows = KDDockWidgets::orderedWindows(ok);
+        const QVector<QWindow *> orderedWindows = KDDockWidgets::orderedWindows(ok);
         FloatingWindow *tlwBeingDragged = m_windowBeingDragged->floatingWindow();
         if (auto tl = qtTopLevelUnderCursor_impl(globalPos, orderedWindows, tlwBeingDragged))
             return tl;

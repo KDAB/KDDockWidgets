@@ -116,12 +116,12 @@ int main(int argc, char **argv)
                                            QCoreApplication::translate("main", "The title bar's close button will only close the current tab instead of all. Illustrates using Config::Flag_CloseOnlyCurrentTab"));
     parser.addOption(closeOnlyCurrentTab);
 
-    QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore", //krazy:exclude=spelling
+    QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore", // krazy:exclude=spelling
                                               QCoreApplication::translate("main", "DockWidget #5 won't be closed before a restore. Illustrates LayoutSaverOption::DontCloseBeforeRestore"));
     parser.addOption(dontCloseBeforeRestore);
 
     QCommandLineOption blockCloseEvent("block-close-event",
-                                        QCoreApplication::translate("main", "DockWidget #0 will block close events"));
+                                       QCoreApplication::translate("main", "DockWidget #0 will block close events"));
     parser.addOption(blockCloseEvent);
 
     QCommandLineOption showButtonsInTabBarIfTitleBarHidden("show-buttons-in-tabbar-if-titlebar-hidden",
@@ -137,7 +137,7 @@ int main(int argc, char **argv)
     parser.addOption(ctxtMenuOnTabs);
 
     QCommandLineOption hideCertainDockingIndicators("hide-certain-docking-indicators",
-                                                     QCoreApplication::translate("main", "Illustrates usage of Config::setDropIndicatorAllowedFunc()"));
+                                                    QCoreApplication::translate("main", "Illustrates usage of Config::setDropIndicatorAllowedFunc()"));
     parser.addOption(hideCertainDockingIndicators);
 
 #if defined(DOCKS_DEVELOPER_MODE)
@@ -153,10 +153,10 @@ int main(int argc, char **argv)
     parser.addOption(nativeTitleBar);
     parser.addOption(noDropIndicators);
 
-# if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
     parser.addOption(noAeroSnap);
-# endif
+#endif
 #else
     Q_UNUSED(centralFrame)
 #endif
@@ -199,10 +199,10 @@ int main(int argc, char **argv)
     if (parser.isSet(noDropIndicators))
         KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
-# if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
         internalFlags |= KDDockWidgets::Config::InternalFlag_NoAeroSnap;
-# endif
+#endif
     Config::self().setInternalFlags(internalFlags);
 #endif
 
@@ -271,9 +271,10 @@ int main(int argc, char **argv)
                        KDDockWidgets::DropArea *) {
             Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already tabbed dock widgets
 
-            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [] (KDDockWidgets::DockWidgetBase *dw) {
-                return dw->uniqueName() == QLatin1String("DockWidget #8");
-            }) != source.cend();
+            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [](KDDockWidgets::DockWidgetBase *dw) {
+                                           return dw->uniqueName() == QLatin1String("DockWidget #8");
+                                       })
+                != source.cend();
 
             return (location & KDDockWidgets::DropLocation_Outter) || !isDraggingDW8;
         };

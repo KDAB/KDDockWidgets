@@ -41,8 +41,7 @@ class DOCKS_EXPORT DockRegistry : public QObject
     Q_PROPERTY(
         KDDockWidgets::Frame *frameInMDIResize READ frameInMDIResize NOTIFY frameInMDIResizeChanged)
 public:
-    enum class DockByNameFlag
-    {
+    enum class DockByNameFlag {
         None = 0,
         ConsultRemapping = 1,
         CreateIfNotFound = 2 ///< Creates the dock widget via the user's widget factory in case it doesn't exist
@@ -125,8 +124,8 @@ public:
     MainWindowBase *mainWindowForHandle(QWindow *windowHandle) const;
 
     ///@brief returns the top level widget associated with the specified QWindow.
-    ///For QtWidgets, it returns a QWidget which is either a KDDockWidgets::MainWindow or a FloatingWindow.
-    ///For QtQuick ir returns the same, but the type is a QWidgetAdapter (a QQuickItem), not QWidget obviously.
+    /// For QtWidgets, it returns a QWidget which is either a KDDockWidgets::MainWindow or a FloatingWindow.
+    /// For QtQuick ir returns the same, but the type is a QWidgetAdapter (a QQuickItem), not QWidget obviously.
     QWidgetOrQuick *topLevelForHandle(QWindow *windowHandle) const;
 
     ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and MainWindow instances.

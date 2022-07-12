@@ -89,8 +89,8 @@ void SideBarButton::paintEvent(QPaintEvent *)
         QStyleOptionToolButton opt;
         initStyleOption(&opt);
         const bool isHovered = opt.state & QStyle::State_MouseOver;
-        //const bool isOverlayed = m_dockWidget->isOverlayed(); // We could style different if it's open
-        //const bool isHoveredOrOverlayed = isHovered || isOverlayed;
+        // const bool isOverlayed = m_dockWidget->isOverlayed(); // We could style different if it's open
+        // const bool isHoveredOrOverlayed = isHovered || isOverlayed;
 
         QPainter p(&pixmap);
 

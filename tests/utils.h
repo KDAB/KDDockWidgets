@@ -26,20 +26,20 @@
 #include "Utils_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "widgets/TabWidgetWidget_p.h"
-# include "widgets/FrameWidget_p.h"
-# include "MainWindow.h"
+#include "widgets/TabWidgetWidget_p.h"
+#include "widgets/FrameWidget_p.h"
+#include "MainWindow.h"
 
-# include <QVBoxLayout>
-# include <QWidget>
-# include <QToolButton>
-# include <QLineEdit>
+#include <QVBoxLayout>
+#include <QWidget>
+#include <QToolButton>
+#include <QLineEdit>
 using FocusableWidget = QLineEdit;
 #else
-# include "quick/MainWindowQuick_p.h"
-# include "quick/TabWidgetQuick_p.h"
+#include "quick/MainWindowQuick_p.h"
+#include "quick/TabWidgetQuick_p.h"
 
-# include <QQuickView>
+#include <QQuickView>
 #endif
 
 #include <QPointer>
@@ -60,7 +60,7 @@ class FrameWidget;
 
 namespace Tests {
 
-template <typename T>
+template<typename T>
 inline QPointer<T> make_qpointer(T *t)
 {
     // To support both QWidget and QtQuick we need QPointer<auto>, so use a function instead.
@@ -74,7 +74,8 @@ enum ButtonAction {
 };
 Q_DECLARE_FLAGS(ButtonActions, ButtonAction)
 
-struct DockDescriptor {
+struct DockDescriptor
+{
     Location loc;
     int relativeToIndex;
     QPointer<DockWidgetBase> createdDock;
@@ -103,13 +104,13 @@ struct EnsureTopLevelsDeleted
 
     ~EnsureTopLevelsDeleted()
     {
-        qDeleteAll(DockRegistry::self()->floatingWindows(/*includeBeingDeleted=*/ true));
+        qDeleteAll(DockRegistry::self()->floatingWindows(/*includeBeingDeleted=*/true));
         qDeleteAll(DockRegistry::self()->dockwidgets());
 
         if (!DockRegistry::self()->isEmpty()) {
             auto dr = DockRegistry::self();
             qWarning() << "There's still top-level widgets present!"
-                       << "\nfloatings:" << dr->floatingWindows(/*includeBeingDeleted=*/ true)
+                       << "\nfloatings:" << dr->floatingWindows(/*includeBeingDeleted=*/true)
                        << "\nmainwindows:" << dr->mainWindowsNames()
                        << "\ndocks:" << dr->dockWidgetNames();
         }
@@ -128,7 +129,7 @@ struct EnsureTopLevelsDeleted
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = {1000, 1000},
+std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = { 1000, 1000 },
                                                  KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
                                                  const QString &name = {}, bool show = true);
 
@@ -153,7 +154,7 @@ public:
 
     QSize minimumSizeHint() const override
     {
-        return {100, 100};
+        return { 100, 100 };
     }
 
 protected:
@@ -229,7 +230,6 @@ protected:
 class MyWidget2 : public QWidgetAdapter
 {
 public:
-
     explicit MyWidget2(QSize minSz = QSize(1, 1))
     {
         setMinimumSize(minSz);
@@ -296,12 +296,10 @@ namespace {
 class MyWidget2 : public QWidget
 {
 public:
-
-    explicit MyWidget2(QSize minSz = QSize(1,1))
+    explicit MyWidget2(QSize minSz = QSize(1, 1))
         : m_minSz(minSz)
         , m_sizeHint(minSz)
     {
-
     }
 
     QSize sizeHint() const override
@@ -355,7 +353,7 @@ inline WidgetType *draggableFor(WidgetType *w)
         if (auto frame = dock->d->frame())
             draggable = frame->titleBar();
     } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
-        Frame *frame = fw->hasSingleFrame() ? static_cast<Frame*>(fw->frames().first())
+        Frame *frame = fw->hasSingleFrame() ? static_cast<Frame *>(fw->frames().first())
                                             : nullptr;
 
         if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) {
@@ -484,4 +482,3 @@ Q_DECLARE_METATYPE(KDDockWidgets::Tests::DockDescriptor)
 
 
 #endif
-

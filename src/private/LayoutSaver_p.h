@@ -26,11 +26,11 @@
 #include <memory>
 
 /**
-  * Bump whenever the format changes, so we can still load old layouts.
-  * version 1: Initial version
-  * version 2: Introduced MainWindow::screenSize and FloatingWindow::screenSize
-  * version 3: New layouting engine
-  */
+ * Bump whenever the format changes, so we can still load old layouts.
+ * version 1: Initial version
+ * version 2: Introduced MainWindow::screenSize and FloatingWindow::screenSize
+ * version 3: New layouting engine
+ */
 #define KDDOCKWIDGETS_SERIALIZATION_VERSION 3
 
 
@@ -43,8 +43,7 @@ class DockRegistry;
 /// There's some granularity that we don't want to expose to all users but want to allow some users
 /// to use. We might make more options public once they've proven themselves, so for now they are
 /// internal
-enum class InternalRestoreOption
-{
+enum class InternalRestoreOption {
     None = 0,
     SkipMainWindowGeometry = 1, ///< Don't reposition the main window's geometry when restoring.
     RelativeFloatingWindowGeometry =
@@ -93,7 +92,7 @@ struct LayoutSaver::Placeholder
 };
 
 ///@brief contains info about how a main window is scaled.
-///Used for RestoreOption_RelativeToMainWindow
+/// Used for RestoreOption_RelativeToMainWindow
 struct LayoutSaver::ScalingInfo
 {
     ScalingInfo() = default;
@@ -294,7 +293,7 @@ public:
 };
 
 ///@brief we serialize some info about screens, so eventually we can make restore smarter when switching screens
-///Not used currently, but nice to have in the json already
+/// Not used currently, but nice to have in the json already
 struct LayoutSaver::ScreenInfo
 {
     typedef QVector<LayoutSaver::ScreenInfo> List;

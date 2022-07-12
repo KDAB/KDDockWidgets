@@ -56,7 +56,7 @@ DropArea::DropArea(QWidgetOrQuick *parent, bool isMDIWrapper)
             }
 
             if (visibleCount() > 0) {
-               // The title of our MDI frame will need to change to the app name if we have more than 1 dock widget nested
+                // The title of our MDI frame will need to change to the app name if we have more than 1 dock widget nested
                 Q_EMIT dw->titleChanged(dw->title());
             } else {
                 // Our wrapeper isn't needed anymore
@@ -284,7 +284,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
     const DockWidgetBase::List droppedDockWidgets = needToFocusNewlyDroppedWidgets
         ? droppedWindow->layoutWidget()->dockWidgets()
         : DockWidgetBase::List(); // just so save some memory allocations for the case where this
-        // variable isn't used
+    // variable isn't used
 
     switch (droploc) {
     case DropLocation_Left:

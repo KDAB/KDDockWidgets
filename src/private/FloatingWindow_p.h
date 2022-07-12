@@ -218,8 +218,8 @@ public:
     Qt::WindowState lastWindowManagerState() const;
 
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
-    ///Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
-    ///be open ended
+    /// Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
+    /// be open ended
     static Qt::WindowFlags s_windowFlagsOverride;
 
 Q_SIGNALS:

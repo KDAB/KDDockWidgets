@@ -1854,7 +1854,7 @@ void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Siz
                                                ChildrenResizeStrategy strategy)
 {
     // This container is being resized to @p newSize, so we must resize our children too, based
-    //on @p strategy.
+    // on @p strategy.
     // The new sizes are applied to @p childSizes, which will be applied to the widgets when we're done
 
     const QVector<double> childPercentages = this->childPercentages();
@@ -2436,7 +2436,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
             // need to guarantee. We can't go larger and overwrite that
 
             const auto othersMissing = // The size that the others are missing to satisfy their
-                // minimum length
+                                       // minimum length
                 std::accumulate(sizes.constBegin(), sizes.constEnd(), 0,
                                 [this](size_t sum, const SizingInfo &sz) {
                                     return int(sum) + sz.missingLength(d->m_orientation);
@@ -2789,7 +2789,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
         sizingInfo.setLength(sizingInfo.length(d->m_orientation) + missing, d->m_orientation);
         const auto count = sizes.count();
         if (count == 1) {
-            //There's no neighbours to push, we're alone. Occupy the full container
+            // There's no neighbours to push, we're alone. Occupy the full container
             sizingInfo.incrementLength(missing, d->m_orientation);
             return;
         }
@@ -2912,8 +2912,8 @@ SizingInfo::List ItemBoxContainer::sizes(bool ignoreBeingInserted) const
     return result;
 }
 
-QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin, //clazy:exclude=function-args-by-ref
-                                                 SizingInfo::List::ConstIterator end, int needed, //clazy:exclude=function-args-by-ref
+QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin, // clazy:exclude=function-args-by-ref
+                                                 SizingInfo::List::ConstIterator end, int needed, // clazy:exclude=function-args-by-ref
                                                  NeighbourSqueezeStrategy strategy, bool reversed) const
 {
     QVector<int> availabilities;

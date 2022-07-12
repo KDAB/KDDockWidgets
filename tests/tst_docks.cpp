@@ -33,7 +33,7 @@
 #include <QAction>
 
 #ifdef Q_OS_WIN
-# include <windows.h>
+#include <windows.h>
 #endif
 
 using namespace KDDockWidgets;
@@ -60,7 +60,7 @@ static QPoint dragPointForWidget(Frame *frame, int index)
     }
 }
 
-template <typename T>
+template<typename T>
 inline int widgetMinLength(const T *w, Qt::Orientation o)
 {
     const QSize sz = Widget::widgetMinSize(w);
@@ -80,11 +80,11 @@ static DockWidgetBase *createAndNestDockWidget(DropArea *dropArea, Frame *relati
     return dock;
 }
 
-static std::unique_ptr<MainWindowBase> createSimpleNestedMainWindow(DockWidgetBase * *centralDock,
-                                                                    DockWidgetBase * *leftDock,
-                                                                    DockWidgetBase * *rightDock)
+static std::unique_ptr<MainWindowBase> createSimpleNestedMainWindow(DockWidgetBase **centralDock,
+                                                                    DockWidgetBase **leftDock,
+                                                                    DockWidgetBase **rightDock)
 {
-    auto window = createMainWindow({900, 500});
+    auto window = createMainWindow({ 900, 500 });
     *centralDock = createDockWidget("centralDock", Qt::green);
     window->addDockWidgetAsTab(*centralDock);
     auto dropArea = window->dropArea();
@@ -316,8 +316,8 @@ void TestDocks::tst_detachPos()
     // Tests a situation where detaching a dock widget would send it to a bogus position
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new MyWidget(QStringLiteral("1"), Qt::black), {}, {}, /** show = */false); // we're creating the dock widgets without showing them as floating initially, so it doesn't record the previous floating position
-    auto dock2 = createDockWidget("2", new MyWidget(QStringLiteral("2"), Qt::black), {}, {}, /** show = */false);
+    auto dock1 = createDockWidget("1", new MyWidget(QStringLiteral("1"), Qt::black), {}, {}, /** show = */ false); // we're creating the dock widgets without showing them as floating initially, so it doesn't record the previous floating position
+    auto dock2 = createDockWidget("2", new MyWidget(QStringLiteral("2"), Qt::black), {}, {}, /** show = */ false);
 
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock2->isVisible());
@@ -810,7 +810,7 @@ void TestDocks::tst_dockInternal()
     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
     auto dropArea = m->dropArea();
 
-    auto centralWidget = static_cast<Frame*>(dropArea->items()[0]->guestAsQObject());
+    auto centralWidget = static_cast<Frame *>(dropArea->items()[0]->guestAsQObject());
     nestDockWidget(dock1, dropArea, centralWidget, KDDockWidgets::Location_OnRight);
 
     QVERIFY(dock1->width() < dropArea->width() - centralWidget->width());
@@ -914,25 +914,23 @@ void TestDocks::tst_complex()
 
     DockWidgetBase::List docks;
 
-    QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft, Location_OnLeft,
-                                                  Location_OnRight, Location_OnRight, Location_OnRight, Location_OnRight,
-                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
-                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
-                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom
-                                                  };
+    QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnLeft, Location_OnLeft,
+                                                   Location_OnRight, Location_OnRight, Location_OnRight, Location_OnRight,
+                                                   Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
+                                                   Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
+                                                   Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom };
 
     QVector<KDDockWidgets::InitialVisibilityOption> options = { InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
-                                                    InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
-                                                    InitialVisibilityOption::StartVisible,
-                                                    InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
-                                                    InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
-                                                    InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden
-    };
+                                                                InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+                                                                InitialVisibilityOption::StartVisible,
+                                                                InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+                                                                InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
+                                                                InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden };
 
-    QVector<bool> floatings =  {true, false, true, false, false, false, false, false, false, false, false, false,
-                               true, false, false, true, true, true, true, true, false };
+    QVector<bool> floatings = { true, false, true, false, false, false, false, false, false, false, false, false,
+                                true, false, false, true, true, true, true, true, false };
 
-    QVector<QSize> minSizes= {
+    QVector<QSize> minSizes = {
         QSize(316, 219),
         QSize(355, 237),
         QSize(293, 66),
@@ -1015,44 +1013,44 @@ void TestDocks::tst_28NestedWidgets_data()
     QTest::addColumn<QVector<int>>("docksToHide");
 
     QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-    QTest::newRow("28") << docks << QVector<int>{11, 0};
+    QTest::newRow("28") << docks << QVector<int> { 11, 0 };
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
 
     };
 
@@ -1064,67 +1062,67 @@ void TestDocks::tst_28NestedWidgets_data()
     QTest::newRow("anchor_intersection") << docks << docksToHide;
 
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // 2. Produced valgrind invalid reads while adding
-    QTest::newRow("valgrind") << docks << QVector<int>{};
+    QTest::newRow("valgrind") << docks << QVector<int> {};
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-    QTest::newRow("bug_when_closing") << docks << QVector<int>{}; // Q_ASSERT(!isSquashed())
+    QTest::newRow("bug_when_closing") << docks << QVector<int> {}; // Q_ASSERT(!isSquashed())
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-    QTest::newRow("bug_when_closing2") << docks << QVector<int>{};    // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
+    QTest::newRow("bug_when_closing2") << docks << QVector<int> {}; // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
 
     docksToHide.clear();
@@ -1136,88 +1134,95 @@ void TestDocks::tst_28NestedWidgets_data()
     QTest::newRow("bug_with_holes") << docks << docksToHide;
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnLeft, 17, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnLeft, 17, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
+    };
 
     docksToHide.clear();
     QTest::newRow("add_as_placeholder") << docks << docksToHide;
 
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden }
+    };
 
     QTest::newRow("add_as_placeholder_simple") << docks << docksToHide;
 
 
     docks = {
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden }
+    };
 
     docksToHide.clear();
     QTest::newRow("isSquashed_assert") << docks << docksToHide;
 
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden } };
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden }
+    };
 
     docksToHide.clear();
     QTest::newRow("negative_pos_warning") << docks << docksToHide;
 
     docks = {
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
+    };
 
     docksToHide.clear();
     QTest::newRow("bug") << docks << docksToHide;
 
     docks = {
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
+    };
 
     docksToHide.clear();
     QTest::newRow("bug2") << docks << docksToHide;
 
     docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
+    };
 
     docksToHide.clear();
     QTest::newRow("bug3") << docks << docksToHide;
@@ -1452,11 +1457,11 @@ void TestDocks::tst_negativeAnchorPosition3()
 {
     // 1. Another case, when floating a dock:
     EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = { {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-                                     {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-                                     {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-                                     {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-                                     {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
+    QVector<DockDescriptor> docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                      { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                      { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                      { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+                                      { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
     MultiSplitter *layout = dropArea;
@@ -1508,10 +1513,10 @@ void TestDocks::tst_negativeAnchorPosition5()
 {
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        };
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+    };
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
@@ -1544,10 +1549,10 @@ void TestDocks::tst_negativeAnchorPosition6()
 
     auto layout = m->multiSplitter();
 
-    auto w1 = new MyWidget2(QSize(400,100));
-    auto w2 = new MyWidget2(QSize(400,100));
-    auto w3 = new MyWidget2(QSize(400,100));
-    auto w4 = new MyWidget2(QSize(400,900));
+    auto w1 = new MyWidget2(QSize(400, 100));
+    auto w2 = new MyWidget2(QSize(400, 100));
+    auto w3 = new MyWidget2(QSize(400, 100));
+    auto w4 = new MyWidget2(QSize(400, 900));
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
     auto d3 = createDockWidget("3", w3);
@@ -1574,15 +1579,15 @@ void TestDocks::tst_negativeAnchorPosition7()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     m->show();
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
+    auto w1 = new MyWidget2(QSize(400, 400));
+    auto w2 = new MyWidget2(QSize(400, 400));
 
     auto d1 = new DockWidgetType("1");
     d1->setWidget(w1);
     auto d2 = new DockWidgetType("2");
     d2->setWidget(w2);
 
-    auto w3 = new MyWidget2(QSize(100,100));
+    auto w3 = new MyWidget2(QSize(100, 100));
     auto d3 = new DockWidgetType("3");
     d3->setWidget(w3);
 
@@ -1867,7 +1872,7 @@ void TestDocks::tst_dockFloatingWindowNested()
 
 void TestDocks::tst_crash()
 {
-     // tests some crash I got
+    // tests some crash I got
 
     EnsureTopLevelsDeleted e;
 
@@ -2036,7 +2041,7 @@ void TestDocks::tst_availableLengthForOrientation()
     QCOMPARE(availableWidth, layout->width());
     QCOMPARE(availableHeight, layout->height());
 
-    //2. Now do the same, but we have some widget docked
+    // 2. Now do the same, but we have some widget docked
 
     auto dock1 = createDockWidget("dock1", new QPushButton("1"));
     m->addDockWidget(dock1, Location_OnLeft);
@@ -2123,7 +2128,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
 
     dock1->dptr()->morphIntoFloatingWindow();
     auto fw = dock1->floatingWindow();
-    layout->addMultiSplitter(fw->dropArea(), Location_OnRight );
+    layout->addMultiSplitter(fw->dropArea(), Location_OnRight);
 
     QCOMPARE(layout->placeholderCount(), 0);
     QCOMPARE(layout->count(), 1);
@@ -2230,13 +2235,13 @@ void TestDocks::tst_crash2()
         for (int i = 0; i < num; ++i)
             docks << new DockWidgetType(QString::number(i));
 
-        QVector<KDDockWidgets::Location> locations = {Location_OnLeft,
-                                                      Location_OnRight, Location_OnRight, Location_OnRight};
+        QVector<KDDockWidgets::Location> locations = { Location_OnLeft,
+                                                       Location_OnRight, Location_OnRight, Location_OnRight };
 
         QVector<KDDockWidgets::InitialVisibilityOption> options = { InitialVisibilityOption::StartHidden,
-                                                        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartHidden};
+                                                                    InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartHidden };
 
-        QVector<bool> floatings =  {true, false, false, false};
+        QVector<bool> floatings = { true, false, false, false };
 
         for (int i = 0; i < num; ++i) {
 
@@ -2260,13 +2265,13 @@ void TestDocks::tst_crash2()
         for (int i = 0; i < num; ++i)
             docks << new DockWidgetType(QString::number(i));
 
-        QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft,
-                                                      Location_OnRight};
+        QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnLeft,
+                                                       Location_OnRight };
 
         QVector<KDDockWidgets::InitialVisibilityOption> options = { InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
-                                                        InitialVisibilityOption::StartHidden};
+                                                                    InitialVisibilityOption::StartHidden };
 
-        QVector<bool> floatings =  {true, false, false};
+        QVector<bool> floatings = { true, false, false };
 
         for (int i = 0; i < num; ++i) {
             m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
@@ -2283,7 +2288,6 @@ void TestDocks::tst_crash2()
         qDeleteAll(docks);
         qDeleteAll(DockRegistry::self()->frames());
     }
-
 }
 
 void TestDocks::tst_closeAllDockWidgets()
@@ -2456,7 +2460,7 @@ void TestDocks::tst_stealFrame()
     {
         SetExpectedWarning sew("Invalid parameters KDDockWidgets::DockWidget"); // Suppress the qFatal this time
         m2->addDockWidget(dock1, Location_OnLeft, dock1);
-        QCOMPARE(dropArea2->count(), 2);  // Nothing happened
+        QCOMPARE(dropArea2->count(), 2); // Nothing happened
         QCOMPARE(dropArea2->placeholderCount(), 0);
         QVERIFY(dock1->isVisible());
     }
@@ -2465,12 +2469,12 @@ void TestDocks::tst_stealFrame()
     m2->addDockWidget(dock1, Location_OnLeft, nullptr); // Should not warn
 
     QVERIFY(dock1->isVisible());
-    QCOMPARE(dropArea2->count(), 2);  // Nothing happened
+    QCOMPARE(dropArea2->count(), 2); // Nothing happened
     QCOMPARE(dropArea2->placeholderCount(), 0);
 
     m2->addDockWidget(dock1, Location_OnLeft, nullptr);
     QVERIFY(dock1->isVisible());
-    QCOMPARE(dropArea2->count(), 2);  // Nothing happened
+    QCOMPARE(dropArea2->count(), 2); // Nothing happened
     QCOMPARE(dropArea2->placeholderCount(), 0);
     dropArea1->checkSanity();
     dropArea2->checkSanity();
@@ -2597,7 +2601,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         auto fw = dock1->floatingWindow();
         QVERIFY(fw);
 
-        //2. Put it back, via setFloating(). It should return to its place.
+        // 2. Put it back, via setFloating(). It should return to its place.
         dock1->setFloating(false);
 
         QVERIFY(!dock1->isFloating());
@@ -2917,7 +2921,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
     QVERIFY(fw2->dropArea()->checkSanity());
 
-    ///Cleanup
+    /// Cleanup
     fw2->deleteLater();
     Testing::waitForDeleted(fw2);
 }
@@ -3011,8 +3015,7 @@ void TestDocks::tst_propagateMinSize()
     nestDockWidget(dock3, dropArea, nullptr, KDDockWidgets::Location_OnRight);
 
     // TODO finish this when the 3 dock widgets have proper sizes
-    //QTest::qWait(50000);
-
+    // QTest::qWait(50000);
 }
 
 void TestDocks::tst_createFloatingWindow()
@@ -3061,7 +3064,7 @@ void TestDocks::tst_addAndReadd()
     fw->titleBar()->makeWindow();
     m->layoutWidget()->checkSanity();
 
-    //Cleanup
+    // Cleanup
     delete dock1;
     Testing::waitForDeleted(fw);
 }
@@ -3098,7 +3101,7 @@ void TestDocks::tst_addToSmallMainWindow1()
 
     QVERIFY(dock1->width() <= mainWindowLength);
 
-    //Add in area:
+    // Add in area:
     m->addDockWidget(dock2, Location_OnLeft);
     m->addDockWidget(dock3, Location_OnTop, dock2);
     m->addDockWidget(dock4, Location_OnBottom);
@@ -3365,7 +3368,7 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
 {
     QFETCH(bool, useSetVisible);
 
-    auto setVisible = [useSetVisible] (DockWidgetBase *dw, bool visible) {
+    auto setVisible = [useSetVisible](DockWidgetBase *dw, bool visible) {
         if (useSetVisible)
             dw->setVisible(visible);
         else if (visible)
@@ -3400,7 +3403,7 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     QCOMPARE(dock1->parentWidget(), oldParent);
 
     // 2. Check that the parent frame also is hidden now
-    //auto fw1 = dock1->window();
+    // auto fw1 = dock1->window();
     setVisible(dock1, false);
     QVERIFY(!dock1->dptr()->frame());
     delete dock1;
@@ -3408,19 +3411,19 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
 
 void TestDocks::tst_restoreSimplest()
 {
-   EnsureTopLevelsDeleted e;
+    EnsureTopLevelsDeleted e;
     // Tests restoring a very simple layout, composed of just 1 docked widget
-   auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-   auto layout = m->multiSplitter();
-   auto dock1 = createDockWidget("one", new QTextEdit());
-   m->addDockWidget(dock1, Location_OnTop);
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto layout = m->multiSplitter();
+    auto dock1 = createDockWidget("one", new QTextEdit());
+    m->addDockWidget(dock1, Location_OnTop);
 
-   LayoutSaver saver;
-   QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSimplest.json")));
-   QTest::qWait(200);
-   QVERIFY(layout->checkSanity());
-   QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));
-   QVERIFY(layout->checkSanity());
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSimplest.json")));
+    QTest::qWait(200);
+    QVERIFY(layout->checkSanity());
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));
+    QVERIFY(layout->checkSanity());
 }
 
 void TestDocks::tst_restoreNonClosable()
@@ -3491,7 +3494,7 @@ void TestDocks::tst_restoreRestoresMainWindowPosition()
         QCOMPARE(originalPos, m->pos());
     }
 #ifdef KDDOCKWIDGETS_QTQUICK
-// Tests the ApplicationWindow {} case
+    // Tests the ApplicationWindow {} case
     {
         QQmlApplicationEngine engine(":/main2.qml");
 
@@ -3568,11 +3571,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
 
         Separator *anchor1 = separators[0];
         int boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
-        int expectedBoundToTheRight = layout->size().width() -
-                                      3*Item::separatorThickness -
-                                      item2->minLength(Qt::Horizontal) -
-                                      item3->minLength(Qt::Horizontal) -
-                                      item4->minLength(Qt::Horizontal);
+        int expectedBoundToTheRight = layout->size().width() - 3 * Item::separatorThickness - item2->minLength(Qt::Horizontal) - item3->minLength(Qt::Horizontal) - item4->minLength(Qt::Horizontal);
 
         QCOMPARE(boundToTheRight, expectedBoundToTheRight);
 
@@ -3585,10 +3584,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         QVERIFY(!item4->isPlaceholder());
 
         boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
-        expectedBoundToTheRight = layout->size().width() -
-                                  2*Item::separatorThickness -
-                                  item2->minLength(Qt::Horizontal) -
-                                  item4->minLength(Qt::Horizontal) ;
+        expectedBoundToTheRight = layout->size().width() - 2 * Item::separatorThickness - item2->minLength(Qt::Horizontal) - item4->minLength(Qt::Horizontal);
 
         QCOMPARE(boundToTheRight, expectedBoundToTheRight);
         dock3->deleteLater();
@@ -3607,8 +3603,8 @@ void TestDocks::tst_rectForDropCrash()
 
     auto layout = m->multiSplitter();
 
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
+    auto w1 = new MyWidget2(QSize(400, 400));
+    auto w2 = new MyWidget2(QSize(400, 400));
 
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
@@ -3833,7 +3829,6 @@ void TestDocks::tst_restoreWithPlaceholder()
         QVERIFY(dock1->isVisible());
         QCOMPARE(layout->count(), 1);
         QCOMPARE(layout->placeholderCount(), 0);
-
     }
 
     // Try again, but on a different main window
@@ -3875,7 +3870,7 @@ void TestDocks::tst_restoreWithAffinity()
     dock2->show();
 
     LayoutSaver saver;
-    saver.setAffinityNames({"a1"});
+    saver.setAffinityNames({ "a1" });
     const QByteArray saved1 = saver.serializeLayout();
 
     QPointer<FloatingWindow> fw2 = dock2->floatingWindow();
@@ -3978,8 +3973,8 @@ void TestDocks::tst_restoreWithDockFactory()
     }
 
     // Now try with a factory func
-    DockWidgetFactoryFunc func = [] (const QString &) {
-        return createDockWidget("1", new QPushButton("1"), {}, {}, /*show=*/ false);
+    DockWidgetFactoryFunc func = [](const QString &) {
+        return createDockWidget("1", new QPushButton("1"), {}, {}, /*show=*/false);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(func);
@@ -4005,9 +4000,9 @@ void TestDocks::tst_restoreWithDockFactory2()
     const QByteArray saved = saver.serializeLayout();
     delete dock1;
 
-    DockWidgetFactoryFunc func = [] (const QString &) {
+    DockWidgetFactoryFunc func = [](const QString &) {
         // A factory func which does id remapping
-        return createDockWidget("dw2", new QPushButton("w"), {}, {}, /*show=*/ false);
+        return createDockWidget("dw2", new QPushButton("w"), {}, {}, /*show=*/false);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(func);
@@ -4017,20 +4012,20 @@ void TestDocks::tst_restoreWithDockFactory2()
 void TestDocks::tst_addDockWidgetToMainWindow()
 {
     EnsureTopLevelsDeleted e;
-     auto m = createMainWindow();
-     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-     auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
 
-     m->addDockWidget(dock1, Location_OnRight, nullptr);
-     m->addDockWidget(dock2, Location_OnTop, dock1);
-     QVERIFY(m->dropArea()->checkSanity());
+    m->addDockWidget(dock1, Location_OnRight, nullptr);
+    m->addDockWidget(dock2, Location_OnTop, dock1);
+    QVERIFY(m->dropArea()->checkSanity());
 
-     QCOMPARE(dock1->window(), m.get());
-     QCOMPARE(dock2->window(), m.get());
-     QVERIFY(dock1->dptr()->frame()->QWidgetAdapter::y()
-             > dock2->dptr()->frame()->QWidgetAdapter::y());
-     QCOMPARE(dock1->dptr()->frame()->QWidgetAdapter::x(),
-              dock2->dptr()->frame()->QWidgetAdapter::x());
+    QCOMPARE(dock1->window(), m.get());
+    QCOMPARE(dock2->window(), m.get());
+    QVERIFY(dock1->dptr()->frame()->QWidgetAdapter::y()
+            > dock2->dptr()->frame()->QWidgetAdapter::y());
+    QCOMPARE(dock1->dptr()->frame()->QWidgetAdapter::x(),
+             dock2->dptr()->frame()->QWidgetAdapter::x());
 }
 
 void TestDocks::tst_addDockWidgetToContainingWindow()
@@ -4288,7 +4283,6 @@ void TestDocks::tst_tabBarWithHiddenTitleBar_data()
 
     QTest::newRow("false-true") << false << true;
     QTest::newRow("true-true") << true << true;
-
 }
 
 void TestDocks::tst_tabBarWithHiddenTitleBar()
@@ -4366,16 +4360,16 @@ void TestDocks::tst_availableSizeWithPlaceholders()
 
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks1 = {
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
-        };
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+    };
 
     QVector<DockDescriptor> docks2 = {
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-        };
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+    };
 
     QVector<DockDescriptor> empty;
 
@@ -4435,12 +4429,13 @@ void TestDocks::tst_anchorFollowingItselfAssert()
     //  ASSERT: "this != m_followee" in file ../src/multisplitter/Anchor.cpp
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
-        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
+    };
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
@@ -4579,99 +4574,99 @@ void TestDocks::tst_sizeConstraintWarning()
     auto window = createMainWindow();
     QList<DockWidgetBase *> listDockWidget;
     {
-       auto dock = new DockWidgetType("foo-0");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-0");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-1");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-1");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-2");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-2");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-3");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-3");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-4");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-4");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-5");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-5");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-6");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-6");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-7");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-7");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-8");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-8");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-9");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-9");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-10");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-10");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-11");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-11");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-12");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-12");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-13");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-13");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-14");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-14");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-15");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-15");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-16");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-16");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-17");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-17");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidgetType("foo-18");
-       dock->setWidget(new QTextEdit());
-       listDockWidget.append(dock);
+        auto dock = new DockWidgetType("foo-18");
+        dock->setWidget(new QTextEdit());
+        listDockWidget.append(dock);
     }
 
     auto dropArea = window->dropArea();
@@ -4684,7 +4679,7 @@ void TestDocks::tst_sizeConstraintWarning()
     listDockWidget.at(2 - 1)->addDockWidgetAsTab(listDockWidget.at(2));
     dropArea->checkSanity();
 
-    window->addDockWidget(listDockWidget.at(3-1), static_cast<Location>(2), listDockWidget.at(3), static_cast<InitialVisibilityOption>(1));
+    window->addDockWidget(listDockWidget.at(3 - 1), static_cast<Location>(2), listDockWidget.at(3), static_cast<InitialVisibilityOption>(1));
     dropArea->checkSanity();
 
     listDockWidget.at(4 - 1)->addDockWidgetAsTab(listDockWidget.at(4));
@@ -4699,13 +4694,13 @@ void TestDocks::tst_sizeConstraintWarning()
     window->addDockWidget(listDockWidget.at(7), static_cast<Location>(4));
     dropArea->checkSanity();
 
-    window->addDockWidget(listDockWidget.at(8-1), static_cast<Location>(1), listDockWidget.at(8), static_cast<InitialVisibilityOption>(1));
+    window->addDockWidget(listDockWidget.at(8 - 1), static_cast<Location>(1), listDockWidget.at(8), static_cast<InitialVisibilityOption>(1));
     dropArea->checkSanity();
 
     window->addDockWidget(listDockWidget.at(9), static_cast<Location>(2));
     dropArea->checkSanity();
 
-    window->addDockWidget(listDockWidget.at(10-1), static_cast<Location>(2), listDockWidget.at(10), static_cast<InitialVisibilityOption>(1));
+    window->addDockWidget(listDockWidget.at(10 - 1), static_cast<Location>(2), listDockWidget.at(10), static_cast<InitialVisibilityOption>(1));
     dropArea->checkSanity();
 
     listDockWidget.at(11 - 1)->addDockWidgetAsTab(listDockWidget.at(11));
@@ -4733,7 +4728,7 @@ void TestDocks::tst_sizeConstraintWarning()
 
     auto docks = DockRegistry::self()->dockwidgets();
     auto lastDock = docks.last();
-    for (auto dock: docks)
+    for (auto dock : docks)
         dock->deleteLater();
 
     Testing::waitForDeleted(lastDock);
@@ -4795,29 +4790,29 @@ void TestDocks::tst_titlebar_getter()
 
 void TestDocks::tst_dockNotFillingSpace()
 {
-     EnsureTopLevelsDeleted e;
-     auto m = createMainWindow(QSize(1000, 1000));
-     m->resize(QSize(500, 500));
-     m->show();
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(1000, 1000));
+    m->resize(QSize(500, 500));
+    m->show();
 
-     auto d1 = createDockWidget("1", new QTextEdit());
-     auto d2 = createDockWidget("2", new QTextEdit());
-     auto d3 = createDockWidget("3", new QTextEdit());
+    auto d1 = createDockWidget("1", new QTextEdit());
+    auto d2 = createDockWidget("2", new QTextEdit());
+    auto d3 = createDockWidget("3", new QTextEdit());
 
-     m->addDockWidget(d1, Location_OnTop);
-     m->addDockWidget(d2, Location_OnBottom);
-     m->addDockWidget(d3, Location_OnBottom);
+    m->addDockWidget(d1, Location_OnTop);
+    m->addDockWidget(d2, Location_OnBottom);
+    m->addDockWidget(d3, Location_OnBottom);
 
-     Frame *frame2 = d2->dptr()->frame();
-     d1->close();
-     d2->close();
-     Testing::waitForDeleted(frame2);
+    Frame *frame2 = d2->dptr()->frame();
+    d1->close();
+    d2->close();
+    Testing::waitForDeleted(frame2);
 
-     auto layout = m->multiSplitter();
-     QVERIFY(layout->checkSanity());
+    auto layout = m->multiSplitter();
+    QVERIFY(layout->checkSanity());
 
-     delete d1;
-     delete d2;
+    delete d1;
+    delete d2;
 }
 
 void TestDocks::tst_lastFloatingPositionIsRestored()
@@ -4870,56 +4865,56 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
 
 void TestDocks::tst_titleBarFocusedWhenTabsChange()
 {
-     EnsureTopLevelsDeleted e;
-     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
 
-     auto le1 = new FocusableWidget();
-     le1->setObjectName("le1");
-     auto dock1 = createDockWidget(QStringLiteral("dock1"), le1);
-     auto dock2 = createDockWidget(QStringLiteral("dock2"), new FocusableWidget());
-     auto dock3 = createDockWidget(QStringLiteral("dock3"), new FocusableWidget());
-     auto oldFw1 = dock1->window();
-     auto oldFw2 = dock2->window();
-     auto oldFw3 = dock3->window();
+    auto le1 = new FocusableWidget();
+    le1->setObjectName("le1");
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), le1);
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new FocusableWidget());
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new FocusableWidget());
+    auto oldFw1 = dock1->window();
+    auto oldFw2 = dock2->window();
+    auto oldFw3 = dock3->window();
 
-     auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
+    auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
 
-     m1->addDockWidget(dock1, Location_OnLeft);
-     m1->addDockWidget(dock2, Location_OnRight);
-     delete oldFw1;
-     delete oldFw2;
-     dock2->addDockWidgetAsTab(dock3);
-     delete oldFw3;
+    m1->addDockWidget(dock1, Location_OnLeft);
+    m1->addDockWidget(dock2, Location_OnRight);
+    delete oldFw1;
+    delete oldFw2;
+    dock2->addDockWidgetAsTab(dock3);
+    delete oldFw3;
 
-     TitleBar *titleBar1 = dock1->titleBar();
-     dock1->widget()->setFocus(Qt::MouseFocusReason);
+    TitleBar *titleBar1 = dock1->titleBar();
+    dock1->widget()->setFocus(Qt::MouseFocusReason);
 
-     QVERIFY(dock1->isFocused() || Testing::waitForEvent(dock1->widget(), QEvent::FocusIn));
-     QVERIFY(titleBar1->isFocused());
+    QVERIFY(dock1->isFocused() || Testing::waitForEvent(dock1->widget(), QEvent::FocusIn));
+    QVERIFY(titleBar1->isFocused());
 
-     auto frame2 = dock2->dptr()->frame();
+    auto frame2 = dock2->dptr()->frame();
 
-     TabWidget *tb2 = frame2->tabWidget();
-     QCOMPARE(tb2->currentIndex(), 1); // Was the last to be added
+    TabWidget *tb2 = frame2->tabWidget();
+    QCOMPARE(tb2->currentIndex(), 1); // Was the last to be added
 
-     auto tabBar2 = tb2->tabBar();
-     const QRect rect0 = tabBar2->rectForTab(0);
-     const QPoint globalPos = tabBar2->asWidget()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
-     Tests::clickOn(globalPos, tabBar2->asWidget());
+    auto tabBar2 = tb2->tabBar();
+    const QRect rect0 = tabBar2->rectForTab(0);
+    const QPoint globalPos = tabBar2->asWidget()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
+    Tests::clickOn(globalPos, tabBar2->asWidget());
 
-     QVERIFY(!titleBar1->isFocused());
-     QVERIFY(dock2->titleBar()->isFocused());
+    QVERIFY(!titleBar1->isFocused());
+    QVERIFY(dock2->titleBar()->isFocused());
 
-     // Test that clicking on a tab that is already current will also set focus
-     dock1->setFocus(Qt::MouseFocusReason);
-     QVERIFY(dock1->titleBar()->isFocused());
-     QVERIFY(!dock2->titleBar()->isFocused());
+    // Test that clicking on a tab that is already current will also set focus
+    dock1->setFocus(Qt::MouseFocusReason);
+    QVERIFY(dock1->titleBar()->isFocused());
+    QVERIFY(!dock2->titleBar()->isFocused());
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-     // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++ TitleBar for focus
-     Tests::clickOn(globalPos, tabBar2->asWidget());
-     QVERIFY(!dock1->titleBar()->isFocused());
-     QVERIFY(dock2->titleBar()->isFocused());
+    // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++ TitleBar for focus
+    Tests::clickOn(globalPos, tabBar2->asWidget());
+    QVERIFY(!dock1->titleBar()->isFocused());
+    QVERIFY(dock2->titleBar()->isFocused());
 #endif
 }
 
@@ -4930,7 +4925,7 @@ void TestDocks::tst_tabsNotClickable()
     // Well, not a great unit-test, as it's only repro when it's Windows sending the native event
     // Can't repro with fabricated events. Uncomment the WAIT and test different configs manually
     EnsureTopLevelsDeleted e;
-    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_Default  | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible);
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_Default | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible);
 
     auto dock1 = createDockWidget("dock1", new QWidget());
     auto dock2 = createDockWidget("dock2", new QWidget());
@@ -4947,7 +4942,7 @@ void TestDocks::tst_tabsNotClickable()
     pressOn(clickPoint, frame->tabBar());
     releaseOn(clickPoint, frame->tabBar());
 
-   // WAIT // Uncomment for MANUAL test. Also test by adding Flag_AlwaysShowTabs
+    // WAIT // Uncomment for MANUAL test. Also test by adding Flag_AlwaysShowTabs
 
     QCOMPARE(frame->currentIndex(), 0);
 
@@ -4964,7 +4959,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
-    QPointer<Frame> centralFrame = static_cast<Frame*>(dropArea->centralFrame()->guestAsQObject());
+    QPointer<Frame> centralFrame = static_cast<Frame *>(dropArea->centralFrame()->guestAsQObject());
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);
@@ -4982,7 +4977,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
 
     // Detach tab
     QPoint globalPressPos = dragPointForWidget(centralFrame.data(), 0);
-    QTabBar *tabBar = static_cast<FrameWidget*>(centralFrame.data())->tabBar();
+    QTabBar *tabBar = static_cast<FrameWidget *>(centralFrame.data())->tabBar();
     QVERIFY(tabBar);
     qDebug() << "Detaching tab from dropArea->size=" << dropArea->QWidget::size() << "; dropArea=" << dropArea;
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
@@ -4999,68 +4994,68 @@ void TestDocks::tst_dockableMainWindows()
 {
     EnsureTopLevelsDeleted e;
 
-     auto m1 = createMainWindow();
-     auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
-     m1->addDockWidget(dock1, Location_OnTop);
+    auto m1 = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
+    m1->addDockWidget(dock1, Location_OnTop);
 
-     auto m2 = new KDDockWidgets::MainWindow("mainwindow-dockable");
-     auto m2Container = createDockWidget("mainwindow-dw", m2);
-     auto menubar = m2->menuBar();
-     menubar->addMenu("File");
-     menubar->addMenu("View");
-     menubar->addMenu("Help");
-     m2Container->show();
+    auto m2 = new KDDockWidgets::MainWindow("mainwindow-dockable");
+    auto m2Container = createDockWidget("mainwindow-dw", m2);
+    auto menubar = m2->menuBar();
+    menubar->addMenu("File");
+    menubar->addMenu("View");
+    menubar->addMenu("Help");
+    m2Container->show();
 
-     auto dock21 = createDockWidget("dock21", new QPushButton("foo"));
-     auto dock22 = createDockWidget("dock22", new QPushButton("foo"));
-     m2->addDockWidget(dock21, Location_OnLeft);
-     m2->addDockWidget(dock22, Location_OnRight);
+    auto dock21 = createDockWidget("dock21", new QPushButton("foo"));
+    auto dock22 = createDockWidget("dock22", new QPushButton("foo"));
+    m2->addDockWidget(dock21, Location_OnLeft);
+    m2->addDockWidget(dock22, Location_OnRight);
 
-     auto fw = m2Container->floatingWindow();
-     TitleBar *fwTitleBar = fw->titleBar();
+    auto fw = m2Container->floatingWindow();
+    TitleBar *fwTitleBar = fw->titleBar();
 
-     QVERIFY(fw->hasSingleFrame());
-     QVERIFY(fw->hasSingleDockWidget());
+    QVERIFY(fw->hasSingleFrame());
+    QVERIFY(fw->hasSingleDockWidget());
 
-     // Check that the inner-inner dock widgets have a visible title-bar
-     QVERIFY(dock21->titleBar()->isVisible());
-     QVERIFY(dock22->titleBar()->isVisible());
-     QVERIFY(dock21->titleBar() != fwTitleBar);
-     QVERIFY(dock22->titleBar() != fwTitleBar);
+    // Check that the inner-inner dock widgets have a visible title-bar
+    QVERIFY(dock21->titleBar()->isVisible());
+    QVERIFY(dock22->titleBar()->isVisible());
+    QVERIFY(dock21->titleBar() != fwTitleBar);
+    QVERIFY(dock22->titleBar() != fwTitleBar);
 
-     const QPoint startPoint = fwTitleBar->mapToGlobal(QPoint(5, 5));
-     const QPoint destination = startPoint + QPoint(20, 20);
+    const QPoint startPoint = fwTitleBar->mapToGlobal(QPoint(5, 5));
+    const QPoint destination = startPoint + QPoint(20, 20);
 
-     // Check that we don't get the "Refusing to itself" warning. not actually dropping anywhere
-     drag(fwTitleBar, startPoint, destination);
+    // Check that we don't get the "Refusing to itself" warning. not actually dropping anywhere
+    drag(fwTitleBar, startPoint, destination);
 
-     // The FloatingWindow has a single DockWidget, so it shows the title bar, while the Frame doesn't
-     QVERIFY(fwTitleBar->isVisible());
-     QVERIFY(!m2Container->dptr()->frame()->titleBar()->isVisible());
+    // The FloatingWindow has a single DockWidget, so it shows the title bar, while the Frame doesn't
+    QVERIFY(fwTitleBar->isVisible());
+    QVERIFY(!m2Container->dptr()->frame()->titleBar()->isVisible());
 
-     fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
-     // Now the FloatingWindow has two dock widgets, so our main window dock widget also shows the title bar
-     QVERIFY(fwTitleBar->isVisible());
-     QVERIFY(m2Container->dptr()->frame()->titleBar()->isVisible());
+    fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
+    // Now the FloatingWindow has two dock widgets, so our main window dock widget also shows the title bar
+    QVERIFY(fwTitleBar->isVisible());
+    QVERIFY(m2Container->dptr()->frame()->titleBar()->isVisible());
 
-     // Put it how it was, FloatingWindow is single dock again
-     auto frame1 = dock1->dptr()->frame();
-     dock1->close();
-     Testing::waitForDeleted(frame1);
-     QVERIFY(fwTitleBar->isVisible());
-     QVERIFY(!m2Container->dptr()->frame()->titleBar()->isVisible());
+    // Put it how it was, FloatingWindow is single dock again
+    auto frame1 = dock1->dptr()->frame();
+    dock1->close();
+    Testing::waitForDeleted(frame1);
+    QVERIFY(fwTitleBar->isVisible());
+    QVERIFY(!m2Container->dptr()->frame()->titleBar()->isVisible());
 
-     // Repeat, but instead of closing dock1, we float it
-     fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
-     QVERIFY(fwTitleBar->isVisible());
-     QVERIFY(m2Container->dptr()->frame()->titleBar()->isVisible());
-     frame1 = dock1->dptr()->frame();
-     frame1->titleBar()->onFloatClicked();
-     QVERIFY(fwTitleBar->isVisible());
+    // Repeat, but instead of closing dock1, we float it
+    fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
+    QVERIFY(fwTitleBar->isVisible());
+    QVERIFY(m2Container->dptr()->frame()->titleBar()->isVisible());
+    frame1 = dock1->dptr()->frame();
+    frame1->titleBar()->onFloatClicked();
+    QVERIFY(fwTitleBar->isVisible());
 
-     QVERIFY(!m2Container->dptr()->frame()->titleBar()->isVisible());
+    QVERIFY(!m2Container->dptr()->frame()->titleBar()->isVisible());
 
-     fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
+    fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
 }
 
 void TestDocks::tst_mdi_mixed_with_docking()
@@ -5121,7 +5116,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     m->setPersistentCentralWidget(mdiArea);
 
 
-    auto createSheet = [](int id) -> DockWidgetBase* {
+    auto createSheet = [](int id) -> DockWidgetBase * {
         auto dock = new DockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetBase::Option_MDINestable);
         dock->setWidget(new QPushButton(QStringLiteral("Sheet %1").arg(id)));
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
@@ -5289,7 +5284,7 @@ void TestDocks::tstCloseNestedMdi()
     m->setPersistentCentralWidget(mdi);
 
     auto dock1 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock1"));
-    dock1->setWidget( new QPushButton("1"));
+    dock1->setWidget(new QPushButton("1"));
 
     mdi->addDockWidget(dock1, {});
 
@@ -5335,7 +5330,7 @@ void TestDocks::tst_mdi_mixed_with_docking_setMDISize()
     auto mdiArea = new MDIArea();
     m->setPersistentCentralWidget(mdiArea);
 
-    auto createSheet = [](int id) -> DockWidgetBase* {
+    auto createSheet = [](int id) -> DockWidgetBase * {
         auto dock = new DockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetBase::Option_MDINestable);
         dock->setWidget(new QPushButton(QStringLiteral("Sheet %1").arg(id)));
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
@@ -5366,9 +5361,9 @@ void TestDocks::tst_floatingWindowDeleted()
     // Tests a case where the empty floating dock widget wouldn't be deleted
     // Doesn't repro QTBUG-83030 unfortunately, as we already have an event loop running
     // but let's leave this here nonetheless
-    class MyMainWindow : public KDDockWidgets::MainWindow {
+    class MyMainWindow : public KDDockWidgets::MainWindow
+    {
     public:
-
         MyMainWindow()
             : KDDockWidgets::MainWindow("tst_floatingWindowDeleted", MainWindowOption_None)
         {
@@ -5798,8 +5793,8 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
     }
     auto layout = m->multiSplitter();
 
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
+    auto w1 = new MyWidget2(QSize(400, 400));
+    auto w2 = new MyWidget2(QSize(400, 400));
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
     auto d3 = createDockWidget("3", w2);
@@ -5875,7 +5870,7 @@ void TestDocks::tst_maximumSizePolicy()
     const int maxHeight = 250;
     widget->setMinimumSize(QSize(200, 200));
     widget->setSizeHint(QSize(250, maxHeight));
-    widget->setSizePolicy({QSizePolicy::Preferred, QSizePolicy::Maximum});
+    widget->setSizePolicy({ QSizePolicy::Preferred, QSizePolicy::Maximum });
 
     auto dock1 = createDockWidget("dock1", widget);
     dock1->show();
@@ -5917,8 +5912,8 @@ void TestDocks::tst_minSizeChanges()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(600, 600), MainWindowOption_None);
     m->show();
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
+    auto w1 = new MyWidget2(QSize(400, 400));
+    auto w2 = new MyWidget2(QSize(400, 400));
 
     auto d1 = new DockWidgetType("1");
     d1->setWidget(w1);
@@ -5952,7 +5947,7 @@ void TestDocks::tst_minSizeChanges()
     QVERIFY(m->height() >= 1600);
 
     // add a small one to the middle
-    auto w3 = new MyWidget2(QSize(100,100));
+    auto w3 = new MyWidget2(QSize(100, 100));
     auto d3 = new DockWidgetType("3");
     d3->setWidget(w3);
     m->addDockWidget(d3, Location_OnTop, d1);
@@ -6046,7 +6041,7 @@ void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dock1 = new DockWidgetType("dock1");
 
-    auto w = new MyWidget2(QSize(400,400));
+    auto w = new MyWidget2(QSize(400, 400));
     w->setMinimumSize(120, 100);
     w->setMaximumSize(300, 150);
     dock1->setWidget(w);
@@ -6073,8 +6068,8 @@ void TestDocks::tst_addToHiddenMainWindow()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, {}, false);
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
+    auto w1 = new MyWidget2(QSize(400, 400));
+    auto w2 = new MyWidget2(QSize(400, 400));
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
 
@@ -6138,7 +6133,7 @@ void TestDocks::tst_maxSizeHonouredWhenDropped()
     m1->addDockWidget(dock1, Location_OnTop);
     m1->resize(2000, 2000);
 
-    auto w2 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400, 400));
     dock2->setWidget(w2);
     const int maxWidth = 200;
     w2->setMaximumSize(maxWidth, 200);
@@ -6209,14 +6204,15 @@ void TestDocks::tst_floatingAction()
         auto fw = dock1->floatingWindow();
         QVERIFY(fw);
 
-        //2. Put it back, via setFloating(). It should return to its place.
+        // 2. Put it back, via setFloating(). It should return to its place.
         action->toggle();
 
         QVERIFY(!dock1->isFloating());
         QVERIFY(!action->isChecked());
         QVERIFY(action->isEnabled());
         QVERIFY(!dock1->isTabbed());
-        QCOMPARE(action->toolTip(), tr("Detach"));;
+        QCOMPARE(action->toolTip(), tr("Detach"));
+        ;
 
         Testing::waitForDeleted(fw);
     }
@@ -6228,7 +6224,7 @@ void TestDocks::tst_floatingAction()
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
 
-        //The floating window action should be disabled as it has no previous place
+        // The floating window action should be disabled as it has no previous place
         auto action = dock2->floatAction();
         QVERIFY(dock2->isFloating());
         QVERIFY(action->isChecked());
@@ -6251,7 +6247,7 @@ void TestDocks::tst_floatingAction()
         auto fw = dock2->floatingWindow();
         QVERIFY(fw);
 
-        //2. Put it back, via setFloating(). It should return to its place.
+        // 2. Put it back, via setFloating(). It should return to its place.
         action->toggle();
 
         QVERIFY(!dock1->isFloating());
@@ -6270,12 +6266,12 @@ void TestDocks::tst_floatingAction()
         bool dock1IsFloating = dock1->floatAction()->isChecked();
         bool dock2IsFloating = dock2->floatAction()->isChecked();
 
-        connect(dock1->floatAction(), &QAction::toggled, [&dock1IsFloating] (bool t) {
+        connect(dock1->floatAction(), &QAction::toggled, [&dock1IsFloating](bool t) {
             Q_ASSERT(dock1IsFloating != t);
             dock1IsFloating = t;
         });
 
-        connect(dock2->floatAction(), &QAction::toggled, [&dock2IsFloating] (bool t) {
+        connect(dock2->floatAction(), &QAction::toggled, [&dock2IsFloating](bool t) {
             Q_ASSERT(dock2IsFloating != t);
             dock2IsFloating = t;
         });
@@ -6509,7 +6505,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QVERIFY(!f2.data());
     QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
     auto fw2 = dock2->floatingWindow();
-    QCOMPARE(layout->minimumSize().width(), 2*Item::separatorThickness + item1->minSize().width() + item3->minSize().width() + item4->minSize().width());
+    QCOMPARE(layout->minimumSize().width(), 2 * Item::separatorThickness + item1->minSize().width() + item3->minSize().width() + item4->minSize().width());
 
     // Drop left of dock3
     layout->addWidget(fw2->dropArea(), Location_OnLeft, dock3->dptr()->frame());
@@ -6521,43 +6517,43 @@ void TestDocks::tst_invalidLayoutAfterRestore()
 
 void TestDocks::tst_dontCloseDockWidgetBeforeRestore()
 {
-      EnsureTopLevelsDeleted e;
-      auto m = createMainWindow();
-      auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-      auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, DockWidgetBase::LayoutSaverOption::Skip);
-      auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, DockWidgetBase::LayoutSaverOption::Skip);
-      auto dock4 = createDockWidget("4", new QPushButton("4"), {}, {}, /*show=*/ false);
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+    auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+    auto dock4 = createDockWidget("4", new QPushButton("4"), {}, {}, /*show=*/false);
 
-      m->addDockWidget(dock1, Location_OnBottom);
-      m->addDockWidget(dock2, Location_OnBottom);
+    m->addDockWidget(dock1, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnBottom);
 
-      // Dock #3 floats, while #1 and #2 are docked.
-      dock3->setFloating(true);
-      QVERIFY(dock3->isOpen());
-      QVERIFY(dock3->isFloating());
-      QVERIFY(!dock3->isInMainWindow());
+    // Dock #3 floats, while #1 and #2 are docked.
+    dock3->setFloating(true);
+    QVERIFY(dock3->isOpen());
+    QVERIFY(dock3->isFloating());
+    QVERIFY(!dock3->isInMainWindow());
 
-      LayoutSaver saver;
-      const QByteArray saved = saver.serializeLayout();
-      dock3->close();
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    dock3->close();
 
-      // Not open anymore
-      QVERIFY(!dock3->isOpen());
+    // Not open anymore
+    QVERIFY(!dock3->isOpen());
 
-      QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(saver.restoreLayout(saved));
 
-      // #3 is still closed, the restore will skip it
-      QVERIFY(!dock3->isOpen());
-      QVERIFY(!dock3->isInMainWindow());
+    // #3 is still closed, the restore will skip it
+    QVERIFY(!dock3->isOpen());
+    QVERIFY(!dock3->isInMainWindow());
 
-      auto dock5 = createDockWidget("5", new QPushButton("5"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+    auto dock5 = createDockWidget("5", new QPushButton("5"), {}, DockWidgetBase::LayoutSaverOption::Skip);
 
-      dock4->show();
-      dock5->show();
+    dock4->show();
+    dock5->show();
 
-      QVERIFY(saver.restoreLayout(saved));
-      QVERIFY(!dock4->isOpen());
-      QVERIFY(dock5->isOpen()); // #5 is still open, it ignored restore
+    QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(!dock4->isOpen());
+    QVERIFY(dock5->isOpen()); // #5 is still open, it ignored restore
 }
 
 void TestDocks::tst_dontCloseDockWidgetBeforeRestore2()
@@ -6618,7 +6614,7 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore4()
     // Widgets which skip layout restore were be skipping LayoutSaver::onResize()
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow({1000, 1000}, {});
+    auto m = createMainWindow({ 1000, 1000 }, {});
     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
     auto dock2 = createDockWidget("dock2", new QPushButton("two"), {},
                                   DockWidgetBase::LayoutSaverOption::Skip);
@@ -6700,7 +6696,6 @@ void TestDocks::tst_closeOnlyCurrentTab()
         QVERIFY(dock1->isOpen());
         QCOMPARE(frame->dockWidgetCount(), 1);
     }
-
 }
 
 void TestDocks::tst_tabWidgetCurrentIndex()
@@ -6715,7 +6710,7 @@ void TestDocks::tst_tabWidgetCurrentIndex()
 
     DockWidgetBase *currentDw = nullptr;
     auto frame = dock1->dptr()->frame();
-    connect(frame, &Frame::currentDockWidgetChanged, this, [&currentDw] (DockWidgetBase *dw){
+    connect(frame, &Frame::currentDockWidgetChanged, this, [&currentDw](DockWidgetBase *dw) {
         currentDw = dw;
     });
 
@@ -7116,7 +7111,9 @@ void TestDocks::tst_close()
     QMargins margins = mainwindow->centerWidgetMargins();
     QCOMPARE(centralDock->dptr()->frame()->width(),
              mainwindow->width() - 0 * 2 - margins.left() - margins.right());
-    delete leftDock; delete rightDock; delete centralDock;
+    delete leftDock;
+    delete rightDock;
+    delete centralDock;
 
     // 1.9 Close tabbed dock, side docks will maintain their position
     mainwindow = createSimpleNestedMainWindow(&centralDock, &leftDock, &rightDock);
@@ -7127,7 +7124,9 @@ void TestDocks::tst_close()
 
     QCOMPARE(leftDock->dptr()->frame()->QWidgetAdapter::x(), leftX);
     QCOMPARE(rightDock->dptr()->frame()->QWidgetAdapter::x(), rightX);
-    delete leftDock; delete rightDock; delete centralDock;
+    delete leftDock;
+    delete rightDock;
+    delete centralDock;
     delete dock1;
 
 
@@ -7235,7 +7234,7 @@ void TestDocks::tst_constraintsPropagateUp()
     const QSize minSz = { minWidth, minHeight };
     auto guestWidget = new MyWidget2(QSize(minWidth, minHeight));
     auto dock1 = createDockWidget("dock1", guestWidget);
-    auto dock2= createDockWidget("dock2", new MyWidget2(QSize(minWidth, minHeight)));
+    auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(minWidth, minHeight)));
 
     QCOMPARE(widgetMinLength(guestWidget, Qt::Vertical), minHeight);
     QCOMPARE(widgetMinLength(guestWidget, Qt::Horizontal), minWidth);
@@ -7245,8 +7244,8 @@ void TestDocks::tst_constraintsPropagateUp()
 
     auto frame1 = dock1->dptr()->frame();
 
-    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Horizontal) - minWidth) < 10); //10px for styling differences
-    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - (minHeight + frame1->nonContentsHeight())) < 10); //10px for styling differences
+    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Horizontal) - minWidth) < 10); // 10px for styling differences
+    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - (minHeight + frame1->nonContentsHeight())) < 10); // 10px for styling differences
 
     // Add dock2 side-by side, so the Frame now has a title bar.
     auto oldFw2 = dock2->window();
@@ -7288,10 +7287,8 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     Item *item3 = layout->itemForFrame(dock3->dptr()->frame());
 
     QMargins margins = m->centerWidgetMargins();
-    const int expectedMinHeight = item2->minLength(Qt::Vertical) +
-                                  item3->minLength(Qt::Vertical) +
-                                  1 * Item::separatorThickness
-                                  + margins.top() + margins.bottom();
+    const int expectedMinHeight = item2->minLength(Qt::Vertical) + item3->minLength(Qt::Vertical) + 1 * Item::separatorThickness
+        + margins.top() + margins.bottom();
 
     QCOMPARE(m->minimumSizeHint().height(), expectedMinHeight);
 
@@ -7417,7 +7414,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     frame1 = dock1->dptr()->frame();
     frame2 = dock2->dptr()->frame();
     fw1 = dock1->floatingWindow();
-    globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100,5));
+    globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100, 5));
     finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
     drag(fw1->titleBar(), globalPressPos, finalPoint);
 
@@ -7485,8 +7482,8 @@ void TestDocks::tst_deleteOnClose()
         // Tests that if it's closed via LayoutSaver it's also destroyed when having Option_DeleteOnClose
         EnsureTopLevelsDeleted e;
 
-        QPointer<DockWidgetBase> dock1 = createDockWidget("1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose, {}, /*show=*/ false);
-        QPointer<DockWidgetBase> dock2 = createDockWidget("2", new MyWidget2(QSize(400, 400)), {}, {}, /*show=*/ false);
+        QPointer<DockWidgetBase> dock1 = createDockWidget("1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose, {}, /*show=*/false);
+        QPointer<DockWidgetBase> dock2 = createDockWidget("2", new MyWidget2(QSize(400, 400)), {}, {}, /*show=*/false);
         LayoutSaver saver;
         const QByteArray saved = saver.serializeLayout();
         dock1->show();

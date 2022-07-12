@@ -33,7 +33,7 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 namespace Debug {
 
-class ObjectViewer : public QWidget //clazy:exclude=missing-qobject-macro
+class ObjectViewer : public QWidget // clazy:exclude=missing-qobject-macro
 {
 public:
     explicit ObjectViewer(QWidget *parent = nullptr);

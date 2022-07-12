@@ -76,6 +76,7 @@ public:
 
     /// Returns the helper dock widget for implementing DockWidget::Option_MDINestable.
     DockWidgetBase *mdiDockWidgetWrapper() const;
+
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;

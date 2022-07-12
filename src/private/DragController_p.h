@@ -72,8 +72,7 @@ class DOCKS_EXPORT DragController : public MinimalStateMachine
     Q_OBJECT
     Q_PROPERTY(bool isDragging READ isDragging NOTIFY isDraggingChanged)
 public:
-    enum State
-    {
+    enum State {
         State_None = 0,
         State_PreDrag,
         State_Dragging

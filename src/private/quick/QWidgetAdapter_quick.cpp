@@ -772,7 +772,7 @@ bool QWidgetAdapter::eventFilter(QObject *watched, QEvent *ev)
             case QEvent::MouseButtonRelease:
                 ev->ignore();
                 qApp->sendEvent(this, ev);
-                //qDebug() << "Mouse event" << ev;
+                // qDebug() << "Mouse event" << ev;
                 if (ev->isAccepted())
                     return true;
                 break;

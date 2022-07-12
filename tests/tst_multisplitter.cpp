@@ -32,21 +32,21 @@ static QtMessageHandler s_original = nullptr;
 static QString s_expectedWarning;
 
 class TestMultiSplitter;
-static TestMultiSplitter* s_testObject = nullptr;
+static TestMultiSplitter *s_testObject = nullptr;
 
-class MyGuestWidget : public QWidget
-                    , public Widget_qwidget
+class MyGuestWidget : public QWidget, public Widget_qwidget
 {
     Q_OBJECT
 public:
-
     MyGuestWidget()
         : QWidget()
         , Widget_qwidget(this)
     {
     }
 
-    void setLayoutItem(Item *) override {}
+    void setLayoutItem(Item *) override
+    {
+    }
 
     QSize minimumSizeHint() const override
     {
@@ -69,7 +69,8 @@ public:
         }
     }
 
-    QSize maxSizeHint() const override {
+    QSize maxSizeHint() const override
+    {
         return m_maxSize;
     }
 
@@ -99,6 +100,7 @@ public:
 
 Q_SIGNALS:
     void layoutInvalidated();
+
 private:
     QSize m_minSize = QSize(200, 200);
     QSize m_maxSize = Layouting::Item::hardcodedMaximumSize;
@@ -113,7 +115,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
             return;
         }
 
-        if (s_expectedWarning.isEmpty() ||!msg.contains(s_expectedWarning))
+        if (s_expectedWarning.isEmpty() || !msg.contains(s_expectedWarning))
             qFatal("Got a warning, category=%s", context.category);
     }
 }
@@ -123,7 +125,7 @@ class TestMultiSplitter : public QObject
     Q_OBJECT
 
 public:
-    QVector<QWidget*> m_hostWidgets; // for cleanup purposes
+    QVector<QWidget *> m_hostWidgets; // for cleanup purposes
 
 public Q_SLOTS:
     void initTestCase()
@@ -131,9 +133,9 @@ public Q_SLOTS:
         s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
         s_testObject = this;
 
-        Config::self().setSeparatorFactoryFunc([] (Layouting::Widget *parent) {
-            //return new SeparatorWidget(parent);
-            return static_cast<Separator*>(new SeparatorWidget(parent));
+        Config::self().setSeparatorFactoryFunc([](Layouting::Widget *parent) {
+            // return new SeparatorWidget(parent);
+            return static_cast<Separator *>(new SeparatorWidget(parent));
         });
     }
 
@@ -198,10 +200,9 @@ private Q_SLOTS:
     void tst_numSideBySide_recursive();
 };
 
-class MyHostWidget : public QWidget
-                   , public Layouting::Widget_qwidget
+class MyHostWidget : public QWidget, public Layouting::Widget_qwidget
 {
-  public:
+public:
     MyHostWidget()
         : QWidget()
         , Widget_qwidget(this)
@@ -218,7 +219,8 @@ class MyHostWidget : public QWidget
     }
 };
 
-MyHostWidget::~MyHostWidget() {
+MyHostWidget::~MyHostWidget()
+{
     s_testObject->m_hostWidgets.removeOne(this);
 }
 
@@ -231,10 +233,10 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
     const QVariantMap serialized = root->toVariantMap();
     ItemBoxContainer root2(root->hostWidget());
 
-    QHash<QString, Widget*> widgets;
+    QHash<QString, Widget *> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
-        if (auto w = static_cast<MyGuestWidget*>(item->guestAsQObject()))
+        if (auto w = static_cast<MyGuestWidget *>(item->guestAsQObject()))
             widgets.insert(w->id(), w);
 
     root2.fillFromVariantMap(serialized, widgets);
@@ -252,7 +254,7 @@ static std::unique_ptr<ItemBoxContainer> createRoot()
     return std::unique_ptr<ItemBoxContainer>(root);
 }
 
-static Item* createItem(QSize minSz = {}, QSize maxSz = {})
+static Item *createItem(QSize minSz = {}, QSize maxSz = {})
 {
     static int count = 0;
     count++;
@@ -273,7 +275,7 @@ static Item* createItem(QSize minSz = {}, QSize maxSz = {})
     return item;
 }
 
-static ItemBoxContainer* createRootWithSingleItem()
+static ItemBoxContainer *createRootWithSingleItem()
 {
     auto root = new ItemBoxContainer(new MyHostWidget());
     root->setSize({ 1000, 1000 });
@@ -592,19 +594,19 @@ void TestMultiSplitter::tst_minSize()
     auto item2 = createItem();
     auto item22 = createItem();
 
-    item1->m_sizingInfo.minSize = {101, 150};
-    item2->m_sizingInfo.minSize = {200, 300};
+    item1->m_sizingInfo.minSize = { 101, 150 };
+    item2->m_sizingInfo.minSize = { 200, 300 };
     item2->setSize(item2->m_sizingInfo.minSize);
-    item22->m_sizingInfo.minSize = {100, 100};
+    item22->m_sizingInfo.minSize = { 100, 100 };
 
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
     ItemBoxContainer::insertItemRelativeTo(item22, item2, Location_OnBottom);
 
     QCOMPARE(item2->minSize(), QSize(200, 300));
-    QCOMPARE(item2->parentBoxContainer()->minSize(), QSize(200, 300+100+st));
+    QCOMPARE(item2->parentBoxContainer()->minSize(), QSize(200, 300 + 100 + st));
 
-    QCOMPARE(root->minSize(), QSize(101+200+st, 300 + 100 + st));
+    QCOMPARE(root->minSize(), QSize(101 + 200 + st, 300 + 100 + st));
     QVERIFY(root->checkSanity());
 
     QVERIFY(serializeDeserializeTest(root));
@@ -627,12 +629,12 @@ void TestMultiSplitter::tst_resize()
     const int item3Percentage = item1->width() / root->width();
 
     // Now resize:
-    root->setSize_recursive({2000, 505});
+    root->setSize_recursive({ 2000, 505 });
     QVERIFY(root->checkSanity());
 
-    QVERIFY(item1Percentage - (1.0* item1->width() / root->width()) < 0.01);
-    QVERIFY(item2Percentage - (1.0* item2->width() / root->width()) < 0.01);
-    QVERIFY(item3Percentage - (1.0* item3->width() / root->width()) < 0.01);
+    QVERIFY(item1Percentage - (1.0 * item1->width() / root->width()) < 0.01);
+    QVERIFY(item2Percentage - (1.0 * item2->width() / root->width()) < 0.01);
+    QVERIFY(item3Percentage - (1.0 * item3->width() / root->width()) < 0.01);
     QCOMPARE(root->width(), 2000);
     QCOMPARE(root->height(), 505);
     QCOMPARE(item1->height(), 505);
@@ -642,7 +644,7 @@ void TestMultiSplitter::tst_resize()
     ItemBoxContainer::insertItemRelativeTo(item31, item3, Location_OnBottom);
 
     QVERIFY(root->checkSanity());
-    root->setSize_recursive({2500, 505});
+    root->setSize_recursive({ 2500, 505 });
     QVERIFY(root->checkSanity());
     QVERIFY(serializeDeserializeTest(root));
 }
@@ -696,9 +698,9 @@ void TestMultiSplitter::tst_availableSize()
     auto item1 = createItem();
     auto item2 = createItem();
     auto item3 = createItem();
-    item1->m_sizingInfo.minSize = {100, 100};
-    item2->m_sizingInfo.minSize = {100, 100};
-    item3->m_sizingInfo.minSize = {100, 100};
+    item1->m_sizingInfo.minSize = { 100, 100 };
+    item2->m_sizingInfo.minSize = { 100, 100 };
+    item3->m_sizingInfo.minSize = { 100, 100 };
 
     root->insertItem(item1, Location_OnLeft);
     QCOMPARE(root->availableSize(), QSize(900, 900));
@@ -767,7 +769,7 @@ void TestMultiSplitter::tst_missingSize()
     QCOMPARE(root->availableSize(), QSize(1000, 1000));
 
     Item *item1 = createItem();
-    item1->setMinSize({100, 100});
+    item1->setMinSize({ 100, 100 });
 
     Item *item2 = createItem();
     item2->setMinSize(root->size());
@@ -789,7 +791,7 @@ void TestMultiSplitter::tst_ensureEnoughSize()
 
     auto root = createRoot(); /// 1000x1000
     Item *item1 = createItem();
-    item1->setMinSize({2000, 500});
+    item1->setMinSize({ 2000, 500 });
 
     // Insert to empty layout:
 
@@ -801,7 +803,7 @@ void TestMultiSplitter::tst_ensureEnoughSize()
 
     // Insert to non-empty layout
     Item *item2 = createItem();
-    item2->setMinSize({2000, 2000});
+    item2->setMinSize({ 2000, 2000 });
     root->insertItem(item2, Location_OnRight);
     QVERIFY(root->checkSanity());
     QCOMPARE(root->size(), QSize(item1->minSize().width() + item2->minSize().width() + st, item2->minSize().height()));
@@ -813,7 +815,7 @@ void TestMultiSplitter::tst_turnIntoPlaceholder()
     auto root = createRoot();
 
     int numVisibleItems = 0;
-    QObject::connect(root.get(), &ItemBoxContainer::numVisibleItemsChanged, this, [&numVisibleItems] (int count) {
+    QObject::connect(root.get(), &ItemBoxContainer::numVisibleItemsChanged, this, [&numVisibleItems](int count) {
         numVisibleItems = count;
     });
 
@@ -1131,7 +1133,7 @@ void TestMultiSplitter::tst_minSizeChanges()
     root->setSize_recursive(QSize(200, 200));
     QVERIFY(root->checkSanity());
 
-    auto w1 = static_cast<MyGuestWidget*>(item1->guestAsQObject()); // TODO: Static cast not required ?
+    auto w1 = static_cast<MyGuestWidget *>(item1->guestAsQObject()); // TODO: Static cast not required ?
     w1->setMinSize(QSize(300, 300));
     QVERIFY(root->checkSanity());
     QCOMPARE(root->size(), QSize(300, 300));
@@ -1214,7 +1216,7 @@ void TestMultiSplitter::tst_separatorRecreatedOnParentChange()
 
     auto root2 = createRoot();
     Item *item21 = createItem();
-    Item *item22= createItem();
+    Item *item22 = createItem();
     root2->insertItem(item21, Location_OnLeft);
     root2->insertItem(item22, Location_OnLeft);
 
@@ -1232,7 +1234,7 @@ void TestMultiSplitter::tst_containerReducesSize()
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnLeft);
     Item *item21 = createItem();
-    Item *item22= createItem();
+    Item *item22 = createItem();
     ItemBoxContainer::insertItemRelativeTo(item21, item2, Location_OnTop);
     ItemBoxContainer::insertItemRelativeTo(item22, item2, Location_OnTop);
     QVERIFY(root->checkSanity());
@@ -1317,8 +1319,8 @@ void TestMultiSplitter::tst_availableOnSide()
     // Since we don't have widgets with max-size, these two must be the same
     QCOMPARE(container31->minPosForSeparator_global(separator31, false), container31->minPosForSeparator_global(separator31, true));
 
-    QCOMPARE(container31->minPosForSeparator_global(separator31), item1->minSize().width() + item2->minSize().width() + item3->minSize().width() + 2*Item::separatorThickness);
-    QCOMPARE(container31->maxPosForSeparator_global(separator31), root->width() -item31->minSize().width() - Item::separatorThickness);
+    QCOMPARE(container31->minPosForSeparator_global(separator31), item1->minSize().width() + item2->minSize().width() + item3->minSize().width() + 2 * Item::separatorThickness);
+    QCOMPARE(container31->maxPosForSeparator_global(separator31), root->width() - item31->minSize().width() - Item::separatorThickness);
 }
 
 void TestMultiSplitter::tst_availableToGrowOnSide()
@@ -1376,7 +1378,7 @@ void TestMultiSplitter::tst_resizeViaSeparator()
     // Now move right
     oldPos = separator->position();
     root->requestSeparatorMove(separator, -delta);
-    QCOMPARE(separator->position(), oldPos -delta);
+    QCOMPARE(separator->position(), oldPos - delta);
 
 
     Item *item3 = createItem(/*min=*/QSize(100, 100));
@@ -1412,7 +1414,7 @@ void TestMultiSplitter::tst_resizeViaSeparator2()
         for (auto item : qAsConst(children)) {
             item->m_sizingInfo.percentageWithinParent = 1.0 / numChildren;
         }
-        root->setSize_recursive(QSize(4000 + Item::separatorThickness*(numChildren-1), 1000));
+        root->setSize_recursive(QSize(4000 + Item::separatorThickness * (numChildren - 1), 1000));
     };
 
     const int delta = 100;
@@ -1479,18 +1481,18 @@ void TestMultiSplitter::tst_resizeViaSeparator3()
     // Move separator up:
     root->requestSeparatorMove(horizontalSeparator, -delta);
 
-    QCOMPARE(item2->height(),  oldH2 + delta);
-    QCOMPARE(item3->height(),  oldH3 - delta);
-    QCOMPARE(item4->height(),  oldH4 - delta);
-    QCOMPARE(item1->height(),  oldH1);
+    QCOMPARE(item2->height(), oldH2 + delta);
+    QCOMPARE(item3->height(), oldH3 - delta);
+    QCOMPARE(item4->height(), oldH4 - delta);
+    QCOMPARE(item1->height(), oldH1);
 
     // Move down again
     root->requestSeparatorMove(horizontalSeparator, delta);
 
-    QCOMPARE(item2->height(),  oldH2);
-    QCOMPARE(item3->height(),  oldH3);
-    QCOMPARE(item4->height(),  oldH4);
-    QCOMPARE(item1->height(),  oldH1);
+    QCOMPARE(item2->height(), oldH2);
+    QCOMPARE(item3->height(), oldH3);
+    QCOMPARE(item4->height(), oldH4);
+    QCOMPARE(item1->height(), oldH1);
 }
 
 void TestMultiSplitter::tst_mapToRoot()
@@ -1541,8 +1543,8 @@ void TestMultiSplitter::tst_closeAndRestorePreservesPosition()
 
     // Test that both sides reclaimed the space equally
     QCOMPARE(item1->width(), oldW1);
-    QVERIFY(qAbs(item2->width() - (oldW2 + (oldW2/2))) < Item::separatorThickness);
-    QVERIFY(qAbs(item4->width() - (oldW4 + (oldW4/2))) < Item::separatorThickness);
+    QVERIFY(qAbs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::separatorThickness);
+    QVERIFY(qAbs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::separatorThickness);
 
     item3->restore(guest3);
 
@@ -1562,7 +1564,7 @@ void TestMultiSplitter::tst_minSizeChangedBeforeRestore()
     root->insertItem(item2, Location_OnBottom);
     const QSize originalSize2 = item2->size();
 
-    auto guest2 = qobject_cast<MyGuestWidget*>(item2->guestWidget()->asQWidget());
+    auto guest2 = qobject_cast<MyGuestWidget *>(item2->guestWidget()->asQWidget());
     const QSize newMinSize = originalSize2 + QSize(10, 10);
 
     item2->turnIntoPlaceholder();
@@ -1607,7 +1609,7 @@ void TestMultiSplitter::tst_separatorMoveHonoursMax()
     root->insertItem(item2, Location_OnRight);
     root->insertItem(item3, Location_OnRight);
 
-    auto guest2 = static_cast<MyGuestWidget*>(item2->guestWidget());
+    auto guest2 = static_cast<MyGuestWidget *>(item2->guestWidget());
     const int maxWidth = 250;
     guest2->setMaxSize(QSize(maxWidth, 250));
     auto separator1 = root->separators()[0];
@@ -1615,7 +1617,7 @@ void TestMultiSplitter::tst_separatorMoveHonoursMax()
 
     const int min1 = root->minPosForSeparator_global(separator1);
     const int max1 = root->maxPosForSeparator_global(separator1);
-    //const int min2 = root->minPosForSeparator_global(separator2);
+    // const int min2 = root->minPosForSeparator_global(separator2);
     const int max2 = root->maxPosForSeparator_global(separator2);
 
     root->requestSeparatorMove(separator1, separator1->position() - min1);
@@ -1645,7 +1647,7 @@ void TestMultiSplitter::tst_maxSizeHonoured1()
     root->insertItem(item1, Location_OnTop);
     root->setSize_recursive(QSize(3000, 3000));
 
-    auto guest2 = static_cast<MyGuestWidget*>(item2->guestWidget());
+    auto guest2 = static_cast<MyGuestWidget *>(item2->guestWidget());
     const int maxHeight = 250;
     guest2->setMaxSize(QSize(250, maxHeight));
 
