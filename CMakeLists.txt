@@ -287,11 +287,8 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
     # Generate .pri file for qmake users
-    #TODO: ECM does not support Qt6 yet, nor with VS generator for older cmake versions
-    if(Qt_VERSION_MAJOR EQUAL 5
-       AND CMAKE_VERSION VERSION_GREATER "3.11.99"
-       AND NOT CMAKE_CONFIGURATION_TYPES
-    )
+    # (except for older cmake versions and when using the VS generator)
+    if(CMAKE_VERSION VERSION_GREATER "3.11.99" AND NOT CMAKE_CONFIGURATION_TYPES)
         include(ECMGeneratePriFile)
         set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
         ecm_generate_pri_file(
