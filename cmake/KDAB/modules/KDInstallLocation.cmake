@@ -1,3 +1,9 @@
+#
+# SPDX-FileCopyrightText: 2012-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+
 # Some default installation locations. These should be global, with any project
 # specific locations added to the end. These paths are all relative to the
 # install prefix.

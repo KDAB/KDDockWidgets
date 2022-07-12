@@ -45,3 +45,7 @@ repos:
     entry: mdl
     language: ruby
     files: \.(md|mdown|markdown)$
+- repo: https://github.com/fsfe/reuse-tool
+  rev: v1.0.0
+  hooks:
+  - id: reuse
