@@ -122,7 +122,6 @@ option(${PROJECT_NAME}_X11EXTRAS
 )
 option(${PROJECT_NAME}_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 
@@ -271,7 +270,7 @@ if(KDAB_INSTALL)
 endif()
 
 # setup default install locations
-include(InstallLocation)
+include(KDInstallLocation)
 
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     set(${PROJECT_NAME}_IS_ROOT_PROJECT TRUE)
