@@ -1,9 +1,9 @@
+# KDDockWidgets
+
 [![Build Status](https://travis-ci.com/KDAB/KDDockWidgets.svg?branch=master)](https://travis-ci.com/KDAB/KDDockWidgets)
 
 > ⚠️⚠️: Please use 1.6 branch instead.
 
-KDDockWidgets
-=============
 `KDDockWidgets` is a Qt dock widget library written by KDAB, suitable for replacing
 `QDockWidget` and implementing advanced functionalities missing in Qt.
 
@@ -11,9 +11,8 @@ Although `KDDockWidgets` is ready to be used out of the box, it can also be seen
 as a framework to allow building very tailored custom docking systems. It tries
 to expose every internal widget and every knob for the app developer to tune.
 
+## Motivation
 
-Motivation
-==========
 Throughout the years KDAB contributed and funded bug fixes and features to `QDockWidget`.
 Sadly, this was very painful. Each bug fix or feature took many days of implementation,
 and an equal number of days just to fix dozens of regressions.
@@ -24,15 +23,15 @@ creative with their requests, so it was clear we needed a better docking framewo
 
 You will find more information in these places:
 
- * [our official home page](https://www.kdab.com/development-resources/qt-tools/kddockwidgets)
- * [online detailed browsable API reference](https://docs.kdab.com/kddockwidgets)
- * [our example programs](examples/)
+- [our official home page](https://www.kdab.com/development-resources/qt-tools/kddockwidgets)
+- [online detailed browsable API reference](https://docs.kdab.com/kddockwidgets)
+- [our example programs](examples/)
 
 We also have an [in browser demo](https://demos.kdab.com/wasm/kddockwidgets/dockwidgets.html). Note
 however that this demo isn't fully featured, as it's running on Qt for WebAssembly.
 
-Features
-========
+## Features
+
 - Provide advanced docking that QDockWidget doesn't support
   - Native window resize on Windows (allowing for Aero-snap even with custom title bar decorations)
   - Arrow drop indicators for great drop precision
@@ -68,49 +67,45 @@ Features
 - Optional minimize and maximize button on the title bar
 - FloatingWindows can be utility windows or full native
 
-Screen capture
-==============
+## Screen capture
+
 ![Screen capture](./screencap.gif?raw=true "The docking system in action")
 
-
-Building and requirements
-=========================
+## Building and requirements
 
 To build KDDockWidgets you'll need:
 
-  - CMake
-  - Qt 5.15.x or Qt6 >= 6.2
-  - Ninja (Other generators might work but are untested)
-  - C++17 capable compiler
-  - Qt Widgets module
-  - Qt X11Extras module if on Linux/X11
-  - Qt Quick and QuickControls2 modules if using the QtQuick support
-  - Qt private development headers, for instance, for Qt5:
-    - SUSE: libqt5-qtbase-private-headers-devel
-    - Ubuntu, debian-based: qtbase5-private-dev
-    - Fedora, redhat-based: qt5-qtbase-private-devel
-    - others: consult your distro
-
+- CMake
+- Qt 5.15.x or Qt6 >= 6.2
+- Ninja (Other generators might work but are untested)
+- C++17 capable compiler
+- Qt Widgets module
+- Qt X11Extras module if on Linux/X11
+- Qt Quick and QuickControls2 modules if using the QtQuick support
+- Qt private development headers, for instance, for Qt5:
+  - SUSE: libqt5-qtbase-private-headers-devel
+  - Ubuntu, debian-based: qtbase5-private-dev
+  - Fedora, redhat-based: qt5-qtbase-private-devel
+  - others: consult your distro
 
 Open a terminal capable of building Qt applications.
 Make sure you have cmake, ninja, compiler, Qt, etc in PATH.
 
 Adapt the instructions to suit your cmake generator and operating system.
 
-```
-$ cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/path/where/to/install ../path/to/kddockwidgets
-$ cmake --build .
-$ cmake --build . --target install
+```bash
+    cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/path/where/to/install ../path/to/kddockwidgets
+    cmake --build .
+    cmake --build . --target install
 ```
 
 The installation directory defaults to `c:\KDAB\KDDockWidgets-<version>` on Windows
 and `/usr/local/KDAB/KDDockWidgets-<version>` on non-Windows.
 
-You can change the installation location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
+Change the installation location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to CMake.
 
+## Trying out the examples
 
-Trying out the examples
-=======================
 A full demo that showcases most of the features lives in [examples/dockwidgets](examples/dockwidgets).
 
 A simpler example can be found in [examples/minimal](examples/minimal),
@@ -118,25 +113,24 @@ which might be more indicated to learn the API, as it's less overwhelming than t
 
 To build and run the example:
 
-```
-$ cd path/to/kddockwidgets/examples/dockwidgets/
-$ cmake -G Ninja -DCMAKE_PREFIX_PATH=/path/where/kddw/is/installed
-$ cmake --build .
-$ ./kddockwidgets_example
+```bash
+    cd path/to/kddockwidgets/examples/dockwidgets/
+    cmake -G Ninja -DCMAKE_PREFIX_PATH=/path/where/kddw/is/installed
+    cmake --build .
+    ./kddockwidgets_example
 ```
 
+## Using
 
-Using
-=====
 From your CMake Qt5 project, add
 
-```
+```cmake
     find_package(KDDockWidgets CONFIG)
 ```
 
 or for Qt6
 
-```
+```cmake
     find_package(KDDockWidgets-qt6 CONFIG)
 ```
 
@@ -146,13 +140,11 @@ That's all you need to do (the imported target also brings in the include direct
 You may also need to modify the `CMAKE_PREFIX_PATH` environment variable depending
 on where you installed KDDockWidgets.
 
+## Python Bindings
 
-Python Bindings
-================
 Please refer to [README-bindings.md](README-bindings.md).
 
-Versioning
-==========
+## Versioning
 
 New features go to master while the stable branch only accepts non-intrusive bug fixes.
 
@@ -166,9 +158,7 @@ not so they can change internal business logic.
 We don't promise or test binary compatibility. It's advised that you recompile
 your application whenever updating KDDW.
 
-
-Styling
-========
+## Styling
 
 Almost all private widgets used by KDDW can be derived by the user to give them
 a custom look. That's done by providing your own FrameworkWidgetFactory. Run
@@ -182,28 +172,23 @@ Warning: When using private headers, be sure to rebuild your application wheneve
 update to a new KDDW version. Binary compatibility is only kept when using public
 headers.
 
+## Licensing
 
-Licensing
-=========
 KDDockWidgets is (C) 2019-2022, Klarälvdalens Datakonsult AB, and is licensed according to
 the terms of the [GPL 2.0](LICENSES/GPL-2.0-only.txt) or [GPL 3.0](LICENSES/GPL-3.0-only.txt).
 
 Contact KDAB at <info@kdab.com> to inquire about commercial licensing.
 
+## Get Involved
 
-Get Involved
-============
-Please submit your issue reports to our GitHub space at
-https://github.com/KDAB/KDDockWidgets
+Please submit your issue reports to our GitHub space at <https://github.com/KDAB/KDDockWidgets>.
 
-
-When reporting bugs please make it easy for the maintainer to reproduce it. Use `examples/minimal/` or
-`examples/dockwidgets/` for reproducing the problem. If you did modifications to the example in order to
-reproduce then please attach the *patch* and not a picture of your changes. You can get a patch by doing
-`git diff > repro.diff` at the repo root.
+When reporting bugs please make it easy for the maintainer to reproduce it. Use `examples/minimal/`
+or `examples/dockwidgets/` for reproducing the problem. If you did modifications to the example
+in order to reproduce then please attach the *patch* and not a picture of your changes. You can
+get a patch by doing `git diff > repro.diff` at the repo root.
 
 Also state which KDDW sha1, branch or version you're using, and which operating system.
-
 
 KDAB will happily accept external contributions; however, **all** contributions require a
 signed [Copyright Assignment Agreement](docs/KDDockWidgets-CopyrightAssignmentForm.pdf).
@@ -214,8 +199,8 @@ Contact info@kdab.com for more information.
 
 Thanks to our [contributors](CONTRIBUTORS.txt).
 
-About KDAB
-==========
+## About KDAB
+
 KDDockWidgets is supported and maintained by Klarälvdalens Datakonsult AB (KDAB).
 
 The KDAB Group is the global No.1 software consultancy for Qt, C++ and
@@ -227,10 +212,10 @@ We continue to help develop parts of Qt and are one of the major contributors
 to the Qt Project. We can give advanced or standard trainings anywhere
 around the globe on Qt as well as C++, OpenGL, 3D and more.
 
-Please visit https://www.kdab.com to meet the people who write code like this.
+Please visit <https://www.kdab.com> to meet the people who write code like this.
 
 Stay up-to-date with KDAB product announcements:
 
-* [KDAB Newsletter](https://news.kdab.com)
-* [KDAB Blogs](https://www.kdab.com/category/blogs)
-* [KDAB on Twitter](https://twitter.com/KDABQt)
+- [KDAB Newsletter](https://news.kdab.com)
+- [KDAB Blogs](https://www.kdab.com/category/blogs)
+- [KDAB on Twitter](https://twitter.com/KDABQt)
