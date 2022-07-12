@@ -295,7 +295,7 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
             BASE_NAME
             KDDockWidgets
             LIB_NAME
-            kddockwidgets
+            kddockwidgets${${PROJECT_NAME}_LIBRARY_QTID}
             DEPS
             ${${PROJECT_NAME}_DEPS}
             FILENAME_VAR
