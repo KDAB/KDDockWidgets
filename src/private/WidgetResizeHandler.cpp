@@ -487,18 +487,18 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 
 void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 {
-    if (m_isTopLevelWindowResizer)
-        mTarget->setCursor(cursor);
-    else
+    if (m_usesGlobalEventFilter)
         qApp->setOverrideCursor(cursor);
+    else
+        mTarget->setCursor(cursor);
 }
 
 void WidgetResizeHandler::restoreMouseCursor()
 {
-    if (m_isTopLevelWindowResizer)
-        mTarget->setCursor(Qt::ArrowCursor);
-    else
+    if (m_usesGlobalEventFilter)
         qApp->restoreOverrideCursor();
+    else
+        mTarget->setCursor(Qt::ArrowCursor);
 }
 
 CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
