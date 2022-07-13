@@ -215,17 +215,11 @@ option(KDockWidgets_PRETTY_QTWIDGETS_HEADERS
 )
 
 if(KDDW_FRONTEND_QTWIDGETS)
-    add_definitions(-DKDDW_FRONTEND_QTWIDGETS)
     set(KDDockWidgets_DEPS "widgets")
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
-    add_definitions(-DKDDW_FRONTEND_QTQUICK)
     set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} quick quickcontrols2")
-endif()
-
-if(KDDW_FRONTEND_DUMMY)
-    add_definitions(-DKDDW_FRONTEND_DUMMY)
 endif()
 
 if(NOT WIN32

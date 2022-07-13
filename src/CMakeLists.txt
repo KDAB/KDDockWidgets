@@ -203,7 +203,6 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
 
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers_qtquick.cpp)
-
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers_qtwidgets.cpp)
 endif()
 
@@ -389,16 +388,19 @@ if(KDDW_FRONTEND_QTWIDGETS)
         PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets
         PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate
     )
+    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTWIDGETS)
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
     target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate)
+    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTQUICK)
 endif()
 
 if(KDDW_FRONTEND_DUMMY)
     # TODOm3: Remove Qt
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Gui)
+    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_DUMMY)
 endif()
 
 if(KDDockWidgets_CODE_COVERAGE)
