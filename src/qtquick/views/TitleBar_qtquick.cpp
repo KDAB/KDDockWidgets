@@ -39,7 +39,7 @@ TitleBar_qtquick::~TitleBar_qtquick()
 
 void TitleBar_qtquick::init()
 {
-    // QML inteface signals
+    // QML interface signals
     connect(m_titleBar, &Controllers::TitleBar::titleChanged, this, &TitleBar_qtquick::titleChanged);
     connect(m_titleBar, &Controllers::TitleBar::iconChanged, this, &TitleBar_qtquick::iconChanged);
     connect(m_titleBar, &Controllers::TitleBar::isFocusedChanged, this, &TitleBar_qtquick::isFocusedChanged);

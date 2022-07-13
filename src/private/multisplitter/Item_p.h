@@ -578,7 +578,7 @@ private:
     Private *const d;
 };
 
-/// QtQuick triggers a lot fo resizes due to bindings being updated individually
+/// QtQuick triggers a lot of resizes due to bindings being updated individually
 /// Only check sanity at the end of an operation, and not each time a binding gets evaluated
 /// Tests will fail with a warning if anything is wrong.
 struct AtomicSanityChecks

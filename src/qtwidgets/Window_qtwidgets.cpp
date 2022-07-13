@@ -61,7 +61,7 @@ Window::Ptr Window_qtwidgets::transientParent() const
 void Window_qtwidgets::setGeometry(QRect geo) const
 {
     if (auto v = rootView()) {
-        // In QWidget world QWidget interface is prefered over QWindow
+        // In QWidget world QWidget interface is preferred over QWindow
         v->setGeometry(geo);
     } else {
         // Go via QWindow instead
@@ -72,7 +72,7 @@ void Window_qtwidgets::setGeometry(QRect geo) const
 void Window_qtwidgets::setVisible(bool is)
 {
     if (auto v = rootView()) {
-        // In QWidget world QWidget interface is prefered over QWindow
+        // In QWidget world QWidget interface is preferred over QWindow
         v->setVisible(is);
     } else {
         // Go via QWindow instead

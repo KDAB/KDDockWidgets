@@ -709,7 +709,7 @@ std::shared_ptr<View> View_qtquick::parentViewFor(const QQuickItem *item)
     auto p = item->parentItem();
     if (QQuickWindow *window = item->window()) {
         if (p == window->contentItem()) {
-            // For our purposes, the root view is the one directly bellow QQuickWindow::contentItem
+            // For our purposes, the root view is the one directly below QQuickWindow::contentItem
             return nullptr;
         }
     }

@@ -54,7 +54,7 @@ public:
     static Platform *instance();
 
     /// @brief Returns whether a popup is open
-    /// Usually not needed to override. Investigate further in case side bars aren't auto hidding
+    /// Usually not needed to override. Investigate further in case side bars aren't auto hiding
     virtual bool hasActivePopup() const;
 
     /// @brief Returns the focused view, if any

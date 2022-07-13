@@ -77,7 +77,7 @@ public:
     /// @brief Returns whether a window is active
     /// An active window has keyboard focus, and might have its window decos
     /// highlighted. Windows are usually become active after you click on their
-    /// title bar, but can also be done programatically.
+    /// title bar, but can also be done programmatically.
     virtual bool isActive() const = 0;
 
     virtual void setProperty(const char *name, const QVariant &value) = 0;
@@ -111,14 +111,14 @@ public:
     /// @brief Returns whether this window is fullscreen currently
     virtual bool isFullScreen() const = 0;
 
-    /// @brief Returns whether this window can't be shrinked to a size that would violate the layout's min size
+    /// @brief Returns whether this window can't be shrunk to a size that would violate the layout's min size
     /// This is true for QtWidgets where the layout constraings propagate up to the window
     /// However, for QtQuick it difficult as there's no QLayout.
     //    - For QtQuick/FloatingWindow we try to not violate the min-size, which we have total control over
     //    - But for QtQuick/MainWindow it's more difficult, as we don't know how the user composed his
     //      main.qml. so this is false if the Window is not a FloatingWindow
     //
-    // This method is only used to so we can surpress some warnings regarding layout being clipped due to
+    // This method is only used to so we can suppress some warnings regarding layout being clipped due to
     // too small window.
     virtual bool supportsHonouringLayoutMinSize() const = 0;
 

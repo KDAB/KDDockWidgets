@@ -74,7 +74,7 @@ void ViewGuard::setView(View *view)
 
     if (view && view->inDtor()) {
         // We don't care about views that are already being in DTOR. They count as already deleted for what's ViewGuard concerned.
-        // This is rare anway, would need to require some reentrancy.
+        // This is rare anyway, would need to require some reentrancy.
         view = nullptr;
     }
 
