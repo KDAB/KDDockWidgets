@@ -165,4 +165,8 @@ QVector<std::shared_ptr<View>> View_qtwidgets<T>::childViewsFor(const QWidget *p
 namespace KDDockWidgets::Views {
 template class View_qtwidgets<QWidget>;
 template class View_qtwidgets<QMainWindow>;
+template class View_qtwidgets<QLineEdit>;
+template class View_qtwidgets<QRubberBand>;
+template class View_qtwidgets<QTabWidget>;
+template class View_qtwidgets<QTabBar>;
 }
