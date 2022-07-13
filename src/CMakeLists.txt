@@ -226,8 +226,13 @@ set(KDDW_PUBLIC_HEADERS
 )
 
 set(KDDW_PRIVATE_HEADERS
-    private/DragController_p.h private/Draggable_p.h private/LayoutSaver_p.h private/WindowBeingDragged_p.h
-    private/WidgetResizeHandler_p.h DockRegistry.h # No ABI guarantees for now, so copy to private/
+    private/DragController_p.h
+    private/Draggable_p.h
+    private/LayoutSaver_p.h
+    private/WindowBeingDragged_p.h
+    private/WidgetResizeHandler_p.h
+    DockRegistry.h
+    EventFilterInterface.h # No ABI guarantees for now, so copy to private/
 )
 
 set(KDDW_CONTROLLER_HEADERS

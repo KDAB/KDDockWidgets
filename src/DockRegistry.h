@@ -14,7 +14,7 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/View.h"
-#include "kddockwidgets/EventFilterInterface.h"
+#include "kddockwidgets/private/EventFilterInterface.h"
 
 #include <QVector>
 #include <QObject>
