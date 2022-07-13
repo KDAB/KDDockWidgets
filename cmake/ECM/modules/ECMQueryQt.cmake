@@ -66,6 +66,8 @@ elseif(QT_MAJOR_VERSION STREQUAL "6")
         set(_exec_name_text "Qt6 qtpaths")
         set(_cli_option "--query")
     endif()
+else()
+    set(_exec_name_text "Qt")
 endif()
 
 function(ecm_query_qt result_variable qt_variable)

@@ -153,6 +153,7 @@ else()
     set(QT_MIN_VERSION "5.15")
     set(${PROJECT_NAME}_LIBRARY_QTID "")
 endif()
+set(QT_MAJOR_VERSION ${Qt_VERSION_MAJOR}) #needed by some ECM modules
 find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Widgets Test)
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
