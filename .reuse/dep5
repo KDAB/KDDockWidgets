@@ -9,12 +9,12 @@ Copyright: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@k
 License: GPL-2.0-only OR GPL-3.0-only
 
 #misc documentation
-Files: CONTRIBUTORS.txt Changelog README.md README-QtQuick.md README-WASM.md README-Wayland.md README-bindings.md README-troubleshooting conan/README.txt python/examples/README.txt python/examples-qt6/README.txt docs/KDDockWidgets-CopyrightAssignmentForm.pdf *.html
+Files: CONTRIBUTORS.txt Changelog README.md README-QtQuick.md README-WASM.md README-Wayland.md README-bindings.md README-troubleshooting conan/README.txt python/examples/README.txt python/examples-qt6/README.txt docs_devel/*.md docs/KDDockWidgets-CopyrightAssignmentForm.pdf *.html
 Copyright: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: GPL-2.0-only OR GPL-3.0-only
 
 #misc config files
-Files: .pre-commit-config.yaml .codespellrc .krazy .cmake-format .clang-format .clazy .gitignore .mdlrc .mdlrc.rb .pep8 .pylintrc appveyor.yml code.dev-*.code-workspace docs/api/Doxyfile.cmake distro/*
+Files: .pre-commit-config.yaml .codespellrc .krazy .cmake-format .clang-format .clazy .gitignore .mdlrc .mdlrc.rb .pep8 .pylintrc appveyor.yml mkdocs.yml code.dev-*.code-workspace code.dev*.code-workspace docs/api/Doxyfile.cmake distro/*
 Copyright: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: GPL-2.0-only OR GPL-3.0-only
 License: BSD-3-Clause
@@ -28,3 +28,12 @@ License: GPL-2.0-only OR GPL-3.0-only
 Files: cmake/ECM/modules/*
 Copyright: The KDE Project
 License: BSD-3-Clause
+
+#3rdparty C++
+Files: src/3rdparty/kdbindings/genindex_array.h
+Copyright: 2021 Jeremy Burns
+License: MIT
+
+Files: src/3rdparty/doctest/doctest.h
+Copyright: 2016-2021 Viktor Kirilov <vik.kirilov@gmail.com>
+License: MIT
