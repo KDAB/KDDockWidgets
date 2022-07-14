@@ -12,8 +12,8 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring,missing-class-docstring
 
 # pylint: disable=no-name-in-module
-from PyKDDockWidgets import KDDockWidgets
 from PySide2 import QtCore, QtWidgets, QtGui
+from PyKDDockWidgets import KDDockWidgets
 
 from MyWidget1 import MyWidget1
 from MyWidget2 import MyWidget2
