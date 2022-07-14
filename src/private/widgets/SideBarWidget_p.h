@@ -29,7 +29,7 @@ class DockWidget;
 class Frame;
 class SideBarWidget;
 
-class SideBarButton : public QToolButton
+class DOCKS_EXPORT SideBarButton : public QToolButton
 {
     Q_OBJECT
 public:
