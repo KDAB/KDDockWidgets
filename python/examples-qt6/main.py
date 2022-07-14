@@ -13,8 +13,8 @@
 
 import sys
 
-from MyMainWindow import MyMainWindow
 from PySide6 import QtWidgets, QtCore
+from MyMainWindow import MyMainWindow
 
 try:
     # pylint: disable=unused-import
