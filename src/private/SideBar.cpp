@@ -68,6 +68,11 @@ void SideBar::onButtonClicked(DockWidgetBase *dw)
     toggleOverlay(dw);
 }
 
+QVector<DockWidgetBase *> SideBar::dockWidgets() const
+{
+    return m_dockWidgets;
+}
+
 void SideBar::onDockWidgetDestroyed(QObject *dw)
 {
     removeDockWidget(static_cast<DockWidgetBase *>(dw));
