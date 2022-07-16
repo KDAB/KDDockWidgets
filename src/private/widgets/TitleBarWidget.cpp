@@ -106,6 +106,14 @@ TitleBarWidget::TitleBarWidget(FloatingWindow *parent)
     init();
 }
 
+TitleBarWidget::TitleBarWidget(QWidget *parent)
+    : TitleBar(parent)
+    , m_layout(new QHBoxLayout(this))
+{
+    init();
+}
+
+
 void TitleBarWidget::init()
 {
     qCDebug(creation) << "TitleBarWidget" << this;
