@@ -40,7 +40,7 @@ class DOCKS_EXPORT Group_qtquick : public View_qtquick, public GroupViewInterfac
     Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(int userType READ userType CONSTANT)
     Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
-    Q_PROPERTY(int currentIndex READ currentIndex_impl NOTIFY currentDockWidgetChanged)
+    Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentDockWidgetChanged)
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
 
 public:
@@ -57,6 +57,7 @@ public:
     QQuickItem *visualItem() const override;
 
     QRect dragRect() const override;
+    int currentIndex() const;
 
     // QML interface:
     KDDockWidgets::Views::TitleBar_qtquick *titleBar() const;
@@ -68,7 +69,6 @@ public:
 protected:
     void removeWidget_impl(Controllers::DockWidget *) override;
     int indexOfDockWidget_impl(const Controllers::DockWidget *) override;
-    int currentIndex_impl() const override;
     void setCurrentTabIndex_impl(int index) override;
     void setCurrentDockWidget_impl(Controllers::DockWidget *) override;
     void insertDockWidget_impl(Controllers::DockWidget *, int index) override;

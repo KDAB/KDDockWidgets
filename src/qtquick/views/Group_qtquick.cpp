@@ -66,7 +66,7 @@ void Group_qtquick::init()
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
     connect(m_group, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
-    connect(m_group, &Controllers::Group::currentDockWidgetChanged, this, &Group_qtquick::currentDockWidgetChanged);
+    connect(m_group->stack(), &Controllers::Stack::currentDockWidgetChanged, this, &Group_qtquick::currentDockWidgetChanged);
     connect(m_group, &Controllers::Group::actualTitleBarChanged, this, &Group_qtquick::actualTitleBarChanged);
 
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
@@ -114,9 +114,9 @@ int Group_qtquick::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
     return stackView()->indexOfDockWidget(dw);
 }
 
-int Group_qtquick::currentIndex_impl() const
+int Group_qtquick::currentIndex() const
 {
-    return stackView()->currentIndex();
+    return m_group->currentIndex();
 }
 
 void Group_qtquick::setCurrentTabIndex_impl(int index)

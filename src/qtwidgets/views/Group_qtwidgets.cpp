@@ -107,11 +107,6 @@ void Group_qtwidgets::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
     m_group->stack()->setCurrentDockWidget(dw);
 }
 
-int Group_qtwidgets::currentIndex_impl() const
-{
-    return m_group->stack()->currentIndex();
-}
-
 void Group_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
     m_group->stack()->insertDockWidget(dw, index);

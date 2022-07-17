@@ -299,7 +299,6 @@ public:
     void onDockWidgetCountChanged();
 
 Q_SIGNALS:
-    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
     void numDockWidgetsChanged();
     void hasTabsVisibleChanged();
     void isInMainWindowChanged();
@@ -338,7 +337,6 @@ public:
 
     void removeWidget_impl(DockWidget *);
     int indexOfDockWidget_impl(const DockWidget *);
-    int currentIndex_impl() const;
     void setCurrentTabIndex_impl(int index);
     void setCurrentDockWidget_impl(DockWidget *);
     void insertDockWidget_impl(DockWidget *, int index);

@@ -39,7 +39,6 @@ public:
     virtual void changeTabIcon(int index, const QIcon &) = 0;
     virtual void removeWidget_impl(Controllers::DockWidget *) = 0;
     virtual int indexOfDockWidget_impl(const Controllers::DockWidget *) = 0;
-    virtual int currentIndex_impl() const = 0;
     virtual void setCurrentTabIndex_impl(int index) = 0;
     virtual void setCurrentDockWidget_impl(Controllers::DockWidget *) = 0;
     virtual void insertDockWidget_impl(Controllers::DockWidget *, int index) = 0;

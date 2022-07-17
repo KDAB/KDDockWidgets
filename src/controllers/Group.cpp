@@ -90,7 +90,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     s_dbg_numFrames++;
     DockRegistry::self()->registerGroup(this);
 
-    connect(this, &Group::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
+    connect(m_stack, &Stack::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
     connect(m_stack, &Controllers::Stack::currentTabChanged,
             this, &Group::onCurrentTabChanged);
 
@@ -185,11 +185,6 @@ void Group::removeWidget_impl(DockWidget *dw)
 int Group::indexOfDockWidget_impl(const DockWidget *dw)
 {
     return dynamic_cast<Views::GroupViewInterface *>(view())->indexOfDockWidget_impl(dw);
-}
-
-int Group::currentIndex_impl() const
-{
-    return dynamic_cast<Views::GroupViewInterface *>(view())->currentIndex_impl();
 }
 
 void Group::setCurrentTabIndex_impl(int index)
@@ -306,7 +301,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
         dockWidget->view()->close(); // Ensure closed
     } else {
         if (hasSingleDockWidget()) {
-            Q_EMIT currentDockWidgetChanged(dockWidget);
+            Q_EMIT m_stack->currentDockWidgetChanged(dockWidget);
             setObjectName(dockWidget->uniqueName());
 
             if (!m_layoutItem) {
@@ -368,7 +363,7 @@ int Group::currentIndex() const
     if (m_inCtor || m_inDtor)
         return -1;
 
-    return currentIndex_impl();
+    return m_stack->currentIndex();
 }
 
 void Group::setCurrentTabIndex(int index)
@@ -443,7 +438,7 @@ void Group::onCurrentTabChanged(int index)
 {
     if (index != -1) {
         if (auto dock = dockWidgetAt(index)) {
-            Q_EMIT currentDockWidgetChanged(dock);
+            Q_EMIT m_stack->currentDockWidgetChanged(dock);
         } else {
             qWarning() << "dockWidgetAt" << index << "returned nullptr" << this;
         }

@@ -5220,7 +5220,7 @@ void TestDocks::tst_tabWidgetCurrentIndex()
 
     Controllers::DockWidget *currentDw = nullptr;
     auto group = dock1->dptr()->group();
-    connect(group, &Controllers::Group::currentDockWidgetChanged, this, [&currentDw](Controllers::DockWidget *dw) {
+    connect(group->stack(), &Controllers::Stack::currentDockWidgetChanged, this, [&currentDw](Controllers::DockWidget *dw) {
         currentDw = dw;
     });
 

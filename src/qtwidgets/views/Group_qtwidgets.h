@@ -31,7 +31,6 @@ public:
     void changeTabIcon(int index, const QIcon &) override;
     void removeWidget_impl(Controllers::DockWidget *) override;
     int indexOfDockWidget_impl(const Controllers::DockWidget *) override;
-    int currentIndex_impl() const override;
     void setCurrentTabIndex_impl(int index) override;
     void setCurrentDockWidget_impl(Controllers::DockWidget *) override;
     void insertDockWidget_impl(Controllers::DockWidget *, int index) override;
