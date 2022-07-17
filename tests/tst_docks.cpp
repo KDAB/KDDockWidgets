@@ -6094,6 +6094,9 @@ void TestDocks::tst_toggleTabbed()
     QVERIFY(!dock0->isVisible());
     QVERIFY(group->isVisible());
 
+    QCOMPARE(group->currentIndex(), 0);
+    QCOMPARE(group->stack()->currentIndex(), 0);
+
     QVERIFY(dock1->isVisible());
 }
 
