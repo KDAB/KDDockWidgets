@@ -9,7 +9,7 @@ version: 1.0.{build}-{branch}
 branches:
   except:
     - gh-pages
-    - wip/v2
+    - wip/gtk_window
 
 # Do not build on tags (GitHub and BitBucket)
 skip_tags: false
