@@ -93,6 +93,7 @@ private:
 class DockWidgetModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
 public:
     enum Role {
         Role_Title = Qt::UserRole

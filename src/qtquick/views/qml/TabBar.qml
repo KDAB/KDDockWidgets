@@ -12,47 +12,34 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.9
 
-TabBar {
-        id: root
 
-        readonly property bool hasCustomMouseEventRedirector: parent.hasCustomMouseEventRedirector
+TabBarBase {
+    id: root
 
-        /// This is our C++ Group_qtquick.cpp
-        readonly property QtObject groupCpp: parent.groupCpp
+    implicitHeight: tabBar.implicitHeight
 
-        /// This is our C++ TabBar_qtquick.cpp
-        property QtObject tabBarCpp: groupCpp ? groupCpp.tabWidget.tabBar : null
+    onCurrentTabIndexChanged: {
+        // A change coming from C++
+        tabBar.currentIndex = root.currentTabIndex
+    }
 
-        /// Don't override in custom TabBar's.
-        visible: tabBarCpp ? (tabBarCpp.tabBarAutoHide ? count > 1 : true) : count > 1
+    TabBar {
+        id: tabBar
 
-        /// Don't override in custom TabBar's. Change implicitHeight instead.
-        height: visible ? implicitHeight : 0
-
-        /// Feel free to customize
-        width: parent ? parent.width : 0
+        width: parent.width
 
         onCurrentIndexChanged: {
             // Tells the C++ backend that the current dock widget has changed
-            if (groupCpp)
-                groupCpp.tabWidget.setCurrentDockWidget(currentIndex);
+            root.currentTabIndex = this.currentIndex
         }
+
+
 
         // If the currentIndex changes in the C++ backend then update it here
         Connections {
             target: root.groupCpp
             function onCurrentIndexChanged() {
-                root.currentIndex = groupCpp.currentIndex;
-            }
-        }
-
-        onTabBarCppChanged: {
-            if (tabBarCpp) {
-                if (!root.hasCustomMouseEventRedirector)
-                    tabBarCpp.redirectMouseEvents(dragMouseArea)
-
-                // Setting just so the unit-tests can access the buttons
-                tabBarCpp.tabBarQmlItem = this;
+                root.currentTabIndex = groupCpp.currentIndex;
             }
         }
 
@@ -65,3 +52,4 @@ TabBar {
             }
         }
     }
+}

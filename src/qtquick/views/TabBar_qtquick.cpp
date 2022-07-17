@@ -124,7 +124,7 @@ bool TabBar_qtquick::event(QEvent *ev)
     case QEvent::MouseButtonPress: {
         if (m_tabBarQmlItem) {
             auto me = static_cast<QMouseEvent *>(ev);
-            m_tabBarQmlItem->setProperty("currentIndex", tabAt(me->pos()));
+            m_tabBarQmlItem->setProperty("currentTabIndex", tabAt(me->pos()));
             if (ev->type() == QEvent::MouseButtonPress)
                 m_tabBar->onMousePress(me->pos());
             else
@@ -155,7 +155,11 @@ QQuickItem *TabBar_qtquick::listView() const
     }
 
     const QList<QQuickItem *> children = m_tabBarQmlItem->childItems();
-    for (QQuickItem *child : children) {
+    if (children.size() != 1) {
+        return nullptr;
+    }
+
+    for (QQuickItem *child : children.constFirst()->childItems()) {
         if (qstrcmp(child->metaObject()->className(), "QQuickListView") == 0)
             return child;
     }
