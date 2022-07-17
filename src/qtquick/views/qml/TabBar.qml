@@ -15,10 +15,10 @@ import QtQuick.Controls 2.9
 TabBar {
         id: root
 
-        property bool hasCustomMouseEventRedirector: false
+        readonly property bool hasCustomMouseEventRedirector: parent.hasCustomMouseEventRedirector
 
         /// This is our C++ Group_qtquick.cpp
-        property QtObject groupCpp: null
+        readonly property QtObject groupCpp: parent.groupCpp
 
         /// This is our C++ TabBar_qtquick.cpp
         property QtObject tabBarCpp: groupCpp ? groupCpp.tabWidget.tabBar : null
@@ -36,6 +36,14 @@ TabBar {
             // Tells the C++ backend that the current dock widget has changed
             if (groupCpp)
                 groupCpp.tabWidget.setCurrentDockWidget(currentIndex);
+        }
+
+        // If the currentIndex changes in the C++ backend then update it here
+        Connections {
+            target: root.groupCpp
+            function onCurrentIndexChanged() {
+                root.currentIndex = groupCpp.currentIndex;
+            }
         }
 
         onTabBarCppChanged: {

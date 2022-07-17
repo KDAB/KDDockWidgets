@@ -26,7 +26,7 @@ Rectangle {
     readonly property bool isMDI: groupCpp && groupCpp.isMDI
     readonly property bool resizeAllowed: root.isMDI && !_kddwDragController.isDragging && _kddwDockRegistry && (!_kddwHelpers.groupViewInMDIResize || _kddwHelpers.groupViewInMDIResize === groupCpp)
     property alias tabBarHeight: tabbar.height
-    property alias hasCustomMouseEventRedirector: tabbar.hasCustomMouseEventRedirector
+    readonly property bool hasCustomMouseEventRedirector: false
 
     anchors.fill: parent
 
@@ -184,13 +184,6 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: groupCpp
-        function onCurrentIndexChanged() {
-            tabbar.currentIndex = groupCpp.currentIndex;
-        }
-    }
-
     MouseArea {
         id: dragMouseArea
         objectName: "kddwTabBarDragMouseArea"
@@ -200,10 +193,13 @@ Rectangle {
         z: 10
     }
 
-    TabBar {
+    Loader {
         id: tabbar
+        readonly property QtObject groupCpp: root.groupCpp
+        readonly property bool hasCustomMouseEventRedirector: root.hasCustomMouseEventRedirector
 
-        groupCpp: root.groupCpp
+        source: groupCpp ? _kddw_widgetFactory.tabbarFilename()
+                         : ""
 
         anchors {
             left: parent ? parent.left : undefined
@@ -214,7 +210,6 @@ Rectangle {
             leftMargin: 1
             rightMargin: 1
         }
-
     }
 
     StackLayout {
@@ -231,6 +226,6 @@ Rectangle {
             bottomMargin: root.contentsMargin
         }
 
-        currentIndex: tabbar.currentIndex
+        currentIndex: root.groupCpp ? root.groupCpp.currentIndex : -1
     }
 }
