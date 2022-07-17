@@ -142,8 +142,16 @@ bool TabBar_qtquick::event(QEvent *ev)
 
 QQuickItem *TabBar_qtquick::tabAt(int index) const
 {
-    const QHash<int, QQuickItem *> tabs = qmlTabs();
-    return tabs.value(index, nullptr);
+    QVariant result;
+    const bool res = QMetaObject::invokeMethod(m_tabBarQmlItem, "getTabAtIndex",
+                                               Q_RETURN_ARG(QVariant, result),
+                                               Q_ARG(QVariant, index));
+
+    if (res)
+        return result.value<QQuickItem *>();
+
+    qWarning() << Q_FUNC_INFO << "Could not find tab for index" << index;
+    return nullptr;
 }
 
 QQuickItem *TabBar_qtquick::listView() const
