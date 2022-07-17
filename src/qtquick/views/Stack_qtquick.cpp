@@ -44,6 +44,14 @@ void Stack_qtquick::init()
     m_tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect([this] {
         Q_EMIT tabBarAutoHideChanged();
     });
+
+    // Emit even if it hasn't changed. When removing indexes lower than the current tab the current tab index
+    // will shift. Too much refactoring to make this signal be emitted less than it's needed, but no big deal either,
+    // as it's mostly used to update tab title's and such.
+    connect(m_dockWidgetModel, &DockWidgetModel::dockWidgetRemoved, m_stack, [this] {
+        Q_EMIT m_stack->currentTabChanged(m_stack->currentIndex());
+    });
+
     Q_EMIT tabBarChanged();
 }
 
@@ -229,6 +237,7 @@ void DockWidgetModel::remove(Controllers::DockWidget *dw)
         endRemoveRows();
 
         Q_EMIT countChanged();
+        Q_EMIT dockWidgetRemoved();
     }
 }
 

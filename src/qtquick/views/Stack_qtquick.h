@@ -110,8 +110,10 @@ public:
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
+
 Q_SIGNALS:
     void countChanged();
+    void dockWidgetRemoved();
 
 private:
     void emitDataChangedFor(Controllers::DockWidget *);
