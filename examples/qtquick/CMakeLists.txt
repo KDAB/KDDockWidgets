@@ -23,3 +23,9 @@ set_compiler_flags(qtquick_customtitlebar)
 set_target_properties(
     qtquick_customtitlebar PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
 )
+
+add_subdirectory(customtabbar)
+set_compiler_flags(qtquick_customtabbar)
+set_target_properties(
+    qtquick_customtabbar PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
+)
