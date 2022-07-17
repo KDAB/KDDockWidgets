@@ -10,7 +10,6 @@
 */
 
 import QtQuick 2.9
-import QtQuick.Controls 2.9
 import QtQuick.Layouts 1.9
 
 import com.kdab.dockwidgets 2.0
@@ -23,11 +22,11 @@ Rectangle {
     readonly property int nonContentsHeight: (titleBar.item ? titleBar.item.heightWhenVisible : 0) + tabbar.implicitHeight + (2 * contentsMargin) + titleBarContentsMargin
     property int contentsMargin: isMDI ? 2 : 1
     property int titleBarContentsMargin: 1
-    property bool hasCustomMouseEventRedirector: false
     property int mouseResizeMargin: 8
     readonly property bool isMDI: groupCpp && groupCpp.isMDI
     readonly property bool resizeAllowed: root.isMDI && !_kddwDragController.isDragging && _kddwDockRegistry && (!_kddwHelpers.groupViewInMDIResize || _kddwHelpers.groupViewInMDIResize === groupCpp)
     property alias tabBarHeight: tabbar.height
+    property alias hasCustomMouseEventRedirector: tabbar.hasCustomMouseEventRedirector
 
     anchors.fill: parent
 
@@ -204,11 +203,7 @@ Rectangle {
     TabBar {
         id: tabbar
 
-        readonly property QtObject tabBarCpp: root.groupCpp ? root.groupCpp.tabWidget.tabBar
-                                                            : null
-
-        visible: tabBarCpp ? (tabBarCpp.tabBarAutoHide ? count > 1 : true) : count > 1
-        height: visible ? implicitHeight : 0
+        groupCpp: root.groupCpp
 
         anchors {
             left: parent ? parent.left : undefined
@@ -220,30 +215,6 @@ Rectangle {
             rightMargin: 1
         }
 
-        width: parent ? parent.width : 0
-
-        onCurrentIndexChanged: {
-            if (root && root.groupCpp)
-                root.groupCpp.tabWidget.setCurrentDockWidget(currentIndex);
-        }
-
-        onTabBarCppChanged: {
-            if (tabBarCpp) {
-                if (!root.hasCustomMouseEventRedirector)
-                    tabBarCpp.redirectMouseEvents(dragMouseArea)
-
-                // Setting just so the unit-tests can access the buttons
-                tabBarCpp.tabBarQmlItem = this;
-            }
-        }
-
-        Repeater {
-            model: root.groupCpp ? root.groupCpp.tabWidget.dockWidgetModel : 0
-            TabButton {
-                readonly property int tabIndex: index
-                text: title
-            }
-        }
     }
 
     StackLayout {

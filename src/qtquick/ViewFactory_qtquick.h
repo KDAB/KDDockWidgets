@@ -72,6 +72,7 @@ public:
     View *createMDILayout(Controllers::MDILayout *, View *parent) const override;
 
     Q_INVOKABLE virtual QUrl titleBarFilename() const;
+    Q_INVOKABLE virtual QUrl tabbarFilename() const;
     virtual QUrl dockwidgetFilename() const;
     virtual QUrl groupFilename() const;
     virtual QUrl floatingWindowFilename() const;
