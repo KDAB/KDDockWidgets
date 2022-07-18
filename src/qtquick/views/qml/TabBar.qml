@@ -89,8 +89,6 @@ TabBarBase {
             root.currentTabIndex = this.currentIndex
         }
 
-
-
         // If the currentIndex changes in the C++ backend then update it here
         Connections {
             target: root.groupCpp
