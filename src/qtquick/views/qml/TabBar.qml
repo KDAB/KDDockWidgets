@@ -16,17 +16,19 @@ import QtQuick.Controls 2.9
 TabBarBase {
     id: root
 
-    function getTabAtIndex(index) {
-
-        // Iterate the internal ListView's children to find our tab
+    function getInternalListView() {
         for(var i = 0; i < tabBar.children.length; ++i) {
-            var isListView = tabBar.children[i].toString().startsWith("QQuickListView");
-            if (isListView) {
-                var listView = tabBar.children[i];
-                if (index < listView.children.length)
-                    return listView.children[0].children[index];
-            }
+            if (tabBar.children[i].toString().startsWith("QQuickListView"))
+                return tabBar.children[i];
         }
+
+        return null;
+    }
+
+    function getTabAtIndex(index) {
+        var listView = getInternalListView();
+        if (index < listView.children.length)
+            return listView.children[0].children[index];
 
         return null;
     }
