@@ -67,4 +67,12 @@ Item {
     function getTabAtIndex(index) {
         console.warn("Override this function in the actual derived tab bar!");
     }
+
+    /// Returns the index of the tab that's at localPoint
+    /// Returns -1 if no tab there.
+    /// This is called by C++ and needs to be implemented in the derived class.
+    /// See TabBar.qml for an example.
+    function getTabIndexAtPosition(localPoint) {
+        console.warn("Override this function in the actual derived tab bar!");
+    }
 }

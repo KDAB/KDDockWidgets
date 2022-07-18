@@ -72,9 +72,7 @@ protected:
     void init() override;
 
 private:
-    QHash<int, QQuickItem *> qmlTabs() const;
     QQuickItem *tabAt(int index) const;
-    QQuickItem *listView() const;
     QPointer<QQuickItem> m_tabBarQmlItem;
     KDBindings::ScopedConnection m_tabBarAutoHideChanged;
 };

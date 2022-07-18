@@ -16,21 +16,60 @@ import QtQuick.Controls 2.9
 TabBarBase {
     id: root
 
+    // Helper, only applies if you're using the TabBar from QQControls.
+    // Returns the internal ListView
     function getInternalListView() {
         for(var i = 0; i < tabBar.children.length; ++i) {
             if (tabBar.children[i].toString().startsWith("QQuickListView"))
                 return tabBar.children[i];
         }
 
+        console.warn("Couldn't find the internal ListView");
         return null;
     }
 
     function getTabAtIndex(index) {
         var listView = getInternalListView();
+        var content = listView.children[0];
+
+        var curr = 0;
+        for (var i = 0; i < content.children.length; ++i) {
+            var candidate = content.children[i];
+            if (typeof candidate.tabIndex == "undefined") {
+                // All tabs need to have "tabIndex" property.
+                continue;
+            }
+
+            if (curr == index)
+                return candidate;
+
+            curr++;
+        }
+
         if (index < listView.children.length)
             return listView.children[0].children[index];
 
         return null;
+    }
+
+    function getTabIndexAtPosition(globalPoint) {
+        var listView = getInternalListView();
+        var content = listView.children[0];
+
+        for (var i = 0; i < content.children.length; ++i) {
+            var candidate = content.children[i];
+            if (typeof candidate.tabIndex == "undefined") {
+                // All tabs need to have "tabIndex" property.
+                continue;
+            }
+
+            var localPt = candidate.mapFromGlobal(globalPoint.x, globalPoint.y);
+            if (candidate.contains(localPt)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     implicitHeight: tabBar.implicitHeight
