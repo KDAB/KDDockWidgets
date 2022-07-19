@@ -35,7 +35,7 @@ static qint64 s_nextId = 1;
 
 View::View(Controller *controller, Type type)
     : d(new Private())
-    , m_controller(controller)
+    , m_controller(controller ? controller : new Controller(Type::None, this))
     , m_id(QString::number(KDDockWidgets::s_nextId++))
     , m_type(type)
 {
