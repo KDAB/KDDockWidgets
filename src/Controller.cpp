@@ -124,3 +124,12 @@ void Controller::show() const
 {
     return view()->show();
 }
+
+void Controller::setParentView(View *parent)
+{
+    if (auto v = view()) {
+        v->setParent(parent);
+    } else {
+        qWarning() << Q_FUNC_INFO << "No view()";
+    }
+}

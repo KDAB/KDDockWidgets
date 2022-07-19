@@ -185,7 +185,7 @@ void Item::setGuestView(View *guest)
     m_layoutInvalidatedConnection->disconnect();
 
     if (m_guest) {
-        m_guest->setParent(m_hostWidget);
+        m_guest->controller()->setParentView(m_hostWidget);
         if (Controllers::Group *group = asGroupController())
             group->setLayoutItem(this);
 

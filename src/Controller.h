@@ -80,6 +80,10 @@ public:
     void show() const;
     bool inDtor() const;
 
+    /// Sets the parent view
+    /// In Qt this would be equivalent to calling view()->setParent(parent);
+    virtual void setParentView(View *parent);
+
 private:
     void setParent(QObject *) = delete;
     View *m_view = nullptr;
