@@ -167,9 +167,9 @@ int Platform_qtwidgets::startDragDistance_impl() const
     return QApplication::startDragDistance();
 }
 
-View *Platform_qtwidgets::createView(View *parent) const
+View *Platform_qtwidgets::createView(Controller *controller, View *parent) const
 {
-    return new Views::View_qtwidgets<QWidget>(nullptr, Type::None, Views::View_qt::asQWidget(parent));
+    return new Views::View_qtwidgets<QWidget>(controller, Type::None, Views::View_qt::asQWidget(parent));
 }
 
 bool Platform_qtwidgets::usesFallbackMouseGrabber() const

@@ -117,7 +117,7 @@ QSize Platform_dummy::screenSizeFor(View *) const
     return {};
 }
 
-View *Platform_dummy::createView(View *) const
+View *Platform_dummy::createView(Controller *, View *) const
 {
     return nullptr;
 }

@@ -95,6 +95,7 @@ static Controller *controllerForItem(QQuickItem *item)
         case Type::RubberBand:
         case Type::LayoutItem:
         case Type::ViewWrapper:
+        case Type::DropAreaIndicatorOverlay:
         case Type::None:
             // skip internal types
             continue;
@@ -285,6 +286,7 @@ bool ViewWrapper_qtquick::is(Type t) const
         return false; // Not support by qtquick
     case Type::LayoutItem:
     case Type::None:
+    case Type::DropAreaIndicatorOverlay:
         qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
         return false;
     case Type::ViewWrapper:

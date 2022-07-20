@@ -43,6 +43,7 @@ enum class Type {
     DropArea = 4096,
     MDILayout = 8192,
     RubberBand = 0x4000,
+    DropAreaIndicatorOverlay = 0x8000,
 
     LAST = RubberBand // Keep last
 };

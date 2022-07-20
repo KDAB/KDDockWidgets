@@ -46,7 +46,7 @@ public:
     QSize screenSizeFor(View *) const override;
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;
-    View *createView(View *parent = nullptr) const override;
+    View *createView(Controller *controller, View *parent = nullptr) const override;
     bool usesFallbackMouseGrabber() const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
     void ungrabMouse() override;
