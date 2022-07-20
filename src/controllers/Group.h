@@ -336,14 +336,6 @@ public:
      * Any widget having 16777215x16777215 is ignored (represents not having a max-size, QWIDGETSIZE_MAX)
      */
     QSize biggestDockWidgetMaxSize() const;
-
-    void removeWidget_impl(DockWidget *);
-    int indexOfDockWidget_impl(const DockWidget *);
-    void setCurrentTabIndex_impl(int index);
-    void setCurrentDockWidget_impl(DockWidget *);
-    void insertDockWidget_impl(DockWidget *, int index);
-    DockWidget *dockWidgetAt_impl(int index) const;
-    DockWidget *currentDockWidget_impl() const;
     int nonContentsHeight() const;
 
 private:

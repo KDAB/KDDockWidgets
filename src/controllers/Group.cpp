@@ -172,41 +172,6 @@ void Group::changeTabIcon(int index, const QIcon &icon)
     dynamic_cast<Views::GroupViewInterface *>(view())->changeTabIcon(index, icon);
 }
 
-void Group::removeWidget_impl(DockWidget *dw)
-{
-    dynamic_cast<Views::GroupViewInterface *>(view())->removeWidget_impl(dw);
-}
-
-int Group::indexOfDockWidget_impl(const DockWidget *dw)
-{
-    return dynamic_cast<Views::GroupViewInterface *>(view())->indexOfDockWidget_impl(dw);
-}
-
-void Group::setCurrentTabIndex_impl(int index)
-{
-    dynamic_cast<Views::GroupViewInterface *>(view())->setCurrentTabIndex_impl(index);
-}
-
-void Group::setCurrentDockWidget_impl(DockWidget *dw)
-{
-    dynamic_cast<Views::GroupViewInterface *>(view())->setCurrentDockWidget_impl(dw);
-}
-
-void Group::insertDockWidget_impl(DockWidget *dw, int index)
-{
-    dynamic_cast<Views::GroupViewInterface *>(view())->insertDockWidget_impl(dw, index);
-}
-
-Controllers::DockWidget *Group::dockWidgetAt_impl(int index) const
-{
-    return dynamic_cast<Views::GroupViewInterface *>(view())->dockWidgetAt_impl(index);
-}
-
-Controllers::DockWidget *Group::currentDockWidget_impl() const
-{
-    return dynamic_cast<Views::GroupViewInterface *>(view())->currentDockWidget_impl();
-}
-
 int Group::nonContentsHeight() const
 {
     return dynamic_cast<Views::GroupViewInterface *>(view())->nonContentsHeight();
@@ -318,7 +283,8 @@ void Group::removeWidget(DockWidget *dw)
 {
     disconnect(dw, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
     disconnect(dw, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
-    removeWidget_impl(dw);
+
+    dynamic_cast<Views::GroupViewInterface *>(view())->removeWidget_impl(dw);
 }
 
 FloatingWindow *Group::detachTab(DockWidget *dockWidget)
@@ -350,7 +316,7 @@ int Group::indexOfDockWidget(const DockWidget *dw)
     if (m_inCtor || m_inDtor)
         return -1;
 
-    return indexOfDockWidget_impl(dw);
+    return dynamic_cast<Views::GroupViewInterface *>(view())->indexOfDockWidget_impl(dw);
 }
 
 int Group::currentIndex() const
@@ -366,7 +332,7 @@ void Group::setCurrentTabIndex(int index)
     if (m_inCtor || m_inDtor)
         return;
 
-    setCurrentTabIndex_impl(index);
+    dynamic_cast<Views::GroupViewInterface *>(view())->setCurrentTabIndex_impl(index);
 }
 
 void Group::setCurrentDockWidget(DockWidget *dw)
@@ -374,7 +340,7 @@ void Group::setCurrentDockWidget(DockWidget *dw)
     if (m_inCtor || m_inDtor)
         return;
 
-    setCurrentDockWidget_impl(dw);
+    dynamic_cast<Views::GroupViewInterface *>(view())->setCurrentDockWidget_impl(dw);
 }
 
 void Group::insertDockWidget(DockWidget *dw, int index)
@@ -382,7 +348,7 @@ void Group::insertDockWidget(DockWidget *dw, int index)
     if (m_inCtor || m_inDtor)
         return;
 
-    insertDockWidget_impl(dw, index);
+    dynamic_cast<Views::GroupViewInterface *>(view())->insertDockWidget_impl(dw, index);
 }
 
 Controllers::DockWidget *Group::dockWidgetAt(int index) const
@@ -390,7 +356,7 @@ Controllers::DockWidget *Group::dockWidgetAt(int index) const
     if (m_inCtor || m_inDtor)
         return nullptr;
 
-    return dockWidgetAt_impl(index);
+    return dynamic_cast<Views::GroupViewInterface *>(view())->dockWidgetAt_impl(index);
 }
 
 Controllers::DockWidget *Group::currentDockWidget() const
@@ -398,7 +364,7 @@ Controllers::DockWidget *Group::currentDockWidget() const
     if (m_inCtor || m_inDtor)
         return nullptr;
 
-    return currentDockWidget_impl();
+    return dynamic_cast<Views::GroupViewInterface *>(view())->currentDockWidget_impl();
 }
 
 int Group::dockWidgetCount() const
