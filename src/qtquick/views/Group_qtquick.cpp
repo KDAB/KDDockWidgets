@@ -136,10 +136,11 @@ void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
     QPointer<Controllers::Group> oldFrame = dw->d->group();
     if (stackView()->insertDockWidget(index, dw, {}, {})) {
 
-        asView_qtquick(dw->view())->setParent(m_stackLayout);
+        auto dockView = asView_qtquick(dw->view());
+        dockView->setParent(m_stackLayout);
 
-        QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::parentViewChanged, this, [dw, this] {
-            if (dw->parent() != m_stackLayout)
+        QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::parentViewChanged, this, [dockView, dw, this] {
+            if (dockView->parent() != m_stackLayout)
                 removeWidget_impl(dw);
         });
 
