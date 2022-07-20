@@ -76,7 +76,9 @@ Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &n
         if (Platform::instance()->tests_waitForWindowActive(dock->view()->window(), 1000)) {
             return dock;
         }
+
         qWarning() << Q_FUNC_INFO << "Couldn't activate window";
+        Q_ASSERT(false);
         return nullptr;
     } else {
         return dock;
