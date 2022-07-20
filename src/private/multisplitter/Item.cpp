@@ -258,7 +258,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View 
     if (!guestId.isEmpty()) {
         if (View *guest = widgets.value(guestId)) {
             setGuestView(guest);
-            m_guest->setParent(hostView());
+            m_guest->controller()->setParentView(hostView());
         } else if (hostView()) {
             qWarning() << Q_FUNC_INFO << "Couldn't find group to restore for" << this;
         }
@@ -348,7 +348,7 @@ void Item::setHostView(View *host)
     if (m_hostWidget != host) {
         m_hostWidget = host;
         if (m_guest) {
-            m_guest->setParent(host);
+            m_guest->controller()->setParentView(host);
             m_guest->setVisible(true);
             updateWidgetGeometries();
         }
