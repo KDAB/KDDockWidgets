@@ -48,6 +48,8 @@ Group_qtquick::Group_qtquick(Controllers::Group *controller, QQuickItem *parent)
 
 Group_qtquick::~Group_qtquick()
 {
+    disconnect(m_group, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
+
     // The QML item must be deleted with deleteLater(), as we might be currently with its mouse
     // handler in the stack. QML doesn't support it being deleted in that case.
     // So unparent it and deleteLater().
