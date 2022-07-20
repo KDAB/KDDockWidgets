@@ -71,6 +71,7 @@ Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &n
     if (show) {
         dock->show();
         dock->dptr()->morphIntoFloatingWindow();
+        Q_ASSERT(dock->floatingWindow());
         dock->view()->activateWindow();
         Q_ASSERT(dock->view()->window());
         if (Platform::instance()->tests_waitForWindowActive(dock->view()->window(), 1000)) {
