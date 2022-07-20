@@ -101,11 +101,6 @@ Group::Group(View *parent, FrameOptions options, int userType)
         onCloseEvent(ev);
     });
 
-    view()->d->parentChanged.connect([this] {
-        auto p = view()->parentView();
-        setLayout(p ? p->asLayout() : nullptr);
-    });
-
     m_inCtor = false;
 }
 
@@ -984,4 +979,10 @@ int Group::userType() const
 WidgetResizeHandler *Group::resizeHandler() const
 {
     return m_resizeHandler;
+}
+
+void Group::setParentView(View *parent)
+{
+    Controller::setParentView(parent);
+    setLayout(parent ? parent->asLayout() : nullptr);
 }

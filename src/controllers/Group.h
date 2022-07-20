@@ -296,6 +296,8 @@ public:
     /// @brief Sets the Layout which this group is in
     void setLayout(Layout *);
 
+    void setParentView(View *parent) override;
+
     void onDockWidgetCountChanged();
 
 Q_SIGNALS:
