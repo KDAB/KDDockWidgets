@@ -31,11 +31,23 @@ using namespace KDDockWidgets;
 
 namespace KDDockWidgets {
 static qint64 s_nextId = 1;
+
+Controller *maybeCreateController(Controller *controller, Type type, View *view)
+{
+    if (controller)
+        return controller;
+
+    if (type == Type::ViewWrapper)
+        return nullptr;
+
+    return new Controller(Type::None, view);
+}
+
 }
 
 View::View(Controller *controller, Type type)
     : d(new Private())
-    , m_controller(controller ? controller : new Controller(Type::None, this))
+    , m_controller(maybeCreateController(controller, type, this))
     , m_id(QString::number(KDDockWidgets::s_nextId++))
     , m_type(type)
 {
