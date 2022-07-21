@@ -79,6 +79,16 @@
         "cwd": "${workspaceFolder}"
       },
       {
+        "name": "tst_docks",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/tst_docks",
+        "args": [
+          "tst_doesntHaveNativeTitleBar"
+        ],
+        "cwd": "${workspaceFolder}"
+      },
+      {
         "name": "tst_qtwidgets",
         "type": "lldb",
         "request": "launch",
