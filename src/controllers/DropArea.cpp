@@ -545,7 +545,7 @@ void DropArea::addWidget(View *w, Location location,
     if (itemForFrame(group) != nullptr) {
         // Item already exists, remove it.
         // Changing the group parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
-        group->view()->setParent(nullptr); // so ~Item doesn't delete it
+        group->setParentView(nullptr); // so ~Item doesn't delete it
         group->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
     }
 

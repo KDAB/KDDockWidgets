@@ -123,7 +123,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
         }
     }
 
-    other->view()->setParent(nullptr);
+    other->setParentView(nullptr);
     group->addWidget(other, option);
 }
 
@@ -762,7 +762,7 @@ void DockWidget::Private::close()
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
     if (Controllers::Group *group = this->group()) {
         q->QObject::setParent(nullptr);
-        q->view()->setParent(nullptr);
+        q->setParentView(nullptr);
         group->removeWidget(q);
 
         if (Controllers::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {

@@ -586,7 +586,7 @@ void MainWindow::overlayOnSideBar(Controllers::DockWidget *dw)
     clearSideBarOverlay();
 
     auto group = new Controllers::Group(nullptr, FrameOption_IsOverlayed);
-    group->view()->setParent(view());
+    group->setParentView(view());
     d->m_overlayedDockWidget = dw;
     group->addWidget(dw);
     d->updateOverlayGeometry(dw->d->lastPosition()->lastOverlayedGeometry(sb->location()).size());
@@ -625,7 +625,7 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
 
     if (deleteFrame) {
         d->m_overlayedDockWidget->QObject::setParent(nullptr);
-        d->m_overlayedDockWidget->view()->setParent(nullptr);
+        d->m_overlayedDockWidget->setParentView(nullptr);
         Q_EMIT d->m_overlayedDockWidget->isOverlayedChanged(false);
         d->m_overlayedDockWidget = nullptr;
         delete group;
