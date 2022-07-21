@@ -776,9 +776,14 @@ void TestDocks::tst_doubleClose()
         m->addDockWidget(dock1, Location_OnBottom);
 
         QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
+        QVERIFY(!dock1->isFloating());
+
         dock1->close();
         QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
+        QVERIFY(dock1->isFloating());
+
         dock1->close();
+        QVERIFY(dock1->isFloating());
         QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
     }
 }
