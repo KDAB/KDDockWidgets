@@ -777,12 +777,15 @@ void TestDocks::tst_doubleClose()
 
         QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
         QVERIFY(!dock1->isFloating());
+        QVERIFY(dock1->isOpen());
 
         dock1->close();
+        QVERIFY(!dock1->isOpen());
         QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
         QVERIFY(dock1->isFloating());
 
         dock1->close();
+        QVERIFY(!dock1->isOpen());
         QVERIFY(dock1->isFloating());
         QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
     }
