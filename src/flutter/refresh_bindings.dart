@@ -48,7 +48,7 @@ List<String> qtIncludes() {
 void main(List<String> args_) async {
   int res = await runCommand(
       "dartagnan",
-      ["--output-directory=${generatedDir()}"] +
+      ["--output-directory=${generatedDir()}", "--license-file=license-file-template"] +
           qtIncludes() +
           ["bindings_global.h", "typesystem.xml"]);
 
