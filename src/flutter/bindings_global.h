@@ -10,6 +10,22 @@
 */
 
 
+#ifndef QT_NO_CAST_TO_ASCII
+#define QT_NO_CAST_TO_ASCII
+#endif
+
+#ifndef QT_NO_CAST_FROM_ASCII
+#define QT_NO_CAST_FROM_ASCII
+#endif
+
+#ifndef QT_NO_URL_CAST_FROM_STRING
+#define QT_NO_URL_CAST_FROM_STRING
+#endif
+
+#ifndef QT_NO_CAST_FROM_BYTEARRAY
+#define QT_NO_CAST_FROM_BYTEARRAY
+#endif
+
 #include "Platform_flutter.h"
 #include "ViewFactory_flutter.h"
 #include "views/View_flutter.h"
