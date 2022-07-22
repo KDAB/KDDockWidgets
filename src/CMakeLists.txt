@@ -201,9 +201,14 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/kddockwidgets_qtquick.qrc
 )
 
+set(KDDW_FRONTEND_FLUTTER_SRCS flutter/ViewFactory_flutter.cpp flutter/Window_flutter.cpp flutter/Platform_flutter.cpp
+                               flutter/views/View_flutter.cpp flutter/TestHelpers_flutter.cpp
+)
+
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers_qtquick.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers_qtwidgets.cpp)
+    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/TestHelpers_flutter.cpp)
 endif()
 
 set(KDDW_FRONTEND_DUMMY_SRCS dummy/ViewFactory_dummy.cpp dummy/Platform_dummy.cpp dummy/Window_dummy.cpp
@@ -280,6 +285,10 @@ endif()
 
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_QTCOMMON_SRCS})
+endif()
+
+if(KDDW_FRONTEND_FLUTTER)
+    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_FLUTTER_SRCS})
 endif()
 
 if(KDDW_FRONTEND_DUMMY)
@@ -406,6 +415,12 @@ if(KDDW_FRONTEND_DUMMY)
     # TODOm3: Remove Qt
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Gui)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_DUMMY)
+endif()
+
+if(KDDW_FRONTEND_FLUTTER)
+    # TODOm3: Remove Qt
+    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Gui)
+    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)
 endif()
 
 if(KDDockWidgets_CODE_COVERAGE)

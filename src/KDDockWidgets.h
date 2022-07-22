@@ -98,7 +98,8 @@ Q_DECLARE_FLAGS(IconPlaces, IconPlace)
 enum class FrontendType {
     QtWidgets = 1,
     QtQuick,
-    Dummy ///< Just for boiler-plate / copy-paste purposes
+    Flutter, ///< Not supported yet.
+    Dummy, ///< Just for boiler-plate / copy-paste purposes
 };
 Q_ENUM_NS(FrontendType)
 

@@ -25,6 +25,10 @@
 #include "dummy/Platform_dummy.h"
 #endif
 
+#ifdef KDDW_FRONTEND_FLUTTER
+#include "flutter/Platform_flutter.h"
+#endif
+
 #include "Config.h"
 
 #include <qglobal.h>
@@ -117,6 +121,11 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     case FrontendType::Dummy:
 #ifdef KDDW_FRONTEND_DUMMY
         platform = new Platform_dummy(argc, argv);
+#endif
+        break;
+    case FrontendType::Flutter:
+#ifdef KDDW_FRONTEND_FLUTTER
+        platform = new Platform_flutter(argc, argv);
 #endif
         break;
     }

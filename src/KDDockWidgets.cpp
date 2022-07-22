@@ -24,6 +24,10 @@
 #include "dummy/Platform_dummy.h"
 #endif
 
+#ifdef KDDW_FRONTEND_FLUTTER
+#include "flutter/Platform_flutter.h"
+#endif
+
 #include <QDebug>
 
 void KDDockWidgets::initFrontend(FrontendType type)
@@ -45,6 +49,10 @@ void KDDockWidgets::initFrontend(FrontendType type)
     case FrontendType::Dummy:
 #ifdef KDDW_FRONTEND_DUMMY
         new Platform_dummy();
+#endif
+    case FrontendType::Flutter:
+#ifdef KDDW_FRONTEND_FLUTTER
+        new Platform_flutter();
 #endif
         break;
     }

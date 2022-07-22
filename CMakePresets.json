@@ -11,7 +11,7 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FUZZER": "OFF",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy;flutter"
             },
             "warnings": {
                 "uninitialized": true
@@ -29,7 +29,7 @@
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FUZZER": "OFF",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy;flutter"
             },
             "warnings": {
                 "uninitialized": true
@@ -61,7 +61,7 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_WERROR": "ON",
                 "KDDockWidgets_EXAMPLES": "OFF",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy;flutter"
             },
             "environment": {
                 "CXX": "clazy",
@@ -315,6 +315,19 @@
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_FRONTENDS": "dummy",
+                "KDDockWidgets_QT6": "ON"
+            }
+        },
+        {
+            "name": "ci-flutter",
+            "displayName": "ci-flutter",
+            "description": "Builds only the flutter frontend. Tests that build passes without Qt.",
+            "binaryDir": "${sourceDir}/build-ci-flutter",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_FRONTENDS": "flutter",
                 "KDDockWidgets_QT6": "ON"
             }
         },
