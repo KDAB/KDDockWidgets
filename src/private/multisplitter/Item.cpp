@@ -179,7 +179,7 @@ void Item::setGuestView(View *guest)
     Q_ASSERT(!guest || !m_guest);
 
     m_guest = guest;
-    m_parentChangedConnection->disconnect();
+    disconnect(m_parentChangedConnection);
     m_guestDebugNameChangedConnection->disconnect();
     m_guestDestroyedConnection->disconnect();
     m_layoutInvalidatedConnection->disconnect();
@@ -189,8 +189,8 @@ void Item::setGuestView(View *guest)
         if (Controllers::Group *group = asGroupController())
             group->setLayoutItem(this);
 
-        m_parentChangedConnection = m_guest->d->parentChanged.connect([this] {
-            if (!View::equals(m_guest->parentView().get(), hostView())) {
+        m_parentChangedConnection = connect(m_guest->controller(), &Controller::parentViewChanged, this, [this](View *parent) {
+            if (!View::equals(parent, hostView())) {
                 // Frame was detached into floating window. Turn into placeholder
                 Q_ASSERT(isVisible());
                 turnIntoPlaceholder();
@@ -801,7 +801,7 @@ void Item::updateObjectName()
 void Item::onWidgetDestroyed()
 {
     m_guest = nullptr;
-    m_parentChangedConnection->disconnect();
+    disconnect(m_parentChangedConnection);
     m_guestDebugNameChangedConnection->disconnect();
     m_guestDestroyedConnection->disconnect();
 

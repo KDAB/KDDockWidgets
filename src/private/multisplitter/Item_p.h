@@ -385,10 +385,10 @@ private:
     KDDockWidgets::View *m_hostWidget = nullptr;
     KDDockWidgets::View *m_guest = nullptr;
 
+    QMetaObject::Connection m_parentChangedConnection;
     KDBindings::ConnectionHandle m_minSizeChangedHandle;
     KDBindings::ConnectionHandle m_visibleChangedHandle;
     KDBindings::ScopedConnection m_layoutInvalidatedConnection;
-    KDBindings::ScopedConnection m_parentChangedConnection;
     KDBindings::ScopedConnection m_guestDebugNameChangedConnection;
     KDBindings::ScopedConnection m_guestDestroyedConnection;
 };

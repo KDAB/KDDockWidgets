@@ -175,12 +175,6 @@ void View_qtquick::itemChange(QQuickItem::ItemChange change, const QQuickItem::I
 
     // Emulate the QWidget behaviour as QQuickItem doesn't receive some QEvents.
     switch (change) {
-    case QQuickItem::ItemParentHasChanged: {
-        QEvent ev(QEvent::ParentChange);
-        qGuiApp->sendEvent(this, &ev); // Not calling event() directly, otherwise it would skip event filters
-        Q_EMIT parentChanged(this);
-        break;
-    }
     case QQuickItem::ItemVisibleHasChanged: {
         if (m_inSetParent) {
             // Setting parent to nullptr will emit visible true in QtQuick
