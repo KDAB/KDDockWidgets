@@ -38,6 +38,7 @@ class DOCKS_EXPORT TitleBarWidget : public TitleBar
 public:
     explicit TitleBarWidget(Frame *parent);
     explicit TitleBarWidget(FloatingWindow *parent);
+    explicit TitleBarWidget(QWidget *parent);
     ~TitleBarWidget() override;
 
     ///@brief getter for the close button

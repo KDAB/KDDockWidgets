@@ -50,6 +50,11 @@ public:
 
     explicit TitleBar(Frame *parent);
     explicit TitleBar(FloatingWindow *parent);
+
+    /// Allows TitleBar to be used in a non-dockwidget application, for example on a frameless QMessageBox on EGLFS
+    /// Just so we can reuse the existing styling
+    explicit TitleBar(QWidget *parent);
+
     ~TitleBar() override;
 
     void setTitle(const QString &title);
@@ -173,6 +178,7 @@ private:
     void updateFloatButton();
     void updateCloseButton();
     void setCloseButtonEnabled(bool);
+    void setCloseButtonVisible(bool);
     void setFloatButtonVisible(bool);
     void setFloatButtonToolTip(const QString &);
 
@@ -184,6 +190,7 @@ private:
 
     Frame *const m_frame;
     FloatingWindow *const m_floatingWindow;
+    QWidget *const m_genericWidget;
     const bool m_supportsAutoHide;
     bool m_closeButtonEnabled = true;
     bool m_floatButtonVisible = true;

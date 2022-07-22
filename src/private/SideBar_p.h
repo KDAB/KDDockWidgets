@@ -66,6 +66,8 @@ protected:
 
     void onButtonClicked(DockWidgetBase *dw);
 
+    QVector<DockWidgetBase *> dockWidgets() const;
+
 private:
     void onDockWidgetDestroyed(QObject *dw);
     void updateSize();

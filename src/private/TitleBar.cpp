@@ -32,6 +32,7 @@ TitleBar::TitleBar(Frame *parent)
     , Draggable(this)
     , m_frame(parent)
     , m_floatingWindow(nullptr)
+    , m_genericWidget(nullptr)
     , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
 {
     connect(m_frame, &Frame::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
@@ -49,11 +50,23 @@ TitleBar::TitleBar(FloatingWindow *parent)
     , Draggable(this)
     , m_frame(nullptr)
     , m_floatingWindow(parent)
+    , m_genericWidget(nullptr)
     , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
 {
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
     connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);
+    init();
+}
+
+TitleBar::TitleBar(QWidget *parent)
+    : QWidgetAdapter(parent)
+    , Draggable(this, /*enabled=*/false) // We don't allow dragging generic windows at this time
+    , m_frame(nullptr)
+    , m_floatingWindow(nullptr)
+    , m_genericWidget(parent)
+    , m_supportsAutoHide(false)
+{
     init();
 }
 
@@ -91,7 +104,7 @@ bool TitleBar::onDoubleClicked()
 
 MainWindowBase *TitleBar::mainWindow() const
 {
-    if (m_floatingWindow)
+    if (m_floatingWindow || m_genericWidget)
         return nullptr;
 
     if (m_frame)
@@ -212,6 +225,9 @@ void TitleBar::setIcon(const QIcon &icon)
 
 std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 {
+    if (m_genericWidget)
+        return {}; // not applicable
+
     if (!isVisible() && window()->isVisible() && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
 
         // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab bar's
@@ -262,6 +278,9 @@ DockWidgetBase *TitleBar::singleDockWidget() const
 
 bool TitleBar::supportsFloatingButton() const
 {
+    if (m_genericWidget)
+        return {}; // not applicable
+
     if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton) {
         // Apps having a maximize/restore button traditionally don't have a floating one,
         // QDockWidget style only has floating and no maximize/restore.
@@ -318,6 +337,8 @@ bool TitleBar::isFocused() const
         return m_frame->isFocused();
     else if (m_floatingWindow)
         return m_floatingWindow->isActiveWindow();
+    else if (m_genericWidget)
+        return m_genericWidget->isActiveWindow();
 
     return false;
 }
@@ -362,6 +383,9 @@ void TitleBar::onCloseClicked()
         } else {
             m_floatingWindow->close();
         }
+    } else if (m_genericWidget) {
+        if (auto window = m_genericWidget->window())
+            window->close();
     }
 }
 
@@ -372,6 +396,9 @@ bool TitleBar::isFloating() const
 
     if (m_frame)
         return m_frame->isFloating();
+
+    if (m_genericWidget)
+        return false; // Not applicable
 
     qWarning() << "TitleBar::isFloating: shouldn't happen";
     return false;
@@ -389,6 +416,9 @@ DockWidgetBase::List TitleBar::dockWidgets() const
 
     if (m_frame)
         return m_frame->dockWidgets();
+
+    if (m_genericWidget)
+        return {}; // Not applicable
 
     qWarning() << "TitleBar::dockWidget: shouldn't happen";
     return {};
