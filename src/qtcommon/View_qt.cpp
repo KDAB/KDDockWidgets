@@ -38,9 +38,6 @@ public:
 
     bool eventFilter(QObject *, QEvent *e) override
     {
-        if (e->type() == QEvent::ParentChange)
-            q->d->parentChanged.emit();
-
         if (auto me = mouseEvent(e))
             return handleMouseEvent(me);
         else if (e->type() == QEvent::Move)

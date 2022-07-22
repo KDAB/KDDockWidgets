@@ -36,9 +36,6 @@ public:
     /// @brief signal emitted when the view is resized
     KDBindings::Signal<QSize> resized;
 
-    /// @brief signal emitted when the view's parent has changed
-    KDBindings::Signal<> parentChanged;
-
     /// @brief signal emitted when the view's debug name has changed
     /// Used for debug only
     KDBindings::Signal<> debugNameChanged;
