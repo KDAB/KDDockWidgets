@@ -349,6 +349,7 @@ void Group::insertDockWidget(DockWidget *dw, int index)
         return;
 
     dynamic_cast<Views::GroupViewInterface *>(view())->insertDockWidget_impl(dw, index);
+    dw->d->onParentChanged();
 }
 
 Controllers::DockWidget *Group::dockWidgetAt(int index) const

@@ -71,7 +71,6 @@ void DockWidget::init()
 {
     d->init();
     view()->setAttribute(Qt::WA_PendingMoveEvent, false);
-    view()->d->parentChanged.connect(&Private::onParentChanged, d);
 }
 
 void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
@@ -511,6 +510,12 @@ QSize DockWidget::lastOverlayedSize() const
 Controllers::DockWidget *DockWidget::byName(const QString &uniqueName)
 {
     return DockRegistry::self()->dockByName(uniqueName);
+}
+
+void DockWidget::setParentView(View *parent)
+{
+    Controller::setParentView(parent);
+    d->onParentChanged();
 }
 
 bool DockWidget::skipsRestore() const

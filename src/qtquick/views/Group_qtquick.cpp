@@ -27,6 +27,7 @@
 #include "qtquick/ViewFactory_qtquick.h"
 #include "qtquick/Platform_qtquick.h"
 #include "qtquick/views/DockWidget_qtquick.h"
+#include "qtquick/views/ViewWrapper_qtquick.h"
 
 #include "Stack_qtquick.h"
 
@@ -136,9 +137,9 @@ void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
     QPointer<Controllers::Group> oldFrame = dw->d->group();
     if (stackView()->insertDockWidget(index, dw, {}, {})) {
 
-        auto dockView = asView_qtquick(dw->view());
-        dockView->setParent(m_stackLayout);
+        dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
 
+        auto dockView = asView_qtquick(dw->view());
         QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::parentViewChanged, this, [dockView, dw, this] {
             if (dockView->parent() != m_stackLayout)
                 removeWidget_impl(dw);

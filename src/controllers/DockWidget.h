@@ -427,6 +427,8 @@ public:
 
     void onResize(QSize newSize);
 
+    void setParentView(View *parent) override;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent of the view changed
     void parentViewChanged();
