@@ -876,7 +876,8 @@ FILE_PATTERNS          = *.cpp \
                          *.h \
                          *.dox \
                          *.md \
-                         *.gif
+                         *.gif \
+                         *.png
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
 # be searched for input files as well.
