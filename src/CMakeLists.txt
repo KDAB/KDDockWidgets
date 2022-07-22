@@ -107,7 +107,7 @@ set(KDDW_BACKEND_SRCS
 )
 
 # Sources shared by Qt frontends (QtWidgets and QtQuick)
-set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window_qt.cpp qtcommon/View_qt.cpp)
+set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window_qt.cpp qtcommon/View_qt.cpp qtcommon/Screen_qt.cpp)
 
 set(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/Window_qtwidgets.cpp
@@ -225,6 +225,7 @@ set(KDDW_PUBLIC_HEADERS
     Controller.h
     View.h
     Window.h
+    Screen.h
     ViewFactory.h
     Qt5Qt6Compat_p.h
     Platform.h
