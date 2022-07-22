@@ -83,7 +83,14 @@ public:
 
     /// Sets the parent view
     /// In Qt this would be equivalent to calling view()->setParent(parent);
-    virtual void setParentView(View *parent);
+    void setParentView(View *parent);
+
+Q_SIGNALS:
+    ///@brief signal counterpart for setParentView()
+    void parentViewChanged(View *parent);
+
+protected:
+    virtual void setParentView_impl(View *parent);
 
 private:
     void setParent(QObject *) = delete;

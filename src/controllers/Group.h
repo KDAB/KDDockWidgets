@@ -296,8 +296,6 @@ public:
     /// @brief Sets the Layout which this group is in
     void setLayout(Layout *);
 
-    void setParentView(View *parent) override;
-
     void onDockWidgetCountChanged();
 
 Q_SIGNALS:
@@ -312,6 +310,7 @@ Q_SIGNALS:
 protected:
     void isFocusedChangedCallback() final;
     void focusedWidgetChangedCallback() final;
+    void setParentView_impl(View *parent) override;
 
 protected Q_SLOTS:
     void onCurrentTabChanged(int index);

@@ -948,8 +948,8 @@ WidgetResizeHandler *Group::resizeHandler() const
     return m_resizeHandler;
 }
 
-void Group::setParentView(View *parent)
+void Group::setParentView_impl(View *parent)
 {
-    Controller::setParentView(parent);
+    Controller::setParentView_impl(parent);
     setLayout(parent ? parent->asLayout() : nullptr);
 }

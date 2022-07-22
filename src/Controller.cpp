@@ -127,6 +127,12 @@ void Controller::show() const
 
 void Controller::setParentView(View *parent)
 {
+    setParentView_impl(parent);
+    Q_EMIT parentViewChanged(parent);
+}
+
+void Controller::setParentView_impl(View *parent)
+{
     if (auto v = view()) {
         v->setParent(parent);
     } else {

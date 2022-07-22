@@ -427,12 +427,7 @@ public:
 
     void onResize(QSize newSize);
 
-    void setParentView(View *parent) override;
-
 Q_SIGNALS:
-    ///@brief signal emitted when the parent of the view changed
-    void parentViewChanged();
-
     ///@brief signal emitted when the DockWidget is shown. As in QEvent::Show.
     void shown();
 
@@ -488,6 +483,9 @@ Q_SIGNALS:
 public: // TODOm3 make private
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
+
+protected:
+    void setParentView_impl(View *parent) override;
 
 public:
     /// @brief Returns the private impl d-pointer.

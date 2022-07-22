@@ -512,9 +512,9 @@ Controllers::DockWidget *DockWidget::byName(const QString &uniqueName)
     return DockRegistry::self()->dockByName(uniqueName);
 }
 
-void DockWidget::setParentView(View *parent)
+void DockWidget::setParentView_impl(View *parent)
 {
-    Controller::setParentView(parent);
+    Controller::setParentView_impl(parent);
     d->onParentChanged();
 }
 
@@ -840,8 +840,6 @@ void DockWidget::Private::saveTabIndex()
 
 void DockWidget::Private::onParentChanged()
 {
-    Q_EMIT q->parentViewChanged();
-
     updateToggleAction();
     updateFloatAction();
 
