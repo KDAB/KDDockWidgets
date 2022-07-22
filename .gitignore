@@ -69,3 +69,7 @@ kddockwidgets_minimal_example
 /compile_commands.json
 /site
 .DS_Store
+.packages
+pubspec.lock
+.dart_tool
+mjb_rejected_*
