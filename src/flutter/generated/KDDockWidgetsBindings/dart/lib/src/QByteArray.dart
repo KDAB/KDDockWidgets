@@ -854,24 +854,6 @@ class QByteArray {
     return QByteArray.fromCppPointer(result, true);
   }
 //tag=1024
-
-//tag=1027
-// replace(const QByteArray & before, const QByteArray & after)
-  QByteArray replace_3(QByteArray? before, QByteArray? after) {
-//tag=1028
-    final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
-        .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            'c_QByteArray__replace_QByteArray_QByteArray')
-        .asFunction();
-//tag=1033
-    ffi.Pointer<void> result = func(
-        thisCpp,
-        before == null ? ffi.nullptr : before.thisCpp,
-        after == null ? ffi.nullptr : after.thisCpp);
-    return QByteArray.fromCppPointer(result, false);
-  }
 //tag=1024
 
 //tag=1027

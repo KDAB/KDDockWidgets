@@ -203,13 +203,13 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
 )
 
 set(KDDW_FRONTEND_DARTBINDINGS_SRCS
-    flutter/generated/KDDockWidgets/dart/ffi/QRect_wrapper.cpp
-    flutter/generated/KDDockWidgets/dart/ffi/QObject_wrapper.cpp
-    flutter/generated/KDDockWidgets/dart/ffi/QList_wrapper.cpp
-    flutter/generated/KDDockWidgets/dart/ffi/QSize_wrapper.cpp
-    flutter/generated/KDDockWidgets/dart/ffi/QString_wrapper.cpp
-    flutter/generated/KDDockWidgets/dart/ffi/QPoint_wrapper.cpp
-    flutter/generated/KDDockWidgets/dart/ffi/QByteArray_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QRect_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QObject_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QList_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QSize_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QPoint_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_wrapper.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
@@ -366,7 +366,7 @@ endif()
 
 if(KDDW_FRONTEND_FLUTTER)
     target_include_directories(
-        kddockwidgets PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgets>
+        kddockwidgets PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgetsBindings>
     )
 
     # So bindings are exported

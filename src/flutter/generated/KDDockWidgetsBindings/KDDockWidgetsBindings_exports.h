@@ -12,8 +12,8 @@
 
 #include <QtCore/QtGlobal>
 
-#if defined(BUILDING_KDDockWidgets)
-#define KDDockWidgets_EXPORT Q_DECL_EXPORT
+#if defined(BUILDING_KDDockWidgetsBindings)
+#  define KDDockWidgetsBindings_EXPORT Q_DECL_EXPORT
 #else
-#define KDDockWidgets_EXPORT Q_DECL_IMPORT
+#  define KDDockWidgetsBindings_EXPORT Q_DECL_IMPORT
 #endif

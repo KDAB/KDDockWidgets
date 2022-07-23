@@ -9,12 +9,11 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-// tag=1040
-#include "KDDockWidgets_exports.h"
+//tag=1040
+#include "KDDockWidgetsBindings_exports.h"
 #include <Qt5Qt6Compat_p.h>
 
 extern "C" {
 
-// tag=1047
-KDDockWidgets_EXPORT void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);
-}
+//tag=1047
+KDDockWidgetsBindings_EXPORT  void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);}

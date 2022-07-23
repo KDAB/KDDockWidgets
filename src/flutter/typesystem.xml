@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<typesystem package="KDDockWidgets">
+<typesystem package="KDDockWidgetsBindings">
     <primitive-type name="int"/>
     <primitive-type name="bool"/>
     <primitive-type name="char"/>
