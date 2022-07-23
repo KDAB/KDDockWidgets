@@ -202,8 +202,19 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/kddockwidgets_qtquick.qrc
 )
 
-set(KDDW_FRONTEND_FLUTTER_SRCS flutter/ViewFactory_flutter.cpp flutter/Window_flutter.cpp flutter/Platform_flutter.cpp
-                               flutter/views/View_flutter.cpp flutter/TestHelpers_flutter.cpp
+set(KDDW_FRONTEND_DARTBINDINGS_SRCS
+    flutter/generated/KDDockWidgets/dart/ffi/QRect_wrapper.cpp
+    flutter/generated/KDDockWidgets/dart/ffi/QObject_wrapper.cpp
+    flutter/generated/KDDockWidgets/dart/ffi/QList_wrapper.cpp
+    flutter/generated/KDDockWidgets/dart/ffi/QSize_wrapper.cpp
+    flutter/generated/KDDockWidgets/dart/ffi/QString_wrapper.cpp
+    flutter/generated/KDDockWidgets/dart/ffi/QPoint_wrapper.cpp
+    flutter/generated/KDDockWidgets/dart/ffi/QByteArray_wrapper.cpp
+)
+
+set(KDDW_FRONTEND_FLUTTER_SRCS
+    flutter/ViewFactory_flutter.cpp flutter/Window_flutter.cpp flutter/Platform_flutter.cpp
+    flutter/views/View_flutter.cpp flutter/TestHelpers_flutter.cpp ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
 )
 
 if(KDDockWidgets_DEVELOPER_MODE)
@@ -351,6 +362,21 @@ endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     target_include_directories(kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtquick>)
+endif()
+
+if(KDDW_FRONTEND_FLUTTER)
+    target_include_directories(
+        kddockwidgets PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgets>
+    )
+
+    if(NOT MSVC)
+        set_source_files_properties(
+            ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
+            PROPERTIES
+                COMPILE_FLAGS
+                "-Wno-unused-function -Wno-unused-variable -Wno-format-security -Wno-unused-parameter -Wno-shadow"
+        )
+    endif()
 endif()
 
 target_compile_definitions(
