@@ -1,9 +1,3 @@
-
-// tag=1040
-#include "KDDockWidgets_exports.h"
-#include <qstring.h>
-#include <qbytearray.h>
-
 /*
   This file is part of KDDockWidgets.
 
@@ -14,6 +8,12 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
+
+// tag=1040
+#include "KDDockWidgets_exports.h"
+#include <qstring.h>
+#include <qbytearray.h>
+
 namespace KDDockWidgets_wrappersNS {
 // tag=1043
 class QString_wrapper : public ::QString

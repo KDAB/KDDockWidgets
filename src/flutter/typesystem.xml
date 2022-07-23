@@ -15,11 +15,16 @@
 
     <object-type name="QObject" />
 
-
     <object-type name="QString">
         <modify-function signature="swap(QString &amp;)" remove="all"/>
     </object-type>
     <object-type name="QByteArray" />
     <object-type name="QList" />
+
+    <namespace-type name="KDDockWidgets">
+        <object-type name="Platform" />
+        <object-type name="View" />
+        <object-type name="ViewFactory" />
+    </namespace-type>
 
 </typesystem>

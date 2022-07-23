@@ -1,8 +1,3 @@
-
-// tag=1040
-#include "KDDockWidgets_exports.h"
-#include <qpoint.h>
-
 /*
   This file is part of KDDockWidgets.
 
@@ -13,6 +8,11 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
+
+// tag=1040
+#include "KDDockWidgets_exports.h"
+#include <qpoint.h>
+
 namespace KDDockWidgets_wrappersNS {
 // tag=1043
 class QPoint_wrapper : public ::QPoint
