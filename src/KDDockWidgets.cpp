@@ -50,6 +50,7 @@ void KDDockWidgets::initFrontend(FrontendType type)
 #ifdef KDDW_FRONTEND_DUMMY
         new Platform_dummy();
 #endif
+        break;
     case FrontendType::Flutter:
 #ifdef KDDW_FRONTEND_FLUTTER
         new Platform_flutter();
