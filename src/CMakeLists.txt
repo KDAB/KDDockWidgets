@@ -82,6 +82,7 @@ set(KDDW_BACKEND_SRCS
     Action.h
     Window.cpp
     Window.h
+    Screen.cpp
     View.cpp
     View.h
     ViewGuard.cpp
