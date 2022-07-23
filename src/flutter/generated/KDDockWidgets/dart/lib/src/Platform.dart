@@ -292,7 +292,7 @@ class Platform {
     }
 //tag=1037
     final result = dartInstance.name();
-    return result;
+    return result.toNativeUtf8();
   }
 //tag=1024
 
