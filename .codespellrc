@@ -1,4 +1,4 @@
 [codespell]
-skip = ./build-*,.git,*.svg,rc_assets.py
+skip = ./build-*,.git,*.svg,rc_assets.py,./src/flutter/generated*
 interactive = 3
-ignore-words-list = overlay,overlayed,seh
+ignore-words-list = overlay,overlayed,seh,sharable
