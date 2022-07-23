@@ -1,3 +1,4 @@
 {
-    "createCMakeLists" : false
+    "createCMakeLists" : false,
+    "bindingsLibrary" : "kddockwidgets"
 }
