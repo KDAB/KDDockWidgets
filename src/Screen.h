@@ -13,10 +13,10 @@
 
 #include "KDDockWidgets_p.h"
 
+#include <QVector>
+
 QT_BEGIN_NAMESPACE
 class QScreen;
-template<typename T>
-class QVector;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
