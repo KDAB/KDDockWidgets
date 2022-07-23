@@ -73,3 +73,4 @@ kddockwidgets_minimal_example
 pubspec.lock
 .dart_tool
 mjb_rejected_*
+mjb_rejected_classes.log
