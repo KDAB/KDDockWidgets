@@ -369,6 +369,9 @@ if(KDDW_FRONTEND_FLUTTER)
         kddockwidgets PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgets>
     )
 
+    # So bindings are exported
+    target_compile_definitions(kddockwidgets PRIVATE BUILDING_KDDockWidgets)
+
     if(NOT MSVC)
         set_source_files_properties(
             ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
