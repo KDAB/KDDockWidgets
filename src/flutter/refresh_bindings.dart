@@ -38,7 +38,7 @@ String generatedDir() {
 }
 
 String generatedFFICpp() {
-  return generatedDir() + "/" + "KDDockWidgets/dart/ffi";
+  return generatedDir() + "/" + "KDDockWidgetsBindings/dart/ffi";
 }
 
 List<String> qtIncludes() {

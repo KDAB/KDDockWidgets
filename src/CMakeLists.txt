@@ -210,6 +210,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QPoint_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Platform_wrapper.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS

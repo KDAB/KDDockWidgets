@@ -335,3 +335,9 @@ typedef voidstar_Func_voidstar_ffi_Int32_ffi_Int32_string_ffi_Int32_FFI
 typedef void_Func_voidstar_double = void Function(ffi.Pointer<void>, double);
 typedef void_Func_voidstar_ffi_Double_FFI = ffi.Void Function(
     ffi.Pointer<void>, ffi.Double);
+typedef void_Func_void = void Function();
+typedef void_Func_void_FFI = ffi.Void Function();
+typedef bool_Func_voidstar_voidstar_int = int Function(
+    ffi.Pointer<void>, ffi.Pointer<void>, int);
+typedef bool_Func_voidstar_voidstar_ffi_Int32_FFI = ffi.Int8 Function(
+    ffi.Pointer<void>, ffi.Pointer<void>, ffi.Int32);

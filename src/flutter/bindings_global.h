@@ -10,6 +10,11 @@
 */
 
 
+// TODOm4: Remove ?
+#ifndef DOCKS_DEVELOPER_MODE
+#define DOCKS_DEVELOPER_MODE
+#endif
+
 #ifndef QT_NO_CAST_TO_ASCII
 #define QT_NO_CAST_TO_ASCII
 #endif
