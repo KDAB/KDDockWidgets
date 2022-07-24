@@ -276,7 +276,9 @@ StateDragging::~StateDragging() = default;
 
 void StateDragging::onEntry()
 {
+#if defined(Q_OS_WIN) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.start();
+#endif
 
     if (Controllers::DockWidget *dw = q->m_draggable->singleDockWidget()) {
         // When we start to drag a floating window which has a single dock widget, we save the position
@@ -365,7 +367,9 @@ void StateDragging::onEntry()
 
 void StateDragging::onExit()
 {
+#if defined(Q_OS_WIN) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.stop();
+#endif
 }
 
 bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
