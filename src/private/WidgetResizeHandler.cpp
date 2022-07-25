@@ -26,7 +26,6 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QGuiApplication>
-#include <QScreen>
 #include <QWindow>
 #include <QScopedValueRollback>
 
@@ -442,7 +441,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Window::Ptr w, MSG *msg,
         // and patch the size
 
         // According to microsoft docs it only works for the primary screen, but extrapolates for the others
-        QScreen *screen = QGuiApplication::primaryScreen();
+        auto screen = Platform::instance()->primaryScreen();
         if (!screen || w->screen() != screen) {
             return false;
         }

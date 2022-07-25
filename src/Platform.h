@@ -146,6 +146,8 @@ public:
     /// @brief Returns all available screens
     virtual Screen::List screens() const = 0;
 
+    virtual Screen::Ptr primaryScreen() const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions

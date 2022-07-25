@@ -505,3 +505,8 @@ Screen::List Platform_qt::screens() const
     }
     return screens;
 }
+
+Screen::Ptr Platform_qt::primaryScreen() const
+{
+    return std::make_shared<Screen_qt>(qGuiApp->primaryScreen());
+}

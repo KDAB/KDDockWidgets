@@ -58,6 +58,8 @@ public:
 
     static Platform_qt *instance();
 
+    Screen::Ptr primaryScreen() const override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     static bool isGammaray();
     explicit Platform_qt(QCoreApplication *);
