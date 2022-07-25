@@ -81,8 +81,8 @@ public:
 
     /// @brief if "-platform" wasn't passed it picks the offscreen QPA to run the tests
     static void maybeSetOffscreenQPA(int argc, char **argv);
-
 #endif
+
 protected:
     int screenNumberForQWindow(QWindow *) const;
 

@@ -63,3 +63,9 @@ QScreen *Screen_qt::qtScreen() const
 {
     return m_screen;
 }
+
+bool Screen_qt::equals(std::shared_ptr<Screen> other) const
+{
+    auto otherQt = static_cast<Screen_qt *>(other.get());
+    return otherQt && otherQt->m_screen == m_screen;
+}

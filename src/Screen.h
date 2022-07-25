@@ -58,6 +58,9 @@ public:
 
     /// @brief returns the pixel geometry of the virtual desktop corresponding to this screen
     virtual QRect virtualGeometry() const = 0;
+
+    /// @brief Returns whether the two Screen instances refer to the same underlying platform Screen
+    virtual bool equals(std::shared_ptr<Screen> other) const = 0;
 };
 
 }

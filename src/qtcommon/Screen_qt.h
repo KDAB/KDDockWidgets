@@ -41,6 +41,8 @@ public:
 
     QScreen *qtScreen() const;
 
+    bool equals(std::shared_ptr<Screen> other) const override;
+
 public:
     QPointer<QScreen> m_screen;
 };
