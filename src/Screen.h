@@ -31,6 +31,8 @@ public:
 
     virtual ~Screen();
 
+    virtual QString name() const = 0;
+
     /// @brief returns the size of screen in pixels
     virtual QSize size() const = 0;
 

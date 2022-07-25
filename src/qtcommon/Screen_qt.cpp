@@ -19,6 +19,11 @@ Screen_qt::Screen_qt(QScreen *screen)
 {
 }
 
+QString Screen_qt::name() const
+{
+    return m_screen->name();
+}
+
 QSize Screen_qt::size() const
 {
     return m_screen->size();

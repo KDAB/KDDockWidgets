@@ -26,6 +26,8 @@ class Screen_qt final : public Screen
 public:
     Screen_qt(QScreen *);
 
+    QString name() const override;
+
     QSize size() const override;
     QRect geometry() const override;
 
