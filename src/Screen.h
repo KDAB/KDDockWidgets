@@ -61,6 +61,25 @@ public:
 
     /// @brief Returns whether the two Screen instances refer to the same underlying platform Screen
     virtual bool equals(std::shared_ptr<Screen> other) const = 0;
+
+    bool operator==(Screen *) = delete;
+    bool operator!=(Screen *) = delete;
 };
+
+
+inline bool operator==(Screen::Ptr s1, Screen::Ptr s2)
+{
+    if (!s1 && !s2)
+        return true;
+
+    if (s1 && s2)
+        return s1->equals(s2);
+
+    return false;
+}
+
+inline bool operator!=(Screen::Ptr s1, Screen::Ptr s2) {
+  return !operator==(s1, s2);
+}
 
 }
