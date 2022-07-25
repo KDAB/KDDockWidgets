@@ -136,6 +136,11 @@ void Platform_flutter::ungrabMouse()
 {
 }
 
+Screen::List Platform_flutter::screens() const
+{
+    return {};
+}
+
 #ifdef DOCKS_DEVELOPER_MODE
 
 void Platform_flutter::installMessageHandler()

@@ -113,11 +113,6 @@ QPoint Window_dummy::mapToGlobal(QPoint) const
     return {};
 }
 
-QScreen *Window_dummy::screen() const
-{
-    return {};
-}
-
 void Window_dummy::destroy()
 {
 }
@@ -138,6 +133,11 @@ QPoint Window_dummy::fromNativePixels(QPoint) const
 }
 
 bool Window_dummy::isFullScreen() const
+{
+    return {};
+}
+
+Screen::Ptr Window_dummy::screen() const
 {
     return {};
 }

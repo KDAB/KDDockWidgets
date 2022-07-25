@@ -136,6 +136,12 @@ void Platform_dummy::ungrabMouse()
 {
 }
 
+Screen::List Platform_dummy::screens() const
+{
+    return {};
+}
+
+
 #ifdef DOCKS_DEVELOPER_MODE
 
 void Platform_dummy::installMessageHandler()

@@ -38,6 +38,8 @@ public:
     bool inDisallowedDragView(QPoint globalPos) const override;
     bool usesFallbackMouseGrabber() const override;
     void ungrabMouse() override;
+    Screen::List screens() const override;
+
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_dummy(int &argc, char **argv);

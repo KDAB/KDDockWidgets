@@ -113,11 +113,6 @@ QPoint Window_flutter::mapToGlobal(QPoint) const
     return {};
 }
 
-QScreen *Window_flutter::screen() const
-{
-    return {};
-}
-
 void Window_flutter::destroy()
 {
 }
@@ -138,6 +133,11 @@ QPoint Window_flutter::fromNativePixels(QPoint) const
 }
 
 bool Window_flutter::isFullScreen() const
+{
+    return {};
+}
+
+Screen::Ptr Window_flutter::screen() const
 {
     return {};
 }

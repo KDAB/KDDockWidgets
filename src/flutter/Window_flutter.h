@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "Screen.h"
 #include "kddockwidgets/Window.h"
 
 namespace KDDockWidgets {
@@ -39,7 +40,7 @@ public:
     WindowState windowState() const override;
     QPoint mapFromGlobal(QPoint globalPos) const override;
     QPoint mapToGlobal(QPoint localPos) const override;
-    QScreen *screen() const override;
+    Screen::Ptr screen() const override;
     void destroy() override;
     QSize minSize() const override;
     QSize maxSize() const override;
