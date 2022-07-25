@@ -494,3 +494,14 @@ Platform_qt *Platform_qt::instance()
 {
     return static_cast<Platform_qt *>(Platform::instance());
 }
+
+Screen::List Platform_qt::screens() const
+{
+    const auto qscreens = qGuiApp->screens();
+    Screen::List screens;
+    screens.reserve(qscreens.size());
+    for (auto qscreen : qscreens) {
+        screens.push_back(std::make_shared<Screen_qt>(qscreen));
+    }
+    return screens;
+}

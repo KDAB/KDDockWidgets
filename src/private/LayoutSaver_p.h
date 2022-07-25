@@ -15,12 +15,12 @@
 #include "KDDockWidgets_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
+#include "kddockwidgets/Platform.h"
 #include "Window.h"
 
 #include <QDebug>
 #include <QGuiApplication>
 #include <QRect>
-#include <QScreen>
 #include <QSettings>
 
 #include <memory>
@@ -260,7 +260,7 @@ public:
     {
         s_currentLayoutBeingRestored = this;
 
-        const QList<QScreen *> screens = qGuiApp->screens();
+        const auto screens = Platform::instance()->screens();
         const int numScreens = screens.size();
         screenInfo.reserve(numScreens);
         for (int i = 0; i < numScreens; ++i) {

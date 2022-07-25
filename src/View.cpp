@@ -25,8 +25,6 @@
 #include "Platform.h"
 #include "Window.h"
 
-#include <QScreen>
-
 using namespace KDDockWidgets;
 
 namespace KDDockWidgets {
@@ -333,7 +331,7 @@ void View::closeRootView()
         view->close();
 }
 
-QScreen *View::screen() const
+Screen::Ptr View::screen() const
 {
     if (Window::Ptr window = this->window())
         return window->screen();

@@ -1032,7 +1032,7 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
 
-static QScreen *screenForMainWindow(Controllers::MainWindow *mw)
+static Screen::Ptr screenForMainWindow(Controllers::MainWindow *mw)
 {
     return mw->view()->screen();
 }
@@ -1055,7 +1055,7 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
         return;
     }
 
-    const int currentScreenIndex = qGuiApp->screens().indexOf(screenForMainWindow(mainWindow));
+    const int currentScreenIndex = Platform::instance()->screens().indexOf(screenForMainWindow(mainWindow));
 
     this->mainWindowName = mainWindowId;
     this->savedMainWindowGeometry = savedMainWindowGeo;

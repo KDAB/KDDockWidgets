@@ -14,6 +14,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "Controller.h"
+#include "Screen.h"
 
 #include <QSize> // TODOm4 Remove Qt headers, introduce Size and Rect structs
 #include <QRect>
@@ -28,7 +29,6 @@ QT_BEGIN_NAMESPACE
 class QCloseEvent;
 class QFocusEvent;
 class QSizePolicy;
-class QScreen;
 class QPainter;
 QT_END_NAMESPACE
 
@@ -36,6 +36,7 @@ namespace KDDockWidgets {
 
 class EventFilterInterface;
 class Controller;
+class Screen;
 class Window;
 
 namespace Controllers {
@@ -219,7 +220,7 @@ public:
     bool equals(const std::shared_ptr<View> &) const;
     static bool equals(const View *one, const View *two);
 
-    QScreen *screen() const;
+    Screen::Ptr screen() const;
 
     /// @brief Returns the views's geometry, but always in global space
     QRect globalGeometry() const;

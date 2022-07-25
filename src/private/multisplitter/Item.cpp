@@ -26,7 +26,6 @@
 #include <QScopedValueRollback>
 #include <QTimer>
 #include <QGuiApplication>
-#include <QScreen>
 #include <algorithm>
 
 #ifdef Q_CC_MSVC
@@ -2102,7 +2101,7 @@ void ItemBoxContainer::dumpLayout(int level)
 {
     if (level == 0 && hostView()) {
 
-        const auto screens = qGuiApp->screens();
+        const auto screens = Platform::instance()->screens();
         for (auto screen : screens) {
             qDebug().noquote() << "Screen" << screen->geometry() << screen->availableGeometry()
                                << "; drp=" << screen->devicePixelRatio();

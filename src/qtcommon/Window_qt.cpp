@@ -10,6 +10,7 @@
 */
 
 
+#include "kddockwidgets/Screen_qt.h"
 #include "kddockwidgets/Window_qt.h"
 
 #include <QWindow>
@@ -108,9 +109,9 @@ QPoint Window_qt::mapToGlobal(QPoint localPos) const
     return m_window->mapToGlobal(localPos);
 }
 
-QScreen *Window_qt::screen() const
+Screen::Ptr Window_qt::screen() const
 {
-    return m_window->screen();
+    return std::make_shared<Screen_qt>(m_window->screen());
 }
 
 void Window_qt::destroy()

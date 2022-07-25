@@ -659,7 +659,7 @@ void FloatingWindow::updateSizeConstraints()
 
 void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
 {
-    const auto screens = qGuiApp->screens();
+    const auto screens = Platform::instance()->screens();
     if (screens.empty())
         return;
 

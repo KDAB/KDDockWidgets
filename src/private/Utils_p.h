@@ -17,7 +17,6 @@
 #include "kddockwidgets/View.h"
 #include "kddockwidgets/Platform.h"
 
-#include <QScreen>
 #include <QWindow>
 #include <QMouseEvent>
 #include <QGuiApplication>

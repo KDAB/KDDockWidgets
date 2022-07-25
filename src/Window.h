@@ -12,15 +12,12 @@
 #pragma once
 
 #include "View.h"
+#include "Screen.h"
 #include "KDDockWidgets_p.h"
 
 #include <QVector>
 
 #include "kdbindings/signal.h"
-
-QT_BEGIN_NAMESPACE
-class QScreen;
-QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
@@ -103,7 +100,7 @@ public:
     virtual QPoint mapToGlobal(QPoint localPos) const = 0;
 
     /// @brief Returns the screen this window is on
-    virtual QScreen *screen() const = 0;
+    virtual Screen::Ptr screen() const = 0;
 
     /// Deletes the underlying window. Only used during tests.
     virtual void destroy() = 0;

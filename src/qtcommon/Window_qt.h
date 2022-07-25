@@ -12,6 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/Window.h"
+#include "Screen_qt.h"
 
 #include <QPointer>
 
@@ -47,7 +48,7 @@ public:
 
     QPoint mapFromGlobal(QPoint globalPos) const override;
     QPoint mapToGlobal(QPoint localPos) const override;
-    QScreen *screen() const override;
+    Screen_qt::Ptr screen() const override;
     void destroy() override;
     QSize minSize() const override;
     QSize maxSize() const override;
