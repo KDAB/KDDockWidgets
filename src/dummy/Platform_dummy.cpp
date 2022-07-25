@@ -141,6 +141,10 @@ Screen::List Platform_dummy::screens() const
     return {};
 }
 
+Screen::Ptr Platform_dummy::primaryScreen() const
+{
+    return {};
+}
 
 #ifdef DOCKS_DEVELOPER_MODE
 

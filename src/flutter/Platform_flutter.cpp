@@ -141,6 +141,11 @@ Screen::List Platform_flutter::screens() const
     return {};
 }
 
+Screen::Ptr Platform_flutter::primaryScreen() const
+{
+    return {};
+}
+
 #ifdef DOCKS_DEVELOPER_MODE
 
 void Platform_flutter::installMessageHandler()

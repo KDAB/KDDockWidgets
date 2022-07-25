@@ -39,6 +39,7 @@ public:
     bool usesFallbackMouseGrabber() const override;
     void ungrabMouse() override;
     Screen::List screens() const override;
+    Screen::Ptr primaryScreen() const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_flutter(int &argc, char **argv);
