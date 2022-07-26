@@ -17,6 +17,7 @@
 #include <qsize.h>
 #include <Controller.h>
 #include <qpoint.h>
+#include <Platform.h>
 #include <qcoreevent.h>
 #include <qobject.h>
 #include <qstring.h>
@@ -92,9 +93,17 @@ public:
     // tag=1008
     virtual void setMouseCursor_nocallback(Qt::CursorShape arg__1);
     // tag=1041
+    virtual KDDockWidgets::View *tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent = nullptr);
+    // tag=1008
+    virtual KDDockWidgets::View *tests_createFocusableView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent = nullptr);
+    // tag=1041
     virtual KDDockWidgets::View *tests_createNonClosableView(KDDockWidgets::View *parent = nullptr);
     // tag=1008
     virtual KDDockWidgets::View *tests_createNonClosableView_nocallback(KDDockWidgets::View *parent = nullptr);
+    // tag=1041
+    virtual KDDockWidgets::View *tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent = nullptr);
+    // tag=1008
+    virtual KDDockWidgets::View *tests_createView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent = nullptr);
     // tag=1041
     virtual void tests_deinitPlatform_impl();
     // tag=1008
@@ -189,8 +198,14 @@ public:
     typedef void (*Callback_setMouseCursor)(void *, Qt::CursorShape arg__1);
     Callback_setMouseCursor m_setMouseCursorCallback = nullptr;
     // tag=1042
+    typedef KDDockWidgets::View *(*Callback_tests_createFocusableView)(void *, KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent);
+    Callback_tests_createFocusableView m_tests_createFocusableViewCallback = nullptr;
+    // tag=1042
     typedef KDDockWidgets::View *(*Callback_tests_createNonClosableView)(void *, KDDockWidgets::View *parent);
     Callback_tests_createNonClosableView m_tests_createNonClosableViewCallback = nullptr;
+    // tag=1042
+    typedef KDDockWidgets::View *(*Callback_tests_createView)(void *, KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent);
+    Callback_tests_createView m_tests_createViewCallback = nullptr;
     // tag=1042
     typedef void (*Callback_tests_deinitPlatform_impl)(void *);
     Callback_tests_deinitPlatform_impl m_tests_deinitPlatform_implCallback = nullptr;
@@ -300,8 +315,16 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__sendEvent_V
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape(void *thisObj, int arg__1);
 
 // tag=1067
+//  KDDockWidgets::Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
+
+// tag=1067
 //  KDDockWidgets::Platform_flutter::tests_createNonClosableView(KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View(void *thisObj, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 
 // tag=1067
 //  KDDockWidgets::Platform_flutter::tests_deinitPlatform_impl()

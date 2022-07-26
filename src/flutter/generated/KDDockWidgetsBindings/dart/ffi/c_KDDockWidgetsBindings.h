@@ -1772,8 +1772,16 @@ void c_KDDockWidgets__Platform_flutter__sendEvent_View_QEvent(void *thisObj, voi
 void c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape(void *thisObj, int arg__1);
 
 // tag=1067
+//  KDDockWidgets::Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+void *c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
+
+// tag=1067
 //  KDDockWidgets::Platform_flutter::tests_createNonClosableView(KDDockWidgets::View * parent)
 void *c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View(void *thisObj, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+void *c_KDDockWidgets__Platform_flutter__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 
 // tag=1067
 //  KDDockWidgets::Platform_flutter::tests_deinitPlatform_impl()
@@ -1830,6 +1838,27 @@ void c_KDDockWidgets__Platform_flutter__destructor(void *thisObj);
 void c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 void c_KDDockWidgets__Platform_flutter_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::CreateViewOptions::CreateViewOptions()
+void *c_KDDockWidgets__CreateViewOptions__constructor();
+
+// tag=1066
+void c_KDDockWidgets__CreateViewOptions__destructor(void *thisObj);
+
+// tag=1044
+bool c_KDDockWidgets__CreateViewOptions___get_isVisible(void *thisObj);
+
+// tag=1044
+bool c_KDDockWidgets__CreateViewOptions___get_createWindow(void *thisObj);
+
+// tag=1045
+void c_KDDockWidgets__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
+
+// tag=1045
+void c_KDDockWidgets__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
+
+// tag=1047
+void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::Controller::close()
 bool c_KDDockWidgets__Controller__close(void *thisObj);

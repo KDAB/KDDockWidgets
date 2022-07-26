@@ -12,6 +12,7 @@ export 'src/Config.dart' show Config;
 export 'src/View_flutter.dart' show View_flutter;
 export 'src/View.dart' show View;
 export 'src/Controller.dart' show Controller;
+export 'src/CreateViewOptions.dart' show CreateViewOptions;
 export 'src/Platform_flutter.dart' show Platform_flutter;
 export 'src/ViewFactory_flutter.dart' show ViewFactory_flutter;
 export 'src/ViewFactory.dart' show ViewFactory;

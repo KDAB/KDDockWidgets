@@ -212,6 +212,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Platform_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/View_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ViewFactory_flutter_wrapper.cpp
 )

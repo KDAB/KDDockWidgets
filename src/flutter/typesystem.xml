@@ -35,6 +35,7 @@
         <object-type name="ViewFactory_flutter" />
         <object-type name="Controller" />
         <object-type name="Config" />
+        <value-type name="CreateViewOptions" />
 
         <object-type name="Platform_flutter">
             <enum-type identified-by-value="DisplayType" />
@@ -44,9 +45,9 @@
             <object-type name="MainWindow" />
         </namespace-type> -->
 
-    <namespace-type name="Views">
+        <namespace-type name="Views">
             <object-type name="View_flutter" />
-    </namespace-type>
+        </namespace-type>
 
     </namespace-type>
 
