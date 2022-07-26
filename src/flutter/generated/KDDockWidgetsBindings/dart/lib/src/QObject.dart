@@ -95,6 +95,32 @@ class QObject {
 //tag=1024
 
 //tag=1027
+// customEvent(QEvent * event)
+  customEvent(QEvent? event) {
+//tag=1028
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(294))
+        .asFunction();
+//tag=1030
+    func(thisCpp, event == null ? ffi.nullptr : event.thisCpp);
+  }
+
+//tag=1035
+  static void customEvent_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
+    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address];
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for QObject::customEvent(QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1036
+    dartInstance.customEvent(QEvent.fromCppPointer(event));
+  }
+//tag=1024
+
+//tag=1027
 // deleteLater()
   deleteLater() {
 //tag=1028
@@ -243,6 +269,63 @@ class QObject {
 //tag=1033
     ffi.Pointer<void> result = func(thisCpp);
     return QList<QByteArray>.fromCppPointer(result, true);
+  }
+//tag=1024
+
+//tag=1027
+// event(QEvent * event)
+  bool event(QEvent? event) {
+//tag=1028
+    final bool_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(305))
+        .asFunction();
+//tag=1029
+    return func(thisCpp, event == null ? ffi.nullptr : event.thisCpp) != 0;
+  }
+
+//tag=1035
+  static int event_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
+    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address];
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for QObject::event(QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1037
+    final result = dartInstance.event(QEvent.fromCppPointer(event));
+    return result ? 1 : 0;
+  }
+//tag=1024
+
+//tag=1027
+// eventFilter(QObject * watched, QEvent * event)
+  bool eventFilter(QObject? watched, QEvent? event) {
+//tag=1028
+    final bool_Func_voidstar_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(306))
+        .asFunction();
+//tag=1029
+    return func(thisCpp, watched == null ? ffi.nullptr : watched.thisCpp,
+            event == null ? ffi.nullptr : event.thisCpp) !=
+        0;
+  }
+
+//tag=1035
+  static int eventFilter_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? watched, ffi.Pointer<void>? event) {
+    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address];
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for QObject::eventFilter(QObject * watched, QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1037
+    final result = dartInstance.eventFilter(
+        QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
+    return result ? 1 : 0;
   }
 //tag=1024
 
@@ -471,12 +554,24 @@ class QObject {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
+      case 294:
+        return "c_QObject__customEvent_QEvent";
+      case 305:
+        return "c_QObject__event_QEvent";
+      case 306:
+        return "c_QObject__eventFilter_QObject_QEvent";
     }
     return "";
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
+      case 294:
+        return "customEvent";
+      case 305:
+        return "event";
+      case 306:
+        return "eventFilter";
     }
     throw Error();
   }
@@ -488,5 +583,23 @@ class QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_QObject__registerVirtualMethodCallback')
         .asFunction();
+
+//tag=1021
+    final callback294 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            QObject.customEvent_calledFromC);
+    registerCallback(thisCpp, callback294, 294);
+    const callbackExcept305 = 0;
+//tag=1021
+    final callback305 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
+            QObject.event_calledFromC, callbackExcept305);
+    registerCallback(thisCpp, callback305, 305);
+    const callbackExcept306 = 0;
+//tag=1021
+    final callback306 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
+            QObject.eventFilter_calledFromC, callbackExcept306);
+    registerCallback(thisCpp, callback306, 306);
   }
 }

@@ -12,6 +12,9 @@
     <object-type name="QSize" />
     <object-type name="QRect" />
     <object-type name="QPoint" />
+    <object-type name="QEvent">
+        <enum-type identified-by-value="Type" />
+    </object-type>
 
     <object-type name="QObject" />
 
@@ -21,10 +24,24 @@
     <object-type name="QByteArray" />
     <object-type name="QList" />
 
+    <namespace-type name="Qt">
+        <enum-type name="CursorShape" />
+    </namespace-type>
+
+
     <namespace-type name="KDDockWidgets">
-        <object-type name="Platform" />
         <object-type name="View" />
         <object-type name="ViewFactory" />
+        <object-type name="Controller" />
+
+        <object-type name="Platform_flutter">
+            <enum-type identified-by-value="DisplayType" />
+        </object-type>
+
+        <!-- <namespace-type name="Controllers">
+            <object-type name="MainWindow" />
+        </namespace-type> -->
+
     </namespace-type>
 
 </typesystem>

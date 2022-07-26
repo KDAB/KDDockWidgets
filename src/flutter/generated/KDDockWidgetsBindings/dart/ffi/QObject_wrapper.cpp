@@ -46,6 +46,24 @@ const QList<QObject *> &QObject_wrapper::children() const
     // tag=1004
     return ::QObject::children();
 }
+void QObject_wrapper::customEvent(QEvent *event)
+{
+    // tag=1000
+    if (m_customEventCallback) {
+        // tag=1001
+        const void *thisPtr = this;
+        m_customEventCallback(const_cast<void *>(thisPtr), event);
+    } else {
+        // tag=1002
+        ::QObject::customEvent(event);
+    }
+}
+// tag=1009
+void QObject_wrapper::customEvent_nocallback(QEvent *event)
+{
+    // tag=1003
+    ::QObject::customEvent(event);
+}
 void QObject_wrapper::deleteLater()
 {
     // tag=1000
@@ -101,6 +119,42 @@ QList<QByteArray> QObject_wrapper::dynamicPropertyNames() const
 
     // tag=1004
     return ::QObject::dynamicPropertyNames();
+}
+bool QObject_wrapper::event(QEvent *event)
+{
+    // tag=1000
+    if (m_eventCallback) {
+        // tag=1001
+        const void *thisPtr = this;
+        return m_eventCallback(const_cast<void *>(thisPtr), event);
+    } else {
+        // tag=1002
+        return ::QObject::event(event);
+    }
+}
+// tag=1009
+bool QObject_wrapper::event_nocallback(QEvent *event)
+{
+    // tag=1003
+    return ::QObject::event(event);
+}
+bool QObject_wrapper::eventFilter(QObject *watched, QEvent *event)
+{
+    // tag=1000
+    if (m_eventFilterCallback) {
+        // tag=1001
+        const void *thisPtr = this;
+        return m_eventFilterCallback(const_cast<void *>(thisPtr), watched, event);
+    } else {
+        // tag=1002
+        return ::QObject::eventFilter(watched, event);
+    }
+}
+// tag=1009
+bool QObject_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
+{
+    // tag=1003
+    return ::QObject::eventFilter(watched, event);
 }
 bool QObject_wrapper::inherits(const char *classname) const
 {
@@ -267,6 +321,17 @@ void *c_QObject__children(void *thisObj)
 }
 
 // tag=1050
+// customEvent(QEvent * event)
+void c_QObject__customEvent_QEvent(void *thisObj, void *event_)
+{
+    auto event = reinterpret_cast<QEvent *>(event_);
+    // tag=1011
+
+    // tag=1074
+    fromWrapperPtr(thisObj)->customEvent_nocallback(event);
+}
+
+// tag=1050
 // deleteLater()
 void c_QObject__deleteLater(void *thisObj)
 {
@@ -350,6 +415,27 @@ void *c_QObject__dynamicPropertyNames(void *thisObj)
 
         // tag=1072
         new Dartagnan::ValueWrapper<QList<QByteArray>> { fromPtr(thisObj)->dynamicPropertyNames() };
+}
+
+// tag=1050
+// event(QEvent * event)
+bool c_QObject__event_QEvent(void *thisObj, void *event_)
+{
+    auto event = reinterpret_cast<QEvent *>(event_);
+    return
+        // tag=1016
+        [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
+}
+
+// tag=1050
+// eventFilter(QObject * watched, QEvent * event)
+bool c_QObject__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
+{
+    auto watched = reinterpret_cast<QObject *>(watched_);
+    auto event = reinterpret_cast<QEvent *>(event_);
+    return
+        // tag=1016
+        [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 
 // tag=1050
@@ -515,6 +601,15 @@ void c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int met
     // tag=1048
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
+    case 294:
+        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_customEvent>(callback);
+        break;
+    case 305:
+        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_event>(callback);
+        break;
+    case 306:
+        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_eventFilter>(callback);
+        break;
     }
 }
 }

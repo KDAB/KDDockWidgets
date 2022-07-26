@@ -14,6 +14,7 @@
 #include <qlist.h>
 #include <qobject.h>
 #include <qstring.h>
+#include <qcoreevent.h>
 #include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

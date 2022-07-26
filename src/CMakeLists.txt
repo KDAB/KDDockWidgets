@@ -210,7 +210,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QPoint_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Platform_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Platform_flutter_wrapper.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
@@ -368,6 +368,7 @@ endif()
 if(KDDW_FRONTEND_FLUTTER)
     target_include_directories(
         kddockwidgets PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgetsBindings>
+                              $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
     )
 
     # So bindings are exported

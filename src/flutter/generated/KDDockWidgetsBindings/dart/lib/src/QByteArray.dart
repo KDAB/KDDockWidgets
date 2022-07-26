@@ -77,7 +77,7 @@ class QByteArray {
 
 //tag=1027
 // append(const QByteArray & a)
-  QByteArray append_1(QByteArray? a) {
+  QByteArray append(QByteArray? a) {
 //tag=1028
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
@@ -298,7 +298,7 @@ class QByteArray {
 
 //tag=1027
 // contains(const QByteArray & a) const
-  bool contains_1(QByteArray? a) {
+  bool contains(QByteArray? a) {
 //tag=1028
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
@@ -376,7 +376,7 @@ class QByteArray {
 
 //tag=1027
 // endsWith(const QByteArray & a) const
-  bool endsWith_1(QByteArray? a) {
+  bool endsWith(QByteArray? a) {
 //tag=1028
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
@@ -476,7 +476,7 @@ class QByteArray {
 
 //tag=1027
 // indexOf(const QByteArray & a, int from) const
-  int indexOf_1(QByteArray? a, {int from = 0}) {
+  int indexOf(QByteArray? a, {int from = 0}) {
 //tag=1028
     final int_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_ffi_Int32_FFI>>(
@@ -502,7 +502,7 @@ class QByteArray {
 
 //tag=1027
 // insert(int i, const QByteArray & a)
-  QByteArray insert_1(int i, QByteArray? a) {
+  QByteArray insert(int i, QByteArray? a) {
 //tag=1028
     final voidstar_Func_voidstar_int_voidstar func = _dylib
         .lookup<
@@ -631,7 +631,7 @@ class QByteArray {
 
 //tag=1027
 // lastIndexOf(const QByteArray & a, int from) const
-  int lastIndexOf_1(QByteArray? a, {int from = -1}) {
+  int lastIndexOf(QByteArray? a, {int from = -1}) {
 //tag=1028
     final int_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_ffi_Int32_FFI>>(
@@ -715,7 +715,7 @@ class QByteArray {
   static
 //tag=1027
 // number(int arg__1, int base)
-      QByteArray number_1(int arg__1, {int base = 10}) {
+      QByteArray number(int arg__1, {int base = 10}) {
 //tag=1028
     final voidstar_Func_int_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_ffi_Int32_FFI>>(
@@ -729,7 +729,7 @@ class QByteArray {
 
 //tag=1027
 // prepend(const QByteArray & a)
-  QByteArray prepend_1(QByteArray? a) {
+  QByteArray prepend(QByteArray? a) {
 //tag=1028
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
@@ -775,7 +775,7 @@ class QByteArray {
 
 //tag=1027
 // push_back(const QByteArray & a)
-  push_back_1(QByteArray? a) {
+  push_back(QByteArray? a) {
 //tag=1028
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
@@ -801,7 +801,7 @@ class QByteArray {
 
 //tag=1027
 // push_front(const QByteArray & a)
-  push_front_1(QByteArray? a) {
+  push_front(QByteArray? a) {
 //tag=1028
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
@@ -852,6 +852,25 @@ class QByteArray {
 //tag=1033
     ffi.Pointer<void> result = func(thisCpp, times);
     return QByteArray.fromCppPointer(result, true);
+  }
+//tag=1024
+
+//tag=1027
+// replace(const QByteArray & before, const QByteArray & after)
+  QByteArray replace(QByteArray? before, QByteArray? after) {
+//tag=1028
+    final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+            'c_QByteArray__replace_QByteArray_QByteArray')
+        .asFunction();
+//tag=1033
+    ffi.Pointer<void> result = func(
+        thisCpp,
+        before == null ? ffi.nullptr : before.thisCpp,
+        after == null ? ffi.nullptr : after.thisCpp);
+    return QByteArray.fromCppPointer(result, false);
   }
 //tag=1024
 
@@ -1020,7 +1039,7 @@ class QByteArray {
 
 //tag=1027
 // setNum(int arg__1, int base)
-  QByteArray setNum_2(int arg__1, {int base = 10}) {
+  QByteArray setNum(int arg__1, {int base = 10}) {
 //tag=1028
     final voidstar_Func_voidstar_int_int func = _dylib
         .lookup<
@@ -1118,7 +1137,7 @@ class QByteArray {
 
 //tag=1027
 // startsWith(const QByteArray & a) const
-  bool startsWith_1(QByteArray? a) {
+  bool startsWith(QByteArray? a) {
 //tag=1028
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(

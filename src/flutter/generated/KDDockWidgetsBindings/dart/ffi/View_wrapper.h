@@ -16,6 +16,7 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
+#include <Controller.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017
@@ -37,6 +38,8 @@ public:
     virtual bool close_nocallback();
     // tag=1041
     void closeRootView();
+    // tag=1041
+    KDDockWidgets::Controller *controller() const;
     // tag=1041
     virtual void createPlatformWindow();
     // tag=1008
@@ -185,6 +188,10 @@ public:
     void resize(int w, int h);
     // tag=1041
     void setAboutToBeDestroyed();
+    // tag=1041
+    virtual void setCursor(Qt::CursorShape arg__1);
+    // tag=1008
+    virtual void setCursor_nocallback(Qt::CursorShape arg__1);
     // tag=1041
     virtual void setFixedHeight(int arg__1);
     // tag=1008
@@ -375,6 +382,9 @@ public:
     typedef void (*Callback_releaseMouse)(void *);
     Callback_releaseMouse m_releaseMouseCallback = nullptr;
     // tag=1042
+    typedef void (*Callback_setCursor)(void *, Qt::CursorShape arg__1);
+    Callback_setCursor m_setCursorCallback = nullptr;
+    // tag=1042
     typedef void (*Callback_setFixedHeight)(void *, int arg__1);
     Callback_setFixedHeight m_setFixedHeightCallback = nullptr;
     // tag=1042
@@ -460,6 +470,10 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__close(void *thisObj);
 // tag=1067
 //  KDDockWidgets::View::closeRootView()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__closeRootView(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::View::controller() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__controller(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::View::createPlatformWindow()
@@ -640,6 +654,10 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__resize_int_int(void *th
 // tag=1067
 //  KDDockWidgets::View::setAboutToBeDestroyed()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__setAboutToBeDestroyed(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::View::setCursor(Qt::CursorShape arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__setCursor_CursorShape(void *thisObj, int arg__1);
 
 // tag=1067
 //  KDDockWidgets::View::setFixedHeight(int arg__1)

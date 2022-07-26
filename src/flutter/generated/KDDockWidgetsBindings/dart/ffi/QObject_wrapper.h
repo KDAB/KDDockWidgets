@@ -13,6 +13,7 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <qobject.h>
 #include <qstring.h>
+#include <qcoreevent.h>
 #include <qlist.h>
 #include <qbytearray.h>
 
@@ -29,6 +30,10 @@ public:
     // tag=1041
     const QList<QObject *> &children() const;
     // tag=1041
+    virtual void customEvent(QEvent *event);
+    // tag=1008
+    virtual void customEvent_nocallback(QEvent *event);
+    // tag=1041
     void deleteLater();
     // tag=1041
     void destroyed(QObject *arg__1 = nullptr);
@@ -44,6 +49,14 @@ public:
     void dumpObjectTree();
     // tag=1041
     QList<QByteArray> dynamicPropertyNames() const;
+    // tag=1041
+    virtual bool event(QEvent *event);
+    // tag=1008
+    virtual bool event_nocallback(QEvent *event);
+    // tag=1041
+    virtual bool eventFilter(QObject *watched, QEvent *event);
+    // tag=1008
+    virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
     // tag=1041
     bool inherits(const char *classname) const;
     // tag=1041
@@ -76,6 +89,15 @@ public:
     int startTimer(int interval);
     // tag=1041
     static QString tr(const char *s, const char *c, int n);
+    // tag=1042
+    typedef void (*Callback_customEvent)(void *, QEvent *event);
+    Callback_customEvent m_customEventCallback = nullptr;
+    // tag=1042
+    typedef bool (*Callback_event)(void *, QEvent *event);
+    Callback_event m_eventCallback = nullptr;
+    // tag=1042
+    typedef bool (*Callback_eventFilter)(void *, QObject *watched, QEvent *event);
+    Callback_eventFilter m_eventFilterCallback = nullptr;
 };
 }
 extern "C" {
@@ -91,6 +113,10 @@ KDDockWidgetsBindings_EXPORT bool c_QObject__blockSignals_bool(void *thisObj, bo
 // tag=1067
 //  QObject::children() const
 KDDockWidgetsBindings_EXPORT void *c_QObject__children(void *thisObj);
+
+// tag=1067
+//  QObject::customEvent(QEvent * event)
+KDDockWidgetsBindings_EXPORT void c_QObject__customEvent_QEvent(void *thisObj, void *event_);
 
 // tag=1067
 //  QObject::deleteLater()
@@ -125,6 +151,14 @@ KDDockWidgetsBindings_EXPORT void c_QObject__dumpObjectTree(void *thisObj);
 // tag=1067
 //  QObject::dynamicPropertyNames() const
 KDDockWidgetsBindings_EXPORT void *c_QObject__dynamicPropertyNames(void *thisObj);
+
+// tag=1067
+//  QObject::event(QEvent * event)
+KDDockWidgetsBindings_EXPORT bool c_QObject__event_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  QObject::eventFilter(QObject * watched, QEvent * event)
+KDDockWidgetsBindings_EXPORT bool c_QObject__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 
 // tag=1067
 //  QObject::inherits(const char * classname) const

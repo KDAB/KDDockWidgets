@@ -8,16 +8,19 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-export 'src/Platform.dart' show Platform;
 export 'src/View.dart' show View;
+export 'src/Controller.dart' show Controller;
+export 'src/Platform_flutter.dart' show Platform_flutter;
 export 'src/ViewFactory.dart' show ViewFactory;
 export 'src/QByteArray.dart' show QByteArray;
+export 'src/QEvent.dart' show QEvent, QEvent_Type;
 export 'src/QList.dart' show QList;
 export 'src/QObject.dart' show QObject;
 export 'src/QPoint.dart' show QPoint;
 export 'src/QRect.dart' show QRect;
 export 'src/QSize.dart' show QSize;
 export 'src/QString.dart' show QString;
+export 'src/Qt.dart' show qt_getEnumName, Qt_CursorShape;
 import 'dart:ffi' as ffi;
 import 'dart:io' show Platform;
 

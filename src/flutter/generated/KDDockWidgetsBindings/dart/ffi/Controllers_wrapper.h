@@ -9,11 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgetsBindings/src/Platform_flutter.dart'
-    as KDDockWidgetBindings;
+// tag=1040
+#include "KDDockWidgetsBindings_exports.h"
+#include <KDDockWidgets.h>
 
-class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
-  String name() {
-    return "flutter";
-  }
+extern "C" {
+
+// tag=1047
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *);
 }

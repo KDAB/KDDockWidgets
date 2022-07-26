@@ -33,6 +33,7 @@
 
 #include "Platform_flutter.h"
 #include "ViewFactory_flutter.h"
+#include "ViewFactory.h"
 #include "views/View_flutter.h"
 #include "../KDDockWidgets.h"
 

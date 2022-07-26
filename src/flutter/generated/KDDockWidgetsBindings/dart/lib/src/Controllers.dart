@@ -9,11 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgetsBindings/src/Platform_flutter.dart'
-    as KDDockWidgetBindings;
+//tag=1052
+import 'dart:ffi' as ffi;
+import 'package:ffi/ffi.dart';
+import 'TypeHelpers.dart';
+import '../Bindings.dart';
+import '../FinalizerHelpers.dart';
 
-class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
-  String name() {
-    return "flutter";
-  }
-}
+//tag=1051
+var _dylib = Library.instance().dylib;

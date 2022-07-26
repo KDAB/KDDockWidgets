@@ -80,7 +80,7 @@ class QString {
 
 //tag=1027
 // arg(const QString & a, int fieldWidth) const
-  QString arg_1(String? a, {int fieldWidth = 0}) {
+  QString arg(String? a, {int fieldWidth = 0}) {
 //tag=1028
     final voidstar_Func_voidstar_voidstar_int func = _dylib
         .lookup<
@@ -833,7 +833,7 @@ class QString {
   static
 //tag=1027
 // number(int arg__1, int base)
-      QString number_1(int arg__1, {int base = 10}) {
+      QString number(int arg__1, {int base = 10}) {
 //tag=1028
     final voidstar_Func_int_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_ffi_Int32_FFI>>(
@@ -1038,7 +1038,7 @@ class QString {
 
 //tag=1027
 // setNum(int arg__1, int base)
-  QString setNum_2(int arg__1, {int base = 10}) {
+  QString setNum(int arg__1, {int base = 10}) {
 //tag=1028
     final voidstar_Func_voidstar_int_int func = _dylib
         .lookup<

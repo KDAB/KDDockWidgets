@@ -13,6 +13,12 @@
 
 
 // tag=1067
+//  Qt::qt_getEnumName(Qt::CursorShape arg__1)
+const char *c_static_Qt__qt_getEnumName_CursorShape(int arg__1);
+
+// tag=1047
+void c_Qt_Finalizer(void *, void *cppObj, void *);
+// tag=1067
 //  QString::QString()
 void *c_QString__constructor();
 
@@ -725,6 +731,10 @@ bool c_QObject__blockSignals_bool(void *thisObj, bool b);
 void *c_QObject__children(void *thisObj);
 
 // tag=1067
+//  QObject::customEvent(QEvent * event)
+void c_QObject__customEvent_QEvent(void *thisObj, void *event_);
+
+// tag=1067
 //  QObject::deleteLater()
 void c_QObject__deleteLater(void *thisObj);
 
@@ -757,6 +767,14 @@ void c_QObject__dumpObjectTree(void *thisObj);
 // tag=1067
 //  QObject::dynamicPropertyNames() const
 void *c_QObject__dynamicPropertyNames(void *thisObj);
+
+// tag=1067
+//  QObject::event(QEvent * event)
+bool c_QObject__event_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  QObject::eventFilter(QObject * watched, QEvent * event)
+bool c_QObject__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 
 // tag=1067
 //  QObject::inherits(const char * classname) const
@@ -1224,6 +1242,45 @@ void c_QList_T_QByteArray_T___destructor(void *thisObj);
 // tag=1047
 void c_QList_T_QByteArray_T__Finalizer(void *, void *cppObj, void *);
 // tag=1067
+//  QEvent::QEvent(QEvent::Type type)
+void *c_QEvent__constructor_Type(int type);
+
+// tag=1067
+//  QEvent::accept()
+void c_QEvent__accept(void *thisObj);
+
+// tag=1067
+//  QEvent::ignore()
+void c_QEvent__ignore(void *thisObj);
+
+// tag=1067
+//  QEvent::isAccepted() const
+bool c_QEvent__isAccepted(void *thisObj);
+
+// tag=1067
+//  QEvent::registerEventType(int hint)
+int c_static_QEvent__registerEventType_int(int hint);
+
+// tag=1067
+//  QEvent::setAccepted(bool accepted)
+void c_QEvent__setAccepted_bool(void *thisObj, bool accepted);
+
+// tag=1067
+//  QEvent::spontaneous() const
+bool c_QEvent__spontaneous(void *thisObj);
+
+// tag=1067
+//  QEvent::type() const
+int c_QEvent__type(void *thisObj);
+
+// tag=1066
+void c_QEvent__destructor(void *thisObj);
+
+// tag=1046
+void c_QEvent__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+// tag=1047
+void c_QEvent_Finalizer(void *, void *cppObj, void *);
+// tag=1067
 //  QByteArray::QByteArray()
 void *c_QByteArray__constructor();
 
@@ -1583,6 +1640,18 @@ void *c_KDDockWidgets__ViewFactory__constructor();
 void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
 
 // tag=1067
+//  KDDockWidgets::ViewFactory::customEvent(QEvent * event)
+void c_KDDockWidgets__ViewFactory__customEvent_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::ViewFactory::event(QEvent * event)
+bool c_KDDockWidgets__ViewFactory__event_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::ViewFactory::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__ViewFactory__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
+
+// tag=1067
 //  KDDockWidgets::ViewFactory::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
 
@@ -1593,6 +1662,230 @@ void c_KDDockWidgets__ViewFactory__destructor(void *thisObj);
 void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 void c_KDDockWidgets__ViewFactory_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::Platform_flutter::Platform_flutter()
+void *c_KDDockWidgets__Platform_flutter__constructor();
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::applicationName() const
+void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::createDefaultViewFactory()
+void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::hasActivePopup() const
+bool c_KDDockWidgets__Platform_flutter__hasActivePopup(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::inDisallowedDragView(QPoint globalPos) const
+bool c_KDDockWidgets__Platform_flutter__inDisallowedDragView_QPoint(void *thisObj, void *globalPos_);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::init()
+void c_KDDockWidgets__Platform_flutter__init(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::installMessageHandler()
+void c_KDDockWidgets__Platform_flutter__installMessageHandler(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::isLeftMouseButtonPressed() const
+bool c_KDDockWidgets__Platform_flutter__isLeftMouseButtonPressed(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::isProcessingAppQuitEvent() const
+bool c_KDDockWidgets__Platform_flutter__isProcessingAppQuitEvent(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::name() const
+const char *c_KDDockWidgets__Platform_flutter__name(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::organizationName() const
+void *c_KDDockWidgets__Platform_flutter__organizationName(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::restoreMouseCursor()
+void c_KDDockWidgets__Platform_flutter__restoreMouseCursor(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::screenNumberFor(KDDockWidgets::View * arg__1) const
+int c_KDDockWidgets__Platform_flutter__screenNumberFor_View(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::screenSizeFor(KDDockWidgets::View * arg__1) const
+void *c_KDDockWidgets__Platform_flutter__screenSizeFor_View(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::sendEvent(KDDockWidgets::View * arg__1, QEvent * arg__2) const
+void c_KDDockWidgets__Platform_flutter__sendEvent_View_QEvent(void *thisObj, void *arg__1_, void *arg__2_);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::setMouseCursor(Qt::CursorShape arg__1)
+void c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_createNonClosableView(KDDockWidgets::View * parent)
+void *c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View(void *thisObj, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_deinitPlatform_impl()
+void c_KDDockWidgets__Platform_flutter__tests_deinitPlatform_impl(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_initPlatform_impl()
+void c_KDDockWidgets__Platform_flutter__tests_initPlatform_impl(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_wait(int ms)
+void c_KDDockWidgets__Platform_flutter__tests_wait_int(void *thisObj, int ms);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
+bool c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_waitForDeleted(QObject * arg__1, int timeout) const
+bool c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_waitForEvent(KDDockWidgets::View * arg__1, QEvent::Type type, int timeout) const
+bool c_KDDockWidgets__Platform_flutter__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_waitForEvent(QObject * w, QEvent::Type type, int timeout) const
+bool c_KDDockWidgets__Platform_flutter__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
+bool c_KDDockWidgets__Platform_flutter__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
+bool c_KDDockWidgets__Platform_flutter__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::ungrabMouse()
+void c_KDDockWidgets__Platform_flutter__ungrabMouse(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::uninstallMessageHandler()
+void c_KDDockWidgets__Platform_flutter__uninstallMessageHandler(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Platform_flutter::usesFallbackMouseGrabber() const
+bool c_KDDockWidgets__Platform_flutter__usesFallbackMouseGrabber(void *thisObj);
+
+// tag=1066
+void c_KDDockWidgets__Platform_flutter__destructor(void *thisObj);
+
+// tag=1046
+void c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+// tag=1047
+void c_KDDockWidgets__Platform_flutter_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::Controller::close()
+bool c_KDDockWidgets__Controller__close(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::customEvent(QEvent * event)
+void c_KDDockWidgets__Controller__customEvent_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controller::event(QEvent * event)
+bool c_KDDockWidgets__Controller__event_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controller::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controller__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controller::geometry() const
+void *c_KDDockWidgets__Controller__geometry(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::height() const
+int c_KDDockWidgets__Controller__height(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::inDtor() const
+bool c_KDDockWidgets__Controller__inDtor(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::isVisible() const
+bool c_KDDockWidgets__Controller__isVisible(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::mapToGlobal(QPoint arg__1) const
+void *c_KDDockWidgets__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Controller::parentViewChanged(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controller__parentViewChanged_View(void *thisObj, void *parent_);
+
+// tag=1078
+void c_KDDockWidgets__Controller__onParentViewChanged_View(void *thisObj, void *contextQObject, void *callback);
+// tag=1067
+//  KDDockWidgets::Controller::pos() const
+void *c_KDDockWidgets__Controller__pos(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::rect() const
+void *c_KDDockWidgets__Controller__rect(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::setParentView(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controller__setParentView_View(void *thisObj, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::Controller::setParentView_impl(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controller__setParentView_impl_View(void *thisObj, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::Controller::setVisible(bool arg__1)
+void c_KDDockWidgets__Controller__setVisible_bool(void *thisObj, bool arg__1);
+
+// tag=1067
+//  KDDockWidgets::Controller::show() const
+void c_KDDockWidgets__Controller__show(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::size() const
+void *c_KDDockWidgets__Controller__size(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const char *c, int n);
+
+// tag=1067
+//  KDDockWidgets::Controller::view() const
+void *c_KDDockWidgets__Controller__view(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::width() const
+int c_KDDockWidgets__Controller__width(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::x() const
+int c_KDDockWidgets__Controller__x(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controller::y() const
+int c_KDDockWidgets__Controller__y(void *thisObj);
+
+// tag=1066
+void c_KDDockWidgets__Controller__destructor(void *thisObj);
+
+// tag=1046
+void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+// tag=1047
+void c_KDDockWidgets__Controller_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::View::aboutToBeDestroyed() const
 bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
@@ -1612,6 +1905,10 @@ bool c_KDDockWidgets__View__close(void *thisObj);
 // tag=1067
 //  KDDockWidgets::View::closeRootView()
 void c_KDDockWidgets__View__closeRootView(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::View::controller() const
+void *c_KDDockWidgets__View__controller(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::View::createPlatformWindow()
@@ -1794,6 +2091,10 @@ void c_KDDockWidgets__View__resize_int_int(void *thisObj, int w, int h);
 void c_KDDockWidgets__View__setAboutToBeDestroyed(void *thisObj);
 
 // tag=1067
+//  KDDockWidgets::View::setCursor(Qt::CursorShape arg__1)
+void c_KDDockWidgets__View__setCursor_CursorShape(void *thisObj, int arg__1);
+
+// tag=1067
 //  KDDockWidgets::View::setFixedHeight(int arg__1)
 void c_KDDockWidgets__View__setFixedHeight_int(void *thisObj, int arg__1);
 
@@ -1908,132 +2209,3 @@ void c_KDDockWidgets__View__destructor(void *thisObj);
 void c_KDDockWidgets__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Platform::Platform()
-void *c_KDDockWidgets__Platform__constructor();
-
-// tag=1067
-//  KDDockWidgets::Platform::applicationName() const
-void *c_KDDockWidgets__Platform__applicationName(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::createDefaultViewFactory()
-void *c_KDDockWidgets__Platform__createDefaultViewFactory(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::hasActivePopup() const
-bool c_KDDockWidgets__Platform__hasActivePopup(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::inDisallowedDragView(QPoint globalPos) const
-bool c_KDDockWidgets__Platform__inDisallowedDragView_QPoint(void *thisObj, void *globalPos_);
-
-// tag=1067
-//  KDDockWidgets::Platform::installMessageHandler()
-void c_KDDockWidgets__Platform__installMessageHandler(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::instance()
-void *c_static_KDDockWidgets__Platform__instance();
-
-// tag=1067
-//  KDDockWidgets::Platform::isLeftMouseButtonPressed() const
-bool c_KDDockWidgets__Platform__isLeftMouseButtonPressed(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::isProcessingAppQuitEvent() const
-bool c_KDDockWidgets__Platform__isProcessingAppQuitEvent(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::isQtQuick() const
-bool c_KDDockWidgets__Platform__isQtQuick(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::isQtWidgets() const
-bool c_KDDockWidgets__Platform__isQtWidgets(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::name() const
-const char *c_KDDockWidgets__Platform__name(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::organizationName() const
-void *c_KDDockWidgets__Platform__organizationName(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::restoreMouseCursor()
-void c_KDDockWidgets__Platform__restoreMouseCursor(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::screenNumberFor(KDDockWidgets::View * arg__1) const
-int c_KDDockWidgets__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Platform::screenSizeFor(KDDockWidgets::View * arg__1) const
-void *c_KDDockWidgets__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Platform::startDragDistance() const
-int c_KDDockWidgets__Platform__startDragDistance(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::startDragDistance_impl() const
-int c_KDDockWidgets__Platform__startDragDistance_impl(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::tests_createNonClosableView(KDDockWidgets::View * parent)
-void *c_KDDockWidgets__Platform__tests_createNonClosableView_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Platform::tests_deinitPlatform()
-void c_static_KDDockWidgets__Platform__tests_deinitPlatform();
-
-// tag=1067
-//  KDDockWidgets::Platform::tests_deinitPlatform_impl()
-void c_KDDockWidgets__Platform__tests_deinitPlatform_impl(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::tests_initPlatform_impl()
-void c_KDDockWidgets__Platform__tests_initPlatform_impl(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::tests_wait(int ms)
-void c_KDDockWidgets__Platform__tests_wait_int(void *thisObj, int ms);
-
-// tag=1067
-//  KDDockWidgets::Platform::tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
-bool c_KDDockWidgets__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const
-bool c_KDDockWidgets__Platform__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
-bool c_KDDockWidgets__Platform__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform::ungrabMouse()
-void c_KDDockWidgets__Platform__ungrabMouse(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::uninstallMessageHandler()
-void c_KDDockWidgets__Platform__uninstallMessageHandler(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform::usesFallbackMouseGrabber() const
-bool c_KDDockWidgets__Platform__usesFallbackMouseGrabber(void *thisObj);
-
-// tag=1066
-void c_KDDockWidgets__Platform__destructor(void *thisObj);
-
-// tag=1044
-int c_KDDockWidgets__Platform___get_m_numWarningsEmitted(void *thisObj);
-
-// tag=1045
-void c_KDDockWidgets__Platform___set_m_numWarningsEmitted_int(void *thisObj, int m_numWarningsEmitted_);
-
-// tag=1046
-void c_KDDockWidgets__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__Platform_Finalizer(void *, void *cppObj, void *);

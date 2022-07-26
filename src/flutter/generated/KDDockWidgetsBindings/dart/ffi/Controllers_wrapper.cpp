@@ -8,12 +8,23 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
+#include "Controllers_wrapper.h"
 
-import 'package:KDDockWidgetsBindings/src/Platform_flutter.dart'
-    as KDDockWidgetBindings;
 
-class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
-  String name() {
-    return "flutter";
-  }
+#include <QDebug>
+
+
+namespace Dartagnan {
+
+typedef int (*CleanupCallback)(void *thisPtr);
+static CleanupCallback s_cleanupCallback = nullptr;
+
+template<typename T>
+struct ValueWrapper
+{
+    T value;
+};
+
+}
+extern "C" {
 }
