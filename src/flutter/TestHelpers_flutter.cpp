@@ -22,7 +22,7 @@ namespace KDDockWidgets {
 class TestView_flutter : public Views::View_flutter
 {
 public:
-    explicit TestView_flutter(Platform::CreateViewOptions opts, QWidget *)
+    explicit TestView_flutter(CreateViewOptions opts, QWidget *)
         : Views::View_flutter(nullptr, Type::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
@@ -41,13 +41,13 @@ public:
     }
 
 private:
-    Platform::CreateViewOptions m_opts;
+    CreateViewOptions m_opts;
 };
 
 class FocusableTestView_flutter : public Views::View_flutter
 {
 public:
-    explicit FocusableTestView_flutter(Platform::CreateViewOptions opts, QWidget *)
+    explicit FocusableTestView_flutter(CreateViewOptions opts, QWidget *)
         : Views::View_flutter(nullptr, Type::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
@@ -66,7 +66,7 @@ public:
     }
 
 private:
-    Platform::CreateViewOptions m_opts;
+    CreateViewOptions m_opts;
 };
 
 class NonClosableTestView_flutter : public Views::View_flutter

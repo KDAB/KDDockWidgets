@@ -42,7 +42,7 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
 
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
-    Platform::CreateViewOptions viewOpts;
+    CreateViewOptions viewOpts;
     viewOpts.isVisible = show;
     viewOpts.size = sz;
     auto ptr = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(mainWindowName,
@@ -98,7 +98,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
 
     View *parent = nullptr;
 
-    Platform::CreateViewOptions viewOpts;
+    CreateViewOptions viewOpts;
     viewOpts.isVisible = true;
     viewOpts.size = QSize(1000, 1000);
     auto m = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(QStringLiteral("MyMainWindow%1").arg(count),

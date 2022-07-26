@@ -30,6 +30,7 @@ class SegmentedIndicators;
 class EventFilterInterface;
 class ViewFactory;
 class Window;
+struct CreateViewOptions;
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
@@ -150,16 +151,6 @@ public:
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-    struct CreateViewOptions
-    {
-        bool isVisible = false;
-        QSize sizeHint = {};
-        QSize minSize = { 0, 0 };
-        QSize maxSize = QSize(16777215, 16777215);
-        QSize size = { 1000, 1000 };
-        bool createWindow = false;
-    };
-
     class WarningObserver
     {
         Q_DISABLE_COPY(WarningObserver)
@@ -276,6 +267,16 @@ struct SetExpectedWarning
     }
 
     Q_DISABLE_COPY(SetExpectedWarning)
+};
+
+struct CreateViewOptions
+{
+    bool isVisible = false;
+    QSize sizeHint = {};
+    QSize minSize = { 0, 0 };
+    QSize maxSize = QSize(16777215, 16777215);
+    QSize size = { 1000, 1000 };
+    bool createWindow = false;
 };
 
 #endif

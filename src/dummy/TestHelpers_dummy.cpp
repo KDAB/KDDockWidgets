@@ -22,7 +22,7 @@ namespace KDDockWidgets {
 class TestView_dummy : public Views::View_dummy
 {
 public:
-    explicit TestView_dummy(Platform::CreateViewOptions opts, QWidget *)
+    explicit TestView_dummy(CreateViewOptions opts, QWidget *)
         : Views::View_dummy(nullptr, Type::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
@@ -41,13 +41,13 @@ public:
     }
 
 private:
-    Platform::CreateViewOptions m_opts;
+    CreateViewOptions m_opts;
 };
 
 class FocusableTestView_dummy : public Views::View_dummy
 {
 public:
-    explicit FocusableTestView_dummy(Platform::CreateViewOptions opts, QWidget *)
+    explicit FocusableTestView_dummy(CreateViewOptions opts, QWidget *)
         : Views::View_dummy(nullptr, Type::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
@@ -66,7 +66,7 @@ public:
     }
 
 private:
-    Platform::CreateViewOptions m_opts;
+    CreateViewOptions m_opts;
 };
 
 class NonClosableTestView_dummy : public Views::View_dummy

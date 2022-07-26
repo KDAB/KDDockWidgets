@@ -32,7 +32,7 @@ namespace KDDockWidgets {
 class TestView_qtquick : public Views::View_qtquick
 {
 public:
-    explicit TestView_qtquick(Platform::CreateViewOptions opts, QQuickItem *parent)
+    explicit TestView_qtquick(CreateViewOptions opts, QQuickItem *parent)
         : Views::View_qtquick(nullptr, Type::None, parent)
         , m_opts(opts)
     {
@@ -48,7 +48,7 @@ public:
     }
 
 private:
-    Platform::CreateViewOptions m_opts;
+    CreateViewOptions m_opts;
 };
 
 TestView_qtquick::~TestView_qtquick() = default;

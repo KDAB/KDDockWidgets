@@ -142,7 +142,7 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
     auto item = new Item(hostWidget);
     item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
-    Platform::CreateViewOptions opts;
+    CreateViewOptions opts;
     if (minSz.isValid())
         opts.minSize = minSz;
     if (maxSz.isValid())

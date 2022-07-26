@@ -31,7 +31,7 @@ class TestView_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit TestView_qtwidgets(Platform::CreateViewOptions opts, QWidget *parent)
+    explicit TestView_qtwidgets(CreateViewOptions opts, QWidget *parent)
         : Views::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
         , m_opts(opts)
     {
@@ -50,14 +50,14 @@ public:
     }
 
 private:
-    Platform::CreateViewOptions m_opts;
+    CreateViewOptions m_opts;
 };
 
 class FocusableTestView_qtwidgets : public Views::View_qtwidgets<QLineEdit>
 {
     Q_OBJECT
 public:
-    explicit FocusableTestView_qtwidgets(Platform::CreateViewOptions opts, QWidget *parent)
+    explicit FocusableTestView_qtwidgets(CreateViewOptions opts, QWidget *parent)
         : Views::View_qtwidgets<QLineEdit>(nullptr, Type::None, parent)
         , m_opts(opts)
     {
@@ -77,7 +77,7 @@ public:
     }
 
 private:
-    Platform::CreateViewOptions m_opts;
+    CreateViewOptions m_opts;
 };
 
 class NonClosableTestView_qtwidgets : public Views::View_qtwidgets<QWidget>

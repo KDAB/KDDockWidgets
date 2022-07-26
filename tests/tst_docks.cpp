@@ -5684,7 +5684,7 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow();
-    Platform::CreateViewOptions opts;
+    CreateViewOptions opts;
     opts.isVisible = true;
     opts.minSize = { 80, 29 };
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView(opts));
