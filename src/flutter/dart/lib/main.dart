@@ -10,8 +10,7 @@
 */
 
 import 'package:KDDockWidgets/Platform_flutter.dart';
-import 'package:KDDockWidgetsBindings/src/Config.dart'
-    as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/src/Config.dart' as KDDockWidgetBindings;
 
 void main(List<String> args) {
   var p = Platform_flutter();
@@ -20,5 +19,4 @@ void main(List<String> args) {
   print("Config.separatorThickness: ${config.separatorThickness()}");
 
   print("Platform.name: " + p.name());
-
 }
