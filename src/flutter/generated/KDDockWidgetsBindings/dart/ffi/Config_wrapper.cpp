@@ -125,26 +125,12 @@ void Config_wrapper::setStartDragDistance(int arg__1)
     // tag=1004
     ::KDDockWidgets::Config::setStartDragDistance(arg__1);
 }
-void Config_wrapper::setViewFactory(KDDockWidgets::ViewFactory *arg__1)
-{
-    // tag=1000
-
-    // tag=1004
-    ::KDDockWidgets::Config::setViewFactory(arg__1);
-}
 int Config_wrapper::startDragDistance() const
 {
     // tag=1000
 
     // tag=1004
     return ::KDDockWidgets::Config::startDragDistance();
-}
-KDDockWidgets::ViewFactory *Config_wrapper::viewFactory() const
-{
-    // tag=1000
-
-    // tag=1004
-    return ::KDDockWidgets::Config::viewFactory();
 }
 
 // tag=1005
@@ -298,30 +284,12 @@ void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1
 }
 
 // tag=1050
-// setViewFactory(KDDockWidgets::ViewFactory * arg__1)
-void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::ViewFactory *>(arg__1_);
-    // tag=1010
-    fromPtr(thisObj)->setViewFactory(arg__1);
-}
-
-// tag=1050
 // startDragDistance() const
 int c_KDDockWidgets__Config__startDragDistance(void *thisObj)
 {
     return
         // tag=1010
         fromPtr(thisObj)->startDragDistance();
-}
-
-// tag=1050
-// viewFactory() const
-void *c_KDDockWidgets__Config__viewFactory(void *thisObj)
-{
-    return
-        // tag=1010
-        fromPtr(thisObj)->viewFactory();
 }
 void c_KDDockWidgets__Config__destructor(void *thisObj)
 {

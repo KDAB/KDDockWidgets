@@ -1632,36 +1632,24 @@ void c_QByteArray_Finalizer(void *, void *cppObj, void *);
 // tag=1047
 void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);
 // tag=1067
-//  KDDockWidgets::ViewFactory::ViewFactory()
-void *c_KDDockWidgets__ViewFactory__constructor();
+//  KDDockWidgets::ViewFactory_flutter::ViewFactory_flutter()
+void *c_KDDockWidgets__ViewFactory_flutter__constructor();
 
 // tag=1067
-//  KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
-void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
+//  KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj, void *parent_);
 
 // tag=1067
-//  KDDockWidgets::ViewFactory::customEvent(QEvent * event)
-void c_KDDockWidgets__ViewFactory__customEvent_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::event(QEvent * event)
-bool c_KDDockWidgets__ViewFactory__event_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__ViewFactory__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
+//  KDDockWidgets::ViewFactory_flutter::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__ViewFactory_flutter__tr_char_char_int(const char *s, const char *c, int n);
 
 // tag=1066
-void c_KDDockWidgets__ViewFactory__destructor(void *thisObj);
+void c_KDDockWidgets__ViewFactory_flutter__destructor(void *thisObj);
 
 // tag=1046
-void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
-void c_KDDockWidgets__ViewFactory_Finalizer(void *, void *cppObj, void *);
+void c_KDDockWidgets__ViewFactory_flutter_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::Platform_flutter::Platform_flutter()
 void *c_KDDockWidgets__Platform_flutter__constructor();
@@ -1669,10 +1657,6 @@ void *c_KDDockWidgets__Platform_flutter__constructor();
 // tag=1067
 //  KDDockWidgets::Platform_flutter::applicationName() const
 void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::createDefaultViewFactory()
-void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
@@ -2266,16 +2250,8 @@ void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj, int value
 void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1);
 
 // tag=1067
-//  KDDockWidgets::Config::setViewFactory(KDDockWidgets::ViewFactory * arg__1)
-void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
-
-// tag=1067
 //  KDDockWidgets::Config::startDragDistance() const
 int c_KDDockWidgets__Config__startDragDistance(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Config::viewFactory() const
-void *c_KDDockWidgets__Config__viewFactory(void *thisObj);
 
 // tag=1066
 void c_KDDockWidgets__Config__destructor(void *thisObj);

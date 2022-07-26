@@ -74,7 +74,7 @@ class Platform_flutter {
 //tag=1028
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(618))
+            cFunctionSymbolName(591))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result = func(thisCpp);
@@ -97,34 +97,6 @@ class Platform_flutter {
 //tag=1024
 
 //tag=1027
-// createDefaultViewFactory()
-  ViewFactory createDefaultViewFactory() {
-//tag=1028
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(619))
-        .asFunction();
-//tag=1033
-    ffi.Pointer<void> result = func(thisCpp);
-    return ViewFactory.fromCppPointer(result, false);
-  }
-
-//tag=1035
-  static ffi.Pointer<void> createDefaultViewFactory_calledFromC(
-      ffi.Pointer<void> thisCpp) {
-    var dartInstance = Platform_flutter.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Platform_flutter::createDefaultViewFactory()! (${thisCpp.address})");
-      throw Error();
-    }
-//tag=1037
-    final result = dartInstance.createDefaultViewFactory();
-    return result.thisCpp;
-  }
-//tag=1024
-
-//tag=1027
 // createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
   View createView(Controller? controller, {required View? parent}) {
 //tag=1028
@@ -132,7 +104,7 @@ class Platform_flutter {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(620))
+            cFunctionSymbolName(592))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result = func(
@@ -165,7 +137,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(621))
+            cFunctionSymbolName(593))
         .asFunction();
 //tag=1029
     return func(thisCpp) != 0;
@@ -191,7 +163,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(622))
+            cFunctionSymbolName(594))
         .asFunction();
 //tag=1029
     return func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp) !=
@@ -233,7 +205,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(624))
+            cFunctionSymbolName(596))
         .asFunction();
 //tag=1030
     func(thisCpp);
@@ -258,7 +230,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(625))
+            cFunctionSymbolName(597))
         .asFunction();
 //tag=1029
     return func(thisCpp) != 0;
@@ -284,7 +256,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(626))
+            cFunctionSymbolName(598))
         .asFunction();
 //tag=1029
     return func(thisCpp) != 0;
@@ -310,7 +282,7 @@ class Platform_flutter {
 //tag=1028
     final string_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<string_Func_voidstar_FFI>>(
-            cFunctionSymbolName(627))
+            cFunctionSymbolName(599))
         .asFunction();
 //tag=1032
     ffi.Pointer<Utf8> result = func(thisCpp);
@@ -337,7 +309,7 @@ class Platform_flutter {
 //tag=1028
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(628))
+            cFunctionSymbolName(600))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result = func(thisCpp);
@@ -365,7 +337,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(629))
+            cFunctionSymbolName(601))
         .asFunction();
 //tag=1030
     func(thisCpp);
@@ -390,7 +362,7 @@ class Platform_flutter {
 //tag=1028
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(630))
+            cFunctionSymbolName(602))
         .asFunction();
 //tag=1031
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
@@ -417,7 +389,7 @@ class Platform_flutter {
 //tag=1028
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(631))
+            cFunctionSymbolName(603))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result =
@@ -446,7 +418,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(632))
+            cFunctionSymbolName(604))
         .asFunction();
 //tag=1030
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp,
@@ -474,7 +446,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(633))
+            cFunctionSymbolName(605))
         .asFunction();
 //tag=1030
     func(thisCpp, arg__1);
@@ -500,7 +472,7 @@ class Platform_flutter {
 //tag=1028
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(634))
+            cFunctionSymbolName(606))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result =
@@ -530,7 +502,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(635))
+            cFunctionSymbolName(607))
         .asFunction();
 //tag=1030
     func(thisCpp);
@@ -555,7 +527,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(636))
+            cFunctionSymbolName(608))
         .asFunction();
 //tag=1030
     func(thisCpp);
@@ -580,7 +552,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(637))
+            cFunctionSymbolName(609))
         .asFunction();
 //tag=1030
     func(thisCpp, ms);
@@ -605,7 +577,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(638))
+            cFunctionSymbolName(610))
         .asFunction();
 //tag=1029
     return func(
@@ -635,7 +607,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(639))
+            cFunctionSymbolName(611))
         .asFunction();
 //tag=1029
     return func(
@@ -667,7 +639,7 @@ class Platform_flutter {
         .lookup<
                 ffi.NativeFunction<
                     bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(640))
+            cFunctionSymbolName(612))
         .asFunction();
 //tag=1029
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, type,
@@ -699,7 +671,7 @@ class Platform_flutter {
         .lookup<
                 ffi.NativeFunction<
                     bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(641))
+            cFunctionSymbolName(613))
         .asFunction();
 //tag=1029
     return func(thisCpp, w == null ? ffi.nullptr : w.thisCpp, type, timeout) !=
@@ -728,7 +700,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(642))
+            cFunctionSymbolName(614))
         .asFunction();
 //tag=1029
     return func(
@@ -758,7 +730,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(643))
+            cFunctionSymbolName(615))
         .asFunction();
 //tag=1029
     return func(
@@ -788,7 +760,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(644))
+            cFunctionSymbolName(616))
         .asFunction();
 //tag=1030
     func(thisCpp);
@@ -813,7 +785,7 @@ class Platform_flutter {
 //tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(645))
+            cFunctionSymbolName(617))
         .asFunction();
 //tag=1030
     func(thisCpp);
@@ -838,7 +810,7 @@ class Platform_flutter {
 //tag=1028
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(646))
+            cFunctionSymbolName(618))
         .asFunction();
 //tag=1029
     return func(thisCpp) != 0;
@@ -869,61 +841,59 @@ class Platform_flutter {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 618:
+      case 591:
         return "c_KDDockWidgets__Platform_flutter__applicationName";
-      case 619:
-        return "c_KDDockWidgets__Platform_flutter__createDefaultViewFactory";
-      case 620:
+      case 592:
         return "c_KDDockWidgets__Platform_flutter__createView_Controller_View";
-      case 621:
+      case 593:
         return "c_KDDockWidgets__Platform_flutter__hasActivePopup";
-      case 622:
+      case 594:
         return "c_KDDockWidgets__Platform_flutter__inDisallowedDragView_QPoint";
-      case 624:
+      case 596:
         return "c_KDDockWidgets__Platform_flutter__installMessageHandler";
-      case 625:
+      case 597:
         return "c_KDDockWidgets__Platform_flutter__isLeftMouseButtonPressed";
-      case 626:
+      case 598:
         return "c_KDDockWidgets__Platform_flutter__isProcessingAppQuitEvent";
-      case 627:
+      case 599:
         return "c_KDDockWidgets__Platform_flutter__name";
-      case 628:
+      case 600:
         return "c_KDDockWidgets__Platform_flutter__organizationName";
-      case 629:
+      case 601:
         return "c_KDDockWidgets__Platform_flutter__restoreMouseCursor";
-      case 630:
+      case 602:
         return "c_KDDockWidgets__Platform_flutter__screenNumberFor_View";
-      case 631:
+      case 603:
         return "c_KDDockWidgets__Platform_flutter__screenSizeFor_View";
-      case 632:
+      case 604:
         return "c_KDDockWidgets__Platform_flutter__sendEvent_View_QEvent";
-      case 633:
+      case 605:
         return "c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape";
-      case 634:
+      case 606:
         return "c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View";
-      case 635:
+      case 607:
         return "c_KDDockWidgets__Platform_flutter__tests_deinitPlatform_impl";
-      case 636:
+      case 608:
         return "c_KDDockWidgets__Platform_flutter__tests_initPlatform_impl";
-      case 637:
+      case 609:
         return "c_KDDockWidgets__Platform_flutter__tests_wait_int";
-      case 638:
+      case 610:
         return "c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_View_int";
-      case 639:
+      case 611:
         return "c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_QObject_int";
-      case 640:
+      case 612:
         return "c_KDDockWidgets__Platform_flutter__tests_waitForEvent_View_Type_int";
-      case 641:
+      case 613:
         return "c_KDDockWidgets__Platform_flutter__tests_waitForEvent_QObject_Type_int";
-      case 642:
+      case 614:
         return "c_KDDockWidgets__Platform_flutter__tests_waitForResize_Controller_int";
-      case 643:
+      case 615:
         return "c_KDDockWidgets__Platform_flutter__tests_waitForResize_View_int";
-      case 644:
+      case 616:
         return "c_KDDockWidgets__Platform_flutter__ungrabMouse";
-      case 645:
+      case 617:
         return "c_KDDockWidgets__Platform_flutter__uninstallMessageHandler";
-      case 646:
+      case 618:
         return "c_KDDockWidgets__Platform_flutter__usesFallbackMouseGrabber";
     }
     return "";
@@ -931,61 +901,59 @@ class Platform_flutter {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 618:
+      case 591:
         return "applicationName";
-      case 619:
-        return "createDefaultViewFactory";
-      case 620:
+      case 592:
         return "createView";
-      case 621:
+      case 593:
         return "hasActivePopup";
-      case 622:
+      case 594:
         return "inDisallowedDragView";
-      case 624:
+      case 596:
         return "installMessageHandler";
-      case 625:
+      case 597:
         return "isLeftMouseButtonPressed";
-      case 626:
+      case 598:
         return "isProcessingAppQuitEvent";
-      case 627:
+      case 599:
         return "name";
-      case 628:
+      case 600:
         return "organizationName";
-      case 629:
+      case 601:
         return "restoreMouseCursor";
-      case 630:
+      case 602:
         return "screenNumberFor";
-      case 631:
+      case 603:
         return "screenSizeFor";
-      case 632:
+      case 604:
         return "sendEvent";
-      case 633:
+      case 605:
         return "setMouseCursor";
-      case 634:
+      case 606:
         return "tests_createNonClosableView";
-      case 635:
+      case 607:
         return "tests_deinitPlatform_impl";
-      case 636:
+      case 608:
         return "tests_initPlatform_impl";
-      case 637:
+      case 609:
         return "tests_wait";
-      case 638:
+      case 610:
         return "tests_waitForDeleted";
-      case 639:
+      case 611:
         return "tests_waitForDeleted_2";
-      case 640:
+      case 612:
         return "tests_waitForEvent";
-      case 641:
+      case 613:
         return "tests_waitForEvent_2";
-      case 642:
+      case 614:
         return "tests_waitForResize";
-      case 643:
+      case 615:
         return "tests_waitForResize_2";
-      case 644:
+      case 616:
         return "ungrabMouse";
-      case 645:
+      case 617:
         return "uninstallMessageHandler";
-      case 646:
+      case 618:
         return "usesFallbackMouseGrabber";
     }
     throw Error();
@@ -1000,150 +968,146 @@ class Platform_flutter {
         .asFunction();
 
 //tag=1021
-    final callback618 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback591 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Platform_flutter.applicationName_calledFromC);
-    registerCallback(thisCpp, callback618, 618);
+    registerCallback(thisCpp, callback591, 591);
 //tag=1021
-    final callback619 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        Platform_flutter.createDefaultViewFactory_calledFromC);
-    registerCallback(thisCpp, callback619, 619);
-//tag=1021
-    final callback620 =
+    final callback592 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             Platform_flutter.createView_calledFromC);
-    registerCallback(thisCpp, callback620, 620);
-    const callbackExcept621 = 0;
+    registerCallback(thisCpp, callback592, 592);
+    const callbackExcept593 = 0;
 //tag=1021
-    final callback621 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        Platform_flutter.hasActivePopup_calledFromC, callbackExcept621);
-    registerCallback(thisCpp, callback621, 621);
-    const callbackExcept622 = 0;
+    final callback593 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        Platform_flutter.hasActivePopup_calledFromC, callbackExcept593);
+    registerCallback(thisCpp, callback593, 593);
+    const callbackExcept594 = 0;
 //tag=1021
-    final callback622 =
+    final callback594 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
             Platform_flutter.inDisallowedDragView_calledFromC,
-            callbackExcept622);
-    registerCallback(thisCpp, callback622, 622);
+            callbackExcept594);
+    registerCallback(thisCpp, callback594, 594);
 //tag=1021
-    final callback624 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback596 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.installMessageHandler_calledFromC);
-    registerCallback(thisCpp, callback624, 624);
-    const callbackExcept625 = 0;
+    registerCallback(thisCpp, callback596, 596);
+    const callbackExcept597 = 0;
 //tag=1021
-    final callback625 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    final callback597 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         Platform_flutter.isLeftMouseButtonPressed_calledFromC,
-        callbackExcept625);
-    registerCallback(thisCpp, callback625, 625);
-    const callbackExcept626 = 0;
+        callbackExcept597);
+    registerCallback(thisCpp, callback597, 597);
+    const callbackExcept598 = 0;
 //tag=1021
-    final callback626 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    final callback598 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         Platform_flutter.isProcessingAppQuitEvent_calledFromC,
-        callbackExcept626);
-    registerCallback(thisCpp, callback626, 626);
+        callbackExcept598);
+    registerCallback(thisCpp, callback598, 598);
 //tag=1021
-    final callback627 = ffi.Pointer.fromFunction<string_Func_voidstar_FFI>(
+    final callback599 = ffi.Pointer.fromFunction<string_Func_voidstar_FFI>(
         Platform_flutter.name_calledFromC);
-    registerCallback(thisCpp, callback627, 627);
+    registerCallback(thisCpp, callback599, 599);
 //tag=1021
-    final callback628 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback600 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Platform_flutter.organizationName_calledFromC);
-    registerCallback(thisCpp, callback628, 628);
+    registerCallback(thisCpp, callback600, 600);
 //tag=1021
-    final callback629 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback601 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.restoreMouseCursor_calledFromC);
-    registerCallback(thisCpp, callback629, 629);
-    const callbackExcept630 = 0;
+    registerCallback(thisCpp, callback601, 601);
+    const callbackExcept602 = 0;
 //tag=1021
-    final callback630 =
+    final callback602 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            Platform_flutter.screenNumberFor_calledFromC, callbackExcept630);
-    registerCallback(thisCpp, callback630, 630);
+            Platform_flutter.screenNumberFor_calledFromC, callbackExcept602);
+    registerCallback(thisCpp, callback602, 602);
 //tag=1021
-    final callback631 =
+    final callback603 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             Platform_flutter.screenSizeFor_calledFromC);
-    registerCallback(thisCpp, callback631, 631);
+    registerCallback(thisCpp, callback603, 603);
 //tag=1021
-    final callback632 =
+    final callback604 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_voidstar_FFI>(
             Platform_flutter.sendEvent_calledFromC);
-    registerCallback(thisCpp, callback632, 632);
+    registerCallback(thisCpp, callback604, 604);
 //tag=1021
-    final callback633 =
+    final callback605 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             Platform_flutter.setMouseCursor_calledFromC);
-    registerCallback(thisCpp, callback633, 633);
+    registerCallback(thisCpp, callback605, 605);
 //tag=1021
-    final callback634 =
+    final callback606 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             Platform_flutter.tests_createNonClosableView_calledFromC);
-    registerCallback(thisCpp, callback634, 634);
+    registerCallback(thisCpp, callback606, 606);
 //tag=1021
-    final callback635 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback607 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.tests_deinitPlatform_impl_calledFromC);
-    registerCallback(thisCpp, callback635, 635);
+    registerCallback(thisCpp, callback607, 607);
 //tag=1021
-    final callback636 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback608 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.tests_initPlatform_impl_calledFromC);
-    registerCallback(thisCpp, callback636, 636);
+    registerCallback(thisCpp, callback608, 608);
 //tag=1021
-    final callback637 =
+    final callback609 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             Platform_flutter.tests_wait_calledFromC);
-    registerCallback(thisCpp, callback637, 637);
-    const callbackExcept638 = 0;
+    registerCallback(thisCpp, callback609, 609);
+    const callbackExcept610 = 0;
 //tag=1021
-    final callback638 =
+    final callback610 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
             Platform_flutter.tests_waitForDeleted_calledFromC,
-            callbackExcept638);
-    registerCallback(thisCpp, callback638, 638);
-    const callbackExcept639 = 0;
+            callbackExcept610);
+    registerCallback(thisCpp, callback610, 610);
+    const callbackExcept611 = 0;
 //tag=1021
-    final callback639 =
+    final callback611 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
             Platform_flutter.tests_waitForDeleted_2_calledFromC,
-            callbackExcept639);
-    registerCallback(thisCpp, callback639, 639);
-    const callbackExcept640 = 0;
+            callbackExcept611);
+    registerCallback(thisCpp, callback611, 611);
+    const callbackExcept612 = 0;
 //tag=1021
-    final callback640 = ffi.Pointer.fromFunction<
+    final callback612 = ffi.Pointer.fromFunction<
             bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>(
-        Platform_flutter.tests_waitForEvent_calledFromC, callbackExcept640);
-    registerCallback(thisCpp, callback640, 640);
-    const callbackExcept641 = 0;
+        Platform_flutter.tests_waitForEvent_calledFromC, callbackExcept612);
+    registerCallback(thisCpp, callback612, 612);
+    const callbackExcept613 = 0;
 //tag=1021
-    final callback641 = ffi.Pointer.fromFunction<
+    final callback613 = ffi.Pointer.fromFunction<
             bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>(
-        Platform_flutter.tests_waitForEvent_2_calledFromC, callbackExcept641);
-    registerCallback(thisCpp, callback641, 641);
-    const callbackExcept642 = 0;
+        Platform_flutter.tests_waitForEvent_2_calledFromC, callbackExcept613);
+    registerCallback(thisCpp, callback613, 613);
+    const callbackExcept614 = 0;
 //tag=1021
-    final callback642 =
+    final callback614 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
             Platform_flutter.tests_waitForResize_calledFromC,
-            callbackExcept642);
-    registerCallback(thisCpp, callback642, 642);
-    const callbackExcept643 = 0;
+            callbackExcept614);
+    registerCallback(thisCpp, callback614, 614);
+    const callbackExcept615 = 0;
 //tag=1021
-    final callback643 =
+    final callback615 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
             Platform_flutter.tests_waitForResize_2_calledFromC,
-            callbackExcept643);
-    registerCallback(thisCpp, callback643, 643);
+            callbackExcept615);
+    registerCallback(thisCpp, callback615, 615);
 //tag=1021
-    final callback644 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback616 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.ungrabMouse_calledFromC);
-    registerCallback(thisCpp, callback644, 644);
+    registerCallback(thisCpp, callback616, 616);
 //tag=1021
-    final callback645 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback617 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.uninstallMessageHandler_calledFromC);
-    registerCallback(thisCpp, callback645, 645);
-    const callbackExcept646 = 0;
+    registerCallback(thisCpp, callback617, 617);
+    const callbackExcept618 = 0;
 //tag=1021
-    final callback646 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    final callback618 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         Platform_flutter.usesFallbackMouseGrabber_calledFromC,
-        callbackExcept646);
-    registerCallback(thisCpp, callback646, 646);
+        callbackExcept618);
+    registerCallback(thisCpp, callback618, 618);
   }
 }

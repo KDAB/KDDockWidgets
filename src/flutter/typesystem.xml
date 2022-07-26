@@ -31,7 +31,7 @@
 
     <namespace-type name="KDDockWidgets">
         <object-type name="View" />
-        <object-type name="ViewFactory" />
+        <object-type name="ViewFactory_flutter" />
         <object-type name="Controller" />
         <object-type name="Config" />
 

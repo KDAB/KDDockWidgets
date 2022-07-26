@@ -12,7 +12,6 @@
 // tag=1040
 #include "KDDockWidgetsBindings_exports.h"
 #include <Platform_flutter.h>
-#include <ViewFactory.h>
 #include <View.h>
 #include <qsize.h>
 #include <Controller.h>
@@ -33,10 +32,6 @@ public:
     virtual QString applicationName() const;
     // tag=1008
     virtual QString applicationName_nocallback() const;
-    // tag=1041
-    virtual KDDockWidgets::ViewFactory *createDefaultViewFactory();
-    // tag=1008
-    virtual KDDockWidgets::ViewFactory *createDefaultViewFactory_nocallback();
     // tag=1041
     virtual KDDockWidgets::View *createView(KDDockWidgets::Controller *controller, KDDockWidgets::View *parent = nullptr) const;
     // tag=1008
@@ -147,9 +142,6 @@ public:
     typedef QString *(*Callback_applicationName)(void *);
     Callback_applicationName m_applicationNameCallback = nullptr;
     // tag=1042
-    typedef KDDockWidgets::ViewFactory *(*Callback_createDefaultViewFactory)(void *);
-    Callback_createDefaultViewFactory m_createDefaultViewFactoryCallback = nullptr;
-    // tag=1042
     typedef KDDockWidgets::View *(*Callback_createView)(void *, KDDockWidgets::Controller *controller, KDDockWidgets::View *parent);
     Callback_createView m_createViewCallback = nullptr;
     // tag=1042
@@ -238,10 +230,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__constructo
 // tag=1067
 //  KDDockWidgets::Platform_flutter::applicationName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::createDefaultViewFactory()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
