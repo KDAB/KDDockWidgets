@@ -151,6 +151,8 @@ List<String> includeArguments() {
       "-I${s_qtIncludePath}",
       "-I${s_qtIncludePath}/QtCore",
       "-I${s_qtIncludePath}/QtGui",
+      "-I..",
+      "-I../3rdparty",
       "-I../fwd_headers",
       "-Iviews/"
     ];

@@ -214,6 +214,8 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/View_flutter_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/DropArea_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Layout_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ViewFactory_flutter_wrapper.cpp
 )
 
@@ -375,6 +377,8 @@ if(KDDW_FRONTEND_FLUTTER)
         PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgetsBindings>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )
 
     # So bindings are exported

@@ -31,9 +31,16 @@
 #define QT_NO_CAST_FROM_BYTEARRAY
 #endif
 
+#define QT_NO_KEYWORDS
+
 #include "Platform_flutter.h"
 #include "ViewFactory_flutter.h"
+
 #include "views/View_flutter.h"
+
+#include "../controllers/Layout.h"
+#include "../controllers/DropArea.h"
+
 #include "../KDDockWidgets.h"
 #include "../Config.h"
 

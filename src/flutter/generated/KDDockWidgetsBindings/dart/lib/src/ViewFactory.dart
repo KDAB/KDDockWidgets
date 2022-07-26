@@ -47,12 +47,47 @@ class ViewFactory extends QObject {
 //tag=1024
 
 //tag=1027
+// createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
+  View createDropArea(DropArea? arg__1, View? parent) {
+//tag=1028
+    final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(592))
+        .asFunction();
+//tag=1033
+    ffi.Pointer<void> result = func(
+        thisCpp,
+        arg__1 == null ? ffi.nullptr : arg__1.thisCpp,
+        parent == null ? ffi.nullptr : parent.thisCpp);
+    return View.fromCppPointer(result, false);
+  }
+
+//tag=1035
+  static ffi.Pointer<void> createDropArea_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1037
+    final result = dartInstance.createDropArea(
+        DropArea.fromCppPointer(arg__1), View.fromCppPointer(parent));
+    return result.thisCpp;
+  }
+//tag=1024
+
+//tag=1027
 // createRubberBand(KDDockWidgets::View * parent) const
   View createRubberBand(View? parent) {
 //tag=1028
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(591))
+            cFunctionSymbolName(593))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result =
@@ -151,7 +186,9 @@ class ViewFactory extends QObject {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 591:
+      case 592:
+        return "c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View";
+      case 593:
         return "c_KDDockWidgets__ViewFactory__createRubberBand_View";
       case 294:
         return "c_KDDockWidgets__ViewFactory__customEvent_QEvent";
@@ -165,7 +202,9 @@ class ViewFactory extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 591:
+      case 592:
+        return "createDropArea";
+      case 593:
         return "createRubberBand";
       case 294:
         return "customEvent";
@@ -186,10 +225,15 @@ class ViewFactory extends QObject {
         .asFunction();
 
 //tag=1021
-    final callback591 =
+    final callback592 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory.createDropArea_calledFromC);
+    registerCallback(thisCpp, callback592, 592);
+//tag=1021
+    final callback593 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback591, 591);
+    registerCallback(thisCpp, callback593, 593);
 //tag=1021
     final callback294 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(

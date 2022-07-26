@@ -1,4 +1,5 @@
 {
     "createCMakeLists" : false,
+    "supportsQtSignals" : false,
     "bindingsLibrary" : "kddockwidgets"
 }

@@ -17,6 +17,8 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include <Controller.h>
+#include <DropArea.h>
+#include <controllers/Layout.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017
@@ -30,6 +32,10 @@ public:
     virtual void activateWindow();
     // tag=1008
     virtual void activateWindow_nocallback();
+    // tag=1041
+    KDDockWidgets::Controllers::DropArea *asDropAreaController() const;
+    // tag=1041
+    KDDockWidgets::Controllers::Layout *asLayout() const;
     // tag=1041
     static QSize boundedMaxSize(QSize min, QSize max);
     // tag=1041
@@ -458,6 +464,14 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__aboutToBeDestroyed(void
 // tag=1067
 //  KDDockWidgets::View::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__activateWindow(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::View::asDropAreaController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asDropAreaController(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::View::asLayout() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asLayout(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::View::boundedMaxSize(QSize min, QSize max)

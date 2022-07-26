@@ -269,17 +269,6 @@ void c_KDDockWidgets__Controller__customEvent_QEvent(void *thisObj, void *event_
     fromWrapperPtr(thisObj)->customEvent_nocallback(event);
 }
 
-// tag=1079
-void c_KDDockWidgets__Controller__onDestroyed_QObject(void *thisObj, void *contextQObject, void *callback)
-{
-    auto instance = reinterpret_cast<Controller *>(thisObj);
-    auto context = reinterpret_cast<QObject *>(contextQObject);
-    QObject::connect(instance, &Controller::destroyed, context ? context : instance, [thisObj, callback] {
-typedef void (*SignalHandler_callback)(void *);
-auto dartCallback = reinterpret_cast<SignalHandler_callback>(callback);
-dartCallback(thisObj); });
-}
-
 // tag=1050
 // event(QEvent * event)
 bool c_KDDockWidgets__Controller__event_QEvent(void *thisObj, void *event_)
@@ -358,17 +347,6 @@ void c_KDDockWidgets__Controller__parentViewChanged_View(void *thisObj, void *pa
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     // tag=1010
     fromPtr(thisObj)->parentViewChanged(parent);
-}
-
-// tag=1079
-void c_KDDockWidgets__Controller__onParentViewChanged_View(void *thisObj, void *contextQObject, void *callback)
-{
-    auto instance = reinterpret_cast<Controller *>(thisObj);
-    auto context = reinterpret_cast<QObject *>(contextQObject);
-    QObject::connect(instance, &Controller::parentViewChanged, context ? context : instance, [thisObj, callback] {
-typedef void (*SignalHandler_callback)(void *);
-auto dartCallback = reinterpret_cast<SignalHandler_callback>(callback);
-dartCallback(thisObj); });
 }
 
 // tag=1050
@@ -506,7 +484,7 @@ void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void 
     case 306:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_eventFilter>(callback);
         break;
-    case 690:
+    case 692:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

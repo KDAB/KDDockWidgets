@@ -32,6 +32,24 @@ ViewFactory_flutter_wrapper::ViewFactory_flutter_wrapper()
     : ::KDDockWidgets::ViewFactory_flutter()
 {
 }
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const
+{
+    // tag=1000
+    if (m_createDropAreaCallback) {
+        // tag=1001
+        const void *thisPtr = this;
+        return m_createDropAreaCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        // tag=1002
+        return ::KDDockWidgets::ViewFactory_flutter::createDropArea(arg__1, parent);
+    }
+}
+// tag=1009
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createDropArea_nocallback(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const
+{
+    // tag=1003
+    return ::KDDockWidgets::ViewFactory_flutter::createDropArea(arg__1, parent);
+}
 KDDockWidgets::View *ViewFactory_flutter_wrapper::createRubberBand(KDDockWidgets::View *parent) const
 {
     // tag=1000
@@ -144,6 +162,17 @@ void *c_KDDockWidgets__ViewFactory_flutter__constructor()
 }
 
 // tag=1050
+// createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DropArea *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return
+        // tag=1016
+        [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDropArea_nocallback(arg__1,parent);} else {    return targetPtr->createDropArea(arg__1,parent);} }();
+}
+
+// tag=1050
 // createRubberBand(KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj, void *parent_)
 {
@@ -206,7 +235,10 @@ void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *p
     // tag=1048
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 591:
+    case 592:
+        wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createDropArea>(callback);
+        break;
+    case 593:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createRubberBand>(callback);
         break;
     case 294:

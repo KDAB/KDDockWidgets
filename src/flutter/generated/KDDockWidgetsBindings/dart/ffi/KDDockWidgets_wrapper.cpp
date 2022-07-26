@@ -27,4 +27,14 @@ struct ValueWrapper
 
 }
 extern "C" {
+
+// tag=1050
+// qt_getEnumName(QFlags<KDDockWidgets::MainWindowOption> arg__1)
+const char *c_static_KDDockWidgets__qt_getEnumName_MainWindowOptions(int arg__1_)
+{
+    auto arg__1 = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(arg__1_);
+    return
+        // tag=1068
+        KDDockWidgets::qt_getEnumName(arg__1);
+}
 }

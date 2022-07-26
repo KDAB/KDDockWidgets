@@ -17,6 +17,8 @@
 #include <View.h>
 #include <qpoint.h>
 #include <qstring.h>
+#include <DropArea.h>
+#include <controllers/Layout.h>
 #include <Controller.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

@@ -49,6 +49,23 @@ class ViewFactory_flutter extends ViewFactory {
 //tag=1024
 
 //tag=1035
+  static ffi.Pointer<void> createDropArea_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1037
+    final result = dartInstance.createDropArea(
+        DropArea.fromCppPointer(arg__1), View.fromCppPointer(parent));
+    return result.thisCpp;
+  }
+//tag=1024
+
+//tag=1035
   static ffi.Pointer<void> createRubberBand_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
     var dartInstance =
@@ -139,7 +156,9 @@ class ViewFactory_flutter extends ViewFactory {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 591:
+      case 592:
+        return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
+      case 593:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
       case 294:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
@@ -153,7 +172,9 @@ class ViewFactory_flutter extends ViewFactory {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 591:
+      case 592:
+        return "createDropArea";
+      case 593:
         return "createRubberBand";
       case 294:
         return "customEvent";
@@ -174,10 +195,15 @@ class ViewFactory_flutter extends ViewFactory {
         .asFunction();
 
 //tag=1021
-    final callback591 =
+    final callback592 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createDropArea_calledFromC);
+    registerCallback(thisCpp, callback592, 592);
+//tag=1021
+    final callback593 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback591, 591);
+    registerCallback(thisCpp, callback593, 593);
 //tag=1021
     final callback294 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(

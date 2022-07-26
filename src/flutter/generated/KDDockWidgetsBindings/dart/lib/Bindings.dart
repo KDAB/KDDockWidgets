@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 export 'src/Config.dart' show Config;
+export 'src/DropArea.dart' show DropArea;
+export 'src/Layout.dart' show Layout;
 export 'src/View_flutter.dart' show View_flutter;
 export 'src/View.dart' show View;
 export 'src/Controller.dart' show Controller;
@@ -17,6 +19,8 @@ export 'src/Platform_flutter.dart' show Platform_flutter;
 export 'src/ViewFactory_flutter.dart' show ViewFactory_flutter;
 export 'src/ViewFactory.dart' show ViewFactory;
 export 'src/Views.dart' show asView_flutter, asView_flutter;
+export 'src/KDDockWidgets.dart'
+    show qt_getEnumName, KDDockWidgets_MainWindowOption;
 export 'src/QByteArray.dart' show QByteArray;
 export 'src/QEvent.dart' show QEvent, QEvent_Type;
 export 'src/QList.dart' show QList;

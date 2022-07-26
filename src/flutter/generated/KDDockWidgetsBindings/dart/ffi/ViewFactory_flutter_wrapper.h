@@ -14,6 +14,7 @@
 #include <ViewFactory_flutter.h>
 #include <qstring.h>
 #include <View.h>
+#include <DropArea.h>
 #include <qcoreevent.h>
 #include <qobject.h>
 
@@ -25,6 +26,10 @@ public:
     ~ViewFactory_flutter_wrapper();
     // tag=1041
     ViewFactory_flutter_wrapper();
+    // tag=1041
+    virtual KDDockWidgets::View *createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
+    // tag=1008
+    virtual KDDockWidgets::View *createDropArea_nocallback(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
     // tag=1041
     virtual KDDockWidgets::View *createRubberBand(KDDockWidgets::View *parent) const;
     // tag=1008
@@ -44,6 +49,9 @@ public:
     // tag=1041
     static QString tr(const char *s, const char *c, int n);
     // tag=1042
+    typedef KDDockWidgets::View *(*Callback_createDropArea)(void *, KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent);
+    Callback_createDropArea m_createDropAreaCallback = nullptr;
+    // tag=1042
     typedef KDDockWidgets::View *(*Callback_createRubberBand)(void *, KDDockWidgets::View *parent);
     Callback_createRubberBand m_createRubberBandCallback = nullptr;
     // tag=1042
@@ -62,6 +70,10 @@ extern "C" {
 // tag=1067
 //  KDDockWidgets::ViewFactory_flutter::ViewFactory_flutter()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__constructor();
+
+// tag=1067
+//  KDDockWidgets::ViewFactory_flutter::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
 
 // tag=1067
 //  KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const

@@ -1629,6 +1629,10 @@ void c_QByteArray__destructor(void *thisObj);
 
 // tag=1047
 void c_QByteArray_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::qt_getEnumName(QFlags<KDDockWidgets::MainWindowOption> arg__1)
+const char *c_static_KDDockWidgets__qt_getEnumName_MainWindowOptions(int arg__1_);
+
 // tag=1047
 void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);
 // tag=1067
@@ -1644,6 +1648,10 @@ void c_KDDockWidgets__Views_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::ViewFactory::ViewFactory()
 void *c_KDDockWidgets__ViewFactory__constructor();
+
+// tag=1067
+//  KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
 
 // tag=1067
 //  KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
@@ -1675,6 +1683,10 @@ void c_KDDockWidgets__ViewFactory_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::ViewFactory_flutter::ViewFactory_flutter()
 void *c_KDDockWidgets__ViewFactory_flutter__constructor();
+
+// tag=1067
+//  KDDockWidgets::ViewFactory_flutter::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
 
 // tag=1067
 //  KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const
@@ -1859,6 +1871,8 @@ void c_KDDockWidgets__CreateViewOptions___set_createWindow_bool(void *thisObj, b
 
 // tag=1047
 void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
+// tag=1047
+void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::Controller::close()
 bool c_KDDockWidgets__Controller__close(void *thisObj);
@@ -1963,6 +1977,14 @@ bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
 // tag=1067
 //  KDDockWidgets::View::activateWindow()
 void c_KDDockWidgets__View__activateWindow(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::View::asDropAreaController() const
+void *c_KDDockWidgets__View__asDropAreaController(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::View::asLayout() const
+void *c_KDDockWidgets__View__asLayout(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::View::boundedMaxSize(QSize min, QSize max)
@@ -2506,6 +2528,148 @@ void c_KDDockWidgets__Views__View_flutter__destructor(void *thisObj);
 void c_KDDockWidgets__Views__View_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 void c_KDDockWidgets__Views__View_flutter_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::asDropArea() const
+void *c_KDDockWidgets__Controllers__Layout__asDropArea(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::checkSanity() const
+bool c_KDDockWidgets__Controllers__Layout__checkSanity(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::clearLayout()
+void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::count() const
+int c_KDDockWidgets__Controllers__Layout__count(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::customEvent(QEvent * event)
+void c_KDDockWidgets__Controllers__Layout__customEvent_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::dumpLayout() const
+void c_KDDockWidgets__Controllers__Layout__dumpLayout(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::event(QEvent * event)
+bool c_KDDockWidgets__Controllers__Layout__event_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::isInMainWindow(bool honourNesting) const
+bool c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::layoutHeight() const
+int c_KDDockWidgets__Controllers__Layout__layoutHeight(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::layoutMaximumSizeHint() const
+void *c_KDDockWidgets__Controllers__Layout__layoutMaximumSizeHint(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::layoutMinimumSize() const
+void *c_KDDockWidgets__Controllers__Layout__layoutMinimumSize(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::layoutSize() const
+void *c_KDDockWidgets__Controllers__Layout__layoutSize(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::layoutWidth() const
+int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::placeholderCount() const
+int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(QSize arg__1)
+void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::setLayoutSize(QSize arg__1)
+void c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::setParentView_impl(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::updateSizeConstraints()
+void c_KDDockWidgets__Controllers__Layout__updateSizeConstraints(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::viewAboutToBeDeleted()
+void c_KDDockWidgets__Controllers__Layout__viewAboutToBeDeleted(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::visibleCount() const
+int c_KDDockWidgets__Controllers__Layout__visibleCount(void *thisObj);
+
+// tag=1066
+void c_KDDockWidgets__Controllers__Layout__destructor(void *thisObj);
+
+// tag=1046
+void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+// tag=1047
+void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::DropArea(KDDockWidgets::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)
+void c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::event(QEvent * event)
+bool c_KDDockWidgets__Controllers__DropArea__event_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::hasSingleFloatingFrame() const
+bool c_KDDockWidgets__Controllers__DropArea__hasSingleFloatingFrame(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::hasSingleFrame() const
+bool c_KDDockWidgets__Controllers__DropArea__hasSingleFrame(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::isMDIWrapper() const
+bool c_KDDockWidgets__Controllers__DropArea__isMDIWrapper(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::layoutEqually()
+void c_KDDockWidgets__Controllers__DropArea__layoutEqually(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::removeHover()
+void c_KDDockWidgets__Controllers__DropArea__removeHover(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::setParentView_impl(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Controllers__DropArea__tr_char_char_int(const char *s, const char *c, int n);
+
+// tag=1066
+void c_KDDockWidgets__Controllers__DropArea__destructor(void *thisObj);
+
+// tag=1046
+void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+// tag=1047
+void c_KDDockWidgets__Controllers__DropArea_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::Config::absoluteWidgetMaxSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj);

@@ -41,9 +41,12 @@
             <enum-type identified-by-value="DisplayType" />
         </object-type>
 
-        <!-- <namespace-type name="Controllers">
-            <object-type name="MainWindow" />
-        </namespace-type> -->
+        <enum-type name="MainWindowOption" flags="MainWindowOptions" />
+
+        <namespace-type name="Controllers">
+            <object-type name="Layout" />
+            <object-type name="DropArea" />
+        </namespace-type>
 
         <namespace-type name="Views">
             <object-type name="View_flutter" />

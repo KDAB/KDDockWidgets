@@ -14,10 +14,11 @@
 #include <ViewFactory.h>
 #include <qstring.h>
 #include <View.h>
+#include <DropArea.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 #include <qlist.h>
 #include <qbytearray.h>
-#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017
@@ -27,6 +28,10 @@ public:
     ~ViewFactory_wrapper();
     // tag=1041
     ViewFactory_wrapper();
+    // tag=1041
+    virtual KDDockWidgets::View *createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
+    // tag=1008
+    virtual KDDockWidgets::View *createDropArea_nocallback(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
     // tag=1041
     virtual KDDockWidgets::View *createRubberBand(KDDockWidgets::View *parent) const;
     // tag=1008
@@ -46,6 +51,9 @@ public:
     // tag=1041
     static QString tr(const char *s, const char *c, int n);
     // tag=1042
+    typedef KDDockWidgets::View *(*Callback_createDropArea)(void *, KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent);
+    Callback_createDropArea m_createDropAreaCallback = nullptr;
+    // tag=1042
     typedef KDDockWidgets::View *(*Callback_createRubberBand)(void *, KDDockWidgets::View *parent);
     Callback_createRubberBand m_createRubberBandCallback = nullptr;
     // tag=1042
@@ -64,6 +72,10 @@ extern "C" {
 // tag=1067
 //  KDDockWidgets::ViewFactory::ViewFactory()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__constructor();
+
+// tag=1067
+//  KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
 
 // tag=1067
 //  KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const

@@ -348,17 +348,6 @@ void c_QObject__destroyed_QObject(void *thisObj, void *arg__1_)
     fromPtr(thisObj)->destroyed(arg__1);
 }
 
-// tag=1079
-void c_QObject__onDestroyed_QObject(void *thisObj, void *contextQObject, void *callback)
-{
-    auto instance = reinterpret_cast<QObject *>(thisObj);
-    auto context = reinterpret_cast<QObject *>(contextQObject);
-    QObject::connect(instance, &QObject::destroyed, context ? context : instance, [thisObj, callback] {
-typedef void (*SignalHandler_callback)(void *);
-auto dartCallback = reinterpret_cast<SignalHandler_callback>(callback);
-dartCallback(thisObj); });
-}
-
 // tag=1050
 // disconnect(const QObject * receiver, const char * member) const
 bool c_QObject__disconnect_QObject_char(void *thisObj, void *receiver_, const char *member)
