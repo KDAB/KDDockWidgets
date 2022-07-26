@@ -18,75 +18,41 @@ import '../FinalizerHelpers.dart';
 
 //tag=1051
 var _dylib = Library.instance().dylib;
-final _finalizer =
-    _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
-        'c_KDDockWidgets__ViewFactory_flutter_Finalizer');
 
-class ViewFactory_flutter {
-//tag=1060
-  static var s_dartInstanceByCppPtr = Map<int, ViewFactory_flutter>();
-  var _thisCpp = null;
-  bool _needsAutoDelete = false;
-  get thisCpp => _thisCpp;
-  set thisCpp(var ptr) {
-    _thisCpp = ptr;
-    ffi.Pointer<ffi.Void> ptrvoid = ptr.cast<ffi.Void>();
-    if (_needsAutoDelete)
-      newWeakPersistentHandle?.call(this, ptrvoid, 0, _finalizer);
-  }
-
-  static bool isCached(var cppPointer) {
-//tag=1024
-    return s_dartInstanceByCppPtr.containsKey(cppPointer.address);
-  }
-
-//tag=1061
+class ViewFactory_flutter extends ViewFactory {
+//tag=1064
+  ViewFactory_flutter.fromCppPointer(var cppPointer,
+      [var needsAutoDelete = false])
+      : super.fromCppPointer(cppPointer, needsAutoDelete) {}
+  ViewFactory_flutter.init() : super.init() {}
+//tag=1062
   factory ViewFactory_flutter.fromCache(var cppPointer,
       [needsAutoDelete = false]) {
-    return (s_dartInstanceByCppPtr[cppPointer.address] ??
-            ViewFactory_flutter.fromCppPointer(cppPointer, needsAutoDelete))
-        as ViewFactory_flutter;
+    if (QObject.isCached(cppPointer)) {
+      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+      if (instance != null) return instance as ViewFactory_flutter;
+    }
+    return ViewFactory_flutter.fromCppPointer(cppPointer, needsAutoDelete);
   }
-  ViewFactory_flutter.fromCppPointer(var cppPointer,
-      [this._needsAutoDelete = false]) {
-//tag=1024
-    thisCpp = cppPointer;
-  }
-//tag=1025
-  ViewFactory_flutter.init() {}
 //tag=1023
 //ViewFactory_flutter()
-  ViewFactory_flutter() {
+  ViewFactory_flutter() : super.init() {
 //tag=1075
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
             'c_KDDockWidgets__ViewFactory_flutter__constructor')
         .asFunction();
     thisCpp = func();
-    ViewFactory_flutter.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   }
 //tag=1024
-
-//tag=1027
-// createRubberBand(KDDockWidgets::View * parent) const
-  View createRubberBand(View? parent) {
-//tag=1028
-    final voidstar_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(587))
-        .asFunction();
-//tag=1033
-    ffi.Pointer<void> result =
-        func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
-    return View.fromCppPointer(result, false);
-  }
 
 //tag=1035
   static ffi.Pointer<void> createRubberBand_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
     var dartInstance =
-        ViewFactory_flutter.s_dartInstanceByCppPtr[thisCpp.address];
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const! (${thisCpp.address})");
@@ -95,6 +61,54 @@ class ViewFactory_flutter {
 //tag=1037
     final result = dartInstance.createRubberBand(View.fromCppPointer(parent));
     return result.thisCpp;
+  }
+//tag=1024
+
+//tag=1035
+  static void customEvent_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::customEvent(QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1036
+    dartInstance.customEvent(QEvent.fromCppPointer(event));
+  }
+//tag=1024
+
+//tag=1035
+  static int event_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::event(QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1037
+    final result = dartInstance.event(QEvent.fromCppPointer(event));
+    return result ? 1 : 0;
+  }
+//tag=1024
+
+//tag=1035
+  static int eventFilter_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? watched, ffi.Pointer<void>? event) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::eventFilter(QObject * watched, QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1037
+    final result = dartInstance.eventFilter(
+        QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
+    return result ? 1 : 0;
   }
 
 //tag=1024
@@ -125,16 +139,28 @@ class ViewFactory_flutter {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 587:
+      case 589:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
+      case 294:
+        return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
+      case 305:
+        return "c_KDDockWidgets__ViewFactory_flutter__event_QEvent";
+      case 306:
+        return "c_KDDockWidgets__ViewFactory_flutter__eventFilter_QObject_QEvent";
     }
-    return "";
+    return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 587:
+      case 589:
         return "createRubberBand";
+      case 294:
+        return "customEvent";
+      case 305:
+        return "event";
+      case 306:
+        return "eventFilter";
     }
     throw Error();
   }
@@ -148,9 +174,26 @@ class ViewFactory_flutter {
         .asFunction();
 
 //tag=1021
-    final callback587 =
+    final callback589 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback587, 587);
+    registerCallback(thisCpp, callback589, 589);
+//tag=1021
+    final callback294 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            QObject.customEvent_calledFromC);
+    registerCallback(thisCpp, callback294, 294);
+    const callbackExcept305 = 0;
+//tag=1021
+    final callback305 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
+            QObject.event_calledFromC, callbackExcept305);
+    registerCallback(thisCpp, callback305, 305);
+    const callbackExcept306 = 0;
+//tag=1021
+    final callback306 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
+            QObject.eventFilter_calledFromC, callbackExcept306);
+    registerCallback(thisCpp, callback306, 306);
   }
 }

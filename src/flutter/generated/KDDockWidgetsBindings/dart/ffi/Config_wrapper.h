@@ -12,6 +12,7 @@
 // tag=1040
 #include "KDDockWidgetsBindings_exports.h"
 #include <Config.h>
+#include <ViewFactory.h>
 #include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -49,7 +50,11 @@ public:
     // tag=1041
     void setStartDragDistance(int arg__1);
     // tag=1041
+    void setViewFactory(KDDockWidgets::ViewFactory *arg__1);
+    // tag=1041
     int startDragDistance() const;
+    // tag=1041
+    KDDockWidgets::ViewFactory *viewFactory() const;
 };
 }
 extern "C" {
@@ -111,8 +116,16 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setSeparatorThickness
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1);
 
 // tag=1067
+//  KDDockWidgets::Config::setViewFactory(KDDockWidgets::ViewFactory * arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
+
+// tag=1067
 //  KDDockWidgets::Config::startDragDistance() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Config__startDragDistance(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Config::viewFactory() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Config__viewFactory(void *thisObj);
 
 // tag=1066
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__destructor(void *thisObj);

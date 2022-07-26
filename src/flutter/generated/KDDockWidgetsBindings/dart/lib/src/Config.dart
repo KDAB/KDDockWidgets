@@ -240,6 +240,19 @@ class Config {
 //tag=1024
 
 //tag=1027
+// setViewFactory(KDDockWidgets::ViewFactory * arg__1)
+  setViewFactory(ViewFactory? arg__1) {
+//tag=1028
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Config__setViewFactory_ViewFactory')
+        .asFunction();
+//tag=1030
+    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+  }
+//tag=1024
+
+//tag=1027
 // startDragDistance() const
   int startDragDistance() {
 //tag=1028
@@ -249,6 +262,20 @@ class Config {
         .asFunction();
 //tag=1031
     return func(thisCpp);
+  }
+//tag=1024
+
+//tag=1027
+// viewFactory() const
+  ViewFactory viewFactory() {
+//tag=1028
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Config__viewFactory')
+        .asFunction();
+//tag=1033
+    ffi.Pointer<void> result = func(thisCpp);
+    return ViewFactory.fromCppPointer(result, false);
   }
 
 //tag=1022

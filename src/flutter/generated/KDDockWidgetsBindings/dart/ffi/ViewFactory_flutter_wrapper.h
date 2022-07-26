@@ -14,6 +14,8 @@
 #include <ViewFactory_flutter.h>
 #include <qstring.h>
 #include <View.h>
+#include <qcoreevent.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017
@@ -28,10 +30,31 @@ public:
     // tag=1008
     virtual KDDockWidgets::View *createRubberBand_nocallback(KDDockWidgets::View *parent) const;
     // tag=1041
+    virtual void customEvent(QEvent *event);
+    // tag=1008
+    virtual void customEvent_nocallback(QEvent *event);
+    // tag=1041
+    virtual bool event(QEvent *event);
+    // tag=1008
+    virtual bool event_nocallback(QEvent *event);
+    // tag=1041
+    virtual bool eventFilter(QObject *watched, QEvent *event);
+    // tag=1008
+    virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
+    // tag=1041
     static QString tr(const char *s, const char *c, int n);
     // tag=1042
     typedef KDDockWidgets::View *(*Callback_createRubberBand)(void *, KDDockWidgets::View *parent);
     Callback_createRubberBand m_createRubberBandCallback = nullptr;
+    // tag=1042
+    typedef void (*Callback_customEvent)(void *, QEvent *event);
+    Callback_customEvent m_customEventCallback = nullptr;
+    // tag=1042
+    typedef bool (*Callback_event)(void *, QEvent *event);
+    Callback_event m_eventCallback = nullptr;
+    // tag=1042
+    typedef bool (*Callback_eventFilter)(void *, QObject *watched, QEvent *event);
+    Callback_eventFilter m_eventFilterCallback = nullptr;
 };
 }
 extern "C" {
@@ -43,6 +66,18 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__constru
 // tag=1067
 //  KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj, void *parent_);
+
+// tag=1067
+//  KDDockWidgets::ViewFactory_flutter::customEvent(QEvent * event)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::ViewFactory_flutter::event(QEvent * event)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__ViewFactory_flutter__event_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  KDDockWidgets::ViewFactory_flutter::eventFilter(QObject * watched, QEvent * event)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__ViewFactory_flutter__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 
 // tag=1067
 //  KDDockWidgets::ViewFactory_flutter::tr(const char * s, const char * c, int n)
