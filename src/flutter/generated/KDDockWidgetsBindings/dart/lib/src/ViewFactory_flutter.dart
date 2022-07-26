@@ -139,7 +139,7 @@ class ViewFactory_flutter extends ViewFactory {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 589:
+      case 591:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
       case 294:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
@@ -153,7 +153,7 @@ class ViewFactory_flutter extends ViewFactory {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 589:
+      case 591:
         return "createRubberBand";
       case 294:
         return "customEvent";
@@ -174,10 +174,10 @@ class ViewFactory_flutter extends ViewFactory {
         .asFunction();
 
 //tag=1021
-    final callback589 =
+    final callback591 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback589, 589);
+    registerCallback(thisCpp, callback591, 591);
 //tag=1021
     final callback294 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(

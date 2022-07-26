@@ -12,8 +12,19 @@
 import 'package:KDDockWidgetsBindings/src/Platform_flutter.dart'
     as KDDockWidgetBindings;
 
+import 'package:KDDockWidgetsBindings/src/ViewFactory.dart'
+    as KDDockWidgetBindings;
+
+import 'ViewFactory_flutter.dart';
+
 class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
   String name() {
     return "flutter";
   }
+
+KDDockWidgetBindings.ViewFactory createDefaultViewFactory() {
+  print("Dart foo!");
+  return ViewFactory_flutter();
+}
+
 }

@@ -143,7 +143,8 @@ List<String> includeArguments() {
       "-I${s_qtLibraryPath}/QtCore.framework/Headers",
       "-I${s_qtLibraryPath}/QtGui.framework/Headers",
       "-F${s_qtLibraryPath}",
-      "-I.."
+      "-I..",
+      "-Iviews/"
     ];
   } else {
     return [
@@ -151,7 +152,7 @@ List<String> includeArguments() {
       "-I${s_qtIncludePath}/QtCore",
       "-I${s_qtIncludePath}/QtGui",
       "-I../fwd_headers",
-      "-I../"
+      "-Iviews/"
     ];
   }
 }

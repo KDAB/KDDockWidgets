@@ -127,7 +127,8 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
         break;
     case FrontendType::Flutter:
 #ifdef KDDW_FRONTEND_FLUTTER
-        platform = new Platform_flutter(argc, argv);
+        // TODOm4: This needs to be called from Dart
+        platform = nullptr;
 #endif
         break;
     }

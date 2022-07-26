@@ -52,7 +52,7 @@ class ViewFactory extends QObject {
 //tag=1028
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(589))
+            cFunctionSymbolName(591))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result =
@@ -151,7 +151,7 @@ class ViewFactory extends QObject {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 589:
+      case 591:
         return "c_KDDockWidgets__ViewFactory__createRubberBand_View";
       case 294:
         return "c_KDDockWidgets__ViewFactory__customEvent_QEvent";
@@ -165,7 +165,7 @@ class ViewFactory extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 589:
+      case 591:
         return "createRubberBand";
       case 294:
         return "customEvent";
@@ -186,10 +186,10 @@ class ViewFactory extends QObject {
         .asFunction();
 
 //tag=1021
-    final callback589 =
+    final callback591 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback589, 589);
+    registerCallback(thisCpp, callback591, 591);
 //tag=1021
     final callback294 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(

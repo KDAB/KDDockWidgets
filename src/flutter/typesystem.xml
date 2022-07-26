@@ -44,6 +44,10 @@
             <object-type name="MainWindow" />
         </namespace-type> -->
 
+    <namespace-type name="Views">
+            <object-type name="View_flutter" />
+    </namespace-type>
+
     </namespace-type>
 
 </typesystem>

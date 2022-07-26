@@ -221,7 +221,7 @@ void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void
     // tag=1048
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 589:
+    case 591:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createRubberBand>(callback);
         break;
     case 294:

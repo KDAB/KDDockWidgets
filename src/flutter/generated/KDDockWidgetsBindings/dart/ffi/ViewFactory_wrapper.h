@@ -14,9 +14,9 @@
 #include <ViewFactory.h>
 #include <qstring.h>
 #include <View.h>
-#include <qlist.h>
 #include <qobject.h>
 #include <qcoreevent.h>
+#include <qlist.h>
 #include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
