@@ -8,6 +8,7 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
+export 'src/Config.dart' show Config;
 export 'src/View.dart' show View;
 export 'src/Controller.dart' show Controller;
 export 'src/Platform_flutter.dart' show Platform_flutter;

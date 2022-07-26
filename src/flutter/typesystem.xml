@@ -33,6 +33,7 @@
         <object-type name="View" />
         <object-type name="ViewFactory" />
         <object-type name="Controller" />
+        <object-type name="Config" />
 
         <object-type name="Platform_flutter">
             <enum-type identified-by-value="DisplayType" />

@@ -2209,3 +2209,76 @@ void c_KDDockWidgets__View__destructor(void *thisObj);
 void c_KDDockWidgets__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::Config::absoluteWidgetMaxSize() const
+void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Config::absoluteWidgetMinSize() const
+void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Config::draggedWindowOpacity() const
+qreal c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Config::dropIndicatorsInhibited() const
+bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Config::mdiPopupThreshold() const
+int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Config::self()
+void *c_static_KDDockWidgets__Config__self();
+
+// tag=1067
+//  KDDockWidgets::Config::separatorThickness() const
+int c_KDDockWidgets__Config__separatorThickness(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Config::setAbsoluteWidgetMaxSize(QSize size)
+void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_);
+
+// tag=1067
+//  KDDockWidgets::Config::setAbsoluteWidgetMinSize(QSize size)
+void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_);
+
+// tag=1067
+//  KDDockWidgets::Config::setDraggedWindowOpacity(qreal opacity)
+void c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity);
+
+// tag=1067
+//  KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const
+void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
+
+// tag=1067
+//  KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
+void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
+
+// tag=1067
+//  KDDockWidgets::Config::setSeparatorThickness(int value)
+void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj, int value);
+
+// tag=1067
+//  KDDockWidgets::Config::setStartDragDistance(int arg__1)
+void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1);
+
+// tag=1067
+//  KDDockWidgets::Config::setViewFactory(KDDockWidgets::ViewFactory * arg__1)
+void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Config::startDragDistance() const
+int c_KDDockWidgets__Config__startDragDistance(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Config::viewFactory() const
+void *c_KDDockWidgets__Config__viewFactory(void *thisObj);
+
+// tag=1066
+void c_KDDockWidgets__Config__destructor(void *thisObj);
+
+// tag=1047
+void c_KDDockWidgets__Config_Finalizer(void *, void *cppObj, void *);
