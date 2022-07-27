@@ -64,11 +64,11 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     , m_dropIndicatorOverlay(createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))
 {
-    Q_ASSERT(parent);
     setRootItem(new Layouting::ItemBoxContainer(view()));
     DockRegistry::self()->registerLayout(this);
 
-    setLayoutSize(parent->size());
+    if (parent)
+        setLayoutSize(parent->size());
 
     // Initialize min size
     updateSizeConstraints();

@@ -458,6 +458,7 @@ if(KDDockWidgets_TESTS)
 
         add_test(NAME tst_view COMMAND tst_view)
         add_test(NAME tst_window COMMAND tst_window)
+        add_test(NAME tst_droparea COMMAND tst_droparea)
         add_test(NAME tst_platform COMMAND tst_platform)
         add_test(NAME tst_viewguard COMMAND tst_viewguard)
         add_test(NAME tst_group COMMAND tst_group)
