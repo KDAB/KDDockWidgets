@@ -32,6 +32,18 @@ class Layout extends Controller {
     }
     return Layout.fromCppPointer(cppPointer, needsAutoDelete);
   }
+//tag=1023
+//Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View * arg__2)
+  Layout(int arg__1, View? arg__2) : super.init() {
+//tag=1075
+    final voidstar_Func_int_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__constructor_Type_View')
+        .asFunction();
+    thisCpp = func(arg__1, arg__2 == null ? ffi.nullptr : arg__2.thisCpp);
+    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    registerCallbacks();
+  }
 //tag=1024
 
 //tag=1027
@@ -346,13 +358,13 @@ class Layout extends Controller {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 294:
+      case 295:
         return "c_KDDockWidgets__Controllers__Layout__customEvent_QEvent";
-      case 305:
-        return "c_KDDockWidgets__Controllers__Layout__event_QEvent";
       case 306:
+        return "c_KDDockWidgets__Controllers__Layout__event_QEvent";
+      case 307:
         return "c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent";
-      case 692:
+      case 695:
         return "c_KDDockWidgets__Controllers__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -360,13 +372,13 @@ class Layout extends Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 294:
+      case 295:
         return "customEvent";
-      case 305:
-        return "event";
       case 306:
+        return "event";
+      case 307:
         return "eventFilter";
-      case 692:
+      case 695:
         return "setParentView_impl";
     }
     throw Error();
@@ -381,26 +393,26 @@ class Layout extends Controller {
         .asFunction();
 
 //tag=1021
-    final callback294 =
+    final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);
-    registerCallback(thisCpp, callback294, 294);
-    const callbackExcept305 = 0;
-//tag=1021
-    final callback305 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            QObject.event_calledFromC, callbackExcept305);
-    registerCallback(thisCpp, callback305, 305);
+    registerCallback(thisCpp, callback295, 295);
     const callbackExcept306 = 0;
 //tag=1021
     final callback306 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
-            QObject.eventFilter_calledFromC, callbackExcept306);
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
+            QObject.event_calledFromC, callbackExcept306);
     registerCallback(thisCpp, callback306, 306);
+    const callbackExcept307 = 0;
 //tag=1021
-    final callback692 =
+    final callback307 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
+            QObject.eventFilter_calledFromC, callbackExcept307);
+    registerCallback(thisCpp, callback307, 307);
+//tag=1021
+    final callback695 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback692, 692);
+    registerCallback(thisCpp, callback695, 695);
   }
 }

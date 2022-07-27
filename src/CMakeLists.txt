@@ -389,7 +389,7 @@ if(KDDW_FRONTEND_FLUTTER)
             ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
             PROPERTIES
                 COMPILE_FLAGS
-                "-Wno-unused-function -Wno-unused-variable -Wno-format-security -Wno-unused-parameter -Wno-shadow"
+                "-Wno-unused-function -Wno-unused-variable -Wno-format-security -Wno-unused-parameter -Wno-shadow -Wno-sign-conversion"
         )
     endif()
 endif()

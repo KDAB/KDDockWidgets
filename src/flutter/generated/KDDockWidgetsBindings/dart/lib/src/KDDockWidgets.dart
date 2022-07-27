@@ -26,17 +26,26 @@ class KDDockWidgets_MainWindowOption {
   static const MainWindowOption_MDI = 2;
   static const MainWindowOption_HasCentralWidget = 5;
 }
-//tag=1024
 
-//tag=1027
-// qt_getEnumName(QFlags<KDDockWidgets::MainWindowOption> arg__1)
-String qt_getEnumName(int arg__1) {
-//tag=1028
-  final string_Func_int func = _dylib
-      .lookup<ffi.NativeFunction<string_Func_ffi_Int32_FFI>>(
-          'c_static_KDDockWidgets__qt_getEnumName_MainWindowOptions')
-      .asFunction();
-//tag=1032
-  ffi.Pointer<Utf8> result = func(arg__1);
-  return result.toDartString();
+//tag=1038
+class KDDockWidgets_Type {
+  static const FIRST = 1;
+  static const None = 0;
+  static const Frame = 1;
+  static const TitleBar = 2;
+  static const TabBar = 4;
+  static const Stack = 8;
+  static const FloatingWindow = 16;
+  static const Separator = 32;
+  static const DockWidget = 64;
+  static const MDIArea = 128;
+  static const LayoutItem = 256;
+  static const SideBar = 512;
+  static const MainWindow = 1024;
+  static const ViewWrapper = 2048;
+  static const DropArea = 4096;
+  static const MDILayout = 8192;
+  static const RubberBand = 16384;
+  static const DropAreaIndicatorOverlay = 32768;
+  static const LAST = 16384;
 }

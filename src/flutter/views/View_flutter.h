@@ -36,7 +36,7 @@ public:
     using View::width;
 
     explicit View_flutter(KDDockWidgets::Controller *controller, Type type,
-                          void *, Qt::WindowFlags windowFlags = {});
+                          View_flutter *, Qt::WindowFlags windowFlags = {});
 
     ~View_flutter() override = default;
 
@@ -117,6 +117,8 @@ public:
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<View>> childViews() const override;
     void setZOrder(int) override;
+
+    HANDLE handle() const override;
 
 private:
     Q_DISABLE_COPY(View_flutter)

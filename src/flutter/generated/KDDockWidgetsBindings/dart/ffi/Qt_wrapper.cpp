@@ -27,13 +27,4 @@ struct ValueWrapper
 
 }
 extern "C" {
-
-// tag=1050
-// qt_getEnumName(Qt::CursorShape arg__1)
-const char *c_static_Qt__qt_getEnumName_CursorShape(int arg__1)
-{
-    return
-        // tag=1068
-        Qt::qt_getEnumName(static_cast<Qt::CursorShape>(arg__1));
-}
 }

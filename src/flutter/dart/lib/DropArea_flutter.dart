@@ -9,11 +9,14 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'View_flutter.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
-class View_flutter extends KDDockWidgetBindings.View_flutter {
-  View_flutter(KDDockWidgetBindings.Controller? controller, int type,
+class DropArea_flutter extends View_flutter {
+  DropArea_flutter(KDDockWidgetBindings.Controller? controller, int type,
       KDDockWidgetBindings.View_flutter? parent,
       {int windowFlags = 0})
-      : super(controller, type, parent, windowFlags: windowFlags);
+      : super(controller, type, parent, windowFlags: windowFlags) {
+    print("DropArea_flutter CTOR");
+  }
 }

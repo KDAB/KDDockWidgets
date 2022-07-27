@@ -156,15 +156,15 @@ class ViewFactory_flutter extends ViewFactory {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 592:
-        return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
       case 593:
+        return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
+      case 594:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
-      case 294:
+      case 295:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
-      case 305:
-        return "c_KDDockWidgets__ViewFactory_flutter__event_QEvent";
       case 306:
+        return "c_KDDockWidgets__ViewFactory_flutter__event_QEvent";
+      case 307:
         return "c_KDDockWidgets__ViewFactory_flutter__eventFilter_QObject_QEvent";
     }
     return super.cFunctionSymbolName(methodId);
@@ -172,15 +172,15 @@ class ViewFactory_flutter extends ViewFactory {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 592:
-        return "createDropArea";
       case 593:
+        return "createDropArea";
+      case 594:
         return "createRubberBand";
-      case 294:
+      case 295:
         return "customEvent";
-      case 305:
-        return "event";
       case 306:
+        return "event";
+      case 307:
         return "eventFilter";
     }
     throw Error();
@@ -195,31 +195,31 @@ class ViewFactory_flutter extends ViewFactory {
         .asFunction();
 
 //tag=1021
-    final callback592 =
+    final callback593 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createDropArea_calledFromC);
-    registerCallback(thisCpp, callback592, 592);
-//tag=1021
-    final callback593 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createRubberBand_calledFromC);
     registerCallback(thisCpp, callback593, 593);
 //tag=1021
-    final callback294 =
+    final callback594 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createRubberBand_calledFromC);
+    registerCallback(thisCpp, callback594, 594);
+//tag=1021
+    final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);
-    registerCallback(thisCpp, callback294, 294);
-    const callbackExcept305 = 0;
-//tag=1021
-    final callback305 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            QObject.event_calledFromC, callbackExcept305);
-    registerCallback(thisCpp, callback305, 305);
+    registerCallback(thisCpp, callback295, 295);
     const callbackExcept306 = 0;
 //tag=1021
     final callback306 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
-            QObject.eventFilter_calledFromC, callbackExcept306);
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
+            QObject.event_calledFromC, callbackExcept306);
     registerCallback(thisCpp, callback306, 306);
+    const callbackExcept307 = 0;
+//tag=1021
+    final callback307 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
+            QObject.eventFilter_calledFromC, callbackExcept307);
+    registerCallback(thisCpp, callback307, 307);
   }
 }

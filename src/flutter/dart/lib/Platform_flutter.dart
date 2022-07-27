@@ -10,15 +10,7 @@
 */
 
 import 'package:KDDockWidgets/View_flutter.dart';
-import 'package:KDDockWidgetsBindings/src/Platform_flutter.dart'
-    as KDDockWidgetBindings;
-
-import 'package:KDDockWidgetsBindings/src/ViewFactory.dart'
-    as KDDockWidgetBindings;
-
-import 'package:KDDockWidgetsBindings/src/View.dart' as KDDockWidgetBindings;
-import 'package:KDDockWidgetsBindings/src/CreateViewOptions.dart'
-    as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
 import 'ViewFactory_flutter.dart';
 
@@ -32,8 +24,8 @@ class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
   }
 
   KDDockWidgetBindings.View tests_createView(
-      KDDockWidgetBindings.CreateViewOptions arg__1,
+      KDDockWidgetBindings.CreateViewOptions opts,
       {required KDDockWidgetBindings.View? parent}) {
-    return View_flutter.init();
+    return View_flutter(null, 0, parent as View_flutter);
   }
 }

@@ -20,7 +20,7 @@ export 'src/ViewFactory_flutter.dart' show ViewFactory_flutter;
 export 'src/ViewFactory.dart' show ViewFactory;
 export 'src/Views.dart' show asView_flutter, asView_flutter;
 export 'src/KDDockWidgets.dart'
-    show qt_getEnumName, KDDockWidgets_MainWindowOption;
+    show qt_getEnumName, KDDockWidgets_MainWindowOption, KDDockWidgets_Type;
 export 'src/QByteArray.dart' show QByteArray;
 export 'src/QEvent.dart' show QEvent, QEvent_Type;
 export 'src/QList.dart' show QList;
@@ -29,7 +29,7 @@ export 'src/QPoint.dart' show QPoint;
 export 'src/QRect.dart' show QRect;
 export 'src/QSize.dart' show QSize;
 export 'src/QString.dart' show QString;
-export 'src/Qt.dart' show qt_getEnumName, Qt_CursorShape;
+export 'src/Qt.dart' show qt_getEnumName, qt_getEnumName, Qt_CursorShape;
 import 'dart:ffi' as ffi;
 import 'dart:io' show Platform;
 

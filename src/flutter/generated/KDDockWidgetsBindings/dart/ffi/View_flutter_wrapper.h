@@ -12,6 +12,7 @@
 // tag=1040
 #include "KDDockWidgetsBindings_exports.h"
 #include <View_flutter.h>
+#include <Controller.h>
 #include <qsize.h>
 #include <qrect.h>
 #include <View.h>
@@ -19,7 +20,6 @@
 #include <qstring.h>
 #include <DropArea.h>
 #include <controllers/Layout.h>
-#include <Controller.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017
@@ -27,6 +27,8 @@ class View_flutter_wrapper : public ::KDDockWidgets::Views::View_flutter
 {
 public:
     ~View_flutter_wrapper();
+    // tag=1041
+    View_flutter_wrapper(KDDockWidgets::Controller *controller, KDDockWidgets::Type type, KDDockWidgets::Views::View_flutter *arg__3, Qt::WindowFlags windowFlags = {});
     // tag=1041
     virtual void activateWindow();
     // tag=1008
@@ -39,6 +41,10 @@ public:
     virtual void createPlatformWindow();
     // tag=1008
     virtual void createPlatformWindow_nocallback();
+    // tag=1041
+    virtual Qt::WindowFlags flags() const;
+    // tag=1008
+    virtual Qt::WindowFlags flags_nocallback() const;
     // tag=1041
     virtual void free_impl();
     // tag=1008
@@ -253,6 +259,9 @@ public:
     typedef void (*Callback_createPlatformWindow)(void *);
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
     // tag=1042
+    typedef Qt::WindowFlags (*Callback_flags)(void *);
+    Callback_flags m_flagsCallback = nullptr;
+    // tag=1042
     typedef void (*Callback_free_impl)(void *);
     Callback_free_impl m_free_implCallback = nullptr;
     // tag=1042
@@ -407,6 +416,10 @@ public:
 extern "C" {
 
 // tag=1067
+//  KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Views::View_flutter * arg__3, Qt::WindowFlags windowFlags)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_flutter_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
+
+// tag=1067
 //  KDDockWidgets::Views::View_flutter::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__View_flutter__activateWindow(void *thisObj);
 
@@ -417,6 +430,10 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__View_flutter__close(vo
 // tag=1067
 //  KDDockWidgets::Views::View_flutter::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__View_flutter__createPlatformWindow(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Views::View_flutter::flags() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__View_flutter__flags(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::Views::View_flutter::free_impl()

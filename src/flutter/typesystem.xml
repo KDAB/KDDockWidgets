@@ -26,6 +26,7 @@
 
     <namespace-type name="Qt">
         <enum-type name="CursorShape" />
+        <enum-type name="WindowFlags" />
     </namespace-type>
 
 
@@ -42,6 +43,7 @@
         </object-type>
 
         <enum-type name="MainWindowOption" flags="MainWindowOptions" />
+        <enum-type name="Type" />
 
         <namespace-type name="Controllers">
             <object-type name="Layout" />

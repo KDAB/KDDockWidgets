@@ -15,8 +15,8 @@
 #include <qstring.h>
 #include <View.h>
 #include <DropArea.h>
-#include <qobject.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
 

@@ -232,13 +232,13 @@ class DropArea extends Layout {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 294:
+      case 295:
         return "c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent";
-      case 305:
-        return "c_KDDockWidgets__Controllers__DropArea__event_QEvent";
       case 306:
+        return "c_KDDockWidgets__Controllers__DropArea__event_QEvent";
+      case 307:
         return "c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent";
-      case 692:
+      case 695:
         return "c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -246,13 +246,13 @@ class DropArea extends Layout {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 294:
+      case 295:
         return "customEvent";
-      case 305:
-        return "event";
       case 306:
+        return "event";
+      case 307:
         return "eventFilter";
-      case 692:
+      case 695:
         return "setParentView_impl";
     }
     throw Error();
@@ -267,26 +267,26 @@ class DropArea extends Layout {
         .asFunction();
 
 //tag=1021
-    final callback294 =
+    final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);
-    registerCallback(thisCpp, callback294, 294);
-    const callbackExcept305 = 0;
-//tag=1021
-    final callback305 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            QObject.event_calledFromC, callbackExcept305);
-    registerCallback(thisCpp, callback305, 305);
+    registerCallback(thisCpp, callback295, 295);
     const callbackExcept306 = 0;
 //tag=1021
     final callback306 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
-            QObject.eventFilter_calledFromC, callbackExcept306);
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
+            QObject.event_calledFromC, callbackExcept306);
     registerCallback(thisCpp, callback306, 306);
+    const callbackExcept307 = 0;
 //tag=1021
-    final callback692 =
+    final callback307 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
+            QObject.eventFilter_calledFromC, callbackExcept307);
+    registerCallback(thisCpp, callback307, 307);
+//tag=1021
+    final callback695 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback692, 692);
+    registerCallback(thisCpp, callback695, 695);
   }
 }

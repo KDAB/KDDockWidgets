@@ -15,10 +15,6 @@
 
 extern "C" {
 
-// tag=1067
-//  KDDockWidgets::qt_getEnumName(QFlags<KDDockWidgets::MainWindowOption> arg__1)
-KDDockWidgetsBindings_EXPORT const char *c_static_KDDockWidgets__qt_getEnumName_MainWindowOptions(int arg__1_);
-
 // tag=1047
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);
 }

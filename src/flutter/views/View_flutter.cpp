@@ -20,9 +20,10 @@ using namespace KDDockWidgets::Views;
 
 
 View_flutter::View_flutter(KDDockWidgets::Controller *controller, Type type,
-                           void * /*parent*/, Qt::WindowFlags) // replace void with your type
+                           View_flutter * /*parent*/, Qt::WindowFlags)
     : View(controller, type)
 {
+    qDebug() << "View_flutter::View_flutter" << controller << int(type);
 }
 
 void View_flutter::setGeometry(QRect)
@@ -329,4 +330,10 @@ QVector<std::shared_ptr<View>> View_flutter::childViews() const
 
 void View_flutter::setZOrder(int)
 {
+}
+
+HANDLE View_flutter::handle() const
+{
+    // TODOm4
+    return this;
 }

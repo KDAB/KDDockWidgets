@@ -12,14 +12,14 @@
 // tag=1040
 #include "KDDockWidgetsBindings_exports.h"
 #include <controllers/Layout.h>
+#include <View.h>
 #include <qsize.h>
 #include <DropArea.h>
 #include <qcoreevent.h>
-#include <View.h>
-#include <qrect.h>
 #include <qpoint.h>
-#include <qstring.h>
+#include <qrect.h>
 #include <qobject.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017
@@ -27,6 +27,8 @@ class Layout_wrapper : public ::KDDockWidgets::Controllers::Layout
 {
 public:
     ~Layout_wrapper();
+    // tag=1041
+    Layout_wrapper(KDDockWidgets::Type arg__1, KDDockWidgets::View *arg__2);
     // tag=1041
     KDDockWidgets::Controllers::DropArea *asDropArea() const;
     // tag=1041
@@ -92,6 +94,10 @@ public:
 };
 }
 extern "C" {
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View * arg__2)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_);
 
 // tag=1067
 //  KDDockWidgets::Controllers::Layout::asDropArea() const

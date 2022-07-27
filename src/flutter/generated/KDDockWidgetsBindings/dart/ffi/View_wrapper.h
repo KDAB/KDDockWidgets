@@ -12,11 +12,11 @@
 // tag=1040
 #include "KDDockWidgetsBindings_exports.h"
 #include <View.h>
+#include <Controller.h>
 #include <qsize.h>
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <Controller.h>
 #include <DropArea.h>
 #include <controllers/Layout.h>
 
@@ -26,6 +26,8 @@ class View_wrapper : public ::KDDockWidgets::View
 {
 public:
     ~View_wrapper();
+    // tag=1041
+    View_wrapper(KDDockWidgets::Controller *controller, KDDockWidgets::Type arg__2);
     // tag=1041
     bool aboutToBeDestroyed() const;
     // tag=1041
@@ -54,6 +56,14 @@ public:
     static bool equals(const KDDockWidgets::View *one, const KDDockWidgets::View *two);
     // tag=1041
     bool equals(const KDDockWidgets::View *other) const;
+    // tag=1041
+    KDDockWidgets::Controller *firstParentOfType(KDDockWidgets::Type arg__1) const;
+    // tag=1041
+    static KDDockWidgets::Controller *firstParentOfType(KDDockWidgets::View *view, KDDockWidgets::Type arg__2);
+    // tag=1041
+    virtual Qt::WindowFlags flags() const;
+    // tag=1008
+    virtual Qt::WindowFlags flags_nocallback() const;
     // tag=1041
     void free();
     // tag=1041
@@ -283,6 +293,8 @@ public:
     // tag=1008
     virtual QSize sizeHint_nocallback() const;
     // tag=1041
+    KDDockWidgets::Type type() const;
+    // tag=1041
     virtual void update();
     // tag=1008
     virtual void update_nocallback();
@@ -303,6 +315,9 @@ public:
     // tag=1042
     typedef void (*Callback_createPlatformWindow)(void *);
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
+    // tag=1042
+    typedef Qt::WindowFlags (*Callback_flags)(void *);
+    Callback_flags m_flagsCallback = nullptr;
     // tag=1042
     typedef void (*Callback_free_impl)(void *);
     Callback_free_impl m_free_implCallback = nullptr;
@@ -458,6 +473,10 @@ public:
 extern "C" {
 
 // tag=1067
+//  KDDockWidgets::View::View(KDDockWidgets::Controller * controller, KDDockWidgets::Type arg__2)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__constructor_Controller_Type(void *controller_, int arg__2);
+
+// tag=1067
 //  KDDockWidgets::View::aboutToBeDestroyed() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
 
@@ -500,6 +519,18 @@ KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__View__equals_View_View
 // tag=1067
 //  KDDockWidgets::View::equals(const KDDockWidgets::View * other) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__equals_View(void *thisObj, void *other_);
+
+// tag=1067
+//  KDDockWidgets::View::firstParentOfType(KDDockWidgets::Type arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__firstParentOfType_Type(void *thisObj, int arg__1);
+
+// tag=1067
+//  KDDockWidgets::View::firstParentOfType(KDDockWidgets::View * view, KDDockWidgets::Type arg__2)
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__View__firstParentOfType_View_Type(void *view_, int arg__2);
+
+// tag=1067
+//  KDDockWidgets::View::flags() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__View__flags(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::View::free()
@@ -760,6 +791,10 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__size(void *thisObj);
 // tag=1067
 //  KDDockWidgets::View::sizeHint() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__sizeHint(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::View::type() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__View__type(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::View::update()

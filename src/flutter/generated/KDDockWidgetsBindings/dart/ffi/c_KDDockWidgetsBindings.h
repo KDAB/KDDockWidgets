@@ -12,10 +12,6 @@
 #include <QtCore/qglobal.h>
 
 
-// tag=1067
-//  Qt::qt_getEnumName(Qt::CursorShape arg__1)
-const char *c_static_Qt__qt_getEnumName_CursorShape(int arg__1);
-
 // tag=1047
 void c_Qt_Finalizer(void *, void *cppObj, void *);
 // tag=1067
@@ -1629,10 +1625,6 @@ void c_QByteArray__destructor(void *thisObj);
 
 // tag=1047
 void c_QByteArray_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::qt_getEnumName(QFlags<KDDockWidgets::MainWindowOption> arg__1)
-const char *c_static_KDDockWidgets__qt_getEnumName_MainWindowOptions(int arg__1_);
-
 // tag=1047
 void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);
 // tag=1067
@@ -1874,6 +1866,10 @@ void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
 // tag=1047
 void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *);
 // tag=1067
+//  KDDockWidgets::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::View * arg__2)
+void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_);
+
+// tag=1067
 //  KDDockWidgets::Controller::close()
 bool c_KDDockWidgets__Controller__close(void *thisObj);
 
@@ -1948,6 +1944,10 @@ void *c_KDDockWidgets__Controller__size(void *thisObj);
 void *c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const char *c, int n);
 
 // tag=1067
+//  KDDockWidgets::Controller::type() const
+int c_KDDockWidgets__Controller__type(void *thisObj);
+
+// tag=1067
 //  KDDockWidgets::Controller::view() const
 void *c_KDDockWidgets__Controller__view(void *thisObj);
 
@@ -1970,6 +1970,10 @@ void c_KDDockWidgets__Controller__destructor(void *thisObj);
 void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 void c_KDDockWidgets__Controller_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::View::View(KDDockWidgets::Controller * controller, KDDockWidgets::Type arg__2)
+void *c_KDDockWidgets__View__constructor_Controller_Type(void *controller_, int arg__2);
+
 // tag=1067
 //  KDDockWidgets::View::aboutToBeDestroyed() const
 bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
@@ -2013,6 +2017,18 @@ bool c_static_KDDockWidgets__View__equals_View_View(void *one_, void *two_);
 // tag=1067
 //  KDDockWidgets::View::equals(const KDDockWidgets::View * other) const
 bool c_KDDockWidgets__View__equals_View(void *thisObj, void *other_);
+
+// tag=1067
+//  KDDockWidgets::View::firstParentOfType(KDDockWidgets::Type arg__1) const
+void *c_KDDockWidgets__View__firstParentOfType_Type(void *thisObj, int arg__1);
+
+// tag=1067
+//  KDDockWidgets::View::firstParentOfType(KDDockWidgets::View * view, KDDockWidgets::Type arg__2)
+void *c_static_KDDockWidgets__View__firstParentOfType_View_Type(void *view_, int arg__2);
+
+// tag=1067
+//  KDDockWidgets::View::flags() const
+int c_KDDockWidgets__View__flags(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::View::free()
@@ -2275,6 +2291,10 @@ void *c_KDDockWidgets__View__size(void *thisObj);
 void *c_KDDockWidgets__View__sizeHint(void *thisObj);
 
 // tag=1067
+//  KDDockWidgets::View::type() const
+int c_KDDockWidgets__View__type(void *thisObj);
+
+// tag=1067
 //  KDDockWidgets::View::update()
 void c_KDDockWidgets__View__update(void *thisObj);
 
@@ -2302,6 +2322,10 @@ void c_KDDockWidgets__View__registerVirtualMethodCallback(void *ptr, void *callb
 // tag=1047
 void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *);
 // tag=1067
+//  KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Views::View_flutter * arg__3, Qt::WindowFlags windowFlags)
+void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_flutter_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
+
+// tag=1067
 //  KDDockWidgets::Views::View_flutter::activateWindow()
 void c_KDDockWidgets__Views__View_flutter__activateWindow(void *thisObj);
 
@@ -2312,6 +2336,10 @@ bool c_KDDockWidgets__Views__View_flutter__close(void *thisObj);
 // tag=1067
 //  KDDockWidgets::Views::View_flutter::createPlatformWindow()
 void c_KDDockWidgets__Views__View_flutter__createPlatformWindow(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Views::View_flutter::flags() const
+int c_KDDockWidgets__Views__View_flutter__flags(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::Views::View_flutter::free_impl()
@@ -2528,6 +2556,10 @@ void c_KDDockWidgets__Views__View_flutter__destructor(void *thisObj);
 void c_KDDockWidgets__Views__View_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 void c_KDDockWidgets__Views__View_flutter_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View * arg__2)
+void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_);
+
 // tag=1067
 //  KDDockWidgets::Controllers::Layout::asDropArea() const
 void *c_KDDockWidgets__Controllers__Layout__asDropArea(void *thisObj);

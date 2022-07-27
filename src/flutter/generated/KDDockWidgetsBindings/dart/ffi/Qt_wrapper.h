@@ -15,10 +15,6 @@
 
 extern "C" {
 
-// tag=1067
-//  Qt::qt_getEnumName(Qt::CursorShape arg__1)
-KDDockWidgetsBindings_EXPORT const char *c_static_Qt__qt_getEnumName_CursorShape(int arg__1);
-
 // tag=1047
 KDDockWidgetsBindings_EXPORT void c_Qt_Finalizer(void *, void *cppObj, void *);
 }

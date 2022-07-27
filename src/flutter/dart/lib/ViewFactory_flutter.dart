@@ -9,11 +9,19 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgetsBindings/src/ViewFactory_flutter.dart'
-    as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'DropArea_flutter.dart';
 
 class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
-ViewFactory_flutter() {
-  print("Dart: Created ViewFactory_flutter");
-}
+  ViewFactory_flutter() {
+    print("Dart: Created ViewFactory_flutter");
+  }
+
+  KDDockWidgetBindings.View createDropArea(
+      KDDockWidgetBindings.DropArea? arg__1,
+      KDDockWidgetBindings.View? parent) {
+    print("createDropArea returning drop area\n");
+    return DropArea_flutter(
+        arg__1, 0, (parent as KDDockWidgetBindings.View_flutter?));
+  }
 }

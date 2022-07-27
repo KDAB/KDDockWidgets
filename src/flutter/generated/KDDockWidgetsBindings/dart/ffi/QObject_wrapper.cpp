@@ -590,13 +590,13 @@ void c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int met
     // tag=1048
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 294:
+    case 295:
         wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_customEvent>(callback);
         break;
-    case 305:
+    case 306:
         wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_event>(callback);
         break;
-    case 306:
+    case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_eventFilter>(callback);
         break;
     }

@@ -17,8 +17,8 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>
-#include <qobject.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
 
@@ -28,6 +28,8 @@ class Controller_wrapper : public ::KDDockWidgets::Controller
 {
 public:
     ~Controller_wrapper();
+    // tag=1041
+    Controller_wrapper(KDDockWidgets::Type type, KDDockWidgets::View *arg__2);
     // tag=1041
     bool close();
     // tag=1041
@@ -73,6 +75,8 @@ public:
     // tag=1041
     static QString tr(const char *s, const char *c, int n);
     // tag=1041
+    KDDockWidgets::Type type() const;
+    // tag=1041
     KDDockWidgets::View *view() const;
     // tag=1041
     int width() const;
@@ -95,6 +99,10 @@ public:
 };
 }
 extern "C" {
+
+// tag=1067
+//  KDDockWidgets::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::View * arg__2)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_);
 
 // tag=1067
 //  KDDockWidgets::Controller::close()
@@ -169,6 +177,10 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__size(void *thisO
 // tag=1067
 //  KDDockWidgets::Controller::tr(const char * s, const char * c, int n)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const char *c, int n);
+
+// tag=1067
+//  KDDockWidgets::Controller::type() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controller__type(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::Controller::view() const

@@ -27,6 +27,11 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
+// tag=1006
+Controller_wrapper::Controller_wrapper(KDDockWidgets::Type type, KDDockWidgets::View *arg__2)
+    : ::KDDockWidgets::Controller(type, arg__2)
+{
+}
 bool Controller_wrapper::close()
 {
     // tag=1000
@@ -197,6 +202,13 @@ QString Controller_wrapper::tr(const char *s, const char *c, int n)
     // tag=1004
     return ::KDDockWidgets::Controller::tr(s, c, n);
 }
+KDDockWidgets::Type Controller_wrapper::type() const
+{
+    // tag=1000
+
+    // tag=1004
+    return ::KDDockWidgets::Controller::type();
+}
 KDDockWidgets::View *Controller_wrapper::view() const
 {
     // tag=1000
@@ -249,6 +261,14 @@ void c_KDDockWidgets__Controller_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper *>(cppObj);
 }
+void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_)
+{
+    auto arg__2 = reinterpret_cast<KDDockWidgets::View *>(arg__2_);
+    // tag=1056
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::Controller_wrapper(static_cast<KDDockWidgets::Type>(type), arg__2);
+    return reinterpret_cast<void *>(ptr);
+}
+
 // tag=1050
 // close()
 bool c_KDDockWidgets__Controller__close(void *thisObj)
@@ -430,6 +450,15 @@ void *c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const 
 }
 
 // tag=1050
+// type() const
+int c_KDDockWidgets__Controller__type(void *thisObj)
+{
+    return
+        // tag=1010
+        fromPtr(thisObj)->type();
+}
+
+// tag=1050
 // view() const
 void *c_KDDockWidgets__Controller__view(void *thisObj)
 {
@@ -475,16 +504,16 @@ void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void 
     // tag=1048
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 294:
+    case 295:
         wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_customEvent>(callback);
         break;
-    case 305:
+    case 306:
         wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_event>(callback);
         break;
-    case 306:
+    case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_eventFilter>(callback);
         break;
-    case 692:
+    case 695:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

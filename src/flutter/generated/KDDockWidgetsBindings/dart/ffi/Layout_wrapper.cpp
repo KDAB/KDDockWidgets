@@ -27,6 +27,11 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
+// tag=1006
+Layout_wrapper::Layout_wrapper(KDDockWidgets::Type arg__1, KDDockWidgets::View *arg__2)
+    : ::KDDockWidgets::Controllers::Layout(arg__1, arg__2)
+{
+}
 KDDockWidgets::Controllers::DropArea *Layout_wrapper::asDropArea() const
 {
     // tag=1000
@@ -242,6 +247,14 @@ void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper *>(cppObj);
 }
+void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_)
+{
+    auto arg__2 = reinterpret_cast<KDDockWidgets::View *>(arg__2_);
+    // tag=1056
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::Layout_wrapper(static_cast<KDDockWidgets::Type>(arg__1), arg__2);
+    return reinterpret_cast<void *>(ptr);
+}
+
 // tag=1050
 // asDropArea() const
 void *c_KDDockWidgets__Controllers__Layout__asDropArea(void *thisObj)
@@ -452,16 +465,16 @@ void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *p
     // tag=1048
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 294:
+    case 295:
         wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_customEvent>(callback);
         break;
-    case 305:
+    case 306:
         wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_event>(callback);
         break;
-    case 306:
+    case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
         break;
-    case 692:
+    case 695:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

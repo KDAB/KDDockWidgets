@@ -47,17 +47,3 @@ class Qt_CursorShape {
   static const BitmapCursor = 24;
   static const CustomCursor = 25;
 }
-//tag=1024
-
-//tag=1027
-// qt_getEnumName(Qt::CursorShape arg__1)
-String qt_getEnumName(int arg__1) {
-//tag=1028
-  final string_Func_int func = _dylib
-      .lookup<ffi.NativeFunction<string_Func_ffi_Int32_FFI>>(
-          'c_static_Qt__qt_getEnumName_CursorShape')
-      .asFunction();
-//tag=1032
-  ffi.Pointer<Utf8> result = func(arg__1);
-  return result.toDartString();
-}
