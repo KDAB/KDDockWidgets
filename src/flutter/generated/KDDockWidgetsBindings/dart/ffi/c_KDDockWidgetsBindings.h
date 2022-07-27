@@ -2322,8 +2322,8 @@ void c_KDDockWidgets__View__registerVirtualMethodCallback(void *ptr, void *callb
 // tag=1047
 void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *);
 // tag=1067
-//  KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Views::View_flutter * arg__3, Qt::WindowFlags windowFlags)
-void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_flutter_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
+//  KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::View * arg__3, Qt::WindowFlags windowFlags)
+void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
 
 // tag=1067
 //  KDDockWidgets::Views::View_flutter::activateWindow()

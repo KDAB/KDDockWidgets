@@ -18,10 +18,11 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
   }
 
   KDDockWidgetBindings.View createDropArea(
-      KDDockWidgetBindings.DropArea? arg__1,
+      KDDockWidgetBindings.DropArea? controller,
       KDDockWidgetBindings.View? parent) {
-    print("createDropArea returning drop area\n");
-    return DropArea_flutter(
-        arg__1, 0, (parent as KDDockWidgetBindings.View_flutter?));
+    print("ViewFactory_flutter: Creating DropArea");
+    var da = DropArea_flutter(controller, 0, parent);
+    print("ViewFactory_flutter: Created DropArea");
+    return da;
   }
 }

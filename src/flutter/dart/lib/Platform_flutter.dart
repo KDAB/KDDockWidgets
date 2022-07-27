@@ -28,4 +28,11 @@ class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
       {required KDDockWidgetBindings.View? parent}) {
     return View_flutter(null, 0, parent as View_flutter);
   }
+
+  KDDockWidgetBindings.View createView(
+      KDDockWidgetBindings.Controller? controller,
+      {required KDDockWidgetBindings.View? parent}) {
+    print("Platform_flutter: createView");
+    return KDDockWidgetBindings.View_flutter(controller, 0, parent);
+  }
 }

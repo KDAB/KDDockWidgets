@@ -20,10 +20,9 @@ using namespace KDDockWidgets::Views;
 
 
 View_flutter::View_flutter(KDDockWidgets::Controller *controller, Type type,
-                           View_flutter * /*parent*/, Qt::WindowFlags)
+                           View * /*parent*/, Qt::WindowFlags)
     : View(controller, type)
 {
-    qDebug() << "View_flutter::View_flutter" << controller << int(type);
 }
 
 void View_flutter::setGeometry(QRect)

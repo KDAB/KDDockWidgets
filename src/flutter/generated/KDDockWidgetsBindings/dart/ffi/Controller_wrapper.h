@@ -17,8 +17,8 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 #include <qlist.h>
 #include <qbytearray.h>
 

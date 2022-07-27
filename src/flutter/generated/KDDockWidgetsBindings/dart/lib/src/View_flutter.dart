@@ -33,8 +33,8 @@ class View_flutter extends View {
     return View_flutter.fromCppPointer(cppPointer, needsAutoDelete);
   }
 //tag=1023
-//View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Views::View_flutter * arg__3, Qt::WindowFlags windowFlags)
-  View_flutter(Controller? controller, int type, View_flutter? arg__3,
+//View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::View * arg__3, Qt::WindowFlags windowFlags)
+  View_flutter(Controller? controller, int type, View? arg__3,
       {int windowFlags = 0})
       : super.init() {
 //tag=1075
@@ -42,7 +42,7 @@ class View_flutter extends View {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_ffi_Int32_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_flutter_WindowFlags')
+            'c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_WindowFlags')
         .asFunction();
     thisCpp = func(controller == null ? ffi.nullptr : controller.thisCpp, type,
         arg__3 == null ? ffi.nullptr : arg__3.thisCpp, windowFlags);

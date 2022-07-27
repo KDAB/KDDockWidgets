@@ -14,7 +14,7 @@ import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
 class DropArea_flutter extends View_flutter {
   DropArea_flutter(KDDockWidgetBindings.Controller? controller, int type,
-      KDDockWidgetBindings.View_flutter? parent,
+      KDDockWidgetBindings.View? parent,
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
     print("DropArea_flutter CTOR");

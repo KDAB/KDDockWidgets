@@ -13,13 +13,13 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <View_flutter.h>
 #include <Controller.h>
+#include <View.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <View.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <DropArea.h>
 #include <controllers/Layout.h>
+#include <DropArea.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017
@@ -28,7 +28,7 @@ class View_flutter_wrapper : public ::KDDockWidgets::Views::View_flutter
 public:
     ~View_flutter_wrapper();
     // tag=1041
-    View_flutter_wrapper(KDDockWidgets::Controller *controller, KDDockWidgets::Type type, KDDockWidgets::Views::View_flutter *arg__3, Qt::WindowFlags windowFlags = {});
+    View_flutter_wrapper(KDDockWidgets::Controller *controller, KDDockWidgets::Type type, KDDockWidgets::View *arg__3, Qt::WindowFlags windowFlags = {});
     // tag=1041
     virtual void activateWindow();
     // tag=1008
@@ -416,8 +416,8 @@ public:
 extern "C" {
 
 // tag=1067
-//  KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Views::View_flutter * arg__3, Qt::WindowFlags windowFlags)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_flutter_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
+//  KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::View * arg__3, Qt::WindowFlags windowFlags)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
 
 // tag=1067
 //  KDDockWidgets::Views::View_flutter::activateWindow()

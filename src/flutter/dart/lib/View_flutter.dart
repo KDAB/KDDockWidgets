@@ -13,7 +13,7 @@ import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
 class View_flutter extends KDDockWidgetBindings.View_flutter {
   View_flutter(KDDockWidgetBindings.Controller? controller, int type,
-      KDDockWidgetBindings.View_flutter? parent,
+      KDDockWidgetBindings.View? parent,
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags);
 }

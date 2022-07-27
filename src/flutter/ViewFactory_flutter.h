@@ -40,7 +40,7 @@ class MainWindow;
 }
 
 /**
- * @brief The default ViewFactory for Dummy frontend
+ * @brief The default ViewFactory for Flutter frontend
  */
 class DOCKS_EXPORT ViewFactory_flutter : public ViewFactory
 {
