@@ -32,6 +32,8 @@ public:
 
     static int s_segmentGirth;
     static int s_segmentPenWidth;
+    static int s_centralIndicatorMaxWidth;
+    static int s_centralIndicatorMaxHeight;
     static qreal s_draggedWindowOpacity;
     static QColor s_segmentPenColor;
     static QColor s_segmentBrushColor;
