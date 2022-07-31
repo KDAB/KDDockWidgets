@@ -202,15 +202,15 @@ struct InitialOption
      */
     QSize preferredSize;
 
-private:
-    friend class Layouting::Item;
-    friend class Layouting::ItemBoxContainer;
-    friend class KDDockWidgets::Controllers::DropArea;
-
+    /// @internal
     InitialOption(DefaultSizeMode mode)
         : sizeMode(mode)
     {
     }
+
+private:
+    friend class Layouting::Item;
+    friend class Layouting::ItemBoxContainer;
 
     DefaultSizeMode sizeMode = DefaultSizeMode::Fair;
 };

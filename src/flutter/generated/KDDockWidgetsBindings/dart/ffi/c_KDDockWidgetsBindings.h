@@ -903,7 +903,9 @@ bool c_static_Layouting__Item___get_s_silenceSanityChecks();
 void c_static_Layouting__Item___set_separatorThickness_int(int separatorThickness_);
 void c_static_Layouting__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
 void c_Layouting__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_Layouting__Item_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::locationStr(KDDockWidgets::Location loc)
+void c_Layouting__Item_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)
+void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1);
+// KDDockWidgets::locationStr(KDDockWidgets::Location loc)
 void *c_static_KDDockWidgets__locationStr_Location(int loc);
 void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Views::asView_flutter(KDDockWidgets::Controller * controller)
 void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_);
@@ -935,6 +937,8 @@ void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface_Finalizer(void 
 void *c_KDDockWidgets__ViewFactory__constructor();
 // KDDockWidgets::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
 void *c_KDDockWidgets__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
+// KDDockWidgets::ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
+void *c_KDDockWidgets__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int options_, int layoutSaverOptions_, int windowFlags);
 // KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
@@ -953,6 +957,8 @@ void c_KDDockWidgets__ViewFactory_Finalizer(void *, void *cppObj, void *); // KD
 void *c_KDDockWidgets__ViewFactory_flutter__constructor();
 // KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
 void *c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
+// KDDockWidgets::ViewFactory_flutter::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
+void *c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int arg__2_, int arg__3_, int arg__4);
 // KDDockWidgets::ViewFactory_flutter::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const
@@ -1035,6 +1041,10 @@ void c_KDDockWidgets__Platform_flutter__destructor(void *thisObj);
 void c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__Platform_flutter_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::InitialOption::InitialOption()
 void *c_KDDockWidgets__InitialOption__constructor();
+// KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v)
+void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption(int v);
+// KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v, QSize size)
+void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_QSize(int v, void *size_);
 // KDDockWidgets::InitialOption::InitialOption(QSize size)
 void *c_KDDockWidgets__InitialOption__constructor_QSize(void *size_);
 // KDDockWidgets::InitialOption::preservesCurrentTab() const

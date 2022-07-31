@@ -25,12 +25,26 @@ export 'src/ClassicIndicatorWindowViewInterface.dart'
 export 'src/Views.dart' show asView_flutter, asView_flutter;
 export 'src/KDDockWidgets.dart'
     show
+        initFrontend,
         locationStr,
+        qt_getEnumName,
+        qt_getEnumName,
+        qt_getEnumName,
+        qt_getEnumName,
+        qt_getEnumName,
+        qt_getEnumName,
         qt_getEnumName,
         qt_getEnumName,
         qt_getEnumName,
         KDDockWidgets_Location,
         KDDockWidgets_MainWindowOption,
+        KDDockWidgets_DockWidgetOption,
+        KDDockWidgets_LayoutSaverOption,
+        KDDockWidgets_IconPlace,
+        KDDockWidgets_FrontendType,
+        KDDockWidgets_DefaultSizeMode,
+        KDDockWidgets_AddingOption,
+        KDDockWidgets_InitialVisibilityOption,
         KDDockWidgets_DropLocation,
         KDDockWidgets_Type;
 export 'src/Item.dart' show Item;

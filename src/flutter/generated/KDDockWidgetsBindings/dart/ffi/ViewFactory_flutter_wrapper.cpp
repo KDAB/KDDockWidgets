@@ -44,6 +44,19 @@ KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_flutter_w
 {
     return ::KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(arg__1);
 }
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
+{
+    if (m_createDockWidgetCallback) {
+        const void *thisPtr = this;
+        return m_createDockWidgetCallback(const_cast<void *>(thisPtr), uniqueName, arg__2, arg__3, arg__4);
+    } else {
+        return ::KDDockWidgets::ViewFactory_flutter::createDockWidget(uniqueName, arg__2, arg__3, arg__4);
+    }
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
+{
+    return ::KDDockWidgets::ViewFactory_flutter::createDockWidget(uniqueName, arg__2, arg__3, arg__4);
+}
 KDDockWidgets::View *ViewFactory_flutter_wrapper::createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const
 {
     if (m_createDropAreaCallback) {
@@ -142,6 +155,14 @@ void *c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_Classic
     auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::ClassicIndicators *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createClassicIndicatorWindow_nocallback(arg__1);} else {    return targetPtr->createClassicIndicatorWindow(arg__1);} }();
 }
+// createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
+void *c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int arg__2_, int arg__3_, int arg__4)
+{
+    const auto uniqueName = QString::fromUtf8(uniqueName_);
+    auto arg__2 = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(arg__2_);
+    auto arg__3 = static_cast<QFlags<KDDockWidgets::LayoutSaverOption>>(arg__3_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDockWidget_nocallback(uniqueName,arg__2,arg__3,static_cast<Qt::WindowFlags>(arg__4));} else {    return targetPtr->createDockWidget(uniqueName,arg__2,arg__3,static_cast<Qt::WindowFlags>(arg__4));} }();
+}
 // createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_)
 {
@@ -187,13 +208,16 @@ void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *p
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 681:
+    case 688:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createClassicIndicatorWindow>(callback);
         break;
-    case 682:
+    case 689:
+        wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createDockWidget>(callback);
+        break;
+    case 690:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createDropArea>(callback);
         break;
-    case 683:
+    case 691:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createRubberBand>(callback);
         break;
     case 295:

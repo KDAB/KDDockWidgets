@@ -18,6 +18,8 @@ class InitialOption_wrapper : public ::KDDockWidgets::InitialOption
 public:
     ~InitialOption_wrapper();
     InitialOption_wrapper();
+    InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v);
+    InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v, QSize size);
     InitialOption_wrapper(QSize size);
     bool preservesCurrentTab() const;
     bool startsHidden() const;
@@ -26,6 +28,10 @@ public:
 extern "C" {
 // KDDockWidgets::InitialOption::InitialOption()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor();
+// KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption(int v);
+// KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v, QSize size)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_QSize(int v, void *size_);
 // KDDockWidgets::InitialOption::InitialOption(QSize size)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_QSize(void *size_);
 // KDDockWidgets::InitialOption::preservesCurrentTab() const

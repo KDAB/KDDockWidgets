@@ -31,6 +31,51 @@ class KDDockWidgets_MainWindowOption {
   static const MainWindowOption_HasCentralWidget = 5;
 }
 
+class KDDockWidgets_DockWidgetOption {
+  static const DockWidgetOption_None = 0;
+  static const DockWidgetOption_NotClosable = 1;
+  static const DockWidgetOption_NotDockable = 2;
+  static const DockWidgetOption_DeleteOnClose = 4;
+  static const DockWidgetOption_MDINestable = 8;
+}
+
+class KDDockWidgets_LayoutSaverOption {
+  static const None = 0;
+  static const Skip = 1;
+}
+
+class KDDockWidgets_IconPlace {
+  static const TitleBar = 1;
+  static const TabBar = 2;
+  static const ToggleAction = 4;
+  static const All = 7;
+}
+
+class KDDockWidgets_FrontendType {
+  static const QtWidgets = 1;
+  static const QtQuick = 2;
+  static const Flutter = 3;
+  static const Dummy = 4;
+}
+
+class KDDockWidgets_DefaultSizeMode {
+  static const ItemSize = 0;
+  static const Fair = 1;
+  static const FairButFloor = 2;
+  static const NoDefaultSizeMode = 3;
+}
+
+class KDDockWidgets_AddingOption {
+  static const AddingOption_None = 0;
+  static const AddingOption_StartHidden = 1;
+}
+
+class KDDockWidgets_InitialVisibilityOption {
+  static const StartVisible = 0;
+  static const StartHidden = 1;
+  static const PreserveCurrentTab = 2;
+}
+
 class KDDockWidgets_DropLocation {
   static const DropLocation_None = 0;
   static const DropLocation_Left = 1;
@@ -68,6 +113,14 @@ class KDDockWidgets_Type {
   static const RubberBand = 16384;
   static const DropAreaIndicatorOverlay = 32768;
   static const LAST = 16384;
+} // initFrontend(KDDockWidgets::FrontendType arg__1)
+
+initFrontend(int arg__1) {
+  final void_Func_int func = _dylib
+      .lookup<ffi.NativeFunction<void_Func_ffi_Int32_FFI>>(
+          'c_static_KDDockWidgets__initFrontend_FrontendType')
+      .asFunction();
+  func(arg__1);
 } // locationStr(KDDockWidgets::Location loc)
 
 QString locationStr(int loc) {

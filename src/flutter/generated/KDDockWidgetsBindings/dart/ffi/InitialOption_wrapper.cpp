@@ -31,6 +31,14 @@ InitialOption_wrapper::InitialOption_wrapper()
     : ::KDDockWidgets::InitialOption()
 {
 }
+InitialOption_wrapper::InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v)
+    : ::KDDockWidgets::InitialOption(v)
+{
+}
+InitialOption_wrapper::InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v, QSize size)
+    : ::KDDockWidgets::InitialOption(v, size)
+{
+}
 InitialOption_wrapper::InitialOption_wrapper(QSize size)
     : ::KDDockWidgets::InitialOption(size)
 {
@@ -64,6 +72,17 @@ void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *)
 void *c_KDDockWidgets__InitialOption__constructor()
 {
     auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper();
+    return reinterpret_cast<void *>(ptr);
+}
+void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption(int v)
+{
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(static_cast<KDDockWidgets::InitialVisibilityOption>(v));
+    return reinterpret_cast<void *>(ptr);
+}
+void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_QSize(int v, void *size_)
+{
+    auto &size = *reinterpret_cast<QSize *>(size_);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(static_cast<KDDockWidgets::InitialVisibilityOption>(v), size);
     return reinterpret_cast<void *>(ptr);
 }
 void *c_KDDockWidgets__InitialOption__constructor_QSize(void *size_)

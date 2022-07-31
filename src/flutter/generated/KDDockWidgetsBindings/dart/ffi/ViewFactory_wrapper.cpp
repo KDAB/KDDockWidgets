@@ -46,6 +46,21 @@ KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
+KDDockWidgets::View *ViewFactory_wrapper::createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
+{
+    if (m_createDockWidgetCallback) {
+        const void *thisPtr = this;
+        return m_createDockWidgetCallback(const_cast<void *>(thisPtr), uniqueName, options, layoutSaverOptions, windowFlags);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return {};
+    }
+}
+KDDockWidgets::View *ViewFactory_wrapper::createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return {};
+}
 KDDockWidgets::View *ViewFactory_wrapper::createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const
 {
     if (m_createDropAreaCallback) {
@@ -148,6 +163,14 @@ void *c_KDDockWidgets__ViewFactory__createClassicIndicatorWindow_ClassicIndicato
     auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::ClassicIndicators *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createClassicIndicatorWindow_nocallback(arg__1);} else {    return targetPtr->createClassicIndicatorWindow(arg__1);} }();
 }
+// createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
+void *c_KDDockWidgets__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int options_, int layoutSaverOptions_, int windowFlags)
+{
+    const auto uniqueName = QString::fromUtf8(uniqueName_);
+    auto options = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(options_);
+    auto layoutSaverOptions = static_cast<QFlags<KDDockWidgets::LayoutSaverOption>>(layoutSaverOptions_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDockWidget_nocallback(uniqueName,options,layoutSaverOptions,static_cast<Qt::WindowFlags>(windowFlags));} else {    return targetPtr->createDockWidget(uniqueName,options,layoutSaverOptions,static_cast<Qt::WindowFlags>(windowFlags));} }();
+}
 // createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_)
 {
@@ -193,13 +216,16 @@ void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 681:
+    case 688:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createClassicIndicatorWindow>(callback);
         break;
-    case 682:
+    case 689:
+        wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createDockWidget>(callback);
+        break;
+    case 690:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createDropArea>(callback);
         break;
-    case 683:
+    case 691:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createRubberBand>(callback);
         break;
     case 295:

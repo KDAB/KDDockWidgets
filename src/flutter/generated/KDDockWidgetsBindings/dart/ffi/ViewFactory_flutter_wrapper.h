@@ -15,8 +15,8 @@
 #include <DropArea.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
-#include <qobject.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ViewFactory_flutter_wrapper : public ::KDDockWidgets::ViewFactory_flutter
@@ -26,6 +26,8 @@ public:
     ViewFactory_flutter_wrapper();
     virtual KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators *arg__1) const;
     virtual KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow_nocallback(KDDockWidgets::Controllers::ClassicIndicators *arg__1) const;
+    virtual KDDockWidgets::View *createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2 = {}, QFlags<KDDockWidgets::LayoutSaverOption> arg__3 = {}, Qt::WindowFlags arg__4 = {}) const;
+    virtual KDDockWidgets::View *createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2 = {}, QFlags<KDDockWidgets::LayoutSaverOption> arg__3 = {}, Qt::WindowFlags arg__4 = {}) const;
     virtual KDDockWidgets::View *createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createDropArea_nocallback(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createRubberBand(KDDockWidgets::View *parent) const;
@@ -39,6 +41,8 @@ public:
     static QString tr(const char *s, const char *c, int n);
     typedef KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Controllers::ClassicIndicators *arg__1);
     Callback_createClassicIndicatorWindow m_createClassicIndicatorWindowCallback = nullptr;
+    typedef KDDockWidgets::View *(*Callback_createDockWidget)(void *, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4);
+    Callback_createDockWidget m_createDockWidgetCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createDropArea)(void *, KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent);
     Callback_createDropArea m_createDropAreaCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createRubberBand)(void *, KDDockWidgets::View *parent);
@@ -56,6 +60,8 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__constructor();
 // KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
+// KDDockWidgets::ViewFactory_flutter::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int arg__2_, int arg__3_, int arg__4);
 // KDDockWidgets::ViewFactory_flutter::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const

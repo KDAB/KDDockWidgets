@@ -13,6 +13,8 @@
 #include <qstring.h>
 
 extern "C" {
+// KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)
+KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1);
 // KDDockWidgets::locationStr(KDDockWidgets::Location loc)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__locationStr_Location(int loc);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);

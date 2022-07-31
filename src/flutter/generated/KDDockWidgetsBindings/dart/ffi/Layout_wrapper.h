@@ -14,11 +14,11 @@
 #include <qsize.h>
 #include <Item_p.h>
 #include <DropArea.h>
+#include <qpoint.h>
 #include <qstring.h>
+#include <qrect.h>
 #include <qobject.h>
 #include <qcoreevent.h>
-#include <qrect.h>
-#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Layout_wrapper : public ::KDDockWidgets::Controllers::Layout

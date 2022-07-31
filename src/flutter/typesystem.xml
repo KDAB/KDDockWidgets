@@ -47,6 +47,13 @@
         <enum-type name="Type" />
         <enum-type name="DropLocation" />
         <enum-type name="Location" />
+        <enum-type name="InitialVisibilityOption" />
+        <enum-type name="AddingOption" />
+        <enum-type name="DefaultSizeMode" />
+        <enum-type name="FrontendType" />
+        <enum-type name="IconPlace" />
+        <enum-type name="LayoutSaverOption" flags="LayoutSaverOptions" />
+        <enum-type name="DockWidgetOption" flags="DockWidgetOptions" />
 
         <namespace-type name="Controllers">
             <object-type name="Layout" />

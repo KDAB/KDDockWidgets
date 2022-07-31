@@ -1424,166 +1424,166 @@ void c_KDDockWidgets__View__registerVirtualMethodCallback(void *ptr, void *callb
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 814:
+    case 825:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_activateWindow>(callback);
         break;
-    case 818:
+    case 829:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_close>(callback);
         break;
-    case 821:
+    case 832:
         wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_createPlatformWindow>(callback);
         break;
-    case 826:
+    case 837:
         wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_flags>(callback);
         break;
-    case 828:
+    case 839:
         wrapper->m_free_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_free_impl>(callback);
         break;
-    case 830:
+    case 841:
         wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_geometry>(callback);
         break;
-    case 832:
+    case 843:
         wrapper->m_grabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_grabMouse>(callback);
         break;
-    case 835:
+    case 846:
         wrapper->m_hasFocusCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_hasFocus>(callback);
         break;
-    case 837:
+    case 848:
         wrapper->m_hideCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_hide>(callback);
         break;
-    case 840:
+    case 851:
         wrapper->m_initCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_init>(callback);
         break;
-    case 842:
+    case 853:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isActiveWindow>(callback);
         break;
-    case 843:
+    case 854:
         wrapper->m_isMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isMaximized>(callback);
         break;
-    case 844:
+    case 855:
         wrapper->m_isMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isMinimized>(callback);
         break;
-    case 845:
+    case 856:
         wrapper->m_isNullCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isNull>(callback);
         break;
-    case 846:
+    case 857:
         wrapper->m_isRootViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isRootView>(callback);
         break;
-    case 847:
+    case 858:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isVisible>(callback);
         break;
-    case 848:
+    case 859:
         wrapper->m_mapFromGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_mapFromGlobal>(callback);
         break;
-    case 849:
+    case 860:
         wrapper->m_mapToCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_mapTo>(callback);
         break;
-    case 850:
+    case 861:
         wrapper->m_mapToGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_mapToGlobal>(callback);
         break;
-    case 851:
+    case 862:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 852:
+    case 863:
         wrapper->m_maximumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_maximumSize>(callback);
         break;
-    case 853:
+    case 864:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_minSize>(callback);
         break;
-    case 854:
+    case 865:
         wrapper->m_minimumHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_minimumHeight>(callback);
         break;
-    case 855:
+    case 866:
         wrapper->m_minimumWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_minimumWidth>(callback);
         break;
-    case 857:
+    case 868:
         wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_move_2>(callback);
         break;
-    case 858:
+    case 869:
         wrapper->m_normalGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_normalGeometry>(callback);
         break;
-    case 859:
+    case 870:
         wrapper->m_objectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_objectName>(callback);
         break;
-    case 860:
+    case 871:
         wrapper->m_onResizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_onResize>(callback);
         break;
-    case 863:
+    case 874:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_raise>(callback);
         break;
-    case 864:
+    case 875:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 866:
+    case 877:
         wrapper->m_releaseKeyboardCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_releaseKeyboard>(callback);
         break;
-    case 867:
+    case 878:
         wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_releaseMouse>(callback);
         break;
-    case 871:
+    case 882:
         wrapper->m_setCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setCursor>(callback);
         break;
-    case 872:
+    case 883:
         wrapper->m_setFixedHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setFixedHeight>(callback);
         break;
-    case 873:
+    case 884:
         wrapper->m_setFixedWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setFixedWidth>(callback);
         break;
-    case 874:
+    case 885:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setGeometry>(callback);
         break;
-    case 875:
+    case 886:
         wrapper->m_setHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setHeight>(callback);
         break;
-    case 876:
+    case 887:
         wrapper->m_setMaximumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setMaximumSize>(callback);
         break;
-    case 877:
+    case 888:
         wrapper->m_setMinimumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setMinimumSize>(callback);
         break;
-    case 878:
+    case 889:
         wrapper->m_setMouseTrackingCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setMouseTracking>(callback);
         break;
-    case 879:
+    case 890:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setObjectName>(callback);
         break;
-    case 880:
+    case 891:
         wrapper->m_setParentCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setParent>(callback);
         break;
-    case 882:
+    case 893:
         wrapper->m_setSize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setSize_2>(callback);
         break;
-    case 883:
+    case 894:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setVisible>(callback);
         break;
-    case 884:
+    case 895:
         wrapper->m_setWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setWidth>(callback);
         break;
-    case 885:
+    case 896:
         wrapper->m_setWindowOpacityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setWindowOpacity>(callback);
         break;
-    case 886:
+    case 897:
         wrapper->m_setWindowTitleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setWindowTitle>(callback);
         break;
-    case 887:
+    case 898:
         wrapper->m_setZOrderCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setZOrder>(callback);
         break;
-    case 888:
+    case 899:
         wrapper->m_showCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_show>(callback);
         break;
-    case 889:
+    case 900:
         wrapper->m_showMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_showMaximized>(callback);
         break;
-    case 890:
+    case 901:
         wrapper->m_showMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_showMinimized>(callback);
         break;
-    case 891:
+    case 902:
         wrapper->m_showNormalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_showNormal>(callback);
         break;
-    case 893:
+    case 904:
         wrapper->m_sizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_sizeHint>(callback);
         break;
-    case 895:
+    case 906:
         wrapper->m_updateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_update>(callback);
         break;
     }

@@ -40,7 +40,7 @@ class ViewFactory extends QObject {
       ClassicIndicators? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(681))
+            cFunctionSymbolName(688))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
@@ -59,6 +59,44 @@ class ViewFactory extends QObject {
     final result = dartInstance
         .createClassicIndicatorWindow(ClassicIndicators.fromCppPointer(arg__1));
     return result.thisCpp;
+  } // createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
+
+  View createDockWidget(String? uniqueName,
+      {int options, int layoutSaverOptions, int windowFlags = 0}) {
+    final voidstar_Func_voidstar_voidstar_int_int_int func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
+            cFunctionSymbolName(689))
+        .asFunction();
+    ffi.Pointer<void> result = func(
+        thisCpp,
+        uniqueName?.toNativeUtf8() ?? ffi.nullptr,
+        options,
+        layoutSaverOptions,
+        windowFlags);
+    return View.fromCppPointer(result, false);
+  }
+
+  static ffi.Pointer<void> createDockWidget_calledFromC(
+      ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? uniqueName,
+      int options,
+      int layoutSaverOptions,
+      int windowFlags) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.createDockWidget(
+        QString.fromCppPointer(uniqueName).toDartString(),
+        options: options,
+        layoutSaverOptions: layoutSaverOptions,
+        windowFlags: windowFlags);
+    return result.thisCpp;
   } // createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 
   View createDropArea(DropArea? arg__1, View? parent) {
@@ -66,7 +104,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(682))
+            cFunctionSymbolName(690))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -92,7 +130,7 @@ class ViewFactory extends QObject {
   View createRubberBand(View? parent) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(683))
+            cFunctionSymbolName(691))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
@@ -172,11 +210,13 @@ class ViewFactory extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 681:
+      case 688:
         return "c_KDDockWidgets__ViewFactory__createClassicIndicatorWindow_ClassicIndicators";
-      case 682:
+      case 689:
+        return "c_KDDockWidgets__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
+      case 690:
         return "c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View";
-      case 683:
+      case 691:
         return "c_KDDockWidgets__ViewFactory__createRubberBand_View";
       case 295:
         return "c_KDDockWidgets__ViewFactory__customEvent_QEvent";
@@ -190,11 +230,13 @@ class ViewFactory extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 681:
+      case 688:
         return "createClassicIndicatorWindow";
-      case 682:
+      case 689:
+        return "createDockWidget";
+      case 690:
         return "createDropArea";
-      case 683:
+      case 691:
         return "createRubberBand";
       case 295:
         return "customEvent";
@@ -212,18 +254,22 @@ class ViewFactory extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback')
         .asFunction();
-    final callback681 =
+    final callback688 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory.createClassicIndicatorWindow_calledFromC);
-    registerCallback(thisCpp, callback681, 681);
-    final callback682 =
+    registerCallback(thisCpp, callback688, 688);
+    final callback689 = ffi.Pointer.fromFunction<
+            voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
+        ViewFactory.createDockWidget_calledFromC);
+    registerCallback(thisCpp, callback689, 689);
+    final callback690 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             ViewFactory.createDropArea_calledFromC);
-    registerCallback(thisCpp, callback682, 682);
-    final callback683 =
+    registerCallback(thisCpp, callback690, 690);
+    final callback691 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback683, 683);
+    registerCallback(thisCpp, callback691, 691);
     final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);

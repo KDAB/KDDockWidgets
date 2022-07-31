@@ -52,8 +52,24 @@ class InitialOption {
         .asFunction();
     thisCpp = func();
     InitialOption.s_dartInstanceByCppPtr[thisCpp.address] = this;
+  } //InitialOption(KDDockWidgets::InitialVisibilityOption v)
+  InitialOption.ctor2(int v) {
+    final voidstar_Func_int func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption')
+        .asFunction();
+    thisCpp = func(v);
+    InitialOption.s_dartInstanceByCppPtr[thisCpp.address] = this;
+  } //InitialOption(KDDockWidgets::InitialVisibilityOption v, QSize size)
+  InitialOption.ctor3(int v, QSize size) {
+    final voidstar_Func_int_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_voidstar_FFI>>(
+            'c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_QSize')
+        .asFunction();
+    thisCpp = func(v, size == null ? ffi.nullptr : size.thisCpp);
+    InitialOption.s_dartInstanceByCppPtr[thisCpp.address] = this;
   } //InitialOption(QSize size)
-  InitialOption.ctor2(QSize size) {
+  InitialOption.ctor4(QSize size) {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__InitialOption__constructor_QSize')

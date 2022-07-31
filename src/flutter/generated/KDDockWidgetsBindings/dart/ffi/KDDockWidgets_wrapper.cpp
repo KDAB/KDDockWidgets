@@ -27,6 +27,11 @@ struct ValueWrapper
 
 }
 extern "C" {
+// initFrontend(KDDockWidgets::FrontendType arg__1)
+void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1)
+{
+    KDDockWidgets::initFrontend(static_cast<KDDockWidgets::FrontendType>(arg__1));
+}
 // locationStr(KDDockWidgets::Location loc)
 void *c_static_KDDockWidgets__locationStr_Location(int loc)
 {
