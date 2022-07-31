@@ -162,13 +162,6 @@ struct InitialOption
     {
     }
 
-    QT_DEPRECATED_X("AddingOption is deprecated and will be removed in v1.5. Use InitialVisibilityOption instead.")
-    InitialOption(AddingOption opt)
-        : visibility(opt == AddingOption_StartHidden ? InitialVisibilityOption::StartHidden
-                                                     : InitialVisibilityOption::StartVisible)
-    {
-    }
-
     bool startsHidden() const
     {
         return visibility == InitialVisibilityOption::StartHidden;
