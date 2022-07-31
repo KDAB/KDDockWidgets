@@ -12,11 +12,12 @@
 #include <ViewFactory_flutter.h>
 #include <qstring.h>
 #include <View.h>
+#include <Group.h>
 #include <DropArea.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ViewFactory_flutter_wrapper : public ::KDDockWidgets::ViewFactory_flutter

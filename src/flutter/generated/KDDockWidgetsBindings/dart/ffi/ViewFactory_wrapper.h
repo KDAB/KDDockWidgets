@@ -12,6 +12,7 @@
 #include <ViewFactory.h>
 #include <qstring.h>
 #include <View.h>
+#include <Group.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
 #include <DropArea.h>
@@ -32,6 +33,8 @@ public:
     virtual KDDockWidgets::View *createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options = {}, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions = {}, Qt::WindowFlags windowFlags = {}) const;
     virtual KDDockWidgets::View *createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createDropArea_nocallback(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
+    virtual KDDockWidgets::View *createGroup(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::View *parent = nullptr) const;
+    virtual KDDockWidgets::View *createGroup_nocallback(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::View *parent = nullptr) const;
     virtual KDDockWidgets::View *createRubberBand(KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createRubberBand_nocallback(KDDockWidgets::View *parent) const;
     virtual void customEvent(QEvent *event);
@@ -47,6 +50,8 @@ public:
     Callback_createDockWidget m_createDockWidgetCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createDropArea)(void *, KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent);
     Callback_createDropArea m_createDropAreaCallback = nullptr;
+    typedef KDDockWidgets::View *(*Callback_createGroup)(void *, KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::View *parent);
+    Callback_createGroup m_createGroupCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createRubberBand)(void *, KDDockWidgets::View *parent);
     Callback_createRubberBand m_createRubberBandCallback = nullptr;
     typedef void (*Callback_customEvent)(void *, QEvent *event);
@@ -66,6 +71,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createClassicIn
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int options_, int layoutSaverOptions_, int windowFlags);
 // KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::ViewFactory::createGroup(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
 // KDDockWidgets::ViewFactory::customEvent(QEvent * event)

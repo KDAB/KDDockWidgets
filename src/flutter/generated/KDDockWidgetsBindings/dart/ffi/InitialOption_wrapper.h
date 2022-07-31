@@ -18,6 +18,7 @@ class InitialOption_wrapper : public ::KDDockWidgets::InitialOption
 public:
     ~InitialOption_wrapper();
     InitialOption_wrapper();
+    InitialOption_wrapper(KDDockWidgets::DefaultSizeMode mode);
     InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v);
     InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v, QSize size);
     InitialOption_wrapper(QSize size);
@@ -28,6 +29,8 @@ public:
 extern "C" {
 // KDDockWidgets::InitialOption::InitialOption()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor();
+// KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::DefaultSizeMode mode)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_DefaultSizeMode(int mode);
 // KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption(int v);
 // KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v, QSize size)

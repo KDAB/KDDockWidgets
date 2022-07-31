@@ -208,16 +208,16 @@ void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *p
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 688:
+    case 689:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createClassicIndicatorWindow>(callback);
         break;
-    case 689:
+    case 690:
         wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createDockWidget>(callback);
         break;
-    case 690:
+    case 691:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createDropArea>(callback);
         break;
-    case 691:
+    case 693:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createRubberBand>(callback);
         break;
     case 295:

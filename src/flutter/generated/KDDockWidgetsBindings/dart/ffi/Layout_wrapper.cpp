@@ -43,6 +43,10 @@ void Layout_wrapper::clearLayout()
 {
     ::KDDockWidgets::Controllers::Layout::clearLayout();
 }
+bool Layout_wrapper::containsFrame(const KDDockWidgets::Controllers::Group *arg__1) const
+{
+    return ::KDDockWidgets::Controllers::Layout::containsFrame(arg__1);
+}
 bool Layout_wrapper::containsItem(const Layouting::Item *arg__1) const
 {
     return ::KDDockWidgets::Controllers::Layout::containsItem(arg__1);
@@ -94,9 +98,21 @@ bool Layout_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
 {
     return ::KDDockWidgets::Controllers::Layout::eventFilter(watched, event);
 }
+QList<KDDockWidgets::Controllers::Group *> Layout_wrapper::groups() const
+{
+    return ::KDDockWidgets::Controllers::Layout::groups();
+}
+QList<KDDockWidgets::Controllers::Group *> Layout_wrapper::groupsFrom(KDDockWidgets::View *groupOrMultiSplitter) const
+{
+    return ::KDDockWidgets::Controllers::Layout::groupsFrom(groupOrMultiSplitter);
+}
 bool Layout_wrapper::isInMainWindow(bool honourNesting) const
 {
     return ::KDDockWidgets::Controllers::Layout::isInMainWindow(honourNesting);
+}
+Layouting::Item *Layout_wrapper::itemForFrame(const KDDockWidgets::Controllers::Group *group) const
+{
+    return ::KDDockWidgets::Controllers::Layout::itemForFrame(group);
 }
 int Layout_wrapper::layoutHeight() const
 {
@@ -146,6 +162,10 @@ void Layout_wrapper::setParentView_impl(KDDockWidgets::View *parent)
 void Layout_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
 {
     ::KDDockWidgets::Controllers::Layout::setParentView_impl(parent);
+}
+void Layout_wrapper::unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group *> &groupsBeingAdded) const
+{
+    ::KDDockWidgets::Controllers::Layout::unrefOldPlaceholders(groupsBeingAdded);
 }
 void Layout_wrapper::updateSizeConstraints()
 {
@@ -198,6 +218,12 @@ void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj)
 {
     fromPtr(thisObj)->clearLayout();
 }
+// containsFrame(const KDDockWidgets::Controllers::Group * arg__1) const
+bool c_KDDockWidgets__Controllers__Layout__containsFrame_Group(void *thisObj, void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Group *>(arg__1_);
+    return fromPtr(thisObj)->containsFrame(arg__1);
+}
 // containsItem(const Layouting::Item * arg__1) const
 bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_)
 {
@@ -233,10 +259,27 @@ bool c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *this
     auto event = reinterpret_cast<QEvent *>(event_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
+// groups() const
+void *c_KDDockWidgets__Controllers__Layout__groups(void *thisObj)
+{
+    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> { fromPtr(thisObj)->groups() };
+}
+// groupsFrom(KDDockWidgets::View * groupOrMultiSplitter) const
+void *c_KDDockWidgets__Controllers__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_)
+{
+    auto groupOrMultiSplitter = reinterpret_cast<KDDockWidgets::View *>(groupOrMultiSplitter_);
+    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> { fromWrapperPtr(thisObj)->groupsFrom(groupOrMultiSplitter) };
+}
 // isInMainWindow(bool honourNesting) const
 bool c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting)
 {
     return fromPtr(thisObj)->isInMainWindow(honourNesting);
+}
+// itemForFrame(const KDDockWidgets::Controllers::Group * group) const
+void *c_KDDockWidgets__Controllers__Layout__itemForFrame_Group(void *thisObj, void *group_)
+{
+    auto group = reinterpret_cast<KDDockWidgets::Controllers::Group *>(group_);
+    return fromPtr(thisObj)->itemForFrame(group);
 }
 // layoutHeight() const
 int c_KDDockWidgets__Controllers__Layout__layoutHeight(void *thisObj)
@@ -292,6 +335,12 @@ void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
+// unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group* > & groupsBeingAdded) const
+void c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group(void *thisObj, void *groupsBeingAdded_)
+{
+    auto &groupsBeingAdded = *reinterpret_cast<QList<KDDockWidgets::Controllers::Group *> *>(groupsBeingAdded_);
+    fromWrapperPtr(thisObj)->unrefOldPlaceholders(groupsBeingAdded);
+}
 // updateSizeConstraints()
 void c_KDDockWidgets__Controllers__Layout__updateSizeConstraints(void *thisObj)
 {
@@ -324,7 +373,7 @@ void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *p
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
         break;
-    case 811:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

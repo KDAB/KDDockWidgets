@@ -31,6 +31,10 @@ Item_wrapper::Item_wrapper(KDDockWidgets::View *hostWidget)
     : ::Layouting::Item(hostWidget)
 {
 }
+KDDockWidgets::Controllers::Group *Item_wrapper::asGroupController() const
+{
+    return ::Layouting::Item::asGroupController();
+}
 bool Item_wrapper::checkSanity()
 {
     if (m_checkSanityCallback) {
@@ -356,6 +360,11 @@ void *c_Layouting__Item__constructor_View(void *hostWidget_)
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Item_wrapper(hostWidget);
     return reinterpret_cast<void *>(ptr);
 }
+// asGroupController() const
+void *c_Layouting__Item__asGroupController(void *thisObj)
+{
+    return fromPtr(thisObj)->asGroupController();
+}
 // checkSanity()
 bool c_Layouting__Item__checkSanity(void *thisObj)
 {
@@ -628,13 +637,13 @@ void c_Layouting__Item__registerVirtualMethodCallback(void *ptr, void *callback,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 589:
+    case 590:
         wrapper->m_checkSanityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_checkSanity>(callback);
         break;
     case 295:
         wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_customEvent>(callback);
         break;
-    case 596:
+    case 597:
         wrapper->m_dumpLayoutCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_dumpLayout>(callback);
         break;
     case 306:
@@ -643,28 +652,28 @@ void c_Layouting__Item__registerVirtualMethodCallback(void *ptr, void *callback,
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_eventFilter>(callback);
         break;
-    case 613:
+    case 614:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_isVisible>(callback);
         break;
-    case 622:
+    case 623:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 623:
+    case 624:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_minSize>(callback);
         break;
-    case 640:
+    case 641:
         wrapper->m_setGeometry_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setGeometry_recursive>(callback);
         break;
-    case 642:
+    case 643:
         wrapper->m_setHostViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setHostView>(callback);
         break;
-    case 643:
+    case 644:
         wrapper->m_setIsVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setIsVisible>(callback);
         break;
-    case 657:
+    case 658:
         wrapper->m_updateWidgetGeometriesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_updateWidgetGeometries>(callback);
         break;
-    case 658:
+    case 659:
         wrapper->m_visibleCount_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_visibleCount_recursive>(callback);
         break;
     }

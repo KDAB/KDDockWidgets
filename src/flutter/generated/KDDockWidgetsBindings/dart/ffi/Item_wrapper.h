@@ -15,6 +15,7 @@
 #include <qsize.h>
 #include <qpoint.h>
 #include <qrect.h>
+#include <Group.h>
 #include <qobject.h>
 #include <qcoreevent.h>
 #include <qlist.h>
@@ -26,6 +27,7 @@ class Item_wrapper : public ::Layouting::Item
 public:
     ~Item_wrapper();
     Item_wrapper(KDDockWidgets::View *hostWidget);
+    KDDockWidgets::Controllers::Group *asGroupController() const;
     virtual bool checkSanity();
     virtual bool checkSanity_nocallback();
     virtual void customEvent(QEvent *event);
@@ -116,6 +118,8 @@ public:
 extern "C" {
 // Layouting::Item::Item(KDDockWidgets::View * hostWidget)
 KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__constructor_View(void *hostWidget_);
+// Layouting::Item::asGroupController() const
+KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__asGroupController(void *thisObj);
 // Layouting::Item::checkSanity()
 KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__checkSanity(void *thisObj);
 // Layouting::Item::customEvent(QEvent * event)

@@ -15,6 +15,7 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
+#include <Group.h>
 #include <DropArea.h>
 #include <controllers/Layout.h>
 
@@ -28,6 +29,7 @@ public:
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     KDDockWidgets::Controllers::DropArea *asDropAreaController() const;
+    KDDockWidgets::Controllers::Group *asGroupController() const;
     KDDockWidgets::Controllers::Layout *asLayout() const;
     static QSize boundedMaxSize(QSize min, QSize max);
     virtual bool close();
@@ -282,6 +284,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__aboutToBeDestroyed(void
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__activateWindow(void *thisObj);
 // KDDockWidgets::View::asDropAreaController() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asDropAreaController(void *thisObj);
+// KDDockWidgets::View::asGroupController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asGroupController(void *thisObj);
 // KDDockWidgets::View::asLayout() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asLayout(void *thisObj);
 // KDDockWidgets::View::boundedMaxSize(QSize min, QSize max)

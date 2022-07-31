@@ -308,8 +308,8 @@ Q_SIGNALS:
     void isMDIChanged();
 
 protected:
-    void isFocusedChangedCallback() final;
-    void focusedWidgetChangedCallback() final;
+    void isFocusedChangedCallback() override;
+    void focusedWidgetChangedCallback() override;
     void setParentView_impl(View *parent) override;
 
 protected Q_SLOTS:

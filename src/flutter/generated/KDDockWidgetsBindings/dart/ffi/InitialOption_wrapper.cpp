@@ -31,6 +31,10 @@ InitialOption_wrapper::InitialOption_wrapper()
     : ::KDDockWidgets::InitialOption()
 {
 }
+InitialOption_wrapper::InitialOption_wrapper(KDDockWidgets::DefaultSizeMode mode)
+    : ::KDDockWidgets::InitialOption(mode)
+{
+}
 InitialOption_wrapper::InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v)
     : ::KDDockWidgets::InitialOption(v)
 {
@@ -72,6 +76,11 @@ void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *)
 void *c_KDDockWidgets__InitialOption__constructor()
 {
     auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper();
+    return reinterpret_cast<void *>(ptr);
+}
+void *c_KDDockWidgets__InitialOption__constructor_DefaultSizeMode(int mode)
+{
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(static_cast<KDDockWidgets::DefaultSizeMode>(mode));
     return reinterpret_cast<void *>(ptr);
 }
 void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption(int v)

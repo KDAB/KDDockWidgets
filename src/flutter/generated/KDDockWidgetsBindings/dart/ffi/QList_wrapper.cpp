@@ -817,3 +817,270 @@ void c_QList_T_QByteArray_T___destructor(void *thisObj)
     delete fromPtr<QByteArray>(thisObj);
 }
 }
+extern "C" {
+void c_QList_T_Group_T__Finalizer(void *, void *cppObj, void *)
+{
+    delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QList_wrapper<KDDockWidgets::Controllers::Group *> *>(cppObj);
+}
+void *c_QList_T_Group_T___constructor()
+{
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::QList_wrapper<KDDockWidgets::Controllers::Group *>();
+    return reinterpret_cast<void *>(ptr);
+}
+// append(const QList<T > & t)
+void c_QList_T_Group_T___append_QList_T(void *thisObj, void *t_)
+{
+    auto &t = *reinterpret_cast<QList<KDDockWidgets::Controllers::Group *> *>(t_);
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->append(t);
+}
+// append(const T & t)
+void c_QList_T_Group_T___append_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->append(t);
+}
+// at(int i) const
+const void *c_QList_T_Group_T___at_int(void *thisObj, int i)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->at(i);
+}
+// back()
+void *c_QList_T_Group_T___back(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->back();
+}
+// clear()
+void c_QList_T_Group_T___clear(void *thisObj)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->clear();
+}
+// constFirst() const
+const void *c_QList_T_Group_T___constFirst(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->constFirst();
+}
+// constLast() const
+const void *c_QList_T_Group_T___constLast(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->constLast();
+}
+// contains(const T & t) const
+bool c_QList_T_Group_T___contains_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->contains(t);
+}
+// count() const
+int c_QList_T_Group_T___count(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->count();
+}
+// count(const T & t) const
+int c_QList_T_Group_T___count_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->count(t);
+}
+// detach()
+void c_QList_T_Group_T___detach(void *thisObj)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->detach();
+}
+// detachShared()
+void c_QList_T_Group_T___detachShared(void *thisObj)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->detachShared();
+}
+// empty() const
+bool c_QList_T_Group_T___empty(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->empty();
+}
+// endsWith(const T & t) const
+bool c_QList_T_Group_T___endsWith_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->endsWith(t);
+}
+// first()
+void *c_QList_T_Group_T___first(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->first();
+}
+// front()
+void *c_QList_T_Group_T___front(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->front();
+}
+// indexOf(const T & t, int from) const
+int c_QList_T_Group_T___indexOf_Group_int(void *thisObj, void *t_, int from)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->indexOf(t, from);
+}
+// insert(int i, const T & t)
+void c_QList_T_Group_T___insert_int_Group(void *thisObj, int i, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->insert(i, t);
+}
+// isDetached() const
+bool c_QList_T_Group_T___isDetached(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->isDetached();
+}
+// isEmpty() const
+bool c_QList_T_Group_T___isEmpty(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->isEmpty();
+}
+// isSharedWith(const QList<T > & other) const
+bool c_QList_T_Group_T___isSharedWith_QList_T(void *thisObj, void *other_)
+{
+    auto &other = *reinterpret_cast<QList<KDDockWidgets::Controllers::Group *> *>(other_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->isSharedWith(other);
+}
+// last()
+void *c_QList_T_Group_T___last(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->last();
+}
+// lastIndexOf(const T & t, int from) const
+int c_QList_T_Group_T___lastIndexOf_Group_int(void *thisObj, void *t_, int from)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->lastIndexOf(t, from);
+}
+// length() const
+int c_QList_T_Group_T___length(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->length();
+}
+// mid(int pos, int length) const
+void *c_QList_T_Group_T___mid_int_int(void *thisObj, int pos, int length)
+{
+    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> { fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->mid(pos, length) };
+}
+// move(int from, int to)
+void c_QList_T_Group_T___move_int_int(void *thisObj, int from, int to)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->move(from, to);
+}
+// pop_back()
+void c_QList_T_Group_T___pop_back(void *thisObj)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->pop_back();
+}
+// pop_front()
+void c_QList_T_Group_T___pop_front(void *thisObj)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->pop_front();
+}
+// prepend(const T & t)
+void c_QList_T_Group_T___prepend_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->prepend(t);
+}
+// push_back(const T & t)
+void c_QList_T_Group_T___push_back_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->push_back(t);
+}
+// push_front(const T & t)
+void c_QList_T_Group_T___push_front_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->push_front(t);
+}
+// removeAll(const T & t)
+int c_QList_T_Group_T___removeAll_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->removeAll(t);
+}
+// removeAt(int i)
+void c_QList_T_Group_T___removeAt_int(void *thisObj, int i)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->removeAt(i);
+}
+// removeFirst()
+void c_QList_T_Group_T___removeFirst(void *thisObj)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->removeFirst();
+}
+// removeLast()
+void c_QList_T_Group_T___removeLast(void *thisObj)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->removeLast();
+}
+// removeOne(const T & t)
+bool c_QList_T_Group_T___removeOne_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->removeOne(t);
+}
+// replace(int i, const T & t)
+void c_QList_T_Group_T___replace_int_Group(void *thisObj, int i, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->replace(i, t);
+}
+// reserve(int size)
+void c_QList_T_Group_T___reserve_int(void *thisObj, int size)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->reserve(size);
+}
+// setSharable(bool sharable)
+void c_QList_T_Group_T___setSharable_bool(void *thisObj, bool sharable)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->setSharable(sharable);
+}
+// size() const
+int c_QList_T_Group_T___size(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->size();
+}
+// startsWith(const T & t) const
+bool c_QList_T_Group_T___startsWith_Group(void *thisObj, void *t_)
+{
+    auto t = reinterpret_cast<KDDockWidgets::Controllers::Group *>(t_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->startsWith(t);
+}
+// swapItemsAt(int i, int j)
+void c_QList_T_Group_T___swapItemsAt_int_int(void *thisObj, int i, int j)
+{
+    fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->swapItemsAt(i, j);
+}
+// takeAt(int i)
+void *c_QList_T_Group_T___takeAt_int(void *thisObj, int i)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->takeAt(i);
+}
+// takeFirst()
+void *c_QList_T_Group_T___takeFirst(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->takeFirst();
+}
+// takeLast()
+void *c_QList_T_Group_T___takeLast(void *thisObj)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->takeLast();
+}
+// value(int i) const
+void *c_QList_T_Group_T___value_int(void *thisObj, int i)
+{
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->value(i);
+}
+// value(int i, const T & defaultValue) const
+void *c_QList_T_Group_T___value_int_Group(void *thisObj, int i, void *defaultValue_)
+{
+    auto defaultValue = reinterpret_cast<KDDockWidgets::Controllers::Group *>(defaultValue_);
+    return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->value(i, defaultValue);
+}
+void c_QList_T_Group_T___destructor(void *thisObj)
+{
+    delete fromPtr<KDDockWidgets::Controllers::Group *>(thisObj);
+}
+}

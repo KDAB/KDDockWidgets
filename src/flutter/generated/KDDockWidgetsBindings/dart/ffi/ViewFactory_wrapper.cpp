@@ -76,6 +76,21 @@ KDDockWidgets::View *ViewFactory_wrapper::createDropArea_nocallback(KDDockWidget
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
+KDDockWidgets::View *ViewFactory_wrapper::createGroup(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::View *parent) const
+{
+    if (m_createGroupCallback) {
+        const void *thisPtr = this;
+        return m_createGroupCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return {};
+    }
+}
+KDDockWidgets::View *ViewFactory_wrapper::createGroup_nocallback(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::View *parent) const
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return {};
+}
 KDDockWidgets::View *ViewFactory_wrapper::createRubberBand(KDDockWidgets::View *parent) const
 {
     if (m_createRubberBandCallback) {
@@ -178,6 +193,13 @@ void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, 
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDropArea_nocallback(arg__1,parent);} else {    return targetPtr->createDropArea(arg__1,parent);} }();
 }
+// createGroup(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Group *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createGroup_nocallback(arg__1,parent);} else {    return targetPtr->createGroup(arg__1,parent);} }();
+}
 // createRubberBand(KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_)
 {
@@ -216,16 +238,19 @@ void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 688:
+    case 689:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createClassicIndicatorWindow>(callback);
         break;
-    case 689:
+    case 690:
         wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createDockWidget>(callback);
         break;
-    case 690:
+    case 691:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createDropArea>(callback);
         break;
-    case 691:
+    case 692:
+        wrapper->m_createGroupCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createGroup>(callback);
+        break;
+    case 693:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createRubberBand>(callback);
         break;
     case 295:

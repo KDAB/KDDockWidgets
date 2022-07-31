@@ -160,13 +160,13 @@ class ViewFactory_flutter extends ViewFactory {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 688:
-        return "c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators";
       case 689:
-        return "c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
+        return "c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators";
       case 690:
-        return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
       case 691:
+        return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
+      case 693:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
       case 295:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
@@ -180,13 +180,13 @@ class ViewFactory_flutter extends ViewFactory {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 688:
-        return "createClassicIndicatorWindow";
       case 689:
-        return "createDockWidget";
+        return "createClassicIndicatorWindow";
       case 690:
-        return "createDropArea";
+        return "createDockWidget";
       case 691:
+        return "createDropArea";
+      case 693:
         return "createRubberBand";
       case 295:
         return "customEvent";
@@ -204,22 +204,22 @@ class ViewFactory_flutter extends ViewFactory {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback')
         .asFunction();
-    final callback688 =
+    final callback689 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createClassicIndicatorWindow_calledFromC);
-    registerCallback(thisCpp, callback688, 688);
-    final callback689 = ffi.Pointer.fromFunction<
+    registerCallback(thisCpp, callback689, 689);
+    final callback690 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
         ViewFactory_flutter.createDockWidget_calledFromC);
-    registerCallback(thisCpp, callback689, 689);
-    final callback690 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createDropArea_calledFromC);
     registerCallback(thisCpp, callback690, 690);
     final callback691 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createDropArea_calledFromC);
+    registerCallback(thisCpp, callback691, 691);
+    final callback693 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback691, 691);
+    registerCallback(thisCpp, callback693, 693);
     final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);

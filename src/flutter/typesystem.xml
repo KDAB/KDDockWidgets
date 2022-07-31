@@ -58,6 +58,7 @@
         <namespace-type name="Controllers">
             <object-type name="Layout" />
             <object-type name="DropArea" />
+            <object-type name="Group" />
             <object-type name="ClassicIndicators" />
         </namespace-type>
 

@@ -14,6 +14,15 @@
 #include <qstring.h>
 #include <qcoreevent.h>
 #include <qbytearray.h>
+#include <Group.h>
+#include <View.h>
+#include <KDDockWidgets.h>
+#include <qpoint.h>
+#include <Item_p.h>
+#include <qrect.h>
+#include <DropArea.h>
+#include <controllers/Layout.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 template<typename T>
@@ -270,4 +279,104 @@ KDDockWidgetsBindings_EXPORT void *c_QList_T_QByteArray_T___value_int(void *this
 KDDockWidgetsBindings_EXPORT void *c_QList_T_QByteArray_T___value_int_QByteArray(void *thisObj, int i, void *defaultValue_);
 KDDockWidgetsBindings_EXPORT void c_QList_T_QByteArray_T___destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_QList_T_QByteArray_T__Finalizer(void *, void *cppObj, void *);
+}
+extern "C" {
+// QList::QList<T>()
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___constructor();
+// QList::append(const QList<T > & t)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___append_QList_T(void *thisObj, void *t_);
+// QList::append(const T & t)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___append_Group(void *thisObj, void *t_);
+// QList::at(int i) const
+KDDockWidgetsBindings_EXPORT const void *c_QList_T_Group_T___at_int(void *thisObj, int i);
+// QList::back()
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___back(void *thisObj);
+// QList::clear()
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___clear(void *thisObj);
+// QList::constFirst() const
+KDDockWidgetsBindings_EXPORT const void *c_QList_T_Group_T___constFirst(void *thisObj);
+// QList::constLast() const
+KDDockWidgetsBindings_EXPORT const void *c_QList_T_Group_T___constLast(void *thisObj);
+// QList::contains(const T & t) const
+KDDockWidgetsBindings_EXPORT bool c_QList_T_Group_T___contains_Group(void *thisObj, void *t_);
+// QList::count() const
+KDDockWidgetsBindings_EXPORT int c_QList_T_Group_T___count(void *thisObj);
+// QList::count(const T & t) const
+KDDockWidgetsBindings_EXPORT int c_QList_T_Group_T___count_Group(void *thisObj, void *t_);
+// QList::detach()
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___detach(void *thisObj);
+// QList::detachShared()
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___detachShared(void *thisObj);
+// QList::empty() const
+KDDockWidgetsBindings_EXPORT bool c_QList_T_Group_T___empty(void *thisObj);
+// QList::endsWith(const T & t) const
+KDDockWidgetsBindings_EXPORT bool c_QList_T_Group_T___endsWith_Group(void *thisObj, void *t_);
+// QList::first()
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___first(void *thisObj);
+// QList::front()
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___front(void *thisObj);
+// QList::indexOf(const T & t, int from) const
+KDDockWidgetsBindings_EXPORT int c_QList_T_Group_T___indexOf_Group_int(void *thisObj, void *t_, int from);
+// QList::insert(int i, const T & t)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___insert_int_Group(void *thisObj, int i, void *t_);
+// QList::isDetached() const
+KDDockWidgetsBindings_EXPORT bool c_QList_T_Group_T___isDetached(void *thisObj);
+// QList::isEmpty() const
+KDDockWidgetsBindings_EXPORT bool c_QList_T_Group_T___isEmpty(void *thisObj);
+// QList::isSharedWith(const QList<T > & other) const
+KDDockWidgetsBindings_EXPORT bool c_QList_T_Group_T___isSharedWith_QList_T(void *thisObj, void *other_);
+// QList::last()
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___last(void *thisObj);
+// QList::lastIndexOf(const T & t, int from) const
+KDDockWidgetsBindings_EXPORT int c_QList_T_Group_T___lastIndexOf_Group_int(void *thisObj, void *t_, int from);
+// QList::length() const
+KDDockWidgetsBindings_EXPORT int c_QList_T_Group_T___length(void *thisObj);
+// QList::mid(int pos, int length) const
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___mid_int_int(void *thisObj, int pos, int length);
+// QList::move(int from, int to)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___move_int_int(void *thisObj, int from, int to);
+// QList::pop_back()
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___pop_back(void *thisObj);
+// QList::pop_front()
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___pop_front(void *thisObj);
+// QList::prepend(const T & t)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___prepend_Group(void *thisObj, void *t_);
+// QList::push_back(const T & t)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___push_back_Group(void *thisObj, void *t_);
+// QList::push_front(const T & t)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___push_front_Group(void *thisObj, void *t_);
+// QList::removeAll(const T & t)
+KDDockWidgetsBindings_EXPORT int c_QList_T_Group_T___removeAll_Group(void *thisObj, void *t_);
+// QList::removeAt(int i)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___removeAt_int(void *thisObj, int i);
+// QList::removeFirst()
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___removeFirst(void *thisObj);
+// QList::removeLast()
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___removeLast(void *thisObj);
+// QList::removeOne(const T & t)
+KDDockWidgetsBindings_EXPORT bool c_QList_T_Group_T___removeOne_Group(void *thisObj, void *t_);
+// QList::replace(int i, const T & t)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___replace_int_Group(void *thisObj, int i, void *t_);
+// QList::reserve(int size)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___reserve_int(void *thisObj, int size);
+// QList::setSharable(bool sharable)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___setSharable_bool(void *thisObj, bool sharable);
+// QList::size() const
+KDDockWidgetsBindings_EXPORT int c_QList_T_Group_T___size(void *thisObj);
+// QList::startsWith(const T & t) const
+KDDockWidgetsBindings_EXPORT bool c_QList_T_Group_T___startsWith_Group(void *thisObj, void *t_);
+// QList::swapItemsAt(int i, int j)
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___swapItemsAt_int_int(void *thisObj, int i, int j);
+// QList::takeAt(int i)
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___takeAt_int(void *thisObj, int i);
+// QList::takeFirst()
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___takeFirst(void *thisObj);
+// QList::takeLast()
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___takeLast(void *thisObj);
+// QList::value(int i) const
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___value_int(void *thisObj, int i);
+// QList::value(int i, const T & defaultValue) const
+KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___value_int_Group(void *thisObj, int i, void *defaultValue_);
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T__Finalizer(void *, void *cppObj, void *);
 }

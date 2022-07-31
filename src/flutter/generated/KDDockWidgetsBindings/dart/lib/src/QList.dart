@@ -21,6 +21,9 @@ final _finalizer_T_QObject_T_ =
 final _finalizer_T_QByteArray_T_ =
     _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
         'c_QList_T_QByteArray_T__Finalizer');
+final _finalizer_T_Group_T_ =
+    _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
+        'c_QList_T_Group_T__Finalizer');
 
 class QList<T> {
   static var s_dartInstanceByCppPtr = Map<int, QList>();
@@ -367,6 +370,166 @@ class QList<T> {
           break;
       }
     }
+    if (this is QList<Group>) {
+      switch (id) {
+        case 324:
+          return "c_QList_T_Group_T___constructor";
+          break;
+        case 327:
+          return "c_QList_T_Group_T___append_QList_T";
+          break;
+        case 328:
+          return "c_QList_T_Group_T___append_Group";
+          break;
+        case 329:
+          return "c_QList_T_Group_T___at_int";
+          break;
+        case 330:
+          return "c_QList_T_Group_T___back";
+          break;
+        case 331:
+          return "c_QList_T_Group_T___back";
+          break;
+        case 332:
+          return "c_QList_T_Group_T___clear";
+          break;
+        case 333:
+          return "c_QList_T_Group_T___constFirst";
+          break;
+        case 334:
+          return "c_QList_T_Group_T___constLast";
+          break;
+        case 335:
+          return "c_QList_T_Group_T___contains_Group";
+          break;
+        case 336:
+          return "c_QList_T_Group_T___count";
+          break;
+        case 337:
+          return "c_QList_T_Group_T___count_Group";
+          break;
+        case 338:
+          return "c_QList_T_Group_T___detach";
+          break;
+        case 339:
+          return "c_QList_T_Group_T___detachShared";
+          break;
+        case 342:
+          return "c_QList_T_Group_T___empty";
+          break;
+        case 343:
+          return "c_QList_T_Group_T___endsWith_Group";
+          break;
+        case 344:
+          return "c_QList_T_Group_T___first";
+          break;
+        case 345:
+          return "c_QList_T_Group_T___first";
+          break;
+        case 346:
+          return "c_QList_T_Group_T___front";
+          break;
+        case 347:
+          return "c_QList_T_Group_T___front";
+          break;
+        case 348:
+          return "c_QList_T_Group_T___indexOf_Group_int";
+          break;
+        case 349:
+          return "c_QList_T_Group_T___insert_int_Group";
+          break;
+        case 350:
+          return "c_QList_T_Group_T___isDetached";
+          break;
+        case 351:
+          return "c_QList_T_Group_T___isEmpty";
+          break;
+        case 352:
+          return "c_QList_T_Group_T___isSharedWith_QList_T";
+          break;
+        case 353:
+          return "c_QList_T_Group_T___last";
+          break;
+        case 354:
+          return "c_QList_T_Group_T___last";
+          break;
+        case 355:
+          return "c_QList_T_Group_T___lastIndexOf_Group_int";
+          break;
+        case 356:
+          return "c_QList_T_Group_T___length";
+          break;
+        case 357:
+          return "c_QList_T_Group_T___mid_int_int";
+          break;
+        case 358:
+          return "c_QList_T_Group_T___move_int_int";
+          break;
+        case 370:
+          return "c_QList_T_Group_T___pop_back";
+          break;
+        case 371:
+          return "c_QList_T_Group_T___pop_front";
+          break;
+        case 372:
+          return "c_QList_T_Group_T___prepend_Group";
+          break;
+        case 373:
+          return "c_QList_T_Group_T___push_back_Group";
+          break;
+        case 374:
+          return "c_QList_T_Group_T___push_front_Group";
+          break;
+        case 375:
+          return "c_QList_T_Group_T___removeAll_Group";
+          break;
+        case 376:
+          return "c_QList_T_Group_T___removeAt_int";
+          break;
+        case 377:
+          return "c_QList_T_Group_T___removeFirst";
+          break;
+        case 378:
+          return "c_QList_T_Group_T___removeLast";
+          break;
+        case 379:
+          return "c_QList_T_Group_T___removeOne_Group";
+          break;
+        case 380:
+          return "c_QList_T_Group_T___replace_int_Group";
+          break;
+        case 381:
+          return "c_QList_T_Group_T___reserve_int";
+          break;
+        case 382:
+          return "c_QList_T_Group_T___setSharable_bool";
+          break;
+        case 383:
+          return "c_QList_T_Group_T___size";
+          break;
+        case 384:
+          return "c_QList_T_Group_T___startsWith_Group";
+          break;
+        case 386:
+          return "c_QList_T_Group_T___swapItemsAt_int_int";
+          break;
+        case 387:
+          return "c_QList_T_Group_T___takeAt_int";
+          break;
+        case 388:
+          return "c_QList_T_Group_T___takeFirst";
+          break;
+        case 389:
+          return "c_QList_T_Group_T___takeLast";
+          break;
+        case 390:
+          return "c_QList_T_Group_T___value_int";
+          break;
+        case 391:
+          return "c_QList_T_Group_T___value_int_Group";
+          break;
+      }
+    }
     return "";
   }
 
@@ -376,6 +539,9 @@ class QList<T> {
     }
     if (this is QList<QByteArray>) {
       return _finalizer_T_QByteArray_T_;
+    }
+    if (this is QList<Group>) {
+      return _finalizer_T_Group_T_;
     }
     print("ERROR: Couldn't find finalizer for" + this.runtimeType.toString());
   } //QList<T>()
@@ -397,6 +563,13 @@ class QList<T> {
   } // append(const T & t)
 
   append_2(T t) {
+    if (this is QList<Group>) {
+      final void_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(328)}')
+          .asFunction();
+      func(thisCpp, (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp);
+    }
     if (this is QList<QByteArray>) {
       final void_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
@@ -416,6 +589,14 @@ class QList<T> {
   } // at(int i) const
 
   T at(int i) {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar_int func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
+              '${getCFunctionName(329)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp, i);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar_int func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
@@ -438,6 +619,14 @@ class QList<T> {
   } // back()
 
   T back() {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+              '${getCFunctionName(330)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -468,6 +657,14 @@ class QList<T> {
   } // constFirst() const
 
   T constFirst() {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+              '${getCFunctionName(333)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -490,6 +687,14 @@ class QList<T> {
   } // constLast() const
 
   T constLast() {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+              '${getCFunctionName(334)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -512,6 +717,15 @@ class QList<T> {
   } // contains(const T & t) const
 
   bool contains(T t) {
+    if (this is QList<Group>) {
+      final bool_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(335)}')
+          .asFunction();
+      return func(thisCpp,
+              (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp) !=
+          0;
+    }
     if (this is QList<QByteArray>) {
       final bool_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
@@ -547,6 +761,14 @@ class QList<T> {
   } // count(const T & t) const
 
   int count_2(T t) {
+    if (this is QList<Group>) {
+      final int_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(337)}')
+          .asFunction();
+      return func(
+          thisCpp, (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp);
+    }
     if (this is QList<QByteArray>) {
       final int_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
@@ -609,6 +831,15 @@ class QList<T> {
   } // endsWith(const T & t) const
 
   bool endsWith(T t) {
+    if (this is QList<Group>) {
+      final bool_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(343)}')
+          .asFunction();
+      return func(thisCpp,
+              (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp) !=
+          0;
+    }
     if (this is QList<QByteArray>) {
       final bool_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
@@ -636,6 +867,14 @@ class QList<T> {
   } // first()
 
   T first() {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+              '${getCFunctionName(344)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -658,6 +897,14 @@ class QList<T> {
   } // front()
 
   T front() {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+              '${getCFunctionName(346)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -680,6 +927,14 @@ class QList<T> {
   } // indexOf(const T & t, int from) const
 
   int indexOf(T t, {int from = 0}) {
+    if (this is QList<Group>) {
+      final int_Func_voidstar_voidstar_int func = _dylib
+          .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_ffi_Int32_FFI>>(
+              '${getCFunctionName(348)}')
+          .asFunction();
+      return func(thisCpp,
+          (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp, from);
+    }
     if (this is QList<QByteArray>) {
       final int_Func_voidstar_voidstar_int func = _dylib
           .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_ffi_Int32_FFI>>(
@@ -704,6 +959,16 @@ class QList<T> {
   } // insert(int i, const T & t)
 
   insert(int i, T t) {
+    if (this is QList<Group>) {
+      final void_Func_voidstar_int_voidstar func = _dylib
+          .lookup<
+                  ffi.NativeFunction<
+                      void_Func_voidstar_ffi_Int32_voidstar_FFI>>(
+              '${getCFunctionName(349)}')
+          .asFunction();
+      func(thisCpp, i,
+          (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp);
+    }
     if (this is QList<QByteArray>) {
       final void_Func_voidstar_int_voidstar func = _dylib
           .lookup<
@@ -751,6 +1016,14 @@ class QList<T> {
   } // last()
 
   T last() {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+              '${getCFunctionName(353)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -773,6 +1046,14 @@ class QList<T> {
   } // lastIndexOf(const T & t, int from) const
 
   int lastIndexOf(T t, {int from = -1}) {
+    if (this is QList<Group>) {
+      final int_Func_voidstar_voidstar_int func = _dylib
+          .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_ffi_Int32_FFI>>(
+              '${getCFunctionName(355)}')
+          .asFunction();
+      return func(thisCpp,
+          (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp, from);
+    }
     if (this is QList<QByteArray>) {
       final int_Func_voidstar_voidstar_int func = _dylib
           .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_ffi_Int32_FFI>>(
@@ -829,6 +1110,13 @@ class QList<T> {
   } // prepend(const T & t)
 
   prepend(T t) {
+    if (this is QList<Group>) {
+      final void_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(372)}')
+          .asFunction();
+      func(thisCpp, (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp);
+    }
     if (this is QList<QByteArray>) {
       final void_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
@@ -848,6 +1136,13 @@ class QList<T> {
   } // push_back(const T & t)
 
   push_back(T t) {
+    if (this is QList<Group>) {
+      final void_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(373)}')
+          .asFunction();
+      func(thisCpp, (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp);
+    }
     if (this is QList<QByteArray>) {
       final void_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
@@ -867,6 +1162,13 @@ class QList<T> {
   } // push_front(const T & t)
 
   push_front(T t) {
+    if (this is QList<Group>) {
+      final void_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(374)}')
+          .asFunction();
+      func(thisCpp, (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp);
+    }
     if (this is QList<QByteArray>) {
       final void_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
@@ -886,6 +1188,14 @@ class QList<T> {
   } // removeAll(const T & t)
 
   int removeAll(T t) {
+    if (this is QList<Group>) {
+      final int_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(375)}')
+          .asFunction();
+      return func(
+          thisCpp, (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp);
+    }
     if (this is QList<QByteArray>) {
       final int_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
@@ -932,6 +1242,15 @@ class QList<T> {
   } // removeOne(const T & t)
 
   bool removeOne(T t) {
+    if (this is QList<Group>) {
+      final bool_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(379)}')
+          .asFunction();
+      return func(thisCpp,
+              (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp) !=
+          0;
+    }
     if (this is QList<QByteArray>) {
       final bool_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
@@ -959,6 +1278,16 @@ class QList<T> {
   } // replace(int i, const T & t)
 
   replace(int i, T t) {
+    if (this is QList<Group>) {
+      final void_Func_voidstar_int_voidstar func = _dylib
+          .lookup<
+                  ffi.NativeFunction<
+                      void_Func_voidstar_ffi_Int32_voidstar_FFI>>(
+              '${getCFunctionName(380)}')
+          .asFunction();
+      func(thisCpp, i,
+          (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp);
+    }
     if (this is QList<QByteArray>) {
       final void_Func_voidstar_int_voidstar func = _dylib
           .lookup<
@@ -1006,6 +1335,15 @@ class QList<T> {
   } // startsWith(const T & t) const
 
   bool startsWith(T t) {
+    if (this is QList<Group>) {
+      final bool_Func_voidstar_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+              '${getCFunctionName(384)}')
+          .asFunction();
+      return func(thisCpp,
+              (t as Group) == null ? ffi.nullptr : (t as Group).thisCpp) !=
+          0;
+    }
     if (this is QList<QByteArray>) {
       final bool_Func_voidstar_voidstar func = _dylib
           .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
@@ -1041,6 +1379,14 @@ class QList<T> {
   } // takeAt(int i)
 
   T takeAt(int i) {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar_int func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
+              '${getCFunctionName(387)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp, i);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar_int func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
@@ -1063,6 +1409,14 @@ class QList<T> {
   } // takeFirst()
 
   T takeFirst() {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+              '${getCFunctionName(388)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -1085,6 +1439,14 @@ class QList<T> {
   } // takeLast()
 
   T takeLast() {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+              '${getCFunctionName(389)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -1107,6 +1469,14 @@ class QList<T> {
   } // value(int i) const
 
   T value(int i) {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar_int func = _dylib
+          .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
+              '${getCFunctionName(390)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(thisCpp, i);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar_int func = _dylib
           .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
@@ -1129,6 +1499,21 @@ class QList<T> {
   } // value(int i, const T & defaultValue) const
 
   T value_2(int i, T defaultValue) {
+    if (this is QList<Group>) {
+      final voidstar_Func_voidstar_int_voidstar func = _dylib
+          .lookup<
+                  ffi.NativeFunction<
+                      voidstar_Func_voidstar_ffi_Int32_voidstar_FFI>>(
+              '${getCFunctionName(391)}')
+          .asFunction();
+      ffi.Pointer<void> result = func(
+          thisCpp,
+          i,
+          (defaultValue as Group) == null
+              ? ffi.nullptr
+              : (defaultValue as Group).thisCpp);
+      return (Group.fromCppPointer(result, false) as T);
+    }
     if (this is QList<QByteArray>) {
       final voidstar_Func_voidstar_int_voidstar func = _dylib
           .lookup<

@@ -59,6 +59,14 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__clearLayout')
         .asFunction();
     func(thisCpp);
+  } // containsFrame(const KDDockWidgets::Controllers::Group * arg__1) const
+
+  bool containsFrame(Group? arg__1) {
+    final bool_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__containsFrame_Group')
+        .asFunction();
+    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   } // containsItem(const Layouting::Item * arg__1) const
 
   bool containsItem(Item? arg__1) {
@@ -122,6 +130,28 @@ class Layout extends Controller {
     final result = dartInstance.eventFilter(
         QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
     return result ? 1 : 0;
+  } // groups() const
+
+  QList groups() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__groups')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return QList<Group>.fromCppPointer(result, true);
+  } // groupsFrom(KDDockWidgets::View * groupOrMultiSplitter) const
+
+  QList groupsFrom(View? groupOrMultiSplitter) {
+    final voidstar_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__groupsFrom_View')
+        .asFunction();
+    ffi.Pointer<void> result = func(
+        thisCpp,
+        groupOrMultiSplitter == null
+            ? ffi.nullptr
+            : groupOrMultiSplitter.thisCpp);
+    return QList<Group>.fromCppPointer(result, true);
   } // isInMainWindow(bool honourNesting) const
 
   bool isInMainWindow({bool honourNesting = false}) {
@@ -130,6 +160,16 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool')
         .asFunction();
     return func(thisCpp, honourNesting ? 1 : 0) != 0;
+  } // itemForFrame(const KDDockWidgets::Controllers::Group * group) const
+
+  Item itemForFrame(Group? group) {
+    final voidstar_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__itemForFrame_Group')
+        .asFunction();
+    ffi.Pointer<void> result =
+        func(thisCpp, group == null ? ffi.nullptr : group.thisCpp);
+    return Item.fromCppPointer(result, false);
   } // layoutHeight() const
 
   int layoutHeight() {
@@ -225,6 +265,15 @@ class Layout extends Controller {
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));
+  } // unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group* > & groupsBeingAdded) const
+
+  unrefOldPlaceholders(QList? groupsBeingAdded) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group')
+        .asFunction();
+    func(thisCpp,
+        groupsBeingAdded == null ? ffi.nullptr : groupsBeingAdded.thisCpp);
   } // updateSizeConstraints()
 
   updateSizeConstraints() {
@@ -267,7 +316,7 @@ class Layout extends Controller {
         return "c_KDDockWidgets__Controllers__Layout__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent";
-      case 811:
+      case 814:
         return "c_KDDockWidgets__Controllers__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -281,7 +330,7 @@ class Layout extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 811:
+      case 814:
         return "setParentView_impl";
     }
     throw Error();
@@ -307,9 +356,9 @@ class Layout extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback811 =
+    final callback814 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback811, 811);
+    registerCallback(thisCpp, callback814, 814);
   }
 }

@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 export 'src/Config.dart' show Config;
+export 'src/Group.dart' show Group;
 export 'src/DropArea.dart' show DropArea;
 export 'src/Layout.dart' show Layout;
 export 'src/View_flutter.dart' show View_flutter;

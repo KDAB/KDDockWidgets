@@ -18,6 +18,7 @@
 #include <qstring.h>
 #include <DropArea.h>
 #include <controllers/Layout.h>
+#include <Group.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class View_flutter_wrapper : public ::KDDockWidgets::Views::View_flutter

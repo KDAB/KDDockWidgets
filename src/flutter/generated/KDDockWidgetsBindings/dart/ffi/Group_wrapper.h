@@ -19,8 +19,8 @@
 #include <DropArea.h>
 #include <controllers/Layout.h>
 #include <qsize.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Group_wrapper : public ::KDDockWidgets::Controllers::Group
@@ -30,7 +30,11 @@ public:
     Group_wrapper(KDDockWidgets::View *parent = nullptr);
     void actualTitleBarChanged();
     void addTab(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::InitialOption arg__2 = {});
+    bool allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const;
+    bool allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const;
     bool alwaysShowsTabs() const;
+    bool anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const;
+    bool anyDockWidgetsHas(KDDockWidgets::LayoutSaverOption arg__1) const;
     bool anyNonClosable() const;
     bool anyNonDockable() const;
     bool beingDeletedLater() const;
@@ -116,8 +120,16 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__construc
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onActualTitleBarChanged(void *thisObj, void *contextQObject, void *callback); // KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::InitialOption arg__2)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__addTab_Group_InitialOption(void *thisObj, void *arg__1_, void *arg__2_);
+// KDDockWidgets::Controllers::Group::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1);
+// KDDockWidgets::Controllers::Group::allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__allDockWidgetsHave_LayoutSaverOption(void *thisObj, int arg__1);
 // KDDockWidgets::Controllers::Group::alwaysShowsTabs() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__alwaysShowsTabs(void *thisObj);
+// KDDockWidgets::Controllers::Group::anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__anyDockWidgetsHas_DockWidgetOption(void *thisObj, int arg__1);
+// KDDockWidgets::Controllers::Group::anyDockWidgetsHas(KDDockWidgets::LayoutSaverOption arg__1) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__anyDockWidgetsHas_LayoutSaverOption(void *thisObj, int arg__1);
 // KDDockWidgets::Controllers::Group::anyNonClosable() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__anyNonClosable(void *thisObj);
 // KDDockWidgets::Controllers::Group::anyNonDockable() const

@@ -40,6 +40,7 @@
 
 #include "../controllers/Layout.h"
 #include "../controllers/DropArea.h"
+#include "../controllers/Group.h"
 #include "../controllers/indicators/ClassicIndicators.h"
 #include "../views/ClassicIndicatorWindowViewInterface.h"
 
