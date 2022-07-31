@@ -23,8 +23,8 @@ class PositionedWidget extends StatefulWidget {
 
 class _PositionedWidgetState extends State<PositionedWidget> {
   final View_flutter kddwView;
-  int x = 100;
-  int y = 100;
+  int x = 0;
+  int y = 0;
   int width = 400;
   int height = 400;
 
@@ -33,11 +33,14 @@ class _PositionedWidgetState extends State<PositionedWidget> {
   _PositionedWidgetState(this.kddwView) {
     kddwView.updatePositionCallback = updatePosition;
     kddwView.updateSizeCallback = updateSize;
+
+    x = kddwView.m_x;
+    y = kddwView.m_y;
+    width = kddwView.m_width;
+    height = kddwView.m_height;
   }
 
   void updatePosition(int kddwX, int kddwY) {
-    final int kddwX = kddwView.x();
-    final int kddwY = kddwView.y();
     setState(() {
       this.x = kddwX;
       this.y = kddwY;

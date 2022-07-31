@@ -31,14 +31,27 @@ class View_flutter extends KDDockWidgetBindings.View_flutter {
   }
 
   View_flutter.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
-      : super.fromCppPointer(cppPointer, needsAutoDelete) {}
+      : super.fromCppPointer(cppPointer, needsAutoDelete) {
+    flutterWidget = PositionedWidget(this);
+  }
 
   setSize_2(int width, int height) {
     print("View_flutter::setSize called ${width}x${height}");
     if (m_width != width || m_height != height) {
-      m_height = height;
       m_width = width;
+      m_height = height;
       if (updateSizeCallback != null) updateSizeCallback!(width, height);
+    }
+  }
+
+  move_2(int x, int y) {
+    print("View_flutter::move called ${x},${y}");
+    if (m_x != x || m_y != y) {
+      m_x = x;
+      m_y = y;
+      print(updatePositionCallback);
+      print(updateSizeCallback);
+      if (updatePositionCallback != null) updatePositionCallback!(x, y);
     }
   }
 }

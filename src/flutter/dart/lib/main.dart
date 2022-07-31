@@ -18,9 +18,5 @@ void f(Function(int x, int y)? f) {
 
 void main(List<String> args) {
   var p = Platform_flutter();
-
   var config = KDDockWidgetBindings.Config.self();
-  print("Config.separatorThickness: ${config.separatorThickness()}");
-
-  print("Platform.name: " + p.name());
 }
