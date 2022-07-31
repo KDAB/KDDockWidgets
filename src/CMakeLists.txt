@@ -384,6 +384,7 @@ if(KDDW_FRONTEND_FLUTTER)
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers/indicators>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )
