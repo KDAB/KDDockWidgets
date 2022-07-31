@@ -20,6 +20,15 @@ import '../FinalizerHelpers.dart';
 var _dylib = Library.instance().dylib;
 
 //tag=1038
+class KDDockWidgets_Location {
+  static const Location_None = 0;
+  static const Location_OnLeft = 1;
+  static const Location_OnTop = 2;
+  static const Location_OnRight = 3;
+  static const Location_OnBottom = 4;
+}
+
+//tag=1038
 class KDDockWidgets_MainWindowOption {
   static const MainWindowOption_None = 0;
   static const MainWindowOption_HasCentralFrame = 1;
@@ -66,4 +75,18 @@ class KDDockWidgets_Type {
   static const RubberBand = 16384;
   static const DropAreaIndicatorOverlay = 32768;
   static const LAST = 16384;
+}
+//tag=1024
+
+//tag=1027
+// locationStr(KDDockWidgets::Location loc)
+QString locationStr(int loc) {
+//tag=1028
+  final voidstar_Func_int func = _dylib
+      .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_FFI>>(
+          'c_static_KDDockWidgets__locationStr_Location')
+      .asFunction();
+//tag=1033
+  ffi.Pointer<void> result = func(loc);
+  return QString.fromCppPointer(result, true);
 }

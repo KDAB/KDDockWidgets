@@ -37,6 +37,7 @@
         <object-type name="Controller" />
         <object-type name="Config" />
         <value-type name="CreateViewOptions" />
+        <value-type name="InitialOption" />
 
         <object-type name="Platform_flutter">
             <enum-type identified-by-value="DisplayType" />
@@ -45,6 +46,7 @@
         <enum-type name="MainWindowOption" flags="MainWindowOptions" />
         <enum-type name="Type" />
         <enum-type name="DropLocation" />
+        <enum-type name="Location" />
 
         <namespace-type name="Controllers">
             <object-type name="Layout" />

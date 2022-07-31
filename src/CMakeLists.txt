@@ -220,6 +220,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicatorWindowViewInterface_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicators_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Controller_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_wrapper.cpp
     # flutter/generated/KDDockWidgetsBindings/dart/ffi/View_wrapper.cpp
 )
 

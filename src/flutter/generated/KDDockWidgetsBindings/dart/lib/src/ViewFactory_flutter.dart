@@ -173,11 +173,11 @@ class ViewFactory_flutter extends ViewFactory {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 604:
-        return "c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators";
-      case 605:
-        return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
       case 606:
+        return "c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators";
+      case 607:
+        return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
+      case 608:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
       case 295:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
@@ -191,11 +191,11 @@ class ViewFactory_flutter extends ViewFactory {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 604:
-        return "createClassicIndicatorWindow";
-      case 605:
-        return "createDropArea";
       case 606:
+        return "createClassicIndicatorWindow";
+      case 607:
+        return "createDropArea";
+      case 608:
         return "createRubberBand";
       case 295:
         return "customEvent";
@@ -216,20 +216,20 @@ class ViewFactory_flutter extends ViewFactory {
         .asFunction();
 
 //tag=1021
-    final callback604 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createClassicIndicatorWindow_calledFromC);
-    registerCallback(thisCpp, callback604, 604);
-//tag=1021
-    final callback605 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createDropArea_calledFromC);
-    registerCallback(thisCpp, callback605, 605);
-//tag=1021
     final callback606 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createRubberBand_calledFromC);
+            ViewFactory_flutter.createClassicIndicatorWindow_calledFromC);
     registerCallback(thisCpp, callback606, 606);
+//tag=1021
+    final callback607 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createDropArea_calledFromC);
+    registerCallback(thisCpp, callback607, 607);
+//tag=1021
+    final callback608 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createRubberBand_calledFromC);
+    registerCallback(thisCpp, callback608, 608);
 //tag=1021
     final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(

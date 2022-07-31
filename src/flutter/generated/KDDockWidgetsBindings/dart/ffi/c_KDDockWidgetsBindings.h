@@ -1625,6 +1625,10 @@ void c_QByteArray__destructor(void *thisObj);
 
 // tag=1047
 void c_QByteArray_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::locationStr(KDDockWidgets::Location loc)
+void *c_static_KDDockWidgets__locationStr_Location(int loc);
+
 // tag=1047
 void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);
 // tag=1067
@@ -1897,6 +1901,27 @@ void c_KDDockWidgets__Platform_flutter__destructor(void *thisObj);
 void c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 void c_KDDockWidgets__Platform_flutter_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::InitialOption::InitialOption()
+void *c_KDDockWidgets__InitialOption__constructor();
+
+// tag=1067
+//  KDDockWidgets::InitialOption::InitialOption(QSize size)
+void *c_KDDockWidgets__InitialOption__constructor_QSize(void *size_);
+
+// tag=1067
+//  KDDockWidgets::InitialOption::preservesCurrentTab() const
+bool c_KDDockWidgets__InitialOption__preservesCurrentTab(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::InitialOption::startsHidden() const
+bool c_KDDockWidgets__InitialOption__startsHidden(void *thisObj);
+
+// tag=1066
+void c_KDDockWidgets__InitialOption__destructor(void *thisObj);
+
+// tag=1047
+void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::CreateViewOptions::CreateViewOptions()
 void *c_KDDockWidgets__CreateViewOptions__constructor();
@@ -2750,6 +2775,14 @@ void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *
 // tag=1067
 //  KDDockWidgets::Controllers::DropArea::DropArea(KDDockWidgets::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
 void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location)
+void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location(void *thisObj, void *splitter_, int location);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location)
+void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location(void *thisObj, void *widget_, int location);
 
 // tag=1067
 //  KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)

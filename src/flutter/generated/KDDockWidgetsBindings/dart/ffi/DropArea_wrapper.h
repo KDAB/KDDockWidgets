@@ -27,6 +27,10 @@ public:
     // tag=1041
     DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper = false);
     // tag=1041
+    void addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter, KDDockWidgets::Location location);
+    // tag=1041
+    void addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location);
+    // tag=1041
     virtual void customEvent(QEvent *event);
     // tag=1008
     virtual void customEvent_nocallback(QEvent *event);
@@ -73,6 +77,14 @@ extern "C" {
 // tag=1067
 //  KDDockWidgets::Controllers::DropArea::DropArea(KDDockWidgets::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location(void *thisObj, void *splitter_, int location);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location(void *thisObj, void *widget_, int location);
 
 // tag=1067
 //  KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)

@@ -51,6 +51,32 @@ class DropArea extends Layout {
 //tag=1024
 
 //tag=1027
+// addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location)
+  addMultiSplitter(DropArea? splitter, int location) {
+//tag=1028
+    final void_Func_voidstar_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location')
+        .asFunction();
+//tag=1030
+    func(thisCpp, splitter == null ? ffi.nullptr : splitter.thisCpp, location);
+  }
+//tag=1024
+
+//tag=1027
+// addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location)
+  addWidget(View? widget, int location) {
+//tag=1028
+    final void_Func_voidstar_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location')
+        .asFunction();
+//tag=1030
+    func(thisCpp, widget == null ? ffi.nullptr : widget.thisCpp, location);
+  }
+//tag=1024
+
+//tag=1027
 // availableSize() const
   QSize availableSize() {
 //tag=1028
@@ -238,7 +264,7 @@ class DropArea extends Layout {
         return "c_KDDockWidgets__Controllers__DropArea__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent";
-      case 719:
+      case 725:
         return "c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -252,7 +278,7 @@ class DropArea extends Layout {
         return "event";
       case 307:
         return "eventFilter";
-      case 719:
+      case 725:
         return "setParentView_impl";
     }
     throw Error();
@@ -284,9 +310,9 @@ class DropArea extends Layout {
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
 //tag=1021
-    final callback719 =
+    final callback725 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback719, 719);
+    registerCallback(thisCpp, callback725, 725);
   }
 }

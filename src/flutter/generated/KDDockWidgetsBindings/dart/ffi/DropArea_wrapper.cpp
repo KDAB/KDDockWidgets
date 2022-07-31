@@ -32,6 +32,20 @@ DropArea_wrapper::DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWid
     : ::KDDockWidgets::Controllers::DropArea(parent, options, isMDIWrapper)
 {
 }
+void DropArea_wrapper::addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter, KDDockWidgets::Location location)
+{
+    // tag=1000
+
+    // tag=1004
+    ::KDDockWidgets::Controllers::DropArea::addMultiSplitter(splitter, location);
+}
+void DropArea_wrapper::addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location)
+{
+    // tag=1000
+
+    // tag=1004
+    ::KDDockWidgets::Controllers::DropArea::addWidget(widget, location);
+}
 void DropArea_wrapper::customEvent(QEvent *event)
 {
     // tag=1000
@@ -180,6 +194,24 @@ void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions
 }
 
 // tag=1050
+// addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location)
+void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location(void *thisObj, void *splitter_, int location)
+{
+    auto splitter = reinterpret_cast<KDDockWidgets::Controllers::DropArea *>(splitter_);
+    // tag=1010
+    fromPtr(thisObj)->addMultiSplitter(splitter, static_cast<KDDockWidgets::Location>(location));
+}
+
+// tag=1050
+// addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location)
+void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location(void *thisObj, void *widget_, int location)
+{
+    auto widget = reinterpret_cast<KDDockWidgets::View *>(widget_);
+    // tag=1010
+    fromPtr(thisObj)->addWidget(widget, static_cast<KDDockWidgets::Location>(location));
+}
+
+// tag=1050
 // customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, void *event_)
 {
@@ -295,7 +327,7 @@ void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void 
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_eventFilter>(callback);
         break;
-    case 719:
+    case 725:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_setParentView_impl>(callback);
         break;
     }
