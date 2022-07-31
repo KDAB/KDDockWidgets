@@ -13,6 +13,8 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <ViewFactory.h>
 #include <qstring.h>
+#include <ClassicIndicatorWindowViewInterface.h>
+#include <ClassicIndicators.h>
 #include <View.h>
 #include <DropArea.h>
 #include <qobject.h>
@@ -28,6 +30,10 @@ public:
     ~ViewFactory_wrapper();
     // tag=1041
     ViewFactory_wrapper();
+    // tag=1041
+    virtual KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators *arg__1) const;
+    // tag=1008
+    virtual KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow_nocallback(KDDockWidgets::Controllers::ClassicIndicators *arg__1) const;
     // tag=1041
     virtual KDDockWidgets::View *createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const;
     // tag=1008
@@ -51,6 +57,9 @@ public:
     // tag=1041
     static QString tr(const char *s, const char *c, int n);
     // tag=1042
+    typedef KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Controllers::ClassicIndicators *arg__1);
+    Callback_createClassicIndicatorWindow m_createClassicIndicatorWindowCallback = nullptr;
+    // tag=1042
     typedef KDDockWidgets::View *(*Callback_createDropArea)(void *, KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent);
     Callback_createDropArea m_createDropAreaCallback = nullptr;
     // tag=1042
@@ -72,6 +81,10 @@ extern "C" {
 // tag=1067
 //  KDDockWidgets::ViewFactory::ViewFactory()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__constructor();
+
+// tag=1067
+//  KDDockWidgets::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
 
 // tag=1067
 //  KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const

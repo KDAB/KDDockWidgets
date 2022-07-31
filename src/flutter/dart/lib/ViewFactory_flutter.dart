@@ -25,4 +25,11 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
     print("ViewFactory_flutter: Created DropArea");
     return da;
   }
+
+  KDDockWidgetBindings.ClassicIndicatorWindowViewInterface
+      createClassicIndicatorWindow(
+          KDDockWidgetBindings.ClassicIndicators? indicators) {
+    print("ViewFactory_flutter: createClassicIndicatorWindow");
+    return KDDockWidgetBindings.ClassicIndicatorWindowViewInterface();
+  }
 }

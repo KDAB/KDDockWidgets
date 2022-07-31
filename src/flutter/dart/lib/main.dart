@@ -12,6 +12,10 @@
 import 'package:KDDockWidgets/Platform_flutter.dart';
 import 'package:KDDockWidgetsBindings/src/Config.dart' as KDDockWidgetBindings;
 
+void f(Function(int x, int y)? f) {
+  if (f != null) f(0, 0);
+}
+
 void main(List<String> args) {
   var p = Platform_flutter();
 

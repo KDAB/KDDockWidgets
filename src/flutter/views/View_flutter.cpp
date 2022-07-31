@@ -47,8 +47,9 @@ void View_flutter::setVisible(bool)
 {
 }
 
-void View_flutter::setSize(int, int)
+void View_flutter::setSize(int w, int h)
 {
+    qDebug() << "View_flutter::setSize()" << w << h << this;
 }
 
 std::shared_ptr<View> View_flutter::rootView() const

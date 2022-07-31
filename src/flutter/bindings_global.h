@@ -40,6 +40,8 @@
 
 #include "../controllers/Layout.h"
 #include "../controllers/DropArea.h"
+#include "../controllers/indicators/ClassicIndicators.h"
+#include "../views/ClassicIndicatorWindowViewInterface.h"
 
 #include "../KDDockWidgets.h"
 #include "../Config.h"

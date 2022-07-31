@@ -47,6 +47,38 @@ class ViewFactory extends QObject {
 //tag=1024
 
 //tag=1027
+// createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
+  ClassicIndicatorWindowViewInterface createClassicIndicatorWindow(
+      ClassicIndicators? arg__1) {
+//tag=1028
+    final voidstar_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(604))
+        .asFunction();
+//tag=1033
+    ffi.Pointer<void> result =
+        func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+    return ClassicIndicatorWindowViewInterface.fromCppPointer(result, false);
+  }
+
+//tag=1035
+  static ffi.Pointer<void> createClassicIndicatorWindow_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const! (${thisCpp.address})");
+      throw Error();
+    }
+//tag=1037
+    final result = dartInstance
+        .createClassicIndicatorWindow(ClassicIndicators.fromCppPointer(arg__1));
+    return result.thisCpp;
+  }
+//tag=1024
+
+//tag=1027
 // createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
   View createDropArea(DropArea? arg__1, View? parent) {
 //tag=1028
@@ -54,7 +86,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(593))
+            cFunctionSymbolName(605))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result = func(
@@ -87,7 +119,7 @@ class ViewFactory extends QObject {
 //tag=1028
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(594))
+            cFunctionSymbolName(606))
         .asFunction();
 //tag=1033
     ffi.Pointer<void> result =
@@ -186,9 +218,11 @@ class ViewFactory extends QObject {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 593:
+      case 604:
+        return "c_KDDockWidgets__ViewFactory__createClassicIndicatorWindow_ClassicIndicators";
+      case 605:
         return "c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View";
-      case 594:
+      case 606:
         return "c_KDDockWidgets__ViewFactory__createRubberBand_View";
       case 295:
         return "c_KDDockWidgets__ViewFactory__customEvent_QEvent";
@@ -202,9 +236,11 @@ class ViewFactory extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 593:
+      case 604:
+        return "createClassicIndicatorWindow";
+      case 605:
         return "createDropArea";
-      case 594:
+      case 606:
         return "createRubberBand";
       case 295:
         return "customEvent";
@@ -225,15 +261,20 @@ class ViewFactory extends QObject {
         .asFunction();
 
 //tag=1021
-    final callback593 =
+    final callback604 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            ViewFactory.createClassicIndicatorWindow_calledFromC);
+    registerCallback(thisCpp, callback604, 604);
+//tag=1021
+    final callback605 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             ViewFactory.createDropArea_calledFromC);
-    registerCallback(thisCpp, callback593, 593);
+    registerCallback(thisCpp, callback605, 605);
 //tag=1021
-    final callback594 =
+    final callback606 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback594, 594);
+    registerCallback(thisCpp, callback606, 606);
 //tag=1021
     final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(

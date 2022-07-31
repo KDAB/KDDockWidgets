@@ -14,13 +14,21 @@ export 'src/Layout.dart' show Layout;
 export 'src/View_flutter.dart' show View_flutter;
 export 'src/View.dart' show View;
 export 'src/Controller.dart' show Controller;
+export 'src/ClassicIndicators.dart' show ClassicIndicators;
 export 'src/CreateViewOptions.dart' show CreateViewOptions;
 export 'src/Platform_flutter.dart' show Platform_flutter;
 export 'src/ViewFactory_flutter.dart' show ViewFactory_flutter;
 export 'src/ViewFactory.dart' show ViewFactory;
+export 'src/ClassicIndicatorWindowViewInterface.dart'
+    show ClassicIndicatorWindowViewInterface;
 export 'src/Views.dart' show asView_flutter, asView_flutter;
 export 'src/KDDockWidgets.dart'
-    show qt_getEnumName, KDDockWidgets_MainWindowOption, KDDockWidgets_Type;
+    show
+        qt_getEnumName,
+        qt_getEnumName,
+        KDDockWidgets_MainWindowOption,
+        KDDockWidgets_DropLocation,
+        KDDockWidgets_Type;
 export 'src/QByteArray.dart' show QByteArray;
 export 'src/QEvent.dart' show QEvent, QEvent_Type;
 export 'src/QList.dart' show QList;

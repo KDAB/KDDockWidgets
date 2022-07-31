@@ -15,11 +15,11 @@
 #include <View.h>
 #include <qsize.h>
 #include <DropArea.h>
-#include <qrect.h>
+#include <qobject.h>
 #include <qcoreevent.h>
 #include <qstring.h>
 #include <qpoint.h>
-#include <qobject.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017

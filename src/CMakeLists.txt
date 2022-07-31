@@ -217,6 +217,10 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DropArea_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Layout_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ViewFactory_flutter_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicatorWindowViewInterface_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicators_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Controller_wrapper.cpp
+    # flutter/generated/KDDockWidgetsBindings/dart/ffi/View_wrapper.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
@@ -378,6 +382,8 @@ if(KDDW_FRONTEND_FLUTTER)
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers/indicators>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )
 
@@ -387,9 +393,8 @@ if(KDDW_FRONTEND_FLUTTER)
     if(NOT MSVC)
         set_source_files_properties(
             ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
-            PROPERTIES
-                COMPILE_FLAGS
-                "-Wno-unused-function -Wno-unused-variable -Wno-format-security -Wno-unused-parameter -Wno-shadow -Wno-sign-conversion"
+            PROPERTIES COMPILE_FLAGS "-Wno-unused-function -Wno-unused-variable -Wno-format-security \
+                -Wno-unused-parameter -Wno-shadow -Wno-sign-conversion"
         )
     endif()
 endif()

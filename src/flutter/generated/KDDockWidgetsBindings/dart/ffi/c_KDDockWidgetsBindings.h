@@ -1638,8 +1638,59 @@ void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_);
 // tag=1047
 void c_KDDockWidgets__Views_Finalizer(void *, void *cppObj, void *);
 // tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::ClassicIndicatorWindowViewInterface()
+void *c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__constructor();
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::hover(QPoint arg__1)
+int c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__hover_QPoint(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::isWindow() const
+bool c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__isWindow(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::posForIndicator(KDDockWidgets::DropLocation arg__1) const
+void *c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__posForIndicator_DropLocation(void *thisObj, int arg__1);
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::raise()
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__raise(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::resize(QSize arg__1)
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__resize_QSize(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setGeometry(QRect arg__1)
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__setGeometry_QRect(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setObjectName(const QString & arg__1)
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__setObjectName_QString(void *thisObj, const char *arg__1_);
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setVisible(bool arg__1)
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__setVisible_bool(void *thisObj, bool arg__1);
+
+// tag=1067
+//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::updatePositions()
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
+
+// tag=1066
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);
+
+// tag=1046
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+// tag=1047
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface_Finalizer(void *, void *cppObj, void *);
+// tag=1067
 //  KDDockWidgets::ViewFactory::ViewFactory()
 void *c_KDDockWidgets__ViewFactory__constructor();
+
+// tag=1067
+//  KDDockWidgets::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
+void *c_KDDockWidgets__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
 
 // tag=1067
 //  KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
@@ -1675,6 +1726,10 @@ void c_KDDockWidgets__ViewFactory_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::ViewFactory_flutter::ViewFactory_flutter()
 void *c_KDDockWidgets__ViewFactory_flutter__constructor();
+
+// tag=1067
+//  KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
+void *c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
 
 // tag=1067
 //  KDDockWidgets::ViewFactory_flutter::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
@@ -1865,6 +1920,47 @@ void c_KDDockWidgets__CreateViewOptions___set_createWindow_bool(void *thisObj, b
 void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
 // tag=1047
 void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  KDDockWidgets::Controllers::ClassicIndicators::ClassicIndicators(KDDockWidgets::Controllers::DropArea * dropArea)
+void *c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea(void *dropArea_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::ClassicIndicators::hover_impl(QPoint globalPos)
+int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj, void *globalPos_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::ClassicIndicators::indicatorsVisibleChanged()
+void c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged(void *thisObj);
+
+// tag=1078
+void c_KDDockWidgets__Controllers__ClassicIndicators__onIndicatorsVisibleChanged(void *thisObj, void *contextQObject, void *callback);
+// tag=1067
+//  KDDockWidgets::Controllers::ClassicIndicators::onResize(QSize newSize)
+bool c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_);
+
+// tag=1067
+//  KDDockWidgets::Controllers::ClassicIndicators::posForIndicator(KDDockWidgets::DropLocation arg__1) const
+void *c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation(void *thisObj, int arg__1);
+
+// tag=1067
+//  KDDockWidgets::Controllers::ClassicIndicators::setDropLocation(KDDockWidgets::DropLocation arg__1)
+void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocation(void *thisObj, int arg__1);
+
+// tag=1067
+//  KDDockWidgets::Controllers::ClassicIndicators::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s, const char *c, int n);
+
+// tag=1067
+//  KDDockWidgets::Controllers::ClassicIndicators::updateVisibility()
+void c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility(void *thisObj);
+
+// tag=1066
+void c_KDDockWidgets__Controllers__ClassicIndicators__destructor(void *thisObj);
+
+// tag=1046
+void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+// tag=1047
+void c_KDDockWidgets__Controllers__ClassicIndicators_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::View * arg__2)
 void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_);

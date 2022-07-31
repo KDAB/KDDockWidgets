@@ -455,7 +455,7 @@ int c_KDDockWidgets__Controller__type(void *thisObj)
 {
     return
         // tag=1010
-        fromPtr(thisObj)->type();
+        int(fromPtr(thisObj)->type());
 }
 
 // tag=1050
@@ -513,7 +513,7 @@ void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void 
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_eventFilter>(callback);
         break;
-    case 695:
+    case 719:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

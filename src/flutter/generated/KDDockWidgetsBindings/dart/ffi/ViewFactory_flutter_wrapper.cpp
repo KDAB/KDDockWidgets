@@ -32,6 +32,24 @@ ViewFactory_flutter_wrapper::ViewFactory_flutter_wrapper()
     : ::KDDockWidgets::ViewFactory_flutter()
 {
 }
+KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_flutter_wrapper::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators *arg__1) const
+{
+    // tag=1000
+    if (m_createClassicIndicatorWindowCallback) {
+        // tag=1001
+        const void *thisPtr = this;
+        return m_createClassicIndicatorWindowCallback(const_cast<void *>(thisPtr), arg__1);
+    } else {
+        // tag=1002
+        return ::KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(arg__1);
+    }
+}
+// tag=1009
+KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_flutter_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Controllers::ClassicIndicators *arg__1) const
+{
+    // tag=1003
+    return ::KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(arg__1);
+}
 KDDockWidgets::View *ViewFactory_flutter_wrapper::createDropArea(KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent) const
 {
     // tag=1000
@@ -162,6 +180,16 @@ void *c_KDDockWidgets__ViewFactory_flutter__constructor()
 }
 
 // tag=1050
+// createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
+void *c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::ClassicIndicators *>(arg__1_);
+    return
+        // tag=1016
+        [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createClassicIndicatorWindow_nocallback(arg__1);} else {    return targetPtr->createClassicIndicatorWindow(arg__1);} }();
+}
+
+// tag=1050
 // createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_)
 {
@@ -235,10 +263,13 @@ void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *p
     // tag=1048
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 593:
+    case 604:
+        wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createClassicIndicatorWindow>(callback);
+        break;
+    case 605:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createDropArea>(callback);
         break;
-    case 594:
+    case 606:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createRubberBand>(callback);
         break;
     case 295:

@@ -364,7 +364,7 @@ class Layout extends Controller {
         return "c_KDDockWidgets__Controllers__Layout__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent";
-      case 695:
+      case 719:
         return "c_KDDockWidgets__Controllers__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -378,7 +378,7 @@ class Layout extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 695:
+      case 719:
         return "setParentView_impl";
     }
     throw Error();
@@ -410,9 +410,9 @@ class Layout extends Controller {
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
 //tag=1021
-    final callback695 =
+    final callback719 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback695, 695);
+    registerCallback(thisCpp, callback719, 719);
   }
 }

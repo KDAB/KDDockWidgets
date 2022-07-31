@@ -44,14 +44,17 @@
 
         <enum-type name="MainWindowOption" flags="MainWindowOptions" />
         <enum-type name="Type" />
+        <enum-type name="DropLocation" />
 
         <namespace-type name="Controllers">
             <object-type name="Layout" />
             <object-type name="DropArea" />
+            <object-type name="ClassicIndicators" />
         </namespace-type>
 
         <namespace-type name="Views">
             <object-type name="View_flutter" />
+            <object-type name="ClassicIndicatorWindowViewInterface" />
         </namespace-type>
 
     </namespace-type>

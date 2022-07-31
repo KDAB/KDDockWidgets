@@ -186,35 +186,6 @@ class Controller extends QObject {
 //tag=1030
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
-
-//tag=1077
-  void onParentViewChanged(Function callback, {QObject? context}) {
-    final SignalHandler func = _dylib
-        .lookup<ffi.NativeFunction<SignalHandler_FFI>>(
-            'c_KDDockWidgets__Controller__onParentViewChanged_View')
-        .asFunction();
-    final dartCallback =
-        ffi.Pointer.fromFunction<ffi.Void Function(ffi.Pointer<void>)>(
-            onParentViewChanged_callback);
-    final callbackMethod = onParentViewChanged_callback;
-    var handlers = signalHandlerersBySignal[callbackMethod] ?? [];
-    handlers.add(callback);
-    signalHandlerersBySignal[callbackMethod] = handlers;
-    ffi.Pointer<void> contextPtr =
-        context == null ? ffi.nullptr : context.thisCpp;
-    func(thisCpp, contextPtr, dartCallback);
-  }
-
-  static void onParentViewChanged_callback(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as Controller;
-    final signalHandlers =
-        dartInstance.signalHandlerersBySignal[onParentViewChanged_callback] ??
-            [];
-    for (var signalHandler in signalHandlers) {
-      signalHandler();
-    }
-  }
 //tag=1024
 
 //tag=1027
@@ -264,7 +235,7 @@ class Controller extends QObject {
 //tag=1028
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(695))
+            cFunctionSymbolName(719))
         .asFunction();
 //tag=1030
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
@@ -424,7 +395,7 @@ class Controller extends QObject {
         return "c_KDDockWidgets__Controller__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controller__eventFilter_QObject_QEvent";
-      case 695:
+      case 719:
         return "c_KDDockWidgets__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -438,7 +409,7 @@ class Controller extends QObject {
         return "event";
       case 307:
         return "eventFilter";
-      case 695:
+      case 719:
         return "setParentView_impl";
     }
     throw Error();
@@ -470,9 +441,9 @@ class Controller extends QObject {
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
 //tag=1021
-    final callback695 =
+    final callback719 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback695, 695);
+    registerCallback(thisCpp, callback719, 719);
   }
 }

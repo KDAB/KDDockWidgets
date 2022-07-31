@@ -144,34 +144,6 @@ class QObject {
 //tag=1030
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
-
-//tag=1077
-  void onDestroyed(Function callback, {QObject? context}) {
-    final SignalHandler func = _dylib
-        .lookup<ffi.NativeFunction<SignalHandler_FFI>>(
-            'c_QObject__onDestroyed_QObject')
-        .asFunction();
-    final dartCallback =
-        ffi.Pointer.fromFunction<ffi.Void Function(ffi.Pointer<void>)>(
-            onDestroyed_callback);
-    final callbackMethod = onDestroyed_callback;
-    var handlers = signalHandlerersBySignal[callbackMethod] ?? [];
-    handlers.add(callback);
-    signalHandlerersBySignal[callbackMethod] = handlers;
-    ffi.Pointer<void> contextPtr =
-        context == null ? ffi.nullptr : context.thisCpp;
-    func(thisCpp, contextPtr, dartCallback);
-  }
-
-  static void onDestroyed_callback(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as QObject;
-    final signalHandlers =
-        dartInstance.signalHandlerersBySignal[onDestroyed_callback] ?? [];
-    for (var signalHandler in signalHandlers) {
-      signalHandler();
-    }
-  }
 //tag=1024
 
 //tag=1027

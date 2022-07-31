@@ -28,6 +28,24 @@ class KDDockWidgets_MainWindowOption {
 }
 
 //tag=1038
+class KDDockWidgets_DropLocation {
+  static const DropLocation_None = 0;
+  static const DropLocation_Left = 1;
+  static const DropLocation_Top = 2;
+  static const DropLocation_Right = 4;
+  static const DropLocation_Bottom = 8;
+  static const DropLocation_Center = 16;
+  static const DropLocation_OutterLeft = 32;
+  static const DropLocation_OutterTop = 64;
+  static const DropLocation_OutterRight = 128;
+  static const DropLocation_OutterBottom = 256;
+  static const DropLocation_Inner = 15;
+  static const DropLocation_Outter = 480;
+  static const DropLocation_Horizontal = 165;
+  static const DropLocation_Vertical = 330;
+}
+
+//tag=1038
 class KDDockWidgets_Type {
   static const FIRST = 1;
   static const None = 0;
