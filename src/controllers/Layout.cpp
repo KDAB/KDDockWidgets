@@ -160,7 +160,7 @@ void Layout::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *it
     if (tabIndex != -1 && group->dockWidgetCount() >= tabIndex) {
         group->insertWidget(dw, tabIndex);
     } else {
-        group->addWidget(dw);
+        group->addTab(dw);
     }
 
     group->setVisible(true);

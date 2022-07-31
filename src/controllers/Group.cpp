@@ -219,28 +219,28 @@ void Group::onDockWidgetTitleChanged()
     }
 }
 
-void Group::addWidget(DockWidget *dockWidget, InitialOption addingOption)
+void Group::addTab(DockWidget *dockWidget, InitialOption addingOption)
 {
     insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
 }
 
-void Group::addWidget(Group *group, InitialOption addingOption)
+void Group::addTab(Group *group, InitialOption addingOption)
 {
     if (group->isEmpty()) {
-        qWarning() << "Group::addWidget: group is empty." << group;
+        qWarning() << "Group::addTab: group is empty." << group;
         return;
     }
 
     const auto &docks = group->dockWidgets();
     for (DockWidget *dockWidget : docks)
-        addWidget(dockWidget, addingOption);
+        addTab(dockWidget, addingOption);
 }
 
-void Group::addWidget(FloatingWindow *floatingWindow, InitialOption addingOption)
+void Group::addTab(FloatingWindow *floatingWindow, InitialOption addingOption)
 {
     Q_ASSERT(floatingWindow);
     for (Group *f : floatingWindow->groups())
-        addWidget(f, addingOption);
+        addTab(f, addingOption);
 }
 
 void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption addingOption)
@@ -248,7 +248,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
         if (!dockWidget->isPersistentCentralDockWidget())
-            qWarning() << "Group::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
+            qWarning() << "Group::addTab dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
         return;
     }
     if (m_layoutItem)
@@ -299,7 +299,7 @@ FloatingWindow *Group::detachTab(DockWidget *dockWidget)
 
     auto newFrame = new Group();
     const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
-    newFrame->addWidget(dockWidget);
+    newFrame->addTab(dockWidget);
 
     // We're potentially already dead at this point, as groups with 0 tabs auto-destruct. Don't access members from this point.
 
@@ -743,7 +743,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
 
     for (const auto &savedDock : qAsConst(f.dockWidgets)) {
         if (DockWidget *dw = DockWidget::deserialize(savedDock)) {
-            group->addWidget(dw);
+            group->addTab(dw);
         }
     }
 

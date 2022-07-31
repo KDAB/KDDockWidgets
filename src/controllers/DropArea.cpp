@@ -190,11 +190,11 @@ void DropArea::addDockWidget(Controllers::DockWidget *dw, Location location,
             group = oldFrame;
         } else {
             group = new Controllers::Group();
-            group->addWidget(dw);
+            group->addTab(dw);
         }
     } else {
         group = new Controllers::Group();
-        group->addWidget(dw);
+        group->addTab(dw);
     }
 
     if (option.startsHidden()) {
@@ -359,7 +359,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *accep
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;
         if (!validateAffinity(droppedWindow, acceptingFrame))
             return false;
-        acceptingFrame->addWidget(droppedWindow);
+        acceptingFrame->addTab(droppedWindow);
         break;
 
     default:
@@ -403,7 +403,7 @@ bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location, Contr
             return false;
 
         auto group = new Controllers::Group();
-        group->addWidget(dock);
+        group->addTab(dock);
         addWidget(group->view(), location, relativeTo, DefaultSizeMode::FairButFloor);
     } else if (auto floatingWindow = droppedWindow->asFloatingWindowController()) {
         if (!validateAffinity(floatingWindow))
@@ -571,7 +571,7 @@ void DropArea::addWidget(View *w, Location location,
         newItem = new Layouting::Item(thisView);
         group = new Controllers::Group();
         newItem->setGuestView(group->view());
-        group->addWidget(dw, option);
+        group->addTab(dw, option);
     } else if (auto ms = w->asDropAreaController()) {
         newItem = ms->m_rootItem;
         newItem->setHostView(thisView);

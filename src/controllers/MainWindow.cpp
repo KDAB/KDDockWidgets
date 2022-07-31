@@ -95,7 +95,7 @@ public:
             return nullptr;
         }
 
-        group->addWidget(dw);
+        group->addTab(dw);
         return dw;
     }
 
@@ -184,7 +184,7 @@ void MainWindow::addDockWidgetAsTab(Controllers::DockWidget *widget)
                    << "MainWindowOption_HasCentralWidget can only have 1 widget in the center."
                    << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports tabbing";
     } else if (d->supportsCentralFrame()) {
-        dropArea()->m_centralFrame->addWidget(widget);
+        dropArea()->m_centralFrame->addTab(widget);
     } else {
         qWarning() << Q_FUNC_INFO << "Not supported without MainWindowOption_HasCentralFrame";
     }
@@ -588,7 +588,7 @@ void MainWindow::overlayOnSideBar(Controllers::DockWidget *dw)
     auto group = new Controllers::Group(nullptr, FrameOption_IsOverlayed);
     group->setParentView(view());
     d->m_overlayedDockWidget = dw;
-    group->addWidget(dw);
+    group->addTab(dw);
     d->updateOverlayGeometry(dw->d->lastPosition()->lastOverlayedGeometry(sb->location()).size());
 
     group->setAllowedResizeSides(d->allowedResizeSides(sb->location()));

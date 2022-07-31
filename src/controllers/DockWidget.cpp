@@ -123,7 +123,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
     }
 
     other->setParentView(nullptr);
-    group->addWidget(other, option);
+    group->addTab(other, option);
 }
 
 void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
@@ -559,7 +559,7 @@ Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
         }
 
         auto group = new Controllers::Group();
-        group->addWidget(q);
+        group->addTab(q);
         geo.setSize(geo.size().boundedTo(group->view()->maxSizeHint()));
         geo.setSize(geo.size().expandedTo(group->view()->minSize()));
         Controllers::FloatingWindow::ensureRectIsOnScreen(geo);

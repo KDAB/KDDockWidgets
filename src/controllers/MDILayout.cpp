@@ -49,7 +49,7 @@ void MDILayout::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initi
         newItem->setGuestView(group->view());
     } else {
         group = new Controllers::Group();
-        group->addWidget(dw, addingOption);
+        group->addTab(dw, addingOption);
 
         newItem->setGuestView(group->view());
     }
