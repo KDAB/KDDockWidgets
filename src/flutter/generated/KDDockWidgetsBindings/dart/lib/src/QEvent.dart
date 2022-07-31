@@ -8,21 +8,17 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-
-//tag=1052
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'TypeHelpers.dart';
 import '../Bindings.dart';
 import '../FinalizerHelpers.dart';
 
-//tag=1051
 var _dylib = Library.instance().dylib;
 final _finalizer =
     _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
         'c_QEvent_Finalizer');
 
-//tag=1038
 class QEvent_Type {
   static const None = 0;
   static const Timer = 1;
@@ -199,7 +195,6 @@ class QEvent_Type {
 }
 
 class QEvent {
-//tag=1060
   static var s_dartInstanceByCppPtr = Map<int, QEvent>();
   var _thisCpp = null;
   bool _needsAutoDelete = false;
@@ -212,25 +207,18 @@ class QEvent {
   }
 
   static bool isCached(var cppPointer) {
-//tag=1024
     return s_dartInstanceByCppPtr.containsKey(cppPointer.address);
   }
 
-//tag=1061
   factory QEvent.fromCache(var cppPointer, [needsAutoDelete = false]) {
     return (s_dartInstanceByCppPtr[cppPointer.address] ??
         QEvent.fromCppPointer(cppPointer, needsAutoDelete)) as QEvent;
   }
   QEvent.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
-//tag=1024
     thisCpp = cppPointer;
   }
-//tag=1025
-  QEvent.init() {}
-//tag=1023
-//QEvent(QEvent::Type type)
+  QEvent.init() {} //QEvent(QEvent::Type type)
   QEvent(int type) {
-//tag=1075
     final voidstar_Func_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_FFI>>(
             'c_QEvent__constructor_Type')
@@ -238,111 +226,69 @@ class QEvent {
     thisCpp = func(type);
     QEvent.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  }
-//tag=1024
-
-//tag=1027
-// accept()
+  } // accept()
   accept() {
-//tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>('c_QEvent__accept')
         .asFunction();
-//tag=1030
     func(thisCpp);
-  }
-//tag=1024
+  } // ignore()
 
-//tag=1027
-// ignore()
   ignore() {
-//tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>('c_QEvent__ignore')
         .asFunction();
-//tag=1030
     func(thisCpp);
-  }
-//tag=1024
+  } // isAccepted() const
 
-//tag=1027
-// isAccepted() const
   bool isAccepted() {
-//tag=1028
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
             'c_QEvent__isAccepted')
         .asFunction();
-//tag=1029
     return func(thisCpp) != 0;
   }
 
-//tag=1024
-  static
-//tag=1027
-// registerEventType(int hint)
+  static // registerEventType(int hint)
       int registerEventType({int hint = -1}) {
-//tag=1028
     final int_Func_int func = _dylib
         .lookup<ffi.NativeFunction<int_Func_ffi_Int32_FFI>>(
             'c_static_QEvent__registerEventType_int')
         .asFunction();
-//tag=1031
     return func(hint);
-  }
-//tag=1024
+  } // setAccepted(bool accepted)
 
-//tag=1027
-// setAccepted(bool accepted)
   setAccepted(bool accepted) {
-//tag=1028
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
             'c_QEvent__setAccepted_bool')
         .asFunction();
-//tag=1030
     func(thisCpp, accepted ? 1 : 0);
-  }
-//tag=1024
+  } // setSpontaneous()
 
-//tag=1027
-// setSpontaneous()
   setSpontaneous() {
-//tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
             'c_QEvent__setSpontaneous')
         .asFunction();
-//tag=1030
     func(thisCpp);
-  }
-//tag=1024
+  } // spontaneous() const
 
-//tag=1027
-// spontaneous() const
   bool spontaneous() {
-//tag=1028
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
             'c_QEvent__spontaneous')
         .asFunction();
-//tag=1029
     return func(thisCpp) != 0;
-  }
-//tag=1024
+  } // type() const
 
-//tag=1027
-// type() const
   int type() {
-//tag=1028
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>('c_QEvent__type')
         .asFunction();
-//tag=1031
     return func(thisCpp);
   }
 
-//tag=1022
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
@@ -351,7 +297,6 @@ class QEvent {
     func(thisCpp);
   }
 
-//tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
     }
@@ -364,7 +309,6 @@ class QEvent {
     throw Error();
   }
 
-//tag=1020
   void registerCallbacks() {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib

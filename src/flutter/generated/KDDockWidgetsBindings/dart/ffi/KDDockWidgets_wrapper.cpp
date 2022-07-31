@@ -27,15 +27,9 @@ struct ValueWrapper
 
 }
 extern "C" {
-
-// tag=1050
 // locationStr(KDDockWidgets::Location loc)
 void *c_static_KDDockWidgets__locationStr_Location(int loc)
 {
-    return
-        // tag=1068
-
-        // tag=1072
-        new Dartagnan::ValueWrapper<QString> { KDDockWidgets::locationStr(static_cast<KDDockWidgets::Location>(loc)) };
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgets::locationStr(static_cast<KDDockWidgets::Location>(loc)) };
 }
 }

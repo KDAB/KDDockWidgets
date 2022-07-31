@@ -8,22 +8,18 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-
-//tag=1052
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'TypeHelpers.dart';
 import '../Bindings.dart';
 import '../FinalizerHelpers.dart';
 
-//tag=1051
 var _dylib = Library.instance().dylib;
 final _finalizer = _dylib.lookup<
         ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
     'c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface_Finalizer');
 
 class ClassicIndicatorWindowViewInterface {
-//tag=1060
   static var s_dartInstanceByCppPtr =
       Map<int, ClassicIndicatorWindowViewInterface>();
   var _thisCpp = null;
@@ -37,11 +33,9 @@ class ClassicIndicatorWindowViewInterface {
   }
 
   static bool isCached(var cppPointer) {
-//tag=1024
     return s_dartInstanceByCppPtr.containsKey(cppPointer.address);
   }
 
-//tag=1061
   factory ClassicIndicatorWindowViewInterface.fromCache(var cppPointer,
       [needsAutoDelete = false]) {
     return (s_dartInstanceByCppPtr[cppPointer.address] ??
@@ -51,15 +45,10 @@ class ClassicIndicatorWindowViewInterface {
   }
   ClassicIndicatorWindowViewInterface.fromCppPointer(var cppPointer,
       [this._needsAutoDelete = false]) {
-//tag=1024
     thisCpp = cppPointer;
   }
-//tag=1025
-  ClassicIndicatorWindowViewInterface.init() {}
-//tag=1023
-//ClassicIndicatorWindowViewInterface()
+  ClassicIndicatorWindowViewInterface.init() {} //ClassicIndicatorWindowViewInterface()
   ClassicIndicatorWindowViewInterface() {
-//tag=1075
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
             'c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__constructor')
@@ -68,22 +57,15 @@ class ClassicIndicatorWindowViewInterface {
     ClassicIndicatorWindowViewInterface
         .s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  }
-//tag=1024
-
-//tag=1027
-// hover(QPoint arg__1)
+  } // hover(QPoint arg__1)
   int hover(QPoint arg__1) {
-//tag=1028
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(669))
         .asFunction();
-//tag=1031
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
 
-//tag=1035
   static int hover_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> arg__1) {
     var dartInstance = ClassicIndicatorWindowViewInterface
@@ -93,25 +75,18 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::hover(QPoint arg__1)! (${thisCpp.address})");
       throw Error();
     }
-//tag=1037
     final result = dartInstance.hover(QPoint.fromCppPointer(arg__1));
     return result;
-  }
-//tag=1024
+  } // isWindow() const
 
-//tag=1027
-// isWindow() const
   bool isWindow() {
-//tag=1028
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
             cFunctionSymbolName(670))
         .asFunction();
-//tag=1029
     return func(thisCpp) != 0;
   }
 
-//tag=1035
   static int isWindow_calledFromC(ffi.Pointer<void> thisCpp) {
     var dartInstance = ClassicIndicatorWindowViewInterface
         .s_dartInstanceByCppPtr[thisCpp.address];
@@ -120,26 +95,19 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::isWindow() const! (${thisCpp.address})");
       throw Error();
     }
-//tag=1037
     final result = dartInstance.isWindow();
     return result ? 1 : 0;
-  }
-//tag=1024
+  } // posForIndicator(KDDockWidgets::DropLocation arg__1) const
 
-//tag=1027
-// posForIndicator(KDDockWidgets::DropLocation arg__1) const
   QPoint posForIndicator(int arg__1) {
-//tag=1028
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
             cFunctionSymbolName(671))
         .asFunction();
-//tag=1033
     ffi.Pointer<void> result = func(thisCpp, arg__1);
     return QPoint.fromCppPointer(result, true);
   }
 
-//tag=1035
   static ffi.Pointer<void> posForIndicator_calledFromC(
       ffi.Pointer<void> thisCpp, int arg__1) {
     var dartInstance = ClassicIndicatorWindowViewInterface
@@ -149,25 +117,18 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::posForIndicator(KDDockWidgets::DropLocation arg__1) const! (${thisCpp.address})");
       throw Error();
     }
-//tag=1037
     final result = dartInstance.posForIndicator(arg__1);
     return result.thisCpp;
-  }
-//tag=1024
+  } // raise()
 
-//tag=1027
-// raise()
   raise() {
-//tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
             cFunctionSymbolName(672))
         .asFunction();
-//tag=1030
     func(thisCpp);
   }
 
-//tag=1035
   static void raise_calledFromC(ffi.Pointer<void> thisCpp) {
     var dartInstance = ClassicIndicatorWindowViewInterface
         .s_dartInstanceByCppPtr[thisCpp.address];
@@ -176,24 +137,17 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::raise()! (${thisCpp.address})");
       throw Error();
     }
-//tag=1036
     dartInstance.raise();
-  }
-//tag=1024
+  } // resize(QSize arg__1)
 
-//tag=1027
-// resize(QSize arg__1)
   resize(QSize arg__1) {
-//tag=1028
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(673))
         .asFunction();
-//tag=1030
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
 
-//tag=1035
   static void resize_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> arg__1) {
     var dartInstance = ClassicIndicatorWindowViewInterface
@@ -203,24 +157,17 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::resize(QSize arg__1)! (${thisCpp.address})");
       throw Error();
     }
-//tag=1036
     dartInstance.resize(QSize.fromCppPointer(arg__1));
-  }
-//tag=1024
+  } // setGeometry(QRect arg__1)
 
-//tag=1027
-// setGeometry(QRect arg__1)
   setGeometry(QRect arg__1) {
-//tag=1028
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(674))
         .asFunction();
-//tag=1030
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
 
-//tag=1035
   static void setGeometry_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> arg__1) {
     var dartInstance = ClassicIndicatorWindowViewInterface
@@ -230,24 +177,17 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::setGeometry(QRect arg__1)! (${thisCpp.address})");
       throw Error();
     }
-//tag=1036
     dartInstance.setGeometry(QRect.fromCppPointer(arg__1));
-  }
-//tag=1024
+  } // setObjectName(const QString & arg__1)
 
-//tag=1027
-// setObjectName(const QString & arg__1)
   setObjectName(String? arg__1) {
-//tag=1028
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(675))
         .asFunction();
-//tag=1030
     func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   }
 
-//tag=1035
   static void setObjectName_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
     var dartInstance = ClassicIndicatorWindowViewInterface
@@ -257,24 +197,17 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::setObjectName(const QString & arg__1)! (${thisCpp.address})");
       throw Error();
     }
-//tag=1036
     dartInstance.setObjectName(QString.fromCppPointer(arg__1).toDartString());
-  }
-//tag=1024
+  } // setVisible(bool arg__1)
 
-//tag=1027
-// setVisible(bool arg__1)
   setVisible(bool arg__1) {
-//tag=1028
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
             cFunctionSymbolName(676))
         .asFunction();
-//tag=1030
     func(thisCpp, arg__1 ? 1 : 0);
   }
 
-//tag=1035
   static void setVisible_calledFromC(ffi.Pointer<void> thisCpp, int arg__1) {
     var dartInstance = ClassicIndicatorWindowViewInterface
         .s_dartInstanceByCppPtr[thisCpp.address];
@@ -283,24 +216,17 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::setVisible(bool arg__1)! (${thisCpp.address})");
       throw Error();
     }
-//tag=1036
     dartInstance.setVisible(arg__1 != 0);
-  }
-//tag=1024
+  } // updatePositions()
 
-//tag=1027
-// updatePositions()
   updatePositions() {
-//tag=1028
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
             cFunctionSymbolName(677))
         .asFunction();
-//tag=1030
     func(thisCpp);
   }
 
-//tag=1035
   static void updatePositions_calledFromC(ffi.Pointer<void> thisCpp) {
     var dartInstance = ClassicIndicatorWindowViewInterface
         .s_dartInstanceByCppPtr[thisCpp.address];
@@ -309,11 +235,9 @@ class ClassicIndicatorWindowViewInterface {
           "Dart instance not found for ClassicIndicatorWindowViewInterface::updatePositions()! (${thisCpp.address})");
       throw Error();
     }
-//tag=1036
     dartInstance.updatePositions();
   }
 
-//tag=1022
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
@@ -322,7 +246,6 @@ class ClassicIndicatorWindowViewInterface {
     func(thisCpp);
   }
 
-//tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
       case 669:
@@ -371,7 +294,6 @@ class ClassicIndicatorWindowViewInterface {
     throw Error();
   }
 
-//tag=1020
   void registerCallbacks() {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
@@ -379,48 +301,39 @@ class ClassicIndicatorWindowViewInterface {
             'c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback')
         .asFunction();
     const callbackExcept669 = 0;
-//tag=1021
     final callback669 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
             ClassicIndicatorWindowViewInterface.hover_calledFromC,
             callbackExcept669);
     registerCallback(thisCpp, callback669, 669);
     const callbackExcept670 = 0;
-//tag=1021
     final callback670 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         ClassicIndicatorWindowViewInterface.isWindow_calledFromC,
         callbackExcept670);
     registerCallback(thisCpp, callback670, 670);
-//tag=1021
     final callback671 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             ClassicIndicatorWindowViewInterface.posForIndicator_calledFromC);
     registerCallback(thisCpp, callback671, 671);
-//tag=1021
     final callback672 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         ClassicIndicatorWindowViewInterface.raise_calledFromC);
     registerCallback(thisCpp, callback672, 672);
-//tag=1021
     final callback673 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             ClassicIndicatorWindowViewInterface.resize_calledFromC);
     registerCallback(thisCpp, callback673, 673);
-//tag=1021
     final callback674 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             ClassicIndicatorWindowViewInterface.setGeometry_calledFromC);
     registerCallback(thisCpp, callback674, 674);
-//tag=1021
     final callback675 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             ClassicIndicatorWindowViewInterface.setObjectName_calledFromC);
     registerCallback(thisCpp, callback675, 675);
-//tag=1021
     final callback676 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             ClassicIndicatorWindowViewInterface.setVisible_calledFromC);
     registerCallback(thisCpp, callback676, 676);
-//tag=1021
     final callback677 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         ClassicIndicatorWindowViewInterface.updatePositions_calledFromC);
     registerCallback(thisCpp, callback677, 677);

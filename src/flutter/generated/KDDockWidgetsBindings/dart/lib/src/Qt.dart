@@ -8,18 +8,14 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-
-//tag=1052
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'TypeHelpers.dart';
 import '../Bindings.dart';
 import '../FinalizerHelpers.dart';
 
-//tag=1051
 var _dylib = Library.instance().dylib;
 
-//tag=1038
 class Qt_CursorShape {
   static const ArrowCursor = 0;
   static const UpArrowCursor = 1;

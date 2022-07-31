@@ -8,8 +8,6 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-
-// tag=1040
 #include "KDDockWidgetsBindings_exports.h"
 #include <KDDockWidgets.h>
 #include <View_flutter.h>
@@ -17,15 +15,9 @@
 #include <Controller.h>
 
 extern "C" {
-
-// tag=1067
-//  KDDockWidgets::Views::asView_flutter(KDDockWidgets::Controller * controller)
+// KDDockWidgets::Views::asView_flutter(KDDockWidgets::Controller * controller)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_);
-
-// tag=1067
-//  KDDockWidgets::Views::asView_flutter(KDDockWidgets::View * view)
+// KDDockWidgets::Views::asView_flutter(KDDockWidgets::View * view)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_);
-
-// tag=1047
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views_Finalizer(void *, void *cppObj, void *);
 }

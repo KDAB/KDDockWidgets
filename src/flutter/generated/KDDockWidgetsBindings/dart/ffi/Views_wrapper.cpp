@@ -27,24 +27,16 @@ struct ValueWrapper
 
 }
 extern "C" {
-
-// tag=1050
 // asView_flutter(KDDockWidgets::Controller * controller)
 void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_)
 {
     auto controller = reinterpret_cast<KDDockWidgets::Controller *>(controller_);
-    return
-        // tag=1068
-        Views::asView_flutter(controller);
+    return Views::asView_flutter(controller);
 }
-
-// tag=1050
 // asView_flutter(KDDockWidgets::View * view)
 void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_)
 {
     auto view = reinterpret_cast<KDDockWidgets::View *>(view_);
-    return
-        // tag=1068
-        Views::asView_flutter(view);
+    return Views::asView_flutter(view);
 }
 }

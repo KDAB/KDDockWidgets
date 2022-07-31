@@ -11,3117 +11,1516 @@
 #include <stdbool.h>
 #include <QtCore/qglobal.h>
 
-
-// tag=1047
-void c_Qt_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QString::QString()
+void c_Qt_Finalizer(void *, void *cppObj, void *); // QString::QString()
 void *c_QString__constructor();
-
-// tag=1067
-//  QString::append(const QString & s)
+// QString::append(const QString & s)
 void *c_QString__append_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::arg(const QString & a, int fieldWidth) const
+// QString::arg(const QString & a, int fieldWidth) const
 void *c_QString__arg_QString_int(void *thisObj, const char *a_, int fieldWidth);
-
-// tag=1067
-//  QString::arg(const QString & a1, const QString & a2) const
+// QString::arg(const QString & a1, const QString & a2) const
 void *c_QString__arg_QString_QString(void *thisObj, const char *a1_, const char *a2_);
-
-// tag=1067
-//  QString::arg(const QString & a1, const QString & a2, const QString & a3) const
+// QString::arg(const QString & a1, const QString & a2, const QString & a3) const
 void *c_QString__arg_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_);
-
-// tag=1067
-//  QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4) const
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4) const
 void *c_QString__arg_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_);
-
-// tag=1067
-//  QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5) const
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5) const
 void *c_QString__arg_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_);
-
-// tag=1067
-//  QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6) const
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6) const
 void *c_QString__arg_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_);
-
-// tag=1067
-//  QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7) const
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7) const
 void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_);
-
-// tag=1067
-//  QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8) const
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8) const
 void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_, const char *a8_);
-
-// tag=1067
-//  QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8, const QString & a9) const
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8, const QString & a9) const
 void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_, const char *a8_, const char *a9_);
-
-// tag=1067
-//  QString::arg(int a, int fieldWidth, int base) const
+// QString::arg(int a, int fieldWidth, int base) const
 void *c_QString__arg_int_int_int(void *thisObj, int a, int fieldWidth, int base);
-
-// tag=1067
-//  QString::arg(long a, int fieldwidth, int base) const
+// QString::arg(long a, int fieldwidth, int base) const
 void *c_QString__arg_long_int_int(void *thisObj, long a, int fieldwidth, int base);
-
-// tag=1067
-//  QString::arg(qint64 a, int fieldwidth, int base) const
+// QString::arg(qint64 a, int fieldwidth, int base) const
 void *c_QString__arg_qint64_int_int(void *thisObj, qint64 a, int fieldwidth, int base);
-
-// tag=1067
-//  QString::arg(short a, int fieldWidth, int base) const
+// QString::arg(short a, int fieldWidth, int base) const
 void *c_QString__arg_short_int_int(void *thisObj, short a, int fieldWidth, int base);
-
-// tag=1067
-//  QString::asprintf(const char * format)
+// QString::asprintf(const char * format)
 void *c_static_QString__asprintf_char(const char *format);
-
-// tag=1067
-//  QString::capacity() const
+// QString::capacity() const
 int c_QString__capacity(void *thisObj);
-
-// tag=1067
-//  QString::chop(int n)
+// QString::chop(int n)
 void c_QString__chop_int(void *thisObj, int n);
-
-// tag=1067
-//  QString::chopped(int n) const
+// QString::chopped(int n) const
 void *c_QString__chopped_int(void *thisObj, int n);
-
-// tag=1067
-//  QString::clear()
+// QString::clear()
 void c_QString__clear(void *thisObj);
-
-// tag=1067
-//  QString::compare(const QString & s) const
+// QString::compare(const QString & s) const
 int c_QString__compare_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::compare(const QString & s1, const QString & s2)
+// QString::compare(const QString & s1, const QString & s2)
 int c_static_QString__compare_QString_QString(const char *s1_, const char *s2_);
-
-// tag=1067
-//  QString::contains(const QString & s) const
+// QString::contains(const QString & s) const
 bool c_QString__contains_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::count() const
+// QString::count() const
 int c_QString__count(void *thisObj);
-
-// tag=1067
-//  QString::count(const QString & s) const
+// QString::count(const QString & s) const
 int c_QString__count_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::detach()
+// QString::detach()
 void c_QString__detach(void *thisObj);
-
-// tag=1067
-//  QString::endsWith(const QString & s) const
+// QString::endsWith(const QString & s) const
 bool c_QString__endsWith_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::fromLatin1(const QByteArray & str)
+// QString::fromLatin1(const QByteArray & str)
 void *c_static_QString__fromLatin1_QByteArray(void *str_);
-
-// tag=1067
-//  QString::fromLatin1(const char * str, int size)
+// QString::fromLatin1(const char * str, int size)
 void *c_static_QString__fromLatin1_char_int(const char *str, int size);
-
-// tag=1067
-//  QString::fromLocal8Bit(const QByteArray & str)
+// QString::fromLocal8Bit(const QByteArray & str)
 void *c_static_QString__fromLocal8Bit_QByteArray(void *str_);
-
-// tag=1067
-//  QString::fromLocal8Bit(const char * str, int size)
+// QString::fromLocal8Bit(const char * str, int size)
 void *c_static_QString__fromLocal8Bit_char_int(const char *str, int size);
-
-// tag=1067
-//  QString::fromUtf8(const QByteArray & str)
+// QString::fromUtf8(const QByteArray & str)
 void *c_static_QString__fromUtf8_QByteArray(void *str_);
-
-// tag=1067
-//  QString::fromUtf8(const char * str, int size)
+// QString::fromUtf8(const char * str, int size)
 void *c_static_QString__fromUtf8_char_int(const char *str, int size);
-
-// tag=1067
-//  QString::indexOf(const QString & s, int from) const
+// QString::indexOf(const QString & s, int from) const
 int c_QString__indexOf_QString_int(void *thisObj, const char *s_, int from);
-
-// tag=1067
-//  QString::insert(int i, const QString & s)
+// QString::insert(int i, const QString & s)
 void *c_QString__insert_int_QString(void *thisObj, int i, const char *s_);
-
-// tag=1067
-//  QString::isDetached() const
+// QString::isDetached() const
 bool c_QString__isDetached(void *thisObj);
-
-// tag=1067
-//  QString::isEmpty() const
+// QString::isEmpty() const
 bool c_QString__isEmpty(void *thisObj);
-
-// tag=1067
-//  QString::isLower() const
+// QString::isLower() const
 bool c_QString__isLower(void *thisObj);
-
-// tag=1067
-//  QString::isNull() const
+// QString::isNull() const
 bool c_QString__isNull(void *thisObj);
-
-// tag=1067
-//  QString::isRightToLeft() const
+// QString::isRightToLeft() const
 bool c_QString__isRightToLeft(void *thisObj);
-
-// tag=1067
-//  QString::isSharedWith(const QString & other) const
+// QString::isSharedWith(const QString & other) const
 bool c_QString__isSharedWith_QString(void *thisObj, const char *other_);
-
-// tag=1067
-//  QString::isSimpleText() const
+// QString::isSimpleText() const
 bool c_QString__isSimpleText(void *thisObj);
-
-// tag=1067
-//  QString::isUpper() const
+// QString::isUpper() const
 bool c_QString__isUpper(void *thisObj);
-
-// tag=1067
-//  QString::isValidUtf16() const
+// QString::isValidUtf16() const
 bool c_QString__isValidUtf16(void *thisObj);
-
-// tag=1067
-//  QString::lastIndexOf(const QString & s, int from) const
+// QString::lastIndexOf(const QString & s, int from) const
 int c_QString__lastIndexOf_QString_int(void *thisObj, const char *s_, int from);
-
-// tag=1067
-//  QString::left(int n) const
+// QString::left(int n) const
 void *c_QString__left_int(void *thisObj, int n);
-
-// tag=1067
-//  QString::leftJustified(int width) const
+// QString::leftJustified(int width) const
 void *c_QString__leftJustified_int(void *thisObj, int width);
-
-// tag=1067
-//  QString::length() const
+// QString::length() const
 int c_QString__length(void *thisObj);
-
-// tag=1067
-//  QString::localeAwareCompare(const QString & s) const
+// QString::localeAwareCompare(const QString & s) const
 int c_QString__localeAwareCompare_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::localeAwareCompare(const QString & s1, const QString & s2)
+// QString::localeAwareCompare(const QString & s1, const QString & s2)
 int c_static_QString__localeAwareCompare_QString_QString(const char *s1_, const char *s2_);
-
-// tag=1067
-//  QString::mid(int position, int n) const
+// QString::mid(int position, int n) const
 void *c_QString__mid_int_int(void *thisObj, int position, int n);
-
-// tag=1067
-//  QString::number(int arg__1, int base)
+// QString::number(int arg__1, int base)
 void *c_static_QString__number_int_int(int arg__1, int base);
-
-// tag=1067
-//  QString::number(long arg__1, int base)
+// QString::number(long arg__1, int base)
 void *c_static_QString__number_long_int(long arg__1, int base);
-
-// tag=1067
-//  QString::number(qint64 arg__1, int base)
+// QString::number(qint64 arg__1, int base)
 void *c_static_QString__number_qint64_int(qint64 arg__1, int base);
-
-// tag=1067
-//  QString::prepend(const QString & s)
+// QString::prepend(const QString & s)
 void *c_QString__prepend_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::push_back(const QString & s)
+// QString::push_back(const QString & s)
 void c_QString__push_back_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::push_front(const QString & s)
+// QString::push_front(const QString & s)
 void c_QString__push_front_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::remove(const QString & s)
+// QString::remove(const QString & s)
 void *c_QString__remove_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::remove(int i, int len)
+// QString::remove(int i, int len)
 void *c_QString__remove_int_int(void *thisObj, int i, int len);
-
-// tag=1067
-//  QString::repeated(int times) const
+// QString::repeated(int times) const
 void *c_QString__repeated_int(void *thisObj, int times);
-
-// tag=1067
-//  QString::replace(const QString & before, const QString & after)
+// QString::replace(const QString & before, const QString & after)
 void *c_QString__replace_QString_QString(void *thisObj, const char *before_, const char *after_);
-
-// tag=1067
-//  QString::replace(int i, int len, const QString & after)
+// QString::replace(int i, int len, const QString & after)
 void *c_QString__replace_int_int_QString(void *thisObj, int i, int len, const char *after_);
-
-// tag=1067
-//  QString::reserve(int size)
+// QString::reserve(int size)
 void c_QString__reserve_int(void *thisObj, int size);
-
-// tag=1067
-//  QString::resize(int size)
+// QString::resize(int size)
 void c_QString__resize_int(void *thisObj, int size);
-
-// tag=1067
-//  QString::right(int n) const
+// QString::right(int n) const
 void *c_QString__right_int(void *thisObj, int n);
-
-// tag=1067
-//  QString::rightJustified(int width) const
+// QString::rightJustified(int width) const
 void *c_QString__rightJustified_int(void *thisObj, int width);
-
-// tag=1067
-//  QString::section(const QString & in_sep, int start, int end) const
+// QString::section(const QString & in_sep, int start, int end) const
 void *c_QString__section_QString_int_int(void *thisObj, const char *in_sep_, int start, int end);
-
-// tag=1067
-//  QString::setNum(int arg__1, int base)
+// QString::setNum(int arg__1, int base)
 void *c_QString__setNum_int_int(void *thisObj, int arg__1, int base);
-
-// tag=1067
-//  QString::setNum(long arg__1, int base)
+// QString::setNum(long arg__1, int base)
 void *c_QString__setNum_long_int(void *thisObj, long arg__1, int base);
-
-// tag=1067
-//  QString::setNum(qint64 arg__1, int base)
+// QString::setNum(qint64 arg__1, int base)
 void *c_QString__setNum_qint64_int(void *thisObj, qint64 arg__1, int base);
-
-// tag=1067
-//  QString::setNum(short arg__1, int base)
+// QString::setNum(short arg__1, int base)
 void *c_QString__setNum_short_int(void *thisObj, short arg__1, int base);
-
-// tag=1067
-//  QString::shrink_to_fit()
+// QString::shrink_to_fit()
 void c_QString__shrink_to_fit(void *thisObj);
-
-// tag=1067
-//  QString::simplified()
+// QString::simplified()
 void *c_QString__simplified(void *thisObj);
-
-// tag=1067
-//  QString::size() const
+// QString::size() const
 int c_QString__size(void *thisObj);
-
-// tag=1067
-//  QString::squeeze()
+// QString::squeeze()
 void c_QString__squeeze(void *thisObj);
-
-// tag=1067
-//  QString::startsWith(const QString & s) const
+// QString::startsWith(const QString & s) const
 bool c_QString__startsWith_QString(void *thisObj, const char *s_);
-
-// tag=1067
-//  QString::toCaseFolded()
+// QString::toCaseFolded()
 void *c_QString__toCaseFolded(void *thisObj);
-
-// tag=1067
-//  QString::toHtmlEscaped() const
+// QString::toHtmlEscaped() const
 void *c_QString__toHtmlEscaped(void *thisObj);
-
-// tag=1067
-//  QString::toLatin1()
+// QString::toLatin1()
 void *c_QString__toLatin1(void *thisObj);
-
-// tag=1067
-//  QString::toLocal8Bit()
+// QString::toLocal8Bit()
 void *c_QString__toLocal8Bit(void *thisObj);
-
-// tag=1067
-//  QString::toLower()
+// QString::toLower()
 void *c_QString__toLower(void *thisObj);
-
-// tag=1067
-//  QString::toUpper()
+// QString::toUpper()
 void *c_QString__toUpper(void *thisObj);
-
-// tag=1067
-//  QString::toUtf8()
+// QString::toUtf8()
 void *c_QString__toUtf8(void *thisObj);
-
-// tag=1067
-//  QString::trimmed()
+// QString::trimmed()
 void *c_QString__trimmed(void *thisObj);
-
-// tag=1067
-//  QString::truncate(int pos)
+// QString::truncate(int pos)
 void c_QString__truncate_int(void *thisObj, int pos);
-
-// tag=1066
 void c_QString__destructor(void *thisObj);
-
-// tag=1047
-void c_QString_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QSize::QSize()
+void c_QString_Finalizer(void *, void *cppObj, void *); // QSize::QSize()
 void *c_QSize__constructor();
-
-// tag=1067
-//  QSize::QSize(int w, int h)
+// QSize::QSize(int w, int h)
 void *c_QSize__constructor_int_int(int w, int h);
-
-// tag=1067
-//  QSize::boundedTo(const QSize & arg__1) const
+// QSize::boundedTo(const QSize & arg__1) const
 void *c_QSize__boundedTo_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  QSize::expandedTo(const QSize & arg__1) const
+// QSize::expandedTo(const QSize & arg__1) const
 void *c_QSize__expandedTo_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  QSize::height() const
+// QSize::height() const
 int c_QSize__height(void *thisObj);
-
-// tag=1067
-//  QSize::isEmpty() const
+// QSize::isEmpty() const
 bool c_QSize__isEmpty(void *thisObj);
-
-// tag=1067
-//  QSize::isNull() const
+// QSize::isNull() const
 bool c_QSize__isNull(void *thisObj);
-
-// tag=1067
-//  QSize::isValid() const
+// QSize::isValid() const
 bool c_QSize__isValid(void *thisObj);
-
-// tag=1067
-//  QSize::setHeight(int h)
+// QSize::setHeight(int h)
 void c_QSize__setHeight_int(void *thisObj, int h);
-
-// tag=1067
-//  QSize::setWidth(int w)
+// QSize::setWidth(int w)
 void c_QSize__setWidth_int(void *thisObj, int w);
-
-// tag=1067
-//  QSize::transpose()
+// QSize::transpose()
 void c_QSize__transpose(void *thisObj);
-
-// tag=1067
-//  QSize::transposed() const
+// QSize::transposed() const
 void *c_QSize__transposed(void *thisObj);
-
-// tag=1067
-//  QSize::width() const
+// QSize::width() const
 int c_QSize__width(void *thisObj);
-
-// tag=1066
 void c_QSize__destructor(void *thisObj);
-
-// tag=1047
-void c_QSize_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QRect::QRect()
+void c_QSize_Finalizer(void *, void *cppObj, void *); // QRect::QRect()
 void *c_QRect__constructor();
-
-// tag=1067
-//  QRect::QRect(const QPoint & topleft, const QPoint & bottomright)
+// QRect::QRect(const QPoint & topleft, const QPoint & bottomright)
 void *c_QRect__constructor_QPoint_QPoint(void *topleft_, void *bottomright_);
-
-// tag=1067
-//  QRect::QRect(const QPoint & topleft, const QSize & size)
+// QRect::QRect(const QPoint & topleft, const QSize & size)
 void *c_QRect__constructor_QPoint_QSize(void *topleft_, void *size_);
-
-// tag=1067
-//  QRect::QRect(int left, int top, int width, int height)
+// QRect::QRect(int left, int top, int width, int height)
 void *c_QRect__constructor_int_int_int_int(int left, int top, int width, int height);
-
-// tag=1067
-//  QRect::adjust(int x1, int y1, int x2, int y2)
+// QRect::adjust(int x1, int y1, int x2, int y2)
 void c_QRect__adjust_int_int_int_int(void *thisObj, int x1, int y1, int x2, int y2);
-
-// tag=1067
-//  QRect::adjusted(int x1, int y1, int x2, int y2) const
+// QRect::adjusted(int x1, int y1, int x2, int y2) const
 void *c_QRect__adjusted_int_int_int_int(void *thisObj, int x1, int y1, int x2, int y2);
-
-// tag=1067
-//  QRect::bottom() const
+// QRect::bottom() const
 int c_QRect__bottom(void *thisObj);
-
-// tag=1067
-//  QRect::bottomLeft() const
+// QRect::bottomLeft() const
 void *c_QRect__bottomLeft(void *thisObj);
-
-// tag=1067
-//  QRect::bottomRight() const
+// QRect::bottomRight() const
 void *c_QRect__bottomRight(void *thisObj);
-
-// tag=1067
-//  QRect::center() const
+// QRect::center() const
 void *c_QRect__center(void *thisObj);
-
-// tag=1067
-//  QRect::contains(const QPoint & p, bool proper) const
+// QRect::contains(const QPoint & p, bool proper) const
 bool c_QRect__contains_QPoint_bool(void *thisObj, void *p_, bool proper);
-
-// tag=1067
-//  QRect::contains(const QRect & r, bool proper) const
+// QRect::contains(const QRect & r, bool proper) const
 bool c_QRect__contains_QRect_bool(void *thisObj, void *r_, bool proper);
-
-// tag=1067
-//  QRect::contains(int x, int y) const
+// QRect::contains(int x, int y) const
 bool c_QRect__contains_int_int(void *thisObj, int x, int y);
-
-// tag=1067
-//  QRect::contains(int x, int y, bool proper) const
+// QRect::contains(int x, int y, bool proper) const
 bool c_QRect__contains_int_int_bool(void *thisObj, int x, int y, bool proper);
-
-// tag=1067
-//  QRect::height() const
+// QRect::height() const
 int c_QRect__height(void *thisObj);
-
-// tag=1067
-//  QRect::intersected(const QRect & other) const
+// QRect::intersected(const QRect & other) const
 void *c_QRect__intersected_QRect(void *thisObj, void *other_);
-
-// tag=1067
-//  QRect::intersects(const QRect & r) const
+// QRect::intersects(const QRect & r) const
 bool c_QRect__intersects_QRect(void *thisObj, void *r_);
-
-// tag=1067
-//  QRect::isEmpty() const
+// QRect::isEmpty() const
 bool c_QRect__isEmpty(void *thisObj);
-
-// tag=1067
-//  QRect::isNull() const
+// QRect::isNull() const
 bool c_QRect__isNull(void *thisObj);
-
-// tag=1067
-//  QRect::isValid() const
+// QRect::isValid() const
 bool c_QRect__isValid(void *thisObj);
-
-// tag=1067
-//  QRect::left() const
+// QRect::left() const
 int c_QRect__left(void *thisObj);
-
-// tag=1067
-//  QRect::moveBottom(int pos)
+// QRect::moveBottom(int pos)
 void c_QRect__moveBottom_int(void *thisObj, int pos);
-
-// tag=1067
-//  QRect::moveBottomLeft(const QPoint & p)
+// QRect::moveBottomLeft(const QPoint & p)
 void c_QRect__moveBottomLeft_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::moveBottomRight(const QPoint & p)
+// QRect::moveBottomRight(const QPoint & p)
 void c_QRect__moveBottomRight_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::moveCenter(const QPoint & p)
+// QRect::moveCenter(const QPoint & p)
 void c_QRect__moveCenter_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::moveLeft(int pos)
+// QRect::moveLeft(int pos)
 void c_QRect__moveLeft_int(void *thisObj, int pos);
-
-// tag=1067
-//  QRect::moveRight(int pos)
+// QRect::moveRight(int pos)
 void c_QRect__moveRight_int(void *thisObj, int pos);
-
-// tag=1067
-//  QRect::moveTo(const QPoint & p)
+// QRect::moveTo(const QPoint & p)
 void c_QRect__moveTo_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::moveTo(int x, int t)
+// QRect::moveTo(int x, int t)
 void c_QRect__moveTo_int_int(void *thisObj, int x, int t);
-
-// tag=1067
-//  QRect::moveTop(int pos)
+// QRect::moveTop(int pos)
 void c_QRect__moveTop_int(void *thisObj, int pos);
-
-// tag=1067
-//  QRect::moveTopLeft(const QPoint & p)
+// QRect::moveTopLeft(const QPoint & p)
 void c_QRect__moveTopLeft_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::moveTopRight(const QPoint & p)
+// QRect::moveTopRight(const QPoint & p)
 void c_QRect__moveTopRight_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::normalized() const
+// QRect::normalized() const
 void *c_QRect__normalized(void *thisObj);
-
-// tag=1067
-//  QRect::right() const
+// QRect::right() const
 int c_QRect__right(void *thisObj);
-
-// tag=1067
-//  QRect::setBottom(int pos)
+// QRect::setBottom(int pos)
 void c_QRect__setBottom_int(void *thisObj, int pos);
-
-// tag=1067
-//  QRect::setBottomLeft(const QPoint & p)
+// QRect::setBottomLeft(const QPoint & p)
 void c_QRect__setBottomLeft_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::setBottomRight(const QPoint & p)
+// QRect::setBottomRight(const QPoint & p)
 void c_QRect__setBottomRight_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::setCoords(int x1, int y1, int x2, int y2)
+// QRect::setCoords(int x1, int y1, int x2, int y2)
 void c_QRect__setCoords_int_int_int_int(void *thisObj, int x1, int y1, int x2, int y2);
-
-// tag=1067
-//  QRect::setHeight(int h)
+// QRect::setHeight(int h)
 void c_QRect__setHeight_int(void *thisObj, int h);
-
-// tag=1067
-//  QRect::setLeft(int pos)
+// QRect::setLeft(int pos)
 void c_QRect__setLeft_int(void *thisObj, int pos);
-
-// tag=1067
-//  QRect::setRect(int x, int y, int w, int h)
+// QRect::setRect(int x, int y, int w, int h)
 void c_QRect__setRect_int_int_int_int(void *thisObj, int x, int y, int w, int h);
-
-// tag=1067
-//  QRect::setRight(int pos)
+// QRect::setRight(int pos)
 void c_QRect__setRight_int(void *thisObj, int pos);
-
-// tag=1067
-//  QRect::setSize(const QSize & s)
+// QRect::setSize(const QSize & s)
 void c_QRect__setSize_QSize(void *thisObj, void *s_);
-
-// tag=1067
-//  QRect::setTop(int pos)
+// QRect::setTop(int pos)
 void c_QRect__setTop_int(void *thisObj, int pos);
-
-// tag=1067
-//  QRect::setTopLeft(const QPoint & p)
+// QRect::setTopLeft(const QPoint & p)
 void c_QRect__setTopLeft_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::setTopRight(const QPoint & p)
+// QRect::setTopRight(const QPoint & p)
 void c_QRect__setTopRight_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::setWidth(int w)
+// QRect::setWidth(int w)
 void c_QRect__setWidth_int(void *thisObj, int w);
-
-// tag=1067
-//  QRect::setX(int x)
+// QRect::setX(int x)
 void c_QRect__setX_int(void *thisObj, int x);
-
-// tag=1067
-//  QRect::setY(int y)
+// QRect::setY(int y)
 void c_QRect__setY_int(void *thisObj, int y);
-
-// tag=1067
-//  QRect::size() const
+// QRect::size() const
 void *c_QRect__size(void *thisObj);
-
-// tag=1067
-//  QRect::top() const
+// QRect::top() const
 int c_QRect__top(void *thisObj);
-
-// tag=1067
-//  QRect::topLeft() const
+// QRect::topLeft() const
 void *c_QRect__topLeft(void *thisObj);
-
-// tag=1067
-//  QRect::topRight() const
+// QRect::topRight() const
 void *c_QRect__topRight(void *thisObj);
-
-// tag=1067
-//  QRect::translate(const QPoint & p)
+// QRect::translate(const QPoint & p)
 void c_QRect__translate_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::translate(int dx, int dy)
+// QRect::translate(int dx, int dy)
 void c_QRect__translate_int_int(void *thisObj, int dx, int dy);
-
-// tag=1067
-//  QRect::translated(const QPoint & p) const
+// QRect::translated(const QPoint & p) const
 void *c_QRect__translated_QPoint(void *thisObj, void *p_);
-
-// tag=1067
-//  QRect::translated(int dx, int dy) const
+// QRect::translated(int dx, int dy) const
 void *c_QRect__translated_int_int(void *thisObj, int dx, int dy);
-
-// tag=1067
-//  QRect::transposed() const
+// QRect::transposed() const
 void *c_QRect__transposed(void *thisObj);
-
-// tag=1067
-//  QRect::united(const QRect & other) const
+// QRect::united(const QRect & other) const
 void *c_QRect__united_QRect(void *thisObj, void *other_);
-
-// tag=1067
-//  QRect::width() const
+// QRect::width() const
 int c_QRect__width(void *thisObj);
-
-// tag=1067
-//  QRect::x() const
+// QRect::x() const
 int c_QRect__x(void *thisObj);
-
-// tag=1067
-//  QRect::y() const
+// QRect::y() const
 int c_QRect__y(void *thisObj);
-
-// tag=1066
 void c_QRect__destructor(void *thisObj);
-
-// tag=1047
-void c_QRect_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QPoint::QPoint()
+void c_QRect_Finalizer(void *, void *cppObj, void *); // QPoint::QPoint()
 void *c_QPoint__constructor();
-
-// tag=1067
-//  QPoint::QPoint(int xpos, int ypos)
+// QPoint::QPoint(int xpos, int ypos)
 void *c_QPoint__constructor_int_int(int xpos, int ypos);
-
-// tag=1067
-//  QPoint::dotProduct(const QPoint & p1, const QPoint & p2)
+// QPoint::dotProduct(const QPoint & p1, const QPoint & p2)
 int c_static_QPoint__dotProduct_QPoint_QPoint(void *p1_, void *p2_);
-
-// tag=1067
-//  QPoint::isNull() const
+// QPoint::isNull() const
 bool c_QPoint__isNull(void *thisObj);
-
-// tag=1067
-//  QPoint::manhattanLength() const
+// QPoint::manhattanLength() const
 int c_QPoint__manhattanLength(void *thisObj);
-
-// tag=1067
-//  QPoint::setX(int x)
+// QPoint::setX(int x)
 void c_QPoint__setX_int(void *thisObj, int x);
-
-// tag=1067
-//  QPoint::setY(int y)
+// QPoint::setY(int y)
 void c_QPoint__setY_int(void *thisObj, int y);
-
-// tag=1067
-//  QPoint::transposed() const
+// QPoint::transposed() const
 void *c_QPoint__transposed(void *thisObj);
-
-// tag=1067
-//  QPoint::x() const
+// QPoint::x() const
 int c_QPoint__x(void *thisObj);
-
-// tag=1067
-//  QPoint::y() const
+// QPoint::y() const
 int c_QPoint__y(void *thisObj);
-
-// tag=1066
 void c_QPoint__destructor(void *thisObj);
-
-// tag=1047
-void c_QPoint_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QObject::QObject(QObject * parent)
+void c_QPoint_Finalizer(void *, void *cppObj, void *); // QObject::QObject(QObject * parent)
 void *c_QObject__constructor_QObject(void *parent_);
-
-// tag=1067
-//  QObject::blockSignals(bool b)
+// QObject::blockSignals(bool b)
 bool c_QObject__blockSignals_bool(void *thisObj, bool b);
-
-// tag=1067
-//  QObject::children() const
+// QObject::children() const
 void *c_QObject__children(void *thisObj);
-
-// tag=1067
-//  QObject::customEvent(QEvent * event)
+// QObject::customEvent(QEvent * event)
 void c_QObject__customEvent_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  QObject::deleteLater()
+// QObject::deleteLater()
 void c_QObject__deleteLater(void *thisObj);
-
-// tag=1067
-//  QObject::destroyed(QObject * arg__1)
+// QObject::destroyed(QObject * arg__1)
 void c_QObject__destroyed_QObject(void *thisObj, void *arg__1_);
-
-// tag=1078
-void c_QObject__onDestroyed_QObject(void *thisObj, void *contextQObject, void *callback);
-// tag=1067
-//  QObject::disconnect(const QObject * receiver, const char * member) const
+void c_QObject__onDestroyed_QObject(void *thisObj, void *contextQObject, void *callback); // QObject::disconnect(const QObject * receiver, const char * member) const
 bool c_QObject__disconnect_QObject_char(void *thisObj, void *receiver_, const char *member);
-
-// tag=1067
-//  QObject::disconnect(const QObject * sender, const char * signal, const QObject * receiver, const char * member)
+// QObject::disconnect(const QObject * sender, const char * signal, const QObject * receiver, const char * member)
 bool c_static_QObject__disconnect_QObject_char_QObject_char(void *sender_, const char *signal, void *receiver_, const char *member);
-
-// tag=1067
-//  QObject::disconnect(const char * signal, const QObject * receiver, const char * member) const
+// QObject::disconnect(const char * signal, const QObject * receiver, const char * member) const
 bool c_QObject__disconnect_char_QObject_char(void *thisObj, const char *signal, void *receiver_, const char *member);
-
-// tag=1067
-//  QObject::dumpObjectInfo()
+// QObject::dumpObjectInfo()
 void c_QObject__dumpObjectInfo(void *thisObj);
-
-// tag=1067
-//  QObject::dumpObjectTree()
+// QObject::dumpObjectTree()
 void c_QObject__dumpObjectTree(void *thisObj);
-
-// tag=1067
-//  QObject::dynamicPropertyNames() const
+// QObject::dynamicPropertyNames() const
 void *c_QObject__dynamicPropertyNames(void *thisObj);
-
-// tag=1067
-//  QObject::event(QEvent * event)
+// QObject::event(QEvent * event)
 bool c_QObject__event_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  QObject::eventFilter(QObject * watched, QEvent * event)
+// QObject::eventFilter(QObject * watched, QEvent * event)
 bool c_QObject__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
-
-// tag=1067
-//  QObject::inherits(const char * classname) const
+// QObject::inherits(const char * classname) const
 bool c_QObject__inherits_char(void *thisObj, const char *classname);
-
-// tag=1067
-//  QObject::installEventFilter(QObject * filterObj)
+// QObject::installEventFilter(QObject * filterObj)
 void c_QObject__installEventFilter_QObject(void *thisObj, void *filterObj_);
-
-// tag=1067
-//  QObject::isWidgetType() const
+// QObject::isWidgetType() const
 bool c_QObject__isWidgetType(void *thisObj);
-
-// tag=1067
-//  QObject::isWindowType() const
+// QObject::isWindowType() const
 bool c_QObject__isWindowType(void *thisObj);
-
-// tag=1067
-//  QObject::killTimer(int id)
+// QObject::killTimer(int id)
 void c_QObject__killTimer_int(void *thisObj, int id);
-
-// tag=1067
-//  QObject::objectName() const
+// QObject::objectName() const
 void *c_QObject__objectName(void *thisObj);
-
-// tag=1067
-//  QObject::parent() const
+// QObject::parent() const
 void *c_QObject__parent(void *thisObj);
-
-// tag=1067
-//  QObject::receivers(const char * signal) const
+// QObject::receivers(const char * signal) const
 int c_QObject__receivers_char(void *thisObj, const char *signal);
-
-// tag=1067
-//  QObject::removeEventFilter(QObject * obj)
+// QObject::removeEventFilter(QObject * obj)
 void c_QObject__removeEventFilter_QObject(void *thisObj, void *obj_);
-
-// tag=1067
-//  QObject::sender() const
+// QObject::sender() const
 void *c_QObject__sender(void *thisObj);
-
-// tag=1067
-//  QObject::senderSignalIndex() const
+// QObject::senderSignalIndex() const
 int c_QObject__senderSignalIndex(void *thisObj);
-
-// tag=1067
-//  QObject::setObjectName(const QString & name)
+// QObject::setObjectName(const QString & name)
 void c_QObject__setObjectName_QString(void *thisObj, const char *name_);
-
-// tag=1067
-//  QObject::setParent(QObject * parent)
+// QObject::setParent(QObject * parent)
 void c_QObject__setParent_QObject(void *thisObj, void *parent_);
-
-// tag=1067
-//  QObject::signalsBlocked() const
+// QObject::signalsBlocked() const
 bool c_QObject__signalsBlocked(void *thisObj);
-
-// tag=1067
-//  QObject::startTimer(int interval)
+// QObject::startTimer(int interval)
 int c_QObject__startTimer_int(void *thisObj, int interval);
-
-// tag=1067
-//  QObject::tr(const char * s, const char * c, int n)
+// QObject::tr(const char * s, const char * c, int n)
 void *c_static_QObject__tr_char_char_int(const char *s, const char *c, int n);
-
-// tag=1066
 void c_QObject__destructor(void *thisObj);
-
-// tag=1046
 void c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_QObject_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QList::QList<T>()
+void c_QObject_Finalizer(void *, void *cppObj, void *); // QList::QList<T>()
 void *c_QList_T_QObject_T___constructor();
-
-// tag=1067
-//  QList::append(const QList<T > & t)
+// QList::append(const QList<T > & t)
 void c_QList_T_QObject_T___append_QList_T(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::append(const T & t)
+// QList::append(const T & t)
 void c_QList_T_QObject_T___append_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::at(int i) const
+// QList::at(int i) const
 const void *c_QList_T_QObject_T___at_int(void *thisObj, int i);
-
-// tag=1067
-//  QList::back()
+// QList::back()
 void *c_QList_T_QObject_T___back(void *thisObj);
-
-// tag=1067
-//  QList::clear()
+// QList::clear()
 void c_QList_T_QObject_T___clear(void *thisObj);
-
-// tag=1067
-//  QList::constFirst() const
+// QList::constFirst() const
 const void *c_QList_T_QObject_T___constFirst(void *thisObj);
-
-// tag=1067
-//  QList::constLast() const
+// QList::constLast() const
 const void *c_QList_T_QObject_T___constLast(void *thisObj);
-
-// tag=1067
-//  QList::contains(const T & t) const
+// QList::contains(const T & t) const
 bool c_QList_T_QObject_T___contains_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::count() const
+// QList::count() const
 int c_QList_T_QObject_T___count(void *thisObj);
-
-// tag=1067
-//  QList::count(const T & t) const
+// QList::count(const T & t) const
 int c_QList_T_QObject_T___count_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::detach()
+// QList::detach()
 void c_QList_T_QObject_T___detach(void *thisObj);
-
-// tag=1067
-//  QList::detachShared()
+// QList::detachShared()
 void c_QList_T_QObject_T___detachShared(void *thisObj);
-
-// tag=1067
-//  QList::empty() const
+// QList::empty() const
 bool c_QList_T_QObject_T___empty(void *thisObj);
-
-// tag=1067
-//  QList::endsWith(const T & t) const
+// QList::endsWith(const T & t) const
 bool c_QList_T_QObject_T___endsWith_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::first()
+// QList::first()
 void *c_QList_T_QObject_T___first(void *thisObj);
-
-// tag=1067
-//  QList::front()
+// QList::front()
 void *c_QList_T_QObject_T___front(void *thisObj);
-
-// tag=1067
-//  QList::indexOf(const T & t, int from) const
+// QList::indexOf(const T & t, int from) const
 int c_QList_T_QObject_T___indexOf_QObject_int(void *thisObj, void *t_, int from);
-
-// tag=1067
-//  QList::insert(int i, const T & t)
+// QList::insert(int i, const T & t)
 void c_QList_T_QObject_T___insert_int_QObject(void *thisObj, int i, void *t_);
-
-// tag=1067
-//  QList::isDetached() const
+// QList::isDetached() const
 bool c_QList_T_QObject_T___isDetached(void *thisObj);
-
-// tag=1067
-//  QList::isEmpty() const
+// QList::isEmpty() const
 bool c_QList_T_QObject_T___isEmpty(void *thisObj);
-
-// tag=1067
-//  QList::isSharedWith(const QList<T > & other) const
+// QList::isSharedWith(const QList<T > & other) const
 bool c_QList_T_QObject_T___isSharedWith_QList_T(void *thisObj, void *other_);
-
-// tag=1067
-//  QList::last()
+// QList::last()
 void *c_QList_T_QObject_T___last(void *thisObj);
-
-// tag=1067
-//  QList::lastIndexOf(const T & t, int from) const
+// QList::lastIndexOf(const T & t, int from) const
 int c_QList_T_QObject_T___lastIndexOf_QObject_int(void *thisObj, void *t_, int from);
-
-// tag=1067
-//  QList::length() const
+// QList::length() const
 int c_QList_T_QObject_T___length(void *thisObj);
-
-// tag=1067
-//  QList::mid(int pos, int length) const
+// QList::mid(int pos, int length) const
 void *c_QList_T_QObject_T___mid_int_int(void *thisObj, int pos, int length);
-
-// tag=1067
-//  QList::move(int from, int to)
+// QList::move(int from, int to)
 void c_QList_T_QObject_T___move_int_int(void *thisObj, int from, int to);
-
-// tag=1067
-//  QList::pop_back()
+// QList::pop_back()
 void c_QList_T_QObject_T___pop_back(void *thisObj);
-
-// tag=1067
-//  QList::pop_front()
+// QList::pop_front()
 void c_QList_T_QObject_T___pop_front(void *thisObj);
-
-// tag=1067
-//  QList::prepend(const T & t)
+// QList::prepend(const T & t)
 void c_QList_T_QObject_T___prepend_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::push_back(const T & t)
+// QList::push_back(const T & t)
 void c_QList_T_QObject_T___push_back_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::push_front(const T & t)
+// QList::push_front(const T & t)
 void c_QList_T_QObject_T___push_front_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::removeAll(const T & t)
+// QList::removeAll(const T & t)
 int c_QList_T_QObject_T___removeAll_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::removeAt(int i)
+// QList::removeAt(int i)
 void c_QList_T_QObject_T___removeAt_int(void *thisObj, int i);
-
-// tag=1067
-//  QList::removeFirst()
+// QList::removeFirst()
 void c_QList_T_QObject_T___removeFirst(void *thisObj);
-
-// tag=1067
-//  QList::removeLast()
+// QList::removeLast()
 void c_QList_T_QObject_T___removeLast(void *thisObj);
-
-// tag=1067
-//  QList::removeOne(const T & t)
+// QList::removeOne(const T & t)
 bool c_QList_T_QObject_T___removeOne_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::replace(int i, const T & t)
+// QList::replace(int i, const T & t)
 void c_QList_T_QObject_T___replace_int_QObject(void *thisObj, int i, void *t_);
-
-// tag=1067
-//  QList::reserve(int size)
+// QList::reserve(int size)
 void c_QList_T_QObject_T___reserve_int(void *thisObj, int size);
-
-// tag=1067
-//  QList::setSharable(bool sharable)
+// QList::setSharable(bool sharable)
 void c_QList_T_QObject_T___setSharable_bool(void *thisObj, bool sharable);
-
-// tag=1067
-//  QList::size() const
+// QList::size() const
 int c_QList_T_QObject_T___size(void *thisObj);
-
-// tag=1067
-//  QList::startsWith(const T & t) const
+// QList::startsWith(const T & t) const
 bool c_QList_T_QObject_T___startsWith_QObject(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::swapItemsAt(int i, int j)
+// QList::swapItemsAt(int i, int j)
 void c_QList_T_QObject_T___swapItemsAt_int_int(void *thisObj, int i, int j);
-
-// tag=1067
-//  QList::takeAt(int i)
+// QList::takeAt(int i)
 void *c_QList_T_QObject_T___takeAt_int(void *thisObj, int i);
-
-// tag=1067
-//  QList::takeFirst()
+// QList::takeFirst()
 void *c_QList_T_QObject_T___takeFirst(void *thisObj);
-
-// tag=1067
-//  QList::takeLast()
+// QList::takeLast()
 void *c_QList_T_QObject_T___takeLast(void *thisObj);
-
-// tag=1067
-//  QList::value(int i) const
+// QList::value(int i) const
 void *c_QList_T_QObject_T___value_int(void *thisObj, int i);
-
-// tag=1067
-//  QList::value(int i, const T & defaultValue) const
+// QList::value(int i, const T & defaultValue) const
 void *c_QList_T_QObject_T___value_int_QObject(void *thisObj, int i, void *defaultValue_);
-
-// tag=1066
 void c_QList_T_QObject_T___destructor(void *thisObj);
-
-// tag=1047
-void c_QList_T_QObject_T__Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QList::QList<T>()
+void c_QList_T_QObject_T__Finalizer(void *, void *cppObj, void *); // QList::QList<T>()
 void *c_QList_T_QByteArray_T___constructor();
-
-// tag=1067
-//  QList::append(const QList<T > & t)
+// QList::append(const QList<T > & t)
 void c_QList_T_QByteArray_T___append_QList_T(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::append(const T & t)
+// QList::append(const T & t)
 void c_QList_T_QByteArray_T___append_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::at(int i) const
+// QList::at(int i) const
 const void *c_QList_T_QByteArray_T___at_int(void *thisObj, int i);
-
-// tag=1067
-//  QList::back()
+// QList::back()
 void *c_QList_T_QByteArray_T___back(void *thisObj);
-
-// tag=1067
-//  QList::clear()
+// QList::clear()
 void c_QList_T_QByteArray_T___clear(void *thisObj);
-
-// tag=1067
-//  QList::constFirst() const
+// QList::constFirst() const
 const void *c_QList_T_QByteArray_T___constFirst(void *thisObj);
-
-// tag=1067
-//  QList::constLast() const
+// QList::constLast() const
 const void *c_QList_T_QByteArray_T___constLast(void *thisObj);
-
-// tag=1067
-//  QList::contains(const T & t) const
+// QList::contains(const T & t) const
 bool c_QList_T_QByteArray_T___contains_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::count() const
+// QList::count() const
 int c_QList_T_QByteArray_T___count(void *thisObj);
-
-// tag=1067
-//  QList::count(const T & t) const
+// QList::count(const T & t) const
 int c_QList_T_QByteArray_T___count_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::detach()
+// QList::detach()
 void c_QList_T_QByteArray_T___detach(void *thisObj);
-
-// tag=1067
-//  QList::detachShared()
+// QList::detachShared()
 void c_QList_T_QByteArray_T___detachShared(void *thisObj);
-
-// tag=1067
-//  QList::empty() const
+// QList::empty() const
 bool c_QList_T_QByteArray_T___empty(void *thisObj);
-
-// tag=1067
-//  QList::endsWith(const T & t) const
+// QList::endsWith(const T & t) const
 bool c_QList_T_QByteArray_T___endsWith_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::first()
+// QList::first()
 void *c_QList_T_QByteArray_T___first(void *thisObj);
-
-// tag=1067
-//  QList::front()
+// QList::front()
 void *c_QList_T_QByteArray_T___front(void *thisObj);
-
-// tag=1067
-//  QList::indexOf(const T & t, int from) const
+// QList::indexOf(const T & t, int from) const
 int c_QList_T_QByteArray_T___indexOf_QByteArray_int(void *thisObj, void *t_, int from);
-
-// tag=1067
-//  QList::insert(int i, const T & t)
+// QList::insert(int i, const T & t)
 void c_QList_T_QByteArray_T___insert_int_QByteArray(void *thisObj, int i, void *t_);
-
-// tag=1067
-//  QList::isDetached() const
+// QList::isDetached() const
 bool c_QList_T_QByteArray_T___isDetached(void *thisObj);
-
-// tag=1067
-//  QList::isEmpty() const
+// QList::isEmpty() const
 bool c_QList_T_QByteArray_T___isEmpty(void *thisObj);
-
-// tag=1067
-//  QList::isSharedWith(const QList<T > & other) const
+// QList::isSharedWith(const QList<T > & other) const
 bool c_QList_T_QByteArray_T___isSharedWith_QList_T(void *thisObj, void *other_);
-
-// tag=1067
-//  QList::last()
+// QList::last()
 void *c_QList_T_QByteArray_T___last(void *thisObj);
-
-// tag=1067
-//  QList::lastIndexOf(const T & t, int from) const
+// QList::lastIndexOf(const T & t, int from) const
 int c_QList_T_QByteArray_T___lastIndexOf_QByteArray_int(void *thisObj, void *t_, int from);
-
-// tag=1067
-//  QList::length() const
+// QList::length() const
 int c_QList_T_QByteArray_T___length(void *thisObj);
-
-// tag=1067
-//  QList::mid(int pos, int length) const
+// QList::mid(int pos, int length) const
 void *c_QList_T_QByteArray_T___mid_int_int(void *thisObj, int pos, int length);
-
-// tag=1067
-//  QList::move(int from, int to)
+// QList::move(int from, int to)
 void c_QList_T_QByteArray_T___move_int_int(void *thisObj, int from, int to);
-
-// tag=1067
-//  QList::pop_back()
+// QList::pop_back()
 void c_QList_T_QByteArray_T___pop_back(void *thisObj);
-
-// tag=1067
-//  QList::pop_front()
+// QList::pop_front()
 void c_QList_T_QByteArray_T___pop_front(void *thisObj);
-
-// tag=1067
-//  QList::prepend(const T & t)
+// QList::prepend(const T & t)
 void c_QList_T_QByteArray_T___prepend_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::push_back(const T & t)
+// QList::push_back(const T & t)
 void c_QList_T_QByteArray_T___push_back_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::push_front(const T & t)
+// QList::push_front(const T & t)
 void c_QList_T_QByteArray_T___push_front_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::removeAll(const T & t)
+// QList::removeAll(const T & t)
 int c_QList_T_QByteArray_T___removeAll_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::removeAt(int i)
+// QList::removeAt(int i)
 void c_QList_T_QByteArray_T___removeAt_int(void *thisObj, int i);
-
-// tag=1067
-//  QList::removeFirst()
+// QList::removeFirst()
 void c_QList_T_QByteArray_T___removeFirst(void *thisObj);
-
-// tag=1067
-//  QList::removeLast()
+// QList::removeLast()
 void c_QList_T_QByteArray_T___removeLast(void *thisObj);
-
-// tag=1067
-//  QList::removeOne(const T & t)
+// QList::removeOne(const T & t)
 bool c_QList_T_QByteArray_T___removeOne_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::replace(int i, const T & t)
+// QList::replace(int i, const T & t)
 void c_QList_T_QByteArray_T___replace_int_QByteArray(void *thisObj, int i, void *t_);
-
-// tag=1067
-//  QList::reserve(int size)
+// QList::reserve(int size)
 void c_QList_T_QByteArray_T___reserve_int(void *thisObj, int size);
-
-// tag=1067
-//  QList::setSharable(bool sharable)
+// QList::setSharable(bool sharable)
 void c_QList_T_QByteArray_T___setSharable_bool(void *thisObj, bool sharable);
-
-// tag=1067
-//  QList::size() const
+// QList::size() const
 int c_QList_T_QByteArray_T___size(void *thisObj);
-
-// tag=1067
-//  QList::startsWith(const T & t) const
+// QList::startsWith(const T & t) const
 bool c_QList_T_QByteArray_T___startsWith_QByteArray(void *thisObj, void *t_);
-
-// tag=1067
-//  QList::swapItemsAt(int i, int j)
+// QList::swapItemsAt(int i, int j)
 void c_QList_T_QByteArray_T___swapItemsAt_int_int(void *thisObj, int i, int j);
-
-// tag=1067
-//  QList::takeAt(int i)
+// QList::takeAt(int i)
 void *c_QList_T_QByteArray_T___takeAt_int(void *thisObj, int i);
-
-// tag=1067
-//  QList::takeFirst()
+// QList::takeFirst()
 void *c_QList_T_QByteArray_T___takeFirst(void *thisObj);
-
-// tag=1067
-//  QList::takeLast()
+// QList::takeLast()
 void *c_QList_T_QByteArray_T___takeLast(void *thisObj);
-
-// tag=1067
-//  QList::value(int i) const
+// QList::value(int i) const
 void *c_QList_T_QByteArray_T___value_int(void *thisObj, int i);
-
-// tag=1067
-//  QList::value(int i, const T & defaultValue) const
+// QList::value(int i, const T & defaultValue) const
 void *c_QList_T_QByteArray_T___value_int_QByteArray(void *thisObj, int i, void *defaultValue_);
-
-// tag=1066
 void c_QList_T_QByteArray_T___destructor(void *thisObj);
-
-// tag=1047
-void c_QList_T_QByteArray_T__Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QEvent::QEvent(QEvent::Type type)
+void c_QList_T_QByteArray_T__Finalizer(void *, void *cppObj, void *); // QEvent::QEvent(QEvent::Type type)
 void *c_QEvent__constructor_Type(int type);
-
-// tag=1067
-//  QEvent::accept()
+// QEvent::accept()
 void c_QEvent__accept(void *thisObj);
-
-// tag=1067
-//  QEvent::ignore()
+// QEvent::ignore()
 void c_QEvent__ignore(void *thisObj);
-
-// tag=1067
-//  QEvent::isAccepted() const
+// QEvent::isAccepted() const
 bool c_QEvent__isAccepted(void *thisObj);
-
-// tag=1067
-//  QEvent::registerEventType(int hint)
+// QEvent::registerEventType(int hint)
 int c_static_QEvent__registerEventType_int(int hint);
-
-// tag=1067
-//  QEvent::setAccepted(bool accepted)
+// QEvent::setAccepted(bool accepted)
 void c_QEvent__setAccepted_bool(void *thisObj, bool accepted);
-
-// tag=1067
-//  QEvent::spontaneous() const
+// QEvent::spontaneous() const
 bool c_QEvent__spontaneous(void *thisObj);
-
-// tag=1067
-//  QEvent::type() const
+// QEvent::type() const
 int c_QEvent__type(void *thisObj);
-
-// tag=1066
 void c_QEvent__destructor(void *thisObj);
-
-// tag=1046
 void c_QEvent__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_QEvent_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  QByteArray::QByteArray()
+void c_QEvent_Finalizer(void *, void *cppObj, void *); // QByteArray::QByteArray()
 void *c_QByteArray__constructor();
-
-// tag=1067
-//  QByteArray::QByteArray(const char * arg__1, int size)
+// QByteArray::QByteArray(const char * arg__1, int size)
 void *c_QByteArray__constructor_char_int(const char *arg__1, int size);
-
-// tag=1067
-//  QByteArray::append(const QByteArray & a)
+// QByteArray::append(const QByteArray & a)
 void *c_QByteArray__append_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::append(const char * s)
+// QByteArray::append(const char * s)
 void *c_QByteArray__append_char(void *thisObj, const char *s);
-
-// tag=1067
-//  QByteArray::append(const char * s, int len)
+// QByteArray::append(const char * s, int len)
 void *c_QByteArray__append_char_int(void *thisObj, const char *s, int len);
-
-// tag=1067
-//  QByteArray::at(int i) const
+// QByteArray::at(int i) const
 char c_QByteArray__at_int(void *thisObj, int i);
-
-// tag=1067
-//  QByteArray::back() const
+// QByteArray::back() const
 char c_QByteArray__back(void *thisObj);
-
-// tag=1067
-//  QByteArray::begin() const
+// QByteArray::begin() const
 const char *c_QByteArray__begin(void *thisObj);
-
-// tag=1067
-//  QByteArray::capacity() const
+// QByteArray::capacity() const
 int c_QByteArray__capacity(void *thisObj);
-
-// tag=1067
-//  QByteArray::cbegin() const
+// QByteArray::cbegin() const
 const char *c_QByteArray__cbegin(void *thisObj);
-
-// tag=1067
-//  QByteArray::cend() const
+// QByteArray::cend() const
 const char *c_QByteArray__cend(void *thisObj);
-
-// tag=1067
-//  QByteArray::chop(int n)
+// QByteArray::chop(int n)
 void c_QByteArray__chop_int(void *thisObj, int n);
-
-// tag=1067
-//  QByteArray::chopped(int len) const
+// QByteArray::chopped(int len) const
 void *c_QByteArray__chopped_int(void *thisObj, int len);
-
-// tag=1067
-//  QByteArray::clear()
+// QByteArray::clear()
 void c_QByteArray__clear(void *thisObj);
-
-// tag=1067
-//  QByteArray::compare(const QByteArray & a) const
+// QByteArray::compare(const QByteArray & a) const
 int c_QByteArray__compare_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::compare(const char * c) const
+// QByteArray::compare(const char * c) const
 int c_QByteArray__compare_char(void *thisObj, const char *c);
-
-// tag=1067
-//  QByteArray::constBegin() const
+// QByteArray::constBegin() const
 const char *c_QByteArray__constBegin(void *thisObj);
-
-// tag=1067
-//  QByteArray::constData() const
+// QByteArray::constData() const
 const char *c_QByteArray__constData(void *thisObj);
-
-// tag=1067
-//  QByteArray::constEnd() const
+// QByteArray::constEnd() const
 const char *c_QByteArray__constEnd(void *thisObj);
-
-// tag=1067
-//  QByteArray::contains(const QByteArray & a) const
+// QByteArray::contains(const QByteArray & a) const
 bool c_QByteArray__contains_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::contains(const char * a) const
+// QByteArray::contains(const char * a) const
 bool c_QByteArray__contains_char(void *thisObj, const char *a);
-
-// tag=1067
-//  QByteArray::count() const
+// QByteArray::count() const
 int c_QByteArray__count(void *thisObj);
-
-// tag=1067
-//  QByteArray::count(const QByteArray & a) const
+// QByteArray::count(const QByteArray & a) const
 int c_QByteArray__count_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::count(const char * a) const
+// QByteArray::count(const char * a) const
 int c_QByteArray__count_char(void *thisObj, const char *a);
-
-// tag=1067
-//  QByteArray::data() const
+// QByteArray::data() const
 const char *c_QByteArray__data(void *thisObj);
-
-// tag=1067
-//  QByteArray::detach()
+// QByteArray::detach()
 void c_QByteArray__detach(void *thisObj);
-
-// tag=1067
-//  QByteArray::end() const
+// QByteArray::end() const
 const char *c_QByteArray__end(void *thisObj);
-
-// tag=1067
-//  QByteArray::endsWith(const QByteArray & a) const
+// QByteArray::endsWith(const QByteArray & a) const
 bool c_QByteArray__endsWith_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::endsWith(const char * c) const
+// QByteArray::endsWith(const char * c) const
 bool c_QByteArray__endsWith_char(void *thisObj, const char *c);
-
-// tag=1067
-//  QByteArray::fromBase64(const QByteArray & base64)
+// QByteArray::fromBase64(const QByteArray & base64)
 void *c_static_QByteArray__fromBase64_QByteArray(void *base64_);
-
-// tag=1067
-//  QByteArray::fromHex(const QByteArray & hexEncoded)
+// QByteArray::fromHex(const QByteArray & hexEncoded)
 void *c_static_QByteArray__fromHex_QByteArray(void *hexEncoded_);
-
-// tag=1067
-//  QByteArray::fromRawData(const char * arg__1, int size)
+// QByteArray::fromRawData(const char * arg__1, int size)
 void *c_static_QByteArray__fromRawData_char_int(const char *arg__1, int size);
-
-// tag=1067
-//  QByteArray::front() const
+// QByteArray::front() const
 char c_QByteArray__front(void *thisObj);
-
-// tag=1067
-//  QByteArray::indexOf(const QByteArray & a, int from) const
+// QByteArray::indexOf(const QByteArray & a, int from) const
 int c_QByteArray__indexOf_QByteArray_int(void *thisObj, void *a_, int from);
-
-// tag=1067
-//  QByteArray::indexOf(const char * c, int from) const
+// QByteArray::indexOf(const char * c, int from) const
 int c_QByteArray__indexOf_char_int(void *thisObj, const char *c, int from);
-
-// tag=1067
-//  QByteArray::insert(int i, const QByteArray & a)
+// QByteArray::insert(int i, const QByteArray & a)
 void *c_QByteArray__insert_int_QByteArray(void *thisObj, int i, void *a_);
-
-// tag=1067
-//  QByteArray::insert(int i, const char * s)
+// QByteArray::insert(int i, const char * s)
 void *c_QByteArray__insert_int_char(void *thisObj, int i, const char *s);
-
-// tag=1067
-//  QByteArray::insert(int i, const char * s, int len)
+// QByteArray::insert(int i, const char * s, int len)
 void *c_QByteArray__insert_int_char_int(void *thisObj, int i, const char *s, int len);
-
-// tag=1067
-//  QByteArray::isDetached() const
+// QByteArray::isDetached() const
 bool c_QByteArray__isDetached(void *thisObj);
-
-// tag=1067
-//  QByteArray::isEmpty() const
+// QByteArray::isEmpty() const
 bool c_QByteArray__isEmpty(void *thisObj);
-
-// tag=1067
-//  QByteArray::isLower() const
+// QByteArray::isLower() const
 bool c_QByteArray__isLower(void *thisObj);
-
-// tag=1067
-//  QByteArray::isNull() const
+// QByteArray::isNull() const
 bool c_QByteArray__isNull(void *thisObj);
-
-// tag=1067
-//  QByteArray::isSharedWith(const QByteArray & other) const
+// QByteArray::isSharedWith(const QByteArray & other) const
 bool c_QByteArray__isSharedWith_QByteArray(void *thisObj, void *other_);
-
-// tag=1067
-//  QByteArray::isUpper() const
+// QByteArray::isUpper() const
 bool c_QByteArray__isUpper(void *thisObj);
-
-// tag=1067
-//  QByteArray::lastIndexOf(const QByteArray & a, int from) const
+// QByteArray::lastIndexOf(const QByteArray & a, int from) const
 int c_QByteArray__lastIndexOf_QByteArray_int(void *thisObj, void *a_, int from);
-
-// tag=1067
-//  QByteArray::lastIndexOf(const char * c, int from) const
+// QByteArray::lastIndexOf(const char * c, int from) const
 int c_QByteArray__lastIndexOf_char_int(void *thisObj, const char *c, int from);
-
-// tag=1067
-//  QByteArray::left(int len) const
+// QByteArray::left(int len) const
 void *c_QByteArray__left_int(void *thisObj, int len);
-
-// tag=1067
-//  QByteArray::length() const
+// QByteArray::length() const
 int c_QByteArray__length(void *thisObj);
-
-// tag=1067
-//  QByteArray::mid(int index, int len) const
+// QByteArray::mid(int index, int len) const
 void *c_QByteArray__mid_int_int(void *thisObj, int index, int len);
-
-// tag=1067
-//  QByteArray::number(int arg__1, int base)
+// QByteArray::number(int arg__1, int base)
 void *c_static_QByteArray__number_int_int(int arg__1, int base);
-
-// tag=1067
-//  QByteArray::number(qint64 arg__1, int base)
+// QByteArray::number(qint64 arg__1, int base)
 void *c_static_QByteArray__number_qint64_int(qint64 arg__1, int base);
-
-// tag=1067
-//  QByteArray::prepend(const QByteArray & a)
+// QByteArray::prepend(const QByteArray & a)
 void *c_QByteArray__prepend_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::prepend(const char * s)
+// QByteArray::prepend(const char * s)
 void *c_QByteArray__prepend_char(void *thisObj, const char *s);
-
-// tag=1067
-//  QByteArray::prepend(const char * s, int len)
+// QByteArray::prepend(const char * s, int len)
 void *c_QByteArray__prepend_char_int(void *thisObj, const char *s, int len);
-
-// tag=1067
-//  QByteArray::push_back(const QByteArray & a)
+// QByteArray::push_back(const QByteArray & a)
 void c_QByteArray__push_back_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::push_back(const char * c)
+// QByteArray::push_back(const char * c)
 void c_QByteArray__push_back_char(void *thisObj, const char *c);
-
-// tag=1067
-//  QByteArray::push_front(const QByteArray & a)
+// QByteArray::push_front(const QByteArray & a)
 void c_QByteArray__push_front_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::push_front(const char * c)
+// QByteArray::push_front(const char * c)
 void c_QByteArray__push_front_char(void *thisObj, const char *c);
-
-// tag=1067
-//  QByteArray::remove(int index, int len)
+// QByteArray::remove(int index, int len)
 void *c_QByteArray__remove_int_int(void *thisObj, int index, int len);
-
-// tag=1067
-//  QByteArray::repeated(int times) const
+// QByteArray::repeated(int times) const
 void *c_QByteArray__repeated_int(void *thisObj, int times);
-
-// tag=1067
-//  QByteArray::replace(const QByteArray & before, const QByteArray & after)
+// QByteArray::replace(const QByteArray & before, const QByteArray & after)
 void *c_QByteArray__replace_QByteArray_QByteArray(void *thisObj, void *before_, void *after_);
-
-// tag=1067
-//  QByteArray::replace(const QByteArray & before, const char * after)
+// QByteArray::replace(const QByteArray & before, const char * after)
 void *c_QByteArray__replace_QByteArray_char(void *thisObj, void *before_, const char *after);
-
-// tag=1067
-//  QByteArray::replace(const char * before, const QByteArray & after)
+// QByteArray::replace(const char * before, const QByteArray & after)
 void *c_QByteArray__replace_char_QByteArray(void *thisObj, const char *before, void *after_);
-
-// tag=1067
-//  QByteArray::replace(const char * before, const char * after)
+// QByteArray::replace(const char * before, const char * after)
 void *c_QByteArray__replace_char_char(void *thisObj, const char *before, const char *after);
-
-// tag=1067
-//  QByteArray::replace(const char * before, int bsize, const char * after, int asize)
+// QByteArray::replace(const char * before, int bsize, const char * after, int asize)
 void *c_QByteArray__replace_char_int_char_int(void *thisObj, const char *before, int bsize, const char *after, int asize);
-
-// tag=1067
-//  QByteArray::replace(int index, int len, const QByteArray & s)
+// QByteArray::replace(int index, int len, const QByteArray & s)
 void *c_QByteArray__replace_int_int_QByteArray(void *thisObj, int index, int len, void *s_);
-
-// tag=1067
-//  QByteArray::replace(int index, int len, const char * s)
+// QByteArray::replace(int index, int len, const char * s)
 void *c_QByteArray__replace_int_int_char(void *thisObj, int index, int len, const char *s);
-
-// tag=1067
-//  QByteArray::replace(int index, int len, const char * s, int alen)
+// QByteArray::replace(int index, int len, const char * s, int alen)
 void *c_QByteArray__replace_int_int_char_int(void *thisObj, int index, int len, const char *s, int alen);
-
-// tag=1067
-//  QByteArray::reserve(int size)
+// QByteArray::reserve(int size)
 void c_QByteArray__reserve_int(void *thisObj, int size);
-
-// tag=1067
-//  QByteArray::resize(int size)
+// QByteArray::resize(int size)
 void c_QByteArray__resize_int(void *thisObj, int size);
-
-// tag=1067
-//  QByteArray::right(int len) const
+// QByteArray::right(int len) const
 void *c_QByteArray__right_int(void *thisObj, int len);
-
-// tag=1067
-//  QByteArray::setNum(int arg__1, int base)
+// QByteArray::setNum(int arg__1, int base)
 void *c_QByteArray__setNum_int_int(void *thisObj, int arg__1, int base);
-
-// tag=1067
-//  QByteArray::setNum(qint64 arg__1, int base)
+// QByteArray::setNum(qint64 arg__1, int base)
 void *c_QByteArray__setNum_qint64_int(void *thisObj, qint64 arg__1, int base);
-
-// tag=1067
-//  QByteArray::setNum(short arg__1, int base)
+// QByteArray::setNum(short arg__1, int base)
 void *c_QByteArray__setNum_short_int(void *thisObj, short arg__1, int base);
-
-// tag=1067
-//  QByteArray::shrink_to_fit()
+// QByteArray::shrink_to_fit()
 void c_QByteArray__shrink_to_fit(void *thisObj);
-
-// tag=1067
-//  QByteArray::simplified()
+// QByteArray::simplified()
 void *c_QByteArray__simplified(void *thisObj);
-
-// tag=1067
-//  QByteArray::size() const
+// QByteArray::size() const
 int c_QByteArray__size(void *thisObj);
-
-// tag=1067
-//  QByteArray::squeeze()
+// QByteArray::squeeze()
 void c_QByteArray__squeeze(void *thisObj);
-
-// tag=1067
-//  QByteArray::startsWith(const QByteArray & a) const
+// QByteArray::startsWith(const QByteArray & a) const
 bool c_QByteArray__startsWith_QByteArray(void *thisObj, void *a_);
-
-// tag=1067
-//  QByteArray::startsWith(const char * c) const
+// QByteArray::startsWith(const char * c) const
 bool c_QByteArray__startsWith_char(void *thisObj, const char *c);
-
-// tag=1067
-//  QByteArray::toBase64() const
+// QByteArray::toBase64() const
 void *c_QByteArray__toBase64(void *thisObj);
-
-// tag=1067
-//  QByteArray::toHex() const
+// QByteArray::toHex() const
 void *c_QByteArray__toHex(void *thisObj);
-
-// tag=1067
-//  QByteArray::toLower()
+// QByteArray::toLower()
 void *c_QByteArray__toLower(void *thisObj);
-
-// tag=1067
-//  QByteArray::toUpper()
+// QByteArray::toUpper()
 void *c_QByteArray__toUpper(void *thisObj);
-
-// tag=1067
-//  QByteArray::trimmed()
+// QByteArray::trimmed()
 void *c_QByteArray__trimmed(void *thisObj);
-
-// tag=1067
-//  QByteArray::truncate(int pos)
+// QByteArray::truncate(int pos)
 void c_QByteArray__truncate_int(void *thisObj, int pos);
-
-// tag=1066
 void c_QByteArray__destructor(void *thisObj);
-
-// tag=1047
 void c_QByteArray_Finalizer(void *, void *cppObj, void *);
-// tag=1047
-void c_Layouting_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  Layouting::Item::Item(KDDockWidgets::View * hostWidget)
+void c_Layouting_Finalizer(void *, void *cppObj, void *); // Layouting::Item::Item(KDDockWidgets::View * hostWidget)
 void *c_Layouting__Item__constructor_View(void *hostWidget_);
-
-// tag=1067
-//  Layouting::Item::checkSanity()
+// Layouting::Item::checkSanity()
 bool c_Layouting__Item__checkSanity(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::customEvent(QEvent * event)
+// Layouting::Item::customEvent(QEvent * event)
 void c_Layouting__Item__customEvent_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  Layouting::Item::dumpLayout(int level)
+// Layouting::Item::dumpLayout(int level)
 void c_Layouting__Item__dumpLayout_int(void *thisObj, int level);
-
-// tag=1067
-//  Layouting::Item::event(QEvent * event)
+// Layouting::Item::event(QEvent * event)
 bool c_Layouting__Item__event_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  Layouting::Item::eventFilter(QObject * watched, QEvent * event)
+// Layouting::Item::eventFilter(QObject * watched, QEvent * event)
 bool c_Layouting__Item__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
-
-// tag=1067
-//  Layouting::Item::geometry() const
+// Layouting::Item::geometry() const
 void *c_Layouting__Item__geometry(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::guestView() const
+// Layouting::Item::guestView() const
 void *c_Layouting__Item__guestView(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::height() const
+// Layouting::Item::height() const
 int c_Layouting__Item__height(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::hostView() const
+// Layouting::Item::hostView() const
 void *c_Layouting__Item__hostView(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::isBeingInserted() const
+// Layouting::Item::isBeingInserted() const
 bool c_Layouting__Item__isBeingInserted(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::isContainer() const
+// Layouting::Item::isContainer() const
 bool c_Layouting__Item__isContainer(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::isMDI() const
+// Layouting::Item::isMDI() const
 bool c_Layouting__Item__isMDI(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::isPlaceholder() const
+// Layouting::Item::isPlaceholder() const
 bool c_Layouting__Item__isPlaceholder(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::isRoot() const
+// Layouting::Item::isRoot() const
 bool c_Layouting__Item__isRoot(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::isVisible(bool excludeBeingInserted) const
+// Layouting::Item::isVisible(bool excludeBeingInserted) const
 bool c_Layouting__Item__isVisible_bool(void *thisObj, bool excludeBeingInserted);
-
-// tag=1067
-//  Layouting::Item::mapFromParent(QPoint arg__1) const
+// Layouting::Item::mapFromParent(QPoint arg__1) const
 void *c_Layouting__Item__mapFromParent_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::mapFromRoot(QPoint arg__1) const
+// Layouting::Item::mapFromRoot(QPoint arg__1) const
 void *c_Layouting__Item__mapFromRoot_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::mapFromRoot(QRect arg__1) const
+// Layouting::Item::mapFromRoot(QRect arg__1) const
 void *c_Layouting__Item__mapFromRoot_QRect(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::mapToRoot(QPoint arg__1) const
+// Layouting::Item::mapToRoot(QPoint arg__1) const
 void *c_Layouting__Item__mapToRoot_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::mapToRoot(QRect arg__1) const
+// Layouting::Item::mapToRoot(QRect arg__1) const
 void *c_Layouting__Item__mapToRoot_QRect(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::maxSizeHint() const
+// Layouting::Item::maxSizeHint() const
 void *c_Layouting__Item__maxSizeHint(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::minSize() const
+// Layouting::Item::minSize() const
 void *c_Layouting__Item__minSize(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::missingSize() const
+// Layouting::Item::missingSize() const
 void *c_Layouting__Item__missingSize(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::pos() const
+// Layouting::Item::pos() const
 void *c_Layouting__Item__pos(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::rect() const
+// Layouting::Item::rect() const
 void *c_Layouting__Item__rect(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::ref()
+// Layouting::Item::ref()
 void c_Layouting__Item__ref(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::refCount() const
+// Layouting::Item::refCount() const
 int c_Layouting__Item__refCount(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::restore(KDDockWidgets::View * guestView)
+// Layouting::Item::restore(KDDockWidgets::View * guestView)
 void c_Layouting__Item__restore_View(void *thisObj, void *guestView_);
-
-// tag=1067
-//  Layouting::Item::setBeingInserted(bool arg__1)
+// Layouting::Item::setBeingInserted(bool arg__1)
 void c_Layouting__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
-
-// tag=1067
-//  Layouting::Item::setGeometry(QRect rect)
+// Layouting::Item::setGeometry(QRect rect)
 void c_Layouting__Item__setGeometry_QRect(void *thisObj, void *rect_);
-
-// tag=1067
-//  Layouting::Item::setGeometry_recursive(QRect rect)
+// Layouting::Item::setGeometry_recursive(QRect rect)
 void c_Layouting__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_);
-
-// tag=1067
-//  Layouting::Item::setGuestView(KDDockWidgets::View * arg__1)
+// Layouting::Item::setGuestView(KDDockWidgets::View * arg__1)
 void c_Layouting__Item__setGuestView_View(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::setHostView(KDDockWidgets::View * arg__1)
+// Layouting::Item::setHostView(KDDockWidgets::View * arg__1)
 void c_Layouting__Item__setHostView_View(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::setIsVisible(bool arg__1)
+// Layouting::Item::setIsVisible(bool arg__1)
 void c_Layouting__Item__setIsVisible_bool(void *thisObj, bool arg__1);
-
-// tag=1067
-//  Layouting::Item::setMaxSizeHint(QSize arg__1)
+// Layouting::Item::setMaxSizeHint(QSize arg__1)
 void c_Layouting__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::setMinSize(QSize arg__1)
+// Layouting::Item::setMinSize(QSize arg__1)
 void c_Layouting__Item__setMinSize_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::setPos(QPoint arg__1)
+// Layouting::Item::setPos(QPoint arg__1)
 void c_Layouting__Item__setPos_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::setSize(QSize arg__1)
+// Layouting::Item::setSize(QSize arg__1)
 void c_Layouting__Item__setSize_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  Layouting::Item::size() const
+// Layouting::Item::size() const
 void *c_Layouting__Item__size(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::tr(const char * s, const char * c, int n)
+// Layouting::Item::tr(const char * s, const char * c, int n)
 void *c_static_Layouting__Item__tr_char_char_int(const char *s, const char *c, int n);
-
-// tag=1067
-//  Layouting::Item::unref()
+// Layouting::Item::unref()
 void c_Layouting__Item__unref(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::updateWidgetGeometries()
+// Layouting::Item::updateWidgetGeometries()
 void c_Layouting__Item__updateWidgetGeometries(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::visibleCount_recursive() const
+// Layouting::Item::visibleCount_recursive() const
 int c_Layouting__Item__visibleCount_recursive(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::width() const
+// Layouting::Item::width() const
 int c_Layouting__Item__width(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::x() const
+// Layouting::Item::x() const
 int c_Layouting__Item__x(void *thisObj);
-
-// tag=1067
-//  Layouting::Item::y() const
+// Layouting::Item::y() const
 int c_Layouting__Item__y(void *thisObj);
-
-// tag=1066
 void c_Layouting__Item__destructor(void *thisObj);
-
-// tag=1044
 int c_static_Layouting__Item___get_separatorThickness();
-
-// tag=1044
 bool c_static_Layouting__Item___get_s_silenceSanityChecks();
-
-// tag=1045
 void c_static_Layouting__Item___set_separatorThickness_int(int separatorThickness_);
-
-// tag=1045
 void c_static_Layouting__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
-
-// tag=1046
 void c_Layouting__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_Layouting__Item_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::locationStr(KDDockWidgets::Location loc)
+void c_Layouting__Item_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::locationStr(KDDockWidgets::Location loc)
 void *c_static_KDDockWidgets__locationStr_Location(int loc);
-
-// tag=1047
-void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Views::asView_flutter(KDDockWidgets::Controller * controller)
+void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Views::asView_flutter(KDDockWidgets::Controller * controller)
 void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_);
-
-// tag=1067
-//  KDDockWidgets::Views::asView_flutter(KDDockWidgets::View * view)
+// KDDockWidgets::Views::asView_flutter(KDDockWidgets::View * view)
 void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_);
-
-// tag=1047
-void c_KDDockWidgets__Views_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::ClassicIndicatorWindowViewInterface()
+void c_KDDockWidgets__Views_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::ClassicIndicatorWindowViewInterface()
 void *c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__constructor();
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::hover(QPoint arg__1)
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::hover(QPoint arg__1)
 int c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__hover_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::isWindow() const
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::isWindow() const
 bool c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__isWindow(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::posForIndicator(KDDockWidgets::DropLocation arg__1) const
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__posForIndicator_DropLocation(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::raise()
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::raise()
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__raise(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::resize(QSize arg__1)
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::resize(QSize arg__1)
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__resize_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setGeometry(QRect arg__1)
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setGeometry(QRect arg__1)
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__setGeometry_QRect(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setObjectName(const QString & arg__1)
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setObjectName(const QString & arg__1)
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__setObjectName_QString(void *thisObj, const char *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setVisible(bool arg__1)
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::setVisible(bool arg__1)
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__setVisible_bool(void *thisObj, bool arg__1);
-
-// tag=1067
-//  KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::updatePositions()
+// KDDockWidgets::Views::ClassicIndicatorWindowViewInterface::updatePositions()
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::ViewFactory::ViewFactory()
+void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::ViewFactory::ViewFactory()
 void *c_KDDockWidgets__ViewFactory__constructor();
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
+// KDDockWidgets::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
 void *c_KDDockWidgets__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
+// KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
+// KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::customEvent(QEvent * event)
+// KDDockWidgets::ViewFactory::customEvent(QEvent * event)
 void c_KDDockWidgets__ViewFactory__customEvent_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::event(QEvent * event)
+// KDDockWidgets::ViewFactory::event(QEvent * event)
 bool c_KDDockWidgets__ViewFactory__event_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::eventFilter(QObject * watched, QEvent * event)
+// KDDockWidgets::ViewFactory::eventFilter(QObject * watched, QEvent * event)
 bool c_KDDockWidgets__ViewFactory__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory::tr(const char * s, const char * c, int n)
+// KDDockWidgets::ViewFactory::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
-
-// tag=1066
 void c_KDDockWidgets__ViewFactory__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__ViewFactory_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::ViewFactory_flutter::ViewFactory_flutter()
+void c_KDDockWidgets__ViewFactory_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::ViewFactory_flutter::ViewFactory_flutter()
 void *c_KDDockWidgets__ViewFactory_flutter__constructor();
-
-// tag=1067
-//  KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
+// KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(KDDockWidgets::Controllers::ClassicIndicators * arg__1) const
 void *c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory_flutter::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
+// KDDockWidgets::ViewFactory_flutter::createDropArea(KDDockWidgets::Controllers::DropArea * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const
+// KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory_flutter::customEvent(QEvent * event)
+// KDDockWidgets::ViewFactory_flutter::customEvent(QEvent * event)
 void c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory_flutter::event(QEvent * event)
+// KDDockWidgets::ViewFactory_flutter::event(QEvent * event)
 bool c_KDDockWidgets__ViewFactory_flutter__event_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory_flutter::eventFilter(QObject * watched, QEvent * event)
+// KDDockWidgets::ViewFactory_flutter::eventFilter(QObject * watched, QEvent * event)
 bool c_KDDockWidgets__ViewFactory_flutter__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
-
-// tag=1067
-//  KDDockWidgets::ViewFactory_flutter::tr(const char * s, const char * c, int n)
+// KDDockWidgets::ViewFactory_flutter::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__ViewFactory_flutter__tr_char_char_int(const char *s, const char *c, int n);
-
-// tag=1066
 void c_KDDockWidgets__ViewFactory_flutter__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__ViewFactory_flutter_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Platform_flutter::Platform_flutter()
+void c_KDDockWidgets__ViewFactory_flutter_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Platform_flutter::Platform_flutter()
 void *c_KDDockWidgets__Platform_flutter__constructor();
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::applicationName() const
+// KDDockWidgets::Platform_flutter::applicationName() const
 void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::createDefaultViewFactory()
+// KDDockWidgets::Platform_flutter::createDefaultViewFactory()
 void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
+// KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::hasActivePopup() const
+// KDDockWidgets::Platform_flutter::hasActivePopup() const
 bool c_KDDockWidgets__Platform_flutter__hasActivePopup(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::inDisallowedDragView(QPoint globalPos) const
+// KDDockWidgets::Platform_flutter::inDisallowedDragView(QPoint globalPos) const
 bool c_KDDockWidgets__Platform_flutter__inDisallowedDragView_QPoint(void *thisObj, void *globalPos_);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::init()
+// KDDockWidgets::Platform_flutter::init()
 void c_KDDockWidgets__Platform_flutter__init(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::installMessageHandler()
+// KDDockWidgets::Platform_flutter::installMessageHandler()
 void c_KDDockWidgets__Platform_flutter__installMessageHandler(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::isLeftMouseButtonPressed() const
+// KDDockWidgets::Platform_flutter::isLeftMouseButtonPressed() const
 bool c_KDDockWidgets__Platform_flutter__isLeftMouseButtonPressed(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::isProcessingAppQuitEvent() const
+// KDDockWidgets::Platform_flutter::isProcessingAppQuitEvent() const
 bool c_KDDockWidgets__Platform_flutter__isProcessingAppQuitEvent(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::name() const
+// KDDockWidgets::Platform_flutter::name() const
 const char *c_KDDockWidgets__Platform_flutter__name(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::organizationName() const
+// KDDockWidgets::Platform_flutter::organizationName() const
 void *c_KDDockWidgets__Platform_flutter__organizationName(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::restoreMouseCursor()
+// KDDockWidgets::Platform_flutter::restoreMouseCursor()
 void c_KDDockWidgets__Platform_flutter__restoreMouseCursor(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::screenNumberFor(KDDockWidgets::View * arg__1) const
+// KDDockWidgets::Platform_flutter::screenNumberFor(KDDockWidgets::View * arg__1) const
 int c_KDDockWidgets__Platform_flutter__screenNumberFor_View(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::screenSizeFor(KDDockWidgets::View * arg__1) const
+// KDDockWidgets::Platform_flutter::screenSizeFor(KDDockWidgets::View * arg__1) const
 void *c_KDDockWidgets__Platform_flutter__screenSizeFor_View(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::sendEvent(KDDockWidgets::View * arg__1, QEvent * arg__2) const
+// KDDockWidgets::Platform_flutter::sendEvent(KDDockWidgets::View * arg__1, QEvent * arg__2) const
 void c_KDDockWidgets__Platform_flutter__sendEvent_View_QEvent(void *thisObj, void *arg__1_, void *arg__2_);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::setMouseCursor(Qt::CursorShape arg__1)
+// KDDockWidgets::Platform_flutter::setMouseCursor(Qt::CursorShape arg__1)
 void c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+// KDDockWidgets::Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
 void *c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_createNonClosableView(KDDockWidgets::View * parent)
+// KDDockWidgets::Platform_flutter::tests_createNonClosableView(KDDockWidgets::View * parent)
 void *c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+// KDDockWidgets::Platform_flutter::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
 void *c_KDDockWidgets__Platform_flutter__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_deinitPlatform_impl()
+// KDDockWidgets::Platform_flutter::tests_deinitPlatform_impl()
 void c_KDDockWidgets__Platform_flutter__tests_deinitPlatform_impl(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_initPlatform_impl()
+// KDDockWidgets::Platform_flutter::tests_initPlatform_impl()
 void c_KDDockWidgets__Platform_flutter__tests_initPlatform_impl(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_wait(int ms)
+// KDDockWidgets::Platform_flutter::tests_wait(int ms)
 void c_KDDockWidgets__Platform_flutter__tests_wait_int(void *thisObj, int ms);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
+// KDDockWidgets::Platform_flutter::tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_waitForDeleted(QObject * arg__1, int timeout) const
+// KDDockWidgets::Platform_flutter::tests_waitForDeleted(QObject * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_waitForEvent(KDDockWidgets::View * arg__1, QEvent::Type type, int timeout) const
+// KDDockWidgets::Platform_flutter::tests_waitForEvent(KDDockWidgets::View * arg__1, QEvent::Type type, int timeout) const
 bool c_KDDockWidgets__Platform_flutter__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_waitForEvent(QObject * w, QEvent::Type type, int timeout) const
+// KDDockWidgets::Platform_flutter::tests_waitForEvent(QObject * w, QEvent::Type type, int timeout) const
 bool c_KDDockWidgets__Platform_flutter__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
+// KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform_flutter__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
+// KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform_flutter__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::ungrabMouse()
+// KDDockWidgets::Platform_flutter::ungrabMouse()
 void c_KDDockWidgets__Platform_flutter__ungrabMouse(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::uninstallMessageHandler()
+// KDDockWidgets::Platform_flutter::uninstallMessageHandler()
 void c_KDDockWidgets__Platform_flutter__uninstallMessageHandler(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Platform_flutter::usesFallbackMouseGrabber() const
+// KDDockWidgets::Platform_flutter::usesFallbackMouseGrabber() const
 bool c_KDDockWidgets__Platform_flutter__usesFallbackMouseGrabber(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__Platform_flutter__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__Platform_flutter_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::InitialOption::InitialOption()
+void c_KDDockWidgets__Platform_flutter_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::InitialOption::InitialOption()
 void *c_KDDockWidgets__InitialOption__constructor();
-
-// tag=1067
-//  KDDockWidgets::InitialOption::InitialOption(QSize size)
+// KDDockWidgets::InitialOption::InitialOption(QSize size)
 void *c_KDDockWidgets__InitialOption__constructor_QSize(void *size_);
-
-// tag=1067
-//  KDDockWidgets::InitialOption::preservesCurrentTab() const
+// KDDockWidgets::InitialOption::preservesCurrentTab() const
 bool c_KDDockWidgets__InitialOption__preservesCurrentTab(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::InitialOption::startsHidden() const
+// KDDockWidgets::InitialOption::startsHidden() const
 bool c_KDDockWidgets__InitialOption__startsHidden(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__InitialOption__destructor(void *thisObj);
-
-// tag=1047
-void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::CreateViewOptions::CreateViewOptions()
+void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::CreateViewOptions::CreateViewOptions()
 void *c_KDDockWidgets__CreateViewOptions__constructor();
-
-// tag=1066
 void c_KDDockWidgets__CreateViewOptions__destructor(void *thisObj);
-
-// tag=1044
 bool c_KDDockWidgets__CreateViewOptions___get_isVisible(void *thisObj);
-
-// tag=1044
 bool c_KDDockWidgets__CreateViewOptions___get_createWindow(void *thisObj);
-
-// tag=1045
 void c_KDDockWidgets__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
-
-// tag=1045
 void c_KDDockWidgets__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
-
-// tag=1047
 void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
-// tag=1047
-void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Controllers::ClassicIndicators::ClassicIndicators(KDDockWidgets::Controllers::DropArea * dropArea)
+void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Controllers::ClassicIndicators::ClassicIndicators(KDDockWidgets::Controllers::DropArea * dropArea)
 void *c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea(void *dropArea_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::ClassicIndicators::hover_impl(QPoint globalPos)
+// KDDockWidgets::Controllers::ClassicIndicators::hover_impl(QPoint globalPos)
 int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj, void *globalPos_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::ClassicIndicators::indicatorsVisibleChanged()
+// KDDockWidgets::Controllers::ClassicIndicators::indicatorsVisibleChanged()
 void c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged(void *thisObj);
-
-// tag=1078
-void c_KDDockWidgets__Controllers__ClassicIndicators__onIndicatorsVisibleChanged(void *thisObj, void *contextQObject, void *callback);
-// tag=1067
-//  KDDockWidgets::Controllers::ClassicIndicators::onResize(QSize newSize)
+void c_KDDockWidgets__Controllers__ClassicIndicators__onIndicatorsVisibleChanged(void *thisObj, void *contextQObject, void *callback); // KDDockWidgets::Controllers::ClassicIndicators::onResize(QSize newSize)
 bool c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::ClassicIndicators::posForIndicator(KDDockWidgets::DropLocation arg__1) const
+// KDDockWidgets::Controllers::ClassicIndicators::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::Controllers::ClassicIndicators::setDropLocation(KDDockWidgets::DropLocation arg__1)
+// KDDockWidgets::Controllers::ClassicIndicators::setDropLocation(KDDockWidgets::DropLocation arg__1)
 void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocation(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::Controllers::ClassicIndicators::tr(const char * s, const char * c, int n)
+// KDDockWidgets::Controllers::ClassicIndicators::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s, const char *c, int n);
-
-// tag=1067
-//  KDDockWidgets::Controllers::ClassicIndicators::updateVisibility()
+// KDDockWidgets::Controllers::ClassicIndicators::updateVisibility()
 void c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__Controllers__ClassicIndicators__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__Controllers__ClassicIndicators_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::View * arg__2)
+void c_KDDockWidgets__Controllers__ClassicIndicators_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::View * arg__2)
 void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_);
-
-// tag=1067
-//  KDDockWidgets::Controller::close()
+// KDDockWidgets::Controller::close()
 bool c_KDDockWidgets__Controller__close(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::customEvent(QEvent * event)
+// KDDockWidgets::Controller::customEvent(QEvent * event)
 void c_KDDockWidgets__Controller__customEvent_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controller::event(QEvent * event)
+// KDDockWidgets::Controller::event(QEvent * event)
 bool c_KDDockWidgets__Controller__event_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controller::eventFilter(QObject * watched, QEvent * event)
+// KDDockWidgets::Controller::eventFilter(QObject * watched, QEvent * event)
 bool c_KDDockWidgets__Controller__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controller::geometry() const
+// KDDockWidgets::Controller::geometry() const
 void *c_KDDockWidgets__Controller__geometry(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::height() const
+// KDDockWidgets::Controller::height() const
 int c_KDDockWidgets__Controller__height(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::inDtor() const
+// KDDockWidgets::Controller::inDtor() const
 bool c_KDDockWidgets__Controller__inDtor(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::isVisible() const
+// KDDockWidgets::Controller::isVisible() const
 bool c_KDDockWidgets__Controller__isVisible(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::mapToGlobal(QPoint arg__1) const
+// KDDockWidgets::Controller::mapToGlobal(QPoint arg__1) const
 void *c_KDDockWidgets__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Controller::parentViewChanged(KDDockWidgets::View * parent)
+// KDDockWidgets::Controller::parentViewChanged(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controller__parentViewChanged_View(void *thisObj, void *parent_);
-
-// tag=1078
-void c_KDDockWidgets__Controller__onParentViewChanged_View(void *thisObj, void *contextQObject, void *callback);
-// tag=1067
-//  KDDockWidgets::Controller::pos() const
+void c_KDDockWidgets__Controller__onParentViewChanged_View(void *thisObj, void *contextQObject, void *callback); // KDDockWidgets::Controller::pos() const
 void *c_KDDockWidgets__Controller__pos(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::rect() const
+// KDDockWidgets::Controller::rect() const
 void *c_KDDockWidgets__Controller__rect(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::setParentView(KDDockWidgets::View * parent)
+// KDDockWidgets::Controller::setParentView(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controller__setParentView_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Controller::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Controller::setParentView_impl(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controller__setParentView_impl_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Controller::setVisible(bool arg__1)
+// KDDockWidgets::Controller::setVisible(bool arg__1)
 void c_KDDockWidgets__Controller__setVisible_bool(void *thisObj, bool arg__1);
-
-// tag=1067
-//  KDDockWidgets::Controller::show() const
+// KDDockWidgets::Controller::show() const
 void c_KDDockWidgets__Controller__show(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::size() const
+// KDDockWidgets::Controller::size() const
 void *c_KDDockWidgets__Controller__size(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::tr(const char * s, const char * c, int n)
+// KDDockWidgets::Controller::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const char *c, int n);
-
-// tag=1067
-//  KDDockWidgets::Controller::type() const
+// KDDockWidgets::Controller::type() const
 int c_KDDockWidgets__Controller__type(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::view() const
+// KDDockWidgets::Controller::view() const
 void *c_KDDockWidgets__Controller__view(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::width() const
+// KDDockWidgets::Controller::width() const
 int c_KDDockWidgets__Controller__width(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::x() const
+// KDDockWidgets::Controller::x() const
 int c_KDDockWidgets__Controller__x(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controller::y() const
+// KDDockWidgets::Controller::y() const
 int c_KDDockWidgets__Controller__y(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__Controller__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__Controller_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::View::View(KDDockWidgets::Controller * controller, KDDockWidgets::Type arg__2)
+void c_KDDockWidgets__Controller_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::View::View(KDDockWidgets::Controller * controller, KDDockWidgets::Type arg__2)
 void *c_KDDockWidgets__View__constructor_Controller_Type(void *controller_, int arg__2);
-
-// tag=1067
-//  KDDockWidgets::View::aboutToBeDestroyed() const
+// KDDockWidgets::View::aboutToBeDestroyed() const
 bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::activateWindow()
+// KDDockWidgets::View::activateWindow()
 void c_KDDockWidgets__View__activateWindow(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::asDropAreaController() const
+// KDDockWidgets::View::asDropAreaController() const
 void *c_KDDockWidgets__View__asDropAreaController(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::asLayout() const
+// KDDockWidgets::View::asLayout() const
 void *c_KDDockWidgets__View__asLayout(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::boundedMaxSize(QSize min, QSize max)
+// KDDockWidgets::View::boundedMaxSize(QSize min, QSize max)
 void *c_static_KDDockWidgets__View__boundedMaxSize_QSize_QSize(void *min_, void *max_);
-
-// tag=1067
-//  KDDockWidgets::View::close()
+// KDDockWidgets::View::close()
 bool c_KDDockWidgets__View__close(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::closeRootView()
+// KDDockWidgets::View::closeRootView()
 void c_KDDockWidgets__View__closeRootView(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::controller() const
+// KDDockWidgets::View::controller() const
 void *c_KDDockWidgets__View__controller(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::createPlatformWindow()
+// KDDockWidgets::View::createPlatformWindow()
 void c_KDDockWidgets__View__createPlatformWindow(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::equals(const KDDockWidgets::View * one, const KDDockWidgets::View * two)
+// KDDockWidgets::View::equals(const KDDockWidgets::View * one, const KDDockWidgets::View * two)
 bool c_static_KDDockWidgets__View__equals_View_View(void *one_, void *two_);
-
-// tag=1067
-//  KDDockWidgets::View::equals(const KDDockWidgets::View * other) const
+// KDDockWidgets::View::equals(const KDDockWidgets::View * other) const
 bool c_KDDockWidgets__View__equals_View(void *thisObj, void *other_);
-
-// tag=1067
-//  KDDockWidgets::View::firstParentOfType(KDDockWidgets::Type arg__1) const
+// KDDockWidgets::View::firstParentOfType(KDDockWidgets::Type arg__1) const
 void *c_KDDockWidgets__View__firstParentOfType_Type(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::View::firstParentOfType(KDDockWidgets::View * view, KDDockWidgets::Type arg__2)
+// KDDockWidgets::View::firstParentOfType(KDDockWidgets::View * view, KDDockWidgets::Type arg__2)
 void *c_static_KDDockWidgets__View__firstParentOfType_View_Type(void *view_, int arg__2);
-
-// tag=1067
-//  KDDockWidgets::View::flags() const
+// KDDockWidgets::View::flags() const
 int c_KDDockWidgets__View__flags(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::free()
+// KDDockWidgets::View::free()
 void c_KDDockWidgets__View__free(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::free_impl()
+// KDDockWidgets::View::free_impl()
 void c_KDDockWidgets__View__free_impl(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::freed() const
+// KDDockWidgets::View::freed() const
 bool c_KDDockWidgets__View__freed(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::geometry() const
+// KDDockWidgets::View::geometry() const
 void *c_KDDockWidgets__View__geometry(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::globalGeometry() const
+// KDDockWidgets::View::globalGeometry() const
 void *c_KDDockWidgets__View__globalGeometry(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::grabMouse()
+// KDDockWidgets::View::grabMouse()
 void c_KDDockWidgets__View__grabMouse(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::hardcodedMinimumSize()
+// KDDockWidgets::View::hardcodedMinimumSize()
 void *c_static_KDDockWidgets__View__hardcodedMinimumSize();
-
-// tag=1067
-//  KDDockWidgets::View::hasFocus() const
+// KDDockWidgets::View::hasFocus() const
 bool c_KDDockWidgets__View__hasFocus(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::height() const
+// KDDockWidgets::View::height() const
 int c_KDDockWidgets__View__height(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::hide()
+// KDDockWidgets::View::hide()
 void c_KDDockWidgets__View__hide(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::id() const
+// KDDockWidgets::View::id() const
 void *c_KDDockWidgets__View__id(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::inDtor() const
+// KDDockWidgets::View::inDtor() const
 bool c_KDDockWidgets__View__inDtor(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::init()
+// KDDockWidgets::View::init()
 void c_KDDockWidgets__View__init(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::isActiveWindow() const
+// KDDockWidgets::View::isActiveWindow() const
 bool c_KDDockWidgets__View__isActiveWindow(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::isMaximized() const
+// KDDockWidgets::View::isMaximized() const
 bool c_KDDockWidgets__View__isMaximized(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::isMinimized() const
+// KDDockWidgets::View::isMinimized() const
 bool c_KDDockWidgets__View__isMinimized(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::isNull() const
+// KDDockWidgets::View::isNull() const
 bool c_KDDockWidgets__View__isNull(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::isRootView() const
+// KDDockWidgets::View::isRootView() const
 bool c_KDDockWidgets__View__isRootView(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::isVisible() const
+// KDDockWidgets::View::isVisible() const
 bool c_KDDockWidgets__View__isVisible(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::mapFromGlobal(QPoint arg__1) const
+// KDDockWidgets::View::mapFromGlobal(QPoint arg__1) const
 void *c_KDDockWidgets__View__mapFromGlobal_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::mapTo(KDDockWidgets::View * arg__1, QPoint arg__2) const
+// KDDockWidgets::View::mapTo(KDDockWidgets::View * arg__1, QPoint arg__2) const
 void *c_KDDockWidgets__View__mapTo_View_QPoint(void *thisObj, void *arg__1_, void *arg__2_);
-
-// tag=1067
-//  KDDockWidgets::View::mapToGlobal(QPoint arg__1) const
+// KDDockWidgets::View::mapToGlobal(QPoint arg__1) const
 void *c_KDDockWidgets__View__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::maxSizeHint() const
+// KDDockWidgets::View::maxSizeHint() const
 void *c_KDDockWidgets__View__maxSizeHint(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::maximumSize() const
+// KDDockWidgets::View::maximumSize() const
 void *c_KDDockWidgets__View__maximumSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::minSize() const
+// KDDockWidgets::View::minSize() const
 void *c_KDDockWidgets__View__minSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::minimumHeight() const
+// KDDockWidgets::View::minimumHeight() const
 int c_KDDockWidgets__View__minimumHeight(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::minimumWidth() const
+// KDDockWidgets::View::minimumWidth() const
 int c_KDDockWidgets__View__minimumWidth(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::move(QPoint arg__1)
+// KDDockWidgets::View::move(QPoint arg__1)
 void c_KDDockWidgets__View__move_QPoint(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::move(int x, int y)
+// KDDockWidgets::View::move(int x, int y)
 void c_KDDockWidgets__View__move_int_int(void *thisObj, int x, int y);
-
-// tag=1067
-//  KDDockWidgets::View::normalGeometry() const
+// KDDockWidgets::View::normalGeometry() const
 void *c_KDDockWidgets__View__normalGeometry(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::objectName() const
+// KDDockWidgets::View::objectName() const
 void *c_KDDockWidgets__View__objectName(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::onResize(QSize newSize)
+// KDDockWidgets::View::onResize(QSize newSize)
 bool c_KDDockWidgets__View__onResize_QSize(void *thisObj, void *newSize_);
-
-// tag=1067
-//  KDDockWidgets::View::parentSize() const
+// KDDockWidgets::View::parentSize() const
 void *c_KDDockWidgets__View__parentSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::pos() const
+// KDDockWidgets::View::pos() const
 void *c_KDDockWidgets__View__pos(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::raise()
+// KDDockWidgets::View::raise()
 void c_KDDockWidgets__View__raise(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::raiseAndActivate()
+// KDDockWidgets::View::raiseAndActivate()
 void c_KDDockWidgets__View__raiseAndActivate(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::rect() const
+// KDDockWidgets::View::rect() const
 void *c_KDDockWidgets__View__rect(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::releaseKeyboard()
+// KDDockWidgets::View::releaseKeyboard()
 void c_KDDockWidgets__View__releaseKeyboard(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::releaseMouse()
+// KDDockWidgets::View::releaseMouse()
 void c_KDDockWidgets__View__releaseMouse(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::resize(QSize arg__1)
+// KDDockWidgets::View::resize(QSize arg__1)
 void c_KDDockWidgets__View__resize_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::resize(int w, int h)
+// KDDockWidgets::View::resize(int w, int h)
 void c_KDDockWidgets__View__resize_int_int(void *thisObj, int w, int h);
-
-// tag=1067
-//  KDDockWidgets::View::setAboutToBeDestroyed()
+// KDDockWidgets::View::setAboutToBeDestroyed()
 void c_KDDockWidgets__View__setAboutToBeDestroyed(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::setCursor(Qt::CursorShape arg__1)
+// KDDockWidgets::View::setCursor(Qt::CursorShape arg__1)
 void c_KDDockWidgets__View__setCursor_CursorShape(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::View::setFixedHeight(int arg__1)
+// KDDockWidgets::View::setFixedHeight(int arg__1)
 void c_KDDockWidgets__View__setFixedHeight_int(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::View::setFixedWidth(int arg__1)
+// KDDockWidgets::View::setFixedWidth(int arg__1)
 void c_KDDockWidgets__View__setFixedWidth_int(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::View::setGeometry(QRect arg__1)
+// KDDockWidgets::View::setGeometry(QRect arg__1)
 void c_KDDockWidgets__View__setGeometry_QRect(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::setHeight(int height)
+// KDDockWidgets::View::setHeight(int height)
 void c_KDDockWidgets__View__setHeight_int(void *thisObj, int height);
-
-// tag=1067
-//  KDDockWidgets::View::setMaximumSize(QSize sz)
+// KDDockWidgets::View::setMaximumSize(QSize sz)
 void c_KDDockWidgets__View__setMaximumSize_QSize(void *thisObj, void *sz_);
-
-// tag=1067
-//  KDDockWidgets::View::setMinimumSize(QSize arg__1)
+// KDDockWidgets::View::setMinimumSize(QSize arg__1)
 void c_KDDockWidgets__View__setMinimumSize_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::setMouseTracking(bool arg__1)
+// KDDockWidgets::View::setMouseTracking(bool arg__1)
 void c_KDDockWidgets__View__setMouseTracking_bool(void *thisObj, bool arg__1);
-
-// tag=1067
-//  KDDockWidgets::View::setObjectName(const QString & arg__1)
+// KDDockWidgets::View::setObjectName(const QString & arg__1)
 void c_KDDockWidgets__View__setObjectName_QString(void *thisObj, const char *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::setParent(KDDockWidgets::View * arg__1)
+// KDDockWidgets::View::setParent(KDDockWidgets::View * arg__1)
 void c_KDDockWidgets__View__setParent_View(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::setSize(QSize arg__1)
+// KDDockWidgets::View::setSize(QSize arg__1)
 void c_KDDockWidgets__View__setSize_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::View::setSize(int width, int height)
+// KDDockWidgets::View::setSize(int width, int height)
 void c_KDDockWidgets__View__setSize_int_int(void *thisObj, int width, int height);
-
-// tag=1067
-//  KDDockWidgets::View::setVisible(bool arg__1)
+// KDDockWidgets::View::setVisible(bool arg__1)
 void c_KDDockWidgets__View__setVisible_bool(void *thisObj, bool arg__1);
-
-// tag=1067
-//  KDDockWidgets::View::setWidth(int width)
+// KDDockWidgets::View::setWidth(int width)
 void c_KDDockWidgets__View__setWidth_int(void *thisObj, int width);
-
-// tag=1067
-//  KDDockWidgets::View::setWindowOpacity(double arg__1)
+// KDDockWidgets::View::setWindowOpacity(double arg__1)
 void c_KDDockWidgets__View__setWindowOpacity_double(void *thisObj, double arg__1);
-
-// tag=1067
-//  KDDockWidgets::View::setWindowTitle(const QString & title)
+// KDDockWidgets::View::setWindowTitle(const QString & title)
 void c_KDDockWidgets__View__setWindowTitle_QString(void *thisObj, const char *title_);
-
-// tag=1067
-//  KDDockWidgets::View::setZOrder(int arg__1)
+// KDDockWidgets::View::setZOrder(int arg__1)
 void c_KDDockWidgets__View__setZOrder_int(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::View::show()
+// KDDockWidgets::View::show()
 void c_KDDockWidgets__View__show(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::showMaximized()
+// KDDockWidgets::View::showMaximized()
 void c_KDDockWidgets__View__showMaximized(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::showMinimized()
+// KDDockWidgets::View::showMinimized()
 void c_KDDockWidgets__View__showMinimized(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::showNormal()
+// KDDockWidgets::View::showNormal()
 void c_KDDockWidgets__View__showNormal(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::size() const
+// KDDockWidgets::View::size() const
 void *c_KDDockWidgets__View__size(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::sizeHint() const
+// KDDockWidgets::View::sizeHint() const
 void *c_KDDockWidgets__View__sizeHint(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::type() const
+// KDDockWidgets::View::type() const
 int c_KDDockWidgets__View__type(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::update()
+// KDDockWidgets::View::update()
 void c_KDDockWidgets__View__update(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::width() const
+// KDDockWidgets::View::width() const
 int c_KDDockWidgets__View__width(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::windowGeometry() const
+// KDDockWidgets::View::windowGeometry() const
 void *c_KDDockWidgets__View__windowGeometry(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::x() const
+// KDDockWidgets::View::x() const
 int c_KDDockWidgets__View__x(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::View::y() const
+// KDDockWidgets::View::y() const
 int c_KDDockWidgets__View__y(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__View__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::View * arg__3, Qt::WindowFlags windowFlags)
+void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::View * arg__3, Qt::WindowFlags windowFlags)
 void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::activateWindow()
+// KDDockWidgets::Views::View_flutter::activateWindow()
 void c_KDDockWidgets__Views__View_flutter__activateWindow(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::close()
+// KDDockWidgets::Views::View_flutter::close()
 bool c_KDDockWidgets__Views__View_flutter__close(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::createPlatformWindow()
+// KDDockWidgets::Views::View_flutter::createPlatformWindow()
 void c_KDDockWidgets__Views__View_flutter__createPlatformWindow(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::flags() const
+// KDDockWidgets::Views::View_flutter::flags() const
 int c_KDDockWidgets__Views__View_flutter__flags(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::free_impl()
+// KDDockWidgets::Views::View_flutter::free_impl()
 void c_KDDockWidgets__Views__View_flutter__free_impl(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::geometry() const
+// KDDockWidgets::Views::View_flutter::geometry() const
 void *c_KDDockWidgets__Views__View_flutter__geometry(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::grabMouse()
+// KDDockWidgets::Views::View_flutter::grabMouse()
 void c_KDDockWidgets__Views__View_flutter__grabMouse(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::hasFocus() const
+// KDDockWidgets::Views::View_flutter::hasFocus() const
 bool c_KDDockWidgets__Views__View_flutter__hasFocus(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::hide()
+// KDDockWidgets::Views::View_flutter::hide()
 void c_KDDockWidgets__Views__View_flutter__hide(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::init()
+// KDDockWidgets::Views::View_flutter::init()
 void c_KDDockWidgets__Views__View_flutter__init(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::isActiveWindow() const
+// KDDockWidgets::Views::View_flutter::isActiveWindow() const
 bool c_KDDockWidgets__Views__View_flutter__isActiveWindow(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::isMaximized() const
+// KDDockWidgets::Views::View_flutter::isMaximized() const
 bool c_KDDockWidgets__Views__View_flutter__isMaximized(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::isMinimized() const
+// KDDockWidgets::Views::View_flutter::isMinimized() const
 bool c_KDDockWidgets__Views__View_flutter__isMinimized(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::isNull() const
+// KDDockWidgets::Views::View_flutter::isNull() const
 bool c_KDDockWidgets__Views__View_flutter__isNull(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::isRootView() const
+// KDDockWidgets::Views::View_flutter::isRootView() const
 bool c_KDDockWidgets__Views__View_flutter__isRootView(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::isVisible() const
+// KDDockWidgets::Views::View_flutter::isVisible() const
 bool c_KDDockWidgets__Views__View_flutter__isVisible(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::mapFromGlobal(QPoint globalPt) const
+// KDDockWidgets::Views::View_flutter::mapFromGlobal(QPoint globalPt) const
 void *c_KDDockWidgets__Views__View_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::mapTo(KDDockWidgets::View * parent, QPoint pos) const
+// KDDockWidgets::Views::View_flutter::mapTo(KDDockWidgets::View * parent, QPoint pos) const
 void *c_KDDockWidgets__Views__View_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::mapToGlobal(QPoint localPt) const
+// KDDockWidgets::Views::View_flutter::mapToGlobal(QPoint localPt) const
 void *c_KDDockWidgets__Views__View_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::maxSizeHint() const
+// KDDockWidgets::Views::View_flutter::maxSizeHint() const
 void *c_KDDockWidgets__Views__View_flutter__maxSizeHint(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::maximumSize() const
+// KDDockWidgets::Views::View_flutter::maximumSize() const
 void *c_KDDockWidgets__Views__View_flutter__maximumSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::minSize() const
+// KDDockWidgets::Views::View_flutter::minSize() const
 void *c_KDDockWidgets__Views__View_flutter__minSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::minimumHeight() const
+// KDDockWidgets::Views::View_flutter::minimumHeight() const
 int c_KDDockWidgets__Views__View_flutter__minimumHeight(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::minimumWidth() const
+// KDDockWidgets::Views::View_flutter::minimumWidth() const
 int c_KDDockWidgets__Views__View_flutter__minimumWidth(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::move(int x, int y)
+// KDDockWidgets::Views::View_flutter::move(int x, int y)
 void c_KDDockWidgets__Views__View_flutter__move_int_int(void *thisObj, int x, int y);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::normalGeometry() const
+// KDDockWidgets::Views::View_flutter::normalGeometry() const
 void *c_KDDockWidgets__Views__View_flutter__normalGeometry(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::objectName() const
+// KDDockWidgets::Views::View_flutter::objectName() const
 void *c_KDDockWidgets__Views__View_flutter__objectName(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::onResize(QSize newSize)
+// KDDockWidgets::Views::View_flutter::onResize(QSize newSize)
 bool c_KDDockWidgets__Views__View_flutter__onResize_QSize(void *thisObj, void *newSize_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::raise()
+// KDDockWidgets::Views::View_flutter::raise()
 void c_KDDockWidgets__Views__View_flutter__raise(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::raiseAndActivate()
+// KDDockWidgets::Views::View_flutter::raiseAndActivate()
 void c_KDDockWidgets__Views__View_flutter__raiseAndActivate(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::releaseKeyboard()
+// KDDockWidgets::Views::View_flutter::releaseKeyboard()
 void c_KDDockWidgets__Views__View_flutter__releaseKeyboard(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::releaseMouse()
+// KDDockWidgets::Views::View_flutter::releaseMouse()
 void c_KDDockWidgets__Views__View_flutter__releaseMouse(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setCursor(Qt::CursorShape shape)
+// KDDockWidgets::Views::View_flutter::setCursor(Qt::CursorShape shape)
 void c_KDDockWidgets__Views__View_flutter__setCursor_CursorShape(void *thisObj, int shape);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setFixedHeight(int h)
+// KDDockWidgets::Views::View_flutter::setFixedHeight(int h)
 void c_KDDockWidgets__Views__View_flutter__setFixedHeight_int(void *thisObj, int h);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setFixedWidth(int w)
+// KDDockWidgets::Views::View_flutter::setFixedWidth(int w)
 void c_KDDockWidgets__Views__View_flutter__setFixedWidth_int(void *thisObj, int w);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setGeometry(QRect arg__1)
+// KDDockWidgets::Views::View_flutter::setGeometry(QRect arg__1)
 void c_KDDockWidgets__Views__View_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setHeight(int h)
+// KDDockWidgets::Views::View_flutter::setHeight(int h)
 void c_KDDockWidgets__Views__View_flutter__setHeight_int(void *thisObj, int h);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setMaximumSize(QSize sz)
+// KDDockWidgets::Views::View_flutter::setMaximumSize(QSize sz)
 void c_KDDockWidgets__Views__View_flutter__setMaximumSize_QSize(void *thisObj, void *sz_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setMinimumSize(QSize sz)
+// KDDockWidgets::Views::View_flutter::setMinimumSize(QSize sz)
 void c_KDDockWidgets__Views__View_flutter__setMinimumSize_QSize(void *thisObj, void *sz_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setMouseTracking(bool enable)
+// KDDockWidgets::Views::View_flutter::setMouseTracking(bool enable)
 void c_KDDockWidgets__Views__View_flutter__setMouseTracking_bool(void *thisObj, bool enable);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setNormalGeometry(QRect geo)
+// KDDockWidgets::Views::View_flutter::setNormalGeometry(QRect geo)
 void c_KDDockWidgets__Views__View_flutter__setNormalGeometry_QRect(void *thisObj, void *geo_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setObjectName(const QString & name)
+// KDDockWidgets::Views::View_flutter::setObjectName(const QString & name)
 void c_KDDockWidgets__Views__View_flutter__setObjectName_QString(void *thisObj, const char *name_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setParent(KDDockWidgets::View * parent)
+// KDDockWidgets::Views::View_flutter::setParent(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Views__View_flutter__setParent_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setSize(int w, int h)
+// KDDockWidgets::Views::View_flutter::setSize(int w, int h)
 void c_KDDockWidgets__Views__View_flutter__setSize_int_int(void *thisObj, int w, int h);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setVisible(bool visible)
+// KDDockWidgets::Views::View_flutter::setVisible(bool visible)
 void c_KDDockWidgets__Views__View_flutter__setVisible_bool(void *thisObj, bool visible);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setWidth(int w)
+// KDDockWidgets::Views::View_flutter::setWidth(int w)
 void c_KDDockWidgets__Views__View_flutter__setWidth_int(void *thisObj, int w);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setWindowOpacity(double v)
+// KDDockWidgets::Views::View_flutter::setWindowOpacity(double v)
 void c_KDDockWidgets__Views__View_flutter__setWindowOpacity_double(void *thisObj, double v);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setWindowTitle(const QString & title)
+// KDDockWidgets::Views::View_flutter::setWindowTitle(const QString & title)
 void c_KDDockWidgets__Views__View_flutter__setWindowTitle_QString(void *thisObj, const char *title_);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::setZOrder(int arg__1)
+// KDDockWidgets::Views::View_flutter::setZOrder(int arg__1)
 void c_KDDockWidgets__Views__View_flutter__setZOrder_int(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::show()
+// KDDockWidgets::Views::View_flutter::show()
 void c_KDDockWidgets__Views__View_flutter__show(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::showMaximized()
+// KDDockWidgets::Views::View_flutter::showMaximized()
 void c_KDDockWidgets__Views__View_flutter__showMaximized(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::showMinimized()
+// KDDockWidgets::Views::View_flutter::showMinimized()
 void c_KDDockWidgets__Views__View_flutter__showMinimized(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::showNormal()
+// KDDockWidgets::Views::View_flutter::showNormal()
 void c_KDDockWidgets__Views__View_flutter__showNormal(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::sizeHint() const
+// KDDockWidgets::Views::View_flutter::sizeHint() const
 void *c_KDDockWidgets__Views__View_flutter__sizeHint(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::update()
+// KDDockWidgets::Views::View_flutter::update()
 void c_KDDockWidgets__Views__View_flutter__update(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Views::View_flutter::updateGeometry()
+// KDDockWidgets::Views::View_flutter::updateGeometry()
 void c_KDDockWidgets__Views__View_flutter__updateGeometry(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__Views__View_flutter__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__Views__View_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__Views__View_flutter_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View * arg__2)
+void c_KDDockWidgets__Views__View_flutter_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Controllers::Layout::Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View * arg__2)
 void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::asDropArea() const
+// KDDockWidgets::Controllers::Layout::asDropArea() const
 void *c_KDDockWidgets__Controllers__Layout__asDropArea(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::checkSanity() const
+// KDDockWidgets::Controllers::Layout::checkSanity() const
 bool c_KDDockWidgets__Controllers__Layout__checkSanity(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::clearLayout()
+// KDDockWidgets::Controllers::Layout::clearLayout()
 void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::containsItem(const Layouting::Item * arg__1) const
+// KDDockWidgets::Controllers::Layout::containsItem(const Layouting::Item * arg__1) const
 bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::count() const
+// KDDockWidgets::Controllers::Layout::count() const
 int c_KDDockWidgets__Controllers__Layout__count(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::customEvent(QEvent * event)
+// KDDockWidgets::Controllers::Layout::customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__Layout__customEvent_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::dumpLayout() const
+// KDDockWidgets::Controllers::Layout::dumpLayout() const
 void c_KDDockWidgets__Controllers__Layout__dumpLayout(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::event(QEvent * event)
+// KDDockWidgets::Controllers::Layout::event(QEvent * event)
 bool c_KDDockWidgets__Controllers__Layout__event_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::eventFilter(QObject * watched, QEvent * event)
+// KDDockWidgets::Controllers::Layout::eventFilter(QObject * watched, QEvent * event)
 bool c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::isInMainWindow(bool honourNesting) const
+// KDDockWidgets::Controllers::Layout::isInMainWindow(bool honourNesting) const
 bool c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::layoutHeight() const
+// KDDockWidgets::Controllers::Layout::layoutHeight() const
 int c_KDDockWidgets__Controllers__Layout__layoutHeight(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::layoutMaximumSizeHint() const
+// KDDockWidgets::Controllers::Layout::layoutMaximumSizeHint() const
 void *c_KDDockWidgets__Controllers__Layout__layoutMaximumSizeHint(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::layoutMinimumSize() const
+// KDDockWidgets::Controllers::Layout::layoutMinimumSize() const
 void *c_KDDockWidgets__Controllers__Layout__layoutMinimumSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::layoutSize() const
+// KDDockWidgets::Controllers::Layout::layoutSize() const
 void *c_KDDockWidgets__Controllers__Layout__layoutSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::layoutWidth() const
+// KDDockWidgets::Controllers::Layout::layoutWidth() const
 int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::placeholderCount() const
+// KDDockWidgets::Controllers::Layout::placeholderCount() const
 int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::removeItem(Layouting::Item * item)
+// KDDockWidgets::Controllers::Layout::removeItem(Layouting::Item * item)
 void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(QSize arg__1)
+// KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::setLayoutSize(QSize arg__1)
+// KDDockWidgets::Controllers::Layout::setLayoutSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Controllers::Layout::setParentView_impl(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::updateSizeConstraints()
+// KDDockWidgets::Controllers::Layout::updateSizeConstraints()
 void c_KDDockWidgets__Controllers__Layout__updateSizeConstraints(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::viewAboutToBeDeleted()
+// KDDockWidgets::Controllers::Layout::viewAboutToBeDeleted()
 void c_KDDockWidgets__Controllers__Layout__viewAboutToBeDeleted(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::Layout::visibleCount() const
+// KDDockWidgets::Controllers::Layout::visibleCount() const
 int c_KDDockWidgets__Controllers__Layout__visibleCount(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__Controllers__Layout__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::DropArea(KDDockWidgets::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Controllers::DropArea::DropArea(KDDockWidgets::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
 void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location)
+// KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location)
 void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location(void *thisObj, void *splitter_, int location);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location)
+// KDDockWidgets::Controllers::DropArea::addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location)
 void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location(void *thisObj, void *widget_, int location);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::centralFrame() const
+// KDDockWidgets::Controllers::DropArea::centralFrame() const
 void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)
+// KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::event(QEvent * event)
+// KDDockWidgets::Controllers::DropArea::event(QEvent * event)
 bool c_KDDockWidgets__Controllers__DropArea__event_QEvent(void *thisObj, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::eventFilter(QObject * watched, QEvent * event)
+// KDDockWidgets::Controllers::DropArea::eventFilter(QObject * watched, QEvent * event)
 bool c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::hasSingleFloatingFrame() const
+// KDDockWidgets::Controllers::DropArea::hasSingleFloatingFrame() const
 bool c_KDDockWidgets__Controllers__DropArea__hasSingleFloatingFrame(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::hasSingleFrame() const
+// KDDockWidgets::Controllers::DropArea::hasSingleFrame() const
 bool c_KDDockWidgets__Controllers__DropArea__hasSingleFrame(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::isMDIWrapper() const
+// KDDockWidgets::Controllers::DropArea::isMDIWrapper() const
 bool c_KDDockWidgets__Controllers__DropArea__isMDIWrapper(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::layoutEqually()
+// KDDockWidgets::Controllers::DropArea::layoutEqually()
 void c_KDDockWidgets__Controllers__DropArea__layoutEqually(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::removeHover()
+// KDDockWidgets::Controllers::DropArea::removeHover()
 void c_KDDockWidgets__Controllers__DropArea__removeHover(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Controllers::DropArea::setParentView_impl(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
-
-// tag=1067
-//  KDDockWidgets::Controllers::DropArea::tr(const char * s, const char * c, int n)
+// KDDockWidgets::Controllers::DropArea::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controllers__DropArea__tr_char_char_int(const char *s, const char *c, int n);
-
-// tag=1066
 void c_KDDockWidgets__Controllers__DropArea__destructor(void *thisObj);
-
-// tag=1046
 void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-// tag=1047
-void c_KDDockWidgets__Controllers__DropArea_Finalizer(void *, void *cppObj, void *);
-// tag=1067
-//  KDDockWidgets::Config::absoluteWidgetMaxSize() const
+void c_KDDockWidgets__Controllers__DropArea_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Config::absoluteWidgetMaxSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Config::absoluteWidgetMinSize() const
+// KDDockWidgets::Config::absoluteWidgetMinSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Config::draggedWindowOpacity() const
+// KDDockWidgets::Config::draggedWindowOpacity() const
 qreal c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Config::dropIndicatorsInhibited() const
+// KDDockWidgets::Config::dropIndicatorsInhibited() const
 bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Config::mdiPopupThreshold() const
+// KDDockWidgets::Config::mdiPopupThreshold() const
 int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Config::self()
+// KDDockWidgets::Config::self()
 void *c_static_KDDockWidgets__Config__self();
-
-// tag=1067
-//  KDDockWidgets::Config::separatorThickness() const
+// KDDockWidgets::Config::separatorThickness() const
 int c_KDDockWidgets__Config__separatorThickness(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Config::setAbsoluteWidgetMaxSize(QSize size)
+// KDDockWidgets::Config::setAbsoluteWidgetMaxSize(QSize size)
 void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_);
-
-// tag=1067
-//  KDDockWidgets::Config::setAbsoluteWidgetMinSize(QSize size)
+// KDDockWidgets::Config::setAbsoluteWidgetMinSize(QSize size)
 void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_);
-
-// tag=1067
-//  KDDockWidgets::Config::setDraggedWindowOpacity(qreal opacity)
+// KDDockWidgets::Config::setDraggedWindowOpacity(qreal opacity)
 void c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity);
-
-// tag=1067
-//  KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const
+// KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const
 void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
-
-// tag=1067
-//  KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
+// KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
 void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::Config::setSeparatorThickness(int value)
+// KDDockWidgets::Config::setSeparatorThickness(int value)
 void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj, int value);
-
-// tag=1067
-//  KDDockWidgets::Config::setStartDragDistance(int arg__1)
+// KDDockWidgets::Config::setStartDragDistance(int arg__1)
 void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1);
-
-// tag=1067
-//  KDDockWidgets::Config::setViewFactory(KDDockWidgets::ViewFactory * arg__1)
+// KDDockWidgets::Config::setViewFactory(KDDockWidgets::ViewFactory * arg__1)
 void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
-
-// tag=1067
-//  KDDockWidgets::Config::startDragDistance() const
+// KDDockWidgets::Config::startDragDistance() const
 int c_KDDockWidgets__Config__startDragDistance(void *thisObj);
-
-// tag=1067
-//  KDDockWidgets::Config::viewFactory() const
+// KDDockWidgets::Config::viewFactory() const
 void *c_KDDockWidgets__Config__viewFactory(void *thisObj);
-
-// tag=1066
 void c_KDDockWidgets__Config__destructor(void *thisObj);
-
-// tag=1047
 void c_KDDockWidgets__Config_Finalizer(void *, void *cppObj, void *);
