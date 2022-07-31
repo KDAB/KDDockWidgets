@@ -22,6 +22,7 @@ class View_flutter extends KDDockWidgetBindings.View_flutter {
   int m_y = 100;
   int m_width = 400;
   int m_height = 400;
+  bool m_fillsParent = false;
 
   View_flutter(KDDockWidgetBindings.Controller? controller, int type,
       KDDockWidgetBindings.View? parent,

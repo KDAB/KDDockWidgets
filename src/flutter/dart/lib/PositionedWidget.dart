@@ -27,10 +27,12 @@ class _PositionedWidgetState extends State<PositionedWidget> {
   int y = 0;
   int width = 400;
   int height = 400;
+  final bool _fillsParent;
 
   var childWidgets = <PositionedWidget>[];
 
-  _PositionedWidgetState(this.kddwView) {
+  _PositionedWidgetState(this.kddwView)
+      : _fillsParent = kddwView.m_fillsParent {
     kddwView.updatePositionCallback = updatePosition;
     kddwView.updateSizeCallback = updateSize;
 
@@ -56,15 +58,19 @@ class _PositionedWidgetState extends State<PositionedWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final container = Container(
+        color: Colors.red,
+        child: Stack(
+          children: childWidgets,
+        ));
+
+    if (_fillsParent) return container;
+
     return Positioned(
-        height: height * 1.0,
         width: width * 1.0,
+        height: height * 1.0,
         top: y * 1.0,
         left: x * 1.0,
-        child: Container(
-            color: Colors.red,
-            child: Stack(
-              children: childWidgets,
-            )));
+        child: container);
   }
 }
