@@ -315,7 +315,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
     return drop(droppedWindow, acceptingGroup, droploc);
 }
 
-bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *acceptingFrame,
+bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *acceptingGroup,
                     DropLocation droploc)
 {
     Controllers::FloatingWindow *droppedWindow = draggedWindow ? draggedWindow->floatingWindow()
@@ -347,7 +347,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *accep
     case DropLocation_Top:
     case DropLocation_Bottom:
     case DropLocation_Right:
-        result = drop(droppedWindow->view(), DropIndicatorOverlay::multisplitterLocationFor(droploc), acceptingFrame);
+        result = drop(droppedWindow->view(), DropIndicatorOverlay::multisplitterLocationFor(droploc), acceptingGroup);
         break;
     case DropLocation_OutterLeft:
     case DropLocation_OutterTop:
@@ -356,10 +356,10 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *accep
         result = drop(droppedWindow->view(), DropIndicatorOverlay::multisplitterLocationFor(droploc), nullptr);
         break;
     case DropLocation_Center:
-        qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;
-        if (!validateAffinity(droppedWindow, acceptingFrame))
+        qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingGroup;
+        if (!validateAffinity(droppedWindow, acceptingGroup))
             return false;
-        acceptingFrame->addTab(droppedWindow);
+        acceptingGroup->addTab(droppedWindow);
         break;
 
     default:

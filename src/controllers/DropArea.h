@@ -168,8 +168,8 @@ private:
     QSize availableSize() const;
 
     template<typename T>
-    bool validateAffinity(T *, Controllers::Group *acceptingFrame = nullptr) const;
-    bool drop(WindowBeingDragged *draggedWindow, Controllers::Group *acceptingFrame, DropLocation);
+    bool validateAffinity(T *, Controllers::Group *acceptingGroup = nullptr) const;
+    bool drop(WindowBeingDragged *draggedWindow, Controllers::Group *acceptingGroup, DropLocation);
     bool drop(View *droppedwindow, KDDockWidgets::Location location, Controllers::Group *relativeTo);
     Controllers::Group *groupContainingPos(QPoint globalPos) const;
     void updateFloatingActions();
