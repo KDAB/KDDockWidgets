@@ -18,8 +18,8 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <controllers/Layout.h>
 #include <DropArea.h>
+#include <controllers/Layout.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017

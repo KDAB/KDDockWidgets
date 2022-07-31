@@ -87,6 +87,19 @@ class Layout extends Controller {
 //tag=1024
 
 //tag=1027
+// containsItem(const Layouting::Item * arg__1) const
+  bool containsItem(Item? arg__1) {
+//tag=1028
+    final bool_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__containsItem_Item')
+        .asFunction();
+//tag=1029
+    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
+  }
+//tag=1024
+
+//tag=1027
 // count() const
   int count() {
 //tag=1028
@@ -268,6 +281,19 @@ class Layout extends Controller {
 //tag=1024
 
 //tag=1027
+// removeItem(Layouting::Item * item)
+  removeItem(Item? item) {
+//tag=1028
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__removeItem_Item')
+        .asFunction();
+//tag=1030
+    func(thisCpp, item == null ? ffi.nullptr : item.thisCpp);
+  }
+//tag=1024
+
+//tag=1027
 // setLayoutMinimumSize(QSize arg__1)
   setLayoutMinimumSize(QSize arg__1) {
 //tag=1028
@@ -364,7 +390,7 @@ class Layout extends Controller {
         return "c_KDDockWidgets__Controllers__Layout__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent";
-      case 725:
+      case 800:
         return "c_KDDockWidgets__Controllers__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -378,7 +404,7 @@ class Layout extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 725:
+      case 800:
         return "setParentView_impl";
     }
     throw Error();
@@ -410,9 +436,9 @@ class Layout extends Controller {
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
 //tag=1021
-    final callback725 =
+    final callback800 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback725, 725);
+    registerCallback(thisCpp, callback800, 800);
   }
 }

@@ -14,6 +14,7 @@
 #include <DropArea.h>
 #include <qstring.h>
 #include <View.h>
+#include <Item_p.h>
 #include <qsize.h>
 #include <qcoreevent.h>
 #include <qobject.h>
@@ -30,6 +31,8 @@ public:
     void addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter, KDDockWidgets::Location location);
     // tag=1041
     void addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location);
+    // tag=1041
+    Layouting::Item *centralFrame() const;
     // tag=1041
     virtual void customEvent(QEvent *event);
     // tag=1008
@@ -85,6 +88,10 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addMul
 // tag=1067
 //  KDDockWidgets::Controllers::DropArea::addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location(void *thisObj, void *widget_, int location);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::centralFrame() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)

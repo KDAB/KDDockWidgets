@@ -33,6 +33,7 @@ export 'src/KDDockWidgets.dart'
         KDDockWidgets_MainWindowOption,
         KDDockWidgets_DropLocation,
         KDDockWidgets_Type;
+export 'src/Item.dart' show Item;
 export 'src/QByteArray.dart' show QByteArray;
 export 'src/QEvent.dart' show QEvent, QEvent_Type;
 export 'src/QList.dart' show QList;

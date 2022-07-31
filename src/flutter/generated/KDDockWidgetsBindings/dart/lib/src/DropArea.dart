@@ -90,6 +90,20 @@ class DropArea extends Layout {
   }
 //tag=1024
 
+//tag=1027
+// centralFrame() const
+  Item centralFrame() {
+//tag=1028
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__DropArea__centralFrame')
+        .asFunction();
+//tag=1033
+    ffi.Pointer<void> result = func(thisCpp);
+    return Item.fromCppPointer(result, false);
+  }
+//tag=1024
+
 //tag=1035
   static void customEvent_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
@@ -264,7 +278,7 @@ class DropArea extends Layout {
         return "c_KDDockWidgets__Controllers__DropArea__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent";
-      case 725:
+      case 800:
         return "c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -278,7 +292,7 @@ class DropArea extends Layout {
         return "event";
       case 307:
         return "eventFilter";
-      case 725:
+      case 800:
         return "setParentView_impl";
     }
     throw Error();
@@ -310,9 +324,9 @@ class DropArea extends Layout {
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
 //tag=1021
-    final callback725 =
+    final callback800 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback725, 725);
+    registerCallback(thisCpp, callback800, 800);
   }
 }

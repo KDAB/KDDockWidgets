@@ -173,11 +173,11 @@ class ViewFactory_flutter extends ViewFactory {
 //tag=1019
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 606:
+      case 681:
         return "c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators";
-      case 607:
+      case 682:
         return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
-      case 608:
+      case 683:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
       case 295:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
@@ -191,11 +191,11 @@ class ViewFactory_flutter extends ViewFactory {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 606:
+      case 681:
         return "createClassicIndicatorWindow";
-      case 607:
+      case 682:
         return "createDropArea";
-      case 608:
+      case 683:
         return "createRubberBand";
       case 295:
         return "customEvent";
@@ -216,20 +216,20 @@ class ViewFactory_flutter extends ViewFactory {
         .asFunction();
 
 //tag=1021
-    final callback606 =
+    final callback681 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createClassicIndicatorWindow_calledFromC);
-    registerCallback(thisCpp, callback606, 606);
+    registerCallback(thisCpp, callback681, 681);
 //tag=1021
-    final callback607 =
+    final callback682 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createDropArea_calledFromC);
-    registerCallback(thisCpp, callback607, 607);
+    registerCallback(thisCpp, callback682, 682);
 //tag=1021
-    final callback608 =
+    final callback683 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback608, 608);
+    registerCallback(thisCpp, callback683, 683);
 //tag=1021
     final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(

@@ -1625,6 +1625,215 @@ void c_QByteArray__destructor(void *thisObj);
 
 // tag=1047
 void c_QByteArray_Finalizer(void *, void *cppObj, void *);
+// tag=1047
+void c_Layouting_Finalizer(void *, void *cppObj, void *);
+// tag=1067
+//  Layouting::Item::Item(KDDockWidgets::View * hostWidget)
+void *c_Layouting__Item__constructor_View(void *hostWidget_);
+
+// tag=1067
+//  Layouting::Item::checkSanity()
+bool c_Layouting__Item__checkSanity(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::customEvent(QEvent * event)
+void c_Layouting__Item__customEvent_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  Layouting::Item::dumpLayout(int level)
+void c_Layouting__Item__dumpLayout_int(void *thisObj, int level);
+
+// tag=1067
+//  Layouting::Item::event(QEvent * event)
+bool c_Layouting__Item__event_QEvent(void *thisObj, void *event_);
+
+// tag=1067
+//  Layouting::Item::eventFilter(QObject * watched, QEvent * event)
+bool c_Layouting__Item__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
+
+// tag=1067
+//  Layouting::Item::geometry() const
+void *c_Layouting__Item__geometry(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::guestView() const
+void *c_Layouting__Item__guestView(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::height() const
+int c_Layouting__Item__height(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::hostView() const
+void *c_Layouting__Item__hostView(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::isBeingInserted() const
+bool c_Layouting__Item__isBeingInserted(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::isContainer() const
+bool c_Layouting__Item__isContainer(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::isMDI() const
+bool c_Layouting__Item__isMDI(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::isPlaceholder() const
+bool c_Layouting__Item__isPlaceholder(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::isRoot() const
+bool c_Layouting__Item__isRoot(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::isVisible(bool excludeBeingInserted) const
+bool c_Layouting__Item__isVisible_bool(void *thisObj, bool excludeBeingInserted);
+
+// tag=1067
+//  Layouting::Item::mapFromParent(QPoint arg__1) const
+void *c_Layouting__Item__mapFromParent_QPoint(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::mapFromRoot(QPoint arg__1) const
+void *c_Layouting__Item__mapFromRoot_QPoint(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::mapFromRoot(QRect arg__1) const
+void *c_Layouting__Item__mapFromRoot_QRect(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::mapToRoot(QPoint arg__1) const
+void *c_Layouting__Item__mapToRoot_QPoint(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::mapToRoot(QRect arg__1) const
+void *c_Layouting__Item__mapToRoot_QRect(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::maxSizeHint() const
+void *c_Layouting__Item__maxSizeHint(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::minSize() const
+void *c_Layouting__Item__minSize(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::missingSize() const
+void *c_Layouting__Item__missingSize(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::pos() const
+void *c_Layouting__Item__pos(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::rect() const
+void *c_Layouting__Item__rect(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::ref()
+void c_Layouting__Item__ref(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::refCount() const
+int c_Layouting__Item__refCount(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::restore(KDDockWidgets::View * guestView)
+void c_Layouting__Item__restore_View(void *thisObj, void *guestView_);
+
+// tag=1067
+//  Layouting::Item::setBeingInserted(bool arg__1)
+void c_Layouting__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
+
+// tag=1067
+//  Layouting::Item::setGeometry(QRect rect)
+void c_Layouting__Item__setGeometry_QRect(void *thisObj, void *rect_);
+
+// tag=1067
+//  Layouting::Item::setGeometry_recursive(QRect rect)
+void c_Layouting__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_);
+
+// tag=1067
+//  Layouting::Item::setGuestView(KDDockWidgets::View * arg__1)
+void c_Layouting__Item__setGuestView_View(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::setHostView(KDDockWidgets::View * arg__1)
+void c_Layouting__Item__setHostView_View(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::setIsVisible(bool arg__1)
+void c_Layouting__Item__setIsVisible_bool(void *thisObj, bool arg__1);
+
+// tag=1067
+//  Layouting::Item::setMaxSizeHint(QSize arg__1)
+void c_Layouting__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::setMinSize(QSize arg__1)
+void c_Layouting__Item__setMinSize_QSize(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::setPos(QPoint arg__1)
+void c_Layouting__Item__setPos_QPoint(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::setSize(QSize arg__1)
+void c_Layouting__Item__setSize_QSize(void *thisObj, void *arg__1_);
+
+// tag=1067
+//  Layouting::Item::size() const
+void *c_Layouting__Item__size(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::tr(const char * s, const char * c, int n)
+void *c_static_Layouting__Item__tr_char_char_int(const char *s, const char *c, int n);
+
+// tag=1067
+//  Layouting::Item::unref()
+void c_Layouting__Item__unref(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::updateWidgetGeometries()
+void c_Layouting__Item__updateWidgetGeometries(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::visibleCount_recursive() const
+int c_Layouting__Item__visibleCount_recursive(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::width() const
+int c_Layouting__Item__width(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::x() const
+int c_Layouting__Item__x(void *thisObj);
+
+// tag=1067
+//  Layouting::Item::y() const
+int c_Layouting__Item__y(void *thisObj);
+
+// tag=1066
+void c_Layouting__Item__destructor(void *thisObj);
+
+// tag=1044
+int c_static_Layouting__Item___get_separatorThickness();
+
+// tag=1044
+bool c_static_Layouting__Item___get_s_silenceSanityChecks();
+
+// tag=1045
+void c_static_Layouting__Item___set_separatorThickness_int(int separatorThickness_);
+
+// tag=1045
+void c_static_Layouting__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
+
+// tag=1046
+void c_Layouting__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+// tag=1047
+void c_Layouting__Item_Finalizer(void *, void *cppObj, void *);
 // tag=1067
 //  KDDockWidgets::locationStr(KDDockWidgets::Location loc)
 void *c_static_KDDockWidgets__locationStr_Location(int loc);
@@ -2694,6 +2903,10 @@ bool c_KDDockWidgets__Controllers__Layout__checkSanity(void *thisObj);
 void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj);
 
 // tag=1067
+//  KDDockWidgets::Controllers::Layout::containsItem(const Layouting::Item * arg__1) const
+bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_);
+
+// tag=1067
 //  KDDockWidgets::Controllers::Layout::count() const
 int c_KDDockWidgets__Controllers__Layout__count(void *thisObj);
 
@@ -2742,6 +2955,10 @@ int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj);
 int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
 
 // tag=1067
+//  KDDockWidgets::Controllers::Layout::removeItem(Layouting::Item * item)
+void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
+
+// tag=1067
 //  KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
 
@@ -2783,6 +3000,10 @@ void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location(
 // tag=1067
 //  KDDockWidgets::Controllers::DropArea::addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location)
 void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location(void *thisObj, void *widget_, int location);
+
+// tag=1067
+//  KDDockWidgets::Controllers::DropArea::centralFrame() const
+void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj);
 
 // tag=1067
 //  KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)

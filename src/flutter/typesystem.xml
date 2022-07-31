@@ -61,4 +61,9 @@
 
     </namespace-type>
 
+    <namespace-type name="Layouting">
+        <object-type name="Item" />
+        <!-- <object-type name="ItemContainer" /> -->
+    </namespace-type>
+
 </typesystem>

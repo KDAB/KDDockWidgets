@@ -17,8 +17,8 @@
 #include <DropArea.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017

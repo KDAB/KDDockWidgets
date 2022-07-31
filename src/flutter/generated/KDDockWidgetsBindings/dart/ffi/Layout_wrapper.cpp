@@ -53,6 +53,13 @@ void Layout_wrapper::clearLayout()
     // tag=1004
     ::KDDockWidgets::Controllers::Layout::clearLayout();
 }
+bool Layout_wrapper::containsItem(const Layouting::Item *arg__1) const
+{
+    // tag=1000
+
+    // tag=1004
+    return ::KDDockWidgets::Controllers::Layout::containsItem(arg__1);
+}
 int Layout_wrapper::count() const
 {
     // tag=1000
@@ -170,6 +177,13 @@ int Layout_wrapper::placeholderCount() const
     // tag=1004
     return ::KDDockWidgets::Controllers::Layout::placeholderCount();
 }
+void Layout_wrapper::removeItem(Layouting::Item *item)
+{
+    // tag=1000
+
+    // tag=1004
+    ::KDDockWidgets::Controllers::Layout::removeItem(item);
+}
 void Layout_wrapper::setLayoutMinimumSize(QSize arg__1)
 {
     // tag=1000
@@ -279,6 +293,16 @@ void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj)
 {
     // tag=1010
     fromPtr(thisObj)->clearLayout();
+}
+
+// tag=1050
+// containsItem(const Layouting::Item * arg__1) const
+bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<Layouting::Item *>(arg__1_);
+    return
+        // tag=1010
+        fromPtr(thisObj)->containsItem(arg__1);
 }
 
 // tag=1050
@@ -400,6 +424,15 @@ int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj)
 }
 
 // tag=1050
+// removeItem(Layouting::Item * item)
+void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_)
+{
+    auto item = reinterpret_cast<Layouting::Item *>(item_);
+    // tag=1010
+    fromPtr(thisObj)->removeItem(item);
+}
+
+// tag=1050
 // setLayoutMinimumSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_)
 {
@@ -474,7 +507,7 @@ void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *p
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
         break;
-    case 725:
+    case 800:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

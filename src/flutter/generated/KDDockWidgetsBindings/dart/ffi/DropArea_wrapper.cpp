@@ -46,6 +46,13 @@ void DropArea_wrapper::addWidget(KDDockWidgets::View *widget, KDDockWidgets::Loc
     // tag=1004
     ::KDDockWidgets::Controllers::DropArea::addWidget(widget, location);
 }
+Layouting::Item *DropArea_wrapper::centralFrame() const
+{
+    // tag=1000
+
+    // tag=1004
+    return ::KDDockWidgets::Controllers::DropArea::centralFrame();
+}
 void DropArea_wrapper::customEvent(QEvent *event)
 {
     // tag=1000
@@ -212,6 +219,15 @@ void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location(void *thisO
 }
 
 // tag=1050
+// centralFrame() const
+void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj)
+{
+    return
+        // tag=1010
+        fromPtr(thisObj)->centralFrame();
+}
+
+// tag=1050
 // customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, void *event_)
 {
@@ -327,7 +343,7 @@ void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void 
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_eventFilter>(callback);
         break;
-    case 725:
+    case 800:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

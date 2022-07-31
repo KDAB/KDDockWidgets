@@ -353,31 +353,31 @@ void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__registerVirtua
     // tag=1048
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 594:
+    case 669:
         wrapper->m_hoverCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_hover>(callback);
         break;
-    case 595:
+    case 670:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_isWindow>(callback);
         break;
-    case 596:
+    case 671:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 597:
+    case 672:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_raise>(callback);
         break;
-    case 598:
+    case 673:
         wrapper->m_resizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_resize>(callback);
         break;
-    case 599:
+    case 674:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_setGeometry>(callback);
         break;
-    case 600:
+    case 675:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_setObjectName>(callback);
         break;
-    case 601:
+    case 676:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_setVisible>(callback);
         break;
-    case 602:
+    case 677:
         wrapper->m_updatePositionsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper::Callback_updatePositions>(callback);
         break;
     }

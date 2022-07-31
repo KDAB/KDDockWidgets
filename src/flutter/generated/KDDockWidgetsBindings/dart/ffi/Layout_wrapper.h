@@ -14,12 +14,13 @@
 #include <controllers/Layout.h>
 #include <View.h>
 #include <qsize.h>
+#include <Item_p.h>
 #include <DropArea.h>
-#include <qcoreevent.h>
-#include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
+#include <qcoreevent.h>
 #include <qobject.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 // tag=1017
@@ -35,6 +36,8 @@ public:
     bool checkSanity() const;
     // tag=1041
     void clearLayout();
+    // tag=1041
+    bool containsItem(const Layouting::Item *arg__1) const;
     // tag=1041
     int count() const;
     // tag=1041
@@ -65,6 +68,8 @@ public:
     int layoutWidth() const;
     // tag=1041
     int placeholderCount() const;
+    // tag=1041
+    void removeItem(Layouting::Item *item);
     // tag=1041
     void setLayoutMinimumSize(QSize arg__1);
     // tag=1041
@@ -110,6 +115,10 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__checkSan
 // tag=1067
 //  KDDockWidgets::Controllers::Layout::clearLayout()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::containsItem(const Layouting::Item * arg__1) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_);
 
 // tag=1067
 //  KDDockWidgets::Controllers::Layout::count() const
@@ -158,6 +167,10 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__layoutWid
 // tag=1067
 //  KDDockWidgets::Controllers::Layout::placeholderCount() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
+
+// tag=1067
+//  KDDockWidgets::Controllers::Layout::removeItem(Layouting::Item * item)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
 
 // tag=1067
 //  KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(QSize arg__1)
