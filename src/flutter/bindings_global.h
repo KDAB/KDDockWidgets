@@ -41,6 +41,9 @@
 #include "../controllers/Layout.h"
 #include "../controllers/DropArea.h"
 #include "../controllers/Group.h"
+#include "../controllers/Stack.h"
+#include "../controllers/TabBar.h"
+#include "../controllers/TitleBar.h"
 #include "../controllers/indicators/ClassicIndicators.h"
 #include "../views/ClassicIndicatorWindowViewInterface.h"
 

@@ -31,6 +31,10 @@ Group_wrapper::Group_wrapper(KDDockWidgets::View *parent)
     : ::KDDockWidgets::Controllers::Group(parent)
 {
 }
+KDDockWidgets::Controllers::TitleBar *Group_wrapper::actualTitleBar() const
+{
+    return ::KDDockWidgets::Controllers::Group::actualTitleBar();
+}
 void Group_wrapper::actualTitleBarChanged()
 {
     ::KDDockWidgets::Controllers::Group::actualTitleBarChanged();
@@ -314,9 +318,21 @@ void Group_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
 {
     ::KDDockWidgets::Controllers::Group::setParentView_impl(parent);
 }
+KDDockWidgets::Controllers::Stack *Group_wrapper::stack() const
+{
+    return ::KDDockWidgets::Controllers::Group::stack();
+}
+KDDockWidgets::Controllers::TabBar *Group_wrapper::tabBar() const
+{
+    return ::KDDockWidgets::Controllers::Group::tabBar();
+}
 QString Group_wrapper::title() const
 {
     return ::KDDockWidgets::Controllers::Group::title();
+}
+KDDockWidgets::Controllers::TitleBar *Group_wrapper::titleBar() const
+{
+    return ::KDDockWidgets::Controllers::Group::titleBar();
 }
 QString Group_wrapper::tr(const char *s, const char *c, int n)
 {
@@ -365,6 +381,11 @@ void *c_KDDockWidgets__Controllers__Group__constructor_View(void *parent_)
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Group_wrapper(parent);
     return reinterpret_cast<void *>(ptr);
+}
+// actualTitleBar() const
+void *c_KDDockWidgets__Controllers__Group__actualTitleBar(void *thisObj)
+{
+    return fromPtr(thisObj)->actualTitleBar();
 }
 // actualTitleBarChanged()
 void c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj)
@@ -652,10 +673,25 @@ void c_KDDockWidgets__Controllers__Group__setParentView_impl_View(void *thisObj,
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
+// stack() const
+void *c_KDDockWidgets__Controllers__Group__stack(void *thisObj)
+{
+    return fromPtr(thisObj)->stack();
+}
+// tabBar() const
+void *c_KDDockWidgets__Controllers__Group__tabBar(void *thisObj)
+{
+    return fromPtr(thisObj)->tabBar();
+}
 // title() const
 void *c_KDDockWidgets__Controllers__Group__title(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->title() };
+}
+// titleBar() const
+void *c_KDDockWidgets__Controllers__Group__titleBar(void *thisObj)
+{
+    return fromPtr(thisObj)->titleBar();
 }
 // tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controllers__Group__tr_char_char_int(const char *s, const char *c, int n)
@@ -698,7 +734,7 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
     case 295:
         wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_customEvent>(callback);
         break;
-    case 1054:
+    case 1201:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_dragRect>(callback);
         break;
     case 306:
@@ -707,13 +743,13 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_eventFilter>(callback);
         break;
-    case 1056:
+    case 1203:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_focusedWidgetChangedCallback>(callback);
         break;
-    case 1070:
+    case 1217:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_isFocusedChangedCallback>(callback);
         break;
-    case 814:
+    case 817:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

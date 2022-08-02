@@ -87,6 +87,20 @@ class ViewFactory_flutter extends ViewFactory {
     return result.thisCpp;
   }
 
+  static ffi.Pointer<void> createGroup_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::createGroup(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.createGroup(Group.fromCppPointer(arg__1),
+        parent: View.fromCppPointer(parent));
+    return result.thisCpp;
+  }
+
   static ffi.Pointer<void> createRubberBand_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
     var dartInstance =
@@ -97,6 +111,48 @@ class ViewFactory_flutter extends ViewFactory {
       throw Error();
     }
     final result = dartInstance.createRubberBand(View.fromCppPointer(parent));
+    return result.thisCpp;
+  }
+
+  static ffi.Pointer<void> createStack_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::createStack(KDDockWidgets::Controllers::Stack * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.createStack(
+        Stack.fromCppPointer(arg__1), View.fromCppPointer(parent));
+    return result.thisCpp;
+  }
+
+  static ffi.Pointer<void> createTabBar_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? tabBar, ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::createTabBar(KDDockWidgets::Controllers::TabBar * tabBar, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.createTabBar(TabBar.fromCppPointer(tabBar),
+        parent: View.fromCppPointer(parent));
+    return result.thisCpp;
+  }
+
+  static ffi.Pointer<void> createTitleBar_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::createTitleBar(KDDockWidgets::Controllers::TitleBar * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.createTitleBar(
+        TitleBar.fromCppPointer(arg__1), View.fromCppPointer(parent));
     return result.thisCpp;
   }
 
@@ -166,8 +222,16 @@ class ViewFactory_flutter extends ViewFactory {
         return "c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
       case 691:
         return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
+      case 692:
+        return "c_KDDockWidgets__ViewFactory_flutter__createGroup_Group_View";
       case 693:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
+      case 694:
+        return "c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View";
+      case 695:
+        return "c_KDDockWidgets__ViewFactory_flutter__createTabBar_TabBar_View";
+      case 696:
+        return "c_KDDockWidgets__ViewFactory_flutter__createTitleBar_TitleBar_View";
       case 295:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
       case 306:
@@ -186,8 +250,16 @@ class ViewFactory_flutter extends ViewFactory {
         return "createDockWidget";
       case 691:
         return "createDropArea";
+      case 692:
+        return "createGroup";
       case 693:
         return "createRubberBand";
+      case 694:
+        return "createStack";
+      case 695:
+        return "createTabBar";
+      case 696:
+        return "createTitleBar";
       case 295:
         return "customEvent";
       case 306:
@@ -216,10 +288,26 @@ class ViewFactory_flutter extends ViewFactory {
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createDropArea_calledFromC);
     registerCallback(thisCpp, callback691, 691);
+    final callback692 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createGroup_calledFromC);
+    registerCallback(thisCpp, callback692, 692);
     final callback693 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createRubberBand_calledFromC);
     registerCallback(thisCpp, callback693, 693);
+    final callback694 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createStack_calledFromC);
+    registerCallback(thisCpp, callback694, 694);
+    final callback695 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createTabBar_calledFromC);
+    registerCallback(thisCpp, callback695, 695);
+    final callback696 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createTitleBar_calledFromC);
+    registerCallback(thisCpp, callback696, 696);
     final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);

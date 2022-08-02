@@ -35,7 +35,16 @@ class Group extends Controller {
     thisCpp = func(parent == null ? ffi.nullptr : parent.thisCpp);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
+  } // actualTitleBar() const
+  TitleBar actualTitleBar() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Group__actualTitleBar')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return TitleBar.fromCppPointer(result, false);
   } // actualTitleBarChanged()
+
   actualTitleBarChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
@@ -191,7 +200,7 @@ class Group extends Controller {
   QRect dragRect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1054))
+            cFunctionSymbolName(1201))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -244,7 +253,7 @@ class Group extends Controller {
   focusedWidgetChangedCallback() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1056))
+            cFunctionSymbolName(1203))
         .asFunction();
     func(thisCpp);
   }
@@ -335,7 +344,7 @@ class Group extends Controller {
   isFocusedChangedCallback() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1070))
+            cFunctionSymbolName(1217))
         .asFunction();
     func(thisCpp);
   }
@@ -538,6 +547,24 @@ class Group extends Controller {
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));
+  } // stack() const
+
+  Stack stack() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Group__stack')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return Stack.fromCppPointer(result, false);
+  } // tabBar() const
+
+  TabBar tabBar() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Group__tabBar')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return TabBar.fromCppPointer(result, false);
   } // title() const
 
   QString title() {
@@ -547,6 +574,15 @@ class Group extends Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QString.fromCppPointer(result, true);
+  } // titleBar() const
+
+  TitleBar titleBar() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Group__titleBar')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return TitleBar.fromCppPointer(result, false);
   }
 
   static // tr(const char * s, const char * c, int n)
@@ -612,17 +648,17 @@ class Group extends Controller {
     switch (methodId) {
       case 295:
         return "c_KDDockWidgets__Controllers__Group__customEvent_QEvent";
-      case 1054:
+      case 1201:
         return "c_KDDockWidgets__Controllers__Group__dragRect";
       case 306:
         return "c_KDDockWidgets__Controllers__Group__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Group__eventFilter_QObject_QEvent";
-      case 1056:
+      case 1203:
         return "c_KDDockWidgets__Controllers__Group__focusedWidgetChangedCallback";
-      case 1070:
+      case 1217:
         return "c_KDDockWidgets__Controllers__Group__isFocusedChangedCallback";
-      case 814:
+      case 817:
         return "c_KDDockWidgets__Controllers__Group__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -632,17 +668,17 @@ class Group extends Controller {
     switch (methodId) {
       case 295:
         return "customEvent";
-      case 1054:
+      case 1201:
         return "dragRect";
       case 306:
         return "event";
       case 307:
         return "eventFilter";
-      case 1056:
+      case 1203:
         return "focusedWidgetChangedCallback";
-      case 1070:
+      case 1217:
         return "isFocusedChangedCallback";
-      case 814:
+      case 817:
         return "setParentView_impl";
     }
     throw Error();
@@ -658,9 +694,9 @@ class Group extends Controller {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);
     registerCallback(thisCpp, callback295, 295);
-    final callback1054 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1201 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Group.dragRect_calledFromC);
-    registerCallback(thisCpp, callback1054, 1054);
+    registerCallback(thisCpp, callback1201, 1201);
     const callbackExcept306 = 0;
     final callback306 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
@@ -671,15 +707,15 @@ class Group extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback1056 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback1203 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Group.focusedWidgetChangedCallback_calledFromC);
-    registerCallback(thisCpp, callback1056, 1056);
-    final callback1070 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback1203, 1203);
+    final callback1217 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Group.isFocusedChangedCallback_calledFromC);
-    registerCallback(thisCpp, callback1070, 1070);
-    final callback814 =
+    registerCallback(thisCpp, callback1217, 1217);
+    final callback817 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Group.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback814, 814);
+    registerCallback(thisCpp, callback817, 817);
   }
 }

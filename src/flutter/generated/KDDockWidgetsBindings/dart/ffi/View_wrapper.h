@@ -16,6 +16,9 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include <Group.h>
+#include <TitleBar.h>
+#include <TabBar.h>
+#include <Stack.h>
 #include <DropArea.h>
 #include <controllers/Layout.h>
 
@@ -31,6 +34,9 @@ public:
     KDDockWidgets::Controllers::DropArea *asDropAreaController() const;
     KDDockWidgets::Controllers::Group *asGroupController() const;
     KDDockWidgets::Controllers::Layout *asLayout() const;
+    KDDockWidgets::Controllers::Stack *asStackController() const;
+    KDDockWidgets::Controllers::TabBar *asTabBarController() const;
+    KDDockWidgets::Controllers::TitleBar *asTitleBarController() const;
     static QSize boundedMaxSize(QSize min, QSize max);
     virtual bool close();
     virtual bool close_nocallback();
@@ -288,6 +294,12 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asDropAreaController(v
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asGroupController(void *thisObj);
 // KDDockWidgets::View::asLayout() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asLayout(void *thisObj);
+// KDDockWidgets::View::asStackController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asStackController(void *thisObj);
+// KDDockWidgets::View::asTabBarController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asTabBarController(void *thisObj);
+// KDDockWidgets::View::asTitleBarController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asTitleBarController(void *thisObj);
 // KDDockWidgets::View::boundedMaxSize(QSize min, QSize max)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__View__boundedMaxSize_QSize_QSize(void *min_, void *max_);
 // KDDockWidgets::View::close()

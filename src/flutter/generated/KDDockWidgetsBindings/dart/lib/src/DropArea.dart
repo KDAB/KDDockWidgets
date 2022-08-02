@@ -277,7 +277,7 @@ class DropArea extends Layout {
         return "c_KDDockWidgets__Controllers__DropArea__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent";
-      case 814:
+      case 817:
         return "c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -291,7 +291,7 @@ class DropArea extends Layout {
         return "event";
       case 307:
         return "eventFilter";
-      case 814:
+      case 817:
         return "setParentView_impl";
     }
     throw Error();
@@ -317,9 +317,9 @@ class DropArea extends Layout {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback814 =
+    final callback817 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback814, 814);
+    registerCallback(thisCpp, callback817, 817);
   }
 }

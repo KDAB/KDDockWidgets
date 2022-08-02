@@ -54,10 +54,10 @@ public:
                            LayoutSaverOptions = {},
                            Qt::WindowFlags = {}) const override;
 
-    View *createGroup(Controllers::Group *, View *parent) const override;
+    View *createGroup(Controllers::Group *, View *parent = nullptr) const override;
     View *createTitleBar(Controllers::TitleBar *, View *parent) const override;
     View *createStack(Controllers::Stack *, View *parent) const override;
-    View *createTabBar(Controllers::TabBar *tabBar, View *parent) const override;
+    View *createTabBar(Controllers::TabBar *tabBar, View *parent = nullptr) const override;
     View *createSeparator(Controllers::Separator *, View *parent = nullptr) const override;
     View *createFloatingWindow(Controllers::FloatingWindow *,
                                Controllers::MainWindow *parent = nullptr,

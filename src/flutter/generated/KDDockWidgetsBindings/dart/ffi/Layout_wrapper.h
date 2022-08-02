@@ -16,9 +16,9 @@
 #include <Group.h>
 #include <qlist.h>
 #include <DropArea.h>
+#include <qrect.h>
 #include <qpoint.h>
 #include <qcoreevent.h>
-#include <qrect.h>
 #include <qstring.h>
 #include <qobject.h>
 

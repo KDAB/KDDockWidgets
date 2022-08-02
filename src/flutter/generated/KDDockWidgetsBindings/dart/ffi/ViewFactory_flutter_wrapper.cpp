@@ -70,6 +70,19 @@ KDDockWidgets::View *ViewFactory_flutter_wrapper::createDropArea_nocallback(KDDo
 {
     return ::KDDockWidgets::ViewFactory_flutter::createDropArea(arg__1, parent);
 }
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createGroup(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::View *parent) const
+{
+    if (m_createGroupCallback) {
+        const void *thisPtr = this;
+        return m_createGroupCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        return ::KDDockWidgets::ViewFactory_flutter::createGroup(arg__1, parent);
+    }
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createGroup_nocallback(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::View *parent) const
+{
+    return ::KDDockWidgets::ViewFactory_flutter::createGroup(arg__1, parent);
+}
 KDDockWidgets::View *ViewFactory_flutter_wrapper::createRubberBand(KDDockWidgets::View *parent) const
 {
     if (m_createRubberBandCallback) {
@@ -82,6 +95,45 @@ KDDockWidgets::View *ViewFactory_flutter_wrapper::createRubberBand(KDDockWidgets
 KDDockWidgets::View *ViewFactory_flutter_wrapper::createRubberBand_nocallback(KDDockWidgets::View *parent) const
 {
     return ::KDDockWidgets::ViewFactory_flutter::createRubberBand(parent);
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createStack(KDDockWidgets::Controllers::Stack *arg__1, KDDockWidgets::View *parent) const
+{
+    if (m_createStackCallback) {
+        const void *thisPtr = this;
+        return m_createStackCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        return ::KDDockWidgets::ViewFactory_flutter::createStack(arg__1, parent);
+    }
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createStack_nocallback(KDDockWidgets::Controllers::Stack *arg__1, KDDockWidgets::View *parent) const
+{
+    return ::KDDockWidgets::ViewFactory_flutter::createStack(arg__1, parent);
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createTabBar(KDDockWidgets::Controllers::TabBar *tabBar, KDDockWidgets::View *parent) const
+{
+    if (m_createTabBarCallback) {
+        const void *thisPtr = this;
+        return m_createTabBarCallback(const_cast<void *>(thisPtr), tabBar, parent);
+    } else {
+        return ::KDDockWidgets::ViewFactory_flutter::createTabBar(tabBar, parent);
+    }
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createTabBar_nocallback(KDDockWidgets::Controllers::TabBar *tabBar, KDDockWidgets::View *parent) const
+{
+    return ::KDDockWidgets::ViewFactory_flutter::createTabBar(tabBar, parent);
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createTitleBar(KDDockWidgets::Controllers::TitleBar *arg__1, KDDockWidgets::View *parent) const
+{
+    if (m_createTitleBarCallback) {
+        const void *thisPtr = this;
+        return m_createTitleBarCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        return ::KDDockWidgets::ViewFactory_flutter::createTitleBar(arg__1, parent);
+    }
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createTitleBar_nocallback(KDDockWidgets::Controllers::TitleBar *arg__1, KDDockWidgets::View *parent) const
+{
+    return ::KDDockWidgets::ViewFactory_flutter::createTitleBar(arg__1, parent);
 }
 void ViewFactory_flutter_wrapper::customEvent(QEvent *event)
 {
@@ -170,11 +222,39 @@ void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *t
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDropArea_nocallback(arg__1,parent);} else {    return targetPtr->createDropArea(arg__1,parent);} }();
 }
+// createGroup(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Group *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createGroup_nocallback(arg__1,parent);} else {    return targetPtr->createGroup(arg__1,parent);} }();
+}
 // createRubberBand(KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj, void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createRubberBand_nocallback(parent);} else {    return targetPtr->createRubberBand(parent);} }();
+}
+// createStack(KDDockWidgets::Controllers::Stack * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View(void *thisObj, void *arg__1_, void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Stack *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createStack_nocallback(arg__1,parent);} else {    return targetPtr->createStack(arg__1,parent);} }();
+}
+// createTabBar(KDDockWidgets::Controllers::TabBar * tabBar, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_)
+{
+    auto tabBar = reinterpret_cast<KDDockWidgets::Controllers::TabBar *>(tabBar_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createTabBar_nocallback(tabBar,parent);} else {    return targetPtr->createTabBar(tabBar,parent);} }();
+}
+// createTitleBar(KDDockWidgets::Controllers::TitleBar * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createTitleBar_TitleBar_View(void *thisObj, void *arg__1_, void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::TitleBar *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createTitleBar_nocallback(arg__1,parent);} else {    return targetPtr->createTitleBar(arg__1,parent);} }();
 }
 // customEvent(QEvent * event)
 void c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent(void *thisObj, void *event_)
@@ -217,8 +297,20 @@ void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *p
     case 691:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createDropArea>(callback);
         break;
+    case 692:
+        wrapper->m_createGroupCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createGroup>(callback);
+        break;
     case 693:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createRubberBand>(callback);
+        break;
+    case 694:
+        wrapper->m_createStackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createStack>(callback);
+        break;
+    case 695:
+        wrapper->m_createTabBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createTabBar>(callback);
+        break;
+    case 696:
+        wrapper->m_createTitleBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createTitleBar>(callback);
         break;
     case 295:
         wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_customEvent>(callback);

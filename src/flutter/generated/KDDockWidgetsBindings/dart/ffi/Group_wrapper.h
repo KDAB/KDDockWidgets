@@ -13,7 +13,10 @@
 #include <qstring.h>
 #include <View.h>
 #include <KDDockWidgets.h>
+#include <Stack.h>
+#include <TabBar.h>
 #include <qpoint.h>
+#include <TitleBar.h>
 #include <Item_p.h>
 #include <qrect.h>
 #include <DropArea.h>
@@ -28,6 +31,7 @@ class Group_wrapper : public ::KDDockWidgets::Controllers::Group
 public:
     ~Group_wrapper();
     Group_wrapper(KDDockWidgets::View *parent = nullptr);
+    KDDockWidgets::Controllers::TitleBar *actualTitleBar() const;
     void actualTitleBarChanged();
     void addTab(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::InitialOption arg__2 = {});
     bool allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const;
@@ -90,7 +94,10 @@ public:
     void setLayoutItem(Layouting::Item *item);
     virtual void setParentView_impl(KDDockWidgets::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    KDDockWidgets::Controllers::Stack *stack() const;
+    KDDockWidgets::Controllers::TabBar *tabBar() const;
     QString title() const;
+    KDDockWidgets::Controllers::TitleBar *titleBar() const;
     static QString tr(const char *s, const char *c, int n);
     void unoverlay();
     void updateFloatingActions();
@@ -116,6 +123,8 @@ public:
 extern "C" {
 // KDDockWidgets::Controllers::Group::Group(KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__constructor_View(void *parent_);
+// KDDockWidgets::Controllers::Group::actualTitleBar() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__actualTitleBar(void *thisObj);
 // KDDockWidgets::Controllers::Group::actualTitleBarChanged()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onActualTitleBarChanged(void *thisObj, void *contextQObject, void *callback); // KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::InitialOption arg__2)
@@ -226,8 +235,14 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setLayout
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setLayoutItem_Item(void *thisObj, void *item_);
 // KDDockWidgets::Controllers::Group::setParentView_impl(KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setParentView_impl_View(void *thisObj, void *parent_);
+// KDDockWidgets::Controllers::Group::stack() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__stack(void *thisObj);
+// KDDockWidgets::Controllers::Group::tabBar() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__tabBar(void *thisObj);
 // KDDockWidgets::Controllers::Group::title() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__title(void *thisObj);
+// KDDockWidgets::Controllers::Group::titleBar() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__titleBar(void *thisObj);
 // KDDockWidgets::Controllers::Group::tr(const char * s, const char * c, int n)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__Group__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Controllers::Group::unoverlay()

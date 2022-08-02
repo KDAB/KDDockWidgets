@@ -59,8 +59,9 @@ View *ViewFactory_flutter::createDockWidget(const QString &,
 }
 
 
-View *ViewFactory_flutter::createGroup(Controllers::Group *, View * = nullptr) const
+View *ViewFactory_flutter::createGroup(Controllers::Group *, View *) const
 {
+    Q_ASSERT(false);
     return {};
 }
 

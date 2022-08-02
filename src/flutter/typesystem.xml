@@ -59,6 +59,9 @@
             <object-type name="Layout" />
             <object-type name="DropArea" />
             <object-type name="Group" />
+            <object-type name="Stack" />
+            <object-type name="TabBar" />
+            <object-type name="TitleBar" />
             <object-type name="ClassicIndicators" />
         </namespace-type>
 

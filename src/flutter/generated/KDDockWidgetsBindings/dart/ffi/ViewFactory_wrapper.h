@@ -13,13 +13,16 @@
 #include <qstring.h>
 #include <View.h>
 #include <Group.h>
+#include <TitleBar.h>
+#include <Stack.h>
+#include <TabBar.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
 #include <DropArea.h>
-#include <qcoreevent.h>
-#include <qobject.h>
 #include <qlist.h>
+#include <qobject.h>
 #include <qbytearray.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ViewFactory_wrapper : public ::KDDockWidgets::ViewFactory
@@ -37,6 +40,12 @@ public:
     virtual KDDockWidgets::View *createGroup_nocallback(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::View *parent = nullptr) const;
     virtual KDDockWidgets::View *createRubberBand(KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createRubberBand_nocallback(KDDockWidgets::View *parent) const;
+    virtual KDDockWidgets::View *createStack(KDDockWidgets::Controllers::Stack *stack, KDDockWidgets::View *parent) const;
+    virtual KDDockWidgets::View *createStack_nocallback(KDDockWidgets::Controllers::Stack *stack, KDDockWidgets::View *parent) const;
+    virtual KDDockWidgets::View *createTabBar(KDDockWidgets::Controllers::TabBar *tabBar, KDDockWidgets::View *parent = nullptr) const;
+    virtual KDDockWidgets::View *createTabBar_nocallback(KDDockWidgets::Controllers::TabBar *tabBar, KDDockWidgets::View *parent = nullptr) const;
+    virtual KDDockWidgets::View *createTitleBar(KDDockWidgets::Controllers::TitleBar *controller, KDDockWidgets::View *parent) const;
+    virtual KDDockWidgets::View *createTitleBar_nocallback(KDDockWidgets::Controllers::TitleBar *controller, KDDockWidgets::View *parent) const;
     virtual void customEvent(QEvent *event);
     virtual void customEvent_nocallback(QEvent *event);
     virtual bool event(QEvent *event);
@@ -54,6 +63,12 @@ public:
     Callback_createGroup m_createGroupCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createRubberBand)(void *, KDDockWidgets::View *parent);
     Callback_createRubberBand m_createRubberBandCallback = nullptr;
+    typedef KDDockWidgets::View *(*Callback_createStack)(void *, KDDockWidgets::Controllers::Stack *stack, KDDockWidgets::View *parent);
+    Callback_createStack m_createStackCallback = nullptr;
+    typedef KDDockWidgets::View *(*Callback_createTabBar)(void *, KDDockWidgets::Controllers::TabBar *tabBar, KDDockWidgets::View *parent);
+    Callback_createTabBar m_createTabBarCallback = nullptr;
+    typedef KDDockWidgets::View *(*Callback_createTitleBar)(void *, KDDockWidgets::Controllers::TitleBar *controller, KDDockWidgets::View *parent);
+    Callback_createTitleBar m_createTitleBarCallback = nullptr;
     typedef void (*Callback_customEvent)(void *, QEvent *event);
     Callback_customEvent m_customEventCallback = nullptr;
     typedef bool (*Callback_event)(void *, QEvent *event);
@@ -75,6 +90,12 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createDropArea_
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
+// KDDockWidgets::ViewFactory::createStack(KDDockWidgets::Controllers::Stack * stack, KDDockWidgets::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createStack_Stack_View(void *thisObj, void *stack_, void *parent_);
+// KDDockWidgets::ViewFactory::createTabBar(KDDockWidgets::Controllers::TabBar * tabBar, KDDockWidgets::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_);
+// KDDockWidgets::ViewFactory::createTitleBar(KDDockWidgets::Controllers::TitleBar * controller, KDDockWidgets::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createTitleBar_TitleBar_View(void *thisObj, void *controller_, void *parent_);
 // KDDockWidgets::ViewFactory::customEvent(QEvent * event)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__ViewFactory__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::ViewFactory::event(QEvent * event)

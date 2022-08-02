@@ -106,6 +106,51 @@ KDDockWidgets::View *ViewFactory_wrapper::createRubberBand_nocallback(KDDockWidg
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
+KDDockWidgets::View *ViewFactory_wrapper::createStack(KDDockWidgets::Controllers::Stack *stack, KDDockWidgets::View *parent) const
+{
+    if (m_createStackCallback) {
+        const void *thisPtr = this;
+        return m_createStackCallback(const_cast<void *>(thisPtr), stack, parent);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return {};
+    }
+}
+KDDockWidgets::View *ViewFactory_wrapper::createStack_nocallback(KDDockWidgets::Controllers::Stack *stack, KDDockWidgets::View *parent) const
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return {};
+}
+KDDockWidgets::View *ViewFactory_wrapper::createTabBar(KDDockWidgets::Controllers::TabBar *tabBar, KDDockWidgets::View *parent) const
+{
+    if (m_createTabBarCallback) {
+        const void *thisPtr = this;
+        return m_createTabBarCallback(const_cast<void *>(thisPtr), tabBar, parent);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return {};
+    }
+}
+KDDockWidgets::View *ViewFactory_wrapper::createTabBar_nocallback(KDDockWidgets::Controllers::TabBar *tabBar, KDDockWidgets::View *parent) const
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return {};
+}
+KDDockWidgets::View *ViewFactory_wrapper::createTitleBar(KDDockWidgets::Controllers::TitleBar *controller, KDDockWidgets::View *parent) const
+{
+    if (m_createTitleBarCallback) {
+        const void *thisPtr = this;
+        return m_createTitleBarCallback(const_cast<void *>(thisPtr), controller, parent);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return {};
+    }
+}
+KDDockWidgets::View *ViewFactory_wrapper::createTitleBar_nocallback(KDDockWidgets::Controllers::TitleBar *controller, KDDockWidgets::View *parent) const
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return {};
+}
 void ViewFactory_wrapper::customEvent(QEvent *event)
 {
     if (m_customEventCallback) {
@@ -206,6 +251,27 @@ void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *p
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createRubberBand_nocallback(parent);} else {    return targetPtr->createRubberBand(parent);} }();
 }
+// createStack(KDDockWidgets::Controllers::Stack * stack, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory__createStack_Stack_View(void *thisObj, void *stack_, void *parent_)
+{
+    auto stack = reinterpret_cast<KDDockWidgets::Controllers::Stack *>(stack_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createStack_nocallback(stack,parent);} else {    return targetPtr->createStack(stack,parent);} }();
+}
+// createTabBar(KDDockWidgets::Controllers::TabBar * tabBar, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_)
+{
+    auto tabBar = reinterpret_cast<KDDockWidgets::Controllers::TabBar *>(tabBar_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createTabBar_nocallback(tabBar,parent);} else {    return targetPtr->createTabBar(tabBar,parent);} }();
+}
+// createTitleBar(KDDockWidgets::Controllers::TitleBar * controller, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory__createTitleBar_TitleBar_View(void *thisObj, void *controller_, void *parent_)
+{
+    auto controller = reinterpret_cast<KDDockWidgets::Controllers::TitleBar *>(controller_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createTitleBar_nocallback(controller,parent);} else {    return targetPtr->createTitleBar(controller,parent);} }();
+}
 // customEvent(QEvent * event)
 void c_KDDockWidgets__ViewFactory__customEvent_QEvent(void *thisObj, void *event_)
 {
@@ -252,6 +318,15 @@ void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void
         break;
     case 693:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createRubberBand>(callback);
+        break;
+    case 694:
+        wrapper->m_createStackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createStack>(callback);
+        break;
+    case 695:
+        wrapper->m_createTabBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createTabBar>(callback);
+        break;
+    case 696:
+        wrapper->m_createTitleBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createTitleBar>(callback);
         break;
     case 295:
         wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_customEvent>(callback);
