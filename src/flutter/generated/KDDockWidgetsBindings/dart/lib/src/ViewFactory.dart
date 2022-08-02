@@ -62,7 +62,7 @@ class ViewFactory extends QObject {
   } // createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 
   View createDockWidget(String? uniqueName,
-      {int options, int layoutSaverOptions, int windowFlags = 0}) {
+      {int options = 0, int layoutSaverOptions = 0, int windowFlags = 0}) {
     final voidstar_Func_voidstar_voidstar_int_int_int func = _dylib
         .lookup<
                 ffi.NativeFunction<

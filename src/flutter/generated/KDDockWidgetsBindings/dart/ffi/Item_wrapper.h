@@ -16,8 +16,8 @@
 #include <qpoint.h>
 #include <qrect.h>
 #include <Group.h>
-#include <qobject.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
 

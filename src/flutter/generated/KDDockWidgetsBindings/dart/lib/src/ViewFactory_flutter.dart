@@ -67,9 +67,9 @@ class ViewFactory_flutter extends ViewFactory {
     }
     final result = dartInstance.createDockWidget(
         QString.fromCppPointer(uniqueName).toDartString(),
-        arg__2: arg__2,
-        arg__3: arg__3,
-        arg__4: arg__4);
+        options: arg__2,
+        layoutSaverOptions: arg__3,
+        windowFlags: arg__4);
     return result.thisCpp;
   }
 
