@@ -233,7 +233,9 @@ int Stack::currentIndex() const
 
 int Stack::numDockWidgets() const
 {
-    return dynamic_cast<Views::StackViewInterface *>(view())->numDockWidgets();
+    auto svi = dynamic_cast<Views::StackViewInterface *>(view());
+    Q_ASSERT(svi);
+    return svi->numDockWidgets();
 }
 
 void Stack::changeTabIcon(int index, const QIcon &icon)
