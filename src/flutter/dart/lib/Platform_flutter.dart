@@ -15,24 +15,34 @@ import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'ViewFactory_flutter.dart';
 
 class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
+  @override
   String name() {
     return "flutter";
   }
 
+  @override
   KDDockWidgetBindings.ViewFactory createDefaultViewFactory() {
     return ViewFactory_flutter();
   }
 
+  @override
   KDDockWidgetBindings.View tests_createView(
       KDDockWidgetBindings.CreateViewOptions opts,
       {required KDDockWidgetBindings.View? parent}) {
     return View_flutter(null, 0, parent as View_flutter);
   }
 
+  @override
   KDDockWidgetBindings.View createView(
       KDDockWidgetBindings.Controller? controller,
       {required KDDockWidgetBindings.View? parent}) {
     print("Platform_flutter: createView");
     return KDDockWidgetBindings.View_flutter(controller, 0, parent);
+  }
+
+  @override
+  void dumpManagedBacktrace() {
+    print("Printing!");
+    print(StackTrace.current);
   }
 }

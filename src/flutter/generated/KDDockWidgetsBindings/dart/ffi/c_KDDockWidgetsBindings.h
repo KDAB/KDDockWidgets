@@ -1088,7 +1088,89 @@ bool c_KDDockWidgets__ViewFactory_flutter__eventFilter_QObject_QEvent(void *this
 void *c_static_KDDockWidgets__ViewFactory_flutter__tr_char_char_int(const char *s, const char *c, int n);
 void c_KDDockWidgets__ViewFactory_flutter__destructor(void *thisObj);
 void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__ViewFactory_flutter_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Platform_flutter::Platform_flutter()
+void c_KDDockWidgets__ViewFactory_flutter_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Platform::Platform()
+void *c_KDDockWidgets__Platform__constructor();
+// KDDockWidgets::Platform::applicationName() const
+void *c_KDDockWidgets__Platform__applicationName(void *thisObj);
+// KDDockWidgets::Platform::createDefaultViewFactory()
+void *c_KDDockWidgets__Platform__createDefaultViewFactory(void *thisObj);
+// KDDockWidgets::Platform::createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__Platform__createView_Controller_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::Platform::dumpManagedBacktrace()
+void c_KDDockWidgets__Platform__dumpManagedBacktrace(void *thisObj);
+// KDDockWidgets::Platform::hasActivePopup() const
+bool c_KDDockWidgets__Platform__hasActivePopup(void *thisObj);
+// KDDockWidgets::Platform::inDisallowedDragView(QPoint globalPos) const
+bool c_KDDockWidgets__Platform__inDisallowedDragView_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Platform::indirection()
+void c_static_KDDockWidgets__Platform__indirection();
+// KDDockWidgets::Platform::installMessageHandler()
+void c_KDDockWidgets__Platform__installMessageHandler(void *thisObj);
+// KDDockWidgets::Platform::instance()
+void *c_static_KDDockWidgets__Platform__instance();
+// KDDockWidgets::Platform::isLeftMouseButtonPressed() const
+bool c_KDDockWidgets__Platform__isLeftMouseButtonPressed(void *thisObj);
+// KDDockWidgets::Platform::isProcessingAppQuitEvent() const
+bool c_KDDockWidgets__Platform__isProcessingAppQuitEvent(void *thisObj);
+// KDDockWidgets::Platform::isQtQuick() const
+bool c_KDDockWidgets__Platform__isQtQuick(void *thisObj);
+// KDDockWidgets::Platform::isQtWidgets() const
+bool c_KDDockWidgets__Platform__isQtWidgets(void *thisObj);
+// KDDockWidgets::Platform::name() const
+const char *c_KDDockWidgets__Platform__name(void *thisObj);
+// KDDockWidgets::Platform::organizationName() const
+void *c_KDDockWidgets__Platform__organizationName(void *thisObj);
+// KDDockWidgets::Platform::restoreMouseCursor()
+void c_KDDockWidgets__Platform__restoreMouseCursor(void *thisObj);
+// KDDockWidgets::Platform::screenNumberFor(KDDockWidgets::View * arg__1) const
+int c_KDDockWidgets__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Platform::screenSizeFor(KDDockWidgets::View * arg__1) const
+void *c_KDDockWidgets__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Platform::sendEvent(KDDockWidgets::View * arg__1, QEvent * arg__2) const
+void c_KDDockWidgets__Platform__sendEvent_View_QEvent(void *thisObj, void *arg__1_, void *arg__2_);
+// KDDockWidgets::Platform::setMouseCursor(Qt::CursorShape arg__1)
+void c_KDDockWidgets__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+// KDDockWidgets::Platform::startDragDistance() const
+int c_KDDockWidgets__Platform__startDragDistance(void *thisObj);
+// KDDockWidgets::Platform::startDragDistance_impl() const
+int c_KDDockWidgets__Platform__startDragDistance_impl(void *thisObj);
+// KDDockWidgets::Platform::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+void *c_KDDockWidgets__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::Platform::tests_createNonClosableView(KDDockWidgets::View * parent)
+void *c_KDDockWidgets__Platform__tests_createNonClosableView_View(void *thisObj, void *parent_);
+// KDDockWidgets::Platform::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+void *c_KDDockWidgets__Platform__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::Platform::tests_deinitPlatform()
+void c_static_KDDockWidgets__Platform__tests_deinitPlatform();
+// KDDockWidgets::Platform::tests_deinitPlatform_impl()
+void c_KDDockWidgets__Platform__tests_deinitPlatform_impl(void *thisObj);
+// KDDockWidgets::Platform::tests_initPlatform_impl()
+void c_KDDockWidgets__Platform__tests_initPlatform_impl(void *thisObj);
+// KDDockWidgets::Platform::tests_wait(int ms)
+void c_KDDockWidgets__Platform__tests_wait_int(void *thisObj, int ms);
+// KDDockWidgets::Platform::tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
+bool c_KDDockWidgets__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
+// KDDockWidgets::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const
+bool c_KDDockWidgets__Platform__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
+// KDDockWidgets::Platform::tests_waitForEvent(KDDockWidgets::View * arg__1, QEvent::Type type, int timeout) const
+bool c_KDDockWidgets__Platform__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
+// KDDockWidgets::Platform::tests_waitForEvent(QObject * w, QEvent::Type type, int timeout) const
+bool c_KDDockWidgets__Platform__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
+// KDDockWidgets::Platform::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
+bool c_KDDockWidgets__Platform__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
+// KDDockWidgets::Platform::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
+bool c_KDDockWidgets__Platform__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
+// KDDockWidgets::Platform::ungrabMouse()
+void c_KDDockWidgets__Platform__ungrabMouse(void *thisObj);
+// KDDockWidgets::Platform::uninstallMessageHandler()
+void c_KDDockWidgets__Platform__uninstallMessageHandler(void *thisObj);
+// KDDockWidgets::Platform::usesFallbackMouseGrabber() const
+bool c_KDDockWidgets__Platform__usesFallbackMouseGrabber(void *thisObj);
+void c_KDDockWidgets__Platform__destructor(void *thisObj);
+int c_KDDockWidgets__Platform___get_m_numWarningsEmitted(void *thisObj);
+void c_KDDockWidgets__Platform___set_m_numWarningsEmitted_int(void *thisObj, int m_numWarningsEmitted_);
+void c_KDDockWidgets__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+void c_KDDockWidgets__Platform_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Platform_flutter::Platform_flutter()
 void *c_KDDockWidgets__Platform_flutter__constructor();
 // KDDockWidgets::Platform_flutter::applicationName() const
 void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
@@ -1096,6 +1178,8 @@ void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
 void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
 // KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
+// KDDockWidgets::Platform_flutter::dumpManagedBacktrace()
+void c_KDDockWidgets__Platform_flutter__dumpManagedBacktrace(void *thisObj);
 // KDDockWidgets::Platform_flutter::hasActivePopup() const
 bool c_KDDockWidgets__Platform_flutter__hasActivePopup(void *thisObj);
 // KDDockWidgets::Platform_flutter::inDisallowedDragView(QPoint globalPos) const
@@ -1122,6 +1206,8 @@ void *c_KDDockWidgets__Platform_flutter__screenSizeFor_View(void *thisObj, void 
 void c_KDDockWidgets__Platform_flutter__sendEvent_View_QEvent(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Platform_flutter::setMouseCursor(Qt::CursorShape arg__1)
 void c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+// KDDockWidgets::Platform_flutter::startDragDistance_impl() const
+int c_KDDockWidgets__Platform_flutter__startDragDistance_impl(void *thisObj);
 // KDDockWidgets::Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
 void *c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Platform_flutter::tests_createNonClosableView(KDDockWidgets::View * parent)
@@ -1134,18 +1220,6 @@ void c_KDDockWidgets__Platform_flutter__tests_deinitPlatform_impl(void *thisObj)
 void c_KDDockWidgets__Platform_flutter__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::Platform_flutter::tests_wait(int ms)
 void c_KDDockWidgets__Platform_flutter__tests_wait_int(void *thisObj, int ms);
-// KDDockWidgets::Platform_flutter::tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
-bool c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForDeleted(QObject * arg__1, int timeout) const
-bool c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForEvent(KDDockWidgets::View * arg__1, QEvent::Type type, int timeout) const
-bool c_KDDockWidgets__Platform_flutter__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForEvent(QObject * w, QEvent::Type type, int timeout) const
-bool c_KDDockWidgets__Platform_flutter__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
-bool c_KDDockWidgets__Platform_flutter__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
-bool c_KDDockWidgets__Platform_flutter__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Platform_flutter::ungrabMouse()
 void c_KDDockWidgets__Platform_flutter__ungrabMouse(void *thisObj);
 // KDDockWidgets::Platform_flutter::uninstallMessageHandler()

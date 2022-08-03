@@ -26,6 +26,7 @@ export 'src/ClassicIndicators.dart' show ClassicIndicators;
 export 'src/CreateViewOptions.dart' show CreateViewOptions;
 export 'src/InitialOption.dart' show InitialOption;
 export 'src/Platform_flutter.dart' show Platform_flutter;
+export 'src/Platform.dart' show Platform;
 export 'src/ViewFactory_flutter.dart' show ViewFactory_flutter;
 export 'src/ViewFactory.dart' show ViewFactory;
 export 'src/ClassicIndicatorWindowViewInterface.dart'

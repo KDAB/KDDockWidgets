@@ -149,6 +149,13 @@ public:
 
     virtual Screen::Ptr primaryScreen() const = 0;
 
+    /// @brief For non-C++, managed languages (having a VM) prints a non-native back-trace
+    /// For example, the flutter frontend implements this to get a dart backtrace
+    /// Used for debugging only. Can be called by gdb.
+    virtual void dumpManagedBacktrace()
+    {
+    }
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     class WarningObserver

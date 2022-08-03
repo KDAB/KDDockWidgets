@@ -155,13 +155,13 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallb
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 770:
+    case 789:
         wrapper->m_hover_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_hover_impl>(callback);
         break;
-    case 773:
+    case 792:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 778:
+    case 797:
         wrapper->m_updateVisibilityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_updateVisibility>(callback);
         break;
     }

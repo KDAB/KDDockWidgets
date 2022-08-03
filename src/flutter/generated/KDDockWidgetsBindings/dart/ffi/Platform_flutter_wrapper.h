@@ -19,6 +19,7 @@
 #include <qcoreevent.h>
 #include <qobject.h>
 #include <qstring.h>
+#include <vector>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Platform_flutter_wrapper : public ::KDDockWidgets::Platform_flutter
@@ -32,6 +33,8 @@ public:
     virtual KDDockWidgets::ViewFactory *createDefaultViewFactory_nocallback();
     virtual KDDockWidgets::View *createView(KDDockWidgets::Controller *controller, KDDockWidgets::View *parent = nullptr) const;
     virtual KDDockWidgets::View *createView_nocallback(KDDockWidgets::Controller *controller, KDDockWidgets::View *parent = nullptr) const;
+    virtual void dumpManagedBacktrace();
+    virtual void dumpManagedBacktrace_nocallback();
     virtual bool hasActivePopup() const;
     virtual bool hasActivePopup_nocallback() const;
     virtual bool inDisallowedDragView(QPoint globalPos) const;
@@ -57,6 +60,8 @@ public:
     virtual void sendEvent_nocallback(KDDockWidgets::View *arg__1, QEvent *arg__2) const;
     virtual void setMouseCursor(Qt::CursorShape arg__1);
     virtual void setMouseCursor_nocallback(Qt::CursorShape arg__1);
+    virtual int startDragDistance_impl() const;
+    virtual int startDragDistance_impl_nocallback() const;
     virtual KDDockWidgets::View *tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent = nullptr);
     virtual KDDockWidgets::View *tests_createFocusableView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent = nullptr);
     virtual KDDockWidgets::View *tests_createNonClosableView(KDDockWidgets::View *parent = nullptr);
@@ -69,18 +74,6 @@ public:
     virtual void tests_initPlatform_impl_nocallback();
     virtual void tests_wait(int ms);
     virtual void tests_wait_nocallback(int ms);
-    virtual bool tests_waitForDeleted(KDDockWidgets::View *arg__1, int timeout) const;
-    virtual bool tests_waitForDeleted_nocallback(KDDockWidgets::View *arg__1, int timeout) const;
-    virtual bool tests_waitForDeleted(QObject *arg__1, int timeout) const;
-    virtual bool tests_waitForDeleted_nocallback(QObject *arg__1, int timeout) const;
-    virtual bool tests_waitForEvent(KDDockWidgets::View *arg__1, QEvent::Type type, int timeout) const;
-    virtual bool tests_waitForEvent_nocallback(KDDockWidgets::View *arg__1, QEvent::Type type, int timeout) const;
-    virtual bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout) const;
-    virtual bool tests_waitForEvent_nocallback(QObject *w, QEvent::Type type, int timeout) const;
-    virtual bool tests_waitForResize(KDDockWidgets::Controller *arg__1, int timeout) const;
-    virtual bool tests_waitForResize_nocallback(KDDockWidgets::Controller *arg__1, int timeout) const;
-    virtual bool tests_waitForResize(KDDockWidgets::View *arg__1, int timeout) const;
-    virtual bool tests_waitForResize_nocallback(KDDockWidgets::View *arg__1, int timeout) const;
     virtual void ungrabMouse();
     virtual void ungrabMouse_nocallback();
     virtual void uninstallMessageHandler();
@@ -93,6 +86,8 @@ public:
     Callback_createDefaultViewFactory m_createDefaultViewFactoryCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createView)(void *, KDDockWidgets::Controller *controller, KDDockWidgets::View *parent);
     Callback_createView m_createViewCallback = nullptr;
+    typedef void (*Callback_dumpManagedBacktrace)(void *);
+    Callback_dumpManagedBacktrace m_dumpManagedBacktraceCallback = nullptr;
     typedef bool (*Callback_hasActivePopup)(void *);
     Callback_hasActivePopup m_hasActivePopupCallback = nullptr;
     typedef bool (*Callback_inDisallowedDragView)(void *, QPoint globalPos);
@@ -117,6 +112,8 @@ public:
     Callback_sendEvent m_sendEventCallback = nullptr;
     typedef void (*Callback_setMouseCursor)(void *, Qt::CursorShape arg__1);
     Callback_setMouseCursor m_setMouseCursorCallback = nullptr;
+    typedef int (*Callback_startDragDistance_impl)(void *);
+    Callback_startDragDistance_impl m_startDragDistance_implCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_tests_createFocusableView)(void *, KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent);
     Callback_tests_createFocusableView m_tests_createFocusableViewCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_tests_createNonClosableView)(void *, KDDockWidgets::View *parent);
@@ -129,18 +126,6 @@ public:
     Callback_tests_initPlatform_impl m_tests_initPlatform_implCallback = nullptr;
     typedef void (*Callback_tests_wait)(void *, int ms);
     Callback_tests_wait m_tests_waitCallback = nullptr;
-    typedef bool (*Callback_tests_waitForDeleted)(void *, KDDockWidgets::View *arg__1, int timeout);
-    Callback_tests_waitForDeleted m_tests_waitForDeletedCallback = nullptr;
-    typedef bool (*Callback_tests_waitForDeleted_2)(void *, QObject *arg__1, int timeout);
-    Callback_tests_waitForDeleted_2 m_tests_waitForDeleted_2Callback = nullptr;
-    typedef bool (*Callback_tests_waitForEvent)(void *, KDDockWidgets::View *arg__1, QEvent::Type type, int timeout);
-    Callback_tests_waitForEvent m_tests_waitForEventCallback = nullptr;
-    typedef bool (*Callback_tests_waitForEvent_2)(void *, QObject *w, QEvent::Type type, int timeout);
-    Callback_tests_waitForEvent_2 m_tests_waitForEvent_2Callback = nullptr;
-    typedef bool (*Callback_tests_waitForResize)(void *, KDDockWidgets::Controller *arg__1, int timeout);
-    Callback_tests_waitForResize m_tests_waitForResizeCallback = nullptr;
-    typedef bool (*Callback_tests_waitForResize_2)(void *, KDDockWidgets::View *arg__1, int timeout);
-    Callback_tests_waitForResize_2 m_tests_waitForResize_2Callback = nullptr;
     typedef void (*Callback_ungrabMouse)(void *);
     Callback_ungrabMouse m_ungrabMouseCallback = nullptr;
     typedef void (*Callback_uninstallMessageHandler)(void *);
@@ -158,6 +143,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__applicatio
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
 // KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
+// KDDockWidgets::Platform_flutter::dumpManagedBacktrace()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__dumpManagedBacktrace(void *thisObj);
 // KDDockWidgets::Platform_flutter::hasActivePopup() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform_flutter__hasActivePopup(void *thisObj);
 // KDDockWidgets::Platform_flutter::inDisallowedDragView(QPoint globalPos) const
@@ -184,6 +171,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__screenSize
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__sendEvent_View_QEvent(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Platform_flutter::setMouseCursor(Qt::CursorShape arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+// KDDockWidgets::Platform_flutter::startDragDistance_impl() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Platform_flutter__startDragDistance_impl(void *thisObj);
 // KDDockWidgets::Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Platform_flutter::tests_createNonClosableView(KDDockWidgets::View * parent)
@@ -196,18 +185,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__tests_deini
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::Platform_flutter::tests_wait(int ms)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__tests_wait_int(void *thisObj, int ms);
-// KDDockWidgets::Platform_flutter::tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForDeleted(QObject * arg__1, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform_flutter__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForEvent(KDDockWidgets::View * arg__1, QEvent::Type type, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform_flutter__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForEvent(QObject * w, QEvent::Type type, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform_flutter__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform_flutter__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Platform_flutter::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform_flutter__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Platform_flutter::ungrabMouse()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__ungrabMouse(void *thisObj);
 // KDDockWidgets::Platform_flutter::uninstallMessageHandler()

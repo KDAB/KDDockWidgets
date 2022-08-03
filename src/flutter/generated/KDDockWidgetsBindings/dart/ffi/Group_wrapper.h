@@ -22,8 +22,8 @@
 #include <DropArea.h>
 #include <controllers/Layout.h>
 #include <qsize.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Group_wrapper : public ::KDDockWidgets::Controllers::Group
