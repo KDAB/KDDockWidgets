@@ -40,7 +40,7 @@ void Stack_flutter::init()
 
 int Stack_flutter::numDockWidgets() const
 {
-    return 1;
+    return 0;
 }
 
 void Stack_flutter::removeDockWidget(Controllers::DockWidget *)
