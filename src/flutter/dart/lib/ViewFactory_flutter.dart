@@ -25,7 +25,8 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
       KDDockWidgetBindings.DropArea? controller,
       KDDockWidgetBindings.View? parent) {
     print("ViewFactory_flutter: Creating DropArea");
-    var da = DropArea_flutter(controller, 0, parent);
+    var da = DropArea_flutter(
+        controller, KDDockWidgetBindings.KDDockWidgets_Type.DropArea, parent);
     print("ViewFactory_flutter: Created DropArea");
     return da;
   }
@@ -39,10 +40,39 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
   }
 
   @override
-  KDDockWidgetBindings.View createGroup(KDDockWidgetBindings.Group? arg__1,
+  KDDockWidgetBindings.View createGroup(KDDockWidgetBindings.Group? group,
       {required KDDockWidgetBindings.View? parent}) {
     print("ViewFactory_flutter: createGroup");
     // Something generic for now
-    return View_flutter(null, 0, parent);
+    return View_flutter(
+        group, KDDockWidgetBindings.KDDockWidgets_Type.Frame, parent);
+  }
+
+  @override
+  KDDockWidgetBindings.View createTabBar(KDDockWidgetBindings.TabBar? tabBar,
+      {required KDDockWidgetBindings.View? parent}) {
+    // Something generic for now
+    print("ViewFactory_flutter: createTabBar");
+    return View_flutter(
+        tabBar, KDDockWidgetBindings.KDDockWidgets_Type.TabBar, parent);
+  }
+
+  @override
+  KDDockWidgetBindings.View createTitleBar(
+      KDDockWidgetBindings.TitleBar? controller,
+      KDDockWidgetBindings.View? parent) {
+    // Something generic for now
+    print("ViewFactory_flutter: createTitleBar");
+    return View_flutter(
+        controller, KDDockWidgetBindings.KDDockWidgets_Type.TitleBar, parent);
+  }
+
+  @override
+  KDDockWidgetBindings.View createStack(
+      KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent) {
+    // Something generic for now
+    print("ViewFactory_flutter: createStack");
+    return View_flutter(
+        stack, KDDockWidgetBindings.KDDockWidgets_Type.Stack, parent);
   }
 }

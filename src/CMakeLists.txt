@@ -229,8 +229,17 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
-    flutter/ViewFactory_flutter.cpp flutter/Window_flutter.cpp flutter/Platform_flutter.cpp
-    flutter/views/View_flutter.cpp flutter/TestHelpers_flutter.cpp ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
+    flutter/ViewFactory_flutter.cpp
+    flutter/Window_flutter.cpp
+    flutter/Platform_flutter.cpp
+    flutter/views/View_flutter.cpp
+    flutter/TestHelpers_flutter.cpp
+    flutter/views/Stack_flutter.cpp
+    flutter/views/DockWidget_flutter.cpp
+    flutter/views/Group_flutter.cpp
+    flutter/views/TabBar_flutter.cpp
+    flutter/views/TitleBar_flutter.cpp
+    ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
 )
 
 if(KDDockWidgets_DEVELOPER_MODE)
