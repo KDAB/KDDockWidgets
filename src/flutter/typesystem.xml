@@ -39,6 +39,7 @@
         <value-type name="CreateViewOptions" />
         <value-type name="InitialOption" />
 
+        <object-type name="Platform" />
         <object-type name="Platform_flutter">
             <enum-type identified-by-value="DisplayType" />
         </object-type>
