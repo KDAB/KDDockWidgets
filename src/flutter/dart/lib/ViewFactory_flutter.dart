@@ -43,36 +43,28 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
   KDDockWidgetBindings.View createGroup(KDDockWidgetBindings.Group? group,
       {required KDDockWidgetBindings.View? parent}) {
     print("ViewFactory_flutter: createGroup");
-    // Something generic for now
-    return View_flutter(
-        group, KDDockWidgetBindings.KDDockWidgets_Type.Frame, parent);
+    return KDDockWidgetBindings.Group_flutter(group, parent: parent);
   }
 
   @override
   KDDockWidgetBindings.View createTabBar(KDDockWidgetBindings.TabBar? tabBar,
       {required KDDockWidgetBindings.View? parent}) {
-    // Something generic for now
     print("ViewFactory_flutter: createTabBar");
-    return View_flutter(
-        tabBar, KDDockWidgetBindings.KDDockWidgets_Type.TabBar, parent);
+    return KDDockWidgetBindings.TabBar_flutter(tabBar, parent: parent);
   }
 
   @override
   KDDockWidgetBindings.View createTitleBar(
       KDDockWidgetBindings.TitleBar? controller,
       KDDockWidgetBindings.View? parent) {
-    // Something generic for now
     print("ViewFactory_flutter: createTitleBar");
-    return View_flutter(
-        controller, KDDockWidgetBindings.KDDockWidgets_Type.TitleBar, parent);
+    return KDDockWidgetBindings.TitleBar_flutter(controller, parent: parent);
   }
 
   @override
   KDDockWidgetBindings.View createStack(
       KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent) {
-    // Something generic for now
     print("ViewFactory_flutter: createStack");
-    return View_flutter(
-        stack, KDDockWidgetBindings.KDDockWidgets_Type.Stack, parent);
+    return KDDockWidgetBindings.Stack_flutter(stack, parent: parent);
   }
 }
