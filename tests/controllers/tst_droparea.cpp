@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "main.h"
+#include "../main.h"
 #include "controllers/DropArea.h"
 #include "Platform.h"
 
