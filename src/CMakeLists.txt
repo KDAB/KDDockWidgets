@@ -239,8 +239,17 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/TestHelpers_flutter.cpp)
 endif()
 
-set(KDDW_FRONTEND_DUMMY_SRCS dummy/ViewFactory_dummy.cpp dummy/Platform_dummy.cpp dummy/Window_dummy.cpp
-                             dummy/views/View_dummy.cpp dummy/TestHelpers_dummy.cpp
+set(KDDW_FRONTEND_DUMMY_SRCS
+    dummy/ViewFactory_dummy.cpp
+    dummy/Platform_dummy.cpp
+    dummy/Window_dummy.cpp
+    dummy/views/View_dummy.cpp
+    dummy/TestHelpers_dummy.cpp
+    dummy/views/Stack_dummy.cpp
+    dummy/views/DockWidget_dummy.cpp
+    dummy/views/Group_dummy.cpp
+    dummy/views/TabBar_dummy.cpp
+    dummy/views/TitleBar_dummy.cpp
 )
 
 set(KDDW_PUBLIC_HEADERS
