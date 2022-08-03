@@ -520,10 +520,10 @@ void c_KDDockWidgets__Controllers__TitleBar__registerVirtualMethodCallback(void 
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_eventFilter>(callback);
         break;
-    case 979:
+    case 1010:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 982:
+    case 1013:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
     case 817:

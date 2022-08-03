@@ -41,13 +41,6 @@ public:
     QRect dragRect() const override;
     int currentIndex() const;
 
-    // QML interface:
-    KDDockWidgets::Views::TitleBar_flutter *titleBar() const;
-    KDDockWidgets::Views::TitleBar_flutter *actualTitleBar() const;
-    int userType() const;
-    QObject *tabWidgetObj() const;
-
-
 protected:
     void removeWidget_impl(Controllers::DockWidget *) override;
     int indexOfDockWidget_impl(const Controllers::DockWidget *) override;

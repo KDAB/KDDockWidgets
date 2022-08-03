@@ -734,7 +734,7 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
     case 295:
         wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_customEvent>(callback);
         break;
-    case 1201:
+    case 1232:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_dragRect>(callback);
         break;
     case 306:
@@ -743,10 +743,10 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_eventFilter>(callback);
         break;
-    case 1203:
+    case 1234:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_focusedWidgetChangedCallback>(callback);
         break;
-    case 1217:
+    case 1248:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_isFocusedChangedCallback>(callback);
         break;
     case 817:

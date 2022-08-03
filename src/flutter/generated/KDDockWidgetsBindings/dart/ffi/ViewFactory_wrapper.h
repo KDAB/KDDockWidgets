@@ -19,10 +19,10 @@
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
 #include <DropArea.h>
-#include <qlist.h>
 #include <qobject.h>
-#include <qbytearray.h>
 #include <qcoreevent.h>
+#include <qlist.h>
+#include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ViewFactory_wrapper : public ::KDDockWidgets::ViewFactory

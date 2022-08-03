@@ -123,27 +123,3 @@ QRect Group_dummy::dragRect() const
     qFatal("Not implemented");
     return {};
 }
-
-KDDockWidgets::Views::TitleBar_dummy *Group_dummy::titleBar() const
-{
-    if (auto tb = m_group->titleBar()) {
-        return dynamic_cast<KDDockWidgets::Views::TitleBar_dummy *>(tb->view());
-    }
-
-    return nullptr;
-}
-
-KDDockWidgets::Views::TitleBar_dummy *Group_dummy::actualTitleBar() const
-{
-    if (auto tb = m_group->actualTitleBar()) {
-        return dynamic_cast<KDDockWidgets::Views::TitleBar_dummy *>(tb->view());
-    }
-
-    return nullptr;
-}
-
-int Group_dummy::userType() const
-{
-    /// TODOm3
-    return 0;
-}

@@ -339,13 +339,13 @@ void c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *pt
     case 307:
         wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_eventFilter>(callback);
         break;
-    case 1065:
+    case 1096:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isMDI>(callback);
         break;
-    case 1066:
+    case 1097:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isPositionDraggable>(callback);
         break;
-    case 1068:
+    case 1099:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isWindow>(callback);
         break;
     case 817:

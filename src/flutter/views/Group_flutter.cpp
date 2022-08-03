@@ -123,27 +123,3 @@ QRect Group_flutter::dragRect() const
     qFatal("Not implemented");
     return {};
 }
-
-KDDockWidgets::Views::TitleBar_flutter *Group_flutter::titleBar() const
-{
-    if (auto tb = m_group->titleBar()) {
-        return dynamic_cast<KDDockWidgets::Views::TitleBar_flutter *>(tb->view());
-    }
-
-    return nullptr;
-}
-
-KDDockWidgets::Views::TitleBar_flutter *Group_flutter::actualTitleBar() const
-{
-    if (auto tb = m_group->actualTitleBar()) {
-        return dynamic_cast<KDDockWidgets::Views::TitleBar_flutter *>(tb->view());
-    }
-
-    return nullptr;
-}
-
-int Group_flutter::userType() const
-{
-    /// TODOm3
-    return 0;
-}

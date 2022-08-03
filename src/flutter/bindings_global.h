@@ -37,6 +37,10 @@
 #include "ViewFactory_flutter.h"
 
 #include "views/View_flutter.h"
+#include "views/Stack_flutter.h"
+#include "views/Group_flutter.h"
+#include "views/TabBar_flutter.h"
+#include "views/TitleBar_flutter.h"
 
 #include "../controllers/Layout.h"
 #include "../controllers/DropArea.h"
