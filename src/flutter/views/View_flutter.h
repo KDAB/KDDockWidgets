@@ -48,7 +48,7 @@ public:
     QRect geometry() const override;
     QRect normalGeometry() const override;
     void setNormalGeometry(QRect geo);
-    void setGeometry(QRect) override;
+    void setGeometry(QRect geometry) override;
     void setMaximumSize(QSize sz) override;
 
     bool isVisible() const override;
@@ -75,7 +75,7 @@ public:
     QPoint mapFromGlobal(QPoint globalPt) const override;
     QPoint mapTo(View *parent, QPoint pos) const override;
     void setWindowOpacity(double v) override;
-    void setSizePolicy(SizePolicy, SizePolicy) override;
+    void setSizePolicy(SizePolicy hPolicy, SizePolicy vPolicy) override;
     SizePolicy verticalSizePolicy() const override;
     SizePolicy horizontalSizePolicy() const override;
 
@@ -109,14 +109,14 @@ public:
     void setFocus(Qt::FocusReason reason) override;
     Qt::FocusPolicy focusPolicy() const override;
     bool hasFocus() const override;
-    void setFocusPolicy(Qt::FocusPolicy) override;
+    void setFocusPolicy(Qt::FocusPolicy policy) override;
     QString objectName() const override;
     void setMinimumSize(QSize sz) override;
     void render(QPainter *) override;
     void setCursor(Qt::CursorShape shape) override;
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<View>> childViews() const override;
-    void setZOrder(int) override;
+    void setZOrder(int z) override;
 
     HANDLE handle() const override;
 
