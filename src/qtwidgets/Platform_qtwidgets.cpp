@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -60,11 +60,13 @@ public:
         if (auto w = qobject_cast<QWidget *>(o)) {
             if (w->isWindow()) {
                 if (ev->type() == QEvent::WindowActivate) {
-                    Platform::instance()->d->windowActivated.emit(Views::ViewWrapper_qtwidgets::create(w));
+                    Platform::instance()->d->windowActivated.emit(
+                        Views::ViewWrapper_qtwidgets::create(w));
                 }
 
                 if (ev->type() == QEvent::WindowDeactivate) {
-                    Platform::instance()->d->windowDeactivated.emit(Views::ViewWrapper_qtwidgets::create(w));
+                    Platform::instance()->d->windowDeactivated.emit(
+                        Views::ViewWrapper_qtwidgets::create(w));
                 }
             }
         }
@@ -169,7 +171,8 @@ int Platform_qtwidgets::startDragDistance_impl() const
 
 View *Platform_qtwidgets::createView(Controller *controller, View *parent) const
 {
-    return new Views::View_qtwidgets<QWidget>(controller, Type::None, Views::View_qt::asQWidget(parent));
+    return new Views::View_qtwidgets<QWidget>(controller, Type::None,
+                                              Views::View_qt::asQWidget(parent));
 }
 
 bool Platform_qtwidgets::usesFallbackMouseGrabber() const

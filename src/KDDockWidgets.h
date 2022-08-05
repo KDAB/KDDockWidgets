@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -26,7 +26,8 @@
 #include <QDebug>
 
 #ifdef Q_OS_WIN
-// Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested on macOS.
+// Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested
+// on macOS.
 #define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
 #endif
 
@@ -58,10 +59,14 @@ Q_ENUM_NS(Location)
 
 enum MainWindowOption {
     MainWindowOption_None = 0, ///> No option set
-    MainWindowOption_HasCentralFrame = 1, ///> Makes the MainWindow always have a central group, for tabbing documents
-    MainWindowOption_MDI = 2, ///> The layout will be MDI. DockWidgets can have arbitrary positions, not restricted by any layout
-    MainWindowOption_HasCentralWidget = 4 | MainWindowOption_HasCentralFrame, ///> Similar to MainWindowOption_HasCentralFrame but
-    ///> you'll have a central widget which can't be detached (Similar to regular QMainWindow). @sa MainWindowBase::setPersistentCentralWidget()
+    MainWindowOption_HasCentralFrame =
+        1, ///> Makes the MainWindow always have a central group, for tabbing documents
+    MainWindowOption_MDI = 2, ///> The layout will be MDI. DockWidgets can have arbitrary positions,
+                              /// not restricted by any layout
+    MainWindowOption_HasCentralWidget =
+        4 | MainWindowOption_HasCentralFrame, ///> Similar to MainWindowOption_HasCentralFrame but
+    ///> you'll have a central widget which can't be detached (Similar to regular QMainWindow). @sa
+    /// MainWindowBase::setPersistentCentralWidget()
 };
 Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 Q_ENUM_NS(MainWindowOptions)
@@ -69,12 +74,16 @@ Q_ENUM_NS(MainWindowOptions)
 ///@brief DockWidget options to pass at construction time
 enum DockWidgetOption {
     DockWidgetOption_None = 0, ///< No option, the default
-    DockWidgetOption_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programmatically
+    DockWidgetOption_NotClosable =
+        1, ///< The DockWidget can't be closed on the [x], only programmatically
     DockWidgetOption_NotDockable = 2, ///< The DockWidget can't be docked, it's always floating
     DockWidgetOption_DeleteOnClose = 4, ///< Deletes the DockWidget when closed
-    DockWidgetOption_MDINestable = 8 ///< EXPERIMENTAL. When this dock widget is being shown in a MDI area it will also allow other dock widgets to be dropped to its sides and tabbed
-                                     /// Usually Each MDI "window" corresponds to one DockWidget, with this option each "window" will have a layout with 1 or more dock widgets
-                                     /// Run "examples/qtwidgets_mdi_with_docking -n" to see it in action
+    DockWidgetOption_MDINestable =
+        8 ///< EXPERIMENTAL. When this dock widget is being shown in a MDI area it will also allow
+          ///< other dock widgets to be dropped to its sides and tabbed
+          /// Usually Each MDI "window" corresponds to one DockWidget, with this option each
+          /// "window" will have a layout with 1 or more dock widgets Run
+          /// "examples/qtwidgets_mdi_with_docking -n" to see it in action
 };
 Q_DECLARE_FLAGS(DockWidgetOptions, DockWidgetOption)
 Q_ENUM_NS(DockWidgetOptions);
@@ -82,7 +91,8 @@ Q_ENUM_NS(DockWidgetOptions);
 /// @brief Options which will affect LayoutSaver save/restore
 enum class LayoutSaverOption {
     None = 0, ///< Just use the defaults
-    Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for floating windows.
+    Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for
+              ///< floating windows.
 };
 Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
 
@@ -108,9 +118,11 @@ Q_ENUM_NS(FrontendType)
 /// This is internal. The public API for dealing with sizing is InitialOption.
 ///@sa InitialOption
 enum class DefaultSizeMode {
-    ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
+    ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be
+              ///< smaller if our window isn't big enough.
     Fair, ///< Gives an equal relative size as the items that are already in the layout
-    FairButFloor, ///< Equal to fair, but if the item we're adding is smaller than the fair suggestion, then that small size is used.
+    FairButFloor, ///< Equal to fair, but if the item we're adding is smaller than the fair
+                  ///< suggestion, then that small size is used.
     NoDefaultSizeMode, ///< Don't do any sizing
 };
 Q_ENUM_NS(DefaultSizeMode)
@@ -174,8 +186,7 @@ struct InitialOption
 
     int preferredLength(Qt::Orientation o) const
     {
-        return o == Qt::Horizontal ? preferredSize.width()
-                                   : preferredSize.height();
+        return o == Qt::Horizontal ? preferredSize.width() : preferredSize.height();
     }
 
     bool hasPreferredLength(Qt::Orientation o) const
@@ -217,8 +228,10 @@ private:
 
 enum RestoreOption {
     RestoreOption_None = 0,
-    RestoreOption_RelativeToMainWindow = 1, ///< Skips restoring the main window geometry and the restored dock widgets will use relative sizing.
-                                            ///< Loading layouts won't change the main window geometry and just use whatever the user has at the moment.
+    RestoreOption_RelativeToMainWindow =
+        1, ///< Skips restoring the main window geometry and the restored dock widgets will use
+           ///< relative sizing. Loading layouts won't change the main window geometry and just use
+           ///< whatever the user has at the moment.
 };
 Q_DECLARE_FLAGS(RestoreOptions, RestoreOption)
 Q_ENUM_NS(RestoreOptions)
@@ -281,10 +294,14 @@ enum DropLocation {
     DropLocation_OutterTop = 64,
     DropLocation_OutterRight = 128,
     DropLocation_OutterBottom = 256,
-    DropLocation_Inner = DropLocation_Left | DropLocation_Right | DropLocation_Top | DropLocation_Bottom,
-    DropLocation_Outter = DropLocation_OutterLeft | DropLocation_OutterRight | DropLocation_OutterTop | DropLocation_OutterBottom,
-    DropLocation_Horizontal = DropLocation_Left | DropLocation_Right | DropLocation_OutterLeft | DropLocation_OutterRight,
-    DropLocation_Vertical = DropLocation_Top | DropLocation_Bottom | DropLocation_OutterTop | DropLocation_OutterBottom
+    DropLocation_Inner =
+        DropLocation_Left | DropLocation_Right | DropLocation_Top | DropLocation_Bottom,
+    DropLocation_Outter = DropLocation_OutterLeft | DropLocation_OutterRight
+        | DropLocation_OutterTop | DropLocation_OutterBottom,
+    DropLocation_Horizontal =
+        DropLocation_Left | DropLocation_Right | DropLocation_OutterLeft | DropLocation_OutterRight,
+    DropLocation_Vertical =
+        DropLocation_Top | DropLocation_Bottom | DropLocation_OutterTop | DropLocation_OutterBottom
 };
 Q_ENUM_NS(DropLocation)
 
@@ -307,7 +324,8 @@ enum CursorPosition {
     CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left,
     CursorPosition_Horizontal = CursorPosition_Right | CursorPosition_Left,
     CursorPosition_Vertical = CursorPosition_Top | CursorPosition_Bottom,
-    CursorPosition_All = CursorPosition_Left | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
+    CursorPosition_All =
+        CursorPosition_Left | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
 };
 Q_DECLARE_FLAGS(CursorPositions, CursorPosition)
 Q_ENUM_NS(CursorPosition)

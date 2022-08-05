@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -173,7 +173,8 @@ void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
     context->setContextProperty(QStringLiteral("_kddwHelpers"), m_qquickHelpers);
     context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
     context->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
-    context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), Config::self().viewFactory());
+    context->setContextProperty(QStringLiteral("_kddw_widgetFactory"),
+                                Config::self().viewFactory());
 }
 
 ViewFactory_qtquick *Platform_qtquick::viewFactory() const

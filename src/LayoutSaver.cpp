@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -120,7 +120,8 @@ void from_json(const nlohmann::json &json, LayoutSaver::Group &f)
     auto &dockWidgets = *it;
     f.dockWidgets.reserve(( int )dockWidgets.size());
     for (const auto &d : dockWidgets) {
-        LayoutSaver::DockWidget::Ptr dw = LayoutSaver::DockWidget::dockWidgetForName(d.get<QString>());
+        LayoutSaver::DockWidget::Ptr dw =
+            LayoutSaver::DockWidget::dockWidgetForName(d.get<QString>());
         f.dockWidgets.push_back(dw);
     }
 }
@@ -167,7 +168,8 @@ void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
     json["affinities"] = mw.affinities;
     json["windowState"] = mw.windowState;
 
-    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
+                                 SideBarLocation::West, SideBarLocation::South }) {
         const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
         if (!dockWidgets.isEmpty()) {
             std::string key = std::string("sidebar-") + std::to_string(( int )loc);
@@ -189,7 +191,8 @@ void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
     mw.affinities = json.value("affinities", QStringList());
     mw.windowState = ( WindowState )json.value("windowState", 0);
 
-    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
+    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities"
+    // list:
     if (json.find("affinityName") != json.end()) {
         QString affinityName = json["affinityName"].get<QString>();
         if (!mw.affinities.contains(affinityName)) {
@@ -197,7 +200,8 @@ void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
         }
     }
 
-    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
+                                 SideBarLocation::West, SideBarLocation::South }) {
         std::string key = std::string("sidebar-") + std::to_string(( int )loc);
         auto it = json.find(key);
         if (it == json.end())
@@ -237,7 +241,8 @@ void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
     window.windowState = ( WindowState )json.value("windowState", 0);
     window.affinities = json.value("affinities", QStringList());
 
-    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
+    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities"
+    // list:
     const QString affinityName = json.value("affinityName", QString());
     if (!affinityName.isEmpty() && !window.affinities.contains(affinityName)) {
         window.affinities.push_back(affinityName);
@@ -394,7 +399,8 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
-    const QVector<Controllers::FloatingWindow *> floatingWindows = d->m_dockRegistry->floatingWindows();
+    const QVector<Controllers::FloatingWindow *> floatingWindows =
+        d->m_dockRegistry->floatingWindows();
     layout.floatingWindows.reserve(floatingWindows.size());
     for (Controllers::FloatingWindow *floatingWindow : floatingWindows) {
         if (d->matchesAffinity(floatingWindow->affinities()))
@@ -409,8 +415,8 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.closedDockWidgets.push_back(dockWidget->d->serialize());
     }
 
-    // Save the placeholder info. We do it last, as we also restore it last, since we need all items to be created
-    // before restoring the placeholders
+    // Save the placeholder info. We do it last, as we also restore it last, since we need all items
+    // to be created before restoring the placeholders
 
     const Controllers::DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
@@ -478,7 +484,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             if (auto mwFunc = Config::self().mainWindowFactoryFunc()) {
                 mainWindow = mwFunc(mw.uniqueName);
             } else {
-                qWarning() << "Failed to restore layout create MainWindow with name" << mw.uniqueName << "first";
+                qWarning() << "Failed to restore layout create MainWindow with name"
+                           << mw.uniqueName << "first";
                 return false;
             }
         }
@@ -505,8 +512,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(fw.affinities) || fw.skipsRestore())
             continue;
 
-        auto parent = fw.parentIndex == -1 ? nullptr
-                                           : DockRegistry::self()->mainwindows().at(fw.parentIndex);
+        auto parent =
+            fw.parentIndex == -1 ? nullptr : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
         auto floatingWindow = new Controllers::FloatingWindow({}, parent);
         fw.floatingWindowInstance = floatingWindow;
@@ -517,7 +524,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         }
     }
 
-    // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
+    // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder
+    // properties
     for (const auto &dw : qAsConst(layout.closedDockWidgets)) {
         if (d->matchesAffinity(dw->affinities)) {
             Controllers::DockWidget::deserialize(dw);
@@ -529,8 +537,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(dw->affinities))
             continue;
 
-        if (Controllers::DockWidget *dockWidget =
-                d->m_dockRegistry->dockByName(dw->uniqueName, DockRegistry::DockByNameFlag::ConsultRemapping)) {
+        if (Controllers::DockWidget *dockWidget = d->m_dockRegistry->dockByName(
+                dw->uniqueName, DockRegistry::DockByNameFlag::ConsultRemapping)) {
             dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
         } else {
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;
@@ -626,8 +634,8 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainW
 void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout)
 {
     // An old *.json layout file might have not know about existing dock widgets
-    // When restoring such a file, we need to float any visible dock widgets which it doesn't know about
-    // so we can restore the MainWindow layout properly
+    // When restoring such a file, we need to float any visible dock widgets which it doesn't know
+    // about so we can restore the MainWindow layout properly
 
     for (auto mw : DockRegistry::self()->mainWindows(layout.mainWindowNames())) {
         const Controllers::DockWidget::List docks = mw->layout()->dockWidgets();
@@ -652,8 +660,8 @@ void LayoutSaver::Private::deleteEmptyGroups()
 
 std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
 {
-    auto settings = std::unique_ptr<QSettings>(new QSettings(Platform::instance()->organizationName(),
-                                                             Platform::instance()->applicationName()));
+    auto settings = std::unique_ptr<QSettings>(new QSettings(
+        Platform::instance()->organizationName(), Platform::instance()->applicationName()));
     settings->beginGroup(QStringLiteral("KDDockWidgets::LayoutSaver"));
 
     return settings;
@@ -667,8 +675,8 @@ bool LayoutSaver::restoreInProgress()
 bool LayoutSaver::Layout::isValid() const
 {
     if (serializationVersion != KDDOCKWIDGETS_SERIALIZATION_VERSION) {
-        qWarning() << Q_FUNC_INFO << "Serialization format is too old"
-                   << serializationVersion << "current=" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
+        qWarning() << Q_FUNC_INFO << "Serialization format is too old" << serializationVersion
+                   << "current=" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
         return false;
     }
 
@@ -710,7 +718,8 @@ void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
     layout.closedDockWidgets.clear();
     const QVariantList closedDockWidgetsV = j.value("closedDockWidgets", QVariantList {});
     for (const QVariant &v : closedDockWidgetsV) {
-        layout.closedDockWidgets.push_back(LayoutSaver::DockWidget::dockWidgetForName(v.toString()));
+        layout.closedDockWidgets.push_back(
+            LayoutSaver::DockWidget::dockWidgetForName(v.toString()));
     }
 
     layout.floatingWindows = j.value("floatingWindows", LayoutSaver::FloatingWindow::List {});
@@ -817,7 +826,8 @@ QStringList LayoutSaver::Layout::dockWidgetNames() const
 
 QStringList LayoutSaver::Layout::dockWidgetsToClose() const
 {
-    // Before restoring a layout we close all dock widgets, unless they're a floating window with the DontCloseBeforeRestore flag
+    // Before restoring a layout we close all dock widgets, unless they're a floating window with
+    // the DontCloseBeforeRestore flag
 
     QStringList names;
     names.reserve(allDockWidgets.size());
@@ -830,7 +840,8 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
             if (dockWidget->skipsRestore()) {
                 if (auto fw = dockWidget->floatingWindow()) {
                     if (fw->allDockWidgetsHave(LayoutSaverOption::Skip)) {
-                        // All dock widgets in this floating window skips float, so we can honour it for all.
+                        // All dock widgets in this floating window skips float, so we can honour it
+                        // for all.
                         doClose = false;
                     }
                 }
@@ -846,9 +857,10 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
 
 bool LayoutSaver::Layout::containsDockWidget(const QString &uniqueName) const
 {
-    return std::find_if(allDockWidgets.cbegin(), allDockWidgets.cend(), [uniqueName](const std::shared_ptr<LayoutSaver::DockWidget> &dock) {
-               return dock->uniqueName == uniqueName;
-           })
+    return std::find_if(allDockWidgets.cbegin(), allDockWidgets.cend(),
+                        [uniqueName](const std::shared_ptr<LayoutSaver::DockWidget> &dock) {
+                            return dock->uniqueName == uniqueName;
+                        })
         != allDockWidgets.cend();
 }
 
@@ -869,7 +881,8 @@ bool LayoutSaver::Group::isValid() const
 
     if (!dockWidgets.isEmpty()) {
         if (currentTabIndex >= dockWidgets.size() || currentTabIndex < 0) {
-            qWarning() << Q_FUNC_INFO << "Invalid tab index" << currentTabIndex << dockWidgets.size();
+            qWarning() << Q_FUNC_INFO << "Invalid tab index" << currentTabIndex
+                       << dockWidgets.size();
             return false;
         }
     }
@@ -889,9 +902,8 @@ bool LayoutSaver::Group::hasSingleDockWidget() const
 
 bool LayoutSaver::Group::skipsRestore() const
 {
-    return std::all_of(dockWidgets.cbegin(), dockWidgets.cend(), [](LayoutSaver::DockWidget::Ptr dw) {
-        return dw->skipsRestore();
-    });
+    return std::all_of(dockWidgets.cbegin(), dockWidgets.cend(),
+                       [](LayoutSaver::DockWidget::Ptr dw) { return dw->skipsRestore(); });
 }
 
 LayoutSaver::DockWidget::Ptr LayoutSaver::Group::singleDockWidget() const
@@ -1000,9 +1012,8 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() cons
 
 bool LayoutSaver::MultiSplitter::skipsRestore() const
 {
-    return std::all_of(groups.cbegin(), groups.cend(), [](const LayoutSaver::Group &group) {
-        return group.skipsRestore();
-    });
+    return std::all_of(groups.cbegin(), groups.cend(),
+                       [](const LayoutSaver::Group &group) { return group.skipsRestore(); });
 }
 
 void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)
@@ -1037,7 +1048,8 @@ static Screen::Ptr screenForMainWindow(Controllers::MainWindow *mw)
     return mw->view()->screen();
 }
 
-LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo, int screenIndex)
+LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo,
+                                      int screenIndex)
 {
     auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
     if (!mainWindow) {
@@ -1055,11 +1067,13 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
         return;
     }
 
-    const int currentScreenIndex = Platform::instance()->screens().indexOf(screenForMainWindow(mainWindow));
+    const int currentScreenIndex =
+        Platform::instance()->screens().indexOf(screenForMainWindow(mainWindow));
 
     this->mainWindowName = mainWindowId;
     this->savedMainWindowGeometry = savedMainWindowGeo;
-    realMainWindowGeometry = mainWindow->window()->geometry(); // window() as our main window might be embedded
+    realMainWindowGeometry =
+        mainWindow->window()->geometry(); // window() as our main window might be embedded
     widthFactor = double(realMainWindowGeometry.width()) / savedMainWindowGeo.width();
     heightFactor = double(realMainWindowGeometry.height()) / savedMainWindowGeo.height();
     mainWindowChangedScreen = currentScreenIndex != screenIndex;
@@ -1102,8 +1116,8 @@ void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const
     if (!mainWindowChangedScreen) {
         // Don't play with floating window position if the main window changed screen.
         // There's too many corner cases that push the floating windows out of bounds, and
-        // we're not even considering monitors with different HDPI. We can support only the simple case.
-        // For complex cases we'll try to guarantee the window is placed somewhere reasonable.
+        // we're not even considering monitors with different HDPI. We can support only the simple
+        // case. For complex cases we'll try to guarantee the window is placed somewhere reasonable.
         applyFactorsTo(/*by-ref*/ pos);
     }
 

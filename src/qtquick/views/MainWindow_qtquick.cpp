@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -51,8 +51,8 @@ public:
 
 MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOptions options,
                                        QQuickItem *parent, Qt::WindowFlags flags)
-    : View_qtquick(new Controllers::MainWindow(this, uniqueName, options),
-                   Type::MainWindow, parent, flags)
+    : View_qtquick(new Controllers::MainWindow(this, uniqueName, options), Type::MainWindow, parent,
+                   flags)
     , MainWindowViewInterface(static_cast<Controllers::MainWindow *>(View::controller()))
     , d(new Private(this))
 {
@@ -66,22 +66,20 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
     // MainWindowQuick has the same constraints as Layout, so just forward the signal
     connect(layoutView, &View_qtquick::geometryUpdated, this, &MainWindow_qtquick::geometryUpdated);
 
-    connect(layoutView, &View_qtquick::geometryUpdated, this, [this] {
-        d->onLayoutGeometryUpdated();
-    });
+    connect(layoutView, &View_qtquick::geometryUpdated, this,
+            [this] { d->onLayoutGeometryUpdated(); });
 
     {
         // This block silences a benign layouting constraints warning.
         // During initialization, QtQuick will evaluate the width and height bindings separately,
-        // meaning our first Layout::setSize() might have height=0 still, as we're processing the width binding.
+        // meaning our first Layout::setSize() might have height=0 still, as we're processing the
+        // width binding.
 
         auto timer = new QTimer(this);
         timer->setSingleShot(true);
         timer->start();
         Layouting::Item::s_silenceSanityChecks = true;
-        timer->callOnTimeout([] {
-            Layouting::Item::s_silenceSanityChecks = false;
-        });
+        timer->callOnTimeout([] { Layouting::Item::s_silenceSanityChecks = false; });
     }
 }
 

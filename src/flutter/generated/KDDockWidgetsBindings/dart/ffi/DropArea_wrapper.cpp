@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -27,15 +27,23 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-DropArea_wrapper::DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+DropArea_wrapper::DropArea_wrapper(KDDockWidgets::View *parent,
+                                   QFlags<KDDockWidgets::MainWindowOption> options,
+                                   bool isMDIWrapper)
     : ::KDDockWidgets::Controllers::DropArea(parent, options, isMDIWrapper)
 {
 }
-void DropArea_wrapper::addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group *relativeTo, KDDockWidgets::InitialOption option)
+void DropArea_wrapper::addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter,
+                                        KDDockWidgets::Location location,
+                                        KDDockWidgets::Controllers::Group *relativeTo,
+                                        KDDockWidgets::InitialOption option)
 {
-    ::KDDockWidgets::Controllers::DropArea::addMultiSplitter(splitter, location, relativeTo, option);
+    ::KDDockWidgets::Controllers::DropArea::addMultiSplitter(splitter, location, relativeTo,
+                                                             option);
 }
-void DropArea_wrapper::addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group *relativeTo, KDDockWidgets::InitialOption option)
+void DropArea_wrapper::addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location,
+                                 KDDockWidgets::Controllers::Group *relativeTo,
+                                 KDDockWidgets::InitialOption option)
 {
     ::KDDockWidgets::Controllers::DropArea::addWidget(widget, location, relativeTo, option);
 }
@@ -43,7 +51,8 @@ Layouting::Item *DropArea_wrapper::centralFrame() const
 {
     return ::KDDockWidgets::Controllers::DropArea::centralFrame();
 }
-KDDockWidgets::Controllers::Group *DropArea_wrapper::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
+KDDockWidgets::Controllers::Group *
+DropArea_wrapper::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
 {
     return ::KDDockWidgets::Controllers::DropArea::createCentralFrame(options);
 }
@@ -145,28 +154,36 @@ void c_KDDockWidgets__Controllers__DropArea_Finalizer(void *, void *cppObj, void
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper *>(cppObj);
 }
-void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper)
+void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(
+    void *parent_, int options_, bool isMDIWrapper)
 {
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     auto options = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(options_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::DropArea_wrapper(parent, options, isMDIWrapper);
+    auto ptr =
+        new KDDockWidgetsBindings_wrappersNS::DropArea_wrapper(parent, options, isMDIWrapper);
     return reinterpret_cast<void *>(ptr);
 }
-// addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
-void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_)
+// addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location
+// location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
+void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(
+    void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_)
 {
     auto splitter = reinterpret_cast<KDDockWidgets::Controllers::DropArea *>(splitter_);
     auto relativeTo = reinterpret_cast<KDDockWidgets::Controllers::Group *>(relativeTo_);
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
-    fromPtr(thisObj)->addMultiSplitter(splitter, static_cast<KDDockWidgets::Location>(location), relativeTo, option);
+    fromPtr(thisObj)->addMultiSplitter(splitter, static_cast<KDDockWidgets::Location>(location),
+                                       relativeTo, option);
 }
-// addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
-void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeTo_, void *option_)
+// addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location,
+// KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
+void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_InitialOption(
+    void *thisObj, void *widget_, int location, void *relativeTo_, void *option_)
 {
     auto widget = reinterpret_cast<KDDockWidgets::View *>(widget_);
     auto relativeTo = reinterpret_cast<KDDockWidgets::Controllers::Group *>(relativeTo_);
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
-    fromPtr(thisObj)->addWidget(widget, static_cast<KDDockWidgets::Location>(location), relativeTo, option);
+    fromPtr(thisObj)->addWidget(widget, static_cast<KDDockWidgets::Location>(location), relativeTo,
+                                option);
 }
 // centralFrame() const
 void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj)
@@ -174,7 +191,8 @@ void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj)
     return fromPtr(thisObj)->centralFrame();
 }
 // createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
-void *c_static_KDDockWidgets__Controllers__DropArea__createCentralFrame_MainWindowOptions(int options_)
+void *
+c_static_KDDockWidgets__Controllers__DropArea__createCentralFrame_MainWindowOptions(int options_)
 {
     auto options = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(options_);
     return KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::createCentralFrame(options);
@@ -189,19 +207,41 @@ void c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, v
 bool c_KDDockWidgets__Controllers__DropArea__event_QEvent(void *thisObj, void *event_)
 {
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->event_nocallback(event);
+        } else {
+            return targetPtr->event(event);
+        }
+    }();
 }
 // eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
+bool c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent(void *thisObj,
+                                                                        void *watched_,
+                                                                        void *event_)
 {
     auto watched = reinterpret_cast<QObject *>(watched_);
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->eventFilter_nocallback(watched, event);
+        } else {
+            return targetPtr->eventFilter(watched, event);
+        }
+    }();
 }
 // groups() const
 void *c_KDDockWidgets__Controllers__DropArea__groups(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> { fromPtr(thisObj)->groups() };
+    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> {
+        fromPtr(thisObj)->groups()
+    };
 }
 // hasSingleFloatingFrame() const
 bool c_KDDockWidgets__Controllers__DropArea__hasSingleFloatingFrame(void *thisObj)
@@ -235,29 +275,40 @@ void c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View(void *thisO
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Controllers__DropArea__tr_char_char_int(const char *s, const char *c, int n)
+void *c_static_KDDockWidgets__Controllers__DropArea__tr_char_char_int(const char *s, const char *c,
+                                                                      int n)
 {
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::tr(s, c, n) };
+    return new Dartagnan::ValueWrapper<QString> {
+        KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::tr(s, c, n)
+    };
 }
 void c_KDDockWidgets__Controllers__DropArea__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void *ptr,
+                                                                           void *callback,
+                                                                           int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_customEvent>(callback);
+        wrapper->m_customEventCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_customEvent>(callback);
         break;
     case 306:
-        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_event>(callback);
+        wrapper->m_eventCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_event>(
+                callback);
         break;
     case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_eventFilter>(callback);
+        wrapper->m_eventFilterCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_eventFilter>(callback);
         break;
     case 836:
-        wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_setParentView_impl>(callback);
+        wrapper->m_setParentView_implCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_setParentView_impl>(
+            callback);
         break;
     }
 }

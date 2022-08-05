@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -63,7 +63,8 @@ Window::Ptr windowForHandle(WId id)
 #endif
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
-WidgetResizeHandler::WidgetResizeHandler(EventFilterMode filterMode, WindowMode windowMode, View *target)
+WidgetResizeHandler::WidgetResizeHandler(EventFilterMode filterMode, WindowMode windowMode,
+                                         View *target)
     : m_usesGlobalEventFilter(filterMode == EventFilterMode::Global)
     , m_isTopLevelWindowResizer(windowMode == WindowMode::TopLevel)
 {
@@ -111,7 +112,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
     if (s_disableAllHandlers || !widget)
         return false;
 
-    if (!(e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::MouseMove))
+    if (!(e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease
+          || e->type() == QEvent::MouseMove))
         return false;
 
     auto me = mouseEvent(e);
@@ -124,8 +126,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
         if (!widget->isRootView() || !widget->equals(mTarget)) {
             if (m_usesGlobalEventFilter) {
                 // Case #1.1: FloatingWindows on EGLFS
-                // EGLFS doesn't support storing mouse cursor shape per window, so we need to use global filter
-                // do detect mouse leaving the window
+                // EGLFS doesn't support storing mouse cursor shape per window, so we need to use
+                // global filter do detect mouse leaving the window
                 if (!m_resizingInProgress) {
                     const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(me);
                     updateCursor(cursorPosition(globalPos));
@@ -142,11 +144,11 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
         // Each Frame has a WidgetResizeHandler instance.
         // mTarget is the Frame we want to resize.
         // but 'o' might not be mTarget, because we're using a global event filter.
-        // The global event filter is required because we allow the cursor to be outside the group, a few pixels
-        // so we have a nice resize margin.
-        // Here we deal with the case where our mTarget, let's say "Frame 1" is on top of "Frame 2" but cursor
-        // is near "Frame 2"'s margins, and would show resize cursor.
-        // We only want to continue if the cursor is near the margins of our own group (mTarget)
+        // The global event filter is required because we allow the cursor to be outside the group,
+        // a few pixels so we have a nice resize margin. Here we deal with the case where our
+        // mTarget, let's say "Frame 1" is on top of "Frame 2" but cursor is near "Frame 2"'s
+        // margins, and would show resize cursor. We only want to continue if the cursor is near the
+        // margins of our own group (mTarget)
 
         auto f = widget->firstParentOfType(Type::Frame);
         auto group = f ? f->view()->asGroupController() : nullptr;
@@ -156,7 +158,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
         }
 
         if (group && !group->view()->equals(mTarget)) {
-            auto groupParent = group->view()->aboutToBeDestroyed() ? nullptr : group->view()->parentView();
+            auto groupParent =
+                group->view()->aboutToBeDestroyed() ? nullptr : group->view()->parentView();
             auto targetParent = mTarget->aboutToBeDestroyed() ? nullptr : mTarget->parentView();
             const bool areSiblings = groupParent && groupParent->equals(targetParent);
             if (areSiblings)
@@ -192,9 +195,9 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
         m_resizingInProgress = false;
         if (isMDI()) {
             Q_EMIT DockRegistry::self()->groupInMDIResizeChanged();
-            // Usually in KDDW all geometry changes are done in the layout items, which propagate to the widgets
-            // When resizing a MDI however, we're resizing the widget directly. So update the corresponding layout
-            // item when we're finished.
+            // Usually in KDDW all geometry changes are done in the layout items, which propagate to
+            // the widgets When resizing a MDI however, we're resizing the widget directly. So
+            // update the corresponding layout item when we're finished.
             auto group = mTarget->asGroupController();
             group->mdiLayout()->setDockWidgetGeometry(group, group->geometry());
         }
@@ -214,7 +217,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
 
         if (isMDI()) {
             const Controllers::Group *groupBeingResized = DockRegistry::self()->groupInMDIResize();
-            const bool otherGroupBeingResized = groupBeingResized && groupBeingResized->view() != mTarget;
+            const bool otherGroupBeingResized =
+                groupBeingResized && groupBeingResized->view() != mTarget;
             if (otherGroupBeingResized) {
                 // only one at a time!
                 return false;
@@ -346,8 +350,8 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 
 /// Handler to enable Aero-snap
 bool WidgetResizeHandler::handleWindowsNativeEvent(Controllers::FloatingWindow *fw,
-                                                   const QByteArray &eventType,
-                                                   void *message, Qt5Qt6Compat::qintptr *result)
+                                                   const QByteArray &eventType, void *message,
+                                                   Qt5Qt6Compat::qintptr *result)
 {
     if (eventType != "windows_generic_MSG")
         return false;
@@ -401,28 +405,40 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Window::Ptr w, MSG *msg,
         RECT rect;
         GetWindowRect(reinterpret_cast<HWND>(w->handle()), &rect);
 
-        if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
+        if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos <= rect.bottom
+            && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMLEFT;
-        } else if (xPos < rect.right && xPos >= rect.right - borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
+        } else if (xPos < rect.right && xPos >= rect.right - borderWidth && yPos <= rect.bottom
+                   && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMRIGHT;
-        } else if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos >= rect.top && yPos <= rect.top + borderWidth && features.hasResize()) {
+        } else if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos >= rect.top
+                   && yPos <= rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPLEFT;
-        } else if (xPos <= rect.right && xPos >= rect.right - borderWidth && yPos >= rect.top && yPos < rect.top + borderWidth && features.hasResize()) {
+        } else if (xPos <= rect.right && xPos >= rect.right - borderWidth && yPos >= rect.top
+                   && yPos < rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPRIGHT;
-        } else if (!hasFixedWidth && xPos >= rect.left && xPos <= rect.left + borderWidth && features.hasResize()) {
+        } else if (!hasFixedWidth && xPos >= rect.left && xPos <= rect.left + borderWidth
+                   && features.hasResize()) {
             *result = HTLEFT;
-        } else if (!hasFixedHeight && yPos >= rect.top && yPos <= rect.top + borderWidth && features.hasResize()) {
+        } else if (!hasFixedHeight && yPos >= rect.top && yPos <= rect.top + borderWidth
+                   && features.hasResize()) {
             *result = HTTOP;
-        } else if (!hasFixedHeight && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
+        } else if (!hasFixedHeight && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth
+                   && features.hasResize()) {
             *result = HTBOTTOM;
-        } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth && features.hasResize()) {
+        } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth
+                   && features.hasResize()) {
             *result = HTRIGHT;
         } else if (features.hasDrag()) {
             const QPoint globalPosQt = w->fromNativePixels(QPoint(xPos, yPos));
             // htCaptionRect is the rect on which we allow for Windows to do a native drag
             const QRect htCaptionRect = features.htCaptionRect;
-            if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
-                if (!Platform::instance()->inDisallowedDragView(globalPosQt)) { // Just makes sure the mouse isn't over the close button, we don't allow drag in that case.
+            if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom()
+                && globalPosQt.x() >= htCaptionRect.left()
+                && globalPosQt.x() <= htCaptionRect.right()) {
+                if (!Platform::instance()->inDisallowedDragView(
+                        globalPosQt)) { // Just makes sure the mouse isn't over the close button, we
+                                        // don't allow drag in that case.
                     *result = HTCAPTION;
                 }
             }
@@ -431,16 +447,18 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Window::Ptr w, MSG *msg,
         return *result != 0;
     } else if (msg->message == WM_NCLBUTTONDBLCLK && features.hasMaximize()) {
         // By returning false we accept Windows native action, a maximize.
-        // We could also call titleBar->onDoubleClicked(); here which will maximize if Flag_DoubleClickMaximizes is set,
-        // but there's a bug in QWidget::showMaximized() on Windows when we're covering the native title bar, the window is maximized with an offset.
+        // We could also call titleBar->onDoubleClicked(); here which will maximize if
+        // Flag_DoubleClickMaximizes is set, but there's a bug in QWidget::showMaximized() on
+        // Windows when we're covering the native title bar, the window is maximized with an offset.
         // So instead, use a native maximize which works well
         return false;
     } else if (msg->message == WM_GETMINMAXINFO) {
         // Qt doesn't work well with windows that don't have title bar but have native frames.
-        // When maximized they go out of bounds and the title bar is clipped, so catch WM_GETMINMAXINFO
-        // and patch the size
+        // When maximized they go out of bounds and the title bar is clipped, so catch
+        // WM_GETMINMAXINFO and patch the size
 
-        // According to microsoft docs it only works for the primary screen, but extrapolates for the others
+        // According to microsoft docs it only works for the primary screen, but extrapolates for
+        // the others
         auto screen = Platform::instance()->primaryScreen();
         if (!screen || w->screen() != screen) {
             return false;
@@ -454,7 +472,8 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Window::Ptr w, MSG *msg,
         const qreal dpr = screen->devicePixelRatio();
 
         mmi->ptMaxSize.y = int(availableGeometry.height() * dpr);
-        mmi->ptMaxSize.x = int(availableGeometry.width() * dpr) - 1; // -1 otherwise it gets bogus size
+        mmi->ptMaxSize.x =
+            int(availableGeometry.width() * dpr) - 1; // -1 otherwise it gets bogus size
         mmi->ptMaxPosition.x = availableGeometry.x();
         mmi->ptMaxPosition.y = availableGeometry.y();
 
@@ -605,7 +624,8 @@ void WidgetResizeHandler::setupWindow(Window::Ptr window)
             Config::self().internalFlags() & Config::InternalFlag_UseTransparentFloatingWindow;
         if (!usesTransparentFloatingWindow) {
             // This enables the native drop shadow.
-            // Doesn't work well if the floating window has transparent round corners (shows weird white line).
+            // Doesn't work well if the floating window has transparent round corners (shows weird
+            // white line).
 
             MARGINS margins = { 0, 0, 0, 1 }; // arbitrary, just needs to be > 0 it seems
             DwmExtendFrameIntoClientArea(wid, &margins);

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -25,10 +25,9 @@ class MainWindow;
 class SideBar;
 }
 
-/// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindow's ctor
-/// So instead, user instantiates a MainWindowWrapper in QML and calls init.
-class DOCKS_EXPORT MDIDockingAreaInstantiator
-    : public QQuickItem
+/// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through
+/// MainWindow's ctor So instead, user instantiates a MainWindowWrapper in QML and calls init.
+class DOCKS_EXPORT MDIDockingAreaInstantiator : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
@@ -42,8 +41,8 @@ public:
 
     QStringList affinities() const;
 
-    Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget,
-                                   QPoint localPos, InitialOption addingOption = {});
+    Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, QPoint localPos,
+                                   InitialOption addingOption = {});
 
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
 

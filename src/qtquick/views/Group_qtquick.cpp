@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -63,14 +63,15 @@ void Group_qtquick::init()
     connect(m_group->stack(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
-    connect(this, &View_qtquick::geometryUpdated, this, [this] {
-        View::d->layoutInvalidated.emit();
-    });
+    connect(this, &View_qtquick::geometryUpdated, this,
+            [this] { View::d->layoutInvalidated.emit(); });
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
     connect(m_group, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
-    connect(m_group->stack(), &Controllers::Stack::currentDockWidgetChanged, this, &Group_qtquick::currentDockWidgetChanged);
-    connect(m_group, &Controllers::Group::actualTitleBarChanged, this, &Group_qtquick::actualTitleBarChanged);
+    connect(m_group->stack(), &Controllers::Stack::currentDockWidgetChanged, this,
+            &Group_qtquick::currentDockWidgetChanged);
+    connect(m_group, &Controllers::Group::actualTitleBarChanged, this,
+            &Group_qtquick::actualTitleBarChanged);
 
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
         for (auto dw : m_group->dockWidgets()) {
@@ -79,8 +80,7 @@ void Group_qtquick::init()
         }
     });
 
-    QQmlComponent component(plat()->qmlEngine(),
-                            plat()->viewFactory()->groupFilename());
+    QQmlComponent component(plat()->qmlEngine(), plat()->viewFactory()->groupFilename());
 
     m_visualItem = static_cast<QQuickItem *>(component.create());
 
@@ -140,22 +140,25 @@ void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
         dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
 
         auto dockView = asView_qtquick(dw->view());
-        QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::parentViewChanged, this, [dockView, dw, this] {
-            if (dockView->parent() != m_stackLayout)
-                removeWidget_impl(dw);
-        });
+        QMetaObject::Connection conn =
+            connect(dw, &Controllers::DockWidget::parentViewChanged, this, [dockView, dw, this] {
+                if (dockView->parent() != m_stackLayout)
+                    removeWidget_impl(dw);
+            });
 
         m_connections[dw] = conn;
         setCurrentDockWidget_impl(dw);
 
         if (oldFrame && oldFrame->beingDeletedLater()) {
             // give it a push and delete it immediately.
-            // Having too many deleteLater() puts us in an inconsistent state. For example if LayoutSaver::saveState()
-            // would to be called while the Frame hadn't been deleted yet it would count with that group unless hacks.
-            // Also the unit-tests are full of waitForDeleted() due to deleteLater.
+            // Having too many deleteLater() puts us in an inconsistent state. For example if
+            // LayoutSaver::saveState() would to be called while the Frame hadn't been deleted yet
+            // it would count with that group unless hacks. Also the unit-tests are full of
+            // waitForDeleted() due to deleteLater.
 
-            // Ideally we would just remove the deleteLater from Group.cpp, but QTabWidget::insertTab()
-            // would crash, as it accesses the old tab-widget we're stealing from
+            // Ideally we would just remove the deleteLater from Group.cpp, but
+            // QTabWidget::insertTab() would crash, as it accesses the old tab-widget we're stealing
+            // from
 
             delete oldFrame;
         }

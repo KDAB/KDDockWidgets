@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -36,14 +36,16 @@ namespace {
 
 bool rubberBandIsTopLevel()
 {
-    return KDDockWidgets::Config::self().internalFlags() & KDDockWidgets::Config::InternalFlag_TopLevelIndicatorRubberBand;
+    return KDDockWidgets::Config::self().internalFlags()
+        & KDDockWidgets::Config::InternalFlag_TopLevelIndicatorRubberBand;
 }
 
 }
 
 struct Separator::Private
 {
-    // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
+    // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2
+    // otherwise.
 
     Private(View *host)
         : m_hostView(host)
@@ -91,7 +93,8 @@ void Separator::init(Layouting::ItemBoxContainer *parentContainer, Qt::Orientati
     d->parentContainer = parentContainer;
     d->orientation = orientation;
     view()->init();
-    d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : d->m_hostView)
+    d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(
+                                  rubberBandIsTopLevel() ? nullptr : d->m_hostView)
                                                 : nullptr;
     view()->setVisible(true);
 }
@@ -232,16 +235,19 @@ void Separator::onMouseMove(QPoint pos)
         return;
 
     if (!(qGuiApp->mouseButtons() & Qt::LeftButton)) {
-        qCDebug(separators) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        qCDebug(separators) << Q_FUNC_INFO
+                            << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
         onMouseReleased();
         return;
     }
 
 #ifdef Q_OS_WIN
     // Try harder, Qt can be wrong, if mixed with MFC
-    const bool mouseButtonIsReallyDown = (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
+    const bool mouseButtonIsReallyDown =
+        (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
     if (!mouseButtonIsReallyDown) {
-        qCDebug(separators) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        qCDebug(separators) << Q_FUNC_INFO
+                            << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
         onMouseReleased();
         return;
     }
@@ -251,7 +257,8 @@ void Separator::onMouseMove(QPoint pos)
     const int minPos = d->parentContainer->minPosForSeparator_global(this);
     const int maxPos = d->parentContainer->maxPosForSeparator_global(this);
 
-    if ((positionToGoTo > maxPos && position() <= positionToGoTo) || (positionToGoTo < minPos && position() >= positionToGoTo)) {
+    if ((positionToGoTo > maxPos && position() <= positionToGoTo)
+        || (positionToGoTo < minPos && position() >= positionToGoTo)) {
         // if current pos is 100, and max is 80, we do allow going to 90.
         // Would continue to violate, but only by 10, so allow.
 
@@ -262,9 +269,10 @@ void Separator::onMouseMove(QPoint pos)
         return;
     }
 
-    d->lastMoveDirection = positionToGoTo < position() ? Layouting::Side1
-                                                       : (positionToGoTo > position() ? Layouting::Side2
-                                                                                      : Layouting::Side1); // Last case shouldn't happen though.
+    d->lastMoveDirection = positionToGoTo < position()
+        ? Layouting::Side1
+        : (positionToGoTo > position() ? Layouting::Side2
+                                       : Layouting::Side1); // Last case shouldn't happen though.
 
     if (d->lazyResizeRubberBand)
         setLazyPosition(positionToGoTo);

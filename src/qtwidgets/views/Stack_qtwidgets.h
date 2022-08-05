@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -31,8 +31,7 @@ class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public S
 {
     Q_OBJECT
 public:
-    explicit Stack_qtwidgets(Controllers::Stack *controller,
-                             QWidget *parent = nullptr);
+    explicit Stack_qtwidgets(Controllers::Stack *controller, QWidget *parent = nullptr);
 
 
     /// @brief Returns the QTabBar associated with this QTabWidget
@@ -55,7 +54,8 @@ public: // TODOm3: make protected
     void tabInserted(int index) override;
     void tabRemoved(int index) override;
     void setCurrentDockWidget(int index) override;
-    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &, const QString &title) override;
+    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
+                          const QString &title) override;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &) override;
     Controllers::DockWidget *dockwidgetAt(int index) const override;

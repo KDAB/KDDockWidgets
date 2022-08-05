@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -34,19 +34,30 @@ int main(int argc, char **argv)
     parser.setApplicationDescription("Fuzzer Help");
     parser.addPositionalArgument("json", QCoreApplication::translate("main", "json file to load"));
 
-    QCommandLineOption slowDownOption("s", QCoreApplication::translate("main", "Slowdown tests. Adds a 1 second delay between operations"));
+    QCommandLineOption slowDownOption(
+        "s",
+        QCoreApplication::translate("main",
+                                    "Slowdown tests. Adds a 1 second delay between operations"));
     parser.addOption(slowDownOption);
 
-    QCommandLineOption forceDumpJsonOption("f", QCoreApplication::translate("main", "Dump json of the test even if we're already loading a test."));
+    QCommandLineOption forceDumpJsonOption(
+        "f",
+        QCoreApplication::translate("main",
+                                    "Dump json of the test even if we're already loading a test."));
     parser.addOption(forceDumpJsonOption);
 
-    QCommandLineOption loopOption("l", QCoreApplication::translate("main", "Loops until it crashes"));
+    QCommandLineOption loopOption("l",
+                                  QCoreApplication::translate("main", "Loops until it crashes"));
     parser.addOption(loopOption);
 
-    QCommandLineOption skipLastOption("a", QCoreApplication::translate("main", "Skips the last test (presumably failing)"));
+    QCommandLineOption skipLastOption(
+        "a", QCoreApplication::translate("main", "Skips the last test (presumably failing)"));
     parser.addOption(skipLastOption);
 
-    QCommandLineOption noQuitOption("n", QCoreApplication::translate("main", "Don't quit at the end, keep event loop running for debugging"));
+    QCommandLineOption noQuitOption(
+        "n",
+        QCoreApplication::translate(
+            "main", "Don't quit at the end, keep event loop running for debugging"));
     parser.addOption(noQuitOption);
 
     parser.addHelpOption();

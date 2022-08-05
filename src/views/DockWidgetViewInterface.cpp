@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -117,10 +117,9 @@ void DockWidgetViewInterface::addDockWidgetAsTab(DockWidgetViewInterface *other,
     m_dockWidget->addDockWidgetAsTab(dw, initialOption);
 }
 
-void DockWidgetViewInterface::addDockWidgetToContainingWindow(DockWidgetViewInterface *other,
-                                                              KDDockWidgets::Location location,
-                                                              DockWidgetViewInterface *relativeTo,
-                                                              KDDockWidgets::InitialOption initialOption)
+void DockWidgetViewInterface::addDockWidgetToContainingWindow(
+    DockWidgetViewInterface *other, KDDockWidgets::Location location,
+    DockWidgetViewInterface *relativeTo, KDDockWidgets::InitialOption initialOption)
 {
     Controllers::DockWidget *dw = other ? other->dockWidget() : nullptr;
     Controllers::DockWidget *relativeToDw = relativeTo ? relativeTo->dockWidget() : nullptr;

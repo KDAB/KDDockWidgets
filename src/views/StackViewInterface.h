@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -42,8 +42,8 @@ public:
     virtual Controllers::DockWidget *dockwidgetAt(int index) const = 0;
     virtual int indexOfDockWidget(const Controllers::DockWidget *dw) const = 0;
     virtual void removeDockWidget(Controllers::DockWidget *dw) = 0;
-    virtual bool insertDockWidget(int index, Controllers::DockWidget *dw,
-                                  const QIcon &icon, const QString &title) = 0;
+    virtual bool insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+                                  const QString &title) = 0;
     virtual void setCurrentDockWidget(int index) = 0;
     virtual void setDocumentMode(bool) = 0;
 

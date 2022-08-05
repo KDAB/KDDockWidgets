@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -35,6 +35,7 @@ void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1)
 // locationStr(KDDockWidgets::Location loc)
 void *c_static_KDDockWidgets__locationStr_Location(int loc)
 {
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgets::locationStr(static_cast<KDDockWidgets::Location>(loc)) };
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgets::locationStr(
+        static_cast<KDDockWidgets::Location>(loc)) };
 }
 }

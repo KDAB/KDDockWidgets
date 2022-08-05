@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -29,9 +29,9 @@ namespace Views {
 /// Named MainWindow as it's the QtWidgets/QMainWindow counterpart.
 /// Provides the ability of acepting drops of dock widgets.
 /// It's not a real QWindow and not a main window in the sense of QMainWindow. Would be overkill
-/// to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user to do.
-/// From QML just use DockingArea {}, which will create a this class behind the scenes. It's mostly
-/// an implementation detail unless you want to use C++.
+/// to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user
+/// to do. From QML just use DockingArea {}, which will create a this class behind the scenes. It's
+/// mostly an implementation detail unless you want to use C++.
 
 class DOCKS_EXPORT MainWindow_qtquick : public Views::View_qtquick, public MainWindowViewInterface
 {
@@ -47,8 +47,7 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent Visual parent item.
     ///@param flags Window flags to pass to top-level window, in case we're constructing it too
-    explicit MainWindow_qtquick(const QString &uniqueName,
-                                MainWindowOptions options = {},
+    explicit MainWindow_qtquick(const QString &uniqueName, MainWindowOptions options = {},
                                 QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
 
     ~MainWindow_qtquick() override;
@@ -73,8 +72,7 @@ public:
     Q_INVOKABLE void toggleOverlayOnSideBar(const QString &dockId);
     Q_INVOKABLE void layoutParentContainerEqually(const QString &dockId);
     Q_INVOKABLE void addDockWidgetAsTab(const QString &dockId);
-    Q_INVOKABLE void addDockWidget(const QString &dockId,
-                                   KDDockWidgets::Location,
+    Q_INVOKABLE void addDockWidget(const QString &dockId, KDDockWidgets::Location,
                                    const QString &relativeToDockId = {},
                                    KDDockWidgets::InitialOption = {});
 

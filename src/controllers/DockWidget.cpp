@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -56,8 +56,10 @@ DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions option
     if (name.isEmpty())
         qWarning() << Q_FUNC_INFO << "Name can't be null";
 
-    d->m_windowActivatedConnection = Platform::instance()->d->windowActivated.connect(&DockWidget::Private::onWindowActivated, d);
-    d->m_windowDeactivatedConnection = Platform::instance()->d->windowDeactivated.connect(&DockWidget::Private::onWindowDeactivated, d);
+    d->m_windowActivatedConnection = Platform::instance()->d->windowActivated.connect(
+        &DockWidget::Private::onWindowActivated, d);
+    d->m_windowDeactivatedConnection = Platform::instance()->d->windowDeactivated.connect(
+        &DockWidget::Private::onWindowDeactivated, d);
 }
 
 DockWidget::~DockWidget()
@@ -91,7 +93,8 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
         return;
     }
 
-    if ((other->options() & DockWidgetOption_NotDockable) || (options() & DockWidgetOption_NotDockable)) {
+    if ((other->options() & DockWidgetOption_NotDockable)
+        || (options() & DockWidgetOption_NotDockable)) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
         return;
     }
@@ -99,7 +102,8 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
     if (isPersistentCentralDockWidget()) {
         qWarning() << Q_FUNC_INFO << "Not supported with MainWindowOption_HasCentralWidget."
                    << "MainWindowOption_HasCentralWidget can only have 1 widget in the center."
-                   << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports tabbing.";
+                   << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports "
+                      "tabbing.";
         return;
     }
 
@@ -126,8 +130,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
     group->addTab(other, option);
 }
 
-void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
-                                                 Location location,
+void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location location,
                                                  DockWidget *relativeTo,
                                                  InitialOption initialOption)
 {
@@ -143,7 +146,8 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
         return;
     }
 
-    if ((other->options() & DockWidgetOption_NotDockable) || (options() & DockWidgetOption_NotDockable)) {
+    if ((other->options() & DockWidgetOption_NotDockable)
+        || (options() & DockWidgetOption_NotDockable)) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
         return;
     }
@@ -196,9 +200,13 @@ bool DockWidget::setFloating(bool floats)
     if (floats == alreadyFloating)
         return true; // Nothing to do
 
-    if (!floats && (Config::self().internalFlags() & Config::InternalFlag_DontShowWhenUnfloatingHiddenWindow) && !isVisible()) {
+    if (!floats
+        && (Config::self().internalFlags()
+            & Config::InternalFlag_DontShowWhenUnfloatingHiddenWindow)
+        && !isVisible()) {
         // Mimics behaviour of QDockWidget, which you might need during porting.
-        // Not something we suggest though. For KDDW, setFloating(false) means dock, and that implies showing.
+        // Not something we suggest though. For KDDW, setFloating(false) means dock, and that
+        // implies showing.
         return false;
     }
 
@@ -210,8 +218,7 @@ bool DockWidget::setFloating(bool floats)
         if (isTabbed()) {
             auto group = d->group();
             if (!group) {
-                qWarning() << "DockWidget::setFloating: Tabbed but no group exists"
-                           << this;
+                qWarning() << "DockWidget::setFloating: Tabbed but no group exists" << this;
                 Q_ASSERT(false);
                 return false;
             }
@@ -251,7 +258,8 @@ QString DockWidget::uniqueName() const
 QString DockWidget::title() const
 {
     if (d->isMDIWrapper()) {
-        // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real dock widget we're hosting.
+        // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real
+        // dock widget we're hosting.
         auto dropAreaGuest = d->guest ? guestView()->asDropAreaController() : nullptr;
         Q_ASSERT(dropAreaGuest);
         if (dropAreaGuest->hasSingleFrame()) {
@@ -295,7 +303,8 @@ LayoutSaverOptions DockWidget::layoutSaverOptions() const
 void DockWidget::setOptions(DockWidgetOptions options)
 {
     if ((d->options & DockWidgetOption_NotDockable) != (options & DockWidgetOption_NotDockable)) {
-        qWarning() << Q_FUNC_INFO << "Option_NotDockable not allowed to change. Pass via ctor only.";
+        qWarning() << Q_FUNC_INFO
+                   << "Option_NotDockable not allowed to change. Pass via ctor only.";
         return;
     }
 
@@ -402,7 +411,8 @@ QStringList DockWidget::affinities() const
 
 void DockWidget::show()
 {
-    if (view()->isRootView() && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
+    if (view()->isRootView()
+        && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms
         d->morphIntoFloatingWindow();
@@ -464,8 +474,7 @@ void DockWidget::setAffinities(const QStringList &affinityNames)
         return;
 
     if (!d->affinities.isEmpty()) {
-        qWarning() << Q_FUNC_INFO
-                   << "Affinity is already set, refusing to change."
+        qWarning() << Q_FUNC_INFO << "Affinity is already set, refusing to change."
                    << "Submit a feature request with a good justification.";
         return;
     }
@@ -550,7 +559,8 @@ Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
         if (geo.isNull()) {
             geo = q->geometry();
 
-            if (!q->view()->testAttribute(Qt::WA_PendingMoveEvent)) { // If user already moved it, we don't
+            if (!q->view()->testAttribute(Qt::WA_PendingMoveEvent)) { // If user already moved it,
+                                                                      // we don't
                 // interfere
                 const QPoint center = defaultCenterPosForFloating();
                 if (!center.isNull())
@@ -653,7 +663,8 @@ DockWidget::Private::~Private() = default;
 QPoint DockWidget::Private::defaultCenterPosForFloating()
 {
     MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
-    // We don't care about multiple mainwindows yet. Or, let's just say that the first one is more main than the others
+    // We don't care about multiple mainwindows yet. Or, let's just say that the first one is more
+    // main than the others
     MainWindow *mw = mainWindows.isEmpty() ? nullptr : mainWindows.constFirst();
     if (!mw || !q->isFloating())
         return {};
@@ -699,7 +710,8 @@ void DockWidget::Private::toggle(bool enabled)
 
 void DockWidget::Private::updateToggleAction()
 {
-    QScopedValueRollback<bool> recursionGuard(m_updatingToggleAction, true); // Guard against recursiveness
+    QScopedValueRollback<bool> recursionGuard(m_updatingToggleAction,
+                                              true); // Guard against recursiveness
 
     if ((q->isVisible() || group()) && !toggleAction->isChecked()) {
         toggleAction->setChecked(true);
@@ -713,7 +725,8 @@ void DockWidget::Private::updateFloatAction()
     if (m_willUpdateActions)
         return;
 
-    QScopedValueRollback<bool> recursionGuard(m_updatingFloatAction, true); // Guard against recursiveness
+    QScopedValueRollback<bool> recursionGuard(m_updatingFloatAction,
+                                              true); // Guard against recursiveness
 
     if (q->isFloating()) {
         floatAction->setEnabled(m_lastPosition->isValid());
@@ -796,7 +809,8 @@ bool DockWidget::Private::restoreToPreviousPosition()
 
 void DockWidget::Private::maybeRestoreToPreviousPosition()
 {
-    // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous position.
+    // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous
+    // position.
 
     if (!m_lastPosition->isValid())
         return;
@@ -816,7 +830,8 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
         return;
     }
 
-    // Now we deal with the case where the DockWidget was close()ed. In this case it doesn't have a parent.
+    // Now we deal with the case where the DockWidget was close()ed. In this case it doesn't have a
+    // parent.
 
     if (q->view()->parentView()) {
         // The QEvent::Show is due to it being made floating. Nothing to restore.
@@ -889,15 +904,16 @@ void DockWidget::onResize(QSize)
 Controllers::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
 {
     auto dr = DockRegistry::self();
-    DockWidget *dw = dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
+    DockWidget *dw =
+        dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
     if (dw) {
         if (auto guest = dw->guestView())
             guest->setVisible(true);
         dw->setProperty("kddockwidget_was_restored", true);
 
         if (dw->affinities() != saved->affinities) {
-            qWarning() << Q_FUNC_INFO << "Affinity name changed from" << dw->affinities()
-                       << "; to" << saved->affinities;
+            qWarning() << Q_FUNC_INFO << "Affinity name changed from" << dw->affinities() << "; to"
+                       << saved->affinities;
             dw->d->affinities = saved->affinities;
         }
     }

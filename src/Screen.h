@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Waqar Ahmed <waqar.ahmed@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Waqar Ahmed <waqar.ahmed@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -78,8 +78,9 @@ inline bool operator==(Screen::Ptr s1, Screen::Ptr s2)
     return false;
 }
 
-inline bool operator!=(Screen::Ptr s1, Screen::Ptr s2) {
-  return !operator==(s1, s2);
+inline bool operator!=(Screen::Ptr s1, Screen::Ptr s2)
+{
+    return !operator==(s1, s2);
 }
 
 }

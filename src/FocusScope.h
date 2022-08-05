@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -34,8 +34,8 @@ public:
     virtual ~FocusScope();
 
     ///@brief Returns true if this FocusScope is focused.
-    /// This is similar to the QWidget::hasFocus(), except that it counts with the children being focused too.
-    /// i.e: If any child is focused then this FocusScope has focus too.
+    /// This is similar to the QWidget::hasFocus(), except that it counts with the children being
+    /// focused too. i.e: If any child is focused then this FocusScope has focus too.
     bool isFocused() const;
 
     ///@brief Sets focus on this scope.

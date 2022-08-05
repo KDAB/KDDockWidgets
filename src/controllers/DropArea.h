@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -69,8 +69,8 @@ public:
     {
         return m_dropIndicatorOverlay;
     }
-    void addDockWidget(DockWidget *, KDDockWidgets::Location location,
-                       DockWidget *relativeTo, InitialOption = {});
+    void addDockWidget(DockWidget *, KDDockWidgets::Location location, DockWidget *relativeTo,
+                       InitialOption = {});
 
     bool containsDockWidget(DockWidget *) const;
 
@@ -85,8 +85,9 @@ public:
     QStringList affinities() const;
     void layoutParentContainerEqually(DockWidget *);
 
-    /// When DockWidget::Option_MDINestable is used, docked MDI dock widgets will be wrapped inside a DropArea, so they accept drops
-    /// This DropArea is created implicitly while docking, and this function will return true
+    /// When DockWidget::Option_MDINestable is used, docked MDI dock widgets will be wrapped inside
+    /// a DropArea, so they accept drops This DropArea is created implicitly while docking, and this
+    /// function will return true
     bool isMDIWrapper() const;
 
     /// Returns the helper dock widget for implementing DockWidget::Option_MDINestable.
@@ -104,8 +105,8 @@ public:
     /**
      * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
      * after all its Frames are stolen. All added Frames will preserve their original layout, so,
-     * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be at left
-     * of widgetBar when the whole splitter is dropped into this one.
+     * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be
+     * at left of widgetBar when the whole splitter is dropped into this one.
      */
     void addMultiSplitter(Controllers::DropArea *splitter, KDDockWidgets::Location location,
                           Controllers::Group *relativeTo = nullptr,
@@ -114,8 +115,8 @@ public:
     /**
      * Called by the indicators, so they draw the drop rubber band at the correct place.
      * The rect for the rubberband when dropping a widget at the specified location.
-     * Excludes the Separator thickness, result is actually smaller than what needed. In other words,
-     * the result will be exactly the same as the geometry the widget will get.
+     * Excludes the Separator thickness, result is actually smaller than what needed. In other
+     * words, the result will be exactly the same as the geometry the widget will get.
      */
     QRect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
                       const Layouting::Item *relativeTo) const;
@@ -155,8 +156,8 @@ private:
     void setRootItem(Layouting::ItemBoxContainer *);
 
     /**
-     * @brief Like @ref availableLengthForDrop but just returns the total available width or height (depending on @p orientation)
-     * So no need to receive any location.
+     * @brief Like @ref availableLengthForDrop but just returns the total available width or height
+     * (depending on @p orientation) So no need to receive any location.
      * @param orientation If Qt::Vertical then returns the available height. Width otherwise.
      */
     int availableLengthForOrientation(Qt::Orientation orientation) const;
@@ -170,7 +171,8 @@ private:
     template<typename T>
     bool validateAffinity(T *, Controllers::Group *acceptingGroup = nullptr) const;
     bool drop(WindowBeingDragged *draggedWindow, Controllers::Group *acceptingGroup, DropLocation);
-    bool drop(View *droppedwindow, KDDockWidgets::Location location, Controllers::Group *relativeTo);
+    bool drop(View *droppedwindow, KDDockWidgets::Location location,
+              Controllers::Group *relativeTo);
     Controllers::Group *groupContainingPos(QPoint globalPos) const;
     void updateFloatingActions();
 

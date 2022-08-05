@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -420,7 +420,7 @@ void View::installViewEventFilter(EventFilterInterface *filter)
 
 void View::removeViewEventFilter(EventFilterInterface *filter)
 {
-    d->m_viewEventFilters.erase(std::remove(d->m_viewEventFilters.begin(),
-                                            d->m_viewEventFilters.end(), filter),
-                                d->m_viewEventFilters.end());
+    d->m_viewEventFilters.erase(
+        std::remove(d->m_viewEventFilters.begin(), d->m_viewEventFilters.end(), filter),
+        d->m_viewEventFilters.end());
 }

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -64,7 +64,8 @@ public:
 
     /**
      * @brief Docks a DockWidget into the central group, tabbed.
-     * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralFrame option.
+     * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralFrame
+     * option.
      * @param dockwidget The dockwidget to dock.
      *
      * @sa Controllers::DockWidget::addDockWidgetAsTab()
@@ -76,9 +77,9 @@ public:
      * @param dockWidget The dock widget to add into this MainWindow
      * @param location the location where to dock
      * @param relativeTo In case we're docking in relation to another dock widget
-     * @param initialOption Allows to specify an InitialOption. Which is useful to add the dock widget
-     * as hidden, recording only a placeholder in the tab. So it's restored to tabbed when eventually
-     * shown.
+     * @param initialOption Allows to specify an InitialOption. Which is useful to add the dock
+     * widget as hidden, recording only a placeholder in the tab. So it's restored to tabbed when
+     * eventually shown.
      */
     void addDockWidget(KDDockWidgets::Controllers::DockWidget *dockWidget,
                        KDDockWidgets::Location location,
@@ -104,14 +105,16 @@ public:
     MainWindowOptions options() const;
 
     /**
-     * @brief Sets the affinities names. Dock widgets can only dock into main windows of the same affinity.
+     * @brief Sets the affinities names. Dock widgets can only dock into main windows of the same
+     * affinity.
      *
      * By default the affinity is empty and a dock widget can dock into any main window. Usually you
-     * won't ever need to call this function, unless you have requirements where certain dock widgets
-     * can only dock into certain main windows. @sa Controllers::DockWidget::setAffinities().
+     * won't ever need to call this function, unless you have requirements where certain dock
+     * widgets can only dock into certain main windows. @sa
+     * Controllers::DockWidget::setAffinities().
      *
-     * Note: Call this function right after creating your main window, before docking any dock widgets
-     * into a main window and before restoring any layout.
+     * Note: Call this function right after creating your main window, before docking any dock
+     * widgets into a main window and before restoring any layout.
      *
      * Note: Currently you can only call this function once, to keep the code simple and avoid
      * edge cases. This will only be changed if a good use case comes up that requires changing
@@ -140,9 +143,9 @@ public:
     void layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget *dockWidget);
 
     ///@brief Moves the dock widget into one of the MainWindow's sidebar.
-    /// Means the dock widget is removed from the layout, and the sidebar shows a button that if pressed
-    /// will toggle the dock widget's visibility as an overlay over the layout. This is the auto-hide
-    /// functionality.
+    /// Means the dock widget is removed from the layout, and the sidebar shows a button that if
+    /// pressed will toggle the dock widget's visibility as an overlay over the layout. This is the
+    /// auto-hide functionality.
     ///
     /// The chosen side bar will depend on some heuristics, mostly proximity.
     void moveToSideBar(KDDockWidgets::Controllers::DockWidget *);

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -34,9 +34,7 @@ Layout::Layout(Type type, View *view)
     : Controller(type, view)
 {
     Q_ASSERT(view);
-    view->d->layoutInvalidated.connect([this] {
-        updateSizeConstraints();
-    });
+    view->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
 
     view->d->resized.connect(&Layout::onResize, this);
 }
@@ -79,8 +77,8 @@ Controllers::MainWindow *Layout::mainWindow(bool honourNesting) const
         return nullptr;
     } else {
         if (auto pw = view()->parentView()) {
-            // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as
-            // it's parented
+            // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too,
+            // as it's parented
             if (pw->objectName() == QLatin1String("MyCentralWidget"))
                 return pw->parentView()->asMainWindowController();
 
@@ -102,11 +100,11 @@ void Layout::setRootItem(Layouting::ItemContainer *root)
 {
     delete m_rootItem;
     m_rootItem = root;
-    m_rootItem->numVisibleItemsChanged.connect([this](int count) {
-        visibleWidgetCountChanged.emit(count);
-    });
+    m_rootItem->numVisibleItemsChanged.connect(
+        [this](int count) { visibleWidgetCountChanged.emit(count); });
 
-    m_minSizeChangedHandler = m_rootItem->minSizeChanged.connect([this] { view()->setMinimumSize(layoutMinimumSize()); });
+    m_minSizeChangedHandler =
+        m_rootItem->minSizeChanged.connect([this] { view()->setMinimumSize(layoutMinimumSize()); });
 }
 
 QSize Layout::layoutMinimumSize() const
@@ -122,7 +120,8 @@ QSize Layout::layoutMaximumSizeHint() const
 void Layout::setLayoutMinimumSize(QSize sz)
 {
     if (sz != m_rootItem->minSize()) {
-        setLayoutSize(layoutSize().expandedTo(m_rootItem->minSize())); // Increase size in case we need to
+        setLayoutSize(layoutSize().expandedTo(m_rootItem->minSize())); // Increase size in case we
+                                                                       // need to
         m_rootItem->setMinSize(sz);
     }
 }

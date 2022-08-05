@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -49,14 +49,11 @@ void SideBar_qtquick::addDockWidget_Impl(Controllers::DockWidget *dw)
     auto button = createButton(dw, this);
     button->setText(dw->title());
     connect(dw, &Controllers::DockWidget::titleChanged, button, &SideBarButton::setText);
-    connect(dw, &Controllers::DockWidget::isOverlayedChanged, button, [button] {
-        button->update();
-    });
+    connect(dw, &Controllers::DockWidget::isOverlayedChanged, button,
+            [button] { button->update(); });
     connect(dw, &Controllers::DockWidget::removedFromSideBar, button, &QObject::deleteLater);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
-    connect(button, &SideBarButton::clicked, this, [this, dw] {
-        m_sideBar->onButtonClicked(dw);
-    });
+    connect(button, &SideBarButton::clicked, this, [this, dw] { m_sideBar->onButtonClicked(dw); });
 
     const int count = m_layout->count();
     m_layout->insertWidget(count - 1, button);
@@ -72,7 +69,8 @@ bool SideBar_qtquick::isVertical() const
     return m_sideBar->isVertical();
 }
 
-SideBarButton *SideBar_qtquick::createButton(Controllers::DockWidget *dw, SideBar_qtquick *parent) const
+SideBarButton *SideBar_qtquick::createButton(Controllers::DockWidget *dw,
+                                             SideBar_qtquick *parent) const
 {
     return new SideBarButton(dw, parent);
 }
@@ -106,8 +104,8 @@ void SideBarButton::paintEvent(QPaintEvent *)
         QStyleOptionToolButton opt;
         initStyleOption(&opt);
         const bool isHovered = opt.state & QStyle::State_MouseOver;
-        // const bool isOverlayed = m_dockWidget->isOverlayed(); // We could style different if it's open
-        // const bool isHoveredOrOverlayed = isHovered || isOverlayed;
+        // const bool isOverlayed = m_dockWidget->isOverlayed(); // We could style different if it's
+        // open const bool isHoveredOrOverlayed = isHovered || isOverlayed;
 
         QPainter p(&pixmap);
 
@@ -117,7 +115,8 @@ void SideBarButton::paintEvent(QPaintEvent *)
         p.setPen(palette().color(QPalette::Text));
         p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
 
-        QPen pen(isHovered ? palette().color(QPalette::Highlight) : palette().color(QPalette::Highlight).darker());
+        QPen pen(isHovered ? palette().color(QPalette::Highlight)
+                           : palette().color(QPalette::Highlight).darker());
         pen.setWidth(isHovered ? 2 : 1);
         p.setPen(pen);
         p.drawLine(3, r.bottom() - 1, r.width() - 3 * 2, r.bottom() - 1);
@@ -134,6 +133,5 @@ void SideBarButton::paintEvent(QPaintEvent *)
 QSize SideBarButton::sizeHint() const
 {
     const QSize hint = QToolButton::sizeHint();
-    return isVertical() ? (hint.transposed() + QSize(2, 0))
-                        : (hint + QSize(0, 2));
+    return isVertical() ? (hint.transposed() + QSize(2, 0)) : (hint + QSize(0, 2));
 }

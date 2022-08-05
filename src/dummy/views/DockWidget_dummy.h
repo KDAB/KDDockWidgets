@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -32,7 +32,8 @@ namespace Views {
  *
  * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_dummy : public Views::View_dummy, public Views::DockWidgetViewInterface
+class DOCKS_EXPORT DockWidget_dummy : public Views::View_dummy,
+                                      public Views::DockWidgetViewInterface
 {
 public:
     using Views::DockWidgetViewInterface::raise;
@@ -40,7 +41,8 @@ public:
 
     /**
      * @brief constructs a new DockWidget
-     * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
+     * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible
+     * text.
      * @param options optional options controlling behaviour
      * @param layoutSaverOptions options regarding LayoutSaver behaviour
      * @param engine the QML engine this dock widget will be created on. If not specified then
@@ -49,10 +51,8 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget_dummy(const QString &uniqueName,
-                              DockWidgetOptions = {},
-                              LayoutSaverOptions = {},
-                              Qt::WindowFlags = Qt::Tool);
+    explicit DockWidget_dummy(const QString &uniqueName, DockWidgetOptions = {},
+                              LayoutSaverOptions = {}, Qt::WindowFlags = Qt::Tool);
 
     ///@brief destructor
     ~DockWidget_dummy() override;

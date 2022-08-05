@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -121,17 +121,15 @@ View *Platform_qtquick::tests_createNonClosableView(View *parent)
     CreateViewOptions opts;
     opts.isVisible = true;
     auto view = tests_createView(opts, parent);
-    view->d->closeRequested.connect([](QCloseEvent *ev) {
-        ev->ignore();
-    });
+    view->d->closeRequested.connect([](QCloseEvent *ev) { ev->ignore(); });
 
     return view;
 }
 
 Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
                                                             CreateViewOptions viewOpts,
-                                                            MainWindowOptions options,
-                                                            View *parent, Qt::WindowFlags flags) const
+                                                            MainWindowOptions options, View *parent,
+                                                            Qt::WindowFlags flags) const
 {
     QQuickItem *parentItem = Views::asQQuickItem(parent);
 
@@ -149,8 +147,7 @@ Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqu
         Platform::instance()->tests_wait(100); // the root object gets sized delayed
     }
 
-    auto view = new Views::MainWindow_qtquick(uniqueName, options,
-                                              parentItem, flags);
+    auto view = new Views::MainWindow_qtquick(uniqueName, options, parentItem, flags);
 
     return view->mainWindow();
 }

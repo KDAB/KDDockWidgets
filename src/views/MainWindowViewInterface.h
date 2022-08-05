@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -57,8 +57,7 @@ public:
     bool anySideBarIsVisible() const;
 
     void addDockWidgetAsTab(DockWidgetViewInterface *dockwidget);
-    void addDockWidget(DockWidgetViewInterface *dockWidget,
-                       KDDockWidgets::Location location,
+    void addDockWidget(DockWidgetViewInterface *dockWidget, KDDockWidgets::Location location,
                        DockWidgetViewInterface *relativeTo = nullptr,
                        KDDockWidgets::InitialOption initialOption = {});
 
@@ -76,10 +75,8 @@ public:
     void toggleOverlayOnSideBar(const QString &dockId);
     void layoutParentContainerEqually(const QString &dockId);
     void addDockWidgetAsTab(const QString &dockId);
-    void addDockWidget(const QString &dockId,
-                       KDDockWidgets::Location,
-                       const QString &relativeToDockId = {},
-                       KDDockWidgets::InitialOption = {});
+    void addDockWidget(const QString &dockId, KDDockWidgets::Location,
+                       const QString &relativeToDockId = {}, KDDockWidgets::InitialOption = {});
 
 protected:
     void init(const QString &name);

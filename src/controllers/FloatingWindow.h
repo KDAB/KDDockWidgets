@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -38,7 +38,8 @@ class DOCKS_EXPORT FloatingWindow : public Controller, public Draggable
     Q_OBJECT
 public:
     explicit FloatingWindow(QRect suggestedGeometry, MainWindow *parent = nullptr);
-    explicit FloatingWindow(Controllers::Group *group, QRect suggestedGeometry, MainWindow *parent = nullptr);
+    explicit FloatingWindow(Controllers::Group *group, QRect suggestedGeometry,
+                            MainWindow *parent = nullptr);
     virtual ~FloatingWindow() override;
 
     bool deserialize(const LayoutSaver::FloatingWindow &);
@@ -81,7 +82,8 @@ public:
      * @param preserveCenter, if true, then the center is preserved
      *
      */
-    void setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints = SuggestedGeometryHint_None);
+    void setSuggestedGeometry(QRect suggestedRect,
+                              SuggestedGeometryHints = SuggestedGeometryHint_None);
 
     bool anyNonClosable() const;
     bool anyNonDockable() const;
@@ -127,8 +129,8 @@ public:
     Layout *layout() const;
 
     /**
-     * @brief Returns whether @p globalPoint is inside the title bar (or, when there's no title-bar, the draggable empty
-     * area of a tab bar)
+     * @brief Returns whether @p globalPoint is inside the title bar (or, when there's no title-bar,
+     * the draggable empty area of a tab bar)
      */
     bool isInDragArea(QPoint globalPoint) const;
 
@@ -142,8 +144,8 @@ public:
 
     /**
      * Returns the drag rect in global coordinates. This is usually the title bar rect.
-     * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar background.
-     * Returns global coordinates.
+     * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar
+     * background. Returns global coordinates.
      */
     QRect dragRect() const;
 
@@ -160,8 +162,8 @@ public:
     bool anyDockWidgetsHas(LayoutSaverOption) const;
 
     /// @brief Adds the dock widget to the specified location
-    void addDockWidget(DockWidget *, KDDockWidgets::Location location,
-                       DockWidget *relativeTo, InitialOption = {});
+    void addDockWidget(DockWidget *, KDDockWidgets::Location location, DockWidget *relativeTo,
+                       InitialOption = {});
 
     /// @brief Returns the MainWindow which is the transient parent of this FloatingWindow
     /// Can be nullptr if you create dock widgets before the main window. Can also be some
@@ -177,9 +179,10 @@ public:
     WindowState lastWindowManagerState() const;
     void setLastWindowManagerState(WindowState);
 
-    ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
-    /// Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
-    /// be open ended
+    ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default
+    /// ones
+    /// Bugs caused by this won't be supported, as the amount of combinations that could go wrong
+    /// can be open ended
     static Qt::WindowFlags s_windowFlagsOverride;
 
     void maybeCreateResizeHandler();

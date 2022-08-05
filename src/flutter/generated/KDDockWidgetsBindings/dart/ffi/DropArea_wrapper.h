@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -26,11 +26,19 @@ class DropArea_wrapper : public ::KDDockWidgets::Controllers::DropArea
 {
 public:
     ~DropArea_wrapper();
-    DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper = false);
-    void addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
-    void addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
+    DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWidgets::MainWindowOption> options,
+                     bool isMDIWrapper = false);
+    void
+    addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter,
+                     KDDockWidgets::Location location,
+                     KDDockWidgets::Controllers::Group *relativeTo = nullptr,
+                     KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
+    void addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location,
+                   KDDockWidgets::Controllers::Group *relativeTo = nullptr,
+                   KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
     Layouting::Item *centralFrame() const;
-    static KDDockWidgets::Controllers::Group *createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options);
+    static KDDockWidgets::Controllers::Group *
+    createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options);
     virtual void customEvent(QEvent *event);
     virtual void customEvent_nocallback(QEvent *event);
     virtual bool event(QEvent *event);
@@ -57,39 +65,69 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Controllers::DropArea::DropArea(KDDockWidgets::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
-// KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_);
-// KDDockWidgets::Controllers::DropArea::addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeTo_, void *option_);
+// KDDockWidgets::Controllers::DropArea::DropArea(KDDockWidgets::View * parent,
+// QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_,
+                                                                                int options_,
+                                                                                bool isMDIWrapper);
+// KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea *
+// splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo,
+// KDDockWidgets::InitialOption option)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(
+    void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_);
+// KDDockWidgets::Controllers::DropArea::addWidget(KDDockWidgets::View * widget,
+// KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo,
+// KDDockWidgets::InitialOption option)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_InitialOption(
+    void *thisObj, void *widget_, int location, void *relativeTo_, void *option_);
 // KDDockWidgets::Controllers::DropArea::centralFrame() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj);
-// KDDockWidgets::Controllers::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__DropArea__createCentralFrame_MainWindowOptions(int options_);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj);
+// KDDockWidgets::Controllers::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption>
+// options)
+KDDockWidgetsBindings_EXPORT void *
+c_static_KDDockWidgets__Controllers__DropArea__createCentralFrame_MainWindowOptions(int options_);
 // KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, void *event_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::DropArea::event(QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__DropArea__event_QEvent(void *thisObj, void *event_);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__DropArea__event_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::DropArea::eventFilter(QObject * watched, QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
+                                                                   void *event_);
 // KDDockWidgets::Controllers::DropArea::groups() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DropArea__groups(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::hasSingleFloatingFrame() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__DropArea__hasSingleFloatingFrame(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__DropArea__hasSingleFloatingFrame(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::hasSingleFrame() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__DropArea__hasSingleFrame(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__DropArea__hasSingleFrame(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::isMDIWrapper() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__DropArea__isMDIWrapper(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__DropArea__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::layoutEqually()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__layoutEqually(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__layoutEqually(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::removeHover()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__removeHover(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__removeHover(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::setParentView_impl(KDDockWidgets::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Controllers::DropArea::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__DropArea__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void *
+c_static_KDDockWidgets__Controllers__DropArea__tr_char_char_int(const char *s, const char *c,
+                                                                int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void *ptr, void *callback,
+                                                                      int methodId);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea_Finalizer(void *, void *cppObj, void *);
 }

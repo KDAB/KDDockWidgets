@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -68,8 +68,8 @@ public:
     ~Layout();
 
     /// @brief Returns whether this layout is in a MainWindow
-    /// @param honourNesting If true, then we'll count DropAreas/MDIAreas which are nested into DropAreas/MDIAreas as inside the main window.
-    /// otherwise, only direct parenting is considered
+    /// @param honourNesting If true, then we'll count DropAreas/MDIAreas which are nested into
+    /// DropAreas/MDIAreas as inside the main window. otherwise, only direct parenting is considered
     bool isInMainWindow(bool honourNesting = false) const;
 
     Controllers::MainWindow *mainWindow(bool honourNesting = false) const;

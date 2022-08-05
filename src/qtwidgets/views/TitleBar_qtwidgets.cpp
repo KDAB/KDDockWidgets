@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -65,17 +65,21 @@ void Button::paintEvent(QPaintEvent *)
         // Some window managers will just change the font dpi (which affects logical dpi), while
         // others will only change the device pixel ratio. Take care of both cases.
         // macOS is easier, as it never changes logical DPI.
-        // On Windows, with AA_EnableHighDpiScaling, logical DPI is always 96 and physical is manipulated instead.
+        // On Windows, with AA_EnableHighDpiScaling, logical DPI is always 96 and physical is
+        // manipulated instead.
 #if defined(Q_OS_LINUX)
         const qreal dpr = devicePixelRatioF();
         const qreal combinedFactor = logicalFactor * dpr;
 
-        if (scalingFactorIsSupported(combinedFactor)) // Older Qt has rendering bugs with fractional factors
+        if (scalingFactorIsSupported(combinedFactor)) // Older Qt has rendering bugs with fractional
+                                                      // factors
             opt.iconSize = opt.iconSize * combinedFactor;
 #elif defined(Q_OS_WIN) && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        // Probably Windows could use the same code path as Linux, but I'm seeing too thick icons on Windows...
+        // Probably Windows could use the same code path as Linux, but I'm seeing too thick icons on
+        // Windows...
         if (!QGuiApplication::testAttribute(Qt::AA_EnableHighDpiScaling)
-            && scalingFactorIsSupported(logicalFactor)) // Older Qt has rendering bugs with fractional factors
+            && scalingFactorIsSupported(logicalFactor)) // Older Qt has rendering bugs with
+                                                        // fractional factors
             opt.iconSize = opt.iconSize * logicalFactor;
 #else
         Q_UNUSED(logicalFactor);
@@ -87,7 +91,8 @@ void Button::paintEvent(QPaintEvent *)
 
 QSize Button::sizeHint() const
 {
-    // Pass an opt so it scales against the logical dpi of the correct screen (since Qt 5.14) even if the HDPI Qt::AA_ attributes are off.
+    // Pass an opt so it scales against the logical dpi of the correct screen (since Qt 5.14) even
+    // if the HDPI Qt::AA_ attributes are off.
     QStyleOption opt;
     opt.initFrom(this);
 
@@ -129,18 +134,21 @@ void TitleBar_qtwidgets::init()
 
     m_autoHideButton->setVisible(false);
 
-    connect(m_floatButton, &QAbstractButton::clicked, m_titleBar, &Controllers::TitleBar::onFloatClicked);
-    connect(m_closeButton, &QAbstractButton::clicked, m_titleBar, &Controllers::TitleBar::onCloseClicked);
-    connect(m_maximizeButton, &QAbstractButton::clicked, m_titleBar, &Controllers::TitleBar::onMaximizeClicked);
-    connect(m_minimizeButton, &QAbstractButton::clicked, m_titleBar, &Controllers::TitleBar::onMinimizeClicked);
-    connect(m_autoHideButton, &QAbstractButton::clicked, m_titleBar, &Controllers::TitleBar::onAutoHideClicked);
+    connect(m_floatButton, &QAbstractButton::clicked, m_titleBar,
+            &Controllers::TitleBar::onFloatClicked);
+    connect(m_closeButton, &QAbstractButton::clicked, m_titleBar,
+            &Controllers::TitleBar::onCloseClicked);
+    connect(m_maximizeButton, &QAbstractButton::clicked, m_titleBar,
+            &Controllers::TitleBar::onMaximizeClicked);
+    connect(m_minimizeButton, &QAbstractButton::clicked, m_titleBar,
+            &Controllers::TitleBar::onMinimizeClicked);
+    connect(m_autoHideButton, &QAbstractButton::clicked, m_titleBar,
+            &Controllers::TitleBar::onAutoHideClicked);
 
     m_minimizeButton->setToolTip(tr("Minimize"));
     m_closeButton->setToolTip(tr("Close"));
 
-    connect(m_titleBar, &Controllers::TitleBar::titleChanged, this, [this] {
-        update();
-    });
+    connect(m_titleBar, &Controllers::TitleBar::titleChanged, this, [this] { update(); });
 
     connect(m_titleBar, &Controllers::TitleBar::iconChanged, this, [this] {
         if (m_titleBar->icon().isNull()) {
@@ -153,13 +161,19 @@ void TitleBar_qtwidgets::init()
     });
 
     m_closeButton->setEnabled(m_titleBar->closeButtonEnabled());
-    connect(m_titleBar, &Controllers::TitleBar::closeButtonEnabledChanged, m_closeButton, &QAbstractButton::setEnabled);
+    connect(m_titleBar, &Controllers::TitleBar::closeButtonEnabledChanged, m_closeButton,
+            &QAbstractButton::setEnabled);
 
-    connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, m_floatButton, &QWidget::setToolTip);
-    connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, m_floatButton, &QWidget::setVisible);
-    connect(m_titleBar, &Controllers::TitleBar::autoHideButtonChanged, this, &TitleBar_qtwidgets::updateAutoHideButton);
-    connect(m_titleBar, &Controllers::TitleBar::minimizeButtonChanged, this, &TitleBar_qtwidgets::updateMinimizeButton);
-    connect(m_titleBar, &Controllers::TitleBar::maximizeButtonChanged, this, &TitleBar_qtwidgets::updateMaximizeButton);
+    connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, m_floatButton,
+            &QWidget::setToolTip);
+    connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, m_floatButton,
+            &QWidget::setVisible);
+    connect(m_titleBar, &Controllers::TitleBar::autoHideButtonChanged, this,
+            &TitleBar_qtwidgets::updateAutoHideButton);
+    connect(m_titleBar, &Controllers::TitleBar::minimizeButtonChanged, this,
+            &TitleBar_qtwidgets::updateMinimizeButton);
+    connect(m_titleBar, &Controllers::TitleBar::maximizeButtonChanged, this,
+            &TitleBar_qtwidgets::updateMaximizeButton);
 
     m_floatButton->setVisible(m_titleBar->floatButtonVisible());
     m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
@@ -181,8 +195,9 @@ void TitleBar_qtwidgets::paintEvent(QPaintEvent *)
     titleOpt.initFrom(this);
     style()->drawPrimitive(QStyle::PE_Widget, &titleOpt, &p, this);
     titleOpt.title = m_titleBar->title();
-    titleOpt.rect = iconRect().isEmpty() ? rect().adjusted(2, 0, -buttonAreaWidth(), 0)
-                                         : rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
+    titleOpt.rect = iconRect().isEmpty()
+        ? rect().adjusted(2, 0, -buttonAreaWidth(), 0)
+        : rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
 
     if (m_titleBar->isMDI()) {
         const QColor c = palette().color(QPalette::Base);
@@ -215,7 +230,8 @@ void TitleBar_qtwidgets::updateMaximizeButton(bool visible, bool enabled, TitleB
     if (visible) {
         auto factory = Config::self().viewFactory();
         m_maximizeButton->setIcon(factory->iconForButtonType(type, devicePixelRatioF()));
-        m_maximizeButton->setToolTip(type == TitleBarButtonType::Normal ? tr("Restore") : tr("Maximize"));
+        m_maximizeButton->setToolTip(type == TitleBarButtonType::Normal ? tr("Restore")
+                                                                        : tr("Maximize"));
     }
 }
 
@@ -232,7 +248,8 @@ int TitleBar_qtwidgets::buttonAreaWidth() const
 {
     int smallestX = width();
 
-    for (auto button : { m_autoHideButton, m_minimizeButton, m_floatButton, m_maximizeButton, m_closeButton }) {
+    for (auto button :
+         { m_autoHideButton, m_minimizeButton, m_floatButton, m_maximizeButton, m_closeButton }) {
         if (button->isVisible() && button->x() < smallestX)
             smallestX = button->x();
     }
@@ -258,7 +275,8 @@ void TitleBar_qtwidgets::mouseDoubleClickEvent(QMouseEvent *e)
 
 QSize TitleBar_qtwidgets::sizeHint() const
 {
-    // Pass an opt so it scales against the logical dpi of the correct screen (since Qt 5.14) even if the HDPI Qt::AA_ attributes are off.
+    // Pass an opt so it scales against the logical dpi of the correct screen (since Qt 5.14) even
+    // if the HDPI Qt::AA_ attributes are off.
     QStyleOption opt;
     opt.initFrom(this);
 

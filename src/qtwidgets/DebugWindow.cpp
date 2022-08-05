@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -11,7 +11,8 @@
 
 /**
  * @file
- * @brief Window to show debug information. Used for debugging only, for apps that don't support GammaRay.
+ * @brief Window to show debug information. Used for debugging only, for apps that don't support
+ * GammaRay.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
@@ -133,8 +134,9 @@ DebugWindow::DebugWindow(QWidget *parent)
         if (dw) {
             dw->show();
         } else {
-            QMessageBox::warning(nullptr, QStringLiteral("Could not find"),
-                                 QStringLiteral("Could not find DockWidget with name %1").arg(lineedit->text()));
+            QMessageBox::warning(
+                nullptr, QStringLiteral("Could not find"),
+                QStringLiteral("Could not find DockWidget with name %1").arg(lineedit->text()));
         }
     });
 
@@ -166,8 +168,9 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         LayoutSaver saver;
-        QString message = saver.saveToFile(QStringLiteral("layout.json")) ? QStringLiteral("Saved!")
-                                                                          : QStringLiteral("Error!");
+        QString message = saver.saveToFile(QStringLiteral("layout.json"))
+            ? QStringLiteral("Saved!")
+            : QStringLiteral("Error!");
         qDebug() << message;
     });
 
@@ -176,8 +179,9 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         LayoutSaver saver;
-        QString message = saver.restoreFromFile(QStringLiteral("layout.json")) ? QStringLiteral("Restored!")
-                                                                               : QStringLiteral("Error!");
+        QString message = saver.restoreFromFile(QStringLiteral("layout.json"))
+            ? QStringLiteral("Restored!")
+            : QStringLiteral("Error!");
         qDebug() << message;
     });
 
@@ -220,7 +224,9 @@ DebugWindow::DebugWindow(QWidget *parent)
         if (mainWindows.isEmpty())
             return;
         auto mainwindow = mainWindows.at(0);
-        auto centralWidget = qobject_cast<QMainWindow *>(Views::MainWindow_qtwidgets::asQWidget(mainwindow))->centralWidget();
+        auto centralWidget =
+            qobject_cast<QMainWindow *>(Views::MainWindow_qtwidgets::asQWidget(mainwindow))
+                ->centralWidget();
         centralWidget->setParent(nullptr, Qt::Window);
         if (!centralWidget->isVisible()) {
             centralWidget->show();
@@ -280,10 +286,17 @@ void DebugWindow::dumpWindow(QWidget *w)
         GetClientRect(hwnd, &clientRect);
 
         qDebug() << w
-                 << QStringLiteral(" ClientRect=%1,%2 %3x%4").arg(clientRect.left).arg(clientRect.top).arg(clientRect.right - clientRect.left + 1).arg(clientRect.bottom - clientRect.top + 1)
-                 << QStringLiteral(" WindowRect=%1,%2 %3x%4").arg(rect.left).arg(rect.top).arg(rect.right - rect.left + 1).arg(rect.bottom - rect.top + 1)
-                 << "; geo=" << w->geometry()
-                 << "; groupGeo=" << w->frameGeometry();
+                 << QStringLiteral(" ClientRect=%1,%2 %3x%4")
+                        .arg(clientRect.left)
+                        .arg(clientRect.top)
+                        .arg(clientRect.right - clientRect.left + 1)
+                        .arg(clientRect.bottom - clientRect.top + 1)
+                 << QStringLiteral(" WindowRect=%1,%2 %3x%4")
+                        .arg(rect.left)
+                        .arg(rect.top)
+                        .arg(rect.right - rect.left + 1)
+                        .arg(rect.bottom - rect.top + 1)
+                 << "; geo=" << w->geometry() << "; groupGeo=" << w->frameGeometry();
     }
 
     for (QObject *child : w->children()) {
@@ -316,7 +329,8 @@ void DebugWindow::repaintWidgetRecursive(QWidget *w)
 
 void DebugWindow::dumpDockWidgetInfo()
 {
-    const QVector<Controllers::FloatingWindow *> floatingWindows = DockRegistry::self()->floatingWindows();
+    const QVector<Controllers::FloatingWindow *> floatingWindows =
+        DockRegistry::self()->floatingWindows();
     const MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
     const Controllers::DockWidget::List dockWidgets = DockRegistry::self()->dockwidgets();
 
@@ -341,10 +355,9 @@ void DebugWindow::mousePressEvent(QMouseEvent *event)
         QWidget::mousePressEvent(event);
 
     QWidget *w = qApp->widgetAt(Qt5Qt6Compat::eventGlobalPos(event));
-    qDebug() << "Widget at pos" << Qt5Qt6Compat::eventGlobalPos(event) << "is"
-             << w << "; parent="
-             << (w ? w->parentWidget() : nullptr) << "; geometry="
-             << (w ? w->geometry() : QRect());
+    qDebug() << "Widget at pos" << Qt5Qt6Compat::eventGlobalPos(event) << "is" << w
+             << "; parent=" << (w ? w->parentWidget() : nullptr)
+             << "; geometry=" << (w ? w->geometry() : QRect());
 
     if (m_isPickingWidget)
         m_isPickingWidget->quit();

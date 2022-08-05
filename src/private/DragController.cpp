@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -50,7 +50,8 @@ using namespace KDDockWidgets::Controllers;
 
 namespace KDDockWidgets {
 ///@brief Custom mouse grabber, for platforms that don't support grabbing the mouse
-class FallbackMouseGrabber : public QObject, public EventFilterInterface /// clazy:exclude=missing-qobject-macro
+class FallbackMouseGrabber : public QObject,
+                             public EventFilterInterface /// clazy:exclude=missing-qobject-macro
 {
 public:
     FallbackMouseGrabber(QObject *parent)
@@ -190,8 +191,8 @@ void StateNone::onEntry()
 
 bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
 {
-    qCDebug(state) << "StateNone::handleMouseButtonPress: draggable"
-                   << draggable << "; globalPos" << globalPos;
+    qCDebug(state) << "StateNone::handleMouseButtonPress: draggable" << draggable << "; globalPos"
+                   << globalPos;
 
     if (!draggable->isPositionDraggable(pos))
         return false;
@@ -281,7 +282,8 @@ void StateDragging::onEntry()
 #endif
 
     if (Controllers::DockWidget *dw = q->m_draggable->singleDockWidget()) {
-        // When we start to drag a floating window which has a single dock widget, we save the position
+        // When we start to drag a floating window which has a single dock widget, we save the
+        // position
         if (dw->isFloating())
             dw->d->saveLastFloatingGeometry();
     }
@@ -292,7 +294,8 @@ void StateDragging::onEntry()
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN)
         if (!q->m_nonClientDrag && KDDockWidgets::usesNativeDraggingAndResizing()) {
             // Started as a client move, as the dock widget was docked,
-            // but now that we're dragging it as a floating window, switch to native drag, so we can still get aero-snap
+            // but now that we're dragging it as a floating window, switch to native drag, so we can
+            // still get aero-snap
             FloatingWindow *fw = q->m_windowBeingDragged->floatingWindow();
             q->m_nonClientDrag = true;
             q->m_windowBeingDragged.reset();
@@ -301,8 +304,8 @@ void StateDragging::onEntry()
             Window::Ptr window = fw->view()->window();
 
             if (needsUndocking) {
-                // Position the window before the drag start, otherwise if you move mouse too fast there will be an offset
-                // Only required when we've undocked/detached a window.
+                // Position the window before the drag start, otherwise if you move mouse too fast
+                // there will be an offset Only required when we've undocked/detached a window.
                 window->setPosition(QCursor::pos() - q->m_offset);
             }
 
@@ -335,13 +338,15 @@ void StateDragging::onEntry()
             fw->view()->showNormal();
 
             if (!normalGeometry.contains(q->m_pressPos)) {
-                if ((leftEdgeIsNearest && leftOffset > normalGeometry.width()) || (!leftEdgeIsNearest && rightOffset > normalGeometry.width())) {
+                if ((leftEdgeIsNearest && leftOffset > normalGeometry.width())
+                    || (!leftEdgeIsNearest && rightOffset > normalGeometry.width())) {
                     // Case #1: The window isn't under the cursor anymore
                     // Let's just put its middle under the cursor
                     q->m_offset.setX(normalGeometry.width() / 2);
                 } else if (!leftEdgeIsNearest) {
-                    // Case #2: The new geometry is still under the cursor, but instead of moving its right edge left
-                    // we'll move the left edge right, since initially the press position was closer to the right edge
+                    // Case #2: The new geometry is still under the cursor, but instead of moving
+                    // its right edge left we'll move the left edge right, since initially the press
+                    // position was closer to the right edge
                     q->m_offset.setX(normalGeometry.width() - rightOffset);
                 }
             }
@@ -349,9 +354,9 @@ void StateDragging::onEntry()
 #endif
 
             if (!fw->geometry().contains(q->m_pressPos)) {
-            // The window shrunk when the drag started, this can happen if it has max-size constraints
-            // we make the floating window smaller. Has the downside that it might not be under the mouse
-            // cursor anymore, so make the change
+            // The window shrunk when the drag started, this can happen if it has max-size
+            // constraints we make the floating window smaller. Has the downside that it might not
+            // be under the mouse cursor anymore, so make the change
             if (fw->width() < q->m_offset.x()) { // make sure it shrunk
                 q->m_offset.setX(fw->width() / 2);
             }
@@ -414,7 +419,8 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
     }
 
     if (fw->beingDeleted()) {
-        // Ignore, we're in the middle of recurrency. We're inside StateDragging::handleMouseButtonRelease too
+        // Ignore, we're in the middle of recurrency. We're inside
+        // StateDragging::handleMouseButtonRelease too
         return true;
     }
 
@@ -423,9 +429,10 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
         // The window was maximized, we dragged it, which triggers a show normal.
         // But we can only start moving the window *after* the (async) window manager acknowledges.
         // See QTBUG-102430.
-        // Since #286 was only implemented and needed on Linux, then this counter-part is also ifdefed for Linux,
-        // Probably the ifdef could be removed, but don't want to be testing N platforms, who's undocumented behaviour
-        // can change between releases, so narrow the scope and workaround for linux only.
+        // Since #286 was only implemented and needed on Linux, then this counter-part is also
+        // ifdefed for Linux, Probably the ifdef could be removed, but don't want to be testing N
+        // platforms, who's undocumented behaviour can change between releases, so narrow the scope
+        // and workaround for linux only.
         return true;
     }
 #endif
@@ -477,8 +484,7 @@ StateInternalMDIDragging::~StateInternalMDIDragging()
 
 void StateInternalMDIDragging::onEntry()
 {
-    qCDebug(state) << "StateInternalMDIDragging entered. draggable="
-                   << q->m_draggable;
+    qCDebug(state) << "StateInternalMDIDragging entered. draggable=" << q->m_draggable;
 
     // Raise the dock widget being dragged
     if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
@@ -566,7 +572,8 @@ void StateDraggingWayland::onEntry()
     }
 
     QScopedValueRollback<bool> guard(m_inQDrag, true);
-    q->m_windowBeingDragged = std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
+    q->m_windowBeingDragged =
+        std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
 
     auto mimeData = new WaylandMimeData();
     QDrag drag(this);
@@ -607,7 +614,8 @@ bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropAr
         return true;
     }
 
-    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
+    dropArea->hover(q->m_windowBeingDragged.get(),
+                    dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
 
     ev->accept();
     return true;
@@ -627,7 +635,8 @@ bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
-    if (dropArea->drop(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)))) {
+    if (dropArea->drop(q->m_windowBeingDragged.get(),
+                       dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)))) {
         ev->setDropAction(Qt::MoveAction);
         ev->accept();
         Q_EMIT q->dropped();
@@ -645,7 +654,8 @@ bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
-    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
+    dropArea->hover(q->m_windowBeingDragged.get(),
+                    dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
 
     return true;
 }
@@ -657,8 +667,7 @@ DragController::DragController(QObject *parent)
 
     m_stateNone = new StateNone(this);
     auto statepreDrag = new StatePreDrag(this);
-    auto stateDragging = isWayland() ? new StateDraggingWayland(this)
-                                     : new StateDragging(this);
+    auto stateDragging = isWayland() ? new StateDraggingWayland(this) : new StateDragging(this);
     m_stateDraggingMDI = new StateInternalMDIDragging(this);
 
     m_stateNone->addTransition(this, &DragController::mousePressed, statepreDrag);
@@ -741,8 +750,7 @@ void DragController::releaseMouse(View *target)
 
 FloatingWindow *DragController::floatingWindowBeingDragged() const
 {
-    return m_windowBeingDragged ? m_windowBeingDragged->floatingWindow()
-                                : nullptr;
+    return m_windowBeingDragged ? m_windowBeingDragged->floatingWindow() : nullptr;
 }
 
 void DragController::enableFallbackMouseGrabber()
@@ -813,19 +821,23 @@ bool DragController::onMouseEvent(View *w, QMouseEvent *me)
     switch (me->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = w->asFloatingWindowController()) {
-            if (KDDockWidgets::usesNativeTitleBar() || fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
+            if (KDDockWidgets::usesNativeTitleBar()
+                || fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
                 m_nonClientDrag = true;
-                return activeState()->handleMouseButtonPress(draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
+                return activeState()->handleMouseButtonPress(
+                    draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
             }
         }
         return false;
     }
     case QEvent::MouseButtonPress:
-        // For top-level windows that support native dragging all goes through the NonClient* events.
-        // This also forbids dragging a FloatingWindow simply by pressing outside of the title area, in the background
+        // For top-level windows that support native dragging all goes through the NonClient*
+        // events. This also forbids dragging a FloatingWindow simply by pressing outside of the
+        // title area, in the background
         if (!KDDockWidgets::usesNativeDraggingAndResizing() || !w->isRootView()) {
             Q_ASSERT(activeState());
-            return activeState()->handleMouseButtonPress(draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
+            return activeState()->handleMouseButtonPress(
+                draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
         } else
             break;
     case QEvent::MouseButtonRelease:
@@ -868,9 +880,10 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
                 const QWidgetList widgets = qApp->topLevelWidgets();
                 for (QWidget *widget : widgets) {
                     if (!widget->window()) {
-                        // Don't call winId on windows that don't have it, as that will force all its children to have it,
-                        // and that's not very stable. a top level might not have one because it's being destroyed, or because
-                        // it's a top-level just because it has't been reparented I guess.
+                        // Don't call winId on windows that don't have it, as that will force all
+                        // its children to have it, and that's not very stable. a top level might
+                        // not have one because it's being destroyed, or because it's a top-level
+                        // just because it has't been reparented I guess.
                         continue;
                     }
                     if (hwnd == ( HWND )widget->winId()) {
@@ -888,7 +901,8 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 
 #endif
 
-static std::shared_ptr<View> qtTopLevelUnderCursor_impl(QPoint globalPos, const Window::List &windows,
+static std::shared_ptr<View> qtTopLevelUnderCursor_impl(QPoint globalPos,
+                                                        const Window::List &windows,
                                                         View *rootViewBeingDragged)
 {
     for (auto i = windows.size() - 1; i >= 0; --i) {
@@ -920,8 +934,9 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
         if (!GetCursorPos(&globalNativePos))
             return nullptr;
 
-        // There might be windows that don't belong to our app in between, so use win32 to travel by z-order.
-        // Another solution is to set a parent on all top-levels. But this code is orthogonal.
+        // There might be windows that don't belong to our app in between, so use win32 to travel by
+        // z-order. Another solution is to set a parent on all top-levels. But this code is
+        // orthogonal.
         HWND hwnd = HWND(m_windowBeingDragged->floatingWindow()->view()->window()->handle());
         while (hwnd) {
             hwnd = GetWindow(hwnd, GW_HWNDNEXT);
@@ -935,7 +950,8 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
             if (auto tl = qtTopLevelForHWND(hwnd)) {
                 const QRect windowGeometry = tl->windowGeometry();
 
-                if (windowGeometry.contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                if (windowGeometry.contains(globalPos)
+                    && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
                     qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl.get();
                     return tl;
                 }
@@ -945,10 +961,14 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                     // Maybe it's embedded in a QWinWidget:
                     auto topLevels = qApp->topLevelWidgets();
                     for (auto topLevel : topLevels) {
-                        if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
+                        if (QLatin1String(topLevel->metaObject()->className())
+                            == QLatin1String("QWinWidget")) {
                             if (hwnd == GetParent(HWND(topLevel->window()->winId()))) {
-                                if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
+                                if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos))
+                                    && topLevel->objectName()
+                                        != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                                    qCDebug(toplevels)
+                                        << Q_FUNC_INFO << "Found top-level" << topLevel;
                                     return Platform_qt::instance()->qobjectAsView(topLevel);
                                 }
                             }
@@ -956,7 +976,8 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                     }
                 }
 #endif // QtWidgets A window belonging to another app is below the cursor
-                qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
+                qCDebug(toplevels)
+                    << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
                 return nullptr;
             }
         }
@@ -965,26 +986,29 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
         bool ok = false;
         const Window::List orderedWindows = KDDockWidgets::orderedWindows(ok);
         FloatingWindow *tlwBeingDragged = m_windowBeingDragged->floatingWindow();
-        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, orderedWindows, tlwBeingDragged->view()))
+        if (auto tl =
+                qtTopLevelUnderCursor_impl(globalPos, orderedWindows, tlwBeingDragged->view()))
             return tl;
 
         if (!ok) {
-            qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found. Some windows weren't seen by XLib";
+            qCDebug(toplevels) << Q_FUNC_INFO
+                               << "No top-level found. Some windows weren't seen by XLib";
         }
     } else {
         // !Windows: Linux, macOS, offscreen (offscreen on Windows too), etc.
 
-        // On Linux we don't have API to check the z-order of top-levels. So first check the floating windows
-        // and check the MainWindow last, as the MainWindow will have lower z-order as it's a parent (TODO: How will it work with multiple MainWindows ?)
-        // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
+        // On Linux we don't have API to check the z-order of top-levels. So first check the
+        // floating windows and check the MainWindow last, as the MainWindow will have lower z-order
+        // as it's a parent (TODO: How will it work with multiple MainWindows ?) The floating window
+        // list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
 
         View *tlwBeingDragged = m_windowBeingDragged->floatingWindow()->view();
-        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->floatingQWindows(), tlwBeingDragged))
+        if (auto tl = qtTopLevelUnderCursor_impl(
+                globalPos, DockRegistry::self()->floatingQWindows(), tlwBeingDragged))
             return tl;
 
-        return qtTopLevelUnderCursor_impl(globalPos,
-                                          DockRegistry::self()->topLevels(/*excludeFloating=*/true),
-                                          tlwBeingDragged);
+        return qtTopLevelUnderCursor_impl(
+            globalPos, DockRegistry::self()->topLevels(/*excludeFloating=*/true), tlwBeingDragged);
     }
 
     qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found";
@@ -1026,7 +1050,8 @@ DropArea *DragController::dropAreaUnderCursor() const
     }
 
     if (topLevel->objectName() == QStringLiteral("_docks_IndicatorWindow")) {
-        qWarning() << "Indicator window should be hidden " << topLevel.get() << topLevel->isVisible();
+        qWarning() << "Indicator window should be hidden " << topLevel.get()
+                   << topLevel->isVisible();
         Q_ASSERT(false);
     }
 

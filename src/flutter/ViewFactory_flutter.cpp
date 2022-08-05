@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -50,9 +50,7 @@ ViewFactory_flutter::~ViewFactory_flutter()
 {
 }
 
-View *ViewFactory_flutter::createDockWidget(const QString &,
-                                            DockWidgetOptions,
-                                            LayoutSaverOptions,
+View *ViewFactory_flutter::createDockWidget(const QString &, DockWidgetOptions, LayoutSaverOptions,
                                             Qt::WindowFlags) const
 {
     return {};
@@ -96,8 +94,7 @@ View *ViewFactory_flutter::createRubberBand(View *) const
     return nullptr;
 }
 
-View *ViewFactory_flutter::createSideBar(Controllers::SideBar *,
-                                         View *) const
+View *ViewFactory_flutter::createSideBar(Controllers::SideBar *, View *) const
 {
     return {};
 }
@@ -123,12 +120,15 @@ View *ViewFactory_flutter::createMDILayout(Controllers::MDILayout *, View *) con
     return {};
 }
 
-View *ViewFactory_flutter::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *, View *) const
+View *
+ViewFactory_flutter::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *,
+                                                             View *) const
 {
     return {};
 }
 
-Views::ClassicIndicatorWindowViewInterface *ViewFactory_flutter::createClassicIndicatorWindow(Controllers::ClassicIndicators *) const
+Views::ClassicIndicatorWindowViewInterface *
+ViewFactory_flutter::createClassicIndicatorWindow(Controllers::ClassicIndicators *) const
 {
     return {};
 }

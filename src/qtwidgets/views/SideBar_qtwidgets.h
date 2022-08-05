@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -63,7 +63,8 @@ protected:
     void removeDockWidget_Impl(Controllers::DockWidget *dock) override;
 
     // virtual so users can provide their own buttons
-    virtual SideBarButton *createButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent) const;
+    virtual SideBarButton *createButton(Controllers::DockWidget *dw,
+                                        SideBar_qtwidgets *parent) const;
 
 private:
     void init() override;

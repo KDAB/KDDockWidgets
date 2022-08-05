@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -36,13 +36,15 @@ public:
     }
 
     int styleHint(QStyle::StyleHint hint, const QStyleOption *option = nullptr,
-                  const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override
+                  const QWidget *widget = nullptr,
+                  QStyleHintReturn *returnData = nullptr) const override
     {
         if (hint == QStyle::SH_Widget_Animation_Duration) {
-            // QTabBar has a bug which causes the paint event to dereference a tab which was already removed.
-            // Because, after the tab being removed, the d->pressedIndex is only reset after the animation ends.
-            // So disable the animation. Crash can be repro by enabling movable tabs, and detaching a tab quickly from
-            // a floating window containing two dock widgets. Reproduced on Windows
+            // QTabBar has a bug which causes the paint event to dereference a tab which was already
+            // removed. Because, after the tab being removed, the d->pressedIndex is only reset
+            // after the animation ends. So disable the animation. Crash can be repro by enabling
+            // movable tabs, and detaching a tab quickly from a floating window containing two dock
+            // widgets. Reproduced on Windows
             return 0;
         }
         return baseStyle()->styleHint(hint, option, widget, returnData);
@@ -67,8 +69,7 @@ int TabBar_qtwidgets::tabAt(QPoint localPos) const
 Controllers::DockWidget *TabBar_qtwidgets::currentDockWidget() const
 {
     const int index = currentIndex();
-    return index == -1 ? nullptr
-                       : m_controller->dockWidgetAt(index);
+    return index == -1 ? nullptr : m_controller->dockWidgetAt(index);
 }
 
 void TabBar_qtwidgets::mousePressEvent(QMouseEvent *e)

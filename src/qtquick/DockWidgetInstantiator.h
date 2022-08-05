@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -37,7 +37,8 @@ class DockWidgetInstantiator : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
-    Q_PROPERTY(KDDockWidgets::Views::DockWidget_qtquick *dockWidget READ dockWidget NOTIFY dockWidgetChanged)
+    Q_PROPERTY(KDDockWidgets::Views::DockWidget_qtquick *dockWidget READ dockWidget NOTIFY
+                   dockWidgetChanged)
     Q_PROPERTY(QObject *actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -425,7 +425,8 @@ int c_QList_T_QObject_T___length(void *thisObj)
 // mid(int pos, int length) const
 void *c_QList_T_QObject_T___mid_int_int(void *thisObj, int pos, int length)
 {
-    return new Dartagnan::ValueWrapper<QList<QObject *>> { fromPtr<QObject *>(thisObj)->mid(pos, length) };
+    return new Dartagnan::ValueWrapper<QList<QObject *>> { fromPtr<QObject *>(thisObj)->mid(
+        pos, length) };
 }
 // move(int from, int to)
 void c_QList_T_QObject_T___move_int_int(void *thisObj, int from, int to)
@@ -692,7 +693,8 @@ int c_QList_T_QByteArray_T___length(void *thisObj)
 // mid(int pos, int length) const
 void *c_QList_T_QByteArray_T___mid_int_int(void *thisObj, int pos, int length)
 {
-    return new Dartagnan::ValueWrapper<QList<QByteArray>> { fromPtr<QByteArray>(thisObj)->mid(pos, length) };
+    return new Dartagnan::ValueWrapper<QList<QByteArray>> { fromPtr<QByteArray>(thisObj)->mid(
+        pos, length) };
 }
 // move(int from, int to)
 void c_QList_T_QByteArray_T___move_int_int(void *thisObj, int from, int to)
@@ -810,7 +812,8 @@ void *c_QList_T_QByteArray_T___value_int(void *thisObj, int i)
 void *c_QList_T_QByteArray_T___value_int_QByteArray(void *thisObj, int i, void *defaultValue_)
 {
     auto &defaultValue = *reinterpret_cast<QByteArray *>(defaultValue_);
-    return new Dartagnan::ValueWrapper<QByteArray> { fromPtr<QByteArray>(thisObj)->value(i, defaultValue) };
+    return new Dartagnan::ValueWrapper<QByteArray> { fromPtr<QByteArray>(thisObj)->value(
+        i, defaultValue) };
 }
 void c_QList_T_QByteArray_T___destructor(void *thisObj)
 {
@@ -820,11 +823,14 @@ void c_QList_T_QByteArray_T___destructor(void *thisObj)
 extern "C" {
 void c_QList_T_Group_T__Finalizer(void *, void *cppObj, void *)
 {
-    delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QList_wrapper<KDDockWidgets::Controllers::Group *> *>(cppObj);
+    delete reinterpret_cast<
+        KDDockWidgetsBindings_wrappersNS::QList_wrapper<KDDockWidgets::Controllers::Group *> *>(
+        cppObj);
 }
 void *c_QList_T_Group_T___constructor()
 {
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::QList_wrapper<KDDockWidgets::Controllers::Group *>();
+    auto ptr =
+        new KDDockWidgetsBindings_wrappersNS::QList_wrapper<KDDockWidgets::Controllers::Group *>();
     return reinterpret_cast<void *>(ptr);
 }
 // append(const QList<T > & t)
@@ -959,7 +965,9 @@ int c_QList_T_Group_T___length(void *thisObj)
 // mid(int pos, int length) const
 void *c_QList_T_Group_T___mid_int_int(void *thisObj, int pos, int length)
 {
-    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> { fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->mid(pos, length) };
+    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> {
+        fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->mid(pos, length)
+    };
 }
 // move(int from, int to)
 void c_QList_T_Group_T___move_int_int(void *thisObj, int from, int to)

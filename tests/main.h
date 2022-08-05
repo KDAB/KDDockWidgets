@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -36,7 +36,12 @@ std::ostream &operator<<(std::ostream &os, QPoint pt)
 
 std::ostream &operator<<(std::ostream &os, QRect r)
 {
-    os << QStringLiteral("QRect(%1,%2 %3x%4)").arg(r.x()).arg(r.y()).arg(r.width()).arg(r.height()).toStdString();
+    os << QStringLiteral("QRect(%1,%2 %3x%4)")
+              .arg(r.x())
+              .arg(r.y())
+              .arg(r.width())
+              .arg(r.height())
+              .toStdString();
     return os;
 }
 

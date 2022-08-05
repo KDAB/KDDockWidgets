@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -74,7 +74,8 @@ inline bool usesClientTitleBar()
         return true;
     }
 
-    // All other platforms have either the OS native title bar or a Qt title bar (aka client title bar).
+    // All other platforms have either the OS native title bar or a Qt title bar (aka client title
+    // bar).
     return !usesNativeTitleBar();
 }
 
@@ -104,7 +105,8 @@ inline bool usesUtilityWindows()
 {
     const auto flags = Config::self().internalFlags();
 
-    const bool dontUse = (flags & Config::InternalFlag_DontUseParentForFloatingWindows) && (flags & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows);
+    const bool dontUse = (flags & Config::InternalFlag_DontUseParentForFloatingWindows)
+        && (flags & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows);
 
     return !dontUse;
 }
@@ -116,7 +118,8 @@ inline bool isNormalWindowState(WindowStates states)
 
 inline bool windowManagerHasTranslucency()
 {
-    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY") || (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))
+    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY")
+        || (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))
         return false;
 
 #ifdef QT_X11EXTRAS_LIB
@@ -178,7 +181,8 @@ inline bool isDnDEvent(const QEvent *e)
 
 /// @brief Returns whether we support the specified scalling factor
 /// This is a workaround against a bug in older Qt (QTBUG-86170).
-/// Mostly affects Linux. Unless you're using Qt::HighDpiScaleFactorRoundingPolicy::PassThrough, in which case it will affect other OSes too.
+/// Mostly affects Linux. Unless you're using Qt::HighDpiScaleFactorRoundingPolicy::PassThrough, in
+/// which case it will affect other OSes too.
 inline bool scalingFactorIsSupported(qreal factor)
 {
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 2)

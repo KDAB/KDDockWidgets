@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -35,15 +35,15 @@ TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *pare
 
 void TabBar_qtquick::init()
 {
-    m_tabBarAutoHideChanged = m_tabBar->stack()->tabBarAutoHideChanged.connect([this] {
-        Q_EMIT tabBarAutoHideChanged();
-    });
+    m_tabBarAutoHideChanged = m_tabBar->stack()->tabBarAutoHideChanged.connect(
+        [this] { Q_EMIT tabBarAutoHideChanged(); });
 }
 
 int TabBar_qtquick::tabAt(QPoint localPt) const
 {
     // QtQuick's TabBar doesn't provide any API for this.
-    // Also note that the ListView's flickable has bogus contentX, so instead just iterate through the tabs
+    // Also note that the ListView's flickable has bogus contentX, so instead just iterate through
+    // the tabs
 
     if (!m_tabBarQmlItem) {
         qWarning() << Q_FUNC_INFO << "No visual tab bar item yet";
@@ -53,9 +53,9 @@ int TabBar_qtquick::tabAt(QPoint localPt) const
     const QPointF globalPos = m_tabBarQmlItem->mapToGlobal(localPt);
 
     QVariant index;
-    const bool res = QMetaObject::invokeMethod(m_tabBarQmlItem, "getTabIndexAtPosition",
-                                               Q_RETURN_ARG(QVariant, index),
-                                               Q_ARG(QVariant, globalPos));
+    const bool res =
+        QMetaObject::invokeMethod(m_tabBarQmlItem, "getTabIndexAtPosition",
+                                  Q_RETURN_ARG(QVariant, index), Q_ARG(QVariant, globalPos));
 
     if (res)
         return index.toInt();
@@ -115,9 +115,8 @@ bool TabBar_qtquick::event(QEvent *ev)
 QQuickItem *TabBar_qtquick::tabAt(int index) const
 {
     QVariant result;
-    const bool res = QMetaObject::invokeMethod(m_tabBarQmlItem, "getTabAtIndex",
-                                               Q_RETURN_ARG(QVariant, result),
-                                               Q_ARG(QVariant, index));
+    const bool res = QMetaObject::invokeMethod(
+        m_tabBarQmlItem, "getTabAtIndex", Q_RETURN_ARG(QVariant, result), Q_ARG(QVariant, index));
 
     if (res)
         return result.value<QQuickItem *>();

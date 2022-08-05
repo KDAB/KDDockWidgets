@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Waqar Ahmed <waqar.ahmed@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Waqar Ahmed <waqar.ahmed@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -73,8 +73,9 @@ void ViewGuard::setView(View *view)
         return;
 
     if (view && view->inDtor()) {
-        // We don't care about views that are already being in DTOR. They count as already deleted for what's ViewGuard concerned.
-        // This is rare anyway, would need to require some reentrancy.
+        // We don't care about views that are already being in DTOR. They count as already deleted
+        // for what's ViewGuard concerned. This is rare anyway, would need to require some
+        // reentrancy.
         view = nullptr;
     }
 
@@ -82,8 +83,6 @@ void ViewGuard::setView(View *view)
     v = view;
 
     if (v) {
-        m_onDestroy = v->d->beingDestroyed.connect([this] {
-            v = nullptr;
-        });
+        m_onDestroy = v->d->beingDestroyed.connect([this] { v = nullptr; });
     }
 }

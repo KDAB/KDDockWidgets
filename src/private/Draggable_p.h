@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -85,13 +85,15 @@ public:
      */
     virtual Controllers::DockWidget *singleDockWidget() const = 0;
 
-    ///@brief Returns whether this draggable is a MDI window, being dragged internally within a main window
+    ///@brief Returns whether this draggable is a MDI window, being dragged internally within a main
+    /// window
     virtual bool isMDI() const = 0;
 
     /**
      * @brief Returns whether this draggable is already a window.
      *
-     * If true, means the drag will simply move the existing window, and no undocking/untabbing is involved.
+     * If true, means the drag will simply move the existing window, and no undocking/untabbing is
+     * involved.
      */
     virtual bool isWindow() const = 0;
 

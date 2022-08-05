@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -23,8 +23,7 @@ namespace KDDockWidgets {
 
 static QString iconName(DropLocation loc, bool active)
 {
-    QString suffix = active ? QStringLiteral("_active")
-                            : QString();
+    QString suffix = active ? QStringLiteral("_active") : QString();
 
     QString name;
     switch (loc) {
@@ -75,17 +74,19 @@ IndicatorWindow_qtquick::IndicatorWindow_qtquick(Controllers::ClassicIndicators 
     setFlags(flags() | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::Tool);
     setColor(Qt::transparent);
 
-    rootContext()->setContextProperty(QStringLiteral("_window"), QVariant::fromValue<QObject *>(this));
-    setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
+    rootContext()->setContextProperty(QStringLiteral("_window"),
+                                      QVariant::fromValue<QObject *>(this));
+    setSource(
+        QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
 
-    connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged,
-            this, &IndicatorWindow_qtquick::indicatorsVisibleChanged);
+    connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged, this,
+            &IndicatorWindow_qtquick::indicatorsVisibleChanged);
 
-    connect(classicIndicators, &ClassicIndicators::hoveredFrameRectChanged,
-            this, &IndicatorWindow_qtquick::hoveredFrameRectChanged);
+    connect(classicIndicators, &ClassicIndicators::hoveredFrameRectChanged, this,
+            &IndicatorWindow_qtquick::hoveredFrameRectChanged);
 
-    connect(classicIndicators, &ClassicIndicators::currentDropLocationChanged,
-            this, &IndicatorWindow_qtquick::currentDropLocationChanged);
+    connect(classicIndicators, &ClassicIndicators::currentDropLocationChanged, this,
+            &IndicatorWindow_qtquick::currentDropLocationChanged);
 
     // Two workarounds for two unrelated bugs:
     if (KDDockWidgets::isOffscreen()) {
@@ -110,8 +111,7 @@ IndicatorWindow_qtquick::IndicatorWindow_qtquick(Controllers::ClassicIndicators 
 DropLocation IndicatorWindow_qtquick::hover(QPoint pt)
 {
     QQuickItem *item = indicatorForPos(pt);
-    const DropLocation loc = item ? locationForIndicator(item)
-                                  : DropLocation_None;
+    const DropLocation loc = item ? locationForIndicator(item) : DropLocation_None;
     classicIndicators()->setDropLocation(loc);
     return loc;
 }
@@ -182,12 +182,14 @@ QVector<QQuickItem *> IndicatorWindow_qtquick::indicatorItems() const
     QQuickItem *root = rootObject();
     const QList<QQuickItem *> items = root->childItems();
     for (QQuickItem *item : items) {
-        if (QString::fromLatin1(item->metaObject()->className()).startsWith(QLatin1String("ClassicIndicator_QMLTYPE"))) {
+        if (QString::fromLatin1(item->metaObject()->className())
+                .startsWith(QLatin1String("ClassicIndicator_QMLTYPE"))) {
             indicators.push_back(item);
         } else if (item->objectName() == QLatin1String("innerIndicators")) {
             const QList<QQuickItem *> innerIndicators = item->childItems();
             for (QQuickItem *innerItem : innerIndicators) {
-                if (QString::fromLatin1(innerItem->metaObject()->className()).startsWith(QLatin1String("ClassicIndicator_QMLTYPE"))) {
+                if (QString::fromLatin1(innerItem->metaObject()->className())
+                        .startsWith(QLatin1String("ClassicIndicator_QMLTYPE"))) {
                     indicators.push_back(innerItem);
                 }
             }

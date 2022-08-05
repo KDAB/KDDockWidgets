@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -287,7 +287,8 @@ bool c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabled(void *thisObj)
     return fromPtr(thisObj)->closeButtonEnabled();
 }
 // closeButtonEnabledChanged(bool arg__1)
-void c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabledChanged_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabledChanged_bool(void *thisObj,
+                                                                            bool arg__1)
 {
     fromPtr(thisObj)->closeButtonEnabledChanged(arg__1);
 }
@@ -301,14 +302,34 @@ void c_KDDockWidgets__Controllers__TitleBar__customEvent_QEvent(void *thisObj, v
 bool c_KDDockWidgets__Controllers__TitleBar__event_QEvent(void *thisObj, void *event_)
 {
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->event_nocallback(event);
+        } else {
+            return targetPtr->event(event);
+        }
+    }();
 }
 // eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controllers__TitleBar__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
+bool c_KDDockWidgets__Controllers__TitleBar__eventFilter_QObject_QEvent(void *thisObj,
+                                                                        void *watched_,
+                                                                        void *event_)
 {
     auto watched = reinterpret_cast<QObject *>(watched_);
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->eventFilter_nocallback(watched, event);
+        } else {
+            return targetPtr->eventFilter(watched, event);
+        }
+    }();
 }
 // floatButtonToolTip() const
 void *c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTip(void *thisObj)
@@ -316,7 +337,8 @@ void *c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTip(void *thisObj)
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->floatButtonToolTip() };
 }
 // floatButtonToolTipChanged(const QString & arg__1)
-void c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTipChanged_QString(void *thisObj, const char *arg__1_)
+void c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTipChanged_QString(void *thisObj,
+                                                                               const char *arg__1_)
 {
     const auto arg__1 = QString::fromUtf8(arg__1_);
     fromPtr(thisObj)->floatButtonToolTipChanged(arg__1);
@@ -327,7 +349,8 @@ bool c_KDDockWidgets__Controllers__TitleBar__floatButtonVisible(void *thisObj)
     return fromPtr(thisObj)->floatButtonVisible();
 }
 // floatButtonVisibleChanged(bool arg__1)
-void c_KDDockWidgets__Controllers__TitleBar__floatButtonVisibleChanged_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Controllers__TitleBar__floatButtonVisibleChanged_bool(void *thisObj,
+                                                                            bool arg__1)
 {
     fromPtr(thisObj)->floatButtonVisibleChanged(arg__1);
 }
@@ -379,7 +402,16 @@ void c_KDDockWidgets__Controllers__TitleBar__isFocusedChanged(void *thisObj)
 // isMDI() const
 bool c_KDDockWidgets__Controllers__TitleBar__isMDI(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isMDI_nocallback();
+        } else {
+            return targetPtr->isMDI();
+        }
+    }();
 }
 // isOverlayed() const
 bool c_KDDockWidgets__Controllers__TitleBar__isOverlayed(void *thisObj)
@@ -389,10 +421,21 @@ bool c_KDDockWidgets__Controllers__TitleBar__isOverlayed(void *thisObj)
 // isWindow() const
 bool c_KDDockWidgets__Controllers__TitleBar__isWindow(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isWindow_nocallback();
+        } else {
+            return targetPtr->isWindow();
+        }
+    }();
 }
 // minimizeButtonChanged(bool visible, bool enabled)
-void c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj, bool visible, bool enabled)
+void c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj,
+                                                                             bool visible,
+                                                                             bool enabled)
 {
     fromPtr(thisObj)->minimizeButtonChanged(visible, enabled);
 }
@@ -494,9 +537,12 @@ void c_KDDockWidgets__Controllers__TitleBar__toggleMaximized(void *thisObj)
     fromPtr(thisObj)->toggleMaximized();
 }
 // tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Controllers__TitleBar__tr_char_char_int(const char *s, const char *c, int n)
+void *c_static_KDDockWidgets__Controllers__TitleBar__tr_char_char_int(const char *s, const char *c,
+                                                                      int n)
 {
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::tr(s, c, n) };
+    return new Dartagnan::ValueWrapper<QString> {
+        KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::tr(s, c, n)
+    };
 }
 // updateButtons()
 void c_KDDockWidgets__Controllers__TitleBar__updateButtons(void *thisObj)
@@ -507,27 +553,39 @@ void c_KDDockWidgets__Controllers__TitleBar__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__TitleBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Controllers__TitleBar__registerVirtualMethodCallback(void *ptr,
+                                                                           void *callback,
+                                                                           int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_customEvent>(callback);
+        wrapper->m_customEventCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_customEvent>(callback);
         break;
     case 306:
-        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_event>(callback);
+        wrapper->m_eventCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_event>(
+                callback);
         break;
     case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_eventFilter>(callback);
+        wrapper->m_eventFilterCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_eventFilter>(callback);
         break;
     case 1029:
-        wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isMDI>(callback);
+        wrapper->m_isMDICallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isMDI>(
+                callback);
         break;
     case 1032:
-        wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isWindow>(callback);
+        wrapper->m_isWindowCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isWindow>(
+                callback);
         break;
     case 836:
-        wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_setParentView_impl>(callback);
+        wrapper->m_setParentView_implCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_setParentView_impl>(
+            callback);
         break;
     }
 }

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -31,12 +31,13 @@
  *   - The Qt maintainers have manifested intention to deprecated stylesheets.
  *   - Stylesheets are supported for built-in QWidgets (QPushButton, QComboBox, etc.), any widget
  *   that's not in Qt needs to be crafted by the user, that includes, for example, having to paint
- *   your background manually. KDDockWidget::Views::TitleBar_qtwidgets does this for your convenience though.
+ *   your background manually. KDDockWidget::Views::TitleBar_qtwidgets does this for your
+ * convenience though.
  *   - Qt stylesheets don't react to property changes (known old bug in Qt), for example:
  *     QLineEdit[readOnly="true"] { color: gray }
  *     this won't trigger when readOnly changes to false, you need to set/unset. This is QTBUG-51236
- *   - KDDockWidget::Views::TitleBar_qtwidgets::isFocused is a property, there for needs to workaround the
- *   above bug by unsetting the sheet and setting it again.
+ *   - KDDockWidget::Views::TitleBar_qtwidgets::isFocused is a property, there for needs to
+ * workaround the above bug by unsetting the sheet and setting it again.
  */
 class MyTitleBar_CSS : public KDDockWidgets::Views::TitleBar_qtwidgets
 {

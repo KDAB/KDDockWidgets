@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -40,12 +40,17 @@ TitleBar_qtquick::~TitleBar_qtquick()
 void TitleBar_qtquick::init()
 {
     // QML interface signals
-    connect(m_titleBar, &Controllers::TitleBar::titleChanged, this, &TitleBar_qtquick::titleChanged);
+    connect(m_titleBar, &Controllers::TitleBar::titleChanged, this,
+            &TitleBar_qtquick::titleChanged);
     connect(m_titleBar, &Controllers::TitleBar::iconChanged, this, &TitleBar_qtquick::iconChanged);
-    connect(m_titleBar, &Controllers::TitleBar::isFocusedChanged, this, &TitleBar_qtquick::isFocusedChanged);
-    connect(m_titleBar, &Controllers::TitleBar::closeButtonEnabledChanged, this, &TitleBar_qtquick::closeButtonEnabledChanged);
-    connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, this, &TitleBar_qtquick::floatButtonVisibleChanged);
-    connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, this, &TitleBar_qtquick::floatButtonToolTipChanged);
+    connect(m_titleBar, &Controllers::TitleBar::isFocusedChanged, this,
+            &TitleBar_qtquick::isFocusedChanged);
+    connect(m_titleBar, &Controllers::TitleBar::closeButtonEnabledChanged, this,
+            &TitleBar_qtquick::closeButtonEnabledChanged);
+    connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, this,
+            &TitleBar_qtquick::floatButtonVisibleChanged);
+    connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, this,
+            &TitleBar_qtquick::floatButtonToolTipChanged);
 }
 
 #ifdef DOCKS_DEVELOPER_MODE

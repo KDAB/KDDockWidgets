@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -53,21 +53,29 @@ KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Config__self();
 // KDDockWidgets::Config::separatorThickness() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Config__separatorThickness(void *thisObj);
 // KDDockWidgets::Config::setAbsoluteWidgetMaxSize(QSize size)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_);
 // KDDockWidgets::Config::setAbsoluteWidgetMinSize(QSize size)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_);
 // KDDockWidgets::Config::setDraggedWindowOpacity(qreal opacity)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity);
 // KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj,
+                                                                                    int arg__1);
 // KDDockWidgets::Config::setSeparatorThickness(int value)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj, int value);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj,
+                                                                                     int value);
 // KDDockWidgets::Config::setStartDragDistance(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj,
+                                                                                    int arg__1);
 // KDDockWidgets::Config::setViewFactory(KDDockWidgets::ViewFactory * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
 // KDDockWidgets::Config::startDragDistance() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Config__startDragDistance(void *thisObj);
 // KDDockWidgets::Config::viewFactory() const

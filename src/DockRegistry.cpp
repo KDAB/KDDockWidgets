@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -49,7 +49,8 @@ DockRegistry::DockRegistry(QObject *parent)
 {
     Platform::instance()->installGlobalEventFilter(this);
 
-    d->m_connection = Platform::instance()->d->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
+    d->m_connection = Platform::instance()->d->focusedViewChanged.connect(
+        &DockRegistry::onFocusedViewChanged, this);
 }
 
 DockRegistry::~DockRegistry()
@@ -109,8 +110,7 @@ bool DockRegistry::isEmpty(bool excludeBeingDeleted) const
     if (!m_dockWidgets.isEmpty() || !m_mainWindows.isEmpty())
         return false;
 
-    return excludeBeingDeleted ? !hasFloatingWindows()
-                               : m_floatingWindows.isEmpty();
+    return excludeBeingDeleted ? !hasFloatingWindows() : m_floatingWindows.isEmpty();
 }
 
 void DockRegistry::checkSanityAll(bool dumpLayout)
@@ -122,7 +122,8 @@ void DockRegistry::checkSanityAll(bool dumpLayout)
     }
 }
 
-bool DockRegistry::affinitiesMatch(const QStringList &affinities1, const QStringList &affinities2) const
+bool DockRegistry::affinitiesMatch(const QStringList &affinities1,
+                                   const QStringList &affinities2) const
 {
     if (affinities1.isEmpty() && affinities2.isEmpty())
         return true;
@@ -157,7 +158,8 @@ QStringList DockRegistry::dockWidgetNames() const
     return names;
 }
 
-bool DockRegistry::isProbablyObscured(Window::Ptr window, Controllers::FloatingWindow *exclude) const
+bool DockRegistry::isProbablyObscured(Window::Ptr window,
+                                      Controllers::FloatingWindow *exclude) const
 {
     if (!window)
         return false;
@@ -169,19 +171,23 @@ bool DockRegistry::isProbablyObscured(Window::Ptr window, Controllers::FloatingW
             continue;
 
         if (fwWindow->geometry().intersects(geo)) {
-            // fw might be below, but we don't have a way to check. So be conservative and return true.
+            // fw might be below, but we don't have a way to check. So be conservative and return
+            // true.
             return true;
         }
     }
 
     // Floating windows are Tool (keep above), unless we disabled it in Config
-    const bool targetIsToolWindow = KDDockWidgets::usesUtilityWindows() && floatingWindowForHandle(window) != nullptr;
+    const bool targetIsToolWindow =
+        KDDockWidgets::usesUtilityWindows() && floatingWindowForHandle(window) != nullptr;
 
     for (Controllers::MainWindow *mw : m_mainWindows) {
         Window::Ptr mwWindow = mw->view()->window();
 
-        if (mwWindow && !mwWindow->equals(window) && !targetIsToolWindow && mwWindow->geometry().intersects(geo)) {
-            // Two main windows that intersect. Return true. If the target is a tool window it will be above, so we don't care.
+        if (mwWindow && !mwWindow->equals(window) && !targetIsToolWindow
+            && mwWindow->geometry().intersects(geo)) {
+            // Two main windows that intersect. Return true. If the target is a tool window it will
+            // be above, so we don't care.
             return true;
         }
     }
@@ -191,8 +197,9 @@ bool DockRegistry::isProbablyObscured(Window::Ptr window, Controllers::FloatingW
 
 bool DockRegistry::isProbablyObscured(Window::Ptr target, WindowBeingDragged *exclude) const
 {
-    Controllers::FloatingWindow *fw = exclude ? exclude->floatingWindow()
-                                              : nullptr; // It's null on Wayland. On wayland obscuring never happens anyway, so not a problem.
+    Controllers::FloatingWindow *fw =
+        exclude ? exclude->floatingWindow() : nullptr; // It's null on Wayland. On wayland obscuring
+                                                       // never happens anyway, so not a problem.
 
     return isProbablyObscured(target, fw);
 }
@@ -234,7 +241,8 @@ Controllers::Group *DockRegistry::groupInMDIResize() const
     return nullptr;
 }
 
-Controllers::MainWindow::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
+Controllers::MainWindow::List
+DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
     Controllers::MainWindow::List result;
     result.reserve(m_mainWindows.size());
@@ -281,7 +289,8 @@ void DockRegistry::registerDockWidget(Controllers::DockWidget *dock)
     if (dock->uniqueName().isEmpty()) {
         qWarning() << Q_FUNC_INFO << "DockWidget" << dock << " doesn't have an ID";
     } else if (auto other = dockByName(dock->uniqueName())) {
-        qWarning() << Q_FUNC_INFO << "Another DockWidget" << other << "with name" << dock->uniqueName() << " already exists." << dock;
+        qWarning() << Q_FUNC_INFO << "Another DockWidget" << other << "with name"
+                   << dock->uniqueName() << " already exists." << dock;
     }
 
     m_dockWidgets << dock;
@@ -301,7 +310,8 @@ void DockRegistry::registerMainWindow(Controllers::MainWindow *mainWindow)
     if (mainWindow->uniqueName().isEmpty()) {
         qWarning() << Q_FUNC_INFO << "MainWindow" << mainWindow << " doesn't have an ID";
     } else if (auto other = mainWindowByName(mainWindow->uniqueName())) {
-        qWarning() << Q_FUNC_INFO << "Another MainWindow" << other << "with name" << mainWindow->uniqueName() << " already exists." << mainWindow;
+        qWarning() << Q_FUNC_INFO << "Another MainWindow" << other << "with name"
+                   << mainWindow->uniqueName() << " already exists." << mainWindow;
     }
 
     m_mainWindows << mainWindow;
@@ -524,7 +534,8 @@ const Controllers::Group::List DockRegistry::groups() const
     return m_groups;
 }
 
-const QVector<Controllers::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted) const
+const QVector<Controllers::FloatingWindow *>
+DockRegistry::floatingWindows(bool includeBeingDeleted) const
 {
     // Returns all the FloatingWindow which aren't being deleted
     QVector<Controllers::FloatingWindow *> result;
@@ -556,9 +567,8 @@ const Window::List DockRegistry::floatingQWindows() const
 
 bool DockRegistry::hasFloatingWindows() const
 {
-    return std::any_of(m_floatingWindows.begin(), m_floatingWindows.end(), [](Controllers::FloatingWindow *fw) {
-        return !fw->beingDeleted();
-    });
+    return std::any_of(m_floatingWindows.begin(), m_floatingWindows.end(),
+                       [](Controllers::FloatingWindow *fw) { return !fw->beingDeleted(); });
 }
 
 Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr windowHandle) const
@@ -717,7 +727,8 @@ bool DockRegistry::onDockWidgetPressed(Controllers::DockWidget *dw, QMouseEvent 
         Platform::instance()->sendEvent(overlayedDockWidget->d->group()->view(), ev);
 
         if (ev->isAccepted()) {
-            // The Frame accepted it. It means the user is resizing it. We allow for 4px outside for better resize.
+            // The Frame accepted it. It means the user is resizing it. We allow for 4px outside for
+            // better resize.
             return true; // don't propagate the event further
         }
         if (dw != overlayedDockWidget) {

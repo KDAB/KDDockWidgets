@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -69,7 +69,8 @@ static Qt::WindowFlags windowFlagsToUse()
     if (KDDockWidgets::usesNativeDraggingAndResizing())
         return Qt::Window;
 
-    if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
+    if (Config::self().internalFlags()
+        & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
         return Qt::Window;
 
     return Qt::Tool;
@@ -98,7 +99,8 @@ static MainWindow *hackFindParentHarder(Controllers::Group *group, MainWindow *c
         return windows.first();
     } else {
         const QStringList affinities = group ? group->affinities() : QStringList();
-        const MainWindow::List mainWindows = DockRegistry::self()->mainWindowsWithAffinity(affinities);
+        const MainWindow::List mainWindows =
+            DockRegistry::self()->mainWindowsWithAffinity(affinities);
 
         if (mainWindows.isEmpty()) {
             qWarning() << Q_FUNC_INFO << "No window with affinity" << affinities << "found";
@@ -117,8 +119,15 @@ MainWindow *actualParent(MainWindow *candidate)
 }
 
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
-    : Controller(Type::FloatingWindow, Config::self().viewFactory()->createFloatingWindow(this, actualParent(parent), windowFlagsToUse()))
-    , Draggable(view(), KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
+    : Controller(Type::FloatingWindow,
+                 Config::self().viewFactory()->createFloatingWindow(this, actualParent(parent),
+                                                                    windowFlagsToUse()))
+    , Draggable(view(),
+                KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable
+                                                                // when using a native title bar.
+                                                                // Otherwise the
+                                                                // KDDockWidgets::TitleBar is the
+                                                                // draggable
     , d(new Private())
     , m_dropArea(new DropArea(view(), MainWindowOption_None))
     , m_titleBar(new Controllers::TitleBar(this))
@@ -151,31 +160,31 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
 
     updateTitleBarVisibility();
 
-    d->m_visibleWidgetCountConnection = m_dropArea->visibleWidgetCountChanged.connect([this](int count) {
-        onFrameCountChanged(count);
-        numFramesChanged();
-        onVisibleFrameCountChanged(count);
-    });
+    d->m_visibleWidgetCountConnection =
+        m_dropArea->visibleWidgetCountChanged.connect([this](int count) {
+            onFrameCountChanged(count);
+            numFramesChanged();
+            onVisibleFrameCountChanged(count);
+        });
 
-    view()->d->closeRequested.connect([this](QCloseEvent *ev) {
-        onCloseEvent(ev);
-    });
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
 
-    view()->d->layoutInvalidated.connect([this] {
-        updateSizeConstraints();
-    });
+    view()->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
 
-    m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
+    m_layoutDestroyedConnection =
+        connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
-FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometry, MainWindow *parent)
+FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometry,
+                               MainWindow *parent)
     : FloatingWindow({}, hackFindParentHarder(group, parent))
 {
     QScopedValueRollback<bool> guard(m_disableSetVisible, true);
 
     if (group->hasNestedMDIDockWidgets()) {
-        // When using DockWidget::MDINestable, the docked MDI widget is wrapped by a drop area so we can drop things into it.
-        // When floating it, we can delete that helper drop area, as FloatingWindow already has one
+        // When using DockWidget::MDINestable, the docked MDI widget is wrapped by a drop area so we
+        // can drop things into it. When floating it, we can delete that helper drop area, as
+        // FloatingWindow already has one
 
         if (group->dockWidgetCount() == 0) {
             // doesn't happen
@@ -190,9 +199,10 @@ FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometr
             Controllers::Group *innerFrame = dropAreaMDIWrapper->groups().constFirst();
             if (innerFrame->hasSingleDockWidget()) {
                 // When pressing the unfloat button, the dock widgets gets docked to the previous
-                // position it was at. Controllers::DockWidget::Private::m_lastPosition stores that location,
-                // however, when having nested MDI, we have an extra Dock Widget, the wrapper, and it
-                // contains the last position. So, when floating, we need to transfer that and not lose it.
+                // position it was at. Controllers::DockWidget::Private::m_lastPosition stores that
+                // location, however, when having nested MDI, we have an extra Dock Widget, the
+                // wrapper, and it contains the last position. So, when floating, we need to
+                // transfer that and not lose it.
                 DockWidget *dw = innerFrame->dockWidgetAt(0);
                 dw->d->lastPosition() = dwMDIWrapper->d->lastPosition();
             }
@@ -201,20 +211,22 @@ FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometr
         m_dropArea->addMultiSplitter(dropAreaMDIWrapper, Location_OnTop);
         dwMDIWrapper->setVisible(false);
         if (!DragController::instance()->isIdle()) {
-            // We're dragging a MDI window and we reached the border, detaching it, and making it float. We can't delete the wrapper group just yet,
-            // as that would delete the title bar which is currently being dragged. Delete it once the drag finishes
-            QObject::connect(DragController::instance(), &DragController::currentStateChanged, dwMDIWrapper, [dwMDIWrapper] {
-                if (DragController::instance()->isIdle())
-                    delete dwMDIWrapper;
-            });
+            // We're dragging a MDI window and we reached the border, detaching it, and making it
+            // float. We can't delete the wrapper group just yet, as that would delete the title bar
+            // which is currently being dragged. Delete it once the drag finishes
+            QObject::connect(DragController::instance(), &DragController::currentStateChanged,
+                             dwMDIWrapper, [dwMDIWrapper] {
+                                 if (DragController::instance()->isIdle())
+                                     delete dwMDIWrapper;
+                             });
         } else {
             dwMDIWrapper->deleteLater();
         }
 
     } else {
         // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
-        // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
-        // So disable the setVisible(true) call while in the ctor.
+        // The problem with setVisible(true) will forget about or requested geometry and place the
+        // window at 0,0 So disable the setVisible(true) call while in the ctor.
         m_dropArea->addWidget(group->view(), KDDockWidgets::Location_OnTop, {});
     }
 
@@ -245,11 +257,12 @@ void FloatingWindow::maybeCreateResizeHandler()
 {
     if (!KDDockWidgets::usesNativeDraggingAndResizing()) {
         view()->setFlag(Qt::FramelessWindowHint, true);
-        // EGLFS can't have different mouse cursors per window, needs global filter hack to unset when cursor leaves
+        // EGLFS can't have different mouse cursors per window, needs global filter hack to unset
+        // when cursor leaves
         const auto filterMode = isEGLFS() ? WidgetResizeHandler::EventFilterMode::Global
                                           : WidgetResizeHandler::EventFilterMode::Local;
-        setWidgetResizeHandler(new WidgetResizeHandler(filterMode,
-                                                       WidgetResizeHandler::WindowMode::TopLevel, view()));
+        setWidgetResizeHandler(
+            new WidgetResizeHandler(filterMode, WidgetResizeHandler::WindowMode::TopLevel, view()));
     }
 }
 
@@ -303,13 +316,15 @@ QSize FloatingWindow::maxSizeHint() const
         // let's do that first, it's also easy.
         Controllers::Group *group = groups[0];
         if (group->dockWidgetCount() == 1) { // We don't support if there's tabbing
-            const QSize waste = (view()->minSize() - group->view()->minSize()).expandedTo(QSize(0, 0));
+            const QSize waste =
+                (view()->minSize() - group->view()->minSize()).expandedTo(QSize(0, 0));
             result = group->view()->maxSizeHint() + waste;
         }
     }
 
     // Semantically the result is fine, but bound it so we don't get:
-    // QWidget::setMaximumSize: (/KDDockWidgets::FloatingWindowWidget) The largest allowed size is (16777215,16777215)
+    // QWidget::setMaximumSize: (/KDDockWidgets::FloatingWindowWidget) The largest allowed size is
+    // (16777215,16777215)
     return result.boundedTo(Layouting::Item::hardcodedMaximumSize);
 }
 
@@ -325,8 +340,8 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometry
         if ((hint & SuggestedGeometryHint_GeometryIsFromDocked)
             && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
             const QMargins margins = contentMargins();
-            suggestedRect.setHeight(suggestedRect.height() - m_titleBar->view()->height() + margins.top()
-                                    + margins.bottom());
+            suggestedRect.setHeight(suggestedRect.height() - m_titleBar->view()->height()
+                                    + margins.top() + margins.bottom());
         }
 
         if (hint & SuggestedGeometryHint_PreserveCenter)
@@ -406,8 +421,7 @@ Controllers::Group *FloatingWindow::singleFrame() const
 {
     const Controllers::Group::List groups = this->groups();
 
-    return groups.isEmpty() ? nullptr
-                            : groups.first();
+    return groups.isEmpty() ? nullptr : groups.first();
 }
 
 bool FloatingWindow::beingDeleted() const
@@ -429,7 +443,8 @@ void FloatingWindow::onFrameCountChanged(int count)
         scheduleDeleteLater();
     } else {
         updateTitleBarVisibility();
-        if (count == 1) // if something was removed, then our single dock widget is floating, we need to check the QAction
+        if (count == 1) // if something was removed, then our single dock widget is floating, we
+                        // need to check the QAction
             dropArea()->updateFloatingActions();
     }
 }
@@ -470,7 +485,8 @@ void FloatingWindow::updateTitleBarVisibility()
 
     if (KDDockWidgets::usesClientTitleBar()) {
         const auto flags = Config::self().flags();
-        if ((flags & Config::Flag_HideTitleBarWhenTabsVisible) && !(flags & Config::Flag_AlwaysTitleBarWhenFloating)) {
+        if ((flags & Config::Flag_HideTitleBarWhenTabsVisible)
+            && !(flags & Config::Flag_AlwaysTitleBarWhenFloating)) {
             if (hasSingleFrame()) {
                 visible = !groups().first()->hasTabsVisible();
             }
@@ -555,7 +571,8 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
 
     Window::Ptr transientParentWindow = view()->transientWindow();
     auto transientMainWindow = DockRegistry::self()->mainWindowForHandle(transientParentWindow);
-    fw.parentIndex = transientMainWindow ? DockRegistry::self()->mainwindows().indexOf(transientMainWindow) : -1;
+    fw.parentIndex =
+        transientMainWindow ? DockRegistry::self()->mainwindows().indexOf(transientMainWindow) : -1;
 
     return fw;
 }

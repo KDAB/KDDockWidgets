@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -47,7 +47,8 @@ public:
     void setGeometry(int pos, int pos2, int length);
     Layouting::ItemBoxContainer *parentContainer() const;
 
-    ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other work while we're not in the final size
+    ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other
+    /// work while we're not in the final size
     static bool isResizing();
 
     /// @internal Just for the unit-tests.

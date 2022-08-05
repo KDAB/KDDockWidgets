@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Waqar Ahmed <waqar.ahmed@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Waqar Ahmed <waqar.ahmed@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -182,8 +182,7 @@ QT_END_NAMESPACE
 inline QDebug operator<<(QDebug debug, const nlohmann::json &j)
 {
     QDebugStateSaver s(debug);
-    debug.nospace() << '\n'
-                    << j.dump(4).data() << '\n';
+    debug.nospace() << '\n' << j.dump(4).data() << '\n';
     return debug;
 }
 

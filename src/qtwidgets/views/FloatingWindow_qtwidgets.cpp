@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -84,14 +84,17 @@ void FloatingWindow_qtwidgets::paintEvent(QPaintEvent *ev)
 
 bool FloatingWindow_qtwidgets::event(QEvent *ev)
 {
-    if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
+    if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick
+        && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
         if ((windowFlags() & Qt::Tool) == Qt::Tool) {
             if (Config::self().flags() & Config::Flag_DoubleClickMaximizes) {
                 // Let's refuse to maximize Qt::Tool. It's not natural.
-                // Just avoid this combination: Flag_NativeTitleBar + Qt::Tool + Flag_DoubleClickMaximizes
+                // Just avoid this combination: Flag_NativeTitleBar + Qt::Tool +
+                // Flag_DoubleClickMaximizes
             } else {
                 // Double clicking a Qt::Tool title-bar. Triggers a redocking.
-                if (d->m_controller->titleBar()->isFloating()) { // redocking nested floating windows aren't supported
+                if (d->m_controller->titleBar()->isFloating()) { // redocking nested floating
+                                                                 // windows aren't supported
                     d->m_controller->titleBar()->onFloatClicked();
                     return true;
                 }
@@ -103,9 +106,8 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
     } else if (ev->type() == QEvent::Show && !d->m_screenChangedConnection.isActive()) {
         // We connect after QEvent::Show, so we have a QWindow. Qt doesn't offer much API to
         // intercept screen events
-        d->m_screenChangedConnection = window()->screenChanged.connect([this] {
-            Q_EMIT DockRegistry::self()->windowChangedScreen(window());
-        });
+        d->m_screenChangedConnection = window()->screenChanged.connect(
+            [this] { Q_EMIT DockRegistry::self()->windowChangedScreen(window()); });
 
         QWidget::windowHandle()->installEventFilter(this);
     } else if (ev->type() == QEvent::ActivationChange) {
@@ -146,10 +148,10 @@ bool FloatingWindow_qtwidgets::eventFilter(QObject *, QEvent *ev)
 {
     if (ev->type() == QEvent::WindowStateChange) {
 
-        // QWidget::windowState() is not reliable as it's emitted both for the spontaneous (async) event and non-spontaneous (sync)
-        // The sync one being useless, as the window manager can still have the old state.
-        // Only emit windowStateChanged once the window manager tells us the state has actually changed
-        // See also QTBUG-102430
+        // QWidget::windowState() is not reliable as it's emitted both for the spontaneous (async)
+        // event and non-spontaneous (sync) The sync one being useless, as the window manager can
+        // still have the old state. Only emit windowStateChanged once the window manager tells us
+        // the state has actually changed See also QTBUG-102430
         if (ev->spontaneous()) {
             d->m_controller->setLastWindowManagerState(WindowState(windowHandle()->windowState()));
             Q_EMIT d->m_controller->windowStateChanged();
@@ -160,7 +162,8 @@ bool FloatingWindow_qtwidgets::eventFilter(QObject *, QEvent *ev)
 }
 
 #if defined(Q_OS_WIN)
-bool FloatingWindow_qtwidgets::nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result)
+bool FloatingWindow_qtwidgets::nativeEvent(const QByteArray &eventType, void *message,
+                                           Qt5Qt6Compat::qintptr *result)
 {
     auto fw = floatingWindow();
     if (fw->beingDeleted())

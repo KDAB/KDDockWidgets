@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -22,8 +22,8 @@ MainWindowMDIViewInterface::MainWindowMDIViewInterface(Controllers::MDILayout *l
 {
 }
 
-void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget,
-                                               QPoint localPos, InitialOption addingOption)
+void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget, QPoint localPos,
+                                               InitialOption addingOption)
 {
     Controllers::DockWidget *dw = dockWidget ? dockWidget->dockWidget() : nullptr;
     m_mdiLayout->addDockWidget(dw, localPos, addingOption);

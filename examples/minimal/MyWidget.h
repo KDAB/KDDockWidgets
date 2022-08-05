@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -25,8 +25,10 @@ class MyWidget : public QWidget
     Q_OBJECT
 public:
     MyWidget() = default;
-    explicit MyWidget(const QString &backgroundFile, const QString &logoFile, QWidget *parent = nullptr);
+    explicit MyWidget(const QString &backgroundFile, const QString &logoFile,
+                      QWidget *parent = nullptr);
     ~MyWidget();
+
 protected:
     void drawLogo(QPainter &);
     QImage m_background;
@@ -38,8 +40,9 @@ class MyWidget1 : public MyWidget
     Q_OBJECT
 public:
     explicit MyWidget1(QWidget *parent = nullptr);
+
 protected:
-    void paintEvent(QPaintEvent*) override;
+    void paintEvent(QPaintEvent *) override;
 };
 
 class MyWidget2 : public MyWidget
@@ -47,8 +50,9 @@ class MyWidget2 : public MyWidget
     Q_OBJECT
 public:
     explicit MyWidget2(QWidget *parent = nullptr);
+
 protected:
-    void paintEvent(QPaintEvent*) override;
+    void paintEvent(QPaintEvent *) override;
 };
 
 class MyWidget3 : public MyWidget
@@ -56,8 +60,9 @@ class MyWidget3 : public MyWidget
     Q_OBJECT
 public:
     explicit MyWidget3(QWidget *parent = nullptr);
+
 protected:
-    void paintEvent(QPaintEvent*) override;
+    void paintEvent(QPaintEvent *) override;
     QImage m_triangle;
 };
 

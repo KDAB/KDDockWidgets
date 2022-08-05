@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -116,10 +116,11 @@ public:
     void unoverlay();
 
     /**
-     * @brief Returns whether this group is floating. A floating group isn't attached to any other MainWindow,
-     * and if it's attached to a FloatingWindow then it's considered floating if it's the only group in that Window.
-     * A floating group can have multiple dock widgets (tabbed), in which case each DockWidget::isFloating() returns false,
-     * in which case you can use isInFloatingWindow() which would still return true
+     * @brief Returns whether this group is floating. A floating group isn't attached to any other
+     * MainWindow, and if it's attached to a FloatingWindow then it's considered floating if it's
+     * the only group in that Window. A floating group can have multiple dock widgets (tabbed), in
+     * which case each DockWidget::isFloating() returns false, in which case you can use
+     * isInFloatingWindow() which would still return true
      */
     bool isFloating() const;
 
@@ -137,7 +138,8 @@ public:
 
     /**
      * @brief returns if this widget is the central group
-     * MainWindow supports a mode where the middle group is persistent even if no dock widget is there.
+     * MainWindow supports a mode where the middle group is persistent even if no dock widget is
+     * there.
      *
      * @return whether this widget is the central group in a main window
      */
@@ -157,7 +159,8 @@ public:
      *
      * While technically a non-floating dock widget is always tabbed, the user won't see the tabs
      * as in most cases there's only 1 widget tabbed. But for the main window central group it's
-     * often wanted to see tabs even if there's only 1 widget, where each widget represents a "document".
+     * often wanted to see tabs even if there's only 1 widget, where each widget represents a
+     * "document".
      *
      * @return whether the tab widget will always show tabs, even if there's only 1 dock widget
      */
@@ -196,7 +199,8 @@ public:
     bool anyNonClosable() const;
     bool anyNonDockable() const;
 
-    ///@brief returns whether there's 0 dock widgets. If not persistent then the Frame will delete itself.
+    ///@brief returns whether there's 0 dock widgets. If not persistent then the Frame will delete
+    /// itself.
     bool isEmpty() const
     {
         return dockWidgetCount() == 0;
@@ -214,7 +218,8 @@ public:
     ///@brief Called when a dock widget child @p w is hidden
     void onDockWidgetHidden(DockWidget *w);
 
-    ///@brief returns the layout item that either contains this Frame in the layout or is a placeholder
+    ///@brief returns the layout item that either contains this Frame in the layout or is a
+    /// placeholder
     Layouting::Item *layoutItem() const;
 
     ///@brief For tests-only. Returns the number of Frame instances in the whole application.
@@ -239,8 +244,8 @@ public:
 
     /**
      * Returns the drag rect in global coordinates. This is usually the title bar rect.
-     * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar background.
-     * Returns global coordinates.
+     * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar
+     * background. Returns global coordinates.
      */
     virtual QRect dragRect() const;
 
@@ -264,7 +269,8 @@ public:
     /// Usually no, unless you're using an MDI main window
     bool isMDI() const;
 
-    /// @brief Returns whether this group was created automatically just for the purpose of supporting DockWidget::Option_MDINestable
+    /// @brief Returns whether this group was created automatically just for the purpose of
+    /// supporting DockWidget::Option_MDINestable
     bool isMDIWrapper() const;
 
     /// @brief If this is an MDI wrapper group, return the DockWidget MDI wrapper
@@ -275,13 +281,15 @@ public:
     /// @sa isMDIWrapper
     DropArea *mdiDropAreaWrapper() const;
 
-    /// @brief If this group is an MDI wrapper, returns the MDI group. That is the group you actually drag inside the MDI area
+    /// @brief If this group is an MDI wrapper, returns the MDI group. That is the group you
+    /// actually drag inside the MDI area
     Group *mdiFrame() const;
 
     /// @brief Returns the MDI layout. Or nullptr if this group isn't in a MDI layout
     MDILayout *mdiLayout() const;
 
-    /// @brief If this group is a MDI group (isMDI() == true), returns whether it contains nested dock widgets (DockWidget::Option_MDINestable)
+    /// @brief If this group is a MDI group (isMDI() == true), returns whether it contains nested
+    /// dock widgets (DockWidget::Option_MDINestable)
     /// @sa isMDI()
     bool hasNestedMDIDockWidgets() const;
 
@@ -318,8 +326,8 @@ protected Q_SLOTS:
 public:
     /**
      * @brief Returns the minimum size of the dock widgets.
-     * This might be slightly smaller than Frame::minSize() due to the QTabWidget having some margins
-     * and tab bar.
+     * This might be slightly smaller than Frame::minSize() due to the QTabWidget having some
+     * margins and tab bar.
      */
     QSize dockWidgetsMinSize() const;
 
@@ -332,7 +340,8 @@ public:
      *   dock3, max=
      *   result=3000,1000
      *
-     * Any widget having 16777215x16777215 is ignored (represents not having a max-size, QWIDGETSIZE_MAX)
+     * Any widget having 16777215x16777215 is ignored (represents not having a max-size,
+     * QWIDGETSIZE_MAX)
      */
     QSize biggestDockWidgetMaxSize() const;
     int nonContentsHeight() const;

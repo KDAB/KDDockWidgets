@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -74,51 +74,76 @@ public:
 extern "C" {
 // KDDockWidgets::Controllers::Stack::countChanged()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__countChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onCountChanged(void *thisObj, void *contextQObject, void *callback); // KDDockWidgets::Controllers::Stack::currentIndex() const
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onCountChanged(
+    void *thisObj, void *contextQObject,
+    void *callback); // KDDockWidgets::Controllers::Stack::currentIndex()
+                     // const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Stack__currentIndex(void *thisObj);
 // KDDockWidgets::Controllers::Stack::currentTabChanged(int index)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__currentTabChanged_int(void *thisObj, int index);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onCurrentTabChanged_int(void *thisObj, void *contextQObject, void *callback); // KDDockWidgets::Controllers::Stack::customEvent(QEvent * event)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__customEvent_QEvent(void *thisObj, void *event_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__currentTabChanged_int(void *thisObj, int index);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onCurrentTabChanged_int(
+    void *thisObj, void *contextQObject,
+    void *callback); // KDDockWidgets::Controllers::Stack::customEvent(QEvent
+                     // * event)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::Stack::event(QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__event_QEvent(void *thisObj, void *event_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__event_QEvent(void *thisObj,
+                                                                                    void *event_);
 // KDDockWidgets::Controllers::Stack::eventFilter(QObject * watched, QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__Stack__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
+                                                                void *event_);
 // KDDockWidgets::Controllers::Stack::group() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Stack__group(void *thisObj);
 // KDDockWidgets::Controllers::Stack::isMDI() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__isMDI(void *thisObj);
 // KDDockWidgets::Controllers::Stack::isPositionDraggable(QPoint p) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__isPositionDraggable_QPoint(void *thisObj, void *p_);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__Stack__isPositionDraggable_QPoint(void *thisObj, void *p_);
 // KDDockWidgets::Controllers::Stack::isWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__isWindow(void *thisObj);
 // KDDockWidgets::Controllers::Stack::numDockWidgets() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Stack__numDockWidgets(void *thisObj);
 // KDDockWidgets::Controllers::Stack::onCurrentTabChanged(int index)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onCurrentTabChanged_int(void *thisObj, int index);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__onCurrentTabChanged_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Stack::onMouseDoubleClick(QPoint localPos)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::Controllers::Stack::onTabInserted()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onTabInserted(void *thisObj);
 // KDDockWidgets::Controllers::Stack::onTabRemoved()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onTabRemoved(void *thisObj);
 // KDDockWidgets::Controllers::Stack::renameTab(int index, const QString & arg__2)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__renameTab_int_QString(void *thisObj, int index, const char *arg__2_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__renameTab_int_QString(void *thisObj, int index,
+                                                           const char *arg__2_);
 // KDDockWidgets::Controllers::Stack::setCurrentDockWidget(int index)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__setCurrentDockWidget_int(void *thisObj, int index);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__setCurrentDockWidget_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Stack::setDocumentMode(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__setDocumentMode_bool(void *thisObj, bool arg__1);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__setDocumentMode_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Controllers::Stack::setParentView_impl(KDDockWidgets::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__setParentView_impl_View(void *thisObj, void *parent_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Controllers::Stack::setTabBarAutoHide(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__setTabBarAutoHide_bool(void *thisObj, bool arg__1);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__setTabBarAutoHide_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Controllers::Stack::tabBar() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Stack__tabBar(void *thisObj);
 // KDDockWidgets::Controllers::Stack::tabBarAutoHide() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__tabBarAutoHide(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__Stack__tabBarAutoHide(void *thisObj);
 // KDDockWidgets::Controllers::Stack::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__Stack__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void *
+c_static_KDDockWidgets__Controllers__Stack__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *ptr, void *callback,
+                                                                   int methodId);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Stack_Finalizer(void *, void *cppObj, void *);
 }

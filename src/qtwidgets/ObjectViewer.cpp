@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -11,7 +11,8 @@
 
 /**
  * @file
- * @brief Tree Widget to show the object tree. Used for debugging only, for apps that don't support GammaRay.
+ * @brief Tree Widget to show the object tree. Used for debugging only, for apps that don't support
+ * GammaRay.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
@@ -51,8 +52,8 @@ ObjectViewer::ObjectViewer(QWidget *parent)
     auto lay = new QHBoxLayout(this);
     lay->addWidget(&m_treeView);
     m_treeView.setModel(&m_model);
-    connect(m_treeView.selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, &ObjectViewer::onSelectionChanged);
+    connect(m_treeView.selectionModel(), &QItemSelectionModel::selectionChanged, this,
+            &ObjectViewer::onSelectionChanged);
 
     QAction *action = m_menu.addAction(QStringLiteral("Refresh"));
     connect(action, &QAction::triggered, this, &ObjectViewer::refresh);
@@ -137,7 +138,8 @@ void ObjectViewer::dumpWindows()
     qDebug() << "Top Level Windows:";
     const auto &topLevelWindows = qGuiApp->topLevelWindows();
     for (QWindow *w : topLevelWindows) {
-        qDebug() << "    QWindow=" << w << "; parent=" << w->parent() << "; transientParent=" << w->transientParent() << "; hwnd=" << w->winId();
+        qDebug() << "    QWindow=" << w << "; parent=" << w->parent()
+                 << "; transientParent=" << w->transientParent() << "; hwnd=" << w->winId();
     }
 }
 
@@ -148,7 +150,11 @@ QString ObjectViewer::nameForObj(QObject *o) const
         name += QStringLiteral("(%1)").arg(o->objectName());
 
     if (auto w = qobject_cast<QWidget *>(o)) {
-        name += QStringLiteral(" - %1,%2 %3x%4").arg(w->x()).arg(w->y()).arg(w->width()).arg(w->height());
+        name += QStringLiteral(" - %1,%2 %3x%4")
+                    .arg(w->x())
+                    .arg(w->y())
+                    .arg(w->width())
+                    .arg(w->height());
 
         if (w->isWindow())
             name += QStringLiteral(" ;W");

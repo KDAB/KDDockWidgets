@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -25,9 +25,8 @@ Window_qt::Window_qt(QWindow *window)
     : m_window(window)
 {
     Q_ASSERT(window);
-    m_connection = QObject::connect(window, &QWindow::screenChanged, [this] {
-        screenChanged.emit();
-    });
+    m_connection =
+        QObject::connect(window, &QWindow::screenChanged, [this] { screenChanged.emit(); });
 }
 
 Window_qt::~Window_qt()

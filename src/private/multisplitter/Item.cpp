@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -77,8 +77,7 @@ inline Qt::Orientation orientationForLocation(Location loc)
 
 inline Qt::Orientation oppositeOrientation(Qt::Orientation o)
 {
-    return o == Qt::Vertical ? Qt::Horizontal
-                             : Qt::Vertical;
+    return o == Qt::Vertical ? Qt::Horizontal : Qt::Vertical;
 }
 
 inline QRect adjustedRect(QRect r, Qt::Orientation o, int p1, int p2)
@@ -188,13 +187,15 @@ void Item::setGuestView(View *guest)
         if (Controllers::Group *group = asGroupController())
             group->setLayoutItem(this);
 
-        m_parentChangedConnection = connect(m_guest->controller(), &Controller::parentViewChanged, this, [this](View *parent) {
-            if (!View::equals(parent, hostView())) {
-                // Frame was detached into floating window. Turn into placeholder
-                Q_ASSERT(isVisible());
-                turnIntoPlaceholder();
-            }
-        });
+        m_parentChangedConnection = connect(m_guest->controller(), &Controller::parentViewChanged,
+                                            this, [this](View *parent) {
+                                                if (!View::equals(parent, hostView())) {
+                                                    // Frame was detached into floating window. Turn
+                                                    // into placeholder
+                                                    Q_ASSERT(isVisible());
+                                                    turnIntoPlaceholder();
+                                                }
+                                            });
 
         {
             QScopedValueRollback<bool> guard(m_isSettingGuest, true);
@@ -202,10 +203,13 @@ void Item::setGuestView(View *guest)
             setMaxSizeHint(guest->maxSizeHint());
         }
 
-        m_guestDebugNameChangedConnection = m_guest->d->debugNameChanged.connect(&Item::updateObjectName, this);
-        m_guestDestroyedConnection = m_guest->d->beingDestroyed.connect(&Item::onWidgetDestroyed, this);
+        m_guestDebugNameChangedConnection =
+            m_guest->d->debugNameChanged.connect(&Item::updateObjectName, this);
+        m_guestDestroyedConnection =
+            m_guest->d->beingDestroyed.connect(&Item::onWidgetDestroyed, this);
 
-        m_layoutInvalidatedConnection = guest->d->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
+        m_layoutInvalidatedConnection =
+            guest->d->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
 
         if (m_sizingInfo.geometry.isEmpty()) {
             // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize
@@ -242,7 +246,8 @@ QVariantMap Item::toVariantMap() const
     result[QStringLiteral("isContainer")] = isContainer();
     result[QStringLiteral("objectName")] = objectName();
     if (m_guest)
-        result[QStringLiteral("guestId")] = m_guest->id(); // just for coorelation purposes when restoring
+        result[QStringLiteral("guestId")] =
+            m_guest->id(); // just for coorelation purposes when restoring
 
     return result;
 }
@@ -264,8 +269,8 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View 
     }
 }
 
-Item *Item::createFromVariantMap(View *hostWidget, ItemContainer *parent,
-                                 const QVariantMap &map, const QHash<QString, View *> &widgets)
+Item *Item::createFromVariantMap(View *hostWidget, ItemContainer *parent, const QVariantMap &map,
+                                 const QHash<QString, View *> &widgets)
 {
     auto item = new Item(hostWidget, parent);
     item->fillFromVariantMap(map, widgets);
@@ -300,8 +305,8 @@ View *Item::hostView() const
 void Item::restore(View *guest)
 {
     if (isVisible() || m_guest) {
-        qWarning() << Q_FUNC_INFO << "Hitting assert. visible="
-                   << isVisible() << "; guest=" << this;
+        qWarning() << Q_FUNC_INFO << "Hitting assert. visible=" << isVisible()
+                   << "; guest=" << this;
         Q_ASSERT(false);
     }
 
@@ -321,7 +326,8 @@ void Item::restore(View *guest)
 QVector<int> Item::pathFromRoot() const
 {
     // Returns the list of indexes to get to this item, starting from the root container
-    // Example [0, 1, 3] would mean that the item is the 4th child of the 2nd child of the 1st child of root
+    // Example [0, 1, 3] would mean that the item is the 4th child of the 2nd child of the 1st child
+    // of root
     // [] would mean 'this' is the root item
     // [0] would mean the 1st child of root
 
@@ -377,7 +383,8 @@ void Item::setBeingInserted(bool is)
 {
     m_sizingInfo.isBeingInserted = is;
 
-    // Trickle up the hierarchy too, as the parent might be hidden due to not having visible children
+    // Trickle up the hierarchy too, as the parent might be hidden due to not having visible
+    // children
     if (auto parent = parentContainer()) {
         if (is) {
             if (!parent->hasVisibleChildren())
@@ -417,8 +424,10 @@ void Item::setParentContainer(ItemContainer *parent)
 void Item::connectParent(ItemContainer *parent)
 {
     if (parent) {
-        m_minSizeChangedHandle = minSizeChanged.connect(&ItemContainer::onChildMinSizeChanged, parent);
-        m_visibleChangedHandle = visibleChanged.connect(&ItemContainer::onChildVisibleChanged, parent);
+        m_minSizeChangedHandle =
+            minSizeChanged.connect(&ItemContainer::onChildMinSizeChanged, parent);
+        m_visibleChangedHandle =
+            visibleChanged.connect(&ItemContainer::onChildVisibleChanged, parent);
 
         setHostView(parent->hostView());
         updateWidgetGeometries();
@@ -540,8 +549,7 @@ QPoint Item::pos() const
 
 QRect Item::geometry() const
 {
-    return isBeingInserted() ? QRect()
-                             : m_sizingInfo.geometry;
+    return isBeingInserted() ? QRect() : m_sizingInfo.geometry;
 }
 
 QRect Item::rect() const
@@ -639,8 +647,7 @@ bool Item::checkSanity()
             if (root())
                 root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest."
-                       << "; this=" << this
-                       << "; item.parentContainer=" << parentContainer()
+                       << "; this=" << this << "; item.parentContainer=" << parentContainer()
                        << "; item.root.parent=" << (root() ? root()->parent() : nullptr);
             return false;
         }
@@ -656,10 +663,8 @@ bool Item::checkSanity()
             root()->dumpLayout();
             auto d = qWarning();
             d << Q_FUNC_INFO << "Guest widget doesn't have correct geometry. has"
-              << "guest.global=" << m_guest->geometry()
-              << "; item.local=" << geometry()
-              << "; item.global=" << mapToRoot(rect())
-              << this;
+              << "guest.global=" << m_guest->geometry() << "; item.local=" << geometry()
+              << "; item.global=" << mapToRoot(rect()) << this;
 
             return false;
         }
@@ -697,7 +702,8 @@ void Item::setGeometry(QRect rect)
         }
 
         const QSize minSz = minSize();
-        if (!s_silenceSanityChecks && (rect.width() < minSz.width() || rect.height() < minSz.height())) {
+        if (!s_silenceSanityChecks
+            && (rect.width() < minSz.width() || rect.height() < minSz.height())) {
             if (auto r = root())
                 r->dumpLayout();
             qWarning() << Q_FUNC_INFO << this << "Constraints not honoured."
@@ -775,9 +781,9 @@ void Item::turnIntoPlaceholder()
 {
     Q_ASSERT(!isContainer());
 
-    // Turning into placeholder just means hiding it. So we can show it again in its original position.
-    // Call removeItem() so we share the code for making the neighbours grow into the space that becomes available
-    // after hiding this one
+    // Turning into placeholder just means hiding it. So we can show it again in its original
+    // position. Call removeItem() so we share the code for making the neighbours grow into the
+    // space that becomes available after hiding this one
     parentContainer()->removeItem(this, /*hardDelete=*/false);
 }
 
@@ -814,11 +820,11 @@ void Item::onWidgetDestroyed()
 void Item::onWidgetLayoutRequested()
 {
     if (View *w = guestView()) {
-        if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with mouse
-            qDebug() << Q_FUNC_INFO << "TODO: Not implemented yet. Widget can't just decide to resize yet"
-                     << "View.size=" << w->size()
-                     << "Item.size=" << size()
-                     << m_sizingInfo.geometry
+        if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
+                                               // mouse
+            qDebug() << Q_FUNC_INFO
+                     << "TODO: Not implemented yet. Widget can't just decide to resize yet"
+                     << "View.size=" << w->size() << "Item.size=" << size() << m_sizingInfo.geometry
                      << m_sizingInfo.isBeingInserted;
         }
 
@@ -926,13 +932,17 @@ struct ItemBoxContainer::Private
     bool isOverflowing() const;
     void relayoutIfNeeded();
     const Item *itemFromPath(const QVector<int> &path) const;
-    void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes, ChildrenResizeStrategy);
+    void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes,
+                        ChildrenResizeStrategy);
     void honourMaxSizes(SizingInfo::List &sizes);
     void scheduleCheckSanity() const;
-    KDDockWidgets::Controllers::Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;
-    KDDockWidgets::Controllers::Separator *neighbourSeparator_recursive(const Item *item, Side, Qt::Orientation) const;
+    KDDockWidgets::Controllers::Separator *neighbourSeparator(const Item *item, Side,
+                                                              Qt::Orientation) const;
+    KDDockWidgets::Controllers::Separator *neighbourSeparator_recursive(const Item *item, Side,
+                                                                        Qt::Orientation) const;
     void updateWidgets_recursive();
-    /// Returns the positions that each separator should have (x position if Qt::Horizontal, y otherwise)
+    /// Returns the positions that each separator should have (x position if Qt::Horizontal, y
+    /// otherwise)
     QVector<int> requiredSeparatorPositions() const;
     void updateSeparators();
     void deleteSeparators();
@@ -1037,8 +1047,7 @@ bool ItemBoxContainer::checkSanity()
         if (expectedPos != pos) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected pos" << pos << "; expected=" << expectedPos
-                       << "; for item=" << item
-                       << "; isContainer=" << item->isContainer();
+                       << "; for item=" << item << "; isContainer=" << item->isContainer();
             return false;
         }
 
@@ -1054,8 +1063,8 @@ bool ItemBoxContainer::checkSanity()
         }
 
         if (item->parent() != this) {
-            qWarning() << "Invalid QObject parent for" << item
-                       << "; is=" << item->parent() << "; expected=" << this;
+            qWarning() << "Invalid QObject parent for" << item << "; is=" << item->parent()
+                       << "; expected=" << this;
             return false;
         }
 
@@ -1071,8 +1080,8 @@ bool ItemBoxContainer::checkSanity()
 
             if (!rect().contains(item->geometry())) {
                 root()->dumpLayout();
-                qWarning() << Q_FUNC_INFO << "Item geo is out of bounds. item=" << item << "; geo="
-                           << item->geometry() << "; parent.rect=" << rect();
+                qWarning() << Q_FUNC_INFO << "Item geo is out of bounds. item=" << item
+                           << "; geo=" << item->geometry() << "; parent.rect=" << rect();
                 return false;
             }
         }
@@ -1101,9 +1110,8 @@ bool ItemBoxContainer::checkSanity()
         const double expectedPercentage = visibleChildren.isEmpty() ? 0.0 : 1.0;
         if (!qFuzzyCompare(totalPercentage, expectedPercentage)) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Percentages don't add up"
-                       << totalPercentage << percentages
-                       << this;
+            qWarning() << Q_FUNC_INFO << "Percentages don't add up" << totalPercentage
+                       << percentages << this;
             const_cast<ItemBoxContainer *>(this)->d->updateSeparators_recursive();
             qWarning() << Q_FUNC_INFO << d->childPercentages();
             return false;
@@ -1126,7 +1134,8 @@ bool ItemBoxContainer::checkSanity()
     for (int i = 0; i < d->m_separators.size(); ++i) {
         KDDockWidgets::Controllers::Separator *separator = d->m_separators.at(i);
         Item *item = visibleChildren.at(i);
-        const int expectedSeparatorPos = mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
+        const int expectedSeparatorPos =
+            mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
         if (!View::equals(separator->view()->parentView().get(), hostView())) {
             qWarning() << Q_FUNC_INFO << "Invalid host widget for separator" << this;
@@ -1142,43 +1151,45 @@ bool ItemBoxContainer::checkSanity()
         if (separator->position() != expectedSeparatorPos) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected separator position" << separator->position()
-                       << "; expected=" << expectedSeparatorPos
-                       << separator << "; this=" << this;
+                       << "; expected=" << expectedSeparatorPos << separator << "; this=" << this;
             return false;
         }
 
         View *separatorWidget = separator->view();
         if (separatorWidget->geometry().size() != expectedSeparatorSize) {
-            qWarning() << Q_FUNC_INFO << "Unexpected separator size" << separatorWidget->geometry().size()
-                       << "; expected=" << expectedSeparatorSize
-                       << separator << "; this=" << this;
+            qWarning() << Q_FUNC_INFO << "Unexpected separator size"
+                       << separatorWidget->geometry().size()
+                       << "; expected=" << expectedSeparatorSize << separator << "; this=" << this;
             return false;
         }
 
-        const int separatorPos2 = Layouting::pos(separatorWidget->geometry().topLeft(), oppositeOrientation(d->m_orientation));
-        if (Layouting::pos(separatorWidget->geometry().topLeft(), oppositeOrientation(d->m_orientation)) != pos2) {
+        const int separatorPos2 = Layouting::pos(separatorWidget->geometry().topLeft(),
+                                                 oppositeOrientation(d->m_orientation));
+        if (Layouting::pos(separatorWidget->geometry().topLeft(),
+                           oppositeOrientation(d->m_orientation))
+            != pos2) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected position pos2=" << separatorPos2
-                       << "; expected=" << pos2
-                       << separator << "; this=" << this;
+                       << "; expected=" << pos2 << separator << "; this=" << this;
             return false;
         }
 
-        if (separator->view()->parentView() && !separator->view()->parentView()->equals(hostView())) {
+        if (separator->view()->parentView()
+            && !separator->view()->parentView()->equals(hostView())) {
             qWarning() << Q_FUNC_INFO << "Unexpected host widget in separator";
             return false;
         }
 
-        // Check that the separator bounds are correct. We can't always honour widget's max-size constraints, so only honour min-size
+        // Check that the separator bounds are correct. We can't always honour widget's max-size
+        // constraints, so only honour min-size
         const int separatorMinPos = minPosForSeparator_global(separator, /*honourMax=*/false);
         const int separatorMaxPos = maxPosForSeparator_global(separator, /*honourMax=*/false);
         const int separatorPos = separator->position();
-        if (separatorPos < separatorMinPos || separatorPos > separatorMaxPos || separatorMinPos < 0 || separatorMaxPos <= 0) {
+        if (separatorPos < separatorMinPos || separatorPos > separatorMaxPos || separatorMinPos < 0
+            || separatorMaxPos <= 0) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Invalid bounds for separator, pos="
-                       << separatorPos << "; min=" << separatorMinPos
-                       << "; max=" << separatorMaxPos
-                       << separator;
+            qWarning() << Q_FUNC_INFO << "Invalid bounds for separator, pos=" << separatorPos
+                       << "; min=" << separatorMinPos << "; max=" << separatorMaxPos << separator;
             return false;
         }
     }
@@ -1301,8 +1312,8 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 }
 
 /** static */
-void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo,
-                                            Location loc, KDDockWidgets::InitialOption option)
+void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Location loc,
+                                            KDDockWidgets::InitialOption option)
 {
     Q_ASSERT(item != relativeTo);
 
@@ -1330,8 +1341,8 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo,
         const Qt::Orientation orientation = orientationForLocation(loc);
         if (orientation != parent->orientation()) {
             Q_ASSERT(parent->visibleChildren().size() == 1);
-            // This is the case where the container only has one item, so it's both vertical and horizontal
-            // Now its orientation gets defined
+            // This is the case where the container only has one item, so it's both vertical and
+            // horizontal Now its orientation gets defined
             parent->setOrientation(orientation);
         }
 
@@ -1406,8 +1417,10 @@ void ItemBoxContainer::onChildMinSizeChanged(Item *child)
 
     const QSize missingForChild = child->missingSize();
     if (!missingForChild.isNull()) {
-        // Child has some growing to do. It will grow left and right equally, (and top-bottom), as needed.
-        growItem(child, Layouting::length(missingForChild, d->m_orientation), GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
+        // Child has some growing to do. It will grow left and right equally, (and top-bottom), as
+        // needed.
+        growItem(child, Layouting::length(missingForChild, d->m_orientation),
+                 GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
     }
 
     updateChildPercentages();
@@ -1434,21 +1447,22 @@ void ItemBoxContainer::onChildVisibleChanged(Item *, bool visible)
 
     const int numVisible = numVisibleChildren();
     if (visible && numVisible == 1) {
-        // Child became visible and there's only 1 visible child. Meaning there were 0 visible before.
+        // Child became visible and there's only 1 visible child. Meaning there were 0 visible
+        // before.
         visibleChanged.emit(this, true);
     } else if (!visible && numVisible == 0) {
         visibleChanged.emit(this, false);
     }
 }
 
-QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeTo, Location loc) const
+QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeTo,
+                                          Location loc) const
 {
-    // Returns the drop rect. This is the geometry used by the rubber band when you hover over an indicator.
-    // It's calculated by copying the layout and inserting the item into the dummy/invisible copy
-    // The we see which geometry the item got. This way the returned geometry is always what the item will get
-    // if you drop it.
-    // One exception is if the window doesn't have enough space and it would grow. In this case
-    // we fall back to something reasonable
+    // Returns the drop rect. This is the geometry used by the rubber band when you hover over an
+    // indicator. It's calculated by copying the layout and inserting the item into the
+    // dummy/invisible copy The we see which geometry the item got. This way the returned geometry
+    // is always what the item will get if you drop it. One exception is if the window doesn't have
+    // enough space and it would grow. In this case we fall back to something reasonable
 
 
     if (relativeTo && !relativeTo->parentContainer()) {
@@ -1476,7 +1490,8 @@ QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relative
     const bool isEmpty = !root()->hasVisibleChildren();
     const int extraWidth = (isEmpty || locationIsVertical(loc)) ? 0 : Item::separatorThickness;
     const int extraHeight = (isEmpty || !locationIsVertical(loc)) ? 0 : Item::separatorThickness;
-    const bool windowNeedsGrowing = availableSize.width() < minSize.width() + extraWidth || availableSize.height() < minSize.height() + extraHeight;
+    const bool windowNeedsGrowing = availableSize.width() < minSize.width() + extraWidth
+        || availableSize.height() < minSize.height() + extraHeight;
 
     if (windowNeedsGrowing)
         return suggestedDropRectFallback(item, relativeTo, loc);
@@ -1509,7 +1524,8 @@ QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relative
     return itemCopy->mapToRoot(itemCopy->rect());
 }
 
-QRect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *relativeTo, Location loc) const
+QRect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *relativeTo,
+                                                  Location loc) const
 {
     const QSize minSize = item->minSize();
     const int itemMin = Layouting::length(minSize, d->m_orientation);
@@ -1610,7 +1626,8 @@ void ItemBoxContainer::applyPositions(const SizingInfo::List &sizes)
         }
 
         const Qt::Orientation oppositeOrientation = ::oppositeOrientation(d->m_orientation);
-        // If the layout is horizontal, the item will have the height of the container. And vice-versa
+        // If the layout is horizontal, the item will have the height of the container. And
+        // vice-versa
         item->setLength_recursive(sizing.length(oppositeOrientation), oppositeOrientation);
 
         item->setPos(sizing.geometry.topLeft());
@@ -1634,7 +1651,8 @@ void ItemBoxContainer::positionItems(SizingInfo::List &sizes)
             continue;
         }
 
-        // If the layout is horizontal, the item will have the height of the container. And vice-versa
+        // If the layout is horizontal, the item will have the height of the container. And
+        // vice-versa
         const int oppositeLength = Layouting::length(size(), oppositeOrientation);
         sizing.setLength(oppositeLength, oppositeOrientation);
         sizing.setPos(0, oppositeOrientation);
@@ -1848,23 +1866,27 @@ QSize ItemBoxContainer::maxSizeHint() const
     return QSize(maxW, maxH).expandedTo(d->minSize(visibleChildren));
 }
 
-void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &childSizes,
+void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize,
+                                               SizingInfo::List &childSizes,
                                                ChildrenResizeStrategy strategy)
 {
     // This container is being resized to @p newSize, so we must resize our children too, based
     // on @p strategy.
-    // The new sizes are applied to @p childSizes, which will be applied to the widgets when we're done
+    // The new sizes are applied to @p childSizes, which will be applied to the widgets when we're
+    // done
 
     const QVector<double> childPercentages = this->childPercentages();
     const auto count = childSizes.count();
     const bool widthChanged = oldSize.width() != newSize.width();
     const bool heightChanged = oldSize.height() != newSize.height();
-    const bool lengthChanged = (q->isVertical() && heightChanged) || (q->isHorizontal() && widthChanged);
+    const bool lengthChanged =
+        (q->isVertical() && heightChanged) || (q->isHorizontal() && widthChanged);
     const int totalNewLength = q->usableLength();
 
     if (strategy == ChildrenResizeStrategy::Percentage) {
-        // In this strategy mode, each children will preserve its current relative size. So, if a child
-        // is occupying 50% of this container, then it will still occupy that after the container resize
+        // In this strategy mode, each children will preserve its current relative size. So, if a
+        // child is occupying 50% of this container, then it will still occupy that after the
+        // container resize
 
         int remaining = totalNewLength;
         for (int i = 0; i < count; ++i) {
@@ -1873,9 +1895,9 @@ void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Siz
             SizingInfo &itemSize = childSizes[i];
 
             const qreal childPercentage = childPercentages.at(i);
-            const int newItemLength = lengthChanged ? (isLast ? remaining
-                                                              : int(childPercentage * totalNewLength))
-                                                    : itemSize.length(m_orientation);
+            const int newItemLength = lengthChanged
+                ? (isLast ? remaining : int(childPercentage * totalNewLength))
+                : itemSize.length(m_orientation);
 
             if (newItemLength <= 0) {
                 q->root()->dumpLayout();
@@ -1892,15 +1914,20 @@ void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Siz
                 itemSize.geometry.setSize({ newItemLength, q->height() });
             }
         }
-    } else if (strategy == ChildrenResizeStrategy::Side1SeparatorMove || strategy == ChildrenResizeStrategy::Side2SeparatorMove) {
-        int remaining = Layouting::length(newSize - oldSize, m_orientation); // This is how much we need to give to children (when growing the container), or to take from them when shrinking the container
+    } else if (strategy == ChildrenResizeStrategy::Side1SeparatorMove
+               || strategy == ChildrenResizeStrategy::Side2SeparatorMove) {
+        int remaining = Layouting::length(
+            newSize - oldSize,
+            m_orientation); // This is how much we need to give to children (when growing the
+                            // container), or to take from them when shrinking the container
         const bool isGrowing = remaining > 0;
         remaining = qAbs(remaining); // Easier to deal in positive numbers
 
-        // We're resizing the container, and need to decide if we start resizing the 1st children or in reverse order.
-        // If the separator is being dragged left or top, then isSide1SeparatorMove is true.
-        // If isSide1SeparatorMove is true and we're growing, then it means this container is on the right/bottom of the separator,
-        // so should resize its first children first. Same logic for the other 3 cases
+        // We're resizing the container, and need to decide if we start resizing the 1st children or
+        // in reverse order. If the separator is being dragged left or top, then
+        // isSide1SeparatorMove is true. If isSide1SeparatorMove is true and we're growing, then it
+        // means this container is on the right/bottom of the separator, so should resize its first
+        // children first. Same logic for the other 3 cases
 
         const bool isSide1SeparatorMove = strategy == ChildrenResizeStrategy::Side1SeparatorMove;
         bool resizeHeadFirst = false;
@@ -2050,9 +2077,7 @@ void ItemBoxContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy s
         if (!s_silenceSanityChecks && hostSupportsHonouringLayoutMinSize()) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "New size doesn't respect size constraints"
-                       << "; new=" << newSize
-                       << "; min=" << minSize
-                       << this;
+                       << "; new=" << newSize << "; min=" << minSize << this;
         }
         return;
     }
@@ -2070,8 +2095,8 @@ void ItemBoxContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy s
     // #1 Since we changed size, also resize out children.
     // But apply them to our SizingInfo::List first before setting actual Item/QWidget geometries
     // Because we need step #2 where we ensure min sizes for each item are respected. We could
-    // calculate and do everything in a single-step, but we already have the code for #2 in growItem()
-    // so doing it in 2 steps will reuse much logic.
+    // calculate and do everything in a single-step, but we already have the code for #2 in
+    // growItem() so doing it in 2 steps will reuse much logic.
 
 
     // the sizes:
@@ -2085,7 +2110,8 @@ void ItemBoxContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy s
         SizingInfo &size = childSizes[i];
         const int missing = size.missingLength(d->m_orientation);
         if (missing > 0)
-            growItem(i, childSizes, missing, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
+            growItem(i, childSizes, missing, GrowthStrategy::BothSidesEqually,
+                     NeighbourSqueezeStrategy::AllNeighbours);
     }
 
     // #3 Sizes are now correct and honour min/max sizes. So apply them to our Items
@@ -2110,20 +2136,18 @@ void ItemBoxContainer::dumpLayout(int level)
 
     QString indent;
     indent.fill(QLatin1Char(' '), level);
-    const QString beingInserted = m_sizingInfo.isBeingInserted ? QStringLiteral("; beingInserted;")
-                                                               : QString();
-    const QString visible = !isVisible() ? QStringLiteral(";hidden;")
-                                         : QString();
+    const QString beingInserted =
+        m_sizingInfo.isBeingInserted ? QStringLiteral("; beingInserted;") : QString();
+    const QString visible = !isVisible() ? QStringLiteral(";hidden;") : QString();
 
-    const QString typeStr = isRoot() ? QStringLiteral("* Root: ")
-                                     : QStringLiteral("* Layout: ");
+    const QString typeStr = isRoot() ? QStringLiteral("* Root: ") : QStringLiteral("* Layout: ");
 
     {
         auto dbg = qDebug().noquote();
         dbg << indent << typeStr << d->m_orientation
-            << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" << m_geometry.bottom()*/
-            << "; min=" << minSize()
-            << "; this=" << this << beingInserted << visible
+            << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" <<
+                                        m_geometry.bottom()*/
+            << "; min=" << minSize() << "; this=" << this << beingInserted << visible
             << "; %=" << d->childPercentages();
 
         if (maxSizeHint() != Item::hardcodedMaximumSize)
@@ -2138,8 +2162,7 @@ void ItemBoxContainer::dumpLayout(int level)
                 auto separator = d->m_separators.at(i);
                 qDebug().noquote() << indent << " - Separator: "
                                    << "local.geo=" << mapFromRoot(separator->view()->geometry())
-                                   << "global.geo=" << separator->view()->geometry()
-                                   << separator;
+                                   << "global.geo=" << separator->view()->geometry() << separator;
             }
             ++i;
         }
@@ -2154,7 +2177,8 @@ void ItemBoxContainer::updateChildPercentages()
     const int usable = usableLength();
     for (Item *item : qAsConst(m_children)) {
         if (item->isVisible() && !item->isBeingInserted()) {
-            item->m_sizingInfo.percentageWithinParent = (1.0 * item->length(d->m_orientation)) / usable;
+            item->m_sizingInfo.percentageWithinParent =
+                (1.0 * item->length(d->m_orientation)) / usable;
         } else {
             item->m_sizingInfo.percentageWithinParent = 0.0;
         }
@@ -2197,7 +2221,8 @@ void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbo
     if (!hadVisibleChildren) {
         // This container was hidden and will now be restored too, since a child was restored
         if (auto c = parentBoxContainer()) {
-            setSize(item->size()); // give it a decent size. Same size as the item being restored makes sense
+            setSize(item->size()); // give it a decent size. Same size as the item being restored
+                                   // makes sense
             c->restoreChild(this, neighbourSqueezeStrategy);
         }
     }
@@ -2214,30 +2239,36 @@ void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbo
         return;
     }
 
-    const int available = availableToSqueezeOnSide(item, Side1) + availableToSqueezeOnSide(item, Side2) - Item::separatorThickness;
+    const int available = availableToSqueezeOnSide(item, Side1)
+        + availableToSqueezeOnSide(item, Side2) - Item::separatorThickness;
 
     const int max = qMin(available, item->maxLengthHint(d->m_orientation));
     const int min = item->minLength(d->m_orientation);
 
     /*
      * Regarding the excessLength:
-     * The layout bigger than its own max-size. The new item will get more (if it can), to counter that excess.
-     * There's just 1 case where we have excess length: A layout with items with max-size, but the layout can't be smaller due to min-size constraints of the higher level layouts, in the nesting hierarchy.
-     * The excess goes away when inserting a widget that can grow indefinitely, it eats all the current excess.
+     * The layout bigger than its own max-size. The new item will get more (if it can), to counter
+     * that excess. There's just 1 case where we have excess length: A layout with items with
+     * max-size, but the layout can't be smaller due to min-size constraints of the higher level
+     * layouts, in the nesting hierarchy. The excess goes away when inserting a widget that can grow
+     * indefinitely, it eats all the current excess.
      */
-    const int proposed = qMax(Layouting::length(item->size(), d->m_orientation), excessLength - Item::separatorThickness);
+    const int proposed = qMax(Layouting::length(item->size(), d->m_orientation),
+                              excessLength - Item::separatorThickness);
     const int newLength = qBound(min, proposed, max);
 
     Q_ASSERT(item->isVisible());
 
-    // growItem() will make it grow by the same amount it steals from the neighbours, so we can't start the growing without zeroing it
+    // growItem() will make it grow by the same amount it steals from the neighbours, so we can't
+    // start the growing without zeroing it
     if (isVertical()) {
         item->m_sizingInfo.geometry.setHeight(0);
     } else {
         item->m_sizingInfo.geometry.setWidth(0);
     }
 
-    growItem(item, newLength, GrowthStrategy::BothSidesEqually, neighbourSqueezeStrategy, /*accountForNewSeparator=*/true);
+    growItem(item, newLength, GrowthStrategy::BothSidesEqually, neighbourSqueezeStrategy,
+             /*accountForNewSeparator=*/true);
     d->updateSeparators_recursive();
 }
 
@@ -2249,11 +2280,11 @@ void ItemBoxContainer::updateWidgetGeometries()
 
 int ItemBoxContainer::oppositeLength() const
 {
-    return isVertical() ? width()
-                        : height();
+    return isVertical() ? width() : height();
 }
 
-void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Controllers::Separator *separator, int delta)
+void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Controllers::Separator *separator,
+                                            int delta)
 {
     const auto separatorIndex = d->m_separators.indexOf(separator);
     if (separatorIndex == -1) {
@@ -2270,12 +2301,14 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Controllers::Separato
     const int pos = separator->position();
     const int max = maxPosForSeparator_global(separator);
 
-    if ((pos + delta < min && delta < 0) || // pos can be smaller than min, as long as we're making the distane to minPos smaller, same for max.
-        (pos + delta > max && delta > 0)) { // pos can be bigger than max already and going left/up (negative delta, which is fine), just don't increase if further
+    if ((pos + delta < min && delta < 0) || // pos can be smaller than min, as long as we're making
+                                            // the distane to minPos smaller, same for max.
+        (pos + delta > max && delta > 0)) { // pos can be bigger than max already and going left/up
+                                            // (negative delta, which is fine), just don't increase
+                                            // if further
         root()->dumpLayout();
         qWarning() << "Separator would have gone out of bounds"
-                   << "; separators=" << separator
-                   << "; min=" << min << "; pos=" << pos
+                   << "; separators=" << separator << "; min=" << min << "; pos=" << pos
                    << "; max=" << max << "; delta=" << delta;
         return;
     }
@@ -2284,8 +2317,8 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Controllers::Separato
     const Item::List children = visibleChildren();
     if (children.size() <= separatorIndex) {
         // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "Not enough children for separator index" << separator
-                   << this << separatorIndex;
+        qWarning() << Q_FUNC_INFO << "Not enough children for separator index" << separator << this
+                   << separatorIndex;
         root()->dumpLayout();
         return;
     }
@@ -2303,7 +2336,8 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Controllers::Separato
         const int availableSqueeze1 = availableToSqueezeOnSide(side2Neighbour, Side1);
         const int availableGrow2 = availableToGrowOnSide(side1Neighbour, Side2);
 
-        // This is the available within our container, which we can use without bothering other separators
+        // This is the available within our container, which we can use without bothering other
+        // separators
         tookLocally = qMin(availableSqueeze1, remainingToTake);
         tookLocally = qMin(tookLocally, availableGrow2);
 
@@ -2341,10 +2375,11 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Controllers::Separato
         // Go up the hierarchy and move the next separator on the left
         if (Q_UNLIKELY(isRoot())) {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "Not enough space to move separator"
-                       << this;
+            qWarning() << Q_FUNC_INFO << "Not enough space to move separator" << this;
         } else {
-            KDDockWidgets::Controllers::Separator *nextSeparator = parentBoxContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection, d->m_orientation);
+            KDDockWidgets::Controllers::Separator *nextSeparator =
+                parentBoxContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection,
+                                                                      d->m_orientation);
             if (!nextSeparator) {
                 // Doesn't happen
                 qWarning() << Q_FUNC_INFO << "nextSeparator is null, report a bug";
@@ -2378,8 +2413,10 @@ void ItemBoxContainer::requestEqualSize(KDDockWidgets::Controllers::Separator *s
         // items already have the same length, nothing to do.
         // We allow for a difference of 1px, since you can't split that.
 
-        // But if at least 1 item is bigger than its max-size, don't bail out early, as then they don't deserve equal sizes.
-        if (!(side1Item->m_sizingInfo.isPastMax(d->m_orientation) || side2Item->m_sizingInfo.isPastMax(d->m_orientation))) {
+        // But if at least 1 item is bigger than its max-size, don't bail out early, as then they
+        // don't deserve equal sizes.
+        if (!(side1Item->m_sizingInfo.isPastMax(d->m_orientation)
+              || side2Item->m_sizingInfo.isPastMax(d->m_orientation))) {
             return;
         }
     }
@@ -2532,12 +2569,11 @@ QSize ItemBoxContainer::availableSize() const
 
 int ItemBoxContainer::availableLength() const
 {
-    return isVertical() ? availableSize().height()
-                        : availableSize().width();
+    return isVertical() ? availableSize().height() : availableSize().width();
 }
 
-LengthOnSide ItemBoxContainer::lengthOnSide(const SizingInfo::List &sizes, int fromIndex,
-                                            Side side, Qt::Orientation o) const
+LengthOnSide ItemBoxContainer::lengthOnSide(const SizingInfo::List &sizes, int fromIndex, Side side,
+                                            Qt::Orientation o) const
 {
     if (fromIndex < 0)
         return {};
@@ -2597,9 +2633,11 @@ int ItemBoxContainer::neighboursLengthFor(const Item *item, Side side, Qt::Orien
     }
 }
 
-int ItemBoxContainer::neighboursLengthFor_recursive(const Item *item, Side side, Qt::Orientation o) const
+int ItemBoxContainer::neighboursLengthFor_recursive(const Item *item, Side side,
+                                                    Qt::Orientation o) const
 {
-    return neighboursLengthFor(item, side, o) + (isRoot() ? 0 : parentBoxContainer()->neighboursLengthFor_recursive(this, side, o));
+    return neighboursLengthFor(item, side, o)
+        + (isRoot() ? 0 : parentBoxContainer()->neighboursLengthFor_recursive(this, side, o));
 }
 
 int ItemBoxContainer::neighboursMinLengthFor(const Item *item, Side side, Qt::Orientation o) const
@@ -2655,7 +2693,9 @@ int ItemBoxContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Or
         }
 
         for (int i = start; i <= end; ++i)
-            neighbourMaxLength = qMin(Layouting::length(root()->size(), d->m_orientation), neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
+            neighbourMaxLength =
+                qMin(Layouting::length(root()->size(), d->m_orientation),
+                     neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
 
         return neighbourMaxLength;
     } else {
@@ -2685,27 +2725,35 @@ int ItemBoxContainer::availableToGrowOnSide(const Item *child, Side side) const
     return max - length;
 }
 
-int ItemBoxContainer::availableToSqueezeOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
+int ItemBoxContainer::availableToSqueezeOnSide_recursive(const Item *child, Side side,
+                                                         Qt::Orientation orientation) const
 {
     if (orientation == d->m_orientation) {
         const int available = availableToSqueezeOnSide(child, side);
-        return isRoot() ? available
-                        : (available + parentBoxContainer()->availableToSqueezeOnSide_recursive(this, side, orientation));
+        return isRoot()
+            ? available
+            : (available
+               + parentBoxContainer()->availableToSqueezeOnSide_recursive(this, side, orientation));
     } else {
-        return isRoot() ? 0
-                        : parentBoxContainer()->availableToSqueezeOnSide_recursive(this, side, orientation);
+        return isRoot()
+            ? 0
+            : parentBoxContainer()->availableToSqueezeOnSide_recursive(this, side, orientation);
     }
 }
 
-int ItemBoxContainer::availableToGrowOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
+int ItemBoxContainer::availableToGrowOnSide_recursive(const Item *child, Side side,
+                                                      Qt::Orientation orientation) const
 {
     if (orientation == d->m_orientation) {
         const int available = availableToGrowOnSide(child, side);
-        return isRoot() ? available
-                        : (available + parentBoxContainer()->availableToGrowOnSide_recursive(this, side, orientation));
+        return isRoot()
+            ? available
+            : (available
+               + parentBoxContainer()->availableToGrowOnSide_recursive(this, side, orientation));
     } else {
-        return isRoot() ? 0
-                        : parentBoxContainer()->availableToGrowOnSide_recursive(this, side, orientation);
+        return isRoot()
+            ? 0
+            : parentBoxContainer()->availableToGrowOnSide_recursive(this, side, orientation);
     }
 }
 
@@ -2720,9 +2768,11 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
         const int index1 = indexOfVisibleChild(side1Neighbour);
         const int index2 = indexOfVisibleChild(side2Neighbour);
 
-        if (index1 == -1 || index2 == -1 || index1 >= childSizes.count() || index2 >= childSizes.count()) {
+        if (index1 == -1 || index2 == -1 || index1 >= childSizes.count()
+            || index2 >= childSizes.count()) {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "Invalid indexes" << index1 << index2 << childSizes.count();
+            qWarning() << Q_FUNC_INFO << "Invalid indexes" << index1 << index2
+                       << childSizes.count();
             return;
         }
 
@@ -2808,7 +2858,8 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
             return;
         }
 
-        // #2. Now shrink the neighbors by the same amount. Calculate how much to shrink from each side
+        // #2. Now shrink the neighbors by the same amount. Calculate how much to shrink from each
+        // side
         const LengthOnSide side1Length = lengthOnSide(sizes, index - 1, Side1, d->m_orientation);
         const LengthOnSide side2Length = lengthOnSide(sizes, index + 1, Side2, d->m_orientation);
 
@@ -2849,7 +2900,8 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
         side1Growth = qMin(missing, sizingInfo.availableToGrow(d->m_orientation));
         sizingInfo.setLength(sizingInfo.length(d->m_orientation) + side1Growth, d->m_orientation);
         if (side1Growth > 0)
-            shrinkNeighbours(index, sizes, side1Growth, /*side2Growth=*/0, neighbourSqueezeStrategy);
+            shrinkNeighbours(index, sizes, side1Growth, /*side2Growth=*/0,
+                             neighbourSqueezeStrategy);
         if (side1Growth < missing) {
             missing = missing - side1Growth;
 
@@ -2857,7 +2909,8 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
                 // Doesn't happen
                 qWarning() << Q_FUNC_INFO << "No more items to grow";
             } else {
-                growItem(index + 1, sizes, missing, growthStrategy, neighbourSqueezeStrategy, accountForNewSeparator);
+                growItem(index + 1, sizes, missing, growthStrategy, neighbourSqueezeStrategy,
+                         accountForNewSeparator);
             }
         }
 
@@ -2866,7 +2919,8 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
         sizingInfo.setLength(sizingInfo.length(d->m_orientation) + side2Growth, d->m_orientation);
 
         if (side2Growth > 0)
-            shrinkNeighbours(index, sizes, /*side1Growth=*/0, side2Growth, neighbourSqueezeStrategy);
+            shrinkNeighbours(index, sizes, /*side1Growth=*/0, side2Growth,
+                             neighbourSqueezeStrategy);
         if (side2Growth < missing) {
             missing = missing - side2Growth;
 
@@ -2874,7 +2928,8 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
                 // Doesn't happen
                 qWarning() << Q_FUNC_INFO << "No more items to grow";
             } else {
-                growItem(index - 1, sizes, missing, growthStrategy, neighbourSqueezeStrategy, accountForNewSeparator);
+                growItem(index - 1, sizes, missing, growthStrategy, neighbourSqueezeStrategy,
+                         accountForNewSeparator);
             }
         }
     }
@@ -2889,12 +2944,14 @@ void ItemBoxContainer::growItem(Item *item, int amount, GrowthStrategy growthStr
     const auto index = items.indexOf(item);
     SizingInfo::List sizes = this->sizes();
 
-    growItem(index, /*by-ref=*/sizes, amount, growthStrategy, neighbourSqueezeStrategy, accountForNewSeparator);
+    growItem(index, /*by-ref=*/sizes, amount, growthStrategy, neighbourSqueezeStrategy,
+             accountForNewSeparator);
 
     applyGeometries(sizes, childResizeStrategy);
 }
 
-void ItemBoxContainer::applyGeometries(const SizingInfo::List &sizes, ChildrenResizeStrategy strategy)
+void ItemBoxContainer::applyGeometries(const SizingInfo::List &sizes,
+                                       ChildrenResizeStrategy strategy)
 {
     const Item::List items = visibleChildren();
     const auto count = items.size();
@@ -2915,8 +2972,8 @@ SizingInfo::List ItemBoxContainer::sizes(bool ignoreBeingInserted) const
     result.reserve(children.count());
     for (Item *item : children) {
         if (item->isContainer()) {
-            // Containers have virtual min/maxSize methods, and don't really fill in these properties
-            // So fill them here
+            // Containers have virtual min/maxSize methods, and don't really fill in these
+            // properties So fill them here
             item->m_sizingInfo.minSize = item->minSize();
             item->m_sizingInfo.maxSizeHint = item->maxSizeHint();
         }
@@ -2926,9 +2983,10 @@ SizingInfo::List ItemBoxContainer::sizes(bool ignoreBeingInserted) const
     return result;
 }
 
-QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin, // clazy:exclude=function-args-by-ref
-                                                 SizingInfo::List::ConstIterator end, int needed, // clazy:exclude=function-args-by-ref
-                                                 NeighbourSqueezeStrategy strategy, bool reversed) const
+QVector<int> ItemBoxContainer::calculateSqueezes(
+    SizingInfo::List::ConstIterator begin, // clazy:exclude=function-args-by-ref
+    SizingInfo::List::ConstIterator end, int needed, // clazy:exclude=function-args-by-ref
+    NeighbourSqueezeStrategy strategy, bool reversed) const
 {
     QVector<int> availabilities;
     for (auto it = begin; it < end; ++it) {
@@ -2945,9 +3003,8 @@ QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator
 
     if (strategy == NeighbourSqueezeStrategy::AllNeighbours) {
         while (missing > 0) {
-            const int numDonors = std::count_if(availabilities.cbegin(), availabilities.cend(), [](int num) {
-                return num > 0;
-            });
+            const int numDonors = std::count_if(availabilities.cbegin(), availabilities.cend(),
+                                                [](int num) { return num > 0; });
 
             if (numDonors == 0) {
                 root()->dumpLayout();
@@ -2989,8 +3046,7 @@ QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator
 
     if (missing < 0) {
         // Doesn't really happen
-        qWarning() << Q_FUNC_INFO << "Missing is negative" << missing
-                   << squeezes;
+        qWarning() << Q_FUNC_INFO << "Missing is negative" << missing << squeezes;
     }
 
     return squeezes;
@@ -3006,11 +3062,13 @@ void ItemBoxContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int 
         auto begin = sizes.cbegin();
         auto end = sizes.cbegin() + index;
         const bool reversed = strategy == NeighbourSqueezeStrategy::ImmediateNeighboursFirst;
-        const QVector<int> squeezes = calculateSqueezes(begin, end, side1Amount, strategy, reversed);
+        const QVector<int> squeezes =
+            calculateSqueezes(begin, end, side1Amount, strategy, reversed);
         for (int i = 0; i < squeezes.size(); ++i) {
             const int squeeze = squeezes.at(i);
             SizingInfo &sizing = sizes[i];
-            // setSize() or setGeometry() have the same effect here, we don't care about the position yet. That's done in positionItems()
+            // setSize() or setGeometry() have the same effect here, we don't care about the
+            // position yet. That's done in positionItems()
             sizing.setSize(adjustedRect(sizing.geometry, d->m_orientation, 0, -squeeze).size());
         }
     }
@@ -3082,8 +3140,8 @@ void ItemBoxContainer::Private::updateSeparators()
     }
 
     // Update their positions:
-    const int pos2 = q->isVertical() ? q->mapToRoot(QPoint(0, 0)).x()
-                                     : q->mapToRoot(QPoint(0, 0)).y();
+    const int pos2 =
+        q->isVertical() ? q->mapToRoot(QPoint(0, 0)).x() : q->mapToRoot(QPoint(0, 0)).y();
 
     int i = 0;
     for (int position : positions) {
@@ -3131,8 +3189,8 @@ int ItemBoxContainer::Private::excessLength() const
 
 void ItemBoxContainer::simplify()
 {
-    // Removes unneeded nesting. For example, a vertical layout doesn't need to have vertical layouts
-    // inside. It can simply have the contents of said sub-layouts
+    // Removes unneeded nesting. For example, a vertical layout doesn't need to have vertical
+    // layouts inside. It can simply have the contents of said sub-layouts
 
     QScopedValueRollback<bool> isInSimplify(d->m_isSimplifying, true);
 
@@ -3143,7 +3201,8 @@ void ItemBoxContainer::simplify()
         if (ItemBoxContainer *childContainer = child->asBoxContainer()) {
             childContainer->simplify(); // recurse down the hierarchy
 
-            if (childContainer->orientation() == d->m_orientation || childContainer->m_children.size() == 1) {
+            if (childContainer->orientation() == d->m_orientation
+                || childContainer->m_children.size() == 1) {
                 // This sub-container is redundant, as it has the same orientation as its parent
                 // Cannibalize it.
                 for (Item *child2 : childContainer->childItems()) {
@@ -3201,19 +3260,22 @@ bool ItemBoxContainer::isInSimplify() const
     return p && p->isInSimplify();
 }
 
-int ItemBoxContainer::minPosForSeparator(KDDockWidgets::Controllers::Separator *separator, bool honourMax) const
+int ItemBoxContainer::minPosForSeparator(KDDockWidgets::Controllers::Separator *separator,
+                                         bool honourMax) const
 {
     const int globalMin = minPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMin, d->m_orientation);
 }
 
-int ItemBoxContainer::maxPosForSeparator(KDDockWidgets::Controllers::Separator *separator, bool honourMax) const
+int ItemBoxContainer::maxPosForSeparator(KDDockWidgets::Controllers::Separator *separator,
+                                         bool honourMax) const
 {
     const int globalMax = maxPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMax, d->m_orientation);
 }
 
-int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Controllers::Separator *separator, bool honourMax) const
+int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Controllers::Separator *separator,
+                                                bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
@@ -3222,10 +3284,12 @@ int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Controllers::Sepa
     Q_ASSERT(separatorIndex + 1 < children.size());
     Item *item2 = children.at(separatorIndex + 1);
 
-    const int availableToSqueeze = availableToSqueezeOnSide_recursive(item2, Side1, d->m_orientation);
+    const int availableToSqueeze =
+        availableToSqueezeOnSide_recursive(item2, Side1, d->m_orientation);
 
     if (honourMax) {
-        // We can drag the separator left just as much as it doesn't violate max-size constraints of Side2
+        // We can drag the separator left just as much as it doesn't violate max-size constraints of
+        // Side2
         Item *item1 = children.at(separatorIndex);
         const int availabletoGrow = availableToGrowOnSide_recursive(item1, Side2, d->m_orientation);
         return separator->position() - qMin(availabletoGrow, availableToSqueeze);
@@ -3234,7 +3298,8 @@ int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Controllers::Sepa
     return separator->position() - availableToSqueeze;
 }
 
-int ItemBoxContainer::maxPosForSeparator_global(KDDockWidgets::Controllers::Separator *separator, bool honourMax) const
+int ItemBoxContainer::maxPosForSeparator_global(KDDockWidgets::Controllers::Separator *separator,
+                                                bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
@@ -3242,10 +3307,12 @@ int ItemBoxContainer::maxPosForSeparator_global(KDDockWidgets::Controllers::Sepa
     const Item::List children = visibleChildren();
     Item *item1 = children.at(separatorIndex);
 
-    const int availableToSqueeze = availableToSqueezeOnSide_recursive(item1, Side2, d->m_orientation);
+    const int availableToSqueeze =
+        availableToSqueezeOnSide_recursive(item1, Side2, d->m_orientation);
 
     if (honourMax) {
-        // We can drag the separator right just as much as it doesn't violate max-size constraints of Side1
+        // We can drag the separator right just as much as it doesn't violate max-size constraints
+        // of Side1
         Item *item2 = children.at(separatorIndex + 1);
         const int availabletoGrow = availableToGrowOnSide_recursive(item2, Side1, d->m_orientation);
         return separator->position() + qMin(availabletoGrow, availableToSqueeze);
@@ -3282,8 +3349,8 @@ void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
     for (const QVariant &childV : childrenV) {
         const QVariantMap childMap = childV.toMap();
         const bool isContainer = childMap.value(QStringLiteral("isContainer")).toBool();
-        Item *child = isContainer ? new ItemBoxContainer(hostView(), this)
-                                  : new Item(hostView(), this);
+        Item *child =
+            isContainer ? new ItemBoxContainer(hostView(), this) : new Item(hostView(), this);
         child->fillFromVariantMap(childMap, widgets);
         m_children.push_back(child);
     }
@@ -3322,7 +3389,8 @@ bool ItemBoxContainer::test_suggestedRect()
             c->test_suggestedRect();
         } else {
             QHash<Location, QRect> rects;
-            for (Location loc : { Location_OnTop, Location_OnLeft, Location_OnRight, Location_OnBottom }) {
+            for (Location loc :
+                 { Location_OnTop, Location_OnLeft, Location_OnRight, Location_OnBottom }) {
                 const QRect rect = suggestedDropRect(itemToDrop, relativeTo, loc);
                 rects.insert(loc, rect);
                 if (rect.isEmpty()) {
@@ -3335,10 +3403,11 @@ bool ItemBoxContainer::test_suggestedRect()
                     return false;
                 }
             }
-            if (rects.value(Location_OnBottom).y() <= rects.value(Location_OnTop).y() || rects.value(Location_OnRight).x() <= rects.value(Location_OnLeft).x()) {
+            if (rects.value(Location_OnBottom).y() <= rects.value(Location_OnTop).y()
+                || rects.value(Location_OnRight).x() <= rects.value(Location_OnLeft).x()) {
                 root()->dumpLayout();
-                qWarning() << Q_FUNC_INFO << "Invalid suggested rects" << rects
-                           << this << "; relativeTo=" << relativeTo;
+                qWarning() << Q_FUNC_INFO << "Invalid suggested rects" << rects << this
+                           << "; relativeTo=" << relativeTo;
                 return false;
             }
         }
@@ -3419,8 +3488,7 @@ const Item *ItemBoxContainer::Private::itemFromPath(const QVector<int> &path) co
         if (index < 0 || index >= container->m_children.size()) {
             // Doesn't happen
             q->root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Invalid index" << index
-                       << this << path << q->isRoot();
+            qWarning() << Q_FUNC_INFO << "Invalid index" << index << this << path << q->isRoot();
             return nullptr;
         }
 
@@ -3438,13 +3506,14 @@ const Item *ItemBoxContainer::Private::itemFromPath(const QVector<int> &path) co
     return q;
 }
 
-Controllers::Separator *ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
+Controllers::Separator *
+ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side,
+                                              Qt::Orientation orientation) const
 {
     Item::List children = q->visibleChildren();
     const auto itemIndex = children.indexOf(const_cast<Item *>(item));
     if (itemIndex == -1) {
-        qWarning() << Q_FUNC_INFO << "Item not found" << item
-                   << this;
+        qWarning() << Q_FUNC_INFO << "Item not found" << item << this;
         q->root()->dumpLayout();
         return nullptr;
     }
@@ -3458,8 +3527,7 @@ Controllers::Separator *ItemBoxContainer::Private::neighbourSeparator(const Item
         }
     }
 
-    const auto separatorIndex = side == Side1 ? itemIndex - 1
-                                              : itemIndex;
+    const auto separatorIndex = side == Side1 ? itemIndex - 1 : itemIndex;
 
     if (separatorIndex < 0 || separatorIndex >= m_separators.size())
         return nullptr;
@@ -3467,8 +3535,9 @@ Controllers::Separator *ItemBoxContainer::Private::neighbourSeparator(const Item
     return m_separators[separatorIndex];
 }
 
-KDDockWidgets::Controllers::Separator *ItemBoxContainer::Private::neighbourSeparator_recursive(const Item *item, Side side,
-                                                                                               Qt::Orientation orientation) const
+KDDockWidgets::Controllers::Separator *
+ItemBoxContainer::Private::neighbourSeparator_recursive(const Item *item, Side side,
+                                                        Qt::Orientation orientation) const
 {
     KDDockWidgets::Controllers::Separator *separator = neighbourSeparator(item, side, orientation);
     if (separator)
@@ -3491,8 +3560,7 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
                     widget->setGeometry(q->mapToRoot(item->geometry()));
                     widget->setVisible(true);
                 } else {
-                    qWarning() << Q_FUNC_INFO << "visible item doesn't have a guest"
-                               << item;
+                    qWarning() << Q_FUNC_INFO << "visible item doesn't have a guest" << item;
                 }
             }
         }
@@ -3531,15 +3599,18 @@ int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option
 {
     int result = 0;
 
-    if (option.hasPreferredLength(m_orientation) && option.sizeMode != DefaultSizeMode::NoDefaultSizeMode) {
+    if (option.hasPreferredLength(m_orientation)
+        && option.sizeMode != DefaultSizeMode::NoDefaultSizeMode) {
         result = option.preferredLength(m_orientation);
     } else {
         switch (option.sizeMode) {
         case DefaultSizeMode::NoDefaultSizeMode:
             break;
         case DefaultSizeMode::Fair: {
-            const int numVisibleChildren = q->numVisibleChildren() + 1; // +1 so it counts with @p item too, which we're adding
-            const int usableLength = q->length() - (Item::separatorThickness * (numVisibleChildren - 1));
+            const int numVisibleChildren =
+                q->numVisibleChildren() + 1; // +1 so it counts with @p item too, which we're adding
+            const int usableLength =
+                q->length() - (Item::separatorThickness * (numVisibleChildren - 1));
             result = usableLength / numVisibleChildren;
             break;
         }

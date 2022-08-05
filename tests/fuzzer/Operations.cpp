@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -136,7 +136,8 @@ QString OperationBase::toString()
     if (m_description.isEmpty())
         updateDescription();
 
-    return QStringLiteral("type=%1;description=%2").arg(operationTypeStr(m_operationType), m_description);
+    return QStringLiteral("type=%1;description=%2")
+        .arg(operationTypeStr(m_operationType), m_description);
 }
 
 Controllers::DockWidget *OperationBase::dockByName(const QString &name) const
@@ -312,9 +313,14 @@ bool AddDockWidget::hasParams() const
 void AddDockWidget::updateDescription()
 {
     if (m_params.relativeToName.isEmpty())
-        m_description = QStringLiteral("AddDockWidget %1 to %2").arg(dockStr(m_params.dockWidgetName), KDDockWidgets::locationStr(m_params.location));
+        m_description = QStringLiteral("AddDockWidget %1 to %2")
+                            .arg(dockStr(m_params.dockWidgetName),
+                                 KDDockWidgets::locationStr(m_params.location));
     else
-        m_description = QStringLiteral("AddDockWidget %1 to %2, relative to %3").arg(dockStr(m_params.dockWidgetName), KDDockWidgets::locationStr(m_params.location), dockStr(m_params.relativeToName));
+        m_description = QStringLiteral("AddDockWidget %1 to %2, relative to %3")
+                            .arg(dockStr(m_params.dockWidgetName),
+                                 KDDockWidgets::locationStr(m_params.location),
+                                 dockStr(m_params.relativeToName));
 }
 
 void AddDockWidget::execute_impl()
@@ -328,8 +334,7 @@ void AddDockWidget::execute_impl()
 
 QVariantMap AddDockWidget::paramsToVariantMap() const
 {
-    return m_params.isNull() ? QVariantMap()
-                             : m_params.toVariantMap();
+    return m_params.isNull() ? QVariantMap() : m_params.toVariantMap();
 }
 
 void AddDockWidget::fillParamsFromVariantMap(const QVariantMap &map)
@@ -373,7 +378,8 @@ bool AddDockWidgetAsTab::hasParams() const
 
 void AddDockWidgetAsTab::updateDescription()
 {
-    m_description = QStringLiteral("AddDockWidgetAsTab %1 onto %2").arg(dockStr(m_dockWidgetToAddName), dockStr(m_dockWidgetName));
+    m_description = QStringLiteral("AddDockWidgetAsTab %1 onto %2")
+                        .arg(dockStr(m_dockWidgetToAddName), dockStr(m_dockWidgetName));
 }
 
 void AddDockWidgetAsTab::execute_impl()

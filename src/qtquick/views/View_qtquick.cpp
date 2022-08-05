@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -28,8 +28,8 @@ namespace KDDockWidgets::Views {
 
 /**
  * @brief Event filter which redirects mouse events from one QObject to another.
- * Needed for QtQuick to redirect the events from MouseArea to our KDDW classes which derive from Draggable.
- * For QtWidgets it's not needed, as the Draggables are QWidgets themselves.
+ * Needed for QtQuick to redirect the events from MouseArea to our KDDW classes which derive from
+ * Draggable. For QtWidgets it's not needed, as the Draggables are QWidgets themselves.
  */
 class MouseEventRedirector : public QObject
 {
@@ -102,19 +102,18 @@ static QQuickItem *actualParentItem(QQuickItem *candidateParentItem, Qt::WindowF
 {
     // When we have a top-level, such as FloatingWindow, we only want to set QObject parentship
     // and not parentItem.
-    return flagsAreTopLevelFlags(flags) ? nullptr
-                                        : candidateParentItem;
+    return flagsAreTopLevelFlags(flags) ? nullptr : candidateParentItem;
 }
 
-View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type,
-                           QQuickItem *parent,
+View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type, QQuickItem *parent,
                            Qt::WindowFlags flags)
     : QQuickItem(actualParentItem(parent, flags))
     , View_qt(controller, type, this)
     , m_windowFlags(flags)
 {
     if (parent && flagsAreTopLevelFlags(flags)) {
-        // See comment in actualParentItem(). We set only the QObject parent. Mimics QWidget behaviour
+        // See comment in actualParentItem(). We set only the QObject parent. Mimics QWidget
+        // behaviour
         QObject::setParent(parent);
     }
 
@@ -513,8 +512,8 @@ void View_qtquick::setParent(QQuickItem *parentItem)
     }
 
     // Mimic QWidget::setParent(), hide widget when setting parent
-    // Only of no parent item though, as that causes binding loops. Since it's benign we won't bother
-    // making it strictly like qtwidgets.
+    // Only of no parent item though, as that causes binding loops. Since it's benign we won't
+    // bother making it strictly like qtwidgets.
     if (!parentItem && !m_inDtor)
         setVisible(false);
 }
@@ -852,7 +851,8 @@ void View_qtquick::setZOrder(int z)
 
 QQuickItem *View_qtquick::visualItem() const
 {
-    qWarning() << Q_FUNC_INFO << "Base class called, please implement in your derived class if needed";
+    qWarning() << Q_FUNC_INFO
+               << "Base class called, please implement in your derived class if needed";
     return nullptr;
 }
 

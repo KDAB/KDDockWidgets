@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -40,16 +40,13 @@ namespace Views {
 
 class DockWidgetModel;
 
-class DOCKS_EXPORT Stack_qtquick
-    : public View_qtquick,
-      public StackViewInterface
+class DOCKS_EXPORT Stack_qtquick : public View_qtquick, public StackViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
     Q_PROPERTY(QObject *tabBar READ tabBarViewObj NOTIFY tabBarChanged)
 public:
-    explicit Stack_qtquick(Controllers::Stack *controller,
-                           QQuickItem *parent = nullptr);
+    explicit Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent = nullptr);
 
     int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
@@ -57,7 +54,8 @@ public:
     DockWidgetModel *dockWidgetModel() const;
     Controllers::DockWidget *dockwidgetAt(int index) const override;
     int currentIndex() const override;
-    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &, const QString &title) override;
+    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
+                          const QString &title) override;
     Q_INVOKABLE void setCurrentDockWidget(int index) override;
     void setDocumentMode(bool) override;
     Controllers::DockWidget *currentDockWidget() const;
@@ -119,7 +117,8 @@ Q_SIGNALS:
 private:
     void emitDataChangedFor(Controllers::DockWidget *);
     QVector<Controllers::DockWidget *> m_dockWidgets;
-    QHash<Controllers::DockWidget *, QVector<QMetaObject::Connection>> m_connections; // To make it easy to disconnect from lambdas
+    QHash<Controllers::DockWidget *, QVector<QMetaObject::Connection>>
+        m_connections; // To make it easy to disconnect from lambdas
     bool m_removeGuard = false;
 };
 

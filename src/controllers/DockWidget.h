@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -63,15 +63,15 @@ public:
 
     /**
      * @brief constructs a new DockWidget
-     * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
+     * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible
+     * text.
      * @param options the options controlling certain behaviours
      * @param layoutSaverOptions the options to control save/restore
      *
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget(View *view, const QString &uniqueName,
-                        DockWidgetOptions options = {},
+    explicit DockWidget(View *view, const QString &uniqueName, DockWidgetOptions options = {},
                         LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
 
     ///@brief destructor
@@ -82,9 +82,9 @@ public:
     /**
      * @brief docks @p other widget into this one. Tabs will be shown if not already.
      * @param other The other dock widget to dock into this one.
-     * @param initialOption Allows to specify an InitialOption. Which is useful to add the dock widget
-     * as hidden, recording only a placeholder in the tab. So it's restored to tabbed when eventually
-     * shown.
+     * @param initialOption Allows to specify an InitialOption. Which is useful to add the dock
+     * widget as hidden, recording only a placeholder in the tab. So it's restored to tabbed when
+     * eventually shown.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
     void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other,
@@ -98,7 +98,8 @@ public:
      *
      * @param other The other dock widget to dock into the window.
      * @param location The location to dock.
-     * @param relativeTo The dock widget that the @p location is relative to. If null then the window is considered
+     * @param relativeTo The dock widget that the @p location is relative to. If null then the
+     * window is considered
      * @param initialOption Allows to specify some extra options that are used while docking.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetAsTab()
      */
@@ -198,8 +199,8 @@ public:
 
     /**
      * @brief Setter for the options.
-     * Only DockWidetOption_NotClosable is allowed to change after construction. For the other options use
-     * the constructor only.
+     * Only DockWidetOption_NotClosable is allowed to change after construction. For the other
+     * options use the constructor only.
      *
      * @sa options(), optionsChanged()
      */
@@ -210,8 +211,8 @@ public:
      *
      * Technically a docked DockWidget always lives in a tab widget, but from the user's perspective
      * it's not tabbed when there's only 1 dock widget, as there are no tabs displayed. Unless
-     * the group is using Option_AlwaysShowsTabs, in which case this method will return true regardless
-     * if being the single one.
+     * the group is using Option_AlwaysShowsTabs, in which case this method will return true
+     * regardless if being the single one.
      */
     bool isTabbed() const;
 
@@ -251,7 +252,8 @@ public:
     void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
 
     /**
-     * @brief Returns the dock widget's titlebar, tabbar, or toggle action icon (depending on the passed @p place)
+     * @brief Returns the dock widget's titlebar, tabbar, or toggle action icon (depending on the
+     * passed @p place)
      *
      * By default it's null.
      *
@@ -280,15 +282,16 @@ public:
     bool isOpen() const;
 
     /**
-     * @brief Sets the affinity names. Dock widgets can only dock into dock widgets of the same affinity.
+     * @brief Sets the affinity names. Dock widgets can only dock into dock widgets of the same
+     * affinity.
      *
      * By default the affinity is empty and a dock widget can dock into any main window and into any
      * floating window. Usually you won't ever need to call
      * this function, unless you have requirements where certain dock widgets can only dock into
      * certain other dock widgets and main windows. @sa MainWindowBase::setAffinities().
      *
-     * Note: Call this function right after creating your dock widget, before adding to a main window and
-     * before restoring any layout.
+     * Note: Call this function right after creating your dock widget, before adding to a main
+     * window and before restoring any layout.
      *
      * Note: Currently you can only call this function once, to keep the code simple and avoid
      * edge cases. This will only be changed if a good use case comes up that requires changing
@@ -307,13 +310,15 @@ public:
      */
     QStringList affinities() const;
 
-    /// @brief Equivalent to QWidget::show(), but it's optimized to reduce flickering on some platforms
+    /// @brief Equivalent to QWidget::show(), but it's optimized to reduce flickering on some
+    /// platforms
     void show();
 
     /// @brief Brings the dock widget to the front.
     ///
     /// This means:
-    /// - If the dock widget is tabbed with other dock widgets but its tab is not current, it's made current.
+    /// - If the dock widget is tabbed with other dock widgets but its tab is not current, it's made
+    /// current.
     /// - If the dock widget is floating, QWindow::raise() is called.
     ///
     /// This only applies if the dock widget is already open. If closed, does nothing.
@@ -335,13 +340,13 @@ public:
      * @brief Returns whether this dock widget is docked into a main window (as opposed to floating)
      *
      * Note that isFloating() returning false might either mean the dock widget is docked into a
-     * main window or into a floating window (groupped/nested with other dock widgets. Use this function
-     * then if you need to disambiguate
+     * main window or into a floating window (groupped/nested with other dock widgets. Use this
+     * function then if you need to disambiguate
      */
     bool isInMainWindow() const;
 
-    /// @brief Returns the main window this dock widget is in. nullptr if it's not inside a main window
-    /// Also returns nullptr if it's minimized to a sidebar
+    /// @brief Returns the main window this dock widget is in. nullptr if it's not inside a main
+    /// window Also returns nullptr if it's minimized to a sidebar
     MainWindow *mainWindow() const;
 
     ///@brief Returns whether This or any child of this dock widget is focused

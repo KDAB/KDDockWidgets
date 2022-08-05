@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -28,29 +28,27 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
     , StackViewInterface(controller)
     , m_dockWidgetModel(new DockWidgetModel(this))
 {
-    connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
-            [this] {
-                if (m_currentDockWidget && indexOfDockWidget(m_currentDockWidget) == -1) {
-                    // The current dock widget was removed, set the first one as current
-                    if (numDockWidgets() > 0)
-                        setCurrentDockWidget(0);
-                }
+    connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this, [this] {
+        if (m_currentDockWidget && indexOfDockWidget(m_currentDockWidget) == -1) {
+            // The current dock widget was removed, set the first one as current
+            if (numDockWidgets() > 0)
+                setCurrentDockWidget(0);
+        }
 
-                Q_EMIT m_stack->countChanged(); });
+        Q_EMIT m_stack->countChanged();
+    });
 }
 
 void Stack_qtquick::init()
 {
-    m_tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect([this] {
-        Q_EMIT tabBarAutoHideChanged();
-    });
+    m_tabBarAutoHideChanged =
+        m_stack->tabBarAutoHideChanged.connect([this] { Q_EMIT tabBarAutoHideChanged(); });
 
-    // Emit even if it hasn't changed. When removing indexes lower than the current tab the current tab index
-    // will shift. Too much refactoring to make this signal be emitted less than it's needed, but no big deal either,
-    // as it's mostly used to update tab title's and such.
-    connect(m_dockWidgetModel, &DockWidgetModel::dockWidgetRemoved, m_stack, [this] {
-        Q_EMIT m_stack->currentTabChanged(m_stack->currentIndex());
-    });
+    // Emit even if it hasn't changed. When removing indexes lower than the current tab the current
+    // tab index will shift. Too much refactoring to make this signal be emitted less than it's
+    // needed, but no big deal either, as it's mostly used to update tab title's and such.
+    connect(m_dockWidgetModel, &DockWidgetModel::dockWidgetRemoved, m_stack,
+            [this] { Q_EMIT m_stack->currentTabChanged(m_stack->currentIndex()); });
 
     Q_EMIT tabBarChanged();
 }
@@ -107,7 +105,8 @@ Controllers::DockWidget *Stack_qtquick::currentDockWidget() const
     return m_currentDockWidget;
 }
 
-bool Stack_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &, const QString &title)
+bool Stack_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &,
+                                     const QString &title)
 {
     Q_UNUSED(title); // todo
     return m_dockWidgetModel->insert(dw, index);
@@ -225,7 +224,8 @@ void DockWidgetModel::remove(Controllers::DockWidget *dw)
             // can happen if there's reentrancy. Some user code reacting
             // to the signals and call remove for whatever reason.
             qWarning() << Q_FUNC_INFO << "Nothing to remove"
-                       << static_cast<void *>(dw); // Print address only, as it might be deleted already
+                       << static_cast<void *>(dw); // Print address only, as it might be deleted
+                                                   // already
         }
     } else {
         const auto connections = m_connections.take(dw);
@@ -253,13 +253,11 @@ bool DockWidgetModel::insert(Controllers::DockWidget *dw, int index)
         return false;
     }
 
-    QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::titleChanged, this, [dw, this] {
-        emitDataChangedFor(dw);
-    });
+    QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::titleChanged, this,
+                                           [dw, this] { emitDataChangedFor(dw); });
 
-    QMetaObject::Connection conn2 = connect(dw, &QObject::destroyed, this, [dw, this] {
-        remove(dw);
-    });
+    QMetaObject::Connection conn2 =
+        connect(dw, &QObject::destroyed, this, [dw, this] { remove(dw); });
 
     m_connections[dw] = { conn, conn2 };
 

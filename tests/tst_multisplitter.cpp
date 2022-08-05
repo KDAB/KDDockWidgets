@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -613,12 +613,15 @@ void TestMultiSplitter::tst_availableSize()
     root->insertItem(item3, Location_OnBottom);
     QCOMPARE(root->availableSize(), QSize(800 - st, 800 - st));
     QCOMPARE(root->minSize(), QSize(200 + st, 100 + 100 + st));
-    QCOMPARE(item3->parentBoxContainer()->neighboursMinLengthFor(item3, Side1, Qt::Vertical), item1->minSize().height());
+    QCOMPARE(item3->parentBoxContainer()->neighboursMinLengthFor(item3, Side1, Qt::Vertical),
+             item1->minSize().height());
 
     auto container2 = item2->parentBoxContainer();
     QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side1, Qt::Vertical), 0);
-    QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical), item3->height());
-    QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side1, Qt::Horizontal), item2->width());
+    QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical),
+             item3->height());
+    QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side1, Qt::Horizontal),
+             item2->width());
     QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
 
     // More nesting
@@ -628,13 +631,18 @@ void TestMultiSplitter::tst_availableSize()
     ItemBoxContainer::insertItemRelativeTo(item5, item4, Location_OnBottom);
 
     auto container4 = item4->parentBoxContainer();
-    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side1, Qt::Vertical), item1->height());
-    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side2, Qt::Vertical), item5->height());
-    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side1, Qt::Horizontal), item3->width());
+    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side1, Qt::Vertical),
+             item1->height());
+    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side2, Qt::Vertical),
+             item5->height());
+    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side1, Qt::Horizontal),
+             item3->width());
     QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side2, Qt::Horizontal), 0);
-    QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Vertical), item4->height() + item1->height());
+    QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Vertical),
+             item4->height() + item1->height());
     QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Vertical), 0);
-    QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Horizontal), item3->width());
+    QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Horizontal),
+             item3->width());
     QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Horizontal), 0);
 
     QVERIFY(serializeDeserializeTest(root));
@@ -684,7 +692,9 @@ void TestMultiSplitter::tst_ensureEnoughSize()
     item2->setMinSize({ 2000, 2000 });
     root->insertItem(item2, Location_OnRight);
     QVERIFY(root->checkSanity());
-    QCOMPARE(root->size(), QSize(item1->minSize().width() + item2->minSize().width() + st, item2->minSize().height()));
+    QCOMPARE(
+        root->size(),
+        QSize(item1->minSize().width() + item2->minSize().width() + st, item2->minSize().height()));
     QVERIFY(serializeDeserializeTest(root));
 }
 
@@ -693,9 +703,8 @@ void TestMultiSplitter::tst_turnIntoPlaceholder()
     auto root = createRoot();
 
     int numVisibleItems = 0;
-    root->numVisibleItemsChanged.connect([&numVisibleItems](int count) {
-        numVisibleItems = count;
-    });
+    root->numVisibleItemsChanged.connect(
+        [&numVisibleItems](int count) { numVisibleItems = count; });
 
     Item *item1 = createItem();
     Item *item2 = createItem();
@@ -810,7 +819,9 @@ void TestMultiSplitter::tst_suggestedRect2()
     root2->insertItem(item, Location_OnRight);
     root1->insertItem(root2.release(), Location_OnRight);
 
-    QVERIFY(item->parentBoxContainer()->suggestedDropRect(&itemBeingDropped, item, Location_OnRight).isValid());
+    QVERIFY(item->parentBoxContainer()
+                ->suggestedDropRect(&itemBeingDropped, item, Location_OnRight)
+                .isValid());
 }
 
 void TestMultiSplitter::tst_suggestedRect3()
@@ -825,7 +836,9 @@ void TestMultiSplitter::tst_suggestedRect3()
     root1->insertItem(item2, Location_OnRight);
     ItemBoxContainer::insertItemRelativeTo(item3, item2, Location_OnBottom);
 
-    QVERIFY(!item3->parentBoxContainer()->suggestedDropRect(itemToDrop, item3, Location_OnLeft).isEmpty());
+    QVERIFY(!item3->parentBoxContainer()
+                 ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
+                 .isEmpty());
     delete itemToDrop;
 }
 
@@ -853,7 +866,9 @@ void TestMultiSplitter::tst_suggestedRect4()
     Item *itemToDrop = createItem();
 
     QVERIFY(root->checkSanity());
-    QVERIFY(!item3->parentBoxContainer()->suggestedDropRect(itemToDrop, item3, Location_OnLeft).isEmpty());
+    QVERIFY(!item3->parentBoxContainer()
+                 ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
+                 .isEmpty());
 
     delete itemToDrop;
 }
@@ -1161,32 +1176,44 @@ void TestMultiSplitter::tst_availableOnSide()
     root->insertItem(item2, Location_OnRight);
     auto separator = root->separators_recursive()[0];
     QCOMPARE(root->minPosForSeparator_global(separator), item1->minSize().width());
-    QCOMPARE(root->maxPosForSeparator_global(separator), root->width() - item2->minSize().width() - Item::separatorThickness);
+    QCOMPARE(root->maxPosForSeparator_global(separator),
+             root->width() - item2->minSize().width() - Item::separatorThickness);
 
     QCOMPARE(root->availableToSqueezeOnSide(item1, Side1), 0);
-    QCOMPARE(root->availableToSqueezeOnSide(item1, Side2), item2->width() - item2->minSize().width());
-    QCOMPARE(root->availableToSqueezeOnSide(item2, Side1), item1->width() - item1->minSize().width());
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side2),
+             item2->width() - item2->minSize().width());
+    QCOMPARE(root->availableToSqueezeOnSide(item2, Side1),
+             item1->width() - item1->minSize().width());
     QCOMPARE(root->availableToSqueezeOnSide(item2, Side2), 0);
 
     Item *item3 = createItem(/*min=*/QSize(200, 200));
     root->insertItem(item3, Location_OnRight);
     QVERIFY(root->checkSanity());
-    QCOMPARE(root->availableToSqueezeOnSide(item3, Side1), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
+    QCOMPARE(root->availableToSqueezeOnSide(item3, Side1),
+             (item1->width() - item1->minSize().width())
+                 + (item2->width() - item2->minSize().width()));
     QCOMPARE(root->availableToSqueezeOnSide(item3, Side2), 0);
 
     auto separator2 = root->separators_recursive()[1];
-    QCOMPARE(root->minPosForSeparator_global(separator2), item1->minSize().width() + item2->minSize().width() + Item::separatorThickness);
-    QCOMPARE(root->maxPosForSeparator_global(separator2), root->width() - item3->minSize().width() - Item::separatorThickness);
+    QCOMPARE(root->minPosForSeparator_global(separator2),
+             item1->minSize().width() + item2->minSize().width() + Item::separatorThickness);
+    QCOMPARE(root->maxPosForSeparator_global(separator2),
+             root->width() - item3->minSize().width() - Item::separatorThickness);
 
     Item *item4 = createItem(/*min=*/QSize(200, 200));
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnBottom);
 
     auto c = item3->parentBoxContainer();
-    QCOMPARE(c->availableToSqueezeOnSide_recursive(item3, Side1, Qt::Horizontal), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item3, Side1, Qt::Horizontal),
+             (item1->width() - item1->minSize().width())
+                 + (item2->width() - item2->minSize().width()));
     QCOMPARE(c->availableToSqueezeOnSide_recursive(item3, Side2, Qt::Horizontal), 0);
-    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Horizontal), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Horizontal),
+             (item1->width() - item1->minSize().width())
+                 + (item2->width() - item2->minSize().width()));
     QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Horizontal), 0);
-    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Vertical), (item3->height() - item3->minSize().height()));
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Vertical),
+             (item3->height() - item3->minSize().height()));
     QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Vertical), 0);
 
     Item *item31 = createItem(/*min=*/QSize(100, 100));
@@ -1195,10 +1222,14 @@ void TestMultiSplitter::tst_availableOnSide()
     auto separator31 = container31->separators().at(0);
 
     // Since we don't have widgets with max-size, these two must be the same
-    QCOMPARE(container31->minPosForSeparator_global(separator31, false), container31->minPosForSeparator_global(separator31, true));
+    QCOMPARE(container31->minPosForSeparator_global(separator31, false),
+             container31->minPosForSeparator_global(separator31, true));
 
-    QCOMPARE(container31->minPosForSeparator_global(separator31), item1->minSize().width() + item2->minSize().width() + item3->minSize().width() + 2 * Item::separatorThickness);
-    QCOMPARE(container31->maxPosForSeparator_global(separator31), root->width() - item31->minSize().width() - Item::separatorThickness);
+    QCOMPARE(container31->minPosForSeparator_global(separator31),
+             item1->minSize().width() + item2->minSize().width() + item3->minSize().width()
+                 + 2 * Item::separatorThickness);
+    QCOMPARE(container31->maxPosForSeparator_global(separator31),
+             root->width() - item31->minSize().width() - Item::separatorThickness);
 }
 
 void TestMultiSplitter::tst_availableToGrowOnSide()
@@ -1221,7 +1252,8 @@ void TestMultiSplitter::tst_availableToGrowOnSide()
     QCOMPARE(root->availableToGrowOnSide(item1, Side1), 0);
     QCOMPARE(root->availableToGrowOnSide(item2, Side2), 0);
     QCOMPARE(root->availableToGrowOnSide(item1, Side2), root->length() - item2->width());
-    QCOMPARE(root->availableToGrowOnSide(item2, Side1), item1->maxSizeHint().width() - item1->width());
+    QCOMPARE(root->availableToGrowOnSide(item2, Side1),
+             item1->maxSizeHint().width() - item1->width());
 
     auto separator = root->separators_recursive()[0];
     QCOMPARE(root->minPosForSeparator_global(separator, true), item1->minSize().width());
@@ -1232,9 +1264,12 @@ void TestMultiSplitter::tst_availableToGrowOnSide()
     QVERIFY(root->checkSanity());
 
     QCOMPARE(root->availableToGrowOnSide(item3, Side2), 0);
-    QCOMPARE(root->availableToGrowOnSide(item3, Side1), root->length() - item2->width() - item1->width());
-    QCOMPARE(root->availableToGrowOnSide(item2, Side1), item1->maxSizeHint().width() - item1->width());
-    QCOMPARE(root->availableToGrowOnSide(item2, Side2), item3->maxSizeHint().width() - item3->width());
+    QCOMPARE(root->availableToGrowOnSide(item3, Side1),
+             root->length() - item2->width() - item1->width());
+    QCOMPARE(root->availableToGrowOnSide(item2, Side1),
+             item1->maxSizeHint().width() - item1->width());
+    QCOMPARE(root->availableToGrowOnSide(item2, Side2),
+             item3->maxSizeHint().width() - item3->width());
 }
 
 void TestMultiSplitter::tst_resizeViaSeparator()
@@ -1286,7 +1321,8 @@ void TestMultiSplitter::tst_resizeViaSeparator2()
     root->insertItem(item4, Location_OnRight);
 
     auto resizeChildrenTo1000px = [&root] {
-        /// Make sure each item has 1000  of width. Cheating here as we don't have API to resize all.
+        /// Make sure each item has 1000  of width. Cheating here as we don't have API to resize
+        /// all.
         const int numChildren = root->numChildren();
         auto children = root->childItems();
         for (auto item : qAsConst(children)) {
@@ -1305,14 +1341,18 @@ void TestMultiSplitter::tst_resizeViaSeparator2()
 
     root->requestSeparatorMove(separators[1], delta);
 
-    QCOMPARE(item1->width(), originalChildWidth); // item1 didn't change when we moved the second separator, only item2 and 3 are supposed to move
+    QCOMPARE(item1->width(),
+             originalChildWidth); // item1 didn't change when we moved the second separator, only
+                                  // item2 and 3 are supposed to move
     QCOMPARE(item2->width(), originalChildWidth + delta);
     QCOMPARE(item3->width(), originalChildWidth - delta);
     QCOMPARE(item4->width(), originalChildWidth);
 
     // And back
     root->requestSeparatorMove(separators[1], -delta);
-    QCOMPARE(item1->width(), originalChildWidth); // item1 didn't change when we moved the second separator, only item2 and 3 are supposed to move
+    QCOMPARE(item1->width(),
+             originalChildWidth); // item1 didn't change when we moved the second separator, only
+                                  // item2 and 3 are supposed to move
     QCOMPARE(item2->width(), originalChildWidth);
     QCOMPARE(item3->width(), originalChildWidth);
     QCOMPARE(item4->width(), originalChildWidth);
@@ -1659,7 +1699,8 @@ void TestMultiSplitter::tst_requestEqualSize()
 
         {
             // Let's put the separator further right manually, then try again:
-            // (Can't use ItemBoxContainer::requstSeparatorMove() as it respects max-size constraints
+            // (Can't use ItemBoxContainer::requstSeparatorMove() as it respects max-size
+            // constraints
             item1->m_sizingInfo.incrementLength(20, Qt::Horizontal);
             item2->m_sizingInfo.incrementLength(-20, Qt::Horizontal);
             root->positionItems();

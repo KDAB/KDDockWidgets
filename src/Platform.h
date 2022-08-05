@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -184,7 +184,8 @@ public:
     /// Returns true if the view received said event until timeout was reached
     virtual bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const = 0;
     virtual bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const = 0;
-    virtual bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type, int timeout = 5000) const = 0;
+    virtual bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type,
+                                    int timeout = 5000) const = 0;
 
     /// @brief Waits for the specified view to be deleted
     virtual bool tests_waitForDeleted(View *, int timeout = 2000) const = 0;
@@ -205,7 +206,8 @@ public:
     virtual std::shared_ptr<Window> tests_createWindow() = 0;
 
     /// @brief Creates a view with the specified parent
-    /// If the parent is null then a new window is created and the returned view will be the root view
+    /// If the parent is null then a new window is created and the returned view will be the root
+    /// view
     virtual View *tests_createView(CreateViewOptions, View *parent = nullptr) = 0;
 
     /// @brief Returns a view that can have keyboard focus
@@ -216,8 +218,8 @@ public:
     virtual View *tests_createNonClosableView(View *parent = nullptr) = 0;
 
     /// @brief halts the test during the specified number of milliseconds
-    /// The event loop keeps running. Use this for debugging purposes so you can interact with your test
-    /// and see what's going on
+    /// The event loop keeps running. Use this for debugging purposes so you can interact with your
+    /// test and see what's going on
     virtual void tests_wait(int ms) = 0;
 
     virtual void installMessageHandler() = 0;
@@ -225,10 +227,10 @@ public:
 
     /// @brief Creates a main window. This is not API that the user will use, but used
     /// internally by some tools that need a main window
-    virtual Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
-                                                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                                                      View *parent = nullptr,
-                                                      Qt::WindowFlags = {}) const = 0;
+    virtual Controllers::MainWindow *
+    createMainWindow(const QString &uniqueName, CreateViewOptions,
+                     MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                     View *parent = nullptr, Qt::WindowFlags = {}) const = 0;
 
     static QString s_expectedWarning;
     static WarningObserver *s_warningObserver;

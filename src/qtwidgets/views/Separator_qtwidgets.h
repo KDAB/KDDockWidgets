@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -25,8 +25,7 @@ class DOCKS_EXPORT Separator_qtwidgets : public View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit Separator_qtwidgets(Controllers::Separator *controller,
-                                 View *parent = nullptr);
+    explicit Separator_qtwidgets(Controllers::Separator *controller, View *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *) override;

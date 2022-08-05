@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -39,7 +39,8 @@ class DOCKS_EXPORT Group_qtquick : public View_qtquick, public GroupViewInterfac
     Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)
     Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(int userType READ userType CONSTANT)
-    Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
+    Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar READ actualTitleBar NOTIFY
+                   actualTitleBarChanged)
     Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentDockWidgetChanged)
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
 
@@ -95,7 +96,9 @@ private:
 
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
-    QHash<Controllers::DockWidget *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
+    QHash<Controllers::DockWidget *, QMetaObject::Connection> m_connections; // To make it easy to
+                                                                             // disconnect from
+                                                                             // lambdas
 };
 
 }

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -83,8 +83,8 @@ void TestQtQuick::tst_restoreRestoresMainWindowPosition()
 
 void TestQtQuick::tst_hoverShowsDropIndicators()
 {
-    // For QtQuick on Windows, there was a bug where drop indicators wouldn't be shown if MainWindowBase
-    // wasn't the root item.
+    // For QtQuick on Windows, there was a bug where drop indicators wouldn't be shown if
+    // MainWindowBase wasn't the root item.
 
     EnsureTopLevelsDeleted e;
     QQmlApplicationEngine engine(":/main2.qml");
@@ -95,9 +95,12 @@ void TestQtQuick::tst_hoverShowsDropIndicators()
 
     m->window()->window()->setFramePosition(QPoint(500, 800));
 
-    auto dock0 = createDockWidget("dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
 
-    auto floatingDockWidget = createDockWidget("floatingDockWidget", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+    auto floatingDockWidget =
+        createDockWidget("floatingDockWidget",
+                         Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
 
     m->addDockWidget(dock0, Location_OnLeft);
 

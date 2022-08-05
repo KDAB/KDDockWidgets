@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -34,7 +34,8 @@ namespace Views {
  *
  * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>, public Views::DockWidgetViewInterface
+class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>,
+                                          public Views::DockWidgetViewInterface
 {
     Q_OBJECT
 public:
@@ -52,8 +53,7 @@ public:
      * when visible, or stays without a parent when hidden. This allows to support docking
      * to different main windows.
      */
-    explicit DockWidget_qtwidgets(const QString &uniqueName,
-                                  DockWidgetOptions options = {},
+    explicit DockWidget_qtwidgets(const QString &uniqueName, DockWidgetOptions options = {},
                                   LayoutSaverOptions layoutSaverOptions = {},
                                   Qt::WindowFlags windowFlags = Qt::Tool);
 

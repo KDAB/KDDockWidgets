@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -48,21 +48,21 @@ ViewFactory_qtquick::~ViewFactory_qtquick()
 {
 }
 
-View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
-                                            DockWidgetOptions options,
+View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName, DockWidgetOptions options,
                                             LayoutSaverOptions layoutSaverOptions,
                                             Qt::WindowFlags windowFlags) const
 {
-    return createDockWidget(uniqueName, /*engine=*/nullptr, options, layoutSaverOptions, windowFlags);
+    return createDockWidget(uniqueName, /*engine=*/nullptr, options, layoutSaverOptions,
+                            windowFlags);
 }
 
-View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
-                                            QQmlEngine *qmlEngine,
+View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName, QQmlEngine *qmlEngine,
                                             DockWidgetOptions options,
                                             LayoutSaverOptions layoutSaverOptions,
                                             Qt::WindowFlags windowFlags) const
 {
-    return new Views::DockWidget_qtquick(uniqueName, options, layoutSaverOptions, windowFlags, qmlEngine);
+    return new Views::DockWidget_qtquick(uniqueName, options, layoutSaverOptions, windowFlags,
+                                         qmlEngine);
 }
 
 View *ViewFactory_qtquick::createGroup(Controllers::Group *controller, View *parent) const
@@ -70,8 +70,7 @@ View *ViewFactory_qtquick::createGroup(Controllers::Group *controller, View *par
     return new Views::Group_qtquick(controller, Views::asQQuickItem(parent));
 }
 
-View *ViewFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
-                                          View *parent) const
+View *ViewFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar, View *parent) const
 {
     return new Views::TitleBar_qtquick(titleBar, Views::asQQuickItem(parent));
 }
@@ -88,15 +87,18 @@ View *ViewFactory_qtquick::createStack(Controllers::Stack *controller, View *par
 
 View *ViewFactory_qtquick::createSeparator(Controllers::Separator *controller, View *parent) const
 {
-    return new Views::Separator_qtquick(controller, parent ? static_cast<Views::View_qtquick *>(parent) : nullptr);
+    return new Views::Separator_qtquick(
+        controller, parent ? static_cast<Views::View_qtquick *>(parent) : nullptr);
 }
 
 View *ViewFactory_qtquick::createFloatingWindow(Controllers::FloatingWindow *controller,
-                                                Controllers::MainWindow *parent, Qt::WindowFlags flags) const
+                                                Controllers::MainWindow *parent,
+                                                Qt::WindowFlags flags) const
 {
 
-    auto mainwindow = parent ? qobject_cast<Views::MainWindow_qtquick *>(Views::asQQuickItem(parent->view()))
-                             : nullptr;
+    auto mainwindow = parent
+        ? qobject_cast<Views::MainWindow_qtquick *>(Views::asQQuickItem(parent->view()))
+        : nullptr;
     return new Views::FloatingWindow_qtquick(controller, mainwindow, flags);
 }
 
@@ -192,12 +194,15 @@ QUrl ViewFactory_qtquick::tabbarFilename() const
     return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/TabBar.qml"));
 }
 
-View *ViewFactory_qtquick::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *, View *) const
+View *
+ViewFactory_qtquick::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *,
+                                                             View *) const
 {
     return nullptr;
 }
 
-Views::ClassicIndicatorWindowViewInterface *ViewFactory_qtquick::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const
+Views::ClassicIndicatorWindowViewInterface *ViewFactory_qtquick::createClassicIndicatorWindow(
+    Controllers::ClassicIndicators *classicIndicators) const
 {
     return new IndicatorWindow_qtquick(classicIndicators);
 }

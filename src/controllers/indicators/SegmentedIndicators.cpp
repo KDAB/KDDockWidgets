@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -31,9 +31,9 @@ SegmentedIndicators::SegmentedIndicators(Controllers::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea)
 {
     // If the app didn't choose opacity then we choose a suitable default value.
-    // ClassicIndicators works fine with an opaque dragged window because the indicators have higher Z,
-    // However for SegmentedIndicators the indicators are in the main window, so lower Z. Make the
-    // dragged window translucent a bit, so we can see the indicators
+    // ClassicIndicators works fine with an opaque dragged window because the indicators have higher
+    // Z, However for SegmentedIndicators the indicators are in the main window, so lower Z. Make
+    // the dragged window translucent a bit, so we can see the indicators
     const bool userChoseOpacity = !qIsNaN(Config::self().draggedWindowOpacity());
     if (!userChoseOpacity)
         Config::self().setDraggedWindowOpacity(s_draggedWindowOpacity);
@@ -63,7 +63,8 @@ DropLocation SegmentedIndicators::dropLocationForPos(QPoint pos) const
     return DropLocation_None;
 }
 
-QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner, bool useOffset) const
+QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner,
+                                                                   bool useOffset) const
 {
     const int halfPenWidth = s_segmentPenWidth / 2;
 
@@ -77,27 +78,22 @@ QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool
     const QPoint bottomLeft = { left + halfPenWidth, bottom };
     const QPoint bottomRight = { right, bottom };
 
-    const QVector<QPoint> leftPoints = { topLeft, bottomLeft,
-                                         QPoint(left, bottom) + QPoint(l, -l),
+    const QVector<QPoint> leftPoints = { topLeft, bottomLeft, QPoint(left, bottom) + QPoint(l, -l),
                                          topLeft + QPoint(l, l), topLeft };
 
-    const QVector<QPoint> rightPoints = { topRight, bottomRight,
-                                          bottomRight + QPoint(-l, -l),
+    const QVector<QPoint> rightPoints = { topRight, bottomRight, bottomRight + QPoint(-l, -l),
                                           topRight + QPoint(-l, l) };
 
-    const QVector<QPoint> topPoints = { topLeft, topRight,
-                                        topRight + QPoint(-l, l),
+    const QVector<QPoint> topPoints = { topLeft, topRight, topRight + QPoint(-l, l),
                                         topLeft + QPoint(l, l) };
 
-    const QVector<QPoint> bottomPoints = { bottomLeft, bottomRight,
-                                           bottomRight + QPoint(-l, -l),
+    const QVector<QPoint> bottomPoints = { bottomLeft, bottomRight, bottomRight + QPoint(-l, -l),
                                            bottomLeft + QPoint(l, -l) };
 
     if (inner) {
-        QPolygon bounds = QVector<QPoint> { topLeft + QPoint(l, l),
-                                            topRight + QPoint(-l, l),
-                                            bottomRight + QPoint(-l, -l),
-                                            bottomLeft + QPoint(l, -l) };
+        QPolygon bounds =
+            QVector<QPoint> { topLeft + QPoint(l, l), topRight + QPoint(-l, l),
+                              bottomRight + QPoint(-l, -l), bottomLeft + QPoint(l, -l) };
         const int maxWidth = bounds.boundingRect().width();
         const QPoint centerPos = bounds.boundingRect().center();
 
@@ -121,20 +117,16 @@ QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool
             { centerRectLeft, centerRectBottom },
         };
 
-        return {
-            { DropLocation_Left, leftPoints },
-            { DropLocation_Top, topPoints },
-            { DropLocation_Right, rightPoints },
-            { DropLocation_Bottom, bottomPoints },
-            { DropLocation_Center, center }
-        };
+        return { { DropLocation_Left, leftPoints },
+                 { DropLocation_Top, topPoints },
+                 { DropLocation_Right, rightPoints },
+                 { DropLocation_Bottom, bottomPoints },
+                 { DropLocation_Center, center } };
     } else {
-        return {
-            { DropLocation_OutterLeft, leftPoints },
-            { DropLocation_OutterTop, topPoints },
-            { DropLocation_OutterRight, rightPoints },
-            { DropLocation_OutterBottom, bottomPoints }
-        };
+        return { { DropLocation_OutterLeft, leftPoints },
+                 { DropLocation_OutterTop, topPoints },
+                 { DropLocation_OutterRight, rightPoints },
+                 { DropLocation_OutterBottom, bottomPoints } };
     }
 }
 
@@ -144,7 +136,8 @@ void SegmentedIndicators::updateSegments()
 
     const auto outterSegments = segmentsForRect(rect(), /*inner=*/false);
 
-    for (auto indicator : { DropLocation_OutterLeft, DropLocation_OutterRight, DropLocation_OutterTop, DropLocation_OutterBottom }) {
+    for (auto indicator : { DropLocation_OutterLeft, DropLocation_OutterRight,
+                            DropLocation_OutterTop, DropLocation_OutterBottom }) {
         if (dropIndicatorVisible(indicator)) {
             m_segments.insert(indicator, outterSegments.value(indicator));
         }
@@ -154,7 +147,8 @@ void SegmentedIndicators::updateSegments()
     const bool useOffset = hasOutter;
     const auto innerSegments = segmentsForRect(hoveredFrameRect(), /*inner=*/true, useOffset);
 
-    for (auto indicator : { DropLocation_Left, DropLocation_Top, DropLocation_Right, DropLocation_Bottom, DropLocation_Center }) {
+    for (auto indicator : { DropLocation_Left, DropLocation_Top, DropLocation_Right,
+                            DropLocation_Bottom, DropLocation_Center }) {
         if (dropIndicatorVisible(indicator)) {
             m_segments.insert(indicator, innerSegments.value(indicator));
         }

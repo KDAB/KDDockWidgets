@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -46,8 +46,8 @@ QStringList MDIDockingAreaInstantiator::affinities() const
     return m_mainWindow ? m_mainWindow->affinities() : QStringList();
 }
 
-void MDIDockingAreaInstantiator::addDockWidget(QQuickItem *dockWidget,
-                                               QPoint localPos, InitialOption addingOption)
+void MDIDockingAreaInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint localPos,
+                                               InitialOption addingOption)
 {
     if (!dockWidget || !m_mainWindow)
         return;

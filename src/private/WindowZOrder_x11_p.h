@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -33,8 +33,7 @@ static void travelTree(WId current, Display *disp, Window::List &remaining, Wind
     ::Window parent, root, *children;
     unsigned int nchildren;
 
-    if (!XQueryTree(disp, current, &root, &parent,
-                    &children, &nchildren)) {
+    if (!XQueryTree(disp, current, &root, &parent, &children, &nchildren)) {
         return;
     }
 
@@ -43,9 +42,10 @@ static void travelTree(WId current, Display *disp, Window::List &remaining, Wind
 
     for (int i = 0; i < int(nchildren); ++i) {
         /// XQueryTree returns a lot more stuff than our top-level stuff, let's search for it:
-        auto it = std::find_if(remaining.begin(), remaining.end(), [i, children](Window::Ptr window) {
-            return window->handle() == children[i];
-        });
+        auto it =
+            std::find_if(remaining.begin(), remaining.end(), [i, children](Window::Ptr window) {
+                return window->handle() == children[i];
+            });
 
         if (it != remaining.end()) {
             result << *it;

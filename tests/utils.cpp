@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -40,13 +40,13 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     if (!sz.isValid())
         sz = QSize(1000, 1000);
 
-    const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
-                                                  : name;
+    const QString mainWindowName =
+        name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count) : name;
     CreateViewOptions viewOpts;
     viewOpts.isVisible = show;
     viewOpts.size = sz;
-    auto ptr = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(mainWindowName,
-                                                                                               viewOpts, options));
+    auto ptr = std::unique_ptr<Controllers::MainWindow>(
+        Platform::instance()->createMainWindow(mainWindowName, viewOpts, options));
 
     if (show)
         ptr->show();
@@ -55,15 +55,17 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     return ptr;
 }
 
-Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest,
-                                                                DockWidgetOptions options,
-                                                                LayoutSaverOptions layoutSaverOptions,
-                                                                bool show,
-                                                                const QString &affinityName)
+Controllers::DockWidget *
+KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWidgetOptions options,
+                                       LayoutSaverOptions layoutSaverOptions, bool show,
+                                       const QString &affinityName)
 {
     Q_ASSERT(guest);
     guest->setFocusPolicy(Qt::StrongFocus);
-    auto dock = Config::self().viewFactory()->createDockWidget(name, options, layoutSaverOptions)->asDockWidgetController();
+    auto dock = Config::self()
+                    .viewFactory()
+                    ->createDockWidget(name, options, layoutSaverOptions)
+                    ->asDockWidgetController();
     dock->setAffinityName(affinityName);
     dock->setGuestView(guest->asWrapper());
     dock->setObjectName(name);
@@ -88,7 +90,8 @@ Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &n
 
 Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name)
 {
-    return createDockWidget(name, Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
+    return createDockWidget(name,
+                            Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
 };
 
 std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
@@ -101,8 +104,8 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     CreateViewOptions viewOpts;
     viewOpts.isVisible = true;
     viewOpts.size = QSize(1000, 1000);
-    auto m = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(QStringLiteral("MyMainWindow%1").arg(count),
-                                                                                             viewOpts, MainWindowOption_None, parent));
+    auto m = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(
+        QStringLiteral("MyMainWindow%1").arg(count), viewOpts, MainWindowOption_None, parent));
     auto layout = m->layout();
     m->show();
     m->view()->resize(QSize(700, 700));
@@ -110,7 +113,8 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     int i = 0;
     for (DockDescriptor &desc : docks) {
         auto guest = Platform::instance()->tests_createView({ true, {}, { 100, 100 } });
-        desc.createdDock = createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), guest, {}, {}, false);
+        desc.createdDock =
+            createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), guest, {}, {}, false);
         Controllers::DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docks.at(desc.relativeToIndex).createdDock;
@@ -129,7 +133,13 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
     if (category == QLatin1String("qt.qpa.xcb"))
         return true;
 
-    return msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) || msg.contains(QLatin1String("QWindowsWindow::setGeometry")) || msg.contains(QLatin1String("This plugin does not support")) || msg.contains(QLatin1String("Note that Qt no longer ships fonts")) || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")) || msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
+    return msg.contains(QLatin1String("QSocketNotifier: Invalid socket"))
+        || msg.contains(QLatin1String("QWindowsWindow::setGeometry"))
+        || msg.contains(QLatin1String("This plugin does not support"))
+        || msg.contains(QLatin1String("Note that Qt no longer ships fonts"))
+        || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget"))
+        || msg.contains(
+            QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
 }
 
 void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, View *receiver)
@@ -137,8 +147,9 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, View *receiver)
     QCursor::setPos(globalPos);
     pressOn(globalPos, receiver); // double-click involves an initial press
 
-    QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos), receiver->rootView()->mapFromGlobal(globalPos), globalPos,
-                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos),
+                   receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
+                   Qt::LeftButton, Qt::NoModifier);
 
     if (auto actualReceiver = receiver->property("titleBarMouseArea").value<QObject *>()) {
         // QtQuick case, we need to send the event to the mouse area
@@ -152,8 +163,9 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, View *receiver)
 void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, Window::Ptr receiver)
 {
     QCursor::setPos(globalPos);
-    QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos), receiver->mapFromGlobal(globalPos), globalPos,
-                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos),
+                   receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
+                   Qt::NoModifier);
 
     pressOn(globalPos, receiver); // double-click involves an initial press
     Platform::instance()->tests_sendEvent(receiver, &ev);
@@ -162,23 +174,26 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, Window::Ptr receiver)
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, View *receiver)
 {
     QCursor::setPos(globalPos);
-    QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos), receiver->rootView()->mapFromGlobal(globalPos), globalPos,
-                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos),
+                   receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
+                   Qt::LeftButton, Qt::NoModifier);
     Platform::instance()->sendEvent(receiver, &ev);
 }
 
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, Window::Ptr receiver)
 {
     QCursor::setPos(globalPos);
-    QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos), receiver->mapFromGlobal(globalPos), globalPos,
-                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos),
+                   receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
+                   Qt::NoModifier);
     Platform::instance()->tests_sendEvent(receiver, &ev);
 }
 
 void KDDockWidgets::Tests::releaseOn(QPoint globalPos, View *receiver)
 {
-    QMouseEvent ev(QEvent::MouseButtonRelease, receiver->mapFromGlobal(globalPos), receiver->rootView()->mapFromGlobal(globalPos), globalPos,
-                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent ev(QEvent::MouseButtonRelease, receiver->mapFromGlobal(globalPos),
+                   receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
+                   Qt::LeftButton, Qt::NoModifier);
     Platform::instance()->sendEvent(receiver, &ev);
 }
 
@@ -206,8 +221,9 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
         }
 
         QCursor::setPos(globalSrc); // Since some code uses QCursor::pos()
-        QMouseEvent ev(QEvent::MouseMove, receiver->mapFromGlobal(globalSrc), receiver->rootView()->mapFromGlobal(globalSrc), globalSrc,
-                       Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        QMouseEvent ev(QEvent::MouseMove, receiver->mapFromGlobal(globalSrc),
+                       receiver->rootView()->mapFromGlobal(globalSrc), globalSrc, Qt::LeftButton,
+                       Qt::LeftButton, Qt::NoModifier);
 
         if (!receiverP) {
             qWarning() << "Receiver was deleted";
@@ -219,7 +235,8 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
     }
 }
 
-void KDDockWidgets::Tests::nestDockWidget(Controllers::DockWidget *dock, DropArea *dropArea, Controllers::Group *relativeTo, Location location)
+void KDDockWidgets::Tests::nestDockWidget(Controllers::DockWidget *dock, DropArea *dropArea,
+                                          Controllers::Group *relativeTo, Location location)
 {
     auto group = new Controllers::Group();
     group->addTab(dock);

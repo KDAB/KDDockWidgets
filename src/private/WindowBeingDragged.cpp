@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -33,7 +33,8 @@ static Draggable *bestDraggable(Draggable *draggable)
     if (!draggable)
         return nullptr;
 
-    // When de detach a title bar it will get hidden and we only the title bar of the FloatingWindow is visible
+    // When de detach a title bar it will get hidden and we only the title bar of the FloatingWindow
+    // is visible
     /// Apparently that causes problems with grabbing the mouse, so instead use a visible draggable.
     // grabbing mouse on an hidden window works usually, it's some edge case on Windows with MFC.
     if (auto titleBar = draggable->asView()->asTitleBarController()) {
@@ -130,8 +131,7 @@ void WindowBeingDragged::grabMouse(bool grab)
 
 QStringList WindowBeingDragged::affinities() const
 {
-    return m_floatingWindow ? m_floatingWindow->affinities()
-                            : QStringList();
+    return m_floatingWindow ? m_floatingWindow->affinities() : QStringList();
 }
 
 QSize WindowBeingDragged::size() const
@@ -167,7 +167,8 @@ bool WindowBeingDragged::contains(Controllers::Layout *layout) const
         return m_floatingWindow->layout() == layout;
 
     if (auto fw = m_draggableView->rootView()->asFloatingWindowController()) {
-        // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
+        // We're not dragging via the floating window itself, but via the tab bar. Still might
+        // represent floating window though.
         return fw->layout() == layout && fw->hasSingleFrame();
     }
 

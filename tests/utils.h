@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -44,8 +44,7 @@ namespace KDDockWidgets {
 
 namespace Tests {
 
-enum ButtonAction
-{
+enum ButtonAction {
     ButtonAction_None,
     ButtonAction_Press = 1,
     ButtonAction_Release = 2
@@ -107,9 +106,10 @@ struct EnsureTopLevelsDeleted
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-std::unique_ptr<Controllers::MainWindow> createMainWindow(QSize sz = { 1000, 1000 },
-                                                          KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                                                          const QString &name = {}, bool show = true);
+std::unique_ptr<Controllers::MainWindow>
+createMainWindow(QSize sz = { 1000, 1000 },
+                 KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                 const QString &name = {}, bool show = true);
 
 
 
@@ -122,8 +122,8 @@ Controllers::DockWidget *createDockWidget(const QString &name, View *guest,
 
 Controllers::DockWidget *createDockWidget(const QString &name);
 
-void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea, Controllers::Group *relativeTo,
-                    KDDockWidgets::Location location);
+void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea,
+                    Controllers::Group *relativeTo, KDDockWidgets::Location location);
 
 
 void doubleClickOn(QPoint globalPos, View *receiver);
@@ -149,10 +149,13 @@ inline View *draggableFor(View *view)
         if (auto group = dw->d->group())
             draggable = group->titleBar()->view();
     } else if (auto fw = view->asFloatingWindowController()) {
-        Controllers::Group *group = fw->hasSingleFrame() ? static_cast<Controllers::Group *>(fw->groups().first())
-                                                         : nullptr;
+        Controllers::Group *group = fw->hasSingleFrame()
+            ? static_cast<Controllers::Group *>(fw->groups().first())
+            : nullptr;
 
-        if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && group && group->hasTabsVisible()) {
+        if ((KDDockWidgets::Config::self().flags()
+             & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible)
+            && group && group->hasTabsVisible()) {
             draggable = group->stack()->view();
         } else {
             draggable = fw->titleBar()->view();
@@ -166,7 +169,8 @@ inline View *draggableFor(View *view)
 }
 
 inline void drag(View *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
-                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
+                     | ButtonAction_Release)
 {
     if (buttonActions & ButtonAction_Press) {
         if (s_pauseBeforePress)
@@ -184,8 +188,7 @@ inline void drag(View *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
              << "; sourceWidget->size=" << sourceWidget->size()
              << "; pressPosGlobal=" << pressGlobalPos
              << "; pressPosLocal=" << sourceWidget->mapFromGlobal(pressGlobalPos)
-             << "; from=" << QCursor::pos()
-             << "; actions=" << buttonActions
+             << "; from=" << QCursor::pos() << "; actions=" << buttonActions
              << "; visible=" << sourceWidget->isVisible();
     moveMouseTo(globalDest, sourceWidget);
     qDebug() << "Arrived at" << QCursor::pos();
@@ -195,7 +198,8 @@ inline void drag(View *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
 }
 
 inline void drag(View *sourceView, QPoint globalDest,
-                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
+                     | ButtonAction_Release)
 {
     Q_ASSERT(sourceView && sourceView->isVisible());
 
@@ -208,7 +212,8 @@ inline void drag(View *sourceView, QPoint globalDest,
 }
 
 inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalDest,
-                                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+                                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
+                                     | ButtonAction_Release)
 {
     View *draggable = draggableFor(fw->view());
     Q_ASSERT(draggable);
@@ -216,13 +221,15 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalD
     drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
 }
 
-inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, Controllers::DropArea *target, DropLocation dropLocation)
+inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, Controllers::DropArea *target,
+                                 DropLocation dropLocation)
 {
     auto draggable = draggableFor(fw->view());
     Q_ASSERT(draggable);
 
     // First we drag over it, so the drop indicators appear:
-    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)),
+         target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
     Controllers::DropIndicatorOverlay *dropIndicatorOverlay = target->dropIndicatorOverlay();

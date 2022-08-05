@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -28,7 +28,8 @@ namespace KDDockWidgets {
 namespace Views {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI_qtwidgets : public Views::MainWindow_qtwidgets, public Views::MainWindowMDIViewInterface
+class DOCKS_EXPORT MainWindowMDI_qtwidgets : public Views::MainWindow_qtwidgets,
+                                             public Views::MainWindowMDIViewInterface
 {
     Q_OBJECT
 public:

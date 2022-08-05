@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -80,18 +80,21 @@ void *c_KDDockWidgets__InitialOption__constructor()
 }
 void *c_KDDockWidgets__InitialOption__constructor_DefaultSizeMode(int mode)
 {
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(static_cast<KDDockWidgets::DefaultSizeMode>(mode));
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(
+        static_cast<KDDockWidgets::DefaultSizeMode>(mode));
     return reinterpret_cast<void *>(ptr);
 }
 void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption(int v)
 {
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(static_cast<KDDockWidgets::InitialVisibilityOption>(v));
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(
+        static_cast<KDDockWidgets::InitialVisibilityOption>(v));
     return reinterpret_cast<void *>(ptr);
 }
 void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_QSize(int v, void *size_)
 {
     auto &size = *reinterpret_cast<QSize *>(size_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(static_cast<KDDockWidgets::InitialVisibilityOption>(v), size);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(
+        static_cast<KDDockWidgets::InitialVisibilityOption>(v), size);
     return reinterpret_cast<void *>(ptr);
 }
 void *c_KDDockWidgets__InitialOption__constructor_QSize(void *size_)

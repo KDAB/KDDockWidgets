@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -29,11 +29,12 @@ namespace KDDockWidgets {
 namespace Controllers {
 class SideBar;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidget::Private : public QObject /// clazy:exclude=missing-qobject-macro
+class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidget::Private
+    : public QObject /// clazy:exclude=missing-qobject-macro
 {
 public:
-    /// RAII class to help updating actions exactly once, otherwise they can be triggered in the middle
-    /// of operations during reparenting
+    /// RAII class to help updating actions exactly once, otherwise they can be triggered in the
+    /// middle of operations during reparenting
     struct UpdateActions
     {
         explicit UpdateActions(Controllers::DockWidget *dock)
@@ -61,9 +62,7 @@ public:
     void init()
     {
         updateTitle();
-        q->view()->d->closeRequested.connect([this](QCloseEvent *ev) {
-            onCloseEvent(ev);
-        });
+        q->view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
     }
 
     /**
@@ -168,15 +167,16 @@ public:
     /// @brief Returns the mdi layout this dock widget is in, if any.
     MDILayout *mdiLayout() const;
 
-    /// @brief Returns if this is an helper DockWidget created automatically to host a drop area inside MDI
-    /// This is only used by the DockWidget::Option_MDINestable feature
+    /// @brief Returns if this is an helper DockWidget created automatically to host a drop area
+    /// inside MDI This is only used by the DockWidget::Option_MDINestable feature
     bool isMDIWrapper() const;
 
-    /// @brief If this dock widget is an MDI wrapper (isMDIWrapper()), then returns the wrapper drop area
+    /// @brief If this dock widget is an MDI wrapper (isMDIWrapper()), then returns the wrapper drop
+    /// area
     DropArea *mdiDropAreaWrapper() const;
 
-    /// @brief If this dock widget is inside a drop area nested in MDI then returns the wrapper dock widget
-    /// This goes up the hierarchy, while mdiDropAreaWrapper goes down.
+    /// @brief If this dock widget is inside a drop area nested in MDI then returns the wrapper dock
+    /// widget This goes up the hierarchy, while mdiDropAreaWrapper goes down.
     DockWidget *mdiDockWidgetWrapper() const;
 
     const QString name;

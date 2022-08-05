@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sergio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sergio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -38,28 +38,38 @@ int main(int argc, char *argv[])
     parser.setApplicationDescription("KDDockWidgets example application");
     parser.addHelpOption();
 
-    QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Hide titlebars when tabs are visible"));
+    QCommandLineOption noTitleBars(
+        "t", QCoreApplication::translate("main", "Hide titlebars when tabs are visible"));
     parser.addOption(noTitleBars);
 
-    QCommandLineOption alwaysTabs("z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
+    QCommandLineOption alwaysTabs(
+        "z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
     parser.addOption(alwaysTabs);
 
 #ifdef Q_OS_WIN
-    QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
+    QCommandLineOption nativeTitleBar(
+        "native-title-bar",
+        QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
     parser.addOption(nativeTitleBar);
 #endif
 
 #if defined(DOCKS_DEVELOPER_MODE)
-    QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
-    QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
-    QCommandLineOption noDropIndicators("no-drop-indicators", QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
+    QCommandLineOption noQtTool(
+        "no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
+    QCommandLineOption noParentForFloating(
+        "no-parent-for-floating",
+        QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
+    QCommandLineOption noDropIndicators(
+        "no-drop-indicators",
+        QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
 
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
     parser.addOption(noDropIndicators);
 
 #if defined(Q_OS_WIN)
-    QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
+    QCommandLineOption noAeroSnap(
+        "no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
     parser.addOption(noAeroSnap);
 #endif
 #endif

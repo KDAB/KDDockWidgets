@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -59,8 +59,9 @@ public:
     }
 
     /// @brief Provided for convenience, aggregates all other overloads
-    /// receives all mouse event types, if you return true here then the specialized counterparts won't be called
-    /// Example, if true is returned here for a mouse press, then onMouseButtonPress() won't be called
+    /// receives all mouse event types, if you return true here then the specialized counterparts
+    /// won't be called Example, if true is returned here for a mouse press, then
+    /// onMouseButtonPress() won't be called
     virtual bool onMouseEvent(View *, QMouseEvent *)
     {
         return false;

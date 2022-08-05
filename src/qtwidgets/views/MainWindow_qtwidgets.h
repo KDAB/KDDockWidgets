@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -41,7 +41,8 @@ namespace Views {
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget DockWidget instances.
  */
-class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>, public MainWindowViewInterface
+class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>,
+                                          public MainWindowViewInterface
 {
     Q_OBJECT
 public:
@@ -53,8 +54,7 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent QObject *parent to pass to QMainWindow constructor.
     ///@param flags Window flags to  pass to QMainWindow constructor.
-    explicit MainWindow_qtwidgets(const QString &uniqueName,
-                                  MainWindowOptions options = {},
+    explicit MainWindow_qtwidgets(const QString &uniqueName, MainWindowOptions options = {},
                                   QWidget *parent = nullptr,
                                   Qt::WindowFlags flags = Qt::WindowFlags());
 

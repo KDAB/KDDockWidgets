@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -43,11 +43,11 @@ public:
     QVBoxLayout *const layout;
 };
 
-DockWidget_qtwidgets::DockWidget_qtwidgets(const QString &uniqueName,
-                                           DockWidgetOptions options,
+DockWidget_qtwidgets::DockWidget_qtwidgets(const QString &uniqueName, DockWidgetOptions options,
                                            LayoutSaverOptions layoutSaverOptions,
                                            Qt::WindowFlags windowFlags)
-    : View_qtwidgets<QWidget>(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget, nullptr, windowFlags)
+    : View_qtwidgets<QWidget>(new DockWidget(this, uniqueName, options, layoutSaverOptions),
+                              Type::DockWidget, nullptr, windowFlags)
     , Views::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this))
 {

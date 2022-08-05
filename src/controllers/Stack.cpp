@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -30,7 +30,9 @@ using namespace KDDockWidgets::Controllers;
 
 Stack::Stack(Group *group, StackOptions options)
     : Controller(Type::Stack, Config::self().viewFactory()->createStack(this, group->view()))
-    , Draggable(view(), Config::self().flags() & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
+    , Draggable(view(),
+                Config::self().flags()
+                    & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
     , m_tabBar(new TabBar(this))
     , m_group(group)
     , m_options(options)
@@ -89,9 +91,10 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
 
     if (oldFrame && oldFrame->beingDeletedLater()) {
         // give it a push and delete it immediately.
-        // Having too many deleteLater() puts us in an inconsistent state. For example if LayoutSaver::saveState()
-        // would to be called while the Frame hadn't been deleted yet it would count with that group unless hacks.
-        // Also the unit-tests are full of waitForDeleted() due to deleteLater.
+        // Having too many deleteLater() puts us in an inconsistent state. For example if
+        // LayoutSaver::saveState() would to be called while the Frame hadn't been deleted yet it
+        // would count with that group unless hacks. Also the unit-tests are full of
+        // waitForDeleted() due to deleteLater.
 
         // Ideally we would just remove the deleteLater from Group.cpp, but QStack::insertTab()
         // would crash, as it accesses the old tab-widget we're stealing from
@@ -180,7 +183,8 @@ bool Stack::onMouseDoubleClick(QPoint localPos)
     // User clicked the empty space of the tab widget and we don't have title bar
     // We float the entire group.
 
-    if (!(Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) || tabBar()->dockWidgetAt(localPos))
+    if (!(Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
+        || tabBar()->dockWidgetAt(localPos))
         return false;
 
     Group *group = this->group();
@@ -260,7 +264,8 @@ void Stack::removeDockWidget(DockWidget *dw)
 
 bool Stack::insertDockWidget(int index, DockWidget *dw, const QIcon &icon, const QString &title)
 {
-    return dynamic_cast<Views::StackViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
+    return dynamic_cast<Views::StackViewInterface *>(view())->insertDockWidget(index, dw, icon,
+                                                                               title);
 }
 
 void Stack::setCurrentDockWidget(int index)

@@ -41,11 +41,13 @@ using namespace KDDockWidgets::Views;
 namespace KDDockWidgets {
 static Controller *controllerForItem(QQuickItem *item)
 {
-    // KDDW deals in views, but sometimes we might get a native type like QWidget, for example if you call
-    // someview->window(). This function let's us retrieve the actual controller of the stray QWidget.
+    // KDDW deals in views, but sometimes we might get a native type like QWidget, for example if
+    // you call someview->window(). This function let's us retrieve the actual controller of the
+    // stray QWidget.
 
     for (int i = int(Type::FIRST); i <= int(::Type::LAST); i *= 2) {
-        // Using a for+switch pattern so that compiler reminds us if new enumerators are added to enum
+        // Using a for+switch pattern so that compiler reminds us if new enumerators are added to
+        // enum
         switch (Type(i)) {
         case Type::Frame:
             if (auto view = qobject_cast<Group_qtquick *>(item))

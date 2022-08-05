@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -50,12 +50,11 @@ class DOCKS_EXPORT ViewFactory_qtquick : public ViewFactory
 public:
     ViewFactory_qtquick() = default;
     ~ViewFactory_qtquick() override;
-    View *createDockWidget(const QString &uniqueName,
-                           DockWidgetOptions options = {},
+    View *createDockWidget(const QString &uniqueName, DockWidgetOptions options = {},
                            LayoutSaverOptions layoutSaverOptions = {},
                            Qt::WindowFlags windowFlags = {}) const override;
-    virtual View *createDockWidget(const QString &uniqueName,
-                                   QQmlEngine *, DockWidgetOptions options = {},
+    virtual View *createDockWidget(const QString &uniqueName, QQmlEngine *,
+                                   DockWidgetOptions options = {},
                                    LayoutSaverOptions layoutSaverOptions = {},
                                    Qt::WindowFlags windowFlags = {}) const;
     View *createGroup(Controllers::Group *, View *parent) const override;
@@ -78,8 +77,10 @@ public:
     virtual QUrl floatingWindowFilename() const;
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
-    Views::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(Controllers::ClassicIndicators *) const override;
-    View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const override;
+    Views::ClassicIndicatorWindowViewInterface *
+    createClassicIndicatorWindow(Controllers::ClassicIndicators *) const override;
+    View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller,
+                                                  View *parent = nullptr) const override;
 
     static ViewFactory_qtquick *self();
 

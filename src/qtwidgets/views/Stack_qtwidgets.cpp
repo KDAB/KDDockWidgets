@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -43,16 +43,20 @@ void Stack_qtwidgets::init()
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QTabWidget::customContextMenuRequested, this, &Stack_qtwidgets::showContextMenu);
 
-    // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
+    // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user
+    // presses [x]
     connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
         if (auto dw = dockwidgetAt(index)) {
             if (dw->options() & DockWidgetOption_NotClosable) {
-                qWarning() << "QTabWidget::tabCloseRequested: Refusing to close dock widget with Option_NotClosable option. name=" << dw->uniqueName();
+                qWarning() << "QTabWidget::tabCloseRequested: Refusing to close dock widget with "
+                              "Option_NotClosable option. name="
+                           << dw->uniqueName();
             } else {
                 dw->view()->close();
             }
         } else {
-            qWarning() << "QTabWidget::tabCloseRequested Couldn't find dock widget for index" << index << "; count=" << count();
+            qWarning() << "QTabWidget::tabCloseRequested Couldn't find dock widget for index"
+                       << index << "; count=" << count();
         }
     });
 
@@ -63,9 +67,8 @@ void Stack_qtwidgets::init()
         Q_EMIT m_stack->currentDockWidgetChanged(m_stack->currentDockWidget());
     });
 
-    m_tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect([this](bool is) {
-        QTabWidget::setTabBarAutoHide(is);
-    });
+    m_tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect(
+        [this](bool is) { QTabWidget::setTabBarAutoHide(is); });
 
     if (!QTabWidget::tabBar()->isVisible())
         setFocusProxy(nullptr);
@@ -103,7 +106,8 @@ void Stack_qtwidgets::mousePressEvent(QMouseEvent *ev)
 {
     QTabWidget::mousePressEvent(ev);
 
-    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !m_stack->group()->isFocused()) {
+    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable)
+        && !m_stack->group()->isFocused()) {
         // User clicked on the tab widget itself
         m_stack->group()->FocusScope::focus(Qt::MouseFocusReason);
     }
@@ -124,8 +128,8 @@ void Stack_qtwidgets::setCurrentDockWidget(int index)
     setCurrentIndex(index);
 }
 
-bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw,
-                                       const QIcon &icon, const QString &title)
+bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+                                       const QString &title)
 {
     insertTab(index, View_qt::asQWidget(dw), icon, title);
     return true;
@@ -218,9 +222,7 @@ void Stack_qtwidgets::showContextMenu(QPoint pos)
 
     QMenu menu(this);
     for (int i = 0; i < tabBar->count(); ++i) {
-        QAction *action = menu.addAction(tabText(i), this, [this, i] {
-            setCurrentIndex(i);
-        });
+        QAction *action = menu.addAction(tabText(i), this, [this, i] { setCurrentIndex(i); });
         if (i == currentIndex())
             action->setDisabled(true);
     }

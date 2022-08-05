@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -97,9 +97,10 @@ public:
     QStringList affinities() const override;
     QVector<Controllers::DockWidget *> dockWidgets() const override;
 
-    // These two are set for Wayland only, where we can't make the floating window immediately (no way to position it)
-    // So we're dragging either a group with multiple dock widgets or a single tab, keep them here.
-    // It's important to know what we're dragging, so drop rubber band respect min/max sizes.
+    // These two are set for Wayland only, where we can't make the floating window immediately (no
+    // way to position it) So we're dragging either a group with multiple dock widgets or a single
+    // tab, keep them here. It's important to know what we're dragging, so drop rubber band respect
+    // min/max sizes.
     QPointer<Controllers::Group> m_group;
     QPointer<Controllers::DockWidget> m_dockWidget;
 };

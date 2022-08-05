@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -38,7 +38,10 @@ int main(int argc, char **argv)
     parser.setApplicationDescription("KDDockWidgets MDI mixed with normal docking");
     parser.addHelpOption();
 
-    QCommandLineOption nestedDocking("n", QCoreApplication::translate("main", "The MDI dock widgets will serve as drop areas, allowing for further nesting"));
+    QCommandLineOption nestedDocking(
+        "n",
+        QCoreApplication::translate(
+            "main", "The MDI dock widgets will serve as drop areas, allowing for further nesting"));
     parser.addOption(nestedDocking);
 
     parser.process(app);
@@ -48,7 +51,8 @@ int main(int argc, char **argv)
 
     // # 1. Create our main window
 
-    KDDockWidgets::Views::MainWindow_qtwidgets mainWindow(QStringLiteral("MyMainWindow"), KDDockWidgets::MainWindowOption_HasCentralWidget);
+    KDDockWidgets::Views::MainWindow_qtwidgets mainWindow(
+        QStringLiteral("MyMainWindow"), KDDockWidgets::MainWindowOption_HasCentralWidget);
     mainWindow.setWindowTitle("Main Window");
     mainWindow.resize(1600, 1200);
     mainWindow.show();
@@ -63,10 +67,10 @@ int main(int argc, char **argv)
     dock2->setWidget(widget2);
 
     // # 3. Dock them
-    mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft,
-                             nullptr, KDDockWidgets::InitialOption(QSize(300, 0)));
-    mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnBottom,
-                             nullptr, KDDockWidgets::InitialOption(QSize(0, 300)));
+    mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft, nullptr,
+                             KDDockWidgets::InitialOption(QSize(300, 0)));
+    mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnBottom, nullptr,
+                             KDDockWidgets::InitialOption(QSize(0, 300)));
 
     KDDockWidgets::DockWidgetOptions options = {};
     if (parser.isSet(nestedDocking)) {
@@ -74,13 +78,16 @@ int main(int argc, char **argv)
     }
 
     // 4. Create our MDI widgets, which will go into the MDI area
-    auto mdiWidget1 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MDI widget1"), options);
+    auto mdiWidget1 =
+        new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MDI widget1"), options);
     mdiWidget1->setWidget(new MyWidget1());
 
-    auto mdiWidget2 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MDI widget2"), options);
+    auto mdiWidget2 =
+        new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MDI widget2"), options);
     mdiWidget2->setWidget(new MyWidget2());
 
-    auto mdiWidget3 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MDI widget3"), options);
+    auto mdiWidget3 =
+        new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MDI widget3"), options);
     mdiWidget3->setWidget(new MyWidget3());
 
     auto mdiArea = new KDDockWidgets::Views::MDIArea_qtwidgets();

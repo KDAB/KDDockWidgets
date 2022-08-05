@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -61,7 +61,8 @@ public:
         , m_controller(qq->mainWindow())
         , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
         , m_centralWidget(new MyCentralWidget(qq))
-        , m_layout(new QHBoxLayout(m_centralWidget)) // 1 level of indirection so we can add some margins
+        , m_layout(new QHBoxLayout(m_centralWidget)) // 1 level of indirection so we can add some
+                                                     // margins
     {
     }
 
@@ -87,10 +88,8 @@ public:
 
 MyCentralWidget::~MyCentralWidget() = default;
 
-MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
-                                           MainWindowOptions options,
-                                           QWidget *parent,
-                                           Qt::WindowFlags flags)
+MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName, MainWindowOptions options,
+                                           QWidget *parent, Qt::WindowFlags flags)
     : View_qtwidgets<QMainWindow>(new Controllers::MainWindow(this, uniqueName, options),
                                   Type::MainWindow, parent, flags)
     , MainWindowViewInterface(static_cast<Controllers::MainWindow *>(controller()))
@@ -102,13 +101,16 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
     d->updateMargins();
 
     if (d->m_supportsAutoHide) {
-        d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::West)->view()));
+        d->m_layout->addWidget(
+            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::West)->view()));
         auto innerVLayout = new QVBoxLayout();
         innerVLayout->setSpacing(0);
         innerVLayout->setContentsMargins(0, 0, 0, 0);
-        innerVLayout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::North)));
+        innerVLayout->addWidget(
+            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::North)));
         innerVLayout->addWidget(View_qt::asQWidget(d->m_controller->layout()));
-        innerVLayout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::South)));
+        innerVLayout->addWidget(
+            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::South)));
         d->m_layout->addLayout(innerVLayout);
         d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::East)));
     } else {
@@ -121,11 +123,12 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
     if (isWindow) {
         // Update our margins when logical dpi changes.
         // QWidget doesn't have any screenChanged signal, so we need to use QWindow::screenChanged.
-        // Note #1: Someone might be using this main window embedded into another main window, in which case it will
-        // never have a QWindow, so guard it with isWindow.
-        // Note #2: We don't use QWidget::isWindow() as that will always be true since QMainWindow sets it. Anyone wanting
-        // or not wanting this immediate create() needs to pass a parent/flag pair that makes sense. For example, some people
-        // might want to add this main window into a layout and avoid the create(), so they pass a parent, with null flag.
+        // Note #1: Someone might be using this main window embedded into another main window, in
+        // which case it will never have a QWindow, so guard it with isWindow. Note #2: We don't use
+        // QWidget::isWindow() as that will always be true since QMainWindow sets it. Anyone wanting
+        // or not wanting this immediate create() needs to pass a parent/flag pair that makes sense.
+        // For example, some people might want to add this main window into a layout and avoid the
+        // create(), so they pass a parent, with null flag.
 
         create(); // ensure QWindow exists
         d->m_connection = window()->screenChanged.connect([this] {

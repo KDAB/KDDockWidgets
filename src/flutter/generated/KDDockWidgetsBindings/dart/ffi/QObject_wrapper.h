@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -28,8 +28,10 @@ public:
     void deleteLater();
     void destroyed(QObject *arg__1 = nullptr);
     bool disconnect(const QObject *receiver, const char *member = nullptr) const;
-    static bool disconnect(const QObject *sender, const char *signal, const QObject *receiver, const char *member);
-    bool disconnect(const char *signal = nullptr, const QObject *receiver = nullptr, const char *member = nullptr) const;
+    static bool disconnect(const QObject *sender, const char *signal, const QObject *receiver,
+                           const char *member);
+    bool disconnect(const char *signal = nullptr, const QObject *receiver = nullptr,
+                    const char *member = nullptr) const;
     void dumpObjectInfo();
     void dumpObjectTree();
     QList<QByteArray> dynamicPropertyNames() const;
@@ -74,12 +76,22 @@ KDDockWidgetsBindings_EXPORT void c_QObject__customEvent_QEvent(void *thisObj, v
 KDDockWidgetsBindings_EXPORT void c_QObject__deleteLater(void *thisObj);
 // QObject::destroyed(QObject * arg__1)
 KDDockWidgetsBindings_EXPORT void c_QObject__destroyed_QObject(void *thisObj, void *arg__1_);
-KDDockWidgetsBindings_EXPORT void c_QObject__onDestroyed_QObject(void *thisObj, void *contextQObject, void *callback); // QObject::disconnect(const QObject * receiver, const char * member) const
-KDDockWidgetsBindings_EXPORT bool c_QObject__disconnect_QObject_char(void *thisObj, void *receiver_, const char *member);
-// QObject::disconnect(const QObject * sender, const char * signal, const QObject * receiver, const char * member)
-KDDockWidgetsBindings_EXPORT bool c_static_QObject__disconnect_QObject_char_QObject_char(void *sender_, const char *signal, void *receiver_, const char *member);
+KDDockWidgetsBindings_EXPORT void
+c_QObject__onDestroyed_QObject(void *thisObj, void *contextQObject,
+                               void *callback); // QObject::disconnect(const QObject * receiver,
+                                                // const char * member) const
+KDDockWidgetsBindings_EXPORT bool c_QObject__disconnect_QObject_char(void *thisObj, void *receiver_,
+                                                                     const char *member);
+// QObject::disconnect(const QObject * sender, const char * signal, const QObject * receiver, const
+// char * member)
+KDDockWidgetsBindings_EXPORT bool
+c_static_QObject__disconnect_QObject_char_QObject_char(void *sender_, const char *signal,
+                                                       void *receiver_, const char *member);
 // QObject::disconnect(const char * signal, const QObject * receiver, const char * member) const
-KDDockWidgetsBindings_EXPORT bool c_QObject__disconnect_char_QObject_char(void *thisObj, const char *signal, void *receiver_, const char *member);
+KDDockWidgetsBindings_EXPORT bool c_QObject__disconnect_char_QObject_char(void *thisObj,
+                                                                          const char *signal,
+                                                                          void *receiver_,
+                                                                          const char *member);
 // QObject::dumpObjectInfo()
 KDDockWidgetsBindings_EXPORT void c_QObject__dumpObjectInfo(void *thisObj);
 // QObject::dumpObjectTree()
@@ -89,11 +101,13 @@ KDDockWidgetsBindings_EXPORT void *c_QObject__dynamicPropertyNames(void *thisObj
 // QObject::event(QEvent * event)
 KDDockWidgetsBindings_EXPORT bool c_QObject__event_QEvent(void *thisObj, void *event_);
 // QObject::eventFilter(QObject * watched, QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_QObject__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
+KDDockWidgetsBindings_EXPORT bool
+c_QObject__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 // QObject::inherits(const char * classname) const
 KDDockWidgetsBindings_EXPORT bool c_QObject__inherits_char(void *thisObj, const char *classname);
 // QObject::installEventFilter(QObject * filterObj)
-KDDockWidgetsBindings_EXPORT void c_QObject__installEventFilter_QObject(void *thisObj, void *filterObj_);
+KDDockWidgetsBindings_EXPORT void c_QObject__installEventFilter_QObject(void *thisObj,
+                                                                        void *filterObj_);
 // QObject::isWidgetType() const
 KDDockWidgetsBindings_EXPORT bool c_QObject__isWidgetType(void *thisObj);
 // QObject::isWindowType() const
@@ -113,7 +127,8 @@ KDDockWidgetsBindings_EXPORT void *c_QObject__sender(void *thisObj);
 // QObject::senderSignalIndex() const
 KDDockWidgetsBindings_EXPORT int c_QObject__senderSignalIndex(void *thisObj);
 // QObject::setObjectName(const QString & name)
-KDDockWidgetsBindings_EXPORT void c_QObject__setObjectName_QString(void *thisObj, const char *name_);
+KDDockWidgetsBindings_EXPORT void c_QObject__setObjectName_QString(void *thisObj,
+                                                                   const char *name_);
 // QObject::setParent(QObject * parent)
 KDDockWidgetsBindings_EXPORT void c_QObject__setParent_QObject(void *thisObj, void *parent_);
 // QObject::signalsBlocked() const
@@ -121,8 +136,10 @@ KDDockWidgetsBindings_EXPORT bool c_QObject__signalsBlocked(void *thisObj);
 // QObject::startTimer(int interval)
 KDDockWidgetsBindings_EXPORT int c_QObject__startTimer_int(void *thisObj, int interval);
 // QObject::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_QObject__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void *c_static_QObject__tr_char_char_int(const char *s, const char *c,
+                                                                      int n);
 KDDockWidgetsBindings_EXPORT void c_QObject__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void
+c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_QObject_Finalizer(void *, void *cppObj, void *);
 }

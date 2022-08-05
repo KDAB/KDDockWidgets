@@ -22,14 +22,16 @@ class DropArea;
 
 /// @brief The base class for view wrappers
 /// A view wrapper is a view that doesn't own the native GUI element(QWidget, QQuickItem etc.)
-/// It just adds View API to an existing GUI element. Useful for GUI elements that are not created by KDDW.
-/// this is optional
+/// It just adds View API to an existing GUI element. Useful for GUI elements that are not created
+/// by KDDW. this is optional
 class DOCKS_EXPORT ViewWrapper : public Views::View_qt
 {
 public:
     using Ptr = std::shared_ptr<View>;
 
-    explicit ViewWrapper(Controller *controller, QObject *thisObj); // TODOm4: Remove thisObj argument once all calls to asQWidget() are removed
+    explicit ViewWrapper(Controller *controller,
+                         QObject *thisObj); // TODOm4: Remove thisObj argument once all calls to
+                                            // asQWidget() are removed
 
     void setMinimumSize(QSize) override;
     QSize maxSizeHint() const override;

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -44,8 +44,8 @@ std::shared_ptr<View> Window_qtquick::rootView() const
     if (auto quickwindow = qobject_cast<QQuickWindow *>(m_window)) {
         auto contentItem = quickwindow->contentItem();
         if (View *view = topMostKDDWView(contentItem)) {
-            // This block is for retrocompatibility with 1.x. For QtQuick the topmost "widget" is a KDDW known widget
-            // and not any arbitrary user QtQuickItem.
+            // This block is for retrocompatibility with 1.x. For QtQuick the topmost "widget" is a
+            // KDDW known widget and not any arbitrary user QtQuickItem.
             // TODOm3: I'd like to change it so it's normalized.
             return view->asWrapper();
         } else {
@@ -83,8 +83,8 @@ bool Window_qtquick::supportsHonouringLayoutMinSize() const
     // whenever the window is resized lower than the layout's min-size.
 
     if (auto view = rootView()) {
-        // For floating window we have full control. While for anything else we don't know the disposition
-        // of the users main.qml
+        // For floating window we have full control. While for anything else we don't know the
+        // disposition of the users main.qml
         return view->is(Type::FloatingWindow);
     }
 

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -45,7 +45,8 @@ bool Controllers::TabBar::tabsAreMovable() const
 bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
 {
     // Here we allow the user to re-order tabs instead of dragging them off.
-    // To do that we just return false here, and QTabBar will handle the mouse event, assuming QTabBar::isMovable.
+    // To do that we just return false here, and QTabBar will handle the mouse event, assuming
+    // QTabBar::isMovable.
 
     const bool defaultResult = Draggable::dragCanStart(pressPos, pos);
 
@@ -56,7 +57,8 @@ bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
         return defaultResult;
     }
 
-    const int index = dynamic_cast<Views::TabBarViewInterface *>(view())->tabAt(view()->mapFromGlobal(pos));
+    const int index =
+        dynamic_cast<Views::TabBarViewInterface *>(view())->tabAt(view()->mapFromGlobal(pos));
     if (index == -1)
         return defaultResult;
 
@@ -93,25 +95,30 @@ Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) cons
 std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
 {
     auto dock = m_lastPressedDockWidget;
-    m_lastPressedDockWidget = nullptr; // TODO check if we still have this dock, it might have been deleted
+    m_lastPressedDockWidget =
+        nullptr; // TODO check if we still have this dock, it might have been deleted
 
-    const bool hideTitleBarWhenTabsVisible = Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible;
+    const bool hideTitleBarWhenTabsVisible =
+        Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible;
     const bool alwaysShowTabs = Config::self().flags() & Config::Flag_AlwaysShowTabs;
 
     if (hideTitleBarWhenTabsVisible) {
         if (dock) {
             if (alwaysShowTabs && hasSingleDockWidget()) {
-                // Case #1. User is dragging a tab but there's only 1 tab (and tabs are always visible), so drag everything instead, no detaching happens
+                // Case #1. User is dragging a tab but there's only 1 tab (and tabs are always
+                // visible), so drag everything instead, no detaching happens
                 return m_tabWidget->makeWindow();
             }
         } else {
             // Case #2. User is dragging on the QTabBar background, not on an actual tab.
-            // As Flag_HideTitleBarWhenTabsVisible is set, we let the user drag through the tab widget background.
+            // As Flag_HideTitleBarWhenTabsVisible is set, we let the user drag through the tab
+            // widget background.
             return m_tabWidget->makeWindow();
         }
     } else {
         if (dock && hasSingleDockWidget() && alwaysShowTabs) {
-            // Case #3. window with title bar and single tab, no detaching should happen, just use the title bar.
+            // Case #3. window with title bar and single tab, no detaching should happen, just use
+            // the title bar.
             return {};
         }
     }

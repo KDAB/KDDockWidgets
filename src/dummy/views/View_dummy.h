@@ -35,8 +35,8 @@ public:
     using View::resize;
     using View::width;
 
-    explicit View_dummy(KDDockWidgets::Controller *controller, Type type,
-                        void *, Qt::WindowFlags windowFlags = {});
+    explicit View_dummy(KDDockWidgets::Controller *controller, Type type, void *,
+                        Qt::WindowFlags windowFlags = {});
 
     ~View_dummy() override = default;
 

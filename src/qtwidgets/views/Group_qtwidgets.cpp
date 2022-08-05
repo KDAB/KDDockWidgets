@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -146,8 +146,7 @@ void Group_qtwidgets::paintEvent(QPaintEvent *)
         const QRectF rectf = QWidget::rect();
 
         const bool isOverlayed = m_group->isOverlayed();
-        const QColor penColor = isOverlayed ? QColor(0x666666)
-                                            : QColor(184, 184, 184, 184);
+        const QColor penColor = isOverlayed ? QColor(0x666666) : QColor(184, 184, 184, 184);
         QPen pen(penColor);
         pen.setWidthF(penWidth);
         p.setPen(pen);
@@ -156,7 +155,8 @@ void Group_qtwidgets::paintEvent(QPaintEvent *)
             pen.setJoinStyle(Qt::MiterJoin);
             p.drawRect(rectf.adjusted(halfPenWidth, penWidth, -halfPenWidth, -halfPenWidth));
         } else {
-            p.drawRoundedRect(rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth), 2, 2);
+            p.drawRoundedRect(
+                rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth), 2, 2);
         }
     }
 }

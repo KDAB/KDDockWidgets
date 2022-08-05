@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -38,7 +38,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 namespace KDDockWidgets {
-static Controllers::DropIndicatorOverlay *createDropIndicatorOverlay(Controllers::DropArea *dropArea)
+static Controllers::DropIndicatorOverlay *
+createDropIndicatorOverlay(Controllers::DropArea *dropArea)
 {
 #ifdef Q_OS_WASM
     // On WASM windows don't support translucency, which is required for the classic indicators.
@@ -84,7 +85,8 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
             }
 
             if (visibleCount() > 0) {
-                // The title of our MDI group will need to change to the app name if we have more than 1 dock widget nested
+                // The title of our MDI group will need to change to the app name if we have more
+                // than 1 dock widget nested
                 Q_EMIT dw->titleChanged(dw->title());
             } else {
                 // Our wrapeper isn't needed anymore
@@ -186,7 +188,8 @@ void DropArea::addDockWidget(Controllers::DockWidget *dw, Location location,
         Controllers::Group *oldFrame = dw->d->group();
         if (oldFrame->hasSingleDockWidget()) {
             Q_ASSERT(oldFrame->containsDockWidget(dw));
-            // The group only has this dock widget, and the group is already in the layout. So move the group instead
+            // The group only has this dock widget, and the group is already in the layout. So move
+            // the group instead
             group = oldFrame;
         } else {
             group = new Controllers::Group();
@@ -204,8 +207,8 @@ void DropArea::addDockWidget(Controllers::DockWidget *dw, Location location,
     }
 
     if (hadSingleFloatingFrame && !hasSingleFloatingFrame()) {
-        // The dock widgets that already existed in our layout need to have their floatAction() updated
-        // otherwise it's still checked. Only the dropped dock widget got updated
+        // The dock widgets that already existed in our layout need to have their floatAction()
+        // updated otherwise it's still checked. Only the dropped dock widget got updated
         updateFloatingActions();
     }
 }
@@ -258,7 +261,8 @@ DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos
         return DropLocation_None;
     }
 
-    Controllers::Group *group = groupContainingPos(globalPos); // Group is nullptr if MainWindowOption_HasCentralFrame isn't set
+    Controllers::Group *group = groupContainingPos(
+        globalPos); // Group is nullptr if MainWindowOption_HasCentralFrame isn't set
     m_dropIndicatorOverlay->setWindowBeingDragged(true);
     m_dropIndicatorOverlay->setHoveredFrame(group);
     return m_dropIndicatorOverlay->hover(globalPos);
@@ -318,16 +322,17 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *acceptingGroup,
                     DropLocation droploc)
 {
-    Controllers::FloatingWindow *droppedWindow = draggedWindow ? draggedWindow->floatingWindow()
-                                                               : nullptr;
+    Controllers::FloatingWindow *droppedWindow =
+        draggedWindow ? draggedWindow->floatingWindow() : nullptr;
 
     if (isWayland() && !droppedWindow) {
         // This is the Wayland special case.
-        // With other platforms, when detaching a tab or dock widget we create the FloatingWindow immediately.
-        // With Wayland we delay the floating window until we drop it.
-        // Ofc, we could just dock the dockwidget without the temporary FloatingWindow, but this way we reuse
-        // 99% of the rest of the code, without adding more wayland special cases
-        droppedWindow = draggedWindow ? draggedWindow->draggable()->makeWindow()->floatingWindow() : nullptr;
+        // With other platforms, when detaching a tab or dock widget we create the FloatingWindow
+        // immediately. With Wayland we delay the floating window until we drop it. Ofc, we could
+        // just dock the dockwidget without the temporary FloatingWindow, but this way we reuse 99%
+        // of the rest of the code, without adding more wayland special cases
+        droppedWindow =
+            draggedWindow ? draggedWindow->draggable()->makeWindow()->floatingWindow() : nullptr;
         if (!droppedWindow) {
             // Doesn't happen
             qWarning() << Q_FUNC_INFO << "Wayland: Expected window" << draggedWindow;
@@ -336,10 +341,12 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *accep
     }
 
     bool result = true;
-    const bool needToFocusNewlyDroppedWidgets = Config::self().flags() & Config::Flag_TitleBarIsFocusable;
+    const bool needToFocusNewlyDroppedWidgets =
+        Config::self().flags() & Config::Flag_TitleBarIsFocusable;
     const Controllers::DockWidget::List droppedDockWidgets = needToFocusNewlyDroppedWidgets
         ? droppedWindow->layout()->dockWidgets()
-        : Controllers::DockWidget::List(); // just so save some memory allocations for the case where this
+        : Controllers::DockWidget::List(); // just so save some memory allocations for the case
+                                           // where this
     // variable isn't used
 
     switch (droploc) {
@@ -347,13 +354,15 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *accep
     case DropLocation_Top:
     case DropLocation_Bottom:
     case DropLocation_Right:
-        result = drop(droppedWindow->view(), DropIndicatorOverlay::multisplitterLocationFor(droploc), acceptingGroup);
+        result = drop(droppedWindow->view(),
+                      DropIndicatorOverlay::multisplitterLocationFor(droploc), acceptingGroup);
         break;
     case DropLocation_OutterLeft:
     case DropLocation_OutterTop:
     case DropLocation_OutterRight:
     case DropLocation_OutterBottom:
-        result = drop(droppedWindow->view(), DropIndicatorOverlay::multisplitterLocationFor(droploc), nullptr);
+        result = drop(droppedWindow->view(),
+                      DropIndicatorOverlay::multisplitterLocationFor(droploc), nullptr);
         break;
     case DropLocation_Center:
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingGroup;
@@ -363,7 +372,8 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *accep
         break;
 
     default:
-        qWarning() << "DropArea::drop: Unexpected drop location" << m_dropIndicatorOverlay->currentDropLocation();
+        qWarning() << "DropArea::drop: Unexpected drop location"
+                   << m_dropIndicatorOverlay->currentDropLocation();
         result = false;
         break;
     }
@@ -371,10 +381,11 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *accep
     if (result) {
         // Window receiving the drop gets raised
         // Window receiving the drop gets raised.
-        // Exception: Under EGLFS we don't raise the fullscreen main window, as then all floating windows would
-        // go behind. It's also unneeded to raise, as it's fullscreen.
+        // Exception: Under EGLFS we don't raise the fullscreen main window, as then all floating
+        // windows would go behind. It's also unneeded to raise, as it's fullscreen.
 
-        const bool isEGLFSRootWindow = isEGLFS() && (view()->window()->isFullScreen() || window()->isMaximized());
+        const bool isEGLFSRootWindow =
+            isEGLFS() && (view()->window()->isFullScreen() || window()->isMaximized());
         if (!isEGLFSRootWindow)
             view()->raiseAndActivate();
 
@@ -394,7 +405,8 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Group *accep
     return result;
 }
 
-bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location, Controllers::Group *relativeTo)
+bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location,
+                    Controllers::Group *relativeTo)
 {
     qCDebug(docking) << "DropArea::addFrame";
 
@@ -440,7 +452,8 @@ bool DropArea::validateAffinity(T *window, Controllers::Group *acceptingGroup) c
     if (acceptingGroup) {
         // We're dropping into another group (as tabbed), so also check the affinity of the group
         // not only of the main window, which might be more forgiving
-        if (!DockRegistry::self()->affinitiesMatch(window->affinities(), acceptingGroup->affinities())) {
+        if (!DockRegistry::self()->affinitiesMatch(window->affinities(),
+                                                   acceptingGroup->affinities())) {
             return false;
         }
     }
@@ -467,7 +480,8 @@ Controllers::Group *DropArea::createCentralFrame(MainWindowOptions options)
     Controllers::Group *group = nullptr;
     if (options & MainWindowOption_HasCentralFrame) {
         FrameOptions groupOptions = FrameOption_IsCentralFrame;
-        const bool hasPersistentCentralWidget = (options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
+        const bool hasPersistentCentralWidget =
+            (options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
         if (hasPersistentCentralWidget) {
             groupOptions |= FrameOption_NonDockable;
         } else {
@@ -528,23 +542,22 @@ bool DropArea::validateInputs(View *widget, Location location,
     if (!relativeToThis && !containsItem(relativeToItem)) {
         qWarning() << "DropArea::addWidget: Doesn't contain relativeTo:"
                    << "; relativeToFrame=" << relativeToFrame
-                   << "; relativeToItem=" << relativeToItem
-                   << "; options=" << option;
+                   << "; relativeToItem=" << relativeToItem << "; options=" << option;
         return false;
     }
 
     return true;
 }
 
-void DropArea::addWidget(View *w, Location location,
-                         Controllers::Group *relativeToWidget,
+void DropArea::addWidget(View *w, Location location, Controllers::Group *relativeToWidget,
                          InitialOption option)
 {
 
     auto group = w->asGroupController();
     if (itemForFrame(group) != nullptr) {
         // Item already exists, remove it.
-        // Changing the group parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
+        // Changing the group parent will make the item clean itself up. It turns into a placeholder
+        // and is removed by unrefOldPlaceholders
         group->setParentView(nullptr); // so ~Item doesn't delete it
         group->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
     }
@@ -596,8 +609,7 @@ void DropArea::addWidget(View *w, Location location,
 }
 
 void DropArea::addMultiSplitter(Controllers::DropArea *sourceMultiSplitter, Location location,
-                                Controllers::Group *relativeTo,
-                                InitialOption option)
+                                Controllers::Group *relativeTo, InitialOption option)
 {
     qCDebug(addwidget) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
     addWidget(sourceMultiSplitter->view(), location, relativeTo, option);
@@ -660,8 +672,8 @@ QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
     item.setMinSize(wbd->minSize());
     item.setMaxSizeHint(wbd->maxSize());
 
-    Layouting::ItemBoxContainer *container = relativeTo ? relativeTo->parentBoxContainer()
-                                                        : m_rootItem;
+    Layouting::ItemBoxContainer *container =
+        relativeTo ? relativeTo->parentBoxContainer() : m_rootItem;
 
     return container->suggestedDropRect(&item, relativeTo, location);
 }

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -78,7 +78,8 @@ struct LayoutSaver::ScalingInfo
 
     bool isValid() const
     {
-        return heightFactor > 0 && widthFactor > 0 && !((qFuzzyCompare(widthFactor, 1) && qFuzzyCompare(heightFactor, 1)));
+        return heightFactor > 0 && widthFactor > 0
+            && !((qFuzzyCompare(widthFactor, 1) && qFuzzyCompare(heightFactor, 1)));
     }
 
     void translatePos(QPoint &) const;
@@ -102,7 +103,8 @@ struct LayoutSaver::Position
     LayoutSaver::Placeholder::List placeholders;
     QHash<SideBarLocation, QRect> lastOverlayedGeometries;
 
-    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See
+    /// RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);
 };
 
@@ -115,7 +117,8 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 
     bool isValid() const;
 
-    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See
+    /// RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);
 
     static Ptr dockWidgetForName(const QString &name)
@@ -199,7 +202,8 @@ struct LayoutSaver::FloatingWindow
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
     bool skipsRestore() const;
 
-    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See
+    /// RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &);
 
     LayoutSaver::MultiSplitter multiSplitterLayout;
@@ -223,7 +227,8 @@ public:
 
     bool isValid() const;
 
-    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See
+    /// RestoreOption_RelativeToMainWindow.
     void scaleSizes();
 
     QHash<SideBarLocation, QStringList> dockWidgetsPerSideBar;
@@ -241,7 +246,8 @@ public:
     ScalingInfo scalingInfo;
 };
 
-///@brief we serialize some info about screens, so eventually we can make restore smarter when switching screens
+///@brief we serialize some info about screens, so eventually we can make restore smarter when
+/// switching screens
 /// Not used currently, but nice to have in the json already
 struct LayoutSaver::ScreenInfo
 {
@@ -283,7 +289,8 @@ public:
     QByteArray toJson() const;
     bool fromJson(const QByteArray &jsonData);
 
-    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See
+    /// RestoreOption_RelativeToMainWindow.
     void scaleSizes(KDDockWidgets::InternalRestoreOptions);
 
     static LayoutSaver::Layout *s_currentLayoutBeingRestored;

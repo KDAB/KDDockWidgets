@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -101,7 +101,8 @@ public:
      * @brief returns a list of dock widgets which were restored since the last
      * @ref restoreLayout() or @ref restoreFromFile()
      *
-     * Useful since some dock widgets can be new, and hence not be included in the last saved layout.
+     * Useful since some dock widgets can be new, and hence not be included in the last saved
+     * layout.
      */
     QVector<Controllers::DockWidget *> restoredDockWidgets() const;
 
@@ -109,7 +110,8 @@ public:
      * @brief Sets the list of affinity names for which restore and save will be applied on.
      * Allows to save/restore only a subset of the windows.
      * Empty by default, all windows are subject to save/restore.
-     * Any window with empty affinity will also be subject to save/restore, regardless of @p affinityNames.
+     * Any window with empty affinity will also be subject to save/restore, regardless of @p
+     * affinityNames.
      */
     void setAffinityNames(const QStringList &affinityNames);
 

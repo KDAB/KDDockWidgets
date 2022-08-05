@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -115,7 +115,8 @@ KDDockWidgetsBindings_EXPORT void *c_QByteArray__append_QByteArray(void *thisObj
 // QByteArray::append(const char * s)
 KDDockWidgetsBindings_EXPORT void *c_QByteArray__append_char(void *thisObj, const char *s);
 // QByteArray::append(const char * s, int len)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__append_char_int(void *thisObj, const char *s, int len);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__append_char_int(void *thisObj, const char *s,
+                                                                 int len);
 // QByteArray::at(int i) const
 KDDockWidgetsBindings_EXPORT char c_QByteArray__at_int(void *thisObj, int i);
 // QByteArray::back() const
@@ -169,19 +170,25 @@ KDDockWidgetsBindings_EXPORT void *c_static_QByteArray__fromBase64_QByteArray(vo
 // QByteArray::fromHex(const QByteArray & hexEncoded)
 KDDockWidgetsBindings_EXPORT void *c_static_QByteArray__fromHex_QByteArray(void *hexEncoded_);
 // QByteArray::fromRawData(const char * arg__1, int size)
-KDDockWidgetsBindings_EXPORT void *c_static_QByteArray__fromRawData_char_int(const char *arg__1, int size);
+KDDockWidgetsBindings_EXPORT void *c_static_QByteArray__fromRawData_char_int(const char *arg__1,
+                                                                             int size);
 // QByteArray::front() const
 KDDockWidgetsBindings_EXPORT char c_QByteArray__front(void *thisObj);
 // QByteArray::indexOf(const QByteArray & a, int from) const
-KDDockWidgetsBindings_EXPORT int c_QByteArray__indexOf_QByteArray_int(void *thisObj, void *a_, int from);
+KDDockWidgetsBindings_EXPORT int c_QByteArray__indexOf_QByteArray_int(void *thisObj, void *a_,
+                                                                      int from);
 // QByteArray::indexOf(const char * c, int from) const
-KDDockWidgetsBindings_EXPORT int c_QByteArray__indexOf_char_int(void *thisObj, const char *c, int from);
+KDDockWidgetsBindings_EXPORT int c_QByteArray__indexOf_char_int(void *thisObj, const char *c,
+                                                                int from);
 // QByteArray::insert(int i, const QByteArray & a)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__insert_int_QByteArray(void *thisObj, int i, void *a_);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__insert_int_QByteArray(void *thisObj, int i,
+                                                                       void *a_);
 // QByteArray::insert(int i, const char * s)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__insert_int_char(void *thisObj, int i, const char *s);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__insert_int_char(void *thisObj, int i,
+                                                                 const char *s);
 // QByteArray::insert(int i, const char * s, int len)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__insert_int_char_int(void *thisObj, int i, const char *s, int len);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__insert_int_char_int(void *thisObj, int i,
+                                                                     const char *s, int len);
 // QByteArray::isDetached() const
 KDDockWidgetsBindings_EXPORT bool c_QByteArray__isDetached(void *thisObj);
 // QByteArray::isEmpty() const
@@ -191,13 +198,16 @@ KDDockWidgetsBindings_EXPORT bool c_QByteArray__isLower(void *thisObj);
 // QByteArray::isNull() const
 KDDockWidgetsBindings_EXPORT bool c_QByteArray__isNull(void *thisObj);
 // QByteArray::isSharedWith(const QByteArray & other) const
-KDDockWidgetsBindings_EXPORT bool c_QByteArray__isSharedWith_QByteArray(void *thisObj, void *other_);
+KDDockWidgetsBindings_EXPORT bool c_QByteArray__isSharedWith_QByteArray(void *thisObj,
+                                                                        void *other_);
 // QByteArray::isUpper() const
 KDDockWidgetsBindings_EXPORT bool c_QByteArray__isUpper(void *thisObj);
 // QByteArray::lastIndexOf(const QByteArray & a, int from) const
-KDDockWidgetsBindings_EXPORT int c_QByteArray__lastIndexOf_QByteArray_int(void *thisObj, void *a_, int from);
+KDDockWidgetsBindings_EXPORT int c_QByteArray__lastIndexOf_QByteArray_int(void *thisObj, void *a_,
+                                                                          int from);
 // QByteArray::lastIndexOf(const char * c, int from) const
-KDDockWidgetsBindings_EXPORT int c_QByteArray__lastIndexOf_char_int(void *thisObj, const char *c, int from);
+KDDockWidgetsBindings_EXPORT int c_QByteArray__lastIndexOf_char_int(void *thisObj, const char *c,
+                                                                    int from);
 // QByteArray::left(int len) const
 KDDockWidgetsBindings_EXPORT void *c_QByteArray__left_int(void *thisObj, int len);
 // QByteArray::length() const
@@ -213,7 +223,8 @@ KDDockWidgetsBindings_EXPORT void *c_QByteArray__prepend_QByteArray(void *thisOb
 // QByteArray::prepend(const char * s)
 KDDockWidgetsBindings_EXPORT void *c_QByteArray__prepend_char(void *thisObj, const char *s);
 // QByteArray::prepend(const char * s, int len)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__prepend_char_int(void *thisObj, const char *s, int len);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__prepend_char_int(void *thisObj, const char *s,
+                                                                  int len);
 // QByteArray::push_back(const QByteArray & a)
 KDDockWidgetsBindings_EXPORT void c_QByteArray__push_back_QByteArray(void *thisObj, void *a_);
 // QByteArray::push_back(const char * c)
@@ -227,21 +238,30 @@ KDDockWidgetsBindings_EXPORT void *c_QByteArray__remove_int_int(void *thisObj, i
 // QByteArray::repeated(int times) const
 KDDockWidgetsBindings_EXPORT void *c_QByteArray__repeated_int(void *thisObj, int times);
 // QByteArray::replace(const QByteArray & before, const QByteArray & after)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_QByteArray_QByteArray(void *thisObj, void *before_, void *after_);
+KDDockWidgetsBindings_EXPORT void *
+c_QByteArray__replace_QByteArray_QByteArray(void *thisObj, void *before_, void *after_);
 // QByteArray::replace(const QByteArray & before, const char * after)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_QByteArray_char(void *thisObj, void *before_, const char *after);
+KDDockWidgetsBindings_EXPORT void *
+c_QByteArray__replace_QByteArray_char(void *thisObj, void *before_, const char *after);
 // QByteArray::replace(const char * before, const QByteArray & after)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_char_QByteArray(void *thisObj, const char *before, void *after_);
+KDDockWidgetsBindings_EXPORT void *
+c_QByteArray__replace_char_QByteArray(void *thisObj, const char *before, void *after_);
 // QByteArray::replace(const char * before, const char * after)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_char_char(void *thisObj, const char *before, const char *after);
+KDDockWidgetsBindings_EXPORT void *
+c_QByteArray__replace_char_char(void *thisObj, const char *before, const char *after);
 // QByteArray::replace(const char * before, int bsize, const char * after, int asize)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_char_int_char_int(void *thisObj, const char *before, int bsize, const char *after, int asize);
+KDDockWidgetsBindings_EXPORT void *
+c_QByteArray__replace_char_int_char_int(void *thisObj, const char *before, int bsize,
+                                        const char *after, int asize);
 // QByteArray::replace(int index, int len, const QByteArray & s)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_int_int_QByteArray(void *thisObj, int index, int len, void *s_);
+KDDockWidgetsBindings_EXPORT void *
+c_QByteArray__replace_int_int_QByteArray(void *thisObj, int index, int len, void *s_);
 // QByteArray::replace(int index, int len, const char * s)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_int_int_char(void *thisObj, int index, int len, const char *s);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_int_int_char(void *thisObj, int index,
+                                                                      int len, const char *s);
 // QByteArray::replace(int index, int len, const char * s, int alen)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__replace_int_int_char_int(void *thisObj, int index, int len, const char *s, int alen);
+KDDockWidgetsBindings_EXPORT void *
+c_QByteArray__replace_int_int_char_int(void *thisObj, int index, int len, const char *s, int alen);
 // QByteArray::reserve(int size)
 KDDockWidgetsBindings_EXPORT void c_QByteArray__reserve_int(void *thisObj, int size);
 // QByteArray::resize(int size)
@@ -249,11 +269,14 @@ KDDockWidgetsBindings_EXPORT void c_QByteArray__resize_int(void *thisObj, int si
 // QByteArray::right(int len) const
 KDDockWidgetsBindings_EXPORT void *c_QByteArray__right_int(void *thisObj, int len);
 // QByteArray::setNum(int arg__1, int base)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__setNum_int_int(void *thisObj, int arg__1, int base);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__setNum_int_int(void *thisObj, int arg__1,
+                                                                int base);
 // QByteArray::setNum(qint64 arg__1, int base)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__setNum_qint64_int(void *thisObj, qint64 arg__1, int base);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__setNum_qint64_int(void *thisObj, qint64 arg__1,
+                                                                   int base);
 // QByteArray::setNum(short arg__1, int base)
-KDDockWidgetsBindings_EXPORT void *c_QByteArray__setNum_short_int(void *thisObj, short arg__1, int base);
+KDDockWidgetsBindings_EXPORT void *c_QByteArray__setNum_short_int(void *thisObj, short arg__1,
+                                                                  int base);
 // QByteArray::shrink_to_fit()
 KDDockWidgetsBindings_EXPORT void c_QByteArray__shrink_to_fit(void *thisObj);
 // QByteArray::simplified()

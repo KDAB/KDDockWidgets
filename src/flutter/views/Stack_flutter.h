@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -21,8 +21,7 @@ namespace Views {
 class DOCKS_EXPORT Stack_flutter : public View_flutter, public StackViewInterface
 {
 public:
-    explicit Stack_flutter(Controllers::Stack *controller,
-                           View *parent = nullptr);
+    explicit Stack_flutter(Controllers::Stack *controller, View *parent = nullptr);
 
     int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
@@ -34,7 +33,8 @@ public:
 
 public:
     void setCurrentDockWidget(int index) override;
-    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &, const QString &title) override;
+    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
+                          const QString &title) override;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &) override;
     Controllers::DockWidget *dockwidgetAt(int index) const override;

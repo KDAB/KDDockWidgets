@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -49,10 +49,8 @@ public:
     ViewFactory_dummy() = default;
     ~ViewFactory_dummy() override;
 
-    View *createDockWidget(const QString &uniqueName,
-                           DockWidgetOptions = {},
-                           LayoutSaverOptions = {},
-                           Qt::WindowFlags = {}) const override;
+    View *createDockWidget(const QString &uniqueName, DockWidgetOptions = {},
+                           LayoutSaverOptions = {}, Qt::WindowFlags = {}) const override;
 
     View *createGroup(Controllers::Group *, View *parent) const override;
     View *createTitleBar(Controllers::TitleBar *, View *parent) const override;
@@ -69,9 +67,11 @@ public:
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
-    Views::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(Controllers::ClassicIndicators *) const override;
+    Views::ClassicIndicatorWindowViewInterface *
+    createClassicIndicatorWindow(Controllers::ClassicIndicators *) const override;
 
-    View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const override;
+    View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller,
+                                                  View *parent = nullptr) const override;
 
 private:
     Q_DISABLE_COPY(ViewFactory_dummy)

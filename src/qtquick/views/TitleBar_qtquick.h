@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -30,12 +30,15 @@ class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick, public Views::TitleBa
 {
     Q_OBJECT
     // These properties is just for the unit-tests
-    Q_PROPERTY(QQuickItem *titleBarQmlItem READ titleBarQmlItem WRITE setTitleBarQmlItem NOTIFY titleBarQmlItemChanged)
+    Q_PROPERTY(QQuickItem *titleBarQmlItem READ titleBarQmlItem WRITE setTitleBarQmlItem NOTIFY
+                   titleBarQmlItemChanged)
     Q_PROPERTY(QQuickItem *titleBarMouseArea READ titleBarMouseArea CONSTANT)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(bool hasIcon READ hasIcon NOTIFY iconChanged)
-    Q_PROPERTY(bool closeButtonEnabled READ closeButtonEnabled WRITE setCloseButtonEnabled NOTIFY closeButtonEnabledChanged)
-    Q_PROPERTY(bool floatButtonVisible READ floatButtonVisible WRITE setFloatButtonVisible NOTIFY floatButtonVisibleChanged)
+    Q_PROPERTY(bool closeButtonEnabled READ closeButtonEnabled WRITE setCloseButtonEnabled NOTIFY
+                   closeButtonEnabledChanged)
+    Q_PROPERTY(bool floatButtonVisible READ floatButtonVisible WRITE setFloatButtonVisible NOTIFY
+                   floatButtonVisibleChanged)
     Q_PROPERTY(QString floatButtonToolTip READ floatButtonToolTip NOTIFY floatButtonToolTipChanged)
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
 

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -61,7 +61,8 @@ QPoint ClassicIndicators_wrapper::posForIndicator(KDDockWidgets::DropLocation ar
         return ::KDDockWidgets::Controllers::ClassicIndicators::posForIndicator(arg__1);
     }
 }
-QPoint ClassicIndicators_wrapper::posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const
+QPoint
+ClassicIndicators_wrapper::posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const
 {
     return ::KDDockWidgets::Controllers::ClassicIndicators::posForIndicator(arg__1);
 }
@@ -111,10 +112,20 @@ void *c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea(void
     return reinterpret_cast<void *>(ptr);
 }
 // hover_impl(QPoint globalPos)
-int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj, void *globalPos_)
+int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj,
+                                                                       void *globalPos_)
 {
     auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hover_impl_nocallback(globalPos);} else {    return targetPtr->hover_impl(globalPos);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->hover_impl_nocallback(globalPos);
+        } else {
+            return targetPtr->hover_impl(globalPos);
+        }
+    }();
 }
 // indicatorsVisibleChanged()
 void c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged(void *thisObj)
@@ -128,41 +139,73 @@ bool c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize(void *thisO
     return fromPtr(thisObj)->onResize(newSize);
 }
 // posForIndicator(KDDockWidgets::DropLocation arg__1) const
-void *c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation(void *thisObj, int arg__1)
+void *c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation(void *thisObj,
+                                                                                    int arg__1)
 {
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
+    return new Dartagnan::ValueWrapper<QPoint> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->posForIndicator_nocallback(
+                static_cast<KDDockWidgets::DropLocation>(arg__1));
+        } else {
+            return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));
+        }
+    }() };
 }
 // setDropLocation(KDDockWidgets::DropLocation arg__1)
-void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocation(void *thisObj, int arg__1)
+void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocation(void *thisObj,
+                                                                                   int arg__1)
 {
     fromPtr(thisObj)->setDropLocation(static_cast<KDDockWidgets::DropLocation>(arg__1));
 }
 // tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s, const char *c, int n)
+void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s,
+                                                                               const char *c, int n)
 {
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::tr(s, c, n) };
+    return new Dartagnan::ValueWrapper<QString> {
+        KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::tr(s, c, n)
+    };
 }
 // updateVisibility()
 void c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->updateVisibility_nocallback();} else {    return targetPtr->updateVisibility();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->updateVisibility_nocallback();
+        } else {
+            return targetPtr->updateVisibility();
+        }
+    }();
 }
 void c_KDDockWidgets__Controllers__ClassicIndicators__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback(void *ptr,
+                                                                                    void *callback,
+                                                                                    int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 789:
-        wrapper->m_hover_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_hover_impl>(callback);
+        wrapper->m_hover_implCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_hover_impl>(
+            callback);
         break;
     case 792:
-        wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_posForIndicator>(callback);
+        wrapper->m_posForIndicatorCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_posForIndicator>(
+            callback);
         break;
     case 797:
-        wrapper->m_updateVisibilityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_updateVisibility>(callback);
+        wrapper->m_updateVisibilityCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_updateVisibility>(
+            callback);
         break;
     }
 }

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -52,8 +52,7 @@ ViewFactory_qtwidgets::~ViewFactory_qtwidgets()
 {
 }
 
-View *ViewFactory_qtwidgets::createDockWidget(const QString &uniqueName,
-                                              DockWidgetOptions options,
+View *ViewFactory_qtwidgets::createDockWidget(const QString &uniqueName, DockWidgetOptions options,
                                               LayoutSaverOptions layoutSaverOptions,
                                               Qt::WindowFlags windowFlags) const
 {
@@ -61,7 +60,8 @@ View *ViewFactory_qtwidgets::createDockWidget(const QString &uniqueName,
 }
 
 
-View *ViewFactory_qtwidgets::createGroup(Controllers::Group *controller, View *parent = nullptr) const
+View *ViewFactory_qtwidgets::createGroup(Controllers::Group *controller,
+                                         View *parent = nullptr) const
 {
     return new Views::Group_qtwidgets(controller, Views::View_qt::asQWidget(parent));
 }
@@ -87,9 +87,11 @@ View *ViewFactory_qtwidgets::createSeparator(Controllers::Separator *controller,
 }
 
 View *ViewFactory_qtwidgets::createFloatingWindow(Controllers::FloatingWindow *controller,
-                                                  Controllers::MainWindow *parent, Qt::WindowFlags windowFlags) const
+                                                  Controllers::MainWindow *parent,
+                                                  Qt::WindowFlags windowFlags) const
 {
-    auto mainwindow = qobject_cast<QMainWindow *>(Views::View_qt::asQWidget(parent ? parent->view() : nullptr));
+    auto mainwindow =
+        qobject_cast<QMainWindow *>(Views::View_qt::asQWidget(parent ? parent->view() : nullptr));
     return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
 }
 
@@ -98,13 +100,13 @@ View *ViewFactory_qtwidgets::createRubberBand(View *parent) const
     return new Views::RubberBand_qtwidgets(Views::View_qt::asQWidget(parent));
 }
 
-View *ViewFactory_qtwidgets::createSideBar(Controllers::SideBar *controller,
-                                           View *parent) const
+View *ViewFactory_qtwidgets::createSideBar(Controllers::SideBar *controller, View *parent) const
 {
     return new Views::SideBar_qtwidgets(controller, Views::View_qt::asQWidget(parent));
 }
 
-QAbstractButton *ViewFactory_qtwidgets::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const
+QAbstractButton *ViewFactory_qtwidgets::createTitleBarButton(QWidget *parent,
+                                                             TitleBarButtonType type) const
 {
     if (!parent) {
         qWarning() << Q_FUNC_INFO << "Parent not provided";
@@ -174,12 +176,15 @@ View *ViewFactory_qtwidgets::createMDILayout(Controllers::MDILayout *controller,
     return new Views::MDILayout_qtwidgets(controller, parent);
 }
 
-View *ViewFactory_qtwidgets::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent) const
+View *ViewFactory_qtwidgets::createSegmentedDropIndicatorOverlayView(
+    Controllers::SegmentedIndicators *controller, View *parent) const
 {
-    return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller, Views::View_qt::asQWidget(parent));
+    return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller,
+                                                           Views::View_qt::asQWidget(parent));
 }
 
-Views::ClassicIndicatorWindowViewInterface *ViewFactory_qtwidgets::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const
+Views::ClassicIndicatorWindowViewInterface *ViewFactory_qtwidgets::createClassicIndicatorWindow(
+    Controllers::ClassicIndicators *classicIndicators) const
 {
     return new IndicatorWindow_qtwidgets(classicIndicators);
 }

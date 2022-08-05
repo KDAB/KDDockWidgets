@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -65,14 +65,16 @@ public:
 
     /// @brief Returns a handle for the GUI element
     /// This value only makes sense to the frontend. For example, for QtQuick it might be a
-    /// QQuickItem, while for QtWidgets it's a QWidget *. Can be whatever the frontend developer wants,
-    /// as long as it uniquely identifies the GUI element. KDDW backend only uses it for comparison purposes
+    /// QQuickItem, while for QtWidgets it's a QWidget *. Can be whatever the frontend developer
+    /// wants, as long as it uniquely identifies the GUI element. KDDW backend only uses it for
+    /// comparison purposes
     virtual HANDLE handle() const = 0;
 
     /// @brief Returns whether the gui item represented by this view was already deleted
-    /// Usually false, as KDDW internal gui elements inherit View, and nobody will access them after destruction.
-    /// However, ViewWrapper derived classes, wrap an existing gui element, which might get deleted.
-    /// Override isNull() in our ViewWrapper subclasses and return true if the wrapped gui element was already deleted
+    /// Usually false, as KDDW internal gui elements inherit View, and nobody will access them after
+    /// destruction. However, ViewWrapper derived classes, wrap an existing gui element, which might
+    /// get deleted. Override isNull() in our ViewWrapper subclasses and return true if the wrapped
+    /// gui element was already deleted
     virtual bool isNull() const;
 
     virtual void setParent(View *) = 0;
@@ -211,8 +213,8 @@ public:
     /// @brief Returns whether free() has already been called
     bool freed() const;
 
-    /// @brief Returns whether the DTOR is currently running. freed() might be true while inDtor false,
-    /// as the implementation of free() is free to delay it (with deleteLater() for example)
+    /// @brief Returns whether the DTOR is currently running. freed() might be true while inDtor
+    /// false, as the implementation of free() is free to delay it (with deleteLater() for example)
     bool inDtor() const;
 
     /// @brief Returns whether this view represents the same GUI element as the other
@@ -264,9 +266,9 @@ public:
     bool isInWindow(std::shared_ptr<Window> window) const;
 
     /// @brief If true, it means destruction hasn't happen yet but is about to happen.
-    /// Useful when a controller is under destructions and wants all related views to stop painting or
-    /// doing anything that would call back into the controller.
-    /// If false, it doesn't mean anything, as not all controllers are using this.
+    /// Useful when a controller is under destructions and wants all related views to stop painting
+    /// or doing anything that would call back into the controller. If false, it doesn't mean
+    /// anything, as not all controllers are using this.
     void setAboutToBeDestroyed();
     bool aboutToBeDestroyed() const;
 
@@ -288,8 +290,7 @@ public:
     Private *const d;
 
 protected:
-    virtual void
-    free_impl();
+    virtual void free_impl();
 
     Controller *const m_controller;
     bool m_inDtor = false;

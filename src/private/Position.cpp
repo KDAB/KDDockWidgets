@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -44,22 +44,25 @@ void Position::addPlaceholderItem(Layouting::Item *placeholder)
         // 2. If we have a MainWindow placeholder we don't need nothing else
         removePlaceholders();
     } else {
-        // 3. It's a placeholder to a FloatingWindow. Let's still keep any MainWindow placeholders we have
-        // as FloatingWindow are temporary so we might need the MainWindow placeholder later.
+        // 3. It's a placeholder to a FloatingWindow. Let's still keep any MainWindow placeholders
+        // we have as FloatingWindow are temporary so we might need the MainWindow placeholder
+        // later.
         removeNonMainWindowPlaceholders();
     }
 
-    // Make sure our list only contains valid placeholders. We save the result so we can disconnect from the lambda, since the Item might outlive Position
-    QMetaObject::Connection connection = QObject::connect(placeholder, &QObject::destroyed, placeholder, [this, placeholder] {
-        removePlaceholder(placeholder);
-    });
+    // Make sure our list only contains valid placeholders. We save the result so we can disconnect
+    // from the lambda, since the Item might outlive Position
+    QMetaObject::Connection connection =
+        QObject::connect(placeholder, &QObject::destroyed, placeholder,
+                         [this, placeholder] { removePlaceholder(placeholder); });
 
     m_placeholders.push_back(std::unique_ptr<ItemRef>(new ItemRef(connection, placeholder)));
 
     // NOTE: We use a list instead of simply two variables to keep the placeholders, because
     // a placeholder from a FloatingWindow might become a MainWindow one without we knowing,
     // like when dragging a floating window into a MainWindow. So, isInMainWindow() won't return
-    // the same value always, hence we just shove them into a list, instead of giving them meaningful names in separated variables
+    // the same value always, hence we just shove them into a list, instead of giving them
+    // meaningful names in separated variables
 }
 
 Layouting::Item *Position::layoutItem() const
@@ -93,9 +96,11 @@ void Position::removePlaceholders()
 void Position::removePlaceholders(const Controllers::Layout *ms)
 {
     auto layoutView = ms->view();
-    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [layoutView](const std::unique_ptr<ItemRef> &itemref) {
-                             return layoutView && layoutView->equals(itemref->item->hostView());
-                         }),
+    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(),
+                                        [layoutView](const std::unique_ptr<ItemRef> &itemref) {
+                                            return layoutView
+                                                && layoutView->equals(itemref->item->hostView());
+                                        }),
                          m_placeholders.end());
 }
 
@@ -116,9 +121,10 @@ void Position::removePlaceholder(Layouting::Item *placeholder)
     if (m_clearing) // reentrancy guard
         return;
 
-    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [placeholder](const std::unique_ptr<ItemRef> &itemref) {
-                             return itemref->item == placeholder;
-                         }),
+    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(),
+                                        [placeholder](const std::unique_ptr<ItemRef> &itemref) {
+                                            return itemref->item == placeholder;
+                                        }),
                          m_placeholders.end());
 }
 
@@ -135,7 +141,9 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             if (index == -1) {
                 continue; // Skip
             } else {
-                auto serializedFw = LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(index);
+                auto serializedFw =
+                    LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(
+                        index);
                 if (serializedFw.isValid()) {
                     if (auto fw = serializedFw.floatingWindowInstance) {
                         layout = fw->layout();
@@ -148,7 +156,8 @@ void Position::deserialize(const LayoutSaver::Position &lp)
                 }
             }
         } else {
-            Controllers::MainWindow *mainWindow = DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
+            Controllers::MainWindow *mainWindow =
+                DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
             layout = mainWindow->layout();
         }
 
@@ -183,7 +192,11 @@ LayoutSaver::Position Position::serialize() const
         p.isFloatingWindow = fw;
 
         if (p.isFloatingWindow) {
-            p.indexOfFloatingWindow = fw->beingDeleted() ? -1 : DockRegistry::self()->floatingWindows().indexOf(fw); // TODO: Remove once we stop using deleteLater with FloatingWindow. delete would be better
+            p.indexOfFloatingWindow = fw->beingDeleted()
+                ? -1
+                : DockRegistry::self()->floatingWindows().indexOf(
+                    fw); // TODO: Remove once we stop using deleteLater with FloatingWindow. delete
+                         // would be better
         } else {
             p.mainWindowUniqueName = mainWindow->uniqueName();
             Q_ASSERT(!p.mainWindowUniqueName.isEmpty());

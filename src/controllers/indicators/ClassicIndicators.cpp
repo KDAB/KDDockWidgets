@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -25,7 +25,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-static Views::ClassicIndicatorWindowViewInterface *createIndicatorWindow(ClassicIndicators *classicIndicators)
+static Views::ClassicIndicatorWindowViewInterface *
+createIndicatorWindow(ClassicIndicators *classicIndicators)
 {
     auto window = Config::self().viewFactory()->createClassicIndicatorWindow(classicIndicators);
     window->setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));
@@ -35,7 +36,8 @@ static Views::ClassicIndicatorWindowViewInterface *createIndicatorWindow(Classic
 
 ClassicIndicators::ClassicIndicators(Controllers::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea) // Is parented on the drop-area, not a toplevel.
-    , m_rubberBand(Config::self().viewFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea->view()))
+    , m_rubberBand(Config::self().viewFactory()->createRubberBand(
+          rubberBandIsTopLevel() ? nullptr : dropArea->view()))
     , m_indicatorWindow(createIndicatorWindow(this))
 {
     if (rubberBandIsTopLevel())
@@ -117,7 +119,8 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     }
 
     if (location == DropLocation_Center) {
-        m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->view()->geometry() : rect()));
+        m_rubberBand->setGeometry(
+            geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->view()->geometry() : rect()));
         m_rubberBand->setVisible(true);
         if (rubberBandIsTopLevel()) {
             m_rubberBand->raise();
@@ -136,8 +139,8 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     case DropLocation_Right:
     case DropLocation_Bottom:
         if (!m_hoveredFrame) {
-            qWarning() << "ClassicIndicators::setCurrentDropLocation: group is null. location=" << location
-                       << "; isHovered=" << isHovered()
+            qWarning() << "ClassicIndicators::setCurrentDropLocation: group is null. location="
+                       << location << "; isHovered=" << isHovered()
                        << "; dropArea->widgets=" << m_dropArea->items();
             Q_ASSERT(false);
             return;

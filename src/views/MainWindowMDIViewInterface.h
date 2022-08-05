@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -40,12 +40,12 @@ public:
 
     ///@brief Docks @p dockWidget
     /// The widget will be placed at the specified position
-    void addDockWidget(DockWidgetViewInterface *dockWidget,
-                       QPoint localPos, InitialOption addingOption = {});
+    void addDockWidget(DockWidgetViewInterface *dockWidget, QPoint localPos,
+                       InitialOption addingOption = {});
 
     ///@brief Convenience overload
-    void addDockWidget(DockWidgetViewInterface *dockWidget,
-                       QPointF localPos, InitialOption addingOption = {});
+    void addDockWidget(DockWidgetViewInterface *dockWidget, QPointF localPos,
+                       InitialOption addingOption = {});
 
 private:
     Controllers::MDILayout *const m_mdiLayout;

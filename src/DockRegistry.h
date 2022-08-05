@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -54,7 +54,8 @@ public:
     enum class DockByNameFlag {
         None = 0,
         ConsultRemapping = 1,
-        CreateIfNotFound = 2 ///< Creates the dock widget via the user's widget factory in case it doesn't exist
+        CreateIfNotFound =
+            2 ///< Creates the dock widget via the user's widget factory in case it doesn't exist
     };
     Q_DECLARE_FLAGS(DockByNameFlags, DockByNameFlag)
 
@@ -80,8 +81,8 @@ public:
     Q_INVOKABLE bool containsDockWidget(const QString &uniqueName) const;
     Q_INVOKABLE bool containsMainWindow(const QString &uniqueName) const;
 
-    Q_INVOKABLE KDDockWidgets::Controllers::DockWidget *dockByName(const QString &,
-                                                                   KDDockWidgets::DockRegistry::DockByNameFlags = {}) const;
+    Q_INVOKABLE KDDockWidgets::Controllers::DockWidget *
+    dockByName(const QString &, KDDockWidgets::DockRegistry::DockByNameFlags = {}) const;
     Q_INVOKABLE KDDockWidgets::Controllers::MainWindow *mainWindowByName(const QString &) const;
 
     /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
@@ -117,16 +118,19 @@ public:
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
-    const QVector<Controllers::FloatingWindow *> floatingWindows(bool includeBeingDeleted = false) const;
+    const QVector<Controllers::FloatingWindow *>
+    floatingWindows(bool includeBeingDeleted = false) const;
 
-    ///@brief overload that returns list of QWindow. This is more friendly for supporting both QtWidgets and QtQuick
+    ///@brief overload that returns list of QWindow. This is more friendly for supporting both
+    /// QtWidgets and QtQuick
     const QVector<std::shared_ptr<Window>> floatingQWindows() const;
 
     ///@brief returns whether if there's at least one floating window
     Q_INVOKABLE bool hasFloatingWindows() const;
 
     ///@brief returns the FloatingWindow with handle @p windowHandle
-    Controllers::FloatingWindow *floatingWindowForHandle(std::shared_ptr<Window> windowHandle) const;
+    Controllers::FloatingWindow *
+    floatingWindowForHandle(std::shared_ptr<Window> windowHandle) const;
 
     ///@brief returns the FloatingWindow with handle @p hwnd
     Controllers::FloatingWindow *floatingWindowForHandle(WId hwnd) const;
@@ -134,13 +138,15 @@ public:
     ///@brief returns the MainWindow with handle @p windowHandle
     Controllers::MainWindow *mainWindowForHandle(std::shared_ptr<Window> windowHandle) const;
 
-    ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and MainWindow instances.
+    ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and
+    /// MainWindow instances.
     ///
     /// Typically these are the FloatingWindows and MainWindows themselves. However, since a
     /// MainWindow can be embedded into another widget (for whatever reason, like a QWinWidget),
     /// it means that a top-level can be something else.
     ///
-    /// Every returned widget is either a FloatingWindow, MainWindow, or something that contains a MainWindow.
+    /// Every returned widget is either a FloatingWindow, MainWindow, or something that contains a
+    /// MainWindow.
     ///
     /// If @p excludeFloatingDocks is true then FloatingWindow won't be returned
     QVector<std::shared_ptr<Window>> topLevels(bool excludeFloatingDocks = false) const;
@@ -148,7 +154,8 @@ public:
     /**
      * @brief Closes all dock widgets, and destroys all FloatingWindows
      * This is called before restoring a layout.
-     * @param affinities if specified only closes dock widgets and main windows with the specified affinities
+     * @param affinities if specified only closes dock widgets and main windows with the specified
+     * affinities
      */
     Q_INVOKABLE void clear(const QStringList &affinities = {});
 
@@ -209,7 +216,8 @@ public:
     /// geometries.
     /// @param target The window which we want to know if it's probably obscured
     /// @param exclude This window should not be counted as an obscurer. (It's being dragged).
-    bool isProbablyObscured(std::shared_ptr<Window> target, Controllers::FloatingWindow *exclude) const;
+    bool isProbablyObscured(std::shared_ptr<Window> target,
+                            Controllers::FloatingWindow *exclude) const;
 
     /// @overload
     bool isProbablyObscured(std::shared_ptr<Window> target, WindowBeingDragged *exclude) const;

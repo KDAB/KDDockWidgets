@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -25,8 +25,9 @@ SideBar::SideBar(SideBarLocation location, MainWindow *parent)
     : Controller(Type::SideBar, Config::self().viewFactory()->createSideBar(this, parent->view()))
     , m_mainWindow(parent)
     , m_location(location)
-    , m_orientation((location == SideBarLocation::North || location == SideBarLocation::South) ? Qt::Horizontal
-                                                                                               : Qt::Vertical)
+    , m_orientation((location == SideBarLocation::North || location == SideBarLocation::South)
+                        ? Qt::Horizontal
+                        : Qt::Vertical)
 {
     updateSize();
     view()->init();

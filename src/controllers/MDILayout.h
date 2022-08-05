@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -38,7 +38,8 @@ public:
     ~MDILayout() override;
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
-    void addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption = {});
+    void addDockWidget(Controllers::DockWidget *dw, QPoint localPt,
+                       InitialOption addingOption = {});
 
     /// @brief Moves a dock widget @p dw to point @p pos
     void moveDockWidget(Controllers::DockWidget *dw, QPoint pos);

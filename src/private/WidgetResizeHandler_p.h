@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -96,7 +96,8 @@ public:
     };
 
     enum class EventFilterMode {
-        Local = 1, ///< The event filter is set only on the widget being resized, this is the default for floating windows
+        Local = 1, ///< The event filter is set only on the widget being resized, this is the
+                   ///< default for floating windows
         Global = 2 ///< The event filter is app-wide, used for embedded MDI windows, for example
     };
 
@@ -107,8 +108,9 @@ public:
 
     /**
      * @brief CTOR
-     * @param isTopLevelResizer If true, then this resize handler is for top-level widgets (aka windows)
-     *        if false, they are docked (like for example resizing docked MDI widgets, or the sidebar overlay)
+     * @param isTopLevelResizer If true, then this resize handler is for top-level widgets (aka
+     * windows) if false, they are docked (like for example resizing docked MDI widgets, or the
+     * sidebar overlay)
      * @param target The target widget that will be resized. Also acts as parent QObject.
      */
     explicit WidgetResizeHandler(EventFilterMode, WindowMode, View *target);
@@ -127,11 +129,12 @@ public:
      * Sets the resize gap. By default 10.
      *
      * This is only used for non-top-level (child) widgets.
-     * When resizing a child widget, it will be clipped by its parent, but we leave a little space so
-     * we can resize it again.
+     * When resizing a child widget, it will be clipped by its parent, but we leave a little space
+     * so we can resize it again.
      *
-     * Meaning, if you're resizing 'bottom' of the child widget, it can never be bigger than parent.geometry().bottom() - gap.
-     * The gap allows you to put your mouse there and resize again.
+     * Meaning, if you're resizing 'bottom' of the child widget, it can never be bigger than
+     * parent.geometry().bottom() - gap. The gap allows you to put your mouse there and resize
+     * again.
      */
     void setResizeGap(int);
 
@@ -144,7 +147,8 @@ public:
     static void setupWindow(Window::Ptr);
 #ifdef Q_OS_WIN
     static bool isInterestingNativeEvent(unsigned int);
-    static bool handleWindowsNativeEvent(Window::Ptr, MSG *msg, Qt5Qt6Compat::qintptr *result, const NativeFeatures &);
+    static bool handleWindowsNativeEvent(Window::Ptr, MSG *msg, Qt5Qt6Compat::qintptr *result,
+                                         const NativeFeatures &);
     static bool handleWindowsNativeEvent(Controllers::FloatingWindow *, const QByteArray &eventType,
                                          void *message, Qt5Qt6Compat::qintptr *result);
 #endif
@@ -199,9 +203,7 @@ public:
 
 #endif // Q_OS_WIN
 
-class DOCKS_EXPORT CustomFrameHelper
-    : public QObject,
-      public QAbstractNativeEventFilter
+class DOCKS_EXPORT CustomFrameHelper : public QObject, public QAbstractNativeEventFilter
 {
     Q_OBJECT
 public:

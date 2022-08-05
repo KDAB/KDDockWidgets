@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -73,8 +73,7 @@ void MainWindowInstantiator::addDockWidget(QQuickItem *dockWidget, Location loca
     Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
     Controllers::DockWidget *relativeToDw = Platform_qtquick::dockWidgetForItem(relativeTo);
 
-    m_mainWindow->addDockWidget(dw, location,
-                                relativeToDw, { option, initialSize });
+    m_mainWindow->addDockWidget(dw, location, relativeToDw, { option, initialSize });
 }
 
 void MainWindowInstantiator::layoutEqually()

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -25,7 +25,8 @@ class DOCKS_EXPORT SegmentedIndicatorsOverlay_qtwidgets : public View_qtwidgets<
 {
     Q_OBJECT
 public:
-    explicit SegmentedIndicatorsOverlay_qtwidgets(Controllers::SegmentedIndicators *controller, QWidget *parent = nullptr);
+    explicit SegmentedIndicatorsOverlay_qtwidgets(Controllers::SegmentedIndicators *controller,
+                                                  QWidget *parent = nullptr);
     ~SegmentedIndicatorsOverlay_qtwidgets() override;
 
 protected:

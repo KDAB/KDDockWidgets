@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -37,7 +37,8 @@ class DOCKS_EXPORT FloatingWindow_qtquick : public Views::View_qtquick
     Q_PROPERTY(QObject *dropArea READ dropArea CONSTANT)
 public:
     explicit FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
-                                    Views::MainWindow_qtquick *parent = nullptr, Qt::WindowFlags flags = {});
+                                    Views::MainWindow_qtquick *parent = nullptr,
+                                    Qt::WindowFlags flags = {});
     ~FloatingWindow_qtquick();
 
     QSize minSize() const override;

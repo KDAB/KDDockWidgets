@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -124,7 +124,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Screen__virtualSize(void *th
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Screen__destructor(void *thisObj);
 
 // tag=1046
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Screen__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Screen__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 // tag=1047
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Screen_Finalizer(void *, void *cppObj, void *);
 }

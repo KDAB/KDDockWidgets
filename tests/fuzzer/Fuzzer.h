@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -61,7 +61,8 @@ public:
     enum Option {
         Option_None = 0,
         Option_NoQuit = 1, ///< Don't quit when the tests finish. So we can debug in gammaray
-        Option_SkipLast = 2 ///< Don't execute the last test. Useful when the last one is the failing one and we want to inspect the state prior to crash
+        Option_SkipLast = 2 ///< Don't execute the last test. Useful when the last one is the
+                            ///< failing one and we want to inspect the state prior to crash
     };
     Q_DECLARE_FLAGS(Options, Option)
 
@@ -219,7 +220,8 @@ public:
             const QVariantList operations = map["operations"].toList();
             t.operations.reserve(operations.size());
             for (const QVariant &operation : operations)
-                t.operations.push_back(Operations::OperationBase::fromVariantMap(fuzzer, operation.toMap()));
+                t.operations.push_back(
+                    Operations::OperationBase::fromVariantMap(fuzzer, operation.toMap()));
 
             return t;
         }
@@ -240,7 +242,8 @@ public:
     Testing::AddDockWidgetParams getRandomAddDockWidgetParams();
 
     KDDockWidgets::MainWindowBase *getRandomMainWindow();
-    KDDockWidgets::Controllers::DockWidget *getRandomDockWidget(const Controllers::DockWidget::List &excluding = {});
+    KDDockWidgets::Controllers::DockWidget *
+    getRandomDockWidget(const Controllers::DockWidget::List &excluding = {});
     KDDockWidgets::Controllers::DockWidget *getRandomRelativeTo(MainWindowBase *mainWindow,
                                                                 Controllers::DockWidget *excluding);
 

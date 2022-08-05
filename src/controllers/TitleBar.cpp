@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -34,7 +34,9 @@ using namespace KDDockWidgets::Controllers;
 
 
 TitleBar::TitleBar(Group *parent)
-    : Controller(Type::TitleBar, Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
+    : Controller(
+        Type::TitleBar,
+        Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
     , m_group(parent)
     , m_floatingWindow(nullptr)
@@ -47,7 +49,9 @@ TitleBar::TitleBar(Group *parent)
 }
 
 TitleBar::TitleBar(FloatingWindow *parent)
-    : Controller(Type::TitleBar, Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
+    : Controller(
+        Type::TitleBar,
+        Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
     , m_group(nullptr)
     , m_floatingWindow(parent)
@@ -55,7 +59,8 @@ TitleBar::TitleBar(FloatingWindow *parent)
 {
     init();
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
-    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
+    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this,
+            &TitleBar::updateMaximizeButton);
     connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);
 }
 
@@ -128,7 +133,8 @@ QIcon TitleBar::icon() const
 bool TitleBar::onDoubleClicked()
 {
     if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes) && m_floatingWindow) {
-        // Not using isFloating(), as that can be a dock widget nested in a floating window. By convention it's floating, but it's not the title bar of the top-level window.
+        // Not using isFloating(), as that can be a dock widget nested in a floating window. By
+        // convention it's floating, but it's not the title bar of the top-level window.
         toggleMaximized();
         return true;
     } else if (supportsFloatingButton()) {
@@ -179,7 +185,8 @@ bool TitleBar::supportsMaximizeButton() const
 
 bool TitleBar::supportsMinimizeButton() const
 {
-    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton) != Config::Flag_TitleBarHasMinimizeButton) // this specific flag is not base^2
+    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
+        != Config::Flag_TitleBarHasMinimizeButton) // this specific flag is not base^2
         return false;
 
     return m_floatingWindow != nullptr;
@@ -264,8 +271,8 @@ void TitleBar::updateMaximizeButton()
     TitleBarButtonType type = TitleBarButtonType::Maximize;
 
     if (auto fw = floatingWindow()) {
-        type = fw->view()->isMaximized() ? TitleBarButtonType::Normal
-                                         : TitleBarButtonType::Maximize;
+        type =
+            fw->view()->isMaximized() ? TitleBarButtonType::Normal : TitleBarButtonType::Maximize;
 
         visible = supportsMaximizeButton();
     }
@@ -276,9 +283,9 @@ void TitleBar::updateMaximizeButton()
 void TitleBar::updateCloseButton()
 {
 
-    const bool anyNonClosable = group() ? group()->anyNonClosable()
-                                        : (floatingWindow() ? floatingWindow()->anyNonClosable()
-                                                            : false);
+    const bool anyNonClosable = group()
+        ? group()->anyNonClosable()
+        : (floatingWindow() ? floatingWindow()->anyNonClosable() : false);
 
     setCloseButtonEnabled(!anyNonClosable);
 }
@@ -392,8 +399,8 @@ void TitleBar::onFloatClicked()
             dockWidgets[0]->setFloating(false);
         } else {
             // Case 2: Multiple dockwidgets are tabbed together and floating
-            // TODO: Just reuse the whole group and put it back. The group currently doesn't remember the position in the main window
-            // so use an hack for now
+            // TODO: Just reuse the whole group and put it back. The group currently doesn't
+            // remember the position in the main window so use an hack for now
 
             if (!dockWidgets.isEmpty()) { // could be empty during destruction, maybe
                 if (!dockWidgets.constFirst()->hasPreviousDockedLocation()) {
@@ -422,8 +429,9 @@ void TitleBar::onFloatClicked()
     } else {
         // Let's float it
         if (dockWidgets.size() == 1) {
-            // If there's a single dock widget, just call DockWidget::setFloating(true). The only difference
-            // is that it has logic for using the last used geometry for the floating window
+            // If there's a single dock widget, just call DockWidget::setFloating(true). The only
+            // difference is that it has logic for using the last used geometry for the floating
+            // window
             dockWidgets[0]->setFloating(true);
         } else {
             makeWindow();
@@ -477,13 +485,14 @@ bool TitleBar::closeButtonEnabled() const
 
 std::unique_ptr<KDDockWidgets::WindowBeingDragged> TitleBar::makeWindow()
 {
-    if (!isVisible() && view()->rootView()->isVisible() && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
+    if (!isVisible() && view()->rootView()->isVisible()
+        && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
 
-        // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab bar's
-        // buttons to the title bar's buttons, just to reuse logic
+        // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab
+        // bar's buttons to the title bar's buttons, just to reuse logic
 
-        qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar"
-                   << this << view()->rootView()->isVisible();
+        qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar" << this
+                   << view()->rootView()->isVisible();
         if (m_group) {
             qWarning() << "this=" << this << "; actual=" << m_group->actualTitleBar();
         } else if (m_floatingWindow) {
@@ -501,7 +510,8 @@ std::unique_ptr<KDDockWidgets::WindowBeingDragged> TitleBar::makeWindow()
     }
 
     if (FloatingWindow *fw = floatingWindow()) { // Already floating
-        if (m_group->isTheOnlyFrame()) { // We don't detach. This one drags the entire window instead.
+        if (m_group->isTheOnlyFrame()) { // We don't detach. This one drags the entire window
+                                         // instead.
             qCDebug(hovering) << "TitleBar::makeWindow no detach needed";
             return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
         }

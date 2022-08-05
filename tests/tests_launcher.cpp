@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -48,7 +48,8 @@ static QStringList availableTests()
     return result;
 }
 
-static QStringList calculateSubset(int subsetNumber, int subsetPercentage, const QStringList &allFunctions)
+static QStringList calculateSubset(int subsetNumber, int subsetPercentage,
+                                   const QStringList &allFunctions)
 {
     if (allFunctions.isEmpty()) {
         qWarning() << Q_FUNC_INFO << "No tests to run";

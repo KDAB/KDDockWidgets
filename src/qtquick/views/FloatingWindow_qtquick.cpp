@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -67,9 +67,10 @@ public:
         } else if (ev->type() == QEvent::Resize) {
             updateRootItemSize();
         } else if (isNonClientMouseEvent(ev) || ev->type() == QEvent::Move) {
-            // Mimic QWidget behaviour: The non-client mouse events go to the QWidget not the QWindow. In our case the QQuickItem.
-            // I mean, they also go to QWindow, but for our QtWidgets impl we process them at the QWidget level, so use the same approach
-            // so we maintain a single code path for processing mouse events
+            // Mimic QWidget behaviour: The non-client mouse events go to the QWidget not the
+            // QWindow. In our case the QQuickItem. I mean, they also go to QWindow, but for our
+            // QtWidgets impl we process them at the QWidget level, so use the same approach so we
+            // maintain a single code path for processing mouse events
             Platform::instance()->sendEvent(m_view, ev);
             return true;
         }
@@ -108,11 +109,13 @@ public:
     }
 
 #ifdef Q_OS_WIN
-    bool nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override
+    bool nativeEvent(const QByteArray &eventType, void *message,
+                     Qt5Qt6Compat::qintptr *result) override
     {
         // To enable aero snap we need to tell Windows where's our custom title bar
         Controllers::FloatingWindow *fw = m_view->asFloatingWindowController();
-        if (!fw->beingDeleted() && WidgetResizeHandler::handleWindowsNativeEvent(fw, eventType, message, result))
+        if (!fw->beingDeleted()
+            && WidgetResizeHandler::handleWindowsNativeEvent(fw, eventType, message, result))
             return true;
 
         return QWindow::nativeEvent(eventType, message, result);
@@ -128,7 +131,8 @@ QuickView::~QuickView() = default;
 
 
 FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
-                                               Views::MainWindow_qtquick *parent, Qt::WindowFlags flags)
+                                               Views::MainWindow_qtquick *parent,
+                                               Qt::WindowFlags flags)
     : Views::View_qtquick(controller, Type::FloatingWindow, parent, flags)
     , m_quickWindow(new QuickView(plat()->qmlEngine(), this))
     , m_controller(controller)
@@ -139,7 +143,8 @@ FloatingWindow_qtquick::~FloatingWindow_qtquick()
 {
     m_inDtor = true;
     setParent(static_cast<View *>(nullptr));
-    if (qobject_cast<QQuickView *>(m_quickWindow)) // QObject cast just to make sure the QWindow is not in ~QObject already
+    if (qobject_cast<QQuickView *>(m_quickWindow)) // QObject cast just to make sure the QWindow is
+                                                   // not in ~QObject already
         delete m_quickWindow;
 }
 
@@ -148,7 +153,8 @@ QSize FloatingWindow_qtquick::minSize() const
     // Doesn't matter if it's not visible. We don't want the min-size to jump around. Also not so
     // easy to track as we don't have layouts
     const int margins = contentsMargins();
-    return m_controller->multiSplitter()->view()->minSize() + QSize(0, titleBarHeight()) + QSize(margins * 2, margins * 2);
+    return m_controller->multiSplitter()->view()->minSize() + QSize(0, titleBarHeight())
+        + QSize(margins * 2, margins * 2);
 }
 
 void FloatingWindow_qtquick::setGeometry(QRect geo)

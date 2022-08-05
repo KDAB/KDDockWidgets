@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -91,15 +91,12 @@ Group::Group(View *parent, FrameOptions options, int userType)
     DockRegistry::self()->registerGroup(this);
 
     connect(m_stack, &Stack::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
-    connect(m_stack, &Controllers::Stack::currentTabChanged,
-            this, &Group::onCurrentTabChanged);
+    connect(m_stack, &Controllers::Stack::currentTabChanged, this, &Group::onCurrentTabChanged);
 
     setLayout(parent ? parent->asLayout() : nullptr);
     m_stack->setTabBarAutoHide(!alwaysShowsTabs());
     view()->init();
-    view()->d->closeRequested.connect([this](QCloseEvent *ev) {
-        onCloseEvent(ev);
-    });
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
 
     m_inCtor = false;
 }
@@ -152,8 +149,10 @@ void Group::setLayout(Layout *dt)
                                                       WidgetResizeHandler::WindowMode::MDI, view());
 
         // We keep the connect result so we don't dereference m_layout at shutdown
-        d->m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass. It's a KDBindings bug.
-        d->m_visibleWidgetCountChangedConnection = m_layout->visibleWidgetCountChanged.connect(&Group::updateTitleBarVisibility, this);
+        d->m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass.
+                                                                // It's a KDBindings bug.
+        d->m_visibleWidgetCountChangedConnection =
+            m_layout->visibleWidgetCountChanged.connect(&Group::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();
@@ -248,7 +247,8 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
         if (!dockWidget->isPersistentCentralDockWidget())
-            qWarning() << "Group::addTab dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
+            qWarning() << "Group::addTab dockWidget already exists. this=" << this
+                       << "; dockWidget=" << dockWidget;
         return;
     }
     if (m_layoutItem)
@@ -266,8 +266,8 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
 
             if (!m_layoutItem) {
                 // When adding the 1st dock widget of a fresh group, let's give the group the size
-                // of the dock widget, so that when adding it to the main window, the main window can
-                // use that size as the initial suggested size.
+                // of the dock widget, so that when adding it to the main window, the main window
+                // can use that size as the initial suggested size.
                 view()->resize(dockWidget->size());
             }
         } else if (addingOption.preservesCurrentTab() && originalCurrentIndex != -1) {
@@ -301,7 +301,8 @@ FloatingWindow *Group::detachTab(DockWidget *dockWidget)
     const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
     newFrame->addTab(dockWidget);
 
-    // We're potentially already dead at this point, as groups with 0 tabs auto-destruct. Don't access members from this point.
+    // We're potentially already dead at this point, as groups with 0 tabs auto-destruct. Don't
+    // access members from this point.
 
     auto floatingWindow = new FloatingWindow(newFrame, {});
     r.moveTopLeft(globalPoint);
@@ -378,13 +379,15 @@ int Group::dockWidgetCount() const
 
 void Group::onDockWidgetCountChanged()
 {
-    qCDebug(docking) << "Frame::onDockWidgetCountChanged:" << this << "; widgetCount=" << dockWidgetCount();
+    qCDebug(docking) << "Frame::onDockWidgetCountChanged:" << this
+                     << "; widgetCount=" << dockWidgetCount();
     if (isEmpty() && !isCentralFrame()) {
         scheduleDeleteLater();
     } else {
         updateTitleBarVisibility();
 
-        // We don't really keep track of the state, so emit even if the visibility didn't change. No biggie.
+        // We don't really keep track of the state, so emit even if the visibility didn't change. No
+        // biggie.
         if (!(m_options & FrameOption_AlwaysShowsTabs))
             Q_EMIT hasTabsVisibleChanged();
 
@@ -429,7 +432,8 @@ void Group::updateTitleBarVisibility()
     bool visible = false;
     if (isCentralFrame()) {
         visible = false;
-    } else if ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && hasTabsVisible()) {
+    } else if ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
+               && hasTabsVisible()) {
         visible = false;
     } else if (FloatingWindow *fw = floatingWindow()) {
         // If there's nested groups then show each Frame's title bar
@@ -452,7 +456,8 @@ void Group::updateTitleBarVisibility()
 
     if (auto fw = floatingWindow()) {
         // Update the floating window which might be using Flag_HideTitleBarWhenTabsVisible
-        // In that case it might not show title bar depending on the number of tabs that the group has
+        // In that case it might not show title bar depending on the number of tabs that the group
+        // has
         fw->updateTitleBarVisibility();
     }
 }
@@ -561,7 +566,8 @@ void Group::restoreToPreviousPosition()
     }
 
     if (!m_layoutItem->isPlaceholder()) {
-        // Maybe in this case just fold the group into the placeholder, which probably has other dockwidgets which were added meanwhile. TODO
+        // Maybe in this case just fold the group into the placeholder, which probably has other
+        // dockwidgets which were added meanwhile. TODO
         qCDebug(placeholder) << Q_FUNC_INFO << "Previous position isn't a placeholder";
         return;
     }
@@ -577,7 +583,8 @@ int Group::currentTabIndex() const
 bool Group::anyNonClosable() const
 {
     for (auto dw : dockWidgets()) {
-        if ((dw->options() & DockWidgetOption_NotClosable) && !Platform::instance()->isProcessingAppQuitEvent())
+        if ((dw->options() & DockWidgetOption_NotClosable)
+            && !Platform::instance()->isProcessingAppQuitEvent())
             return true;
     }
 
@@ -596,11 +603,12 @@ bool Group::anyNonDockable() const
 
 void Group::onDockWidgetShown(DockWidget *w)
 {
-    if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
+    if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it
+                                                          // might be being in process of being
+                                                          // reparented
         if (!isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was shown, we're="
-                            << "; visible="
-                            << isVisible();
+                            << "; visible=" << isVisible();
             setVisible(true);
         }
     }
@@ -608,11 +616,12 @@ void Group::onDockWidgetShown(DockWidget *w)
 
 void Group::onDockWidgetHidden(DockWidget *w)
 {
-    if (!isCentralFrame() && hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
+    if (!isCentralFrame() && hasSingleDockWidget()
+        && containsDockWidget(w)) { // We have to call contains because it might be being in process
+                                    // of being reparented
         if (isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was hidden, we're="
-                            << "; visible=" << isVisible()
-                            << "; dockWidgets=" << dockWidgets();
+                            << "; visible=" << isVisible() << "; dockWidgets=" << dockWidgets();
             setVisible(false);
         }
     }
@@ -726,12 +735,12 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
                 group = mw->dropArea()->m_centralFrame;
                 if (!group) {
                     // Doesn't happen...
-                    qWarning() << "Main window" << f.mainWindowUniqueName << "doesn't have central group";
+                    qWarning() << "Main window" << f.mainWindowUniqueName
+                               << "doesn't have central group";
                 }
             } else {
                 // Doesn't happen...
-                qWarning() << Q_FUNC_INFO << "Couldn't find main window"
-                           << f.mainWindowUniqueName;
+                qWarning() << Q_FUNC_INFO << "Couldn't find main window" << f.mainWindowUniqueName;
             }
         }
     }
@@ -781,7 +790,8 @@ void Group::scheduleDeleteLater()
     qCDebug(creation) << Q_FUNC_INFO << this;
     m_beingDeleted = true;
     QTimer::singleShot(0, this, [this] {
-        // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if triggered by a sendEvent() before event loop starts)
+        // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
+        // triggered by a sendEvent() before event loop starts)
         delete this;
     });
 }
@@ -842,41 +852,38 @@ MainWindow *Group::mainWindow() const
 bool Group::allDockWidgetsHave(DockWidgetOption option) const
 {
     const DockWidget::List docks = dockWidgets();
-    return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
-        return dw->options() & option;
-    });
+    return std::all_of(docks.cbegin(), docks.cend(),
+                       [option](DockWidget *dw) { return dw->options() & option; });
 }
 
 ///@brief Returns whether at least one dock widget has the specified option set
 bool Group::anyDockWidgetsHas(DockWidgetOption option) const
 {
     const DockWidget::List docks = dockWidgets();
-    return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
-        return dw->options() & option;
-    });
+    return std::any_of(docks.cbegin(), docks.cend(),
+                       [option](DockWidget *dw) { return dw->options() & option; });
 }
 
 bool Group::allDockWidgetsHave(LayoutSaverOption option) const
 {
     const DockWidget::List docks = dockWidgets();
-    return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
-        return dw->layoutSaverOptions() & option;
-    });
+    return std::all_of(docks.cbegin(), docks.cend(),
+                       [option](DockWidget *dw) { return dw->layoutSaverOptions() & option; });
 }
 
 bool Group::anyDockWidgetsHas(LayoutSaverOption option) const
 {
     const DockWidget::List docks = dockWidgets();
-    return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
-        return dw->layoutSaverOptions() & option;
-    });
+    return std::any_of(docks.cbegin(), docks.cend(),
+                       [option](DockWidget *dw) { return dw->layoutSaverOptions() & option; });
 }
 
 void Group::setAllowedResizeSides(CursorPositions sides)
 {
     if (sides) {
         delete m_resizeHandler;
-        m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global, WidgetResizeHandler::WindowMode::MDI, view());
+        m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
+                                                  WidgetResizeHandler::WindowMode::MDI, view());
         m_resizeHandler->setAllowedResizeSides(sides);
     } else {
         delete m_resizeHandler;

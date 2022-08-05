@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -38,12 +38,11 @@ namespace KDDockWidgets::Views {
 class DockWidget;
 class TabWidget;
 
-class DOCKS_EXPORT TabBar_qtquick
-    : public View_qtquick,
-      public TabBarViewInterface
+class DOCKS_EXPORT TabBar_qtquick : public View_qtquick, public TabBarViewInterface
 {
     Q_OBJECT
-    Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY tabBarQmlItemChanged)
+    Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY
+                   tabBarQmlItemChanged)
     Q_PROPERTY(bool tabBarAutoHide READ tabBarAutoHide NOTIFY tabBarAutoHideChanged)
 public:
     explicit TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent = nullptr);

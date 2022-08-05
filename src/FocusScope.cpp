@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -27,7 +27,8 @@
 using namespace KDDockWidgets;
 
 // Our Private inherits from QObject since FocusScope can't (Since Frame is already QObject)
-class FocusScope::Private : public QObject // clazy:exclude=missing-qobject-macro (breaks unity build with earlier cmake due to including .moc here.)
+class FocusScope::Private : public QObject // clazy:exclude=missing-qobject-macro (breaks unity
+                                           // build with earlier cmake due to including .moc here.)
 {
 public:
     Private(FocusScope *qq, View *thisView)
@@ -44,7 +45,8 @@ public:
     /// @brief Returns whether the last focused widget is the tab widget itself
     bool lastFocusedIsTabWidget() const
     {
-        return m_lastFocusedInScope && !m_lastFocusedInScope->isNull() && m_lastFocusedInScope->is(Type::Stack);
+        return m_lastFocusedInScope && !m_lastFocusedInScope->isNull()
+            && m_lastFocusedInScope->is(Type::Stack);
     }
 
     ~Private() override;
@@ -83,7 +85,8 @@ bool FocusScope::isFocused() const
 
 void FocusScope::focus(Qt::FocusReason reason)
 {
-    if (d->m_lastFocusedInScope && !d->m_lastFocusedInScope->isNull() && !d->lastFocusedIsTabWidget()) {
+    if (d->m_lastFocusedInScope && !d->m_lastFocusedInScope->isNull()
+        && !d->lastFocusedIsTabWidget()) {
         // When we focus the FocusScope, we give focus to the last focused widget, but let's
         // do better than focusing a tab widget. The tab widget itself being focused isn't
         // very useful.
@@ -121,7 +124,8 @@ void FocusScope::Private::onFocusedViewChanged(std::shared_ptr<View> view)
     }
 
     const bool is = isInFocusScope(view);
-    const bool focusViewChanged = !m_lastFocusedInScope || m_lastFocusedInScope->isNull() || !m_lastFocusedInScope->equals(view);
+    const bool focusViewChanged = !m_lastFocusedInScope || m_lastFocusedInScope->isNull()
+        || !m_lastFocusedInScope->equals(view);
     if (is && focusViewChanged && !view->is(Type::TitleBar)) {
         m_lastFocusedInScope = view;
         setIsFocused(is);

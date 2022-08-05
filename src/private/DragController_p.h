@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -138,7 +138,8 @@ private:
 
     QVector<Draggable *> m_draggables;
     Draggable *m_draggable = nullptr;
-    ViewGuard m_draggableGuard = nullptr; // Just so we know if the draggable was destroyed for some reason
+    ViewGuard m_draggableGuard =
+        nullptr; // Just so we know if the draggable was destroyed for some reason
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;
     Controllers::DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;
@@ -155,7 +156,8 @@ public:
     ~StateBase();
 
     // Not using QEvent here, to abstract platform differences regarding production of such events
-    virtual bool handleMouseButtonPress(Draggable * /*receiver*/, QPoint /*globalPos*/, QPoint /*pos*/)
+    virtual bool handleMouseButtonPress(Draggable * /*receiver*/, QPoint /*globalPos*/,
+                                        QPoint /*pos*/)
     {
         return false;
     }

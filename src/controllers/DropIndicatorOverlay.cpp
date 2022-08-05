@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -24,13 +24,15 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 DropIndicatorOverlay::DropIndicatorOverlay(Controllers::DropArea *dropArea)
-    : Controller(Type::DropAreaIndicatorOverlay, Platform::instance()->createView(this, dropArea->view()))
+    : Controller(Type::DropAreaIndicatorOverlay,
+                 Platform::instance()->createView(this, dropArea->view()))
     , m_dropArea(dropArea)
 {
     view()->setVisible(false);
     view()->setObjectName(QStringLiteral("DropIndicatorOverlay"));
 
-    // Set transparent for mouse events so that topLevel->childAt() never returns the drop indicator overlay
+    // Set transparent for mouse events so that topLevel->childAt() never returns the drop indicator
+    // overlay
     view()->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     connect(DockRegistry::self(), &DockRegistry::dropIndicatorsInhibitedChanged, this,
@@ -70,7 +72,8 @@ void DropIndicatorOverlay::setHoveredFrame(Controllers::Group *group)
         return;
 
     if (m_hoveredFrame)
-        disconnect(m_hoveredFrame, &QObject::destroyed, this, &DropIndicatorOverlay::onFrameDestroyed);
+        disconnect(m_hoveredFrame, &QObject::destroyed, this,
+                   &DropIndicatorOverlay::onFrameDestroyed);
 
     m_hoveredFrame = group;
     if (m_hoveredFrame) {
@@ -135,8 +138,8 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
         return false;
 
     const Controllers::DockWidget::List source = windowBeingDragged->dockWidgets();
-    const Controllers::DockWidget::List target = m_hoveredFrame ? m_hoveredFrame->dockWidgets()
-                                                                : Controllers::DockWidget::List();
+    const Controllers::DockWidget::List target =
+        m_hoveredFrame ? m_hoveredFrame->dockWidgets() : Controllers::DockWidget::List();
 
     const bool isInner = dropLoc & DropLocation_Inner;
     const bool isOutter = dropLoc & DropLocation_Outter;
@@ -144,10 +147,13 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
         if (!m_hoveredFrame)
             return false;
     } else if (isOutter) {
-        // If there's only 1 group in the layout, the outer indicators are redundant, as they do the same thing as the internal ones.
-        // But there might be another window obscuring our target, so it's useful to show the outer indicators in this case
+        // If there's only 1 group in the layout, the outer indicators are redundant, as they do the
+        // same thing as the internal ones. But there might be another window obscuring our target,
+        // so it's useful to show the outer indicators in this case
         const bool isTheOnlyFrame = m_hoveredFrame && m_hoveredFrame->isTheOnlyFrame();
-        if (isTheOnlyFrame && !DockRegistry::self()->isProbablyObscured(m_hoveredFrame->view()->window(), windowBeingDragged))
+        if (isTheOnlyFrame
+            && !DockRegistry::self()->isProbablyObscured(m_hoveredFrame->view()->window(),
+                                                         windowBeingDragged))
             return false;
     } else if (dropLoc == DropLocation_Center) {
         if (!m_hoveredFrame || !m_hoveredFrame->isDockable())
@@ -159,7 +165,8 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
         }
 
         // Only allow to dock to center if the affinities match
-        if (!DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities()))
+        if (!DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(),
+                                                   windowBeingDragged->affinities()))
             return false;
     } else {
         qWarning() << Q_FUNC_INFO << "Unknown drop indicator location" << dropLoc;

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -134,7 +134,8 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     }
 
     if (!platform) {
-        qCritical() << "Could not initialize platform for" << type << ". KDDockWidgets was built without support for it";
+        qCritical() << "Could not initialize platform for" << type
+                    << ". KDDockWidgets was built without support for it";
         qFatal("Aborting");
         return;
     }
@@ -195,7 +196,7 @@ void Platform::installGlobalEventFilter(EventFilterInterface *filter)
 
 void Platform::removeGlobalEventFilter(EventFilterInterface *filter)
 {
-    d->m_globalEventFilters.erase(std::remove(d->m_globalEventFilters.begin(),
-                                              d->m_globalEventFilters.end(), filter),
-                                  d->m_globalEventFilters.end());
+    d->m_globalEventFilters.erase(
+        std::remove(d->m_globalEventFilters.begin(), d->m_globalEventFilters.end(), filter),
+        d->m_globalEventFilters.end());
 }

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -18,8 +18,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::Controllers;
 
-SegmentedIndicatorsOverlay_qtwidgets::SegmentedIndicatorsOverlay_qtwidgets(Controllers::SegmentedIndicators *controller,
-                                                                           QWidget *parent)
+SegmentedIndicatorsOverlay_qtwidgets::SegmentedIndicatorsOverlay_qtwidgets(
+    Controllers::SegmentedIndicators *controller, QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::None, parent)
     , m_controller(controller)
 {
@@ -40,15 +40,10 @@ void SegmentedIndicatorsOverlay_qtwidgets::paintEvent(QPaintEvent *)
 void SegmentedIndicatorsOverlay_qtwidgets::drawSegments(QPainter *p)
 {
     const QHash<DropLocation, QPolygon> segments = m_controller->segments();
-    for (DropLocation loc : { DropLocation_Left,
-                              DropLocation_Top,
-                              DropLocation_Right,
-                              DropLocation_Bottom,
-                              DropLocation_Center,
-                              DropLocation_OutterLeft,
-                              DropLocation_OutterTop,
-                              DropLocation_OutterRight,
-                              DropLocation_OutterBottom })
+    for (DropLocation loc :
+         { DropLocation_Left, DropLocation_Top, DropLocation_Right, DropLocation_Bottom,
+           DropLocation_Center, DropLocation_OutterLeft, DropLocation_OutterTop,
+           DropLocation_OutterRight, DropLocation_OutterBottom })
         drawSegment(p, segments.value(loc));
 }
 

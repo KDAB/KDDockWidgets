@@ -45,8 +45,7 @@ inline QQuickItem *asQQuickItem(Controller *controller)
     return asQQuickItem(controller->view());
 }
 
-class DOCKS_EXPORT View_qtquick : public QQuickItem,
-                                  public View_qt
+class DOCKS_EXPORT View_qtquick : public QQuickItem, public View_qt
 {
     Q_OBJECT
 public:
@@ -60,8 +59,7 @@ public:
     using View::width;
 
     explicit View_qtquick(KDDockWidgets::Controller *controller, Type type,
-                          QQuickItem *parent = nullptr,
-                          Qt::WindowFlags windowFlags = {});
+                          QQuickItem *parent = nullptr, Qt::WindowFlags windowFlags = {});
 
     ~View_qtquick() override = default;
 

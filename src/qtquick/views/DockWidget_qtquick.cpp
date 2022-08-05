@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -40,8 +40,8 @@ class DockWidget_qtquick::Private
 public:
     Private(DockWidget_qtquick *view, QQmlEngine *qmlengine)
         : q(view)
-        , m_visualItem(q->createItem(qmlengine,
-                                     plat()->viewFactory()->dockwidgetFilename().toString()))
+        , m_visualItem(
+              q->createItem(qmlengine, plat()->viewFactory()->dockwidgetFilename().toString()))
         , m_qmlEngine(qmlengine)
     {
         Q_ASSERT(m_visualItem);
@@ -54,21 +54,25 @@ public:
     QQmlEngine *const m_qmlEngine;
 };
 
-DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName,
-                                       DockWidgetOptions options,
+DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName, DockWidgetOptions options,
                                        LayoutSaverOptions layoutSaverOptions,
                                        Qt::WindowFlags windowFlags, QQmlEngine *engine)
-    : View_qtquick(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget, nullptr, windowFlags)
+    : View_qtquick(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget,
+                   nullptr, windowFlags)
     , Views::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this, engine ? engine : plat()->qmlEngine()))
 {
     init();
     m_dockWidget->init();
 
-    connect(m_dockWidget, &Controllers::DockWidget::isFloatingChanged, this, &DockWidget_qtquick::isFloatingChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this, &DockWidget_qtquick::isFocusedChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this, &DockWidget_qtquick::titleChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::optionsChanged, this, &DockWidget_qtquick::optionsChanged);
+    connect(m_dockWidget, &Controllers::DockWidget::isFloatingChanged, this,
+            &DockWidget_qtquick::isFloatingChanged);
+    connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
+            &DockWidget_qtquick::isFocusedChanged);
+    connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this,
+            &DockWidget_qtquick::titleChanged);
+    connect(m_dockWidget, &Controllers::DockWidget::optionsChanged, this,
+            &DockWidget_qtquick::optionsChanged);
 }
 
 DockWidget_qtquick::~DockWidget_qtquick()
@@ -82,8 +86,8 @@ void DockWidget_qtquick::init()
     setVisible(false);
 
     auto dw = this->dockWidget();
-    connect(dw, &Controllers::DockWidget::actualTitleBarChanged,
-            this, &DockWidget_qtquick::actualTitleBarChanged);
+    connect(dw, &Controllers::DockWidget::actualTitleBarChanged, this,
+            &DockWidget_qtquick::actualTitleBarChanged);
 
     connect(dw, &Controllers::DockWidget::guestViewChanged, this, [this, dw] {
         if (auto guest = dw->guestView()) {

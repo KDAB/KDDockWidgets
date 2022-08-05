@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -79,7 +79,8 @@ void c_QEvent_Finalizer(void *, void *cppObj, void *)
 }
 void *c_QEvent__constructor_Type(int type)
 {
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::QEvent_wrapper(static_cast<QEvent::Type>(type));
+    auto ptr =
+        new KDDockWidgetsBindings_wrappersNS::QEvent_wrapper(static_cast<QEvent::Type>(type));
     return reinterpret_cast<void *>(ptr);
 }
 // accept()

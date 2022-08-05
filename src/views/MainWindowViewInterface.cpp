@@ -106,7 +106,8 @@ void MainWindowViewInterface::moveToSideBar(DockWidgetViewInterface *dockView)
     m_mainWindow->moveToSideBar(dw);
 }
 
-void MainWindowViewInterface::moveToSideBar(DockWidgetViewInterface *dockView, KDDockWidgets::SideBarLocation loc)
+void MainWindowViewInterface::moveToSideBar(DockWidgetViewInterface *dockView,
+                                            KDDockWidgets::SideBarLocation loc)
 {
     auto dw = dockView ? dockView->dockWidget() : nullptr;
     m_mainWindow->moveToSideBar(dw, loc);
@@ -146,7 +147,8 @@ void MainWindowViewInterface::moveToSideBar(const QString &dockId)
     }
 }
 
-void MainWindowViewInterface::moveToSideBar(const QString &dockId, KDDockWidgets::SideBarLocation loc)
+void MainWindowViewInterface::moveToSideBar(const QString &dockId,
+                                            KDDockWidgets::SideBarLocation loc)
 {
     if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         return m_mainWindow->moveToSideBar(dw, loc);
@@ -200,14 +202,14 @@ void MainWindowViewInterface::addDockWidgetAsTab(const QString &dockId)
     }
 }
 
-void MainWindowViewInterface::addDockWidget(const QString &dockId,
-                                            KDDockWidgets::Location location,
+void MainWindowViewInterface::addDockWidget(const QString &dockId, KDDockWidgets::Location location,
                                             const QString &relativeToDockId,
                                             KDDockWidgets::InitialOption initialOption)
 {
     if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
-        auto relativeTo = relativeToDockId.isEmpty() ? nullptr
-                                                     : DockRegistry::self()->dockByName(relativeToDockId);
+        auto relativeTo = relativeToDockId.isEmpty()
+            ? nullptr
+            : DockRegistry::self()->dockByName(relativeToDockId);
         return m_mainWindow->addDockWidget(dw, location, relativeTo, initialOption);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;

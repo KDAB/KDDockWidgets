@@ -115,9 +115,9 @@ View *Platform_flutter::tests_createNonClosableView(View *)
     return {};
 }
 
-Controllers::MainWindow *Platform_flutter::createMainWindow(const QString &,
-                                                            CreateViewOptions, MainWindowOptions,
-                                                            View *, Qt::WindowFlags) const
+Controllers::MainWindow *Platform_flutter::createMainWindow(const QString &, CreateViewOptions,
+                                                            MainWindowOptions, View *,
+                                                            Qt::WindowFlags) const
 {
     return {};
 }
@@ -156,7 +156,8 @@ bool Platform_flutter::tests_waitForEvent(View *, QEvent::Type type, int timeout
     return false;
 }
 
-bool Platform_flutter::tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type, int timeout) const
+bool Platform_flutter::tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type,
+                                          int timeout) const
 {
     ( void )type;
     ( void )timeout;

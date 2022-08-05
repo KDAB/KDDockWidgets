@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -19,9 +19,11 @@ class MyMainWindow : public KDDockWidgets::Views::MainWindow_qtwidgets
     Q_OBJECT
 public:
     explicit MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                          bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
-                          bool maxSizeForDockWidget8, bool dockwidget5DoesntCloseBeforeRestore, bool dock0BlocksCloseEvent,
-                          const QString &affinityName = {}, // Usually not needed. Just here to show the feature.
+                          bool dockWidget0IsNonClosable, bool nonDockableDockWidget9,
+                          bool restoreIsRelative, bool maxSizeForDockWidget8,
+                          bool dockwidget5DoesntCloseBeforeRestore, bool dock0BlocksCloseEvent,
+                          const QString &affinityName = {}, // Usually not needed. Just here to show
+                                                            // the feature.
                           QWidget *parent = nullptr);
     ~MyMainWindow() override;
 

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -86,7 +86,8 @@ public:
         if (!supportsPersistentCentralWidget())
             return nullptr;
 
-        auto dockView = Config::self().viewFactory()->createDockWidget(QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
+        auto dockView = Config::self().viewFactory()->createDockWidget(
+            QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
         auto dw = dockView->asDockWidgetController();
         dw->dptr()->m_isPersistentCentralDockWidget = true;
         Controllers::Group *group = dropArea()->m_centralFrame;
@@ -146,10 +147,9 @@ void MainWindow::init(const QString &name)
 
     setUniqueName(name);
 
-    d->m_visibleWidgetCountConnection = d->m_layout->visibleWidgetCountChanged.connect(&MainWindow::groupCountChanged, this);
-    view()->d->closeRequested.connect([this](QCloseEvent *ev) {
-        d->m_layout->onCloseEvent(ev);
-    });
+    d->m_visibleWidgetCountConnection =
+        d->m_layout->visibleWidgetCountChanged.connect(&MainWindow::groupCountChanged, this);
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
 }
 
 MainWindow::~MainWindow()
@@ -182,7 +182,8 @@ void MainWindow::addDockWidgetAsTab(Controllers::DockWidget *widget)
     if (d->supportsPersistentCentralWidget()) {
         qWarning() << Q_FUNC_INFO << "Not supported with MainWindowOption_HasCentralWidget."
                    << "MainWindowOption_HasCentralWidget can only have 1 widget in the center."
-                   << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports tabbing";
+                   << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports "
+                      "tabbing";
     } else if (d->supportsCentralFrame()) {
         dropArea()->m_centralFrame->addTab(widget);
     } else {
@@ -245,8 +246,7 @@ void MainWindow::setAffinities(const QStringList &affinityNames)
         return;
 
     if (!d->affinities.isEmpty()) {
-        qWarning() << Q_FUNC_INFO
-                   << "Affinity is already set, refusing to change."
+        qWarning() << Q_FUNC_INFO << "Affinity is already set, refusing to change."
                    << "Submit a feature request with a good justification.";
         return;
     }
@@ -307,15 +307,16 @@ QRect MainWindow::Private::rectForOverlay(Controllers::Group *group, SideBarLoca
 
         Controllers::SideBar *leftSideBar = q->sideBar(SideBarLocation::West);
         Controllers::SideBar *rightSideBar = q->sideBar(SideBarLocation::East);
-        const int leftSideBarWidth = (leftSideBar && leftSideBar->isVisible()) ? leftSideBar->width()
-                                                                               : 0;
-        const int rightSideBarWidth = (rightSideBar && rightSideBar->isVisible()) ? rightSideBar->width()
-                                                                                  : 0;
+        const int leftSideBarWidth =
+            (leftSideBar && leftSideBar->isVisible()) ? leftSideBar->width() : 0;
+        const int rightSideBarWidth =
+            (rightSideBar && rightSideBar->isVisible()) ? rightSideBar->width() : 0;
         rect.setHeight(qMax(300, group->view()->minSize().height()));
         rect.setWidth(centralAreaGeo.width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
         rect.moveLeft(margin + leftSideBarWidth);
         if (location == SideBarLocation::South) {
-            rect.moveTop(centralAreaGeo.bottom() - centerWidgetMargins.bottom() - rect.height() - sb->height());
+            rect.moveTop(centralAreaGeo.bottom() - centerWidgetMargins.bottom() - rect.height()
+                         - sb->height());
         } else {
             rect.moveTop(centralAreaGeo.y() + sb->height() + centerWidgetMargins.top());
         }
@@ -325,15 +326,17 @@ QRect MainWindow::Private::rectForOverlay(Controllers::Group *group, SideBarLoca
     case SideBarLocation::East: {
         Controllers::SideBar *topSideBar = q->sideBar(SideBarLocation::North);
         Controllers::SideBar *bottomSideBar = q->sideBar(SideBarLocation::South);
-        const int topSideBarHeight = (topSideBar && topSideBar->isVisible()) ? topSideBar->height()
-                                                                             : 0;
-        const int bottomSideBarHeight = (bottomSideBar && bottomSideBar->isVisible()) ? bottomSideBar->height()
-                                                                                      : 0;
+        const int topSideBarHeight =
+            (topSideBar && topSideBar->isVisible()) ? topSideBar->height() : 0;
+        const int bottomSideBarHeight =
+            (bottomSideBar && bottomSideBar->isVisible()) ? bottomSideBar->height() : 0;
         rect.setWidth(qMax(300, group->view()->minSize().width()));
-        rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight - centerWidgetMargins.top() - centerWidgetMargins.bottom());
+        rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight
+                       - centerWidgetMargins.top() - centerWidgetMargins.bottom());
         rect.moveTop(sb->view()->mapTo(q->view(), QPoint(0, 0)).y() + topSideBarHeight - 1);
         if (location == SideBarLocation::East) {
-            rect.moveLeft(centralAreaGeo.x() + centralAreaGeo.width() - rect.width() - sb->width() - centerWidgetMargins.right() - margin);
+            rect.moveLeft(centralAreaGeo.x() + centralAreaGeo.width() - rect.width() - sb->width()
+                          - centerWidgetMargins.right() - margin);
         } else {
             rect.moveLeft(margin + centralAreaGeo.x() + centerWidgetMargins.left() + sb->width());
         }
@@ -403,42 +406,43 @@ SideBarLocation MainWindow::Private::preferredSideBar(Controllers::DockWidget *d
 
     /// 1. It's touching all borders
     if (borders == Layouting::LayoutBorderLocation_All) {
-        return aspectRatio > 1.0 ? SideBarLocation::South
-                                 : SideBarLocation::East;
+        return aspectRatio > 1.0 ? SideBarLocation::South : SideBarLocation::East;
     }
 
     /// 2. It's touching 3 borders
-    for (auto borderLoc : { Layouting::LayoutBorderLocation_North, Layouting::LayoutBorderLocation_East,
-                            Layouting::LayoutBorderLocation_West, Layouting::LayoutBorderLocation_South }) {
+    for (auto borderLoc :
+         { Layouting::LayoutBorderLocation_North, Layouting::LayoutBorderLocation_East,
+           Layouting::LayoutBorderLocation_West, Layouting::LayoutBorderLocation_South }) {
         if (borders == (Layouting::LayoutBorderLocation_All & ~borderLoc))
             return opposedSideBarLocationForBorder(borderLoc);
     }
 
     /// 3. It's touching left and right borders
-    if ((borders & Layouting::LayoutBorderLocation_Verticals) == Layouting::LayoutBorderLocation_Verticals) {
+    if ((borders & Layouting::LayoutBorderLocation_Verticals)
+        == Layouting::LayoutBorderLocation_Verticals) {
         // We could measure the distance to the top though.
         return SideBarLocation::South;
     }
 
     /// 4. It's touching top and bottom borders
-    if ((borders & Layouting::LayoutBorderLocation_Horizontals) == Layouting::LayoutBorderLocation_Horizontals) {
+    if ((borders & Layouting::LayoutBorderLocation_Horizontals)
+        == Layouting::LayoutBorderLocation_Horizontals) {
         // We could measure the distance to the left though.
         return SideBarLocation::East;
     }
 
     // 5. It's in a corner
     if (borders == (Layouting::LayoutBorderLocation_West | Layouting::LayoutBorderLocation_South)) {
-        return aspectRatio > 1.0 ? SideBarLocation::South
-                                 : SideBarLocation::West;
-    } else if (borders == (Layouting::LayoutBorderLocation_East | Layouting::LayoutBorderLocation_South)) {
-        return aspectRatio > 1.0 ? SideBarLocation::South
-                                 : SideBarLocation::East;
-    } else if (borders == (Layouting::LayoutBorderLocation_West | Layouting::LayoutBorderLocation_North)) {
-        return aspectRatio > 1.0 ? SideBarLocation::North
-                                 : SideBarLocation::West;
-    } else if (borders == (Layouting::LayoutBorderLocation_East | Layouting::LayoutBorderLocation_North)) {
-        return aspectRatio > 1.0 ? SideBarLocation::North
-                                 : SideBarLocation::East;
+        return aspectRatio > 1.0 ? SideBarLocation::South : SideBarLocation::West;
+    } else if (borders
+               == (Layouting::LayoutBorderLocation_East | Layouting::LayoutBorderLocation_South)) {
+        return aspectRatio > 1.0 ? SideBarLocation::South : SideBarLocation::East;
+    } else if (borders
+               == (Layouting::LayoutBorderLocation_West | Layouting::LayoutBorderLocation_North)) {
+        return aspectRatio > 1.0 ? SideBarLocation::North : SideBarLocation::West;
+    } else if (borders
+               == (Layouting::LayoutBorderLocation_East | Layouting::LayoutBorderLocation_North)) {
+        return aspectRatio > 1.0 ? SideBarLocation::North : SideBarLocation::East;
     }
 
 
@@ -450,8 +454,7 @@ SideBarLocation MainWindow::Private::preferredSideBar(Controllers::DockWidget *d
     }
 
     // It's not touching any border, use aspect ratio.
-    return aspectRatio > 1.0 ? SideBarLocation::South
-                             : SideBarLocation::West;
+    return aspectRatio > 1.0 ? SideBarLocation::South : SideBarLocation::West;
 }
 
 void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
@@ -508,8 +511,8 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
 
 void MainWindow::Private::clearSideBars()
 {
-    for (auto loc : { SideBarLocation::North, SideBarLocation::South,
-                      SideBarLocation::East, SideBarLocation::West }) {
+    for (auto loc : { SideBarLocation::North, SideBarLocation::South, SideBarLocation::East,
+                      SideBarLocation::West }) {
         if (Controllers::SideBar *sb = q->sideBar(loc))
             sb->clear();
     }
@@ -545,7 +548,8 @@ void MainWindow::moveToSideBar(Controllers::DockWidget *dw, SideBarLocation loca
         sb->addDockWidget(dw);
     } else {
         // Shouldn't happen
-        qWarning() << Q_FUNC_INFO << "Minimization supported, probably disabled in Config::self().flags()";
+        qWarning() << Q_FUNC_INFO
+                   << "Minimization supported, probably disabled in Config::self().flags()";
     }
 }
 
@@ -573,7 +577,8 @@ void MainWindow::overlayOnSideBar(Controllers::DockWidget *dw)
 
     const Controllers::SideBar *sb = sideBarForDockWidget(dw);
     if (!sb) {
-        qWarning() << Q_FUNC_INFO << "You need to add the dock widget to the sidebar before you can overlay it";
+        qWarning() << Q_FUNC_INFO
+                   << "You need to add the dock widget to the sidebar before you can overlay it";
         return;
     }
 
@@ -618,8 +623,7 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
     }
 
     const SideBarLocation loc = d->m_overlayedDockWidget->sideBarLocation();
-    d->m_overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(
-        loc, group->geometry());
+    d->m_overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(loc, group->geometry());
 
     group->unoverlay();
 
@@ -639,8 +643,8 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
 
 Controllers::SideBar *MainWindow::sideBarForDockWidget(const Controllers::DockWidget *dw) const
 {
-    for (auto loc : { SideBarLocation::North, SideBarLocation::South,
-                      SideBarLocation::East, SideBarLocation::West }) {
+    for (auto loc : { SideBarLocation::North, SideBarLocation::South, SideBarLocation::East,
+                      SideBarLocation::West }) {
 
         if (Controllers::SideBar *sb = sideBar(loc)) {
             if (sb->containsDockWidget(const_cast<Controllers::DockWidget *>(dw)))
@@ -667,8 +671,8 @@ bool MainWindow::sideBarIsVisible(SideBarLocation loc) const
 
 bool MainWindow::anySideBarIsVisible() const
 {
-    for (auto loc : { SideBarLocation::North, SideBarLocation::South,
-                      SideBarLocation::East, SideBarLocation::West }) {
+    for (auto loc : { SideBarLocation::North, SideBarLocation::South, SideBarLocation::East,
+                      SideBarLocation::West }) {
         if (sideBarIsVisible(loc))
             return true;
     }
@@ -734,8 +738,8 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
     }
 
     if (d->affinities != mw.affinities) {
-        qWarning() << Q_FUNC_INFO << "Affinty name changed from" << d->affinities
-                   << "; to" << mw.affinities;
+        qWarning() << Q_FUNC_INFO << "Affinty name changed from" << d->affinities << "; to"
+                   << mw.affinities;
 
         d->affinities = mw.affinities;
     }
@@ -744,7 +748,8 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
 
     // Restore the SideBars
     d->clearSideBars();
-    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
+                                 SideBarLocation::West, SideBarLocation::South }) {
         Controllers::SideBar *sb = sideBar(loc);
         if (!sb)
             continue;
@@ -752,7 +757,8 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
         for (const QString &uniqueName : dockWidgets) {
 
-            Controllers::DockWidget *dw = DockRegistry::self()->dockByName(uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
+            Controllers::DockWidget *dw = DockRegistry::self()->dockByName(
+                uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
             if (!dw) {
                 qWarning() << Q_FUNC_INFO << "Could not find dock widget" << uniqueName
                            << ". Won't restore it to sidebar";
@@ -785,10 +791,10 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.screenSize = Platform::instance()->screenSizeFor(view());
     m.multiSplitterLayout = layout()->serialize();
     m.affinities = d->affinities;
-    m.windowState = window ? window->windowState()
-                           : WindowState::None;
+    m.windowState = window ? window->windowState() : WindowState::None;
 
-    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
+                                 SideBarLocation::West, SideBarLocation::South }) {
         if (Controllers::SideBar *sb = sideBar(loc)) {
             const QStringList dockwidgets = sb->serialize();
             if (!dockwidgets.isEmpty())
@@ -802,7 +808,8 @@ LayoutSaver::MainWindow MainWindow::serialize() const
 void MainWindow::setPersistentCentralView(std::shared_ptr<View> widget)
 {
     if (!d->supportsPersistentCentralWidget()) {
-        qWarning() << "MainWindow::setPersistentCentralWidget() requires MainWindowOption_HasCentralWidget";
+        qWarning() << "MainWindow::setPersistentCentralWidget() requires "
+                      "MainWindowOption_HasCentralWidget";
         return;
     }
 

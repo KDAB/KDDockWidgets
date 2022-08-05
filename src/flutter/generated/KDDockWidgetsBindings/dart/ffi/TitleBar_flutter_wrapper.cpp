@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -27,7 +27,8 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-TitleBar_flutter_wrapper::TitleBar_flutter_wrapper(KDDockWidgets::Controllers::TitleBar *controller, KDDockWidgets::View *parent)
+TitleBar_flutter_wrapper::TitleBar_flutter_wrapper(KDDockWidgets::Controllers::TitleBar *controller,
+                                                   KDDockWidgets::View *parent)
     : ::KDDockWidgets::Views::TitleBar_flutter(controller, parent)
 {
 }
@@ -790,7 +791,8 @@ void c_KDDockWidgets__Views__TitleBar_flutter_Finalizer(void *, void *cppObj, vo
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(cppObj);
 }
-void *c_KDDockWidgets__Views__TitleBar_flutter__constructor_TitleBar_View(void *controller_, void *parent_)
+void *c_KDDockWidgets__Views__TitleBar_flutter__constructor_TitleBar_View(void *controller_,
+                                                                          void *parent_)
 {
     auto controller = reinterpret_cast<KDDockWidgets::Controllers::TitleBar *>(controller_);
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
@@ -800,47 +802,128 @@ void *c_KDDockWidgets__Views__TitleBar_flutter__constructor_TitleBar_View(void *
 // activateWindow()
 void c_KDDockWidgets__Views__TitleBar_flutter__activateWindow(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->activateWindow_nocallback();} else {    return targetPtr->activateWindow();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->activateWindow_nocallback();
+        } else {
+            return targetPtr->activateWindow();
+        }
+    }();
 }
 // close()
 bool c_KDDockWidgets__Views__TitleBar_flutter__close(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->close_nocallback();} else {    return targetPtr->close();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->close_nocallback();
+        } else {
+            return targetPtr->close();
+        }
+    }();
 }
 // createPlatformWindow()
 void c_KDDockWidgets__Views__TitleBar_flutter__createPlatformWindow(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createPlatformWindow_nocallback();} else {    return targetPtr->createPlatformWindow();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->createPlatformWindow_nocallback();
+        } else {
+            return targetPtr->createPlatformWindow();
+        }
+    }();
 }
 // flags() const
 int c_KDDockWidgets__Views__TitleBar_flutter__flags(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->flags_nocallback();} else {    return targetPtr->flags();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->flags_nocallback();
+        } else {
+            return targetPtr->flags();
+        }
+    }();
 }
 // free_impl()
 void c_KDDockWidgets__Views__TitleBar_flutter__free_impl(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->free_impl_nocallback();} else {    return targetPtr->free_impl();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->free_impl_nocallback();
+        } else {
+            return targetPtr->free_impl();
+        }
+    }();
 }
 // geometry() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__geometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
+    return new Dartagnan::ValueWrapper<QRect> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->geometry_nocallback();
+        } else {
+            return targetPtr->geometry();
+        }
+    }() };
 }
 // grabMouse()
 void c_KDDockWidgets__Views__TitleBar_flutter__grabMouse(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->grabMouse_nocallback();} else {    return targetPtr->grabMouse();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->grabMouse_nocallback();
+        } else {
+            return targetPtr->grabMouse();
+        }
+    }();
 }
 // hasFocus() const
 bool c_KDDockWidgets__Views__TitleBar_flutter__hasFocus(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hasFocus_nocallback();} else {    return targetPtr->hasFocus();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->hasFocus_nocallback();
+        } else {
+            return targetPtr->hasFocus();
+        }
+    }();
 }
 // hide()
 void c_KDDockWidgets__Views__TitleBar_flutter__hide(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hide_nocallback();} else {    return targetPtr->hide();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->hide_nocallback();
+        } else {
+            return targetPtr->hide();
+        }
+    }();
 }
 // init()
 void c_KDDockWidgets__Views__TitleBar_flutter__init(void *thisObj)
@@ -850,7 +933,16 @@ void c_KDDockWidgets__Views__TitleBar_flutter__init(void *thisObj)
 // isActiveWindow() const
 bool c_KDDockWidgets__Views__TitleBar_flutter__isActiveWindow(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isActiveWindow_nocallback();} else {    return targetPtr->isActiveWindow();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isActiveWindow_nocallback();
+        } else {
+            return targetPtr->isActiveWindow();
+        }
+    }();
 }
 // isCloseButtonEnabled() const
 bool c_KDDockWidgets__Views__TitleBar_flutter__isCloseButtonEnabled(void *thisObj)
@@ -870,407 +962,902 @@ bool c_KDDockWidgets__Views__TitleBar_flutter__isFloatButtonVisible(void *thisOb
 // isMaximized() const
 bool c_KDDockWidgets__Views__TitleBar_flutter__isMaximized(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMaximized_nocallback();} else {    return targetPtr->isMaximized();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isMaximized_nocallback();
+        } else {
+            return targetPtr->isMaximized();
+        }
+    }();
 }
 // isMinimized() const
 bool c_KDDockWidgets__Views__TitleBar_flutter__isMinimized(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMinimized_nocallback();} else {    return targetPtr->isMinimized();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isMinimized_nocallback();
+        } else {
+            return targetPtr->isMinimized();
+        }
+    }();
 }
 // isNull() const
 bool c_KDDockWidgets__Views__TitleBar_flutter__isNull(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isNull_nocallback();} else {    return targetPtr->isNull();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isNull_nocallback();
+        } else {
+            return targetPtr->isNull();
+        }
+    }();
 }
 // isRootView() const
 bool c_KDDockWidgets__Views__TitleBar_flutter__isRootView(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isRootView_nocallback();} else {    return targetPtr->isRootView();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isRootView_nocallback();
+        } else {
+            return targetPtr->isRootView();
+        }
+    }();
 }
 // isVisible() const
 bool c_KDDockWidgets__Views__TitleBar_flutter__isVisible(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback();} else {    return targetPtr->isVisible();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isVisible_nocallback();
+        } else {
+            return targetPtr->isVisible();
+        }
+    }();
 }
 // mapFromGlobal(QPoint globalPt) const
 void *c_KDDockWidgets__Views__TitleBar_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_)
 {
     auto &globalPt = *reinterpret_cast<QPoint *>(globalPt_);
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(globalPt);} else {    return targetPtr->mapFromGlobal(globalPt);} }() };
+    return new Dartagnan::ValueWrapper<QPoint> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->mapFromGlobal_nocallback(globalPt);
+        } else {
+            return targetPtr->mapFromGlobal(globalPt);
+        }
+    }() };
 }
 // mapTo(KDDockWidgets::View * parent, QPoint pos) const
-void *c_KDDockWidgets__Views__TitleBar_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_)
+void *c_KDDockWidgets__Views__TitleBar_flutter__mapTo_View_QPoint(void *thisObj, void *parent_,
+                                                                  void *pos_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     auto &pos = *reinterpret_cast<QPoint *>(pos_);
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(parent,pos);} else {    return targetPtr->mapTo(parent,pos);} }() };
+    return new Dartagnan::ValueWrapper<QPoint> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->mapTo_nocallback(parent, pos);
+        } else {
+            return targetPtr->mapTo(parent, pos);
+        }
+    }() };
 }
 // mapToGlobal(QPoint localPt) const
 void *c_KDDockWidgets__Views__TitleBar_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_)
 {
     auto &localPt = *reinterpret_cast<QPoint *>(localPt_);
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(localPt);} else {    return targetPtr->mapToGlobal(localPt);} }() };
+    return new Dartagnan::ValueWrapper<QPoint> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->mapToGlobal_nocallback(localPt);
+        } else {
+            return targetPtr->mapToGlobal(localPt);
+        }
+    }() };
 }
 // maxSizeHint() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__maxSizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    return new Dartagnan::ValueWrapper<QSize> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->maxSizeHint_nocallback();
+        } else {
+            return targetPtr->maxSizeHint();
+        }
+    }() };
 }
 // maximumSize() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__maximumSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maximumSize_nocallback();} else {    return targetPtr->maximumSize();} }() };
+    return new Dartagnan::ValueWrapper<QSize> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->maximumSize_nocallback();
+        } else {
+            return targetPtr->maximumSize();
+        }
+    }() };
 }
 // minSize() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__minSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    return new Dartagnan::ValueWrapper<QSize> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->minSize_nocallback();
+        } else {
+            return targetPtr->minSize();
+        }
+    }() };
 }
 // minimumHeight() const
 int c_KDDockWidgets__Views__TitleBar_flutter__minimumHeight(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minimumHeight_nocallback();} else {    return targetPtr->minimumHeight();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->minimumHeight_nocallback();
+        } else {
+            return targetPtr->minimumHeight();
+        }
+    }();
 }
 // minimumWidth() const
 int c_KDDockWidgets__Views__TitleBar_flutter__minimumWidth(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minimumWidth_nocallback();} else {    return targetPtr->minimumWidth();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->minimumWidth_nocallback();
+        } else {
+            return targetPtr->minimumWidth();
+        }
+    }();
 }
 // move(int x, int y)
 void c_KDDockWidgets__Views__TitleBar_flutter__move_int_int(void *thisObj, int x, int y)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->move_nocallback(x,y);} else {    return targetPtr->move(x,y);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->move_nocallback(x, y);
+        } else {
+            return targetPtr->move(x, y);
+        }
+    }();
 }
 // normalGeometry() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__normalGeometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
+    return new Dartagnan::ValueWrapper<QRect> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->normalGeometry_nocallback();
+        } else {
+            return targetPtr->normalGeometry();
+        }
+    }() };
 }
 // objectName() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__objectName(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->objectName_nocallback();} else {    return targetPtr->objectName();} }() };
+    return new Dartagnan::ValueWrapper<QString> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->objectName_nocallback();
+        } else {
+            return targetPtr->objectName();
+        }
+    }() };
 }
 // onResize(QSize newSize)
 bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_QSize(void *thisObj, void *newSize_)
 {
     auto &newSize = *reinterpret_cast<QSize *>(newSize_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(newSize);} else {    return targetPtr->onResize(newSize);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->onResize_nocallback(newSize);
+        } else {
+            return targetPtr->onResize(newSize);
+        }
+    }();
 }
 // raise()
 void c_KDDockWidgets__Views__TitleBar_flutter__raise(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raise_nocallback();} else {    return targetPtr->raise();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->raise_nocallback();
+        } else {
+            return targetPtr->raise();
+        }
+    }();
 }
 // raiseAndActivate()
 void c_KDDockWidgets__Views__TitleBar_flutter__raiseAndActivate(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseAndActivate_nocallback();} else {    return targetPtr->raiseAndActivate();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->raiseAndActivate_nocallback();
+        } else {
+            return targetPtr->raiseAndActivate();
+        }
+    }();
 }
 // releaseKeyboard()
 void c_KDDockWidgets__Views__TitleBar_flutter__releaseKeyboard(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->releaseKeyboard_nocallback();} else {    return targetPtr->releaseKeyboard();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->releaseKeyboard_nocallback();
+        } else {
+            return targetPtr->releaseKeyboard();
+        }
+    }();
 }
 // releaseMouse()
 void c_KDDockWidgets__Views__TitleBar_flutter__releaseMouse(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->releaseMouse_nocallback();} else {    return targetPtr->releaseMouse();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->releaseMouse_nocallback();
+        } else {
+            return targetPtr->releaseMouse();
+        }
+    }();
 }
 // setCursor(Qt::CursorShape shape)
 void c_KDDockWidgets__Views__TitleBar_flutter__setCursor_CursorShape(void *thisObj, int shape)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setCursor_nocallback(static_cast<Qt::CursorShape>(shape));} else {    return targetPtr->setCursor(static_cast<Qt::CursorShape>(shape));} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setCursor_nocallback(static_cast<Qt::CursorShape>(shape));
+        } else {
+            return targetPtr->setCursor(static_cast<Qt::CursorShape>(shape));
+        }
+    }();
 }
 // setFixedHeight(int h)
 void c_KDDockWidgets__Views__TitleBar_flutter__setFixedHeight_int(void *thisObj, int h)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setFixedHeight_nocallback(h);} else {    return targetPtr->setFixedHeight(h);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setFixedHeight_nocallback(h);
+        } else {
+            return targetPtr->setFixedHeight(h);
+        }
+    }();
 }
 // setFixedWidth(int w)
 void c_KDDockWidgets__Views__TitleBar_flutter__setFixedWidth_int(void *thisObj, int w)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setFixedWidth_nocallback(w);} else {    return targetPtr->setFixedWidth(w);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setFixedWidth_nocallback(w);
+        } else {
+            return targetPtr->setFixedWidth(w);
+        }
+    }();
 }
 // setGeometry(QRect arg__1)
 void c_KDDockWidgets__Views__TitleBar_flutter__setGeometry_QRect(void *thisObj, void *arg__1_)
 {
     auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setGeometry_nocallback(arg__1);} else {    return targetPtr->setGeometry(arg__1);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setGeometry_nocallback(arg__1);
+        } else {
+            return targetPtr->setGeometry(arg__1);
+        }
+    }();
 }
 // setHeight(int h)
 void c_KDDockWidgets__Views__TitleBar_flutter__setHeight_int(void *thisObj, int h)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setHeight_nocallback(h);} else {    return targetPtr->setHeight(h);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setHeight_nocallback(h);
+        } else {
+            return targetPtr->setHeight(h);
+        }
+    }();
 }
 // setMaximumSize(QSize sz)
 void c_KDDockWidgets__Views__TitleBar_flutter__setMaximumSize_QSize(void *thisObj, void *sz_)
 {
     auto &sz = *reinterpret_cast<QSize *>(sz_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMaximumSize_nocallback(sz);} else {    return targetPtr->setMaximumSize(sz);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setMaximumSize_nocallback(sz);
+        } else {
+            return targetPtr->setMaximumSize(sz);
+        }
+    }();
 }
 // setMinimumSize(QSize sz)
 void c_KDDockWidgets__Views__TitleBar_flutter__setMinimumSize_QSize(void *thisObj, void *sz_)
 {
     auto &sz = *reinterpret_cast<QSize *>(sz_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMinimumSize_nocallback(sz);} else {    return targetPtr->setMinimumSize(sz);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setMinimumSize_nocallback(sz);
+        } else {
+            return targetPtr->setMinimumSize(sz);
+        }
+    }();
 }
 // setMouseTracking(bool enable)
 void c_KDDockWidgets__Views__TitleBar_flutter__setMouseTracking_bool(void *thisObj, bool enable)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMouseTracking_nocallback(enable);} else {    return targetPtr->setMouseTracking(enable);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setMouseTracking_nocallback(enable);
+        } else {
+            return targetPtr->setMouseTracking(enable);
+        }
+    }();
 }
 // setObjectName(const QString & name)
-void c_KDDockWidgets__Views__TitleBar_flutter__setObjectName_QString(void *thisObj, const char *name_)
+void c_KDDockWidgets__Views__TitleBar_flutter__setObjectName_QString(void *thisObj,
+                                                                     const char *name_)
 {
     const auto name = QString::fromUtf8(name_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setObjectName_nocallback(name);} else {    return targetPtr->setObjectName(name);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setObjectName_nocallback(name);
+        } else {
+            return targetPtr->setObjectName(name);
+        }
+    }();
 }
 // setParent(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Views__TitleBar_flutter__setParent_View(void *thisObj, void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setParent_nocallback(parent);} else {    return targetPtr->setParent(parent);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setParent_nocallback(parent);
+        } else {
+            return targetPtr->setParent(parent);
+        }
+    }();
 }
 // setSize(int w, int h)
 void c_KDDockWidgets__Views__TitleBar_flutter__setSize_int_int(void *thisObj, int w, int h)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setSize_nocallback(w,h);} else {    return targetPtr->setSize(w,h);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setSize_nocallback(w, h);
+        } else {
+            return targetPtr->setSize(w, h);
+        }
+    }();
 }
 // setVisible(bool visible)
 void c_KDDockWidgets__Views__TitleBar_flutter__setVisible_bool(void *thisObj, bool visible)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setVisible_nocallback(visible);} else {    return targetPtr->setVisible(visible);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setVisible_nocallback(visible);
+        } else {
+            return targetPtr->setVisible(visible);
+        }
+    }();
 }
 // setWidth(int w)
 void c_KDDockWidgets__Views__TitleBar_flutter__setWidth_int(void *thisObj, int w)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWidth_nocallback(w);} else {    return targetPtr->setWidth(w);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setWidth_nocallback(w);
+        } else {
+            return targetPtr->setWidth(w);
+        }
+    }();
 }
 // setWindowOpacity(double v)
 void c_KDDockWidgets__Views__TitleBar_flutter__setWindowOpacity_double(void *thisObj, double v)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWindowOpacity_nocallback(v);} else {    return targetPtr->setWindowOpacity(v);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setWindowOpacity_nocallback(v);
+        } else {
+            return targetPtr->setWindowOpacity(v);
+        }
+    }();
 }
 // setWindowTitle(const QString & title)
-void c_KDDockWidgets__Views__TitleBar_flutter__setWindowTitle_QString(void *thisObj, const char *title_)
+void c_KDDockWidgets__Views__TitleBar_flutter__setWindowTitle_QString(void *thisObj,
+                                                                      const char *title_)
 {
     const auto title = QString::fromUtf8(title_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWindowTitle_nocallback(title);} else {    return targetPtr->setWindowTitle(title);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setWindowTitle_nocallback(title);
+        } else {
+            return targetPtr->setWindowTitle(title);
+        }
+    }();
 }
 // setZOrder(int arg__1)
 void c_KDDockWidgets__Views__TitleBar_flutter__setZOrder_int(void *thisObj, int arg__1)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setZOrder_nocallback(arg__1);} else {    return targetPtr->setZOrder(arg__1);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setZOrder_nocallback(arg__1);
+        } else {
+            return targetPtr->setZOrder(arg__1);
+        }
+    }();
 }
 // show()
 void c_KDDockWidgets__Views__TitleBar_flutter__show(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->show_nocallback();} else {    return targetPtr->show();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->show_nocallback();
+        } else {
+            return targetPtr->show();
+        }
+    }();
 }
 // showMaximized()
 void c_KDDockWidgets__Views__TitleBar_flutter__showMaximized(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showMaximized_nocallback();} else {    return targetPtr->showMaximized();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->showMaximized_nocallback();
+        } else {
+            return targetPtr->showMaximized();
+        }
+    }();
 }
 // showMinimized()
 void c_KDDockWidgets__Views__TitleBar_flutter__showMinimized(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showMinimized_nocallback();} else {    return targetPtr->showMinimized();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->showMinimized_nocallback();
+        } else {
+            return targetPtr->showMinimized();
+        }
+    }();
 }
 // showNormal()
 void c_KDDockWidgets__Views__TitleBar_flutter__showNormal(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showNormal_nocallback();} else {    return targetPtr->showNormal();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->showNormal_nocallback();
+        } else {
+            return targetPtr->showNormal();
+        }
+    }();
 }
 // sizeHint() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__sizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->sizeHint_nocallback();} else {    return targetPtr->sizeHint();} }() };
+    return new Dartagnan::ValueWrapper<QSize> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->sizeHint_nocallback();
+        } else {
+            return targetPtr->sizeHint();
+        }
+    }() };
 }
 // update()
 void c_KDDockWidgets__Views__TitleBar_flutter__update(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->update_nocallback();} else {    return targetPtr->update();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->update_nocallback();
+        } else {
+            return targetPtr->update();
+        }
+    }();
 }
 void c_KDDockWidgets__Views__TitleBar_flutter__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Views__TitleBar_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Views__TitleBar_flutter__registerVirtualMethodCallback(void *ptr,
+                                                                             void *callback,
+                                                                             int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 850:
-        wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_activateWindow>(callback);
+        wrapper->m_activateWindowCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_activateWindow>(
+            callback);
         break;
     case 858:
-        wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_close>(callback);
+        wrapper->m_closeCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_close>(callback);
         break;
     case 861:
-        wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_createPlatformWindow>(callback);
+        wrapper->m_createPlatformWindowCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::
+                                 Callback_createPlatformWindow>(callback);
         break;
     case 866:
-        wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_flags>(callback);
+        wrapper->m_flagsCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_flags>(callback);
         break;
     case 868:
-        wrapper->m_free_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_free_impl>(callback);
+        wrapper->m_free_implCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_free_impl>(
+            callback);
         break;
     case 870:
-        wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_geometry>(callback);
+        wrapper->m_geometryCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_geometry>(
+            callback);
         break;
     case 872:
-        wrapper->m_grabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_grabMouse>(callback);
+        wrapper->m_grabMouseCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_grabMouse>(
+            callback);
         break;
     case 875:
-        wrapper->m_hasFocusCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_hasFocus>(callback);
+        wrapper->m_hasFocusCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_hasFocus>(
+            callback);
         break;
     case 877:
-        wrapper->m_hideCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_hide>(callback);
+        wrapper->m_hideCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_hide>(callback);
         break;
     case 880:
-        wrapper->m_initCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_init>(callback);
+        wrapper->m_initCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_init>(callback);
         break;
     case 882:
-        wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isActiveWindow>(callback);
+        wrapper->m_isActiveWindowCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isActiveWindow>(
+            callback);
         break;
     case 977:
-        wrapper->m_isCloseButtonEnabledCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isCloseButtonEnabled>(callback);
+        wrapper->m_isCloseButtonEnabledCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::
+                                 Callback_isCloseButtonEnabled>(callback);
         break;
     case 978:
-        wrapper->m_isCloseButtonVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isCloseButtonVisible>(callback);
+        wrapper->m_isCloseButtonVisibleCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::
+                                 Callback_isCloseButtonVisible>(callback);
         break;
     case 979:
-        wrapper->m_isFloatButtonVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isFloatButtonVisible>(callback);
+        wrapper->m_isFloatButtonVisibleCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::
+                                 Callback_isFloatButtonVisible>(callback);
         break;
     case 883:
-        wrapper->m_isMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isMaximized>(callback);
+        wrapper->m_isMaximizedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isMaximized>(
+            callback);
         break;
     case 884:
-        wrapper->m_isMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isMinimized>(callback);
+        wrapper->m_isMinimizedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isMinimized>(
+            callback);
         break;
     case 885:
-        wrapper->m_isNullCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isNull>(callback);
+        wrapper->m_isNullCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isNull>(callback);
         break;
     case 886:
-        wrapper->m_isRootViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isRootView>(callback);
+        wrapper->m_isRootViewCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isRootView>(
+            callback);
         break;
     case 887:
-        wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isVisible>(callback);
+        wrapper->m_isVisibleCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isVisible>(
+            callback);
         break;
     case 888:
-        wrapper->m_mapFromGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_mapFromGlobal>(callback);
+        wrapper->m_mapFromGlobalCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_mapFromGlobal>(
+            callback);
         break;
     case 889:
-        wrapper->m_mapToCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_mapTo>(callback);
+        wrapper->m_mapToCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_mapTo>(callback);
         break;
     case 890:
-        wrapper->m_mapToGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_mapToGlobal>(callback);
+        wrapper->m_mapToGlobalCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_mapToGlobal>(
+            callback);
         break;
     case 891:
-        wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_maxSizeHint>(callback);
+        wrapper->m_maxSizeHintCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_maxSizeHint>(
+            callback);
         break;
     case 892:
-        wrapper->m_maximumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_maximumSize>(callback);
+        wrapper->m_maximumSizeCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_maximumSize>(
+            callback);
         break;
     case 893:
-        wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_minSize>(callback);
+        wrapper->m_minSizeCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_minSize>(callback);
         break;
     case 894:
-        wrapper->m_minimumHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_minimumHeight>(callback);
+        wrapper->m_minimumHeightCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_minimumHeight>(
+            callback);
         break;
     case 895:
-        wrapper->m_minimumWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_minimumWidth>(callback);
+        wrapper->m_minimumWidthCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_minimumWidth>(
+            callback);
         break;
     case 897:
-        wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_move_2>(callback);
+        wrapper->m_move_2Callback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_move_2>(callback);
         break;
     case 898:
-        wrapper->m_normalGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_normalGeometry>(callback);
+        wrapper->m_normalGeometryCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_normalGeometry>(
+            callback);
         break;
     case 899:
-        wrapper->m_objectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_objectName>(callback);
+        wrapper->m_objectNameCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_objectName>(
+            callback);
         break;
     case 900:
-        wrapper->m_onResizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_onResize>(callback);
+        wrapper->m_onResizeCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_onResize>(
+            callback);
         break;
     case 903:
-        wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_raise>(callback);
+        wrapper->m_raiseCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_raise>(callback);
         break;
     case 904:
-        wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_raiseAndActivate>(callback);
+        wrapper->m_raiseAndActivateCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_raiseAndActivate>(
+            callback);
         break;
     case 906:
-        wrapper->m_releaseKeyboardCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_releaseKeyboard>(callback);
+        wrapper->m_releaseKeyboardCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_releaseKeyboard>(
+            callback);
         break;
     case 907:
-        wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_releaseMouse>(callback);
+        wrapper->m_releaseMouseCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_releaseMouse>(
+            callback);
         break;
     case 911:
-        wrapper->m_setCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setCursor>(callback);
+        wrapper->m_setCursorCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setCursor>(
+            callback);
         break;
     case 912:
-        wrapper->m_setFixedHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setFixedHeight>(callback);
+        wrapper->m_setFixedHeightCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setFixedHeight>(
+            callback);
         break;
     case 913:
-        wrapper->m_setFixedWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setFixedWidth>(callback);
+        wrapper->m_setFixedWidthCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setFixedWidth>(
+            callback);
         break;
     case 914:
-        wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setGeometry>(callback);
+        wrapper->m_setGeometryCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setGeometry>(
+            callback);
         break;
     case 915:
-        wrapper->m_setHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setHeight>(callback);
+        wrapper->m_setHeightCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setHeight>(
+            callback);
         break;
     case 916:
-        wrapper->m_setMaximumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMaximumSize>(callback);
+        wrapper->m_setMaximumSizeCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMaximumSize>(
+            callback);
         break;
     case 917:
-        wrapper->m_setMinimumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMinimumSize>(callback);
+        wrapper->m_setMinimumSizeCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMinimumSize>(
+            callback);
         break;
     case 918:
-        wrapper->m_setMouseTrackingCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMouseTracking>(callback);
+        wrapper->m_setMouseTrackingCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMouseTracking>(
+            callback);
         break;
     case 919:
-        wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setObjectName>(callback);
+        wrapper->m_setObjectNameCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setObjectName>(
+            callback);
         break;
     case 920:
-        wrapper->m_setParentCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setParent>(callback);
+        wrapper->m_setParentCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setParent>(
+            callback);
         break;
     case 922:
-        wrapper->m_setSize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setSize_2>(callback);
+        wrapper->m_setSize_2Callback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setSize_2>(
+            callback);
         break;
     case 923:
-        wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setVisible>(callback);
+        wrapper->m_setVisibleCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setVisible>(
+            callback);
         break;
     case 924:
-        wrapper->m_setWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWidth>(callback);
+        wrapper->m_setWidthCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWidth>(
+            callback);
         break;
     case 925:
-        wrapper->m_setWindowOpacityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWindowOpacity>(callback);
+        wrapper->m_setWindowOpacityCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWindowOpacity>(
+            callback);
         break;
     case 926:
-        wrapper->m_setWindowTitleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWindowTitle>(callback);
+        wrapper->m_setWindowTitleCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWindowTitle>(
+            callback);
         break;
     case 927:
-        wrapper->m_setZOrderCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setZOrder>(callback);
+        wrapper->m_setZOrderCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setZOrder>(
+            callback);
         break;
     case 928:
-        wrapper->m_showCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_show>(callback);
+        wrapper->m_showCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_show>(callback);
         break;
     case 929:
-        wrapper->m_showMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showMaximized>(callback);
+        wrapper->m_showMaximizedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showMaximized>(
+            callback);
         break;
     case 930:
-        wrapper->m_showMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showMinimized>(callback);
+        wrapper->m_showMinimizedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showMinimized>(
+            callback);
         break;
     case 931:
-        wrapper->m_showNormalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showNormal>(callback);
+        wrapper->m_showNormalCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showNormal>(
+            callback);
         break;
     case 933:
-        wrapper->m_sizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_sizeHint>(callback);
+        wrapper->m_sizeHintCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_sizeHint>(
+            callback);
         break;
     case 935:
-        wrapper->m_updateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_update>(callback);
+        wrapper->m_updateCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_update>(callback);
         break;
     }
 }

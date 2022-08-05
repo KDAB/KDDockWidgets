@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -47,110 +47,184 @@ int main(int argc, char **argv)
     // Fusion looks better in general, but feel free to change
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
-    QCommandLineOption customStyle("p", QCoreApplication::translate("main", "Shows how to style framework internals via ViewFactory"));
+    QCommandLineOption customStyle(
+        "p",
+        QCoreApplication::translate("main",
+                                    "Shows how to style framework internals via ViewFactory"));
     parser.addOption(customStyle);
 
-    QCommandLineOption reorderTabsOption("r", QCoreApplication::translate("main", "Support re-ordering tabs with mouse"));
+    QCommandLineOption reorderTabsOption(
+        "r", QCoreApplication::translate("main", "Support re-ordering tabs with mouse"));
     parser.addOption(reorderTabsOption);
 
-    QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Hide titlebars when tabs are visible"));
+    QCommandLineOption noTitleBars(
+        "t", QCoreApplication::translate("main", "Hide titlebars when tabs are visible"));
     parser.addOption(noTitleBars);
 
-    QCommandLineOption alwaysTitleBarWhenFloating("q", QCoreApplication::translate("main", "Don't hide title bars if floating, even if Flag_HideTitleBarWhenTabsVisible is specified."));
+    QCommandLineOption alwaysTitleBarWhenFloating(
+        "q",
+        QCoreApplication::translate("main",
+                                    "Don't hide title bars if floating, even if "
+                                    "Flag_HideTitleBarWhenTabsVisible is specified."));
     parser.addOption(alwaysTitleBarWhenFloating);
 
-    QCommandLineOption alwaysTabs("z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
+    QCommandLineOption alwaysTabs(
+        "z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
     parser.addOption(alwaysTabs);
 
-    QCommandLineOption lazyResizeOption("l", QCoreApplication::translate("main", "Use lazy resize"));
+    QCommandLineOption lazyResizeOption("l",
+                                        QCoreApplication::translate("main", "Use lazy resize"));
     parser.addOption(lazyResizeOption);
 
-    QCommandLineOption multipleMainWindows("m", QCoreApplication::translate("main", "Shows two multiple main windows"));
+    QCommandLineOption multipleMainWindows(
+        "m", QCoreApplication::translate("main", "Shows two multiple main windows"));
     parser.addOption(multipleMainWindows);
 
-    QCommandLineOption incompatibleMainWindows("i", QCoreApplication::translate("main", "Only usable with -m. Make the two main windows incompatible with each other. (Illustrates (MainWindowBase::setAffinityName))"));
+    QCommandLineOption incompatibleMainWindows(
+        "i",
+        QCoreApplication::translate(
+            "main",
+            "Only usable with -m. Make the two main windows incompatible with each other. "
+            "(Illustrates (MainWindowBase::setAffinityName))"));
     parser.addOption(incompatibleMainWindows);
 
-    QCommandLineOption tabsHaveCloseButton("c", QCoreApplication::translate("main", "Tabs have a close button"));
+    QCommandLineOption tabsHaveCloseButton(
+        "c", QCoreApplication::translate("main", "Tabs have a close button"));
     parser.addOption(tabsHaveCloseButton);
 
-    QCommandLineOption nonClosableDockWidget("n", QCoreApplication::translate("main", "DockWidget #0 will be non-closable"));
+    QCommandLineOption nonClosableDockWidget(
+        "n", QCoreApplication::translate("main", "DockWidget #0 will be non-closable"));
     parser.addOption(nonClosableDockWidget);
 
-    QCommandLineOption relativeRestore("s", QCoreApplication::translate("main", "Don't restore main window geometry, restore dock widgets in relative sizes"));
+    QCommandLineOption relativeRestore(
+        "s",
+        QCoreApplication::translate(
+            "main", "Don't restore main window geometry, restore dock widgets in relative sizes"));
     parser.addOption(relativeRestore);
 
-    QCommandLineOption doubleClickMaximize("x", QCoreApplication::translate("main", "Double clicking a title bar will maximize a floating window"));
+    QCommandLineOption doubleClickMaximize(
+        "x",
+        QCoreApplication::translate("main",
+                                    "Double clicking a title bar will maximize a floating window"));
     parser.addOption(doubleClickMaximize);
 
-    QCommandLineOption nonDockable("d", QCoreApplication::translate("main", "DockWidget #9 will be non-dockable"));
+    QCommandLineOption nonDockable(
+        "d", QCoreApplication::translate("main", "DockWidget #9 will be non-dockable"));
     parser.addOption(nonDockable);
 
-    QCommandLineOption maximizeButtonOption("b", QCoreApplication::translate("main", "Floating dockWidgets have maximize/restore buttons instead of float/dock button"));
+    QCommandLineOption maximizeButtonOption(
+        "b",
+        QCoreApplication::translate(
+            "main",
+            "Floating dockWidgets have maximize/restore buttons instead of float/dock button"));
     parser.addOption(maximizeButtonOption);
 
-    QCommandLineOption minimizeButtonOption("k", QCoreApplication::translate("main", "Floating dockWidgets have a minimize button. Implies not being an utility window (~Qt::Tool)"));
+    QCommandLineOption minimizeButtonOption(
+        "k",
+        QCoreApplication::translate("main",
+                                    "Floating dockWidgets have a minimize button. Implies not "
+                                    "being an utility window (~Qt::Tool)"));
     parser.addOption(minimizeButtonOption);
 
-    QCommandLineOption segmentedIndicators("y", QCoreApplication::translate("main", "Use segmented indicators instead of classical"));
+    QCommandLineOption segmentedIndicators(
+        "y", QCoreApplication::translate("main", "Use segmented indicators instead of classical"));
     parser.addOption(segmentedIndicators);
 
-    QCommandLineOption noUtilityWindows("u", QCoreApplication::translate("main", "FloatingWindows will be normal windows instead of utility windows"));
+    QCommandLineOption noUtilityWindows(
+        "u",
+        QCoreApplication::translate(
+            "main", "FloatingWindows will be normal windows instead of utility windows"));
     parser.addOption(noUtilityWindows);
 
-    QCommandLineOption keepAbove("o", QCoreApplication::translate("main", "FloatingWindows will have Qt::WindowStaysOnTopHint. Implies not being an utility window (try it with -u too)"));
+    QCommandLineOption keepAbove(
+        "o",
+        QCoreApplication::translate("main",
+                                    "FloatingWindows will have Qt::WindowStaysOnTopHint. Implies "
+                                    "not being an utility window (try it with -u too)"));
     parser.addOption(keepAbove);
 
-    parser.addPositionalArgument("savedlayout", QCoreApplication::translate("main", "loads the specified json file at startup"));
+    parser.addPositionalArgument(
+        "savedlayout",
+        QCoreApplication::translate("main", "loads the specified json file at startup"));
 
 #ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
-    QCommandLineOption dockableMainWindows("j", QCoreApplication::translate("main", "Allow main windows to be docked inside other main windows"));
+    QCommandLineOption dockableMainWindows(
+        "j",
+        QCoreApplication::translate("main",
+                                    "Allow main windows to be docked inside other main windows"));
     parser.addOption(dockableMainWindows);
 #endif
 
-    QCommandLineOption maxSizeOption("g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200."));
+    QCommandLineOption maxSizeOption(
+        "g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200."));
     parser.addOption(maxSizeOption);
 
-    QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central group"));
+    QCommandLineOption centralFrame(
+        "f", QCoreApplication::translate("main", "Persistent central group"));
 
-    QCommandLineOption autoHideSupport("w", QCoreApplication::translate("main", "Enables auto-hide/minimization to side-bar support"));
+    QCommandLineOption autoHideSupport(
+        "w",
+        QCoreApplication::translate("main", "Enables auto-hide/minimization to side-bar support"));
     parser.addOption(autoHideSupport);
 
-    QCommandLineOption closeOnlyCurrentTab("close-only-current-tab",
-                                           QCoreApplication::translate("main", "The title bar's close button will only close the current tab instead of all. Illustrates using Config::Flag_CloseOnlyCurrentTab"));
+    QCommandLineOption closeOnlyCurrentTab(
+        "close-only-current-tab",
+        QCoreApplication::translate(
+            "main",
+            "The title bar's close button will only close the current tab instead of all. "
+            "Illustrates using Config::Flag_CloseOnlyCurrentTab"));
     parser.addOption(closeOnlyCurrentTab);
 
-    QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore", // krazy:exclude=spelling
-                                              QCoreApplication::translate("main", "DockWidget #5 won't be closed before a restore. Illustrates LayoutSaverOption::DontCloseBeforeRestore"));
+    QCommandLineOption dontCloseBeforeRestore(
+        "dont-close-widget-before-restore", // krazy:exclude=spelling
+        QCoreApplication::translate("main",
+                                    "DockWidget #5 won't be closed before a restore. Illustrates "
+                                    "LayoutSaverOption::DontCloseBeforeRestore"));
     parser.addOption(dontCloseBeforeRestore);
 
-    QCommandLineOption blockCloseEvent("block-close-event",
-                                       QCoreApplication::translate("main", "DockWidget #0 will block close events"));
+    QCommandLineOption blockCloseEvent(
+        "block-close-event",
+        QCoreApplication::translate("main", "DockWidget #0 will block close events"));
     parser.addOption(blockCloseEvent);
 
-    QCommandLineOption showButtonsInTabBarIfTitleBarHidden("show-buttons-in-tabbar-if-titlebar-hidden",
-                                                           QCoreApplication::translate("main", "If we're not using title bars we'll still show the close and float button in the tab bar"));
+    QCommandLineOption showButtonsInTabBarIfTitleBarHidden(
+        "show-buttons-in-tabbar-if-titlebar-hidden",
+        QCoreApplication::translate("main",
+                                    "If we're not using title bars we'll still show the close and "
+                                    "float button in the tab bar"));
     parser.addOption(showButtonsInTabBarIfTitleBarHidden);
 
-    QCommandLineOption centralWidget("central-widget",
-                                     QCoreApplication::translate("main", "The main window will have a non-detachable central widget"));
+    QCommandLineOption centralWidget(
+        "central-widget",
+        QCoreApplication::translate("main",
+                                    "The main window will have a non-detachable central widget"));
     parser.addOption(centralWidget);
 
-    QCommandLineOption ctxtMenuOnTabs("allow-switch-tabs-via-menu",
-                                      QCoreApplication::translate("main", "Allow switching tabs via context menu in tabs area"));
+    QCommandLineOption ctxtMenuOnTabs(
+        "allow-switch-tabs-via-menu",
+        QCoreApplication::translate("main", "Allow switching tabs via context menu in tabs area"));
     parser.addOption(ctxtMenuOnTabs);
 
-    QCommandLineOption hideCertainDockingIndicators("hide-certain-docking-indicators",
-                                                    QCoreApplication::translate("main", "Illustrates usage of Config::setDropIndicatorAllowedFunc()"));
+    QCommandLineOption hideCertainDockingIndicators(
+        "hide-certain-docking-indicators",
+        QCoreApplication::translate("main",
+                                    "Illustrates usage of Config::setDropIndicatorAllowedFunc()"));
     parser.addOption(hideCertainDockingIndicators);
 
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
 
-    QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
-    QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
-    QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
-    QCommandLineOption noDropIndicators("no-drop-indicators", QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
+    QCommandLineOption noQtTool(
+        "no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
+    QCommandLineOption noParentForFloating(
+        "no-parent-for-floating",
+        QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
+    QCommandLineOption nativeTitleBar(
+        "native-title-bar",
+        QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
+    QCommandLineOption noDropIndicators(
+        "no-drop-indicators",
+        QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
 
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
@@ -158,7 +232,8 @@ int main(int argc, char **argv)
     parser.addOption(noDropIndicators);
 
 #if defined(Q_OS_WIN)
-    QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
+    QCommandLineOption noAeroSnap(
+        "no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
     parser.addOption(noAeroSnap);
 #endif
 #else
@@ -175,15 +250,15 @@ int main(int argc, char **argv)
     }
 
     if (parser.isSet(segmentedIndicators))
-        KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
+        KDDockWidgets::ViewFactory::s_dropIndicatorType =
+            KDDockWidgets::DropIndicatorType::Segmented;
 
     MainWindowOptions options = MainWindowOption_None;
     auto flags = KDDockWidgets::Config::self().flags();
 #if defined(DOCKS_DEVELOPER_MODE)
     auto internalFlags = KDDockWidgets::Config::self().internalFlags();
 
-    options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame
-                                         : MainWindowOption_None;
+    options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame : MainWindowOption_None;
 
     if (parser.isSet(centralWidget))
         options |= MainWindowOption_HasCentralWidget;
@@ -231,13 +306,16 @@ int main(int argc, char **argv)
     if (parser.isSet(alwaysTitleBarWhenFloating)) {
         flags |= KDDockWidgets::Config::Flag_AlwaysTitleBarWhenFloating;
         if (!(flags & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible)) {
-            qWarning() << "Flag_AlwaysTitleBarWhenFloating is unneeded if Flag_HideTitleBarWhenTabsVisible isn't used."
+            qWarning() << "Flag_AlwaysTitleBarWhenFloating is unneeded if "
+                          "Flag_HideTitleBarWhenTabsVisible isn't used."
                        << "As floating windows already have title bars by default.";
         }
     }
 
     if (parser.isSet(customStyle) || qEnvironmentVariableIsSet("KDDW_DEBUG_FOCUS"))
-        flags |= KDDockWidgets::Config::Flag_TitleBarIsFocusable; // also showing title bar focus with -p, just to not introduce another switch
+        flags |= KDDockWidgets::Config::Flag_TitleBarIsFocusable; // also showing title bar focus
+                                                                  // with -p, just to not introduce
+                                                                  // another switch
 
     if (parser.isSet(reorderTabsOption))
         flags |= KDDockWidgets::Config::Flag_AllowReorderTabs;
@@ -273,11 +351,14 @@ int main(int argc, char **argv)
                        const KDDockWidgets::Controllers::DockWidget::List &source,
                        const KDDockWidgets::Controllers::DockWidget::List &target,
                        Controllers::DropArea *) {
-            Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already tabbed dock widgets
+            Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already
+                              // tabbed dock widgets
 
-            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [](KDDockWidgets::Controllers::DockWidget *dw) {
-                                           return dw->uniqueName() == QLatin1String("DockWidget #8");
-                                       })
+            const bool isDraggingDW8 =
+                std::find_if(source.cbegin(), source.cend(),
+                             [](KDDockWidgets::Controllers::DockWidget *dw) {
+                                 return dw->uniqueName() == QLatin1String("DockWidget #8");
+                             })
                 != source.cend();
 
             return (location & KDDockWidgets::DropLocation_Outter) || !isDraggingDW8;
@@ -311,19 +392,21 @@ int main(int argc, char **argv)
 
     if (usesMainWindowsWithAffinity) {
         if (usesDockableMainWindows) {
-            qWarning() << "MainWindows with affinity option is incompatible with Dockable Main Windows option";
+            qWarning() << "MainWindows with affinity option is incompatible with Dockable Main "
+                          "Windows option";
             return 1;
         }
 
         // By default a dock widget can dock into any main window.
-        // By setting an affinity name we can prevent that. Dock widgets of different affinities are incompatible.
-        const QString affinity = parser.isSet(incompatibleMainWindows) ? QStringLiteral("affinity1")
-                                                                       : QString();
+        // By setting an affinity name we can prevent that. Dock widgets of different affinities are
+        // incompatible.
+        const QString affinity =
+            parser.isSet(incompatibleMainWindows) ? QStringLiteral("affinity1") : QString();
 
-        auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
-                                            nonClosableDockWidget0, nonDockableDockWidget9,
-                                            restoreIsRelative, maxSizeForDockWidget8,
-                                            dontCloseDockWidget5BeforeRestore, dock0BlocksCloseEvent, affinity);
+        auto mainWindow2 =
+            new MyMainWindow(QStringLiteral("MyMainWindow-2"), options, nonClosableDockWidget0,
+                             nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8,
+                             dontCloseDockWidget5BeforeRestore, dock0BlocksCloseEvent, affinity);
         if (affinity.isEmpty())
             mainWindow2->setWindowTitle("Main Window 2");
         else
@@ -332,12 +415,13 @@ int main(int argc, char **argv)
         mainWindow2->resize(1200, 1200);
         mainWindow2->show();
     } else if (usesDockableMainWindows) {
-        auto mainWindowDockWidget = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyMainWindow-2-DW"));
+        auto mainWindowDockWidget =
+            new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyMainWindow-2-DW"));
 
         const QString affinity = QStringLiteral("Inner-DockWidgets-2");
-        auto dockableMainWindow = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
-                                                   false, false, restoreIsRelative, false,
-                                                   false, false, affinity);
+        auto dockableMainWindow =
+            new MyMainWindow(QStringLiteral("MyMainWindow-2"), options, false, false,
+                             restoreIsRelative, false, false, false, affinity);
 
         dockableMainWindow->setAffinities({ affinity });
         dockableMainWindow->setStyleSheet(QStringLiteral("background: yellow"));

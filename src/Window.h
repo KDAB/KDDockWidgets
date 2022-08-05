@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -108,15 +108,17 @@ public:
     /// @brief Returns whether this window is fullscreen currently
     virtual bool isFullScreen() const = 0;
 
-    /// @brief Returns whether this window can't be shrunk to a size that would violate the layout's min size
-    /// This is true for QtWidgets where the layout constraings propagate up to the window
+    /// @brief Returns whether this window can't be shrunk to a size that would violate the layout's
+    /// min size This is true for QtWidgets where the layout constraings propagate up to the window
     /// However, for QtQuick it difficult as there's no QLayout.
-    //    - For QtQuick/FloatingWindow we try to not violate the min-size, which we have total control over
-    //    - But for QtQuick/MainWindow it's more difficult, as we don't know how the user composed his
+    //    - For QtQuick/FloatingWindow we try to not violate the min-size, which we have total
+    //    control over
+    //    - But for QtQuick/MainWindow it's more difficult, as we don't know how the user composed
+    //    his
     //      main.qml. so this is false if the Window is not a FloatingWindow
     //
-    // This method is only used to so we can suppress some warnings regarding layout being clipped due to
-    // too small window.
+    // This method is only used to so we can suppress some warnings regarding layout being clipped
+    // due to too small window.
     virtual bool supportsHonouringLayoutMinSize() const = 0;
 
     /// @brief Returns the window's minimum size
@@ -127,15 +129,15 @@ public:
 
     /// @brief Receives a point in native global space and returns in logical global space.
     /// This is relevant only when there's HDPI scaling applied.
-    /// By native it's meant that it corresponds to physical pixels, which is what win32 API deals with.
-    /// By logical it's meant that there might be an HDPI factor applied.
-    /// Both returned and received points are in global space (screen space).
-    /// Implement if your frontend will run on Windows, otherwise it's unused.
+    /// By native it's meant that it corresponds to physical pixels, which is what win32 API deals
+    /// with. By logical it's meant that there might be an HDPI factor applied. Both returned and
+    /// received points are in global space (screen space). Implement if your frontend will run on
+    /// Windows, otherwise it's unused.
     virtual QPoint fromNativePixels(QPoint) const = 0;
 
     /// @brief Starts a native window move
-    /// Only needed on Windows. The difference between a a native move and a client move is that we can
-    /// get aerosnap on the edges of the screen.
+    /// Only needed on Windows. The difference between a a native move and a client move is that we
+    /// can get aerosnap on the edges of the screen.
     virtual void startSystemMove();
 
     /// @brief Returns the client size of this window.

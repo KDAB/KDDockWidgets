@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -57,7 +57,8 @@ KDDockWidgets::ViewFactory *Platform_flutter_wrapper::createDefaultViewFactory_n
 {
     return ::KDDockWidgets::Platform_flutter::createDefaultViewFactory();
 }
-KDDockWidgets::View *Platform_flutter_wrapper::createView(KDDockWidgets::Controller *controller, KDDockWidgets::View *parent) const
+KDDockWidgets::View *Platform_flutter_wrapper::createView(KDDockWidgets::Controller *controller,
+                                                          KDDockWidgets::View *parent) const
 {
     if (m_createViewCallback) {
         const void *thisPtr = this;
@@ -66,7 +67,9 @@ KDDockWidgets::View *Platform_flutter_wrapper::createView(KDDockWidgets::Control
         return ::KDDockWidgets::Platform_flutter::createView(controller, parent);
     }
 }
-KDDockWidgets::View *Platform_flutter_wrapper::createView_nocallback(KDDockWidgets::Controller *controller, KDDockWidgets::View *parent) const
+KDDockWidgets::View *
+Platform_flutter_wrapper::createView_nocallback(KDDockWidgets::Controller *controller,
+                                                KDDockWidgets::View *parent) const
 {
     return ::KDDockWidgets::Platform_flutter::createView(controller, parent);
 }
@@ -226,7 +229,8 @@ void Platform_flutter_wrapper::sendEvent(KDDockWidgets::View *arg__1, QEvent *ar
         ::KDDockWidgets::Platform_flutter::sendEvent(arg__1, arg__2);
     }
 }
-void Platform_flutter_wrapper::sendEvent_nocallback(KDDockWidgets::View *arg__1, QEvent *arg__2) const
+void Platform_flutter_wrapper::sendEvent_nocallback(KDDockWidgets::View *arg__1,
+                                                    QEvent *arg__2) const
 {
     ::KDDockWidgets::Platform_flutter::sendEvent(arg__1, arg__2);
 }
@@ -256,7 +260,9 @@ int Platform_flutter_wrapper::startDragDistance_impl_nocallback() const
 {
     return ::KDDockWidgets::Platform_flutter::startDragDistance_impl();
 }
-KDDockWidgets::View *Platform_flutter_wrapper::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
+KDDockWidgets::View *
+Platform_flutter_wrapper::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1,
+                                                    KDDockWidgets::View *parent)
 {
     if (m_tests_createFocusableViewCallback) {
         const void *thisPtr = this;
@@ -265,11 +271,13 @@ KDDockWidgets::View *Platform_flutter_wrapper::tests_createFocusableView(KDDockW
         return ::KDDockWidgets::Platform_flutter::tests_createFocusableView(arg__1, parent);
     }
 }
-KDDockWidgets::View *Platform_flutter_wrapper::tests_createFocusableView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
+KDDockWidgets::View *Platform_flutter_wrapper::tests_createFocusableView_nocallback(
+    KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
 {
     return ::KDDockWidgets::Platform_flutter::tests_createFocusableView(arg__1, parent);
 }
-KDDockWidgets::View *Platform_flutter_wrapper::tests_createNonClosableView(KDDockWidgets::View *parent)
+KDDockWidgets::View *
+Platform_flutter_wrapper::tests_createNonClosableView(KDDockWidgets::View *parent)
 {
     if (m_tests_createNonClosableViewCallback) {
         const void *thisPtr = this;
@@ -278,11 +286,14 @@ KDDockWidgets::View *Platform_flutter_wrapper::tests_createNonClosableView(KDDoc
         return ::KDDockWidgets::Platform_flutter::tests_createNonClosableView(parent);
     }
 }
-KDDockWidgets::View *Platform_flutter_wrapper::tests_createNonClosableView_nocallback(KDDockWidgets::View *parent)
+KDDockWidgets::View *
+Platform_flutter_wrapper::tests_createNonClosableView_nocallback(KDDockWidgets::View *parent)
 {
     return ::KDDockWidgets::Platform_flutter::tests_createNonClosableView(parent);
 }
-KDDockWidgets::View *Platform_flutter_wrapper::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
+KDDockWidgets::View *
+Platform_flutter_wrapper::tests_createView(KDDockWidgets::CreateViewOptions arg__1,
+                                           KDDockWidgets::View *parent)
 {
     if (m_tests_createViewCallback) {
         const void *thisPtr = this;
@@ -291,7 +302,9 @@ KDDockWidgets::View *Platform_flutter_wrapper::tests_createView(KDDockWidgets::C
         return ::KDDockWidgets::Platform_flutter::tests_createView(arg__1, parent);
     }
 }
-KDDockWidgets::View *Platform_flutter_wrapper::tests_createView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
+KDDockWidgets::View *
+Platform_flutter_wrapper::tests_createView_nocallback(KDDockWidgets::CreateViewOptions arg__1,
+                                                      KDDockWidgets::View *parent)
 {
     return ::KDDockWidgets::Platform_flutter::tests_createView(arg__1, parent);
 }
@@ -399,44 +412,92 @@ void *c_KDDockWidgets__Platform_flutter__constructor()
 // applicationName() const
 void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->applicationName_nocallback();} else {    return targetPtr->applicationName();} }() };
+    return new Dartagnan::ValueWrapper<QString> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->applicationName_nocallback();
+        } else {
+            return targetPtr->applicationName();
+        }
+    }() };
 }
 // createDefaultViewFactory()
 void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDefaultViewFactory_nocallback();} else {    return targetPtr->createDefaultViewFactory();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->createDefaultViewFactory_nocallback();
+        } else {
+            return targetPtr->createDefaultViewFactory();
+        }
+    }();
 }
 // createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const
-void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_)
+void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj,
+                                                                    void *controller_,
+                                                                    void *parent_)
 {
     auto controller = reinterpret_cast<KDDockWidgets::Controller *>(controller_);
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
-    return [&] {auto targetPtr = fromPtr(thisObj);
-    auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);
-    if (wrapperPtr) {    return wrapperPtr->createView_nocallback(controller,parent);} else {    return targetPtr->createView(controller,parent);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->createView_nocallback(controller, parent);
+        } else {
+            return targetPtr->createView(controller, parent);
+        }
+    }();
 }
 
 // dumpManagedBacktrace()
 void c_KDDockWidgets__Platform_flutter__dumpManagedBacktrace(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);
-    auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);
-    if (wrapperPtr) {
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
             return wrapperPtr->dumpManagedBacktrace_nocallback();
-    } else {
+        } else {
             return targetPtr->dumpManagedBacktrace();
-            } }();
+        }
+    }();
 }
 // hasActivePopup() const
 bool c_KDDockWidgets__Platform_flutter__hasActivePopup(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hasActivePopup_nocallback();} else {    return targetPtr->hasActivePopup();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->hasActivePopup_nocallback();
+        } else {
+            return targetPtr->hasActivePopup();
+        }
+    }();
 }
 // inDisallowedDragView(QPoint globalPos) const
 bool c_KDDockWidgets__Platform_flutter__inDisallowedDragView_QPoint(void *thisObj, void *globalPos_)
 {
     auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->inDisallowedDragView_nocallback(globalPos);} else {    return targetPtr->inDisallowedDragView(globalPos);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->inDisallowedDragView_nocallback(globalPos);
+        } else {
+            return targetPtr->inDisallowedDragView(globalPos);
+        }
+    }();
 }
 // init()
 void c_KDDockWidgets__Platform_flutter__init(void *thisObj)
@@ -446,56 +507,147 @@ void c_KDDockWidgets__Platform_flutter__init(void *thisObj)
 // installMessageHandler()
 void c_KDDockWidgets__Platform_flutter__installMessageHandler(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->installMessageHandler_nocallback();} else {    return targetPtr->installMessageHandler();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->installMessageHandler_nocallback();
+        } else {
+            return targetPtr->installMessageHandler();
+        }
+    }();
 }
 // isLeftMouseButtonPressed() const
 bool c_KDDockWidgets__Platform_flutter__isLeftMouseButtonPressed(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isLeftMouseButtonPressed_nocallback();} else {    return targetPtr->isLeftMouseButtonPressed();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isLeftMouseButtonPressed_nocallback();
+        } else {
+            return targetPtr->isLeftMouseButtonPressed();
+        }
+    }();
 }
 // isProcessingAppQuitEvent() const
 bool c_KDDockWidgets__Platform_flutter__isProcessingAppQuitEvent(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isProcessingAppQuitEvent_nocallback();} else {    return targetPtr->isProcessingAppQuitEvent();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->isProcessingAppQuitEvent_nocallback();
+        } else {
+            return targetPtr->isProcessingAppQuitEvent();
+        }
+    }();
 }
 // name() const
 const char *c_KDDockWidgets__Platform_flutter__name(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->name_nocallback();} else {    return targetPtr->name();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->name_nocallback();
+        } else {
+            return targetPtr->name();
+        }
+    }();
 }
 // organizationName() const
 void *c_KDDockWidgets__Platform_flutter__organizationName(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->organizationName_nocallback();} else {    return targetPtr->organizationName();} }() };
+    return new Dartagnan::ValueWrapper<QString> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->organizationName_nocallback();
+        } else {
+            return targetPtr->organizationName();
+        }
+    }() };
 }
 // restoreMouseCursor()
 void c_KDDockWidgets__Platform_flutter__restoreMouseCursor(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->restoreMouseCursor_nocallback();} else {    return targetPtr->restoreMouseCursor();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->restoreMouseCursor_nocallback();
+        } else {
+            return targetPtr->restoreMouseCursor();
+        }
+    }();
 }
 // screenNumberFor(KDDockWidgets::View * arg__1) const
 int c_KDDockWidgets__Platform_flutter__screenNumberFor_View(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->screenNumberFor_nocallback(arg__1);} else {    return targetPtr->screenNumberFor(arg__1);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->screenNumberFor_nocallback(arg__1);
+        } else {
+            return targetPtr->screenNumberFor(arg__1);
+        }
+    }();
 }
 // screenSizeFor(KDDockWidgets::View * arg__1) const
 void *c_KDDockWidgets__Platform_flutter__screenSizeFor_View(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->screenSizeFor_nocallback(arg__1);} else {    return targetPtr->screenSizeFor(arg__1);} }() };
+    return new Dartagnan::ValueWrapper<QSize> { [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->screenSizeFor_nocallback(arg__1);
+        } else {
+            return targetPtr->screenSizeFor(arg__1);
+        }
+    }() };
 }
 // sendEvent(KDDockWidgets::View * arg__1, QEvent * arg__2) const
-void c_KDDockWidgets__Platform_flutter__sendEvent_View_QEvent(void *thisObj, void *arg__1_, void *arg__2_)
+void c_KDDockWidgets__Platform_flutter__sendEvent_View_QEvent(void *thisObj, void *arg__1_,
+                                                              void *arg__2_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
     auto arg__2 = reinterpret_cast<QEvent *>(arg__2_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->sendEvent_nocallback(arg__1,arg__2);} else {    return targetPtr->sendEvent(arg__1,arg__2);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->sendEvent_nocallback(arg__1, arg__2);
+        } else {
+            return targetPtr->sendEvent(arg__1, arg__2);
+        }
+    }();
 }
 // setMouseCursor(Qt::CursorShape arg__1)
 void c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape(void *thisObj, int arg__1)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMouseCursor_nocallback(static_cast<Qt::CursorShape>(arg__1));} else {    return targetPtr->setMouseCursor(static_cast<Qt::CursorShape>(arg__1));} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setMouseCursor_nocallback(static_cast<Qt::CursorShape>(arg__1));
+        } else {
+            return targetPtr->setMouseCursor(static_cast<Qt::CursorShape>(arg__1));
+        }
+    }();
 }
 // startDragDistance_impl() const
 int c_KDDockWidgets__Platform_flutter__startDragDistance_impl(void *thisObj)
@@ -503,140 +655,277 @@ int c_KDDockWidgets__Platform_flutter__startDragDistance_impl(void *thisObj)
     return fromWrapperPtr(thisObj)->startDragDistance_impl_nocallback();
 }
 // tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
-void *c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_)
+void *c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View(
+    void *thisObj, void *arg__1_, void *parent_)
 {
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::CreateViewOptions *>(arg__1_);
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_createFocusableView_nocallback(arg__1,parent);} else {    return targetPtr->tests_createFocusableView(arg__1,parent);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->tests_createFocusableView_nocallback(arg__1, parent);
+        } else {
+            return targetPtr->tests_createFocusableView(arg__1, parent);
+        }
+    }();
 }
 // tests_createNonClosableView(KDDockWidgets::View * parent)
-void *c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View(void *thisObj, void *parent_)
+void *c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View(void *thisObj,
+                                                                          void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_createNonClosableView_nocallback(parent);} else {    return targetPtr->tests_createNonClosableView(parent);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->tests_createNonClosableView_nocallback(parent);
+        } else {
+            return targetPtr->tests_createNonClosableView(parent);
+        }
+    }();
 }
 // tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
-void *c_KDDockWidgets__Platform_flutter__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_)
+void *c_KDDockWidgets__Platform_flutter__tests_createView_CreateViewOptions_View(void *thisObj,
+                                                                                 void *arg__1_,
+                                                                                 void *parent_)
 {
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::CreateViewOptions *>(arg__1_);
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_createView_nocallback(arg__1,parent);} else {    return targetPtr->tests_createView(arg__1,parent);} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->tests_createView_nocallback(arg__1, parent);
+        } else {
+            return targetPtr->tests_createView(arg__1, parent);
+        }
+    }();
 }
 // tests_deinitPlatform_impl()
 void c_KDDockWidgets__Platform_flutter__tests_deinitPlatform_impl(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_deinitPlatform_impl_nocallback();} else {    return targetPtr->tests_deinitPlatform_impl();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->tests_deinitPlatform_impl_nocallback();
+        } else {
+            return targetPtr->tests_deinitPlatform_impl();
+        }
+    }();
 }
 // tests_initPlatform_impl()
 void c_KDDockWidgets__Platform_flutter__tests_initPlatform_impl(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_initPlatform_impl_nocallback();} else {    return targetPtr->tests_initPlatform_impl();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->tests_initPlatform_impl_nocallback();
+        } else {
+            return targetPtr->tests_initPlatform_impl();
+        }
+    }();
 }
 // tests_wait(int ms)
 void c_KDDockWidgets__Platform_flutter__tests_wait_int(void *thisObj, int ms)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_wait_nocallback(ms);} else {    return targetPtr->tests_wait(ms);} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->tests_wait_nocallback(ms);
+        } else {
+            return targetPtr->tests_wait(ms);
+        }
+    }();
 }
 // ungrabMouse()
 void c_KDDockWidgets__Platform_flutter__ungrabMouse(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->ungrabMouse_nocallback();} else {    return targetPtr->ungrabMouse();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->ungrabMouse_nocallback();
+        } else {
+            return targetPtr->ungrabMouse();
+        }
+    }();
 }
 // uninstallMessageHandler()
 void c_KDDockWidgets__Platform_flutter__uninstallMessageHandler(void *thisObj)
 {
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->uninstallMessageHandler_nocallback();} else {    return targetPtr->uninstallMessageHandler();} }();
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->uninstallMessageHandler_nocallback();
+        } else {
+            return targetPtr->uninstallMessageHandler();
+        }
+    }();
 }
 // usesFallbackMouseGrabber() const
 bool c_KDDockWidgets__Platform_flutter__usesFallbackMouseGrabber(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->usesFallbackMouseGrabber_nocallback();} else {    return targetPtr->usesFallbackMouseGrabber();} }();
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->usesFallbackMouseGrabber_nocallback();
+        } else {
+            return targetPtr->usesFallbackMouseGrabber();
+        }
+    }();
 }
 void c_KDDockWidgets__Platform_flutter__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback(void *ptr, void *callback,
+                                                                      int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 726:
-        wrapper->m_applicationNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_applicationName>(callback);
+        wrapper->m_applicationNameCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_applicationName>(
+            callback);
         break;
     case 727:
-        wrapper->m_createDefaultViewFactoryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_createDefaultViewFactory>(callback);
+        wrapper->m_createDefaultViewFactoryCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_createDefaultViewFactory>(callback);
         break;
     case 728:
-        wrapper->m_createViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_createView>(callback);
+        wrapper->m_createViewCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_createView>(
+            callback);
         break;
     case 729:
-        wrapper->m_dumpManagedBacktraceCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_dumpManagedBacktrace>(callback);
+        wrapper->m_dumpManagedBacktraceCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_dumpManagedBacktrace>(callback);
         break;
     case 731:
-        wrapper->m_hasActivePopupCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_hasActivePopup>(callback);
+        wrapper->m_hasActivePopupCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_hasActivePopup>(
+            callback);
         break;
     case 732:
-        wrapper->m_inDisallowedDragViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_inDisallowedDragView>(callback);
+        wrapper->m_inDisallowedDragViewCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_inDisallowedDragView>(callback);
         break;
     case 734:
-        wrapper->m_installMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_installMessageHandler>(callback);
+        wrapper->m_installMessageHandlerCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_installMessageHandler>(callback);
         break;
     case 736:
-        wrapper->m_isLeftMouseButtonPressedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_isLeftMouseButtonPressed>(callback);
+        wrapper->m_isLeftMouseButtonPressedCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_isLeftMouseButtonPressed>(callback);
         break;
     case 737:
-        wrapper->m_isProcessingAppQuitEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_isProcessingAppQuitEvent>(callback);
+        wrapper->m_isProcessingAppQuitEventCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_isProcessingAppQuitEvent>(callback);
         break;
     case 740:
-        wrapper->m_nameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_name>(callback);
+        wrapper->m_nameCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_name>(callback);
         break;
     case 741:
-        wrapper->m_organizationNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_organizationName>(callback);
+        wrapper->m_organizationNameCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_organizationName>(
+            callback);
         break;
     case 742:
-        wrapper->m_restoreMouseCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_restoreMouseCursor>(callback);
+        wrapper->m_restoreMouseCursorCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_restoreMouseCursor>(callback);
         break;
     case 743:
-        wrapper->m_screenNumberForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_screenNumberFor>(callback);
+        wrapper->m_screenNumberForCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_screenNumberFor>(
+            callback);
         break;
     case 744:
-        wrapper->m_screenSizeForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_screenSizeFor>(callback);
+        wrapper->m_screenSizeForCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_screenSizeFor>(
+            callback);
         break;
     case 745:
-        wrapper->m_sendEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_sendEvent>(callback);
+        wrapper->m_sendEventCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_sendEvent>(
+            callback);
         break;
     case 746:
-        wrapper->m_setMouseCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_setMouseCursor>(callback);
+        wrapper->m_setMouseCursorCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_setMouseCursor>(
+            callback);
         break;
     case 748:
-        wrapper->m_startDragDistance_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_startDragDistance_impl>(callback);
+        wrapper->m_startDragDistance_implCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_startDragDistance_impl>(callback);
         break;
     case 749:
-        wrapper->m_tests_createFocusableViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_createFocusableView>(callback);
+        wrapper->m_tests_createFocusableViewCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_tests_createFocusableView>(callback);
         break;
     case 750:
-        wrapper->m_tests_createNonClosableViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_createNonClosableView>(callback);
+        wrapper->m_tests_createNonClosableViewCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_tests_createNonClosableView>(callback);
         break;
     case 751:
-        wrapper->m_tests_createViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_createView>(callback);
+        wrapper->m_tests_createViewCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_createView>(
+            callback);
         break;
     case 753:
-        wrapper->m_tests_deinitPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_deinitPlatform_impl>(callback);
+        wrapper->m_tests_deinitPlatform_implCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_tests_deinitPlatform_impl>(callback);
         break;
     case 755:
-        wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_initPlatform_impl>(callback);
+        wrapper->m_tests_initPlatform_implCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_tests_initPlatform_impl>(callback);
         break;
     case 756:
-        wrapper->m_tests_waitCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_wait>(callback);
+        wrapper->m_tests_waitCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_wait>(
+            callback);
         break;
     case 763:
-        wrapper->m_ungrabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_ungrabMouse>(callback);
+        wrapper->m_ungrabMouseCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_ungrabMouse>(
+            callback);
         break;
     case 764:
-        wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_uninstallMessageHandler>(callback);
+        wrapper->m_uninstallMessageHandlerCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_uninstallMessageHandler>(callback);
         break;
     case 765:
-        wrapper->m_usesFallbackMouseGrabberCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_usesFallbackMouseGrabber>(callback);
+        wrapper->m_usesFallbackMouseGrabberCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
+                                 Callback_usesFallbackMouseGrabber>(callback);
         break;
     }
 }

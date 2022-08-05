@@ -38,8 +38,7 @@ public:
     using View::width;
 
     explicit View_qtwidgets(KDDockWidgets::Controller *controller, Type type,
-                            QWidget *parent = nullptr,
-                            Qt::WindowFlags windowFlags = {});
+                            QWidget *parent = nullptr, Qt::WindowFlags windowFlags = {});
 
     ~View_qtwidgets() override = default;
 
@@ -56,11 +55,11 @@ public:
 
     QSize minSize() const override
     {
-        const int minW = Base::minimumWidth() > 0 ? Base::minimumWidth()
-                                                  : minimumSizeHint().width();
+        const int minW =
+            Base::minimumWidth() > 0 ? Base::minimumWidth() : minimumSizeHint().width();
 
-        const int minH = Base::minimumHeight() > 0 ? Base::minimumHeight()
-                                                   : minimumSizeHint().height();
+        const int minH =
+            Base::minimumHeight() > 0 ? Base::minimumHeight() : minimumSizeHint().height();
 
         return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
     }
@@ -74,8 +73,9 @@ public:
 
     QSize maxSizeHint() const override
     {
-        // The max size is usually QWidget::maximumSize(), but we also honour the QSizePolicy::Fixed+sizeHint() case
-        // as widgets don't need to have QWidget::maximumSize() to have a max size honoured
+        // The max size is usually QWidget::maximumSize(), but we also honour the
+        // QSizePolicy::Fixed+sizeHint() case as widgets don't need to have QWidget::maximumSize()
+        // to have a max size honoured
 
         const QSize min = minSize();
         QSize max = maximumSize();

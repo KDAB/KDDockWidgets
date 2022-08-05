@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -86,7 +86,8 @@ public:
     ///@brief getter for m_floatingWindow
     FloatingWindow *floatingWindow() const;
 
-    ///@brief If this title bar belongs to a dock widget docked into the main window, returns the main window
+    ///@brief If this title bar belongs to a dock widget docked into the main window, returns the
+    /// main window
     /// Returns nullptr otherwise
     MainWindow *mainWindow() const;
 

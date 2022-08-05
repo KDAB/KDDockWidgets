@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -248,7 +248,16 @@ void *c_KDDockWidgets__Screen__availableGeometry(void *thisObj)
         // tag=1016
 
         // tag=1072
-        new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->availableGeometry_nocallback();} else {    return targetPtr->availableGeometry();} }() };
+        new Dartagnan::ValueWrapper<QRect> { [&] {
+            auto targetPtr = fromPtr(thisObj);
+            auto wrapperPtr =
+                dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper *>(targetPtr);
+            if (wrapperPtr) {
+                return wrapperPtr->availableGeometry_nocallback();
+            } else {
+                return targetPtr->availableGeometry();
+            }
+        }() };
 }
 
 // tag=1050
@@ -259,7 +268,16 @@ void *c_KDDockWidgets__Screen__availableSize(void *thisObj)
         // tag=1016
 
         // tag=1072
-        new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->availableSize_nocallback();} else {    return targetPtr->availableSize();} }() };
+        new Dartagnan::ValueWrapper<QSize> { [&] {
+            auto targetPtr = fromPtr(thisObj);
+            auto wrapperPtr =
+                dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper *>(targetPtr);
+            if (wrapperPtr) {
+                return wrapperPtr->availableSize_nocallback();
+            } else {
+                return targetPtr->availableSize();
+            }
+        }() };
 }
 
 // tag=1050
@@ -268,7 +286,16 @@ qreal c_KDDockWidgets__Screen__devicePixelRatio(void *thisObj)
 {
     return
         // tag=1016
-        [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->devicePixelRatio_nocallback();} else {    return targetPtr->devicePixelRatio();} }();
+        [&] {
+            auto targetPtr = fromPtr(thisObj);
+            auto wrapperPtr =
+                dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper *>(targetPtr);
+            if (wrapperPtr) {
+                return wrapperPtr->devicePixelRatio_nocallback();
+            } else {
+                return targetPtr->devicePixelRatio();
+            }
+        }();
 }
 
 // tag=1050
@@ -279,7 +306,16 @@ void *c_KDDockWidgets__Screen__geometry(void *thisObj)
         // tag=1016
 
         // tag=1072
-        new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
+        new Dartagnan::ValueWrapper<QRect> { [&] {
+            auto targetPtr = fromPtr(thisObj);
+            auto wrapperPtr =
+                dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper *>(targetPtr);
+            if (wrapperPtr) {
+                return wrapperPtr->geometry_nocallback();
+            } else {
+                return targetPtr->geometry();
+            }
+        }() };
 }
 
 // tag=1050
@@ -290,7 +326,16 @@ void *c_KDDockWidgets__Screen__name(void *thisObj)
         // tag=1016
 
         // tag=1072
-        new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->name_nocallback();} else {    return targetPtr->name();} }() };
+        new Dartagnan::ValueWrapper<QString> { [&] {
+            auto targetPtr = fromPtr(thisObj);
+            auto wrapperPtr =
+                dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper *>(targetPtr);
+            if (wrapperPtr) {
+                return wrapperPtr->name_nocallback();
+            } else {
+                return targetPtr->name();
+            }
+        }() };
 }
 
 // tag=1050
@@ -301,7 +346,16 @@ void *c_KDDockWidgets__Screen__size(void *thisObj)
         // tag=1016
 
         // tag=1072
-        new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->size_nocallback();} else {    return targetPtr->size();} }() };
+        new Dartagnan::ValueWrapper<QSize> { [&] {
+            auto targetPtr = fromPtr(thisObj);
+            auto wrapperPtr =
+                dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper *>(targetPtr);
+            if (wrapperPtr) {
+                return wrapperPtr->size_nocallback();
+            } else {
+                return targetPtr->size();
+            }
+        }() };
 }
 
 // tag=1050
@@ -312,7 +366,16 @@ void *c_KDDockWidgets__Screen__virtualGeometry(void *thisObj)
         // tag=1016
 
         // tag=1072
-        new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->virtualGeometry_nocallback();} else {    return targetPtr->virtualGeometry();} }() };
+        new Dartagnan::ValueWrapper<QRect> { [&] {
+            auto targetPtr = fromPtr(thisObj);
+            auto wrapperPtr =
+                dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper *>(targetPtr);
+            if (wrapperPtr) {
+                return wrapperPtr->virtualGeometry_nocallback();
+            } else {
+                return targetPtr->virtualGeometry();
+            }
+        }() };
 }
 
 // tag=1050
@@ -323,7 +386,16 @@ void *c_KDDockWidgets__Screen__virtualSize(void *thisObj)
         // tag=1016
 
         // tag=1072
-        new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->virtualSize_nocallback();} else {    return targetPtr->virtualSize();} }() };
+        new Dartagnan::ValueWrapper<QSize> { [&] {
+            auto targetPtr = fromPtr(thisObj);
+            auto wrapperPtr =
+                dynamic_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper *>(targetPtr);
+            if (wrapperPtr) {
+                return wrapperPtr->virtualSize_nocallback();
+            } else {
+                return targetPtr->virtualSize();
+            }
+        }() };
 }
 void c_KDDockWidgets__Screen__destructor(void *thisObj)
 {
@@ -337,28 +409,39 @@ void c_KDDockWidgets__Screen__registerVirtualMethodCallback(void *ptr, void *cal
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 617:
-        wrapper->m_availableGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_availableGeometry>(callback);
+        wrapper->m_availableGeometryCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_availableGeometry>(callback);
         break;
     case 618:
-        wrapper->m_availableSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_availableSize>(callback);
+        wrapper->m_availableSizeCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_availableSize>(callback);
         break;
     case 619:
-        wrapper->m_devicePixelRatioCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_devicePixelRatio>(callback);
+        wrapper->m_devicePixelRatioCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_devicePixelRatio>(callback);
         break;
     case 620:
-        wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_geometry>(callback);
+        wrapper->m_geometryCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_geometry>(
+                callback);
         break;
     case 621:
-        wrapper->m_nameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_name>(callback);
+        wrapper->m_nameCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_name>(
+                callback);
         break;
     case 622:
-        wrapper->m_sizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_size>(callback);
+        wrapper->m_sizeCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_size>(
+                callback);
         break;
     case 623:
-        wrapper->m_virtualGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_virtualGeometry>(callback);
+        wrapper->m_virtualGeometryCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_virtualGeometry>(callback);
         break;
     case 624:
-        wrapper->m_virtualSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_virtualSize>(callback);
+        wrapper->m_virtualSizeCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Screen_wrapper::Callback_virtualSize>(callback);
         break;
     }
 }

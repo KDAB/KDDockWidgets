@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -52,9 +52,7 @@ MDIArea_qtwidgets::MDIArea_qtwidgets(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
     vlay->addWidget(View_qt::asQWidget(d->layout));
 
-    View::d->closeRequested.connect([this](QCloseEvent *ev) {
-        d->layout->onCloseEvent(ev);
-    });
+    View::d->closeRequested.connect([this](QCloseEvent *ev) { d->layout->onCloseEvent(ev); });
 
     // TODOm3: for qtquick:
     // QWidgetAdapter::makeItemFillParent(d->layout);
@@ -65,11 +63,16 @@ MDIArea_qtwidgets::~MDIArea_qtwidgets()
     delete d;
 }
 
-void MDIArea_qtwidgets::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption)
+void MDIArea_qtwidgets::addDockWidget(Controllers::DockWidget *dw, QPoint localPt,
+                                      InitialOption addingOption)
 {
     if (dw->options() & DockWidgetOption_MDINestable) {
         // We' wrap it with a drop area, so we can drag other dock widgets over this one and dock
-        auto wrapperDW = Config::self().viewFactory()->createDockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()))->asDockWidgetController();
+        auto wrapperDW =
+            Config::self()
+                .viewFactory()
+                ->createDockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()))
+                ->asDockWidgetController();
 
         auto dropAreaWrapper = new DropArea(wrapperDW->view(), {}, /*isMDIWrapper= */ true);
         dropAreaWrapper->addDockWidget(dw, Location_OnBottom, nullptr);
@@ -91,7 +94,8 @@ void MDIArea_qtwidgets::resizeDockWidget(Controllers::DockWidget *dw, QSize size
     d->layout->resizeDockWidget(dw, size);
 }
 
-void MDIArea_qtwidgets::addDockWidget(Views::DockWidgetViewInterface *dwView, QPoint localPt, InitialOption addingOption)
+void MDIArea_qtwidgets::addDockWidget(Views::DockWidgetViewInterface *dwView, QPoint localPt,
+                                      InitialOption addingOption)
 {
     auto dw = dwView ? dwView->dockWidget() : nullptr;
     addDockWidget(dw, localPt, addingOption);

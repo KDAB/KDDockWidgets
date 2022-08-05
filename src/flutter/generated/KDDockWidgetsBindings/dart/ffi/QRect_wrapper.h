@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -86,15 +86,19 @@ extern "C" {
 // QRect::QRect()
 KDDockWidgetsBindings_EXPORT void *c_QRect__constructor();
 // QRect::QRect(const QPoint & topleft, const QPoint & bottomright)
-KDDockWidgetsBindings_EXPORT void *c_QRect__constructor_QPoint_QPoint(void *topleft_, void *bottomright_);
+KDDockWidgetsBindings_EXPORT void *c_QRect__constructor_QPoint_QPoint(void *topleft_,
+                                                                      void *bottomright_);
 // QRect::QRect(const QPoint & topleft, const QSize & size)
 KDDockWidgetsBindings_EXPORT void *c_QRect__constructor_QPoint_QSize(void *topleft_, void *size_);
 // QRect::QRect(int left, int top, int width, int height)
-KDDockWidgetsBindings_EXPORT void *c_QRect__constructor_int_int_int_int(int left, int top, int width, int height);
+KDDockWidgetsBindings_EXPORT void *c_QRect__constructor_int_int_int_int(int left, int top,
+                                                                        int width, int height);
 // QRect::adjust(int x1, int y1, int x2, int y2)
-KDDockWidgetsBindings_EXPORT void c_QRect__adjust_int_int_int_int(void *thisObj, int x1, int y1, int x2, int y2);
+KDDockWidgetsBindings_EXPORT void c_QRect__adjust_int_int_int_int(void *thisObj, int x1, int y1,
+                                                                  int x2, int y2);
 // QRect::adjusted(int x1, int y1, int x2, int y2) const
-KDDockWidgetsBindings_EXPORT void *c_QRect__adjusted_int_int_int_int(void *thisObj, int x1, int y1, int x2, int y2);
+KDDockWidgetsBindings_EXPORT void *c_QRect__adjusted_int_int_int_int(void *thisObj, int x1, int y1,
+                                                                     int x2, int y2);
 // QRect::bottom() const
 KDDockWidgetsBindings_EXPORT int c_QRect__bottom(void *thisObj);
 // QRect::bottomLeft() const
@@ -104,13 +108,16 @@ KDDockWidgetsBindings_EXPORT void *c_QRect__bottomRight(void *thisObj);
 // QRect::center() const
 KDDockWidgetsBindings_EXPORT void *c_QRect__center(void *thisObj);
 // QRect::contains(const QPoint & p, bool proper) const
-KDDockWidgetsBindings_EXPORT bool c_QRect__contains_QPoint_bool(void *thisObj, void *p_, bool proper);
+KDDockWidgetsBindings_EXPORT bool c_QRect__contains_QPoint_bool(void *thisObj, void *p_,
+                                                                bool proper);
 // QRect::contains(const QRect & r, bool proper) const
-KDDockWidgetsBindings_EXPORT bool c_QRect__contains_QRect_bool(void *thisObj, void *r_, bool proper);
+KDDockWidgetsBindings_EXPORT bool c_QRect__contains_QRect_bool(void *thisObj, void *r_,
+                                                               bool proper);
 // QRect::contains(int x, int y) const
 KDDockWidgetsBindings_EXPORT bool c_QRect__contains_int_int(void *thisObj, int x, int y);
 // QRect::contains(int x, int y, bool proper) const
-KDDockWidgetsBindings_EXPORT bool c_QRect__contains_int_int_bool(void *thisObj, int x, int y, bool proper);
+KDDockWidgetsBindings_EXPORT bool c_QRect__contains_int_int_bool(void *thisObj, int x, int y,
+                                                                 bool proper);
 // QRect::height() const
 KDDockWidgetsBindings_EXPORT int c_QRect__height(void *thisObj);
 // QRect::intersected(const QRect & other) const
@@ -158,13 +165,15 @@ KDDockWidgetsBindings_EXPORT void c_QRect__setBottomLeft_QPoint(void *thisObj, v
 // QRect::setBottomRight(const QPoint & p)
 KDDockWidgetsBindings_EXPORT void c_QRect__setBottomRight_QPoint(void *thisObj, void *p_);
 // QRect::setCoords(int x1, int y1, int x2, int y2)
-KDDockWidgetsBindings_EXPORT void c_QRect__setCoords_int_int_int_int(void *thisObj, int x1, int y1, int x2, int y2);
+KDDockWidgetsBindings_EXPORT void c_QRect__setCoords_int_int_int_int(void *thisObj, int x1, int y1,
+                                                                     int x2, int y2);
 // QRect::setHeight(int h)
 KDDockWidgetsBindings_EXPORT void c_QRect__setHeight_int(void *thisObj, int h);
 // QRect::setLeft(int pos)
 KDDockWidgetsBindings_EXPORT void c_QRect__setLeft_int(void *thisObj, int pos);
 // QRect::setRect(int x, int y, int w, int h)
-KDDockWidgetsBindings_EXPORT void c_QRect__setRect_int_int_int_int(void *thisObj, int x, int y, int w, int h);
+KDDockWidgetsBindings_EXPORT void c_QRect__setRect_int_int_int_int(void *thisObj, int x, int y,
+                                                                   int w, int h);
 // QRect::setRight(int pos)
 KDDockWidgetsBindings_EXPORT void c_QRect__setRight_int(void *thisObj, int pos);
 // QRect::setSize(const QSize & s)

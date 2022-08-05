@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -22,7 +22,8 @@ class TitleBar_flutter_wrapper : public ::KDDockWidgets::Views::TitleBar_flutter
 {
 public:
     ~TitleBar_flutter_wrapper();
-    TitleBar_flutter_wrapper(KDDockWidgets::Controllers::TitleBar *controller, KDDockWidgets::View *parent = nullptr);
+    TitleBar_flutter_wrapper(KDDockWidgets::Controllers::TitleBar *controller,
+                             KDDockWidgets::View *parent = nullptr);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -254,22 +255,30 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::TitleBar_flutter::TitleBar_flutter(KDDockWidgets::Controllers::TitleBar * controller, KDDockWidgets::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__constructor_TitleBar_View(void *controller_, void *parent_);
+// KDDockWidgets::Views::TitleBar_flutter::TitleBar_flutter(KDDockWidgets::Controllers::TitleBar *
+// controller, KDDockWidgets::View * parent)
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__constructor_TitleBar_View(void *controller_,
+                                                                    void *parent_);
 // KDDockWidgets::Views::TitleBar_flutter::activateWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__activateWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__activateWindow(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__close(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::createPlatformWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__createPlatformWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__createPlatformWindow(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TitleBar_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::free_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__free_impl(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__free_impl(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::geometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__geometry(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__geometry(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::grabMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__grabMouse(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__grabMouse(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::hasFocus() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__hasFocus(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::hide()
@@ -277,100 +286,147 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__hide
 // KDDockWidgets::Views::TitleBar_flutter::init()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__init(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isActiveWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isActiveWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__isActiveWindow(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isCloseButtonEnabled() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isCloseButtonEnabled(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__isCloseButtonEnabled(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isCloseButtonVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isCloseButtonVisible(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__isCloseButtonVisible(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isFloatButtonVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isFloatButtonVisible(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__isFloatButtonVisible(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isMaximized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isMaximized(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__isMaximized(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isMinimized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isMinimized(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__isMinimized(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isNull() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isNull(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isRootView() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isRootView(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__isRootView(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::isVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__isVisible(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__isVisible(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::mapFromGlobal(QPoint globalPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
 // KDDockWidgets::Views::TitleBar_flutter::mapTo(KDDockWidgets::View * parent, QPoint pos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__mapTo_View_QPoint(void *thisObj, void *parent_,
+                                                            void *pos_);
 // KDDockWidgets::Views::TitleBar_flutter::mapToGlobal(QPoint localPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
 // KDDockWidgets::Views::TitleBar_flutter::maxSizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__maxSizeHint(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__maxSizeHint(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::maximumSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__maximumSize(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__maximumSize(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::minSize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__minSize(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::minimumHeight() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TitleBar_flutter__minimumHeight(void *thisObj);
+KDDockWidgetsBindings_EXPORT int
+c_KDDockWidgets__Views__TitleBar_flutter__minimumHeight(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::minimumWidth() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TitleBar_flutter__minimumWidth(void *thisObj);
+KDDockWidgetsBindings_EXPORT int
+c_KDDockWidgets__Views__TitleBar_flutter__minimumWidth(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::move(int x, int y)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__move_int_int(void *thisObj, int x, int y);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::Views::TitleBar_flutter::normalGeometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__normalGeometry(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::objectName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__objectName(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__objectName(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::onResize(QSize newSize)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_QSize(void *thisObj, void *newSize_);
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Views__TitleBar_flutter__onResize_QSize(void *thisObj, void *newSize_);
 // KDDockWidgets::Views::TitleBar_flutter::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::raiseAndActivate()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__raiseAndActivate(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__raiseAndActivate(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::releaseKeyboard()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__releaseKeyboard(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::releaseMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__releaseMouse(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__releaseMouse(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::setCursor(Qt::CursorShape shape)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setCursor_CursorShape(void *thisObj, int shape);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setCursor_CursorShape(void *thisObj, int shape);
 // KDDockWidgets::Views::TitleBar_flutter::setFixedHeight(int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setFixedHeight_int(void *thisObj, int h);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::TitleBar_flutter::setFixedWidth(int w)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setFixedWidth_int(void *thisObj, int w);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setFixedWidth_int(void *thisObj, int w);
 // KDDockWidgets::Views::TitleBar_flutter::setGeometry(QRect arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
 // KDDockWidgets::Views::TitleBar_flutter::setHeight(int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setHeight_int(void *thisObj, int h);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::TitleBar_flutter::setMaximumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setMaximumSize_QSize(void *thisObj, void *sz_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setMaximumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::Views::TitleBar_flutter::setMinimumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setMinimumSize_QSize(void *thisObj, void *sz_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::Views::TitleBar_flutter::setMouseTracking(bool enable)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setMouseTracking_bool(void *thisObj, bool enable);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::Views::TitleBar_flutter::setObjectName(const QString & name)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setObjectName_QString(void *thisObj, const char *name_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::Views::TitleBar_flutter::setParent(KDDockWidgets::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setParent_View(void *thisObj, void *parent_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::Views::TitleBar_flutter::setSize(int w, int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setSize_int_int(void *thisObj, int w, int h);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setSize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TitleBar_flutter::setVisible(bool visible)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setVisible_bool(void *thisObj, bool visible);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::Views::TitleBar_flutter::setWidth(int w)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setWidth_int(void *thisObj, int w);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setWidth_int(void *thisObj, int w);
 // KDDockWidgets::Views::TitleBar_flutter::setWindowOpacity(double v)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setWindowOpacity_double(void *thisObj, double v);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setWindowOpacity_double(void *thisObj, double v);
 // KDDockWidgets::Views::TitleBar_flutter::setWindowTitle(const QString & title)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setWindowTitle_QString(void *thisObj, const char *title_);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setWindowTitle_QString(void *thisObj, const char *title_);
 // KDDockWidgets::Views::TitleBar_flutter::setZOrder(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__setZOrder_int(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__setZOrder_int(void *thisObj, int arg__1);
 // KDDockWidgets::Views::TitleBar_flutter::show()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__show(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::showMaximized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__showMaximized(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__showMaximized(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::showMinimized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__showMinimized(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__showMinimized(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::showNormal()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__showNormal(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__showNormal(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::sizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__sizeHint(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TitleBar_flutter__sizeHint(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::update()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__update(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__registerVirtualMethodCallback(void *ptr, void *callback,
+                                                                        int methodId);
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter_Finalizer(void *, void *cppObj, void *);
 }

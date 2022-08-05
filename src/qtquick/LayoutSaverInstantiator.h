@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -30,9 +30,7 @@ namespace KDDockWidgets {
  * Use it from QML, like: LayoutSaver { id: saver }
  * For C++, just use KDDockWidgets::LayoutSaver directly
  */
-class DOCKS_EXPORT LayoutSaverInstantiator
-    : public QObject,
-      public LayoutSaver
+class DOCKS_EXPORT LayoutSaverInstantiator : public QObject, public LayoutSaver
 {
     Q_OBJECT
 public:

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -167,7 +167,8 @@ public:
 private:
     friend inline QDebug operator<<(QDebug, const KDDockWidgets::Position::Ptr &);
 
-    // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
+    // The last places where this dock widget was (or is), so it can be restored when
+    // setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
     QRect m_lastFloatingGeometry;
     QHash<SideBarLocation, QRect> m_lastOverlayedGeometries;

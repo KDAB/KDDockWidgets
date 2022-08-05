@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -66,7 +66,8 @@ public:
     bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const override;
     bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const override;
-    bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type, int timeout = 5000) const override;
+    bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type,
+                            int timeout = 5000) const override;
     bool tests_waitForResize(View *, int timeout = 2000) const override;
     bool tests_waitForResize(Controller *, int timeout = 2000) const override;
     bool tests_waitForDeleted(View *, int timeout = 2000) const override;

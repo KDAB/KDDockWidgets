@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -44,17 +44,21 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
         || msg.contains(QLatin1String("This plugin does not support"))
         || msg.contains(QLatin1String("Note that Qt no longer ships fonts"))
         || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget"))
-        || msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"))
+        || msg.contains(
+            QLatin1String("There's multiple MainWindows, not sure what to do about parenting"))
         || msg.contains(QLatin1String("Testing::"))
         || msg.contains(QLatin1String("outside any known screen, using primary screen"))
         || msg.contains(QLatin1String("Populating font family aliases took"))
         || msg.contains(QLatin1String("QSGThreadedRenderLoop: expose event received for window"))
 
-        // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in Qt.
-        || (msg.contains(QLatin1String("TypeError: Cannot read property")) && msg.contains(QLatin1String("Material")));
+        // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in
+        // Qt.
+        || (msg.contains(QLatin1String("TypeError: Cannot read property"))
+            && msg.contains(QLatin1String("Material")));
 }
 
-static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
+static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
+                                        const QString &msg)
 {
     if (shouldBlacklistWarning(msg, QLatin1String(context.category)))
         return;
@@ -191,13 +195,16 @@ public:
 
         auto view = Platform_qt::instance()->qobjectAsView(watched);
 
-        // Make a copy, as there could be reentrancy and filters getting removed while event being processed
+        // Make a copy, as there could be reentrancy and filters getting removed while event being
+        // processed
         const auto filters = qAsConst(q->d->m_globalEventFilters);
 
         for (EventFilterInterface *filter : filters) {
 
             // Filter might have been deleted meanwhile
-            if (std::find(q->d->m_globalEventFilters.cbegin(), q->d->m_globalEventFilters.cend(), filter) == q->d->m_globalEventFilters.cend())
+            if (std::find(q->d->m_globalEventFilters.cbegin(), q->d->m_globalEventFilters.cend(),
+                          filter)
+                == q->d->m_globalEventFilters.cend())
                 continue;
 
             if (filter->onMouseEvent(view.get(), ev))
@@ -332,7 +339,8 @@ bool Platform_qt::tests_waitForResize(Controller *c, int timeout) const
     return tests_waitForResize(c->view(), timeout);
 }
 
-bool Platform_qt::tests_waitForEvent(std::shared_ptr<Window> window, QEvent::Type type, int timeout) const
+bool Platform_qt::tests_waitForEvent(std::shared_ptr<Window> window, QEvent::Type type,
+                                     int timeout) const
 {
     auto windowqt = static_cast<Window_qt *>(window.get());
     return tests_waitForEvent(windowqt->qtWindow(), type, timeout);
@@ -389,7 +397,9 @@ void Platform_qt::installMessageHandler()
 void Platform_qt::uninstallMessageHandler()
 {
     if (!Tests::s_original)
-        qWarning() << Q_FUNC_INFO << "No message handler was installed or the fatalWarningsMessageHandler was already uninstalled!";
+        qWarning() << Q_FUNC_INFO
+                   << "No message handler was installed or the fatalWarningsMessageHandler was "
+                      "already uninstalled!";
     qInstallMessageHandler(Tests::s_original);
     Tests::s_original = nullptr;
 }

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -231,8 +231,10 @@ Fuzzer::DockWidgetDescriptor Fuzzer::generateRandomDockWidget()
     }
 
     QPoint pos = getRandomPos();
-    std::uniform_int_distribution<> widthDistrib(dwd.minSize.width(), hasMaxSize ? dwd.maxSize.width() : dwd.minSize.width() + 600);
-    std::uniform_int_distribution<> heightDistrib(dwd.minSize.height(), hasMaxSize ? dwd.maxSize.height() : dwd.minSize.height() + 600);
+    std::uniform_int_distribution<> widthDistrib(
+        dwd.minSize.width(), hasMaxSize ? dwd.maxSize.width() : dwd.minSize.width() + 600);
+    std::uniform_int_distribution<> heightDistrib(
+        dwd.minSize.height(), hasMaxSize ? dwd.maxSize.height() : dwd.minSize.height() + 600);
     dwd.geometry = QRect(pos, QSize(widthDistrib(m_randomEngine), heightDistrib(m_randomEngine)));
 
     return dwd;
@@ -307,7 +309,8 @@ Controllers::DockWidget *Fuzzer::getRandomDockWidget(const Controllers::DockWidg
     return docks[locationDistrib(m_randomEngine)];
 }
 
-Controllers::DockWidget *Fuzzer::getRandomRelativeTo(MainWindowBase *mainWindow, Controllers::DockWidget *excluding)
+Controllers::DockWidget *Fuzzer::getRandomRelativeTo(MainWindowBase *mainWindow,
+                                                     Controllers::DockWidget *excluding)
 {
     auto docks = DockRegistry::self()->dockwidgets();
 
@@ -341,7 +344,8 @@ QPoint Fuzzer::getRandomPos()
 
 OperationBase::Ptr Fuzzer::getRandomOperation()
 {
-    std::uniform_int_distribution<> operationDistrib(OperationType_None + 1, OperationType_Count - 1);
+    std::uniform_int_distribution<> operationDistrib(OperationType_None + 1,
+                                                     OperationType_Count - 1);
     auto operationType = OperationType(operationDistrib(m_randomEngine));
 
     return OperationBase::newOperation(this, operationType);
@@ -394,8 +398,7 @@ void Fuzzer::fuzz(const QStringList &jsonFiles)
 void Fuzzer::fuzz(const QString &jsonFile)
 {
     m_currentJsonFile = jsonFile;
-    qDebug() << "\n"
-             << Q_FUNC_INFO << jsonFile;
+    qDebug() << "\n" << Q_FUNC_INFO << jsonFile;
     QFile file(jsonFile);
     if (file.open(QIODevice::ReadOnly)) {
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());

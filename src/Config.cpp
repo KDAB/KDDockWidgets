@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -86,9 +86,11 @@ void Config::setFlags(Flags f)
 {
     auto dr = DockRegistry::self();
     if (!dr->isEmpty(/*excludeBeingDeleted=*/true)) {
-        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow"
-                   << "; These are already created: " << dr->mainWindowsNames()
-                   << dr->dockWidgetNames() << dr->floatingWindows();
+        qWarning()
+            << Q_FUNC_INFO
+            << "Only use this function at startup before creating any DockWidget or MainWindow"
+            << "; These are already created: " << dr->mainWindowsNames() << dr->dockWidgetNames()
+            << dr->floatingWindows();
         return;
     }
 
@@ -136,7 +138,9 @@ int Config::separatorThickness() const
 void Config::setSeparatorThickness(int value)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/true)) {
-        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
+        qWarning()
+            << Q_FUNC_INFO
+            << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }
 
@@ -181,7 +185,9 @@ DropIndicatorAllowedFunc Config::dropIndicatorAllowedFunc() const
 void Config::setAbsoluteWidgetMinSize(QSize size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
-        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
+        qWarning()
+            << Q_FUNC_INFO
+            << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }
 
@@ -196,7 +202,9 @@ QSize Config::absoluteWidgetMinSize() const
 void Config::setAbsoluteWidgetMaxSize(QSize size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
-        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
+        qWarning()
+            << Q_FUNC_INFO
+            << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }
 
@@ -253,7 +261,8 @@ void Config::Private::fixFlags()
 #endif
 
 #if (!defined(Q_OS_WIN) && !defined(Q_OS_MACOS))
-    // QtQuick doesn't support AeroSnap yet. Some problem with the native events not being received...
+    // QtQuick doesn't support AeroSnap yet. Some problem with the native events not being
+    // received...
     m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
 #endif
 

@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -25,5 +25,6 @@ void KDDockWidgets::registerQmlTypes()
     qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 2, 0, "DockWidget");
     qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 2, 0, "LayoutSaver");
 
-    qmlRegisterUncreatableMetaObject(KDDockWidgets::staticMetaObject, "com.kdab.dockwidgets", 2, 0, "KDDockWidgets", QStringLiteral("Enum access only"));
+    qmlRegisterUncreatableMetaObject(KDDockWidgets::staticMetaObject, "com.kdab.dockwidgets", 2, 0,
+                                     "KDDockWidgets", QStringLiteral("Enum access only"));
 }

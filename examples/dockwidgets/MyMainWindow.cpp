@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -45,9 +45,9 @@ static MyWidget *newMyWidget()
 }
 
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                           bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
-                           bool maxSizeForDockWidget8, bool dockwidget5DoesntCloseBeforeRestore,
-                           bool dock0BlocksCloseEvent,
+                           bool dockWidget0IsNonClosable, bool nonDockableDockWidget9,
+                           bool restoreIsRelative, bool maxSizeForDockWidget8,
+                           bool dockwidget5DoesntCloseBeforeRestore, bool dock0BlocksCloseEvent,
                            const QString &affinityName, QWidget *parent)
     : KDDockWidgets::Views::MainWindow_qtwidgets(uniqueName, options, parent)
     , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
@@ -73,7 +73,8 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         count++;
         auto w = newMyWidget();
         w->setGeometry(100, 100, 400, 400);
-        auto dock = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("new dock %1").arg(count));
+        auto dock = new KDDockWidgets::Views::DockWidget_qtwidgets(
+            QStringLiteral("new dock %1").arg(count));
         dock->setWidget(w);
         dock->resize(QSize(600, 600));
         dock->show();
@@ -103,13 +104,13 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     });
 
     auto layoutEqually = fileMenu->addAction(QStringLiteral("Layout Equally"));
-    connect(layoutEqually, &QAction::triggered,
-            this, [this] { this->layoutEqually(); });
+    connect(layoutEqually, &QAction::triggered, this, [this] { this->layoutEqually(); });
 
     auto quitAction = fileMenu->addAction(QStringLiteral("Quit"));
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
 
-    QAction *toggleDropIndicatorSupport = miscMenu->addAction(QStringLiteral("Toggle Drop Indicator Support"));
+    QAction *toggleDropIndicatorSupport =
+        miscMenu->addAction(QStringLiteral("Toggle Drop Indicator Support"));
     toggleDropIndicatorSupport->setCheckable(true);
     toggleDropIndicatorSupport->setChecked(true);
     connect(toggleDropIndicatorSupport, &QAction::toggled, this, [](bool checked) {
@@ -135,7 +136,8 @@ void MyMainWindow::createDockWidgets()
 
     const int numDockWidgets = m_dockWidget9IsNonDockable ? 10 : 9;
 
-    // Create 9 KDDockWidget::DockWidget and the respective widgets they're hosting (MyWidget instances)
+    // Create 9 KDDockWidget::DockWidget and the respective widgets they're hosting (MyWidget
+    // instances)
     for (int i = 0; i < numDockWidgets; i++)
         m_dockwidgets << newDockWidget();
 
@@ -157,7 +159,8 @@ void MyMainWindow::createDockWidgets()
     m_dockwidgets[6]->addDockWidgetAsTab(m_dockwidgets.at(7));
 
     // Floating windows also support nesting, here we add 8 to the bottom of the group
-    m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets.at(8), KDDockWidgets::Location_OnBottom);
+    m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets.at(8),
+                                                      KDDockWidgets::Location_OnBottom);
 
     auto floatingWindow = m_dockwidgets.at(6)->rootView();
     floatingWindow->move(100, 100);
@@ -180,8 +183,10 @@ KDDockWidgets::Views::DockWidget_qtwidgets *MyMainWindow::newDockWidget()
     if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
         layoutSaverOptions |= KDDockWidgets::LayoutSaverOption::Skip;
 
-    auto dock = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
-    dock->setAffinities(affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
+    auto dock = new KDDockWidgets::Views::DockWidget_qtwidgets(
+        QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
+    dock->setAffinities(affinities()); // optional, just to show the feature. Pass -mi to the
+                                       // example to see incompatible dock widgets
 
     if (count == 1)
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));

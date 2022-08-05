@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -44,8 +44,8 @@ class ClassicIndicatorWindowViewInterface;
  * @brief A factory class for allowing the user to customize some internal views.
  * This is optional, and if not provided, a default one will be used.
  *
- * You should however not derive directly from ViewFactory, and instead, derive from ViewFactory_qtwidgets (for QtWidgets),
- * or ViewFactory_qtquick (for QtQuick).
+ * You should however not derive directly from ViewFactory, and instead, derive from
+ * ViewFactory_qtwidgets (for QtWidgets), or ViewFactory_qtquick (for QtQuick).
  *
  * Sub-classing ViewFactory allows for fine-grained customization and
  * styling of some non-public widgets, such as titlebars, dock widget group and
@@ -67,8 +67,7 @@ public:
 
     /// @brief Creates a dock widget. This is only used by MainWindow's persistent widget feature.
     /// In all other cases users will instantiate DockWidget directly
-    virtual View *createDockWidget(const QString &uniqueName,
-                                   DockWidgetOptions options = {},
+    virtual View *createDockWidget(const QString &uniqueName, DockWidgetOptions options = {},
                                    LayoutSaverOptions layoutSaverOptions = {},
                                    Qt::WindowFlags windowFlags = {}) const = 0;
 
@@ -109,13 +108,15 @@ public:
                                        Qt::WindowFlags windowFlags = {}) const = 0;
 
 
-    /// @brief Creates the window that will show the actual drop indicators. They need a higher z-order, so this
-    /// is actually a separate window, not parented to the main window
-    virtual Views::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(Controllers::ClassicIndicators *) const = 0;
+    /// @brief Creates the window that will show the actual drop indicators. They need a higher
+    /// z-order, so this is actually a separate window, not parented to the main window
+    virtual Views::ClassicIndicatorWindowViewInterface *
+    createClassicIndicatorWindow(Controllers::ClassicIndicators *) const = 0;
 
     /// @brief Creates the view that will parent the segmented drop indicators
     virtual View *
-    createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const = 0;
+    createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller,
+                                            View *parent = nullptr) const = 0;
 
     /// @brief Called by the framework to create a DropArea view
     virtual View *createDropArea(Controllers::DropArea *, View *parent) const = 0;
@@ -127,7 +128,8 @@ public:
     virtual View *createRubberBand(View *parent) const = 0;
 
     ///@brief Called by the framework to create a SideBar view
-    ///@param loc The side-bar location without the main window. Just forward into your SideBar sub-class ctor.
+    ///@param loc The side-bar location without the main window. Just forward into your SideBar
+    /// sub-class ctor.
     ///@param parent The MainWindow. Just forward into your SideBar sub-class ctor.
     virtual View *createSideBar(Controllers::SideBar *, View *parent) const = 0;
 

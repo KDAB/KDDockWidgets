@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -93,8 +93,7 @@ void DockWidgetInstantiator::setFloating(bool is)
     m_isFloating = is;
 }
 
-void DockWidgetInstantiator::addDockWidgetAsTab(QQuickItem *other,
-                                                InitialVisibilityOption option)
+void DockWidgetInstantiator::addDockWidgetAsTab(QQuickItem *other, InitialVisibilityOption option)
 {
     if (!other || !m_dockWidget)
         return;
@@ -103,8 +102,7 @@ void DockWidgetInstantiator::addDockWidgetAsTab(QQuickItem *other,
     m_dockWidget->addDockWidgetAsTab(otherDockWidget, option);
 }
 
-void DockWidgetInstantiator::addDockWidgetToContainingWindow(QQuickItem *other,
-                                                             Location location,
+void DockWidgetInstantiator::addDockWidgetToContainingWindow(QQuickItem *other, Location location,
                                                              QQuickItem *relativeTo,
                                                              QSize initialSize,
                                                              InitialVisibilityOption option)
@@ -115,9 +113,8 @@ void DockWidgetInstantiator::addDockWidgetToContainingWindow(QQuickItem *other,
     Controllers::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
     Controllers::DockWidget *relativeToDockWidget = Platform_qtquick::dockWidgetForItem(relativeTo);
 
-    m_dockWidget->addDockWidgetToContainingWindow(
-        otherDockWidget, location,
-        relativeToDockWidget, InitialOption(option, initialSize));
+    m_dockWidget->addDockWidgetToContainingWindow(otherDockWidget, location, relativeToDockWidget,
+                                                  InitialOption(option, initialSize));
 }
 
 void DockWidgetInstantiator::setAsCurrentTab()
@@ -166,7 +163,8 @@ void DockWidgetInstantiator::classBegin()
 void DockWidgetInstantiator::componentComplete()
 {
     if (m_uniqueName.isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "Each DockWidget need an unique name. Set the uniqueName property.";
+        qWarning() << Q_FUNC_INFO
+                   << "Each DockWidget need an unique name. Set the uniqueName property.";
         return;
     }
 
@@ -186,7 +184,9 @@ void DockWidgetInstantiator::componentComplete()
         return;
     }
 
-    m_dockWidget = ViewFactory_qtquick::self()->createDockWidget(m_uniqueName, qmlEngine(this))->asDockWidgetController();
+    m_dockWidget = ViewFactory_qtquick::self()
+                       ->createDockWidget(m_uniqueName, qmlEngine(this))
+                       ->asDockWidgetController();
 
     connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this,
             &DockWidgetInstantiator::titleChanged);

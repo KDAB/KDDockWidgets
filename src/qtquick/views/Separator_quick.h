@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -20,10 +20,9 @@
 
 namespace Layouting {
 
-class DOCKS_EXPORT SeparatorQuick
-    : public QQuickItem,
-      public Layouting::Separator,
-      public Layouting::Widget_quick
+class DOCKS_EXPORT SeparatorQuick : public QQuickItem,
+                                    public Layouting::Separator,
+                                    public Layouting::Widget_quick
 {
     Q_OBJECT
     Q_PROPERTY(bool isVertical READ isVertical NOTIFY isVerticalChanged)

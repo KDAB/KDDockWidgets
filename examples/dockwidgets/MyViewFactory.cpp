@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -23,8 +23,7 @@
 class MyTitleBar : public KDDockWidgets::Views::TitleBar_qtwidgets
 {
 public:
-    explicit MyTitleBar(KDDockWidgets::Controllers::TitleBar *controller,
-                        View *parent = nullptr)
+    explicit MyTitleBar(KDDockWidgets::Controllers::TitleBar *controller, View *parent = nullptr)
         : KDDockWidgets::Views::TitleBar_qtwidgets(controller, parent)
         , m_controller(controller)
     {
@@ -57,7 +56,8 @@ private:
 
 MyTitleBar::~MyTitleBar() = default;
 
-// Inheriting from SeparatorWidget instead of Separator as it handles moving and mouse cursor changing
+// Inheriting from SeparatorWidget instead of Separator as it handles moving and mouse cursor
+// changing
 class MySeparator : public KDDockWidgets::Views::Separator_qtwidgets
 {
 public:
@@ -77,15 +77,17 @@ public:
 
 MySeparator::~MySeparator() = default;
 
-KDDockWidgets::View *CustomWidgetFactory::createTitleBar(KDDockWidgets::Controllers::TitleBar *controller,
-                                                         KDDockWidgets::View *parent) const
+KDDockWidgets::View *
+CustomWidgetFactory::createTitleBar(KDDockWidgets::Controllers::TitleBar *controller,
+                                    KDDockWidgets::View *parent) const
 {
     // Feel free to return MyTitleBar_CSS here instead, but just for education purposes!
     return new MyTitleBar(controller, parent);
 }
 
-KDDockWidgets::View *CustomWidgetFactory::createSeparator(KDDockWidgets::Controllers::Separator *controller,
-                                                          KDDockWidgets::View *parent) const
+KDDockWidgets::View *
+CustomWidgetFactory::createSeparator(KDDockWidgets::Controllers::Separator *controller,
+                                     KDDockWidgets::View *parent) const
 {
     return new MySeparator(controller, parent);
 }

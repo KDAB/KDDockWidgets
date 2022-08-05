@@ -1,8 +1,8 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company
+  <info@kdab.com> Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
@@ -77,8 +77,7 @@ int main(int argc, char **argv)
 
     // 5. dock4 is docked at the bottom, with 200px height
     const QSize preferredSize(QSize(/*ignored*/ 0, 200));
-    mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom,
-                             nullptr, preferredSize);
+    mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
 
 
     // 5. dock5 will be its own top level (floating window)
