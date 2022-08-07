@@ -150,12 +150,14 @@ int c_KDDockWidgets__Config__separatorThickness(void *thisObj)
 // setAbsoluteWidgetMaxSize(QSize size)
 void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_)
 {
+    assert(size_);
     auto &size = *reinterpret_cast<QSize *>(size_);
     fromPtr(thisObj)->setAbsoluteWidgetMaxSize(size);
 }
 // setAbsoluteWidgetMinSize(QSize size)
 void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_)
 {
+    assert(size_);
     auto &size = *reinterpret_cast<QSize *>(size_);
     fromPtr(thisObj)->setAbsoluteWidgetMinSize(size);
 }

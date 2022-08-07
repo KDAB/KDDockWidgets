@@ -32,7 +32,7 @@ public:
     static QString tr(const char *s, const char *c, int n);
     virtual void updateVisibility();
     virtual void updateVisibility_nocallback();
-    typedef KDDockWidgets::DropLocation (*Callback_hover_impl)(void *, QPoint globalPos);
+    typedef KDDockWidgets::DropLocation (*Callback_hover_impl)(void *, QPoint *globalPos);
     Callback_hover_impl m_hover_implCallback = nullptr;
     typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;

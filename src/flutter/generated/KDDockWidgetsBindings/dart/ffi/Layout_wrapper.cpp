@@ -347,12 +347,14 @@ void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *
 // setLayoutMinimumSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromWrapperPtr(thisObj)->setLayoutMinimumSize(arg__1);
 }
 // setLayoutSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromPtr(thisObj)->setLayoutSize(arg__1);
 }
@@ -366,6 +368,7 @@ void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj
 void c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group(void *thisObj,
                                                                             void *groupsBeingAdded_)
 {
+    assert(groupsBeingAdded_);
     auto &groupsBeingAdded =
         *reinterpret_cast<QList<KDDockWidgets::Controllers::Group *> *>(groupsBeingAdded_);
     fromWrapperPtr(thisObj)->unrefOldPlaceholders(groupsBeingAdded);
@@ -407,7 +410,7 @@ void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *p
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
         break;
-    case 836:
+    case 834:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(
             callback);

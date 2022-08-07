@@ -35,7 +35,7 @@ KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover(Q
 {
     if (m_hoverCallback) {
         const void *thisPtr = this;
-        return m_hoverCallback(const_cast<void *>(thisPtr), arg__1);
+        return m_hoverCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
         qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
         return {};
@@ -98,7 +98,7 @@ void ClassicIndicatorWindowViewInterface_wrapper::resize(QSize arg__1)
 {
     if (m_resizeCallback) {
         const void *thisPtr = this;
-        m_resizeCallback(const_cast<void *>(thisPtr), arg__1);
+        m_resizeCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
         qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
         return;
@@ -113,7 +113,7 @@ void ClassicIndicatorWindowViewInterface_wrapper::setGeometry(QRect arg__1)
 {
     if (m_setGeometryCallback) {
         const void *thisPtr = this;
-        m_setGeometryCallback(const_cast<void *>(thisPtr), arg__1);
+        m_setGeometryCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
         qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
         return;
@@ -200,6 +200,7 @@ void *c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__constructor()
 int c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__hover_QPoint(void *thisObj,
                                                                               void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return [&] {
         auto targetPtr = fromPtr(thisObj);
@@ -264,6 +265,7 @@ void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__raise(void *th
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__resize_QSize(void *thisObj,
                                                                                void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     [&] {
         auto targetPtr = fromPtr(thisObj);
@@ -281,6 +283,7 @@ void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__resize_QSize(v
 void c_KDDockWidgets__Views__ClassicIndicatorWindowViewInterface__setGeometry_QRect(void *thisObj,
                                                                                     void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
     [&] {
         auto targetPtr = fromPtr(thisObj);

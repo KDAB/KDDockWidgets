@@ -65,12 +65,12 @@ QSize DockWidget_flutter::minSize() const
     return View_flutter::minSize();
 }
 
-QSize DockWidget_flutter::maximumSize() const
+QSize DockWidget_flutter::maxSizeHint() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests max-size is the same as the widget's, there's no spacing or margins.
-        return guestWidget->maximumSize();
+        return guestWidget->maxSizeHint();
     }
 
-    return View_flutter::maximumSize();
+    return View_flutter::maxSizeHint();
 }

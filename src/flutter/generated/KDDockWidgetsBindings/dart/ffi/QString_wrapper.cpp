@@ -607,6 +607,7 @@ bool c_QString__endsWith_QString(void *thisObj, const char *s_)
 // fromLatin1(const QByteArray & str)
 void *c_static_QString__fromLatin1_QByteArray(void *str_)
 {
+    assert(str_);
     auto &str = *reinterpret_cast<QByteArray *>(str_);
     return new Dartagnan::ValueWrapper<QString> {
         KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromLatin1(str)
@@ -622,6 +623,7 @@ void *c_static_QString__fromLatin1_char_int(const char *str, int size)
 // fromLocal8Bit(const QByteArray & str)
 void *c_static_QString__fromLocal8Bit_QByteArray(void *str_)
 {
+    assert(str_);
     auto &str = *reinterpret_cast<QByteArray *>(str_);
     return new Dartagnan::ValueWrapper<QString> {
         KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromLocal8Bit(str)
@@ -637,6 +639,7 @@ void *c_static_QString__fromLocal8Bit_char_int(const char *str, int size)
 // fromUtf8(const QByteArray & str)
 void *c_static_QString__fromUtf8_QByteArray(void *str_)
 {
+    assert(str_);
     auto &str = *reinterpret_cast<QByteArray *>(str_);
     return new Dartagnan::ValueWrapper<QString> {
         KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromUtf8(str)

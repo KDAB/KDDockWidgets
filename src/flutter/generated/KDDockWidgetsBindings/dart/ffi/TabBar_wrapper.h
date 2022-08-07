@@ -15,10 +15,10 @@
 #include <qpoint.h>
 #include <Group.h>
 #include <qrect.h>
-#include <qsize.h>
 #include <View.h>
-#include <qobject.h>
+#include <qsize.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TabBar_wrapper : public ::KDDockWidgets::Controllers::TabBar
@@ -53,7 +53,7 @@ public:
     static QString tr(const char *s, const char *c, int n);
     typedef void (*Callback_customEvent)(void *, QEvent *event);
     Callback_customEvent m_customEventCallback = nullptr;
-    typedef bool (*Callback_dragCanStart)(void *, QPoint pressPos, QPoint pos);
+    typedef bool (*Callback_dragCanStart)(void *, QPoint *pressPos, QPoint *pos);
     Callback_dragCanStart m_dragCanStartCallback = nullptr;
     typedef bool (*Callback_event)(void *, QEvent *event);
     Callback_event m_eventCallback = nullptr;

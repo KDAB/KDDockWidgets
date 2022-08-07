@@ -390,6 +390,7 @@ void *c_QByteArray__constructor_char_int(const char *arg__1, int size)
 // append(const QByteArray & a)
 void *c_QByteArray__append_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return &fromPtr(thisObj)->append(a);
 }
@@ -446,6 +447,7 @@ void c_QByteArray__clear(void *thisObj)
 // compare(const QByteArray & a) const
 int c_QByteArray__compare_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return fromPtr(thisObj)->compare(a);
 }
@@ -472,6 +474,7 @@ const char *c_QByteArray__constEnd(void *thisObj)
 // contains(const QByteArray & a) const
 bool c_QByteArray__contains_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return fromPtr(thisObj)->contains(a);
 }
@@ -488,6 +491,7 @@ int c_QByteArray__count(void *thisObj)
 // count(const QByteArray & a) const
 int c_QByteArray__count_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return fromPtr(thisObj)->count(a);
 }
@@ -504,6 +508,7 @@ void c_QByteArray__detach(void *thisObj)
 // endsWith(const QByteArray & a) const
 bool c_QByteArray__endsWith_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return fromPtr(thisObj)->endsWith(a);
 }
@@ -515,6 +520,7 @@ bool c_QByteArray__endsWith_char(void *thisObj, const char *c)
 // fromBase64(const QByteArray & base64)
 void *c_static_QByteArray__fromBase64_QByteArray(void *base64_)
 {
+    assert(base64_);
     auto &base64 = *reinterpret_cast<QByteArray *>(base64_);
     return new Dartagnan::ValueWrapper<QByteArray> {
         KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromBase64(base64)
@@ -523,6 +529,7 @@ void *c_static_QByteArray__fromBase64_QByteArray(void *base64_)
 // fromHex(const QByteArray & hexEncoded)
 void *c_static_QByteArray__fromHex_QByteArray(void *hexEncoded_)
 {
+    assert(hexEncoded_);
     auto &hexEncoded = *reinterpret_cast<QByteArray *>(hexEncoded_);
     return new Dartagnan::ValueWrapper<QByteArray> {
         KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromHex(hexEncoded)
@@ -543,6 +550,7 @@ char c_QByteArray__front(void *thisObj)
 // indexOf(const QByteArray & a, int from) const
 int c_QByteArray__indexOf_QByteArray_int(void *thisObj, void *a_, int from)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return fromPtr(thisObj)->indexOf(a, from);
 }
@@ -554,6 +562,7 @@ int c_QByteArray__indexOf_char_int(void *thisObj, const char *c, int from)
 // insert(int i, const QByteArray & a)
 void *c_QByteArray__insert_int_QByteArray(void *thisObj, int i, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return &fromPtr(thisObj)->insert(i, a);
 }
@@ -590,6 +599,7 @@ bool c_QByteArray__isNull(void *thisObj)
 // isSharedWith(const QByteArray & other) const
 bool c_QByteArray__isSharedWith_QByteArray(void *thisObj, void *other_)
 {
+    assert(other_);
     auto &other = *reinterpret_cast<QByteArray *>(other_);
     return fromPtr(thisObj)->isSharedWith(other);
 }
@@ -601,6 +611,7 @@ bool c_QByteArray__isUpper(void *thisObj)
 // lastIndexOf(const QByteArray & a, int from) const
 int c_QByteArray__lastIndexOf_QByteArray_int(void *thisObj, void *a_, int from)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return fromPtr(thisObj)->lastIndexOf(a, from);
 }
@@ -641,6 +652,7 @@ void *c_static_QByteArray__number_qint64_int(qint64 arg__1, int base)
 // prepend(const QByteArray & a)
 void *c_QByteArray__prepend_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return &fromPtr(thisObj)->prepend(a);
 }
@@ -657,6 +669,7 @@ void *c_QByteArray__prepend_char_int(void *thisObj, const char *s, int len)
 // push_back(const QByteArray & a)
 void c_QByteArray__push_back_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     fromPtr(thisObj)->push_back(a);
 }
@@ -668,6 +681,7 @@ void c_QByteArray__push_back_char(void *thisObj, const char *c)
 // push_front(const QByteArray & a)
 void c_QByteArray__push_front_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     fromPtr(thisObj)->push_front(a);
 }
@@ -689,19 +703,23 @@ void *c_QByteArray__repeated_int(void *thisObj, int times)
 // replace(const QByteArray & before, const QByteArray & after)
 void *c_QByteArray__replace_QByteArray_QByteArray(void *thisObj, void *before_, void *after_)
 {
+    assert(before_);
     auto &before = *reinterpret_cast<QByteArray *>(before_);
+    assert(after_);
     auto &after = *reinterpret_cast<QByteArray *>(after_);
     return &fromPtr(thisObj)->replace(before, after);
 }
 // replace(const QByteArray & before, const char * after)
 void *c_QByteArray__replace_QByteArray_char(void *thisObj, void *before_, const char *after)
 {
+    assert(before_);
     auto &before = *reinterpret_cast<QByteArray *>(before_);
     return &fromPtr(thisObj)->replace(before, after);
 }
 // replace(const char * before, const QByteArray & after)
 void *c_QByteArray__replace_char_QByteArray(void *thisObj, const char *before, void *after_)
 {
+    assert(after_);
     auto &after = *reinterpret_cast<QByteArray *>(after_);
     return &fromPtr(thisObj)->replace(before, after);
 }
@@ -719,6 +737,7 @@ void *c_QByteArray__replace_char_int_char_int(void *thisObj, const char *before,
 // replace(int index, int len, const QByteArray & s)
 void *c_QByteArray__replace_int_int_QByteArray(void *thisObj, int index, int len, void *s_)
 {
+    assert(s_);
     auto &s = *reinterpret_cast<QByteArray *>(s_);
     return &fromPtr(thisObj)->replace(index, len, s);
 }
@@ -786,6 +805,7 @@ void c_QByteArray__squeeze(void *thisObj)
 // startsWith(const QByteArray & a) const
 bool c_QByteArray__startsWith_QByteArray(void *thisObj, void *a_)
 {
+    assert(a_);
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     return fromPtr(thisObj)->startsWith(a);
 }

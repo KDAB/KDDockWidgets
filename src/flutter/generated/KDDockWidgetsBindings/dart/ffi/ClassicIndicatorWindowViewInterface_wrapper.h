@@ -40,7 +40,7 @@ public:
     virtual void setVisible_nocallback(bool arg__1);
     virtual void updatePositions();
     virtual void updatePositions_nocallback();
-    typedef KDDockWidgets::DropLocation (*Callback_hover)(void *, QPoint arg__1);
+    typedef KDDockWidgets::DropLocation (*Callback_hover)(void *, QPoint *arg__1);
     Callback_hover m_hoverCallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;
@@ -48,9 +48,9 @@ public:
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
-    typedef void (*Callback_resize)(void *, QSize arg__1);
+    typedef void (*Callback_resize)(void *, QSize *arg__1);
     Callback_resize m_resizeCallback = nullptr;
-    typedef void (*Callback_setGeometry)(void *, QRect arg__1);
+    typedef void (*Callback_setGeometry)(void *, QRect *arg__1);
     Callback_setGeometry m_setGeometryCallback = nullptr;
     typedef void (*Callback_setObjectName)(void *, const QString &arg__1);
     Callback_setObjectName m_setObjectNameCallback = nullptr;

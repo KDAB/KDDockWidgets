@@ -35,7 +35,7 @@ KDDockWidgets::DropLocation ClassicIndicators_wrapper::hover_impl(QPoint globalP
 {
     if (m_hover_implCallback) {
         const void *thisPtr = this;
-        return m_hover_implCallback(const_cast<void *>(thisPtr), globalPos);
+        return m_hover_implCallback(const_cast<void *>(thisPtr), &globalPos);
     } else {
         return ::KDDockWidgets::Controllers::ClassicIndicators::hover_impl(globalPos);
     }
@@ -115,6 +115,7 @@ void *c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea(void
 int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj,
                                                                        void *globalPos_)
 {
+    assert(globalPos_);
     auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
     return [&] {
         auto targetPtr = fromPtr(thisObj);
@@ -135,6 +136,7 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged(v
 // onResize(QSize newSize)
 bool c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_)
 {
+    assert(newSize_);
     auto &newSize = *reinterpret_cast<QSize *>(newSize_);
     return fromPtr(thisObj)->onResize(newSize);
 }
@@ -192,17 +194,17 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallb
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 789:
+    case 787:
         wrapper->m_hover_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_hover_impl>(
             callback);
         break;
-    case 792:
+    case 790:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_posForIndicator>(
             callback);
         break;
-    case 797:
+    case 795:
         wrapper->m_updateVisibilityCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_updateVisibility>(
             callback);

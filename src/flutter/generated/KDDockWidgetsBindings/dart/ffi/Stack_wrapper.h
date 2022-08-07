@@ -14,11 +14,11 @@
 #include <TabBar.h>
 #include <Group.h>
 #include <qpoint.h>
-#include <qsize.h>
 #include <View.h>
-#include <qobject.h>
-#include <qcoreevent.h>
 #include <qrect.h>
+#include <qsize.h>
+#include <qcoreevent.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Stack_wrapper : public ::KDDockWidgets::Controllers::Stack
@@ -63,7 +63,7 @@ public:
     Callback_eventFilter m_eventFilterCallback = nullptr;
     typedef bool (*Callback_isMDI)(void *);
     Callback_isMDI m_isMDICallback = nullptr;
-    typedef bool (*Callback_isPositionDraggable)(void *, QPoint p);
+    typedef bool (*Callback_isPositionDraggable)(void *, QPoint *p);
     Callback_isPositionDraggable m_isPositionDraggableCallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;

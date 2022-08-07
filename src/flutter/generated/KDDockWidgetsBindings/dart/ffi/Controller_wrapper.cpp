@@ -250,6 +250,7 @@ bool c_KDDockWidgets__Controller__isVisible(void *thisObj)
 // mapToGlobal(QPoint arg__1) const
 void *c_KDDockWidgets__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapToGlobal(arg__1) };
 }
@@ -350,7 +351,7 @@ void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void 
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_eventFilter>(callback);
         break;
-    case 836:
+    case 834:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_setParentView_impl>(
             callback);

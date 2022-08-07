@@ -300,14 +300,18 @@ void *c_QRect__constructor()
 }
 void *c_QRect__constructor_QPoint_QPoint(void *topleft_, void *bottomright_)
 {
+    assert(topleft_);
     auto &topleft = *reinterpret_cast<QPoint *>(topleft_);
+    assert(bottomright_);
     auto &bottomright = *reinterpret_cast<QPoint *>(bottomright_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::QRect_wrapper(topleft, bottomright);
     return reinterpret_cast<void *>(ptr);
 }
 void *c_QRect__constructor_QPoint_QSize(void *topleft_, void *size_)
 {
+    assert(topleft_);
     auto &topleft = *reinterpret_cast<QPoint *>(topleft_);
+    assert(size_);
     auto &size = *reinterpret_cast<QSize *>(size_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::QRect_wrapper(topleft, size);
     return reinterpret_cast<void *>(ptr);
@@ -350,12 +354,14 @@ void *c_QRect__center(void *thisObj)
 // contains(const QPoint & p, bool proper) const
 bool c_QRect__contains_QPoint_bool(void *thisObj, void *p_, bool proper)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     return fromPtr(thisObj)->contains(p, proper);
 }
 // contains(const QRect & r, bool proper) const
 bool c_QRect__contains_QRect_bool(void *thisObj, void *r_, bool proper)
 {
+    assert(r_);
     auto &r = *reinterpret_cast<QRect *>(r_);
     return fromPtr(thisObj)->contains(r, proper);
 }
@@ -377,12 +383,14 @@ int c_QRect__height(void *thisObj)
 // intersected(const QRect & other) const
 void *c_QRect__intersected_QRect(void *thisObj, void *other_)
 {
+    assert(other_);
     auto &other = *reinterpret_cast<QRect *>(other_);
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->intersected(other) };
 }
 // intersects(const QRect & r) const
 bool c_QRect__intersects_QRect(void *thisObj, void *r_)
 {
+    assert(r_);
     auto &r = *reinterpret_cast<QRect *>(r_);
     return fromPtr(thisObj)->intersects(r);
 }
@@ -414,18 +422,21 @@ void c_QRect__moveBottom_int(void *thisObj, int pos)
 // moveBottomLeft(const QPoint & p)
 void c_QRect__moveBottomLeft_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->moveBottomLeft(p);
 }
 // moveBottomRight(const QPoint & p)
 void c_QRect__moveBottomRight_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->moveBottomRight(p);
 }
 // moveCenter(const QPoint & p)
 void c_QRect__moveCenter_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->moveCenter(p);
 }
@@ -442,6 +453,7 @@ void c_QRect__moveRight_int(void *thisObj, int pos)
 // moveTo(const QPoint & p)
 void c_QRect__moveTo_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->moveTo(p);
 }
@@ -458,12 +470,14 @@ void c_QRect__moveTop_int(void *thisObj, int pos)
 // moveTopLeft(const QPoint & p)
 void c_QRect__moveTopLeft_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->moveTopLeft(p);
 }
 // moveTopRight(const QPoint & p)
 void c_QRect__moveTopRight_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->moveTopRight(p);
 }
@@ -485,12 +499,14 @@ void c_QRect__setBottom_int(void *thisObj, int pos)
 // setBottomLeft(const QPoint & p)
 void c_QRect__setBottomLeft_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->setBottomLeft(p);
 }
 // setBottomRight(const QPoint & p)
 void c_QRect__setBottomRight_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->setBottomRight(p);
 }
@@ -522,6 +538,7 @@ void c_QRect__setRight_int(void *thisObj, int pos)
 // setSize(const QSize & s)
 void c_QRect__setSize_QSize(void *thisObj, void *s_)
 {
+    assert(s_);
     auto &s = *reinterpret_cast<QSize *>(s_);
     fromPtr(thisObj)->setSize(s);
 }
@@ -533,12 +550,14 @@ void c_QRect__setTop_int(void *thisObj, int pos)
 // setTopLeft(const QPoint & p)
 void c_QRect__setTopLeft_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->setTopLeft(p);
 }
 // setTopRight(const QPoint & p)
 void c_QRect__setTopRight_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->setTopRight(p);
 }
@@ -580,6 +599,7 @@ void *c_QRect__topRight(void *thisObj)
 // translate(const QPoint & p)
 void c_QRect__translate_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     fromPtr(thisObj)->translate(p);
 }
@@ -591,6 +611,7 @@ void c_QRect__translate_int_int(void *thisObj, int dx, int dy)
 // translated(const QPoint & p) const
 void *c_QRect__translated_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->translated(p) };
 }
@@ -607,6 +628,7 @@ void *c_QRect__transposed(void *thisObj)
 // united(const QRect & other) const
 void *c_QRect__united_QRect(void *thisObj, void *other_)
 {
+    assert(other_);
     auto &other = *reinterpret_cast<QRect *>(other_);
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->united(other) };
 }

@@ -231,7 +231,7 @@ void Item_wrapper::setGeometry_recursive(QRect rect)
 {
     if (m_setGeometry_recursiveCallback) {
         const void *thisPtr = this;
-        m_setGeometry_recursiveCallback(const_cast<void *>(thisPtr), rect);
+        m_setGeometry_recursiveCallback(const_cast<void *>(thisPtr), &rect);
     } else {
         ::Layouting::Item::setGeometry_recursive(rect);
     }
@@ -487,30 +487,35 @@ bool c_Layouting__Item__isVisible_bool(void *thisObj, bool excludeBeingInserted)
 // mapFromParent(QPoint arg__1) const
 void *c_Layouting__Item__mapFromParent_QPoint(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapFromParent(arg__1) };
 }
 // mapFromRoot(QPoint arg__1) const
 void *c_Layouting__Item__mapFromRoot_QPoint(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapFromRoot(arg__1) };
 }
 // mapFromRoot(QRect arg__1) const
 void *c_Layouting__Item__mapFromRoot_QRect(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->mapFromRoot(arg__1) };
 }
 // mapToRoot(QPoint arg__1) const
 void *c_Layouting__Item__mapToRoot_QPoint(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapToRoot(arg__1) };
 }
 // mapToRoot(QRect arg__1) const
 void *c_Layouting__Item__mapToRoot_QRect(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->mapToRoot(arg__1) };
 }
@@ -579,12 +584,14 @@ void c_Layouting__Item__setBeingInserted_bool(void *thisObj, bool arg__1)
 // setGeometry(QRect rect)
 void c_Layouting__Item__setGeometry_QRect(void *thisObj, void *rect_)
 {
+    assert(rect_);
     auto &rect = *reinterpret_cast<QRect *>(rect_);
     fromPtr(thisObj)->setGeometry(rect);
 }
 // setGeometry_recursive(QRect rect)
 void c_Layouting__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_)
 {
+    assert(rect_);
     auto &rect = *reinterpret_cast<QRect *>(rect_);
     [&] {
         auto targetPtr = fromPtr(thisObj);
@@ -624,24 +631,28 @@ void c_Layouting__Item__setIsVisible_bool(void *thisObj, bool arg__1)
 // setMaxSizeHint(QSize arg__1)
 void c_Layouting__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromPtr(thisObj)->setMaxSizeHint(arg__1);
 }
 // setMinSize(QSize arg__1)
 void c_Layouting__Item__setMinSize_QSize(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromPtr(thisObj)->setMinSize(arg__1);
 }
 // setPos(QPoint arg__1)
 void c_Layouting__Item__setPos_QPoint(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     fromWrapperPtr(thisObj)->setPos(arg__1);
 }
 // setSize(QSize arg__1)
 void c_Layouting__Item__setSize_QSize(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromPtr(thisObj)->setSize(arg__1);
 }

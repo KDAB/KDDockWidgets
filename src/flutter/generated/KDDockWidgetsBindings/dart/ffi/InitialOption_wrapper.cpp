@@ -92,6 +92,7 @@ void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption(int v)
 }
 void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_QSize(int v, void *size_)
 {
+    assert(size_);
     auto &size = *reinterpret_cast<QSize *>(size_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(
         static_cast<KDDockWidgets::InitialVisibilityOption>(v), size);
@@ -99,6 +100,7 @@ void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_QSize(
 }
 void *c_KDDockWidgets__InitialOption__constructor_QSize(void *size_)
 {
+    assert(size_);
     auto &size = *reinterpret_cast<QSize *>(size_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper(size);
     return reinterpret_cast<void *>(ptr);

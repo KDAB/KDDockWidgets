@@ -398,6 +398,7 @@ void c_KDDockWidgets__Controllers__Group__addTab_Group_InitialOption(void *thisO
                                                                      void *arg__2_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Group *>(arg__1_);
+    assert(arg__2_);
     auto &arg__2 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__2_);
     fromPtr(thisObj)->addTab(arg__1, arg__2);
 }
@@ -457,6 +458,7 @@ void *c_KDDockWidgets__Controllers__Group__biggestDockWidgetMaxSize(void *thisOb
 // containsMouse(QPoint globalPos) const
 bool c_KDDockWidgets__Controllers__Group__containsMouse_QPoint(void *thisObj, void *globalPos_)
 {
+    assert(globalPos_);
     auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
     return fromPtr(thisObj)->containsMouse(globalPos);
 }
@@ -779,7 +781,7 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_customEvent>(
                 callback);
         break;
-    case 1251:
+    case 1248:
         wrapper->m_dragRectCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_dragRect>(
                 callback);
@@ -794,17 +796,17 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_eventFilter>(
                 callback);
         break;
-    case 1253:
+    case 1250:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_focusedWidgetChangedCallback>(
             callback);
         break;
-    case 1267:
+    case 1264:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_isFocusedChangedCallback>(
             callback);
         break;
-    case 836:
+    case 834:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_setParentView_impl>(callback);
         break;

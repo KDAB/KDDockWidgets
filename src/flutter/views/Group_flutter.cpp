@@ -108,9 +108,9 @@ QSize Group_flutter::minSize() const
     return contentsSize + QSize(0, nonContentsHeight());
 }
 
-QSize Group_flutter::maximumSize() const
+QSize Group_flutter::maxSizeHint() const
 {
-    return View_flutter::maximumSize();
+    return View_flutter::maxSizeHint();
 }
 
 int Group_flutter::nonContentsHeight() const

@@ -99,7 +99,7 @@ bool Stack_wrapper::isPositionDraggable(QPoint p) const
 {
     if (m_isPositionDraggableCallback) {
         const void *thisPtr = this;
-        return m_isPositionDraggableCallback(const_cast<void *>(thisPtr), p);
+        return m_isPositionDraggableCallback(const_cast<void *>(thisPtr), &p);
     } else {
         return ::KDDockWidgets::Controllers::Stack::isPositionDraggable(p);
     }
@@ -274,6 +274,7 @@ bool c_KDDockWidgets__Controllers__Stack__isMDI(void *thisObj)
 // isPositionDraggable(QPoint p) const
 bool c_KDDockWidgets__Controllers__Stack__isPositionDraggable_QPoint(void *thisObj, void *p_)
 {
+    assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     return [&] {
         auto targetPtr = fromPtr(thisObj);
@@ -313,6 +314,7 @@ void c_KDDockWidgets__Controllers__Stack__onCurrentTabChanged_int(void *thisObj,
 // onMouseDoubleClick(QPoint localPos)
 bool c_KDDockWidgets__Controllers__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_)
 {
+    assert(localPos_);
     auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
     return fromPtr(thisObj)->onMouseDoubleClick(localPos);
 }
@@ -396,22 +398,22 @@ void c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_eventFilter>(
                 callback);
         break;
-    case 1115:
+    case 1112:
         wrapper->m_isMDICallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isMDI>(
                 callback);
         break;
-    case 1116:
+    case 1113:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isPositionDraggable>(
             callback);
         break;
-    case 1118:
+    case 1115:
         wrapper->m_isWindowCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isWindow>(
                 callback);
         break;
-    case 836:
+    case 834:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_setParentView_impl>(callback);
         break;

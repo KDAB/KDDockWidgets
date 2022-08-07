@@ -98,7 +98,9 @@ void *c_QPoint__constructor_int_int(int xpos, int ypos)
 // dotProduct(const QPoint & p1, const QPoint & p2)
 int c_static_QPoint__dotProduct_QPoint_QPoint(void *p1_, void *p2_)
 {
+    assert(p1_);
     auto &p1 = *reinterpret_cast<QPoint *>(p1_);
+    assert(p2_);
     auto &p2 = *reinterpret_cast<QPoint *>(p2_);
     return KDDockWidgetsBindings_wrappersNS::QPoint_wrapper::dotProduct(p1, p2);
 }

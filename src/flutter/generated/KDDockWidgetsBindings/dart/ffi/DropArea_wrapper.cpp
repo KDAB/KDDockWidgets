@@ -170,6 +170,7 @@ void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location_
 {
     auto splitter = reinterpret_cast<KDDockWidgets::Controllers::DropArea *>(splitter_);
     auto relativeTo = reinterpret_cast<KDDockWidgets::Controllers::Group *>(relativeTo_);
+    assert(option_);
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
     fromPtr(thisObj)->addMultiSplitter(splitter, static_cast<KDDockWidgets::Location>(location),
                                        relativeTo, option);
@@ -181,6 +182,7 @@ void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_Initi
 {
     auto widget = reinterpret_cast<KDDockWidgets::View *>(widget_);
     auto relativeTo = reinterpret_cast<KDDockWidgets::Controllers::Group *>(relativeTo_);
+    assert(option_);
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
     fromPtr(thisObj)->addWidget(widget, static_cast<KDDockWidgets::Location>(location), relativeTo,
                                 option);
@@ -305,7 +307,7 @@ void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void 
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_eventFilter>(callback);
         break;
-    case 836:
+    case 834:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_setParentView_impl>(
             callback);

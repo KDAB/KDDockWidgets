@@ -40,7 +40,6 @@ public:
     virtual bool hasActivePopup_nocallback() const;
     virtual bool inDisallowedDragView(QPoint globalPos) const;
     virtual bool inDisallowedDragView_nocallback(QPoint globalPos) const;
-    static void indirection();
     virtual void installMessageHandler();
     virtual void installMessageHandler_nocallback();
     static KDDockWidgets::Platform *instance();
@@ -122,7 +121,7 @@ public:
     Callback_dumpManagedBacktrace m_dumpManagedBacktraceCallback = nullptr;
     typedef bool (*Callback_hasActivePopup)(void *);
     Callback_hasActivePopup m_hasActivePopupCallback = nullptr;
-    typedef bool (*Callback_inDisallowedDragView)(void *, QPoint globalPos);
+    typedef bool (*Callback_inDisallowedDragView)(void *, QPoint *globalPos);
     Callback_inDisallowedDragView m_inDisallowedDragViewCallback = nullptr;
     typedef void (*Callback_installMessageHandler)(void *);
     Callback_installMessageHandler m_installMessageHandlerCallback = nullptr;
@@ -147,13 +146,13 @@ public:
     typedef int (*Callback_startDragDistance_impl)(void *);
     Callback_startDragDistance_impl m_startDragDistance_implCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_tests_createFocusableView)(
-        void *, KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent);
+        void *, KDDockWidgets::CreateViewOptions *arg__1, KDDockWidgets::View *parent);
     Callback_tests_createFocusableView m_tests_createFocusableViewCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_tests_createNonClosableView)(
         void *, KDDockWidgets::View *parent);
     Callback_tests_createNonClosableView m_tests_createNonClosableViewCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_tests_createView)(
-        void *, KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent);
+        void *, KDDockWidgets::CreateViewOptions *arg__1, KDDockWidgets::View *parent);
     Callback_tests_createView m_tests_createViewCallback = nullptr;
     typedef void (*Callback_tests_deinitPlatform_impl)(void *);
     Callback_tests_deinitPlatform_impl m_tests_deinitPlatform_implCallback = nullptr;
@@ -204,8 +203,6 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__hasActivePopup(void
 // KDDockWidgets::Platform::inDisallowedDragView(QPoint globalPos) const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Platform__inDisallowedDragView_QPoint(void *thisObj, void *globalPos_);
-// KDDockWidgets::Platform::indirection()
-KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Platform__indirection();
 // KDDockWidgets::Platform::installMessageHandler()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform__installMessageHandler(void *thisObj);
 // KDDockWidgets::Platform::instance()

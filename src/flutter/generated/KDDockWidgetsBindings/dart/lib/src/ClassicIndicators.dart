@@ -68,7 +68,7 @@ class ClassicIndicators {
   int hover_impl(QPoint globalPos) {
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(789))
+            cFunctionSymbolName(787))
         .asFunction();
     return func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp);
   }
@@ -105,7 +105,7 @@ class ClassicIndicators {
   QPoint posForIndicator(int arg__1) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(792))
+            cFunctionSymbolName(790))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, arg__1);
     return QPoint.fromCppPointer(result, true);
@@ -162,7 +162,7 @@ class ClassicIndicators {
   updateVisibility() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(797))
+            cFunctionSymbolName(795))
         .asFunction();
     func(thisCpp);
   }
@@ -196,11 +196,11 @@ class ClassicIndicators {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 789:
+      case 787:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint";
-      case 792:
+      case 790:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation";
-      case 797:
+      case 795:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility";
     }
     return "";
@@ -208,11 +208,11 @@ class ClassicIndicators {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 789:
+      case 787:
         return "hover_impl";
-      case 792:
+      case 790:
         return "posForIndicator";
-      case 797:
+      case 795:
         return "updateVisibility";
     }
     throw Error();
@@ -224,17 +224,17 @@ class ClassicIndicators {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept789 = 0;
-    final callback789 =
+    const callbackExcept787 = 0;
+    final callback787 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            ClassicIndicators.hover_impl_calledFromC, callbackExcept789);
-    registerCallback(thisCpp, callback789, 789);
-    final callback792 =
+            ClassicIndicators.hover_impl_calledFromC, callbackExcept787);
+    registerCallback(thisCpp, callback787, 787);
+    final callback790 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             ClassicIndicators.posForIndicator_calledFromC);
-    registerCallback(thisCpp, callback792, 792);
-    final callback797 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback790, 790);
+    final callback795 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         ClassicIndicators.updateVisibility_calledFromC);
-    registerCallback(thisCpp, callback797, 797);
+    registerCallback(thisCpp, callback795, 795);
   }
 }

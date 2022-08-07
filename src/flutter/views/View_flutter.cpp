@@ -96,11 +96,6 @@ QSize View_flutter::maxSizeHint() const
     return {};
 }
 
-QSize View_flutter::maximumSize() const
-{
-    return {};
-}
-
 QRect View_flutter::geometry() const
 {
     return {};

@@ -17,9 +17,9 @@
 #include <qrect.h>
 #include <Group.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 #include <qlist.h>
 #include <qbytearray.h>
-#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Item_wrapper : public ::Layouting::Item
@@ -103,7 +103,7 @@ public:
     Callback_maxSizeHint m_maxSizeHintCallback = nullptr;
     typedef QSize *(*Callback_minSize)(void *);
     Callback_minSize m_minSizeCallback = nullptr;
-    typedef void (*Callback_setGeometry_recursive)(void *, QRect rect);
+    typedef void (*Callback_setGeometry_recursive)(void *, QRect *rect);
     Callback_setGeometry_recursive m_setGeometry_recursiveCallback = nullptr;
     typedef void (*Callback_setHostView)(void *, KDDockWidgets::View *arg__1);
     Callback_setHostView m_setHostViewCallback = nullptr;

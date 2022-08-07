@@ -48,7 +48,7 @@ bool TabBar_wrapper::dragCanStart(QPoint pressPos, QPoint pos) const
 {
     if (m_dragCanStartCallback) {
         const void *thisPtr = this;
-        return m_dragCanStartCallback(const_cast<void *>(thisPtr), pressPos, pos);
+        return m_dragCanStartCallback(const_cast<void *>(thisPtr), &pressPos, &pos);
     } else {
         return ::KDDockWidgets::Controllers::TabBar::dragCanStart(pressPos, pos);
     }
@@ -200,7 +200,9 @@ void c_KDDockWidgets__Controllers__TabBar__customEvent_QEvent(void *thisObj, voi
 bool c_KDDockWidgets__Controllers__TabBar__dragCanStart_QPoint_QPoint(void *thisObj,
                                                                       void *pressPos_, void *pos_)
 {
+    assert(pressPos_);
     auto &pressPos = *reinterpret_cast<QPoint *>(pressPos_);
+    assert(pos_);
     auto &pos = *reinterpret_cast<QPoint *>(pos_);
     return [&] {
         auto targetPtr = fromPtr(thisObj);
@@ -296,12 +298,14 @@ int c_KDDockWidgets__Controllers__TabBar__numDockWidgets(void *thisObj)
 // onMouseDoubleClick(QPoint localPos)
 void c_KDDockWidgets__Controllers__TabBar__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_)
 {
+    assert(localPos_);
     auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
     fromPtr(thisObj)->onMouseDoubleClick(localPos);
 }
 // onMousePress(QPoint localPos)
 void c_KDDockWidgets__Controllers__TabBar__onMousePress_QPoint(void *thisObj, void *localPos_)
 {
+    assert(localPos_);
     auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
     fromPtr(thisObj)->onMousePress(localPos);
 }
@@ -352,7 +356,7 @@ void c_KDDockWidgets__Controllers__TabBar__registerVirtualMethodCallback(void *p
         wrapper->m_customEventCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_customEvent>(callback);
         break;
-    case 1074:
+    case 1071:
         wrapper->m_dragCanStartCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_dragCanStart>(callback);
         break;
@@ -365,17 +369,17 @@ void c_KDDockWidgets__Controllers__TabBar__registerVirtualMethodCallback(void *p
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_eventFilter>(callback);
         break;
-    case 1081:
+    case 1078:
         wrapper->m_isMDICallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_isMDI>(
                 callback);
         break;
-    case 1083:
+    case 1080:
         wrapper->m_isWindowCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_isWindow>(
                 callback);
         break;
-    case 836:
+    case 834:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_setParentView_impl>(
             callback);

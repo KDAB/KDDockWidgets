@@ -44,7 +44,6 @@ public:
     QSize sizeHint() const override;
     QSize minSize() const override;
     QSize maxSizeHint() const override;
-    QSize maximumSize() const override;
     QRect geometry() const override;
     QRect normalGeometry() const override;
     void setNormalGeometry(QRect geo);

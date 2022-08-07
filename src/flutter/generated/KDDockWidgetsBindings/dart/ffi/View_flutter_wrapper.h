@@ -16,12 +16,12 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <TabBar.h>
+#include <TitleBar.h>
+#include <DropArea.h>
 #include <Group.h>
 #include <Stack.h>
 #include <controllers/Layout.h>
-#include <TitleBar.h>
-#include <DropArea.h>
+#include <TabBar.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class View_flutter_wrapper : public ::KDDockWidgets::Views::View_flutter
@@ -70,8 +70,6 @@ public:
     virtual QPoint mapToGlobal_nocallback(QPoint localPt) const;
     virtual QSize maxSizeHint() const;
     virtual QSize maxSizeHint_nocallback() const;
-    virtual QSize maximumSize() const;
-    virtual QSize maximumSize_nocallback() const;
     virtual QSize minSize() const;
     virtual QSize minSize_nocallback() const;
     virtual int minimumHeight() const;
@@ -100,8 +98,8 @@ public:
     virtual void setFixedHeight_nocallback(int h);
     virtual void setFixedWidth(int w);
     virtual void setFixedWidth_nocallback(int w);
-    virtual void setGeometry(QRect arg__1);
-    virtual void setGeometry_nocallback(QRect arg__1);
+    virtual void setGeometry(QRect geometry);
+    virtual void setGeometry_nocallback(QRect geometry);
     virtual void setHeight(int h);
     virtual void setHeight_nocallback(int h);
     virtual void setMaximumSize(QSize sz);
@@ -125,8 +123,8 @@ public:
     virtual void setWindowOpacity_nocallback(double v);
     virtual void setWindowTitle(const QString &title);
     virtual void setWindowTitle_nocallback(const QString &title);
-    virtual void setZOrder(int arg__1);
-    virtual void setZOrder_nocallback(int arg__1);
+    virtual void setZOrder(int z);
+    virtual void setZOrder_nocallback(int z);
     virtual void show();
     virtual void show_nocallback();
     virtual void showMaximized();
@@ -172,16 +170,14 @@ public:
     Callback_isRootView m_isRootViewCallback = nullptr;
     typedef bool (*Callback_isVisible)(void *);
     Callback_isVisible m_isVisibleCallback = nullptr;
-    typedef QPoint *(*Callback_mapFromGlobal)(void *, QPoint globalPt);
+    typedef QPoint *(*Callback_mapFromGlobal)(void *, QPoint *globalPt);
     Callback_mapFromGlobal m_mapFromGlobalCallback = nullptr;
-    typedef QPoint *(*Callback_mapTo)(void *, KDDockWidgets::View *parent, QPoint pos);
+    typedef QPoint *(*Callback_mapTo)(void *, KDDockWidgets::View *parent, QPoint *pos);
     Callback_mapTo m_mapToCallback = nullptr;
-    typedef QPoint *(*Callback_mapToGlobal)(void *, QPoint localPt);
+    typedef QPoint *(*Callback_mapToGlobal)(void *, QPoint *localPt);
     Callback_mapToGlobal m_mapToGlobalCallback = nullptr;
     typedef QSize *(*Callback_maxSizeHint)(void *);
     Callback_maxSizeHint m_maxSizeHintCallback = nullptr;
-    typedef QSize *(*Callback_maximumSize)(void *);
-    Callback_maximumSize m_maximumSizeCallback = nullptr;
     typedef QSize *(*Callback_minSize)(void *);
     Callback_minSize m_minSizeCallback = nullptr;
     typedef int (*Callback_minimumHeight)(void *);
@@ -194,7 +190,7 @@ public:
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
     typedef QString *(*Callback_objectName)(void *);
     Callback_objectName m_objectNameCallback = nullptr;
-    typedef bool (*Callback_onResize)(void *, QSize newSize);
+    typedef bool (*Callback_onResize)(void *, QSize *newSize);
     Callback_onResize m_onResizeCallback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
@@ -210,13 +206,13 @@ public:
     Callback_setFixedHeight m_setFixedHeightCallback = nullptr;
     typedef void (*Callback_setFixedWidth)(void *, int w);
     Callback_setFixedWidth m_setFixedWidthCallback = nullptr;
-    typedef void (*Callback_setGeometry)(void *, QRect arg__1);
+    typedef void (*Callback_setGeometry)(void *, QRect *geometry);
     Callback_setGeometry m_setGeometryCallback = nullptr;
     typedef void (*Callback_setHeight)(void *, int h);
     Callback_setHeight m_setHeightCallback = nullptr;
-    typedef void (*Callback_setMaximumSize)(void *, QSize sz);
+    typedef void (*Callback_setMaximumSize)(void *, QSize *sz);
     Callback_setMaximumSize m_setMaximumSizeCallback = nullptr;
-    typedef void (*Callback_setMinimumSize)(void *, QSize sz);
+    typedef void (*Callback_setMinimumSize)(void *, QSize *sz);
     Callback_setMinimumSize m_setMinimumSizeCallback = nullptr;
     typedef void (*Callback_setMouseTracking)(void *, bool enable);
     Callback_setMouseTracking m_setMouseTrackingCallback = nullptr;
@@ -234,7 +230,7 @@ public:
     Callback_setWindowOpacity m_setWindowOpacityCallback = nullptr;
     typedef void (*Callback_setWindowTitle)(void *, const QString &title);
     Callback_setWindowTitle m_setWindowTitleCallback = nullptr;
-    typedef void (*Callback_setZOrder)(void *, int arg__1);
+    typedef void (*Callback_setZOrder)(void *, int z);
     Callback_setZOrder m_setZOrderCallback = nullptr;
     typedef void (*Callback_show)(void *);
     Callback_show m_showCallback = nullptr;
@@ -302,8 +298,6 @@ KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Views__View_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
 // KDDockWidgets::Views::View_flutter::maxSizeHint() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__View_flutter__maxSizeHint(void *thisObj);
-// KDDockWidgets::Views::View_flutter::maximumSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__View_flutter__maximumSize(void *thisObj);
 // KDDockWidgets::Views::View_flutter::minSize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__View_flutter__minSize(void *thisObj);
 // KDDockWidgets::Views::View_flutter::minimumHeight() const
@@ -340,9 +334,9 @@ c_KDDockWidgets__Views__View_flutter__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::View_flutter::setFixedWidth(int w)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__View_flutter__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::Views::View_flutter::setGeometry(QRect arg__1)
+// KDDockWidgets::Views::View_flutter::setGeometry(QRect geometry)
 KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__View_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
+c_KDDockWidgets__Views__View_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
 // KDDockWidgets::Views::View_flutter::setHeight(int h)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__View_flutter__setHeight_int(void *thisObj,
                                                                                       int h);
@@ -379,9 +373,9 @@ c_KDDockWidgets__Views__View_flutter__setWindowOpacity_double(void *thisObj, dou
 // KDDockWidgets::Views::View_flutter::setWindowTitle(const QString & title)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__View_flutter__setWindowTitle_QString(void *thisObj, const char *title_);
-// KDDockWidgets::Views::View_flutter::setZOrder(int arg__1)
+// KDDockWidgets::Views::View_flutter::setZOrder(int z)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__View_flutter__setZOrder_int(void *thisObj,
-                                                                                      int arg__1);
+                                                                                      int z);
 // KDDockWidgets::Views::View_flutter::show()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__View_flutter__show(void *thisObj);
 // KDDockWidgets::Views::View_flutter::showMaximized()

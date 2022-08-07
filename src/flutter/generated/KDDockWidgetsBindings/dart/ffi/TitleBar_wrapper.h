@@ -13,12 +13,12 @@
 #include <qstring.h>
 #include <Group.h>
 #include <TabBar.h>
-#include <qpoint.h>
-#include <qsize.h>
 #include <View.h>
-#include <qobject.h>
-#include <qcoreevent.h>
 #include <qrect.h>
+#include <qsize.h>
+#include <qcoreevent.h>
+#include <qobject.h>
+#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_wrapper : public ::KDDockWidgets::Controllers::TitleBar

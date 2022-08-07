@@ -110,12 +110,14 @@ void *c_QSize__constructor_int_int(int w, int h)
 // boundedTo(const QSize & arg__1) const
 void *c_QSize__boundedTo_QSize(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->boundedTo(arg__1) };
 }
 // expandedTo(const QSize & arg__1) const
 void *c_QSize__expandedTo_QSize(void *thisObj, void *arg__1_)
 {
+    assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->expandedTo(arg__1) };
 }

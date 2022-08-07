@@ -61,7 +61,7 @@ public:
     QSize minSize() const override;
 
     /// @reimp
-    QSize maximumSize() const override;
+    QSize maxSizeHint() const override;
 
 protected:
     void init() override;

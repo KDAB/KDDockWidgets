@@ -296,6 +296,7 @@ void *c_QList_T_QObject_T___constructor()
 // append(const QList<T > & t)
 void c_QList_T_QObject_T___append_QList_T(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QList<QObject *> *>(t_);
     fromPtr<QObject *>(thisObj)->append(t);
 }
@@ -403,6 +404,7 @@ bool c_QList_T_QObject_T___isEmpty(void *thisObj)
 // isSharedWith(const QList<T > & other) const
 bool c_QList_T_QObject_T___isSharedWith_QList_T(void *thisObj, void *other_)
 {
+    assert(other_);
     auto &other = *reinterpret_cast<QList<QObject *> *>(other_);
     return fromPtr<QObject *>(thisObj)->isSharedWith(other);
 }
@@ -564,12 +566,14 @@ void *c_QList_T_QByteArray_T___constructor()
 // append(const QList<T > & t)
 void c_QList_T_QByteArray_T___append_QList_T(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QList<QByteArray> *>(t_);
     fromPtr<QByteArray>(thisObj)->append(t);
 }
 // append(const T & t)
 void c_QList_T_QByteArray_T___append_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     fromPtr<QByteArray>(thisObj)->append(t);
 }
@@ -601,6 +605,7 @@ const void *c_QList_T_QByteArray_T___constLast(void *thisObj)
 // contains(const T & t) const
 bool c_QList_T_QByteArray_T___contains_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     return fromPtr<QByteArray>(thisObj)->contains(t);
 }
@@ -612,6 +617,7 @@ int c_QList_T_QByteArray_T___count(void *thisObj)
 // count(const T & t) const
 int c_QList_T_QByteArray_T___count_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     return fromPtr<QByteArray>(thisObj)->count(t);
 }
@@ -633,6 +639,7 @@ bool c_QList_T_QByteArray_T___empty(void *thisObj)
 // endsWith(const T & t) const
 bool c_QList_T_QByteArray_T___endsWith_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     return fromPtr<QByteArray>(thisObj)->endsWith(t);
 }
@@ -649,12 +656,14 @@ void *c_QList_T_QByteArray_T___front(void *thisObj)
 // indexOf(const T & t, int from) const
 int c_QList_T_QByteArray_T___indexOf_QByteArray_int(void *thisObj, void *t_, int from)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     return fromPtr<QByteArray>(thisObj)->indexOf(t, from);
 }
 // insert(int i, const T & t)
 void c_QList_T_QByteArray_T___insert_int_QByteArray(void *thisObj, int i, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     fromPtr<QByteArray>(thisObj)->insert(i, t);
 }
@@ -671,6 +680,7 @@ bool c_QList_T_QByteArray_T___isEmpty(void *thisObj)
 // isSharedWith(const QList<T > & other) const
 bool c_QList_T_QByteArray_T___isSharedWith_QList_T(void *thisObj, void *other_)
 {
+    assert(other_);
     auto &other = *reinterpret_cast<QList<QByteArray> *>(other_);
     return fromPtr<QByteArray>(thisObj)->isSharedWith(other);
 }
@@ -682,6 +692,7 @@ void *c_QList_T_QByteArray_T___last(void *thisObj)
 // lastIndexOf(const T & t, int from) const
 int c_QList_T_QByteArray_T___lastIndexOf_QByteArray_int(void *thisObj, void *t_, int from)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     return fromPtr<QByteArray>(thisObj)->lastIndexOf(t, from);
 }
@@ -714,24 +725,28 @@ void c_QList_T_QByteArray_T___pop_front(void *thisObj)
 // prepend(const T & t)
 void c_QList_T_QByteArray_T___prepend_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     fromPtr<QByteArray>(thisObj)->prepend(t);
 }
 // push_back(const T & t)
 void c_QList_T_QByteArray_T___push_back_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     fromPtr<QByteArray>(thisObj)->push_back(t);
 }
 // push_front(const T & t)
 void c_QList_T_QByteArray_T___push_front_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     fromPtr<QByteArray>(thisObj)->push_front(t);
 }
 // removeAll(const T & t)
 int c_QList_T_QByteArray_T___removeAll_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     return fromPtr<QByteArray>(thisObj)->removeAll(t);
 }
@@ -753,12 +768,14 @@ void c_QList_T_QByteArray_T___removeLast(void *thisObj)
 // removeOne(const T & t)
 bool c_QList_T_QByteArray_T___removeOne_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     return fromPtr<QByteArray>(thisObj)->removeOne(t);
 }
 // replace(int i, const T & t)
 void c_QList_T_QByteArray_T___replace_int_QByteArray(void *thisObj, int i, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     fromPtr<QByteArray>(thisObj)->replace(i, t);
 }
@@ -780,6 +797,7 @@ int c_QList_T_QByteArray_T___size(void *thisObj)
 // startsWith(const T & t) const
 bool c_QList_T_QByteArray_T___startsWith_QByteArray(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QByteArray *>(t_);
     return fromPtr<QByteArray>(thisObj)->startsWith(t);
 }
@@ -811,6 +829,7 @@ void *c_QList_T_QByteArray_T___value_int(void *thisObj, int i)
 // value(int i, const T & defaultValue) const
 void *c_QList_T_QByteArray_T___value_int_QByteArray(void *thisObj, int i, void *defaultValue_)
 {
+    assert(defaultValue_);
     auto &defaultValue = *reinterpret_cast<QByteArray *>(defaultValue_);
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr<QByteArray>(thisObj)->value(
         i, defaultValue) };
@@ -836,6 +855,7 @@ void *c_QList_T_Group_T___constructor()
 // append(const QList<T > & t)
 void c_QList_T_Group_T___append_QList_T(void *thisObj, void *t_)
 {
+    assert(t_);
     auto &t = *reinterpret_cast<QList<KDDockWidgets::Controllers::Group *> *>(t_);
     fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->append(t);
 }
@@ -943,6 +963,7 @@ bool c_QList_T_Group_T___isEmpty(void *thisObj)
 // isSharedWith(const QList<T > & other) const
 bool c_QList_T_Group_T___isSharedWith_QList_T(void *thisObj, void *other_)
 {
+    assert(other_);
     auto &other = *reinterpret_cast<QList<KDDockWidgets::Controllers::Group *> *>(other_);
     return fromPtr<KDDockWidgets::Controllers::Group *>(thisObj)->isSharedWith(other);
 }

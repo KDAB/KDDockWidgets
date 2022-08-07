@@ -1191,8 +1191,6 @@ void c_KDDockWidgets__Platform__dumpManagedBacktrace(void *thisObj);
 bool c_KDDockWidgets__Platform__hasActivePopup(void *thisObj);
 // KDDockWidgets::Platform::inDisallowedDragView(QPoint globalPos) const
 bool c_KDDockWidgets__Platform__inDisallowedDragView_QPoint(void *thisObj, void *globalPos_);
-// KDDockWidgets::Platform::indirection()
-void c_static_KDDockWidgets__Platform__indirection();
 // KDDockWidgets::Platform::installMessageHandler()
 void c_KDDockWidgets__Platform__installMessageHandler(void *thisObj);
 // KDDockWidgets::Platform::instance()
@@ -1550,8 +1548,6 @@ void *c_KDDockWidgets__View__mapTo_View_QPoint(void *thisObj, void *arg__1_, voi
 void *c_KDDockWidgets__View__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::View::maxSizeHint() const
 void *c_KDDockWidgets__View__maxSizeHint(void *thisObj);
-// KDDockWidgets::View::maximumSize() const
-void *c_KDDockWidgets__View__maximumSize(void *thisObj);
 // KDDockWidgets::View::minSize() const
 void *c_KDDockWidgets__View__minSize(void *thisObj);
 // KDDockWidgets::View::minimumHeight() const
@@ -1697,8 +1693,6 @@ void *c_KDDockWidgets__Views__View_flutter__mapTo_View_QPoint(void *thisObj, voi
 void *c_KDDockWidgets__Views__View_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
 // KDDockWidgets::Views::View_flutter::maxSizeHint() const
 void *c_KDDockWidgets__Views__View_flutter__maxSizeHint(void *thisObj);
-// KDDockWidgets::Views::View_flutter::maximumSize() const
-void *c_KDDockWidgets__Views__View_flutter__maximumSize(void *thisObj);
 // KDDockWidgets::Views::View_flutter::minSize() const
 void *c_KDDockWidgets__Views__View_flutter__minSize(void *thisObj);
 // KDDockWidgets::Views::View_flutter::minimumHeight() const
@@ -1727,8 +1721,8 @@ void c_KDDockWidgets__Views__View_flutter__setCursor_CursorShape(void *thisObj, 
 void c_KDDockWidgets__Views__View_flutter__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::View_flutter::setFixedWidth(int w)
 void c_KDDockWidgets__Views__View_flutter__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::Views::View_flutter::setGeometry(QRect arg__1)
-void c_KDDockWidgets__Views__View_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Views::View_flutter::setGeometry(QRect geometry)
+void c_KDDockWidgets__Views__View_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
 // KDDockWidgets::Views::View_flutter::setHeight(int h)
 void c_KDDockWidgets__Views__View_flutter__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::View_flutter::setMaximumSize(QSize sz)
@@ -1754,8 +1748,8 @@ void c_KDDockWidgets__Views__View_flutter__setWindowOpacity_double(void *thisObj
 // KDDockWidgets::Views::View_flutter::setWindowTitle(const QString & title)
 void c_KDDockWidgets__Views__View_flutter__setWindowTitle_QString(void *thisObj,
                                                                   const char *title_);
-// KDDockWidgets::Views::View_flutter::setZOrder(int arg__1)
-void c_KDDockWidgets__Views__View_flutter__setZOrder_int(void *thisObj, int arg__1);
+// KDDockWidgets::Views::View_flutter::setZOrder(int z)
+void c_KDDockWidgets__Views__View_flutter__setZOrder_int(void *thisObj, int z);
 // KDDockWidgets::Views::View_flutter::show()
 void c_KDDockWidgets__Views__View_flutter__show(void *thisObj);
 // KDDockWidgets::Views::View_flutter::showMaximized()
@@ -1829,8 +1823,6 @@ void *c_KDDockWidgets__Views__TitleBar_flutter__mapTo_View_QPoint(void *thisObj,
 void *c_KDDockWidgets__Views__TitleBar_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
 // KDDockWidgets::Views::TitleBar_flutter::maxSizeHint() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__maxSizeHint(void *thisObj);
-// KDDockWidgets::Views::TitleBar_flutter::maximumSize() const
-void *c_KDDockWidgets__Views__TitleBar_flutter__maximumSize(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::minSize() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__minSize(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::minimumHeight() const
@@ -1859,8 +1851,8 @@ void c_KDDockWidgets__Views__TitleBar_flutter__setCursor_CursorShape(void *thisO
 void c_KDDockWidgets__Views__TitleBar_flutter__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::TitleBar_flutter::setFixedWidth(int w)
 void c_KDDockWidgets__Views__TitleBar_flutter__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::Views::TitleBar_flutter::setGeometry(QRect arg__1)
-void c_KDDockWidgets__Views__TitleBar_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Views::TitleBar_flutter::setGeometry(QRect geometry)
+void c_KDDockWidgets__Views__TitleBar_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
 // KDDockWidgets::Views::TitleBar_flutter::setHeight(int h)
 void c_KDDockWidgets__Views__TitleBar_flutter__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::TitleBar_flutter::setMaximumSize(QSize sz)
@@ -1885,8 +1877,8 @@ void c_KDDockWidgets__Views__TitleBar_flutter__setWindowOpacity_double(void *thi
 // KDDockWidgets::Views::TitleBar_flutter::setWindowTitle(const QString & title)
 void c_KDDockWidgets__Views__TitleBar_flutter__setWindowTitle_QString(void *thisObj,
                                                                       const char *title_);
-// KDDockWidgets::Views::TitleBar_flutter::setZOrder(int arg__1)
-void c_KDDockWidgets__Views__TitleBar_flutter__setZOrder_int(void *thisObj, int arg__1);
+// KDDockWidgets::Views::TitleBar_flutter::setZOrder(int z)
+void c_KDDockWidgets__Views__TitleBar_flutter__setZOrder_int(void *thisObj, int z);
 // KDDockWidgets::Views::TitleBar_flutter::show()
 void c_KDDockWidgets__Views__TitleBar_flutter__show(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::showMaximized()
@@ -1952,8 +1944,6 @@ void *c_KDDockWidgets__Views__TabBar_flutter__mapTo_View_QPoint(void *thisObj, v
 void *c_KDDockWidgets__Views__TabBar_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
 // KDDockWidgets::Views::TabBar_flutter::maxSizeHint() const
 void *c_KDDockWidgets__Views__TabBar_flutter__maxSizeHint(void *thisObj);
-// KDDockWidgets::Views::TabBar_flutter::maximumSize() const
-void *c_KDDockWidgets__Views__TabBar_flutter__maximumSize(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::minSize() const
 void *c_KDDockWidgets__Views__TabBar_flutter__minSize(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::minimumHeight() const
@@ -1986,8 +1976,8 @@ void c_KDDockWidgets__Views__TabBar_flutter__setCursor_CursorShape(void *thisObj
 void c_KDDockWidgets__Views__TabBar_flutter__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::TabBar_flutter::setFixedWidth(int w)
 void c_KDDockWidgets__Views__TabBar_flutter__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::Views::TabBar_flutter::setGeometry(QRect arg__1)
-void c_KDDockWidgets__Views__TabBar_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Views::TabBar_flutter::setGeometry(QRect geometry)
+void c_KDDockWidgets__Views__TabBar_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
 // KDDockWidgets::Views::TabBar_flutter::setHeight(int h)
 void c_KDDockWidgets__Views__TabBar_flutter__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::TabBar_flutter::setMaximumSize(QSize sz)
@@ -2012,8 +2002,8 @@ void c_KDDockWidgets__Views__TabBar_flutter__setWindowOpacity_double(void *thisO
 // KDDockWidgets::Views::TabBar_flutter::setWindowTitle(const QString & title)
 void c_KDDockWidgets__Views__TabBar_flutter__setWindowTitle_QString(void *thisObj,
                                                                     const char *title_);
-// KDDockWidgets::Views::TabBar_flutter::setZOrder(int arg__1)
-void c_KDDockWidgets__Views__TabBar_flutter__setZOrder_int(void *thisObj, int arg__1);
+// KDDockWidgets::Views::TabBar_flutter::setZOrder(int z)
+void c_KDDockWidgets__Views__TabBar_flutter__setZOrder_int(void *thisObj, int z);
 // KDDockWidgets::Views::TabBar_flutter::show()
 void c_KDDockWidgets__Views__TabBar_flutter__show(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::showMaximized()
@@ -2088,8 +2078,6 @@ void *c_KDDockWidgets__Views__Stack_flutter__mapTo_View_QPoint(void *thisObj, vo
 void *c_KDDockWidgets__Views__Stack_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
 // KDDockWidgets::Views::Stack_flutter::maxSizeHint() const
 void *c_KDDockWidgets__Views__Stack_flutter__maxSizeHint(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::maximumSize() const
-void *c_KDDockWidgets__Views__Stack_flutter__maximumSize(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::minSize() const
 void *c_KDDockWidgets__Views__Stack_flutter__minSize(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::minimumHeight() const
@@ -2127,8 +2115,8 @@ void c_KDDockWidgets__Views__Stack_flutter__setDocumentMode_bool(void *thisObj, 
 void c_KDDockWidgets__Views__Stack_flutter__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::Stack_flutter::setFixedWidth(int w)
 void c_KDDockWidgets__Views__Stack_flutter__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::Views::Stack_flutter::setGeometry(QRect arg__1)
-void c_KDDockWidgets__Views__Stack_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Views::Stack_flutter::setGeometry(QRect geometry)
+void c_KDDockWidgets__Views__Stack_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
 // KDDockWidgets::Views::Stack_flutter::setHeight(int h)
 void c_KDDockWidgets__Views__Stack_flutter__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::Stack_flutter::setMaximumSize(QSize sz)
@@ -2152,8 +2140,8 @@ void c_KDDockWidgets__Views__Stack_flutter__setWindowOpacity_double(void *thisOb
 // KDDockWidgets::Views::Stack_flutter::setWindowTitle(const QString & title)
 void c_KDDockWidgets__Views__Stack_flutter__setWindowTitle_QString(void *thisObj,
                                                                    const char *title_);
-// KDDockWidgets::Views::Stack_flutter::setZOrder(int arg__1)
-void c_KDDockWidgets__Views__Stack_flutter__setZOrder_int(void *thisObj, int arg__1);
+// KDDockWidgets::Views::Stack_flutter::setZOrder(int z)
+void c_KDDockWidgets__Views__Stack_flutter__setZOrder_int(void *thisObj, int z);
 // KDDockWidgets::Views::Stack_flutter::show()
 void c_KDDockWidgets__Views__Stack_flutter__show(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::showMaximized()
@@ -2219,8 +2207,6 @@ void *c_KDDockWidgets__Views__Group_flutter__mapTo_View_QPoint(void *thisObj, vo
 void *c_KDDockWidgets__Views__Group_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
 // KDDockWidgets::Views::Group_flutter::maxSizeHint() const
 void *c_KDDockWidgets__Views__Group_flutter__maxSizeHint(void *thisObj);
-// KDDockWidgets::Views::Group_flutter::maximumSize() const
-void *c_KDDockWidgets__Views__Group_flutter__maximumSize(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::minSize() const
 void *c_KDDockWidgets__Views__Group_flutter__minSize(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::minimumHeight() const
@@ -2256,8 +2242,8 @@ void c_KDDockWidgets__Views__Group_flutter__setCursor_CursorShape(void *thisObj,
 void c_KDDockWidgets__Views__Group_flutter__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::Group_flutter::setFixedWidth(int w)
 void c_KDDockWidgets__Views__Group_flutter__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::Views::Group_flutter::setGeometry(QRect arg__1)
-void c_KDDockWidgets__Views__Group_flutter__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Views::Group_flutter::setGeometry(QRect geometry)
+void c_KDDockWidgets__Views__Group_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
 // KDDockWidgets::Views::Group_flutter::setHeight(int h)
 void c_KDDockWidgets__Views__Group_flutter__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::Group_flutter::setMaximumSize(QSize sz)
@@ -2281,8 +2267,8 @@ void c_KDDockWidgets__Views__Group_flutter__setWindowOpacity_double(void *thisOb
 // KDDockWidgets::Views::Group_flutter::setWindowTitle(const QString & title)
 void c_KDDockWidgets__Views__Group_flutter__setWindowTitle_QString(void *thisObj,
                                                                    const char *title_);
-// KDDockWidgets::Views::Group_flutter::setZOrder(int arg__1)
-void c_KDDockWidgets__Views__Group_flutter__setZOrder_int(void *thisObj, int arg__1);
+// KDDockWidgets::Views::Group_flutter::setZOrder(int z)
+void c_KDDockWidgets__Views__Group_flutter__setZOrder_int(void *thisObj, int z);
 // KDDockWidgets::Views::Group_flutter::show()
 void c_KDDockWidgets__Views__Group_flutter__show(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::showMaximized()
