@@ -10,13 +10,14 @@
 */
 
 import 'package:KDDockWidgets/View_mixin.dart';
-
+import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
 class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
   Group_flutter(
       KDDockWidgetBindings.Group? group, KDDockWidgetBindings.View? parent)
       : super(group, parent: parent) {
+    flutterWidget = PositionedWidget(this);
     print("Group_flutter CTOR");
   }
 }

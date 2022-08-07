@@ -10,10 +10,11 @@
 */
 
 import 'package:KDDockWidgets/View_flutter.dart';
+import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:flutter/material.dart';
 
 class PositionedWidget extends StatefulWidget {
-  final View_flutter kddwView;
+  final View_mixin kddwView;
 
   const PositionedWidget(this.kddwView, {Key? key}) : super(key: key);
 
@@ -22,7 +23,7 @@ class PositionedWidget extends StatefulWidget {
 }
 
 class _PositionedWidgetState extends State<PositionedWidget> {
-  final View_flutter kddwView;
+  final View_mixin kddwView;
   int x = 0;
   int y = 0;
   int width = 400;
@@ -44,8 +45,8 @@ class _PositionedWidgetState extends State<PositionedWidget> {
 
   void updatePosition(int kddwX, int kddwY) {
     setState(() {
-      this.x = kddwX;
-      this.y = kddwY;
+      x = kddwX;
+      y = kddwY;
     });
   }
 
