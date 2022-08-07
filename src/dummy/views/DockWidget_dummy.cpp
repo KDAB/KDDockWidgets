@@ -65,12 +65,12 @@ QSize DockWidget_dummy::minSize() const
     return View_dummy::minSize();
 }
 
-QSize DockWidget_dummy::maximumSize() const
+QSize DockWidget_dummy::maxSizeHint() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests max-size is the same as the widget's, there's no spacing or margins.
-        return guestWidget->maximumSize();
+        return guestWidget->maxSizeHint();
     }
 
-    return View_dummy::maximumSize();
+    return View_dummy::maxSizeHint();
 }

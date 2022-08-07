@@ -101,7 +101,7 @@ void Group_qtquick::updateConstriants()
     // QtQuick doesn't have layouts, so we need to do constraint propagation manually
 
     setProperty("kddockwidgets_min_size", minSize());
-    setProperty("kddockwidgets_max_size", maximumSize());
+    setProperty("kddockwidgets_max_size", maxSizeHint());
 
     View::d->layoutInvalidated.emit();
 }
@@ -200,11 +200,6 @@ QSize Group_qtquick::minSize() const
 {
     const QSize contentsSize = m_group->dockWidgetsMinSize();
     return contentsSize + QSize(0, nonContentsHeight());
-}
-
-QSize Group_qtquick::maximumSize() const
-{
-    return View_qtquick::maximumSize();
 }
 
 QObject *Group_qtquick::tabWidgetObj() const

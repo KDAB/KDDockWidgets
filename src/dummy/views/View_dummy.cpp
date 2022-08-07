@@ -95,11 +95,6 @@ QSize View_dummy::maxSizeHint() const
     return {};
 }
 
-QSize View_dummy::maximumSize() const
-{
-    return {};
-}
-
 QRect View_dummy::geometry() const
 {
     return {};

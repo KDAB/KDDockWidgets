@@ -202,11 +202,6 @@ bool ViewWrapper_qtwidgets::isMinimized() const
     return m_widget->isMinimized();
 }
 
-QSize ViewWrapper_qtwidgets::maximumSize() const
-{
-    return m_widget->maximumSize();
-}
-
 void ViewWrapper_qtwidgets::setSize(int x, int y)
 {
     m_widget->resize(x, y);
@@ -386,4 +381,9 @@ SizePolicy ViewWrapper_qtwidgets::horizontalSizePolicy() const
 SizePolicy ViewWrapper_qtwidgets::verticalSizePolicy() const
 {
     return SizePolicy(m_widget->sizePolicy().verticalPolicy());
+}
+
+QSize ViewWrapper_qtwidgets::maxSizeHint() const
+{
+    return m_widget->maximumSize();
 }

@@ -56,7 +56,7 @@ public:
     QSize minSize() const override;
 
     /// @reimp
-    QSize maximumSize() const override;
+    QSize maxSizeHint() const override;
 
 #ifdef Q_MOC_RUN
     Q_INVOKABLE bool closeDockWidgets(bool force = false);

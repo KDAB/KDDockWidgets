@@ -817,7 +817,7 @@ QSize Group::biggestDockWidgetMaxSize() const
 
         const bool hasMaxSize = dwMax != Layouting::Item::hardcodedMaximumSize;
         if (hasMaxSize)
-            size = dw->view()->maximumSize().expandedTo(size);
+            size = dwMax.expandedTo(size);
     }
 
     // Interpret 0 max-size as not having one too.

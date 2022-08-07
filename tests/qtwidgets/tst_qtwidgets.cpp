@@ -1179,7 +1179,7 @@ void TestQtWidgets::tst_maxSizePropagates()
 
 
     QCOMPARE(dock1->view()->minSize(), w->minSize());
-    QCOMPARE(dock1->view()->maximumSize(), w->maximumSize());
+    QCOMPARE(dock1->view()->maxSizeHint(), w->maxSizeHint());
 
     w->setMinimumSize(QSize(121, 121));
     w->setMaximumSize(QSize(501, 501));
@@ -1187,11 +1187,11 @@ void TestQtWidgets::tst_maxSizePropagates()
     Platform::instance()->tests_waitForEvent(w, QEvent::LayoutRequest);
 
     QCOMPARE(dock1->view()->minSize(), w->minSize());
-    QCOMPARE(dock1->view()->maximumSize(), w->maximumSize());
+    QCOMPARE(dock1->view()->maxSizeHint(), w->maxSizeHint());
 
     // Now let's see if our Frame also has proper size-constraints
     Controllers::Group *group = dock1->dptr()->group();
-    QCOMPARE(group->view()->maxSizeHint().expandedTo(w->maximumSize()),
+    QCOMPARE(group->view()->maxSizeHint().expandedTo(w->maxSizeHint()),
              group->view()->maxSizeHint());
 }
 
@@ -1213,21 +1213,21 @@ void TestQtWidgets::tst_maxSizedFloatingWindow()
     auto window2 = dock2->window();
     Platform::instance()->tests_waitForEvent(window1.get(), QEvent::LayoutRequest);
 
-    QVERIFY(window1->maximumSize().width() < 500);
-    QVERIFY(window1->maximumSize().height() < 500);
-    QVERIFY(window2->maximumSize().width() > 500);
-    QVERIFY(window2->maximumSize().height() > 500);
+    QVERIFY(window1->maxSizeHint().width() < 500);
+    QVERIFY(window1->maxSizeHint().height() < 500);
+    QVERIFY(window2->maxSizeHint().width() > 500);
+    QVERIFY(window2->maxSizeHint().height() > 500);
 
     auto hasMax = [&window1] {
-        const QSize max = window1->maximumSize();
+        const QSize max = window1->maxSizeHint();
         return max.width() < 500 && max.height() < 500;
     };
 
     // Adding side-by-side, we don't honour max size (yet)
     dock1->addDockWidgetToContainingWindow(dock2, Location_OnBottom);
     Platform::instance()->tests_waitForEvent(window1.get(), QEvent::LayoutRequest);
-    QVERIFY(window1->maximumSize().width() > 500);
-    QVERIFY(window1->maximumSize().height() > 500);
+    QVERIFY(window1->maxSizeHint().width() > 500);
+    QVERIFY(window1->maxSizeHint().height() > 500);
 
     // Close dw2, we have a single dock widget again, we honour max-size
     dock2->close();

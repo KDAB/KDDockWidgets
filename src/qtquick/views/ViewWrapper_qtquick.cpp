@@ -228,10 +228,10 @@ bool ViewWrapper_qtquick::isMinimized() const
     return false;
 }
 
-QSize ViewWrapper_qtquick::maximumSize() const
+QSize ViewWrapper_qtquick::maxSizeHint() const
 {
     if (auto view = unwrap()) {
-        return view->maximumSize();
+        return view->maxSizeHint();
     } else {
         const QSize max = m_item->property("kddockwidgets_max_size").toSize();
         return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize

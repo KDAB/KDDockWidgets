@@ -78,7 +78,7 @@ public:
         // to have a max size honoured
 
         const QSize min = minSize();
-        QSize max = maximumSize();
+        QSize max = Base::maximumSize();
         max = boundedMaxSize(min, max); // for safety against weird values
 
         const SizePolicy vPolicy = verticalSizePolicy();
@@ -91,11 +91,6 @@ public:
 
         max = View::boundedMaxSize(min, max); // for safety against weird values
         return max;
-    }
-
-    QSize maximumSize() const override
-    {
-        return Base::maximumSize();
     }
 
     QRect geometry() const override

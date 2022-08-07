@@ -312,7 +312,7 @@ QSize WindowBeingDraggedWayland::maxSize() const
     } else if (m_group) {
         return m_group->view()->maxSizeHint();
     } else if (m_dockWidget) {
-        return m_dockWidget->view()->maximumSize();
+        return m_dockWidget->view()->maxSizeHint();
     }
 
     qWarning() << Q_FUNC_INFO << "Unknown maxSize, shouldn't happen";

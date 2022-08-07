@@ -428,11 +428,6 @@ QSize View_qtquick::maxSizeHint() const
                          : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
 }
 
-QSize View_qtquick::maximumSize() const
-{
-    return maxSizeHint();
-}
-
 QRect View_qtquick::geometry() const
 {
     if (isRootView()) {
@@ -456,7 +451,7 @@ void View_qtquick::setNormalGeometry(QRect geo)
 
 void View_qtquick::setMaximumSize(QSize sz)
 {
-    if (maximumSize() != sz) {
+    if (maxSizeHint() != sz) {
         setProperty("kddockwidgets_max_size", sz);
         updateGeometry();
         View::d->layoutInvalidated.emit();

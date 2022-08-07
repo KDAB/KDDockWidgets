@@ -36,7 +36,7 @@ public:
     QSize minSize() const override;
 
     /// @reimp
-    QSize maximumSize() const override;
+    QSize maxSizeHint() const override;
 
     QRect dragRect() const override;
     int currentIndex() const;

@@ -108,9 +108,9 @@ QSize Group_dummy::minSize() const
     return contentsSize + QSize(0, nonContentsHeight());
 }
 
-QSize Group_dummy::maximumSize() const
+QSize Group_dummy::maxSizeHint() const
 {
-    return View_dummy::maximumSize();
+    return View_dummy::maxSizeHint();
 }
 
 int Group_dummy::nonContentsHeight() const

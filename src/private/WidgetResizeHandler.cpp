@@ -256,7 +256,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     {
         int deltaWidth = 0;
         int newWidth = 0;
-        const int maxWidth = mTarget->maximumSize().width();
+        const int maxWidth = mTarget->maxSizeHint().width();
         const int minWidth = mTarget->minSize().width();
 
         switch (mCursorPos) {
@@ -292,7 +292,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     }
 
     {
-        const int maxHeight = mTarget->maximumSize().height();
+        const int maxHeight = mTarget->maxSizeHint().height();
         const int minHeight = mTarget->minSize().height();
         int deltaHeight = 0;
         int newHeight = 0;

@@ -35,7 +35,7 @@ public:
     void activateWindow() override;
     bool isMaximized() const override;
     bool isMinimized() const override;
-    QSize maximumSize() const override;
+    QSize maxSizeHint() const override;
     void setSize(int width, int height) override;
     bool is(Type) const override;
     std::shared_ptr<View> childViewAt(QPoint) const override;

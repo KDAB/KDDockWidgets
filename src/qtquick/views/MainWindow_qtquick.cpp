@@ -100,7 +100,7 @@ QSize MainWindow_qtquick::minSize() const
     return m_mainWindow->layout()->layoutMinimumSize();
 }
 
-QSize MainWindow_qtquick::maximumSize() const
+QSize MainWindow_qtquick::maxSizeHint() const
 {
     return m_mainWindow->layout()->layoutMaximumSizeHint();
 }

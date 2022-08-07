@@ -146,14 +146,14 @@ QSize DockWidget_qtquick::minSize() const
     return View_qtquick::minSize();
 }
 
-QSize DockWidget_qtquick::maximumSize() const
+QSize DockWidget_qtquick::maxSizeHint() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests max-size is the same as the widget's, there's no spacing or margins.
-        return guestWidget->maximumSize();
+        return guestWidget->maxSizeHint();
     }
 
-    return View_qtquick::maximumSize();
+    return View_qtquick::maxSizeHint();
 }
 
 QObject *DockWidget_qtquick::actualTitleBarView() const

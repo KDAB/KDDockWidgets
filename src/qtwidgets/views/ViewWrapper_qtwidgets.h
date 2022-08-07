@@ -35,7 +35,6 @@ public:
     void activateWindow() override;
     bool isMaximized() const override;
     bool isMinimized() const override;
-    QSize maximumSize() const override;
     void setSize(int width, int height) override;
     bool is(Type) const override;
     std::shared_ptr<Window> window() const override;
@@ -59,6 +58,7 @@ public:
     Qt::FocusPolicy focusPolicy() const override;
     void setFocusPolicy(Qt::FocusPolicy) override;
     bool hasFocus() const override;
+    QSize maxSizeHint() const override;
     SizePolicy horizontalSizePolicy() const override;
     SizePolicy verticalSizePolicy() const override;
     QWidget *widget() const;

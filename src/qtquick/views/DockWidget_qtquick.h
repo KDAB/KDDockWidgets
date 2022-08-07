@@ -87,7 +87,7 @@ public:
     QSize minSize() const override;
 
     /// @reimp
-    QSize maximumSize() const override;
+    QSize maxSizeHint() const override;
 
     /// @brief Returns the title bar view
     /// Qt6 requires us to include TitleBar_p.h, so instead the Q_PROPERTY uses
