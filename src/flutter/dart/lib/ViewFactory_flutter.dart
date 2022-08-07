@@ -11,8 +11,10 @@
 
 import 'dart:ffi';
 
+import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'DropArea_flutter.dart';
+import 'Group_flutter.dart';
 import 'View_flutter.dart';
 
 class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
@@ -43,7 +45,7 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
   KDDockWidgetBindings.View createGroup(KDDockWidgetBindings.Group? group,
       {required KDDockWidgetBindings.View? parent}) {
     print("ViewFactory_flutter: createGroup");
-    return KDDockWidgetBindings.Group_flutter(group, parent: parent);
+    return Group_flutter(group, parent);
   }
 
   @override
