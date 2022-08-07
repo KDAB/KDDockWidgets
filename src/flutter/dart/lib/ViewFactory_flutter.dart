@@ -15,7 +15,9 @@ import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'DropArea_flutter.dart';
 import 'Group_flutter.dart';
-import 'View_flutter.dart';
+import 'Stack_flutter.dart';
+import 'TitleBar_flutter.dart';
+import 'TabBar_flutter.dart';
 
 class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
   ViewFactory_flutter() {
@@ -52,7 +54,7 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
   KDDockWidgetBindings.View createTabBar(KDDockWidgetBindings.TabBar? tabBar,
       {required KDDockWidgetBindings.View? parent}) {
     print("ViewFactory_flutter: createTabBar");
-    return KDDockWidgetBindings.TabBar_flutter(tabBar, parent: parent);
+    return TabBar_flutter(tabBar, parent);
   }
 
   @override
@@ -60,13 +62,13 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
       KDDockWidgetBindings.TitleBar? controller,
       KDDockWidgetBindings.View? parent) {
     print("ViewFactory_flutter: createTitleBar");
-    return KDDockWidgetBindings.TitleBar_flutter(controller, parent: parent);
+    return TitleBar_flutter(controller, parent);
   }
 
   @override
   KDDockWidgetBindings.View createStack(
       KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent) {
     print("ViewFactory_flutter: createStack");
-    return KDDockWidgetBindings.Stack_flutter(stack, parent: parent);
+    return Stack_flutter(stack, parent);
   }
 }
