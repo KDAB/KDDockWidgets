@@ -19,10 +19,12 @@ class PositionedWidget extends StatefulWidget {
   const PositionedWidget(this.kddwView, {Key? key}) : super(key: key);
 
   @override
-  State<PositionedWidget> createState() => _PositionedWidgetState(kddwView);
+  State<PositionedWidget> createState() {
+    return PositionedWidgetState(kddwView);
+  }
 }
 
-class _PositionedWidgetState extends State<PositionedWidget> {
+class PositionedWidgetState extends State<PositionedWidget> {
   final View_mixin kddwView;
   int x = 0;
   int y = 0;
@@ -32,11 +34,7 @@ class _PositionedWidgetState extends State<PositionedWidget> {
 
   var childWidgets = <PositionedWidget>[];
 
-  _PositionedWidgetState(this.kddwView)
-      : _fillsParent = kddwView.m_fillsParent {
-    kddwView.updatePositionCallback = updatePosition;
-    kddwView.updateSizeCallback = updateSize;
-
+  PositionedWidgetState(this.kddwView) : _fillsParent = kddwView.m_fillsParent {
     x = kddwView.m_x;
     y = kddwView.m_y;
     width = kddwView.m_width;
@@ -44,6 +42,7 @@ class _PositionedWidgetState extends State<PositionedWidget> {
   }
 
   void updatePosition(int kddwX, int kddwY) {
+    print("PositionedWidgetState::updatePosition()");
     setState(() {
       x = kddwX;
       y = kddwY;
@@ -51,6 +50,7 @@ class _PositionedWidgetState extends State<PositionedWidget> {
   }
 
   void updateSize(int kddwWidth, int kddwHeight) {
+    print("PositionedWidgetState::updateSize()");
     setState(() {
       height = kddwHeight;
       width = kddwWidth;

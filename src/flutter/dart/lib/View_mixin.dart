@@ -11,9 +11,11 @@
 
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:flutter/cupertino.dart';
 
 class View_mixin {
   late final PositionedWidget flutterWidget;
+  late final GlobalObjectKey<PositionedWidgetState> widgetKey;
 
   Function(int, int)? updatePositionCallback;
   Function(int, int)? updateSizeCallback;
@@ -32,7 +34,11 @@ class View_mixin {
     if (m_width != width || m_height != height) {
       m_width = width;
       m_height = height;
-      if (updateSizeCallback != null) updateSizeCallback!(width, height);
+
+      final state = widgetKey.currentState;
+      if (state != null) {
+        state.updateSize(m_width, m_height);
+      }
     }
   }
 
@@ -80,9 +86,10 @@ class View_mixin {
     if (m_x != x || m_y != y) {
       m_x = x;
       m_y = y;
-      print(updatePositionCallback);
-      print(updateSizeCallback);
-      if (updatePositionCallback != null) updatePositionCallback!(x, y);
+      final state = widgetKey.currentState;
+      if (state != null) {
+        state.updatePosition(m_x, m_y);
+      }
     }
   }
 }
