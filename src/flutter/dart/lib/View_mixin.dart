@@ -17,9 +17,6 @@ class View_mixin {
   late final PositionedWidget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
 
-  Function(int, int)? updatePositionCallback;
-  Function(int, int)? updateSizeCallback;
-
   int m_x = 100;
   int m_y = 100;
   int m_width = 400;
