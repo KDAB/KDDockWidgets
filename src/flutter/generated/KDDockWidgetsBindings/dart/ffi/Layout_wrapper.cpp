@@ -410,7 +410,7 @@ void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *p
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
         break;
-    case 834:
+    case 835:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(
             callback);

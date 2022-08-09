@@ -12,10 +12,10 @@
 #include <TitleBar_flutter.h>
 #include <TitleBar.h>
 #include <View.h>
-#include <qsize.h>
+#include <qstring.h>
 #include <qrect.h>
 #include <qpoint.h>
-#include <qstring.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_flutter_wrapper : public ::KDDockWidgets::Views::TitleBar_flutter
@@ -82,8 +82,10 @@ public:
     virtual QRect normalGeometry_nocallback() const;
     virtual QString objectName() const;
     virtual QString objectName_nocallback() const;
-    virtual bool onResize(int h, int w);
-    virtual bool onResize_nocallback(int h, int w);
+    virtual void onChildAdded(KDDockWidgets::View *childView);
+    virtual void onChildAdded_nocallback(KDDockWidgets::View *childView);
+    virtual bool onResize(int w, int h);
+    virtual bool onResize_nocallback(int w, int h);
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -194,7 +196,9 @@ public:
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
     typedef QString *(*Callback_objectName)(void *);
     Callback_objectName m_objectNameCallback = nullptr;
-    typedef bool (*Callback_onResize_2)(void *, int h, int w);
+    typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::View *childView);
+    Callback_onChildAdded m_onChildAddedCallback = nullptr;
+    typedef bool (*Callback_onResize_2)(void *, int w, int h);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
@@ -337,9 +341,12 @@ c_KDDockWidgets__Views__TitleBar_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::objectName() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Views__TitleBar_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::TitleBar_flutter::onResize(int h, int w)
+// KDDockWidgets::Views::TitleBar_flutter::onChildAdded(KDDockWidgets::View * childView)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TitleBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::TitleBar_flutter::onResize(int w, int h)
 KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Views__TitleBar_flutter__onResize_int_int(void *thisObj, int h, int w);
+c_KDDockWidgets__Views__TitleBar_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TitleBar_flutter::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::raiseAndActivate()

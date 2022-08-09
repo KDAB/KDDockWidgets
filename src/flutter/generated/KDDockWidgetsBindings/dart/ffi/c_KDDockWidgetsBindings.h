@@ -1099,6 +1099,10 @@ void *c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *
                                                            void *parent_);
 // KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
+// KDDockWidgets::ViewFactory::createSeparator(KDDockWidgets::Controllers::Separator * arg__1,
+// KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory__createSeparator_Separator_View(void *thisObj, void *arg__1_,
+                                                                   void *parent_);
 // KDDockWidgets::ViewFactory::createStack(KDDockWidgets::Controllers::Stack * stack,
 // KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createStack_Stack_View(void *thisObj, void *stack_,
@@ -1148,6 +1152,11 @@ void *c_KDDockWidgets__ViewFactory_flutter__createGroup_Group_View(void *thisObj
                                                                    void *parent_);
 // KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj, void *parent_);
+// KDDockWidgets::ViewFactory_flutter::createSeparator(KDDockWidgets::Controllers::Separator *
+// arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View(void *thisObj,
+                                                                           void *arg__1_,
+                                                                           void *parent_);
 // KDDockWidgets::ViewFactory_flutter::createStack(KDDockWidgets::Controllers::Stack * arg__1,
 // KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View(void *thisObj, void *arg__1_,
@@ -1707,8 +1716,10 @@ void c_KDDockWidgets__Views__View_flutter__move_int_int(void *thisObj, int x, in
 void *c_KDDockWidgets__Views__View_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::View_flutter::objectName() const
 void *c_KDDockWidgets__Views__View_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::View_flutter::onResize(int h, int w)
-bool c_KDDockWidgets__Views__View_flutter__onResize_int_int(void *thisObj, int h, int w);
+// KDDockWidgets::Views::View_flutter::onChildAdded(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__View_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::View_flutter::onResize(int w, int h)
+bool c_KDDockWidgets__Views__View_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::View_flutter::raise()
 void c_KDDockWidgets__Views__View_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::View_flutter::raiseAndActivate()
@@ -1837,8 +1848,10 @@ void c_KDDockWidgets__Views__TitleBar_flutter__move_int_int(void *thisObj, int x
 void *c_KDDockWidgets__Views__TitleBar_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::objectName() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::TitleBar_flutter::onResize(int h, int w)
-bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_int_int(void *thisObj, int h, int w);
+// KDDockWidgets::Views::TitleBar_flutter::onChildAdded(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__TitleBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::TitleBar_flutter::onResize(int w, int h)
+bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TitleBar_flutter::raise()
 void c_KDDockWidgets__Views__TitleBar_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::raiseAndActivate()
@@ -1960,8 +1973,10 @@ void c_KDDockWidgets__Views__TabBar_flutter__moveTabTo_int_int(void *thisObj, in
 void *c_KDDockWidgets__Views__TabBar_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::objectName() const
 void *c_KDDockWidgets__Views__TabBar_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::TabBar_flutter::onResize(int h, int w)
-bool c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int h, int w);
+// KDDockWidgets::Views::TabBar_flutter::onChildAdded(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__TabBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::TabBar_flutter::onResize(int w, int h)
+bool c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TabBar_flutter::raise()
 void c_KDDockWidgets__Views__TabBar_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::raiseAndActivate()
@@ -2094,8 +2109,10 @@ void *c_KDDockWidgets__Views__Stack_flutter__normalGeometry(void *thisObj);
 int c_KDDockWidgets__Views__Stack_flutter__numDockWidgets(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::objectName() const
 void *c_KDDockWidgets__Views__Stack_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::onResize(int h, int w)
-bool c_KDDockWidgets__Views__Stack_flutter__onResize_int_int(void *thisObj, int h, int w);
+// KDDockWidgets::Views::Stack_flutter::onChildAdded(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__Stack_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::Stack_flutter::onResize(int w, int h)
+bool c_KDDockWidgets__Views__Stack_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::Stack_flutter::raise()
 void c_KDDockWidgets__Views__Stack_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::raiseAndActivate()
@@ -2223,8 +2240,10 @@ int c_KDDockWidgets__Views__Group_flutter__nonContentsHeight(void *thisObj);
 void *c_KDDockWidgets__Views__Group_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::objectName() const
 void *c_KDDockWidgets__Views__Group_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::Group_flutter::onResize(int h, int w)
-bool c_KDDockWidgets__Views__Group_flutter__onResize_int_int(void *thisObj, int h, int w);
+// KDDockWidgets::Views::Group_flutter::onChildAdded(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__Group_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::Group_flutter::onResize(int w, int h)
+bool c_KDDockWidgets__Views__Group_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::Group_flutter::raise()
 void c_KDDockWidgets__Views__Group_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::raiseAndActivate()
@@ -2514,8 +2533,51 @@ void c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *pt
                                                                         int methodId);
 void c_KDDockWidgets__Controllers__Stack_Finalizer(
     void *, void *cppObj,
+    void *); // KDDockWidgets::Controllers::Separator::Separator(KDDockWidgets::View
+             // * host)
+void *c_KDDockWidgets__Controllers__Separator__constructor_View(void *host_);
+// KDDockWidgets::Controllers::Separator::customEvent(QEvent * event)
+void c_KDDockWidgets__Controllers__Separator__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::Separator::event(QEvent * event)
+bool c_KDDockWidgets__Controllers__Separator__event_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::Separator::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controllers__Separator__eventFilter_QObject_QEvent(void *thisObj,
+                                                                         void *watched_,
+                                                                         void *event_);
+// KDDockWidgets::Controllers::Separator::isResizing()
+bool c_static_KDDockWidgets__Controllers__Separator__isResizing();
+// KDDockWidgets::Controllers::Separator::isVertical() const
+bool c_KDDockWidgets__Controllers__Separator__isVertical(void *thisObj);
+// KDDockWidgets::Controllers::Separator::move(int p)
+void c_KDDockWidgets__Controllers__Separator__move_int(void *thisObj, int p);
+// KDDockWidgets::Controllers::Separator::numSeparators()
+int c_static_KDDockWidgets__Controllers__Separator__numSeparators();
+// KDDockWidgets::Controllers::Separator::onMouseDoubleClick()
+void c_KDDockWidgets__Controllers__Separator__onMouseDoubleClick(void *thisObj);
+// KDDockWidgets::Controllers::Separator::onMouseMove(QPoint pos)
+void c_KDDockWidgets__Controllers__Separator__onMouseMove_QPoint(void *thisObj, void *pos_);
+// KDDockWidgets::Controllers::Separator::onMousePress()
+void c_KDDockWidgets__Controllers__Separator__onMousePress(void *thisObj);
+// KDDockWidgets::Controllers::Separator::onMouseReleased()
+void c_KDDockWidgets__Controllers__Separator__onMouseReleased(void *thisObj);
+// KDDockWidgets::Controllers::Separator::position() const
+int c_KDDockWidgets__Controllers__Separator__position(void *thisObj);
+// KDDockWidgets::Controllers::Separator::setGeometry(QRect r)
+void c_KDDockWidgets__Controllers__Separator__setGeometry_QRect(void *thisObj, void *r_);
+// KDDockWidgets::Controllers::Separator::setGeometry(int pos, int pos2, int length)
+void c_KDDockWidgets__Controllers__Separator__setGeometry_int_int_int(void *thisObj, int pos,
+                                                                      int pos2, int length);
+// KDDockWidgets::Controllers::Separator::setParentView_impl(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controllers__Separator__setParentView_impl_View(void *thisObj, void *parent_);
+void c_KDDockWidgets__Controllers__Separator__destructor(void *thisObj);
+void c_KDDockWidgets__Controllers__Separator__registerVirtualMethodCallback(void *ptr,
+                                                                            void *callback,
+                                                                            int methodId);
+void c_KDDockWidgets__Controllers__Separator_Finalizer(
+    void *, void *cppObj,
     void *); // KDDockWidgets::Controllers::Layout::Layout(KDDockWidgets::Type
-             // arg__1, KDDockWidgets::View * arg__2)
+             // arg__1, KDDockWidgets::View *
+             // arg__2)
 void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_);
 // KDDockWidgets::Controllers::Layout::asDropArea() const
 void *c_KDDockWidgets__Controllers__Layout__asDropArea(void *thisObj);

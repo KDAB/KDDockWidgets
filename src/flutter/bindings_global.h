@@ -48,6 +48,7 @@
 #include "../controllers/Stack.h"
 #include "../controllers/TabBar.h"
 #include "../controllers/TitleBar.h"
+#include "../controllers/Separator.h"
 #include "../controllers/indicators/ClassicIndicators.h"
 #include "../views/ClassicIndicatorWindowViewInterface.h"
 

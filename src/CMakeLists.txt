@@ -223,6 +223,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_wrapper.cpp
     # flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_wrapper.cpp // TODOm4: Error compiling
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_flutter_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Separator_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_flutter_wrapper.cpp

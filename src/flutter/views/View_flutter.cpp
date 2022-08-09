@@ -19,10 +19,13 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 
-View_flutter::View_flutter(KDDockWidgets::Controller *controller, Type type, View * /*parent*/,
+View_flutter::View_flutter(KDDockWidgets::Controller *controller, Type type, View *parent,
                            Qt::WindowFlags)
     : View(controller, type)
 {
+    if (parent) {
+        // setParent(parent);
+    }
 }
 
 void View_flutter::setGeometry(QRect)
@@ -146,10 +149,16 @@ void View_flutter::update()
 {
 }
 
-
-
-void View_flutter::setParent(View *)
+void View_flutter::setParent(View *parent)
 {
+    if (parent == m_parentView)
+        return;
+
+    m_parentView = parent;
+
+    if (parent) {
+        static_cast<View_flutter *>(parent)->onChildAdded(this);
+    }
 }
 
 void View_flutter::raiseAndActivate()
@@ -262,8 +271,9 @@ std::shared_ptr<View> View_flutter::asWrapper()
     return {};
 }
 
-void View_flutter::setObjectName(const QString &)
+void View_flutter::setObjectName(const QString &name)
 {
+    m_name = name;
 }
 
 void View_flutter::grabMouse()
@@ -299,7 +309,7 @@ void View_flutter::setFocusPolicy(Qt::FocusPolicy)
 
 QString View_flutter::objectName() const
 {
-    return {};
+    return m_name;
 }
 
 void View_flutter::setMinimumSize(QSize)

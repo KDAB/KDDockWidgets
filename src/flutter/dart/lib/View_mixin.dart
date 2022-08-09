@@ -12,24 +12,33 @@
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'Group_flutter.dart';
+import 'View_flutter.dart';
 
 class View_mixin {
   late final PositionedWidget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
   late final KDDockWidgetBindings.View_flutter kddwView;
 
+  Color m_color = Colors.red;
   int m_x = 100;
   int m_y = 100;
   int m_width = 400;
   int m_height = 400;
   bool m_fillsParent = false;
+  String debugName = "";
 
   int m_maxHeight = 16777215;
   int m_maxWidth = 16777215;
 
+  var childWidgets = <PositionedWidget>[];
+
   setSize_2(int width, int height) {
-    print("View_mixin::setSize called ${width}x${height}");
-    if (m_width != width || m_height != height) {
+    // print(
+    //     "View_mixin::setSize called ${width}x${height} ; old=${m_width}x${height}");
+    if (m_width != width || height != height) {
       m_width = width;
       m_height = height;
 
@@ -58,7 +67,25 @@ class View_mixin {
     setSize_2(m_width, height);
   }
 
+  void onChildAdded(KDDockWidgetBindings.View? childView) {
+    final state = widgetKey.currentState;
+
+    final viewFlutter =
+        KDDockWidgetBindings.View_flutter.fromCache(childView!.thisCpp)
+            as View_mixin;
+
+    print(
+        "View_mixin::onChildAdded: this=${debugName}, child=${viewFlutter.debugName}");
+
+    childWidgets.add(viewFlutter.flutterWidget);
+
+    if (state != null) {
+      state.addChildView(viewFlutter);
+    }
+  }
+
   setGeometry(KDDockWidgetBindings.QRect geo) {
+    // print("View_mixin: setGeometry .name=${debugName}");
     final sz = geo.size();
     final topLeft = geo.topLeft();
     setSize_2(sz.width(), sz.height());
@@ -75,12 +102,12 @@ class View_mixin {
   }
 
   KDDockWidgetBindings.QSize maxSizeHint() {
-    print("View_flutter::maximumSize()");
+    // print("View_flutter::maximumSize()");
     return KDDockWidgetBindings.QSize.ctor2(m_maxWidth, m_maxHeight);
   }
 
   move_2(int x, int y) {
-    print("View_flutter::move called ${x},${y}");
+    // print("View_flutter::move called ${x},${y}");
     if (m_x != x || m_y != y) {
       m_x = x;
       m_y = y;

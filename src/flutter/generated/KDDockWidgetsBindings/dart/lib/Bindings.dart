@@ -12,6 +12,7 @@ export 'src/Config.dart' show Config;
 export 'src/Group.dart' show Group;
 export 'src/DropArea.dart' show DropArea;
 export 'src/Layout.dart' show Layout;
+export 'src/Separator.dart' show Separator;
 export 'src/Stack.dart' show Stack;
 export 'src/TabBar.dart' show TabBar;
 export 'src/TitleBar.dart' show TitleBar;

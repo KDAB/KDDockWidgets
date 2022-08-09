@@ -9,17 +9,22 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
   Group_flutter(
       KDDockWidgetBindings.Group? group, KDDockWidgetBindings.View? parent)
       : super(group, parent: parent) {
-    flutterWidget = PositionedWidget(this);
-    widgetKey = GlobalObjectKey(thisCpp);
+    m_color = Colors.amber;
+    kddwView = this;
+    final ffi.Pointer<ffi.Void> ptr = thisCpp.cast<ffi.Void>();
+    widgetKey = GlobalObjectKey(ptr.address);
+    flutterWidget = PositionedWidget(this, key: widgetKey);
+    debugName = "group";
     print("Group_flutter CTOR");
   }
 }

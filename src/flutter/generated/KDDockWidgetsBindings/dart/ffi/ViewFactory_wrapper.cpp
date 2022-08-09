@@ -123,6 +123,25 @@ ViewFactory_wrapper::createRubberBand_nocallback(KDDockWidgets::View *parent) co
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
+KDDockWidgets::View *
+ViewFactory_wrapper::createSeparator(KDDockWidgets::Controllers::Separator *arg__1,
+                                     KDDockWidgets::View *parent) const
+{
+    if (m_createSeparatorCallback) {
+        const void *thisPtr = this;
+        return m_createSeparatorCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return {};
+    }
+}
+KDDockWidgets::View *
+ViewFactory_wrapper::createSeparator_nocallback(KDDockWidgets::Controllers::Separator *arg__1,
+                                                KDDockWidgets::View *parent) const
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return {};
+}
 KDDockWidgets::View *ViewFactory_wrapper::createStack(KDDockWidgets::Controllers::Stack *stack,
                                                       KDDockWidgets::View *parent) const
 {
@@ -332,6 +351,24 @@ void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *p
         }
     }();
 }
+// createSeparator(KDDockWidgets::Controllers::Separator * arg__1, KDDockWidgets::View * parent)
+// const
+void *c_KDDockWidgets__ViewFactory__createSeparator_Separator_View(void *thisObj, void *arg__1_,
+                                                                   void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Separator *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->createSeparator_nocallback(arg__1, parent);
+        } else {
+            return targetPtr->createSeparator(arg__1, parent);
+        }
+    }();
+}
 // createStack(KDDockWidgets::Controllers::Stack * stack, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createStack_Stack_View(void *thisObj, void *stack_,
                                                            void *parent_)
@@ -463,14 +500,19 @@ void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void
             callback);
         break;
     case 694:
+        wrapper->m_createSeparatorCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createSeparator>(
+            callback);
+        break;
+    case 695:
         wrapper->m_createStackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createStack>(callback);
         break;
-    case 695:
+    case 696:
         wrapper->m_createTabBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createTabBar>(callback);
         break;
-    case 696:
+    case 697:
         wrapper->m_createTitleBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createTitleBar>(
             callback);

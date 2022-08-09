@@ -10,7 +10,6 @@
 */
 
 import 'dart:ffi' as ffi;
-import 'package:ffi/ffi.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/cupertino.dart';
@@ -33,7 +32,7 @@ class View_flutter extends KDDockWidgetBindings.View_flutter with View_mixin {
     // The key is the C++ KDDockWidget pointer, which is stable and unique
     final ffi.Pointer<ffi.Void> ptr = thisCpp.cast<ffi.Void>();
     widgetKey = GlobalObjectKey(ptr.address);
-    flutterWidget = PositionedWidget(this, key: widgetKey);
     kddwView = this;
+    flutterWidget = PositionedWidget(this, key: widgetKey);
   }
 }

@@ -114,6 +114,23 @@ class ViewFactory_flutter extends ViewFactory {
     return result.thisCpp;
   }
 
+  static ffi.Pointer<void> createSeparator_calledFromC(
+      ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1,
+      ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::createSeparator(KDDockWidgets::Controllers::Separator * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.createSeparator(
+        Separator.fromCppPointer(arg__1),
+        parent: View.fromCppPointer(parent));
+    return result.thisCpp;
+  }
+
   static ffi.Pointer<void> createStack_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
     var dartInstance =
@@ -227,10 +244,12 @@ class ViewFactory_flutter extends ViewFactory {
       case 693:
         return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
       case 694:
-        return "c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View";
       case 695:
-        return "c_KDDockWidgets__ViewFactory_flutter__createTabBar_TabBar_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View";
       case 696:
+        return "c_KDDockWidgets__ViewFactory_flutter__createTabBar_TabBar_View";
+      case 697:
         return "c_KDDockWidgets__ViewFactory_flutter__createTitleBar_TitleBar_View";
       case 295:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
@@ -255,10 +274,12 @@ class ViewFactory_flutter extends ViewFactory {
       case 693:
         return "createRubberBand";
       case 694:
-        return "createStack";
+        return "createSeparator";
       case 695:
-        return "createTabBar";
+        return "createStack";
       case 696:
+        return "createTabBar";
+      case 697:
         return "createTitleBar";
       case 295:
         return "customEvent";
@@ -298,16 +319,20 @@ class ViewFactory_flutter extends ViewFactory {
     registerCallback(thisCpp, callback693, 693);
     final callback694 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createStack_calledFromC);
+            ViewFactory_flutter.createSeparator_calledFromC);
     registerCallback(thisCpp, callback694, 694);
     final callback695 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createTabBar_calledFromC);
+            ViewFactory_flutter.createStack_calledFromC);
     registerCallback(thisCpp, callback695, 695);
     final callback696 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createTitleBar_calledFromC);
+            ViewFactory_flutter.createTabBar_calledFromC);
     registerCallback(thisCpp, callback696, 696);
+    final callback697 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createTitleBar_calledFromC);
+    registerCallback(thisCpp, callback697, 697);
     final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);

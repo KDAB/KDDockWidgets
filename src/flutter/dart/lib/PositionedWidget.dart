@@ -40,10 +40,25 @@ class PositionedWidgetState extends State<PositionedWidget> {
     y = kddwView.m_y;
     width = kddwView.m_width;
     height = kddwView.m_height;
+    childWidgets = kddwView.childWidgets;
+
+    // print("Creating PositionedWidgetState  width=${width}");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // print("PositionedWidgetState::initState: width=${width}");
+  }
+
+  void addChildView(View_mixin childView) {
+    setState(() {
+      childWidgets.add(childView.flutterWidget);
+    });
   }
 
   void updatePosition(int kddwX, int kddwY) {
-    print("PositionedWidgetState::updatePosition()");
+    // print("PositionedWidgetState::updatePosition()");
     setState(() {
       x = kddwX;
       y = kddwY;
@@ -51,7 +66,7 @@ class PositionedWidgetState extends State<PositionedWidget> {
   }
 
   void updateSize(int kddwWidth, int kddwHeight) {
-    print("PositionedWidgetState::updateSize()");
+    // print("PositionedWidgetState::updateSize()");
     setState(() {
       height = kddwHeight;
       width = kddwWidth;
@@ -79,8 +94,11 @@ class PositionedWidgetState extends State<PositionedWidget> {
       afterBuild();
     });
 
+    // if (!_fillsParent)
+    //   print("Build started width=${width} but ${kddwView.m_width}");
+
     final container = Container(
-        color: Colors.red,
+        color: kddwView.m_color,
         child: Stack(
           children: childWidgets,
         ));

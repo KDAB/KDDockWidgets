@@ -16,12 +16,13 @@
 #include <TitleBar.h>
 #include <Stack.h>
 #include <TabBar.h>
+#include <Separator.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
 #include <DropArea.h>
-#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
+#include <qobject.h>
 #include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -57,6 +58,11 @@ public:
                            KDDockWidgets::View *parent = nullptr) const;
     virtual KDDockWidgets::View *createRubberBand(KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createRubberBand_nocallback(KDDockWidgets::View *parent) const;
+    virtual KDDockWidgets::View *createSeparator(KDDockWidgets::Controllers::Separator *arg__1,
+                                                 KDDockWidgets::View *parent = nullptr) const;
+    virtual KDDockWidgets::View *
+    createSeparator_nocallback(KDDockWidgets::Controllers::Separator *arg__1,
+                               KDDockWidgets::View *parent = nullptr) const;
     virtual KDDockWidgets::View *createStack(KDDockWidgets::Controllers::Stack *stack,
                                              KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createStack_nocallback(KDDockWidgets::Controllers::Stack *stack,
@@ -95,6 +101,9 @@ public:
     Callback_createGroup m_createGroupCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createRubberBand)(void *, KDDockWidgets::View *parent);
     Callback_createRubberBand m_createRubberBandCallback = nullptr;
+    typedef KDDockWidgets::View *(*Callback_createSeparator)(
+        void *, KDDockWidgets::Controllers::Separator *arg__1, KDDockWidgets::View *parent);
+    Callback_createSeparator m_createSeparatorCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createStack)(void *,
                                                          KDDockWidgets::Controllers::Stack *stack,
                                                          KDDockWidgets::View *parent);
@@ -139,6 +148,11 @@ c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1
 // KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
+// KDDockWidgets::ViewFactory::createSeparator(KDDockWidgets::Controllers::Separator * arg__1,
+// KDDockWidgets::View * parent) const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__ViewFactory__createSeparator_Separator_View(void *thisObj, void *arg__1_,
+                                                             void *parent_);
 // KDDockWidgets::ViewFactory::createStack(KDDockWidgets::Controllers::Stack * stack,
 // KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *

@@ -63,6 +63,7 @@
             <object-type name="Stack" />
             <object-type name="TabBar" />
             <object-type name="TitleBar" />
+            <object-type name="Separator" />
             <object-type name="ClassicIndicators" />
         </namespace-type>
 

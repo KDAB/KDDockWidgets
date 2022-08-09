@@ -15,6 +15,7 @@ import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'DropArea_flutter.dart';
 import 'Group_flutter.dart';
+import 'Separator_flutter.dart';
 import 'Stack_flutter.dart';
 import 'TitleBar_flutter.dart';
 import 'TabBar_flutter.dart';
@@ -70,5 +71,12 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
       KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent) {
     print("ViewFactory_flutter: createStack");
     return Stack_flutter(stack, parent);
+  }
+
+  @override
+  KDDockWidgetBindings.View createSeparator(
+      KDDockWidgetBindings.Separator? separator,
+      {required KDDockWidgetBindings.View? parent}) {
+    return Separator_flutter(separator, parent: parent);
   }
 }

@@ -121,7 +121,15 @@ public:
 
     HANDLE handle() const override;
 
+    virtual void onChildAdded(View *childView)
+    {
+        Q_UNUSED(childView);
+        qFatal("Derived class should be called instead");
+    }
+
 private:
+    View *m_parentView = nullptr;
+    QString m_name;
     Q_DISABLE_COPY(View_flutter)
 };
 

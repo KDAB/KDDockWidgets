@@ -118,6 +118,22 @@ ViewFactory_flutter_wrapper::createRubberBand_nocallback(KDDockWidgets::View *pa
     return ::KDDockWidgets::ViewFactory_flutter::createRubberBand(parent);
 }
 KDDockWidgets::View *
+ViewFactory_flutter_wrapper::createSeparator(KDDockWidgets::Controllers::Separator *arg__1,
+                                             KDDockWidgets::View *parent) const
+{
+    if (m_createSeparatorCallback) {
+        const void *thisPtr = this;
+        return m_createSeparatorCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        return ::KDDockWidgets::ViewFactory_flutter::createSeparator(arg__1, parent);
+    }
+}
+KDDockWidgets::View *ViewFactory_flutter_wrapper::createSeparator_nocallback(
+    KDDockWidgets::Controllers::Separator *arg__1, KDDockWidgets::View *parent) const
+{
+    return ::KDDockWidgets::ViewFactory_flutter::createSeparator(arg__1, parent);
+}
+KDDockWidgets::View *
 ViewFactory_flutter_wrapper::createStack(KDDockWidgets::Controllers::Stack *arg__1,
                                          KDDockWidgets::View *parent) const
 {
@@ -329,6 +345,26 @@ void *c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj,
         }
     }();
 }
+// createSeparator(KDDockWidgets::Controllers::Separator * arg__1, KDDockWidgets::View * parent)
+// const
+void *c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View(void *thisObj,
+                                                                           void *arg__1_,
+                                                                           void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Separator *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper *>(
+                targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->createSeparator_nocallback(arg__1, parent);
+        } else {
+            return targetPtr->createSeparator(arg__1, parent);
+        }
+    }();
+}
 // createStack(KDDockWidgets::Controllers::Stack * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View(void *thisObj, void *arg__1_,
                                                                    void *parent_)
@@ -467,16 +503,21 @@ void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *p
                                  Callback_createRubberBand>(callback);
         break;
     case 694:
+        wrapper->m_createSeparatorCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::
+                                 Callback_createSeparator>(callback);
+        break;
+    case 695:
         wrapper->m_createStackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createStack>(
             callback);
         break;
-    case 695:
+    case 696:
         wrapper->m_createTabBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createTabBar>(
             callback);
         break;
-    case 696:
+    case 697:
         wrapper->m_createTitleBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createTitleBar>(
             callback);
