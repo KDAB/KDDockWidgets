@@ -78,6 +78,8 @@ public:
     SizePolicy verticalSizePolicy() const override;
     SizePolicy horizontalSizePolicy() const override;
 
+    bool onResize(int w, int h) override;
+
     bool close() override;
     void setFlag(Qt::WindowType f, bool on = true) override;
     void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override;

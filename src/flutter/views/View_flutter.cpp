@@ -332,3 +332,9 @@ HANDLE View_flutter::handle() const
     // TODOm4
     return this;
 }
+
+bool View_flutter::onResize(int w, int h)
+{
+    // Indirection so Dartagnan generates it, while we don't do bindings for View.cpp
+    return View::onResize(w, h);
+}

@@ -12,6 +12,7 @@
 import 'package:KDDockWidgets/View_flutter.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class PositionedWidget extends StatefulWidget {
   final View_mixin kddwView;
@@ -57,8 +58,27 @@ class PositionedWidgetState extends State<PositionedWidget> {
     });
   }
 
+  void afterBuild() {
+    // If the widget is resized by flutter then tell KDDW.
+    // Example use case: User resizes the window, which resizes the KDDW layout
+    if (!_fillsParent) return;
+
+    final renderBox =
+        kddwView.widgetKey.currentContext?.findRenderObject() as RenderBox;
+
+    final Size size = renderBox.size;
+
+    if (size.width != width || size.height != height) {
+      kddwView.kddwView.onResize_2(size.width.toInt(), size.height.toInt());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      afterBuild();
+    });
+
     final container = Container(
         color: Colors.red,
         child: Stack(

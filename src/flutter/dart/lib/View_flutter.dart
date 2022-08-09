@@ -34,5 +34,6 @@ class View_flutter extends KDDockWidgetBindings.View_flutter with View_mixin {
     final ffi.Pointer<ffi.Void> ptr = thisCpp.cast<ffi.Void>();
     widgetKey = GlobalObjectKey(ptr.address);
     flutterWidget = PositionedWidget(this, key: widgetKey);
+    kddwView = this;
   }
 }

@@ -16,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 class View_mixin {
   late final PositionedWidget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
+  late final KDDockWidgetBindings.View_flutter kddwView;
 
   int m_x = 100;
   int m_y = 100;
