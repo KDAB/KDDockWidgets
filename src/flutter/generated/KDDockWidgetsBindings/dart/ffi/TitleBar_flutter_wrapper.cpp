@@ -409,18 +409,18 @@ QString TitleBar_flutter_wrapper::objectName_nocallback() const
 {
     return ::KDDockWidgets::Views::TitleBar_flutter::objectName();
 }
-bool TitleBar_flutter_wrapper::onResize(QSize newSize)
+bool TitleBar_flutter_wrapper::onResize(int h, int w)
 {
-    if (m_onResizeCallback) {
+    if (m_onResize_2Callback) {
         const void *thisPtr = this;
-        return m_onResizeCallback(const_cast<void *>(thisPtr), &newSize);
+        return m_onResize_2Callback(const_cast<void *>(thisPtr), h, w);
     } else {
-        return ::KDDockWidgets::Views::TitleBar_flutter::onResize(newSize);
+        return ::KDDockWidgets::Views::TitleBar_flutter::onResize(h, w);
     }
 }
-bool TitleBar_flutter_wrapper::onResize_nocallback(QSize newSize)
+bool TitleBar_flutter_wrapper::onResize_nocallback(int h, int w)
 {
-    return ::KDDockWidgets::Views::TitleBar_flutter::onResize(newSize);
+    return ::KDDockWidgets::Views::TitleBar_flutter::onResize(h, w);
 }
 void TitleBar_flutter_wrapper::raise()
 {
@@ -1164,19 +1164,17 @@ void *c_KDDockWidgets__Views__TitleBar_flutter__objectName(void *thisObj)
         }
     }() };
 }
-// onResize(QSize newSize)
-bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_QSize(void *thisObj, void *newSize_)
+// onResize(int h, int w)
+bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_int_int(void *thisObj, int h, int w)
 {
-    assert(newSize_);
-    auto &newSize = *reinterpret_cast<QSize *>(newSize_);
     return [&] {
         auto targetPtr = fromPtr(thisObj);
         auto wrapperPtr =
             dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper *>(targetPtr);
         if (wrapperPtr) {
-            return wrapperPtr->onResize_nocallback(newSize);
+            return wrapperPtr->onResize_nocallback(h, w);
         } else {
-            return targetPtr->onResize(newSize);
+            return targetPtr->onResize(h, w);
         }
     }();
 }
@@ -1616,17 +1614,17 @@ void c_KDDockWidgets__Views__TitleBar_flutter__registerVirtualMethodCallback(voi
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_isActiveWindow>(
             callback);
         break;
-    case 974:
+    case 976:
         wrapper->m_isCloseButtonEnabledCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::
                                  Callback_isCloseButtonEnabled>(callback);
         break;
-    case 975:
+    case 977:
         wrapper->m_isCloseButtonVisibleCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::
                                  Callback_isCloseButtonVisible>(callback);
         break;
-    case 976:
+    case 978:
         wrapper->m_isFloatButtonVisibleCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::
                                  Callback_isFloatButtonVisible>(callback);
@@ -1702,135 +1700,135 @@ void c_KDDockWidgets__Views__TitleBar_flutter__registerVirtualMethodCallback(voi
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_objectName>(
             callback);
         break;
-    case 897:
-        wrapper->m_onResizeCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_onResize>(
+    case 898:
+        wrapper->m_onResize_2Callback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_onResize_2>(
             callback);
         break;
-    case 900:
+    case 901:
         wrapper->m_raiseCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_raise>(callback);
         break;
-    case 901:
+    case 902:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_raiseAndActivate>(
             callback);
         break;
-    case 903:
+    case 904:
         wrapper->m_releaseKeyboardCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_releaseKeyboard>(
             callback);
         break;
-    case 904:
+    case 905:
         wrapper->m_releaseMouseCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_releaseMouse>(
             callback);
         break;
-    case 908:
+    case 909:
         wrapper->m_setCursorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setCursor>(
             callback);
         break;
-    case 909:
+    case 910:
         wrapper->m_setFixedHeightCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setFixedHeight>(
             callback);
         break;
-    case 910:
+    case 911:
         wrapper->m_setFixedWidthCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setFixedWidth>(
             callback);
         break;
-    case 911:
+    case 912:
         wrapper->m_setGeometryCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setGeometry>(
             callback);
         break;
-    case 912:
+    case 913:
         wrapper->m_setHeightCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setHeight>(
             callback);
         break;
-    case 913:
+    case 914:
         wrapper->m_setMaximumSizeCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMaximumSize>(
             callback);
         break;
-    case 914:
+    case 915:
         wrapper->m_setMinimumSizeCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMinimumSize>(
             callback);
         break;
-    case 915:
+    case 916:
         wrapper->m_setMouseTrackingCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setMouseTracking>(
             callback);
         break;
-    case 916:
+    case 917:
         wrapper->m_setObjectNameCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setObjectName>(
             callback);
         break;
-    case 917:
+    case 918:
         wrapper->m_setParentCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setParent>(
             callback);
         break;
-    case 919:
+    case 920:
         wrapper->m_setSize_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setSize_2>(
             callback);
         break;
-    case 920:
+    case 921:
         wrapper->m_setVisibleCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setVisible>(
             callback);
         break;
-    case 921:
+    case 922:
         wrapper->m_setWidthCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWidth>(
             callback);
         break;
-    case 922:
+    case 923:
         wrapper->m_setWindowOpacityCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWindowOpacity>(
             callback);
         break;
-    case 923:
+    case 924:
         wrapper->m_setWindowTitleCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setWindowTitle>(
             callback);
         break;
-    case 924:
+    case 925:
         wrapper->m_setZOrderCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_setZOrder>(
             callback);
         break;
-    case 925:
+    case 926:
         wrapper->m_showCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_show>(callback);
         break;
-    case 926:
+    case 927:
         wrapper->m_showMaximizedCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showMaximized>(
             callback);
         break;
-    case 927:
+    case 928:
         wrapper->m_showMinimizedCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showMinimized>(
             callback);
         break;
-    case 928:
+    case 929:
         wrapper->m_showNormalCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_showNormal>(
             callback);
         break;
-    case 930:
+    case 931:
         wrapper->m_sizeHintCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_sizeHint>(
             callback);
         break;
-    case 932:
+    case 933:
         wrapper->m_updateCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_flutter_wrapper::Callback_update>(callback);
         break;

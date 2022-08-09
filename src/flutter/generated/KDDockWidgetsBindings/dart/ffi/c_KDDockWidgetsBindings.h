@@ -1562,8 +1562,10 @@ void c_KDDockWidgets__View__move_int_int(void *thisObj, int x, int y);
 void *c_KDDockWidgets__View__normalGeometry(void *thisObj);
 // KDDockWidgets::View::objectName() const
 void *c_KDDockWidgets__View__objectName(void *thisObj);
-// KDDockWidgets::View::onResize(QSize newSize)
-bool c_KDDockWidgets__View__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::View::onResize(QSize arg__1)
+bool c_KDDockWidgets__View__onResize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::View::onResize(int h, int w)
+bool c_KDDockWidgets__View__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::View::parentSize() const
 void *c_KDDockWidgets__View__parentSize(void *thisObj);
 // KDDockWidgets::View::pos() const
@@ -1705,8 +1707,8 @@ void c_KDDockWidgets__Views__View_flutter__move_int_int(void *thisObj, int x, in
 void *c_KDDockWidgets__Views__View_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::View_flutter::objectName() const
 void *c_KDDockWidgets__Views__View_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::View_flutter::onResize(QSize newSize)
-bool c_KDDockWidgets__Views__View_flutter__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::Views::View_flutter::onResize(int h, int w)
+bool c_KDDockWidgets__Views__View_flutter__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::Views::View_flutter::raise()
 void c_KDDockWidgets__Views__View_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::View_flutter::raiseAndActivate()
@@ -1835,8 +1837,8 @@ void c_KDDockWidgets__Views__TitleBar_flutter__move_int_int(void *thisObj, int x
 void *c_KDDockWidgets__Views__TitleBar_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::objectName() const
 void *c_KDDockWidgets__Views__TitleBar_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::TitleBar_flutter::onResize(QSize newSize)
-bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::Views::TitleBar_flutter::onResize(int h, int w)
+bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::Views::TitleBar_flutter::raise()
 void c_KDDockWidgets__Views__TitleBar_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::raiseAndActivate()
@@ -1958,8 +1960,8 @@ void c_KDDockWidgets__Views__TabBar_flutter__moveTabTo_int_int(void *thisObj, in
 void *c_KDDockWidgets__Views__TabBar_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::objectName() const
 void *c_KDDockWidgets__Views__TabBar_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::TabBar_flutter::onResize(QSize newSize)
-bool c_KDDockWidgets__Views__TabBar_flutter__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::Views::TabBar_flutter::onResize(int h, int w)
+bool c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::Views::TabBar_flutter::raise()
 void c_KDDockWidgets__Views__TabBar_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::raiseAndActivate()
@@ -2092,8 +2094,8 @@ void *c_KDDockWidgets__Views__Stack_flutter__normalGeometry(void *thisObj);
 int c_KDDockWidgets__Views__Stack_flutter__numDockWidgets(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::objectName() const
 void *c_KDDockWidgets__Views__Stack_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::onResize(QSize newSize)
-bool c_KDDockWidgets__Views__Stack_flutter__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::Views::Stack_flutter::onResize(int h, int w)
+bool c_KDDockWidgets__Views__Stack_flutter__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::Views::Stack_flutter::raise()
 void c_KDDockWidgets__Views__Stack_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::raiseAndActivate()
@@ -2221,8 +2223,8 @@ int c_KDDockWidgets__Views__Group_flutter__nonContentsHeight(void *thisObj);
 void *c_KDDockWidgets__Views__Group_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::objectName() const
 void *c_KDDockWidgets__Views__Group_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::Group_flutter::onResize(QSize newSize)
-bool c_KDDockWidgets__Views__Group_flutter__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::Views::Group_flutter::onResize(int h, int w)
+bool c_KDDockWidgets__Views__Group_flutter__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::Views::Group_flutter::raise()
 void c_KDDockWidgets__Views__Group_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::raiseAndActivate()

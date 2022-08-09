@@ -16,12 +16,12 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <TitleBar.h>
 #include <DropArea.h>
 #include <Group.h>
+#include <TabBar.h>
 #include <Stack.h>
 #include <controllers/Layout.h>
-#include <TabBar.h>
+#include <TitleBar.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class View_flutter_wrapper : public ::KDDockWidgets::Views::View_flutter
@@ -82,8 +82,8 @@ public:
     virtual QRect normalGeometry_nocallback() const;
     virtual QString objectName() const;
     virtual QString objectName_nocallback() const;
-    virtual bool onResize(QSize newSize);
-    virtual bool onResize_nocallback(QSize newSize);
+    virtual bool onResize(int h, int w);
+    virtual bool onResize_nocallback(int h, int w);
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -190,8 +190,8 @@ public:
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
     typedef QString *(*Callback_objectName)(void *);
     Callback_objectName m_objectNameCallback = nullptr;
-    typedef bool (*Callback_onResize)(void *, QSize *newSize);
-    Callback_onResize m_onResizeCallback = nullptr;
+    typedef bool (*Callback_onResize_2)(void *, int h, int w);
+    Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
     typedef void (*Callback_raiseAndActivate)(void *);
@@ -312,9 +312,9 @@ KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Views__View_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::View_flutter::objectName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__View_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::View_flutter::onResize(QSize newSize)
+// KDDockWidgets::Views::View_flutter::onResize(int h, int w)
 KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Views__View_flutter__onResize_QSize(void *thisObj, void *newSize_);
+c_KDDockWidgets__Views__View_flutter__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::Views::View_flutter::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__View_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::View_flutter::raiseAndActivate()

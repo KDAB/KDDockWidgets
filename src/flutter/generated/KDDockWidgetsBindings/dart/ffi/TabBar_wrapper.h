@@ -16,9 +16,9 @@
 #include <Group.h>
 #include <qrect.h>
 #include <View.h>
-#include <qsize.h>
 #include <qcoreevent.h>
 #include <qobject.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TabBar_wrapper : public ::KDDockWidgets::Controllers::TabBar

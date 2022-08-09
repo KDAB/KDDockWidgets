@@ -82,8 +82,8 @@ public:
     virtual int numDockWidgets_nocallback() const;
     virtual QString objectName() const;
     virtual QString objectName_nocallback() const;
-    virtual bool onResize(QSize newSize);
-    virtual bool onResize_nocallback(QSize newSize);
+    virtual bool onResize(int h, int w);
+    virtual bool onResize_nocallback(int h, int w);
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -200,8 +200,8 @@ public:
     Callback_numDockWidgets m_numDockWidgetsCallback = nullptr;
     typedef QString *(*Callback_objectName)(void *);
     Callback_objectName m_objectNameCallback = nullptr;
-    typedef bool (*Callback_onResize)(void *, QSize *newSize);
-    Callback_onResize m_onResizeCallback = nullptr;
+    typedef bool (*Callback_onResize_2)(void *, int h, int w);
+    Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
     typedef void (*Callback_raiseAndActivate)(void *);
@@ -337,9 +337,9 @@ KDDockWidgetsBindings_EXPORT int
 c_KDDockWidgets__Views__Stack_flutter__numDockWidgets(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::objectName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__Stack_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::onResize(QSize newSize)
+// KDDockWidgets::Views::Stack_flutter::onResize(int h, int w)
 KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Views__Stack_flutter__onResize_QSize(void *thisObj, void *newSize_);
+c_KDDockWidgets__Views__Stack_flutter__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::Views::Stack_flutter::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Stack_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::raiseAndActivate()

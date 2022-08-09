@@ -208,7 +208,7 @@ class TitleBar extends Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1026))
+            cFunctionSymbolName(1028))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -236,7 +236,7 @@ class TitleBar extends Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1029))
+            cFunctionSymbolName(1031))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -494,9 +494,9 @@ class TitleBar extends Controller {
         return "c_KDDockWidgets__Controllers__TitleBar__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__TitleBar__eventFilter_QObject_QEvent";
-      case 1026:
+      case 1028:
         return "c_KDDockWidgets__Controllers__TitleBar__isMDI";
-      case 1029:
+      case 1031:
         return "c_KDDockWidgets__Controllers__TitleBar__isWindow";
       case 834:
         return "c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View";
@@ -512,9 +512,9 @@ class TitleBar extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 1026:
+      case 1028:
         return "isMDI";
-      case 1029:
+      case 1031:
         return "isWindow";
       case 834:
         return "setParentView_impl";
@@ -542,14 +542,14 @@ class TitleBar extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    const callbackExcept1026 = 0;
-    final callback1026 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        TitleBar.isMDI_calledFromC, callbackExcept1026);
-    registerCallback(thisCpp, callback1026, 1026);
-    const callbackExcept1029 = 0;
-    final callback1029 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        TitleBar.isWindow_calledFromC, callbackExcept1029);
-    registerCallback(thisCpp, callback1029, 1029);
+    const callbackExcept1028 = 0;
+    final callback1028 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        TitleBar.isMDI_calledFromC, callbackExcept1028);
+    registerCallback(thisCpp, callback1028, 1028);
+    const callbackExcept1031 = 0;
+    final callback1031 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        TitleBar.isWindow_calledFromC, callbackExcept1031);
+    registerCallback(thisCpp, callback1031, 1031);
     final callback834 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);

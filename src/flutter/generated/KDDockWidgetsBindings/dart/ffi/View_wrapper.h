@@ -103,8 +103,9 @@ public:
     virtual QRect normalGeometry_nocallback() const;
     virtual QString objectName() const;
     virtual QString objectName_nocallback() const;
-    virtual bool onResize(QSize newSize);
-    virtual bool onResize_nocallback(QSize newSize);
+    bool onResize(QSize arg__1);
+    virtual bool onResize(int h, int w);
+    virtual bool onResize_nocallback(int h, int w);
     QSize parentSize() const;
     QPoint pos() const;
     virtual void raise();
@@ -222,8 +223,8 @@ public:
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
     typedef QString *(*Callback_objectName)(void *);
     Callback_objectName m_objectNameCallback = nullptr;
-    typedef bool (*Callback_onResize)(void *, QSize *newSize);
-    Callback_onResize m_onResizeCallback = nullptr;
+    typedef bool (*Callback_onResize_2)(void *, int h, int w);
+    Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
     typedef void (*Callback_raiseAndActivate)(void *);
@@ -385,9 +386,12 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__move_int_int(void *this
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__normalGeometry(void *thisObj);
 // KDDockWidgets::View::objectName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__objectName(void *thisObj);
-// KDDockWidgets::View::onResize(QSize newSize)
+// KDDockWidgets::View::onResize(QSize arg__1)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__onResize_QSize(void *thisObj,
-                                                                        void *newSize_);
+                                                                        void *arg__1_);
+// KDDockWidgets::View::onResize(int h, int w)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__onResize_int_int(void *thisObj, int h,
+                                                                          int w);
 // KDDockWidgets::View::parentSize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__parentSize(void *thisObj);
 // KDDockWidgets::View::pos() const
