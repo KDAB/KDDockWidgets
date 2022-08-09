@@ -33,14 +33,11 @@ class PositionedWidgetState extends State<PositionedWidget> {
   int height = 400;
   final bool _fillsParent;
 
-  var childWidgets = <PositionedWidget>[];
-
   PositionedWidgetState(this.kddwView) : _fillsParent = kddwView.m_fillsParent {
     x = kddwView.m_x;
     y = kddwView.m_y;
     width = kddwView.m_width;
     height = kddwView.m_height;
-    childWidgets = kddwView.childWidgets;
 
     // print("Creating PositionedWidgetState  width=${width}");
   }
@@ -52,9 +49,7 @@ class PositionedWidgetState extends State<PositionedWidget> {
   }
 
   void addChildView(View_mixin childView) {
-    setState(() {
-      childWidgets.add(childView.flutterWidget);
-    });
+    setState(() {});
   }
 
   void updatePosition(int kddwX, int kddwY) {
@@ -100,7 +95,7 @@ class PositionedWidgetState extends State<PositionedWidget> {
     final container = Container(
         color: kddwView.m_color,
         child: Stack(
-          children: childWidgets,
+          children: kddwView.childWidgets,
         ));
 
     if (_fillsParent) return container;

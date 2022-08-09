@@ -18,7 +18,7 @@ import 'Group_flutter.dart';
 import 'View_flutter.dart';
 
 class View_mixin {
-  late final PositionedWidget flutterWidget;
+  late final StatefulWidget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
   late final KDDockWidgetBindings.View_flutter kddwView;
 
@@ -33,7 +33,7 @@ class View_mixin {
   int m_maxHeight = 16777215;
   int m_maxWidth = 16777215;
 
-  var childWidgets = <PositionedWidget>[];
+  var childWidgets = <StatefulWidget>[];
 
   setSize_2(int width, int height) {
     // print(
