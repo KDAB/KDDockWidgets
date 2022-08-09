@@ -153,7 +153,8 @@ public:
     virtual void setCursor(Qt::CursorShape) = 0;
     virtual void setMouseTracking(bool) = 0;
 
-    virtual bool onResize(QSize newSize);
+    virtual bool onResize(int h, int w);
+    bool onResize(QSize);
 
     virtual bool onFocusInEvent(QFocusEvent *)
     {

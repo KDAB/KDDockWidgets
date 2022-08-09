@@ -395,10 +395,15 @@ std::shared_ptr<Window> View::transientWindow() const
     return {};
 }
 
-bool View::onResize(QSize newSize)
+bool View::onResize(int h, int w)
 {
-    d->resized.emit(newSize);
+    d->resized.emit(QSize(h, w));
     return false;
+}
+
+bool View::onResize(QSize sz)
+{
+    return onResize(sz.height(), sz.width());
 }
 
 /** static */
