@@ -31,6 +31,15 @@ View_flutter::View_flutter(KDDockWidgets::Controller *controller, Type type, Vie
     }
 }
 
+View_flutter::~View_flutter()
+{
+    // qDebug() << "~View_flutter" << this << int(type());
+    m_inDtor = true;
+    if (m_parentView && !m_parentView->inDtor()) {
+        m_parentView->onChildRemoved(this);
+    }
+}
+
 void View_flutter::setGeometry(QRect)
 {
 }
