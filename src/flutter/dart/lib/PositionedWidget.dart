@@ -59,7 +59,7 @@ class PositionedWidgetState extends State<PositionedWidget>
     // Whenever the window resizes we rebuild
     if (_fillsParent) {
       // setState(() {});
-      afterBuild();
+      resizeKDDWLayout();
     }
   }
 
@@ -83,7 +83,7 @@ class PositionedWidgetState extends State<PositionedWidget>
     });
   }
 
-  void afterBuild() {
+  void resizeKDDWLayout() {
     // If the widget is resized by flutter then tell KDDW.
     // Example use case: User resizes the window, which resizes the KDDW layout
     if (!_fillsParent) return;
@@ -110,7 +110,7 @@ class PositionedWidgetState extends State<PositionedWidget>
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      afterBuild();
+      resizeKDDWLayout();
     });
 
     if (_fillsParent)
