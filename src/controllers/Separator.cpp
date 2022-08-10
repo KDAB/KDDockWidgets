@@ -18,7 +18,6 @@
 #include "Controller.h"
 #include "kddockwidgets/ViewFactory.h"
 
-#include <QGuiApplication>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -234,7 +233,7 @@ void Separator::onMouseMove(QPoint pos)
     if (!isBeingDragged())
         return;
 
-    if (!(qGuiApp->mouseButtons() & Qt::LeftButton)) {
+    if (!Platform::instance()->isLeftMouseButtonPressed()) {
         qCDebug(separators) << Q_FUNC_INFO
                             << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
         onMouseReleased();
