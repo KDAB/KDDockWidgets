@@ -92,6 +92,9 @@ public:
     /// @brief Returns whether this platform is QtQuick
     bool isQtQuick() const;
 
+    /// @brief Returns whether this platform is Qt based
+    bool isQt() const;
+
     /// @brief Returns how many pixels the mouse must move for a drag to start
     /// This is usually 4 by default (QApplication::startDragDistance() for QtWidgets)
     /// You can override by calling Config::setStartDragDistance(), so you don't need to create

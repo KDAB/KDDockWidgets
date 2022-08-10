@@ -229,28 +229,31 @@ void Separator::onMouseDoubleClick()
 
 void Separator::onMouseMove(QPoint pos)
 {
-    Q_UNUSED(pos);
     if (!isBeingDragged())
         return;
 
-    if (!Platform::instance()->isLeftMouseButtonPressed()) {
-        qCDebug(separators) << Q_FUNC_INFO
-                            << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
-        onMouseReleased();
-        return;
-    }
+    if (Platform::instance()->isQt()) {
+        // Workaround a bug in Qt where we're getting mouse moves without without the button being
+        // pressed
+        if (!Platform::instance()->isLeftMouseButtonPressed()) {
+            qCDebug(separators) << Q_FUNC_INFO
+                                << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+            onMouseReleased();
+            return;
+        }
 
 #ifdef Q_OS_WIN
-    // Try harder, Qt can be wrong, if mixed with MFC
-    const bool mouseButtonIsReallyDown =
-        (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
-    if (!mouseButtonIsReallyDown) {
-        qCDebug(separators) << Q_FUNC_INFO
-                            << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
-        onMouseReleased();
-        return;
-    }
+        // Try harder, Qt can be wrong, if mixed with MFC
+        const bool mouseButtonIsReallyDown =
+            (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
+        if (!mouseButtonIsReallyDown) {
+            qCDebug(separators) << Q_FUNC_INFO
+                                << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+            onMouseReleased();
+            return;
+        }
 #endif
+    }
 
     const int positionToGoTo = Layouting::pos(pos, d->orientation);
     const int minPos = d->parentContainer->minPosForSeparator_global(this);

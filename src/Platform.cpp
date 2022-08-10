@@ -82,6 +82,12 @@ bool Platform::isQtQuick() const
     return strcmp(name(), "qtquick") == 0;
 }
 
+bool Platform::isQt() const
+{
+    static const bool is = isQtWidgets() || isQtQuick();
+    return is;
+}
+
 int Platform::startDragDistance() const
 {
     const int userRequestedDistance = Config::self().startDragDistance();
