@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'PositionedWidget.dart';
@@ -67,6 +68,7 @@ class SeparatorPositionedWidgetState extends PositionedWidgetState {
         separatorView.m_controller.onMouseReleased();
       },
       onPointerMove: (event) {
+        if (event.buttons != kPrimaryButton) return;
         var globalPos = event.position;
         print("Moved to ${event.position}");
         separatorView.m_controller.onMouseMove(
