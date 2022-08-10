@@ -18,7 +18,7 @@ import 'Group_flutter.dart';
 import 'View_flutter.dart';
 
 class View_mixin {
-  late final StatefulWidget flutterWidget;
+  late final Widget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
   late final KDDockWidgetBindings.View_flutter kddwView;
 
@@ -33,12 +33,12 @@ class View_mixin {
   int m_maxHeight = 16777215;
   int m_maxWidth = 16777215;
 
-  var childWidgets = <StatefulWidget>[];
+  var childWidgets = <Widget>[];
 
   setSize_2(int width, int height) {
     // print(
     //     "View_mixin::setSize called ${width}x${height} ; old=${m_width}x${height}");
-    if (m_width != width || height != height) {
+    if (m_width != width || height != m_height) {
       m_width = width;
       m_height = height;
 
@@ -80,7 +80,18 @@ class View_mixin {
     childWidgets.add(viewFlutter.flutterWidget);
 
     if (state != null) {
-      state.addChildView(viewFlutter);
+      state.childrenChanged();
+    }
+  }
+
+  void onChildRemoved(KDDockWidgetBindings.View? childView) {
+    final state = widgetKey.currentState;
+    final viewFlutter =
+        KDDockWidgetBindings.View_flutter.fromCache(childView!.thisCpp)
+            as View_mixin;
+    childWidgets.remove(viewFlutter.flutterWidget);
+    if (state != null) {
+      state.childrenChanged();
     }
   }
 

@@ -384,6 +384,19 @@ void View_flutter_wrapper::onChildAdded_nocallback(KDDockWidgets::View *childVie
 {
     ::KDDockWidgets::Views::View_flutter::onChildAdded(childView);
 }
+void View_flutter_wrapper::onChildRemoved(KDDockWidgets::View *childView)
+{
+    if (m_onChildRemovedCallback) {
+        const void *thisPtr = this;
+        m_onChildRemovedCallback(const_cast<void *>(thisPtr), childView);
+    } else {
+        ::KDDockWidgets::Views::View_flutter::onChildRemoved(childView);
+    }
+}
+void View_flutter_wrapper::onChildRemoved_nocallback(KDDockWidgets::View *childView)
+{
+    ::KDDockWidgets::Views::View_flutter::onChildRemoved(childView);
+}
 bool View_flutter_wrapper::onResize(int w, int h)
 {
     if (m_onResize_2Callback) {
@@ -1158,6 +1171,21 @@ void c_KDDockWidgets__Views__View_flutter__onChildAdded_View(void *thisObj, void
         }
     }();
 }
+// onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__View_flutter__onChildRemoved_View(void *thisObj, void *childView_)
+{
+    auto childView = reinterpret_cast<KDDockWidgets::View *>(childView_);
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->onChildRemoved_nocallback(childView);
+        } else {
+            return targetPtr->onChildRemoved(childView);
+        }
+    }();
+}
 // onResize(int w, int h)
 bool c_KDDockWidgets__Views__View_flutter__onResize_int_int(void *thisObj, int w, int h)
 {
@@ -1682,6 +1710,11 @@ void c_KDDockWidgets__Views__View_flutter__registerVirtualMethodCallback(void *p
     case 961:
         wrapper->m_onChildAddedCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::View_flutter_wrapper::Callback_onChildAdded>(
+            callback);
+        break;
+    case 962:
+        wrapper->m_onChildRemovedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::View_flutter_wrapper::Callback_onChildRemoved>(
             callback);
         break;
     case 899:

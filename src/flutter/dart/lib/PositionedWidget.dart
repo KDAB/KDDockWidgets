@@ -9,10 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/View_flutter.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class PositionedWidget extends StatefulWidget {
   final View_mixin kddwView;
@@ -25,7 +23,8 @@ class PositionedWidget extends StatefulWidget {
   }
 }
 
-class PositionedWidgetState extends State<PositionedWidget> {
+class PositionedWidgetState extends State<PositionedWidget>
+    with WidgetsBindingObserver {
   final View_mixin kddwView;
   int x = 0;
   int y = 0;
@@ -44,11 +43,27 @@ class PositionedWidgetState extends State<PositionedWidget> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
     // print("PositionedWidgetState::initState: width=${width}");
   }
 
-  void addChildView(View_mixin childView) {
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    // Whenever the window resizes we rebuild
+    if (_fillsParent) {
+      // setState(() {});
+      afterBuild();
+    }
+  }
+
+  void childrenChanged() {
     setState(() {});
   }
 
@@ -83,20 +98,25 @@ class PositionedWidgetState extends State<PositionedWidget> {
     }
   }
 
+  /// This is factored-out from build() so derived classes can return something else
+  Widget buildContents() {
+    return Container(
+        color: kddwView.m_color,
+        child: Stack(
+          children: kddwView.childWidgets,
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       afterBuild();
     });
 
-    // if (!_fillsParent)
-    //   print("Build started width=${width} but ${kddwView.m_width}");
+    if (_fillsParent)
+      print("Build started width=${width} but ${kddwView.m_width}");
 
-    final container = Container(
-        color: kddwView.m_color,
-        child: Stack(
-          children: kddwView.childWidgets,
-        ));
+    final container = buildContents();
 
     if (_fillsParent) return container;
 

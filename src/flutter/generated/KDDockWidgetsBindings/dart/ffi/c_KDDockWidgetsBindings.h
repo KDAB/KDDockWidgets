@@ -1718,6 +1718,8 @@ void *c_KDDockWidgets__Views__View_flutter__normalGeometry(void *thisObj);
 void *c_KDDockWidgets__Views__View_flutter__objectName(void *thisObj);
 // KDDockWidgets::Views::View_flutter::onChildAdded(KDDockWidgets::View * childView)
 void c_KDDockWidgets__Views__View_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::View_flutter::onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__View_flutter__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::View_flutter::onResize(int w, int h)
 bool c_KDDockWidgets__Views__View_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::View_flutter::raise()
@@ -1850,6 +1852,8 @@ void *c_KDDockWidgets__Views__TitleBar_flutter__normalGeometry(void *thisObj);
 void *c_KDDockWidgets__Views__TitleBar_flutter__objectName(void *thisObj);
 // KDDockWidgets::Views::TitleBar_flutter::onChildAdded(KDDockWidgets::View * childView)
 void c_KDDockWidgets__Views__TitleBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::TitleBar_flutter::onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__TitleBar_flutter__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::TitleBar_flutter::onResize(int w, int h)
 bool c_KDDockWidgets__Views__TitleBar_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TitleBar_flutter::raise()
@@ -1975,6 +1979,8 @@ void *c_KDDockWidgets__Views__TabBar_flutter__normalGeometry(void *thisObj);
 void *c_KDDockWidgets__Views__TabBar_flutter__objectName(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::onChildAdded(KDDockWidgets::View * childView)
 void c_KDDockWidgets__Views__TabBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::TabBar_flutter::onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__TabBar_flutter__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::TabBar_flutter::onResize(int w, int h)
 bool c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TabBar_flutter::raise()
@@ -2111,6 +2117,8 @@ int c_KDDockWidgets__Views__Stack_flutter__numDockWidgets(void *thisObj);
 void *c_KDDockWidgets__Views__Stack_flutter__objectName(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::onChildAdded(KDDockWidgets::View * childView)
 void c_KDDockWidgets__Views__Stack_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::Stack_flutter::onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__Stack_flutter__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::Stack_flutter::onResize(int w, int h)
 bool c_KDDockWidgets__Views__Stack_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::Stack_flutter::raise()
@@ -2242,6 +2250,8 @@ void *c_KDDockWidgets__Views__Group_flutter__normalGeometry(void *thisObj);
 void *c_KDDockWidgets__Views__Group_flutter__objectName(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::onChildAdded(KDDockWidgets::View * childView)
 void c_KDDockWidgets__Views__Group_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::Group_flutter::onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__Group_flutter__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::Group_flutter::onResize(int w, int h)
 bool c_KDDockWidgets__Views__Group_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::Group_flutter::raise()

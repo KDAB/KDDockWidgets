@@ -19,8 +19,8 @@
 #include <qpoint.h>
 #include <qcoreevent.h>
 #include <qrect.h>
-#include <qobject.h>
 #include <qstring.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Layout_wrapper : public ::KDDockWidgets::Controllers::Layout

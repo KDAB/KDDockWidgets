@@ -422,6 +422,19 @@ void Stack_flutter_wrapper::onChildAdded_nocallback(KDDockWidgets::View *childVi
 {
     ::KDDockWidgets::Views::Stack_flutter::onChildAdded(childView);
 }
+void Stack_flutter_wrapper::onChildRemoved(KDDockWidgets::View *childView)
+{
+    if (m_onChildRemovedCallback) {
+        const void *thisPtr = this;
+        m_onChildRemovedCallback(const_cast<void *>(thisPtr), childView);
+    } else {
+        ::KDDockWidgets::Views::Stack_flutter::onChildRemoved(childView);
+    }
+}
+void Stack_flutter_wrapper::onChildRemoved_nocallback(KDDockWidgets::View *childView)
+{
+    ::KDDockWidgets::Views::Stack_flutter::onChildRemoved(childView);
+}
 bool Stack_flutter_wrapper::onResize(int w, int h)
 {
     if (m_onResize_2Callback) {
@@ -1269,6 +1282,21 @@ void c_KDDockWidgets__Views__Stack_flutter__onChildAdded_View(void *thisObj, voi
         }
     }();
 }
+// onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__Stack_flutter__onChildRemoved_View(void *thisObj, void *childView_)
+{
+    auto childView = reinterpret_cast<KDDockWidgets::View *>(childView_);
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->onChildRemoved_nocallback(childView);
+        } else {
+            return targetPtr->onChildRemoved(childView);
+        }
+    }();
+}
 // onResize(int w, int h)
 bool c_KDDockWidgets__Views__Stack_flutter__onResize_int_int(void *thisObj, int w, int h)
 {
@@ -1724,7 +1752,7 @@ void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_createPlatformWindow>(
             callback);
         break;
-    case 991:
+    case 992:
         wrapper->m_currentIndexCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_currentIndex>(
             callback);
@@ -1776,7 +1804,7 @@ void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *
         wrapper->m_isNullCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_isNull>(callback);
         break;
-    case 992:
+    case 993:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_isPositionDraggable>(
             callback);
@@ -1831,7 +1859,7 @@ void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_normalGeometry>(
             callback);
         break;
-    case 993:
+    case 994:
         wrapper->m_numDockWidgetsCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_numDockWidgets>(
             callback);
@@ -1843,6 +1871,11 @@ void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *
     case 961:
         wrapper->m_onChildAddedCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_onChildAdded>(
+            callback);
+        break;
+    case 962:
+        wrapper->m_onChildRemovedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_onChildRemoved>(
             callback);
         break;
     case 899:
@@ -1868,11 +1901,11 @@ void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_releaseMouse>(
             callback);
         break;
-    case 994:
+    case 995:
         wrapper->m_renameTabCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_renameTab>(callback);
         break;
-    case 995:
+    case 996:
         wrapper->m_setCurrentDockWidgetCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_setCurrentDockWidget>(
             callback);
@@ -1881,7 +1914,7 @@ void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *
         wrapper->m_setCursorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_setCursor>(callback);
         break;
-    case 996:
+    case 997:
         wrapper->m_setDocumentModeCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_setDocumentMode>(
             callback);

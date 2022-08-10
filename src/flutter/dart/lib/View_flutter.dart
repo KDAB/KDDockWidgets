@@ -20,19 +20,23 @@ class View_flutter extends KDDockWidgetBindings.View_flutter with View_mixin {
       KDDockWidgetBindings.View? parent,
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
-    createFlutterWidget();
+    initMixin();
   }
 
   View_flutter.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
       : super.fromCppPointer(cppPointer, needsAutoDelete) {
-    createFlutterWidget();
+    initMixin();
   }
 
-  void createFlutterWidget() {
+  void initMixin() {
     // The key is the C++ KDDockWidget pointer, which is stable and unique
     final ffi.Pointer<ffi.Void> ptr = thisCpp.cast<ffi.Void>();
     widgetKey = GlobalObjectKey(ptr.address);
     kddwView = this;
-    flutterWidget = PositionedWidget(this, key: widgetKey);
+    flutterWidget = createFlutterWidget();
+  }
+
+  Widget createFlutterWidget() {
+    return PositionedWidget(this, key: widgetKey);
   }
 }

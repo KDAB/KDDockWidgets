@@ -14,8 +14,8 @@
 #include <View.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <qrect.h>
 #include <qsize.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Stack_flutter_wrapper : public ::KDDockWidgets::Views::Stack_flutter
@@ -84,6 +84,8 @@ public:
     virtual QString objectName_nocallback() const;
     virtual void onChildAdded(KDDockWidgets::View *childView);
     virtual void onChildAdded_nocallback(KDDockWidgets::View *childView);
+    virtual void onChildRemoved(KDDockWidgets::View *childView);
+    virtual void onChildRemoved_nocallback(KDDockWidgets::View *childView);
     virtual bool onResize(int w, int h);
     virtual bool onResize_nocallback(int w, int h);
     virtual void raise();
@@ -204,6 +206,8 @@ public:
     Callback_objectName m_objectNameCallback = nullptr;
     typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::View *childView);
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
+    typedef void (*Callback_onChildRemoved)(void *, KDDockWidgets::View *childView);
+    Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int w, int h);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
@@ -344,6 +348,9 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__Stack_flutter__object
 // KDDockWidgets::Views::Stack_flutter::onChildAdded(KDDockWidgets::View * childView)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__Stack_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::Stack_flutter::onChildRemoved(KDDockWidgets::View * childView)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__Stack_flutter__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::Stack_flutter::onResize(int w, int h)
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Views__Stack_flutter__onResize_int_int(void *thisObj, int w, int h);

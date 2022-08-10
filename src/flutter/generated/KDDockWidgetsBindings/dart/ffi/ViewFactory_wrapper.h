@@ -20,9 +20,9 @@
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
 #include <DropArea.h>
+#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
-#include <qobject.h>
 #include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

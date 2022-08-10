@@ -369,6 +369,26 @@ class View_flutter extends View {
       throw Error();
     }
     dartInstance.onChildAdded(View.fromCppPointer(childView));
+  } // onChildRemoved(KDDockWidgets::View * childView)
+
+  onChildRemoved(View? childView) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(962))
+        .asFunction();
+    func(thisCpp, childView == null ? ffi.nullptr : childView.thisCpp);
+  }
+
+  static void onChildRemoved_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? childView) {
+    var dartInstance =
+        View.s_dartInstanceByCppPtr[thisCpp.address] as View_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for View_flutter::onChildRemoved(KDDockWidgets::View * childView)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.onChildRemoved(View.fromCppPointer(childView));
   }
 
   static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int w, int h) {
@@ -758,6 +778,8 @@ class View_flutter extends View {
         return "c_KDDockWidgets__Views__View_flutter__objectName";
       case 961:
         return "c_KDDockWidgets__Views__View_flutter__onChildAdded_View";
+      case 962:
+        return "c_KDDockWidgets__Views__View_flutter__onChildRemoved_View";
       case 899:
         return "c_KDDockWidgets__Views__View_flutter__onResize_int_int";
       case 902:
@@ -872,6 +894,8 @@ class View_flutter extends View {
         return "objectName";
       case 961:
         return "onChildAdded";
+      case 962:
+        return "onChildRemoved";
       case 899:
         return "onResize_2";
       case 902:
@@ -1033,6 +1057,10 @@ class View_flutter extends View {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             View_flutter.onChildAdded_calledFromC);
     registerCallback(thisCpp, callback961, 961);
+    final callback962 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            View_flutter.onChildRemoved_calledFromC);
+    registerCallback(thisCpp, callback962, 962);
     const callbackExcept899 = 0;
     final callback899 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(

@@ -400,6 +400,19 @@ void Group_flutter_wrapper::onChildAdded_nocallback(KDDockWidgets::View *childVi
 {
     ::KDDockWidgets::Views::Group_flutter::onChildAdded(childView);
 }
+void Group_flutter_wrapper::onChildRemoved(KDDockWidgets::View *childView)
+{
+    if (m_onChildRemovedCallback) {
+        const void *thisPtr = this;
+        m_onChildRemovedCallback(const_cast<void *>(thisPtr), childView);
+    } else {
+        ::KDDockWidgets::Views::Group_flutter::onChildRemoved(childView);
+    }
+}
+void Group_flutter_wrapper::onChildRemoved_nocallback(KDDockWidgets::View *childView)
+{
+    ::KDDockWidgets::Views::Group_flutter::onChildRemoved(childView);
+}
 bool Group_flutter_wrapper::onResize(int w, int h)
 {
     if (m_onResize_2Callback) {
@@ -1200,6 +1213,21 @@ void c_KDDockWidgets__Views__Group_flutter__onChildAdded_View(void *thisObj, voi
         }
     }();
 }
+// onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__Group_flutter__onChildRemoved_View(void *thisObj, void *childView_)
+{
+    auto childView = reinterpret_cast<KDDockWidgets::View *>(childView_);
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->onChildRemoved_nocallback(childView);
+        } else {
+            return targetPtr->onChildRemoved(childView);
+        }
+    }();
+}
 // onResize(int w, int h)
 bool c_KDDockWidgets__Views__Group_flutter__onResize_int_int(void *thisObj, int w, int h)
 {
@@ -1623,7 +1651,7 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_createPlatformWindow>(
             callback);
         break;
-    case 1001:
+    case 1002:
         wrapper->m_dragRectCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_dragRect>(callback);
         break;
@@ -1715,7 +1743,7 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
         wrapper->m_move_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_move_2>(callback);
         break;
-    case 1002:
+    case 1003:
         wrapper->m_nonContentsHeightCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_nonContentsHeight>(
             callback);
@@ -1732,6 +1760,11 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
     case 961:
         wrapper->m_onChildAddedCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_onChildAdded>(
+            callback);
+        break;
+    case 962:
+        wrapper->m_onChildRemovedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_onChildRemoved>(
             callback);
         break;
     case 899:
@@ -1757,11 +1790,11 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_releaseMouse>(
             callback);
         break;
-    case 1003:
+    case 1004:
         wrapper->m_renameTabCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_renameTab>(callback);
         break;
-    case 1004:
+    case 1005:
         wrapper->m_setCurrentTabIndex_implCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::
                                  Callback_setCurrentTabIndex_impl>(callback);

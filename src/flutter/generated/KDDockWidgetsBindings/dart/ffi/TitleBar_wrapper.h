@@ -13,8 +13,8 @@
 #include <qstring.h>
 #include <Group.h>
 #include <TabBar.h>
-#include <View.h>
 #include <qpoint.h>
+#include <View.h>
 #include <qcoreevent.h>
 #include <qrect.h>
 #include <qsize.h>

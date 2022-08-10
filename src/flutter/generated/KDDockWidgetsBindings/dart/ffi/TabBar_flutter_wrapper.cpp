@@ -396,6 +396,19 @@ void TabBar_flutter_wrapper::onChildAdded_nocallback(KDDockWidgets::View *childV
 {
     ::KDDockWidgets::Views::TabBar_flutter::onChildAdded(childView);
 }
+void TabBar_flutter_wrapper::onChildRemoved(KDDockWidgets::View *childView)
+{
+    if (m_onChildRemovedCallback) {
+        const void *thisPtr = this;
+        m_onChildRemovedCallback(const_cast<void *>(thisPtr), childView);
+    } else {
+        ::KDDockWidgets::Views::TabBar_flutter::onChildRemoved(childView);
+    }
+}
+void TabBar_flutter_wrapper::onChildRemoved_nocallback(KDDockWidgets::View *childView)
+{
+    ::KDDockWidgets::Views::TabBar_flutter::onChildRemoved(childView);
+}
 bool TabBar_flutter_wrapper::onResize(int w, int h)
 {
     if (m_onResize_2Callback) {
@@ -1217,6 +1230,21 @@ void c_KDDockWidgets__Views__TabBar_flutter__onChildAdded_View(void *thisObj, vo
         }
     }();
 }
+// onChildRemoved(KDDockWidgets::View * childView)
+void c_KDDockWidgets__Views__TabBar_flutter__onChildRemoved_View(void *thisObj, void *childView_)
+{
+    auto childView = reinterpret_cast<KDDockWidgets::View *>(childView_);
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->onChildRemoved_nocallback(childView);
+        } else {
+            return targetPtr->onChildRemoved(childView);
+        }
+    }();
+}
 // onResize(int w, int h)
 bool c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int w, int h)
 {
@@ -1780,7 +1808,7 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
         wrapper->m_move_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_move_2>(callback);
         break;
-    case 983:
+    case 984:
         wrapper->m_moveTabToCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_moveTabTo>(callback);
         break;
@@ -1799,6 +1827,11 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_onChildAdded>(
             callback);
         break;
+    case 962:
+        wrapper->m_onChildRemovedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_onChildRemoved>(
+            callback);
+        break;
     case 899:
         wrapper->m_onResize_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_onResize_2>(
@@ -1813,7 +1846,7 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_raiseAndActivate>(
             callback);
         break;
-    case 984:
+    case 985:
         wrapper->m_rectForTabCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_rectForTab>(
             callback);
@@ -1925,16 +1958,16 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
         wrapper->m_sizeHintCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_sizeHint>(callback);
         break;
-    case 986:
+    case 987:
         wrapper->m_tabAtCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_tabAt>(callback);
         break;
-    case 987:
+    case 988:
         wrapper->m_tabsAreMovableCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_tabsAreMovable>(
             callback);
         break;
-    case 988:
+    case 989:
         wrapper->m_textCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_text>(callback);
         break;
