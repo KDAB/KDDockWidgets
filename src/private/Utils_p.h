@@ -57,11 +57,6 @@ inline bool isWindows()
     return Platform::instance()->displayType() == Platform::DisplayType::Windows;
 }
 
-inline bool isLeftButtonPressed()
-{
-    return Platform::instance()->isLeftMouseButtonPressed();
-}
-
 inline bool usesNativeTitleBar()
 {
     return Config::self().flags() & Config::Flag_NativeTitleBar;
