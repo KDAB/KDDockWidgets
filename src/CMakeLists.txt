@@ -481,13 +481,13 @@ if(KDDW_FRONTEND_QTWIDGETS)
         PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets
         PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate
     )
-    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTWIDGETS)
+    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTWIDGETS KDDW_FRONTEND_QT)
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
     target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate)
-    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTQUICK)
+    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTQUICK KDDW_FRONTEND_QT)
 endif()
 
 if(KDDW_FRONTEND_DUMMY)
