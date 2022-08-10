@@ -13,6 +13,7 @@
 #include "private/View_p.h"
 #include "private/multisplitter/Item_p.h"
 #include "../Window_flutter.h"
+#include "ViewWrapper.h"
 
 
 using namespace KDDockWidgets;
@@ -23,6 +24,8 @@ View_flutter::View_flutter(KDDockWidgets::Controller *controller, Type type, Vie
                            Qt::WindowFlags)
     : View(controller, type)
 {
+    m_parentView = static_cast<View_flutter *>(parent);
+
     if (parent) {
         // setParent(parent);
     }
@@ -154,7 +157,7 @@ void View_flutter::setParent(View *parent)
     if (parent == m_parentView)
         return;
 
-    m_parentView = parent;
+    m_parentView = static_cast<View_flutter *>(parent);
 
     if (parent) {
         static_cast<View_flutter *>(parent)->onChildAdded(this);
@@ -263,12 +266,18 @@ std::shared_ptr<View> View_flutter::childViewAt(QPoint) const
 
 std::shared_ptr<View> View_flutter::parentView() const
 {
+    // qDebug() << Q_FUNC_INFO << "parent is" << ( void * )m_parentView << "this=" << ( void * )this
+    //          << int(type());
+
+    if (m_parentView)
+        return m_parentView->asWrapper();
+
     return {};
 }
 
 std::shared_ptr<View> View_flutter::asWrapper()
 {
-    return {};
+    return ViewWrapper::create(this);
 }
 
 void View_flutter::setObjectName(const QString &name)

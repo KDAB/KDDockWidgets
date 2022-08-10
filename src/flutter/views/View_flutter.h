@@ -38,7 +38,7 @@ public:
     explicit View_flutter(KDDockWidgets::Controller *controller, Type type, View *,
                           Qt::WindowFlags windowFlags = {});
 
-    ~View_flutter() override = default;
+    ~View_flutter() override;
 
     void free_impl() override;
     QSize sizeHint() const override;
@@ -127,8 +127,14 @@ public:
         qFatal("Derived class should be called instead");
     }
 
+    virtual void onChildRemoved(View *childView)
+    {
+        Q_UNUSED(childView);
+        qFatal("Derived class should be called instead");
+    }
+
 private:
-    View *m_parentView = nullptr;
+    View_flutter *m_parentView = nullptr;
     QString m_name;
     Q_DISABLE_COPY(View_flutter)
 };
