@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../../ViewWrapper.h"
+#include "../../qtcommon/ViewWrapper.h"
 
 #include <QWidget>
 #include <QPointer>
