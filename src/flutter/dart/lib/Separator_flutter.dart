@@ -18,6 +18,7 @@ import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
 class Separator_flutter extends View_flutter {
   late final KDDockWidgetBindings.Separator m_controller;
+  late final KDDockWidgetBindings.View_flutter m_parent;
 
   Separator_flutter(KDDockWidgetBindings.Separator? separator,
       {required KDDockWidgetBindings.View? parent})
@@ -27,10 +28,9 @@ class Separator_flutter extends View_flutter {
     m_color = Colors.blueGrey;
     debugName = "Separator";
     print("Separator_flutter CTOR");
-    if (parent != null) {
-      var v = KDDockWidgetBindings.View_flutter.fromCache(parent.thisCpp);
-      v.onChildAdded(this);
-    }
+
+    m_parent = KDDockWidgetBindings.View_flutter.fromCache(parent!.thisCpp);
+    m_parent.onChildAdded(this);
   }
 
   Widget createFlutterWidget() {
@@ -69,11 +69,22 @@ class SeparatorPositionedWidgetState extends PositionedWidgetState {
       },
       onPointerMove: (event) {
         if (event.buttons != kPrimaryButton) return;
-        var globalPos = event.position;
-        print("Moved to ${event.position}");
+
+        final renderBox = (separatorView.m_parent as View_flutter)
+            .widgetKey
+            .currentContext
+            ?.findRenderObject() as RenderBox;
+
+        // The event is in coord space of the Separator. KDDW needs the position in
+        // the coord space of the DropArea (m_parent) instead:
+
+        var trans = renderBox.getTransformTo(null); // local to global
+        trans.invert(); // global to local
+        final localPos = event.transformed(trans).localPosition;
+
         separatorView.m_controller.onMouseMove(
             KDDockWidgetBindings.QPoint.ctor2(
-                globalPos.dx.toInt(), globalPos.dy.toInt()));
+                localPos.dx.toInt(), localPos.dy.toInt()));
       },
       child: MouseRegion(
           child: defaultContainer,
