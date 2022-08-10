@@ -631,7 +631,7 @@ if(KDDW_FRONTEND_QTQUICK)
         qtquick/views/MainWindowMDI_qtquick.h
         qtquick/views/RubberBand_qtquick.h
         qtquick/views/MainWindow_qtquick.h
-        qtquick/views/Separator_quick.h
+        qtquick/views/Separator_qtquick.h
         qtquick/views/FloatingWindow_qtquick.h
         qtquick/views/SideBar_qtquick.h
         qtquick/views/TabBar_qtquick.h
