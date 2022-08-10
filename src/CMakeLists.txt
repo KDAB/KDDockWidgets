@@ -239,6 +239,7 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/Window_flutter.cpp
     flutter/Platform_flutter.cpp
     flutter/views/View_flutter.cpp
+    flutter/views/ViewWrapper.cpp
     flutter/TestHelpers_flutter.cpp
     flutter/views/Stack_flutter.cpp
     flutter/views/DockWidget_flutter.cpp
