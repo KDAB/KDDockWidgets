@@ -134,6 +134,23 @@ KDDockWidgets::View *ViewFactory_flutter_wrapper::createSeparator_nocallback(
     return ::KDDockWidgets::ViewFactory_flutter::createSeparator(arg__1, parent);
 }
 KDDockWidgets::View *
+ViewFactory_flutter_wrapper::createSideBar(KDDockWidgets::Controllers::SideBar *arg__1,
+                                           KDDockWidgets::View *parent) const
+{
+    if (m_createSideBarCallback) {
+        const void *thisPtr = this;
+        return m_createSideBarCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        return ::KDDockWidgets::ViewFactory_flutter::createSideBar(arg__1, parent);
+    }
+}
+KDDockWidgets::View *
+ViewFactory_flutter_wrapper::createSideBar_nocallback(KDDockWidgets::Controllers::SideBar *arg__1,
+                                                      KDDockWidgets::View *parent) const
+{
+    return ::KDDockWidgets::ViewFactory_flutter::createSideBar(arg__1, parent);
+}
+KDDockWidgets::View *
 ViewFactory_flutter_wrapper::createStack(KDDockWidgets::Controllers::Stack *arg__1,
                                          KDDockWidgets::View *parent) const
 {
@@ -365,6 +382,24 @@ void *c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View(void 
         }
     }();
 }
+// createSideBar(KDDockWidgets::Controllers::SideBar * arg__1, KDDockWidgets::View * parent) const
+void *c_KDDockWidgets__ViewFactory_flutter__createSideBar_SideBar_View(void *thisObj, void *arg__1_,
+                                                                       void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::SideBar *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper *>(
+                targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->createSideBar_nocallback(arg__1, parent);
+        } else {
+            return targetPtr->createSideBar(arg__1, parent);
+        }
+    }();
+}
 // createStack(KDDockWidgets::Controllers::Stack * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View(void *thisObj, void *arg__1_,
                                                                    void *parent_)
@@ -508,16 +543,21 @@ void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *p
                                  Callback_createSeparator>(callback);
         break;
     case 695:
+        wrapper->m_createSideBarCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createSideBar>(
+            callback);
+        break;
+    case 696:
         wrapper->m_createStackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createStack>(
             callback);
         break;
-    case 696:
+    case 697:
         wrapper->m_createTabBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createTabBar>(
             callback);
         break;
-    case 697:
+    case 698:
         wrapper->m_createTitleBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_flutter_wrapper::Callback_createTitleBar>(
             callback);

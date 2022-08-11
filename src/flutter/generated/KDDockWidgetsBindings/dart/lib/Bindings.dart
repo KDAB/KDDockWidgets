@@ -9,10 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 export 'src/Config.dart' show Config;
+export 'src/FloatingWindow.dart' show FloatingWindow;
 export 'src/Group.dart' show Group;
 export 'src/DropArea.dart' show DropArea;
 export 'src/Layout.dart' show Layout;
 export 'src/Separator.dart' show Separator;
+export 'src/SideBar.dart' show SideBar;
 export 'src/Stack.dart' show Stack;
 export 'src/TabBar.dart' show TabBar;
 export 'src/TitleBar.dart' show TitleBar;

@@ -47,6 +47,7 @@ public:
     virtual bool isLeftMouseButtonPressed_nocallback() const;
     virtual bool isProcessingAppQuitEvent() const;
     virtual bool isProcessingAppQuitEvent_nocallback() const;
+    bool isQt() const;
     bool isQtQuick() const;
     bool isQtWidgets() const;
     virtual const char *name() const;
@@ -213,6 +214,8 @@ c_KDDockWidgets__Platform__isLeftMouseButtonPressed(void *thisObj);
 // KDDockWidgets::Platform::isProcessingAppQuitEvent() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Platform__isProcessingAppQuitEvent(void *thisObj);
+// KDDockWidgets::Platform::isQt() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__isQt(void *thisObj);
 // KDDockWidgets::Platform::isQtQuick() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__isQtQuick(void *thisObj);
 // KDDockWidgets::Platform::isQtWidgets() const

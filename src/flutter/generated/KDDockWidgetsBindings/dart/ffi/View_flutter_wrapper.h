@@ -17,11 +17,12 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include <controllers/Layout.h>
+#include <DropArea.h>
 #include <Stack.h>
 #include <TabBar.h>
-#include <Group.h>
-#include <DropArea.h>
 #include <TitleBar.h>
+#include <FloatingWindow.h>
+#include <Group.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class View_flutter_wrapper : public ::KDDockWidgets::Views::View_flutter

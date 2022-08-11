@@ -64,6 +64,9 @@
             <object-type name="TabBar" />
             <object-type name="TitleBar" />
             <object-type name="Separator" />
+            <object-type name="SideBar" />
+            <object-type name="FloatingWindow" />
+            <!-- <object-type name="DropIndicatorOverlay" /> -->
             <object-type name="ClassicIndicators" />
         </namespace-type>
 

@@ -11,16 +11,17 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <controllers/Layout.h>
 #include <View.h>
+#include <FloatingWindow.h>
 #include <qsize.h>
 #include <Item_p.h>
 #include <Group.h>
 #include <qlist.h>
 #include <DropArea.h>
-#include <qpoint.h>
-#include <qcoreevent.h>
-#include <qrect.h>
-#include <qstring.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <qpoint.h>
+#include <qstring.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Layout_wrapper : public ::KDDockWidgets::Controllers::Layout
@@ -41,6 +42,7 @@ public:
     virtual bool event_nocallback(QEvent *event);
     virtual bool eventFilter(QObject *watched, QEvent *event);
     virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
+    KDDockWidgets::Controllers::FloatingWindow *floatingWindow() const;
     QList<KDDockWidgets::Controllers::Group *> groups() const;
     QList<KDDockWidgets::Controllers::Group *>
     groupsFrom(KDDockWidgets::View *groupOrMultiSplitter) const;
@@ -104,6 +106,9 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__event_QE
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
                                                                  void *event_);
+// KDDockWidgets::Controllers::Layout::floatingWindow() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__Layout__floatingWindow(void *thisObj);
 // KDDockWidgets::Controllers::Layout::groups() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__groups(void *thisObj);
 // KDDockWidgets::Controllers::Layout::groupsFrom(KDDockWidgets::View * groupOrMultiSplitter) const

@@ -27,6 +27,10 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
+TitleBar_wrapper::TitleBar_wrapper(KDDockWidgets::Controllers::FloatingWindow *parent)
+    : ::KDDockWidgets::Controllers::TitleBar(parent)
+{
+}
 TitleBar_wrapper::TitleBar_wrapper(KDDockWidgets::Controllers::Group *parent)
     : ::KDDockWidgets::Controllers::TitleBar(parent)
 {
@@ -93,6 +97,10 @@ bool TitleBar_wrapper::floatButtonVisible() const
 void TitleBar_wrapper::floatButtonVisibleChanged(bool arg__1)
 {
     ::KDDockWidgets::Controllers::TitleBar::floatButtonVisibleChanged(arg__1);
+}
+KDDockWidgets::Controllers::FloatingWindow *TitleBar_wrapper::floatingWindow() const
+{
+    return ::KDDockWidgets::Controllers::TitleBar::floatingWindow();
 }
 KDDockWidgets::Controllers::Group *TitleBar_wrapper::group() const
 {
@@ -275,6 +283,12 @@ void c_KDDockWidgets__Controllers__TitleBar_Finalizer(void *, void *cppObj, void
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper *>(cppObj);
 }
+void *c_KDDockWidgets__Controllers__TitleBar__constructor_FloatingWindow(void *parent_)
+{
+    auto parent = reinterpret_cast<KDDockWidgets::Controllers::FloatingWindow *>(parent_);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper(parent);
+    return reinterpret_cast<void *>(ptr);
+}
 void *c_KDDockWidgets__Controllers__TitleBar__constructor_Group(void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Controllers::Group *>(parent_);
@@ -353,6 +367,11 @@ void c_KDDockWidgets__Controllers__TitleBar__floatButtonVisibleChanged_bool(void
                                                                             bool arg__1)
 {
     fromPtr(thisObj)->floatButtonVisibleChanged(arg__1);
+}
+// floatingWindow() const
+void *c_KDDockWidgets__Controllers__TitleBar__floatingWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->floatingWindow();
 }
 // group() const
 void *c_KDDockWidgets__Controllers__TitleBar__group(void *thisObj)
@@ -572,17 +591,17 @@ void c_KDDockWidgets__Controllers__TitleBar__registerVirtualMethodCallback(void 
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_eventFilter>(callback);
         break;
-    case 1030:
+    case 1037:
         wrapper->m_isMDICallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isMDI>(
                 callback);
         break;
-    case 1033:
+    case 1040:
         wrapper->m_isWindowCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isWindow>(
                 callback);
         break;
-    case 835:
+    case 838:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_setParentView_impl>(
             callback);

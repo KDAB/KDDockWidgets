@@ -15,6 +15,7 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
+#include <FloatingWindow.h>
 #include <Group.h>
 #include <TitleBar.h>
 #include <TabBar.h>
@@ -32,6 +33,7 @@ public:
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     KDDockWidgets::Controllers::DropArea *asDropAreaController() const;
+    KDDockWidgets::Controllers::FloatingWindow *asFloatingWindowController() const;
     KDDockWidgets::Controllers::Group *asGroupController() const;
     KDDockWidgets::Controllers::Layout *asLayout() const;
     KDDockWidgets::Controllers::Stack *asStackController() const;
@@ -289,6 +291,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__aboutToBeDestroyed(void
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__activateWindow(void *thisObj);
 // KDDockWidgets::View::asDropAreaController() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asDropAreaController(void *thisObj);
+// KDDockWidgets::View::asFloatingWindowController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asFloatingWindowController(void *thisObj);
 // KDDockWidgets::View::asGroupController() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asGroupController(void *thisObj);
 // KDDockWidgets::View::asLayout() const

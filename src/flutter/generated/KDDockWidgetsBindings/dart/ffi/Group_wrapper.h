@@ -13,6 +13,7 @@
 #include <qstring.h>
 #include <View.h>
 #include <KDDockWidgets.h>
+#include <FloatingWindow.h>
 #include <Stack.h>
 #include <TabBar.h>
 #include <qpoint.h>
@@ -22,8 +23,8 @@
 #include <DropArea.h>
 #include <controllers/Layout.h>
 #include <qsize.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Group_wrapper : public ::KDDockWidgets::Controllers::Group
@@ -33,6 +34,8 @@ public:
     Group_wrapper(KDDockWidgets::View *parent = nullptr);
     KDDockWidgets::Controllers::TitleBar *actualTitleBar() const;
     void actualTitleBarChanged();
+    void addTab(KDDockWidgets::Controllers::FloatingWindow *floatingWindow,
+                KDDockWidgets::InitialOption arg__2 = {});
     void addTab(KDDockWidgets::Controllers::Group *arg__1,
                 KDDockWidgets::InitialOption arg__2 = {});
     bool allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const;
@@ -58,6 +61,7 @@ public:
     virtual bool event_nocallback(QEvent *event);
     virtual bool eventFilter(QObject *watched, QEvent *event);
     virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
+    KDDockWidgets::Controllers::FloatingWindow *floatingWindow() const;
     void focusedWidgetChanged();
     virtual void focusedWidgetChangedCallback();
     virtual void focusedWidgetChangedCallback_nocallback();
@@ -133,8 +137,15 @@ KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onActualTitleBarChanged(
     void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::Group
-                     // * arg__1, KDDockWidgets::InitialOption arg__2)
+    void *
+        callback); // KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::FloatingWindow
+                   // * floatingWindow, KDDockWidgets::InitialOption arg__2)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Group__addTab_FloatingWindow_InitialOption(void *thisObj,
+                                                                         void *floatingWindow_,
+                                                                         void *arg__2_);
+// KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::Group * arg__1,
+// KDDockWidgets::InitialOption arg__2)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__addTab_Group_InitialOption(void *thisObj, void *arg__1_,
                                                                 void *arg__2_);
@@ -198,6 +209,9 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__event_QEv
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__Group__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
                                                                 void *event_);
+// KDDockWidgets::Controllers::Group::floatingWindow() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__Group__floatingWindow(void *thisObj);
 // KDDockWidgets::Controllers::Group::focusedWidgetChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__focusedWidgetChanged(void *thisObj);

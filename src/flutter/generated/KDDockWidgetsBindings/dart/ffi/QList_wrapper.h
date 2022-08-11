@@ -17,6 +17,7 @@
 #include <Group.h>
 #include <View.h>
 #include <KDDockWidgets.h>
+#include <FloatingWindow.h>
 #include <Stack.h>
 #include <TabBar.h>
 #include <qpoint.h>

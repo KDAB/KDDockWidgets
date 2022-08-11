@@ -17,6 +17,7 @@
 #include <Stack.h>
 #include <TabBar.h>
 #include <Separator.h>
+#include <SideBar.h>
 #include <DropArea.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
@@ -58,6 +59,11 @@ public:
     virtual KDDockWidgets::View *
     createSeparator_nocallback(KDDockWidgets::Controllers::Separator *arg__1,
                                KDDockWidgets::View *parent = nullptr) const;
+    virtual KDDockWidgets::View *createSideBar(KDDockWidgets::Controllers::SideBar *arg__1,
+                                               KDDockWidgets::View *parent) const;
+    virtual KDDockWidgets::View *
+    createSideBar_nocallback(KDDockWidgets::Controllers::SideBar *arg__1,
+                             KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createStack(KDDockWidgets::Controllers::Stack *arg__1,
                                              KDDockWidgets::View *parent) const;
     virtual KDDockWidgets::View *createStack_nocallback(KDDockWidgets::Controllers::Stack *arg__1,
@@ -99,6 +105,9 @@ public:
     typedef KDDockWidgets::View *(*Callback_createSeparator)(
         void *, KDDockWidgets::Controllers::Separator *arg__1, KDDockWidgets::View *parent);
     Callback_createSeparator m_createSeparatorCallback = nullptr;
+    typedef KDDockWidgets::View *(*Callback_createSideBar)(
+        void *, KDDockWidgets::Controllers::SideBar *arg__1, KDDockWidgets::View *parent);
+    Callback_createSideBar m_createSideBarCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createStack)(void *,
                                                          KDDockWidgets::Controllers::Stack *arg__1,
                                                          KDDockWidgets::View *parent);
@@ -149,6 +158,11 @@ c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj, void 
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View(void *thisObj, void *arg__1_,
                                                                      void *parent_);
+// KDDockWidgets::ViewFactory_flutter::createSideBar(KDDockWidgets::Controllers::SideBar * arg__1,
+// KDDockWidgets::View * parent) const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__ViewFactory_flutter__createSideBar_SideBar_View(void *thisObj, void *arg__1_,
+                                                                 void *parent_);
 // KDDockWidgets::ViewFactory_flutter::createStack(KDDockWidgets::Controllers::Stack * arg__1,
 // KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *

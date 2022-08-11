@@ -12,19 +12,21 @@
 #include <TitleBar.h>
 #include <qstring.h>
 #include <Group.h>
+#include <FloatingWindow.h>
 #include <TabBar.h>
-#include <qpoint.h>
 #include <View.h>
-#include <qcoreevent.h>
-#include <qrect.h>
-#include <qsize.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <qpoint.h>
+#include <qsize.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_wrapper : public ::KDDockWidgets::Controllers::TitleBar
 {
 public:
     ~TitleBar_wrapper();
+    TitleBar_wrapper(KDDockWidgets::Controllers::FloatingWindow *parent);
     TitleBar_wrapper(KDDockWidgets::Controllers::Group *parent);
     bool closeButtonEnabled() const;
     void closeButtonEnabledChanged(bool arg__1);
@@ -38,6 +40,7 @@ public:
     void floatButtonToolTipChanged(const QString &arg__1);
     bool floatButtonVisible() const;
     void floatButtonVisibleChanged(bool arg__1);
+    KDDockWidgets::Controllers::FloatingWindow *floatingWindow() const;
     KDDockWidgets::Controllers::Group *group() const;
     bool hasIcon() const;
     void iconChanged();
@@ -90,6 +93,10 @@ public:
 };
 }
 extern "C" {
+// KDDockWidgets::Controllers::TitleBar::TitleBar(KDDockWidgets::Controllers::FloatingWindow *
+// parent)
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__TitleBar__constructor_FloatingWindow(void *parent_);
 // KDDockWidgets::Controllers::TitleBar::TitleBar(KDDockWidgets::Controllers::Group * parent)
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__TitleBar__constructor_Group(void *parent_);
@@ -131,8 +138,11 @@ c_KDDockWidgets__Controllers__TitleBar__floatButtonVisibleChanged_bool(void *thi
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__onFloatButtonVisibleChanged_bool(
     void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::group()
+    void *callback); // KDDockWidgets::Controllers::TitleBar::floatingWindow()
                      // const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__TitleBar__floatingWindow(void *thisObj);
+// KDDockWidgets::Controllers::TitleBar::group() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__TitleBar__group(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::hasIcon() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__TitleBar__hasIcon(void *thisObj);

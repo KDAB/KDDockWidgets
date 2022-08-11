@@ -39,6 +39,11 @@ void Group_wrapper::actualTitleBarChanged()
 {
     ::KDDockWidgets::Controllers::Group::actualTitleBarChanged();
 }
+void Group_wrapper::addTab(KDDockWidgets::Controllers::FloatingWindow *floatingWindow,
+                           KDDockWidgets::InitialOption arg__2)
+{
+    ::KDDockWidgets::Controllers::Group::addTab(floatingWindow, arg__2);
+}
 void Group_wrapper::addTab(KDDockWidgets::Controllers::Group *arg__1,
                            KDDockWidgets::InitialOption arg__2)
 {
@@ -155,6 +160,10 @@ bool Group_wrapper::eventFilter(QObject *watched, QEvent *event)
 bool Group_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
 {
     return ::KDDockWidgets::Controllers::Group::eventFilter(watched, event);
+}
+KDDockWidgets::Controllers::FloatingWindow *Group_wrapper::floatingWindow() const
+{
+    return ::KDDockWidgets::Controllers::Group::floatingWindow();
 }
 void Group_wrapper::focusedWidgetChanged()
 {
@@ -393,6 +402,18 @@ void c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj)
 {
     fromPtr(thisObj)->actualTitleBarChanged();
 }
+// addTab(KDDockWidgets::Controllers::FloatingWindow * floatingWindow, KDDockWidgets::InitialOption
+// arg__2)
+void c_KDDockWidgets__Controllers__Group__addTab_FloatingWindow_InitialOption(void *thisObj,
+                                                                              void *floatingWindow_,
+                                                                              void *arg__2_)
+{
+    auto floatingWindow =
+        reinterpret_cast<KDDockWidgets::Controllers::FloatingWindow *>(floatingWindow_);
+    assert(arg__2_);
+    auto &arg__2 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__2_);
+    fromPtr(thisObj)->addTab(floatingWindow, arg__2);
+}
 // addTab(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::InitialOption arg__2)
 void c_KDDockWidgets__Controllers__Group__addTab_Group_InitialOption(void *thisObj, void *arg__1_,
                                                                      void *arg__2_)
@@ -538,6 +559,11 @@ bool c_KDDockWidgets__Controllers__Group__eventFilter_QObject_QEvent(void *thisO
             return targetPtr->eventFilter(watched, event);
         }
     }();
+}
+// floatingWindow() const
+void *c_KDDockWidgets__Controllers__Group__floatingWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->floatingWindow();
 }
 // focusedWidgetChanged()
 void c_KDDockWidgets__Controllers__Group__focusedWidgetChanged(void *thisObj)
@@ -781,7 +807,7 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_customEvent>(
                 callback);
         break;
-    case 1287:
+    case 1321:
         wrapper->m_dragRectCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_dragRect>(
                 callback);
@@ -796,17 +822,17 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_eventFilter>(
                 callback);
         break;
-    case 1289:
+    case 1324:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_focusedWidgetChangedCallback>(
             callback);
         break;
-    case 1303:
+    case 1338:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_isFocusedChangedCallback>(
             callback);
         break;
-    case 835:
+    case 838:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_setParentView_impl>(callback);
         break;

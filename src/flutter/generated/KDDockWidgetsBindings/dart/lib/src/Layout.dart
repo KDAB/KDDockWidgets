@@ -130,6 +130,15 @@ class Layout extends Controller {
     final result = dartInstance.eventFilter(
         QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
     return result ? 1 : 0;
+  } // floatingWindow() const
+
+  FloatingWindow floatingWindow() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__floatingWindow')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return FloatingWindow.fromCppPointer(result, false);
   } // groups() const
 
   QList groups() {
@@ -316,7 +325,7 @@ class Layout extends Controller {
         return "c_KDDockWidgets__Controllers__Layout__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent";
-      case 835:
+      case 838:
         return "c_KDDockWidgets__Controllers__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -330,7 +339,7 @@ class Layout extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 835:
+      case 838:
         return "setParentView_impl";
     }
     throw Error();
@@ -356,9 +365,9 @@ class Layout extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback835 =
+    final callback838 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback835, 835);
+    registerCallback(thisCpp, callback838, 838);
   }
 }

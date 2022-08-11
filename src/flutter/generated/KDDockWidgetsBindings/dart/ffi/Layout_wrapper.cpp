@@ -98,6 +98,10 @@ bool Layout_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
 {
     return ::KDDockWidgets::Controllers::Layout::eventFilter(watched, event);
 }
+KDDockWidgets::Controllers::FloatingWindow *Layout_wrapper::floatingWindow() const
+{
+    return ::KDDockWidgets::Controllers::Layout::floatingWindow();
+}
 QList<KDDockWidgets::Controllers::Group *> Layout_wrapper::groups() const
 {
     return ::KDDockWidgets::Controllers::Layout::groups();
@@ -281,6 +285,11 @@ bool c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *this
         }
     }();
 }
+// floatingWindow() const
+void *c_KDDockWidgets__Controllers__Layout__floatingWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->floatingWindow();
+}
 // groups() const
 void *c_KDDockWidgets__Controllers__Layout__groups(void *thisObj)
 {
@@ -410,7 +419,7 @@ void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *p
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
         break;
-    case 835:
+    case 838:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(
             callback);

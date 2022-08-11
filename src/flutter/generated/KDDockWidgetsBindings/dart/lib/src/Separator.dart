@@ -219,7 +219,7 @@ class Separator extends Controller {
         return "c_KDDockWidgets__Controllers__Separator__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Separator__eventFilter_QObject_QEvent";
-      case 835:
+      case 838:
         return "c_KDDockWidgets__Controllers__Separator__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -233,7 +233,7 @@ class Separator extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 835:
+      case 838:
         return "setParentView_impl";
     }
     throw Error();
@@ -259,9 +259,9 @@ class Separator extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback835 =
+    final callback838 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback835, 835);
+    registerCallback(thisCpp, callback838, 838);
   }
 }

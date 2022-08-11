@@ -18,8 +18,9 @@
 #include <KDDockWidgets.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DropArea_wrapper : public ::KDDockWidgets::Controllers::DropArea

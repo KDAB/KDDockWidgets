@@ -800,131 +800,131 @@ void c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 727:
+    case 728:
         wrapper->m_applicationNameCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_applicationName>(
             callback);
         break;
-    case 728:
+    case 729:
         wrapper->m_createDefaultViewFactoryCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_createDefaultViewFactory>(callback);
         break;
-    case 729:
+    case 730:
         wrapper->m_createViewCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_createView>(
             callback);
         break;
-    case 730:
+    case 731:
         wrapper->m_dumpManagedBacktraceCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_dumpManagedBacktrace>(callback);
         break;
-    case 732:
+    case 733:
         wrapper->m_hasActivePopupCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_hasActivePopup>(
             callback);
         break;
-    case 733:
+    case 734:
         wrapper->m_inDisallowedDragViewCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_inDisallowedDragView>(callback);
         break;
-    case 734:
+    case 735:
         wrapper->m_installMessageHandlerCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_installMessageHandler>(callback);
         break;
-    case 736:
+    case 737:
         wrapper->m_isLeftMouseButtonPressedCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_isLeftMouseButtonPressed>(callback);
         break;
-    case 737:
+    case 738:
         wrapper->m_isProcessingAppQuitEventCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_isProcessingAppQuitEvent>(callback);
         break;
-    case 740:
+    case 742:
         wrapper->m_nameCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_name>(callback);
         break;
-    case 741:
+    case 743:
         wrapper->m_organizationNameCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_organizationName>(
             callback);
         break;
-    case 742:
+    case 744:
         wrapper->m_restoreMouseCursorCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_restoreMouseCursor>(callback);
         break;
-    case 743:
+    case 745:
         wrapper->m_screenNumberForCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_screenNumberFor>(
             callback);
         break;
-    case 744:
+    case 746:
         wrapper->m_screenSizeForCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_screenSizeFor>(
             callback);
         break;
-    case 745:
+    case 747:
         wrapper->m_sendEventCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_sendEvent>(
             callback);
         break;
-    case 746:
+    case 748:
         wrapper->m_setMouseCursorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_setMouseCursor>(
             callback);
         break;
-    case 748:
+    case 750:
         wrapper->m_startDragDistance_implCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_startDragDistance_impl>(callback);
         break;
-    case 749:
+    case 751:
         wrapper->m_tests_createFocusableViewCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_tests_createFocusableView>(callback);
         break;
-    case 750:
+    case 752:
         wrapper->m_tests_createNonClosableViewCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_tests_createNonClosableView>(callback);
         break;
-    case 751:
+    case 753:
         wrapper->m_tests_createViewCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_createView>(
             callback);
         break;
-    case 753:
+    case 755:
         wrapper->m_tests_deinitPlatform_implCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_tests_deinitPlatform_impl>(callback);
         break;
-    case 755:
+    case 757:
         wrapper->m_tests_initPlatform_implCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_tests_initPlatform_impl>(callback);
         break;
-    case 756:
+    case 758:
         wrapper->m_tests_waitCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_tests_wait>(
             callback);
         break;
-    case 763:
+    case 765:
         wrapper->m_ungrabMouseCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::Callback_ungrabMouse>(
             callback);
         break;
-    case 764:
+    case 766:
         wrapper->m_uninstallMessageHandlerCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_uninstallMessageHandler>(callback);
         break;
-    case 765:
+    case 767:
         wrapper->m_usesFallbackMouseGrabberCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::
                                  Callback_usesFallbackMouseGrabber>(callback);
