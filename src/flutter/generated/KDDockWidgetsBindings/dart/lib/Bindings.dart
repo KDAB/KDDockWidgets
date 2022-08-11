@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 export 'src/Config.dart' show Config;
+export 'src/ClassicIndicators.dart' show ClassicIndicators;
+export 'src/DropIndicatorOverlay.dart' show DropIndicatorOverlay;
 export 'src/FloatingWindow.dart' show FloatingWindow;
 export 'src/Group.dart' show Group;
 export 'src/DropArea.dart' show DropArea;
@@ -25,7 +27,6 @@ export 'src/TitleBar_flutter.dart' show TitleBar_flutter;
 export 'src/View_flutter.dart' show View_flutter;
 export 'src/View.dart' show View;
 export 'src/Controller.dart' show Controller;
-export 'src/ClassicIndicators.dart' show ClassicIndicators;
 export 'src/CreateViewOptions.dart' show CreateViewOptions;
 export 'src/InitialOption.dart' show InitialOption;
 export 'src/Platform_flutter.dart' show Platform_flutter;

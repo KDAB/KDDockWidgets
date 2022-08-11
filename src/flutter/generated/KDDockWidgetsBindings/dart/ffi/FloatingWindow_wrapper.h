@@ -18,9 +18,9 @@
 #include <controllers/Layout.h>
 #include <qpoint.h>
 #include <qsize.h>
+#include <qcoreevent.h>
 #include <View.h>
 #include <qobject.h>
-#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class FloatingWindow_wrapper : public ::KDDockWidgets::Controllers::FloatingWindow
@@ -94,11 +94,8 @@ c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect(void *suggestedG
 // KDDockWidgets::Controllers::FloatingWindow::activatedChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__onActivatedChanged(
-    void *thisObj, void *contextQObject,
-    void *
-        callback); // KDDockWidgets::Controllers::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption
-                   // arg__1) const
+// KDDockWidgets::Controllers::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption
+// arg__1) const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__FloatingWindow__allDockWidgetsHave_DockWidgetOption(void *thisObj,
                                                                                   int arg__1);
@@ -174,9 +171,7 @@ c_KDDockWidgets__Controllers__FloatingWindow__multiSplitter(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::numFramesChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__numFramesChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__onNumFramesChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::FloatingWindow::scheduleDeleteLater()
+// KDDockWidgets::Controllers::FloatingWindow::scheduleDeleteLater()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__scheduleDeleteLater(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::setParentView_impl(KDDockWidgets::View * parent)
@@ -208,10 +203,6 @@ c_KDDockWidgets__Controllers__FloatingWindow__userType(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::windowStateChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__windowStateChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__FloatingWindow__onWindowStateChanged(void *thisObj,
-                                                                   void *contextQObject,
-                                                                   void *callback);
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void

@@ -14,11 +14,11 @@
 #include <TabBar.h>
 #include <Group.h>
 #include <qpoint.h>
-#include <View.h>
-#include <qobject.h>
-#include <qcoreevent.h>
-#include <qsize.h>
 #include <qrect.h>
+#include <qcoreevent.h>
+#include <View.h>
+#include <qsize.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Stack_wrapper : public ::KDDockWidgets::Controllers::Stack
@@ -74,18 +74,12 @@ public:
 extern "C" {
 // KDDockWidgets::Controllers::Stack::countChanged()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__countChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onCountChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Stack::currentIndex()
-                     // const
+// KDDockWidgets::Controllers::Stack::currentIndex() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Stack__currentIndex(void *thisObj);
 // KDDockWidgets::Controllers::Stack::currentTabChanged(int index)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Stack__currentTabChanged_int(void *thisObj, int index);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__onCurrentTabChanged_int(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Stack::customEvent(QEvent
-                     // * event)
+// KDDockWidgets::Controllers::Stack::customEvent(QEvent * event)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Stack__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::Stack::event(QEvent * event)

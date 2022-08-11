@@ -76,10 +76,7 @@ KDDockWidgetsBindings_EXPORT void c_QObject__customEvent_QEvent(void *thisObj, v
 KDDockWidgetsBindings_EXPORT void c_QObject__deleteLater(void *thisObj);
 // QObject::destroyed(QObject * arg__1)
 KDDockWidgetsBindings_EXPORT void c_QObject__destroyed_QObject(void *thisObj, void *arg__1_);
-KDDockWidgetsBindings_EXPORT void
-c_QObject__onDestroyed_QObject(void *thisObj, void *contextQObject,
-                               void *callback); // QObject::disconnect(const QObject * receiver,
-                                                // const char * member) const
+// QObject::disconnect(const QObject * receiver, const char * member) const
 KDDockWidgetsBindings_EXPORT bool c_QObject__disconnect_QObject_char(void *thisObj, void *receiver_,
                                                                      const char *member);
 // QObject::disconnect(const QObject * sender, const char * signal, const QObject * receiver, const

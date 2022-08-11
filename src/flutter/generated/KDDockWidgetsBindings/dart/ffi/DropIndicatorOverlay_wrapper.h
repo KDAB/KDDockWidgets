@@ -15,10 +15,10 @@
 #include <Group.h>
 #include <qrect.h>
 #include <qpoint.h>
-#include <View.h>
 #include <qcoreevent.h>
-#include <qobject.h>
+#include <View.h>
 #include <qsize.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DropIndicatorOverlay_wrapper : public ::KDDockWidgets::Controllers::DropIndicatorOverlay
@@ -90,11 +90,7 @@ c_KDDockWidgets__Controllers__DropIndicatorOverlay__currentDropLocation(void *th
 // KDDockWidgets::Controllers::DropIndicatorOverlay::currentDropLocationChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DropIndicatorOverlay__currentDropLocationChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__DropIndicatorOverlay__onCurrentDropLocationChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::DropIndicatorOverlay::customEvent(QEvent
-                     // * event)
+// KDDockWidgets::Controllers::DropIndicatorOverlay::customEvent(QEvent * event)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DropIndicatorOverlay__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::DropIndicatorOverlay::dropIndicatorVisible(KDDockWidgets::DropLocation
@@ -125,19 +121,13 @@ c_KDDockWidgets__Controllers__DropIndicatorOverlay__hoveredFrame(void *thisObj);
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DropIndicatorOverlay__hoveredFrameChanged_Group(void *thisObj,
                                                                               void *arg__1_);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__DropIndicatorOverlay__onHoveredFrameChanged_Group(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::DropIndicatorOverlay::hoveredFrameRect() const
+// KDDockWidgets::Controllers::DropIndicatorOverlay::hoveredFrameRect() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__DropIndicatorOverlay__hoveredFrameRect(void *thisObj);
 // KDDockWidgets::Controllers::DropIndicatorOverlay::hoveredFrameRectChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DropIndicatorOverlay__hoveredFrameRectChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__DropIndicatorOverlay__onHoveredFrameRectChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::DropIndicatorOverlay::isHovered() const
+// KDDockWidgets::Controllers::DropIndicatorOverlay::isHovered() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__DropIndicatorOverlay__isHovered(void *thisObj);
 // KDDockWidgets::Controllers::DropIndicatorOverlay::multisplitterLocationFor(KDDockWidgets::DropLocation

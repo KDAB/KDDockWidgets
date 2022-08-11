@@ -125,6 +125,15 @@ class DropArea extends Layout {
             location,
             relativeTo == null ? ffi.nullptr : relativeTo.thisCpp) !=
         0;
+  } // dropIndicatorOverlay() const
+
+  DropIndicatorOverlay dropIndicatorOverlay() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__DropArea__dropIndicatorOverlay')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return DropIndicatorOverlay.fromCppPointer(result, false);
   }
 
   static int event_calledFromC(
@@ -277,7 +286,7 @@ class DropArea extends Layout {
         return "c_KDDockWidgets__Controllers__DropArea__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent";
-      case 838:
+      case 826:
         return "c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -291,7 +300,7 @@ class DropArea extends Layout {
         return "event";
       case 307:
         return "eventFilter";
-      case 838:
+      case 826:
         return "setParentView_impl";
     }
     throw Error();
@@ -317,9 +326,9 @@ class DropArea extends Layout {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback838 =
+    final callback826 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback838, 838);
+    registerCallback(thisCpp, callback826, 826);
   }
 }

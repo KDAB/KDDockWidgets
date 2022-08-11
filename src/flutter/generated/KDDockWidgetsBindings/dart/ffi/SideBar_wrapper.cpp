@@ -201,7 +201,7 @@ void c_KDDockWidgets__Controllers__SideBar__registerVirtualMethodCallback(void *
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::SideBar_wrapper::Callback_eventFilter>(callback);
         break;
-    case 838:
+    case 826:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::SideBar_wrapper::Callback_setParentView_impl>(
             callback);

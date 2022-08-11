@@ -23,8 +23,8 @@
 #include <DropArea.h>
 #include <controllers/Layout.h>
 #include <qsize.h>
-#include <qobject.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Group_wrapper : public ::KDDockWidgets::Controllers::Group
@@ -135,11 +135,8 @@ c_KDDockWidgets__Controllers__Group__actualTitleBar(void *thisObj);
 // KDDockWidgets::Controllers::Group::actualTitleBarChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onActualTitleBarChanged(
-    void *thisObj, void *contextQObject,
-    void *
-        callback); // KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::FloatingWindow
-                   // * floatingWindow, KDDockWidgets::InitialOption arg__2)
+// KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::FloatingWindow *
+// floatingWindow, KDDockWidgets::InitialOption arg__2)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__addTab_FloatingWindow_InitialOption(void *thisObj,
                                                                          void *floatingWindow_,
@@ -215,9 +212,7 @@ c_KDDockWidgets__Controllers__Group__floatingWindow(void *thisObj);
 // KDDockWidgets::Controllers::Group::focusedWidgetChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__focusedWidgetChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onFocusedWidgetChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::focusedWidgetChangedCallback()
+// KDDockWidgets::Controllers::Group::focusedWidgetChangedCallback()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__focusedWidgetChangedCallback(void *thisObj);
 // KDDockWidgets::Controllers::Group::hasNestedMDIDockWidgets() const
@@ -232,10 +227,7 @@ c_KDDockWidgets__Controllers__Group__hasTabsVisible(void *thisObj);
 // KDDockWidgets::Controllers::Group::hasTabsVisibleChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__hasTabsVisibleChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onHasTabsVisibleChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::isCentralFrame()
-                     // const
+// KDDockWidgets::Controllers::Group::isCentralFrame() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__Group__isCentralFrame(void *thisObj);
 // KDDockWidgets::Controllers::Group::isDockable() const
@@ -247,9 +239,7 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isFloatin
 // KDDockWidgets::Controllers::Group::isFocusedChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__isFocusedChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onIsFocusedChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::isFocusedChangedCallback()
+// KDDockWidgets::Controllers::Group::isFocusedChangedCallback()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__isFocusedChangedCallback(void *thisObj);
 // KDDockWidgets::Controllers::Group::isInFloatingWindow() const
@@ -261,17 +251,11 @@ c_KDDockWidgets__Controllers__Group__isInMainWindow(void *thisObj);
 // KDDockWidgets::Controllers::Group::isInMainWindowChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__isInMainWindowChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onIsInMainWindowChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::isMDI()
-                     // const
+// KDDockWidgets::Controllers::Group::isMDI() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isMDI(void *thisObj);
 // KDDockWidgets::Controllers::Group::isMDIChanged()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__isMDIChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onIsMDIChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::isMDIWrapper()
-                     // const
+// KDDockWidgets::Controllers::Group::isMDIWrapper() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Controllers::Group::isOverlayed() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isOverlayed(void *thisObj);
@@ -291,10 +275,7 @@ c_KDDockWidgets__Controllers__Group__nonContentsHeight(void *thisObj);
 // KDDockWidgets::Controllers::Group::numDockWidgetsChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__numDockWidgetsChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onNumDockWidgetsChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::onCurrentTabChanged(int
-                     // index)
+// KDDockWidgets::Controllers::Group::onCurrentTabChanged(int index)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__onCurrentTabChanged_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Group::onDockWidgetCountChanged()

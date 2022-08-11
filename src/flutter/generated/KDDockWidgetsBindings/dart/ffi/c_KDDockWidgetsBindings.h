@@ -387,9 +387,7 @@ void c_QObject__customEvent_QEvent(void *thisObj, void *event_);
 void c_QObject__deleteLater(void *thisObj);
 // QObject::destroyed(QObject * arg__1)
 void c_QObject__destroyed_QObject(void *thisObj, void *arg__1_);
-void c_QObject__onDestroyed_QObject(void *thisObj, void *contextQObject,
-                                    void *callback); // QObject::disconnect(const QObject *
-                                                     // receiver, const char * member) const
+// QObject::disconnect(const QObject * receiver, const char * member) const
 bool c_QObject__disconnect_QObject_char(void *thisObj, void *receiver_, const char *member);
 // QObject::disconnect(const QObject * sender, const char * signal, const QObject * receiver, const
 // char * member)
@@ -1390,42 +1388,8 @@ void c_KDDockWidgets__CreateViewOptions___set_createWindow_bool(void *thisObj, b
 void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
 void c_KDDockWidgets__Controllers_Finalizer(
     void *, void *cppObj,
-    void
-        *); // KDDockWidgets::Controllers::ClassicIndicators::ClassicIndicators(KDDockWidgets::Controllers::DropArea
-            // * dropArea)
-void *c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea(void *dropArea_);
-// KDDockWidgets::Controllers::ClassicIndicators::hover_impl(QPoint globalPos)
-int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj,
-                                                                       void *globalPos_);
-// KDDockWidgets::Controllers::ClassicIndicators::indicatorsVisibleChanged()
-void c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__ClassicIndicators__onIndicatorsVisibleChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::ClassicIndicators::onResize(QSize newSize)
-bool c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_);
-// KDDockWidgets::Controllers::ClassicIndicators::posForIndicator(KDDockWidgets::DropLocation
-// arg__1) const
-void *c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation(void *thisObj,
-                                                                                    int arg__1);
-// KDDockWidgets::Controllers::ClassicIndicators::setDropLocation(KDDockWidgets::DropLocation
-// arg__1)
-void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocation(void *thisObj,
-                                                                                   int arg__1);
-// KDDockWidgets::Controllers::ClassicIndicators::tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s,
-                                                                               const char *c,
-                                                                               int n);
-// KDDockWidgets::Controllers::ClassicIndicators::updateVisibility()
-void c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility(void *thisObj);
-void c_KDDockWidgets__Controllers__ClassicIndicators__destructor(void *thisObj);
-void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback(void *ptr,
-                                                                                    void *callback,
-                                                                                    int methodId);
-void c_KDDockWidgets__Controllers__ClassicIndicators_Finalizer(
-    void *, void *cppObj,
     void *); // KDDockWidgets::Controller::Controller(KDDockWidgets::Type
-             // type, KDDockWidgets::View
-             // * arg__2)
+             // type, KDDockWidgets::View * arg__2)
 void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_);
 // KDDockWidgets::Controller::close()
 bool c_KDDockWidgets__Controller__close(void *thisObj);
@@ -1448,10 +1412,7 @@ bool c_KDDockWidgets__Controller__isVisible(void *thisObj);
 void *c_KDDockWidgets__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controller::parentViewChanged(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controller__parentViewChanged_View(void *thisObj, void *parent_);
-void c_KDDockWidgets__Controller__onParentViewChanged_View(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controller::pos()
-                     // const
+// KDDockWidgets::Controller::pos() const
 void *c_KDDockWidgets__Controller__pos(void *thisObj);
 // KDDockWidgets::Controller::rect() const
 void *c_KDDockWidgets__Controller__rect(void *thisObj);
@@ -2340,9 +2301,7 @@ bool c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabled(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::closeButtonEnabledChanged(bool arg__1)
 void c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabledChanged_bool(void *thisObj,
                                                                             bool arg__1);
-void c_KDDockWidgets__Controllers__TitleBar__onCloseButtonEnabledChanged_bool(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::customEvent(QEvent * event)
+// KDDockWidgets::Controllers::TitleBar::customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__TitleBar__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::TitleBar::event(QEvent * event)
 bool c_KDDockWidgets__Controllers__TitleBar__event_QEvent(void *thisObj, void *event_);
@@ -2355,16 +2314,12 @@ void *c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTip(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::floatButtonToolTipChanged(const QString & arg__1)
 void c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTipChanged_QString(void *thisObj,
                                                                                const char *arg__1_);
-void c_KDDockWidgets__Controllers__TitleBar__onFloatButtonToolTipChanged_QString(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::floatButtonVisible() const
+// KDDockWidgets::Controllers::TitleBar::floatButtonVisible() const
 bool c_KDDockWidgets__Controllers__TitleBar__floatButtonVisible(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::floatButtonVisibleChanged(bool arg__1)
 void c_KDDockWidgets__Controllers__TitleBar__floatButtonVisibleChanged_bool(void *thisObj,
                                                                             bool arg__1);
-void c_KDDockWidgets__Controllers__TitleBar__onFloatButtonVisibleChanged_bool(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::floatingWindow() const
+// KDDockWidgets::Controllers::TitleBar::floatingWindow() const
 void *c_KDDockWidgets__Controllers__TitleBar__floatingWindow(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::group() const
 void *c_KDDockWidgets__Controllers__TitleBar__group(void *thisObj);
@@ -2372,10 +2327,7 @@ void *c_KDDockWidgets__Controllers__TitleBar__group(void *thisObj);
 bool c_KDDockWidgets__Controllers__TitleBar__hasIcon(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::iconChanged()
 void c_KDDockWidgets__Controllers__TitleBar__iconChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__TitleBar__onIconChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::isCloseButtonEnabled()
-                     // const
+// KDDockWidgets::Controllers::TitleBar::isCloseButtonEnabled() const
 bool c_KDDockWidgets__Controllers__TitleBar__isCloseButtonEnabled(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::isCloseButtonVisible() const
 bool c_KDDockWidgets__Controllers__TitleBar__isCloseButtonVisible(void *thisObj);
@@ -2387,10 +2339,7 @@ bool c_KDDockWidgets__Controllers__TitleBar__isFloating(void *thisObj);
 bool c_KDDockWidgets__Controllers__TitleBar__isFocused(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::isFocusedChanged()
 void c_KDDockWidgets__Controllers__TitleBar__isFocusedChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__TitleBar__onIsFocusedChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::isMDI()
-                     // const
+// KDDockWidgets::Controllers::TitleBar::isMDI() const
 bool c_KDDockWidgets__Controllers__TitleBar__isMDI(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::isOverlayed() const
 bool c_KDDockWidgets__Controllers__TitleBar__isOverlayed(void *thisObj);
@@ -2400,9 +2349,7 @@ bool c_KDDockWidgets__Controllers__TitleBar__isWindow(void *thisObj);
 void c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj,
                                                                              bool visible,
                                                                              bool enabled);
-void c_KDDockWidgets__Controllers__TitleBar__onMinimizeButtonChanged_bool_bool(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::onAutoHideClicked()
+// KDDockWidgets::Controllers::TitleBar::onAutoHideClicked()
 void c_KDDockWidgets__Controllers__TitleBar__onAutoHideClicked(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::onCloseClicked()
 void c_KDDockWidgets__Controllers__TitleBar__onCloseClicked(void *thisObj);
@@ -2438,9 +2385,7 @@ void *c_KDDockWidgets__Controllers__TitleBar__title(void *thisObj);
 bool c_KDDockWidgets__Controllers__TitleBar__titleBarIsFocusable(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::titleChanged()
 void c_KDDockWidgets__Controllers__TitleBar__titleChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__TitleBar__onTitleChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::toggleMaximized()
+// KDDockWidgets::Controllers::TitleBar::toggleMaximized()
 void c_KDDockWidgets__Controllers__TitleBar__toggleMaximized(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controllers__TitleBar__tr_char_char_int(const char *s, const char *c,
@@ -2502,17 +2447,11 @@ void c_KDDockWidgets__Controllers__TabBar__registerVirtualMethodCallback(void *p
 void c_KDDockWidgets__Controllers__TabBar_Finalizer(
     void *, void *cppObj, void *); // KDDockWidgets::Controllers::Stack::countChanged()
 void c_KDDockWidgets__Controllers__Stack__countChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__Stack__onCountChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Stack::currentIndex()
-                     // const
+// KDDockWidgets::Controllers::Stack::currentIndex() const
 int c_KDDockWidgets__Controllers__Stack__currentIndex(void *thisObj);
 // KDDockWidgets::Controllers::Stack::currentTabChanged(int index)
 void c_KDDockWidgets__Controllers__Stack__currentTabChanged_int(void *thisObj, int index);
-void c_KDDockWidgets__Controllers__Stack__onCurrentTabChanged_int(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Stack::customEvent(QEvent
-                     // * event)
+// KDDockWidgets::Controllers::Stack::customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__Stack__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::Stack::event(QEvent * event)
 bool c_KDDockWidgets__Controllers__Stack__event_QEvent(void *thisObj, void *event_);
@@ -2722,6 +2661,8 @@ void *
 c_static_KDDockWidgets__Controllers__DropArea__createCentralFrame_MainWindowOptions(int options_);
 // KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::DropArea::dropIndicatorOverlay() const
+void *c_KDDockWidgets__Controllers__DropArea__dropIndicatorOverlay(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::event(QEvent * event)
 bool c_KDDockWidgets__Controllers__DropArea__event_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::DropArea::eventFilter(QObject * watched, QEvent * event)
@@ -2757,11 +2698,8 @@ void *c_KDDockWidgets__Controllers__Group__constructor_View(void *parent_);
 void *c_KDDockWidgets__Controllers__Group__actualTitleBar(void *thisObj);
 // KDDockWidgets::Controllers::Group::actualTitleBarChanged()
 void c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__Group__onActualTitleBarChanged(
-    void *thisObj, void *contextQObject,
-    void *
-        callback); // KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::FloatingWindow
-                   // * floatingWindow, KDDockWidgets::InitialOption arg__2)
+// KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::FloatingWindow *
+// floatingWindow, KDDockWidgets::InitialOption arg__2)
 void c_KDDockWidgets__Controllers__Group__addTab_FloatingWindow_InitialOption(void *thisObj,
                                                                               void *floatingWindow_,
                                                                               void *arg__2_);
@@ -2820,9 +2758,7 @@ bool c_KDDockWidgets__Controllers__Group__eventFilter_QObject_QEvent(void *thisO
 void *c_KDDockWidgets__Controllers__Group__floatingWindow(void *thisObj);
 // KDDockWidgets::Controllers::Group::focusedWidgetChanged()
 void c_KDDockWidgets__Controllers__Group__focusedWidgetChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__Group__onFocusedWidgetChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::focusedWidgetChangedCallback()
+// KDDockWidgets::Controllers::Group::focusedWidgetChangedCallback()
 void c_KDDockWidgets__Controllers__Group__focusedWidgetChangedCallback(void *thisObj);
 // KDDockWidgets::Controllers::Group::hasNestedMDIDockWidgets() const
 bool c_KDDockWidgets__Controllers__Group__hasNestedMDIDockWidgets(void *thisObj);
@@ -2832,10 +2768,7 @@ bool c_KDDockWidgets__Controllers__Group__hasSingleDockWidget(void *thisObj);
 bool c_KDDockWidgets__Controllers__Group__hasTabsVisible(void *thisObj);
 // KDDockWidgets::Controllers::Group::hasTabsVisibleChanged()
 void c_KDDockWidgets__Controllers__Group__hasTabsVisibleChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__Group__onHasTabsVisibleChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::isCentralFrame()
-                     // const
+// KDDockWidgets::Controllers::Group::isCentralFrame() const
 bool c_KDDockWidgets__Controllers__Group__isCentralFrame(void *thisObj);
 // KDDockWidgets::Controllers::Group::isDockable() const
 bool c_KDDockWidgets__Controllers__Group__isDockable(void *thisObj);
@@ -2845,9 +2778,7 @@ bool c_KDDockWidgets__Controllers__Group__isEmpty(void *thisObj);
 bool c_KDDockWidgets__Controllers__Group__isFloating(void *thisObj);
 // KDDockWidgets::Controllers::Group::isFocusedChanged()
 void c_KDDockWidgets__Controllers__Group__isFocusedChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__Group__onIsFocusedChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::isFocusedChangedCallback()
+// KDDockWidgets::Controllers::Group::isFocusedChangedCallback()
 void c_KDDockWidgets__Controllers__Group__isFocusedChangedCallback(void *thisObj);
 // KDDockWidgets::Controllers::Group::isInFloatingWindow() const
 bool c_KDDockWidgets__Controllers__Group__isInFloatingWindow(void *thisObj);
@@ -2855,17 +2786,11 @@ bool c_KDDockWidgets__Controllers__Group__isInFloatingWindow(void *thisObj);
 bool c_KDDockWidgets__Controllers__Group__isInMainWindow(void *thisObj);
 // KDDockWidgets::Controllers::Group::isInMainWindowChanged()
 void c_KDDockWidgets__Controllers__Group__isInMainWindowChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__Group__onIsInMainWindowChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::isMDI()
-                     // const
+// KDDockWidgets::Controllers::Group::isMDI() const
 bool c_KDDockWidgets__Controllers__Group__isMDI(void *thisObj);
 // KDDockWidgets::Controllers::Group::isMDIChanged()
 void c_KDDockWidgets__Controllers__Group__isMDIChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__Group__onIsMDIChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::isMDIWrapper()
-                     // const
+// KDDockWidgets::Controllers::Group::isMDIWrapper() const
 bool c_KDDockWidgets__Controllers__Group__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Controllers::Group::isOverlayed() const
 bool c_KDDockWidgets__Controllers__Group__isOverlayed(void *thisObj);
@@ -2881,10 +2806,7 @@ void *c_KDDockWidgets__Controllers__Group__mdiFrame(void *thisObj);
 int c_KDDockWidgets__Controllers__Group__nonContentsHeight(void *thisObj);
 // KDDockWidgets::Controllers::Group::numDockWidgetsChanged()
 void c_KDDockWidgets__Controllers__Group__numDockWidgetsChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__Group__onNumDockWidgetsChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::Group::onCurrentTabChanged(int
-                     // index)
+// KDDockWidgets::Controllers::Group::onCurrentTabChanged(int index)
 void c_KDDockWidgets__Controllers__Group__onCurrentTabChanged_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Group::onDockWidgetCountChanged()
 void c_KDDockWidgets__Controllers__Group__onDockWidgetCountChanged(void *thisObj);
@@ -2939,11 +2861,8 @@ c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect(void *grou
 void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect(void *suggestedGeometry_);
 // KDDockWidgets::Controllers::FloatingWindow::activatedChanged()
 void c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__FloatingWindow__onActivatedChanged(
-    void *thisObj, void *contextQObject,
-    void *
-        callback); // KDDockWidgets::Controllers::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption
-                   // arg__1) const
+// KDDockWidgets::Controllers::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption
+// arg__1) const
 bool c_KDDockWidgets__Controllers__FloatingWindow__allDockWidgetsHave_DockWidgetOption(
     void *thisObj, int arg__1);
 // KDDockWidgets::Controllers::FloatingWindow::allDockWidgetsHave(KDDockWidgets::LayoutSaverOption
@@ -2998,9 +2917,7 @@ void c_KDDockWidgets__Controllers__FloatingWindow__maybeCreateResizeHandler(void
 void *c_KDDockWidgets__Controllers__FloatingWindow__multiSplitter(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::numFramesChanged()
 void c_KDDockWidgets__Controllers__FloatingWindow__numFramesChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__FloatingWindow__onNumFramesChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::FloatingWindow::scheduleDeleteLater()
+// KDDockWidgets::Controllers::FloatingWindow::scheduleDeleteLater()
 void c_KDDockWidgets__Controllers__FloatingWindow__scheduleDeleteLater(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::setParentView_impl(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controllers__FloatingWindow__setParentView_impl_View(void *thisObj,
@@ -3023,16 +2940,145 @@ void c_KDDockWidgets__Controllers__FloatingWindow__updateTitleBarVisibility(void
 int c_KDDockWidgets__Controllers__FloatingWindow__userType(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::windowStateChanged()
 void c_KDDockWidgets__Controllers__FloatingWindow__windowStateChanged(void *thisObj);
-void c_KDDockWidgets__Controllers__FloatingWindow__onWindowStateChanged(void *thisObj,
-                                                                        void *contextQObject,
-                                                                        void *callback);
 void c_KDDockWidgets__Controllers__FloatingWindow__destructor(void *thisObj);
 void c_KDDockWidgets__Controllers__FloatingWindow__registerVirtualMethodCallback(void *ptr,
                                                                                  void *callback,
                                                                                  int methodId);
 void c_KDDockWidgets__Controllers__FloatingWindow_Finalizer(
-    void *, void *cppObj, void *); // KDDockWidgets::Config::absoluteWidgetMaxSize()
-                                   // const
+    void *, void *cppObj,
+    void
+        *); // KDDockWidgets::Controllers::DropIndicatorOverlay::DropIndicatorOverlay(KDDockWidgets::Controllers::DropArea
+            // * dropArea)
+void *c_KDDockWidgets__Controllers__DropIndicatorOverlay__constructor_DropArea(void *dropArea_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::currentDropLocation() const
+int c_KDDockWidgets__Controllers__DropIndicatorOverlay__currentDropLocation(void *thisObj);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::currentDropLocationChanged()
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__currentDropLocationChanged(void *thisObj);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::customEvent(QEvent * event)
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__customEvent_QEvent(void *thisObj,
+                                                                            void *event_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::dropIndicatorVisible(KDDockWidgets::DropLocation
+// arg__1) const
+bool c_KDDockWidgets__Controllers__DropIndicatorOverlay__dropIndicatorVisible_DropLocation(
+    void *thisObj, int arg__1);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::event(QEvent * event)
+bool c_KDDockWidgets__Controllers__DropIndicatorOverlay__event_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controllers__DropIndicatorOverlay__eventFilter_QObject_QEvent(void *thisObj,
+                                                                                    void *watched_,
+                                                                                    void *event_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::hover(QPoint globalPos)
+int c_KDDockWidgets__Controllers__DropIndicatorOverlay__hover_QPoint(void *thisObj,
+                                                                     void *globalPos_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::hover_impl(QPoint globalPos)
+int c_KDDockWidgets__Controllers__DropIndicatorOverlay__hover_impl_QPoint(void *thisObj,
+                                                                          void *globalPos_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::hoveredFrame() const
+void *c_KDDockWidgets__Controllers__DropIndicatorOverlay__hoveredFrame(void *thisObj);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::hoveredFrameChanged(KDDockWidgets::Controllers::Group
+// * arg__1)
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__hoveredFrameChanged_Group(void *thisObj,
+                                                                                   void *arg__1_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::hoveredFrameRect() const
+void *c_KDDockWidgets__Controllers__DropIndicatorOverlay__hoveredFrameRect(void *thisObj);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::hoveredFrameRectChanged()
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__hoveredFrameRectChanged(void *thisObj);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::isHovered() const
+bool c_KDDockWidgets__Controllers__DropIndicatorOverlay__isHovered(void *thisObj);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::multisplitterLocationFor(KDDockWidgets::DropLocation
+// arg__1)
+int c_static_KDDockWidgets__Controllers__DropIndicatorOverlay__multisplitterLocationFor_DropLocation(
+    int arg__1);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::onHoveredFrameChanged(KDDockWidgets::Controllers::Group
+// * arg__1)
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__onHoveredFrameChanged_Group(void *thisObj,
+                                                                                     void *arg__1_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation
+// arg__1) const
+void *
+c_KDDockWidgets__Controllers__DropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj,
+                                                                                 int arg__1);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::removeHover()
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__removeHover(void *thisObj);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation
+// location)
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(
+    void *thisObj, int location);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::setHoveredFrame(KDDockWidgets::Controllers::Group
+// * arg__1)
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setHoveredFrame_Group(void *thisObj,
+                                                                               void *arg__1_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::setParentView_impl(KDDockWidgets::View *
+// parent)
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setParentView_impl_View(void *thisObj,
+                                                                                 void *parent_);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::setWindowBeingDragged(bool arg__1)
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setWindowBeingDragged_bool(void *thisObj,
+                                                                                    bool arg__1);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Controllers__DropIndicatorOverlay__tr_char_char_int(const char *s,
+                                                                                  const char *c,
+                                                                                  int n);
+// KDDockWidgets::Controllers::DropIndicatorOverlay::updateVisibility()
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__updateVisibility(void *thisObj);
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__destructor(void *thisObj);
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay__registerVirtualMethodCallback(
+    void *ptr, void *callback, int methodId);
+void c_KDDockWidgets__Controllers__DropIndicatorOverlay_Finalizer(
+    void *, void *cppObj,
+    void
+        *); // KDDockWidgets::Controllers::ClassicIndicators::ClassicIndicators(KDDockWidgets::Controllers::DropArea
+            // * dropArea)
+void *c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea(void *dropArea_);
+// KDDockWidgets::Controllers::ClassicIndicators::customEvent(QEvent * event)
+void c_KDDockWidgets__Controllers__ClassicIndicators__customEvent_QEvent(void *thisObj,
+                                                                         void *event_);
+// KDDockWidgets::Controllers::ClassicIndicators::dropIndicatorVisible(KDDockWidgets::DropLocation
+// arg__1) const
+bool c_KDDockWidgets__Controllers__ClassicIndicators__dropIndicatorVisible_DropLocation(
+    void *thisObj, int arg__1);
+// KDDockWidgets::Controllers::ClassicIndicators::event(QEvent * event)
+bool c_KDDockWidgets__Controllers__ClassicIndicators__event_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::ClassicIndicators::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controllers__ClassicIndicators__eventFilter_QObject_QEvent(void *thisObj,
+                                                                                 void *watched_,
+                                                                                 void *event_);
+// KDDockWidgets::Controllers::ClassicIndicators::hover_impl(QPoint globalPos)
+int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj,
+                                                                       void *globalPos_);
+// KDDockWidgets::Controllers::ClassicIndicators::indicatorsVisibleChanged()
+void c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged(void *thisObj);
+// KDDockWidgets::Controllers::ClassicIndicators::onHoveredFrameChanged(KDDockWidgets::Controllers::Group
+// * arg__1)
+void c_KDDockWidgets__Controllers__ClassicIndicators__onHoveredFrameChanged_Group(void *thisObj,
+                                                                                  void *arg__1_);
+// KDDockWidgets::Controllers::ClassicIndicators::onResize(QSize newSize)
+bool c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::Controllers::ClassicIndicators::posForIndicator(KDDockWidgets::DropLocation
+// arg__1) const
+void *c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation(void *thisObj,
+                                                                                    int arg__1);
+// KDDockWidgets::Controllers::ClassicIndicators::setDropLocation(KDDockWidgets::DropLocation
+// arg__1)
+void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocation(void *thisObj,
+                                                                                   int arg__1);
+// KDDockWidgets::Controllers::ClassicIndicators::setParentView_impl(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controllers__ClassicIndicators__setParentView_impl_View(void *thisObj,
+                                                                              void *parent_);
+// KDDockWidgets::Controllers::ClassicIndicators::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s,
+                                                                               const char *c,
+                                                                               int n);
+// KDDockWidgets::Controllers::ClassicIndicators::updateVisibility()
+void c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility(void *thisObj);
+void c_KDDockWidgets__Controllers__ClassicIndicators__destructor(void *thisObj);
+void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback(void *ptr,
+                                                                                    void *callback,
+                                                                                    int methodId);
+void c_KDDockWidgets__Controllers__ClassicIndicators_Finalizer(
+    void *, void *cppObj,
+    void *); // KDDockWidgets::Config::absoluteWidgetMaxSize()
+             // const
 void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj);
 // KDDockWidgets::Config::absoluteWidgetMinSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj);

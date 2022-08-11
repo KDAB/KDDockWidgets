@@ -15,11 +15,12 @@
 #include <qlist.h>
 #include <Group.h>
 #include <Item_p.h>
+#include <controllers/DropIndicatorOverlay.h>
 #include <KDDockWidgets.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <qobject.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 #include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -42,6 +43,7 @@ public:
     createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options);
     virtual void customEvent(QEvent *event);
     virtual void customEvent_nocallback(QEvent *event);
+    KDDockWidgets::Controllers::DropIndicatorOverlay *dropIndicatorOverlay() const;
     virtual bool event(QEvent *event);
     virtual bool event_nocallback(QEvent *event);
     virtual bool eventFilter(QObject *watched, QEvent *event);
@@ -94,6 +96,9 @@ c_static_KDDockWidgets__Controllers__DropArea__createCentralFrame_MainWindowOpti
 // KDDockWidgets::Controllers::DropArea::customEvent(QEvent * event)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::DropArea::dropIndicatorOverlay() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__DropArea__dropIndicatorOverlay(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::event(QEvent * event)
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__DropArea__event_QEvent(void *thisObj, void *event_);

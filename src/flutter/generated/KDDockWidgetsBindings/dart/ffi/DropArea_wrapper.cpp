@@ -69,6 +69,10 @@ void DropArea_wrapper::customEvent_nocallback(QEvent *event)
 {
     ::KDDockWidgets::Controllers::DropArea::customEvent(event);
 }
+KDDockWidgets::Controllers::DropIndicatorOverlay *DropArea_wrapper::dropIndicatorOverlay() const
+{
+    return ::KDDockWidgets::Controllers::DropArea::dropIndicatorOverlay();
+}
 bool DropArea_wrapper::event(QEvent *event)
 {
     if (m_eventCallback) {
@@ -205,6 +209,11 @@ void c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent(void *thisObj, v
     auto event = reinterpret_cast<QEvent *>(event_);
     fromWrapperPtr(thisObj)->customEvent_nocallback(event);
 }
+// dropIndicatorOverlay() const
+void *c_KDDockWidgets__Controllers__DropArea__dropIndicatorOverlay(void *thisObj)
+{
+    return fromPtr(thisObj)->dropIndicatorOverlay();
+}
 // event(QEvent * event)
 bool c_KDDockWidgets__Controllers__DropArea__event_QEvent(void *thisObj, void *event_)
 {
@@ -307,7 +316,7 @@ void c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback(void 
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_eventFilter>(callback);
         break;
-    case 838:
+    case 826:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::DropArea_wrapper::Callback_setParentView_impl>(
             callback);

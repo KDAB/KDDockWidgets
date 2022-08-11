@@ -209,7 +209,7 @@ class Group extends Controller {
   QRect dragRect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1321))
+            cFunctionSymbolName(1310))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -271,7 +271,7 @@ class Group extends Controller {
   focusedWidgetChangedCallback() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1324))
+            cFunctionSymbolName(1313))
         .asFunction();
     func(thisCpp);
   }
@@ -362,7 +362,7 @@ class Group extends Controller {
   isFocusedChangedCallback() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1338))
+            cFunctionSymbolName(1327))
         .asFunction();
     func(thisCpp);
   }
@@ -666,17 +666,17 @@ class Group extends Controller {
     switch (methodId) {
       case 295:
         return "c_KDDockWidgets__Controllers__Group__customEvent_QEvent";
-      case 1321:
+      case 1310:
         return "c_KDDockWidgets__Controllers__Group__dragRect";
       case 306:
         return "c_KDDockWidgets__Controllers__Group__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Group__eventFilter_QObject_QEvent";
-      case 1324:
+      case 1313:
         return "c_KDDockWidgets__Controllers__Group__focusedWidgetChangedCallback";
-      case 1338:
+      case 1327:
         return "c_KDDockWidgets__Controllers__Group__isFocusedChangedCallback";
-      case 838:
+      case 826:
         return "c_KDDockWidgets__Controllers__Group__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -686,17 +686,17 @@ class Group extends Controller {
     switch (methodId) {
       case 295:
         return "customEvent";
-      case 1321:
+      case 1310:
         return "dragRect";
       case 306:
         return "event";
       case 307:
         return "eventFilter";
-      case 1324:
+      case 1313:
         return "focusedWidgetChangedCallback";
-      case 1338:
+      case 1327:
         return "isFocusedChangedCallback";
-      case 838:
+      case 826:
         return "setParentView_impl";
     }
     throw Error();
@@ -712,9 +712,9 @@ class Group extends Controller {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);
     registerCallback(thisCpp, callback295, 295);
-    final callback1321 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1310 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Group.dragRect_calledFromC);
-    registerCallback(thisCpp, callback1321, 1321);
+    registerCallback(thisCpp, callback1310, 1310);
     const callbackExcept306 = 0;
     final callback306 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
@@ -725,15 +725,15 @@ class Group extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback1324 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback1313 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Group.focusedWidgetChangedCallback_calledFromC);
-    registerCallback(thisCpp, callback1324, 1324);
-    final callback1338 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback1313, 1313);
+    final callback1327 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Group.isFocusedChangedCallback_calledFromC);
-    registerCallback(thisCpp, callback1338, 1338);
-    final callback838 =
+    registerCallback(thisCpp, callback1327, 1327);
+    final callback826 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Group.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback838, 838);
+    registerCallback(thisCpp, callback826, 826);
   }
 }

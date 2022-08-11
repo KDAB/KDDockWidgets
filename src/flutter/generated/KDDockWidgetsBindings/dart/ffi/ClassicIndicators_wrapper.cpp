@@ -31,6 +31,59 @@ ClassicIndicators_wrapper::ClassicIndicators_wrapper(KDDockWidgets::Controllers:
     : ::KDDockWidgets::Controllers::ClassicIndicators(dropArea)
 {
 }
+void ClassicIndicators_wrapper::customEvent(QEvent *event)
+{
+    if (m_customEventCallback) {
+        const void *thisPtr = this;
+        m_customEventCallback(const_cast<void *>(thisPtr), event);
+    } else {
+        ::KDDockWidgets::Controllers::ClassicIndicators::customEvent(event);
+    }
+}
+void ClassicIndicators_wrapper::customEvent_nocallback(QEvent *event)
+{
+    ::KDDockWidgets::Controllers::ClassicIndicators::customEvent(event);
+}
+bool ClassicIndicators_wrapper::dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const
+{
+    if (m_dropIndicatorVisibleCallback) {
+        const void *thisPtr = this;
+        return m_dropIndicatorVisibleCallback(const_cast<void *>(thisPtr), arg__1);
+    } else {
+        return ::KDDockWidgets::Controllers::ClassicIndicators::dropIndicatorVisible(arg__1);
+    }
+}
+bool ClassicIndicators_wrapper::dropIndicatorVisible_nocallback(
+    KDDockWidgets::DropLocation arg__1) const
+{
+    return ::KDDockWidgets::Controllers::ClassicIndicators::dropIndicatorVisible(arg__1);
+}
+bool ClassicIndicators_wrapper::event(QEvent *event)
+{
+    if (m_eventCallback) {
+        const void *thisPtr = this;
+        return m_eventCallback(const_cast<void *>(thisPtr), event);
+    } else {
+        return ::KDDockWidgets::Controllers::ClassicIndicators::event(event);
+    }
+}
+bool ClassicIndicators_wrapper::event_nocallback(QEvent *event)
+{
+    return ::KDDockWidgets::Controllers::ClassicIndicators::event(event);
+}
+bool ClassicIndicators_wrapper::eventFilter(QObject *watched, QEvent *event)
+{
+    if (m_eventFilterCallback) {
+        const void *thisPtr = this;
+        return m_eventFilterCallback(const_cast<void *>(thisPtr), watched, event);
+    } else {
+        return ::KDDockWidgets::Controllers::ClassicIndicators::eventFilter(watched, event);
+    }
+}
+bool ClassicIndicators_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
+{
+    return ::KDDockWidgets::Controllers::ClassicIndicators::eventFilter(watched, event);
+}
 KDDockWidgets::DropLocation ClassicIndicators_wrapper::hover_impl(QPoint globalPos)
 {
     if (m_hover_implCallback) {
@@ -47,6 +100,20 @@ KDDockWidgets::DropLocation ClassicIndicators_wrapper::hover_impl_nocallback(QPo
 void ClassicIndicators_wrapper::indicatorsVisibleChanged()
 {
     ::KDDockWidgets::Controllers::ClassicIndicators::indicatorsVisibleChanged();
+}
+void ClassicIndicators_wrapper::onHoveredFrameChanged(KDDockWidgets::Controllers::Group *arg__1)
+{
+    if (m_onHoveredFrameChangedCallback) {
+        const void *thisPtr = this;
+        m_onHoveredFrameChangedCallback(const_cast<void *>(thisPtr), arg__1);
+    } else {
+        ::KDDockWidgets::Controllers::ClassicIndicators::onHoveredFrameChanged(arg__1);
+    }
+}
+void ClassicIndicators_wrapper::onHoveredFrameChanged_nocallback(
+    KDDockWidgets::Controllers::Group *arg__1)
+{
+    ::KDDockWidgets::Controllers::ClassicIndicators::onHoveredFrameChanged(arg__1);
 }
 bool ClassicIndicators_wrapper::onResize(QSize newSize)
 {
@@ -69,6 +136,19 @@ ClassicIndicators_wrapper::posForIndicator_nocallback(KDDockWidgets::DropLocatio
 void ClassicIndicators_wrapper::setDropLocation(KDDockWidgets::DropLocation arg__1)
 {
     ::KDDockWidgets::Controllers::ClassicIndicators::setDropLocation(arg__1);
+}
+void ClassicIndicators_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+{
+    if (m_setParentView_implCallback) {
+        const void *thisPtr = this;
+        m_setParentView_implCallback(const_cast<void *>(thisPtr), parent);
+    } else {
+        ::KDDockWidgets::Controllers::ClassicIndicators::setParentView_impl(parent);
+    }
+}
+void ClassicIndicators_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+{
+    ::KDDockWidgets::Controllers::ClassicIndicators::setParentView_impl(parent);
 }
 QString ClassicIndicators_wrapper::tr(const char *s, const char *c, int n)
 {
@@ -111,6 +191,63 @@ void *c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea(void
     auto ptr = new KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper(dropArea);
     return reinterpret_cast<void *>(ptr);
 }
+// customEvent(QEvent * event)
+void c_KDDockWidgets__Controllers__ClassicIndicators__customEvent_QEvent(void *thisObj,
+                                                                         void *event_)
+{
+    auto event = reinterpret_cast<QEvent *>(event_);
+    fromWrapperPtr(thisObj)->customEvent_nocallback(event);
+}
+// dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const
+bool c_KDDockWidgets__Controllers__ClassicIndicators__dropIndicatorVisible_DropLocation(
+    void *thisObj, int arg__1)
+{
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->dropIndicatorVisible_nocallback(
+                static_cast<KDDockWidgets::DropLocation>(arg__1));
+        } else {
+            return targetPtr->dropIndicatorVisible(
+                static_cast<KDDockWidgets::DropLocation>(arg__1));
+        }
+    }();
+}
+// event(QEvent * event)
+bool c_KDDockWidgets__Controllers__ClassicIndicators__event_QEvent(void *thisObj, void *event_)
+{
+    auto event = reinterpret_cast<QEvent *>(event_);
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->event_nocallback(event);
+        } else {
+            return targetPtr->event(event);
+        }
+    }();
+}
+// eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controllers__ClassicIndicators__eventFilter_QObject_QEvent(void *thisObj,
+                                                                                 void *watched_,
+                                                                                 void *event_)
+{
+    auto watched = reinterpret_cast<QObject *>(watched_);
+    auto event = reinterpret_cast<QEvent *>(event_);
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->eventFilter_nocallback(watched, event);
+        } else {
+            return targetPtr->eventFilter(watched, event);
+        }
+    }();
+}
 // hover_impl(QPoint globalPos)
 int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj,
                                                                        void *globalPos_)
@@ -132,6 +269,13 @@ int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thi
 void c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged(void *thisObj)
 {
     fromPtr(thisObj)->indicatorsVisibleChanged();
+}
+// onHoveredFrameChanged(KDDockWidgets::Controllers::Group * arg__1)
+void c_KDDockWidgets__Controllers__ClassicIndicators__onHoveredFrameChanged_Group(void *thisObj,
+                                                                                  void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Group *>(arg__1_);
+    fromWrapperPtr(thisObj)->onHoveredFrameChanged_nocallback(arg__1);
 }
 // onResize(QSize newSize)
 bool c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_)
@@ -161,6 +305,13 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocati
                                                                                    int arg__1)
 {
     fromPtr(thisObj)->setDropLocation(static_cast<KDDockWidgets::DropLocation>(arg__1));
+}
+// setParentView_impl(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controllers__ClassicIndicators__setParentView_impl_View(void *thisObj,
+                                                                              void *parent_)
+{
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s,
@@ -194,17 +345,46 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallb
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 791:
+    case 295:
+        wrapper->m_customEventCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_customEvent>(
+            callback);
+        break;
+    case 1432:
+        wrapper->m_dropIndicatorVisibleCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::
+                                 Callback_dropIndicatorVisible>(callback);
+        break;
+    case 306:
+        wrapper->m_eventCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_event>(callback);
+        break;
+    case 307:
+        wrapper->m_eventFilterCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_eventFilter>(
+            callback);
+        break;
+    case 1436:
         wrapper->m_hover_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_hover_impl>(
             callback);
         break;
-    case 794:
+    case 1448:
+        wrapper->m_onHoveredFrameChangedCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::
+                                 Callback_onHoveredFrameChanged>(callback);
+        break;
+    case 1451:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_posForIndicator>(
             callback);
         break;
-    case 799:
+    case 826:
+        wrapper->m_setParentView_implCallback =
+            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::
+                                 Callback_setParentView_impl>(callback);
+        break;
+    case 1464:
         wrapper->m_updateVisibilityCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_updateVisibility>(
             callback);

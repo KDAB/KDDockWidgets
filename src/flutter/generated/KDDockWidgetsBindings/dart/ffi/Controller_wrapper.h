@@ -93,8 +93,7 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__mapToGlobal_QPoi
 // KDDockWidgets::Controller::parentViewChanged(KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controller__parentViewChanged_View(void *thisObj, void *parent_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controller__onParentViewChanged_View(
-    void *thisObj, void *contextQObject, void *callback); // KDDockWidgets::Controller::pos() const
+// KDDockWidgets::Controller::pos() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__pos(void *thisObj);
 // KDDockWidgets::Controller::rect() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__rect(void *thisObj);

@@ -14,12 +14,12 @@
 #include <Group.h>
 #include <FloatingWindow.h>
 #include <TabBar.h>
-#include <View.h>
-#include <qobject.h>
+#include <qrect.h>
 #include <qcoreevent.h>
 #include <qpoint.h>
+#include <View.h>
 #include <qsize.h>
-#include <qrect.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_wrapper : public ::KDDockWidgets::Controllers::TitleBar
@@ -106,10 +106,7 @@ c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabled(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::closeButtonEnabledChanged(bool arg__1)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabledChanged_bool(void *thisObj, bool arg__1);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__TitleBar__onCloseButtonEnabledChanged_bool(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::customEvent(QEvent * event)
+// KDDockWidgets::Controllers::TitleBar::customEvent(QEvent * event)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::TitleBar::event(QEvent * event)
@@ -126,20 +123,13 @@ c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTip(void *thisObj);
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTipChanged_QString(void *thisObj,
                                                                           const char *arg__1_);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__TitleBar__onFloatButtonToolTipChanged_QString(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::floatButtonVisible() const
+// KDDockWidgets::Controllers::TitleBar::floatButtonVisible() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__TitleBar__floatButtonVisible(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::floatButtonVisibleChanged(bool arg__1)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__floatButtonVisibleChanged_bool(void *thisObj, bool arg__1);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__TitleBar__onFloatButtonVisibleChanged_bool(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::floatingWindow()
-                     // const
+// KDDockWidgets::Controllers::TitleBar::floatingWindow() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__TitleBar__floatingWindow(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::group() const
@@ -149,10 +139,7 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__TitleBar__hasIco
 // KDDockWidgets::Controllers::TitleBar::iconChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__iconChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TitleBar__onIconChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::isCloseButtonEnabled()
-                     // const
+// KDDockWidgets::Controllers::TitleBar::isCloseButtonEnabled() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__TitleBar__isCloseButtonEnabled(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::isCloseButtonVisible() const
@@ -168,10 +155,7 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__TitleBar__isFocu
 // KDDockWidgets::Controllers::TitleBar::isFocusedChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__isFocusedChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TitleBar__onIsFocusedChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::isMDI()
-                     // const
+// KDDockWidgets::Controllers::TitleBar::isMDI() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__TitleBar__isMDI(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::isOverlayed() const
 KDDockWidgetsBindings_EXPORT bool
@@ -182,10 +166,7 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__TitleBar__isWind
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj, bool visible,
                                                                         bool enabled);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__TitleBar__onMinimizeButtonChanged_bool_bool(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::onAutoHideClicked()
+// KDDockWidgets::Controllers::TitleBar::onAutoHideClicked()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__onAutoHideClicked(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::onCloseClicked()
@@ -237,9 +218,7 @@ c_KDDockWidgets__Controllers__TitleBar__titleBarIsFocusable(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::titleChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__titleChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TitleBar__onTitleChanged(
-    void *thisObj, void *contextQObject,
-    void *callback); // KDDockWidgets::Controllers::TitleBar::toggleMaximized()
+// KDDockWidgets::Controllers::TitleBar::toggleMaximized()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__toggleMaximized(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::tr(const char * s, const char * c, int n)

@@ -222,7 +222,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicators_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Controller_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_wrapper.cpp
-    # flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_wrapper.cpp // TODOm4: Error compiling
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Separator_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_flutter_wrapper.cpp
@@ -230,7 +230,10 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/SideBar_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/FloatingWindow_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_wrapper.cpp
+    # flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_wrapper.cpp
     # flutter/generated/KDDockWidgetsBindings/dart/ffi/View_wrapper.cpp // TODOm4: Error compiling
 )
 

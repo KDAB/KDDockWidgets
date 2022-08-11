@@ -15,46 +15,81 @@ import '../Bindings.dart';
 import '../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
-final _finalizer =
-    _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
-        'c_KDDockWidgets__Controllers__ClassicIndicators_Finalizer');
 
-class ClassicIndicators {
-  static var s_dartInstanceByCppPtr = Map<int, ClassicIndicators>();
-  var _thisCpp = null;
-  bool _needsAutoDelete = false;
-  get thisCpp => _thisCpp;
-  set thisCpp(var ptr) {
-    _thisCpp = ptr;
-    ffi.Pointer<ffi.Void> ptrvoid = ptr.cast<ffi.Void>();
-    if (_needsAutoDelete)
-      newWeakPersistentHandle?.call(this, ptrvoid, 0, _finalizer);
-  }
-
-  static bool isCached(var cppPointer) {
-    return s_dartInstanceByCppPtr.containsKey(cppPointer.address);
-  }
-
+class ClassicIndicators extends DropIndicatorOverlay {
+  ClassicIndicators.fromCppPointer(var cppPointer,
+      [var needsAutoDelete = false])
+      : super.fromCppPointer(cppPointer, needsAutoDelete) {}
+  ClassicIndicators.init() : super.init() {}
   factory ClassicIndicators.fromCache(var cppPointer,
       [needsAutoDelete = false]) {
-    return (s_dartInstanceByCppPtr[cppPointer.address] ??
-            ClassicIndicators.fromCppPointer(cppPointer, needsAutoDelete))
-        as ClassicIndicators;
-  }
-  ClassicIndicators.fromCppPointer(var cppPointer,
-      [this._needsAutoDelete = false]) {
-    thisCpp = cppPointer;
-  }
-  ClassicIndicators.init() {} //ClassicIndicators(KDDockWidgets::Controllers::DropArea * dropArea)
-  ClassicIndicators(DropArea? dropArea) {
+    if (QObject.isCached(cppPointer)) {
+      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+      if (instance != null) return instance as ClassicIndicators;
+    }
+    return ClassicIndicators.fromCppPointer(cppPointer, needsAutoDelete);
+  } //ClassicIndicators(KDDockWidgets::Controllers::DropArea * dropArea)
+  ClassicIndicators(DropArea? dropArea) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea')
         .asFunction();
     thisCpp = func(dropArea == null ? ffi.nullptr : dropArea.thisCpp);
-    ClassicIndicators.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
+  }
+  static void customEvent_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ClassicIndicators::customEvent(QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.customEvent(QEvent.fromCppPointer(event));
+  }
+
+  static int dropIndicatorVisible_calledFromC(
+      ffi.Pointer<void> thisCpp, int arg__1) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ClassicIndicators::dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.dropIndicatorVisible(arg__1);
+    return result ? 1 : 0;
+  }
+
+  static int event_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ClassicIndicators::event(QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.event(QEvent.fromCppPointer(event));
+    return result ? 1 : 0;
+  }
+
+  static int eventFilter_calledFromC(ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? watched, ffi.Pointer<void>? event) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ClassicIndicators::eventFilter(QObject * watched, QEvent * event)! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.eventFilter(
+        QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
+    return result ? 1 : 0;
   } // geometryForRubberband(QRect localRect) const
+
   QRect geometryForRubberband(QRect localRect) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
@@ -63,20 +98,12 @@ class ClassicIndicators {
     ffi.Pointer<void> result =
         func(thisCpp, localRect == null ? ffi.nullptr : localRect.thisCpp);
     return QRect.fromCppPointer(result, true);
-  } // hover_impl(QPoint globalPos)
-
-  int hover_impl(QPoint globalPos) {
-    final int_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(791))
-        .asFunction();
-    return func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp);
   }
 
   static int hover_impl_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> globalPos) {
     var dartInstance =
-        ClassicIndicators.s_dartInstanceByCppPtr[thisCpp.address];
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ClassicIndicators::hover_impl(QPoint globalPos)! (${thisCpp.address})");
@@ -92,6 +119,18 @@ class ClassicIndicators {
             'c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged')
         .asFunction();
     func(thisCpp);
+  }
+
+  static void onHoveredFrameChanged_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ClassicIndicators::onHoveredFrameChanged(KDDockWidgets::Controllers::Group * arg__1)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.onHoveredFrameChanged(Group.fromCppPointer(arg__1));
   } // onResize(QSize newSize)
 
   bool onResize(QSize newSize) {
@@ -100,21 +139,12 @@ class ClassicIndicators {
             'c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize')
         .asFunction();
     return func(thisCpp, newSize == null ? ffi.nullptr : newSize.thisCpp) != 0;
-  } // posForIndicator(KDDockWidgets::DropLocation arg__1) const
-
-  QPoint posForIndicator(int arg__1) {
-    final voidstar_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(794))
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp, arg__1);
-    return QPoint.fromCppPointer(result, true);
   }
 
   static ffi.Pointer<void> posForIndicator_calledFromC(
       ffi.Pointer<void> thisCpp, int arg__1) {
     var dartInstance =
-        ClassicIndicators.s_dartInstanceByCppPtr[thisCpp.address];
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ClassicIndicators::posForIndicator(KDDockWidgets::DropLocation arg__1) const! (${thisCpp.address})");
@@ -148,6 +178,18 @@ class ClassicIndicators {
     func(thisCpp, arg__1);
   }
 
+  static void setParentView_impl_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ClassicIndicators::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.setParentView_impl(View.fromCppPointer(parent));
+  }
+
   static // tr(const char * s, const char * c, int n)
       QString tr(String? s, String? c, int n) {
     final voidstar_Func_string_string_int func = _dylib
@@ -157,19 +199,11 @@ class ClassicIndicators {
     ffi.Pointer<void> result = func(
         s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
     return QString.fromCppPointer(result, true);
-  } // updateVisibility()
-
-  updateVisibility() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(799))
-        .asFunction();
-    func(thisCpp);
   }
 
   static void updateVisibility_calledFromC(ffi.Pointer<void> thisCpp) {
     var dartInstance =
-        ClassicIndicators.s_dartInstanceByCppPtr[thisCpp.address];
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ClassicIndicators::updateVisibility()! (${thisCpp.address})");
@@ -196,23 +230,47 @@ class ClassicIndicators {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 791:
+      case 295:
+        return "c_KDDockWidgets__Controllers__ClassicIndicators__customEvent_QEvent";
+      case 1432:
+        return "c_KDDockWidgets__Controllers__ClassicIndicators__dropIndicatorVisible_DropLocation";
+      case 306:
+        return "c_KDDockWidgets__Controllers__ClassicIndicators__event_QEvent";
+      case 307:
+        return "c_KDDockWidgets__Controllers__ClassicIndicators__eventFilter_QObject_QEvent";
+      case 1436:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint";
-      case 794:
+      case 1448:
+        return "c_KDDockWidgets__Controllers__ClassicIndicators__onHoveredFrameChanged_Group";
+      case 1451:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation";
-      case 799:
+      case 826:
+        return "c_KDDockWidgets__Controllers__ClassicIndicators__setParentView_impl_View";
+      case 1464:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility";
     }
-    return "";
+    return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 791:
+      case 295:
+        return "customEvent";
+      case 1432:
+        return "dropIndicatorVisible";
+      case 306:
+        return "event";
+      case 307:
+        return "eventFilter";
+      case 1436:
         return "hover_impl";
-      case 794:
+      case 1448:
+        return "onHoveredFrameChanged";
+      case 1451:
         return "posForIndicator";
-      case 799:
+      case 826:
+        return "setParentView_impl";
+      case 1464:
         return "updateVisibility";
     }
     throw Error();
@@ -224,17 +282,45 @@ class ClassicIndicators {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept791 = 0;
-    final callback791 =
+    final callback295 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            QObject.customEvent_calledFromC);
+    registerCallback(thisCpp, callback295, 295);
+    const callbackExcept1432 = 0;
+    final callback1432 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_FFI>(
+            DropIndicatorOverlay.dropIndicatorVisible_calledFromC,
+            callbackExcept1432);
+    registerCallback(thisCpp, callback1432, 1432);
+    const callbackExcept306 = 0;
+    final callback306 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
+            QObject.event_calledFromC, callbackExcept306);
+    registerCallback(thisCpp, callback306, 306);
+    const callbackExcept307 = 0;
+    final callback307 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
+            QObject.eventFilter_calledFromC, callbackExcept307);
+    registerCallback(thisCpp, callback307, 307);
+    const callbackExcept1436 = 0;
+    final callback1436 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            ClassicIndicators.hover_impl_calledFromC, callbackExcept791);
-    registerCallback(thisCpp, callback791, 791);
-    final callback794 =
+            ClassicIndicators.hover_impl_calledFromC, callbackExcept1436);
+    registerCallback(thisCpp, callback1436, 1436);
+    final callback1448 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            DropIndicatorOverlay.onHoveredFrameChanged_calledFromC);
+    registerCallback(thisCpp, callback1448, 1448);
+    final callback1451 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             ClassicIndicators.posForIndicator_calledFromC);
-    registerCallback(thisCpp, callback794, 794);
-    final callback799 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback1451, 1451);
+    final callback826 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            Controller.setParentView_impl_calledFromC);
+    registerCallback(thisCpp, callback826, 826);
+    final callback1464 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         ClassicIndicators.updateVisibility_calledFromC);
-    registerCallback(thisCpp, callback799, 799);
+    registerCallback(thisCpp, callback1464, 1464);
   }
 }
