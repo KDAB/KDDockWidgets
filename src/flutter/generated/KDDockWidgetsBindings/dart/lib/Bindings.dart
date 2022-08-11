@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 export 'src/Config.dart' show Config;
+export 'src/DockWidget.dart' show DockWidget;
 export 'src/ClassicIndicators.dart' show ClassicIndicators;
 export 'src/DropIndicatorOverlay.dart' show DropIndicatorOverlay;
 export 'src/FloatingWindow.dart' show FloatingWindow;

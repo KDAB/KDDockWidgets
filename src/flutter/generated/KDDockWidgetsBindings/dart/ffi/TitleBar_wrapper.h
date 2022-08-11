@@ -13,13 +13,14 @@
 #include <qstring.h>
 #include <Group.h>
 #include <FloatingWindow.h>
+#include <DockWidget.h>
 #include <TabBar.h>
-#include <qrect.h>
-#include <qcoreevent.h>
-#include <qpoint.h>
 #include <View.h>
+#include <qpoint.h>
+#include <qrect.h>
 #include <qsize.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_wrapper : public ::KDDockWidgets::Controllers::TitleBar
@@ -67,6 +68,8 @@ public:
     virtual void setParentView_impl(KDDockWidgets::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
     void setTitle(const QString &title);
+    virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget() const;
+    virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget_nocallback() const;
     bool supportsAutoHideButton() const;
     bool supportsFloatingButton() const;
     bool supportsMaximizeButton() const;
@@ -90,6 +93,8 @@ public:
     Callback_isWindow m_isWindowCallback = nullptr;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
+    typedef KDDockWidgets::Controllers::DockWidget *(*Callback_singleDockWidget)(void *);
+    Callback_singleDockWidget m_singleDockWidgetCallback = nullptr;
 };
 }
 extern "C" {
@@ -196,6 +201,9 @@ c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View(void *thisObj, v
 // KDDockWidgets::Controllers::TitleBar::setTitle(const QString & title)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__setTitle_QString(void *thisObj, const char *title_);
+// KDDockWidgets::Controllers::TitleBar::singleDockWidget() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__TitleBar__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::supportsAutoHideButton() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__TitleBar__supportsAutoHideButton(void *thisObj);

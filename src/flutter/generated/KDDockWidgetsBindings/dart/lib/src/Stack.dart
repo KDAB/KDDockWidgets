@@ -26,13 +26,46 @@ class Stack extends Controller {
       if (instance != null) return instance as Stack;
     }
     return Stack.fromCppPointer(cppPointer, needsAutoDelete);
+  } // addDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+  addDockWidget(DockWidget? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__addDockWidget_DockWidget')
+        .asFunction();
+    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+  } // contains(KDDockWidgets::Controllers::DockWidget * dw) const
+
+  bool contains(DockWidget? dw) {
+    final bool_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__contains_DockWidget')
+        .asFunction();
+    return func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp) != 0;
   } // countChanged()
+
   countChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Controllers__Stack__countChanged')
         .asFunction();
     func(thisCpp);
+  } // currentDockWidget() const
+
+  DockWidget currentDockWidget() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__currentDockWidget')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return DockWidget.fromCppPointer(result, false);
+  } // currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget * arg__1)
+
+  currentDockWidgetChanged(DockWidget? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__currentDockWidgetChanged_DockWidget')
+        .asFunction();
+    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // currentIndex() const
 
   int currentIndex() {
@@ -60,6 +93,15 @@ class Stack extends Controller {
       throw Error();
     }
     dartInstance.customEvent(QEvent.fromCppPointer(event));
+  } // dockwidgetAt(int index) const
+
+  DockWidget dockwidgetAt(int index) {
+    final voidstar_Func_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__dockwidgetAt_int')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp, index);
+    return DockWidget.fromCppPointer(result, false);
   }
 
   static int event_calledFromC(
@@ -94,12 +136,30 @@ class Stack extends Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Group.fromCppPointer(result, false);
+  } // indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget * arg__1) const
+
+  int indexOfDockWidget(DockWidget? arg__1) {
+    final int_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__indexOfDockWidget_DockWidget')
+        .asFunction();
+    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+  } // insertDockWidget(KDDockWidgets::Controllers::DockWidget * dockwidget, int index)
+
+  bool insertDockWidget(DockWidget? dockwidget, int index) {
+    final bool_Func_voidstar_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__insertDockWidget_DockWidget_int')
+        .asFunction();
+    return func(thisCpp, dockwidget == null ? ffi.nullptr : dockwidget.thisCpp,
+            index) !=
+        0;
   } // isMDI() const
 
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1111))
+            cFunctionSymbolName(1135))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -118,7 +178,7 @@ class Stack extends Controller {
   bool isPositionDraggable(QPoint p) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1112))
+            cFunctionSymbolName(1136))
         .asFunction();
     return func(thisCpp, p == null ? ffi.nullptr : p.thisCpp) != 0;
   }
@@ -138,7 +198,7 @@ class Stack extends Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1114))
+            cFunctionSymbolName(1138))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -193,6 +253,14 @@ class Stack extends Controller {
             'c_KDDockWidgets__Controllers__Stack__onTabRemoved')
         .asFunction();
     func(thisCpp);
+  } // removeDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+
+  removeDockWidget(DockWidget? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__removeDockWidget_DockWidget')
+        .asFunction();
+    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // renameTab(int index, const QString & arg__2)
 
   renameTab(int index, String? arg__2) {
@@ -201,9 +269,17 @@ class Stack extends Controller {
             'c_KDDockWidgets__Controllers__Stack__renameTab_int_QString')
         .asFunction();
     func(thisCpp, index, arg__2?.toNativeUtf8() ?? ffi.nullptr);
+  } // setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+
+  setCurrentDockWidget(DockWidget? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__Stack__setCurrentDockWidget_DockWidget')
+        .asFunction();
+    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // setCurrentDockWidget(int index)
 
-  setCurrentDockWidget(int index) {
+  setCurrentDockWidget_2(int index) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Controllers__Stack__setCurrentDockWidget_int')
@@ -236,6 +312,27 @@ class Stack extends Controller {
             'c_KDDockWidgets__Controllers__Stack__setTabBarAutoHide_bool')
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
+  } // singleDockWidget() const
+
+  DockWidget singleDockWidget() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            cFunctionSymbolName(1157))
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return DockWidget.fromCppPointer(result, false);
+  }
+
+  static ffi.Pointer<void> singleDockWidget_calledFromC(
+      ffi.Pointer<void> thisCpp) {
+    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Stack;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for Stack::singleDockWidget() const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.singleDockWidget();
+    return result.thisCpp;
   } // tabBar() const
 
   TabBar tabBar() {
@@ -282,14 +379,16 @@ class Stack extends Controller {
         return "c_KDDockWidgets__Controllers__Stack__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Stack__eventFilter_QObject_QEvent";
-      case 1111:
+      case 1135:
         return "c_KDDockWidgets__Controllers__Stack__isMDI";
-      case 1112:
+      case 1136:
         return "c_KDDockWidgets__Controllers__Stack__isPositionDraggable_QPoint";
-      case 1114:
+      case 1138:
         return "c_KDDockWidgets__Controllers__Stack__isWindow";
       case 826:
         return "c_KDDockWidgets__Controllers__Stack__setParentView_impl_View";
+      case 1157:
+        return "c_KDDockWidgets__Controllers__Stack__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
   }
@@ -302,14 +401,16 @@ class Stack extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 1111:
+      case 1135:
         return "isMDI";
-      case 1112:
+      case 1136:
         return "isPositionDraggable";
-      case 1114:
+      case 1138:
         return "isWindow";
       case 826:
         return "setParentView_impl";
+      case 1157:
+        return "singleDockWidget";
     }
     throw Error();
   }
@@ -334,22 +435,25 @@ class Stack extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    const callbackExcept1111 = 0;
-    final callback1111 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        Stack.isMDI_calledFromC, callbackExcept1111);
-    registerCallback(thisCpp, callback1111, 1111);
-    const callbackExcept1112 = 0;
-    final callback1112 =
+    const callbackExcept1135 = 0;
+    final callback1135 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        Stack.isMDI_calledFromC, callbackExcept1135);
+    registerCallback(thisCpp, callback1135, 1135);
+    const callbackExcept1136 = 0;
+    final callback1136 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            Stack.isPositionDraggable_calledFromC, callbackExcept1112);
-    registerCallback(thisCpp, callback1112, 1112);
-    const callbackExcept1114 = 0;
-    final callback1114 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        Stack.isWindow_calledFromC, callbackExcept1114);
-    registerCallback(thisCpp, callback1114, 1114);
+            Stack.isPositionDraggable_calledFromC, callbackExcept1136);
+    registerCallback(thisCpp, callback1136, 1136);
+    const callbackExcept1138 = 0;
+    final callback1138 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        Stack.isWindow_calledFromC, callbackExcept1138);
+    registerCallback(thisCpp, callback1138, 1138);
     final callback826 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback826, 826);
+    final callback1157 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        Stack.singleDockWidget_calledFromC);
+    registerCallback(thisCpp, callback1157, 1157);
   }
 }

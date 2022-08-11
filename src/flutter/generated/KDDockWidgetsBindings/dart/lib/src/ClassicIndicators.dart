@@ -232,21 +232,21 @@ class ClassicIndicators extends DropIndicatorOverlay {
     switch (methodId) {
       case 295:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__customEvent_QEvent";
-      case 1432:
+      case 1485:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__dropIndicatorVisible_DropLocation";
       case 306:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__eventFilter_QObject_QEvent";
-      case 1436:
+      case 1489:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint";
-      case 1448:
+      case 1501:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__onHoveredFrameChanged_Group";
-      case 1451:
+      case 1504:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation";
       case 826:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__setParentView_impl_View";
-      case 1464:
+      case 1517:
         return "c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility";
     }
     return super.cFunctionSymbolName(methodId);
@@ -256,21 +256,21 @@ class ClassicIndicators extends DropIndicatorOverlay {
     switch (methodId) {
       case 295:
         return "customEvent";
-      case 1432:
+      case 1485:
         return "dropIndicatorVisible";
       case 306:
         return "event";
       case 307:
         return "eventFilter";
-      case 1436:
+      case 1489:
         return "hover_impl";
-      case 1448:
+      case 1501:
         return "onHoveredFrameChanged";
-      case 1451:
+      case 1504:
         return "posForIndicator";
       case 826:
         return "setParentView_impl";
-      case 1464:
+      case 1517:
         return "updateVisibility";
     }
     throw Error();
@@ -286,12 +286,12 @@ class ClassicIndicators extends DropIndicatorOverlay {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);
     registerCallback(thisCpp, callback295, 295);
-    const callbackExcept1432 = 0;
-    final callback1432 =
+    const callbackExcept1485 = 0;
+    final callback1485 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_FFI>(
             DropIndicatorOverlay.dropIndicatorVisible_calledFromC,
-            callbackExcept1432);
-    registerCallback(thisCpp, callback1432, 1432);
+            callbackExcept1485);
+    registerCallback(thisCpp, callback1485, 1485);
     const callbackExcept306 = 0;
     final callback306 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
@@ -302,25 +302,25 @@ class ClassicIndicators extends DropIndicatorOverlay {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    const callbackExcept1436 = 0;
-    final callback1436 =
+    const callbackExcept1489 = 0;
+    final callback1489 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            ClassicIndicators.hover_impl_calledFromC, callbackExcept1436);
-    registerCallback(thisCpp, callback1436, 1436);
-    final callback1448 =
+            ClassicIndicators.hover_impl_calledFromC, callbackExcept1489);
+    registerCallback(thisCpp, callback1489, 1489);
+    final callback1501 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             DropIndicatorOverlay.onHoveredFrameChanged_calledFromC);
-    registerCallback(thisCpp, callback1448, 1448);
-    final callback1451 =
+    registerCallback(thisCpp, callback1501, 1501);
+    final callback1504 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             ClassicIndicators.posForIndicator_calledFromC);
-    registerCallback(thisCpp, callback1451, 1451);
+    registerCallback(thisCpp, callback1504, 1504);
     final callback826 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback826, 826);
-    final callback1464 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback1517 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         ClassicIndicators.updateVisibility_calledFromC);
-    registerCallback(thisCpp, callback1464, 1464);
+    registerCallback(thisCpp, callback1517, 1517);
   }
 }

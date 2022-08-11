@@ -20,6 +20,7 @@
 #include <TitleBar.h>
 #include <TabBar.h>
 #include <Stack.h>
+#include <DockWidget.h>
 #include <DropArea.h>
 #include <controllers/Layout.h>
 
@@ -32,6 +33,7 @@ public:
     bool aboutToBeDestroyed() const;
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
+    KDDockWidgets::Controllers::DockWidget *asDockWidgetController() const;
     KDDockWidgets::Controllers::DropArea *asDropAreaController() const;
     KDDockWidgets::Controllers::FloatingWindow *asFloatingWindowController() const;
     KDDockWidgets::Controllers::Group *asGroupController() const;
@@ -289,6 +291,8 @@ c_KDDockWidgets__View__constructor_Controller_Type(void *controller_, int arg__2
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
 // KDDockWidgets::View::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__activateWindow(void *thisObj);
+// KDDockWidgets::View::asDockWidgetController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asDockWidgetController(void *thisObj);
 // KDDockWidgets::View::asDropAreaController() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asDropAreaController(void *thisObj);
 // KDDockWidgets::View::asFloatingWindowController() const

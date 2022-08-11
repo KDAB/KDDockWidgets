@@ -31,6 +31,10 @@ TabBar_wrapper::TabBar_wrapper(KDDockWidgets::Controllers::Stack *tabWidget)
     : ::KDDockWidgets::Controllers::TabBar(tabWidget)
 {
 }
+KDDockWidgets::Controllers::DockWidget *TabBar_wrapper::currentDockWidget() const
+{
+    return ::KDDockWidgets::Controllers::TabBar::currentDockWidget();
+}
 void TabBar_wrapper::customEvent(QEvent *event)
 {
     if (m_customEventCallback) {
@@ -43,6 +47,14 @@ void TabBar_wrapper::customEvent(QEvent *event)
 void TabBar_wrapper::customEvent_nocallback(QEvent *event)
 {
     ::KDDockWidgets::Controllers::TabBar::customEvent(event);
+}
+KDDockWidgets::Controllers::DockWidget *TabBar_wrapper::dockWidgetAt(QPoint localPos) const
+{
+    return ::KDDockWidgets::Controllers::TabBar::dockWidgetAt(localPos);
+}
+KDDockWidgets::Controllers::DockWidget *TabBar_wrapper::dockWidgetAt(int index) const
+{
+    return ::KDDockWidgets::Controllers::TabBar::dockWidgetAt(index);
 }
 bool TabBar_wrapper::dragCanStart(QPoint pressPos, QPoint pos) const
 {
@@ -150,6 +162,19 @@ void TabBar_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
 {
     ::KDDockWidgets::Controllers::TabBar::setParentView_impl(parent);
 }
+KDDockWidgets::Controllers::DockWidget *TabBar_wrapper::singleDockWidget() const
+{
+    if (m_singleDockWidgetCallback) {
+        const void *thisPtr = this;
+        return m_singleDockWidgetCallback(const_cast<void *>(thisPtr));
+    } else {
+        return ::KDDockWidgets::Controllers::TabBar::singleDockWidget();
+    }
+}
+KDDockWidgets::Controllers::DockWidget *TabBar_wrapper::singleDockWidget_nocallback() const
+{
+    return ::KDDockWidgets::Controllers::TabBar::singleDockWidget();
+}
 KDDockWidgets::Controllers::Stack *TabBar_wrapper::stack() const
 {
     return ::KDDockWidgets::Controllers::TabBar::stack();
@@ -190,11 +215,28 @@ void *c_KDDockWidgets__Controllers__TabBar__constructor_Stack(void *tabWidget_)
     auto ptr = new KDDockWidgetsBindings_wrappersNS::TabBar_wrapper(tabWidget);
     return reinterpret_cast<void *>(ptr);
 }
+// currentDockWidget() const
+void *c_KDDockWidgets__Controllers__TabBar__currentDockWidget(void *thisObj)
+{
+    return fromPtr(thisObj)->currentDockWidget();
+}
 // customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__TabBar__customEvent_QEvent(void *thisObj, void *event_)
 {
     auto event = reinterpret_cast<QEvent *>(event_);
     fromWrapperPtr(thisObj)->customEvent_nocallback(event);
+}
+// dockWidgetAt(QPoint localPos) const
+void *c_KDDockWidgets__Controllers__TabBar__dockWidgetAt_QPoint(void *thisObj, void *localPos_)
+{
+    assert(localPos_);
+    auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
+    return fromPtr(thisObj)->dockWidgetAt(localPos);
+}
+// dockWidgetAt(int index) const
+void *c_KDDockWidgets__Controllers__TabBar__dockWidgetAt_int(void *thisObj, int index)
+{
+    return fromPtr(thisObj)->dockWidgetAt(index);
 }
 // dragCanStart(QPoint pressPos, QPoint pos) const
 bool c_KDDockWidgets__Controllers__TabBar__dragCanStart_QPoint_QPoint(void *thisObj,
@@ -320,6 +362,20 @@ void c_KDDockWidgets__Controllers__TabBar__setParentView_impl_View(void *thisObj
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
+// singleDockWidget() const
+void *c_KDDockWidgets__Controllers__TabBar__singleDockWidget(void *thisObj)
+{
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TabBar_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->singleDockWidget_nocallback();
+        } else {
+            return targetPtr->singleDockWidget();
+        }
+    }();
+}
 // stack() const
 void *c_KDDockWidgets__Controllers__TabBar__stack(void *thisObj)
 {
@@ -356,7 +412,7 @@ void c_KDDockWidgets__Controllers__TabBar__registerVirtualMethodCallback(void *p
         wrapper->m_customEventCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_customEvent>(callback);
         break;
-    case 1070:
+    case 1086:
         wrapper->m_dragCanStartCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_dragCanStart>(callback);
         break;
@@ -369,12 +425,12 @@ void c_KDDockWidgets__Controllers__TabBar__registerVirtualMethodCallback(void *p
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_eventFilter>(callback);
         break;
-    case 1077:
+    case 1093:
         wrapper->m_isMDICallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_isMDI>(
                 callback);
         break;
-    case 1079:
+    case 1095:
         wrapper->m_isWindowCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_isWindow>(
                 callback);
@@ -383,6 +439,10 @@ void c_KDDockWidgets__Controllers__TabBar__registerVirtualMethodCallback(void *p
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_setParentView_impl>(
             callback);
+        break;
+    case 1108:
+        wrapper->m_singleDockWidgetCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TabBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }
 }

@@ -53,6 +53,22 @@ class FloatingWindow extends Controller {
             'c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged')
         .asFunction();
     func(thisCpp);
+  } // addDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
+
+  addDockWidget(DockWidget? arg__1, int location, DockWidget? relativeTo,
+      {required InitialOption arg__4}) {
+    final void_Func_voidstar_voidstar_int_voidstar_voidstar func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    void_Func_voidstar_voidstar_ffi_Int32_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption')
+        .asFunction();
+    func(
+        thisCpp,
+        arg__1 == null ? ffi.nullptr : arg__1.thisCpp,
+        location,
+        relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
+        arg__4 == null ? ffi.nullptr : arg__4.thisCpp);
   } // allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
 
   bool allDockWidgetsHave(int arg__1) {
@@ -206,7 +222,7 @@ class FloatingWindow extends Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1395))
+            cFunctionSymbolName(1447))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -226,7 +242,7 @@ class FloatingWindow extends Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1397))
+            cFunctionSymbolName(1449))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -328,6 +344,28 @@ class FloatingWindow extends Controller {
             'c_KDDockWidgets__Controllers__FloatingWindow__setSuggestedGeometry_QRect')
         .asFunction();
     func(thisCpp, suggestedRect == null ? ffi.nullptr : suggestedRect.thisCpp);
+  } // singleDockWidget() const
+
+  DockWidget singleDockWidget() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            cFunctionSymbolName(1466))
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return DockWidget.fromCppPointer(result, false);
+  }
+
+  static ffi.Pointer<void> singleDockWidget_calledFromC(
+      ffi.Pointer<void> thisCpp) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as FloatingWindow;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for FloatingWindow::singleDockWidget() const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.singleDockWidget();
+    return result.thisCpp;
   } // singleFrame() const
 
   Group singleFrame() {
@@ -415,12 +453,14 @@ class FloatingWindow extends Controller {
         return "c_KDDockWidgets__Controllers__FloatingWindow__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__FloatingWindow__eventFilter_QObject_QEvent";
-      case 1395:
+      case 1447:
         return "c_KDDockWidgets__Controllers__FloatingWindow__isMDI";
-      case 1397:
+      case 1449:
         return "c_KDDockWidgets__Controllers__FloatingWindow__isWindow";
       case 826:
         return "c_KDDockWidgets__Controllers__FloatingWindow__setParentView_impl_View";
+      case 1466:
+        return "c_KDDockWidgets__Controllers__FloatingWindow__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
   }
@@ -433,12 +473,14 @@ class FloatingWindow extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 1395:
+      case 1447:
         return "isMDI";
-      case 1397:
+      case 1449:
         return "isWindow";
       case 826:
         return "setParentView_impl";
+      case 1466:
+        return "singleDockWidget";
     }
     throw Error();
   }
@@ -463,17 +505,20 @@ class FloatingWindow extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    const callbackExcept1395 = 0;
-    final callback1395 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        FloatingWindow.isMDI_calledFromC, callbackExcept1395);
-    registerCallback(thisCpp, callback1395, 1395);
-    const callbackExcept1397 = 0;
-    final callback1397 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        FloatingWindow.isWindow_calledFromC, callbackExcept1397);
-    registerCallback(thisCpp, callback1397, 1397);
+    const callbackExcept1447 = 0;
+    final callback1447 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        FloatingWindow.isMDI_calledFromC, callbackExcept1447);
+    registerCallback(thisCpp, callback1447, 1447);
+    const callbackExcept1449 = 0;
+    final callback1449 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        FloatingWindow.isWindow_calledFromC, callbackExcept1449);
+    registerCallback(thisCpp, callback1449, 1449);
     final callback826 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback826, 826);
+    final callback1466 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        FloatingWindow.singleDockWidget_calledFromC);
+    registerCallback(thisCpp, callback1466, 1466);
   }
 }

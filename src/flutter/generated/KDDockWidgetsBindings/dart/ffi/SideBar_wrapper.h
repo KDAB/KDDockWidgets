@@ -11,19 +11,22 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <SideBar.h>
 #include <qstring.h>
-#include <qrect.h>
-#include <qcoreevent.h>
-#include <qpoint.h>
+#include <DockWidget.h>
 #include <View.h>
+#include <qpoint.h>
+#include <qrect.h>
 #include <qsize.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class SideBar_wrapper : public ::KDDockWidgets::Controllers::SideBar
 {
 public:
     ~SideBar_wrapper();
+    void addDockWidget(KDDockWidgets::Controllers::DockWidget *dw);
     void clear();
+    bool containsDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1) const;
     virtual void customEvent(QEvent *event);
     virtual void customEvent_nocallback(QEvent *event);
     virtual bool event(QEvent *event);
@@ -32,8 +35,11 @@ public:
     virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
     bool isEmpty() const;
     bool isVertical() const;
+    void onButtonClicked(KDDockWidgets::Controllers::DockWidget *dw);
+    void removeDockWidget(KDDockWidgets::Controllers::DockWidget *dw);
     virtual void setParentView_impl(KDDockWidgets::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    void toggleOverlay(KDDockWidgets::Controllers::DockWidget *arg__1);
     static QString tr(const char *s, const char *c, int n);
     typedef void (*Callback_customEvent)(void *, QEvent *event);
     Callback_customEvent m_customEventCallback = nullptr;
@@ -46,8 +52,15 @@ public:
 };
 }
 extern "C" {
+// KDDockWidgets::Controllers::SideBar::addDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__SideBar__addDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Controllers::SideBar::clear()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__clear(void *thisObj);
+// KDDockWidgets::Controllers::SideBar::containsDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1) const
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__SideBar__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::SideBar::customEvent(QEvent * event)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__SideBar__customEvent_QEvent(void *thisObj, void *event_);
@@ -62,9 +75,20 @@ c_KDDockWidgets__Controllers__SideBar__eventFilter_QObject_QEvent(void *thisObj,
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__isEmpty(void *thisObj);
 // KDDockWidgets::Controllers::SideBar::isVertical() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__isVertical(void *thisObj);
+// KDDockWidgets::Controllers::SideBar::onButtonClicked(KDDockWidgets::Controllers::DockWidget * dw)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Controllers::SideBar::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
+// dw)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__SideBar__removeDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Controllers::SideBar::setParentView_impl(KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__SideBar__setParentView_impl_View(void *thisObj, void *parent_);
+// KDDockWidgets::Controllers::SideBar::toggleOverlay(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::SideBar::tr(const char * s, const char * c, int n)
 KDDockWidgetsBindings_EXPORT void *
 c_static_KDDockWidgets__Controllers__SideBar__tr_char_char_int(const char *s, const char *c, int n);

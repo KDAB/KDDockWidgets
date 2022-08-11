@@ -28,8 +28,7 @@ public:
     ~DockWidget_wrapper();
     DockWidget_wrapper(KDDockWidgets::View *view, const QString &uniqueName,
                        QFlags<KDDockWidgets::DockWidgetOption> options = {},
-                       QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions =
-                           KDDockWidgets::LayoutSaverOptions());
+                       QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions = {});
     void aboutToDelete(KDDockWidgets::Controllers::DockWidget *arg__1);
     void aboutToDeleteOnClose();
     void actualTitleBarChanged();

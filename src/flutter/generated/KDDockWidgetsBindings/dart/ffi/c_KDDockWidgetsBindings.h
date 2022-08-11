@@ -1450,6 +1450,8 @@ void *c_KDDockWidgets__View__constructor_Controller_Type(void *controller_, int 
 bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
 // KDDockWidgets::View::activateWindow()
 void c_KDDockWidgets__View__activateWindow(void *thisObj);
+// KDDockWidgets::View::asDockWidgetController() const
+void *c_KDDockWidgets__View__asDockWidgetController(void *thisObj);
 // KDDockWidgets::View::asDropAreaController() const
 void *c_KDDockWidgets__View__asDropAreaController(void *thisObj);
 // KDDockWidgets::View::asFloatingWindowController() const
@@ -1901,6 +1903,8 @@ void c_KDDockWidgets__Views__TabBar_flutter__activateWindow(void *thisObj);
 bool c_KDDockWidgets__Views__TabBar_flutter__close(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::createPlatformWindow()
 void c_KDDockWidgets__Views__TabBar_flutter__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Views::TabBar_flutter::currentDockWidget() const
+void *c_KDDockWidgets__Views__TabBar_flutter__currentDockWidget(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::flags() const
 int c_KDDockWidgets__Views__TabBar_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::free_impl()
@@ -2037,6 +2041,8 @@ bool c_KDDockWidgets__Views__Stack_flutter__close(void *thisObj);
 void c_KDDockWidgets__Views__Stack_flutter__createPlatformWindow(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::currentIndex() const
 int c_KDDockWidgets__Views__Stack_flutter__currentIndex(void *thisObj);
+// KDDockWidgets::Views::Stack_flutter::dockwidgetAt(int index) const
+void *c_KDDockWidgets__Views__Stack_flutter__dockwidgetAt_int(void *thisObj, int index);
 // KDDockWidgets::Views::Stack_flutter::flags() const
 int c_KDDockWidgets__Views__Stack_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::free_impl()
@@ -2049,6 +2055,10 @@ void c_KDDockWidgets__Views__Stack_flutter__grabMouse(void *thisObj);
 bool c_KDDockWidgets__Views__Stack_flutter__hasFocus(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::hide()
 void c_KDDockWidgets__Views__Stack_flutter__hide(void *thisObj);
+// KDDockWidgets::Views::Stack_flutter::indexOfDockWidget(const
+// KDDockWidgets::Controllers::DockWidget * arg__1) const
+int c_KDDockWidgets__Views__Stack_flutter__indexOfDockWidget_DockWidget(void *thisObj,
+                                                                        void *arg__1_);
 // KDDockWidgets::Views::Stack_flutter::init()
 void c_KDDockWidgets__Views__Stack_flutter__init(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::isActiveWindow() const
@@ -2102,6 +2112,10 @@ void c_KDDockWidgets__Views__Stack_flutter__raiseAndActivate(void *thisObj);
 void c_KDDockWidgets__Views__Stack_flutter__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::releaseMouse()
 void c_KDDockWidgets__Views__Stack_flutter__releaseMouse(void *thisObj);
+// KDDockWidgets::Views::Stack_flutter::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+void c_KDDockWidgets__Views__Stack_flutter__removeDockWidget_DockWidget(void *thisObj,
+                                                                        void *arg__1_);
 // KDDockWidgets::Views::Stack_flutter::renameTab(int index, const QString & arg__2)
 void c_KDDockWidgets__Views__Stack_flutter__renameTab_int_QString(void *thisObj, int index,
                                                                   const char *arg__2_);
@@ -2170,8 +2184,12 @@ void c_KDDockWidgets__Views__Group_flutter__activateWindow(void *thisObj);
 bool c_KDDockWidgets__Views__Group_flutter__close(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::createPlatformWindow()
 void c_KDDockWidgets__Views__Group_flutter__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Views::Group_flutter::currentDockWidget_impl() const
+void *c_KDDockWidgets__Views__Group_flutter__currentDockWidget_impl(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::currentIndex() const
 int c_KDDockWidgets__Views__Group_flutter__currentIndex(void *thisObj);
+// KDDockWidgets::Views::Group_flutter::dockWidgetAt_impl(int index) const
+void *c_KDDockWidgets__Views__Group_flutter__dockWidgetAt_impl_int(void *thisObj, int index);
 // KDDockWidgets::Views::Group_flutter::dragRect() const
 void *c_KDDockWidgets__Views__Group_flutter__dragRect(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::flags() const
@@ -2186,6 +2204,15 @@ void c_KDDockWidgets__Views__Group_flutter__grabMouse(void *thisObj);
 bool c_KDDockWidgets__Views__Group_flutter__hasFocus(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::hide()
 void c_KDDockWidgets__Views__Group_flutter__hide(void *thisObj);
+// KDDockWidgets::Views::Group_flutter::indexOfDockWidget_impl(const
+// KDDockWidgets::Controllers::DockWidget * arg__1)
+int c_KDDockWidgets__Views__Group_flutter__indexOfDockWidget_impl_DockWidget(void *thisObj,
+                                                                             void *arg__1_);
+// KDDockWidgets::Views::Group_flutter::insertDockWidget_impl(KDDockWidgets::Controllers::DockWidget
+// * arg__1, int index)
+void c_KDDockWidgets__Views__Group_flutter__insertDockWidget_impl_DockWidget_int(void *thisObj,
+                                                                                 void *arg__1_,
+                                                                                 int index);
 // KDDockWidgets::Views::Group_flutter::isActiveWindow() const
 bool c_KDDockWidgets__Views__Group_flutter__isActiveWindow(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::isMaximized() const
@@ -2235,9 +2262,17 @@ void c_KDDockWidgets__Views__Group_flutter__raiseAndActivate(void *thisObj);
 void c_KDDockWidgets__Views__Group_flutter__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::releaseMouse()
 void c_KDDockWidgets__Views__Group_flutter__releaseMouse(void *thisObj);
+// KDDockWidgets::Views::Group_flutter::removeWidget_impl(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+void c_KDDockWidgets__Views__Group_flutter__removeWidget_impl_DockWidget(void *thisObj,
+                                                                         void *arg__1_);
 // KDDockWidgets::Views::Group_flutter::renameTab(int index, const QString & arg__2)
 void c_KDDockWidgets__Views__Group_flutter__renameTab_int_QString(void *thisObj, int index,
                                                                   const char *arg__2_);
+// KDDockWidgets::Views::Group_flutter::setCurrentDockWidget_impl(KDDockWidgets::Controllers::DockWidget
+// * arg__1)
+void c_KDDockWidgets__Views__Group_flutter__setCurrentDockWidget_impl_DockWidget(void *thisObj,
+                                                                                 void *arg__1_);
 // KDDockWidgets::Views::Group_flutter::setCurrentTabIndex_impl(int index)
 void c_KDDockWidgets__Views__Group_flutter__setCurrentTabIndex_impl_int(void *thisObj, int index);
 // KDDockWidgets::Views::Group_flutter::setCursor(Qt::CursorShape shape)
@@ -2369,6 +2404,8 @@ void c_KDDockWidgets__Controllers__TitleBar__setFloatButtonVisible_bool(void *th
 void c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Controllers::TitleBar::setTitle(const QString & title)
 void c_KDDockWidgets__Controllers__TitleBar__setTitle_QString(void *thisObj, const char *title_);
+// KDDockWidgets::Controllers::TitleBar::singleDockWidget() const
+void *c_KDDockWidgets__Controllers__TitleBar__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::supportsAutoHideButton() const
 bool c_KDDockWidgets__Controllers__TitleBar__supportsAutoHideButton(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::supportsFloatingButton() const
@@ -2401,8 +2438,14 @@ void c_KDDockWidgets__Controllers__TitleBar_Finalizer(
     void *); // KDDockWidgets::Controllers::TabBar::TabBar(KDDockWidgets::Controllers::Stack
              // * tabWidget)
 void *c_KDDockWidgets__Controllers__TabBar__constructor_Stack(void *tabWidget_);
+// KDDockWidgets::Controllers::TabBar::currentDockWidget() const
+void *c_KDDockWidgets__Controllers__TabBar__currentDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__TabBar__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::TabBar::dockWidgetAt(QPoint localPos) const
+void *c_KDDockWidgets__Controllers__TabBar__dockWidgetAt_QPoint(void *thisObj, void *localPos_);
+// KDDockWidgets::Controllers::TabBar::dockWidgetAt(int index) const
+void *c_KDDockWidgets__Controllers__TabBar__dockWidgetAt_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
 bool c_KDDockWidgets__Controllers__TabBar__dragCanStart_QPoint_QPoint(void *thisObj,
                                                                       void *pressPos_, void *pos_);
@@ -2432,6 +2475,8 @@ void c_KDDockWidgets__Controllers__TabBar__onMousePress_QPoint(void *thisObj, vo
 void *c_KDDockWidgets__Controllers__TabBar__rectForTab_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::TabBar::setParentView_impl(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controllers__TabBar__setParentView_impl_View(void *thisObj, void *parent_);
+// KDDockWidgets::Controllers::TabBar::singleDockWidget() const
+void *c_KDDockWidgets__Controllers__TabBar__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::stack() const
 void *c_KDDockWidgets__Controllers__TabBar__stack(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::tabsAreMovable() const
@@ -2445,14 +2490,29 @@ void c_KDDockWidgets__Controllers__TabBar__destructor(void *thisObj);
 void c_KDDockWidgets__Controllers__TabBar__registerVirtualMethodCallback(void *ptr, void *callback,
                                                                          int methodId);
 void c_KDDockWidgets__Controllers__TabBar_Finalizer(
-    void *, void *cppObj, void *); // KDDockWidgets::Controllers::Stack::countChanged()
+    void *, void *cppObj,
+    void
+        *); // KDDockWidgets::Controllers::Stack::addDockWidget(KDDockWidgets::Controllers::DockWidget
+            // * arg__1)
+void c_KDDockWidgets__Controllers__Stack__addDockWidget_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::Controllers::Stack::contains(KDDockWidgets::Controllers::DockWidget * dw) const
+bool c_KDDockWidgets__Controllers__Stack__contains_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Controllers::Stack::countChanged()
 void c_KDDockWidgets__Controllers__Stack__countChanged(void *thisObj);
+// KDDockWidgets::Controllers::Stack::currentDockWidget() const
+void *c_KDDockWidgets__Controllers__Stack__currentDockWidget(void *thisObj);
+// KDDockWidgets::Controllers::Stack::currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget
+// * arg__1)
+void c_KDDockWidgets__Controllers__Stack__currentDockWidgetChanged_DockWidget(void *thisObj,
+                                                                              void *arg__1_);
 // KDDockWidgets::Controllers::Stack::currentIndex() const
 int c_KDDockWidgets__Controllers__Stack__currentIndex(void *thisObj);
 // KDDockWidgets::Controllers::Stack::currentTabChanged(int index)
 void c_KDDockWidgets__Controllers__Stack__currentTabChanged_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Stack::customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__Stack__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::Stack::dockwidgetAt(int index) const
+void *c_KDDockWidgets__Controllers__Stack__dockwidgetAt_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Stack::event(QEvent * event)
 bool c_KDDockWidgets__Controllers__Stack__event_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::Stack::eventFilter(QObject * watched, QEvent * event)
@@ -2460,6 +2520,14 @@ bool c_KDDockWidgets__Controllers__Stack__eventFilter_QObject_QEvent(void *thisO
                                                                      void *event_);
 // KDDockWidgets::Controllers::Stack::group() const
 void *c_KDDockWidgets__Controllers__Stack__group(void *thisObj);
+// KDDockWidgets::Controllers::Stack::indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget
+// * arg__1) const
+int c_KDDockWidgets__Controllers__Stack__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::Controllers::Stack::insertDockWidget(KDDockWidgets::Controllers::DockWidget *
+// dockwidget, int index)
+bool c_KDDockWidgets__Controllers__Stack__insertDockWidget_DockWidget_int(void *thisObj,
+                                                                          void *dockwidget_,
+                                                                          int index);
 // KDDockWidgets::Controllers::Stack::isMDI() const
 bool c_KDDockWidgets__Controllers__Stack__isMDI(void *thisObj);
 // KDDockWidgets::Controllers::Stack::isPositionDraggable(QPoint p) const
@@ -2476,9 +2544,16 @@ bool c_KDDockWidgets__Controllers__Stack__onMouseDoubleClick_QPoint(void *thisOb
 void c_KDDockWidgets__Controllers__Stack__onTabInserted(void *thisObj);
 // KDDockWidgets::Controllers::Stack::onTabRemoved()
 void c_KDDockWidgets__Controllers__Stack__onTabRemoved(void *thisObj);
+// KDDockWidgets::Controllers::Stack::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+void c_KDDockWidgets__Controllers__Stack__removeDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::Stack::renameTab(int index, const QString & arg__2)
 void c_KDDockWidgets__Controllers__Stack__renameTab_int_QString(void *thisObj, int index,
                                                                 const char *arg__2_);
+// KDDockWidgets::Controllers::Stack::setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+void c_KDDockWidgets__Controllers__Stack__setCurrentDockWidget_DockWidget(void *thisObj,
+                                                                          void *arg__1_);
 // KDDockWidgets::Controllers::Stack::setCurrentDockWidget(int index)
 void c_KDDockWidgets__Controllers__Stack__setCurrentDockWidget_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Stack::setDocumentMode(bool arg__1)
@@ -2487,6 +2562,8 @@ void c_KDDockWidgets__Controllers__Stack__setDocumentMode_bool(void *thisObj, bo
 void c_KDDockWidgets__Controllers__Stack__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Controllers::Stack::setTabBarAutoHide(bool arg__1)
 void c_KDDockWidgets__Controllers__Stack__setTabBarAutoHide_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Controllers::Stack::singleDockWidget() const
+void *c_KDDockWidgets__Controllers__Stack__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::Stack::tabBar() const
 void *c_KDDockWidgets__Controllers__Stack__tabBar(void *thisObj);
 // KDDockWidgets::Controllers::Stack::tabBarAutoHide() const
@@ -2498,8 +2575,17 @@ void c_KDDockWidgets__Controllers__Stack__destructor(void *thisObj);
 void c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *ptr, void *callback,
                                                                         int methodId);
 void c_KDDockWidgets__Controllers__Stack_Finalizer(
-    void *, void *cppObj, void *); // KDDockWidgets::Controllers::SideBar::clear()
+    void *, void *cppObj,
+    void
+        *); // KDDockWidgets::Controllers::SideBar::addDockWidget(KDDockWidgets::Controllers::DockWidget
+            // * dw)
+void c_KDDockWidgets__Controllers__SideBar__addDockWidget_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Controllers::SideBar::clear()
 void c_KDDockWidgets__Controllers__SideBar__clear(void *thisObj);
+// KDDockWidgets::Controllers::SideBar::containsDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1) const
+bool c_KDDockWidgets__Controllers__SideBar__containsDockWidget_DockWidget(void *thisObj,
+                                                                          void *arg__1_);
 // KDDockWidgets::Controllers::SideBar::customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__SideBar__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::SideBar::event(QEvent * event)
@@ -2512,8 +2598,16 @@ bool c_KDDockWidgets__Controllers__SideBar__eventFilter_QObject_QEvent(void *thi
 bool c_KDDockWidgets__Controllers__SideBar__isEmpty(void *thisObj);
 // KDDockWidgets::Controllers::SideBar::isVertical() const
 bool c_KDDockWidgets__Controllers__SideBar__isVertical(void *thisObj);
+// KDDockWidgets::Controllers::SideBar::onButtonClicked(KDDockWidgets::Controllers::DockWidget * dw)
+void c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Controllers::SideBar::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
+// dw)
+void c_KDDockWidgets__Controllers__SideBar__removeDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Controllers::SideBar::setParentView_impl(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controllers__SideBar__setParentView_impl_View(void *thisObj, void *parent_);
+// KDDockWidgets::Controllers::SideBar::toggleOverlay(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+void c_KDDockWidgets__Controllers__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::SideBar::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controllers__SideBar__tr_char_char_int(const char *s, const char *c,
                                                                      int n);
@@ -2616,6 +2710,12 @@ int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj);
 int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
 // KDDockWidgets::Controllers::Layout::removeItem(Layouting::Item * item)
 void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
+// KDDockWidgets::Controllers::Layout::restorePlaceholder(KDDockWidgets::Controllers::DockWidget *
+// dw, Layouting::Item * arg__2, int tabIndex)
+void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj,
+                                                                                  void *dw_,
+                                                                                  void *arg__2_,
+                                                                                  int tabIndex);
 // KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::Layout::setLayoutSize(QSize arg__1)
@@ -2643,6 +2743,11 @@ void c_KDDockWidgets__Controllers__Layout_Finalizer(
              // options, bool isMDIWrapper)
 void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(
     void *parent_, int options_, bool isMDIWrapper);
+// KDDockWidgets::Controllers::DropArea::addDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
+// KDDockWidgets::InitialOption arg__4)
+void c_KDDockWidgets__Controllers__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
+    void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
 // KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea *
 // splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo,
 // KDDockWidgets::InitialOption option)
@@ -2655,6 +2760,10 @@ void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_Initi
     void *thisObj, void *widget_, int location, void *relativeTo_, void *option_);
 // KDDockWidgets::Controllers::DropArea::centralFrame() const
 void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj);
+// KDDockWidgets::Controllers::DropArea::containsDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1) const
+bool c_KDDockWidgets__Controllers__DropArea__containsDockWidget_DockWidget(void *thisObj,
+                                                                           void *arg__1_);
 // KDDockWidgets::Controllers::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption>
 // options)
 void *
@@ -2679,6 +2788,12 @@ bool c_KDDockWidgets__Controllers__DropArea__hasSingleFrame(void *thisObj);
 bool c_KDDockWidgets__Controllers__DropArea__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::layoutEqually()
 void c_KDDockWidgets__Controllers__DropArea__layoutEqually(void *thisObj);
+// KDDockWidgets::Controllers::DropArea::layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget
+// * arg__1)
+void c_KDDockWidgets__Controllers__DropArea__layoutParentContainerEqually_DockWidget(void *thisObj,
+                                                                                     void *arg__1_);
+// KDDockWidgets::Controllers::DropArea::mdiDockWidgetWrapper() const
+void *c_KDDockWidgets__Controllers__DropArea__mdiDockWidgetWrapper(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::removeHover()
 void c_KDDockWidgets__Controllers__DropArea__removeHover(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::setParentView_impl(KDDockWidgets::View * parent)
@@ -2698,6 +2813,11 @@ void *c_KDDockWidgets__Controllers__Group__constructor_View(void *parent_);
 void *c_KDDockWidgets__Controllers__Group__actualTitleBar(void *thisObj);
 // KDDockWidgets::Controllers::Group::actualTitleBarChanged()
 void c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj);
+// KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::DockWidget * arg__1,
+// KDDockWidgets::InitialOption arg__2)
+void c_KDDockWidgets__Controllers__Group__addTab_DockWidget_InitialOption(void *thisObj,
+                                                                          void *arg__1_,
+                                                                          void *arg__2_);
 // KDDockWidgets::Controllers::Group::addTab(KDDockWidgets::Controllers::FloatingWindow *
 // floatingWindow, KDDockWidgets::InitialOption arg__2)
 void c_KDDockWidgets__Controllers__Group__addTab_FloatingWindow_InitialOption(void *thisObj,
@@ -2733,8 +2853,13 @@ bool c_KDDockWidgets__Controllers__Group__anyNonDockable(void *thisObj);
 bool c_KDDockWidgets__Controllers__Group__beingDeletedLater(void *thisObj);
 // KDDockWidgets::Controllers::Group::biggestDockWidgetMaxSize() const
 void *c_KDDockWidgets__Controllers__Group__biggestDockWidgetMaxSize(void *thisObj);
+// KDDockWidgets::Controllers::Group::containsDockWidget(KDDockWidgets::Controllers::DockWidget * w)
+// const
+bool c_KDDockWidgets__Controllers__Group__containsDockWidget_DockWidget(void *thisObj, void *w_);
 // KDDockWidgets::Controllers::Group::containsMouse(QPoint globalPos) const
 bool c_KDDockWidgets__Controllers__Group__containsMouse_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Controllers::Group::currentDockWidget() const
+void *c_KDDockWidgets__Controllers__Group__currentDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::Group::currentIndex() const
 int c_KDDockWidgets__Controllers__Group__currentIndex(void *thisObj);
 // KDDockWidgets::Controllers::Group::currentTabIndex() const
@@ -2743,6 +2868,10 @@ int c_KDDockWidgets__Controllers__Group__currentTabIndex(void *thisObj);
 void c_KDDockWidgets__Controllers__Group__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::Group::dbg_numFrames()
 int c_static_KDDockWidgets__Controllers__Group__dbg_numFrames();
+// KDDockWidgets::Controllers::Group::detachTab(KDDockWidgets::Controllers::DockWidget * arg__1)
+void *c_KDDockWidgets__Controllers__Group__detachTab_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::Controllers::Group::dockWidgetAt(int index) const
+void *c_KDDockWidgets__Controllers__Group__dockWidgetAt_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Group::dockWidgetCount() const
 int c_KDDockWidgets__Controllers__Group__dockWidgetCount(void *thisObj);
 // KDDockWidgets::Controllers::Group::dockWidgetsMinSize() const
@@ -2768,6 +2897,19 @@ bool c_KDDockWidgets__Controllers__Group__hasSingleDockWidget(void *thisObj);
 bool c_KDDockWidgets__Controllers__Group__hasTabsVisible(void *thisObj);
 // KDDockWidgets::Controllers::Group::hasTabsVisibleChanged()
 void c_KDDockWidgets__Controllers__Group__hasTabsVisibleChanged(void *thisObj);
+// KDDockWidgets::Controllers::Group::indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget
+// * arg__1)
+int c_KDDockWidgets__Controllers__Group__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::Controllers::Group::insertDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1, int index)
+void c_KDDockWidgets__Controllers__Group__insertDockWidget_DockWidget_int(void *thisObj,
+                                                                          void *arg__1_, int index);
+// KDDockWidgets::Controllers::Group::insertWidget(KDDockWidgets::Controllers::DockWidget * arg__1,
+// int index, KDDockWidgets::InitialOption arg__3)
+void c_KDDockWidgets__Controllers__Group__insertWidget_DockWidget_int_InitialOption(void *thisObj,
+                                                                                    void *arg__1_,
+                                                                                    int index,
+                                                                                    void *arg__3_);
 // KDDockWidgets::Controllers::Group::isCentralFrame() const
 bool c_KDDockWidgets__Controllers__Group__isCentralFrame(void *thisObj);
 // KDDockWidgets::Controllers::Group::isDockable() const
@@ -2798,6 +2940,8 @@ bool c_KDDockWidgets__Controllers__Group__isOverlayed(void *thisObj);
 bool c_KDDockWidgets__Controllers__Group__isTheOnlyFrame(void *thisObj);
 // KDDockWidgets::Controllers::Group::layoutItem() const
 void *c_KDDockWidgets__Controllers__Group__layoutItem(void *thisObj);
+// KDDockWidgets::Controllers::Group::mdiDockWidgetWrapper() const
+void *c_KDDockWidgets__Controllers__Group__mdiDockWidgetWrapper(void *thisObj);
 // KDDockWidgets::Controllers::Group::mdiDropAreaWrapper() const
 void *c_KDDockWidgets__Controllers__Group__mdiDropAreaWrapper(void *thisObj);
 // KDDockWidgets::Controllers::Group::mdiFrame() const
@@ -2810,13 +2954,23 @@ void c_KDDockWidgets__Controllers__Group__numDockWidgetsChanged(void *thisObj);
 void c_KDDockWidgets__Controllers__Group__onCurrentTabChanged_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Group::onDockWidgetCountChanged()
 void c_KDDockWidgets__Controllers__Group__onDockWidgetCountChanged(void *thisObj);
+// KDDockWidgets::Controllers::Group::onDockWidgetHidden(KDDockWidgets::Controllers::DockWidget * w)
+void c_KDDockWidgets__Controllers__Group__onDockWidgetHidden_DockWidget(void *thisObj, void *w_);
+// KDDockWidgets::Controllers::Group::onDockWidgetShown(KDDockWidgets::Controllers::DockWidget * w)
+void c_KDDockWidgets__Controllers__Group__onDockWidgetShown_DockWidget(void *thisObj, void *w_);
 // KDDockWidgets::Controllers::Group::onDockWidgetTitleChanged()
 void c_KDDockWidgets__Controllers__Group__onDockWidgetTitleChanged(void *thisObj);
+// KDDockWidgets::Controllers::Group::removeWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+void c_KDDockWidgets__Controllers__Group__removeWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::Group::renameTab(int index, const QString & arg__2)
 void c_KDDockWidgets__Controllers__Group__renameTab_int_QString(void *thisObj, int index,
                                                                 const char *arg__2_);
 // KDDockWidgets::Controllers::Group::restoreToPreviousPosition()
 void c_KDDockWidgets__Controllers__Group__restoreToPreviousPosition(void *thisObj);
+// KDDockWidgets::Controllers::Group::setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+void c_KDDockWidgets__Controllers__Group__setCurrentDockWidget_DockWidget(void *thisObj,
+                                                                          void *arg__1_);
 // KDDockWidgets::Controllers::Group::setCurrentTabIndex(int index)
 void c_KDDockWidgets__Controllers__Group__setCurrentTabIndex_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Group::setLayout(KDDockWidgets::Controllers::Layout * arg__1)
@@ -2861,6 +3015,11 @@ c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect(void *grou
 void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect(void *suggestedGeometry_);
 // KDDockWidgets::Controllers::FloatingWindow::activatedChanged()
 void c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged(void *thisObj);
+// KDDockWidgets::Controllers::FloatingWindow::addDockWidget(KDDockWidgets::Controllers::DockWidget
+// * arg__1, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
+// KDDockWidgets::InitialOption arg__4)
+void c_KDDockWidgets__Controllers__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
+    void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
 // KDDockWidgets::Controllers::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption
 // arg__1) const
 bool c_KDDockWidgets__Controllers__FloatingWindow__allDockWidgetsHave_DockWidgetOption(
@@ -2925,6 +3084,8 @@ void c_KDDockWidgets__Controllers__FloatingWindow__setParentView_impl_View(void 
 // KDDockWidgets::Controllers::FloatingWindow::setSuggestedGeometry(QRect suggestedRect)
 void c_KDDockWidgets__Controllers__FloatingWindow__setSuggestedGeometry_QRect(void *thisObj,
                                                                               void *suggestedRect_);
+// KDDockWidgets::Controllers::FloatingWindow::singleDockWidget() const
+void *c_KDDockWidgets__Controllers__FloatingWindow__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::singleFrame() const
 void *c_KDDockWidgets__Controllers__FloatingWindow__singleFrame(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::titleBar() const
@@ -3077,8 +3238,163 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallb
                                                                                     int methodId);
 void c_KDDockWidgets__Controllers__ClassicIndicators_Finalizer(
     void *, void *cppObj,
-    void *); // KDDockWidgets::Config::absoluteWidgetMaxSize()
-             // const
+    void *); // KDDockWidgets::Controllers::DockWidget::DockWidget(KDDockWidgets::View * view, const
+             // QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options,
+             // QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+void *
+c_KDDockWidgets__Controllers__DockWidget__constructor_View_QString_DockWidgetOptions_LayoutSaverOptions(
+    void *view_, const char *uniqueName_, int options_, int layoutSaverOptions_);
+// KDDockWidgets::Controllers::DockWidget::aboutToDelete(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+void c_KDDockWidgets__Controllers__DockWidget__aboutToDelete_DockWidget(void *thisObj,
+                                                                        void *arg__1_);
+// KDDockWidgets::Controllers::DockWidget::aboutToDeleteOnClose()
+void c_KDDockWidgets__Controllers__DockWidget__aboutToDeleteOnClose(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::actualTitleBarChanged()
+void c_KDDockWidgets__Controllers__DockWidget__actualTitleBarChanged(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget
+// * other, KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Controllers__DockWidget__addDockWidgetAsTab_DockWidget_InitialOption(
+    void *thisObj, void *other_, void *initialOption_);
+// KDDockWidgets::Controllers::DockWidget::addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget
+// * other, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
+// KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Controllers__DockWidget__addDockWidgetToContainingWindow_DockWidget_Location_DockWidget_InitialOption(
+    void *thisObj, void *other_, int location, void *relativeTo_, void *initialOption_);
+// KDDockWidgets::Controllers::DockWidget::byName(const QString & uniqueName)
+void *c_static_KDDockWidgets__Controllers__DockWidget__byName_QString(const char *uniqueName_);
+// KDDockWidgets::Controllers::DockWidget::currentTabIndex() const
+int c_KDDockWidgets__Controllers__DockWidget__currentTabIndex(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::customEvent(QEvent * event)
+void c_KDDockWidgets__Controllers__DockWidget__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::DockWidget::event(QEvent * event)
+bool c_KDDockWidgets__Controllers__DockWidget__event_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::DockWidget::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controllers__DockWidget__eventFilter_QObject_QEvent(void *thisObj,
+                                                                          void *watched_,
+                                                                          void *event_);
+// KDDockWidgets::Controllers::DockWidget::floatingWindow() const
+void *c_KDDockWidgets__Controllers__DockWidget__floatingWindow(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::forceClose()
+void c_KDDockWidgets__Controllers__DockWidget__forceClose(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::groupGeometry() const
+void *c_KDDockWidgets__Controllers__DockWidget__groupGeometry(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::guestViewChanged()
+void c_KDDockWidgets__Controllers__DockWidget__guestViewChanged(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::hasPreviousDockedLocation() const
+bool c_KDDockWidgets__Controllers__DockWidget__hasPreviousDockedLocation(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::hidden()
+void c_KDDockWidgets__Controllers__DockWidget__hidden(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::iconChanged()
+void c_KDDockWidgets__Controllers__DockWidget__iconChanged(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::init()
+void c_KDDockWidgets__Controllers__DockWidget__init(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isCurrentTab() const
+bool c_KDDockWidgets__Controllers__DockWidget__isCurrentTab(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isFloating() const
+bool c_KDDockWidgets__Controllers__DockWidget__isFloating(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isFloatingChanged(bool arg__1)
+void c_KDDockWidgets__Controllers__DockWidget__isFloatingChanged_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Controllers::DockWidget::isFocused() const
+bool c_KDDockWidgets__Controllers__DockWidget__isFocused(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isFocusedChanged(bool arg__1)
+void c_KDDockWidgets__Controllers__DockWidget__isFocusedChanged_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Controllers::DockWidget::isInMainWindow() const
+bool c_KDDockWidgets__Controllers__DockWidget__isInMainWindow(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isInSideBar() const
+bool c_KDDockWidgets__Controllers__DockWidget__isInSideBar(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isMainWindow() const
+bool c_KDDockWidgets__Controllers__DockWidget__isMainWindow(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isOpen() const
+bool c_KDDockWidgets__Controllers__DockWidget__isOpen(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isOverlayed() const
+bool c_KDDockWidgets__Controllers__DockWidget__isOverlayed(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isOverlayedChanged(bool arg__1)
+void c_KDDockWidgets__Controllers__DockWidget__isOverlayedChanged_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Controllers::DockWidget::isPersistentCentralDockWidget() const
+bool c_KDDockWidgets__Controllers__DockWidget__isPersistentCentralDockWidget(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::isTabbed() const
+bool c_KDDockWidgets__Controllers__DockWidget__isTabbed(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::lastOverlayedSize() const
+void *c_KDDockWidgets__Controllers__DockWidget__lastOverlayedSize(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::layoutSaverOptions() const
+int c_KDDockWidgets__Controllers__DockWidget__layoutSaverOptions(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::moveToSideBar()
+void c_KDDockWidgets__Controllers__DockWidget__moveToSideBar(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::onHidden(bool spontaneous)
+void c_KDDockWidgets__Controllers__DockWidget__onHidden_bool(void *thisObj, bool spontaneous);
+// KDDockWidgets::Controllers::DockWidget::onResize(QSize newSize)
+void c_KDDockWidgets__Controllers__DockWidget__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::Controllers::DockWidget::onShown(bool spontaneous)
+void c_KDDockWidgets__Controllers__DockWidget__onShown_bool(void *thisObj, bool spontaneous);
+// KDDockWidgets::Controllers::DockWidget::options() const
+int c_KDDockWidgets__Controllers__DockWidget__options(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::optionsChanged(QFlags<KDDockWidgets::DockWidgetOption>
+// arg__1)
+void c_KDDockWidgets__Controllers__DockWidget__optionsChanged_DockWidgetOptions(void *thisObj,
+                                                                                int arg__1_);
+// KDDockWidgets::Controllers::DockWidget::raise()
+void c_KDDockWidgets__Controllers__DockWidget__raise(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::removedFromSideBar()
+void c_KDDockWidgets__Controllers__DockWidget__removedFromSideBar(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::setAffinityName(const QString & name)
+void c_KDDockWidgets__Controllers__DockWidget__setAffinityName_QString(void *thisObj,
+                                                                       const char *name_);
+// KDDockWidgets::Controllers::DockWidget::setAsCurrentTab()
+void c_KDDockWidgets__Controllers__DockWidget__setAsCurrentTab(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::setFloating(bool floats)
+bool c_KDDockWidgets__Controllers__DockWidget__setFloating_bool(void *thisObj, bool floats);
+// KDDockWidgets::Controllers::DockWidget::setFloatingGeometry(QRect geo)
+void c_KDDockWidgets__Controllers__DockWidget__setFloatingGeometry_QRect(void *thisObj, void *geo_);
+// KDDockWidgets::Controllers::DockWidget::setMDIPosition(QPoint pos)
+void c_KDDockWidgets__Controllers__DockWidget__setMDIPosition_QPoint(void *thisObj, void *pos_);
+// KDDockWidgets::Controllers::DockWidget::setMDISize(QSize size)
+void c_KDDockWidgets__Controllers__DockWidget__setMDISize_QSize(void *thisObj, void *size_);
+// KDDockWidgets::Controllers::DockWidget::setMDIZ(int z)
+void c_KDDockWidgets__Controllers__DockWidget__setMDIZ_int(void *thisObj, int z);
+// KDDockWidgets::Controllers::DockWidget::setOptions(QFlags<KDDockWidgets::DockWidgetOption>
+// arg__1)
+void c_KDDockWidgets__Controllers__DockWidget__setOptions_DockWidgetOptions(void *thisObj,
+                                                                            int arg__1_);
+// KDDockWidgets::Controllers::DockWidget::setParentView_impl(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controllers__DockWidget__setParentView_impl_View(void *thisObj,
+                                                                       void *parent_);
+// KDDockWidgets::Controllers::DockWidget::setTitle(const QString & title)
+void c_KDDockWidgets__Controllers__DockWidget__setTitle_QString(void *thisObj, const char *title_);
+// KDDockWidgets::Controllers::DockWidget::setUserType(int userType)
+void c_KDDockWidgets__Controllers__DockWidget__setUserType_int(void *thisObj, int userType);
+// KDDockWidgets::Controllers::DockWidget::show()
+void c_KDDockWidgets__Controllers__DockWidget__show(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::shown()
+void c_KDDockWidgets__Controllers__DockWidget__shown(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::skipsRestore() const
+bool c_KDDockWidgets__Controllers__DockWidget__skipsRestore(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::tabIndex() const
+int c_KDDockWidgets__Controllers__DockWidget__tabIndex(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::title() const
+void *c_KDDockWidgets__Controllers__DockWidget__title(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::titleBar() const
+void *c_KDDockWidgets__Controllers__DockWidget__titleBar(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::titleChanged(const QString & title)
+void c_KDDockWidgets__Controllers__DockWidget__titleChanged_QString(void *thisObj,
+                                                                    const char *title_);
+// KDDockWidgets::Controllers::DockWidget::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Controllers__DockWidget__tr_char_char_int(const char *s,
+                                                                        const char *c, int n);
+// KDDockWidgets::Controllers::DockWidget::uniqueName() const
+void *c_KDDockWidgets__Controllers__DockWidget__uniqueName(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::userType() const
+int c_KDDockWidgets__Controllers__DockWidget__userType(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::windowActiveAboutToChange(bool activated)
+void c_KDDockWidgets__Controllers__DockWidget__windowActiveAboutToChange_bool(void *thisObj,
+                                                                              bool activated);
+void c_KDDockWidgets__Controllers__DockWidget__destructor(void *thisObj);
+void c_KDDockWidgets__Controllers__DockWidget__registerVirtualMethodCallback(void *ptr,
+                                                                             void *callback,
+                                                                             int methodId);
+void c_KDDockWidgets__Controllers__DockWidget_Finalizer(
+    void *, void *cppObj, void *); // KDDockWidgets::Config::absoluteWidgetMaxSize()
+                                   // const
 void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj);
 // KDDockWidgets::Config::absoluteWidgetMinSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj);

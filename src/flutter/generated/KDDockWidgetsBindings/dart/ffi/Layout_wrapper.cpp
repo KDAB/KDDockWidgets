@@ -147,6 +147,11 @@ void Layout_wrapper::removeItem(Layouting::Item *item)
 {
     ::KDDockWidgets::Controllers::Layout::removeItem(item);
 }
+void Layout_wrapper::restorePlaceholder(KDDockWidgets::Controllers::DockWidget *dw,
+                                        Layouting::Item *arg__2, int tabIndex)
+{
+    ::KDDockWidgets::Controllers::Layout::restorePlaceholder(dw, arg__2, tabIndex);
+}
 void Layout_wrapper::setLayoutMinimumSize(QSize arg__1)
 {
     ::KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(arg__1);
@@ -352,6 +357,17 @@ void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *
 {
     auto item = reinterpret_cast<Layouting::Item *>(item_);
     fromPtr(thisObj)->removeItem(item);
+}
+// restorePlaceholder(KDDockWidgets::Controllers::DockWidget * dw, Layouting::Item * arg__2, int
+// tabIndex)
+void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj,
+                                                                                  void *dw_,
+                                                                                  void *arg__2_,
+                                                                                  int tabIndex)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(dw_);
+    auto arg__2 = reinterpret_cast<Layouting::Item *>(arg__2_);
+    fromPtr(thisObj)->restorePlaceholder(dw, arg__2, tabIndex);
 }
 // setLayoutMinimumSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_)

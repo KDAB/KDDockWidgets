@@ -16,6 +16,7 @@
 #include <qbytearray.h>
 #include <Group.h>
 #include <View.h>
+#include <DockWidget.h>
 #include <KDDockWidgets.h>
 #include <FloatingWindow.h>
 #include <Stack.h>

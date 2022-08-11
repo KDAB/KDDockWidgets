@@ -26,13 +26,29 @@ class SideBar extends Controller {
       if (instance != null) return instance as SideBar;
     }
     return SideBar.fromCppPointer(cppPointer, needsAutoDelete);
+  } // addDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+  addDockWidget(DockWidget? dw) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__SideBar__addDockWidget_DockWidget')
+        .asFunction();
+    func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   } // clear()
+
   clear() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Controllers__SideBar__clear')
         .asFunction();
     func(thisCpp);
+  } // containsDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1) const
+
+  bool containsDockWidget(DockWidget? arg__1) {
+    final bool_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__SideBar__containsDockWidget_DockWidget')
+        .asFunction();
+    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   }
 
   static void customEvent_calledFromC(
@@ -88,6 +104,22 @@ class SideBar extends Controller {
             'c_KDDockWidgets__Controllers__SideBar__isVertical')
         .asFunction();
     return func(thisCpp) != 0;
+  } // onButtonClicked(KDDockWidgets::Controllers::DockWidget * dw)
+
+  onButtonClicked(DockWidget? dw) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget')
+        .asFunction();
+    func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
+  } // removeDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+
+  removeDockWidget(DockWidget? dw) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__SideBar__removeDockWidget_DockWidget')
+        .asFunction();
+    func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   }
 
   static void setParentView_impl_calledFromC(
@@ -100,6 +132,14 @@ class SideBar extends Controller {
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));
+  } // toggleOverlay(KDDockWidgets::Controllers::DockWidget * arg__1)
+
+  toggleOverlay(DockWidget? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__SideBar__toggleOverlay_DockWidget')
+        .asFunction();
+    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
 
   static // tr(const char * s, const char * c, int n)

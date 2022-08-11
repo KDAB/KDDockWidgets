@@ -13,15 +13,16 @@
 #include <View.h>
 #include <FloatingWindow.h>
 #include <qsize.h>
+#include <DockWidget.h>
 #include <Item_p.h>
 #include <Group.h>
 #include <qlist.h>
 #include <DropArea.h>
-#include <qrect.h>
-#include <qcoreevent.h>
 #include <qpoint.h>
-#include <qstring.h>
+#include <qrect.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Layout_wrapper : public ::KDDockWidgets::Controllers::Layout
@@ -55,6 +56,8 @@ public:
     int layoutWidth() const;
     int placeholderCount() const;
     void removeItem(Layouting::Item *item);
+    void restorePlaceholder(KDDockWidgets::Controllers::DockWidget *dw, Layouting::Item *arg__2,
+                            int tabIndex);
     void setLayoutMinimumSize(QSize arg__1);
     void setLayoutSize(QSize arg__1);
     virtual void setParentView_impl(KDDockWidgets::View *parent);
@@ -139,6 +142,13 @@ c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
 // KDDockWidgets::Controllers::Layout::removeItem(Layouting::Item * item)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
+// KDDockWidgets::Controllers::Layout::restorePlaceholder(KDDockWidgets::Controllers::DockWidget *
+// dw, Layouting::Item * arg__2, int tabIndex)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj,
+                                                                             void *dw_,
+                                                                             void *arg__2_,
+                                                                             int tabIndex);
 // KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(QSize arg__1)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);

@@ -12,13 +12,14 @@
 #include <TabBar.h>
 #include <qstring.h>
 #include <Stack.h>
+#include <DockWidget.h>
 #include <qpoint.h>
 #include <Group.h>
 #include <qrect.h>
-#include <qcoreevent.h>
 #include <View.h>
 #include <qsize.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TabBar_wrapper : public ::KDDockWidgets::Controllers::TabBar
@@ -26,8 +27,11 @@ class TabBar_wrapper : public ::KDDockWidgets::Controllers::TabBar
 public:
     ~TabBar_wrapper();
     TabBar_wrapper(KDDockWidgets::Controllers::Stack *tabWidget = nullptr);
+    KDDockWidgets::Controllers::DockWidget *currentDockWidget() const;
     virtual void customEvent(QEvent *event);
     virtual void customEvent_nocallback(QEvent *event);
+    KDDockWidgets::Controllers::DockWidget *dockWidgetAt(QPoint localPos) const;
+    KDDockWidgets::Controllers::DockWidget *dockWidgetAt(int index) const;
     virtual bool dragCanStart(QPoint pressPos, QPoint pos) const;
     virtual bool dragCanStart_nocallback(QPoint pressPos, QPoint pos) const;
     virtual bool event(QEvent *event);
@@ -47,6 +51,8 @@ public:
     QRect rectForTab(int index) const;
     virtual void setParentView_impl(KDDockWidgets::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget() const;
+    virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Controllers::Stack *stack() const;
     bool tabsAreMovable() const;
     QString text(int index) const;
@@ -65,15 +71,26 @@ public:
     Callback_isWindow m_isWindowCallback = nullptr;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
+    typedef KDDockWidgets::Controllers::DockWidget *(*Callback_singleDockWidget)(void *);
+    Callback_singleDockWidget m_singleDockWidgetCallback = nullptr;
 };
 }
 extern "C" {
 // KDDockWidgets::Controllers::TabBar::TabBar(KDDockWidgets::Controllers::Stack * tabWidget)
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__TabBar__constructor_Stack(void *tabWidget_);
+// KDDockWidgets::Controllers::TabBar::currentDockWidget() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__TabBar__currentDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::customEvent(QEvent * event)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TabBar__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::TabBar::dockWidgetAt(QPoint localPos) const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__TabBar__dockWidgetAt_QPoint(void *thisObj, void *localPos_);
+// KDDockWidgets::Controllers::TabBar::dockWidgetAt(int index) const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__TabBar__dockWidgetAt_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__TabBar__dragCanStart_QPoint_QPoint(void *thisObj, void *pressPos_,
@@ -112,6 +129,9 @@ c_KDDockWidgets__Controllers__TabBar__rectForTab_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::TabBar::setParentView_impl(KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TabBar__setParentView_impl_View(void *thisObj, void *parent_);
+// KDDockWidgets::Controllers::TabBar::singleDockWidget() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__TabBar__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::stack() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__TabBar__stack(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::tabsAreMovable() const

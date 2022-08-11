@@ -13,14 +13,16 @@
 #include <qstring.h>
 #include <qrect.h>
 #include <Group.h>
+#include <DockWidget.h>
 #include <DropArea.h>
 #include <TitleBar.h>
 #include <controllers/Layout.h>
 #include <qpoint.h>
+#include <KDDockWidgets.h>
 #include <qsize.h>
-#include <qcoreevent.h>
 #include <View.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class FloatingWindow_wrapper : public ::KDDockWidgets::Controllers::FloatingWindow
@@ -30,6 +32,10 @@ public:
     FloatingWindow_wrapper(KDDockWidgets::Controllers::Group *group, QRect suggestedGeometry);
     FloatingWindow_wrapper(QRect suggestedGeometry);
     void activatedChanged();
+    void addDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1,
+                       KDDockWidgets::Location location,
+                       KDDockWidgets::Controllers::DockWidget *relativeTo,
+                       KDDockWidgets::InitialOption arg__4 = {});
     bool allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const;
     bool allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const;
     bool anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const;
@@ -61,6 +67,8 @@ public:
     virtual void setParentView_impl(KDDockWidgets::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
     void setSuggestedGeometry(QRect suggestedRect);
+    virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget() const;
+    virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Controllers::Group *singleFrame() const;
     KDDockWidgets::Controllers::TitleBar *titleBar() const;
     static QString tr(const char *s, const char *c, int n);
@@ -80,6 +88,8 @@ public:
     Callback_isWindow m_isWindowCallback = nullptr;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
+    typedef KDDockWidgets::Controllers::DockWidget *(*Callback_singleDockWidget)(void *);
+    Callback_singleDockWidget m_singleDockWidgetCallback = nullptr;
 };
 }
 extern "C" {
@@ -94,6 +104,12 @@ c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect(void *suggestedG
 // KDDockWidgets::Controllers::FloatingWindow::activatedChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged(void *thisObj);
+// KDDockWidgets::Controllers::FloatingWindow::addDockWidget(KDDockWidgets::Controllers::DockWidget
+// * arg__1, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
+// KDDockWidgets::InitialOption arg__4)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
+    void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
 // KDDockWidgets::Controllers::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption
 // arg__1) const
 KDDockWidgetsBindings_EXPORT bool
@@ -181,6 +197,9 @@ c_KDDockWidgets__Controllers__FloatingWindow__setParentView_impl_View(void *this
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__setSuggestedGeometry_QRect(void *thisObj,
                                                                          void *suggestedRect_);
+// KDDockWidgets::Controllers::FloatingWindow::singleDockWidget() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__FloatingWindow__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::singleFrame() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__FloatingWindow__singleFrame(void *thisObj);

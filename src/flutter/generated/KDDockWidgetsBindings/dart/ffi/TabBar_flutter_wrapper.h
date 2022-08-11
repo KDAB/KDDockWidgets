@@ -15,6 +15,7 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include <qrect.h>
+#include <DockWidget.h>
 #include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -30,6 +31,8 @@ public:
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
+    virtual KDDockWidgets::Controllers::DockWidget *currentDockWidget() const;
+    virtual KDDockWidgets::Controllers::DockWidget *currentDockWidget_nocallback() const;
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
     virtual void free_impl();
@@ -150,6 +153,8 @@ public:
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
+    typedef KDDockWidgets::Controllers::DockWidget *(*Callback_currentDockWidget)(void *);
+    Callback_currentDockWidget m_currentDockWidgetCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
     typedef void (*Callback_free_impl)(void *);
@@ -279,6 +284,9 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__close(
 // KDDockWidgets::Views::TabBar_flutter::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__TabBar_flutter__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Views::TabBar_flutter::currentDockWidget() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__TabBar_flutter__currentDockWidget(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TabBar_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::free_impl()

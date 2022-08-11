@@ -72,7 +72,7 @@ public:
      * when visible, or stays without a parent when hidden.
      */
     explicit DockWidget(View *view, const QString &uniqueName, DockWidgetOptions options = {},
-                        LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
+                        LayoutSaverOptions layoutSaverOptions = {});
 
     ///@brief destructor
     ~DockWidget() override;

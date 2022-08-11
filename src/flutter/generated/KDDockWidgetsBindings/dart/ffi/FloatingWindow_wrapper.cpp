@@ -40,6 +40,14 @@ void FloatingWindow_wrapper::activatedChanged()
 {
     ::KDDockWidgets::Controllers::FloatingWindow::activatedChanged();
 }
+void FloatingWindow_wrapper::addDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1,
+                                           KDDockWidgets::Location location,
+                                           KDDockWidgets::Controllers::DockWidget *relativeTo,
+                                           KDDockWidgets::InitialOption arg__4)
+{
+    ::KDDockWidgets::Controllers::FloatingWindow::addDockWidget(arg__1, location, relativeTo,
+                                                                arg__4);
+}
 bool FloatingWindow_wrapper::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
 {
     return ::KDDockWidgets::Controllers::FloatingWindow::allDockWidgetsHave(arg__1);
@@ -194,6 +202,19 @@ void FloatingWindow_wrapper::setSuggestedGeometry(QRect suggestedRect)
 {
     ::KDDockWidgets::Controllers::FloatingWindow::setSuggestedGeometry(suggestedRect);
 }
+KDDockWidgets::Controllers::DockWidget *FloatingWindow_wrapper::singleDockWidget() const
+{
+    if (m_singleDockWidgetCallback) {
+        const void *thisPtr = this;
+        return m_singleDockWidgetCallback(const_cast<void *>(thisPtr));
+    } else {
+        return ::KDDockWidgets::Controllers::FloatingWindow::singleDockWidget();
+    }
+}
+KDDockWidgets::Controllers::DockWidget *FloatingWindow_wrapper::singleDockWidget_nocallback() const
+{
+    return ::KDDockWidgets::Controllers::FloatingWindow::singleDockWidget();
+}
 KDDockWidgets::Controllers::Group *FloatingWindow_wrapper::singleFrame() const
 {
     return ::KDDockWidgets::Controllers::FloatingWindow::singleFrame();
@@ -262,6 +283,18 @@ void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect(void *sugg
 void c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged(void *thisObj)
 {
     fromPtr(thisObj)->activatedChanged();
+}
+// addDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1, KDDockWidgets::Location location,
+// KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
+void c_KDDockWidgets__Controllers__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
+    void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto relativeTo = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(relativeTo_);
+    assert(arg__4_);
+    auto &arg__4 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__4_);
+    fromPtr(thisObj)->addDockWidget(arg__1, static_cast<KDDockWidgets::Location>(location),
+                                    relativeTo, arg__4);
 }
 // allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
 bool c_KDDockWidgets__Controllers__FloatingWindow__allDockWidgetsHave_DockWidgetOption(
@@ -449,6 +482,20 @@ void c_KDDockWidgets__Controllers__FloatingWindow__setSuggestedGeometry_QRect(vo
     auto &suggestedRect = *reinterpret_cast<QRect *>(suggestedRect_);
     fromPtr(thisObj)->setSuggestedGeometry(suggestedRect);
 }
+// singleDockWidget() const
+void *c_KDDockWidgets__Controllers__FloatingWindow__singleDockWidget(void *thisObj)
+{
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->singleDockWidget_nocallback();
+        } else {
+            return targetPtr->singleDockWidget();
+        }
+    }();
+}
 // singleFrame() const
 void *c_KDDockWidgets__Controllers__FloatingWindow__singleFrame(void *thisObj)
 {
@@ -511,17 +558,22 @@ void c_KDDockWidgets__Controllers__FloatingWindow__registerVirtualMethodCallback
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_eventFilter>(
             callback);
         break;
-    case 1395:
+    case 1447:
         wrapper->m_isMDICallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 1397:
+    case 1449:
         wrapper->m_isWindowCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
     case 826:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_setParentView_impl>(
+            callback);
+        break;
+    case 1466:
+        wrapper->m_singleDockWidgetCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_singleDockWidget>(
             callback);
         break;
     }

@@ -14,6 +14,7 @@
 #include <View.h>
 #include <qsize.h>
 #include <qrect.h>
+#include <DockWidget.h>
 #include <qstring.h>
 #include <qpoint.h>
 
@@ -30,7 +31,11 @@ public:
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
+    virtual KDDockWidgets::Controllers::DockWidget *currentDockWidget_impl() const;
+    virtual KDDockWidgets::Controllers::DockWidget *currentDockWidget_impl_nocallback() const;
     int currentIndex() const;
+    virtual KDDockWidgets::Controllers::DockWidget *dockWidgetAt_impl(int index) const;
+    virtual KDDockWidgets::Controllers::DockWidget *dockWidgetAt_impl_nocallback(int index) const;
     virtual QRect dragRect() const;
     virtual QRect dragRect_nocallback() const;
     virtual Qt::WindowFlags flags() const;
@@ -45,6 +50,12 @@ public:
     virtual bool hasFocus_nocallback() const;
     virtual void hide();
     virtual void hide_nocallback();
+    virtual int indexOfDockWidget_impl(const KDDockWidgets::Controllers::DockWidget *arg__1);
+    virtual int
+    indexOfDockWidget_impl_nocallback(const KDDockWidgets::Controllers::DockWidget *arg__1);
+    virtual void insertDockWidget_impl(KDDockWidgets::Controllers::DockWidget *arg__1, int index);
+    virtual void insertDockWidget_impl_nocallback(KDDockWidgets::Controllers::DockWidget *arg__1,
+                                                  int index);
     virtual bool isActiveWindow() const;
     virtual bool isActiveWindow_nocallback() const;
     virtual bool isMaximized() const;
@@ -93,8 +104,13 @@ public:
     virtual void releaseKeyboard_nocallback();
     virtual void releaseMouse();
     virtual void releaseMouse_nocallback();
+    virtual void removeWidget_impl(KDDockWidgets::Controllers::DockWidget *arg__1);
+    virtual void removeWidget_impl_nocallback(KDDockWidgets::Controllers::DockWidget *arg__1);
     virtual void renameTab(int index, const QString &arg__2);
     virtual void renameTab_nocallback(int index, const QString &arg__2);
+    virtual void setCurrentDockWidget_impl(KDDockWidgets::Controllers::DockWidget *arg__1);
+    virtual void
+    setCurrentDockWidget_impl_nocallback(KDDockWidgets::Controllers::DockWidget *arg__1);
     virtual void setCurrentTabIndex_impl(int index);
     virtual void setCurrentTabIndex_impl_nocallback(int index);
     virtual void setCursor(Qt::CursorShape shape);
@@ -147,6 +163,11 @@ public:
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
+    typedef KDDockWidgets::Controllers::DockWidget *(*Callback_currentDockWidget_impl)(void *);
+    Callback_currentDockWidget_impl m_currentDockWidget_implCallback = nullptr;
+    typedef KDDockWidgets::Controllers::DockWidget *(*Callback_dockWidgetAt_impl)(void *,
+                                                                                  int index);
+    Callback_dockWidgetAt_impl m_dockWidgetAt_implCallback = nullptr;
     typedef QRect *(*Callback_dragRect)(void *);
     Callback_dragRect m_dragRectCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
@@ -161,6 +182,13 @@ public:
     Callback_hasFocus m_hasFocusCallback = nullptr;
     typedef void (*Callback_hide)(void *);
     Callback_hide m_hideCallback = nullptr;
+    typedef int (*Callback_indexOfDockWidget_impl)(
+        void *, const KDDockWidgets::Controllers::DockWidget *arg__1);
+    Callback_indexOfDockWidget_impl m_indexOfDockWidget_implCallback = nullptr;
+    typedef void (*Callback_insertDockWidget_impl)(void *,
+                                                   KDDockWidgets::Controllers::DockWidget *arg__1,
+                                                   int index);
+    Callback_insertDockWidget_impl m_insertDockWidget_implCallback = nullptr;
     typedef bool (*Callback_isActiveWindow)(void *);
     Callback_isActiveWindow m_isActiveWindowCallback = nullptr;
     typedef bool (*Callback_isMaximized)(void *);
@@ -209,8 +237,14 @@ public:
     Callback_releaseKeyboard m_releaseKeyboardCallback = nullptr;
     typedef void (*Callback_releaseMouse)(void *);
     Callback_releaseMouse m_releaseMouseCallback = nullptr;
+    typedef void (*Callback_removeWidget_impl)(void *,
+                                               KDDockWidgets::Controllers::DockWidget *arg__1);
+    Callback_removeWidget_impl m_removeWidget_implCallback = nullptr;
     typedef void (*Callback_renameTab)(void *, int index, const QString &arg__2);
     Callback_renameTab m_renameTabCallback = nullptr;
+    typedef void (*Callback_setCurrentDockWidget_impl)(
+        void *, KDDockWidgets::Controllers::DockWidget *arg__1);
+    Callback_setCurrentDockWidget_impl m_setCurrentDockWidget_implCallback = nullptr;
     typedef void (*Callback_setCurrentTabIndex_impl)(void *, int index);
     Callback_setCurrentTabIndex_impl m_setCurrentTabIndex_implCallback = nullptr;
     typedef void (*Callback_setCursor)(void *, Qt::CursorShape shape);
@@ -272,8 +306,14 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__Group_flutter__close(v
 // KDDockWidgets::Views::Group_flutter::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__Group_flutter__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Views::Group_flutter::currentDockWidget_impl() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__Group_flutter__currentDockWidget_impl(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::currentIndex() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__Group_flutter__currentIndex(void *thisObj);
+// KDDockWidgets::Views::Group_flutter::dockWidgetAt_impl(int index) const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__Group_flutter__dockWidgetAt_impl_int(void *thisObj, int index);
 // KDDockWidgets::Views::Group_flutter::dragRect() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__Group_flutter__dragRect(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::flags() const
@@ -288,6 +328,17 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Group_flutter__grabMou
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__Group_flutter__hasFocus(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::hide()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Group_flutter__hide(void *thisObj);
+// KDDockWidgets::Views::Group_flutter::indexOfDockWidget_impl(const
+// KDDockWidgets::Controllers::DockWidget * arg__1)
+KDDockWidgetsBindings_EXPORT int
+c_KDDockWidgets__Views__Group_flutter__indexOfDockWidget_impl_DockWidget(void *thisObj,
+                                                                         void *arg__1_);
+// KDDockWidgets::Views::Group_flutter::insertDockWidget_impl(KDDockWidgets::Controllers::DockWidget
+// * arg__1, int index)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__Group_flutter__insertDockWidget_impl_DockWidget_int(void *thisObj,
+                                                                            void *arg__1_,
+                                                                            int index);
 // KDDockWidgets::Views::Group_flutter::isActiveWindow() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Views__Group_flutter__isActiveWindow(void *thisObj);
@@ -351,10 +402,19 @@ c_KDDockWidgets__Views__Group_flutter__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Views::Group_flutter::releaseMouse()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__Group_flutter__releaseMouse(void *thisObj);
+// KDDockWidgets::Views::Group_flutter::removeWidget_impl(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__Group_flutter__removeWidget_impl_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Views::Group_flutter::renameTab(int index, const QString & arg__2)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__Group_flutter__renameTab_int_QString(void *thisObj, int index,
                                                              const char *arg__2_);
+// KDDockWidgets::Views::Group_flutter::setCurrentDockWidget_impl(KDDockWidgets::Controllers::DockWidget
+// * arg__1)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__Group_flutter__setCurrentDockWidget_impl_DockWidget(void *thisObj,
+                                                                            void *arg__1_);
 // KDDockWidgets::Views::Group_flutter::setCurrentTabIndex_impl(int index)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__Group_flutter__setCurrentTabIndex_impl_int(void *thisObj, int index);

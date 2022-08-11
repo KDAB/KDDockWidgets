@@ -27,9 +27,17 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
+void SideBar_wrapper::addDockWidget(KDDockWidgets::Controllers::DockWidget *dw)
+{
+    ::KDDockWidgets::Controllers::SideBar::addDockWidget(dw);
+}
 void SideBar_wrapper::clear()
 {
     ::KDDockWidgets::Controllers::SideBar::clear();
+}
+bool SideBar_wrapper::containsDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1) const
+{
+    return ::KDDockWidgets::Controllers::SideBar::containsDockWidget(arg__1);
 }
 void SideBar_wrapper::customEvent(QEvent *event)
 {
@@ -78,6 +86,14 @@ bool SideBar_wrapper::isVertical() const
 {
     return ::KDDockWidgets::Controllers::SideBar::isVertical();
 }
+void SideBar_wrapper::onButtonClicked(KDDockWidgets::Controllers::DockWidget *dw)
+{
+    ::KDDockWidgets::Controllers::SideBar::onButtonClicked(dw);
+}
+void SideBar_wrapper::removeDockWidget(KDDockWidgets::Controllers::DockWidget *dw)
+{
+    ::KDDockWidgets::Controllers::SideBar::removeDockWidget(dw);
+}
 void SideBar_wrapper::setParentView_impl(KDDockWidgets::View *parent)
 {
     if (m_setParentView_implCallback) {
@@ -90,6 +106,10 @@ void SideBar_wrapper::setParentView_impl(KDDockWidgets::View *parent)
 void SideBar_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
 {
     ::KDDockWidgets::Controllers::SideBar::setParentView_impl(parent);
+}
+void SideBar_wrapper::toggleOverlay(KDDockWidgets::Controllers::DockWidget *arg__1)
+{
+    ::KDDockWidgets::Controllers::SideBar::toggleOverlay(arg__1);
 }
 QString SideBar_wrapper::tr(const char *s, const char *c, int n)
 {
@@ -112,10 +132,23 @@ extern "C" {
 void c_KDDockWidgets__Controllers__SideBar_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::SideBar_wrapper *>(cppObj);
-} // clear()
+} // addDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+void c_KDDockWidgets__Controllers__SideBar__addDockWidget_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(dw_);
+    fromPtr(thisObj)->addDockWidget(dw);
+}
+// clear()
 void c_KDDockWidgets__Controllers__SideBar__clear(void *thisObj)
 {
     fromPtr(thisObj)->clear();
+}
+// containsDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1) const
+bool c_KDDockWidgets__Controllers__SideBar__containsDockWidget_DockWidget(void *thisObj,
+                                                                          void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    return fromPtr(thisObj)->containsDockWidget(arg__1);
 }
 // customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__SideBar__customEvent_QEvent(void *thisObj, void *event_)
@@ -165,11 +198,29 @@ bool c_KDDockWidgets__Controllers__SideBar__isVertical(void *thisObj)
 {
     return fromPtr(thisObj)->isVertical();
 }
+// onButtonClicked(KDDockWidgets::Controllers::DockWidget * dw)
+void c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(dw_);
+    fromPtr(thisObj)->onButtonClicked(dw);
+}
+// removeDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+void c_KDDockWidgets__Controllers__SideBar__removeDockWidget_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(dw_);
+    fromPtr(thisObj)->removeDockWidget(dw);
+}
 // setParentView_impl(KDDockWidgets::View * parent)
 void c_KDDockWidgets__Controllers__SideBar__setParentView_impl_View(void *thisObj, void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
+}
+// toggleOverlay(KDDockWidgets::Controllers::DockWidget * arg__1)
+void c_KDDockWidgets__Controllers__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    fromPtr(thisObj)->toggleOverlay(arg__1);
 }
 // tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controllers__SideBar__tr_char_char_int(const char *s, const char *c,

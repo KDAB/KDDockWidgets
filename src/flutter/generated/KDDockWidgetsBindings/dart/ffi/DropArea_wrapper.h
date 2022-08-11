@@ -16,12 +16,13 @@
 #include <Group.h>
 #include <Item_p.h>
 #include <controllers/DropIndicatorOverlay.h>
+#include <DockWidget.h>
 #include <KDDockWidgets.h>
 #include <qsize.h>
 #include <qpoint.h>
 #include <qcoreevent.h>
-#include <qobject.h>
 #include <FloatingWindow.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DropArea_wrapper : public ::KDDockWidgets::Controllers::DropArea
@@ -30,6 +31,10 @@ public:
     ~DropArea_wrapper();
     DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWidgets::MainWindowOption> options,
                      bool isMDIWrapper = false);
+    void addDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1,
+                       KDDockWidgets::Location location,
+                       KDDockWidgets::Controllers::DockWidget *relativeTo,
+                       KDDockWidgets::InitialOption arg__4 = {});
     void
     addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter,
                      KDDockWidgets::Location location,
@@ -39,6 +44,7 @@ public:
                    KDDockWidgets::Controllers::Group *relativeTo = nullptr,
                    KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
     Layouting::Item *centralFrame() const;
+    bool containsDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1) const;
     static KDDockWidgets::Controllers::Group *
     createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options);
     virtual void customEvent(QEvent *event);
@@ -53,6 +59,8 @@ public:
     bool hasSingleFrame() const;
     bool isMDIWrapper() const;
     void layoutEqually();
+    void layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget *arg__1);
+    KDDockWidgets::Controllers::DockWidget *mdiDockWidgetWrapper() const;
     void removeHover();
     virtual void setParentView_impl(KDDockWidgets::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
@@ -74,6 +82,12 @@ KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_,
                                                                                 int options_,
                                                                                 bool isMDIWrapper);
+// KDDockWidgets::Controllers::DropArea::addDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
+// KDDockWidgets::InitialOption arg__4)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
+    void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
 // KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea *
 // splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo,
 // KDDockWidgets::InitialOption option)
@@ -89,6 +103,10 @@ c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_InitialOpt
 // KDDockWidgets::Controllers::DropArea::centralFrame() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj);
+// KDDockWidgets::Controllers::DropArea::containsDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1) const
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__DropArea__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption>
 // options)
 KDDockWidgetsBindings_EXPORT void *
@@ -120,6 +138,14 @@ c_KDDockWidgets__Controllers__DropArea__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::layoutEqually()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DropArea__layoutEqually(void *thisObj);
+// KDDockWidgets::Controllers::DropArea::layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget
+// * arg__1)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__DropArea__layoutParentContainerEqually_DockWidget(void *thisObj,
+                                                                                void *arg__1_);
+// KDDockWidgets::Controllers::DropArea::mdiDockWidgetWrapper() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__DropArea__mdiDockWidgetWrapper(void *thisObj);
 // KDDockWidgets::Controllers::DropArea::removeHover()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DropArea__removeHover(void *thisObj);

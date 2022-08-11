@@ -246,6 +246,17 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__removeItem_Item')
         .asFunction();
     func(thisCpp, item == null ? ffi.nullptr : item.thisCpp);
+  } // restorePlaceholder(KDDockWidgets::Controllers::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
+
+  restorePlaceholder(DockWidget? dw, Item? arg__2, int tabIndex) {
+    final void_Func_voidstar_voidstar_voidstar_int func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    void_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int')
+        .asFunction();
+    func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp,
+        arg__2 == null ? ffi.nullptr : arg__2.thisCpp, tabIndex);
   } // setLayoutMinimumSize(QSize arg__1)
 
   setLayoutMinimumSize(QSize arg__1) {

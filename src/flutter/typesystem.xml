@@ -67,7 +67,7 @@
             <object-type name="SideBar" />
             <object-type name="FloatingWindow" />
             <object-type name="DropIndicatorOverlay" />
-            <!-- <object-type name="DockWidget" /> -->
+            <object-type name="DockWidget" />
             <object-type name="ClassicIndicators" />
         </namespace-type>
 
