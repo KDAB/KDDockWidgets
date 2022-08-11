@@ -77,6 +77,7 @@
             <object-type name="TitleBar_flutter" />
             <object-type name="TabBar_flutter" />
             <object-type name="Group_flutter" />
+            <object-type name="DockWidget_flutter" />
             <object-type name="ClassicIndicatorWindowViewInterface" />
         </namespace-type>
 

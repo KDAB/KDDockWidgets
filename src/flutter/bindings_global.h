@@ -41,6 +41,7 @@
 #include "views/Group_flutter.h"
 #include "views/TabBar_flutter.h"
 #include "views/TitleBar_flutter.h"
+#include "views/DockWidget_flutter.h"
 
 #include "../controllers/Layout.h"
 #include "../controllers/DropArea.h"

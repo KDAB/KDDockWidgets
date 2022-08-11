@@ -36,10 +36,9 @@ using namespace KDDockWidgets::Views;
 
 
 DockWidget_flutter::DockWidget_flutter(const QString &uniqueName, DockWidgetOptions options,
-                                       LayoutSaverOptions layoutSaverOptions,
-                                       Qt::WindowFlags windowFlags)
+                                       LayoutSaverOptions layoutSaverOptions)
     : View_flutter(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget,
-                   nullptr, windowFlags)
+                   nullptr)
     , Views::DockWidgetViewInterface(asDockWidgetController())
 {
     init();

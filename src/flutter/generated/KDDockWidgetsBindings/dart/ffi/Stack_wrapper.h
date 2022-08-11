@@ -17,9 +17,9 @@
 #include <qpoint.h>
 #include <View.h>
 #include <qrect.h>
-#include <qsize.h>
 #include <qobject.h>
 #include <qcoreevent.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Stack_wrapper : public ::KDDockWidgets::Controllers::Stack

@@ -21,6 +21,7 @@ export 'src/SideBar.dart' show SideBar;
 export 'src/Stack.dart' show Stack;
 export 'src/TabBar.dart' show TabBar;
 export 'src/TitleBar.dart' show TitleBar;
+export 'src/DockWidget_flutter.dart' show DockWidget_flutter;
 export 'src/Group_flutter.dart' show Group_flutter;
 export 'src/Stack_flutter.dart' show Stack_flutter;
 export 'src/TabBar_flutter.dart' show TabBar_flutter;

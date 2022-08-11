@@ -442,7 +442,7 @@ void c_KDDockWidgets__Controllers__DropIndicatorOverlay__registerVirtualMethodCa
             KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_customEvent>(
             callback);
         break;
-    case 1485:
+    case 1488:
         wrapper->m_dropIndicatorVisibleCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::
                                  Callback_dropIndicatorVisible>(callback);
@@ -457,17 +457,17 @@ void c_KDDockWidgets__Controllers__DropIndicatorOverlay__registerVirtualMethodCa
             KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_eventFilter>(
             callback);
         break;
-    case 1489:
+    case 1492:
         wrapper->m_hover_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_hover_impl>(
             callback);
         break;
-    case 1501:
+    case 1504:
         wrapper->m_onHoveredFrameChangedCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::
                                  Callback_onHoveredFrameChanged>(callback);
         break;
-    case 1504:
+    case 1507:
         wrapper->m_posForIndicatorCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::
                                  Callback_posForIndicator>(callback);
@@ -477,7 +477,7 @@ void c_KDDockWidgets__Controllers__DropIndicatorOverlay__registerVirtualMethodCa
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::
                                  Callback_setParentView_impl>(callback);
         break;
-    case 1517:
+    case 1520:
         wrapper->m_updateVisibilityCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::
                                  Callback_updateVisibility>(callback);

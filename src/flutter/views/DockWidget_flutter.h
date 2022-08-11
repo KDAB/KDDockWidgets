@@ -52,7 +52,7 @@ public:
      * when visible, or stays without a parent when hidden.
      */
     explicit DockWidget_flutter(const QString &uniqueName, DockWidgetOptions = {},
-                                LayoutSaverOptions = {}, Qt::WindowFlags = Qt::Tool);
+                                LayoutSaverOptions = {});
 
     ///@brief destructor
     ~DockWidget_flutter() override;
