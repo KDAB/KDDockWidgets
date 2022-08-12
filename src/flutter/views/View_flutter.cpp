@@ -69,7 +69,10 @@ void View_flutter::setSize(int w, int h)
 
 std::shared_ptr<View> View_flutter::rootView() const
 {
-    return {};
+    if (m_parentView)
+        return m_parentView->rootView();
+
+    return const_cast<View_flutter *>(this)->asWrapper();
 }
 
 void View_flutter::setAttribute(Qt::WidgetAttribute, bool)
@@ -192,7 +195,7 @@ QVariant View_flutter::property(const char *) const
 
 bool View_flutter::isRootView() const
 {
-    return {};
+    return m_parentView == nullptr;
 }
 
 QPoint View_flutter::mapToGlobal(QPoint) const

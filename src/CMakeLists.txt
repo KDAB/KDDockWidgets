@@ -228,6 +228,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_flutter_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_flutter_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/SideBar_wrapper.cpp
