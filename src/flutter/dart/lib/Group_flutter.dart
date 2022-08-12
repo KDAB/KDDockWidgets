@@ -14,10 +14,16 @@ import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
 
+import 'TabBar_flutter.dart';
+import 'TitleBar_flutter.dart';
+
 class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
+  late final KDDockWidgetBindings.Group m_controller;
+
   Group_flutter(
       KDDockWidgetBindings.Group? group, KDDockWidgetBindings.View? parent)
       : super(group, parent: parent) {
+    m_controller = group!;
     initMixin(this, color: Colors.greenAccent, debugName: "Group");
 
     print("Group_flutter CTOR");
@@ -25,6 +31,16 @@ class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
 
   Widget createFlutterWidget() {
     return GroupWidget(kddwView, this, key: widgetKey);
+  }
+
+  TitleBar_flutter titleBarView() {
+    return KDDockWidgetBindings.View_flutter.fromCache(
+        m_controller.titleBar().view().thisCpp) as TitleBar_flutter;
+  }
+
+  TabBar_flutter tabBarView() {
+    return KDDockWidgetBindings.View_flutter.fromCache(
+        m_controller.stack().tabBar().view().thisCpp) as TabBar_flutter;
   }
 }
 
@@ -46,6 +62,15 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents() {
-    return super.buildContents();
+    final titleBarWidget = groupView.titleBarView().flutterWidget;
+    final tabBarWidget = groupView.tabBarView().flutterWidget;
+
+    return Column(
+      children: [
+        titleBarWidget,
+        tabBarWidget,
+        Expanded(child: Container(color: kddwView.m_color))
+      ],
+    );
   }
 }

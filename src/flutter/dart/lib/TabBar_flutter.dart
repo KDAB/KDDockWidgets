@@ -19,6 +19,8 @@ class TabBar_flutter extends KDDockWidgetBindings.TabBar_flutter
   TabBar_flutter(
       KDDockWidgetBindings.TabBar? tabBar, KDDockWidgetBindings.View? parent)
       : super(tabBar, parent: parent) {
+    m_fillsParent = true;
+    initMixin(this);
     print("TabBar_flutter CTOR");
   }
 
@@ -45,6 +47,11 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents() {
-    return super.buildContents();
+    return SizedBox(
+        height: 50,
+        child: Container(
+          // padding: EdgeInsets.fromLTRB(8, 3, 5, 0),
+          color: Color(0xffA5AE9E),
+        ));
   }
 }
