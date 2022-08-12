@@ -23,4 +23,30 @@ class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
 
     print("Group_flutter CTOR");
   }
+
+  Widget createFlutterWidget() {
+    return PositionedWidget(this, key: widgetKey);
+  }
+}
+
+class GroupWidget extends PositionedWidget {
+  final Group_flutter groupView;
+  GroupWidget(var kddwView, this.groupView, {Key? key})
+      : super(kddwView, key: key);
+
+  @override
+  State<PositionedWidget> createState() {
+    return GroupPositionedWidgetState(kddwView, groupView);
+  }
+}
+
+class GroupPositionedWidgetState extends PositionedWidgetState {
+  final Group_flutter groupView;
+
+  GroupPositionedWidgetState(var kddwView, this.groupView) : super(kddwView);
+
+  @override
+  Widget buildContents() {
+    return buildContents();
+  }
 }
