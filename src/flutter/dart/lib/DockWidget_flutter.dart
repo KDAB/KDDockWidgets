@@ -25,4 +25,31 @@ class DockWidget_flutter extends KDDockWidgetBindings.DockWidget_flutter
     m_fillsParent = true;
     print("DockWidget_flutter CTOR");
   }
+
+  Widget createFlutterWidget() {
+    return DockWidgetWidget(kddwView, this, key: widgetKey);
+  }
+}
+
+class DockWidgetWidget extends PositionedWidget {
+  final DockWidget_flutter DockWidgetView;
+  DockWidgetWidget(var kddwView, this.DockWidgetView, {Key? key})
+      : super(kddwView, key: key);
+
+  @override
+  State<PositionedWidget> createState() {
+    return DockWidgetPositionedWidgetState(kddwView, DockWidgetView);
+  }
+}
+
+class DockWidgetPositionedWidgetState extends PositionedWidgetState {
+  final DockWidget_flutter DockWidgetView;
+
+  DockWidgetPositionedWidgetState(var kddwView, this.DockWidgetView)
+      : super(kddwView);
+
+  @override
+  Widget buildContents() {
+    return super.buildContents();
+  }
 }

@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
@@ -25,7 +24,7 @@ class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
   }
 
   Widget createFlutterWidget() {
-    return PositionedWidget(this, key: widgetKey);
+    return GroupWidget(kddwView, this, key: widgetKey);
   }
 }
 
@@ -47,6 +46,6 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents() {
-    return buildContents();
+    return super.buildContents();
   }
 }
