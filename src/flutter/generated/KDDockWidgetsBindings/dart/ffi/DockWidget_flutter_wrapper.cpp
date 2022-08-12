@@ -28,9 +28,9 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 DockWidget_flutter_wrapper::DockWidget_flutter_wrapper(
-    const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2,
-    QFlags<KDDockWidgets::LayoutSaverOption> arg__3)
-    : ::KDDockWidgets::Views::DockWidget_flutter(uniqueName, arg__2, arg__3)
+    const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options,
+    QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+    : ::KDDockWidgets::Views::DockWidget_flutter(uniqueName, options, layoutSaverOptions)
 {
 }
 void DockWidget_flutter_wrapper::activateWindow()
@@ -768,13 +768,14 @@ void c_KDDockWidgets__Views__DockWidget_flutter_Finalizer(void *, void *cppObj, 
 }
 void *
 c_KDDockWidgets__Views__DockWidget_flutter__constructor_QString_DockWidgetOptions_LayoutSaverOptions(
-    const char *uniqueName_, int arg__2_, int arg__3_)
+    const char *uniqueName_, int options_, int layoutSaverOptions_)
 {
     const auto uniqueName = QString::fromUtf8(uniqueName_);
-    auto arg__2 = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(arg__2_);
-    auto arg__3 = static_cast<QFlags<KDDockWidgets::LayoutSaverOption>>(arg__3_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::DockWidget_flutter_wrapper(uniqueName, arg__2,
-                                                                                arg__3);
+    auto options = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(options_);
+    auto layoutSaverOptions =
+        static_cast<QFlags<KDDockWidgets::LayoutSaverOption>>(layoutSaverOptions_);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::DockWidget_flutter_wrapper(uniqueName, options,
+                                                                                layoutSaverOptions);
     return reinterpret_cast<void *>(ptr);
 }
 // activateWindow()

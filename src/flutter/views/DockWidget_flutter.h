@@ -51,8 +51,8 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget_flutter(const QString &uniqueName, DockWidgetOptions = {},
-                                LayoutSaverOptions = {});
+    explicit DockWidget_flutter(const QString &uniqueName, DockWidgetOptions options = {},
+                                LayoutSaverOptions layoutSaverOptions = {});
 
     ///@brief destructor
     ~DockWidget_flutter() override;

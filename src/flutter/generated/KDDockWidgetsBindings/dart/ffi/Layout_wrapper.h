@@ -18,8 +18,8 @@
 #include <Group.h>
 #include <qlist.h>
 #include <DropArea.h>
-#include <qpoint.h>
 #include <qrect.h>
+#include <qpoint.h>
 #include <qstring.h>
 #include <qobject.h>
 #include <qcoreevent.h>

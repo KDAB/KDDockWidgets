@@ -28,8 +28,9 @@ class DockWidget_flutter extends View_flutter {
       if (instance != null) return instance as DockWidget_flutter;
     }
     return DockWidget_flutter.fromCppPointer(cppPointer, needsAutoDelete);
-  } //DockWidget_flutter(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3)
-  DockWidget_flutter(String? uniqueName, {int arg__2 = 0, int arg__3 = 0})
+  } //DockWidget_flutter(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+  DockWidget_flutter(String? uniqueName,
+      {int options = 0, int layoutSaverOptions = 0})
       : super.init() {
     final voidstar_Func_voidstar_int_int func = _dylib
         .lookup<
@@ -37,7 +38,8 @@ class DockWidget_flutter extends View_flutter {
                     voidstar_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Views__DockWidget_flutter__constructor_QString_DockWidgetOptions_LayoutSaverOptions')
         .asFunction();
-    thisCpp = func(uniqueName?.toNativeUtf8() ?? ffi.nullptr, arg__2, arg__3);
+    thisCpp = func(
+        uniqueName?.toNativeUtf8() ?? ffi.nullptr, options, layoutSaverOptions);
     View.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   }

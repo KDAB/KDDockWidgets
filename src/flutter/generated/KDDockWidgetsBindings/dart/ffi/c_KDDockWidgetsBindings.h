@@ -2325,12 +2325,12 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
                                                                           int methodId);
 void c_KDDockWidgets__Views__Group_flutter_Finalizer(
     void *, void *cppObj,
-    void *); // KDDockWidgets::Views::DockWidget_flutter::DockWidget_flutter(const
-             // QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption>
-             // arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3)
+    void *); // KDDockWidgets::Views::DockWidget_flutter::DockWidget_flutter(const QString &
+             // uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options,
+             // QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
 void *
 c_KDDockWidgets__Views__DockWidget_flutter__constructor_QString_DockWidgetOptions_LayoutSaverOptions(
-    const char *uniqueName_, int arg__2_, int arg__3_);
+    const char *uniqueName_, int options_, int layoutSaverOptions_);
 // KDDockWidgets::Views::DockWidget_flutter::activateWindow()
 void c_KDDockWidgets__Views__DockWidget_flutter__activateWindow(void *thisObj);
 // KDDockWidgets::Views::DockWidget_flutter::close()

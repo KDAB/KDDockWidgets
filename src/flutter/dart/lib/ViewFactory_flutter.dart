@@ -13,6 +13,7 @@ import 'dart:ffi';
 
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'DockWidget_flutter.dart';
 import 'DropArea_flutter.dart';
 import 'Group_flutter.dart';
 import 'Separator_flutter.dart';
@@ -78,5 +79,12 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
       KDDockWidgetBindings.Separator? separator,
       {required KDDockWidgetBindings.View? parent}) {
     return Separator_flutter(separator, parent: parent);
+  }
+
+  @override
+  KDDockWidgetBindings.View createDockWidget(String? uniqueName,
+      {int options = 0, int layoutSaverOptions = 0, int windowFlags = 0}) {
+    return DockWidget_flutter(uniqueName,
+        options: options, layoutSaverOptions: layoutSaverOptions);
   }
 }

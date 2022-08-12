@@ -22,8 +22,8 @@ class DockWidget_flutter_wrapper : public ::KDDockWidgets::Views::DockWidget_flu
 public:
     ~DockWidget_flutter_wrapper();
     DockWidget_flutter_wrapper(const QString &uniqueName,
-                               QFlags<KDDockWidgets::DockWidgetOption> arg__2 = {},
-                               QFlags<KDDockWidgets::LayoutSaverOption> arg__3 = {});
+                               QFlags<KDDockWidgets::DockWidgetOption> options = {},
+                               QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions = {});
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -248,10 +248,11 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Views::DockWidget_flutter::DockWidget_flutter(const QString & uniqueName,
-// QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3)
+// QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption>
+// layoutSaverOptions)
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Views__DockWidget_flutter__constructor_QString_DockWidgetOptions_LayoutSaverOptions(
-    const char *uniqueName_, int arg__2_, int arg__3_);
+    const char *uniqueName_, int options_, int layoutSaverOptions_);
 // KDDockWidgets::Views::DockWidget_flutter::activateWindow()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__DockWidget_flutter__activateWindow(void *thisObj);
