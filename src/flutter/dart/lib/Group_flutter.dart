@@ -14,6 +14,7 @@ import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
 
+import 'DockWidget_flutter.dart';
 import 'TabBar_flutter.dart';
 import 'TitleBar_flutter.dart';
 
@@ -42,6 +43,16 @@ class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
     return KDDockWidgetBindings.View_flutter.fromCache(
         m_controller.stack().tabBar().view().thisCpp) as TabBar_flutter;
   }
+
+  DockWidget_flutter? dockWidgetView() {
+    final dw = m_controller.currentDockWidget();
+    if (dw.thisCpp.address != 0) // Add "isNullptr"
+      return KDDockWidgetBindings.View_flutter.fromCache(dw.view().thisCpp)
+          as DockWidget_flutter;
+
+    print("Group_flutter: No dock widget in the Group!");
+    return null;
+  }
 }
 
 class GroupWidget extends PositionedWidget {
@@ -64,11 +75,13 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
   Widget buildContents() {
     final titleBarWidget = groupView.titleBarView().flutterWidget;
     final tabBarWidget = groupView.tabBarView().flutterWidget;
+    final dockWidgetWidget = groupView.dockWidgetView()?.flutterWidget;
 
     return Column(
       children: [
         titleBarWidget,
         tabBarWidget,
+        if (dockWidgetWidget != null) dockWidgetWidget,
         Expanded(child: Container(color: kddwView.m_color))
       ],
     );
