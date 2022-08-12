@@ -63,6 +63,8 @@ public:
     /// @reimp
     QSize maxSizeHint() const override;
 
+    Controllers::DockWidget *dockWidget() const;
+
 protected:
     void init() override;
 };
