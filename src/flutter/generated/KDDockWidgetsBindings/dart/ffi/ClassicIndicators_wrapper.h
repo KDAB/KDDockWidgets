@@ -15,10 +15,10 @@
 #include <qpoint.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <Group.h>
 #include <qcoreevent.h>
-#include <qobject.h>
 #include <View.h>
+#include <Group.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ClassicIndicators_wrapper : public ::KDDockWidgets::Controllers::ClassicIndicators

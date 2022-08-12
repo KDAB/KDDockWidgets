@@ -558,11 +558,11 @@ void c_KDDockWidgets__Controllers__FloatingWindow__registerVirtualMethodCallback
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_eventFilter>(
             callback);
         break;
-    case 1450:
+    case 1451:
         wrapper->m_isMDICallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 1452:
+    case 1453:
         wrapper->m_isWindowCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
@@ -571,7 +571,7 @@ void c_KDDockWidgets__Controllers__FloatingWindow__registerVirtualMethodCallback
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_setParentView_impl>(
             callback);
         break;
-    case 1469:
+    case 1470:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_singleDockWidget>(
             callback);

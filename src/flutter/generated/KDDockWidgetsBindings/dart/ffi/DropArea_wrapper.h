@@ -20,8 +20,8 @@
 #include <KDDockWidgets.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <FloatingWindow.h>
 #include <qcoreevent.h>
+#include <FloatingWindow.h>
 #include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -31,10 +31,9 @@ public:
     ~DropArea_wrapper();
     DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWidgets::MainWindowOption> options,
                      bool isMDIWrapper = false);
-    void addDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1,
-                       KDDockWidgets::Location location,
+    void addDockWidget(KDDockWidgets::Controllers::DockWidget *dw, KDDockWidgets::Location location,
                        KDDockWidgets::Controllers::DockWidget *relativeTo,
-                       KDDockWidgets::InitialOption arg__4 = {});
+                       KDDockWidgets::InitialOption initialOption = {});
     void
     addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter,
                      KDDockWidgets::Location location,
@@ -82,12 +81,12 @@ KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_,
                                                                                 int options_,
                                                                                 bool isMDIWrapper);
-// KDDockWidgets::Controllers::DropArea::addDockWidget(KDDockWidgets::Controllers::DockWidget *
-// arg__1, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
-// KDDockWidgets::InitialOption arg__4)
+// KDDockWidgets::Controllers::DropArea::addDockWidget(KDDockWidgets::Controllers::DockWidget * dw,
+// KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
+// KDDockWidgets::InitialOption initialOption)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
-    void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
+    void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_);
 // KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea *
 // splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo,
 // KDDockWidgets::InitialOption option)

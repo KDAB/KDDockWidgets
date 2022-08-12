@@ -2337,6 +2337,8 @@ void c_KDDockWidgets__Views__DockWidget_flutter__activateWindow(void *thisObj);
 bool c_KDDockWidgets__Views__DockWidget_flutter__close(void *thisObj);
 // KDDockWidgets::Views::DockWidget_flutter::createPlatformWindow()
 void c_KDDockWidgets__Views__DockWidget_flutter__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Views::DockWidget_flutter::dockWidget() const
+void *c_KDDockWidgets__Views__DockWidget_flutter__dockWidget(void *thisObj);
 // KDDockWidgets::Views::DockWidget_flutter::flags() const
 int c_KDDockWidgets__Views__DockWidget_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::DockWidget_flutter::free_impl()
@@ -2870,11 +2872,11 @@ void c_KDDockWidgets__Controllers__Layout_Finalizer(
              // options, bool isMDIWrapper)
 void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(
     void *parent_, int options_, bool isMDIWrapper);
-// KDDockWidgets::Controllers::DropArea::addDockWidget(KDDockWidgets::Controllers::DockWidget *
-// arg__1, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
-// KDDockWidgets::InitialOption arg__4)
+// KDDockWidgets::Controllers::DropArea::addDockWidget(KDDockWidgets::Controllers::DockWidget * dw,
+// KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
+// KDDockWidgets::InitialOption initialOption)
 void c_KDDockWidgets__Controllers__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
-    void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
+    void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_);
 // KDDockWidgets::Controllers::DropArea::addMultiSplitter(KDDockWidgets::Controllers::DropArea *
 // splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo,
 // KDDockWidgets::InitialOption option)

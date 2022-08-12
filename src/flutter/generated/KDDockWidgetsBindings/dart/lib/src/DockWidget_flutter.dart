@@ -75,6 +75,15 @@ class DockWidget_flutter extends View_flutter {
       throw Error();
     }
     dartInstance.createPlatformWindow();
+  } // dockWidget() const
+
+  DockWidget dockWidget() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Views__DockWidget_flutter__dockWidget')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return DockWidget.fromCppPointer(result, false);
   }
 
   static int flags_calledFromC(ffi.Pointer<void> thisCpp) {

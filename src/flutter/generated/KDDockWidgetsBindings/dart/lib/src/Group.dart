@@ -254,7 +254,7 @@ class Group extends Controller {
   QRect dragRect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1356))
+            cFunctionSymbolName(1357))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -316,7 +316,7 @@ class Group extends Controller {
   focusedWidgetChangedCallback() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1359))
+            cFunctionSymbolName(1360))
         .asFunction();
     func(thisCpp);
   }
@@ -434,7 +434,7 @@ class Group extends Controller {
   isFocusedChangedCallback() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1376))
+            cFunctionSymbolName(1377))
         .asFunction();
     func(thisCpp);
   }
@@ -779,15 +779,15 @@ class Group extends Controller {
     switch (methodId) {
       case 295:
         return "c_KDDockWidgets__Controllers__Group__customEvent_QEvent";
-      case 1356:
+      case 1357:
         return "c_KDDockWidgets__Controllers__Group__dragRect";
       case 306:
         return "c_KDDockWidgets__Controllers__Group__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__Group__eventFilter_QObject_QEvent";
-      case 1359:
+      case 1360:
         return "c_KDDockWidgets__Controllers__Group__focusedWidgetChangedCallback";
-      case 1376:
+      case 1377:
         return "c_KDDockWidgets__Controllers__Group__isFocusedChangedCallback";
       case 826:
         return "c_KDDockWidgets__Controllers__Group__setParentView_impl_View";
@@ -799,15 +799,15 @@ class Group extends Controller {
     switch (methodId) {
       case 295:
         return "customEvent";
-      case 1356:
+      case 1357:
         return "dragRect";
       case 306:
         return "event";
       case 307:
         return "eventFilter";
-      case 1359:
+      case 1360:
         return "focusedWidgetChangedCallback";
-      case 1376:
+      case 1377:
         return "isFocusedChangedCallback";
       case 826:
         return "setParentView_impl";
@@ -825,9 +825,9 @@ class Group extends Controller {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);
     registerCallback(thisCpp, callback295, 295);
-    final callback1356 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1357 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Group.dragRect_calledFromC);
-    registerCallback(thisCpp, callback1356, 1356);
+    registerCallback(thisCpp, callback1357, 1357);
     const callbackExcept306 = 0;
     final callback306 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
@@ -838,12 +838,12 @@ class Group extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback1359 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback1360 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Group.focusedWidgetChangedCallback_calledFromC);
-    registerCallback(thisCpp, callback1359, 1359);
-    final callback1376 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback1360, 1360);
+    final callback1377 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Group.isFocusedChangedCallback_calledFromC);
-    registerCallback(thisCpp, callback1376, 1376);
+    registerCallback(thisCpp, callback1377, 1377);
     final callback826 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Group.setParentView_impl_calledFromC);

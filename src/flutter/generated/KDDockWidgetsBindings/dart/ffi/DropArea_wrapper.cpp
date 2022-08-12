@@ -33,12 +33,12 @@ DropArea_wrapper::DropArea_wrapper(KDDockWidgets::View *parent,
     : ::KDDockWidgets::Controllers::DropArea(parent, options, isMDIWrapper)
 {
 }
-void DropArea_wrapper::addDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1,
+void DropArea_wrapper::addDockWidget(KDDockWidgets::Controllers::DockWidget *dw,
                                      KDDockWidgets::Location location,
                                      KDDockWidgets::Controllers::DockWidget *relativeTo,
-                                     KDDockWidgets::InitialOption arg__4)
+                                     KDDockWidgets::InitialOption initialOption)
 {
-    ::KDDockWidgets::Controllers::DropArea::addDockWidget(arg__1, location, relativeTo, arg__4);
+    ::KDDockWidgets::Controllers::DropArea::addDockWidget(dw, location, relativeTo, initialOption);
 }
 void DropArea_wrapper::addMultiSplitter(KDDockWidgets::Controllers::DropArea *splitter,
                                         KDDockWidgets::Location location,
@@ -186,17 +186,17 @@ void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions
         new KDDockWidgetsBindings_wrappersNS::DropArea_wrapper(parent, options, isMDIWrapper);
     return reinterpret_cast<void *>(ptr);
 }
-// addDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1, KDDockWidgets::Location location,
-// KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
+// addDockWidget(KDDockWidgets::Controllers::DockWidget * dw, KDDockWidgets::Location location,
+// KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
 void c_KDDockWidgets__Controllers__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
-    void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_)
+    void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto dw = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(dw_);
     auto relativeTo = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(relativeTo_);
-    assert(arg__4_);
-    auto &arg__4 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__4_);
-    fromPtr(thisObj)->addDockWidget(arg__1, static_cast<KDDockWidgets::Location>(location),
-                                    relativeTo, arg__4);
+    assert(initialOption_);
+    auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
+    fromPtr(thisObj)->addDockWidget(dw, static_cast<KDDockWidgets::Location>(location), relativeTo,
+                                    initialOption);
 }
 // addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location
 // location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)

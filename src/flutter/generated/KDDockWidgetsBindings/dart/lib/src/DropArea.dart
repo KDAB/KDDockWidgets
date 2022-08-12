@@ -39,9 +39,9 @@ class DropArea extends Layout {
         isMDIWrapper ? 1 : 0);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  } // addDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
-  addDockWidget(DockWidget? arg__1, int location, DockWidget? relativeTo,
-      {required InitialOption arg__4}) {
+  } // addDockWidget(KDDockWidgets::Controllers::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+  addDockWidget(DockWidget? dw, int location, DockWidget? relativeTo,
+      {required InitialOption initialOption}) {
     final void_Func_voidstar_voidstar_int_voidstar_voidstar func = _dylib
         .lookup<
                 ffi.NativeFunction<
@@ -50,10 +50,10 @@ class DropArea extends Layout {
         .asFunction();
     func(
         thisCpp,
-        arg__1 == null ? ffi.nullptr : arg__1.thisCpp,
+        dw == null ? ffi.nullptr : dw.thisCpp,
         location,
         relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
-        arg__4 == null ? ffi.nullptr : arg__4.thisCpp);
+        initialOption == null ? ffi.nullptr : initialOption.thisCpp);
   } // addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
 
   addMultiSplitter(DropArea? splitter, int location,

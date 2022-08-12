@@ -72,6 +72,10 @@ void DockWidget_flutter_wrapper::createPlatformWindow_nocallback()
 {
     ::KDDockWidgets::Views::DockWidget_flutter::createPlatformWindow();
 }
+KDDockWidgets::Controllers::DockWidget *DockWidget_flutter_wrapper::dockWidget() const
+{
+    return ::KDDockWidgets::Views::DockWidget_flutter::dockWidget();
+}
 Qt::WindowFlags DockWidget_flutter_wrapper::flags() const
 {
     if (m_flagsCallback) {
@@ -819,6 +823,11 @@ void c_KDDockWidgets__Views__DockWidget_flutter__createPlatformWindow(void *this
             return targetPtr->createPlatformWindow();
         }
     }();
+}
+// dockWidget() const
+void *c_KDDockWidgets__Views__DockWidget_flutter__dockWidget(void *thisObj)
+{
+    return fromPtr(thisObj)->dockWidget();
 }
 // flags() const
 int c_KDDockWidgets__Views__DockWidget_flutter__flags(void *thisObj)

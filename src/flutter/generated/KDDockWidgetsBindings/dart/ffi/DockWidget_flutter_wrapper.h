@@ -12,9 +12,10 @@
 #include <DockWidget_flutter.h>
 #include <qstring.h>
 #include <qsize.h>
+#include <DockWidget.h>
+#include <View.h>
 #include <qrect.h>
 #include <qpoint.h>
-#include <View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockWidget_flutter_wrapper : public ::KDDockWidgets::Views::DockWidget_flutter
@@ -30,6 +31,7 @@ public:
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
+    KDDockWidgets::Controllers::DockWidget *dockWidget() const;
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
     virtual void free_impl();
@@ -261,6 +263,9 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__cl
 // KDDockWidgets::Views::DockWidget_flutter::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__DockWidget_flutter__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Views::DockWidget_flutter::dockWidget() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Views__DockWidget_flutter__dockWidget(void *thisObj);
 // KDDockWidgets::Views::DockWidget_flutter::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__DockWidget_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::DockWidget_flutter::free_impl()
