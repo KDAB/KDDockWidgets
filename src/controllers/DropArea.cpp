@@ -510,29 +510,29 @@ bool DropArea::validateInputs(View *widget, Location location,
 
     const bool isLayout = widget->is(Type::DropArea) || widget->is(Type::MDILayout);
     if (!widget->is(Type::Frame) && !isLayout && !isDockWidget) {
-        qWarning() << "Unknown widget type" << widget;
+        qWarning() << Q_FUNC_INFO << "Unknown widget type" << widget;
         return false;
     }
 
     if (isDockWidget != isStartHidden) {
-        qWarning() << "Wrong parameters" << isDockWidget << isStartHidden;
+        qWarning() << Q_FUNC_INFO << "Wrong parameters" << isDockWidget << isStartHidden;
         return false;
     }
 
     if (relativeToFrame && relativeToFrame->view()->equals(widget)) {
-        qWarning() << "widget can't be relative to itself";
+        qWarning() << Q_FUNC_INFO << "widget can't be relative to itself";
         return false;
     }
 
     Layouting::Item *item = itemForFrame(widget->asGroupController());
 
     if (containsItem(item)) {
-        qWarning() << "DropArea::addWidget: Already contains" << widget;
+        qWarning() << Q_FUNC_INFO << "DropArea::addWidget: Already contains" << widget;
         return false;
     }
 
     if (location == Location_None) {
-        qWarning() << "DropArea::addWidget: not adding to location None";
+        qWarning() << Q_FUNC_INFO << "DropArea::addWidget: not adding to location None";
         return false;
     }
 
