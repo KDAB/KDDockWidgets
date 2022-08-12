@@ -9,13 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'Group_flutter.dart';
-import 'View_flutter.dart';
 
 class View_mixin {
   late final Widget flutterWidget;
@@ -34,6 +31,18 @@ class View_mixin {
   int m_maxWidth = 16777215;
 
   var childWidgets = <Widget>[];
+
+  void initMixin(var kddwView, {var color = Colors.red, var debugName = ""}) {
+    this.kddwView = kddwView;
+    m_color = color;
+    this.debugName = debugName;
+
+    // The key is the C++ View pointer, which is stable and unique
+    final ffi.Pointer<ffi.Void> ptr = kddwView.thisCpp.cast<ffi.Void>();
+    widgetKey = GlobalObjectKey(ptr.address);
+
+    flutterWidget = createFlutterWidget();
+  }
 
   setSize_2(int width, int height) {
     // print(
@@ -127,5 +136,9 @@ class View_mixin {
         state.updatePosition(m_x, m_y);
       }
     }
+  }
+
+  Widget createFlutterWidget() {
+    return PositionedWidget(this, key: widgetKey);
   }
 }

@@ -19,12 +19,8 @@ class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
   Group_flutter(
       KDDockWidgetBindings.Group? group, KDDockWidgetBindings.View? parent)
       : super(group, parent: parent) {
-    m_color = Colors.greenAccent;
-    kddwView = this;
-    final ffi.Pointer<ffi.Void> ptr = thisCpp.cast<ffi.Void>();
-    widgetKey = GlobalObjectKey(ptr.address);
-    flutterWidget = PositionedWidget(this, key: widgetKey);
-    debugName = "group";
+    initMixin(this, color: Colors.greenAccent, debugName: "Group");
+
     print("Group_flutter CTOR");
   }
 }
