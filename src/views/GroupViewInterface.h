@@ -36,6 +36,10 @@ public:
     virtual void removeDockWidget(Controllers::DockWidget *);
     virtual void insertDockWidget(Controllers::DockWidget *, int index);
 
+    /// @brief Returns the height of the "non-dockwidget" part.
+    /// i.e.: the height of the titlebar (if any), + height of tabbar (if any) + any margins.
+    /// Should be implemented by frontend developers, as KDDW doesn't know the layout of the group.
+    /// This is used to honour minimum-sizes of dock widgets.
     virtual int nonContentsHeight() const = 0;
 
     /// @brief the rect that should start a drag.
