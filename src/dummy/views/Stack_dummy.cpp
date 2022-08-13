@@ -80,11 +80,6 @@ Controllers::DockWidget *Stack_dummy::dockwidgetAt(int index) const
     return nullptr;
 }
 
-int Stack_dummy::currentIndex() const
-{
-    return 0;
-}
-
 void Stack_dummy::setDocumentMode(bool)
 {
 }

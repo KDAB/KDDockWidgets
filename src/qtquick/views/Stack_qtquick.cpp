@@ -127,11 +127,6 @@ Controllers::DockWidget *Stack_qtquick::dockwidgetAt(int index) const
     return m_dockWidgetModel->dockWidgetAt(index);
 }
 
-int Stack_qtquick::currentIndex() const
-{
-    return m_dockWidgetModel->currentIndex();
-}
-
 bool Stack_qtquick::tabBarAutoHide() const
 {
     return m_stack->tabBarAutoHide();

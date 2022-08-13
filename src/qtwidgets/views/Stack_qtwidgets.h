@@ -58,7 +58,6 @@ public: // TODOm3: make protected
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &) override;
     Controllers::DockWidget *dockwidgetAt(int index) const override;
-    int currentIndex() const override;
 
     /// @brief Shows the context menu. Override to implement your own context menu.
     /// By default it's used to honour Config::Flag_AllowSwitchingTabsViaMenu

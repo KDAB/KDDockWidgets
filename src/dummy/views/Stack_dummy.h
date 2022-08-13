@@ -37,7 +37,6 @@ public:
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &) override;
     Controllers::DockWidget *dockwidgetAt(int index) const override;
-    int currentIndex() const override;
 
 private:
     Q_DISABLE_COPY(Stack_dummy)

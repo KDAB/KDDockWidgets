@@ -52,7 +52,6 @@ public:
     int indexOfDockWidget(const Controllers::DockWidget *) const override;
     DockWidgetModel *dockWidgetModel() const;
     Controllers::DockWidget *dockwidgetAt(int index) const override;
-    int currentIndex() const override;
     bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;
     Q_INVOKABLE void setCurrentDockWidget(int index) override;

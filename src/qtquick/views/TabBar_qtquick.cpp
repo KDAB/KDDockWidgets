@@ -161,7 +161,7 @@ Stack_qtquick *TabBar_qtquick::stackView() const
 int TabBar_qtquick::currentIndex() const
 {
     // TODOm4: Move stack's model to tabbar
-    return stackView()->currentIndex();
+    return stackView()->dockWidgetModel()->currentIndex();
 }
 
 int TabBar_qtquick::numDockWidgets() const

@@ -146,11 +146,6 @@ Controllers::DockWidget *Stack_qtwidgets::dockwidgetAt(int index) const
     return view ? view->dockWidget() : nullptr;
 }
 
-int Stack_qtwidgets::currentIndex() const
-{
-    return QTabWidget::currentIndex();
-}
-
 void Stack_qtwidgets::setupTabBarButtons()
 {
     if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
