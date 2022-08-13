@@ -61,17 +61,6 @@ Controllers::Stack *Stack_qtquick::stack() const
     return m_stack;
 }
 
-void Stack_qtquick::setDocumentMode(bool)
-{
-    qDebug() << "Not implemented";
-}
-
-bool Stack_qtquick::isPositionDraggable(QPoint p) const
-{
-    Q_UNUSED(p);
-    return true;
-}
-
 QObject *Stack_qtquick::tabBarViewObj() const
 {
     return View_qt::asQObject(m_stack->tabBar()->view());

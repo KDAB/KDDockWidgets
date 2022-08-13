@@ -37,12 +37,3 @@ Stack_dummy::Stack_dummy(Controllers::Stack *controller, QWidget *parent)
 void Stack_dummy::init()
 {
 }
-
-void Stack_dummy::setDocumentMode(bool)
-{
-}
-
-bool Stack_dummy::isPositionDraggable(QPoint) const
-{
-    return true;
-}

@@ -22,4 +22,14 @@ StackViewInterface::StackViewInterface(Controllers::Stack *controller)
 
 StackViewInterface::~StackViewInterface() = default;
 
-} // namespace
+bool StackViewInterface::isPositionDraggable(QPoint) const
+{
+    return true;
+}
+
+void StackViewInterface::setDocumentMode(bool)
+{
+    /// Only QtWidgets reimplements this
+}
+
+}

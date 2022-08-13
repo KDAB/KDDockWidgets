@@ -34,6 +34,11 @@ Controllers::Group *GroupViewInterface::group() const
     return m_group;
 }
 
+QRect GroupViewInterface::dragRect() const
+{
+    return {};
+}
+
 void GroupViewInterface::removeDockWidget(Controllers::DockWidget *dw)
 {
     m_group->tabBar()->removeDockWidget(dw);

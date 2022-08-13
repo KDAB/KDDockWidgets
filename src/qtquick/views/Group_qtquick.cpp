@@ -203,12 +203,6 @@ TabBar_qtquick *Group_qtquick::tabBarView() const
     return nullptr;
 }
 
-QRect Group_qtquick::dragRect() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 KDDockWidgets::Views::TitleBar_qtquick *Group_qtquick::titleBar() const
 {
     if (auto tb = m_group->titleBar()) {

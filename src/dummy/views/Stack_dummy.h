@@ -22,10 +22,7 @@ class DOCKS_EXPORT Stack_dummy : public View_dummy, public StackViewInterface
 {
 public:
     explicit Stack_dummy(Controllers::Stack *controller, QWidget *parent = nullptr);
-
-    bool isPositionDraggable(QPoint p) const override;
     void init() override;
-    void setDocumentMode(bool) override;
 
 private:
     Q_DISABLE_COPY(Stack_dummy)

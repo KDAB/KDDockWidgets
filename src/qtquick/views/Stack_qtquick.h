@@ -49,7 +49,6 @@ public:
     explicit Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent = nullptr);
 
     DockWidgetModel *dockWidgetModel() const;
-    void setDocumentMode(bool) override;
     Controllers::DockWidget *currentDockWidget() const;
 
     /// @brief Returns the tab bar as a QObject for QML.
@@ -68,7 +67,6 @@ Q_SIGNALS:
     void tabBarAutoHideChanged();
 
 protected:
-    bool isPositionDraggable(QPoint p) const override;
     void init() override;
 
 private:

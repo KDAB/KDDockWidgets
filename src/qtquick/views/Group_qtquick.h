@@ -56,7 +56,6 @@ public:
     /// @brief Returns the QQuickItem which represents this group on the screen
     QQuickItem *visualItem() const override;
 
-    QRect dragRect() const override;
     int currentIndex() const;
 
     // QML interface:

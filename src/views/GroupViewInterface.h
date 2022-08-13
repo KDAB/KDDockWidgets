@@ -15,8 +15,6 @@
 
 
 QT_BEGIN_NAMESPACE
-class QString;
-class QIcon;
 class QRect;
 QT_END_NAMESPACE
 
@@ -39,7 +37,11 @@ public:
     virtual void insertDockWidget(Controllers::DockWidget *, int index);
 
     virtual int nonContentsHeight() const = 0;
-    virtual QRect dragRect() const = 0;
+
+    /// @brief the rect that should start a drag.
+    /// Only relevant if the title bar isn't visible. For normal KDDW usage this method doesn't
+    /// need to be reimplemented.
+    virtual QRect dragRect() const;
 
     bool isMDI() const;
     Controllers::Group *group() const;
