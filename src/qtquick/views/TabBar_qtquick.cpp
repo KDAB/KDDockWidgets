@@ -174,7 +174,7 @@ int TabBar_qtquick::numDockWidgets() const
     return stackView()->dockWidgetModel()->count();
 }
 
-Controllers::DockWidget *TabBar_qtquick::dockwidgetAt(int index) const
+Controllers::DockWidget *TabBar_qtquick::dockWidgetAt(int index) const
 {
     return stackView()->dockWidgetModel()->dockWidgetAt(index);
 }
@@ -182,4 +182,30 @@ Controllers::DockWidget *TabBar_qtquick::dockwidgetAt(int index) const
 int TabBar_qtquick::indexOfDockWidget(const Controllers::DockWidget *dw) const
 {
     return stackView()->dockWidgetModel()->indexOf(dw);
+}
+
+void TabBar_qtquick::renameTab(int index, const QString &)
+{
+    Q_UNUSED(index);
+    qWarning() << Q_FUNC_INFO << "Not implemented";
+}
+
+void TabBar_qtquick::changeTabIcon(int index, const QIcon &)
+{
+    Q_UNUSED(index);
+    qWarning() << Q_FUNC_INFO << "Not implemented";
+}
+
+void TabBar_qtquick::removeDockWidget(Controllers::DockWidget *dw)
+{
+    stackView()->dockWidgetModel()->remove(dw);
+}
+
+bool TabBar_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+                                      const QString &title)
+{
+    Q_UNUSED(title); // TODO
+    Q_UNUSED(icon); // TODO
+
+    return stackView()->dockWidgetModel()->insert(dw, index);
 }

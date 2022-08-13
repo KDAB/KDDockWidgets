@@ -48,12 +48,7 @@ class DOCKS_EXPORT Stack_qtquick : public View_qtquick, public StackViewInterfac
 public:
     explicit Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent = nullptr);
 
-    void removeDockWidget(Controllers::DockWidget *) override;
-    int indexOfDockWidget(const Controllers::DockWidget *) const override;
     DockWidgetModel *dockWidgetModel() const;
-    Controllers::DockWidget *dockwidgetAt(int index) const override;
-    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
-                          const QString &title) override;
     void setDocumentMode(bool) override;
     Controllers::DockWidget *currentDockWidget() const;
 
@@ -74,8 +69,6 @@ Q_SIGNALS:
 
 protected:
     bool isPositionDraggable(QPoint p) const override;
-    void renameTab(int index, const QString &) override;
-    void changeTabIcon(int index, const QIcon &) override;
     void init() override;
 
 private:

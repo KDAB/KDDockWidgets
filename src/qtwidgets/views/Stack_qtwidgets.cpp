@@ -35,6 +35,10 @@ Stack_qtwidgets::Stack_qtwidgets(Controllers::Stack *controller, QWidget *parent
 {
 }
 
+Stack_qtwidgets::~Stack_qtwidgets()
+{
+}
+
 void Stack_qtwidgets::init()
 {
     setTabBar(tabBar());
@@ -46,7 +50,7 @@ void Stack_qtwidgets::init()
     // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user
     // presses [x]
     connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
-        if (auto dw = dockwidgetAt(index)) {
+        if (auto dw = m_stack->tabBar()->dockWidgetAt(index)) {
             if (dw->options() & DockWidgetOption_NotClosable) {
                 qWarning() << "QTabWidget::tabCloseRequested: Refusing to close dock widget with "
                               "Option_NotClosable option. name="
@@ -78,16 +82,6 @@ void Stack_qtwidgets::init()
     setDocumentMode(m_stack->options() & StackOption_DocumentMode);
 }
 
-void Stack_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
-{
-    removeTab(indexOf(View_qt::asQWidget(dw)));
-}
-
-int Stack_qtwidgets::indexOfDockWidget(const Controllers::DockWidget *dw) const
-{
-    return indexOf(View_qt::asQWidget(dw->view()));
-}
-
 void Stack_qtwidgets::mouseDoubleClickEvent(QMouseEvent *ev)
 {
     if (m_stack->onMouseDoubleClick(ev->pos())) {
@@ -116,29 +110,6 @@ void Stack_qtwidgets::tabInserted(int)
 void Stack_qtwidgets::tabRemoved(int)
 {
     m_stack->onTabRemoved();
-}
-
-bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
-                                       const QString &title)
-{
-    insertTab(index, View_qt::asQWidget(dw), icon, title);
-    return true;
-}
-
-void Stack_qtwidgets::renameTab(int index, const QString &text)
-{
-    setTabText(index, text);
-}
-
-void Stack_qtwidgets::changeTabIcon(int index, const QIcon &icon)
-{
-    setTabIcon(index, icon);
-}
-
-Controllers::DockWidget *Stack_qtwidgets::dockwidgetAt(int index) const
-{
-    auto view = qobject_cast<DockWidget_qtwidgets *>(widget(index));
-    return view ? view->dockWidget() : nullptr;
 }
 
 void Stack_qtwidgets::setupTabBarButtons()

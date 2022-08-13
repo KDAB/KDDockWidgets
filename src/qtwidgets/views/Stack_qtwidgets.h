@@ -32,13 +32,10 @@ class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public S
     Q_OBJECT
 public:
     explicit Stack_qtwidgets(Controllers::Stack *controller, QWidget *parent = nullptr);
-
+    ~Stack_qtwidgets();
 
     /// @brief Returns the QTabBar associated with this QTabWidget
     QTabBar *tabBar() const;
-
-    void removeDockWidget(Controllers::DockWidget *) override;
-    int indexOfDockWidget(const Controllers::DockWidget *) const override;
 
     bool isPositionDraggable(QPoint p) const override;
     void init() override;
@@ -52,11 +49,6 @@ public: // TODOm3: make protected
     void mousePressEvent(QMouseEvent *) override;
     void tabInserted(int index) override;
     void tabRemoved(int index) override;
-    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
-                          const QString &title) override;
-    void renameTab(int index, const QString &) override;
-    void changeTabIcon(int index, const QIcon &) override;
-    Controllers::DockWidget *dockwidgetAt(int index) const override;
 
     /// @brief Shows the context menu. Override to implement your own context menu.
     /// By default it's used to honour Config::Flag_AllowSwitchingTabsViaMenu

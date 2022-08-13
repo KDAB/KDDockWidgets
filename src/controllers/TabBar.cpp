@@ -84,7 +84,7 @@ Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(int index) const
     if (index < 0 || index >= numDockWidgets())
         return nullptr;
 
-    return m_tabWidget->dockwidgetAt(index);
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->dockWidgetAt(index);
 }
 
 Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) const
@@ -95,6 +95,18 @@ Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) cons
 int TabBar::indexOfDockWidget(const Controllers::DockWidget *dw) const
 {
     return dynamic_cast<Views::TabBarViewInterface *>(view())->indexOfDockWidget(dw);
+}
+
+void TabBar::removeDockWidget(Controllers::DockWidget *dw)
+{
+    dynamic_cast<Views::TabBarViewInterface *>(view())->removeDockWidget(dw);
+}
+
+bool TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+                              const QString &title)
+{
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon,
+                                                                                title);
 }
 
 std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
@@ -211,7 +223,7 @@ QRect Controllers::TabBar::rectForTab(int index) const
 
 DockWidget *TabBar::currentDockWidget() const
 {
-    return dynamic_cast<Views::TabBarViewInterface *>(view())->currentDockWidget();
+    return dockWidgetAt(currentIndex());
 }
 
 void TabBar::setCurrentDockWidget(DockWidget *dw)
@@ -227,4 +239,14 @@ int TabBar::currentIndex() const
 void TabBar::setCurrentIndex(int index)
 {
     dynamic_cast<Views::TabBarViewInterface *>(view())->setCurrentIndex(index);
+}
+
+void TabBar::renameTab(int index, const QString &text)
+{
+    dynamic_cast<Views::TabBarViewInterface *>(view())->renameTab(index, text);
+}
+
+void TabBar::changeTabIcon(int index, const QIcon &icon)
+{
+    dynamic_cast<Views::TabBarViewInterface *>(view())->changeTabIcon(index, icon);
 }

@@ -318,7 +318,7 @@ int Group::indexOfDockWidget(const DockWidget *dw)
     if (m_inCtor || m_inDtor)
         return -1;
 
-    return dynamic_cast<Views::GroupViewInterface *>(view())->indexOfDockWidget_impl(dw);
+    return m_tabBar->indexOfDockWidget(dw);
 }
 
 int Group::currentIndex() const

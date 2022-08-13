@@ -51,6 +51,10 @@ public:
     /// @brief Returns the tab index of the specified dock widget
     int indexOfDockWidget(const Controllers::DockWidget *dw) const;
 
+    void removeDockWidget(Controllers::DockWidget *dw);
+    bool insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+                          const QString &title);
+
     // Draggable
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
@@ -77,7 +81,11 @@ public:
     void moveTabTo(int from, int to);
     QString text(int index) const;
     QRect rectForTab(int index) const;
+    ///@brief rename's the tab's text
+    void renameTab(int index, const QString &);
 
+    ///@brief change the tab's icon
+    void changeTabIcon(int index, const QIcon &);
 Q_SIGNALS:
     void currentTabChanged(int index);
     void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);

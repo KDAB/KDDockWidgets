@@ -46,11 +46,14 @@ public:
 
     bool tabsAreMovable() const override;
     int tabAt(QPoint localPos) const override;
-
+    void renameTab(int index, const QString &) override;
+    void changeTabIcon(int index, const QIcon &icon) override;
     int numDockWidgets() const override;
-    Controllers::DockWidget *dockwidgetAt(int index) const override;
+    Controllers::DockWidget *dockWidgetAt(int index) const override;
     int indexOfDockWidget(const Controllers::DockWidget *dw) const override;
-
+    void removeDockWidget(Controllers::DockWidget *) override;
+    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
+                          const QString &title) override;
     QTabWidget *tabWidget() const;
 
 Q_SIGNALS:

@@ -38,43 +38,6 @@ void Stack_dummy::init()
 {
 }
 
-void Stack_dummy::removeDockWidget(Controllers::DockWidget *)
-{
-}
-
-int Stack_dummy::indexOfDockWidget(const Controllers::DockWidget *) const
-{
-    return 0;
-}
-
-bool Stack_dummy::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
-                                   const QString &title)
-{
-    Q_UNUSED(index);
-    Q_UNUSED(dw);
-    Q_UNUSED(icon);
-    Q_UNUSED(title);
-    return true;
-}
-
-void Stack_dummy::renameTab(int index, const QString &text)
-{
-    Q_UNUSED(index);
-    Q_UNUSED(text);
-}
-
-void Stack_dummy::changeTabIcon(int index, const QIcon &icon)
-{
-    Q_UNUSED(index);
-    Q_UNUSED(icon);
-}
-
-Controllers::DockWidget *Stack_dummy::dockwidgetAt(int index) const
-{
-    Q_UNUSED(index);
-    return nullptr;
-}
-
 void Stack_dummy::setDocumentMode(bool)
 {
 }

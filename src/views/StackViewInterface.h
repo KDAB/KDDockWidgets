@@ -35,13 +35,6 @@ public:
     explicit StackViewInterface(Controllers::Stack *);
     virtual ~StackViewInterface();
     virtual bool isPositionDraggable(QPoint p) const = 0;
-    virtual void renameTab(int index, const QString &) = 0;
-    virtual void changeTabIcon(int index, const QIcon &icon) = 0;
-    virtual Controllers::DockWidget *dockwidgetAt(int index) const = 0;
-    virtual int indexOfDockWidget(const Controllers::DockWidget *dw) const = 0;
-    virtual void removeDockWidget(Controllers::DockWidget *dw) = 0;
-    virtual bool insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
-                                  const QString &title) = 0;
     virtual void setDocumentMode(bool) = 0;
 
 protected:

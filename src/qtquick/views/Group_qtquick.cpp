@@ -109,13 +109,13 @@ void Group_qtquick::updateConstriants()
 
 void Group_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
 {
-    stackView()->removeDockWidget(dw);
+    m_group->tabBar()->removeDockWidget(dw);
     disconnect(m_connections.take(dw));
 }
 
 int Group_qtquick::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
 {
-    return stackView()->indexOfDockWidget(dw);
+    return m_group->indexOfDockWidget(dw);
 }
 
 int Group_qtquick::currentIndex() const
@@ -136,7 +136,7 @@ void Group_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
     QPointer<Controllers::Group> oldFrame = dw->d->group();
-    if (stackView()->insertDockWidget(index, dw, {}, {})) {
+    if (m_group->tabBar()->insertDockWidget(index, dw, {}, {})) {
 
         dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
 
@@ -168,7 +168,7 @@ void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
 
 Controllers::DockWidget *Group_qtquick::dockWidgetAt_impl(int index) const
 {
-    return stackView()->dockwidgetAt(index);
+    return tabBarView()->dockWidgetAt(index);
 }
 
 Controllers::DockWidget *Group_qtquick::currentDockWidget_impl() const

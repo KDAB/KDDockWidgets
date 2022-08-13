@@ -57,7 +57,7 @@ bool Stack::isPositionDraggable(QPoint p) const
 
 Controllers::DockWidget *Stack::currentDockWidget() const
 {
-    return dockwidgetAt(m_tabBar->currentIndex());
+    return m_tabBar->currentDockWidget();
 }
 
 void Stack::addDockWidget(DockWidget *dock)
@@ -81,7 +81,8 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
     }
 
     QPointer<Group> oldFrame = dock->d->group();
-    insertDockWidget(index, dock, dock->icon(IconPlace::TabBar), dock->title());
+
+    m_tabBar->insertDockWidget(index, dock, dock->icon(IconPlace::TabBar), dock->title());
     m_tabBar->setCurrentIndex(index);
 
     if (oldFrame && oldFrame->beingDeletedLater()) {
@@ -102,7 +103,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
 
 bool Stack::contains(DockWidget *dw) const
 {
-    return indexOfDockWidget(dw) != -1;
+    return m_tabBar->indexOfDockWidget(dw) != -1;
 }
 
 Group *Stack::group() const
@@ -215,11 +216,6 @@ bool Stack::tabBarAutoHide() const
     return m_tabBarAutoHide;
 }
 
-void Stack::renameTab(int index, const QString &text)
-{
-    dynamic_cast<Views::StackViewInterface *>(view())->renameTab(index, text);
-}
-
 Controllers::TabBar *Stack::tabBar() const
 {
     return m_tabBar;
@@ -228,32 +224,6 @@ Controllers::TabBar *Stack::tabBar() const
 int Stack::numDockWidgets() const
 {
     return m_tabBar->numDockWidgets();
-}
-
-void Stack::changeTabIcon(int index, const QIcon &icon)
-{
-    dynamic_cast<Views::StackViewInterface *>(view())->changeTabIcon(index, icon);
-}
-
-Controllers::DockWidget *Stack::dockwidgetAt(int index) const
-{
-    return dynamic_cast<Views::StackViewInterface *>(view())->dockwidgetAt(index);
-}
-
-int Stack::indexOfDockWidget(const DockWidget *dw) const
-{
-    return dynamic_cast<Views::StackViewInterface *>(view())->indexOfDockWidget(dw);
-}
-
-void Stack::removeDockWidget(DockWidget *dw)
-{
-    dynamic_cast<Views::StackViewInterface *>(view())->removeDockWidget(dw);
-}
-
-bool Stack::insertDockWidget(int index, DockWidget *dw, const QIcon &icon, const QString &title)
-{
-    return dynamic_cast<Views::StackViewInterface *>(view())->insertDockWidget(index, dw, icon,
-                                                                               title);
 }
 
 void Stack::setDocumentMode(bool is)

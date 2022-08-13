@@ -30,7 +30,7 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
 {
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this, [this] {
         Controllers::DockWidget *currentDw = m_dockWidgetModel->currentDockWidget();
-        if (currentDw && indexOfDockWidget(currentDw) == -1) {
+        if (currentDw && m_dockWidgetModel->indexOf(currentDw) == -1) {
             // The current dock widget was removed, set the first one as current
             if (m_stack->numDockWidgets() > 0)
                 m_dockWidgetModel->setCurrentIndex(0);
@@ -66,16 +66,6 @@ void Stack_qtquick::setDocumentMode(bool)
     qDebug() << "Not implemented";
 }
 
-void Stack_qtquick::removeDockWidget(Controllers::DockWidget *dw)
-{
-    m_dockWidgetModel->remove(dw);
-}
-
-int Stack_qtquick::indexOfDockWidget(const Controllers::DockWidget *dw) const
-{
-    return m_dockWidgetModel->indexOf(dw);
-}
-
 bool Stack_qtquick::isPositionDraggable(QPoint p) const
 {
     Q_UNUSED(p);
@@ -90,30 +80,6 @@ QObject *Stack_qtquick::tabBarViewObj() const
 Controllers::DockWidget *Stack_qtquick::currentDockWidget() const
 {
     return m_dockWidgetModel->currentDockWidget();
-}
-
-bool Stack_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &,
-                                     const QString &title)
-{
-    Q_UNUSED(title); // todo
-    return m_dockWidgetModel->insert(dw, index);
-}
-
-void Stack_qtquick::renameTab(int index, const QString &)
-{
-    Q_UNUSED(index);
-    qWarning() << Q_FUNC_INFO << "Not implemented";
-}
-
-void Stack_qtquick::changeTabIcon(int index, const QIcon &)
-{
-    Q_UNUSED(index);
-    qWarning() << Q_FUNC_INFO << "Not implemented";
-}
-
-Controllers::DockWidget *Stack_qtquick::dockwidgetAt(int index) const
-{
-    return m_dockWidgetModel->dockWidgetAt(index);
 }
 
 bool Stack_qtquick::tabBarAutoHide() const

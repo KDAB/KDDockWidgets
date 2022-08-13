@@ -61,14 +61,19 @@ public:
     Q_INVOKABLE void setCurrentIndex(int index) override;
     bool tabsAreMovable() const override;
     Stack_qtquick *stackView() const;
-
+    void renameTab(int index, const QString &) override;
+    void changeTabIcon(int index, const QIcon &icon) override;
     /// Returns whether the tab bar should hide when there's only 1 tab visible
     /// Default true, unless Flag_HideTitleBarWhenTabsVisible
     bool tabBarAutoHide() const;
 
     int numDockWidgets() const override;
-    Controllers::DockWidget *dockwidgetAt(int index) const override;
+    Controllers::DockWidget *dockWidgetAt(int index) const override;
     int indexOfDockWidget(const Controllers::DockWidget *dw) const override;
+
+    void removeDockWidget(Controllers::DockWidget *) override;
+    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
+                          const QString &title) override;
 
 Q_SIGNALS:
     void tabBarQmlItemChanged();

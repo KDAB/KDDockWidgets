@@ -35,21 +35,8 @@ public:
      */
     int numDockWidgets() const;
 
-    /**
-     * @brief Removes a dock widget from the TabWidget
-     */
-    void removeDockWidget(DockWidget *);
-
-    /**
-     * @brief Returns the index of the dock widget, or -1 if it doesn't exist
-     */
-    int indexOfDockWidget(const DockWidget *) const;
-
-
     /// @brief Returns the current dock widget
     DockWidget *currentDockWidget() const;
-
-    bool insertDockWidget(int index, DockWidget *, const QIcon &, const QString &title);
 
     /// Sets whether the tab bar should be hidden when there's only 1 tab shown
     /// Default is true.
@@ -57,19 +44,8 @@ public:
     void setTabBarAutoHide(bool);
     bool tabBarAutoHide() const;
 
-    ///@brief rename's the tab's text
-    void renameTab(int index, const QString &);
-
-    ///@brief change the tab's icon
-    void changeTabIcon(int index, const QIcon &);
-
     ///@brief appends a dock widget into this TabWidget
     void addDockWidget(DockWidget *);
-
-    /**
-     * @brief Returns the dock widget tabbed at index @p index
-     */
-    DockWidget *dockwidgetAt(int index) const;
 
     /**
      * @brief inserts @p dockwidget into the TabWidget, at @p index
