@@ -54,15 +54,6 @@ void Group_dummy::init()
 {
 }
 
-
-void Group_dummy::removeWidget_impl(Controllers::DockWidget *)
-{
-}
-
-void Group_dummy::insertDockWidget_impl(Controllers::DockWidget *, int)
-{
-}
-
 QSize Group_dummy::minSize() const
 {
     const QSize contentsSize = m_group->dockWidgetsMinSize();

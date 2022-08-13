@@ -67,8 +67,8 @@ public:
     QObject *tabBarObj() const;
 
 protected:
-    void removeWidget_impl(Controllers::DockWidget *) override;
-    void insertDockWidget_impl(Controllers::DockWidget *, int index) override;
+    void removeDockWidget(Controllers::DockWidget *dw) override;
+    void insertDockWidget(Controllers::DockWidget *dw, int index) override;
 
     Q_INVOKABLE void setStackLayout(QQuickItem *);
 

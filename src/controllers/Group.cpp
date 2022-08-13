@@ -285,7 +285,7 @@ void Group::removeWidget(DockWidget *dw)
     disconnect(dw, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
     disconnect(dw, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
 
-    dynamic_cast<Views::GroupViewInterface *>(view())->removeWidget_impl(dw);
+    dynamic_cast<Views::GroupViewInterface *>(view())->removeDockWidget(dw);
 }
 
 FloatingWindow *Group::detachTab(DockWidget *dockWidget)
@@ -350,7 +350,7 @@ void Group::insertDockWidget(DockWidget *dw, int index)
     if (m_inCtor || m_inDtor)
         return;
 
-    dynamic_cast<Views::GroupViewInterface *>(view())->insertDockWidget_impl(dw, index);
+    dynamic_cast<Views::GroupViewInterface *>(view())->insertDockWidget(dw, index);
     dw->d->onParentChanged();
 }
 

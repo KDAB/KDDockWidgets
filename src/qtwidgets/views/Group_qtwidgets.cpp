@@ -87,16 +87,6 @@ int Group_qtwidgets::nonContentsHeight() const
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
 }
 
-void Group_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
-{
-    m_group->stack()->insertDockWidget(dw, index);
-}
-
-void Group_qtwidgets::removeWidget_impl(Controllers::DockWidget *dw)
-{
-    m_group->tabBar()->removeDockWidget(dw);
-}
-
 void Group_qtwidgets::paintEvent(QPaintEvent *)
 {
     if (freed())

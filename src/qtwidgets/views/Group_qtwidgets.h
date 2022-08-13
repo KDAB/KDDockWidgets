@@ -27,8 +27,6 @@ public:
     explicit Group_qtwidgets(Controllers::Group *controller, QWidget *parent = nullptr);
     void init() override;
 
-    void removeWidget_impl(Controllers::DockWidget *) override;
-    void insertDockWidget_impl(Controllers::DockWidget *, int index) override;
     int nonContentsHeight() const override;
     QRect dragRect() const override;
 

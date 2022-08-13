@@ -35,8 +35,9 @@ class DOCKS_EXPORT GroupViewInterface
 public:
     explicit GroupViewInterface(Controllers::Group *);
     virtual ~GroupViewInterface();
-    virtual void removeWidget_impl(Controllers::DockWidget *) = 0;
-    virtual void insertDockWidget_impl(Controllers::DockWidget *, int index) = 0;
+    virtual void removeDockWidget(Controllers::DockWidget *);
+    virtual void insertDockWidget(Controllers::DockWidget *, int index);
+
     virtual int nonContentsHeight() const = 0;
     virtual QRect dragRect() const = 0;
 

@@ -11,6 +11,8 @@
 
 #include "GroupViewInterface.h"
 #include "controllers/Group.h"
+#include "controllers/TabBar.h"
+#include "controllers/Stack.h"
 
 namespace KDDockWidgets {
 
@@ -30,6 +32,16 @@ bool GroupViewInterface::isMDI() const
 Controllers::Group *GroupViewInterface::group() const
 {
     return m_group;
+}
+
+void GroupViewInterface::removeDockWidget(Controllers::DockWidget *dw)
+{
+    m_group->tabBar()->removeDockWidget(dw);
+}
+
+void GroupViewInterface::insertDockWidget(Controllers::DockWidget *dw, int index)
+{
+    m_group->stack()->insertDockWidget(dw, index);
 }
 
 } // namespace

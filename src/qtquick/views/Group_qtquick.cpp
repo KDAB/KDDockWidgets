@@ -107,7 +107,7 @@ void Group_qtquick::updateConstriants()
     View::d->layoutInvalidated.emit();
 }
 
-void Group_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
+void Group_qtquick::removeDockWidget(Controllers::DockWidget *dw)
 {
     m_group->tabBar()->removeDockWidget(dw);
     disconnect(m_connections.take(dw));
@@ -118,7 +118,7 @@ int Group_qtquick::currentIndex() const
     return m_group->currentIndex();
 }
 
-void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
+void Group_qtquick::insertDockWidget(Controllers::DockWidget *dw, int index)
 {
     QPointer<Controllers::Group> oldFrame = dw->d->group();
     if (m_group->tabBar()->insertDockWidget(index, dw, {}, {})) {
@@ -129,7 +129,7 @@ void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
         QMetaObject::Connection conn =
             connect(dw, &Controllers::DockWidget::parentViewChanged, this, [dockView, dw, this] {
                 if (dockView->parent() != m_stackLayout)
-                    removeWidget_impl(dw);
+                    removeDockWidget(dw);
             });
 
         m_connections[dw] = conn;

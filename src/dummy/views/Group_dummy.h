@@ -37,8 +37,6 @@ public:
     QRect dragRect() const override;
 
 protected:
-    void removeWidget_impl(Controllers::DockWidget *) override;
-    void insertDockWidget_impl(Controllers::DockWidget *, int index) override;
     int nonContentsHeight() const override;
 
 private:
