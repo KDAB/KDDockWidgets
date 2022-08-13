@@ -32,25 +32,13 @@ public:
     explicit Group_dummy(Controllers::Group *controller, View *parent = nullptr);
     ~Group_dummy() override;
 
-    /// @reimp
     QSize minSize() const override;
-
-    /// @reimp
     QSize maxSizeHint() const override;
-
     QRect dragRect() const override;
-    int currentIndex() const;
 
 protected:
     void removeWidget_impl(Controllers::DockWidget *) override;
-    int indexOfDockWidget_impl(const Controllers::DockWidget *) override;
-    void setCurrentTabIndex_impl(int index) override;
-    void setCurrentDockWidget_impl(Controllers::DockWidget *) override;
     void insertDockWidget_impl(Controllers::DockWidget *, int index) override;
-    Controllers::DockWidget *dockWidgetAt_impl(int index) const override;
-    Controllers::DockWidget *currentDockWidget_impl() const override;
-    void renameTab(int index, const QString &) override;
-    void changeTabIcon(int index, const QIcon &) override;
     int nonContentsHeight() const override;
 
 private:

@@ -113,24 +113,9 @@ void Group_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
     disconnect(m_connections.take(dw));
 }
 
-int Group_qtquick::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
-{
-    return m_group->indexOfDockWidget(dw);
-}
-
 int Group_qtquick::currentIndex() const
 {
     return m_group->currentIndex();
-}
-
-void Group_qtquick::setCurrentTabIndex_impl(int index)
-{
-    setCurrentDockWidget_impl(m_group->dockWidgetAt(index));
-}
-
-void Group_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
-{
-    m_group->tabBar()->setCurrentDockWidget(dw);
 }
 
 void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
@@ -148,7 +133,7 @@ void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
             });
 
         m_connections[dw] = conn;
-        setCurrentDockWidget_impl(dw);
+        m_group->setCurrentDockWidget(dw);
 
         if (oldFrame && oldFrame->beingDeletedLater()) {
             // give it a push and delete it immediately.
@@ -164,27 +149,6 @@ void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
             delete oldFrame;
         }
     }
-}
-
-Controllers::DockWidget *Group_qtquick::dockWidgetAt_impl(int index) const
-{
-    return tabBarView()->dockWidgetAt(index);
-}
-
-Controllers::DockWidget *Group_qtquick::currentDockWidget_impl() const
-{
-    return stackView()->currentDockWidget();
-}
-
-void Group_qtquick::renameTab(int, const QString &)
-{
-    // Not needed for QtQuick. Our model reacts to titleChanged()
-}
-
-void Group_qtquick::changeTabIcon(int index, const QIcon &)
-{
-    Q_UNUSED(index);
-    qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
 void Group_qtquick::setStackLayout(QQuickItem *stackLayout)

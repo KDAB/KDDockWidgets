@@ -79,32 +79,12 @@ void Group_qtwidgets::free_impl()
     delete this;
 }
 
-void Group_qtwidgets::renameTab(int index, const QString &text)
-{
-    m_group->tabBar()->renameTab(index, text);
-}
-
-void Group_qtwidgets::changeTabIcon(int index, const QIcon &icon)
-{
-    m_group->tabBar()->changeTabIcon(index, icon);
-}
-
 int Group_qtwidgets::nonContentsHeight() const
 {
     Controllers::TitleBar *tb = m_group->titleBar();
     QWidget *tabBar = asQWidget(m_group->tabBar());
 
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
-}
-
-int Group_qtwidgets::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
-{
-    return m_group->tabBar()->indexOfDockWidget(dw);
-}
-
-void Group_qtwidgets::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
-{
-    m_group->tabBar()->setCurrentDockWidget(dw);
 }
 
 void Group_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
@@ -115,21 +95,6 @@ void Group_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int ind
 void Group_qtwidgets::removeWidget_impl(Controllers::DockWidget *dw)
 {
     m_group->tabBar()->removeDockWidget(dw);
-}
-
-void Group_qtwidgets::setCurrentTabIndex_impl(int index)
-{
-    m_group->tabBar()->setCurrentIndex(index);
-}
-
-KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::currentDockWidget_impl() const
-{
-    return m_group->stack()->currentDockWidget();
-}
-
-KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::dockWidgetAt_impl(int index) const
-{
-    return m_group->tabBar()->dockWidgetAt(index);
 }
 
 void Group_qtwidgets::paintEvent(QPaintEvent *)

@@ -22,7 +22,6 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 namespace Controllers {
-class DockWidget;
 class Stack;
 }
 

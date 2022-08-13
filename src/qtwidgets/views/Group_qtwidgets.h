@@ -27,15 +27,8 @@ public:
     explicit Group_qtwidgets(Controllers::Group *controller, QWidget *parent = nullptr);
     void init() override;
 
-    void renameTab(int index, const QString &) override;
-    void changeTabIcon(int index, const QIcon &) override;
     void removeWidget_impl(Controllers::DockWidget *) override;
-    int indexOfDockWidget_impl(const Controllers::DockWidget *) override;
-    void setCurrentTabIndex_impl(int index) override;
-    void setCurrentDockWidget_impl(Controllers::DockWidget *) override;
     void insertDockWidget_impl(Controllers::DockWidget *, int index) override;
-    Controllers::DockWidget *dockWidgetAt_impl(int index) const override;
-    Controllers::DockWidget *currentDockWidget_impl() const override;
     int nonContentsHeight() const override;
     QRect dragRect() const override;
 

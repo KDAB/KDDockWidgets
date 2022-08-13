@@ -164,12 +164,12 @@ void Group::setLayout(Layout *dt)
 
 void Group::renameTab(int index, const QString &title)
 {
-    dynamic_cast<Views::GroupViewInterface *>(view())->renameTab(index, title);
+    m_tabBar->renameTab(index, title);
 }
 
 void Group::changeTabIcon(int index, const QIcon &icon)
 {
-    dynamic_cast<Views::GroupViewInterface *>(view())->changeTabIcon(index, icon);
+    m_tabBar->changeTabIcon(index, icon);
 }
 
 int Group::nonContentsHeight() const
@@ -334,7 +334,7 @@ void Group::setCurrentTabIndex(int index)
     if (m_inCtor || m_inDtor)
         return;
 
-    dynamic_cast<Views::GroupViewInterface *>(view())->setCurrentTabIndex_impl(index);
+    m_tabBar->setCurrentIndex(index);
 }
 
 void Group::setCurrentDockWidget(DockWidget *dw)
@@ -342,7 +342,7 @@ void Group::setCurrentDockWidget(DockWidget *dw)
     if (m_inCtor || m_inDtor)
         return;
 
-    dynamic_cast<Views::GroupViewInterface *>(view())->setCurrentDockWidget_impl(dw);
+    m_tabBar->setCurrentDockWidget(dw);
 }
 
 void Group::insertDockWidget(DockWidget *dw, int index)
@@ -359,7 +359,7 @@ Controllers::DockWidget *Group::dockWidgetAt(int index) const
     if (m_inCtor || m_inDtor)
         return nullptr;
 
-    return dynamic_cast<Views::GroupViewInterface *>(view())->dockWidgetAt_impl(index);
+    return m_tabBar->dockWidgetAt(index);
 }
 
 Controllers::DockWidget *Group::currentDockWidget() const
@@ -367,7 +367,7 @@ Controllers::DockWidget *Group::currentDockWidget() const
     if (m_inCtor || m_inDtor)
         return nullptr;
 
-    return dynamic_cast<Views::GroupViewInterface *>(view())->currentDockWidget_impl();
+    return m_tabBar->currentDockWidget();
 }
 
 int Group::dockWidgetCount() const
