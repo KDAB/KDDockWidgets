@@ -26,6 +26,7 @@
 
 #include "qtquick/ViewFactory_qtquick.h"
 #include "qtquick/Platform_qtquick.h"
+#include "qtquick/views/TabBar_qtquick.h"
 #include "qtquick/views/DockWidget_qtquick.h"
 #include "qtquick/views/ViewWrapper_qtquick.h"
 
@@ -129,7 +130,7 @@ void Group_qtquick::setCurrentTabIndex_impl(int index)
 
 void Group_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
-    m_group->stack()->setCurrentDockWidget(dw);
+    m_group->tabBar()->setCurrentDockWidget(dw);
 }
 
 void Group_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
@@ -207,6 +208,11 @@ QObject *Group_qtquick::tabWidgetObj() const
     return stackView();
 }
 
+QObject *Group_qtquick::tabBarObj() const
+{
+    return tabBarView();
+}
+
 QQuickItem *Group_qtquick::visualItem() const
 {
     return m_visualItem;
@@ -221,6 +227,14 @@ Stack_qtquick *Group_qtquick::stackView() const
 {
     if (auto stack = m_group->stack())
         return qobject_cast<Stack_qtquick *>(asQQuickItem(stack->view()));
+
+    return nullptr;
+}
+
+TabBar_qtquick *Group_qtquick::tabBarView() const
+{
+    if (auto tabBar = m_group->tabBar())
+        return qobject_cast<TabBar_qtquick *>(asQQuickItem(tabBar->view()));
 
     return nullptr;
 }

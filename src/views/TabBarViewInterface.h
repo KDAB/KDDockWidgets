@@ -39,12 +39,14 @@ public:
     virtual void moveTabTo(int from, int to) = 0;
     virtual QRect rectForTab(int index) const = 0;
     virtual Controllers::DockWidget *currentDockWidget() const = 0;
+    virtual void setCurrentIndex(int index) = 0;
     virtual int currentIndex() const = 0;
     virtual int numDockWidgets() const = 0;
     virtual Controllers::DockWidget *dockwidgetAt(int index) const = 0;
     virtual int indexOfDockWidget(const Controllers::DockWidget *dw) const = 0;
 
     virtual QString text(int index) const = 0;
+    void setCurrentDockWidget(Controllers::DockWidget *dw);
 
 protected:
     Controllers::TabBar *const m_tabBar;

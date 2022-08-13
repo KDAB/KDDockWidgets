@@ -47,11 +47,6 @@ int Stack_dummy::indexOfDockWidget(const Controllers::DockWidget *) const
     return 0;
 }
 
-void Stack_dummy::setCurrentDockWidget(int index)
-{
-    Q_UNUSED(index);
-}
-
 bool Stack_dummy::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                                    const QString &title)
 {

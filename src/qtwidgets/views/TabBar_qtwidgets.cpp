@@ -153,6 +153,11 @@ int TabBar_qtwidgets::currentIndex() const
     return QTabBar::currentIndex();
 }
 
+void TabBar_qtwidgets::setCurrentIndex(int index)
+{
+    QTabBar::setCurrentIndex(index);
+}
+
 int TabBar_qtwidgets::numDockWidgets() const
 {
     return QTabBar::count();

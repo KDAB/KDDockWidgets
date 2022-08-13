@@ -33,7 +33,7 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
         if (currentDw && indexOfDockWidget(currentDw) == -1) {
             // The current dock widget was removed, set the first one as current
             if (m_stack->numDockWidgets() > 0)
-                setCurrentDockWidget(0);
+                m_dockWidgetModel->setCurrentIndex(0);
         }
 
         Q_EMIT m_stack->tabBar()->countChanged();
@@ -42,6 +42,7 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
 
 void Stack_qtquick::init()
 {
+    m_dockWidgetModel->m_tabBar = m_stack->tabBar();
     m_tabBarAutoHideChanged =
         m_stack->tabBarAutoHideChanged.connect([this] { Q_EMIT tabBarAutoHideChanged(); });
 
@@ -79,18 +80,6 @@ bool Stack_qtquick::isPositionDraggable(QPoint p) const
 {
     Q_UNUSED(p);
     return true;
-}
-
-void Stack_qtquick::setCurrentDockWidget(int index)
-{
-    Controllers::DockWidget *dw = dockwidgetAt(index);
-    Controllers::DockWidget *currentDw = m_dockWidgetModel->currentDockWidget();
-
-    if (currentDw != dw) {
-        m_dockWidgetModel->setCurrentDockWidget(dw);
-        Q_EMIT m_stack->tabBar()->currentDockWidgetChanged(dw);
-        Q_EMIT m_stack->tabBar()->currentTabChanged(index);
-    }
 }
 
 QObject *Stack_qtquick::tabBarViewObj() const
@@ -252,6 +241,18 @@ int DockWidgetModel::currentIndex() const
                    << "; count=" << count();
 
     return index;
+}
+
+void DockWidgetModel::setCurrentIndex(int index)
+{
+    Controllers::DockWidget *dw = dockWidgetAt(index);
+
+    if (m_currentDockWidget != dw) {
+        setCurrentDockWidget(dw);
+        Q_ASSERT(m_tabBar);
+        Q_EMIT m_tabBar->currentDockWidgetChanged(dw);
+        Q_EMIT m_tabBar->currentTabChanged(index);
+    }
 }
 
 bool DockWidgetModel::insert(Controllers::DockWidget *dw, int index)

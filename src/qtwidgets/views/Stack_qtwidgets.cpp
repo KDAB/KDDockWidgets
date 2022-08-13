@@ -118,11 +118,6 @@ void Stack_qtwidgets::tabRemoved(int)
     m_stack->onTabRemoved();
 }
 
-void Stack_qtwidgets::setCurrentDockWidget(int index)
-{
-    setCurrentIndex(index);
-}
-
 bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                                        const QString &title)
 {

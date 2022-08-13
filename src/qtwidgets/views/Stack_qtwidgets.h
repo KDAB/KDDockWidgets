@@ -52,7 +52,6 @@ public: // TODOm3: make protected
     void mousePressEvent(QMouseEvent *) override;
     void tabInserted(int index) override;
     void tabRemoved(int index) override;
-    void setCurrentDockWidget(int index) override;
     bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;
     void renameTab(int index, const QString &) override;

@@ -104,7 +104,7 @@ int Group_qtwidgets::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
 
 void Group_qtwidgets::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
-    m_group->stack()->setCurrentDockWidget(dw);
+    m_group->tabBar()->setCurrentDockWidget(dw);
 }
 
 void Group_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
@@ -119,7 +119,7 @@ void Group_qtwidgets::removeWidget_impl(Controllers::DockWidget *dw)
 
 void Group_qtwidgets::setCurrentTabIndex_impl(int index)
 {
-    m_group->stack()->setCurrentDockWidget(index);
+    m_group->tabBar()->setCurrentIndex(index);
 }
 
 KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::currentDockWidget_impl() const

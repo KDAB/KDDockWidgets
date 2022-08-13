@@ -22,4 +22,9 @@ TabBarViewInterface::TabBarViewInterface(Controllers::TabBar *controller)
 
 TabBarViewInterface::~TabBarViewInterface() = default;
 
+void TabBarViewInterface::setCurrentDockWidget(Controllers::DockWidget *dw)
+{
+    setCurrentIndex(indexOfDockWidget(dw));
+}
+
 } // namespace

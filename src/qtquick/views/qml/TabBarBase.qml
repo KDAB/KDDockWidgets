@@ -40,7 +40,7 @@ Item {
     onCurrentTabIndexChanged: {
         // Tells the C++ backend that the current dock widget has changed
         if (groupCpp)
-            groupCpp.tabWidget.setCurrentDockWidget(currentTabIndex);
+            groupCpp.tabBar.setCurrentIndex(currentTabIndex);
     }
 
     // If the currentIndex changes in the C++ backend then update it here

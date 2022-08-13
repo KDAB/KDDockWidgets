@@ -31,7 +31,6 @@ public:
     void setDocumentMode(bool) override;
 
 public:
-    void setCurrentDockWidget(int index) override;
     bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;
     void renameTab(int index, const QString &) override;

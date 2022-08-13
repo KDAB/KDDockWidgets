@@ -164,6 +164,11 @@ int TabBar_qtquick::currentIndex() const
     return stackView()->dockWidgetModel()->currentIndex();
 }
 
+void TabBar_qtquick::setCurrentIndex(int index)
+{
+    stackView()->dockWidgetModel()->setCurrentIndex(index);
+}
+
 int TabBar_qtquick::numDockWidgets() const
 {
     return stackView()->dockWidgetModel()->count();

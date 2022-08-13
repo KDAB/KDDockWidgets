@@ -54,7 +54,6 @@ public:
     Controllers::DockWidget *dockwidgetAt(int index) const override;
     bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;
-    Q_INVOKABLE void setCurrentDockWidget(int index) override;
     void setDocumentMode(bool) override;
     Controllers::DockWidget *currentDockWidget() const;
 
@@ -106,6 +105,10 @@ public:
     bool insert(Controllers::DockWidget *dw, int index);
     bool contains(Controllers::DockWidget *dw) const;
     int currentIndex() const;
+    void setCurrentIndex(int index);
+
+    // TODOm4: Move to private and make *const
+    Controllers::TabBar *m_tabBar = nullptr;
 
 protected:
     QHash<int, QByteArray> roleNames() const override;

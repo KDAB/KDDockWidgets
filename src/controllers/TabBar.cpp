@@ -209,12 +209,22 @@ QRect Controllers::TabBar::rectForTab(int index) const
     return dynamic_cast<Views::TabBarViewInterface *>(view())->rectForTab(index);
 }
 
-DockWidget *Controllers::TabBar::currentDockWidget() const
+DockWidget *TabBar::currentDockWidget() const
 {
     return dynamic_cast<Views::TabBarViewInterface *>(view())->currentDockWidget();
+}
+
+void TabBar::setCurrentDockWidget(DockWidget *dw)
+{
+    dynamic_cast<Views::TabBarViewInterface *>(view())->setCurrentDockWidget(dw);
 }
 
 int TabBar::currentIndex() const
 {
     return dynamic_cast<Views::TabBarViewInterface *>(view())->currentIndex();
+}
+
+void TabBar::setCurrentIndex(int index)
+{
+    dynamic_cast<Views::TabBarViewInterface *>(view())->setCurrentIndex(index);
 }

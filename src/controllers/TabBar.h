@@ -42,9 +42,11 @@ public:
 
     /// @brief Returns the current dock widget
     DockWidget *currentDockWidget() const;
+    void setCurrentDockWidget(DockWidget *dw);
 
     /// @brief Returns the index of the current tab
     int currentIndex() const;
+    void setCurrentIndex(int index);
 
     /// @brief Returns the tab index of the specified dock widget
     int indexOfDockWidget(const Controllers::DockWidget *dw) const;

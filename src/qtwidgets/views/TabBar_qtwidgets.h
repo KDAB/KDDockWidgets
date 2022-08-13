@@ -38,6 +38,7 @@ public:
 
     Controllers::DockWidget *currentDockWidget() const override;
     int currentIndex() const override;
+    void setCurrentIndex(int index) override;
 
     QString text(int index) const override;
     QRect rectForTab(int index) const override;

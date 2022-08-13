@@ -42,7 +42,6 @@ public:
     virtual void removeDockWidget(Controllers::DockWidget *dw) = 0;
     virtual bool insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                                   const QString &title) = 0;
-    virtual void setCurrentDockWidget(int index) = 0;
     virtual void setDocumentMode(bool) = 0;
 
 protected:

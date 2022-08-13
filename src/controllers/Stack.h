@@ -45,11 +45,6 @@ public:
      */
     int indexOfDockWidget(const DockWidget *) const;
 
-    /**
-     * @brief Sets the current dock widget index
-     */
-    void setCurrentDockWidget(int index);
-    void setCurrentDockWidget(DockWidget *);
 
     /// @brief Returns the current dock widget
     DockWidget *currentDockWidget() const;

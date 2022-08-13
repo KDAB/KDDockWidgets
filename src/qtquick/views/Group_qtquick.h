@@ -31,12 +31,14 @@ class DockWidget;
 
 namespace Views {
 
+class TabBar_qtquick;
 class Stack_qtquick;
 
 class DOCKS_EXPORT Group_qtquick : public View_qtquick, public GroupViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)
+    Q_PROPERTY(QObject *tabBar READ tabBarObj CONSTANT)
     Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(int userType READ userType CONSTANT)
     Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar READ actualTitleBar NOTIFY
@@ -62,7 +64,7 @@ public:
     KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar() const;
     int userType() const;
     QObject *tabWidgetObj() const;
-
+    QObject *tabBarObj() const;
 
 protected:
     void removeWidget_impl(Controllers::DockWidget *) override;
@@ -90,6 +92,7 @@ public Q_SLOTS:
 private:
     void init() override;
     Stack_qtquick *stackView() const;
+    TabBar_qtquick *tabBarView() const;
 
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
