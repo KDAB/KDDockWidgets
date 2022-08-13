@@ -112,11 +112,6 @@ public:
     /// Emitted when the tabBarAutoHide boolean member changes
     KDBindings::Signal<bool> tabBarAutoHideChanged;
 
-Q_SIGNALS:
-    void currentTabChanged(int index);
-    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
-    void countChanged();
-
 public: // TODOm3
     void onTabInserted();
     void onTabRemoved();

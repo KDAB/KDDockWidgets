@@ -60,7 +60,7 @@ Group_qtquick::~Group_qtquick()
 
 void Group_qtquick::init()
 {
-    connect(m_group->stack(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
+    connect(m_group->stack()->tabBar(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
     connect(this, &View_qtquick::geometryUpdated, this,
@@ -68,7 +68,7 @@ void Group_qtquick::init()
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
     connect(m_group, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
-    connect(m_group->stack(), &Controllers::Stack::currentDockWidgetChanged, this,
+    connect(m_group->tabBar(), &Controllers::TabBar::currentDockWidgetChanged, this,
             &Group_qtquick::currentDockWidgetChanged);
     connect(m_group, &Controllers::Group::actualTitleBarChanged, this,
             &Group_qtquick::actualTitleBarChanged);

@@ -83,7 +83,6 @@ protected:
 private:
     Q_DISABLE_COPY(Stack_qtquick)
     DockWidgetModel *const m_dockWidgetModel;
-    Controllers::DockWidget *m_currentDockWidget = nullptr;
     KDBindings::ScopedConnection m_tabBarAutoHideChanged;
 };
 
@@ -101,10 +100,13 @@ public:
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
     Controllers::DockWidget *dockWidgetAt(int index) const;
+    Controllers::DockWidget *currentDockWidget() const;
+    void setCurrentDockWidget(Controllers::DockWidget *);
     void remove(Controllers::DockWidget *);
     int indexOf(const Controllers::DockWidget *);
     bool insert(Controllers::DockWidget *dw, int index);
     bool contains(Controllers::DockWidget *dw) const;
+    int currentIndex() const;
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
@@ -119,6 +121,7 @@ private:
     QHash<Controllers::DockWidget *, QVector<QMetaObject::Connection>>
         m_connections; // To make it easy to disconnect from lambdas
     bool m_removeGuard = false;
+    Controllers::DockWidget *m_currentDockWidget = nullptr;
 };
 
 }

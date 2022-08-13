@@ -29,13 +29,14 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
     , m_dockWidgetModel(new DockWidgetModel(this))
 {
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this, [this] {
-        if (m_currentDockWidget && indexOfDockWidget(m_currentDockWidget) == -1) {
+        Controllers::DockWidget *currentDw = m_dockWidgetModel->currentDockWidget();
+        if (currentDw && indexOfDockWidget(currentDw) == -1) {
             // The current dock widget was removed, set the first one as current
             if (m_stack->numDockWidgets() > 0)
                 setCurrentDockWidget(0);
         }
 
-        Q_EMIT m_stack->countChanged();
+        Q_EMIT m_stack->tabBar()->countChanged();
     });
 }
 
@@ -47,8 +48,9 @@ void Stack_qtquick::init()
     // Emit even if it hasn't changed. When removing indexes lower than the current tab the current
     // tab index will shift. Too much refactoring to make this signal be emitted less than it's
     // needed, but no big deal either, as it's mostly used to update tab title's and such.
-    connect(m_dockWidgetModel, &DockWidgetModel::dockWidgetRemoved, m_stack,
-            [this] { Q_EMIT m_stack->currentTabChanged(m_stack->tabBar()->currentIndex()); });
+    connect(m_dockWidgetModel, &DockWidgetModel::dockWidgetRemoved, m_stack, [this] {
+        Q_EMIT m_stack->tabBar()->currentTabChanged(m_stack->tabBar()->currentIndex());
+    });
 
     Q_EMIT tabBarChanged();
 }
@@ -82,11 +84,12 @@ bool Stack_qtquick::isPositionDraggable(QPoint p) const
 void Stack_qtquick::setCurrentDockWidget(int index)
 {
     Controllers::DockWidget *dw = dockwidgetAt(index);
+    Controllers::DockWidget *currentDw = m_dockWidgetModel->currentDockWidget();
 
-    if (m_currentDockWidget != dw) {
-        m_currentDockWidget = dw;
-        Q_EMIT m_stack->currentDockWidgetChanged(dw);
-        Q_EMIT m_stack->currentTabChanged(index);
+    if (currentDw != dw) {
+        m_dockWidgetModel->setCurrentDockWidget(dw);
+        Q_EMIT m_stack->tabBar()->currentDockWidgetChanged(dw);
+        Q_EMIT m_stack->tabBar()->currentTabChanged(index);
     }
 }
 
@@ -97,7 +100,7 @@ QObject *Stack_qtquick::tabBarViewObj() const
 
 Controllers::DockWidget *Stack_qtquick::currentDockWidget() const
 {
-    return m_currentDockWidget;
+    return m_dockWidgetModel->currentDockWidget();
 }
 
 bool Stack_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &,
@@ -126,16 +129,7 @@ Controllers::DockWidget *Stack_qtquick::dockwidgetAt(int index) const
 
 int Stack_qtquick::currentIndex() const
 {
-    if (!m_currentDockWidget)
-        return -1;
-
-    const int index = indexOfDockWidget(m_currentDockWidget);
-
-    if (index == -1)
-        qWarning() << Q_FUNC_INFO << "Unexpected null index for" << m_currentDockWidget << this
-                   << "; count=" << m_dockWidgetModel->count();
-
-    return index;
+    return m_dockWidgetModel->currentIndex();
 }
 
 bool Stack_qtquick::tabBarAutoHide() const
@@ -194,6 +188,16 @@ bool DockWidgetModel::contains(Controllers::DockWidget *dw) const
     return m_dockWidgets.contains(dw);
 }
 
+Controllers::DockWidget *DockWidgetModel::currentDockWidget() const
+{
+    return m_currentDockWidget;
+}
+
+void DockWidgetModel::setCurrentDockWidget(Controllers::DockWidget *dw)
+{
+    m_currentDockWidget = dw;
+}
+
 QHash<int, QByteArray> DockWidgetModel::roleNames() const
 {
     return { { Role_Title, "title" } };
@@ -239,6 +243,20 @@ void DockWidgetModel::remove(Controllers::DockWidget *dw)
 int DockWidgetModel::indexOf(const Controllers::DockWidget *dw)
 {
     return m_dockWidgets.indexOf(const_cast<Controllers::DockWidget *>(dw));
+}
+
+int DockWidgetModel::currentIndex() const
+{
+    if (!m_currentDockWidget)
+        return -1;
+
+    const int index = m_dockWidgets.indexOf(m_currentDockWidget);
+
+    if (index == -1)
+        qWarning() << Q_FUNC_INFO << "Unexpected null index for" << m_currentDockWidget << this
+                   << "; count=" << count();
+
+    return index;
 }
 
 bool DockWidgetModel::insert(Controllers::DockWidget *dw, int index)

@@ -5358,7 +5358,7 @@ void TestDocks::tst_tabWidgetCurrentIndex()
 
     Controllers::DockWidget *currentDw = nullptr;
     auto group = dock1->dptr()->group();
-    connect(group->stack(), &Controllers::Stack::currentDockWidgetChanged, this,
+    connect(group->tabBar(), &Controllers::TabBar::currentDockWidgetChanged, this,
             [&currentDw](Controllers::DockWidget *dw) { currentDw = dw; });
 
     QCOMPARE(group->tabBar()->currentIndex(), 0);

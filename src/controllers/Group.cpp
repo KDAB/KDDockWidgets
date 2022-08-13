@@ -91,8 +91,8 @@ Group::Group(View *parent, FrameOptions options, int userType)
     s_dbg_numFrames++;
     DockRegistry::self()->registerGroup(this);
 
-    connect(m_stack, &Stack::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
-    connect(m_stack, &Controllers::Stack::currentTabChanged, this, &Group::onCurrentTabChanged);
+    connect(m_tabBar, &TabBar::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
+    connect(m_tabBar, &TabBar::currentTabChanged, this, &Group::onCurrentTabChanged);
 
     setLayout(parent ? parent->asLayout() : nullptr);
     m_stack->setTabBarAutoHide(!alwaysShowsTabs());
@@ -262,7 +262,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
         dockWidget->view()->close(); // Ensure closed
     } else {
         if (hasSingleDockWidget()) {
-            Q_EMIT m_stack->currentDockWidgetChanged(dockWidget);
+            Q_EMIT m_tabBar->currentDockWidgetChanged(dockWidget);
             setObjectName(dockWidget->uniqueName());
 
             if (!m_layoutItem) {
@@ -404,7 +404,7 @@ void Group::onCurrentTabChanged(int index)
 {
     if (index != -1) {
         if (auto dock = dockWidgetAt(index)) {
-            Q_EMIT m_stack->currentDockWidgetChanged(dock);
+            Q_EMIT m_tabBar->currentDockWidgetChanged(dock);
         } else {
             qWarning() << "dockWidgetAt" << index << "returned nullptr" << this;
         }

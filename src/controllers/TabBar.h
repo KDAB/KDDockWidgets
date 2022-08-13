@@ -76,6 +76,11 @@ public:
     QString text(int index) const;
     QRect rectForTab(int index) const;
 
+Q_SIGNALS:
+    void currentTabChanged(int index);
+    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
+    void countChanged();
+
 private:
     Controllers::Stack *const m_tabWidget;
     QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
