@@ -37,7 +37,6 @@ public:
     virtual bool isPositionDraggable(QPoint p) const = 0;
     virtual void renameTab(int index, const QString &) = 0;
     virtual int currentIndex() const = 0;
-    virtual int numDockWidgets() const = 0;
     virtual void changeTabIcon(int index, const QIcon &icon) = 0;
     virtual Controllers::DockWidget *dockwidgetAt(int index) const = 0;
     virtual int indexOfDockWidget(const Controllers::DockWidget *dw) const = 0;

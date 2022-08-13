@@ -18,6 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 class QMouseEvent;
+class QTabWidget;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets::Controllers {
@@ -36,6 +37,7 @@ public:
     Controllers::TabBar *tabBar() const;
 
     Controllers::DockWidget *currentDockWidget() const override;
+    int currentIndex() const override;
 
     QString text(int index) const override;
     QRect rectForTab(int index) const override;
@@ -43,6 +45,12 @@ public:
 
     bool tabsAreMovable() const override;
     int tabAt(QPoint localPos) const override;
+
+    int numDockWidgets() const override;
+    Controllers::DockWidget *dockwidgetAt(int index) const override;
+    int indexOfDockWidget(const Controllers::DockWidget *dw) const override;
+
+    QTabWidget *tabWidget() const;
 
 Q_SIGNALS:
     void dockWidgetInserted(int index);

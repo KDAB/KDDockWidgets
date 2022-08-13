@@ -62,7 +62,7 @@ bool Stack::isPositionDraggable(QPoint p) const
 
 Controllers::DockWidget *Stack::currentDockWidget() const
 {
-    return dockwidgetAt(currentIndex());
+    return dockwidgetAt(m_tabBar->currentIndex());
 }
 
 void Stack::addDockWidget(DockWidget *dock)
@@ -230,16 +230,9 @@ Controllers::TabBar *Stack::tabBar() const
     return m_tabBar;
 }
 
-int Stack::currentIndex() const
-{
-    return dynamic_cast<Views::StackViewInterface *>(view())->currentIndex();
-}
-
 int Stack::numDockWidgets() const
 {
-    auto svi = dynamic_cast<Views::StackViewInterface *>(view());
-    Q_ASSERT(svi);
-    return svi->numDockWidgets();
+    return m_tabBar->numDockWidgets();
 }
 
 void Stack::changeTabIcon(int index, const QIcon &icon)

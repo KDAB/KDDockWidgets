@@ -354,6 +354,7 @@ protected:
     bool m_inDtor = false;
 
     Controllers::Stack *const m_stack;
+    Controllers::TabBar *const m_tabBar;
     Controllers::TitleBar *const m_titleBar;
 
 private:

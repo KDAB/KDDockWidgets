@@ -48,7 +48,6 @@ class DOCKS_EXPORT Stack_qtquick : public View_qtquick, public StackViewInterfac
 public:
     explicit Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent = nullptr);
 
-    int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
     int indexOfDockWidget(const Controllers::DockWidget *) const override;
     DockWidgetModel *dockWidgetModel() const;

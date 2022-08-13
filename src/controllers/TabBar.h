@@ -43,6 +43,12 @@ public:
     /// @brief Returns the current dock widget
     DockWidget *currentDockWidget() const;
 
+    /// @brief Returns the index of the current tab
+    int currentIndex() const;
+
+    /// @brief Returns the tab index of the specified dock widget
+    int indexOfDockWidget(const Controllers::DockWidget *dw) const;
+
     // Draggable
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;
     std::unique_ptr<WindowBeingDragged> makeWindow() override;

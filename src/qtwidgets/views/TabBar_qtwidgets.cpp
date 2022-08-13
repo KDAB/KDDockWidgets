@@ -10,7 +10,11 @@
 */
 
 #include "TabBar_qtwidgets.h"
+#include "Stack_qtwidgets.h"
+#include "DockWidget_qtwidgets.h"
+#include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/controllers/TabBar.h"
+#include "kddockwidgets/controllers/Stack.h"
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 #include "Config.h"
@@ -142,4 +146,34 @@ void TabBar_qtwidgets::tabRemoved(int index)
 {
     QTabBar::tabRemoved(index);
     Q_EMIT dockWidgetRemoved(index);
+}
+
+int TabBar_qtwidgets::currentIndex() const
+{
+    return QTabBar::currentIndex();
+}
+
+int TabBar_qtwidgets::numDockWidgets() const
+{
+    return QTabBar::count();
+}
+
+QTabWidget *TabBar_qtwidgets::tabWidget() const
+{
+    if (auto tw = dynamic_cast<Stack_qtwidgets *>(m_controller->stack()->view()))
+        return tw;
+
+    qWarning() << Q_FUNC_INFO << "Unexpected null QTabWidget";
+    return nullptr;
+}
+
+Controllers::DockWidget *TabBar_qtwidgets::dockwidgetAt(int index) const
+{
+    auto view = qobject_cast<DockWidget_qtwidgets *>(tabWidget()->widget(index));
+    return view ? view->dockWidget() : nullptr;
+}
+
+int TabBar_qtwidgets::indexOfDockWidget(const Controllers::DockWidget *dw) const
+{
+    return tabWidget()->indexOf(View_qt::asQWidget(dw->view()));
 }

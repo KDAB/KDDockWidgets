@@ -124,7 +124,7 @@ void Group_qtwidgets::setCurrentTabIndex_impl(int index)
 
 KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::currentDockWidget_impl() const
 {
-    return m_group->stack()->dockwidgetAt(m_group->stack()->currentIndex());
+    return m_group->stack()->currentDockWidget();
 }
 
 KDDockWidgets::Controllers::DockWidget *Group_qtwidgets::dockWidgetAt_impl(int index) const

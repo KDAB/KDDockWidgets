@@ -92,6 +92,11 @@ Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) cons
     return dockWidgetAt(dynamic_cast<Views::TabBarViewInterface *>(view())->tabAt(localPos));
 }
 
+int TabBar::indexOfDockWidget(const Controllers::DockWidget *dw) const
+{
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->indexOfDockWidget(dw);
+}
+
 std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
 {
     auto dock = m_lastPressedDockWidget;
@@ -165,9 +170,8 @@ bool Controllers::TabBar::hasSingleDockWidget() const
 
 int Controllers::TabBar::numDockWidgets() const
 {
-    return m_tabWidget->numDockWidgets();
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->numDockWidgets();
 }
-
 
 Controllers::DockWidget *Controllers::TabBar::singleDockWidget() const
 {
@@ -208,4 +212,9 @@ QRect Controllers::TabBar::rectForTab(int index) const
 DockWidget *Controllers::TabBar::currentDockWidget() const
 {
     return dynamic_cast<Views::TabBarViewInterface *>(view())->currentDockWidget();
+}
+
+int TabBar::currentIndex() const
+{
+    return dynamic_cast<Views::TabBarViewInterface *>(view())->currentIndex();
 }

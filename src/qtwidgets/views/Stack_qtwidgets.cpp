@@ -78,11 +78,6 @@ void Stack_qtwidgets::init()
     setDocumentMode(m_stack->options() & StackOption_DocumentMode);
 }
 
-int Stack_qtwidgets::numDockWidgets() const
-{
-    return count();
-}
-
 void Stack_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
 {
     removeTab(indexOf(View_qt::asQWidget(dw)));

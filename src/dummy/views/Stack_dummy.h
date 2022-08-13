@@ -23,7 +23,6 @@ class DOCKS_EXPORT Stack_dummy : public View_dummy, public StackViewInterface
 public:
     explicit Stack_dummy(Controllers::Stack *controller, QWidget *parent = nullptr);
 
-    int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
     int indexOfDockWidget(const Controllers::DockWidget *) const override;
 

@@ -4794,13 +4794,12 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
 
     auto group2 = dock2->dptr()->group();
 
-    Controllers::Stack *tb2 = group2->stack();
+    Controllers::TabBar *tb2 = group2->tabBar();
     QCOMPARE(tb2->currentIndex(), 1); // Was the last to be added
 
-    auto tabBar2 = tb2->tabBar();
-    const QRect rect0 = tabBar2->rectForTab(0);
-    const QPoint globalPos = tabBar2->view()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
-    Tests::clickOn(globalPos, tabBar2->view());
+    const QRect rect0 = tb2->rectForTab(0);
+    const QPoint globalPos = tb2->view()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
+    Tests::clickOn(globalPos, tb2->view());
 
     QVERIFY(!titleBar1->isFocused());
     QVERIFY(dock2->titleBar()->isFocused());
@@ -4813,7 +4812,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     if (Platform::instance()->isQtWidgets()) {
         // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++
         // TitleBar for focus
-        Tests::clickOn(globalPos, tabBar2->view());
+        Tests::clickOn(globalPos, tb2->view());
         QVERIFY(!dock1->titleBar()->isFocused());
         QVERIFY(dock2->titleBar()->isFocused());
     }
@@ -5362,16 +5361,16 @@ void TestDocks::tst_tabWidgetCurrentIndex()
     connect(group->stack(), &Controllers::Stack::currentDockWidgetChanged, this,
             [&currentDw](Controllers::DockWidget *dw) { currentDw = dw; });
 
-    QCOMPARE(group->stack()->currentIndex(), 0);
+    QCOMPARE(group->tabBar()->currentIndex(), 0);
     dock1->addDockWidgetAsTab(dock2);
 
-    QCOMPARE(group->stack()->currentIndex(), 1);
+    QCOMPARE(group->tabBar()->currentIndex(), 1);
     QCOMPARE(group->currentDockWidget(), currentDw);
     QCOMPARE(dock2, currentDw);
 
     dock2->close();
 
-    QCOMPARE(group->stack()->currentIndex(), 0);
+    QCOMPARE(group->tabBar()->currentIndex(), 0);
     QCOMPARE(dock1, currentDw);
 }
 
@@ -6260,15 +6259,15 @@ void TestDocks::tst_toggleTabbed()
     QVERIFY(dock1->toggleAction()->isChecked());
     QVERIFY(dock1->isCurrentTab());
     Controllers::Group *group = dock1->dptr()->group();
-    Controllers::Stack *tw = group->stack();
-    QCOMPARE(tw->currentIndex(), 0);
-    QCOMPARE(tw->numDockWidgets(), 1);
-    QCOMPARE(tw->currentDockWidget(), dock1);
+    Controllers::TabBar *tb = group->tabBar();
+    QCOMPARE(tb->currentIndex(), 0);
+    QCOMPARE(tb->numDockWidgets(), 1);
+    QCOMPARE(group->stack()->currentDockWidget(), dock1);
     QVERIFY(!dock0->isVisible());
     QVERIFY(group->isVisible());
 
     QCOMPARE(group->currentIndex(), 0);
-    QCOMPARE(group->stack()->currentIndex(), 0);
+    QCOMPARE(group->tabBar()->currentIndex(), 0);
 
     QVERIFY(dock1->isVisible());
 }

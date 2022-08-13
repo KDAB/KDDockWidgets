@@ -37,7 +37,6 @@ public:
     /// @brief Returns the QTabBar associated with this QTabWidget
     QTabBar *tabBar() const;
 
-    int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
     int indexOfDockWidget(const Controllers::DockWidget *) const override;
 

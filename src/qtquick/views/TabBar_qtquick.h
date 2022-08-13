@@ -37,6 +37,7 @@ namespace KDDockWidgets::Views {
 
 class DockWidget;
 class TabWidget;
+class Stack_qtquick;
 
 class DOCKS_EXPORT TabBar_qtquick : public View_qtquick, public TabBarViewInterface
 {
@@ -56,11 +57,17 @@ public:
 
     void moveTabTo(int from, int to) override;
     Controllers::DockWidget *currentDockWidget() const override;
+    int currentIndex() const override;
     bool tabsAreMovable() const override;
+    Stack_qtquick *stackView() const;
 
     /// Returns whether the tab bar should hide when there's only 1 tab visible
     /// Default true, unless Flag_HideTitleBarWhenTabsVisible
     bool tabBarAutoHide() const;
+
+    int numDockWidgets() const override;
+    Controllers::DockWidget *dockwidgetAt(int index) const override;
+    int indexOfDockWidget(const Controllers::DockWidget *dw) const override;
 
 Q_SIGNALS:
     void tabBarQmlItemChanged();

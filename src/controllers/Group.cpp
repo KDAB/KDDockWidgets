@@ -83,6 +83,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     , FocusScope(view())
     , d(new Private())
     , m_stack(new Controllers::Stack(this, tabWidgetOptions(options)))
+    , m_tabBar(m_stack->tabBar())
     , m_titleBar(new Controllers::TitleBar(this))
     , m_options(actualOptions(options))
     , m_userType(userType)
@@ -325,7 +326,7 @@ int Group::currentIndex() const
     if (m_inCtor || m_inDtor)
         return -1;
 
-    return m_stack->currentIndex();
+    return m_tabBar->currentIndex();
 }
 
 void Group::setCurrentTabIndex(int index)

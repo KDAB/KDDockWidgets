@@ -18,8 +18,10 @@
  */
 
 #include "TabBar_qtquick.h"
+#include "Stack_qtquick.h"
 #include "kddockwidgets/controllers/TabBar.h"
 #include "kddockwidgets/controllers/Stack.h"
+#include "Stack_qtquick.h"
 
 #include <QMetaObject>
 #include <QMouseEvent>
@@ -145,4 +147,34 @@ bool TabBar_qtquick::tabsAreMovable() const
 bool TabBar_qtquick::tabBarAutoHide() const
 {
     return m_tabBar->stack()->tabBarAutoHide();
+}
+
+Stack_qtquick *TabBar_qtquick::stackView() const
+{
+    if (auto tw = dynamic_cast<Stack_qtquick *>(m_tabBar->stack()->view()))
+        return tw;
+
+    qWarning() << Q_FUNC_INFO << "Unexpected null Stack_qtquick";
+    return nullptr;
+}
+
+int TabBar_qtquick::currentIndex() const
+{
+    // TODOm4: Move stack's model to tabbar
+    return stackView()->currentIndex();
+}
+
+int TabBar_qtquick::numDockWidgets() const
+{
+    return stackView()->dockWidgetModel()->count();
+}
+
+Controllers::DockWidget *TabBar_qtquick::dockwidgetAt(int index) const
+{
+    return stackView()->dockWidgetModel()->dockWidgetAt(index);
+}
+
+int TabBar_qtquick::indexOfDockWidget(const Controllers::DockWidget *dw) const
+{
+    return stackView()->dockWidgetModel()->indexOf(dw);
 }

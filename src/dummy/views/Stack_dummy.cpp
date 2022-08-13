@@ -38,11 +38,6 @@ void Stack_dummy::init()
 {
 }
 
-int Stack_dummy::numDockWidgets() const
-{
-    return 1;
-}
-
 void Stack_dummy::removeDockWidget(Controllers::DockWidget *)
 {
 }

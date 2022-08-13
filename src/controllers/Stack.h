@@ -68,11 +68,6 @@ public:
     ///@brief change the tab's icon
     void changeTabIcon(int index, const QIcon &);
 
-    /**
-     * @brief Returns the current index
-     */
-    int currentIndex() const;
-
     ///@brief appends a dock widget into this TabWidget
     void addDockWidget(DockWidget *);
 

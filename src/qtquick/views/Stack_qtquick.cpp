@@ -31,7 +31,7 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this, [this] {
         if (m_currentDockWidget && indexOfDockWidget(m_currentDockWidget) == -1) {
             // The current dock widget was removed, set the first one as current
-            if (numDockWidgets() > 0)
+            if (m_stack->numDockWidgets() > 0)
                 setCurrentDockWidget(0);
         }
 
@@ -48,7 +48,7 @@ void Stack_qtquick::init()
     // tab index will shift. Too much refactoring to make this signal be emitted less than it's
     // needed, but no big deal either, as it's mostly used to update tab title's and such.
     connect(m_dockWidgetModel, &DockWidgetModel::dockWidgetRemoved, m_stack,
-            [this] { Q_EMIT m_stack->currentTabChanged(m_stack->currentIndex()); });
+            [this] { Q_EMIT m_stack->currentTabChanged(m_stack->tabBar()->currentIndex()); });
 
     Q_EMIT tabBarChanged();
 }
@@ -61,11 +61,6 @@ Controllers::Stack *Stack_qtquick::stack() const
 void Stack_qtquick::setDocumentMode(bool)
 {
     qDebug() << "Not implemented";
-}
-
-int Stack_qtquick::numDockWidgets() const
-{
-    return m_dockWidgetModel->count();
 }
 
 void Stack_qtquick::removeDockWidget(Controllers::DockWidget *dw)
