@@ -116,6 +116,11 @@ void TestQtQuick::tst_hoverShowsDropIndicators()
 
 int main(int argc, char *argv[])
 {
+    // Might be disabled by env var
+    const auto frontends = Platform::instance()->frontendTypes();
+    if (std::find(frontends.cbegin(), frontends.cend(), FrontendType::QtQuick) == frontends.cend())
+        return 0;
+
     KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtQuick);
 
     TestQtQuick test;
