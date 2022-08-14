@@ -223,21 +223,34 @@ QRect Controllers::TabBar::rectForTab(int index) const
 
 DockWidget *TabBar::currentDockWidget() const
 {
-    return dockWidgetAt(currentIndex());
+    return m_currentDockWidget;
 }
 
 void TabBar::setCurrentDockWidget(DockWidget *dw)
 {
-    dynamic_cast<Views::TabBarViewInterface *>(view())->setCurrentDockWidget(dw);
+    if (dw == m_currentDockWidget)
+        return;
+
+    m_currentDockWidget = dw;
+    setCurrentIndex(indexOfDockWidget(dw));
+    Q_EMIT currentDockWidgetChanged(dw);
 }
 
 int TabBar::currentIndex() const
 {
-    return dynamic_cast<Views::TabBarViewInterface *>(view())->currentIndex();
+    if (!m_currentDockWidget)
+        return -1;
+
+    return indexOfDockWidget(m_currentDockWidget);
 }
 
 void TabBar::setCurrentIndex(int index)
 {
+    auto newCurrentDw = dockWidgetAt(index);
+    if (newCurrentDw == m_currentDockWidget)
+        return;
+
+    m_currentDockWidget = newCurrentDw;
     dynamic_cast<Views::TabBarViewInterface *>(view())->setCurrentIndex(index);
 }
 

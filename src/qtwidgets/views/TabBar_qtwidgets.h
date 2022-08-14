@@ -36,8 +36,6 @@ public:
 
     Controllers::TabBar *tabBar() const;
 
-    Controllers::DockWidget *currentDockWidget() const override;
-    int currentIndex() const override;
     void setCurrentIndex(int index) override;
 
     QString text(int index) const override;
@@ -61,6 +59,7 @@ Q_SIGNALS:
     void dockWidgetRemoved(int index);
 
 protected:
+    void init() override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseDoubleClickEvent(QMouseEvent *e) override;

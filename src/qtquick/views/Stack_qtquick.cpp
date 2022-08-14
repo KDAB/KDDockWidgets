@@ -135,6 +135,7 @@ Controllers::DockWidget *DockWidgetModel::currentDockWidget() const
 void DockWidgetModel::setCurrentDockWidget(Controllers::DockWidget *dw)
 {
     m_currentDockWidget = dw;
+    setCurrentIndex(indexOf(dw));
 }
 
 QHash<int, QByteArray> DockWidgetModel::roleNames() const
@@ -214,6 +215,7 @@ void DockWidgetModel::setCurrentIndex(int index)
     if (m_currentDockWidget != dw) {
         setCurrentDockWidget(dw);
         Q_ASSERT(m_tabBar);
+        m_tabBar->setCurrentIndex(index);
         Q_EMIT m_tabBar->currentDockWidgetChanged(dw);
         Q_EMIT m_tabBar->currentTabChanged(index);
     }

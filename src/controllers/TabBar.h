@@ -50,7 +50,6 @@ public:
 
     /// @brief Returns the tab index of the specified dock widget
     int indexOfDockWidget(const Controllers::DockWidget *dw) const;
-
     void removeDockWidget(Controllers::DockWidget *dw);
     bool insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                           const QString &title);
@@ -94,6 +93,7 @@ Q_SIGNALS:
 private:
     Controllers::Stack *const m_tabWidget;
     QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
+    DockWidget *m_currentDockWidget = nullptr;
 };
 
 }

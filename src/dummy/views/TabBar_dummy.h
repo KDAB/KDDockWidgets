@@ -46,7 +46,6 @@ public:
     QRect rectForTab(int index) const override;
 
     void moveTabTo(int from, int to) override;
-    Controllers::DockWidget *currentDockWidget() const override;
     bool tabsAreMovable() const override;
 
 protected:

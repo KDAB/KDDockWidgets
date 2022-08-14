@@ -65,15 +65,14 @@ TabBar_qtwidgets::TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *par
 {
 }
 
+void TabBar_qtwidgets::init()
+{
+    connect(this, &QTabBar::currentChanged, m_tabBar, &Controllers::TabBar::setCurrentIndex);
+}
+
 int TabBar_qtwidgets::tabAt(QPoint localPos) const
 {
     return QTabBar::tabAt(localPos);
-}
-
-Controllers::DockWidget *TabBar_qtwidgets::currentDockWidget() const
-{
-    const int index = currentIndex();
-    return index == -1 ? nullptr : m_controller->dockWidgetAt(index);
 }
 
 void TabBar_qtwidgets::mousePressEvent(QMouseEvent *e)
@@ -146,11 +145,6 @@ void TabBar_qtwidgets::tabRemoved(int index)
 {
     QTabBar::tabRemoved(index);
     Q_EMIT dockWidgetRemoved(index);
-}
-
-int TabBar_qtwidgets::currentIndex() const
-{
-    return QTabBar::currentIndex();
 }
 
 void TabBar_qtwidgets::setCurrentIndex(int index)

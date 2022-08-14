@@ -60,11 +60,6 @@ void TabBar_dummy::moveTabTo(int from, int to)
     // Not implemented yet
 }
 
-Controllers::DockWidget *TabBar_dummy::currentDockWidget() const
-{
-    return nullptr;
-}
-
 bool TabBar_dummy::tabsAreMovable() const
 {
     return false;

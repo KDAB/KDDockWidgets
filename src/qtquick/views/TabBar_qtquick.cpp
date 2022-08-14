@@ -134,11 +134,6 @@ void TabBar_qtquick::moveTabTo(int from, int to)
     // Not implemented yet
 }
 
-Controllers::DockWidget *TabBar_qtquick::currentDockWidget() const
-{
-    return nullptr;
-}
-
 bool TabBar_qtquick::tabsAreMovable() const
 {
     return false;
@@ -156,12 +151,6 @@ Stack_qtquick *TabBar_qtquick::stackView() const
 
     qWarning() << Q_FUNC_INFO << "Unexpected null Stack_qtquick";
     return nullptr;
-}
-
-int TabBar_qtquick::currentIndex() const
-{
-    // TODOm4: Move stack's model to tabbar
-    return stackView()->dockWidgetModel()->currentIndex();
 }
 
 void TabBar_qtquick::setCurrentIndex(int index)
