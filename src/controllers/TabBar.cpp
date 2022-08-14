@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"
+#include "controllers/DockWidget_p.h"
 #include "views/TabBarViewInterface.h"
 #include "Platform.h"
 
@@ -116,6 +117,14 @@ void TabBar::removeDockWidget(Controllers::DockWidget *dw)
 bool TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                               const QString &title)
 {
+    if (auto oldGroup = dw->dptr()->group()) {
+        if (auto oldTabBar = oldGroup->tabBar()) {
+            if (oldTabBar != this) {
+                oldTabBar->removeDockWidget(dw);
+            }
+        }
+    }
+
     m_dockWidgets.insert(index, dw);
     connect(dw, &DockWidget::aboutToDelete, this, &TabBar::removeDockWidget);
 
