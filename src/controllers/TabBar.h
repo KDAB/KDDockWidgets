@@ -93,6 +93,7 @@ private:
     Controllers::Stack *const m_tabWidget;
     QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
     DockWidget *m_currentDockWidget = nullptr;
+    QVector<const DockWidget *> m_dockWidgets;
 };
 
 }

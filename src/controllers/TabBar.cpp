@@ -84,7 +84,7 @@ Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(int index) const
     if (index < 0 || index >= numDockWidgets())
         return nullptr;
 
-    return dynamic_cast<Views::TabBarViewInterface *>(view())->dockWidgetAt(index);
+    return const_cast<DockWidget *>(m_dockWidgets.value(index));
 }
 
 Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) const
@@ -94,17 +94,31 @@ Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) cons
 
 int TabBar::indexOfDockWidget(const Controllers::DockWidget *dw) const
 {
-    return dynamic_cast<Views::TabBarViewInterface *>(view())->indexOfDockWidget(dw);
+    return m_dockWidgets.indexOf(dw);
 }
 
 void TabBar::removeDockWidget(Controllers::DockWidget *dw)
 {
+    const bool wasCurrent = dw == m_currentDockWidget;
+    const int index = m_dockWidgets.indexOf(dw);
+
+    if (wasCurrent) {
+        const bool isLast = index == m_dockWidgets.count() - 1;
+        const int newCurrentIndex = isLast ? index - 1 : index + 1;
+        setCurrentIndex(newCurrentIndex);
+    }
+
+    dw->disconnect(this);
+    m_dockWidgets.removeOne(dw);
     dynamic_cast<Views::TabBarViewInterface *>(view())->removeDockWidget(dw);
 }
 
 bool TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                               const QString &title)
 {
+    m_dockWidgets.insert(index, dw);
+    connect(dw, &DockWidget::aboutToDelete, this, &TabBar::removeDockWidget);
+
     return dynamic_cast<Views::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon,
                                                                                 title);
 }
@@ -241,7 +255,7 @@ int TabBar::currentIndex() const
     if (!m_currentDockWidget)
         return -1;
 
-    return indexOfDockWidget(m_currentDockWidget);
+    return m_dockWidgets.indexOf(m_currentDockWidget);
 }
 
 void TabBar::setCurrentIndex(int index)
