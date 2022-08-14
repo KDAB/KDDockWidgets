@@ -28,16 +28,8 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
     , StackViewInterface(controller)
     , m_dockWidgetModel(new DockWidgetModel(this))
 {
-    connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this, [this] {
-        Controllers::DockWidget *currentDw = m_dockWidgetModel->currentDockWidget();
-        if (currentDw && m_dockWidgetModel->indexOf(currentDw) == -1) {
-            // The current dock widget was removed, set the first one as current
-            if (m_stack->numDockWidgets() > 0)
-                m_dockWidgetModel->setCurrentIndex(0);
-        }
-
-        Q_EMIT m_stack->tabBar()->countChanged();
-    });
+    connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
+            [this] { Q_EMIT m_stack->tabBar()->countChanged(); });
 }
 
 void Stack_qtquick::init()

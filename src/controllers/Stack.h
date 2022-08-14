@@ -35,9 +35,6 @@ public:
      */
     int numDockWidgets() const;
 
-    /// @brief Returns the current dock widget
-    DockWidget *currentDockWidget() const;
-
     /// Sets whether the tab bar should be hidden when there's only 1 tab shown
     /// Default is true.
     /// See Config::Flag_AlwaysShowTabs to change this behaviour

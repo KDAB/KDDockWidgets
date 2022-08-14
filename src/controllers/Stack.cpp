@@ -55,11 +55,6 @@ bool Stack::isPositionDraggable(QPoint p) const
     return dynamic_cast<Views::StackViewInterface *>(view())->isPositionDraggable(p);
 }
 
-Controllers::DockWidget *Stack::currentDockWidget() const
-{
-    return m_tabBar->currentDockWidget();
-}
-
 void Stack::addDockWidget(DockWidget *dock)
 {
     insertDockWidget(dock, numDockWidgets());
