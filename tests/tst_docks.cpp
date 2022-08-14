@@ -6262,7 +6262,7 @@ void TestDocks::tst_toggleTabbed()
     Controllers::TabBar *tb = group->tabBar();
     QCOMPARE(tb->currentIndex(), 0);
     QCOMPARE(tb->numDockWidgets(), 1);
-    QCOMPARE(group->stack()->currentDockWidget(), dock1);
+    QCOMPARE(group->tabBar()->currentDockWidget(), dock1);
     QVERIFY(!dock0->isVisible());
     QVERIFY(group->isVisible());
 
