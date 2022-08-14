@@ -143,7 +143,6 @@ void DockWidgetModel::remove(Controllers::DockWidget *dw)
 {
     QScopedValueRollback<bool> guard(m_removeGuard, true);
     const int row = indexOf(dw);
-    const bool wasCurrent = dw == m_currentDockWidget;
 
     if (row == -1) {
         if (!m_removeGuard) {
@@ -157,13 +156,6 @@ void DockWidgetModel::remove(Controllers::DockWidget *dw)
         const auto connections = m_connections.take(dw);
         for (const QMetaObject::Connection &conn : connections)
             disconnect(conn);
-
-        if (wasCurrent) {
-            const bool isLast = row == count() - 1;
-            const int newCurrentIndex = isLast ? row - 1 : row + 1;
-            if (newCurrentIndex >= 0)
-                setCurrentIndex(newCurrentIndex);
-        }
 
         beginRemoveRows(QModelIndex(), row, row);
         m_dockWidgets.removeOne(dw);
