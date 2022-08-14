@@ -86,7 +86,6 @@ public:
 public: // TODOm3
     void onTabInserted();
     void onTabRemoved();
-    void onCurrentTabChanged(int index);
     bool onMouseDoubleClick(QPoint localPos);
 
 private:

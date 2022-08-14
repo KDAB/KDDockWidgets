@@ -86,7 +86,6 @@ public:
     ///@brief change the tab's icon
     void changeTabIcon(int index, const QIcon &);
 Q_SIGNALS:
-    void currentTabChanged(int index);
     void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
     void countChanged();
 

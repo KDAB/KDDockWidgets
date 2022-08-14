@@ -169,11 +169,6 @@ void Stack::onTabRemoved()
     m_group->onDockWidgetCountChanged();
 }
 
-void Stack::onCurrentTabChanged(int index)
-{
-    Q_UNUSED(index);
-}
-
 bool Stack::onMouseDoubleClick(QPoint localPos)
 {
     // User clicked the empty space of the tab widget and we don't have title bar
