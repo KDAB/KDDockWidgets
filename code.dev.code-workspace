@@ -1,7 +1,12 @@
 {
   "folders": [
     {
+      "name": "kddw",
       "path": "."
+    },
+    {
+      "name": "kddw-example",
+      "path": "../kddockwidgets-flutter-example"
     }
   ],
   "settings": {
@@ -42,9 +47,9 @@
         "name": "qtwidgets_dockwidgets",
         "type": "lldb",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_dockwidgets",
+        "program": "/data/sources/kddockwidgets/build-dev/bin/examples/qtwidgets_dockwidgets",
         "args": [],
-        "cwd": "${workspaceFolder}"
+        "cwd": "/data/sources/kddockwidgets/"
       },
       {
         "name": "qtwidgets_minimal",
@@ -82,11 +87,19 @@
         "name": "tst_docks",
         "type": "lldb",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/tst_docks",
+        "program": "/data/sources/kddockwidgets/build-dev/bin/tst_docks",
         "args": [
-          "tst_doesntHaveNativeTitleBar"
+          "tst_doubleClickTabToDetach"
         ],
-        "cwd": "${workspaceFolder}"
+        "cwd": "/data/sources/kddockwidgets/"
+      },
+      {
+        "name": "tst_tabbar",
+        "type": "lldb",
+        "request": "launch",
+        "program": "/data/sources/kddockwidgets/build-dev-asan/bin/tst_tabbar",
+        "args": [],
+        "cwd": "/data/sources/kddockwidgets/"
       },
       {
         "name": "tst_qtwidgets",
@@ -144,6 +157,13 @@
         "cwd": "${workspaceFolder}",
         "stopAtEntry": false,
         "externalConsole": false
+      },
+      {
+        "name": "flutter-kddw-example",
+        "type": "lldb",
+        "request": "launch",
+        "program": "/data/sources/kddockwidgets-flutter-example/build/linux/x64/debug/bundle/kddockwidgets_flutter_example",
+        "args": []
       }
     ]
   }
