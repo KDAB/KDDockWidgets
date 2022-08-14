@@ -61,8 +61,8 @@ Group_qtquick::~Group_qtquick()
 
 void Group_qtquick::init()
 {
-    connect(m_group->stack()->tabBar(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
-            this, SLOT(updateConstriants()));
+    connect(m_group->tabBar(), &Controllers::TabBar::countChanged, this,
+            &Group_qtquick::updateConstriants);
 
     connect(this, &View_qtquick::geometryUpdated, this,
             [this] { View::d->layoutInvalidated.emit(); });
