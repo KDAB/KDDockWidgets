@@ -68,7 +68,6 @@ void Stack_qtwidgets::init()
     connect(this, &QTabWidget::currentChanged, this, [this](int index) {
         m_stack->onCurrentTabChanged(index);
         Q_EMIT m_stack->tabBar()->currentTabChanged(index);
-        Q_EMIT m_stack->tabBar()->currentDockWidgetChanged(m_stack->currentDockWidget());
     });
 
     m_tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect(

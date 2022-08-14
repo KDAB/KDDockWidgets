@@ -320,9 +320,6 @@ protected:
     void focusedWidgetChangedCallback() override;
     void setParentView_impl(View *parent) override;
 
-protected Q_SLOTS:
-    void onCurrentTabChanged(int index);
-
 public:
     /**
      * @brief Returns the minimum size of the dock widgets.

@@ -214,9 +214,7 @@ void DockWidgetModel::setCurrentIndex(int index)
 
     if (m_currentDockWidget != dw) {
         setCurrentDockWidget(dw);
-        Q_ASSERT(m_tabBar);
         m_tabBar->setCurrentIndex(index);
-        Q_EMIT m_tabBar->currentDockWidgetChanged(dw);
         Q_EMIT m_tabBar->currentTabChanged(index);
     }
 }

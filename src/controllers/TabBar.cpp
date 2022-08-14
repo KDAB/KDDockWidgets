@@ -251,6 +251,7 @@ void TabBar::setCurrentIndex(int index)
         return;
 
     m_currentDockWidget = newCurrentDw;
+    Q_EMIT currentDockWidgetChanged(newCurrentDw);
     dynamic_cast<Views::TabBarViewInterface *>(view())->setCurrentIndex(index);
 }
 
