@@ -40,7 +40,6 @@ public:
     virtual void moveTabTo(int from, int to) = 0;
     virtual QRect rectForTab(int index) const = 0;
     virtual void setCurrentIndex(int index) = 0;
-    virtual int numDockWidgets() const = 0;
 
     virtual void renameTab(int index, const QString &) = 0;
     virtual void changeTabIcon(int index, const QIcon &icon) = 0;

@@ -65,8 +65,6 @@ public:
     /// Default true, unless Flag_HideTitleBarWhenTabsVisible
     bool tabBarAutoHide() const;
 
-    int numDockWidgets() const override;
-
     void removeDockWidget(Controllers::DockWidget *) override;
     void insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;

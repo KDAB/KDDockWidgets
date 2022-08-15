@@ -46,7 +46,6 @@ public:
     int tabAt(QPoint localPos) const override;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &icon) override;
-    int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
     void insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;

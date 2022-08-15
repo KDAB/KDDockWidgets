@@ -152,11 +152,6 @@ void TabBar_qtwidgets::setCurrentIndex(int index)
     QTabBar::setCurrentIndex(index);
 }
 
-int TabBar_qtwidgets::numDockWidgets() const
-{
-    return QTabBar::count();
-}
-
 QTabWidget *TabBar_qtwidgets::tabWidget() const
 {
     if (auto tw = dynamic_cast<Stack_qtwidgets *>(m_controller->stack()->view()))

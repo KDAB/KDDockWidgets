@@ -213,7 +213,7 @@ bool Controllers::TabBar::hasSingleDockWidget() const
 
 int Controllers::TabBar::numDockWidgets() const
 {
-    return dynamic_cast<Views::TabBarViewInterface *>(view())->numDockWidgets();
+    return m_dockWidgets.size();
 }
 
 Controllers::DockWidget *Controllers::TabBar::singleDockWidget() const

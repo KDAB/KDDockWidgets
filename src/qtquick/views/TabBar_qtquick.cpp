@@ -158,11 +158,6 @@ void TabBar_qtquick::setCurrentIndex(int index)
     stackView()->dockWidgetModel()->setCurrentIndex(index);
 }
 
-int TabBar_qtquick::numDockWidgets() const
-{
-    return stackView()->dockWidgetModel()->count();
-}
-
 void TabBar_qtquick::renameTab(int index, const QString &)
 {
     Q_UNUSED(index);
