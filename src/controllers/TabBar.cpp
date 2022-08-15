@@ -110,8 +110,14 @@ void TabBar::removeDockWidget(Controllers::DockWidget *dw)
     }
 
     dw->disconnect(this);
-    m_dockWidgets.removeOne(dw);
+
+    m_removeGuard = true;
+    // The view might call setCurrenteIndex() before our m_dockWidgets reflectig the state.
+    // m_removeGuard protects against that.
     dynamic_cast<Views::TabBarViewInterface *>(view())->removeDockWidget(dw);
+    m_removeGuard = false;
+
+    m_dockWidgets.removeOne(dw);
 }
 
 bool TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
@@ -251,6 +257,9 @@ DockWidget *TabBar::currentDockWidget() const
 
 void TabBar::setCurrentDockWidget(DockWidget *dw)
 {
+    if (m_removeGuard) // We're in the middle of a remove.
+        return;
+
     if (dw == m_currentDockWidget)
         return;
 
@@ -269,6 +278,9 @@ int TabBar::currentIndex() const
 
 void TabBar::setCurrentIndex(int index)
 {
+    if (m_removeGuard) // We're in the middle of a remove.
+        return;
+
     auto newCurrentDw = dockWidgetAt(index);
     if (newCurrentDw == m_currentDockWidget)
         return;

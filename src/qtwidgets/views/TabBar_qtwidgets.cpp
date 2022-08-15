@@ -168,17 +168,6 @@ QTabWidget *TabBar_qtwidgets::tabWidget() const
     return nullptr;
 }
 
-Controllers::DockWidget *TabBar_qtwidgets::dockWidgetAt(int index) const
-{
-    auto view = qobject_cast<DockWidget_qtwidgets *>(tabWidget()->widget(index));
-    return view ? view->dockWidget() : nullptr;
-}
-
-int TabBar_qtwidgets::indexOfDockWidget(const Controllers::DockWidget *dw) const
-{
-    return tabWidget()->indexOf(View_qt::asQWidget(dw->view()));
-}
-
 void TabBar_qtwidgets::renameTab(int index, const QString &text)
 {
     setTabText(index, text);
@@ -192,7 +181,7 @@ void TabBar_qtwidgets::changeTabIcon(int index, const QIcon &icon)
 void TabBar_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
 {
     auto tabWidget = static_cast<QTabWidget *>(View_qt::asQWidget(m_tabBar->stack()));
-    tabWidget->removeTab(indexOfDockWidget(dw));
+    tabWidget->removeTab(m_tabBar->indexOfDockWidget(dw));
 }
 
 bool TabBar_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,

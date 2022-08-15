@@ -41,8 +41,6 @@ public:
     virtual QRect rectForTab(int index) const = 0;
     virtual void setCurrentIndex(int index) = 0;
     virtual int numDockWidgets() const = 0;
-    virtual Controllers::DockWidget *dockWidgetAt(int index) const = 0;
-    virtual int indexOfDockWidget(const Controllers::DockWidget *dw) const = 0;
 
     virtual void renameTab(int index, const QString &) = 0;
     virtual void changeTabIcon(int index, const QIcon &icon) = 0;

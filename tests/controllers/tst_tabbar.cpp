@@ -38,6 +38,7 @@ TEST_CASE("TabBar indexes")
     CHECK_EQ(tabBar->numDockWidgets(), 0);
     CHECK_EQ(tabBar->currentIndex(), -1);
     CHECK_EQ(tabBar->currentDockWidget(), nullptr);
+    CHECK_EQ(tabBar->indexOfDockWidget(nullptr), -1);
 
     // Add 3: [dw0, dw1, dw2]
     auto dw0 = Config::self().viewFactory()->createDockWidget("dw0")->asDockWidgetController();
@@ -47,6 +48,8 @@ TEST_CASE("TabBar indexes")
     tabBar->insertDockWidget(1, dw1, {}, {});
     tabBar->insertDockWidget(2, dw2, {}, {});
 
+    CHECK_EQ(tabBar->indexOfDockWidget(dw0), 0);
+    CHECK_EQ(tabBar->indexOfDockWidget(dw2), 2);
     CHECK_EQ(tabBar->numDockWidgets(), 3);
     CHECK_EQ(tabBar->currentIndex(), 0);
     CHECK_EQ(tabBar->currentDockWidget(), dw0);
@@ -58,6 +61,8 @@ TEST_CASE("TabBar indexes")
     CHECK_EQ(tabBar->numDockWidgets(), 4);
     CHECK_EQ(tabBar->currentIndex(), 1);
     CHECK_EQ(tabBar->currentDockWidget(), dw0);
+    CHECK_EQ(tabBar->indexOfDockWidget(dw3), 0);
+    CHECK_EQ(tabBar->indexOfDockWidget(dw0), 1);
 
     // Set index=2 as current
     tabBar->setCurrentIndex(2);
@@ -75,6 +80,8 @@ TEST_CASE("TabBar indexes")
     // Remove the current: [dw3, dw0, dw2, dw4]
     // Index is maintained, the next dockwidget is current now
     tabBar->removeDockWidget(dw1);
+    CHECK_EQ(tabBar->indexOfDockWidget(dw2), 2);
+    CHECK_EQ(tabBar->indexOfDockWidget(dw1), -1);
     CHECK_EQ(tabBar->numDockWidgets(), 4);
     CHECK_EQ(tabBar->currentIndex(), 2);
     CHECK_EQ(tabBar->currentDockWidget(), dw2);

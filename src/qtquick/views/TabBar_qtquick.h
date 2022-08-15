@@ -66,8 +66,6 @@ public:
     bool tabBarAutoHide() const;
 
     int numDockWidgets() const override;
-    Controllers::DockWidget *dockWidgetAt(int index) const override;
-    int indexOfDockWidget(const Controllers::DockWidget *dw) const override;
 
     void removeDockWidget(Controllers::DockWidget *) override;
     bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,

@@ -163,16 +163,6 @@ int TabBar_qtquick::numDockWidgets() const
     return stackView()->dockWidgetModel()->count();
 }
 
-Controllers::DockWidget *TabBar_qtquick::dockWidgetAt(int index) const
-{
-    return stackView()->dockWidgetModel()->dockWidgetAt(index);
-}
-
-int TabBar_qtquick::indexOfDockWidget(const Controllers::DockWidget *dw) const
-{
-    return stackView()->dockWidgetModel()->indexOf(dw);
-}
-
 void TabBar_qtquick::renameTab(int index, const QString &)
 {
     Q_UNUSED(index);
