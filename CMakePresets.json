@@ -118,7 +118,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_PYTHON_BINDINGS": "ON",
-                "CMAKE_UNITY_BUILD" : "ON"
+                "CMAKE_UNITY_BUILD" : "OFF"
             }
         },
         {
