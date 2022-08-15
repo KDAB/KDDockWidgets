@@ -241,6 +241,8 @@ Stack *TabBar::stack() const
 
 void Controllers::TabBar::moveTabTo(int from, int to)
 {
+    auto fromDw = m_dockWidgets.takeAt(from);
+    m_dockWidgets.insert(to, fromDw);
     dynamic_cast<Views::TabBarViewInterface *>(view())->moveTabTo(from, to);
 }
 
