@@ -172,6 +172,13 @@ TEST_CASE("TabBar dockwidget closed")
     CHECK_EQ(tabBar->currentIndex(), 0);
     CHECK_EQ(tabBar->currentDockWidget(), dw0);
 
+    if (Platform::instance()->isQtQuick()) {
+        // Workaround for QtQuick, which works fine with adding dock widgets through
+        // DropArea::addDockWidget(). But not when using TabBar isolated.
+        dw0->view()->setParent(group.view());
+        dw1->view()->setParent(group.view());
+        dw2->view()->setParent(group.view());
+    }
 
     // Close middle one: [dw0, dw2]
     dw1->close();
