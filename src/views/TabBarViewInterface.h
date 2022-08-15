@@ -40,6 +40,10 @@ public:
     /// Currently only the QtWidgets frontend supports it
     virtual void setTabsAreMovable(bool);
 
+    /// @brief Returns the tab text for the specified index
+    /// This is only used by tests, to make sure your tab's text is correct
+    virtual QString text(int index) const = 0;
+
     virtual int tabAt(QPoint localPt) const = 0;
     virtual void moveTabTo(int from, int to) = 0;
     virtual QRect rectForTab(int index) const = 0;
@@ -51,8 +55,6 @@ public:
     virtual void removeDockWidget(Controllers::DockWidget *dw) = 0;
     virtual void insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                                   const QString &title) = 0;
-
-    virtual QString text(int index) const = 0;
 
 protected:
     Controllers::TabBar *const m_tabBar;
