@@ -55,6 +55,13 @@ public:
     }
 };
 }
+
+static MyProxy *proxyStyle()
+{
+    static auto *proxy = new MyProxy;
+    return proxy;
+}
+
 }
 
 
@@ -63,6 +70,7 @@ TabBar_qtwidgets::TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *par
     , TabBarViewInterface(controller)
     , m_controller(controller)
 {
+    setStyle(proxyStyle());
 }
 
 void TabBar_qtwidgets::init()
