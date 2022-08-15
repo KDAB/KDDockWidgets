@@ -46,7 +46,6 @@ public:
     QRect rectForTab(int index) const override;
 
     void moveTabTo(int from, int to) override;
-    bool tabsAreMovable() const override;
 
 protected:
     void init() override;

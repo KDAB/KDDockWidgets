@@ -22,5 +22,10 @@ TabBarViewInterface::TabBarViewInterface(Controllers::TabBar *controller)
 
 TabBarViewInterface::~TabBarViewInterface() = default;
 
+void TabBarViewInterface::setTabsAreMovable(bool)
+{
+    // Not implemented by default
+}
+
 
 } // namespace

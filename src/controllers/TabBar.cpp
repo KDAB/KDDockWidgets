@@ -32,6 +32,7 @@ Controllers::TabBar::TabBar(Stack *tabWidget)
     , m_tabWidget(tabWidget)
 {
     view()->init();
+    dynamic_cast<Views::TabBarViewInterface *>(view())->setTabsAreMovable(tabsAreMovable());
 }
 
 Controllers::TabBar::~TabBar()
@@ -40,7 +41,7 @@ Controllers::TabBar::~TabBar()
 
 bool Controllers::TabBar::tabsAreMovable() const
 {
-    return dynamic_cast<Views::TabBarViewInterface *>(view())->tabsAreMovable();
+    return Config::self().flags() & Config::Flag_AllowReorderTabs;
 }
 
 bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const

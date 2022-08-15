@@ -57,7 +57,6 @@ public:
 
     void moveTabTo(int from, int to) override;
     Q_INVOKABLE void setCurrentIndex(int index) override;
-    bool tabsAreMovable() const override;
     Stack_qtquick *stackView() const;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &icon) override;

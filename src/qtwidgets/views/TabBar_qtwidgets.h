@@ -42,7 +42,6 @@ public:
     QRect rectForTab(int index) const override;
     void moveTabTo(int from, int to) override;
 
-    bool tabsAreMovable() const override;
     int tabAt(QPoint localPos) const override;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &icon) override;
@@ -50,6 +49,7 @@ public:
     void insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;
     QTabWidget *tabWidget() const;
+    void setTabsAreMovable(bool) override;
 
 Q_SIGNALS:
     void dockWidgetInserted(int index);

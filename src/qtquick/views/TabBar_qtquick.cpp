@@ -134,11 +134,6 @@ void TabBar_qtquick::moveTabTo(int from, int to)
     // Not implemented yet
 }
 
-bool TabBar_qtquick::tabsAreMovable() const
-{
-    return false;
-}
-
 bool TabBar_qtquick::tabBarAutoHide() const
 {
     return m_tabBar->stack()->tabBarAutoHide();

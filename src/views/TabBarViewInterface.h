@@ -35,7 +35,11 @@ class DOCKS_EXPORT TabBarViewInterface
 public:
     explicit TabBarViewInterface(Controllers::TabBar *);
     virtual ~TabBarViewInterface();
-    virtual bool tabsAreMovable() const = 0;
+
+    /// @brief Implement if your frontend will support reordering tabs with mouse
+    /// Currently only the QtWidgets frontend supports it
+    virtual void setTabsAreMovable(bool);
+
     virtual int tabAt(QPoint localPt) const = 0;
     virtual void moveTabTo(int from, int to) = 0;
     virtual QRect rectForTab(int index) const = 0;

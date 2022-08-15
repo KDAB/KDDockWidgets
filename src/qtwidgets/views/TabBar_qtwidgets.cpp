@@ -130,11 +130,6 @@ void TabBar_qtwidgets::moveTabTo(int from, int to)
     moveTab(from, to);
 }
 
-bool TabBar_qtwidgets::tabsAreMovable() const
-{
-    return isMovable();
-}
-
 void TabBar_qtwidgets::tabInserted(int index)
 {
     QTabBar::tabInserted(index);
@@ -182,4 +177,9 @@ void TabBar_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw, 
 {
     auto tabWidget = static_cast<QTabWidget *>(View_qt::asQWidget(m_tabBar->stack()));
     tabWidget->insertTab(index, View_qt::asQWidget(dw), icon, title);
+}
+
+void TabBar_qtwidgets::setTabsAreMovable(bool are)
+{
+    QTabBar::setMovable(are);
 }

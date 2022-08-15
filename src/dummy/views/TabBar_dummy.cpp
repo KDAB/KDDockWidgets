@@ -59,8 +59,3 @@ void TabBar_dummy::moveTabTo(int from, int to)
     Q_UNUSED(to);
     // Not implemented yet
 }
-
-bool TabBar_dummy::tabsAreMovable() const
-{
-    return false;
-}
