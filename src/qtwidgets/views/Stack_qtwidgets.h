@@ -47,8 +47,6 @@ public:
 public: // TODOm3: make protected
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
-    void tabInserted(int index) override;
-    void tabRemoved(int index) override;
 
     /// @brief Shows the context menu. Override to implement your own context menu.
     /// By default it's used to honour Config::Flag_AllowSwitchingTabsViaMenu

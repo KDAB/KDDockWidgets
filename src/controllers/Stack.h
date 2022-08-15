@@ -81,8 +81,6 @@ public:
     KDBindings::Signal<bool> tabBarAutoHideChanged;
 
 public: // TODOm3
-    void onTabInserted();
-    void onTabRemoved();
     bool onMouseDoubleClick(QPoint localPos);
 
 private:

@@ -154,16 +154,6 @@ bool Stack::isMDI() const
     return m_group && m_group->isMDI();
 }
 
-void Stack::onTabInserted()
-{
-    m_group->onDockWidgetCountChanged();
-}
-
-void Stack::onTabRemoved()
-{
-    m_group->onDockWidgetCountChanged();
-}
-
 bool Stack::onMouseDoubleClick(QPoint localPos)
 {
     // User clicked the empty space of the tab widget and we don't have title bar

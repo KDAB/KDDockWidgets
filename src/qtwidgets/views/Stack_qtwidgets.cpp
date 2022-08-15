@@ -97,16 +97,6 @@ void Stack_qtwidgets::mousePressEvent(QMouseEvent *ev)
     }
 }
 
-void Stack_qtwidgets::tabInserted(int)
-{
-    m_stack->onTabInserted();
-}
-
-void Stack_qtwidgets::tabRemoved(int)
-{
-    m_stack->onTabRemoved();
-}
-
 void Stack_qtwidgets::setupTabBarButtons()
 {
     if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
