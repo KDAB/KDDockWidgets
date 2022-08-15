@@ -152,3 +152,40 @@ TEST_CASE("TabBar dockwidget destroyed")
     CHECK_EQ(tabBar->currentIndex(), -1);
     CHECK_EQ(tabBar->currentDockWidget(), nullptr);
 }
+
+TEST_CASE("TabBar dockwidget closed")
+{
+    /// Tests if indexes are correct if dock widget are closed (but not destroyed)
+    /// Tests if indexes are correct if dock widget destroyed itself
+    Controllers::Group group(nullptr, {});
+    Controllers::TabBar *tabBar = group.tabBar();
+
+    // Add 3: [dw0, dw1, dw2]
+    auto dw0 = Config::self().viewFactory()->createDockWidget("dock0")->asDockWidgetController();
+    auto dw1 = Config::self().viewFactory()->createDockWidget("dock1")->asDockWidgetController();
+    auto dw2 = Config::self().viewFactory()->createDockWidget("dock2")->asDockWidgetController();
+    tabBar->insertDockWidget(0, dw0, {}, {});
+    tabBar->insertDockWidget(1, dw1, {}, {});
+    tabBar->insertDockWidget(2, dw2, {}, {});
+
+    CHECK_EQ(tabBar->numDockWidgets(), 3);
+    CHECK_EQ(tabBar->currentIndex(), 0);
+    CHECK_EQ(tabBar->currentDockWidget(), dw0);
+
+
+    // Close middle one: [dw0, dw2]
+    dw1->close();
+    CHECK_EQ(tabBar->numDockWidgets(), 2);
+    CHECK_EQ(tabBar->currentIndex(), 0);
+    CHECK_EQ(tabBar->currentDockWidget(), dw0);
+
+    // Close current
+    dw0->close();
+    CHECK_EQ(tabBar->numDockWidgets(), 1);
+    CHECK_EQ(tabBar->currentIndex(), 0);
+    CHECK_EQ(tabBar->currentDockWidget(), dw2);
+
+    delete dw0;
+    delete dw1;
+    delete dw2;
+}

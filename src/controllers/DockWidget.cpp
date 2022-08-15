@@ -20,6 +20,7 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/SideBar.h"
 #include "controllers/DropArea.h"
+#include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
 #include "private/Utils_p.h"
 #include "private/WindowBeingDragged_p.h"
@@ -523,6 +524,10 @@ Controllers::DockWidget *DockWidget::byName(const QString &uniqueName)
 
 void DockWidget::setParentView_impl(View *parent)
 {
+    if (Controllers::Group *group = d->group()) {
+        group->tabBar()->removeDockWidget(this);
+    }
+
     Controller::setParentView_impl(parent);
     d->onParentChanged();
 }
@@ -754,6 +759,7 @@ void DockWidget::Private::onDockWidgetHidden()
 void DockWidget::Private::close()
 {
     if (!m_processingToggleAction && !q->isOpen()) {
+        q->setParentView(nullptr);
         return;
     }
 
