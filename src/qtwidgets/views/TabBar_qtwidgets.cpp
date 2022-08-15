@@ -182,10 +182,9 @@ void TabBar_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
     tabWidget->removeTab(m_tabBar->indexOfDockWidget(dw));
 }
 
-bool TabBar_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+void TabBar_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                                         const QString &title)
 {
     auto tabWidget = static_cast<QTabWidget *>(View_qt::asQWidget(m_tabBar->stack()));
     tabWidget->insertTab(index, View_qt::asQWidget(dw), icon, title);
-    return true;
 }

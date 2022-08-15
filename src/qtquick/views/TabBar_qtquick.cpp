@@ -180,11 +180,11 @@ void TabBar_qtquick::removeDockWidget(Controllers::DockWidget *dw)
     stackView()->dockWidgetModel()->remove(dw);
 }
 
-bool TabBar_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+void TabBar_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                                       const QString &title)
 {
     Q_UNUSED(title); // TODO
     Q_UNUSED(icon); // TODO
 
-    return stackView()->dockWidgetModel()->insert(dw, index);
+    stackView()->dockWidgetModel()->insert(dw, index);
 }

@@ -120,24 +120,23 @@ int Group_qtquick::currentIndex() const
 void Group_qtquick::insertDockWidget(Controllers::DockWidget *dw, int index)
 {
     QPointer<Controllers::Group> oldFrame = dw->d->group();
-    if (m_group->tabBar()->insertDockWidget(index, dw, {}, {})) {
+    m_group->tabBar()->insertDockWidget(index, dw, {}, {});
 
-        dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
-        m_group->setCurrentDockWidget(dw);
+    dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
+    m_group->setCurrentDockWidget(dw);
 
-        if (oldFrame && oldFrame->beingDeletedLater()) {
-            // give it a push and delete it immediately.
-            // Having too many deleteLater() puts us in an inconsistent state. For example if
-            // LayoutSaver::saveState() would to be called while the Frame hadn't been deleted yet
-            // it would count with that group unless hacks. Also the unit-tests are full of
-            // waitForDeleted() due to deleteLater.
+    if (oldFrame && oldFrame->beingDeletedLater()) {
+        // give it a push and delete it immediately.
+        // Having too many deleteLater() puts us in an inconsistent state. For example if
+        // LayoutSaver::saveState() would to be called while the Frame hadn't been deleted yet
+        // it would count with that group unless hacks. Also the unit-tests are full of
+        // waitForDeleted() due to deleteLater.
 
-            // Ideally we would just remove the deleteLater from Group.cpp, but
-            // QTabWidget::insertTab() would crash, as it accesses the old tab-widget we're stealing
-            // from
+        // Ideally we would just remove the deleteLater from Group.cpp, but
+        // QTabWidget::insertTab() would crash, as it accesses the old tab-widget we're stealing
+        // from
 
-            delete oldFrame;
-        }
+        delete oldFrame;
     }
 }
 

@@ -121,7 +121,7 @@ void TabBar::removeDockWidget(Controllers::DockWidget *dw)
     group()->onDockWidgetCountChanged();
 }
 
-bool TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+void TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                               const QString &title)
 {
     if (auto oldGroup = dw->dptr()->group()) {
@@ -135,11 +135,9 @@ bool TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const QIco
     m_dockWidgets.insert(index, dw);
     connect(dw, &DockWidget::aboutToDelete, this, &TabBar::removeDockWidget);
 
-    const bool result = dynamic_cast<Views::TabBarViewInterface *>(view())->insertDockWidget(
-        index, dw, icon, title);
+    dynamic_cast<Views::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
 
     group()->onDockWidgetCountChanged();
-    return result;
 }
 
 std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()

@@ -46,7 +46,7 @@ public:
     virtual void changeTabIcon(int index, const QIcon &icon) = 0;
 
     virtual void removeDockWidget(Controllers::DockWidget *dw) = 0;
-    virtual bool insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+    virtual void insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
                                   const QString &title) = 0;
 
     virtual QString text(int index) const = 0;

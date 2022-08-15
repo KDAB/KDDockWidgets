@@ -48,7 +48,7 @@ public:
     void changeTabIcon(int index, const QIcon &icon) override;
     int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
-    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
+    void insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;
     QTabWidget *tabWidget() const;
 
