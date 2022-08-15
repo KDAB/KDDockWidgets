@@ -110,7 +110,6 @@ void Group_qtquick::updateConstriants()
 void Group_qtquick::removeDockWidget(Controllers::DockWidget *dw)
 {
     m_group->tabBar()->removeDockWidget(dw);
-    disconnect(m_connections.take(dw));
 }
 
 int Group_qtquick::currentIndex() const
@@ -124,15 +123,6 @@ void Group_qtquick::insertDockWidget(Controllers::DockWidget *dw, int index)
     if (m_group->tabBar()->insertDockWidget(index, dw, {}, {})) {
 
         dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
-
-        auto dockView = asView_qtquick(dw->view());
-        QMetaObject::Connection conn =
-            connect(dw, &Controllers::DockWidget::parentViewChanged, this, [dockView, dw, this] {
-                if (dockView->parent() != m_stackLayout)
-                    removeDockWidget(dw);
-            });
-
-        m_connections[dw] = conn;
         m_group->setCurrentDockWidget(dw);
 
         if (oldFrame && oldFrame->beingDeletedLater()) {

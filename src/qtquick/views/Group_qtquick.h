@@ -88,9 +88,6 @@ private:
 
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
-    QHash<Controllers::DockWidget *, QMetaObject::Connection> m_connections; // To make it easy to
-                                                                             // disconnect from
-                                                                             // lambdas
 };
 
 }
