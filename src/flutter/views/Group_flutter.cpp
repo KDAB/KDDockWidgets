@@ -54,52 +54,9 @@ void Group_flutter::init()
 {
 }
 
-
-void Group_flutter::removeWidget_impl(Controllers::DockWidget *)
-{
-}
-
-int Group_flutter::indexOfDockWidget_impl(const Controllers::DockWidget *)
-{
-    return 0;
-}
-
 int Group_flutter::currentIndex() const
 {
     return 0;
-}
-
-void Group_flutter::setCurrentTabIndex_impl(int)
-{
-}
-
-void Group_flutter::setCurrentDockWidget_impl(Controllers::DockWidget *)
-{
-}
-
-void Group_flutter::insertDockWidget_impl(Controllers::DockWidget *, int)
-{
-}
-
-Controllers::DockWidget *Group_flutter::dockWidgetAt_impl(int) const
-{
-    return nullptr;
-}
-
-Controllers::DockWidget *Group_flutter::currentDockWidget_impl() const
-{
-    return nullptr;
-}
-
-void Group_flutter::renameTab(int, const QString &)
-{
-    // Not needed for QtQuick. Our model reacts to titleChanged()
-}
-
-void Group_flutter::changeTabIcon(int index, const QIcon &)
-{
-    Q_UNUSED(index);
-    qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
 QSize Group_flutter::minSize() const

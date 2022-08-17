@@ -69,48 +69,6 @@ class Stack_flutter extends View_flutter {
       throw Error();
     }
     dartInstance.createPlatformWindow();
-  } // currentIndex() const
-
-  int currentIndex() {
-    final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(988))
-        .asFunction();
-    return func(thisCpp);
-  }
-
-  static int currentIndex_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        View.s_dartInstanceByCppPtr[thisCpp.address] as Stack_flutter;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Stack_flutter::currentIndex() const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.currentIndex();
-    return result;
-  } // dockwidgetAt(int index) const
-
-  DockWidget dockwidgetAt(int index) {
-    final voidstar_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(989))
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp, index);
-    return DockWidget.fromCppPointer(result, false);
-  }
-
-  static ffi.Pointer<void> dockwidgetAt_calledFromC(
-      ffi.Pointer<void> thisCpp, int index) {
-    var dartInstance =
-        View.s_dartInstanceByCppPtr[thisCpp.address] as Stack_flutter;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Stack_flutter::dockwidgetAt(int index) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.dockwidgetAt(index);
-    return result.thisCpp;
   }
 
   static int flags_calledFromC(ffi.Pointer<void> thisCpp) {
@@ -180,28 +138,6 @@ class Stack_flutter extends View_flutter {
       throw Error();
     }
     dartInstance.hide();
-  } // indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget * arg__1) const
-
-  int indexOfDockWidget(DockWidget? arg__1) {
-    final int_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(990))
-        .asFunction();
-    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  }
-
-  static int indexOfDockWidget_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
-    var dartInstance =
-        View.s_dartInstanceByCppPtr[thisCpp.address] as Stack_flutter;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Stack_flutter::indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget * arg__1) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result =
-        dartInstance.indexOfDockWidget(DockWidget.fromCppPointer(arg__1));
-    return result;
   }
 
   static void init_calledFromC(ffi.Pointer<void> thisCpp) {
@@ -266,7 +202,7 @@ class Stack_flutter extends View_flutter {
   bool isPositionDraggable(QPoint p) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(991))
+            cFunctionSymbolName(989))
         .asFunction();
     return func(thisCpp, p == null ? ffi.nullptr : p.thisCpp) != 0;
   }
@@ -418,26 +354,6 @@ class Stack_flutter extends View_flutter {
     }
     final result = dartInstance.normalGeometry();
     return result.thisCpp;
-  } // numDockWidgets() const
-
-  int numDockWidgets() {
-    final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(992))
-        .asFunction();
-    return func(thisCpp);
-  }
-
-  static int numDockWidgets_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        View.s_dartInstanceByCppPtr[thisCpp.address] as Stack_flutter;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Stack_flutter::numDockWidgets() const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.numDockWidgets();
-    return result;
   }
 
   static ffi.Pointer<void> objectName_calledFromC(ffi.Pointer<void> thisCpp) {
@@ -530,67 +446,6 @@ class Stack_flutter extends View_flutter {
       throw Error();
     }
     dartInstance.releaseMouse();
-  } // removeDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
-
-  removeDockWidget(DockWidget? arg__1) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(993))
-        .asFunction();
-    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  }
-
-  static void removeDockWidget_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
-    var dartInstance =
-        View.s_dartInstanceByCppPtr[thisCpp.address] as Stack_flutter;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Stack_flutter::removeDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.removeDockWidget(DockWidget.fromCppPointer(arg__1));
-  } // renameTab(int index, const QString & arg__2)
-
-  renameTab(int index, String? arg__2) {
-    final void_Func_voidstar_int_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_voidstar_FFI>>(
-            cFunctionSymbolName(994))
-        .asFunction();
-    func(thisCpp, index, arg__2?.toNativeUtf8() ?? ffi.nullptr);
-  }
-
-  static void renameTab_calledFromC(
-      ffi.Pointer<void> thisCpp, int index, ffi.Pointer<void>? arg__2) {
-    var dartInstance =
-        View.s_dartInstanceByCppPtr[thisCpp.address] as Stack_flutter;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Stack_flutter::renameTab(int index, const QString & arg__2)! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.renameTab(
-        index, QString.fromCppPointer(arg__2).toDartString());
-  } // setCurrentDockWidget(int index)
-
-  setCurrentDockWidget(int index) {
-    final void_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(995))
-        .asFunction();
-    func(thisCpp, index);
-  }
-
-  static void setCurrentDockWidget_calledFromC(
-      ffi.Pointer<void> thisCpp, int index) {
-    var dartInstance =
-        View.s_dartInstanceByCppPtr[thisCpp.address] as Stack_flutter;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Stack_flutter::setCurrentDockWidget(int index)! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.setCurrentDockWidget(index);
   }
 
   static void setCursor_calledFromC(ffi.Pointer<void> thisCpp, int shape) {
@@ -607,7 +462,7 @@ class Stack_flutter extends View_flutter {
   setDocumentMode(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(996))
+            cFunctionSymbolName(990))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -880,10 +735,6 @@ class Stack_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Stack_flutter__close";
       case 853:
         return "c_KDDockWidgets__Views__Stack_flutter__createPlatformWindow";
-      case 988:
-        return "c_KDDockWidgets__Views__Stack_flutter__currentIndex";
-      case 989:
-        return "c_KDDockWidgets__Views__Stack_flutter__dockwidgetAt_int";
       case 858:
         return "c_KDDockWidgets__Views__Stack_flutter__flags";
       case 860:
@@ -896,8 +747,6 @@ class Stack_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Stack_flutter__hasFocus";
       case 869:
         return "c_KDDockWidgets__Views__Stack_flutter__hide";
-      case 990:
-        return "c_KDDockWidgets__Views__Stack_flutter__indexOfDockWidget_DockWidget";
       case 872:
         return "c_KDDockWidgets__Views__Stack_flutter__init";
       case 874:
@@ -908,7 +757,7 @@ class Stack_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Stack_flutter__isMinimized";
       case 877:
         return "c_KDDockWidgets__Views__Stack_flutter__isNull";
-      case 991:
+      case 989:
         return "c_KDDockWidgets__Views__Stack_flutter__isPositionDraggable_QPoint";
       case 878:
         return "c_KDDockWidgets__Views__Stack_flutter__isRootView";
@@ -932,8 +781,6 @@ class Stack_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Stack_flutter__move_int_int";
       case 889:
         return "c_KDDockWidgets__Views__Stack_flutter__normalGeometry";
-      case 992:
-        return "c_KDDockWidgets__Views__Stack_flutter__numDockWidgets";
       case 890:
         return "c_KDDockWidgets__Views__Stack_flutter__objectName";
       case 956:
@@ -950,15 +797,9 @@ class Stack_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Stack_flutter__releaseKeyboard";
       case 899:
         return "c_KDDockWidgets__Views__Stack_flutter__releaseMouse";
-      case 993:
-        return "c_KDDockWidgets__Views__Stack_flutter__removeDockWidget_DockWidget";
-      case 994:
-        return "c_KDDockWidgets__Views__Stack_flutter__renameTab_int_QString";
-      case 995:
-        return "c_KDDockWidgets__Views__Stack_flutter__setCurrentDockWidget_int";
       case 903:
         return "c_KDDockWidgets__Views__Stack_flutter__setCursor_CursorShape";
-      case 996:
+      case 990:
         return "c_KDDockWidgets__Views__Stack_flutter__setDocumentMode_bool";
       case 904:
         return "c_KDDockWidgets__Views__Stack_flutter__setFixedHeight_int";
@@ -1014,10 +855,6 @@ class Stack_flutter extends View_flutter {
         return "close";
       case 853:
         return "createPlatformWindow";
-      case 988:
-        return "currentIndex";
-      case 989:
-        return "dockwidgetAt";
       case 858:
         return "flags";
       case 860:
@@ -1030,8 +867,6 @@ class Stack_flutter extends View_flutter {
         return "hasFocus";
       case 869:
         return "hide";
-      case 990:
-        return "indexOfDockWidget";
       case 872:
         return "init";
       case 874:
@@ -1042,7 +877,7 @@ class Stack_flutter extends View_flutter {
         return "isMinimized";
       case 877:
         return "isNull";
-      case 991:
+      case 989:
         return "isPositionDraggable";
       case 878:
         return "isRootView";
@@ -1066,8 +901,6 @@ class Stack_flutter extends View_flutter {
         return "move_2";
       case 889:
         return "normalGeometry";
-      case 992:
-        return "numDockWidgets";
       case 890:
         return "objectName";
       case 956:
@@ -1084,15 +917,9 @@ class Stack_flutter extends View_flutter {
         return "releaseKeyboard";
       case 899:
         return "releaseMouse";
-      case 993:
-        return "removeDockWidget";
-      case 994:
-        return "renameTab";
-      case 995:
-        return "setCurrentDockWidget";
       case 903:
         return "setCursor";
-      case 996:
+      case 990:
         return "setDocumentMode";
       case 904:
         return "setFixedHeight";
@@ -1156,14 +983,6 @@ class Stack_flutter extends View_flutter {
     final callback853 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         View.createPlatformWindow_calledFromC);
     registerCallback(thisCpp, callback853, 853);
-    const callbackExcept988 = 0;
-    final callback988 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        Stack_flutter.currentIndex_calledFromC, callbackExcept988);
-    registerCallback(thisCpp, callback988, 988);
-    final callback989 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
-            Stack_flutter.dockwidgetAt_calledFromC);
-    registerCallback(thisCpp, callback989, 989);
     const callbackExcept858 = 0;
     final callback858 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
         View_flutter.flags_calledFromC, callbackExcept858);
@@ -1184,11 +1003,6 @@ class Stack_flutter extends View_flutter {
     final callback869 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         View_flutter.hide_calledFromC);
     registerCallback(thisCpp, callback869, 869);
-    const callbackExcept990 = 0;
-    final callback990 =
-        ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            Stack_flutter.indexOfDockWidget_calledFromC, callbackExcept990);
-    registerCallback(thisCpp, callback990, 990);
     final callback872 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Stack_flutter.init_calledFromC);
     registerCallback(thisCpp, callback872, 872);
@@ -1208,11 +1022,11 @@ class Stack_flutter extends View_flutter {
     final callback877 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         View.isNull_calledFromC, callbackExcept877);
     registerCallback(thisCpp, callback877, 877);
-    const callbackExcept991 = 0;
-    final callback991 =
+    const callbackExcept989 = 0;
+    final callback989 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            Stack_flutter.isPositionDraggable_calledFromC, callbackExcept991);
-    registerCallback(thisCpp, callback991, 991);
+            Stack_flutter.isPositionDraggable_calledFromC, callbackExcept989);
+    registerCallback(thisCpp, callback989, 989);
     const callbackExcept878 = 0;
     final callback878 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         View_flutter.isRootView_calledFromC, callbackExcept878);
@@ -1254,10 +1068,6 @@ class Stack_flutter extends View_flutter {
     final callback889 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         View_flutter.normalGeometry_calledFromC);
     registerCallback(thisCpp, callback889, 889);
-    const callbackExcept992 = 0;
-    final callback992 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        Stack_flutter.numDockWidgets_calledFromC, callbackExcept992);
-    registerCallback(thisCpp, callback992, 992);
     final callback890 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         View_flutter.objectName_calledFromC);
     registerCallback(thisCpp, callback890, 890);
@@ -1286,26 +1096,14 @@ class Stack_flutter extends View_flutter {
     final callback899 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         View_flutter.releaseMouse_calledFromC);
     registerCallback(thisCpp, callback899, 899);
-    final callback993 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            Stack_flutter.removeDockWidget_calledFromC);
-    registerCallback(thisCpp, callback993, 993);
-    final callback994 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_voidstar_FFI>(
-            Stack_flutter.renameTab_calledFromC);
-    registerCallback(thisCpp, callback994, 994);
-    final callback995 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            Stack_flutter.setCurrentDockWidget_calledFromC);
-    registerCallback(thisCpp, callback995, 995);
     final callback903 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             View_flutter.setCursor_calledFromC);
     registerCallback(thisCpp, callback903, 903);
-    final callback996 =
+    final callback990 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             Stack_flutter.setDocumentMode_calledFromC);
-    registerCallback(thisCpp, callback996, 996);
+    registerCallback(thisCpp, callback990, 990);
     final callback904 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             View_flutter.setFixedHeight_calledFromC);

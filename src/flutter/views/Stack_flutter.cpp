@@ -38,58 +38,6 @@ void Stack_flutter::init()
 {
 }
 
-int Stack_flutter::numDockWidgets() const
-{
-    return 0;
-}
-
-void Stack_flutter::removeDockWidget(Controllers::DockWidget *)
-{
-}
-
-int Stack_flutter::indexOfDockWidget(const Controllers::DockWidget *) const
-{
-    return 0;
-}
-
-void Stack_flutter::setCurrentDockWidget(int index)
-{
-    Q_UNUSED(index);
-}
-
-bool Stack_flutter::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
-                                     const QString &title)
-{
-    Q_UNUSED(index);
-    Q_UNUSED(dw);
-    Q_UNUSED(icon);
-    Q_UNUSED(title);
-    return true;
-}
-
-void Stack_flutter::renameTab(int index, const QString &text)
-{
-    Q_UNUSED(index);
-    Q_UNUSED(text);
-}
-
-void Stack_flutter::changeTabIcon(int index, const QIcon &icon)
-{
-    Q_UNUSED(index);
-    Q_UNUSED(icon);
-}
-
-Controllers::DockWidget *Stack_flutter::dockwidgetAt(int index) const
-{
-    Q_UNUSED(index);
-    return nullptr;
-}
-
-int Stack_flutter::currentIndex() const
-{
-    return 0;
-}
-
 void Stack_flutter::setDocumentMode(bool)
 {
 }

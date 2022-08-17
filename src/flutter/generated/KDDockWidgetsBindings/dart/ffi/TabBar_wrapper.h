@@ -17,9 +17,9 @@
 #include <Group.h>
 #include <qrect.h>
 #include <qcoreevent.h>
-#include <qsize.h>
 #include <qobject.h>
 #include <View.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TabBar_wrapper : public ::KDDockWidgets::Controllers::TabBar
@@ -27,7 +27,10 @@ class TabBar_wrapper : public ::KDDockWidgets::Controllers::TabBar
 public:
     ~TabBar_wrapper();
     TabBar_wrapper(KDDockWidgets::Controllers::Stack *tabWidget = nullptr);
+    void countChanged();
     KDDockWidgets::Controllers::DockWidget *currentDockWidget() const;
+    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *arg__1);
+    int currentIndex() const;
     virtual void customEvent(QEvent *event);
     virtual void customEvent_nocallback(QEvent *event);
     KDDockWidgets::Controllers::DockWidget *dockWidgetAt(QPoint localPos) const;
@@ -40,6 +43,7 @@ public:
     virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
     KDDockWidgets::Controllers::Group *group() const;
     bool hasSingleDockWidget() const;
+    int indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget *dw) const;
     virtual bool isMDI() const;
     virtual bool isMDI_nocallback() const;
     virtual bool isWindow() const;
@@ -49,6 +53,10 @@ public:
     void onMouseDoubleClick(QPoint localPos);
     void onMousePress(QPoint localPos);
     QRect rectForTab(int index) const;
+    void removeDockWidget(KDDockWidgets::Controllers::DockWidget *dw);
+    void renameTab(int index, const QString &arg__2);
+    void setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget *dw);
+    void setCurrentIndex(int index);
     virtual void setParentView_impl(KDDockWidgets::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
     virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget() const;
@@ -79,9 +87,18 @@ extern "C" {
 // KDDockWidgets::Controllers::TabBar::TabBar(KDDockWidgets::Controllers::Stack * tabWidget)
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__TabBar__constructor_Stack(void *tabWidget_);
+// KDDockWidgets::Controllers::TabBar::countChanged()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TabBar__countChanged(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::currentDockWidget() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__TabBar__currentDockWidget(void *thisObj);
+// KDDockWidgets::Controllers::TabBar::currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget
+// * arg__1)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__TabBar__currentDockWidgetChanged_DockWidget(void *thisObj,
+                                                                          void *arg__1_);
+// KDDockWidgets::Controllers::TabBar::currentIndex() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__TabBar__currentIndex(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::customEvent(QEvent * event)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TabBar__customEvent_QEvent(void *thisObj, void *event_);
@@ -107,6 +124,10 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__TabBar__group(v
 // KDDockWidgets::Controllers::TabBar::hasSingleDockWidget() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__TabBar__hasSingleDockWidget(void *thisObj);
+// KDDockWidgets::Controllers::TabBar::indexOfDockWidget(const
+// KDDockWidgets::Controllers::DockWidget * dw) const
+KDDockWidgetsBindings_EXPORT int
+c_KDDockWidgets__Controllers__TabBar__indexOfDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Controllers::TabBar::isMDI() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__TabBar__isMDI(void *thisObj);
 // KDDockWidgets::Controllers::TabBar::isWindow() const
@@ -126,6 +147,20 @@ c_KDDockWidgets__Controllers__TabBar__onMousePress_QPoint(void *thisObj, void *l
 // KDDockWidgets::Controllers::TabBar::rectForTab(int index) const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__TabBar__rectForTab_int(void *thisObj, int index);
+// KDDockWidgets::Controllers::TabBar::removeDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__TabBar__removeDockWidget_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Controllers::TabBar::renameTab(int index, const QString & arg__2)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__TabBar__renameTab_int_QString(void *thisObj, int index,
+                                                            const char *arg__2_);
+// KDDockWidgets::Controllers::TabBar::setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget *
+// dw)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__TabBar__setCurrentDockWidget_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Controllers::TabBar::setCurrentIndex(int index)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__TabBar__setCurrentIndex_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::TabBar::setParentView_impl(KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TabBar__setParentView_impl_View(void *thisObj, void *parent_);

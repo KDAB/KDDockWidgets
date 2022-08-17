@@ -102,7 +102,6 @@ public:
     KDDockWidgets::Controllers::Group *mdiFrame() const;
     int nonContentsHeight() const;
     void numDockWidgetsChanged();
-    void onCurrentTabChanged(int index);
     void onDockWidgetCountChanged();
     void onDockWidgetHidden(KDDockWidgets::Controllers::DockWidget *w);
     void onDockWidgetShown(KDDockWidgets::Controllers::DockWidget *w);
@@ -329,9 +328,6 @@ c_KDDockWidgets__Controllers__Group__nonContentsHeight(void *thisObj);
 // KDDockWidgets::Controllers::Group::numDockWidgetsChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__numDockWidgetsChanged(void *thisObj);
-// KDDockWidgets::Controllers::Group::onCurrentTabChanged(int index)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Group__onCurrentTabChanged_int(void *thisObj, int index);
 // KDDockWidgets::Controllers::Group::onDockWidgetCountChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__onDockWidgetCountChanged(void *thisObj);

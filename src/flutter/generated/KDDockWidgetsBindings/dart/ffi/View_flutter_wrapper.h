@@ -16,14 +16,14 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <DropArea.h>
-#include <Group.h>
-#include <FloatingWindow.h>
-#include <TabBar.h>
 #include <controllers/Layout.h>
 #include <Stack.h>
-#include <TitleBar.h>
+#include <FloatingWindow.h>
+#include <TabBar.h>
+#include <DropArea.h>
+#include <Group.h>
 #include <DockWidget.h>
+#include <TitleBar.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class View_flutter_wrapper : public ::KDDockWidgets::Views::View_flutter

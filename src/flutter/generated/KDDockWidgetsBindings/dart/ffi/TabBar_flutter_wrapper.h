@@ -31,8 +31,6 @@ public:
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
-    virtual KDDockWidgets::Controllers::DockWidget *currentDockWidget() const;
-    virtual KDDockWidgets::Controllers::DockWidget *currentDockWidget_nocallback() const;
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
     virtual void free_impl();
@@ -97,6 +95,12 @@ public:
     virtual void releaseKeyboard_nocallback();
     virtual void releaseMouse();
     virtual void releaseMouse_nocallback();
+    virtual void removeDockWidget(KDDockWidgets::Controllers::DockWidget *dw);
+    virtual void removeDockWidget_nocallback(KDDockWidgets::Controllers::DockWidget *dw);
+    virtual void renameTab(int index, const QString &name);
+    virtual void renameTab_nocallback(int index, const QString &name);
+    virtual void setCurrentIndex(int index);
+    virtual void setCurrentIndex_nocallback(int index);
     virtual void setCursor(Qt::CursorShape shape);
     virtual void setCursor_nocallback(Qt::CursorShape shape);
     virtual void setFixedHeight(int h);
@@ -141,8 +145,6 @@ public:
     virtual QSize sizeHint_nocallback() const;
     virtual int tabAt(QPoint localPos) const;
     virtual int tabAt_nocallback(QPoint localPos) const;
-    virtual bool tabsAreMovable() const;
-    virtual bool tabsAreMovable_nocallback() const;
     virtual QString text(int index) const;
     virtual QString text_nocallback(int index) const;
     virtual void update();
@@ -153,8 +155,6 @@ public:
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
-    typedef KDDockWidgets::Controllers::DockWidget *(*Callback_currentDockWidget)(void *);
-    Callback_currentDockWidget m_currentDockWidgetCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
     typedef void (*Callback_free_impl)(void *);
@@ -219,6 +219,12 @@ public:
     Callback_releaseKeyboard m_releaseKeyboardCallback = nullptr;
     typedef void (*Callback_releaseMouse)(void *);
     Callback_releaseMouse m_releaseMouseCallback = nullptr;
+    typedef void (*Callback_removeDockWidget)(void *, KDDockWidgets::Controllers::DockWidget *dw);
+    Callback_removeDockWidget m_removeDockWidgetCallback = nullptr;
+    typedef void (*Callback_renameTab)(void *, int index, const QString &name);
+    Callback_renameTab m_renameTabCallback = nullptr;
+    typedef void (*Callback_setCurrentIndex)(void *, int index);
+    Callback_setCurrentIndex m_setCurrentIndexCallback = nullptr;
     typedef void (*Callback_setCursor)(void *, Qt::CursorShape shape);
     Callback_setCursor m_setCursorCallback = nullptr;
     typedef void (*Callback_setFixedHeight)(void *, int h);
@@ -263,8 +269,6 @@ public:
     Callback_sizeHint m_sizeHintCallback = nullptr;
     typedef int (*Callback_tabAt)(void *, QPoint *localPos);
     Callback_tabAt m_tabAtCallback = nullptr;
-    typedef bool (*Callback_tabsAreMovable)(void *);
-    Callback_tabsAreMovable m_tabsAreMovableCallback = nullptr;
     typedef QString *(*Callback_text)(void *, int index);
     Callback_text m_textCallback = nullptr;
     typedef void (*Callback_update)(void *);
@@ -284,9 +288,6 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__close(
 // KDDockWidgets::Views::TabBar_flutter::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__TabBar_flutter__createPlatformWindow(void *thisObj);
-// KDDockWidgets::Views::TabBar_flutter::currentDockWidget() const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__currentDockWidget(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TabBar_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::free_impl()
@@ -371,6 +372,17 @@ c_KDDockWidgets__Views__TabBar_flutter__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::releaseMouse()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__TabBar_flutter__releaseMouse(void *thisObj);
+// KDDockWidgets::Views::TabBar_flutter::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
+// dw)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TabBar_flutter__removeDockWidget_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Views::TabBar_flutter::renameTab(int index, const QString & name)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TabBar_flutter__renameTab_int_QString(void *thisObj, int index,
+                                                              const char *name_);
+// KDDockWidgets::Views::TabBar_flutter::setCurrentIndex(int index)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Views__TabBar_flutter__setCurrentIndex_int(void *thisObj, int index);
 // KDDockWidgets::Views::TabBar_flutter::setCursor(Qt::CursorShape shape)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__TabBar_flutter__setCursor_CursorShape(void *thisObj, int shape);
@@ -434,9 +446,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__sizeH
 // KDDockWidgets::Views::TabBar_flutter::tabAt(QPoint localPos) const
 KDDockWidgetsBindings_EXPORT int
 c_KDDockWidgets__Views__TabBar_flutter__tabAt_QPoint(void *thisObj, void *localPos_);
-// KDDockWidgets::Views::TabBar_flutter::tabsAreMovable() const
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Views__TabBar_flutter__tabsAreMovable(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::text(int index) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__text_int(void *thisObj,
                                                                                     int index);

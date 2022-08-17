@@ -322,10 +322,6 @@ void Group_wrapper::numDockWidgetsChanged()
 {
     ::KDDockWidgets::Controllers::Group::numDockWidgetsChanged();
 }
-void Group_wrapper::onCurrentTabChanged(int index)
-{
-    ::KDDockWidgets::Controllers::Group::onCurrentTabChanged(index);
-}
 void Group_wrapper::onDockWidgetCountChanged()
 {
     ::KDDockWidgets::Controllers::Group::onDockWidgetCountChanged();
@@ -807,11 +803,6 @@ void c_KDDockWidgets__Controllers__Group__numDockWidgetsChanged(void *thisObj)
 {
     fromPtr(thisObj)->numDockWidgetsChanged();
 }
-// onCurrentTabChanged(int index)
-void c_KDDockWidgets__Controllers__Group__onCurrentTabChanged_int(void *thisObj, int index)
-{
-    fromWrapperPtr(thisObj)->onCurrentTabChanged(index);
-}
 // onDockWidgetCountChanged()
 void c_KDDockWidgets__Controllers__Group__onDockWidgetCountChanged(void *thisObj)
 {
@@ -949,7 +940,7 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_customEvent>(
                 callback);
         break;
-    case 1357:
+    case 1337:
         wrapper->m_dragRectCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_dragRect>(
                 callback);
@@ -964,12 +955,12 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_eventFilter>(
                 callback);
         break;
-    case 1360:
+    case 1340:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_focusedWidgetChangedCallback>(
             callback);
         break;
-    case 1377:
+    case 1357:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_isFocusedChangedCallback>(
             callback);

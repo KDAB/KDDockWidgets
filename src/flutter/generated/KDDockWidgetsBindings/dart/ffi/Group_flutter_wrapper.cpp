@@ -71,37 +71,9 @@ void Group_flutter_wrapper::createPlatformWindow_nocallback()
 {
     ::KDDockWidgets::Views::Group_flutter::createPlatformWindow();
 }
-KDDockWidgets::Controllers::DockWidget *Group_flutter_wrapper::currentDockWidget_impl() const
-{
-    if (m_currentDockWidget_implCallback) {
-        const void *thisPtr = this;
-        return m_currentDockWidget_implCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::Views::Group_flutter::currentDockWidget_impl();
-    }
-}
-KDDockWidgets::Controllers::DockWidget *
-Group_flutter_wrapper::currentDockWidget_impl_nocallback() const
-{
-    return ::KDDockWidgets::Views::Group_flutter::currentDockWidget_impl();
-}
 int Group_flutter_wrapper::currentIndex() const
 {
     return ::KDDockWidgets::Views::Group_flutter::currentIndex();
-}
-KDDockWidgets::Controllers::DockWidget *Group_flutter_wrapper::dockWidgetAt_impl(int index) const
-{
-    if (m_dockWidgetAt_implCallback) {
-        const void *thisPtr = this;
-        return m_dockWidgetAt_implCallback(const_cast<void *>(thisPtr), index);
-    } else {
-        return ::KDDockWidgets::Views::Group_flutter::dockWidgetAt_impl(index);
-    }
-}
-KDDockWidgets::Controllers::DockWidget *
-Group_flutter_wrapper::dockWidgetAt_impl_nocallback(int index) const
-{
-    return ::KDDockWidgets::Views::Group_flutter::dockWidgetAt_impl(index);
 }
 QRect Group_flutter_wrapper::dragRect() const
 {
@@ -193,36 +165,6 @@ void Group_flutter_wrapper::hide()
 void Group_flutter_wrapper::hide_nocallback()
 {
     ::KDDockWidgets::Views::Group_flutter::hide();
-}
-int Group_flutter_wrapper::indexOfDockWidget_impl(
-    const KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    if (m_indexOfDockWidget_implCallback) {
-        const void *thisPtr = this;
-        return m_indexOfDockWidget_implCallback(const_cast<void *>(thisPtr), arg__1);
-    } else {
-        return ::KDDockWidgets::Views::Group_flutter::indexOfDockWidget_impl(arg__1);
-    }
-}
-int Group_flutter_wrapper::indexOfDockWidget_impl_nocallback(
-    const KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    return ::KDDockWidgets::Views::Group_flutter::indexOfDockWidget_impl(arg__1);
-}
-void Group_flutter_wrapper::insertDockWidget_impl(KDDockWidgets::Controllers::DockWidget *arg__1,
-                                                  int index)
-{
-    if (m_insertDockWidget_implCallback) {
-        const void *thisPtr = this;
-        m_insertDockWidget_implCallback(const_cast<void *>(thisPtr), arg__1, index);
-    } else {
-        ::KDDockWidgets::Views::Group_flutter::insertDockWidget_impl(arg__1, index);
-    }
-}
-void Group_flutter_wrapper::insertDockWidget_impl_nocallback(
-    KDDockWidgets::Controllers::DockWidget *arg__1, int index)
-{
-    ::KDDockWidgets::Views::Group_flutter::insertDockWidget_impl(arg__1, index);
 }
 bool Group_flutter_wrapper::isActiveWindow() const
 {
@@ -535,61 +477,6 @@ void Group_flutter_wrapper::releaseMouse()
 void Group_flutter_wrapper::releaseMouse_nocallback()
 {
     ::KDDockWidgets::Views::Group_flutter::releaseMouse();
-}
-void Group_flutter_wrapper::removeWidget_impl(KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    if (m_removeWidget_implCallback) {
-        const void *thisPtr = this;
-        m_removeWidget_implCallback(const_cast<void *>(thisPtr), arg__1);
-    } else {
-        ::KDDockWidgets::Views::Group_flutter::removeWidget_impl(arg__1);
-    }
-}
-void Group_flutter_wrapper::removeWidget_impl_nocallback(
-    KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    ::KDDockWidgets::Views::Group_flutter::removeWidget_impl(arg__1);
-}
-void Group_flutter_wrapper::renameTab(int index, const QString &arg__2)
-{
-    if (m_renameTabCallback) {
-        const void *thisPtr = this;
-        m_renameTabCallback(const_cast<void *>(thisPtr), index, arg__2);
-    } else {
-        ::KDDockWidgets::Views::Group_flutter::renameTab(index, arg__2);
-    }
-}
-void Group_flutter_wrapper::renameTab_nocallback(int index, const QString &arg__2)
-{
-    ::KDDockWidgets::Views::Group_flutter::renameTab(index, arg__2);
-}
-void Group_flutter_wrapper::setCurrentDockWidget_impl(
-    KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    if (m_setCurrentDockWidget_implCallback) {
-        const void *thisPtr = this;
-        m_setCurrentDockWidget_implCallback(const_cast<void *>(thisPtr), arg__1);
-    } else {
-        ::KDDockWidgets::Views::Group_flutter::setCurrentDockWidget_impl(arg__1);
-    }
-}
-void Group_flutter_wrapper::setCurrentDockWidget_impl_nocallback(
-    KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    ::KDDockWidgets::Views::Group_flutter::setCurrentDockWidget_impl(arg__1);
-}
-void Group_flutter_wrapper::setCurrentTabIndex_impl(int index)
-{
-    if (m_setCurrentTabIndex_implCallback) {
-        const void *thisPtr = this;
-        m_setCurrentTabIndex_implCallback(const_cast<void *>(thisPtr), index);
-    } else {
-        ::KDDockWidgets::Views::Group_flutter::setCurrentTabIndex_impl(index);
-    }
-}
-void Group_flutter_wrapper::setCurrentTabIndex_impl_nocallback(int index)
-{
-    ::KDDockWidgets::Views::Group_flutter::setCurrentTabIndex_impl(index);
 }
 void Group_flutter_wrapper::setCursor(Qt::CursorShape shape)
 {
@@ -945,20 +832,10 @@ void c_KDDockWidgets__Views__Group_flutter__createPlatformWindow(void *thisObj)
         }
     }();
 }
-// currentDockWidget_impl() const
-void *c_KDDockWidgets__Views__Group_flutter__currentDockWidget_impl(void *thisObj)
-{
-    return fromWrapperPtr(thisObj)->currentDockWidget_impl_nocallback();
-}
 // currentIndex() const
 int c_KDDockWidgets__Views__Group_flutter__currentIndex(void *thisObj)
 {
     return fromPtr(thisObj)->currentIndex();
-}
-// dockWidgetAt_impl(int index) const
-void *c_KDDockWidgets__Views__Group_flutter__dockWidgetAt_impl_int(void *thisObj, int index)
-{
-    return fromWrapperPtr(thisObj)->dockWidgetAt_impl_nocallback(index);
 }
 // dragRect() const
 void *c_KDDockWidgets__Views__Group_flutter__dragRect(void *thisObj)
@@ -1057,21 +934,6 @@ void c_KDDockWidgets__Views__Group_flutter__hide(void *thisObj)
             return targetPtr->hide();
         }
     }();
-}
-// indexOfDockWidget_impl(const KDDockWidgets::Controllers::DockWidget * arg__1)
-int c_KDDockWidgets__Views__Group_flutter__indexOfDockWidget_impl_DockWidget(void *thisObj,
-                                                                             void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
-    return fromWrapperPtr(thisObj)->indexOfDockWidget_impl_nocallback(arg__1);
-}
-// insertDockWidget_impl(KDDockWidgets::Controllers::DockWidget * arg__1, int index)
-void c_KDDockWidgets__Views__Group_flutter__insertDockWidget_impl_DockWidget_int(void *thisObj,
-                                                                                 void *arg__1_,
-                                                                                 int index)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
-    fromWrapperPtr(thisObj)->insertDockWidget_impl_nocallback(arg__1, index);
 }
 // isActiveWindow() const
 bool c_KDDockWidgets__Views__Group_flutter__isActiveWindow(void *thisObj)
@@ -1409,32 +1271,6 @@ void c_KDDockWidgets__Views__Group_flutter__releaseMouse(void *thisObj)
             return targetPtr->releaseMouse();
         }
     }();
-}
-// removeWidget_impl(KDDockWidgets::Controllers::DockWidget * arg__1)
-void c_KDDockWidgets__Views__Group_flutter__removeWidget_impl_DockWidget(void *thisObj,
-                                                                         void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
-    fromWrapperPtr(thisObj)->removeWidget_impl_nocallback(arg__1);
-}
-// renameTab(int index, const QString & arg__2)
-void c_KDDockWidgets__Views__Group_flutter__renameTab_int_QString(void *thisObj, int index,
-                                                                  const char *arg__2_)
-{
-    const auto arg__2 = QString::fromUtf8(arg__2_);
-    fromWrapperPtr(thisObj)->renameTab_nocallback(index, arg__2);
-}
-// setCurrentDockWidget_impl(KDDockWidgets::Controllers::DockWidget * arg__1)
-void c_KDDockWidgets__Views__Group_flutter__setCurrentDockWidget_impl_DockWidget(void *thisObj,
-                                                                                 void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
-    fromWrapperPtr(thisObj)->setCurrentDockWidget_impl_nocallback(arg__1);
-}
-// setCurrentTabIndex_impl(int index)
-void c_KDDockWidgets__Views__Group_flutter__setCurrentTabIndex_impl_int(void *thisObj, int index)
-{
-    fromWrapperPtr(thisObj)->setCurrentTabIndex_impl_nocallback(index);
 }
 // setCursor(Qt::CursorShape shape)
 void c_KDDockWidgets__Views__Group_flutter__setCursor_CursorShape(void *thisObj, int shape)
@@ -1777,17 +1613,7 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_createPlatformWindow>(
             callback);
         break;
-    case 1000:
-        wrapper->m_currentDockWidget_implCallback =
-            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::
-                                 Callback_currentDockWidget_impl>(callback);
-        break;
-    case 1002:
-        wrapper->m_dockWidgetAt_implCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_dockWidgetAt_impl>(
-            callback);
-        break;
-    case 1003:
+    case 995:
         wrapper->m_dragRectCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_dragRect>(callback);
         break;
@@ -1814,16 +1640,6 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
     case 869:
         wrapper->m_hideCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_hide>(callback);
-        break;
-    case 1004:
-        wrapper->m_indexOfDockWidget_implCallback =
-            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::
-                                 Callback_indexOfDockWidget_impl>(callback);
-        break;
-    case 1005:
-        wrapper->m_insertDockWidget_implCallback =
-            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::
-                                 Callback_insertDockWidget_impl>(callback);
         break;
     case 874:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<
@@ -1889,7 +1705,7 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
         wrapper->m_move_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_move_2>(callback);
         break;
-    case 1006:
+    case 996:
         wrapper->m_nonContentsHeightCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_nonContentsHeight>(
             callback);
@@ -1935,25 +1751,6 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
         wrapper->m_releaseMouseCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_releaseMouse>(
             callback);
-        break;
-    case 1007:
-        wrapper->m_removeWidget_implCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_removeWidget_impl>(
-            callback);
-        break;
-    case 1008:
-        wrapper->m_renameTabCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_renameTab>(callback);
-        break;
-    case 1009:
-        wrapper->m_setCurrentDockWidget_implCallback =
-            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::
-                                 Callback_setCurrentDockWidget_impl>(callback);
-        break;
-    case 1010:
-        wrapper->m_setCurrentTabIndex_implCallback =
-            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::
-                                 Callback_setCurrentTabIndex_impl>(callback);
         break;
     case 903:
         wrapper->m_setCursorCallback = reinterpret_cast<

@@ -12,7 +12,6 @@
 #include <Stack_flutter.h>
 #include <Stack.h>
 #include <View.h>
-#include <DockWidget.h>
 #include <qpoint.h>
 #include <qstring.h>
 #include <qsize.h>
@@ -31,10 +30,6 @@ public:
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
-    virtual int currentIndex() const;
-    virtual int currentIndex_nocallback() const;
-    virtual KDDockWidgets::Controllers::DockWidget *dockwidgetAt(int index) const;
-    virtual KDDockWidgets::Controllers::DockWidget *dockwidgetAt_nocallback(int index) const;
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
     virtual void free_impl();
@@ -47,9 +42,6 @@ public:
     virtual bool hasFocus_nocallback() const;
     virtual void hide();
     virtual void hide_nocallback();
-    virtual int indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget *arg__1) const;
-    virtual int
-    indexOfDockWidget_nocallback(const KDDockWidgets::Controllers::DockWidget *arg__1) const;
     virtual void init();
     virtual void init_nocallback();
     virtual bool isActiveWindow() const;
@@ -84,8 +76,6 @@ public:
     virtual void move_nocallback(int x, int y);
     virtual QRect normalGeometry() const;
     virtual QRect normalGeometry_nocallback() const;
-    virtual int numDockWidgets() const;
-    virtual int numDockWidgets_nocallback() const;
     virtual QString objectName() const;
     virtual QString objectName_nocallback() const;
     virtual void onChildAdded(KDDockWidgets::View *childView);
@@ -102,12 +92,6 @@ public:
     virtual void releaseKeyboard_nocallback();
     virtual void releaseMouse();
     virtual void releaseMouse_nocallback();
-    virtual void removeDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1);
-    virtual void removeDockWidget_nocallback(KDDockWidgets::Controllers::DockWidget *arg__1);
-    virtual void renameTab(int index, const QString &arg__2);
-    virtual void renameTab_nocallback(int index, const QString &arg__2);
-    virtual void setCurrentDockWidget(int index);
-    virtual void setCurrentDockWidget_nocallback(int index);
     virtual void setCursor(Qt::CursorShape shape);
     virtual void setCursor_nocallback(Qt::CursorShape shape);
     virtual void setDocumentMode(bool arg__1);
@@ -160,10 +144,6 @@ public:
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
-    typedef int (*Callback_currentIndex)(void *);
-    Callback_currentIndex m_currentIndexCallback = nullptr;
-    typedef KDDockWidgets::Controllers::DockWidget *(*Callback_dockwidgetAt)(void *, int index);
-    Callback_dockwidgetAt m_dockwidgetAtCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
     typedef void (*Callback_free_impl)(void *);
@@ -176,9 +156,6 @@ public:
     Callback_hasFocus m_hasFocusCallback = nullptr;
     typedef void (*Callback_hide)(void *);
     Callback_hide m_hideCallback = nullptr;
-    typedef int (*Callback_indexOfDockWidget)(void *,
-                                              const KDDockWidgets::Controllers::DockWidget *arg__1);
-    Callback_indexOfDockWidget m_indexOfDockWidgetCallback = nullptr;
     typedef void (*Callback_init)(void *);
     Callback_init m_initCallback = nullptr;
     typedef bool (*Callback_isActiveWindow)(void *);
@@ -213,8 +190,6 @@ public:
     Callback_move_2 m_move_2Callback = nullptr;
     typedef QRect *(*Callback_normalGeometry)(void *);
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
-    typedef int (*Callback_numDockWidgets)(void *);
-    Callback_numDockWidgets m_numDockWidgetsCallback = nullptr;
     typedef QString *(*Callback_objectName)(void *);
     Callback_objectName m_objectNameCallback = nullptr;
     typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::View *childView);
@@ -231,13 +206,6 @@ public:
     Callback_releaseKeyboard m_releaseKeyboardCallback = nullptr;
     typedef void (*Callback_releaseMouse)(void *);
     Callback_releaseMouse m_releaseMouseCallback = nullptr;
-    typedef void (*Callback_removeDockWidget)(void *,
-                                              KDDockWidgets::Controllers::DockWidget *arg__1);
-    Callback_removeDockWidget m_removeDockWidgetCallback = nullptr;
-    typedef void (*Callback_renameTab)(void *, int index, const QString &arg__2);
-    Callback_renameTab m_renameTabCallback = nullptr;
-    typedef void (*Callback_setCurrentDockWidget)(void *, int index);
-    Callback_setCurrentDockWidget m_setCurrentDockWidgetCallback = nullptr;
     typedef void (*Callback_setCursor)(void *, Qt::CursorShape shape);
     Callback_setCursor m_setCursorCallback = nullptr;
     typedef void (*Callback_setDocumentMode)(void *, bool arg__1);
@@ -299,11 +267,6 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__Stack_flutter__close(v
 // KDDockWidgets::Views::Stack_flutter::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__Stack_flutter__createPlatformWindow(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::currentIndex() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__Stack_flutter__currentIndex(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::dockwidgetAt(int index) const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__Stack_flutter__dockwidgetAt_int(void *thisObj, int index);
 // KDDockWidgets::Views::Stack_flutter::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__Stack_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::free_impl()
@@ -316,10 +279,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Stack_flutter__grabMou
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__Stack_flutter__hasFocus(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::hide()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Stack_flutter__hide(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::indexOfDockWidget(const
-// KDDockWidgets::Controllers::DockWidget * arg__1) const
-KDDockWidgetsBindings_EXPORT int
-c_KDDockWidgets__Views__Stack_flutter__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Views::Stack_flutter::init()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Stack_flutter__init(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::isActiveWindow() const
@@ -363,9 +322,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Stack_flutter__move_in
 // KDDockWidgets::Views::Stack_flutter::normalGeometry() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Views__Stack_flutter__normalGeometry(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::numDockWidgets() const
-KDDockWidgetsBindings_EXPORT int
-c_KDDockWidgets__Views__Stack_flutter__numDockWidgets(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::objectName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__Stack_flutter__objectName(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::onChildAdded(KDDockWidgets::View * childView)
@@ -388,17 +344,6 @@ c_KDDockWidgets__Views__Stack_flutter__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Views::Stack_flutter::releaseMouse()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__Stack_flutter__releaseMouse(void *thisObj);
-// KDDockWidgets::Views::Stack_flutter::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
-// arg__1)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__Stack_flutter__removeDockWidget_DockWidget(void *thisObj, void *arg__1_);
-// KDDockWidgets::Views::Stack_flutter::renameTab(int index, const QString & arg__2)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__Stack_flutter__renameTab_int_QString(void *thisObj, int index,
-                                                             const char *arg__2_);
-// KDDockWidgets::Views::Stack_flutter::setCurrentDockWidget(int index)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__Stack_flutter__setCurrentDockWidget_int(void *thisObj, int index);
 // KDDockWidgets::Views::Stack_flutter::setCursor(Qt::CursorShape shape)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Views__Stack_flutter__setCursor_CursorShape(void *thisObj, int shape);

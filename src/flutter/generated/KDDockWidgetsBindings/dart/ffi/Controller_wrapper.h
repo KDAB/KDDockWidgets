@@ -15,10 +15,10 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>
-#include <qcoreevent.h>
-#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
+#include <qcoreevent.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Controller_wrapper : public ::KDDockWidgets::Controller

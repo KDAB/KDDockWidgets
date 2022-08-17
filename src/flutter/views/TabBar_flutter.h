@@ -46,8 +46,13 @@ public:
     QRect rectForTab(int index) const override;
 
     void moveTabTo(int from, int to) override;
-    Controllers::DockWidget *currentDockWidget() const override;
-    bool tabsAreMovable() const override;
+
+    void changeTabIcon(int index, const QIcon &icon) override;
+    void removeDockWidget(Controllers::DockWidget *dw) override;
+    void insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+                          const QString &title) override;
+    void renameTab(int index, const QString &name) override;
+    void setCurrentIndex(int index) override;
 
 protected:
     void init() override;

@@ -35,26 +35,6 @@ bool Stack_wrapper::contains(KDDockWidgets::Controllers::DockWidget *dw) const
 {
     return ::KDDockWidgets::Controllers::Stack::contains(dw);
 }
-void Stack_wrapper::countChanged()
-{
-    ::KDDockWidgets::Controllers::Stack::countChanged();
-}
-KDDockWidgets::Controllers::DockWidget *Stack_wrapper::currentDockWidget() const
-{
-    return ::KDDockWidgets::Controllers::Stack::currentDockWidget();
-}
-void Stack_wrapper::currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    ::KDDockWidgets::Controllers::Stack::currentDockWidgetChanged(arg__1);
-}
-int Stack_wrapper::currentIndex() const
-{
-    return ::KDDockWidgets::Controllers::Stack::currentIndex();
-}
-void Stack_wrapper::currentTabChanged(int index)
-{
-    ::KDDockWidgets::Controllers::Stack::currentTabChanged(index);
-}
 void Stack_wrapper::customEvent(QEvent *event)
 {
     if (m_customEventCallback) {
@@ -67,10 +47,6 @@ void Stack_wrapper::customEvent(QEvent *event)
 void Stack_wrapper::customEvent_nocallback(QEvent *event)
 {
     ::KDDockWidgets::Controllers::Stack::customEvent(event);
-}
-KDDockWidgets::Controllers::DockWidget *Stack_wrapper::dockwidgetAt(int index) const
-{
-    return ::KDDockWidgets::Controllers::Stack::dockwidgetAt(index);
 }
 bool Stack_wrapper::event(QEvent *event)
 {
@@ -101,10 +77,6 @@ bool Stack_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
 KDDockWidgets::Controllers::Group *Stack_wrapper::group() const
 {
     return ::KDDockWidgets::Controllers::Stack::group();
-}
-int Stack_wrapper::indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget *arg__1) const
-{
-    return ::KDDockWidgets::Controllers::Stack::indexOfDockWidget(arg__1);
 }
 bool Stack_wrapper::insertDockWidget(KDDockWidgets::Controllers::DockWidget *dockwidget, int index)
 {
@@ -153,37 +125,9 @@ int Stack_wrapper::numDockWidgets() const
 {
     return ::KDDockWidgets::Controllers::Stack::numDockWidgets();
 }
-void Stack_wrapper::onCurrentTabChanged(int index)
-{
-    ::KDDockWidgets::Controllers::Stack::onCurrentTabChanged(index);
-}
 bool Stack_wrapper::onMouseDoubleClick(QPoint localPos)
 {
     return ::KDDockWidgets::Controllers::Stack::onMouseDoubleClick(localPos);
-}
-void Stack_wrapper::onTabInserted()
-{
-    ::KDDockWidgets::Controllers::Stack::onTabInserted();
-}
-void Stack_wrapper::onTabRemoved()
-{
-    ::KDDockWidgets::Controllers::Stack::onTabRemoved();
-}
-void Stack_wrapper::removeDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    ::KDDockWidgets::Controllers::Stack::removeDockWidget(arg__1);
-}
-void Stack_wrapper::renameTab(int index, const QString &arg__2)
-{
-    ::KDDockWidgets::Controllers::Stack::renameTab(index, arg__2);
-}
-void Stack_wrapper::setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1)
-{
-    ::KDDockWidgets::Controllers::Stack::setCurrentDockWidget(arg__1);
-}
-void Stack_wrapper::setCurrentDockWidget(int index)
-{
-    ::KDDockWidgets::Controllers::Stack::setCurrentDockWidget(index);
 }
 void Stack_wrapper::setDocumentMode(bool arg__1)
 {
@@ -260,43 +204,11 @@ bool c_KDDockWidgets__Controllers__Stack__contains_DockWidget(void *thisObj, voi
     auto dw = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(dw_);
     return fromPtr(thisObj)->contains(dw);
 }
-// countChanged()
-void c_KDDockWidgets__Controllers__Stack__countChanged(void *thisObj)
-{
-    fromPtr(thisObj)->countChanged();
-}
-// currentDockWidget() const
-void *c_KDDockWidgets__Controllers__Stack__currentDockWidget(void *thisObj)
-{
-    return fromPtr(thisObj)->currentDockWidget();
-}
-// currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget * arg__1)
-void c_KDDockWidgets__Controllers__Stack__currentDockWidgetChanged_DockWidget(void *thisObj,
-                                                                              void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
-    fromPtr(thisObj)->currentDockWidgetChanged(arg__1);
-}
-// currentIndex() const
-int c_KDDockWidgets__Controllers__Stack__currentIndex(void *thisObj)
-{
-    return fromPtr(thisObj)->currentIndex();
-}
-// currentTabChanged(int index)
-void c_KDDockWidgets__Controllers__Stack__currentTabChanged_int(void *thisObj, int index)
-{
-    fromPtr(thisObj)->currentTabChanged(index);
-}
 // customEvent(QEvent * event)
 void c_KDDockWidgets__Controllers__Stack__customEvent_QEvent(void *thisObj, void *event_)
 {
     auto event = reinterpret_cast<QEvent *>(event_);
     fromWrapperPtr(thisObj)->customEvent_nocallback(event);
-}
-// dockwidgetAt(int index) const
-void *c_KDDockWidgets__Controllers__Stack__dockwidgetAt_int(void *thisObj, int index)
-{
-    return fromPtr(thisObj)->dockwidgetAt(index);
 }
 // event(QEvent * event)
 bool c_KDDockWidgets__Controllers__Stack__event_QEvent(void *thisObj, void *event_)
@@ -334,12 +246,6 @@ bool c_KDDockWidgets__Controllers__Stack__eventFilter_QObject_QEvent(void *thisO
 void *c_KDDockWidgets__Controllers__Stack__group(void *thisObj)
 {
     return fromPtr(thisObj)->group();
-}
-// indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget * arg__1) const
-int c_KDDockWidgets__Controllers__Stack__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
-    return fromPtr(thisObj)->indexOfDockWidget(arg__1);
 }
 // insertDockWidget(KDDockWidgets::Controllers::DockWidget * dockwidget, int index)
 bool c_KDDockWidgets__Controllers__Stack__insertDockWidget_DockWidget_int(void *thisObj,
@@ -398,52 +304,12 @@ int c_KDDockWidgets__Controllers__Stack__numDockWidgets(void *thisObj)
 {
     return fromPtr(thisObj)->numDockWidgets();
 }
-// onCurrentTabChanged(int index)
-void c_KDDockWidgets__Controllers__Stack__onCurrentTabChanged_int(void *thisObj, int index)
-{
-    fromPtr(thisObj)->onCurrentTabChanged(index);
-}
 // onMouseDoubleClick(QPoint localPos)
 bool c_KDDockWidgets__Controllers__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_)
 {
     assert(localPos_);
     auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
     return fromPtr(thisObj)->onMouseDoubleClick(localPos);
-}
-// onTabInserted()
-void c_KDDockWidgets__Controllers__Stack__onTabInserted(void *thisObj)
-{
-    fromPtr(thisObj)->onTabInserted();
-}
-// onTabRemoved()
-void c_KDDockWidgets__Controllers__Stack__onTabRemoved(void *thisObj)
-{
-    fromPtr(thisObj)->onTabRemoved();
-}
-// removeDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
-void c_KDDockWidgets__Controllers__Stack__removeDockWidget_DockWidget(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
-    fromPtr(thisObj)->removeDockWidget(arg__1);
-}
-// renameTab(int index, const QString & arg__2)
-void c_KDDockWidgets__Controllers__Stack__renameTab_int_QString(void *thisObj, int index,
-                                                                const char *arg__2_)
-{
-    const auto arg__2 = QString::fromUtf8(arg__2_);
-    fromPtr(thisObj)->renameTab(index, arg__2);
-}
-// setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
-void c_KDDockWidgets__Controllers__Stack__setCurrentDockWidget_DockWidget(void *thisObj,
-                                                                          void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
-    fromPtr(thisObj)->setCurrentDockWidget(arg__1);
-}
-// setCurrentDockWidget(int index)
-void c_KDDockWidgets__Controllers__Stack__setCurrentDockWidget_int(void *thisObj, int index)
-{
-    fromPtr(thisObj)->setCurrentDockWidget(index);
 }
 // setDocumentMode(bool arg__1)
 void c_KDDockWidgets__Controllers__Stack__setDocumentMode_bool(void *thisObj, bool arg__1)
@@ -517,17 +383,17 @@ void c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_eventFilter>(
                 callback);
         break;
-    case 1139:
+    case 1126:
         wrapper->m_isMDICallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isMDI>(
                 callback);
         break;
-    case 1140:
+    case 1127:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isPositionDraggable>(
             callback);
         break;
-    case 1142:
+    case 1129:
         wrapper->m_isWindowCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isWindow>(
                 callback);
@@ -536,7 +402,7 @@ void c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *pt
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1161:
+    case 1141:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_singleDockWidget>(callback);
         break;

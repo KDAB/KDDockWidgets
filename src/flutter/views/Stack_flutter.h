@@ -23,22 +23,9 @@ class DOCKS_EXPORT Stack_flutter : public View_flutter, public StackViewInterfac
 public:
     explicit Stack_flutter(Controllers::Stack *controller, View *parent = nullptr);
 
-    int numDockWidgets() const override;
-    void removeDockWidget(Controllers::DockWidget *) override;
-    int indexOfDockWidget(const Controllers::DockWidget *) const override;
-
     bool isPositionDraggable(QPoint p) const override;
     void init() override;
     void setDocumentMode(bool) override;
-
-public:
-    void setCurrentDockWidget(int index) override;
-    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
-                          const QString &title) override;
-    void renameTab(int index, const QString &) override;
-    void changeTabIcon(int index, const QIcon &) override;
-    Controllers::DockWidget *dockwidgetAt(int index) const override;
-    int currentIndex() const override;
 
 private:
     Q_DISABLE_COPY(Stack_flutter)

@@ -60,12 +60,28 @@ void TabBar_flutter::moveTabTo(int from, int to)
     // Not implemented yet
 }
 
-Controllers::DockWidget *TabBar_flutter::currentDockWidget() const
+void TabBar_flutter::changeTabIcon(int index, const QIcon &)
 {
-    return nullptr;
+    qWarning() << Q_FUNC_INFO << "Not implemented" << index;
 }
 
-bool TabBar_flutter::tabsAreMovable() const
+void TabBar_flutter::removeDockWidget(Controllers::DockWidget *dw)
 {
-    return false;
+    qWarning() << Q_FUNC_INFO << "Not implemented" << dw;
+}
+
+void TabBar_flutter::insertDockWidget(int, Controllers::DockWidget *, const QIcon &,
+                                      const QString &)
+{
+    qWarning() << Q_FUNC_INFO << "Not implemented";
+}
+
+void TabBar_flutter::renameTab(int index, const QString &)
+{
+    qWarning() << Q_FUNC_INFO << "Not implemented" << index;
+}
+
+void TabBar_flutter::setCurrentIndex(int)
+{
+    qWarning() << Q_FUNC_INFO << "Not implemented";
 }

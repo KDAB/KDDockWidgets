@@ -71,19 +71,6 @@ void TabBar_flutter_wrapper::createPlatformWindow_nocallback()
 {
     ::KDDockWidgets::Views::TabBar_flutter::createPlatformWindow();
 }
-KDDockWidgets::Controllers::DockWidget *TabBar_flutter_wrapper::currentDockWidget() const
-{
-    if (m_currentDockWidgetCallback) {
-        const void *thisPtr = this;
-        return m_currentDockWidgetCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::Views::TabBar_flutter::currentDockWidget();
-    }
-}
-KDDockWidgets::Controllers::DockWidget *TabBar_flutter_wrapper::currentDockWidget_nocallback() const
-{
-    return ::KDDockWidgets::Views::TabBar_flutter::currentDockWidget();
-}
 Qt::WindowFlags TabBar_flutter_wrapper::flags() const
 {
     if (m_flagsCallback) {
@@ -500,6 +487,45 @@ void TabBar_flutter_wrapper::releaseMouse_nocallback()
 {
     ::KDDockWidgets::Views::TabBar_flutter::releaseMouse();
 }
+void TabBar_flutter_wrapper::removeDockWidget(KDDockWidgets::Controllers::DockWidget *dw)
+{
+    if (m_removeDockWidgetCallback) {
+        const void *thisPtr = this;
+        m_removeDockWidgetCallback(const_cast<void *>(thisPtr), dw);
+    } else {
+        ::KDDockWidgets::Views::TabBar_flutter::removeDockWidget(dw);
+    }
+}
+void TabBar_flutter_wrapper::removeDockWidget_nocallback(KDDockWidgets::Controllers::DockWidget *dw)
+{
+    ::KDDockWidgets::Views::TabBar_flutter::removeDockWidget(dw);
+}
+void TabBar_flutter_wrapper::renameTab(int index, const QString &name)
+{
+    if (m_renameTabCallback) {
+        const void *thisPtr = this;
+        m_renameTabCallback(const_cast<void *>(thisPtr), index, name);
+    } else {
+        ::KDDockWidgets::Views::TabBar_flutter::renameTab(index, name);
+    }
+}
+void TabBar_flutter_wrapper::renameTab_nocallback(int index, const QString &name)
+{
+    ::KDDockWidgets::Views::TabBar_flutter::renameTab(index, name);
+}
+void TabBar_flutter_wrapper::setCurrentIndex(int index)
+{
+    if (m_setCurrentIndexCallback) {
+        const void *thisPtr = this;
+        m_setCurrentIndexCallback(const_cast<void *>(thisPtr), index);
+    } else {
+        ::KDDockWidgets::Views::TabBar_flutter::setCurrentIndex(index);
+    }
+}
+void TabBar_flutter_wrapper::setCurrentIndex_nocallback(int index)
+{
+    ::KDDockWidgets::Views::TabBar_flutter::setCurrentIndex(index);
+}
 void TabBar_flutter_wrapper::setCursor(Qt::CursorShape shape)
 {
     if (m_setCursorCallback) {
@@ -786,19 +812,6 @@ int TabBar_flutter_wrapper::tabAt_nocallback(QPoint localPos) const
 {
     return ::KDDockWidgets::Views::TabBar_flutter::tabAt(localPos);
 }
-bool TabBar_flutter_wrapper::tabsAreMovable() const
-{
-    if (m_tabsAreMovableCallback) {
-        const void *thisPtr = this;
-        return m_tabsAreMovableCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::Views::TabBar_flutter::tabsAreMovable();
-    }
-}
-bool TabBar_flutter_wrapper::tabsAreMovable_nocallback() const
-{
-    return ::KDDockWidgets::Views::TabBar_flutter::tabsAreMovable();
-}
 QString TabBar_flutter_wrapper::text(int index) const
 {
     if (m_textCallback) {
@@ -890,20 +903,6 @@ void c_KDDockWidgets__Views__TabBar_flutter__createPlatformWindow(void *thisObj)
             return wrapperPtr->createPlatformWindow_nocallback();
         } else {
             return targetPtr->createPlatformWindow();
-        }
-    }();
-}
-// currentDockWidget() const
-void *c_KDDockWidgets__Views__TabBar_flutter__currentDockWidget(void *thisObj)
-{
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->currentDockWidget_nocallback();
-        } else {
-            return targetPtr->currentDockWidget();
         }
     }();
 }
@@ -1356,6 +1355,51 @@ void c_KDDockWidgets__Views__TabBar_flutter__releaseMouse(void *thisObj)
         }
     }();
 }
+// removeDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+void c_KDDockWidgets__Views__TabBar_flutter__removeDockWidget_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(dw_);
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->removeDockWidget_nocallback(dw);
+        } else {
+            return targetPtr->removeDockWidget(dw);
+        }
+    }();
+}
+// renameTab(int index, const QString & name)
+void c_KDDockWidgets__Views__TabBar_flutter__renameTab_int_QString(void *thisObj, int index,
+                                                                   const char *name_)
+{
+    const auto name = QString::fromUtf8(name_);
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->renameTab_nocallback(index, name);
+        } else {
+            return targetPtr->renameTab(index, name);
+        }
+    }();
+}
+// setCurrentIndex(int index)
+void c_KDDockWidgets__Views__TabBar_flutter__setCurrentIndex_int(void *thisObj, int index)
+{
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->setCurrentIndex_nocallback(index);
+        } else {
+            return targetPtr->setCurrentIndex(index);
+        }
+    }();
+}
 // setCursor(Qt::CursorShape shape)
 void c_KDDockWidgets__Views__TabBar_flutter__setCursor_CursorShape(void *thisObj, int shape)
 {
@@ -1676,20 +1720,6 @@ int c_KDDockWidgets__Views__TabBar_flutter__tabAt_QPoint(void *thisObj, void *lo
         }
     }();
 }
-// tabsAreMovable() const
-bool c_KDDockWidgets__Views__TabBar_flutter__tabsAreMovable(void *thisObj)
-{
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->tabsAreMovable_nocallback();
-        } else {
-            return targetPtr->tabsAreMovable();
-        }
-    }();
-}
 // text(int index) const
 void *c_KDDockWidgets__Views__TabBar_flutter__text_int(void *thisObj, int index)
 {
@@ -1741,11 +1771,6 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
         wrapper->m_createPlatformWindowCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::
                                  Callback_createPlatformWindow>(callback);
-        break;
-    case 979:
-        wrapper->m_currentDockWidgetCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_currentDockWidget>(
-            callback);
         break;
     case 858:
         wrapper->m_flagsCallback = reinterpret_cast<
@@ -1840,7 +1865,7 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
         wrapper->m_move_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_move_2>(callback);
         break;
-    case 980:
+    case 979:
         wrapper->m_moveTabToCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_moveTabTo>(callback);
         break;
@@ -1878,7 +1903,7 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_raiseAndActivate>(
             callback);
         break;
-    case 981:
+    case 980:
         wrapper->m_rectForTabCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_rectForTab>(
             callback);
@@ -1891,6 +1916,20 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
     case 899:
         wrapper->m_releaseMouseCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_releaseMouse>(
+            callback);
+        break;
+    case 981:
+        wrapper->m_removeDockWidgetCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_removeDockWidget>(
+            callback);
+        break;
+    case 982:
+        wrapper->m_renameTabCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_renameTab>(callback);
+        break;
+    case 983:
+        wrapper->m_setCurrentIndexCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_setCurrentIndex>(
             callback);
         break;
     case 903:
@@ -1990,16 +2029,11 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
         wrapper->m_sizeHintCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_sizeHint>(callback);
         break;
-    case 983:
+    case 985:
         wrapper->m_tabAtCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_tabAt>(callback);
         break;
-    case 984:
-        wrapper->m_tabsAreMovableCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_tabsAreMovable>(
-            callback);
-        break;
-    case 985:
+    case 986:
         wrapper->m_textCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_text>(callback);
         break;
