@@ -81,8 +81,10 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
       children: [
         titleBarWidget,
         tabBarWidget,
-        if (dockWidgetWidget != null) dockWidgetWidget,
-        Expanded(child: Container(color: kddwView.m_color))
+        if (dockWidgetWidget != null)
+          dockWidgetWidget
+        else
+          Expanded(child: Container(color: kddwView.m_color))
       ],
     );
   }
