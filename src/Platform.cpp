@@ -135,6 +135,8 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
 #ifdef KDDW_FRONTEND_FLUTTER
         // TODOm4: This needs to be called from Dart
         platform = nullptr;
+        Q_UNUSED(argc);
+        Q_UNUSED(argv);
 #endif
         break;
     }

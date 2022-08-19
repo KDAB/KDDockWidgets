@@ -11,7 +11,7 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FUZZER": "OFF",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy;flutter"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
             },
             "warnings": {
                 "uninitialized": true
@@ -29,7 +29,24 @@
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FUZZER": "OFF",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy;flutter"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
+            },
+            "warnings": {
+                "uninitialized": true
+            }
+        },
+        {
+            "name": "dev-flutter",
+            "displayName": "dev-flutter",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-flutter",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "KDDockWidgets_FUZZER": "OFF",
+                "KDDockWidgets_FRONTENDS": "flutter",
+                "ECM_ENABLE_SANITIZERS": "'address;undefined'"
             },
             "warnings": {
                 "uninitialized": true
