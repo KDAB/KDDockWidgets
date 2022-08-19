@@ -10,7 +10,9 @@
 */
 
 import 'View_flutter.dart';
+import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:flutter/material.dart';
 
 class DropArea_flutter extends View_flutter {
   DropArea_flutter(KDDockWidgetBindings.Controller? controller, int type,
@@ -18,5 +20,28 @@ class DropArea_flutter extends View_flutter {
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
     print("DropArea_flutter CTOR");
+  }
+}
+
+class DropAreaWidget extends PositionedWidget {
+  final DropArea_flutter DockWidgetView;
+  DropAreaWidget(var kddwView, this.DockWidgetView, {Key? key})
+      : super(kddwView, key: key);
+
+  @override
+  State<PositionedWidget> createState() {
+    return DockWidgetPositionedWidgetState(kddwView, DockWidgetView);
+  }
+}
+
+class DockWidgetPositionedWidgetState extends PositionedWidgetState {
+  final DropArea_flutter DockWidgetView;
+
+  DockWidgetPositionedWidgetState(var kddwView, this.DockWidgetView)
+      : super(kddwView);
+
+  @override
+  Widget buildContents() {
+    return super.buildContents();
   }
 }
