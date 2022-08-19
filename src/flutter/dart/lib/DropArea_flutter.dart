@@ -21,6 +21,10 @@ class DropArea_flutter extends View_flutter {
       : super(controller, type, parent, windowFlags: windowFlags) {
     print("DropArea_flutter CTOR");
   }
+
+  Widget createFlutterWidget() {
+    return DropAreaWidget(kddwView, this, key: widgetKey);
+  }
 }
 
 class DropAreaWidget extends PositionedWidget {
@@ -42,6 +46,10 @@ class DockWidgetPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents() {
-    return super.buildContents();
+    return Container(
+        color: kddwView.m_color,
+        child: Stack(
+          children: kddwView.childWidgets,
+        ));
   }
 }

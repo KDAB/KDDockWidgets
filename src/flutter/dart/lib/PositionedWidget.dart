@@ -100,11 +100,7 @@ class PositionedWidgetState extends State<PositionedWidget>
 
   /// This is factored-out from build() so derived classes can return something else
   Widget buildContents() {
-    return Container(
-        color: kddwView.m_color,
-        child: Stack(
-          children: kddwView.childWidgets,
-        ));
+    return Container(color: kddwView.m_color);
   }
 
   @override
