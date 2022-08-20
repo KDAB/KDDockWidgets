@@ -189,7 +189,7 @@ inline void drag(View *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
              << "; pressPosGlobal=" << pressGlobalPos
              << "; pressPosLocal=" << sourceWidget->mapFromGlobal(pressGlobalPos)
              << "; from=" << QCursor::pos() << "; actions=" << buttonActions
-             << "; visible=" << sourceWidget->isVisible();
+             << "; visible=" << sourceWidget->controller()->isVisible();
     moveMouseTo(globalDest, sourceWidget);
     qDebug() << "Arrived at" << QCursor::pos();
     pressGlobalPos = sourceWidget->mapToGlobal(QPoint(10, 10));
@@ -201,11 +201,11 @@ inline void drag(View *sourceView, QPoint globalDest,
                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
                      | ButtonAction_Release)
 {
-    Q_ASSERT(sourceView && sourceView->isVisible());
+    Q_ASSERT(sourceView && sourceView->controller()->isVisible());
 
     View *draggable = draggableFor(sourceView);
 
-    Q_ASSERT(draggable && draggable->isVisible());
+    Q_ASSERT(draggable && draggable->controller()->isVisible());
     const QPoint pressGlobalPos = draggable->mapToGlobal(QPoint(15, 15));
 
     drag(draggable, pressGlobalPos, globalDest, buttonActions);
@@ -217,7 +217,7 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalD
 {
     View *draggable = draggableFor(fw->view());
     Q_ASSERT(draggable);
-    Q_ASSERT(draggable->isVisible());
+    Q_ASSERT(draggable->controller()->isVisible());
     drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
 }
 

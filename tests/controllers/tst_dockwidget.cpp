@@ -34,7 +34,7 @@ TEST_CASE("setGuestView")
     dw->view()->show();
     Platform::instance()->tests_wait(500); // TODOm3: Replace with wait for visible or so.
 
-    CHECK(guest->isVisible());
+    CHECK(guest->controller()->isVisible());
     CHECK(dw->guestView()->equals(guest));
     REQUIRE(dw->view()->window());
     REQUIRE(guest->window());

@@ -575,8 +575,8 @@ void TestDocks::tst_restoreTwice()
         QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreTwice.json")));
         QVERIFY(dock2->isVisible());
         QVERIFY(dock3->isVisible());
-        QVERIFY(dock2->window()->isVisible());
-        QVERIFY(dock3->window()->isVisible());
+        QVERIFY(dock2->window()->controller()->isVisible());
+        QVERIFY(dock3->window()->controller()->isVisible());
         auto fw = dock2->floatingWindow();
         QVERIFY(fw);
     }
@@ -5654,7 +5654,7 @@ void TestDocks::tst_close()
     QVERIFY(dock1->close());
 
     QVERIFY(!dock1->isVisible());
-    QVERIFY(!dock1->window()->isVisible());
+    QVERIFY(!dock1->window()->controller()->isVisible());
     QVERIFY(dock1->window()->equals(dock1->view()));
     QVERIFY(!toggleAction->isChecked());
 
@@ -5682,7 +5682,7 @@ void TestDocks::tst_close()
 
     QVERIFY(Platform::instance()->tests_waitForDeleted(fw1));
     QVERIFY(!dock1->isVisible());
-    QVERIFY(!dock1->window()->isVisible());
+    QVERIFY(!dock1->window()->controller()->isVisible());
     QVERIFY(dock1->window()->equals(dock1->view()));
     QVERIFY(!toggleAction->isChecked());
 
@@ -5690,7 +5690,7 @@ void TestDocks::tst_close()
     QPointer<Controllers::FloatingWindow> window = dock1->dptr()->morphIntoFloatingWindow();
     QPointer<Controllers::Group> group1 = dock1->dptr()->group();
     QVERIFY(dock1->isVisible());
-    QVERIFY(dock1->window()->isVisible());
+    QVERIFY(dock1->window()->controller()->isVisible());
     QVERIFY(group1->isVisible());
     QVERIFY(dock1->window()->equals(window->view()));
 
@@ -5705,7 +5705,7 @@ void TestDocks::tst_close()
     window = dock1->dptr()->morphIntoFloatingWindow();
     group1 = dock1->dptr()->group();
     QVERIFY(dock1->isVisible());
-    QVERIFY(dock1->window()->isVisible());
+    QVERIFY(dock1->window()->controller()->isVisible());
     QVERIFY(group1->isVisible());
     QVERIFY(dock1->window()->equals(window->view()));
 

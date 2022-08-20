@@ -31,7 +31,7 @@ TEST_CASE("FloatingWindow Ctor")
     CHECK(rootView->is(Type::FloatingWindow));
     REQUIRE(rootView->controller());
     CHECK(rootView->controller()->is(Type::FloatingWindow));
-    CHECK(rootView->isVisible());
+    CHECK(rootView->controller()->isVisible());
 
     Controllers::FloatingWindow *fw = dw->floatingWindow();
     REQUIRE(fw);

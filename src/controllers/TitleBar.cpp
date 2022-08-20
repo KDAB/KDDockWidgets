@@ -485,14 +485,14 @@ bool TitleBar::closeButtonEnabled() const
 
 std::unique_ptr<KDDockWidgets::WindowBeingDragged> TitleBar::makeWindow()
 {
-    if (!isVisible() && view()->rootView()->isVisible()
+    if (!isVisible() && view()->rootView()->controller()->isVisible()
         && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
 
         // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab
         // bar's buttons to the title bar's buttons, just to reuse logic
 
         qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar" << this
-                   << view()->rootView()->isVisible();
+                   << view()->rootView()->controller()->isVisible();
         if (m_group) {
             qWarning() << "this=" << this << "; actual=" << m_group->actualTitleBar();
         } else if (m_floatingWindow) {

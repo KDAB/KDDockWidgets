@@ -64,30 +64,30 @@ TEST_CASE("View::windowHandle,rootView,Window::rootView")
 TEST_CASE("View::isVisible(),show(),hide()")
 {
     auto rootView = createViewAndWindow({});
-    CHECK(!rootView->isVisible());
+    CHECK(!rootView->controller()->isVisible());
 
-    rootView->setVisible(true);
-    CHECK(rootView->isVisible());
+    rootView->controller()->setVisible(true);
+    CHECK(rootView->controller()->isVisible());
 
     // Hiding the parent should hide the children
     auto view2 = createViewAndWindow({});
     view2->setParent(rootView);
-    view2->setVisible(true);
-    CHECK(view2->isVisible());
-    CHECK(rootView->isVisible());
-    rootView->setVisible(false);
-    CHECK(!view2->isVisible());
-    CHECK(!rootView->isVisible());
+    view2->controller()->setVisible(true);
+    CHECK(view2->controller()->isVisible());
+    CHECK(rootView->controller()->isVisible());
+    rootView->controller()->setVisible(false);
+    CHECK(!view2->controller()->isVisible());
+    CHECK(!rootView->controller()->isVisible());
 
     // test show()
     rootView->show();
-    CHECK(rootView->isVisible());
-    CHECK(view2->isVisible());
+    CHECK(rootView->controller()->isVisible());
+    CHECK(view2->controller()->isVisible());
 
     // test hide()
     rootView->hide();
-    CHECK(!rootView->isVisible());
-    CHECK(!view2->isVisible());
+    CHECK(!rootView->controller()->isVisible());
+    CHECK(!view2->controller()->isVisible());
 
     delete rootView;
 }
@@ -114,7 +114,7 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
 
     // Now test with child view
     auto childView = createViewAndWindow({ true }, rootView);
-    CHECK(childView->isVisible());
+    CHECK(childView->controller()->isVisible());
     const QRect newChildGeo(1, 2, 300, 301);
     childView->setGeometry(newChildGeo);
 
@@ -196,7 +196,7 @@ TEST_CASE("View::hasFocus")
     rootView->show();
     rootView->activateWindow();
 
-    CHECK(rootView->isVisible());
+    CHECK(rootView->controller()->isVisible());
     Platform::instance()->tests_wait(0);
     CHECK(!rootView->hasFocus());
 
@@ -208,7 +208,7 @@ TEST_CASE("View::hasFocus")
     auto child1 = createViewAndWindow({}, rootView);
     CHECK(rootView->hasFocus());
     CHECK(rootView->equals(Platform::instance()->focusedView()));
-    child1->setVisible(true);
+    child1->controller()->setVisible(true);
     child1->setFocus(Qt::MouseFocusReason);
     Platform::instance()->tests_wait(200); // QWidget::setFocus() requires 1 event loop iteration
     CHECK(child1->hasFocus());

@@ -3558,7 +3558,7 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
             if (item->isVisible()) {
                 if (View *widget = item->guestView()) {
                     widget->setGeometry(q->mapToRoot(item->geometry()));
-                    widget->setVisible(true);
+                    widget->controller()->setVisible(true);
                 } else {
                     qWarning() << Q_FUNC_INFO << "visible item doesn't have a guest" << item;
                 }

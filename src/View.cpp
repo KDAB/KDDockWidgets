@@ -36,7 +36,7 @@ Controller *maybeCreateController(Controller *controller, Type type, View *view)
         return controller;
 
     if (type == Type::ViewWrapper)
-        return nullptr;
+        return new Controller(Type::ViewWrapper, view);
 
     return new Controller(Type::None, view);
 }
