@@ -16,10 +16,10 @@
 #include <qpoint.h>
 #include <qrect.h>
 #include <Group.h>
-#include <qlist.h>
-#include <qbytearray.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qlist.h>
+#include <qcoreevent.h>
+#include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Item_wrapper : public ::Layouting::Item

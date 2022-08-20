@@ -1613,7 +1613,7 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_createPlatformWindow>(
             callback);
         break;
-    case 995:
+    case 996:
         wrapper->m_dragRectCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_dragRect>(callback);
         break;
@@ -1705,7 +1705,7 @@ void c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback(void *
         wrapper->m_move_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_move_2>(callback);
         break;
-    case 996:
+    case 997:
         wrapper->m_nonContentsHeightCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper::Callback_nonContentsHeight>(
             callback);

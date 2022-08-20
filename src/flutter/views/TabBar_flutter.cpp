@@ -42,7 +42,6 @@ int TabBar_flutter::tabAt(QPoint) const
     return -1;
 }
 
-
 QString TabBar_flutter::text(int) const
 {
     return {};
@@ -65,15 +64,15 @@ void TabBar_flutter::changeTabIcon(int index, const QIcon &)
     qWarning() << Q_FUNC_INFO << "Not implemented" << index;
 }
 
-void TabBar_flutter::removeDockWidget(Controllers::DockWidget *dw)
+void TabBar_flutter::removeDockWidget(Controllers::DockWidget *)
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented" << dw;
+    onRebuildRequested();
 }
 
 void TabBar_flutter::insertDockWidget(int, Controllers::DockWidget *, const QIcon &,
                                       const QString &)
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented";
+    onRebuildRequested();
 }
 
 void TabBar_flutter::renameTab(int index, const QString &)
@@ -83,5 +82,5 @@ void TabBar_flutter::renameTab(int index, const QString &)
 
 void TabBar_flutter::setCurrentIndex(int)
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented";
+    onRebuildRequested();
 }

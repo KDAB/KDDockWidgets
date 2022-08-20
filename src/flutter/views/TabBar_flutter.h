@@ -54,6 +54,9 @@ public:
     void renameTab(int index, const QString &name) override;
     void setCurrentIndex(int index) override;
 
+    /// Tells flutter to rebuild our tab widget. Called when adding or removing tabs.
+    virtual void onRebuildRequested() = 0;
+
 protected:
     void init() override;
 };

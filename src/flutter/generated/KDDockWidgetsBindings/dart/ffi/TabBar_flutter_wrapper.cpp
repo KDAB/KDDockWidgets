@@ -409,6 +409,21 @@ void TabBar_flutter_wrapper::onChildRemoved_nocallback(KDDockWidgets::View *chil
 {
     ::KDDockWidgets::Views::TabBar_flutter::onChildRemoved(childView);
 }
+void TabBar_flutter_wrapper::onRebuildRequested()
+{
+    if (m_onRebuildRequestedCallback) {
+        const void *thisPtr = this;
+        m_onRebuildRequestedCallback(const_cast<void *>(thisPtr));
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return;
+    }
+}
+void TabBar_flutter_wrapper::onRebuildRequested_nocallback()
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return;
+}
 bool TabBar_flutter_wrapper::onResize(int w, int h)
 {
     if (m_onResize_2Callback) {
@@ -1271,6 +1286,20 @@ void c_KDDockWidgets__Views__TabBar_flutter__onChildRemoved_View(void *thisObj, 
         }
     }();
 }
+// onRebuildRequested()
+void c_KDDockWidgets__Views__TabBar_flutter__onRebuildRequested(void *thisObj)
+{
+    [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->onRebuildRequested_nocallback();
+        } else {
+            return targetPtr->onRebuildRequested();
+        }
+    }();
+}
 // onResize(int w, int h)
 bool c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int w, int h)
 {
@@ -1889,6 +1918,11 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_onChildRemoved>(
             callback);
         break;
+    case 980:
+        wrapper->m_onRebuildRequestedCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_onRebuildRequested>(
+            callback);
+        break;
     case 892:
         wrapper->m_onResize_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_onResize_2>(
@@ -1903,7 +1937,7 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_raiseAndActivate>(
             callback);
         break;
-    case 980:
+    case 981:
         wrapper->m_rectForTabCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_rectForTab>(
             callback);
@@ -1918,16 +1952,16 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_releaseMouse>(
             callback);
         break;
-    case 981:
+    case 982:
         wrapper->m_removeDockWidgetCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_removeDockWidget>(
             callback);
         break;
-    case 982:
+    case 983:
         wrapper->m_renameTabCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_renameTab>(callback);
         break;
-    case 983:
+    case 984:
         wrapper->m_setCurrentIndexCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_setCurrentIndex>(
             callback);
@@ -2029,11 +2063,11 @@ void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void 
         wrapper->m_sizeHintCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_sizeHint>(callback);
         break;
-    case 985:
+    case 986:
         wrapper->m_tabAtCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_tabAt>(callback);
         break;
-    case 986:
+    case 987:
         wrapper->m_textCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TabBar_flutter_wrapper::Callback_text>(callback);
         break;

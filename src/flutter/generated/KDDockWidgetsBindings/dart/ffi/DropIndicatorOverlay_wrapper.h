@@ -15,10 +15,10 @@
 #include <Group.h>
 #include <qrect.h>
 #include <qpoint.h>
+#include <qsize.h>
 #include <qcoreevent.h>
 #include <qobject.h>
 #include <View.h>
-#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DropIndicatorOverlay_wrapper : public ::KDDockWidgets::Controllers::DropIndicatorOverlay

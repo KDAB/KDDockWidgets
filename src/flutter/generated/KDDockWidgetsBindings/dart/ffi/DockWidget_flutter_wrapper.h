@@ -13,9 +13,9 @@
 #include <qstring.h>
 #include <qsize.h>
 #include <DockWidget.h>
+#include <View.h>
 #include <qpoint.h>
 #include <qrect.h>
-#include <View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockWidget_flutter_wrapper : public ::KDDockWidgets::Views::DockWidget_flutter

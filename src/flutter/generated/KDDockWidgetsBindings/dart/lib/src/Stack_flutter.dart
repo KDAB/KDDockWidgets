@@ -202,7 +202,7 @@ class Stack_flutter extends View_flutter {
   bool isPositionDraggable(QPoint p) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(989))
+            cFunctionSymbolName(990))
         .asFunction();
     return func(thisCpp, p == null ? ffi.nullptr : p.thisCpp) != 0;
   }
@@ -462,7 +462,7 @@ class Stack_flutter extends View_flutter {
   setDocumentMode(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(990))
+            cFunctionSymbolName(991))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -757,7 +757,7 @@ class Stack_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Stack_flutter__isMinimized";
       case 877:
         return "c_KDDockWidgets__Views__Stack_flutter__isNull";
-      case 989:
+      case 990:
         return "c_KDDockWidgets__Views__Stack_flutter__isPositionDraggable_QPoint";
       case 878:
         return "c_KDDockWidgets__Views__Stack_flutter__isRootView";
@@ -799,7 +799,7 @@ class Stack_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Stack_flutter__releaseMouse";
       case 903:
         return "c_KDDockWidgets__Views__Stack_flutter__setCursor_CursorShape";
-      case 990:
+      case 991:
         return "c_KDDockWidgets__Views__Stack_flutter__setDocumentMode_bool";
       case 904:
         return "c_KDDockWidgets__Views__Stack_flutter__setFixedHeight_int";
@@ -877,7 +877,7 @@ class Stack_flutter extends View_flutter {
         return "isMinimized";
       case 877:
         return "isNull";
-      case 989:
+      case 990:
         return "isPositionDraggable";
       case 878:
         return "isRootView";
@@ -919,7 +919,7 @@ class Stack_flutter extends View_flutter {
         return "releaseMouse";
       case 903:
         return "setCursor";
-      case 990:
+      case 991:
         return "setDocumentMode";
       case 904:
         return "setFixedHeight";
@@ -1022,11 +1022,11 @@ class Stack_flutter extends View_flutter {
     final callback877 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         View.isNull_calledFromC, callbackExcept877);
     registerCallback(thisCpp, callback877, 877);
-    const callbackExcept989 = 0;
-    final callback989 =
+    const callbackExcept990 = 0;
+    final callback990 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            Stack_flutter.isPositionDraggable_calledFromC, callbackExcept989);
-    registerCallback(thisCpp, callback989, 989);
+            Stack_flutter.isPositionDraggable_calledFromC, callbackExcept990);
+    registerCallback(thisCpp, callback990, 990);
     const callbackExcept878 = 0;
     final callback878 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         View_flutter.isRootView_calledFromC, callbackExcept878);
@@ -1100,10 +1100,10 @@ class Stack_flutter extends View_flutter {
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             View_flutter.setCursor_calledFromC);
     registerCallback(thisCpp, callback903, 903);
-    final callback990 =
+    final callback991 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             Stack_flutter.setDocumentMode_calledFromC);
-    registerCallback(thisCpp, callback990, 990);
+    registerCallback(thisCpp, callback991, 991);
     final callback904 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             View_flutter.setFixedHeight_calledFromC);

@@ -16,16 +16,24 @@ import 'package:flutter/material.dart';
 
 class TabBar_flutter extends KDDockWidgetBindings.TabBar_flutter
     with View_mixin {
+  late final KDDockWidgetBindings.TabBar m_controller;
+
   TabBar_flutter(
       KDDockWidgetBindings.TabBar? tabBar, KDDockWidgetBindings.View? parent)
       : super(tabBar, parent: parent) {
     m_fillsParent = true;
+    m_controller = tabBar!;
     initMixin(this);
     print("TabBar_flutter CTOR");
   }
 
   Widget createFlutterWidget() {
     return TabBarWidget(kddwView, this, key: widgetKey);
+  }
+
+  @override
+  onRebuildRequested() {
+    print("TabBar_flutter: onRebuildRequested");
   }
 }
 
@@ -41,17 +49,24 @@ class TabBarWidget extends PositionedWidget {
 }
 
 class TabBarPositionedWidgetState extends PositionedWidgetState {
-  final TabBar_flutter TabBarView;
+  final TabBar_flutter m_tabBarView;
 
-  TabBarPositionedWidgetState(var kddwView, this.TabBarView) : super(kddwView);
+  TabBarPositionedWidgetState(var kddwView, this.m_tabBarView)
+      : super(kddwView);
 
   @override
   Widget buildContents() {
+    final int numTabs = m_tabBarView.m_controller.numDockWidgets();
+    var tabs = <Tab>[];
+    for (var i = 0; i < numTabs; ++i) {
+      tabs.add(Tab(text: "test"));
+    }
+
     return SizedBox(
         height: 50,
-        child: Container(
-          // padding: EdgeInsets.fromLTRB(8, 3, 5, 0),
-          color: Color(0xffA5AE9E),
+        child: DefaultTabController(
+          length: numTabs,
+          child: TabBar(tabs: tabs),
         ));
   }
 }

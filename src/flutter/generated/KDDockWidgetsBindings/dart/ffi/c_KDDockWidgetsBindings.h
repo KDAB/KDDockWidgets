@@ -1956,6 +1956,8 @@ void *c_KDDockWidgets__Views__TabBar_flutter__objectName(void *thisObj);
 void c_KDDockWidgets__Views__TabBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::TabBar_flutter::onChildRemoved(KDDockWidgets::View * childView)
 void c_KDDockWidgets__Views__TabBar_flutter__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::Views::TabBar_flutter::onRebuildRequested()
+void c_KDDockWidgets__Views__TabBar_flutter__onRebuildRequested(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::onResize(int w, int h)
 bool c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TabBar_flutter::raise()

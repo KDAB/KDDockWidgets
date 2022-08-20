@@ -82,7 +82,7 @@ class Group_flutter extends View_flutter {
   QRect dragRect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(995))
+            cFunctionSymbolName(996))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -354,7 +354,7 @@ class Group_flutter extends View_flutter {
   int nonContentsHeight() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(996))
+            cFunctionSymbolName(997))
         .asFunction();
     return func(thisCpp);
   }
@@ -743,7 +743,7 @@ class Group_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Group_flutter__close";
       case 853:
         return "c_KDDockWidgets__Views__Group_flutter__createPlatformWindow";
-      case 995:
+      case 996:
         return "c_KDDockWidgets__Views__Group_flutter__dragRect";
       case 858:
         return "c_KDDockWidgets__Views__Group_flutter__flags";
@@ -787,7 +787,7 @@ class Group_flutter extends View_flutter {
         return "c_KDDockWidgets__Views__Group_flutter__minimumWidth";
       case 888:
         return "c_KDDockWidgets__Views__Group_flutter__move_int_int";
-      case 996:
+      case 997:
         return "c_KDDockWidgets__Views__Group_flutter__nonContentsHeight";
       case 889:
         return "c_KDDockWidgets__Views__Group_flutter__normalGeometry";
@@ -863,7 +863,7 @@ class Group_flutter extends View_flutter {
         return "close";
       case 853:
         return "createPlatformWindow";
-      case 995:
+      case 996:
         return "dragRect";
       case 858:
         return "flags";
@@ -907,7 +907,7 @@ class Group_flutter extends View_flutter {
         return "minimumWidth";
       case 888:
         return "move_2";
-      case 996:
+      case 997:
         return "nonContentsHeight";
       case 889:
         return "normalGeometry";
@@ -991,9 +991,9 @@ class Group_flutter extends View_flutter {
     final callback853 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         View.createPlatformWindow_calledFromC);
     registerCallback(thisCpp, callback853, 853);
-    final callback995 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback996 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Group_flutter.dragRect_calledFromC);
-    registerCallback(thisCpp, callback995, 995);
+    registerCallback(thisCpp, callback996, 996);
     const callbackExcept858 = 0;
     final callback858 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
         View_flutter.flags_calledFromC, callbackExcept858);
@@ -1071,10 +1071,10 @@ class Group_flutter extends View_flutter {
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
             View_flutter.move_2_calledFromC);
     registerCallback(thisCpp, callback888, 888);
-    const callbackExcept996 = 0;
-    final callback996 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        Group_flutter.nonContentsHeight_calledFromC, callbackExcept996);
-    registerCallback(thisCpp, callback996, 996);
+    const callbackExcept997 = 0;
+    final callback997 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        Group_flutter.nonContentsHeight_calledFromC, callbackExcept997);
+    registerCallback(thisCpp, callback997, 997);
     final callback889 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         View_flutter.normalGeometry_calledFromC);
     registerCallback(thisCpp, callback889, 889);

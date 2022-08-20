@@ -19,12 +19,6 @@
 #include "Window.h"
 #include "private/View_p.h"
 
-#include <QMouseEvent>
-#include <QTabBar>
-#include <QHBoxLayout>
-#include <QAbstractButton>
-#include <QMenu>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 

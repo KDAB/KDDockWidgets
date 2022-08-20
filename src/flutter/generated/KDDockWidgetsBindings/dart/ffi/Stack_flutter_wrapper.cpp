@@ -1689,7 +1689,7 @@ void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *
         wrapper->m_isNullCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_isNull>(callback);
         break;
-    case 989:
+    case 990:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_isPositionDraggable>(
             callback);
@@ -1785,7 +1785,7 @@ void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *
         wrapper->m_setCursorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_setCursor>(callback);
         break;
-    case 990:
+    case 991:
         wrapper->m_setDocumentModeCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper::Callback_setDocumentMode>(
             callback);
