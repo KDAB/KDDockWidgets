@@ -64,9 +64,12 @@ public:
     /// @brief Returns whether this controller is of the specified type
     bool is(Type) const;
 
-    // View convenience methods to save 1 indirection
+    /// Returns whether the view is visible
     bool isVisible() const;
+
+    /// Hides or shows the view associated with this controller
     void setVisible(bool);
+
     QRect rect() const;
     QPoint mapToGlobal(QPoint) const;
     int height() const;

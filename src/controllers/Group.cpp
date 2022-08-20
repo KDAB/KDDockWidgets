@@ -433,8 +433,8 @@ void Group::updateTitleBarVisibility()
         visible = true;
     }
 
-    const bool wasVisible = m_titleBar->view()->isVisible();
-    m_titleBar->view()->setVisible(visible);
+    const bool wasVisible = m_titleBar->isVisible();
+    m_titleBar->setVisible(visible);
 
     if (wasVisible != visible) {
         Q_EMIT actualTitleBarChanged();
@@ -820,7 +820,7 @@ QSize Group::biggestDockWidgetMaxSize() const
 QRect Group::dragRect() const
 {
     QRect rect;
-    if (m_titleBar->view()->isVisible()) {
+    if (m_titleBar->isVisible()) {
         rect = m_titleBar->view()->rect();
         rect.moveTopLeft(m_titleBar->view()->mapToGlobal(QPoint(0, 0)));
     }
