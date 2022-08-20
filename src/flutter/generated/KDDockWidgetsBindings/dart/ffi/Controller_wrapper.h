@@ -17,8 +17,8 @@
 #include <qsize.h>
 #include <qobject.h>
 #include <qlist.h>
-#include <qcoreevent.h>
 #include <qbytearray.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Controller_wrapper : public ::KDDockWidgets::Controller

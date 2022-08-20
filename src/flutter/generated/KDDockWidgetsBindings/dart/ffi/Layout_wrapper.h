@@ -11,6 +11,7 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <controllers/Layout.h>
 #include <View.h>
+#include <MainWindow.h>
 #include <FloatingWindow.h>
 #include <qsize.h>
 #include <DockWidget.h>
@@ -19,10 +20,10 @@
 #include <qlist.h>
 #include <DropArea.h>
 #include <qstring.h>
+#include <qrect.h>
 #include <qcoreevent.h>
 #include <qobject.h>
 #include <qpoint.h>
-#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Layout_wrapper : public ::KDDockWidgets::Controllers::Layout
@@ -54,6 +55,7 @@ public:
     QSize layoutMinimumSize() const;
     QSize layoutSize() const;
     int layoutWidth() const;
+    KDDockWidgets::Controllers::MainWindow *mainWindow(bool honourNesting = false) const;
     int placeholderCount() const;
     void removeItem(Layouting::Item *item);
     void restorePlaceholder(KDDockWidgets::Controllers::DockWidget *dw, Layouting::Item *arg__2,
@@ -136,6 +138,9 @@ c_KDDockWidgets__Controllers__Layout__layoutMinimumSize(void *thisObj);
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__layoutSize(void *thisObj);
 // KDDockWidgets::Controllers::Layout::layoutWidth() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj);
+// KDDockWidgets::Controllers::Layout::mainWindow(bool honourNesting) const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__Layout__mainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Controllers::Layout::placeholderCount() const
 KDDockWidgetsBindings_EXPORT int
 c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);

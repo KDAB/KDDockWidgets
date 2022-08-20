@@ -12,6 +12,7 @@
 #include <FloatingWindow.h>
 #include <qstring.h>
 #include <qrect.h>
+#include <MainWindow.h>
 #include <Group.h>
 #include <DockWidget.h>
 #include <DropArea.h>
@@ -20,17 +21,19 @@
 #include <qpoint.h>
 #include <KDDockWidgets.h>
 #include <qsize.h>
+#include <View.h>
 #include <qcoreevent.h>
 #include <qobject.h>
-#include <View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class FloatingWindow_wrapper : public ::KDDockWidgets::Controllers::FloatingWindow
 {
 public:
     ~FloatingWindow_wrapper();
-    FloatingWindow_wrapper(KDDockWidgets::Controllers::Group *group, QRect suggestedGeometry);
-    FloatingWindow_wrapper(QRect suggestedGeometry);
+    FloatingWindow_wrapper(KDDockWidgets::Controllers::Group *group, QRect suggestedGeometry,
+                           KDDockWidgets::Controllers::MainWindow *parent = nullptr);
+    FloatingWindow_wrapper(QRect suggestedGeometry,
+                           KDDockWidgets::Controllers::MainWindow *parent = nullptr);
     void activatedChanged();
     void addDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1,
                        KDDockWidgets::Location location,
@@ -60,6 +63,7 @@ public:
     virtual bool isWindow() const;
     virtual bool isWindow_nocallback() const;
     KDDockWidgets::Controllers::Layout *layout() const;
+    KDDockWidgets::Controllers::MainWindow *mainWindow() const;
     void maybeCreateResizeHandler();
     KDDockWidgets::Controllers::DropArea *multiSplitter() const;
     void numFramesChanged();
@@ -94,13 +98,15 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Controllers::FloatingWindow::FloatingWindow(KDDockWidgets::Controllers::Group *
-// group, QRect suggestedGeometry)
+// group, QRect suggestedGeometry, KDDockWidgets::Controllers::MainWindow * parent)
 KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect(void *group_,
-                                                                      void *suggestedGeometry_);
-// KDDockWidgets::Controllers::FloatingWindow::FloatingWindow(QRect suggestedGeometry)
+c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect_MainWindow(
+    void *group_, void *suggestedGeometry_, void *parent_);
+// KDDockWidgets::Controllers::FloatingWindow::FloatingWindow(QRect suggestedGeometry,
+// KDDockWidgets::Controllers::MainWindow * parent)
 KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect(void *suggestedGeometry_);
+c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_,
+                                                                           void *parent_);
 // KDDockWidgets::Controllers::FloatingWindow::activatedChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged(void *thisObj);
@@ -178,6 +184,9 @@ c_KDDockWidgets__Controllers__FloatingWindow__isWindow(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::layout() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__FloatingWindow__layout(void *thisObj);
+// KDDockWidgets::Controllers::FloatingWindow::mainWindow() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__FloatingWindow__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::maybeCreateResizeHandler()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__FloatingWindow__maybeCreateResizeHandler(void *thisObj);

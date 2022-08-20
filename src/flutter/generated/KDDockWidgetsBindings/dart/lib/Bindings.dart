@@ -16,6 +16,7 @@ export 'src/FloatingWindow.dart' show FloatingWindow;
 export 'src/Group.dart' show Group;
 export 'src/DropArea.dart' show DropArea;
 export 'src/Layout.dart' show Layout;
+export 'src/MainWindow.dart' show MainWindow;
 export 'src/Separator.dart' show Separator;
 export 'src/SideBar.dart' show SideBar;
 export 'src/Stack.dart' show Stack;

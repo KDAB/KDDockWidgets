@@ -1091,6 +1091,10 @@ c_KDDockWidgets__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutS
 // KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_,
                                                                  void *parent_);
+// KDDockWidgets::ViewFactory::createFloatingWindow(KDDockWidgets::Controllers::FloatingWindow *
+// controller, KDDockWidgets::Controllers::MainWindow * parent, Qt::WindowFlags windowFlags) const
+void *c_KDDockWidgets__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags(
+    void *thisObj, void *controller_, void *parent_, int windowFlags);
 // KDDockWidgets::ViewFactory::createGroup(KDDockWidgets::Controllers::Group * arg__1,
 // KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1_,
@@ -1148,6 +1152,11 @@ c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions
 void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj,
                                                                          void *arg__1_,
                                                                          void *parent_);
+// KDDockWidgets::ViewFactory_flutter::createFloatingWindow(KDDockWidgets::Controllers::FloatingWindow
+// * arg__1, KDDockWidgets::Controllers::MainWindow * parent, Qt::WindowFlags windowFlags) const
+void *
+c_KDDockWidgets__ViewFactory_flutter__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags(
+    void *thisObj, void *arg__1_, void *parent_, int windowFlags);
 // KDDockWidgets::ViewFactory_flutter::createGroup(KDDockWidgets::Controllers::Group * arg__1,
 // KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory_flutter__createGroup_Group_View(void *thisObj, void *arg__1_,
@@ -1196,6 +1205,12 @@ void *c_KDDockWidgets__Platform__constructor();
 void *c_KDDockWidgets__Platform__applicationName(void *thisObj);
 // KDDockWidgets::Platform::createDefaultViewFactory()
 void *c_KDDockWidgets__Platform__createDefaultViewFactory(void *thisObj);
+// KDDockWidgets::Platform::createMainWindow(const QString & uniqueName,
+// KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options,
+// KDDockWidgets::View * parent, Qt::WindowFlags arg__5) const
+void *
+c_KDDockWidgets__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(
+    void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
 // KDDockWidgets::Platform::createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::View *
 // parent) const
 void *c_KDDockWidgets__Platform__createView_Controller_View(void *thisObj, void *arg__1_,
@@ -1297,6 +1312,12 @@ void *c_KDDockWidgets__Platform_flutter__constructor();
 void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
 // KDDockWidgets::Platform_flutter::createDefaultViewFactory()
 void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
+// KDDockWidgets::Platform_flutter::createMainWindow(const QString & uniqueName,
+// KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options,
+// KDDockWidgets::View * parent, Qt::WindowFlags arg__5) const
+void *
+c_KDDockWidgets__Platform_flutter__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(
+    void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
 // KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller,
 // KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj,
@@ -1460,6 +1481,8 @@ void *c_KDDockWidgets__View__asFloatingWindowController(void *thisObj);
 void *c_KDDockWidgets__View__asGroupController(void *thisObj);
 // KDDockWidgets::View::asLayout() const
 void *c_KDDockWidgets__View__asLayout(void *thisObj);
+// KDDockWidgets::View::asMainWindowController() const
+void *c_KDDockWidgets__View__asMainWindowController(void *thisObj);
 // KDDockWidgets::View::asStackController() const
 void *c_KDDockWidgets__View__asStackController(void *thisObj);
 // KDDockWidgets::View::asTabBarController() const
@@ -2470,6 +2493,8 @@ bool c_KDDockWidgets__Controllers__TitleBar__isMDI(void *thisObj);
 bool c_KDDockWidgets__Controllers__TitleBar__isOverlayed(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::isWindow() const
 bool c_KDDockWidgets__Controllers__TitleBar__isWindow(void *thisObj);
+// KDDockWidgets::Controllers::TitleBar::mainWindow() const
+void *c_KDDockWidgets__Controllers__TitleBar__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::minimizeButtonChanged(bool visible, bool enabled)
 void c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj,
                                                                              bool visible,
@@ -2675,6 +2700,8 @@ bool c_KDDockWidgets__Controllers__SideBar__eventFilter_QObject_QEvent(void *thi
 bool c_KDDockWidgets__Controllers__SideBar__isEmpty(void *thisObj);
 // KDDockWidgets::Controllers::SideBar::isVertical() const
 bool c_KDDockWidgets__Controllers__SideBar__isVertical(void *thisObj);
+// KDDockWidgets::Controllers::SideBar::mainWindow() const
+void *c_KDDockWidgets__Controllers__SideBar__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::SideBar::onButtonClicked(KDDockWidgets::Controllers::DockWidget * dw)
 void c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Controllers::SideBar::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
@@ -2735,6 +2762,104 @@ void c_KDDockWidgets__Controllers__Separator__registerVirtualMethodCallback(void
                                                                             int methodId);
 void c_KDDockWidgets__Controllers__Separator_Finalizer(
     void *, void *cppObj,
+    void *); // KDDockWidgets::Controllers::MainWindow::MainWindow(KDDockWidgets::View * view, const
+             // QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
+void *c_KDDockWidgets__Controllers__MainWindow__constructor_View_QString_MainWindowOptions(
+    void *view_, const char *uniqueName_, int options_);
+// KDDockWidgets::Controllers::MainWindow::addDockWidget(KDDockWidgets::Controllers::DockWidget *
+// dockWidget, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget *
+// relativeTo, KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Controllers__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(
+    void *thisObj, void *dockWidget_, int location, void *relativeTo_, void *initialOption_);
+// KDDockWidgets::Controllers::MainWindow::addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget
+// * dockwidget)
+void c_KDDockWidgets__Controllers__MainWindow__addDockWidgetAsTab_DockWidget(void *thisObj,
+                                                                             void *dockwidget_);
+// KDDockWidgets::Controllers::MainWindow::anySideBarIsVisible() const
+bool c_KDDockWidgets__Controllers__MainWindow__anySideBarIsVisible(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::centralAreaGeometry() const
+void *c_KDDockWidgets__Controllers__MainWindow__centralAreaGeometry(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::clearSideBarOverlay(bool deleteFrame)
+void c_KDDockWidgets__Controllers__MainWindow__clearSideBarOverlay_bool(void *thisObj,
+                                                                        bool deleteFrame);
+// KDDockWidgets::Controllers::MainWindow::closeDockWidgets(bool force)
+bool c_KDDockWidgets__Controllers__MainWindow__closeDockWidgets_bool(void *thisObj, bool force);
+// KDDockWidgets::Controllers::MainWindow::customEvent(QEvent * event)
+void c_KDDockWidgets__Controllers__MainWindow__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::MainWindow::dropArea() const
+void *c_KDDockWidgets__Controllers__MainWindow__dropArea(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::event(QEvent * event)
+bool c_KDDockWidgets__Controllers__MainWindow__event_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::Controllers::MainWindow::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__Controllers__MainWindow__eventFilter_QObject_QEvent(void *thisObj,
+                                                                          void *watched_,
+                                                                          void *event_);
+// KDDockWidgets::Controllers::MainWindow::groupCountChanged(int arg__1)
+void c_KDDockWidgets__Controllers__MainWindow__groupCountChanged_int(void *thisObj, int arg__1);
+// KDDockWidgets::Controllers::MainWindow::isMDI() const
+bool c_KDDockWidgets__Controllers__MainWindow__isMDI(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::layout() const
+void *c_KDDockWidgets__Controllers__MainWindow__layout(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::layoutEqually()
+void c_KDDockWidgets__Controllers__MainWindow__layoutEqually(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget
+// * dockWidget)
+void c_KDDockWidgets__Controllers__MainWindow__layoutParentContainerEqually_DockWidget(
+    void *thisObj, void *dockWidget_);
+// KDDockWidgets::Controllers::MainWindow::moveToSideBar(KDDockWidgets::Controllers::DockWidget *
+// dw)
+void c_KDDockWidgets__Controllers__MainWindow__moveToSideBar_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Controllers::MainWindow::multiSplitter() const
+void *c_KDDockWidgets__Controllers__MainWindow__multiSplitter(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::options() const
+int c_KDDockWidgets__Controllers__MainWindow__options(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::overlayMargin() const
+int c_KDDockWidgets__Controllers__MainWindow__overlayMargin(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::overlayMarginChanged(int margin)
+void c_KDDockWidgets__Controllers__MainWindow__overlayMarginChanged_int(void *thisObj, int margin);
+// KDDockWidgets::Controllers::MainWindow::overlayOnSideBar(KDDockWidgets::Controllers::DockWidget *
+// dw)
+void c_KDDockWidgets__Controllers__MainWindow__overlayOnSideBar_DockWidget(void *thisObj,
+                                                                           void *dw_);
+// KDDockWidgets::Controllers::MainWindow::overlayedDockWidget() const
+void *c_KDDockWidgets__Controllers__MainWindow__overlayedDockWidget(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::restoreFromSideBar(KDDockWidgets::Controllers::DockWidget
+// * dw)
+void c_KDDockWidgets__Controllers__MainWindow__restoreFromSideBar_DockWidget(void *thisObj,
+                                                                             void *dw_);
+// KDDockWidgets::Controllers::MainWindow::setContentsMargins(int l, int t, int r, int b)
+void c_KDDockWidgets__Controllers__MainWindow__setContentsMargins_int_int_int_int(void *thisObj,
+                                                                                  int l, int t,
+                                                                                  int r, int b);
+// KDDockWidgets::Controllers::MainWindow::setOverlayMargin(int margin)
+void c_KDDockWidgets__Controllers__MainWindow__setOverlayMargin_int(void *thisObj, int margin);
+// KDDockWidgets::Controllers::MainWindow::setParentView_impl(KDDockWidgets::View * parent)
+void c_KDDockWidgets__Controllers__MainWindow__setParentView_impl_View(void *thisObj,
+                                                                       void *parent_);
+// KDDockWidgets::Controllers::MainWindow::setUniqueName(const QString & uniqueName)
+void c_KDDockWidgets__Controllers__MainWindow__setUniqueName_QString(void *thisObj,
+                                                                     const char *uniqueName_);
+// KDDockWidgets::Controllers::MainWindow::sideBarForDockWidget(const
+// KDDockWidgets::Controllers::DockWidget * dw) const
+void *c_KDDockWidgets__Controllers__MainWindow__sideBarForDockWidget_DockWidget(void *thisObj,
+                                                                                void *dw_);
+// KDDockWidgets::Controllers::MainWindow::toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidget
+// * dw)
+void c_KDDockWidgets__Controllers__MainWindow__toggleOverlayOnSideBar_DockWidget(void *thisObj,
+                                                                                 void *dw_);
+// KDDockWidgets::Controllers::MainWindow::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Controllers__MainWindow__tr_char_char_int(const char *s,
+                                                                        const char *c, int n);
+// KDDockWidgets::Controllers::MainWindow::uniqueName() const
+void *c_KDDockWidgets__Controllers__MainWindow__uniqueName(void *thisObj);
+// KDDockWidgets::Controllers::MainWindow::uniqueNameChanged()
+void c_KDDockWidgets__Controllers__MainWindow__uniqueNameChanged(void *thisObj);
+void c_KDDockWidgets__Controllers__MainWindow__destructor(void *thisObj);
+void c_KDDockWidgets__Controllers__MainWindow__registerVirtualMethodCallback(void *ptr,
+                                                                             void *callback,
+                                                                             int methodId);
+void c_KDDockWidgets__Controllers__MainWindow_Finalizer(
+    void *, void *cppObj,
     void *); // KDDockWidgets::Controllers::Layout::Layout(KDDockWidgets::Type
              // arg__1, KDDockWidgets::View *
              // arg__2)
@@ -2783,6 +2908,8 @@ void *c_KDDockWidgets__Controllers__Layout__layoutMinimumSize(void *thisObj);
 void *c_KDDockWidgets__Controllers__Layout__layoutSize(void *thisObj);
 // KDDockWidgets::Controllers::Layout::layoutWidth() const
 int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj);
+// KDDockWidgets::Controllers::Layout::mainWindow(bool honourNesting) const
+void *c_KDDockWidgets__Controllers__Layout__mainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Controllers::Layout::placeholderCount() const
 int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
 // KDDockWidgets::Controllers::Layout::removeItem(Layouting::Item * item)
@@ -3017,6 +3144,8 @@ bool c_KDDockWidgets__Controllers__Group__isOverlayed(void *thisObj);
 bool c_KDDockWidgets__Controllers__Group__isTheOnlyFrame(void *thisObj);
 // KDDockWidgets::Controllers::Group::layoutItem() const
 void *c_KDDockWidgets__Controllers__Group__layoutItem(void *thisObj);
+// KDDockWidgets::Controllers::Group::mainWindow() const
+void *c_KDDockWidgets__Controllers__Group__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::Group::mdiDockWidgetWrapper() const
 void *c_KDDockWidgets__Controllers__Group__mdiDockWidgetWrapper(void *thisObj);
 // KDDockWidgets::Controllers::Group::mdiDropAreaWrapper() const
@@ -3082,12 +3211,16 @@ void c_KDDockWidgets__Controllers__Group_Finalizer(
     void *, void *cppObj,
     void
         *); // KDDockWidgets::Controllers::FloatingWindow::FloatingWindow(KDDockWidgets::Controllers::Group
-            // * group, QRect suggestedGeometry)
+            // * group, QRect suggestedGeometry,
+            // KDDockWidgets::Controllers::MainWindow
+            // * parent)
+void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect_MainWindow(
+    void *group_, void *suggestedGeometry_, void *parent_);
+// KDDockWidgets::Controllers::FloatingWindow::FloatingWindow(QRect suggestedGeometry,
+// KDDockWidgets::Controllers::MainWindow * parent)
 void *
-c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect(void *group_,
-                                                                      void *suggestedGeometry_);
-// KDDockWidgets::Controllers::FloatingWindow::FloatingWindow(QRect suggestedGeometry)
-void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect(void *suggestedGeometry_);
+c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_,
+                                                                           void *parent_);
 // KDDockWidgets::Controllers::FloatingWindow::activatedChanged()
 void c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::addDockWidget(KDDockWidgets::Controllers::DockWidget
@@ -3145,6 +3278,8 @@ bool c_KDDockWidgets__Controllers__FloatingWindow__isMDI(void *thisObj);
 bool c_KDDockWidgets__Controllers__FloatingWindow__isWindow(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::layout() const
 void *c_KDDockWidgets__Controllers__FloatingWindow__layout(void *thisObj);
+// KDDockWidgets::Controllers::FloatingWindow::mainWindow() const
+void *c_KDDockWidgets__Controllers__FloatingWindow__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::maybeCreateResizeHandler()
 void c_KDDockWidgets__Controllers__FloatingWindow__maybeCreateResizeHandler(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::multiSplitter() const
@@ -3394,6 +3529,8 @@ bool c_KDDockWidgets__Controllers__DockWidget__isTabbed(void *thisObj);
 void *c_KDDockWidgets__Controllers__DockWidget__lastOverlayedSize(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::layoutSaverOptions() const
 int c_KDDockWidgets__Controllers__DockWidget__layoutSaverOptions(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::mainWindow() const
+void *c_KDDockWidgets__Controllers__DockWidget__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::moveToSideBar()
 void c_KDDockWidgets__Controllers__DockWidget__moveToSideBar(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::onHidden(bool spontaneous)

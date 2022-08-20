@@ -19,6 +19,7 @@
 #include <qstring.h>
 #include <vector>
 #include <qobject.h>
+#include <MainWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Platform_wrapper : public ::KDDockWidgets::Platform
@@ -30,6 +31,16 @@ public:
     virtual QString applicationName_nocallback() const;
     virtual KDDockWidgets::ViewFactory *createDefaultViewFactory();
     virtual KDDockWidgets::ViewFactory *createDefaultViewFactory_nocallback();
+    virtual KDDockWidgets::Controllers::MainWindow *
+    createMainWindow(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2,
+                     QFlags<KDDockWidgets::MainWindowOption> options =
+                         KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame,
+                     KDDockWidgets::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
+    virtual KDDockWidgets::Controllers::MainWindow *createMainWindow_nocallback(
+        const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2,
+        QFlags<KDDockWidgets::MainWindowOption> options =
+            KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame,
+        KDDockWidgets::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
     virtual KDDockWidgets::View *createView(KDDockWidgets::Controller *arg__1,
                                             KDDockWidgets::View *parent = nullptr) const;
     virtual KDDockWidgets::View *createView_nocallback(KDDockWidgets::Controller *arg__1,
@@ -115,6 +126,11 @@ public:
     Callback_applicationName m_applicationNameCallback = nullptr;
     typedef KDDockWidgets::ViewFactory *(*Callback_createDefaultViewFactory)(void *);
     Callback_createDefaultViewFactory m_createDefaultViewFactoryCallback = nullptr;
+    typedef KDDockWidgets::Controllers::MainWindow *(*Callback_createMainWindow)(
+        void *, const QString &uniqueName, KDDockWidgets::CreateViewOptions *arg__2,
+        QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View *parent,
+        Qt::WindowFlags arg__5);
+    Callback_createMainWindow m_createMainWindowCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createView)(void *, KDDockWidgets::Controller *arg__1,
                                                         KDDockWidgets::View *parent);
     Callback_createView m_createViewCallback = nullptr;
@@ -193,6 +209,12 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform__applicationName(vo
 // KDDockWidgets::Platform::createDefaultViewFactory()
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Platform__createDefaultViewFactory(void *thisObj);
+// KDDockWidgets::Platform::createMainWindow(const QString & uniqueName,
+// KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options,
+// KDDockWidgets::View * parent, Qt::WindowFlags arg__5) const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(
+    void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
 // KDDockWidgets::Platform::createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::View *
 // parent) const
 KDDockWidgetsBindings_EXPORT void *

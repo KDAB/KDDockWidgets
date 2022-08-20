@@ -14,9 +14,9 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <qsize.h>
 #include <qcoreevent.h>
 #include <qobject.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Separator_wrapper : public ::KDDockWidgets::Controllers::Separator

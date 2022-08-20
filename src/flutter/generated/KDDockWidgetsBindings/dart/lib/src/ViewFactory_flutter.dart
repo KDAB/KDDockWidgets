@@ -87,6 +87,25 @@ class ViewFactory_flutter extends ViewFactory {
     return result.thisCpp;
   }
 
+  static ffi.Pointer<void> createFloatingWindow_calledFromC(
+      ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1,
+      ffi.Pointer<void>? parent,
+      int windowFlags) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory_flutter::createFloatingWindow(KDDockWidgets::Controllers::FloatingWindow * arg__1, KDDockWidgets::Controllers::MainWindow * parent, Qt::WindowFlags windowFlags) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.createFloatingWindow(
+        FloatingWindow.fromCppPointer(arg__1),
+        parent: MainWindow.fromCppPointer(parent),
+        windowFlags: windowFlags);
+    return result.thisCpp;
+  }
+
   static ffi.Pointer<void> createGroup_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
     var dartInstance =
@@ -254,18 +273,20 @@ class ViewFactory_flutter extends ViewFactory {
       case 691:
         return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
       case 692:
-        return "c_KDDockWidgets__ViewFactory_flutter__createGroup_Group_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags";
       case 693:
-        return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createGroup_Group_View";
       case 694:
-        return "c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
       case 695:
-        return "c_KDDockWidgets__ViewFactory_flutter__createSideBar_SideBar_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View";
       case 696:
-        return "c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createSideBar_SideBar_View";
       case 697:
-        return "c_KDDockWidgets__ViewFactory_flutter__createTabBar_TabBar_View";
+        return "c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View";
       case 698:
+        return "c_KDDockWidgets__ViewFactory_flutter__createTabBar_TabBar_View";
+      case 699:
         return "c_KDDockWidgets__ViewFactory_flutter__createTitleBar_TitleBar_View";
       case 295:
         return "c_KDDockWidgets__ViewFactory_flutter__customEvent_QEvent";
@@ -286,18 +307,20 @@ class ViewFactory_flutter extends ViewFactory {
       case 691:
         return "createDropArea";
       case 692:
-        return "createGroup";
+        return "createFloatingWindow";
       case 693:
-        return "createRubberBand";
+        return "createGroup";
       case 694:
-        return "createSeparator";
+        return "createRubberBand";
       case 695:
-        return "createSideBar";
+        return "createSeparator";
       case 696:
-        return "createStack";
+        return "createSideBar";
       case 697:
-        return "createTabBar";
+        return "createStack";
       case 698:
+        return "createTabBar";
+      case 699:
         return "createTitleBar";
       case 295:
         return "customEvent";
@@ -327,34 +350,38 @@ class ViewFactory_flutter extends ViewFactory {
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             ViewFactory_flutter.createDropArea_calledFromC);
     registerCallback(thisCpp, callback691, 691);
-    final callback692 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createGroup_calledFromC);
+    final callback692 = ffi.Pointer.fromFunction<
+            voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>(
+        ViewFactory_flutter.createFloatingWindow_calledFromC);
     registerCallback(thisCpp, callback692, 692);
     final callback693 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createRubberBand_calledFromC);
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createGroup_calledFromC);
     registerCallback(thisCpp, callback693, 693);
     final callback694 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createSeparator_calledFromC);
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createRubberBand_calledFromC);
     registerCallback(thisCpp, callback694, 694);
     final callback695 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createSideBar_calledFromC);
+            ViewFactory_flutter.createSeparator_calledFromC);
     registerCallback(thisCpp, callback695, 695);
     final callback696 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createStack_calledFromC);
+            ViewFactory_flutter.createSideBar_calledFromC);
     registerCallback(thisCpp, callback696, 696);
     final callback697 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createTabBar_calledFromC);
+            ViewFactory_flutter.createStack_calledFromC);
     registerCallback(thisCpp, callback697, 697);
     final callback698 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            ViewFactory_flutter.createTitleBar_calledFromC);
+            ViewFactory_flutter.createTabBar_calledFromC);
     registerCallback(thisCpp, callback698, 698);
+    final callback699 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            ViewFactory_flutter.createTitleBar_calledFromC);
+    registerCallback(thisCpp, callback699, 699);
     final callback295 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             QObject.customEvent_calledFromC);

@@ -17,12 +17,14 @@
 #include <Stack.h>
 #include <TabBar.h>
 #include <Separator.h>
+#include <FloatingWindow.h>
+#include <MainWindow.h>
 #include <SideBar.h>
 #include <DropArea.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
-#include <qobject.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ViewFactory_flutter_wrapper : public ::KDDockWidgets::ViewFactory_flutter
@@ -47,6 +49,14 @@ public:
     virtual KDDockWidgets::View *
     createDropArea_nocallback(KDDockWidgets::Controllers::DropArea *arg__1,
                               KDDockWidgets::View *parent) const;
+    virtual KDDockWidgets::View *
+    createFloatingWindow(KDDockWidgets::Controllers::FloatingWindow *arg__1,
+                         KDDockWidgets::Controllers::MainWindow *parent = nullptr,
+                         Qt::WindowFlags windowFlags = {}) const;
+    virtual KDDockWidgets::View *
+    createFloatingWindow_nocallback(KDDockWidgets::Controllers::FloatingWindow *arg__1,
+                                    KDDockWidgets::Controllers::MainWindow *parent = nullptr,
+                                    Qt::WindowFlags windowFlags = {}) const;
     virtual KDDockWidgets::View *createGroup(KDDockWidgets::Controllers::Group *arg__1,
                                              KDDockWidgets::View *parent = nullptr) const;
     virtual KDDockWidgets::View *
@@ -96,6 +106,10 @@ public:
     typedef KDDockWidgets::View *(*Callback_createDropArea)(
         void *, KDDockWidgets::Controllers::DropArea *arg__1, KDDockWidgets::View *parent);
     Callback_createDropArea m_createDropAreaCallback = nullptr;
+    typedef KDDockWidgets::View *(*Callback_createFloatingWindow)(
+        void *, KDDockWidgets::Controllers::FloatingWindow *arg__1,
+        KDDockWidgets::Controllers::MainWindow *parent, Qt::WindowFlags windowFlags);
+    Callback_createFloatingWindow m_createFloatingWindowCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createGroup)(void *,
                                                          KDDockWidgets::Controllers::Group *arg__1,
                                                          KDDockWidgets::View *parent);
@@ -145,6 +159,11 @@ c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_,
                                                                    void *parent_);
+// KDDockWidgets::ViewFactory_flutter::createFloatingWindow(KDDockWidgets::Controllers::FloatingWindow
+// * arg__1, KDDockWidgets::Controllers::MainWindow * parent, Qt::WindowFlags windowFlags) const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__ViewFactory_flutter__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags(
+    void *thisObj, void *arg__1_, void *parent_, int windowFlags);
 // KDDockWidgets::ViewFactory_flutter::createGroup(KDDockWidgets::Controllers::Group * arg__1,
 // KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *

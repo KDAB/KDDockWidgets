@@ -302,6 +302,10 @@ Layouting::Item *Group_wrapper::layoutItem() const
 {
     return ::KDDockWidgets::Controllers::Group::layoutItem();
 }
+KDDockWidgets::Controllers::MainWindow *Group_wrapper::mainWindow() const
+{
+    return ::KDDockWidgets::Controllers::Group::mainWindow();
+}
 KDDockWidgets::Controllers::DockWidget *Group_wrapper::mdiDockWidgetWrapper() const
 {
     return ::KDDockWidgets::Controllers::Group::mdiDockWidgetWrapper();
@@ -778,6 +782,11 @@ void *c_KDDockWidgets__Controllers__Group__layoutItem(void *thisObj)
 {
     return fromPtr(thisObj)->layoutItem();
 }
+// mainWindow() const
+void *c_KDDockWidgets__Controllers__Group__mainWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->mainWindow();
+}
 // mdiDockWidgetWrapper() const
 void *c_KDDockWidgets__Controllers__Group__mdiDockWidgetWrapper(void *thisObj)
 {
@@ -940,7 +949,7 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_customEvent>(
                 callback);
         break;
-    case 1338:
+    case 1395:
         wrapper->m_dragRectCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_dragRect>(
                 callback);
@@ -955,17 +964,17 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_eventFilter>(
                 callback);
         break;
-    case 1341:
+    case 1398:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_focusedWidgetChangedCallback>(
             callback);
         break;
-    case 1358:
+    case 1415:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_isFocusedChangedCallback>(
             callback);
         break;
-    case 826:
+    case 828:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_setParentView_impl>(callback);
         break;

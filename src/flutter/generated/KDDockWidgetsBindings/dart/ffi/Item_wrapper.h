@@ -18,8 +18,8 @@
 #include <Group.h>
 #include <qobject.h>
 #include <qlist.h>
-#include <qcoreevent.h>
 #include <qbytearray.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Item_wrapper : public ::Layouting::Item

@@ -14,13 +14,14 @@
 #include <Group.h>
 #include <FloatingWindow.h>
 #include <DockWidget.h>
+#include <MainWindow.h>
 #include <TabBar.h>
-#include <qsize.h>
+#include <View.h>
+#include <qrect.h>
 #include <qcoreevent.h>
 #include <qobject.h>
-#include <View.h>
 #include <qpoint.h>
-#include <qrect.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_wrapper : public ::KDDockWidgets::Controllers::TitleBar
@@ -56,6 +57,7 @@ public:
     bool isOverlayed() const;
     virtual bool isWindow() const;
     virtual bool isWindow_nocallback() const;
+    KDDockWidgets::Controllers::MainWindow *mainWindow() const;
     void minimizeButtonChanged(bool visible, bool enabled);
     void onAutoHideClicked();
     void onCloseClicked();
@@ -167,6 +169,9 @@ KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__TitleBar__isOverlayed(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::isWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__TitleBar__isWindow(void *thisObj);
+// KDDockWidgets::Controllers::TitleBar::mainWindow() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__TitleBar__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::minimizeButtonChanged(bool visible, bool enabled)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj, bool visible,

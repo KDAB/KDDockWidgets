@@ -69,6 +69,7 @@
             <object-type name="DropIndicatorOverlay" />
             <object-type name="DockWidget" />
             <object-type name="ClassicIndicators" />
+            <object-type name="MainWindow" />
         </namespace-type>
 
         <namespace-type name="Views">

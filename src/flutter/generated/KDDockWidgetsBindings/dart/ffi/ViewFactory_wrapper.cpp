@@ -89,6 +89,27 @@ ViewFactory_wrapper::createDropArea_nocallback(KDDockWidgets::Controllers::DropA
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
+KDDockWidgets::View *
+ViewFactory_wrapper::createFloatingWindow(KDDockWidgets::Controllers::FloatingWindow *controller,
+                                          KDDockWidgets::Controllers::MainWindow *parent,
+                                          Qt::WindowFlags windowFlags) const
+{
+    if (m_createFloatingWindowCallback) {
+        const void *thisPtr = this;
+        return m_createFloatingWindowCallback(const_cast<void *>(thisPtr), controller, parent,
+                                              windowFlags);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return {};
+    }
+}
+KDDockWidgets::View *ViewFactory_wrapper::createFloatingWindow_nocallback(
+    KDDockWidgets::Controllers::FloatingWindow *controller,
+    KDDockWidgets::Controllers::MainWindow *parent, Qt::WindowFlags windowFlags) const
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return {};
+}
 KDDockWidgets::View *ViewFactory_wrapper::createGroup(KDDockWidgets::Controllers::Group *arg__1,
                                                       KDDockWidgets::View *parent) const
 {
@@ -337,6 +358,26 @@ void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, 
         }
     }();
 }
+// createFloatingWindow(KDDockWidgets::Controllers::FloatingWindow * controller,
+// KDDockWidgets::Controllers::MainWindow * parent, Qt::WindowFlags windowFlags) const
+void *c_KDDockWidgets__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags(
+    void *thisObj, void *controller_, void *parent_, int windowFlags)
+{
+    auto controller = reinterpret_cast<KDDockWidgets::Controllers::FloatingWindow *>(controller_);
+    auto parent = reinterpret_cast<KDDockWidgets::Controllers::MainWindow *>(parent_);
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->createFloatingWindow_nocallback(
+                controller, parent, static_cast<Qt::WindowFlags>(windowFlags));
+        } else {
+            return targetPtr->createFloatingWindow(controller, parent,
+                                                   static_cast<Qt::WindowFlags>(windowFlags));
+        }
+    }();
+}
 // createGroup(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1_,
                                                            void *parent_)
@@ -526,33 +567,38 @@ void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void
             callback);
         break;
     case 692:
+        wrapper->m_createFloatingWindowCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createFloatingWindow>(
+            callback);
+        break;
+    case 693:
         wrapper->m_createGroupCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createGroup>(callback);
         break;
-    case 693:
+    case 694:
         wrapper->m_createRubberBandCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createRubberBand>(
             callback);
         break;
-    case 694:
+    case 695:
         wrapper->m_createSeparatorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createSeparator>(
             callback);
         break;
-    case 695:
+    case 696:
         wrapper->m_createSideBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createSideBar>(
             callback);
         break;
-    case 696:
+    case 697:
         wrapper->m_createStackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createStack>(callback);
         break;
-    case 697:
+    case 698:
         wrapper->m_createTabBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createTabBar>(callback);
         break;
-    case 698:
+    case 699:
         wrapper->m_createTitleBarCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper::Callback_createTitleBar>(
             callback);

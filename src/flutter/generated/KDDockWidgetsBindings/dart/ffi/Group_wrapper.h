@@ -19,6 +19,7 @@
 #include <TabBar.h>
 #include <qpoint.h>
 #include <TitleBar.h>
+#include <MainWindow.h>
 #include <Item_p.h>
 #include <qrect.h>
 #include <DropArea.h>
@@ -97,6 +98,7 @@ public:
     bool isOverlayed() const;
     bool isTheOnlyFrame() const;
     Layouting::Item *layoutItem() const;
+    KDDockWidgets::Controllers::MainWindow *mainWindow() const;
     KDDockWidgets::Controllers::DockWidget *mdiDockWidgetWrapper() const;
     KDDockWidgets::Controllers::DropArea *mdiDropAreaWrapper() const;
     KDDockWidgets::Controllers::Group *mdiFrame() const;
@@ -314,6 +316,8 @@ KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__Group__isTheOnlyFrame(void *thisObj);
 // KDDockWidgets::Controllers::Group::layoutItem() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__layoutItem(void *thisObj);
+// KDDockWidgets::Controllers::Group::mainWindow() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::Group::mdiDockWidgetWrapper() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__Group__mdiDockWidgetWrapper(void *thisObj);

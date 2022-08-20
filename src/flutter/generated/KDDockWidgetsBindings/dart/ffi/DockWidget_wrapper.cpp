@@ -196,6 +196,10 @@ QFlags<KDDockWidgets::LayoutSaverOption> DockWidget_wrapper::layoutSaverOptions(
 {
     return ::KDDockWidgets::Controllers::DockWidget::layoutSaverOptions();
 }
+KDDockWidgets::Controllers::MainWindow *DockWidget_wrapper::mainWindow() const
+{
+    return ::KDDockWidgets::Controllers::DockWidget::mainWindow();
+}
 void DockWidget_wrapper::moveToSideBar()
 {
     ::KDDockWidgets::Controllers::DockWidget::moveToSideBar();
@@ -561,6 +565,11 @@ int c_KDDockWidgets__Controllers__DockWidget__layoutSaverOptions(void *thisObj)
 {
     return fromPtr(thisObj)->layoutSaverOptions();
 }
+// mainWindow() const
+void *c_KDDockWidgets__Controllers__DockWidget__mainWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->mainWindow();
+}
 // moveToSideBar()
 void c_KDDockWidgets__Controllers__DockWidget__moveToSideBar(void *thisObj)
 {
@@ -756,7 +765,7 @@ void c_KDDockWidgets__Controllers__DockWidget__registerVirtualMethodCallback(voi
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_eventFilter>(callback);
         break;
-    case 826:
+    case 828:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_setParentView_impl>(
             callback);

@@ -51,6 +51,7 @@
 #include "../controllers/TitleBar.h"
 #include "../controllers/Separator.h"
 #include "../controllers/SideBar.h"
+#include "../controllers/MainWindow.h"
 #include "../controllers/FloatingWindow.h"
 #include "../controllers/DropIndicatorOverlay.h"
 #include "../controllers/indicators/ClassicIndicators.h"

@@ -13,8 +13,8 @@
 #include <Stack.h>
 #include <View.h>
 #include <qpoint.h>
-#include <qstring.h>
 #include <qsize.h>
+#include <qstring.h>
 #include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

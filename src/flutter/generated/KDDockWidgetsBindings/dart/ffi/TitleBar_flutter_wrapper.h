@@ -12,9 +12,9 @@
 #include <TitleBar_flutter.h>
 #include <TitleBar.h>
 #include <View.h>
-#include <qstring.h>
 #include <qsize.h>
 #include <qpoint.h>
+#include <qstring.h>
 #include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

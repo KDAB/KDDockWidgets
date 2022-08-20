@@ -139,6 +139,10 @@ int Layout_wrapper::layoutWidth() const
 {
     return ::KDDockWidgets::Controllers::Layout::layoutWidth();
 }
+KDDockWidgets::Controllers::MainWindow *Layout_wrapper::mainWindow(bool honourNesting) const
+{
+    return ::KDDockWidgets::Controllers::Layout::mainWindow(honourNesting);
+}
 int Layout_wrapper::placeholderCount() const
 {
     return ::KDDockWidgets::Controllers::Layout::placeholderCount();
@@ -347,6 +351,11 @@ int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj)
 {
     return fromPtr(thisObj)->layoutWidth();
 }
+// mainWindow(bool honourNesting) const
+void *c_KDDockWidgets__Controllers__Layout__mainWindow_bool(void *thisObj, bool honourNesting)
+{
+    return fromPtr(thisObj)->mainWindow(honourNesting);
+}
 // placeholderCount() const
 int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj)
 {
@@ -435,7 +444,7 @@ void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *p
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
         break;
-    case 826:
+    case 828:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(
             callback);

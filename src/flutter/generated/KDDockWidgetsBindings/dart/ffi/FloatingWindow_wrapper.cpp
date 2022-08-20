@@ -28,12 +28,14 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 FloatingWindow_wrapper::FloatingWindow_wrapper(KDDockWidgets::Controllers::Group *group,
-                                               QRect suggestedGeometry)
-    : ::KDDockWidgets::Controllers::FloatingWindow(group, suggestedGeometry)
+                                               QRect suggestedGeometry,
+                                               KDDockWidgets::Controllers::MainWindow *parent)
+    : ::KDDockWidgets::Controllers::FloatingWindow(group, suggestedGeometry, parent)
 {
 }
-FloatingWindow_wrapper::FloatingWindow_wrapper(QRect suggestedGeometry)
-    : ::KDDockWidgets::Controllers::FloatingWindow(suggestedGeometry)
+FloatingWindow_wrapper::FloatingWindow_wrapper(QRect suggestedGeometry,
+                                               KDDockWidgets::Controllers::MainWindow *parent)
+    : ::KDDockWidgets::Controllers::FloatingWindow(suggestedGeometry, parent)
 {
 }
 void FloatingWindow_wrapper::activatedChanged()
@@ -169,6 +171,10 @@ KDDockWidgets::Controllers::Layout *FloatingWindow_wrapper::layout() const
 {
     return ::KDDockWidgets::Controllers::FloatingWindow::layout();
 }
+KDDockWidgets::Controllers::MainWindow *FloatingWindow_wrapper::mainWindow() const
+{
+    return ::KDDockWidgets::Controllers::FloatingWindow::mainWindow();
+}
 void FloatingWindow_wrapper::maybeCreateResizeHandler()
 {
     ::KDDockWidgets::Controllers::FloatingWindow::maybeCreateResizeHandler();
@@ -261,22 +267,26 @@ void c_KDDockWidgets__Controllers__FloatingWindow_Finalizer(void *, void *cppObj
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper *>(cppObj);
 }
-void *
-c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect(void *group_,
-                                                                      void *suggestedGeometry_)
+void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect_MainWindow(
+    void *group_, void *suggestedGeometry_, void *parent_)
 {
     auto group = reinterpret_cast<KDDockWidgets::Controllers::Group *>(group_);
     assert(suggestedGeometry_);
     auto &suggestedGeometry = *reinterpret_cast<QRect *>(suggestedGeometry_);
-    auto ptr =
-        new KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper(group, suggestedGeometry);
+    auto parent = reinterpret_cast<KDDockWidgets::Controllers::MainWindow *>(parent_);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper(
+        group, suggestedGeometry, parent);
     return reinterpret_cast<void *>(ptr);
 }
-void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect(void *suggestedGeometry_)
+void *
+c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_,
+                                                                           void *parent_)
 {
     assert(suggestedGeometry_);
     auto &suggestedGeometry = *reinterpret_cast<QRect *>(suggestedGeometry_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper(suggestedGeometry);
+    auto parent = reinterpret_cast<KDDockWidgets::Controllers::MainWindow *>(parent_);
+    auto ptr =
+        new KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper(suggestedGeometry, parent);
     return reinterpret_cast<void *>(ptr);
 }
 // activatedChanged()
@@ -447,6 +457,11 @@ void *c_KDDockWidgets__Controllers__FloatingWindow__layout(void *thisObj)
 {
     return fromPtr(thisObj)->layout();
 }
+// mainWindow() const
+void *c_KDDockWidgets__Controllers__FloatingWindow__mainWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->mainWindow();
+}
 // maybeCreateResizeHandler()
 void c_KDDockWidgets__Controllers__FloatingWindow__maybeCreateResizeHandler(void *thisObj)
 {
@@ -558,20 +573,20 @@ void c_KDDockWidgets__Controllers__FloatingWindow__registerVirtualMethodCallback
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_eventFilter>(
             callback);
         break;
-    case 1431:
+    case 1489:
         wrapper->m_isMDICallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 1433:
+    case 1491:
         wrapper->m_isWindowCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
-    case 826:
+    case 828:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_setParentView_impl>(
             callback);
         break;
-    case 1450:
+    case 1509:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_singleDockWidget>(
             callback);

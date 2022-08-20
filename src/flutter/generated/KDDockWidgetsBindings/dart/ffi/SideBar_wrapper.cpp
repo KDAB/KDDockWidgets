@@ -86,6 +86,10 @@ bool SideBar_wrapper::isVertical() const
 {
     return ::KDDockWidgets::Controllers::SideBar::isVertical();
 }
+KDDockWidgets::Controllers::MainWindow *SideBar_wrapper::mainWindow() const
+{
+    return ::KDDockWidgets::Controllers::SideBar::mainWindow();
+}
 void SideBar_wrapper::onButtonClicked(KDDockWidgets::Controllers::DockWidget *dw)
 {
     ::KDDockWidgets::Controllers::SideBar::onButtonClicked(dw);
@@ -198,6 +202,11 @@ bool c_KDDockWidgets__Controllers__SideBar__isVertical(void *thisObj)
 {
     return fromPtr(thisObj)->isVertical();
 }
+// mainWindow() const
+void *c_KDDockWidgets__Controllers__SideBar__mainWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->mainWindow();
+}
 // onButtonClicked(KDDockWidgets::Controllers::DockWidget * dw)
 void c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_)
 {
@@ -252,7 +261,7 @@ void c_KDDockWidgets__Controllers__SideBar__registerVirtualMethodCallback(void *
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::SideBar_wrapper::Callback_eventFilter>(callback);
         break;
-    case 826:
+    case 828:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::SideBar_wrapper::Callback_setParentView_impl>(
             callback);

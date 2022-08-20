@@ -16,6 +16,7 @@
 #include <FloatingWindow.h>
 #include <qrect.h>
 #include <TitleBar.h>
+#include <MainWindow.h>
 #include <qsize.h>
 #include <qpoint.h>
 #include <qcoreevent.h>
@@ -70,6 +71,7 @@ public:
     bool isTabbed() const;
     QSize lastOverlayedSize() const;
     QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions() const;
+    KDDockWidgets::Controllers::MainWindow *mainWindow() const;
     void moveToSideBar();
     void onHidden(bool spontaneous);
     void onResize(QSize newSize);
@@ -220,6 +222,9 @@ c_KDDockWidgets__Controllers__DockWidget__lastOverlayedSize(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::layoutSaverOptions() const
 KDDockWidgetsBindings_EXPORT int
 c_KDDockWidgets__Controllers__DockWidget__layoutSaverOptions(void *thisObj);
+// KDDockWidgets::Controllers::DockWidget::mainWindow() const
+KDDockWidgetsBindings_EXPORT void *
+c_KDDockWidgets__Controllers__DockWidget__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::moveToSideBar()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DockWidget__moveToSideBar(void *thisObj);

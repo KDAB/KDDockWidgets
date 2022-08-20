@@ -333,6 +333,15 @@ class DockWidget extends Controller {
             'c_KDDockWidgets__Controllers__DockWidget__layoutSaverOptions')
         .asFunction();
     return func(thisCpp);
+  } // mainWindow() const
+
+  MainWindow mainWindow() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__DockWidget__mainWindow')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return MainWindow.fromCppPointer(result, false);
   } // moveToSideBar()
 
   moveToSideBar() {
@@ -601,7 +610,7 @@ class DockWidget extends Controller {
         return "c_KDDockWidgets__Controllers__DockWidget__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__DockWidget__eventFilter_QObject_QEvent";
-      case 826:
+      case 828:
         return "c_KDDockWidgets__Controllers__DockWidget__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -615,7 +624,7 @@ class DockWidget extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 826:
+      case 828:
         return "setParentView_impl";
     }
     throw Error();
@@ -641,9 +650,9 @@ class DockWidget extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback826 =
+    final callback828 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             DockWidget.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback826, 826);
+    registerCallback(thisCpp, callback828, 828);
   }
 }

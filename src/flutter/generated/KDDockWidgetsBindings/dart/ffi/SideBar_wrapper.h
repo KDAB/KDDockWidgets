@@ -12,12 +12,13 @@
 #include <SideBar.h>
 #include <qstring.h>
 #include <DockWidget.h>
-#include <qsize.h>
+#include <MainWindow.h>
+#include <View.h>
+#include <qrect.h>
 #include <qcoreevent.h>
 #include <qobject.h>
-#include <View.h>
 #include <qpoint.h>
-#include <qrect.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class SideBar_wrapper : public ::KDDockWidgets::Controllers::SideBar
@@ -35,6 +36,7 @@ public:
     virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
     bool isEmpty() const;
     bool isVertical() const;
+    KDDockWidgets::Controllers::MainWindow *mainWindow() const;
     void onButtonClicked(KDDockWidgets::Controllers::DockWidget *dw);
     void removeDockWidget(KDDockWidgets::Controllers::DockWidget *dw);
     virtual void setParentView_impl(KDDockWidgets::View *parent);
@@ -75,6 +77,8 @@ c_KDDockWidgets__Controllers__SideBar__eventFilter_QObject_QEvent(void *thisObj,
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__isEmpty(void *thisObj);
 // KDDockWidgets::Controllers::SideBar::isVertical() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__isVertical(void *thisObj);
+// KDDockWidgets::Controllers::SideBar::mainWindow() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__SideBar__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::SideBar::onButtonClicked(KDDockWidgets::Controllers::DockWidget * dw)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_);

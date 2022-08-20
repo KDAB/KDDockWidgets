@@ -61,6 +61,29 @@ KDDockWidgets::ViewFactory *Platform_wrapper::createDefaultViewFactory_nocallbac
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
+KDDockWidgets::Controllers::MainWindow *
+Platform_wrapper::createMainWindow(const QString &uniqueName,
+                                   KDDockWidgets::CreateViewOptions arg__2,
+                                   QFlags<KDDockWidgets::MainWindowOption> options,
+                                   KDDockWidgets::View *parent, Qt::WindowFlags arg__5) const
+{
+    if (m_createMainWindowCallback) {
+        const void *thisPtr = this;
+        return m_createMainWindowCallback(const_cast<void *>(thisPtr), uniqueName, &arg__2, options,
+                                          parent, arg__5);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        return {};
+    }
+}
+KDDockWidgets::Controllers::MainWindow *Platform_wrapper::createMainWindow_nocallback(
+    const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2,
+    QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View *parent,
+    Qt::WindowFlags arg__5) const
+{
+    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    return {};
+}
 KDDockWidgets::View *Platform_wrapper::createView(KDDockWidgets::Controller *arg__1,
                                                   KDDockWidgets::View *parent) const
 {
@@ -592,6 +615,31 @@ void *c_KDDockWidgets__Platform__createDefaultViewFactory(void *thisObj)
         }
     }();
 }
+// createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2,
+// QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View * parent, Qt::WindowFlags
+// arg__5) const
+void *
+c_KDDockWidgets__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(
+    void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5)
+{
+    const auto uniqueName = QString::fromUtf8(uniqueName_);
+    assert(arg__2_);
+    auto &arg__2 = *reinterpret_cast<KDDockWidgets::CreateViewOptions *>(arg__2_);
+    auto options = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(options_);
+    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    return [&] {
+        auto targetPtr = fromPtr(thisObj);
+        auto wrapperPtr =
+            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper *>(targetPtr);
+        if (wrapperPtr) {
+            return wrapperPtr->createMainWindow_nocallback(uniqueName, arg__2, options, parent,
+                                                           static_cast<Qt::WindowFlags>(arg__5));
+        } else {
+            return targetPtr->createMainWindow(uniqueName, arg__2, options, parent,
+                                               static_cast<Qt::WindowFlags>(arg__5));
+        }
+    }();
+}
 // createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::View * parent) const
 void *c_KDDockWidgets__Platform__createView_Controller_View(void *thisObj, void *arg__1_,
                                                             void *parent_)
@@ -1067,153 +1115,158 @@ void c_KDDockWidgets__Platform__registerVirtualMethodCallback(void *ptr, void *c
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 728:
+    case 729:
         wrapper->m_applicationNameCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_applicationName>(callback);
         break;
-    case 729:
+    case 730:
         wrapper->m_createDefaultViewFactoryCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_createDefaultViewFactory>(
             callback);
         break;
-    case 730:
+    case 731:
+        wrapper->m_createMainWindowCallback = reinterpret_cast<
+            KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_createMainWindow>(
+            callback);
+        break;
+    case 732:
         wrapper->m_createViewCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_createView>(callback);
         break;
-    case 731:
+    case 733:
         wrapper->m_dumpManagedBacktraceCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_dumpManagedBacktrace>(
             callback);
         break;
-    case 733:
+    case 735:
         wrapper->m_hasActivePopupCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_hasActivePopup>(callback);
         break;
-    case 734:
+    case 736:
         wrapper->m_inDisallowedDragViewCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_inDisallowedDragView>(
             callback);
         break;
-    case 735:
+    case 737:
         wrapper->m_installMessageHandlerCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_installMessageHandler>(
             callback);
         break;
-    case 737:
+    case 739:
         wrapper->m_isLeftMouseButtonPressedCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_isLeftMouseButtonPressed>(
             callback);
         break;
-    case 738:
+    case 740:
         wrapper->m_isProcessingAppQuitEventCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_isProcessingAppQuitEvent>(
             callback);
         break;
-    case 742:
+    case 744:
         wrapper->m_nameCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_name>(
                 callback);
         break;
-    case 743:
+    case 745:
         wrapper->m_organizationNameCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_organizationName>(
             callback);
         break;
-    case 744:
+    case 746:
         wrapper->m_restoreMouseCursorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_restoreMouseCursor>(
             callback);
         break;
-    case 745:
+    case 747:
         wrapper->m_screenNumberForCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_screenNumberFor>(callback);
         break;
-    case 746:
+    case 748:
         wrapper->m_screenSizeForCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_screenSizeFor>(callback);
         break;
-    case 747:
+    case 749:
         wrapper->m_sendEventCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_sendEvent>(callback);
         break;
-    case 748:
+    case 750:
         wrapper->m_setMouseCursorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_setMouseCursor>(callback);
         break;
-    case 750:
+    case 752:
         wrapper->m_startDragDistance_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_startDragDistance_impl>(
             callback);
         break;
-    case 751:
+    case 753:
         wrapper->m_tests_createFocusableViewCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_createFocusableView>(
             callback);
         break;
-    case 752:
+    case 754:
         wrapper->m_tests_createNonClosableViewCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper::
                                  Callback_tests_createNonClosableView>(callback);
         break;
-    case 753:
+    case 755:
         wrapper->m_tests_createViewCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_createView>(
             callback);
         break;
-    case 755:
+    case 757:
         wrapper->m_tests_deinitPlatform_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_deinitPlatform_impl>(
             callback);
         break;
-    case 757:
+    case 759:
         wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_initPlatform_impl>(
             callback);
         break;
-    case 758:
+    case 760:
         wrapper->m_tests_waitCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_wait>(callback);
         break;
-    case 759:
+    case 761:
         wrapper->m_tests_waitForDeletedCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_waitForDeleted>(
             callback);
         break;
-    case 760:
+    case 762:
         wrapper->m_tests_waitForDeleted_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_waitForDeleted_2>(
             callback);
         break;
-    case 761:
+    case 763:
         wrapper->m_tests_waitForEventCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_waitForEvent>(
             callback);
         break;
-    case 762:
+    case 764:
         wrapper->m_tests_waitForEvent_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_waitForEvent_2>(
             callback);
         break;
-    case 763:
+    case 765:
         wrapper->m_tests_waitForResizeCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_waitForResize>(
             callback);
         break;
-    case 764:
+    case 766:
         wrapper->m_tests_waitForResize_2Callback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_tests_waitForResize_2>(
             callback);
         break;
-    case 765:
+    case 767:
         wrapper->m_ungrabMouseCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_ungrabMouse>(callback);
         break;
-    case 766:
+    case 768:
         wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_uninstallMessageHandler>(
             callback);
         break;
-    case 767:
+    case 769:
         wrapper->m_usesFallbackMouseGrabberCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Platform_wrapper::Callback_usesFallbackMouseGrabber>(
             callback);

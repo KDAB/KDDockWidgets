@@ -21,6 +21,7 @@
 #include <TabBar.h>
 #include <Stack.h>
 #include <DockWidget.h>
+#include <MainWindow.h>
 #include <DropArea.h>
 #include <controllers/Layout.h>
 
@@ -38,6 +39,7 @@ public:
     KDDockWidgets::Controllers::FloatingWindow *asFloatingWindowController() const;
     KDDockWidgets::Controllers::Group *asGroupController() const;
     KDDockWidgets::Controllers::Layout *asLayout() const;
+    KDDockWidgets::Controllers::MainWindow *asMainWindowController() const;
     KDDockWidgets::Controllers::Stack *asStackController() const;
     KDDockWidgets::Controllers::TabBar *asTabBarController() const;
     KDDockWidgets::Controllers::TitleBar *asTitleBarController() const;
@@ -301,6 +303,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asFloatingWindowContro
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asGroupController(void *thisObj);
 // KDDockWidgets::View::asLayout() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asLayout(void *thisObj);
+// KDDockWidgets::View::asMainWindowController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asMainWindowController(void *thisObj);
 // KDDockWidgets::View::asStackController() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__asStackController(void *thisObj);
 // KDDockWidgets::View::asTabBarController() const

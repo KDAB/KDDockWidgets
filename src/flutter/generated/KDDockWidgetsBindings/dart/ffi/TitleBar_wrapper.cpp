@@ -168,6 +168,10 @@ bool TitleBar_wrapper::isWindow_nocallback() const
 {
     return ::KDDockWidgets::Controllers::TitleBar::isWindow();
 }
+KDDockWidgets::Controllers::MainWindow *TitleBar_wrapper::mainWindow() const
+{
+    return ::KDDockWidgets::Controllers::TitleBar::mainWindow();
+}
 void TitleBar_wrapper::minimizeButtonChanged(bool visible, bool enabled)
 {
     ::KDDockWidgets::Controllers::TitleBar::minimizeButtonChanged(visible, enabled);
@@ -464,6 +468,11 @@ bool c_KDDockWidgets__Controllers__TitleBar__isWindow(void *thisObj)
         }
     }();
 }
+// mainWindow() const
+void *c_KDDockWidgets__Controllers__TitleBar__mainWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->mainWindow();
+}
 // minimizeButtonChanged(bool visible, bool enabled)
 void c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj,
                                                                              bool visible,
@@ -618,22 +627,22 @@ void c_KDDockWidgets__Controllers__TitleBar__registerVirtualMethodCallback(void 
         wrapper->m_eventFilterCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_eventFilter>(callback);
         break;
-    case 1028:
+    case 1032:
         wrapper->m_isMDICallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isMDI>(
                 callback);
         break;
-    case 1031:
+    case 1035:
         wrapper->m_isWindowCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isWindow>(
                 callback);
         break;
-    case 826:
+    case 828:
         wrapper->m_setParentView_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_setParentView_impl>(
             callback);
         break;
-    case 1050:
+    case 1055:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_singleDockWidget>(
             callback);
