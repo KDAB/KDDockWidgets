@@ -412,19 +412,6 @@ Controllers::MainWindow *DockRegistry::mainWindowByName(const QString &name) con
     return nullptr;
 }
 
-Controllers::DockWidget *DockRegistry::dockWidgetForGuest(View *guest) const
-{
-    if (!guest)
-        return nullptr;
-
-    for (Controllers::DockWidget *dw : m_dockWidgets) {
-        if (guest->equals(dw->guestView()))
-            return dw;
-    }
-
-    return nullptr;
-}
-
 bool DockRegistry::isSane() const
 {
     QSet<QString> names;

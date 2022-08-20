@@ -85,9 +85,6 @@ public:
     dockByName(const QString &, KDDockWidgets::DockRegistry::DockByNameFlags = {}) const;
     Q_INVOKABLE KDDockWidgets::Controllers::MainWindow *mainWindowByName(const QString &) const;
 
-    /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
-    Controllers::DockWidget *dockWidgetForGuest(View *guest) const;
-
     bool isSane() const;
 
     ///@brief returns all DockWidget instances

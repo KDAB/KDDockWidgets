@@ -2768,8 +2768,6 @@ void TestDocks::tst_registry()
     auto dw = newDockWidget(QStringLiteral("dw1"));
     auto guest = Platform::instance()->tests_createView({});
     dw->setGuestView(guest->asWrapper());
-    QCOMPARE(dr->dockWidgetForGuest(nullptr), nullptr);
-    QCOMPARE(dr->dockWidgetForGuest(guest), dw);
     delete dw;
 }
 
