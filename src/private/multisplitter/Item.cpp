@@ -354,7 +354,7 @@ void Item::setHostView(View *host)
         m_hostWidget = host;
         if (m_guest) {
             m_guest->controller()->setParentView(host);
-            m_guest->setVisible(true);
+            m_guest->controller()->setVisible(true);
             updateWidgetGeometries();
         }
     }
@@ -618,7 +618,7 @@ void Item::setIsVisible(bool is)
 
     if (is && m_guest) {
         m_guest->setGeometry(mapToRoot(rect()));
-        m_guest->setVisible(true); // Only set visible when apply*() ?
+        m_guest->controller()->setVisible(true); // Only set visible when apply*() ?
     }
 
     updateObjectName();

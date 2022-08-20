@@ -95,7 +95,7 @@ void Separator::init(Layouting::ItemBoxContainer *parentContainer, Qt::Orientati
     d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(
                                   rubberBandIsTopLevel() ? nullptr : d->m_hostView)
                                                 : nullptr;
-    view()->setVisible(true);
+    setVisible(true);
 }
 
 bool Separator::isVertical() const
@@ -140,8 +140,9 @@ void Separator::setGeometry(QRect r)
 
     if (View *v = view()) {
         v->setGeometry(r);
-        v->setVisible(true);
     }
+
+    setVisible(true);
 }
 
 void Separator::setGeometry(int pos, int pos2, int length)
