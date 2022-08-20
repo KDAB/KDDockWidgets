@@ -53,3 +53,35 @@ TEST_CASE("toggleAction")
 
     delete dw;
 }
+
+TEST_CASE("isOpen")
+{
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+
+    // Starts closed
+    CHECK(!dw->isOpen());
+
+    // show() makes it open
+    dw->show();
+    CHECK(dw->isOpen());
+    CHECK(dw->isFloating());
+
+    // close() closes
+    dw->close();
+    CHECK(!dw->isOpen());
+
+    // Dockwidget in a non-current tab is not visible, but still counts as open
+    dw->show();
+    CHECK(dw->isOpen());
+    CHECK(dw->isFloating());
+    auto dw2 = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    dw->addDockWidgetAsTab(dw2);
+    dw2->setAsCurrentTab();
+    CHECK(!dw->isCurrentTab());
+    CHECK(dw2->isCurrentTab());
+    CHECK(dw->isOpen());
+    CHECK(dw2->isOpen());
+
+    delete dw;
+    delete dw2;
+}
