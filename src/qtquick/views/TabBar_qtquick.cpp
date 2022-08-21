@@ -156,13 +156,13 @@ void TabBar_qtquick::setCurrentIndex(int index)
 void TabBar_qtquick::renameTab(int index, const QString &)
 {
     Q_UNUSED(index);
-    qWarning() << Q_FUNC_INFO << "Not implemented";
+    qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
 void TabBar_qtquick::changeTabIcon(int index, const QIcon &)
 {
     Q_UNUSED(index);
-    qWarning() << Q_FUNC_INFO << "Not implemented";
+    qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
 void TabBar_qtquick::removeDockWidget(Controllers::DockWidget *dw)
