@@ -71,6 +71,14 @@ void Group_qtquick::init()
     connect(m_group, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
     connect(m_group->tabBar(), &Controllers::TabBar::currentDockWidgetChanged, this,
             &Group_qtquick::currentDockWidgetChanged);
+
+    // Minor hack: While the controllers keep track of "current widget",
+    // the QML StackLayout deals in "current index", these can differ when removing a non-current
+    // tab. The currentDockWidgetChanged() won't be emitted but the index did decrement.
+    // As a workaround, always emit the signal, which is harmless if not needed.
+    connect(m_group, &Controllers::Group::numDockWidgetsChanged, this,
+            &Group_qtquick::currentDockWidgetChanged);
+
     connect(m_group, &Controllers::Group::actualTitleBarChanged, this,
             &Group_qtquick::actualTitleBarChanged);
 
