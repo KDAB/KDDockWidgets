@@ -867,9 +867,8 @@ void DockWidget::Private::onParentChanged()
     Q_EMIT q->actualTitleBarChanged();
 }
 
-void DockWidget::onShown(bool spontaneous)
+void DockWidget::onShown()
 {
-    Q_UNUSED(spontaneous); // TODOm4
     d->onDockWidgetShown();
     Q_EMIT shown();
 
@@ -879,9 +878,8 @@ void DockWidget::onShown(bool spontaneous)
     QTimer::singleShot(0, d, &DockWidget::Private::maybeMorphIntoFloatingWindow);
 }
 
-void DockWidget::onHidden(bool spontaneous)
+void DockWidget::onHidden()
 {
-    Q_UNUSED(spontaneous); // TODOm4
     d->onDockWidgetHidden();
     Q_EMIT hidden();
 }

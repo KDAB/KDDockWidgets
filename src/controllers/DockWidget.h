@@ -486,8 +486,8 @@ Q_SIGNALS:
     void aboutToDelete(KDDockWidgets::Controllers::DockWidget *);
 
 public: // TODOm3 make private
-    void onShown(bool spontaneous);
-    void onHidden(bool spontaneous);
+    void onShown();
+    void onHidden();
 
 protected:
     void setParentView_impl(View *parent) override;
