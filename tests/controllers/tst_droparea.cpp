@@ -13,6 +13,10 @@
 #include "controllers/DropArea.h"
 #include "controllers/Group.h"
 #include "Platform.h"
+#include "Config.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/ViewFactory.h"
+#include "Action.h"
 
 TEST_CASE("DropArea CTOR")
 {
@@ -25,4 +29,22 @@ TEST_CASE("DropArea::addWidget")
     auto group = new Controllers::Group();
     Controllers::DropArea da(nullptr, {});
     da.addWidget(group->view(), KDDockWidgets::Location_OnLeft);
+}
+
+TEST_CASE("DropArea::addWidget hidden")
+{
+    // Test adding a widget that starts hidden
+
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    Controllers::DropArea da(nullptr, {});
+    da.addDockWidget(dw, KDDockWidgets::Location_OnLeft, nullptr,
+                     InitialVisibilityOption::StartHidden);
+
+    CHECK(!dw->isOpen());
+    CHECK(!dw->toggleAction()->isChecked());
+    dw->show();
+    CHECK(dw->isOpen());
+    CHECK(dw->toggleAction()->isChecked());
+
+    delete dw;
 }
