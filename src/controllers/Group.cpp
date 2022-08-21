@@ -602,19 +602,6 @@ void Group::onDockWidgetShown(DockWidget *w)
     }
 }
 
-void Group::onDockWidgetHidden(DockWidget *w)
-{
-    if (!isCentralFrame() && hasSingleDockWidget()
-        && containsDockWidget(w)) { // We have to call contains because it might be being in process
-                                    // of being reparented
-        if (isVisible()) {
-            qCDebug(hiding) << "Widget" << w << " was hidden, we're="
-                            << "; visible=" << isVisible() << "; dockWidgets=" << dockWidgets();
-            setVisible(false);
-        }
-    }
-}
-
 void Group::setLayoutItem(Layouting::Item *item)
 {
     if (item == m_layoutItem)

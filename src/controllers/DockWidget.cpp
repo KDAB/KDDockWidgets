@@ -886,14 +886,9 @@ void DockWidget::onShown(bool spontaneous)
 
 void DockWidget::onHidden(bool spontaneous)
 {
+    Q_UNUSED(spontaneous); // TODOm4
     d->onDockWidgetHidden();
     Q_EMIT hidden();
-
-    if (Controllers::Group *f = d->group()) {
-        if (!spontaneous) {
-            f->onDockWidgetHidden(this);
-        }
-    }
 }
 
 void DockWidget::onResize(QSize)
