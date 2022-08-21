@@ -212,9 +212,6 @@ public:
         return dockWidgetCount() == 1;
     }
 
-    ///@brief Called when a dock widget child @p w is shown
-    void onDockWidgetShown(DockWidget *w);
-
     ///@brief returns the layout item that either contains this Frame in the layout or is a
     /// placeholder
     Layouting::Item *layoutItem() const;

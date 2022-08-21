@@ -589,19 +589,6 @@ bool Group::anyNonDockable() const
     return false;
 }
 
-void Group::onDockWidgetShown(DockWidget *w)
-{
-    if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it
-                                                          // might be being in process of being
-                                                          // reparented
-        if (!isVisible()) {
-            qCDebug(hiding) << "Widget" << w << " was shown, we're="
-                            << "; visible=" << isVisible();
-            setVisible(true);
-        }
-    }
-}
-
 void Group::setLayoutItem(Layouting::Item *item)
 {
     if (item == m_layoutItem)

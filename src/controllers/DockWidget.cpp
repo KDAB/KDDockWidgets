@@ -869,14 +869,9 @@ void DockWidget::Private::onParentChanged()
 
 void DockWidget::onShown(bool spontaneous)
 {
+    Q_UNUSED(spontaneous); // TODOm4
     d->onDockWidgetShown();
     Q_EMIT shown();
-
-    if (Controllers::Group *f = d->group()) {
-        if (!spontaneous) {
-            f->onDockWidgetShown(this);
-        }
-    }
 
     d->maybeRestoreToPreviousPosition();
 
