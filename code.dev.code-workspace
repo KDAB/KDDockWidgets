@@ -104,46 +104,6 @@
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/tst_floatingwindow",
         "cwd": "${workspaceFolder}"
-      },
-      {
-        "name": "msvc-qtwidgets_dockwidgets",
-        "type": "cppvsdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_dockwidgets",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
-        "name": "msvc-qtwidgets_minimal",
-        "type": "cppvsdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_minimal",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
-        "name": "msvc-qtwidgets_mdi",
-        "type": "cppvsdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_mdi",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
-        "name": "msvc-tst_docks",
-        "type": "cppvsdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/tst_docks",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "stopAtEntry": false,
-        "externalConsole": false
       }
     ]
   }
