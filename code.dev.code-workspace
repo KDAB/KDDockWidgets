@@ -83,19 +83,55 @@
         "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/tst_docks",
-        "args": [
-          "tst_doesntHaveNativeTitleBar"
-        ],
+        "args": [],
         "cwd": "${workspaceFolder}"
       },
       {
-        "name": "tst_qtwidgets",
+        "name": "tst_droparea",
         "type": "lldb",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/tst_qtwidgets",
-        "args": [
-          "tst_mainWindowAlwaysHasCentralWidget"
-        ],
+        "program": "${workspaceFolder}/build-dev/bin/tst_droparea",
+        "args": [],
+        "cwd": "${workspaceFolder}"
+      },
+      {
+        "name": "tst_dockwidget",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/tst_dockwidget",
+        "args": [],
+        "cwd": "${workspaceFolder}"
+      },
+      {
+        "name": "tst_group",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/tst_group",
+        "args": [],
+        "cwd": "${workspaceFolder}"
+      },
+      {
+        "name": "tst_separator",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/tst_separator",
+        "args": [],
+        "cwd": "${workspaceFolder}"
+      },
+      {
+        "name": "tst_stack",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/tst_stack",
+        "args": [],
+        "cwd": "${workspaceFolder}"
+      },
+      {
+        "name": "tst_tabbar",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/tst_tabbar",
+        "args": [],
         "cwd": "${workspaceFolder}"
       },
       {
