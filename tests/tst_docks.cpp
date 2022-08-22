@@ -1546,11 +1546,14 @@ void TestDocks::tst_addAsPlaceholder()
     auto dropArea = m->dropArea();
     Controllers::DropArea *layout = dropArea;
 
+    QVERIFY(!dock2->isOpen());
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
     QVERIFY(!dock2->isVisible());
 
     dock2->show();
+    QVERIFY(dock2->isOpen());
+    QVERIFY(!dock2->isFloating());
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 0);
 
