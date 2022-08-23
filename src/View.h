@@ -14,7 +14,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "Controller.h"
-#include "Screen.h"
 
 #include <QSize> // TODOm4 Remove Qt headers, introduce Size and Rect structs
 #include <QRect>
@@ -222,7 +221,7 @@ public:
     bool equals(const std::shared_ptr<View> &) const;
     static bool equals(const View *one, const View *two);
 
-    Screen::Ptr screen() const;
+    std::shared_ptr<Screen> screen() const;
 
     /// @brief Returns the views's geometry, but always in global space
     QRect globalGeometry() const;

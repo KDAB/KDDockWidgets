@@ -48,7 +48,7 @@ public:
     DisplayType displayType() const override;
     bool isLeftMouseButtonPressed() const override;
 
-    Screen::List screens() const override;
+    QVector<std::shared_ptr<Screen>> screens() const override;
 
     /// @brief Returns the specified QObject casted to View
     /// Nullptr if it's not a view. TODOm3: This is shared between the
@@ -58,7 +58,7 @@ public:
 
     static Platform_qt *instance();
 
-    Screen::Ptr primaryScreen() const override;
+    std::shared_ptr<Screen> primaryScreen() const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     static bool isGammaray();

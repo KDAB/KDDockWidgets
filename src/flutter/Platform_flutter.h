@@ -38,8 +38,8 @@ public:
     bool inDisallowedDragView(QPoint globalPos) const override;
     bool usesFallbackMouseGrabber() const override;
     void ungrabMouse() override;
-    Screen::List screens() const override;
-    Screen::Ptr primaryScreen() const override;
+    QVector<std::shared_ptr<Screen>> screens() const override;
+    std::shared_ptr<Screen> primaryScreen() const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_flutter(int &argc, char **argv);

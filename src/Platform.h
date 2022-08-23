@@ -148,9 +148,9 @@ public:
     virtual bool isLeftMouseButtonPressed() const = 0;
 
     /// @brief Returns all available screens
-    virtual Screen::List screens() const = 0;
+    virtual QVector<std::shared_ptr<Screen>> screens() const = 0;
 
-    virtual Screen::Ptr primaryScreen() const = 0;
+    virtual std::shared_ptr<Screen> primaryScreen() const = 0;
 
     /// @brief For non-C++, managed languages (having a VM) prints a non-native back-trace
     /// For example, the flutter frontend implements this to get a dart backtrace
