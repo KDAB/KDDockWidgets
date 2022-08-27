@@ -77,7 +77,9 @@ TEST_CASE("isOpen")
     CHECK(dw->isOpen());
     CHECK(dw->isFloating());
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
+    CHECK(dw->isCurrentTab());
     dw->addDockWidgetAsTab(dw2);
+    CHECK(dw2->isOpen());
     dw2->setAsCurrentTab();
     CHECK(!dw->isCurrentTab());
     CHECK(dw2->isCurrentTab());

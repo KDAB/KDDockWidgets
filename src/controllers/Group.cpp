@@ -258,7 +258,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
     insertDockWidget(dockWidget, index);
 
     if (addingOption.startsHidden()) {
-        dockWidget->view()->close(); // Ensure closed
+        dockWidget->view()->close(); // Ensure closed. TODOm4: Call controller instead.
     } else {
         if (hasSingleDockWidget()) {
             setObjectName(dockWidget->uniqueName());
@@ -272,6 +272,8 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
         } else if (addingOption.preservesCurrentTab() && originalCurrentIndex != -1) {
             setCurrentTabIndex(originalCurrentIndex);
         }
+
+        dockWidget->d->setIsOpen(true);
     }
 
     connect(dockWidget, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);

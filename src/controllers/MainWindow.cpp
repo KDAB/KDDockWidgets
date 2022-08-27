@@ -616,28 +616,32 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
     if (!d->m_overlayedDockWidget)
         return;
 
-    Controllers::Group *group = d->m_overlayedDockWidget->d->group();
+    auto overlayedDockWidget = d->m_overlayedDockWidget;
+    d->m_overlayedDockWidget = nullptr;
+
+    Controllers::Group *group = overlayedDockWidget->d->group();
     if (!group) { // prophylactic check
-        d->m_overlayedDockWidget = nullptr;
         return;
     }
 
-    const SideBarLocation loc = d->m_overlayedDockWidget->sideBarLocation();
-    d->m_overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(loc, group->geometry());
+    const SideBarLocation loc = overlayedDockWidget->sideBarLocation();
+    overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(loc, group->geometry());
 
     group->unoverlay();
 
     if (deleteFrame) {
-        d->m_overlayedDockWidget->QObject::setParent(nullptr);
-        d->m_overlayedDockWidget->setParentView(nullptr);
-        Q_EMIT d->m_overlayedDockWidget->isOverlayedChanged(false);
-        d->m_overlayedDockWidget = nullptr;
+        overlayedDockWidget->QObject::setParent(nullptr);
+        overlayedDockWidget->d->m_removingFromOverlay = true; // TODOm4: Remove soon
+        overlayedDockWidget->setParentView(nullptr);
+        overlayedDockWidget->d->m_removingFromOverlay = false;
+        Q_EMIT overlayedDockWidget->isOverlayedChanged(false);
+        overlayedDockWidget = nullptr;
         delete group;
     } else {
         // No cleanup, just unset. When we drag the overlay it becomes a normal floating window
         // meaning we reuse Frame. Don't delete it.
-        Q_EMIT d->m_overlayedDockWidget->isOverlayedChanged(false);
-        d->m_overlayedDockWidget = nullptr;
+        Q_EMIT overlayedDockWidget->isOverlayedChanged(false);
+        overlayedDockWidget = nullptr;
     }
 }
 

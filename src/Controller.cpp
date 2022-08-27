@@ -58,8 +58,11 @@ void Controller::setVisible(bool is)
 {
     if (m_view)
         m_view->setVisible(is);
-    else
-        qWarning() << Q_FUNC_INFO << "No view";
+
+    if (m_isVisible == is)
+        return;
+
+    Q_EMIT visibleChanged(is);
 }
 
 QRect Controller::rect() const

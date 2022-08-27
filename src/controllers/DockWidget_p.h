@@ -179,6 +179,8 @@ public:
     /// widget This goes up the hierarchy, while mdiDropAreaWrapper goes down.
     DockWidget *mdiDockWidgetWrapper() const;
 
+    void setIsOpen(bool);
+
     const QString name;
     QStringList affinities;
     QString title;
@@ -199,6 +201,10 @@ public:
     bool m_isMovingToSideBar = false;
     bool m_isSettingCurrent =
         false; // TODOm4: Remove once DockWidget::onShown() doesn't drive things
+    bool m_isOpen = false;
+    bool m_inOpenSetter = false;
+    bool m_inClose = false;
+    bool m_removingFromOverlay = false; // TODOm4: Remove soon
     QSize m_lastOverlayedSize = QSize(0, 0);
     int m_userType = 0;
     bool m_willUpdateActions = false;

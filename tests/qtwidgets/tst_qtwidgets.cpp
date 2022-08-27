@@ -819,6 +819,7 @@ void TestQtWidgets::tst_sidebarOverlayGetsHiddenOnClick()
 
         Tests::clickOn(dw2->mapToGlobal(dw2->rect().bottomLeft() + QPoint(5, -5)), dw2->view());
         QVERIFY(!dw1->isOverlayed());
+        QVERIFY(dw1->isInSideBar());
 
         auto widget2 = Platform::instance()->tests_createView({ true });
         dw2->setGuestView(widget2->asWrapper());

@@ -92,6 +92,9 @@ Q_SIGNALS:
     ///@brief signal counterpart for setParentView()
     void parentViewChanged(View *parent);
 
+    ///@brief signal counterpart for setVisible()
+    void visibleChanged(bool);
+
 protected:
     virtual void setParentView_impl(View *parent);
 
@@ -99,6 +102,7 @@ private:
     void setParent(QObject *) = delete;
     View *m_view = nullptr;
     bool m_inDtor = false;
+    bool m_isVisible = true;
     const Type m_type;
 };
 

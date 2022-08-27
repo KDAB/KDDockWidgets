@@ -277,7 +277,7 @@ public:
 
     /**
      * @brief Returns whether this dock widget is open.
-     * Equivalent to calling toggleAction().isChecked() or isVisible()
+     * Equivalent to calling toggleAction().isChecked()
      */
     bool isOpen() const;
 

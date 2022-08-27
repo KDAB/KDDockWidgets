@@ -402,7 +402,7 @@ Controllers::TitleBar *DockWidget::titleBar() const
 
 bool DockWidget::isOpen() const
 {
-    return d->toggleAction->isChecked();
+    return d->m_isOpen;
 }
 
 QStringList DockWidget::affinities() const
@@ -418,6 +418,7 @@ void DockWidget::show()
         // This reduces flickering on some platforms
         d->morphIntoFloatingWindow();
     } else {
+        d->setIsOpen(true);
         view()->show();
     }
 }
@@ -582,6 +583,7 @@ Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
 
         Layouting::AtomicSanityChecks checks(floatingWindow->dropArea()->rootItem());
         floatingWindow->view()->show();
+        setIsOpen(true);
 
         return floatingWindow;
     } else {
@@ -702,6 +704,7 @@ void DockWidget::Private::toggle(bool enabled)
 {
     if (Controllers::SideBar *sb = sideBar()) {
         // The widget is in the sidebar, let's toggle its overlayed state
+        QScopedValueRollback<bool> guard(m_removingFromOverlay, true);
         sb->toggleOverlay(q);
     } else {
         // The most common case. The dock widget is not in the sidebar. just close or open it.
@@ -727,7 +730,7 @@ void DockWidget::Private::updateToggleAction()
 
 void DockWidget::Private::updateFloatAction()
 {
-    if (m_willUpdateActions)
+    if (m_willUpdateActions || m_removingFromOverlay)
         return;
 
     QScopedValueRollback<bool> recursionGuard(m_updatingFloatAction,
@@ -758,6 +761,10 @@ void DockWidget::Private::onDockWidgetHidden()
 
 void DockWidget::Private::close()
 {
+    if (m_inClose)
+        return;
+    QScopedValueRollback<bool> guard(m_inClose, true);
+
     if (!m_processingToggleAction && !q->isOpen()) {
         q->setParentView(nullptr);
         return;
@@ -765,6 +772,8 @@ void DockWidget::Private::close()
 
     if (m_isPersistentCentralDockWidget)
         return;
+
+    setIsOpen(false);
 
     // If it's overlayed and we're closing, we need to close the overlay
     if (Controllers::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
@@ -1059,4 +1068,17 @@ void DockWidget::Private::onCloseEvent(QCloseEvent *e)
 
     if (e->isAccepted())
         close();
+}
+
+void DockWidget::Private::setIsOpen(bool is)
+{
+    if (is == m_isOpen || m_inOpenSetter)
+        return;
+
+    QScopedValueRollback<bool> guard(m_inOpenSetter, true);
+
+    if (!is)
+        close();
+
+    m_isOpen = is;
 }
