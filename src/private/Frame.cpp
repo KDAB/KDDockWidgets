@@ -588,6 +588,8 @@ bool Frame::hasTabsVisible() const
 QStringList Frame::affinities() const
 {
     if (isEmpty()) {
+        if (auto m = mainWindow())
+            return m->affinities();
         return {};
     } else {
         return dockWidgetAt(0)->affinities();
