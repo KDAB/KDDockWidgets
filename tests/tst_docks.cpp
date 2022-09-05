@@ -17,6 +17,7 @@
 #include "DockWidgetBase.h"
 #include "DockWidgetBase_p.h"
 #include "DropAreaWithCentralFrame_p.h"
+#include "Frame_p.h"
 #include "LayoutSaver_p.h"
 #include "MDILayoutWidget_p.h"
 #include "MainWindowMDI.h"
@@ -7820,23 +7821,14 @@ void TestDocks::tst_closeTabOfCentralFrame()
     QVERIFY(frame->QWidgetAdapter::isVisible());
 }
 
-void TestDocks::tst_centralFrame245()
+void TestDocks::tst_centralGroupAffinity()
 {
-    /*
-
-    Build: -DKDDockWidgets_DEVELOPER_MODE=ON
-    Run: ./bin/tst_docks tst_centralFrame245 -platform xcb
-
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_centralFrame245");
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    const QStringList affinities = { "a" };
+    m->setAffinities(affinities);
 
-    m->addDockWidgetAsTab(dock1);
-    m->addDockWidgetAsTab(dock2);
-
-    QTest::qWait(100000);
-
-*/
+    Frame *centralGroup = m->dropArea()->m_centralFrame;
+    QCOMPARE(centralGroup->affinities(), affinities);
 }
 
 void TestDocks::tst_persistentCentralWidget()

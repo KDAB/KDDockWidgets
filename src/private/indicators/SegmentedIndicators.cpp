@@ -24,6 +24,8 @@ qreal SegmentedIndicators::s_draggedWindowOpacity = 0.7;
 QColor SegmentedIndicators::s_segmentPenColor = Qt::black;
 QColor SegmentedIndicators::s_segmentBrushColor = QColor(0xbb, 0xd5, 0xee, /*alpha=*/200);
 QColor SegmentedIndicators::s_hoveredSegmentBrushColor = QColor(0x3574c5);
+int SegmentedIndicators::s_centralIndicatorMaxWidth = 300;
+int SegmentedIndicators::s_centralIndicatorMaxHeight = 160;
 
 
 SegmentedIndicators::SegmentedIndicators(DropArea *dropArea)
@@ -108,8 +110,8 @@ QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool
         const QPoint centerPos = bounds.boundingRect().center();
 
         // Build the center
-        const int indicatorWidth = qMin(300, maxWidth - 100);
-        const int indicatorHeight = qMin(160, int(indicatorWidth * 0.60));
+        const int indicatorWidth = qMin(s_centralIndicatorMaxWidth, maxWidth - 100);
+        const int indicatorHeight = qMin(s_centralIndicatorMaxHeight, int(indicatorWidth * 0.60));
         const int tabWidth = int(indicatorWidth * 0.267);
         const int tabHeight = int(indicatorHeight * 0.187);
         const int centerRectLeft = centerPos.x() - indicatorWidth / 2;

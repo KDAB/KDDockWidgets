@@ -29,6 +29,7 @@ public:
 private:
     friend class MainWindowBase;
     friend class Frame;
+    friend class ::TestDocks;
     Frame *const m_centralFrame = nullptr;
 };
 

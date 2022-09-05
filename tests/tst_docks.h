@@ -152,7 +152,7 @@ private Q_SLOTS:
     void tst_availableLengthForOrientation();
     void tst_closeShowWhenNoCentralFrame();
     void tst_closeTabOfCentralFrame();
-    void tst_centralFrame245();
+    void tst_centralGroupAffinity();
     void tst_setAsCurrentTab();
     void tst_placeholderDisappearsOnReadd();
     void tst_placeholdersAreRemovedProperly();
