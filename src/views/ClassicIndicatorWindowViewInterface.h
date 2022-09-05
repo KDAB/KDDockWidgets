@@ -11,8 +11,14 @@
 
 #pragma once
 
-#include "View.h"
 #include "kddockwidgets/KDDockWidgets.h"
+
+QT_BEGIN_NAMESPACE
+class QPoint;
+class QRect;
+class QSize;
+class QString;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
