@@ -636,6 +636,8 @@ bool Group::hasTabsVisible() const
 QStringList Group::affinities() const
 {
     if (isEmpty()) {
+        if (auto m = mainWindow())
+            return m->affinities();
         return {};
     } else {
         return dockWidgetAt(0)->affinities();

@@ -478,6 +478,7 @@ Controllers::DockWidget *DropArea::mdiDockWidgetWrapper() const
 Controllers::Group *DropArea::createCentralFrame(MainWindowOptions options)
 {
     Controllers::Group *group = nullptr;
+
     if (options & MainWindowOption_HasCentralFrame) {
         FrameOptions groupOptions = FrameOption_IsCentralFrame;
         const bool hasPersistentCentralWidget =

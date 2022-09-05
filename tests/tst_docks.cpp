@@ -6415,24 +6415,15 @@ void TestDocks::tst_closeTabOfCentralFrame()
     QVERIFY(group->isVisible());
 }
 
-void TestDocks::tst_centralFrame245()
+void TestDocks::tst_centralGroupAffinity()
 {
-    /*
+    auto m =
+        createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_centralFrame245");
+    const QStringList affinities = { "a" };
+    m->setAffinities(affinities);
 
-    Build: -DKDDockWidgets_DEVELOPER_MODE=ON
-    Run: ./bin/tst_docks tst_centralFrame245 -platform xcb
-
-    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame,
-    "tst_centralFrame245"); auto dock1 = createDockWidget("1",
-    Platform::instance()->tests_createView({ true })); auto dock2 = createDockWidget("2",
-    Platform::instance()->tests_createView({ true }));
-
-    m->addDockWidgetAsTab(dock1);
-    m->addDockWidgetAsTab(dock2);
-
-    QTest::qWait(100000);
-
-*/
+    Group *centralGroup = m->dropArea()->m_centralFrame;
+    QCOMPARE(centralGroup->affinities(), affinities);
 }
 
 void TestDocks::tst_persistentCentralWidget()
