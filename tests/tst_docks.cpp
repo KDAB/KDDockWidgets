@@ -6500,6 +6500,29 @@ void TestDocks::tst_unfloatTabbedFloatingWidgets2()
     QVERIFY(dock0->floatingWindow() != dock2->floatingWindow());
 }
 
+void TestDocks::tst_currentTabMatchesDockWidget()
+{
+    // Tests that if a dock widget is current, then it's also visible. And vice-versa.
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock0 = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+
+    m->addDockWidget(dock0, KDDockWidgets::Location_OnBottom);
+    dock0->addDockWidgetAsTab(dock1);
+    dock0->addDockWidgetAsTab(dock2);
+
+    QVERIFY(!dock0->isCurrentTab());
+    QVERIFY(!dock1->isCurrentTab());
+    QVERIFY(dock2->isCurrentTab());
+
+    QVERIFY(!dock0->isVisible());
+    QVERIFY(!dock1->isVisible());
+    QVERIFY(dock2->isVisible());
+}
+
 int main(int argc, char *argv[])
 {
     int exitCode = 0;
