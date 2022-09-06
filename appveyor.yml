@@ -10,6 +10,7 @@ branches:
   except:
     - gh-pages
     - wip/v2
+    - master
 
 # Do not build on tags (GitHub and BitBucket)
 skip_tags: false
