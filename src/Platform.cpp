@@ -52,8 +52,6 @@ Platform::Platform()
 {
     Q_ASSERT(!s_platform);
     s_platform = this;
-
-    qDebug() << "Created Platform";
 }
 
 Platform::~Platform()
