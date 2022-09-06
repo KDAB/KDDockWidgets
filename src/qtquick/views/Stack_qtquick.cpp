@@ -15,6 +15,7 @@
 
 #include "kddockwidgets/controllers/Stack.h"
 #include "kddockwidgets/controllers/Group.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
 #include "kddockwidgets/controllers/TabBar.h"
 
 #include <QDebug>
@@ -119,8 +120,15 @@ Controllers::DockWidget *DockWidgetModel::currentDockWidget() const
 
 void DockWidgetModel::setCurrentDockWidget(Controllers::DockWidget *dw)
 {
+    if (m_currentDockWidget)
+        m_currentDockWidget->setVisible(false);
+
     m_currentDockWidget = dw;
     setCurrentIndex(indexOf(dw));
+    if (m_currentDockWidget) {
+        QScopedValueRollback<bool> guard(m_currentDockWidget->d->m_isSettingCurrent, true);
+        m_currentDockWidget->setVisible(true);
+    }
 }
 
 QHash<int, QByteArray> DockWidgetModel::roleNames() const

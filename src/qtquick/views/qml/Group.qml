@@ -212,7 +212,7 @@ Rectangle {
         }
     }
 
-    StackLayout {
+    Item {
         id: stackLayout
         anchors {
             left: parent ? parent.left : undefined
@@ -225,7 +225,5 @@ Rectangle {
             rightMargin: root.contentsMargin
             bottomMargin: root.contentsMargin
         }
-
-        currentIndex: root.groupCpp ? root.groupCpp.currentIndex : -1
     }
 }

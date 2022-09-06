@@ -127,6 +127,9 @@ QQuickItem *DockWidget_qtquick::guestItem() const
 
 bool DockWidget_qtquick::event(QEvent *e)
 {
+    if (dockWidget()->d->m_isSettingCurrent)
+        return View_qtquick::event(e);
+
     if (e->type() == QEvent::Show) {
         dockWidget()->onShown();
     } else if (e->type() == QEvent::Hide) {

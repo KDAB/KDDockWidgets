@@ -6517,10 +6517,21 @@ void TestDocks::tst_currentTabMatchesDockWidget()
     QVERIFY(!dock0->isCurrentTab());
     QVERIFY(!dock1->isCurrentTab());
     QVERIFY(dock2->isCurrentTab());
-
     QVERIFY(!dock0->isVisible());
     QVERIFY(!dock1->isVisible());
     QVERIFY(dock2->isVisible());
+
+    // Float and refloat:
+    dock1->setFloating(true);
+    dock1->setFloating(false);
+
+    QVERIFY(!dock0->isCurrentTab());
+    QVERIFY(dock1->isCurrentTab());
+    QVERIFY(!dock2->isCurrentTab());
+
+    QVERIFY(!dock0->isVisible());
+    QVERIFY(dock1->isVisible());
+    QVERIFY(!dock2->isVisible());
 }
 
 int main(int argc, char *argv[])

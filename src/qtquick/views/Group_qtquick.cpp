@@ -131,6 +131,7 @@ void Group_qtquick::insertDockWidget(Controllers::DockWidget *dw, int index)
     m_group->tabBar()->insertDockWidget(index, dw, {}, {});
 
     dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
+    makeItemFillParent(View_qtquick::asQQuickItem(dw->view()));
     m_group->setCurrentDockWidget(dw);
 
     if (oldFrame && oldFrame->beingDeletedLater()) {
