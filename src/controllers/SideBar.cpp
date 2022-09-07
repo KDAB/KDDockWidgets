@@ -124,3 +124,8 @@ void SideBar::clear()
     for (DockWidget *dw : qAsConst(m_dockWidgets))
         removeDockWidget(dw);
 }
+
+QVector<DockWidget *> SideBar::dockWidgets() const
+{
+    return m_dockWidgets;
+}

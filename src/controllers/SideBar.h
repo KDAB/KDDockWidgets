@@ -64,6 +64,9 @@ public:
     /// @brief clears the sidebar (removes all dock widgets from it)
     void clear();
 
+    /// @brief returns the list of dock widgets in this sidebar
+    QVector<DockWidget *> dockWidgets() const;
+
     void onButtonClicked(DockWidget *dw);
 
 private:
