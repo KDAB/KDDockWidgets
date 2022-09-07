@@ -267,6 +267,7 @@ StateDragging::StateDragging(DragController *parent)
         if (!mouseButtonIsReallyDown && Platform::instance()->isLeftMouseButtonPressed()) {
             qCDebug(state) << "Canceling drag, Qt thinks mouse button is pressed"
                            << "but Windows knows it's not";
+            handleMouseButtonRelease(QCursor::pos());
             Q_EMIT q->dragCanceled();
         }
     });
