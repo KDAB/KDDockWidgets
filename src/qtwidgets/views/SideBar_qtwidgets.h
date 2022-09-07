@@ -34,7 +34,7 @@ namespace Views {
 class SideBar_qtwidgets;
 }
 
-class SideBarButton : public QToolButton
+class DOCKS_EXPORT SideBarButton : public QToolButton
 {
     Q_OBJECT
 public:
