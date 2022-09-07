@@ -53,7 +53,7 @@ public:
 
     /// Allows TitleBar to be used in a non-dockwidget application, for example on a frameless QMessageBox on EGLFS
     /// Just so we can reuse the existing styling
-    explicit TitleBar(QWidget *parent);
+    explicit TitleBar(WidgetType *parent);
 
     ~TitleBar() override;
 
@@ -190,7 +190,7 @@ private:
 
     Frame *const m_frame;
     FloatingWindow *const m_floatingWindow;
-    QWidget *const m_genericWidget;
+    WidgetType *const m_genericWidget;
     const bool m_supportsAutoHide;
     bool m_closeButtonEnabled = true;
     bool m_floatButtonVisible = true;

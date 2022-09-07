@@ -59,7 +59,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     init();
 }
 
-TitleBar::TitleBar(QWidget *parent)
+TitleBar::TitleBar(WidgetType *parent)
     : QWidgetAdapter(parent)
     , Draggable(this, /*enabled=*/false) // We don't allow dragging generic windows at this time
     , m_frame(nullptr)
@@ -337,9 +337,11 @@ bool TitleBar::isFocused() const
         return m_frame->isFocused();
     else if (m_floatingWindow)
         return m_floatingWindow->isActiveWindow();
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    // Remove ifdef in 2.0 branch.
     else if (m_genericWidget)
         return m_genericWidget->isActiveWindow();
-
+#endif
     return false;
 }
 
