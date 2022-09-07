@@ -11,6 +11,8 @@
 
 #include "../main.h"
 #include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
+#include "kddockwidgets/controllers/Group.h"
 #include "Action.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "Config.h"
@@ -84,4 +86,31 @@ TEST_CASE("isOpen")
 
     delete dw;
     delete dw2;
+}
+
+TEST_CASE("setAsCurrentTab")
+{
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
+    auto dw3 = Config::self().viewFactory()->createDockWidget("dw3")->asDockWidgetController();
+
+    dw->view()->show();
+
+    dw->addDockWidgetAsTab(dw2);
+    dw->addDockWidgetAsTab(dw3);
+    dw->setAsCurrentTab();
+
+    Platform::instance()->tests_wait(1000);
+
+    CHECK(dw->isCurrentTab());
+    CHECK(!dw2->isCurrentTab());
+    CHECK(!dw3->isCurrentTab());
+
+    Controllers::Group *group = dw->d->group();
+    CHECK_EQ(group->currentIndex(), 0);
+    CHECK_EQ(group->currentDockWidget(), dw);
+
+    delete dw;
+    delete dw2;
+    delete dw3;
 }
