@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.com/KDAB/KDDockWidgets.svg?branch=master)](https://travis-ci.com/KDAB/KDDockWidgets)
 
+> ⚠️⚠️: If you're using QtQuick/QML it's recommended to use 2.0 branch. 1.x will continue
+> to receive bug fixes for a long time but only for QtWidgets frontend.
+
+
 `KDDockWidgets` is a Qt dock widget library written by KDAB, suitable for replacing
 `QDockWidget` and implementing advanced functionalities missing in Qt.
 
