@@ -1573,24 +1573,29 @@ void TestQtWidgets::tst_setAsCurrentTab()
     auto dw3 = Config::self().viewFactory()->createDockWidget("dw3")->asDockWidgetController();
 
     dw->view()->show();
-
     dw->addDockWidgetAsTab(dw2);
     dw->addDockWidgetAsTab(dw3);
+
+    Controllers::Group *group = dw->d->group();
+    auto tabBar = group->tabBar();
+    QTabBar *tabBarWidget = qobject_cast<QTabBar *>(Views::View_qt::asQWidget(tabBar->view()));
+
+    QVERIFY(!dw->isCurrentTab());
+    QVERIFY(!dw2->isCurrentTab());
+    QVERIFY(dw3->isCurrentTab());
+    QCOMPARE(tabBarWidget->currentIndex(), 2);
+
     dw->setAsCurrentTab();
 
     QVERIFY(dw->isCurrentTab());
     QVERIFY(!dw2->isCurrentTab());
     QVERIFY(!dw3->isCurrentTab());
 
-    Controllers::Group *group = dw->d->group();
     QCOMPARE(group->currentIndex(), 0);
     QCOMPARE(group->currentDockWidget(), dw);
 
-    auto tabBar = group->tabBar();
     QCOMPARE(tabBar->currentIndex(), 0);
 
-    QTabBar *tabBarWidget = qobject_cast<QTabBar *>(Views::View_qt::asQWidget(tabBar->view()));
-    QEXPECT_FAIL(0, "to be fixed", TestFailMode::Continue);
     QCOMPARE(tabBarWidget->currentIndex(), 0);
 }
 

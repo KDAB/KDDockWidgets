@@ -268,9 +268,7 @@ void TabBar::setCurrentDockWidget(DockWidget *dw)
     if (dw == m_currentDockWidget)
         return;
 
-    m_currentDockWidget = dw;
     setCurrentIndex(indexOfDockWidget(dw));
-    Q_EMIT currentDockWidgetChanged(dw);
 }
 
 int TabBar::currentIndex() const
