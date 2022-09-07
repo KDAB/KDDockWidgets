@@ -36,11 +36,13 @@
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/ViewWrapper_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
+#include "qtcommon/View_qt.h"
 #include "Platform.h"
 
 #include <QObject>
 #include <QPushButton>
 #include <QMenuBar>
+#include <QTabBar>
 #include <QVBoxLayout>
 #include <QtTest/QtTest>
 
@@ -154,6 +156,7 @@ private Q_SLOTS:
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
     void tst_overlayCrash();
+    void tst_setAsCurrentTab();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1559,6 +1562,37 @@ void TestQtWidgets::tstCloseNestedMDIPropagates()
     QVERIFY(dock1->isVisible());
 }
 
+void TestQtWidgets::tst_setAsCurrentTab()
+{
+    EnsureTopLevelsDeleted e;
+
+    // For issue #312, which is QtWidget only. The controller has the correct current index but
+    // not the QTabBar.
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
+    auto dw3 = Config::self().viewFactory()->createDockWidget("dw3")->asDockWidgetController();
+
+    dw->view()->show();
+
+    dw->addDockWidgetAsTab(dw2);
+    dw->addDockWidgetAsTab(dw3);
+    dw->setAsCurrentTab();
+
+    QVERIFY(dw->isCurrentTab());
+    QVERIFY(!dw2->isCurrentTab());
+    QVERIFY(!dw3->isCurrentTab());
+
+    Controllers::Group *group = dw->d->group();
+    QCOMPARE(group->currentIndex(), 0);
+    QCOMPARE(group->currentDockWidget(), dw);
+
+    auto tabBar = group->tabBar();
+    QCOMPARE(tabBar->currentIndex(), 0);
+
+    QTabBar *tabBarWidget = qobject_cast<QTabBar *>(Views::View_qt::asQWidget(tabBar->view()));
+    QEXPECT_FAIL(0, "to be fixed", TestFailMode::Continue);
+    QCOMPARE(tabBarWidget->currentIndex(), 0);
+}
 
 void TestQtWidgets::initTestCase()
 {

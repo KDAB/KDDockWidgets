@@ -100,8 +100,6 @@ TEST_CASE("setAsCurrentTab")
     dw->addDockWidgetAsTab(dw3);
     dw->setAsCurrentTab();
 
-    Platform::instance()->tests_wait(1000);
-
     CHECK(dw->isCurrentTab());
     CHECK(!dw2->isCurrentTab());
     CHECK(!dw3->isCurrentTab());
