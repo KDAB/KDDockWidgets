@@ -148,10 +148,17 @@ Please refer to [README-bindings.md](README-bindings.md).
 
 ## Versioning
 
-New features go to master while the stable branch only accepts non-intrusive bug fixes.
+There's currently two lines of development: `v1` which is very mature and stable and `v2` which is an ongoing effort to make
+KDDW support multiple "frontends" (QtWidgets, QtQuick and even non-Qt technologies, like flutter).
 
-We'll try to remain source and binary compatible across versions. API will get
-a deprecation notice before being removed in the next version. Note that this
+1.x will be supported for many years to come, at least for bug fixes and small features.
+Use `v1.5.0` tag for the latest stable. `v1.6.0` will be released soon, so branch `1.6` is also safe.  
+
+Use `2.0` if you need non-QtWidgets support, for example `QtQuick/QML`. While `1.6` has support for `QtQuick/QML` it won't be receiving bug fixes. `2.0` is under active development, you might encounter minor source/ABI incompatibilities. Despite that,
+it is pretty stable, and all 200 unit-tests pass.
+
+We'll try to remain source-compatible across versions (except for the v1 -> v2 jump).  
+API will get a deprecation notice before being removed in the next version. Note that this
 compatibility effort is only for the public API. Private API (headers ending
 in _p.h) might change so you shouldn't depend on them. Private API is only
 exposed so more advanced users can override, for example `paintEvent()`, and
