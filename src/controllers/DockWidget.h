@@ -482,7 +482,6 @@ Q_SIGNALS:
 
 public: // TODOm3 make private
     void onShown();
-    void onHidden();
 
 protected:
     void setParentView_impl(View *parent) override;

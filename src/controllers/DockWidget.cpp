@@ -866,19 +866,10 @@ void DockWidget::Private::onParentChanged()
 
 void DockWidget::onShown()
 {
-    d->updateToggleAction();
-    d->updateFloatAction();
-
     d->maybeRestoreToPreviousPosition();
 
     // Transform into a FloatingWindow if this will be a regular floating dock widget.
     QTimer::singleShot(0, d, &DockWidget::Private::maybeMorphIntoFloatingWindow);
-}
-
-void DockWidget::onHidden()
-{
-    d->updateToggleAction();
-    d->updateFloatAction();
 }
 
 void DockWidget::onResize(QSize)
@@ -1069,4 +1060,7 @@ void DockWidget::Private::setIsOpen(bool is)
         close();
 
     m_isOpen = is;
+
+    updateToggleAction();
+    updateFloatAction();
 }

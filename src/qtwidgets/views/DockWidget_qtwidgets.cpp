@@ -78,8 +78,6 @@ bool DockWidget_qtwidgets::event(QEvent *e)
 {
     if (e->type() == QEvent::Show) {
         m_dockWidget->onShown();
-    } else if (e->type() == QEvent::Hide) {
-        m_dockWidget->onHidden();
     }
 
     return QWidget::event(e);

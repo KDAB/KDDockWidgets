@@ -132,8 +132,6 @@ bool DockWidget_qtquick::event(QEvent *e)
 
     if (e->type() == QEvent::Show) {
         dockWidget()->onShown();
-    } else if (e->type() == QEvent::Hide) {
-        dockWidget()->onHidden();
     }
 
     return View_qtquick::event(e);
