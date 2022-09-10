@@ -21,7 +21,6 @@ class FloatingWindow_flutter extends KDDockWidgetBindings.View_flutter
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
     initMixin(this, color: Colors.black12, debugName: "FloatingWindow");
-    m_fillsParent = true;
     print("FloatingWindow_flutter CTOR");
   }
 
