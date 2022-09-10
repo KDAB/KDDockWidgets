@@ -1399,6 +1399,88 @@ bool c_KDDockWidgets__InitialOption__preservesCurrentTab(void *thisObj);
 bool c_KDDockWidgets__InitialOption__startsHidden(void *thisObj);
 void c_KDDockWidgets__InitialOption__destructor(void *thisObj);
 void c_KDDockWidgets__InitialOption_Finalizer(
+    void *, void *cppObj, void *); // KDDockWidgets::DockRegistry::checkSanityAll(bool
+                                   // dumpDebug)
+void c_KDDockWidgets__DockRegistry__checkSanityAll_bool(void *thisObj, bool dumpDebug);
+// KDDockWidgets::DockRegistry::clear()
+void c_KDDockWidgets__DockRegistry__clear(void *thisObj);
+// KDDockWidgets::DockRegistry::containsDockWidget(const QString & uniqueName) const
+bool c_KDDockWidgets__DockRegistry__containsDockWidget_QString(void *thisObj,
+                                                               const char *uniqueName_);
+// KDDockWidgets::DockRegistry::containsMainWindow(const QString & uniqueName) const
+bool c_KDDockWidgets__DockRegistry__containsMainWindow_QString(void *thisObj,
+                                                               const char *uniqueName_);
+// KDDockWidgets::DockRegistry::customEvent(QEvent * event)
+void c_KDDockWidgets__DockRegistry__customEvent_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::DockRegistry::dockByName(const QString & arg__1) const
+void *c_KDDockWidgets__DockRegistry__dockByName_QString(void *thisObj, const char *arg__1_);
+// KDDockWidgets::DockRegistry::dropIndicatorsInhibitedChanged(bool inhibited)
+void c_KDDockWidgets__DockRegistry__dropIndicatorsInhibitedChanged_bool(void *thisObj,
+                                                                        bool inhibited);
+// KDDockWidgets::DockRegistry::ensureAllFloatingWidgetsAreMorphed()
+void c_KDDockWidgets__DockRegistry__ensureAllFloatingWidgetsAreMorphed(void *thisObj);
+// KDDockWidgets::DockRegistry::event(QEvent * event)
+bool c_KDDockWidgets__DockRegistry__event_QEvent(void *thisObj, void *event_);
+// KDDockWidgets::DockRegistry::eventFilter(QObject * watched, QEvent * event)
+bool c_KDDockWidgets__DockRegistry__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
+                                                               void *event_);
+// KDDockWidgets::DockRegistry::focusedDockWidget() const
+void *c_KDDockWidgets__DockRegistry__focusedDockWidget(void *thisObj);
+// KDDockWidgets::DockRegistry::groupInMDIResize() const
+void *c_KDDockWidgets__DockRegistry__groupInMDIResize(void *thisObj);
+// KDDockWidgets::DockRegistry::groupInMDIResizeChanged()
+void c_KDDockWidgets__DockRegistry__groupInMDIResizeChanged(void *thisObj);
+// KDDockWidgets::DockRegistry::groups() const
+void *c_KDDockWidgets__DockRegistry__groups(void *thisObj);
+// KDDockWidgets::DockRegistry::hasFloatingWindows() const
+bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj);
+// KDDockWidgets::DockRegistry::isEmpty(bool excludeBeingDeleted) const
+bool c_KDDockWidgets__DockRegistry__isEmpty_bool(void *thisObj, bool excludeBeingDeleted);
+// KDDockWidgets::DockRegistry::isSane() const
+bool c_KDDockWidgets__DockRegistry__isSane(void *thisObj);
+// KDDockWidgets::DockRegistry::itemIsInMainWindow(const Layouting::Item * arg__1) const
+bool c_KDDockWidgets__DockRegistry__itemIsInMainWindow_Item(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::layoutForItem(const Layouting::Item * arg__1) const
+void *c_KDDockWidgets__DockRegistry__layoutForItem_Item(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::mainWindowByName(const QString & arg__1) const
+void *c_KDDockWidgets__DockRegistry__mainWindowByName_QString(void *thisObj, const char *arg__1_);
+// KDDockWidgets::DockRegistry::registerDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+void c_KDDockWidgets__DockRegistry__registerDockWidget_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::registerFloatingWindow(KDDockWidgets::Controllers::FloatingWindow *
+// arg__1)
+void c_KDDockWidgets__DockRegistry__registerFloatingWindow_FloatingWindow(void *thisObj,
+                                                                          void *arg__1_);
+// KDDockWidgets::DockRegistry::registerGroup(KDDockWidgets::Controllers::Group * arg__1)
+void c_KDDockWidgets__DockRegistry__registerGroup_Group(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::registerLayout(KDDockWidgets::Controllers::Layout * arg__1)
+void c_KDDockWidgets__DockRegistry__registerLayout_Layout(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::registerMainWindow(KDDockWidgets::Controllers::MainWindow * arg__1)
+void c_KDDockWidgets__DockRegistry__registerMainWindow_MainWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::self()
+void *c_static_KDDockWidgets__DockRegistry__self();
+// KDDockWidgets::DockRegistry::sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget *
+// arg__1) const
+void *c_KDDockWidgets__DockRegistry__sideBarForDockWidget_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__DockRegistry__tr_char_char_int(const char *s, const char *c, int n);
+// KDDockWidgets::DockRegistry::unregisterDockWidget(KDDockWidgets::Controllers::DockWidget *
+// arg__1)
+void c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::unregisterFloatingWindow(KDDockWidgets::Controllers::FloatingWindow
+// * arg__1)
+void c_KDDockWidgets__DockRegistry__unregisterFloatingWindow_FloatingWindow(void *thisObj,
+                                                                            void *arg__1_);
+// KDDockWidgets::DockRegistry::unregisterGroup(KDDockWidgets::Controllers::Group * arg__1)
+void c_KDDockWidgets__DockRegistry__unregisterGroup_Group(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::unregisterLayout(KDDockWidgets::Controllers::Layout * arg__1)
+void c_KDDockWidgets__DockRegistry__unregisterLayout_Layout(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::unregisterMainWindow(KDDockWidgets::Controllers::MainWindow *
+// arg__1)
+void c_KDDockWidgets__DockRegistry__unregisterMainWindow_MainWindow(void *thisObj, void *arg__1_);
+void c_KDDockWidgets__DockRegistry__destructor(void *thisObj);
+void c_KDDockWidgets__DockRegistry__registerVirtualMethodCallback(void *ptr, void *callback,
+                                                                  int methodId);
+void c_KDDockWidgets__DockRegistry_Finalizer(
     void *, void *cppObj, void *); // KDDockWidgets::CreateViewOptions::CreateViewOptions()
 void *c_KDDockWidgets__CreateViewOptions__constructor();
 void c_KDDockWidgets__CreateViewOptions__destructor(void *thisObj);

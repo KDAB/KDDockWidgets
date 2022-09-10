@@ -36,6 +36,7 @@
         <object-type name="ViewFactory_flutter" />
         <object-type name="Controller" />
         <object-type name="Config" />
+        <object-type name="DockRegistry" />
         <value-type name="CreateViewOptions" />
         <value-type name="InitialOption" />
 

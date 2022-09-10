@@ -233,6 +233,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/SideBar_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/FloatingWindow_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_wrapper.cpp

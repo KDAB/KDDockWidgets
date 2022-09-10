@@ -14,8 +14,8 @@
 #include <View.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <qpoint.h>
 #include <qstring.h>
+#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Group_flutter_wrapper : public ::KDDockWidgets::Views::Group_flutter

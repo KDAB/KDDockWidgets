@@ -59,6 +59,7 @@
 
 #include "../KDDockWidgets.h"
 #include "../Config.h"
+#include "../DockRegistry.h"
 
 #include "../private/multisplitter/Item_p.h"
 

@@ -226,7 +226,7 @@ class TitleBar extends Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1033))
+            cFunctionSymbolName(1093))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -254,7 +254,7 @@ class TitleBar extends Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1036))
+            cFunctionSymbolName(1096))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -383,7 +383,7 @@ class TitleBar extends Controller {
   DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1056))
+            cFunctionSymbolName(1116))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DockWidget.fromCppPointer(result, false);
@@ -543,13 +543,13 @@ class TitleBar extends Controller {
         return "c_KDDockWidgets__Controllers__TitleBar__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__TitleBar__eventFilter_QObject_QEvent";
-      case 1033:
+      case 1093:
         return "c_KDDockWidgets__Controllers__TitleBar__isMDI";
-      case 1036:
+      case 1096:
         return "c_KDDockWidgets__Controllers__TitleBar__isWindow";
-      case 828:
+      case 888:
         return "c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View";
-      case 1056:
+      case 1116:
         return "c_KDDockWidgets__Controllers__TitleBar__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -563,13 +563,13 @@ class TitleBar extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 1033:
+      case 1093:
         return "isMDI";
-      case 1036:
+      case 1096:
         return "isWindow";
-      case 828:
+      case 888:
         return "setParentView_impl";
-      case 1056:
+      case 1116:
         return "singleDockWidget";
     }
     throw Error();
@@ -595,20 +595,20 @@ class TitleBar extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    const callbackExcept1033 = 0;
-    final callback1033 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        TitleBar.isMDI_calledFromC, callbackExcept1033);
-    registerCallback(thisCpp, callback1033, 1033);
-    const callbackExcept1036 = 0;
-    final callback1036 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        TitleBar.isWindow_calledFromC, callbackExcept1036);
-    registerCallback(thisCpp, callback1036, 1036);
-    final callback828 =
+    const callbackExcept1093 = 0;
+    final callback1093 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        TitleBar.isMDI_calledFromC, callbackExcept1093);
+    registerCallback(thisCpp, callback1093, 1093);
+    const callbackExcept1096 = 0;
+    final callback1096 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        TitleBar.isWindow_calledFromC, callbackExcept1096);
+    registerCallback(thisCpp, callback1096, 1096);
+    final callback888 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback828, 828);
-    final callback1056 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback888, 888);
+    final callback1116 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         TitleBar.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1056, 1056);
+    registerCallback(thisCpp, callback1116, 1116);
   }
 }

@@ -31,6 +31,7 @@ export 'src/View_flutter.dart' show View_flutter;
 export 'src/View.dart' show View;
 export 'src/Controller.dart' show Controller;
 export 'src/CreateViewOptions.dart' show CreateViewOptions;
+export 'src/DockRegistry.dart' show DockRegistry;
 export 'src/InitialOption.dart' show InitialOption;
 export 'src/Platform_flutter.dart' show Platform_flutter;
 export 'src/Platform.dart' show Platform;

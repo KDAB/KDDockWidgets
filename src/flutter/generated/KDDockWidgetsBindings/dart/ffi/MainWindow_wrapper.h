@@ -18,10 +18,10 @@
 #include <DropArea.h>
 #include <controllers/Layout.h>
 #include <qrect.h>
-#include <qobject.h>
+#include <qsize.h>
 #include <qcoreevent.h>
 #include <qpoint.h>
-#include <qsize.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class MainWindow_wrapper : public ::KDDockWidgets::Controllers::MainWindow
