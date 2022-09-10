@@ -26,10 +26,10 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-Controllers::TabBar::TabBar(Stack *tabWidget)
-    : Controller(Type::TabBar, Config::self().viewFactory()->createTabBar(this, tabWidget->view()))
+Controllers::TabBar::TabBar(Stack *stack)
+    : Controller(Type::TabBar, Config::self().viewFactory()->createTabBar(this, stack->view()))
     , Draggable(view())
-    , m_tabWidget(tabWidget)
+    , m_stack(stack)
 {
     view()->init();
     dynamic_cast<Views::TabBarViewInterface *>(view())->setTabsAreMovable(tabsAreMovable());
@@ -156,13 +156,13 @@ std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
             if (alwaysShowTabs && hasSingleDockWidget()) {
                 // Case #1. User is dragging a tab but there's only 1 tab (and tabs are always
                 // visible), so drag everything instead, no detaching happens
-                return m_tabWidget->makeWindow();
+                return m_stack->makeWindow();
             }
         } else {
             // Case #2. User is dragging on the QTabBar background, not on an actual tab.
             // As Flag_HideTitleBarWhenTabsVisible is set, we let the user drag through the tab
             // widget background.
-            return m_tabWidget->makeWindow();
+            return m_stack->makeWindow();
         }
     } else {
         if (dock && hasSingleDockWidget() && alwaysShowTabs) {
@@ -187,7 +187,7 @@ std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
 bool Controllers::TabBar::isWindow() const
 {
     // Same semantics as tab widget, no need to duplicate logic
-    return m_tabWidget->isWindow();
+    return m_stack->isWindow();
 }
 
 void Controllers::TabBar::onMousePress(QPoint localPos)
@@ -219,7 +219,7 @@ int Controllers::TabBar::numDockWidgets() const
 
 Controllers::DockWidget *Controllers::TabBar::singleDockWidget() const
 {
-    return m_tabWidget->singleDockWidget();
+    return m_stack->singleDockWidget();
 }
 
 bool Controllers::TabBar::isMDI() const
@@ -230,12 +230,12 @@ bool Controllers::TabBar::isMDI() const
 
 Group *Controllers::TabBar::group() const
 {
-    return m_tabWidget->group();
+    return m_stack->group();
 }
 
 Stack *TabBar::stack() const
 {
-    return m_tabWidget;
+    return m_stack;
 }
 
 void Controllers::TabBar::moveTabTo(int from, int to)

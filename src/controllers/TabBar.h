@@ -90,7 +90,7 @@ Q_SIGNALS:
     void countChanged();
 
 private:
-    Controllers::Stack *const m_tabWidget;
+    Controllers::Stack *const m_stack;
     QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
     DockWidget *m_currentDockWidget = nullptr;
     QVector<const DockWidget *> m_dockWidgets;
