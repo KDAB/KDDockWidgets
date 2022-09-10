@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 /// @brief A Widget to host KDDW floating windows
-/// Since Flutter doesn't support real OS level multi-window we need
+/// Since Flutter doesn't support real OS level multi-windows we need
 /// to draw the floating windows into an overlay
 class WindowOverlayWidget extends StatefulWidget {
   @override

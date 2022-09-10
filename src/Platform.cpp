@@ -206,3 +206,11 @@ void Platform::removeGlobalEventFilter(EventFilterInterface *filter)
         std::remove(d->m_globalEventFilters.begin(), d->m_globalEventFilters.end(), filter),
         d->m_globalEventFilters.end());
 }
+
+void Platform::onFloatingWindowCreated(Controllers::FloatingWindow *)
+{
+}
+
+void Platform::onFloatingWindowDestroyed(Controllers::FloatingWindow *)
+{
+}

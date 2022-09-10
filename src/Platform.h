@@ -159,6 +159,14 @@ public:
     {
     }
 
+    /// @brief Called when a floating window is created.
+    /// Override only if your platform isinterested in knowing this.
+    virtual void onFloatingWindowCreated(Controllers::FloatingWindow *);
+
+    /// @brief Called when a floating window is created.
+    /// Override only if your platform isinterested in knowing this.
+    virtual void onFloatingWindowDestroyed(Controllers::FloatingWindow *);
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     class WarningObserver

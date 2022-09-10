@@ -146,6 +146,16 @@ Screen::Ptr Platform_flutter::primaryScreen() const
     return {};
 }
 
+
+void Platform_flutter::onFloatingWindowCreated(Controllers::FloatingWindow *)
+{
+}
+
+void Platform_flutter::onFloatingWindowDestroyed(Controllers::FloatingWindow *)
+{
+}
+
+
 #ifdef DOCKS_DEVELOPER_MODE
 
 void Platform_flutter::installMessageHandler()

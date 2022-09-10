@@ -41,6 +41,9 @@ public:
     QVector<std::shared_ptr<Screen>> screens() const override;
     std::shared_ptr<Screen> primaryScreen() const override;
 
+    void onFloatingWindowCreated(Controllers::FloatingWindow *) override;
+    void onFloatingWindowDestroyed(Controllers::FloatingWindow *) override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_flutter(int &argc, char **argv);
     void tests_initPlatform_impl() override;
