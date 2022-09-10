@@ -41,6 +41,10 @@ class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
   }
 
   @override
+  onFloatingWindowCreated(KDDockWidgetBindings.FloatingWindow? fw) {}
+  onFloatingWindowDestroyed(KDDockWidgetBindings.FloatingWindow? fw) {}
+
+  @override
   void dumpManagedBacktrace() {
     print("Printing!");
     print(StackTrace.current);
