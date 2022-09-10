@@ -869,14 +869,6 @@ void DockWidget::Private::onParentChanged()
     Q_EMIT q->actualTitleBarChanged();
 }
 
-void DockWidget::onShown()
-{
-    d->maybeRestoreToPreviousPosition();
-
-    // Transform into a FloatingWindow if this will be a regular floating dock widget.
-    QTimer::singleShot(0, d, &DockWidget::Private::maybeMorphIntoFloatingWindow);
-}
-
 void DockWidget::onResize(QSize)
 {
     if (isOverlayed()) {
@@ -1065,6 +1057,13 @@ void DockWidget::Private::setIsOpen(bool is)
         close();
 
     m_isOpen = is;
+
+    if (is) {
+        maybeRestoreToPreviousPosition();
+
+        // Transform into a FloatingWindow if this will be a regular floating dock widget.
+        QTimer::singleShot(0, this, &DockWidget::Private::maybeMorphIntoFloatingWindow);
+    }
 
     updateToggleAction();
     updateFloatAction();

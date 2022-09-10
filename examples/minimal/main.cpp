@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 
 
     // 5. dock5 will be its own top level (floating window)
-    dock5->show();
+    dock5->open();
 
     return app.exec();
 }

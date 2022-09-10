@@ -1551,7 +1551,7 @@ void TestQtWidgets::tstCloseNestedMDIPropagates()
     auto dock2 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock2"));
     auto nonClosableWidget2 = Platform::instance()->tests_createNonClosableView();
     dock2->dockWidget()->setGuestView(nonClosableWidget2->asWrapper());
-    dock2->show();
+    dock2->open();
 
     Platform::instance()->tests_waitForEvent(dock1->controller(), QEvent::Show);
     QVERIFY(dock1->isVisible());

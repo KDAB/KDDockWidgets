@@ -45,7 +45,7 @@ public:
     QAction *floatAction() const;
     bool isOpen() const;
     void forceClose();
-    void show();
+    void open();
     void raise();
     void moveToSideBar();
     void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
@@ -65,6 +65,9 @@ public:
 
     DockWidgetOptions options() const;
     void setOptions(DockWidgetOptions);
+
+    /// @deprecated. Use open() instead.
+    void show();
 
 protected:
     Controllers::DockWidget *const m_dockWidget;

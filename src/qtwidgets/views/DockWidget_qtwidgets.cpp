@@ -76,9 +76,8 @@ void DockWidget_qtwidgets::setWidget(QWidget *widget)
 
 bool DockWidget_qtwidgets::event(QEvent *e)
 {
-    if (e->type() == QEvent::Show) {
-        m_dockWidget->onShown();
-    }
+    if (e->type() == QEvent::Show)
+        m_dockWidget->open();
 
     return QWidget::event(e);
 }

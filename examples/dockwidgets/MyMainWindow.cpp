@@ -77,7 +77,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
             QStringLiteral("new dock %1").arg(count));
         dock->setWidget(w);
         dock->resize(QSize(600, 600));
-        dock->show();
+        dock->open();
     });
 
     auto saveLayoutAction = fileMenu->addAction(QStringLiteral("Save Layout"));

@@ -131,7 +131,7 @@ bool DockWidget_qtquick::event(QEvent *e)
         return View_qtquick::event(e);
 
     if (e->type() == QEvent::Show) {
-        dockWidget()->onShown();
+        dockWidget()->open();
     }
 
     return View_qtquick::event(e);

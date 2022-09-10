@@ -95,9 +95,14 @@ void DockWidgetViewInterface::forceClose()
     m_dockWidget->forceClose();
 }
 
-void DockWidgetViewInterface::show()
+void DockWidgetViewInterface::open()
 {
     m_dockWidget->open();
+}
+
+void DockWidgetViewInterface::show()
+{
+    open();
 }
 
 void DockWidgetViewInterface::raise()

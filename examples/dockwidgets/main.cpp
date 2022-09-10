@@ -429,7 +429,7 @@ int main(int argc, char **argv)
         dockableMainWindow->setWindowTitle("Dockable Main Window");
         dockableMainWindow->show();
         mainWindowDockWidget->setWidget(dockableMainWindow);
-        mainWindowDockWidget->show();
+        mainWindowDockWidget->open();
         mainWindowDockWidget->resize(QSize(800, 800));
     }
 
