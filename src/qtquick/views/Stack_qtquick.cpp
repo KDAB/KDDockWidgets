@@ -25,22 +25,3 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
     , StackViewInterface(controller)
 {
 }
-
-void Stack_qtquick::init()
-{
-
-    m_tabBarAutoHideChanged =
-        m_stack->tabBarAutoHideChanged.connect([this] { Q_EMIT tabBarAutoHideChanged(); });
-
-    Q_EMIT tabBarChanged();
-}
-
-Controllers::Stack *Stack_qtquick::stack() const
-{
-    return m_stack;
-}
-
-bool Stack_qtquick::tabBarAutoHide() const
-{
-    return m_stack->tabBarAutoHide();
-}

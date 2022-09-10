@@ -25,13 +25,10 @@
 
 #include <QVector>
 
-#include "kdbindings/signal.h"
-
 namespace KDDockWidgets {
+
 namespace Controllers {
-class DockWidget;
-class Group;
-class TabBar;
+class Stack;
 }
 
 namespace Views {
@@ -42,24 +39,8 @@ class DOCKS_EXPORT Stack_qtquick : public View_qtquick, public StackViewInterfac
 public:
     explicit Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent = nullptr);
 
-
-    /// @brief Returns the stack controller associated with this view
-    Controllers::Stack *stack() const;
-
-    /// Returns whether the tab bar should hide when there's only 1 tab visible
-    /// Default true, unless Flag_HideTitleBarWhenTabsVisible
-    bool tabBarAutoHide() const;
-
-Q_SIGNALS:
-    void tabBarChanged();
-    void tabBarAutoHideChanged();
-
-protected:
-    void init() override;
-
 private:
     Q_DISABLE_COPY(Stack_qtquick)
-    KDBindings::ScopedConnection m_tabBarAutoHideChanged;
 };
 
 }
