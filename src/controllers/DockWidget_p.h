@@ -197,12 +197,11 @@ public:
     bool m_updatingFloatAction = false;
     bool m_isForceClosing = false;
     bool m_isMovingToSideBar = false;
-    bool m_isSettingCurrent =
-        false; // TODOm4: Remove once DockWidget::onShown() doesn't drive things
+    bool m_isSettingCurrent = false;
     bool m_isOpen = false;
     bool m_inOpenSetter = false;
     bool m_inClose = false;
-    bool m_removingFromOverlay = false; // TODOm4: Remove soon
+    bool m_removingFromOverlay = false;
     QSize m_lastOverlayedSize = QSize(0, 0);
     int m_userType = 0;
     bool m_willUpdateActions = false;
