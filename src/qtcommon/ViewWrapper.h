@@ -29,9 +29,7 @@ class DOCKS_EXPORT ViewWrapper : public Views::View_qt
 public:
     using Ptr = std::shared_ptr<View>;
 
-    explicit ViewWrapper(Controller *controller,
-                         QObject *thisObj); // TODOm4: Remove thisObj argument once all calls to
-                                            // asQWidget() are removed
+    explicit ViewWrapper(Controller *controller, QObject *thisObj);
 
     void setMinimumSize(QSize) override;
     QSize maxSizeHint() const override;
