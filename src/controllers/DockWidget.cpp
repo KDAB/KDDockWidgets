@@ -412,6 +412,11 @@ QStringList DockWidget::affinities() const
 
 void DockWidget::show()
 {
+    open();
+}
+
+void DockWidget::open()
+{
     if (view()->isRootView()
         && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.

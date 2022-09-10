@@ -310,8 +310,16 @@ public:
      */
     QStringList affinities() const;
 
-    /// @brief Equivalent to QWidget::show(), but it's optimized to reduce flickering on some
-    /// platforms
+    /// @brief Opens this dock widget.
+    /// Does nothing if already open.
+    /// The dock widget will appear floating unless it knows about its previous layout position,
+    /// in which case it will appear docked (or tabbed) into the main window.
+    void open();
+
+    /// @brief Deprecated, use open() instead.
+    /// Visibility isn't a good concept since tabbed non-current dock widgets are not visible but
+    /// still open.
+    /// @deprecated
     void show();
 
     /// @brief Brings the dock widget to the front.
