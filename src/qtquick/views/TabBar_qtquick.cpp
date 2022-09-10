@@ -35,9 +35,8 @@ using namespace KDDockWidgets::Views;
 TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
-    , m_dockWidgetModel(new DockWidgetModel(this))
+    , m_dockWidgetModel(new DockWidgetModel(controller, this))
 {
-    m_dockWidgetModel->m_tabBar = controller;
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
             [controller] { Q_EMIT controller->countChanged(); });
 }
@@ -191,8 +190,9 @@ DockWidgetModel *TabBar_qtquick::dockWidgetModel() const
     return m_dockWidgetModel;
 }
 
-DockWidgetModel::DockWidgetModel(QObject *parent)
+DockWidgetModel::DockWidgetModel(Controllers::TabBar *tabBar, QObject *parent)
     : QAbstractListModel(parent)
+    , m_tabBar(tabBar)
 {
 }
 

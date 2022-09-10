@@ -97,7 +97,7 @@ public:
         Role_Title = Qt::UserRole
     };
 
-    explicit DockWidgetModel(QObject *parent);
+    explicit DockWidgetModel(Controllers::TabBar *, QObject *parent);
     int count() const;
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
@@ -111,9 +111,6 @@ public:
     int currentIndex() const;
     void setCurrentIndex(int index);
 
-    // TODOm4: Move to private and make *const
-    Controllers::TabBar *m_tabBar = nullptr;
-
 protected:
     QHash<int, QByteArray> roleNames() const override;
 
@@ -123,6 +120,8 @@ Q_SIGNALS:
 
 private:
     void emitDataChangedFor(Controllers::DockWidget *);
+
+    Controllers::TabBar *const m_tabBar = nullptr;
     QVector<Controllers::DockWidget *> m_dockWidgets;
     QHash<Controllers::DockWidget *, QVector<QMetaObject::Connection>>
         m_connections; // To make it easy to disconnect from lambdas
