@@ -16,9 +16,9 @@
 #include <qsize.h>
 #include <qrect.h>
 #include <Group.h>
-#include <qobject.h>
 #include <qcoreevent.h>
 #include <View.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ClassicIndicators_wrapper : public ::KDDockWidgets::Controllers::ClassicIndicators

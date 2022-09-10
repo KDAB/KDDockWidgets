@@ -16,9 +16,9 @@
 #include <qpoint.h>
 #include <qsize.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 #include <qlist.h>
 #include <qbytearray.h>
-#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Controller_wrapper : public ::KDDockWidgets::Controller
@@ -50,6 +50,7 @@ public:
     static QString tr(const char *s, const char *c, int n);
     KDDockWidgets::Type type() const;
     KDDockWidgets::View *view() const;
+    void visibleChanged(bool arg__1);
     int width() const;
     int x() const;
     int y() const;
@@ -117,6 +118,9 @@ c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const char *
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controller__type(void *thisObj);
 // KDDockWidgets::Controller::view() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__view(void *thisObj);
+// KDDockWidgets::Controller::visibleChanged(bool arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controller__visibleChanged_bool(void *thisObj,
+                                                                                   bool arg__1);
 // KDDockWidgets::Controller::width() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controller__width(void *thisObj);
 // KDDockWidgets::Controller::x() const

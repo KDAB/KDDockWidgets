@@ -1453,6 +1453,8 @@ void *c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const 
 int c_KDDockWidgets__Controller__type(void *thisObj);
 // KDDockWidgets::Controller::view() const
 void *c_KDDockWidgets__Controller__view(void *thisObj);
+// KDDockWidgets::Controller::visibleChanged(bool arg__1)
+void c_KDDockWidgets__Controller__visibleChanged_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Controller::width() const
 int c_KDDockWidgets__Controller__width(void *thisObj);
 // KDDockWidgets::Controller::x() const
@@ -3158,10 +3160,6 @@ int c_KDDockWidgets__Controllers__Group__nonContentsHeight(void *thisObj);
 void c_KDDockWidgets__Controllers__Group__numDockWidgetsChanged(void *thisObj);
 // KDDockWidgets::Controllers::Group::onDockWidgetCountChanged()
 void c_KDDockWidgets__Controllers__Group__onDockWidgetCountChanged(void *thisObj);
-// KDDockWidgets::Controllers::Group::onDockWidgetHidden(KDDockWidgets::Controllers::DockWidget * w)
-void c_KDDockWidgets__Controllers__Group__onDockWidgetHidden_DockWidget(void *thisObj, void *w_);
-// KDDockWidgets::Controllers::Group::onDockWidgetShown(KDDockWidgets::Controllers::DockWidget * w)
-void c_KDDockWidgets__Controllers__Group__onDockWidgetShown_DockWidget(void *thisObj, void *w_);
 // KDDockWidgets::Controllers::Group::onDockWidgetTitleChanged()
 void c_KDDockWidgets__Controllers__Group__onDockWidgetTitleChanged(void *thisObj);
 // KDDockWidgets::Controllers::Group::removeWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
@@ -3493,8 +3491,6 @@ void *c_KDDockWidgets__Controllers__DockWidget__groupGeometry(void *thisObj);
 void c_KDDockWidgets__Controllers__DockWidget__guestViewChanged(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::hasPreviousDockedLocation() const
 bool c_KDDockWidgets__Controllers__DockWidget__hasPreviousDockedLocation(void *thisObj);
-// KDDockWidgets::Controllers::DockWidget::hidden()
-void c_KDDockWidgets__Controllers__DockWidget__hidden(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::iconChanged()
 void c_KDDockWidgets__Controllers__DockWidget__iconChanged(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::init()
@@ -3533,12 +3529,10 @@ int c_KDDockWidgets__Controllers__DockWidget__layoutSaverOptions(void *thisObj);
 void *c_KDDockWidgets__Controllers__DockWidget__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::moveToSideBar()
 void c_KDDockWidgets__Controllers__DockWidget__moveToSideBar(void *thisObj);
-// KDDockWidgets::Controllers::DockWidget::onHidden(bool spontaneous)
-void c_KDDockWidgets__Controllers__DockWidget__onHidden_bool(void *thisObj, bool spontaneous);
 // KDDockWidgets::Controllers::DockWidget::onResize(QSize newSize)
 void c_KDDockWidgets__Controllers__DockWidget__onResize_QSize(void *thisObj, void *newSize_);
-// KDDockWidgets::Controllers::DockWidget::onShown(bool spontaneous)
-void c_KDDockWidgets__Controllers__DockWidget__onShown_bool(void *thisObj, bool spontaneous);
+// KDDockWidgets::Controllers::DockWidget::open()
+void c_KDDockWidgets__Controllers__DockWidget__open(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::options() const
 int c_KDDockWidgets__Controllers__DockWidget__options(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::optionsChanged(QFlags<KDDockWidgets::DockWidgetOption>
@@ -3577,8 +3571,6 @@ void c_KDDockWidgets__Controllers__DockWidget__setTitle_QString(void *thisObj, c
 void c_KDDockWidgets__Controllers__DockWidget__setUserType_int(void *thisObj, int userType);
 // KDDockWidgets::Controllers::DockWidget::show()
 void c_KDDockWidgets__Controllers__DockWidget__show(void *thisObj);
-// KDDockWidgets::Controllers::DockWidget::shown()
-void c_KDDockWidgets__Controllers__DockWidget__shown(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::skipsRestore() const
 bool c_KDDockWidgets__Controllers__DockWidget__skipsRestore(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::tabIndex() const

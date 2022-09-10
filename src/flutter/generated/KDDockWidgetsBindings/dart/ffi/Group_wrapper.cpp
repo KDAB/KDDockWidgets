@@ -330,14 +330,6 @@ void Group_wrapper::onDockWidgetCountChanged()
 {
     ::KDDockWidgets::Controllers::Group::onDockWidgetCountChanged();
 }
-void Group_wrapper::onDockWidgetHidden(KDDockWidgets::Controllers::DockWidget *w)
-{
-    ::KDDockWidgets::Controllers::Group::onDockWidgetHidden(w);
-}
-void Group_wrapper::onDockWidgetShown(KDDockWidgets::Controllers::DockWidget *w)
-{
-    ::KDDockWidgets::Controllers::Group::onDockWidgetShown(w);
-}
 void Group_wrapper::onDockWidgetTitleChanged()
 {
     ::KDDockWidgets::Controllers::Group::onDockWidgetTitleChanged();
@@ -817,18 +809,6 @@ void c_KDDockWidgets__Controllers__Group__onDockWidgetCountChanged(void *thisObj
 {
     fromPtr(thisObj)->onDockWidgetCountChanged();
 }
-// onDockWidgetHidden(KDDockWidgets::Controllers::DockWidget * w)
-void c_KDDockWidgets__Controllers__Group__onDockWidgetHidden_DockWidget(void *thisObj, void *w_)
-{
-    auto w = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(w_);
-    fromPtr(thisObj)->onDockWidgetHidden(w);
-}
-// onDockWidgetShown(KDDockWidgets::Controllers::DockWidget * w)
-void c_KDDockWidgets__Controllers__Group__onDockWidgetShown_DockWidget(void *thisObj, void *w_)
-{
-    auto w = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(w_);
-    fromPtr(thisObj)->onDockWidgetShown(w);
-}
 // onDockWidgetTitleChanged()
 void c_KDDockWidgets__Controllers__Group__onDockWidgetTitleChanged(void *thisObj)
 {
@@ -949,7 +929,7 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_customEvent>(
                 callback);
         break;
-    case 1395:
+    case 1403:
         wrapper->m_dragRectCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_dragRect>(
                 callback);
@@ -964,12 +944,12 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_eventFilter>(
                 callback);
         break;
-    case 1398:
+    case 1406:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_focusedWidgetChangedCallback>(
             callback);
         break;
-    case 1415:
+    case 1423:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_isFocusedChangedCallback>(
             callback);

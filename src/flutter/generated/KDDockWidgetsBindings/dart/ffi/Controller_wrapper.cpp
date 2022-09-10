@@ -147,6 +147,10 @@ KDDockWidgets::View *Controller_wrapper::view() const
 {
     return ::KDDockWidgets::Controller::view();
 }
+void Controller_wrapper::visibleChanged(bool arg__1)
+{
+    ::KDDockWidgets::Controller::visibleChanged(arg__1);
+}
 int Controller_wrapper::width() const
 {
     return ::KDDockWidgets::Controller::width();
@@ -313,6 +317,11 @@ int c_KDDockWidgets__Controller__type(void *thisObj)
 void *c_KDDockWidgets__Controller__view(void *thisObj)
 {
     return fromPtr(thisObj)->view();
+}
+// visibleChanged(bool arg__1)
+void c_KDDockWidgets__Controller__visibleChanged_bool(void *thisObj, bool arg__1)
+{
+    fromPtr(thisObj)->visibleChanged(arg__1);
 }
 // width() const
 int c_KDDockWidgets__Controller__width(void *thisObj)

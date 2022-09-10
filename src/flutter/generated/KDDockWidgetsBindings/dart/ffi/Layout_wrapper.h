@@ -20,10 +20,10 @@
 #include <qlist.h>
 #include <DropArea.h>
 #include <qstring.h>
-#include <qrect.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 #include <qpoint.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Layout_wrapper : public ::KDDockWidgets::Controllers::Layout

@@ -24,9 +24,9 @@
 #include <DropArea.h>
 #include <SideBar.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 #include <qlist.h>
 #include <qbytearray.h>
-#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ViewFactory_wrapper : public ::KDDockWidgets::ViewFactory

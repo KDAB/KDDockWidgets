@@ -124,10 +124,6 @@ bool DockWidget_wrapper::hasPreviousDockedLocation() const
 {
     return ::KDDockWidgets::Controllers::DockWidget::hasPreviousDockedLocation();
 }
-void DockWidget_wrapper::hidden()
-{
-    ::KDDockWidgets::Controllers::DockWidget::hidden();
-}
 void DockWidget_wrapper::iconChanged()
 {
     ::KDDockWidgets::Controllers::DockWidget::iconChanged();
@@ -204,17 +200,13 @@ void DockWidget_wrapper::moveToSideBar()
 {
     ::KDDockWidgets::Controllers::DockWidget::moveToSideBar();
 }
-void DockWidget_wrapper::onHidden(bool spontaneous)
-{
-    ::KDDockWidgets::Controllers::DockWidget::onHidden(spontaneous);
-}
 void DockWidget_wrapper::onResize(QSize newSize)
 {
     ::KDDockWidgets::Controllers::DockWidget::onResize(newSize);
 }
-void DockWidget_wrapper::onShown(bool spontaneous)
+void DockWidget_wrapper::open()
 {
-    ::KDDockWidgets::Controllers::DockWidget::onShown(spontaneous);
+    ::KDDockWidgets::Controllers::DockWidget::open();
 }
 QFlags<KDDockWidgets::DockWidgetOption> DockWidget_wrapper::options() const
 {
@@ -288,10 +280,6 @@ void DockWidget_wrapper::setUserType(int userType)
 void DockWidget_wrapper::show()
 {
     ::KDDockWidgets::Controllers::DockWidget::show();
-}
-void DockWidget_wrapper::shown()
-{
-    ::KDDockWidgets::Controllers::DockWidget::shown();
 }
 bool DockWidget_wrapper::skipsRestore() const
 {
@@ -475,11 +463,6 @@ bool c_KDDockWidgets__Controllers__DockWidget__hasPreviousDockedLocation(void *t
 {
     return fromPtr(thisObj)->hasPreviousDockedLocation();
 }
-// hidden()
-void c_KDDockWidgets__Controllers__DockWidget__hidden(void *thisObj)
-{
-    fromPtr(thisObj)->hidden();
-}
 // iconChanged()
 void c_KDDockWidgets__Controllers__DockWidget__iconChanged(void *thisObj)
 {
@@ -575,11 +558,6 @@ void c_KDDockWidgets__Controllers__DockWidget__moveToSideBar(void *thisObj)
 {
     fromPtr(thisObj)->moveToSideBar();
 }
-// onHidden(bool spontaneous)
-void c_KDDockWidgets__Controllers__DockWidget__onHidden_bool(void *thisObj, bool spontaneous)
-{
-    fromPtr(thisObj)->onHidden(spontaneous);
-}
 // onResize(QSize newSize)
 void c_KDDockWidgets__Controllers__DockWidget__onResize_QSize(void *thisObj, void *newSize_)
 {
@@ -587,10 +565,10 @@ void c_KDDockWidgets__Controllers__DockWidget__onResize_QSize(void *thisObj, voi
     auto &newSize = *reinterpret_cast<QSize *>(newSize_);
     fromPtr(thisObj)->onResize(newSize);
 }
-// onShown(bool spontaneous)
-void c_KDDockWidgets__Controllers__DockWidget__onShown_bool(void *thisObj, bool spontaneous)
+// open()
+void c_KDDockWidgets__Controllers__DockWidget__open(void *thisObj)
 {
-    fromPtr(thisObj)->onShown(spontaneous);
+    fromPtr(thisObj)->open();
 }
 // options() const
 int c_KDDockWidgets__Controllers__DockWidget__options(void *thisObj)
@@ -685,11 +663,6 @@ void c_KDDockWidgets__Controllers__DockWidget__setUserType_int(void *thisObj, in
 void c_KDDockWidgets__Controllers__DockWidget__show(void *thisObj)
 {
     fromPtr(thisObj)->show();
-}
-// shown()
-void c_KDDockWidgets__Controllers__DockWidget__shown(void *thisObj)
-{
-    fromPtr(thisObj)->shown();
 }
 // skipsRestore() const
 bool c_KDDockWidgets__Controllers__DockWidget__skipsRestore(void *thisObj)

@@ -15,9 +15,9 @@
 #include <Group.h>
 #include <qrect.h>
 #include <qpoint.h>
-#include <View.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <View.h>
 #include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

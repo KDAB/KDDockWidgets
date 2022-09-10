@@ -19,8 +19,8 @@
 #include <MainWindow.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockWidget_wrapper : public ::KDDockWidgets::Controllers::DockWidget
@@ -53,7 +53,6 @@ public:
     QRect groupGeometry() const;
     void guestViewChanged();
     bool hasPreviousDockedLocation() const;
-    void hidden();
     void iconChanged();
     void init();
     bool isCurrentTab() const;
@@ -73,9 +72,8 @@ public:
     QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions() const;
     KDDockWidgets::Controllers::MainWindow *mainWindow() const;
     void moveToSideBar();
-    void onHidden(bool spontaneous);
     void onResize(QSize newSize);
-    void onShown(bool spontaneous);
+    void open();
     QFlags<KDDockWidgets::DockWidgetOption> options() const;
     void optionsChanged(QFlags<KDDockWidgets::DockWidgetOption> arg__1);
     void raise();
@@ -93,7 +91,6 @@ public:
     void setTitle(const QString &title);
     void setUserType(int userType);
     void show();
-    void shown();
     bool skipsRestore() const;
     int tabIndex() const;
     QString title() const;
@@ -172,8 +169,6 @@ c_KDDockWidgets__Controllers__DockWidget__guestViewChanged(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::hasPreviousDockedLocation() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__DockWidget__hasPreviousDockedLocation(void *thisObj);
-// KDDockWidgets::Controllers::DockWidget::hidden()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__hidden(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::iconChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DockWidget__iconChanged(void *thisObj);
@@ -228,15 +223,11 @@ c_KDDockWidgets__Controllers__DockWidget__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::moveToSideBar()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DockWidget__moveToSideBar(void *thisObj);
-// KDDockWidgets::Controllers::DockWidget::onHidden(bool spontaneous)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__DockWidget__onHidden_bool(void *thisObj, bool spontaneous);
 // KDDockWidgets::Controllers::DockWidget::onResize(QSize newSize)
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DockWidget__onResize_QSize(void *thisObj, void *newSize_);
-// KDDockWidgets::Controllers::DockWidget::onShown(bool spontaneous)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__DockWidget__onShown_bool(void *thisObj, bool spontaneous);
+// KDDockWidgets::Controllers::DockWidget::open()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__open(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::options() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__DockWidget__options(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::optionsChanged(QFlags<KDDockWidgets::DockWidgetOption>
@@ -285,8 +276,6 @@ KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__DockWidget__setUserType_int(void *thisObj, int userType);
 // KDDockWidgets::Controllers::DockWidget::show()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__show(void *thisObj);
-// KDDockWidgets::Controllers::DockWidget::shown()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__shown(void *thisObj);
 // KDDockWidgets::Controllers::DockWidget::skipsRestore() const
 KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Controllers__DockWidget__skipsRestore(void *thisObj);

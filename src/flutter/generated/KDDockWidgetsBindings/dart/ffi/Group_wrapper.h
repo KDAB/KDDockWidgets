@@ -25,8 +25,8 @@
 #include <DropArea.h>
 #include <controllers/Layout.h>
 #include <qsize.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Group_wrapper : public ::KDDockWidgets::Controllers::Group
@@ -105,8 +105,6 @@ public:
     int nonContentsHeight() const;
     void numDockWidgetsChanged();
     void onDockWidgetCountChanged();
-    void onDockWidgetHidden(KDDockWidgets::Controllers::DockWidget *w);
-    void onDockWidgetShown(KDDockWidgets::Controllers::DockWidget *w);
     void onDockWidgetTitleChanged();
     void removeWidget(KDDockWidgets::Controllers::DockWidget *arg__1);
     void renameTab(int index, const QString &arg__2);
@@ -335,12 +333,6 @@ c_KDDockWidgets__Controllers__Group__numDockWidgetsChanged(void *thisObj);
 // KDDockWidgets::Controllers::Group::onDockWidgetCountChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__onDockWidgetCountChanged(void *thisObj);
-// KDDockWidgets::Controllers::Group::onDockWidgetHidden(KDDockWidgets::Controllers::DockWidget * w)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Group__onDockWidgetHidden_DockWidget(void *thisObj, void *w_);
-// KDDockWidgets::Controllers::Group::onDockWidgetShown(KDDockWidgets::Controllers::DockWidget * w)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Group__onDockWidgetShown_DockWidget(void *thisObj, void *w_);
 // KDDockWidgets::Controllers::Group::onDockWidgetTitleChanged()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__Group__onDockWidgetTitleChanged(void *thisObj);

@@ -13,11 +13,11 @@
 #include <qstring.h>
 #include <DockWidget.h>
 #include <MainWindow.h>
-#include <View.h>
-#include <qrect.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <View.h>
 #include <qpoint.h>
+#include <qrect.h>
 #include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

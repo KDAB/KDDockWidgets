@@ -231,6 +231,14 @@ class Controller extends QObject {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return View.fromCppPointer(result, false);
+  } // visibleChanged(bool arg__1)
+
+  visibleChanged(bool arg__1) {
+    final void_Func_voidstar_bool func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
+            'c_KDDockWidgets__Controller__visibleChanged_bool')
+        .asFunction();
+    func(thisCpp, arg__1 ? 1 : 0);
   } // width() const
 
   int width() {

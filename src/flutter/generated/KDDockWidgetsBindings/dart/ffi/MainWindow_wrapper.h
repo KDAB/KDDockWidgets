@@ -18,8 +18,8 @@
 #include <DropArea.h>
 #include <controllers/Layout.h>
 #include <qrect.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 #include <qpoint.h>
 #include <qsize.h>
 

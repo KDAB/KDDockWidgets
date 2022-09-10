@@ -188,14 +188,6 @@ class DockWidget extends Controller {
             'c_KDDockWidgets__Controllers__DockWidget__hasPreviousDockedLocation')
         .asFunction();
     return func(thisCpp) != 0;
-  } // hidden()
-
-  hidden() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DockWidget__hidden')
-        .asFunction();
-    func(thisCpp);
   } // iconChanged()
 
   iconChanged() {
@@ -350,14 +342,6 @@ class DockWidget extends Controller {
             'c_KDDockWidgets__Controllers__DockWidget__moveToSideBar')
         .asFunction();
     func(thisCpp);
-  } // onHidden(bool spontaneous)
-
-  onHidden(bool spontaneous) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__DockWidget__onHidden_bool')
-        .asFunction();
-    func(thisCpp, spontaneous ? 1 : 0);
   } // onResize(QSize newSize)
 
   onResize(QSize newSize) {
@@ -366,14 +350,14 @@ class DockWidget extends Controller {
             'c_KDDockWidgets__Controllers__DockWidget__onResize_QSize')
         .asFunction();
     func(thisCpp, newSize == null ? ffi.nullptr : newSize.thisCpp);
-  } // onShown(bool spontaneous)
+  } // open()
 
-  onShown(bool spontaneous) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__DockWidget__onShown_bool')
+  open() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__DockWidget__open')
         .asFunction();
-    func(thisCpp, spontaneous ? 1 : 0);
+    func(thisCpp);
   } // options() const
 
   int options() {
@@ -504,14 +488,6 @@ class DockWidget extends Controller {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Controllers__DockWidget__show')
-        .asFunction();
-    func(thisCpp);
-  } // shown()
-
-  shown() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DockWidget__shown')
         .asFunction();
     func(thisCpp);
   } // skipsRestore() const
