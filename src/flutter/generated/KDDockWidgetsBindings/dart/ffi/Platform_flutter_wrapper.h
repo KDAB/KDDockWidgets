@@ -15,6 +15,7 @@
 #include <qsize.h>
 #include <Controller.h>
 #include <qpoint.h>
+#include <FloatingWindow.h>
 #include <Platform.h>
 #include <MainWindow.h>
 #include <qstring.h>
@@ -61,6 +62,12 @@ public:
     virtual bool isProcessingAppQuitEvent_nocallback() const;
     virtual const char *name() const;
     virtual const char *name_nocallback() const;
+    virtual void onFloatingWindowCreated(KDDockWidgets::Controllers::FloatingWindow *arg__1);
+    virtual void
+    onFloatingWindowCreated_nocallback(KDDockWidgets::Controllers::FloatingWindow *arg__1);
+    virtual void onFloatingWindowDestroyed(KDDockWidgets::Controllers::FloatingWindow *arg__1);
+    virtual void
+    onFloatingWindowDestroyed_nocallback(KDDockWidgets::Controllers::FloatingWindow *arg__1);
     virtual QString organizationName() const;
     virtual QString organizationName_nocallback() const;
     virtual void restoreMouseCursor();
@@ -127,6 +134,12 @@ public:
     Callback_isProcessingAppQuitEvent m_isProcessingAppQuitEventCallback = nullptr;
     typedef const char *(*Callback_name)(void *);
     Callback_name m_nameCallback = nullptr;
+    typedef void (*Callback_onFloatingWindowCreated)(
+        void *, KDDockWidgets::Controllers::FloatingWindow *arg__1);
+    Callback_onFloatingWindowCreated m_onFloatingWindowCreatedCallback = nullptr;
+    typedef void (*Callback_onFloatingWindowDestroyed)(
+        void *, KDDockWidgets::Controllers::FloatingWindow *arg__1);
+    Callback_onFloatingWindowDestroyed m_onFloatingWindowDestroyedCallback = nullptr;
     typedef QString *(*Callback_organizationName)(void *);
     Callback_organizationName m_organizationNameCallback = nullptr;
     typedef void (*Callback_restoreMouseCursor)(void *);
@@ -205,6 +218,16 @@ KDDockWidgetsBindings_EXPORT bool
 c_KDDockWidgets__Platform_flutter__isProcessingAppQuitEvent(void *thisObj);
 // KDDockWidgets::Platform_flutter::name() const
 KDDockWidgetsBindings_EXPORT const char *c_KDDockWidgets__Platform_flutter__name(void *thisObj);
+// KDDockWidgets::Platform_flutter::onFloatingWindowCreated(KDDockWidgets::Controllers::FloatingWindow
+// * arg__1)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Platform_flutter__onFloatingWindowCreated_FloatingWindow(void *thisObj,
+                                                                          void *arg__1_);
+// KDDockWidgets::Platform_flutter::onFloatingWindowDestroyed(KDDockWidgets::Controllers::FloatingWindow
+// * arg__1)
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Platform_flutter__onFloatingWindowDestroyed_FloatingWindow(void *thisObj,
+                                                                            void *arg__1_);
 // KDDockWidgets::Platform_flutter::organizationName() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Platform_flutter__organizationName(void *thisObj);

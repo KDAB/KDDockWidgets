@@ -20,9 +20,9 @@
 #include <KDDockWidgets.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <qobject.h>
 #include <qcoreevent.h>
 #include <MainWindow.h>
+#include <qobject.h>
 #include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

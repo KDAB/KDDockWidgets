@@ -1237,6 +1237,14 @@ bool c_KDDockWidgets__Platform__isQtQuick(void *thisObj);
 bool c_KDDockWidgets__Platform__isQtWidgets(void *thisObj);
 // KDDockWidgets::Platform::name() const
 const char *c_KDDockWidgets__Platform__name(void *thisObj);
+// KDDockWidgets::Platform::onFloatingWindowCreated(KDDockWidgets::Controllers::FloatingWindow *
+// arg__1)
+void c_KDDockWidgets__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj,
+                                                                       void *arg__1_);
+// KDDockWidgets::Platform::onFloatingWindowDestroyed(KDDockWidgets::Controllers::FloatingWindow *
+// arg__1)
+void c_KDDockWidgets__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj,
+                                                                         void *arg__1_);
 // KDDockWidgets::Platform::organizationName() const
 void *c_KDDockWidgets__Platform__organizationName(void *thisObj);
 // KDDockWidgets::Platform::restoreMouseCursor()
@@ -1340,6 +1348,14 @@ bool c_KDDockWidgets__Platform_flutter__isLeftMouseButtonPressed(void *thisObj);
 bool c_KDDockWidgets__Platform_flutter__isProcessingAppQuitEvent(void *thisObj);
 // KDDockWidgets::Platform_flutter::name() const
 const char *c_KDDockWidgets__Platform_flutter__name(void *thisObj);
+// KDDockWidgets::Platform_flutter::onFloatingWindowCreated(KDDockWidgets::Controllers::FloatingWindow
+// * arg__1)
+void c_KDDockWidgets__Platform_flutter__onFloatingWindowCreated_FloatingWindow(void *thisObj,
+                                                                               void *arg__1_);
+// KDDockWidgets::Platform_flutter::onFloatingWindowDestroyed(KDDockWidgets::Controllers::FloatingWindow
+// * arg__1)
+void c_KDDockWidgets__Platform_flutter__onFloatingWindowDestroyed_FloatingWindow(void *thisObj,
+                                                                                 void *arg__1_);
 // KDDockWidgets::Platform_flutter::organizationName() const
 void *c_KDDockWidgets__Platform_flutter__organizationName(void *thisObj);
 // KDDockWidgets::Platform_flutter::restoreMouseCursor()
