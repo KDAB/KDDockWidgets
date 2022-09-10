@@ -121,8 +121,6 @@ public:
     void toggle(bool enabled);
     void updateToggleAction();
     void updateFloatAction();
-    void onDockWidgetShown();
-    void onDockWidgetHidden();
     void close();
     bool restoreToPreviousPosition();
     void maybeRestoreToPreviousPosition();

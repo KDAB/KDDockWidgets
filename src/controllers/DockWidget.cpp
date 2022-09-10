@@ -747,18 +747,6 @@ void DockWidget::Private::updateFloatAction()
     }
 }
 
-void DockWidget::Private::onDockWidgetShown()
-{
-    updateToggleAction();
-    updateFloatAction();
-}
-
-void DockWidget::Private::onDockWidgetHidden()
-{
-    updateToggleAction();
-    updateFloatAction();
-}
-
 void DockWidget::Private::close()
 {
     if (m_inClose)
@@ -878,7 +866,8 @@ void DockWidget::Private::onParentChanged()
 
 void DockWidget::onShown()
 {
-    d->onDockWidgetShown();
+    d->updateToggleAction();
+    d->updateFloatAction();
 
     d->maybeRestoreToPreviousPosition();
 
@@ -888,7 +877,8 @@ void DockWidget::onShown()
 
 void DockWidget::onHidden()
 {
-    d->onDockWidgetHidden();
+    d->updateToggleAction();
+    d->updateFloatAction();
 }
 
 void DockWidget::onResize(QSize)
