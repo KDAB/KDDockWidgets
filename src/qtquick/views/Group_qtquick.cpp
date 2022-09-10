@@ -165,11 +165,6 @@ QSize Group_qtquick::minSize() const
     return contentsSize + QSize(0, nonContentsHeight());
 }
 
-QObject *Group_qtquick::tabWidgetObj() const
-{
-    return stackView();
-}
-
 QObject *Group_qtquick::tabBarObj() const
 {
     return tabBarView();

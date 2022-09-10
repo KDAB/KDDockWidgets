@@ -37,7 +37,6 @@ class Stack_qtquick;
 class DOCKS_EXPORT Group_qtquick : public View_qtquick, public GroupViewInterface
 {
     Q_OBJECT
-    Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)
     Q_PROPERTY(QObject *tabBar READ tabBarObj CONSTANT)
     Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(int userType READ userType CONSTANT)
@@ -62,7 +61,6 @@ public:
     KDDockWidgets::Views::TitleBar_qtquick *titleBar() const;
     KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar() const;
     int userType() const;
-    QObject *tabWidgetObj() const;
     QObject *tabBarObj() const;
 
 protected:

@@ -39,13 +39,9 @@ namespace Views {
 class DOCKS_EXPORT Stack_qtquick : public View_qtquick, public StackViewInterface
 {
     Q_OBJECT
-    Q_PROPERTY(QObject *tabBar READ tabBarViewObj NOTIFY tabBarChanged)
 public:
     explicit Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent = nullptr);
 
-    /// @brief Returns the tab bar as a QObject for QML.
-    /// As the base class is not a QObject.
-    QObject *tabBarViewObj() const;
 
     /// @brief Returns the stack controller associated with this view
     Controllers::Stack *stack() const;

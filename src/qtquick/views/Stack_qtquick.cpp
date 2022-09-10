@@ -40,11 +40,6 @@ Controllers::Stack *Stack_qtquick::stack() const
     return m_stack;
 }
 
-QObject *Stack_qtquick::tabBarViewObj() const
-{
-    return View_qt::asQObject(m_stack->tabBar()->view());
-}
-
 bool Stack_qtquick::tabBarAutoHide() const
 {
     return m_stack->tabBarAutoHide();
