@@ -817,7 +817,7 @@ bool DockWidget::Private::restoreToPreviousPosition()
 
 void DockWidget::Private::maybeRestoreToPreviousPosition()
 {
-    // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous
+    // This is called when we open a dock widget. Let's see if we have to restore it to a previous
     // position.
 
     if (!m_lastPosition->isValid())
@@ -842,7 +842,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
     // parent.
 
     if (q->view()->parentView()) {
-        // The QEvent::Show is due to it being made floating. Nothing to restore.
+        // Was called due to it being made floating. Nothing to restore.
         return;
     }
 
