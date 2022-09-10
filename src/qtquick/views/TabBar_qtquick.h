@@ -24,6 +24,7 @@
 #include "View_qtquick.h"
 #include "views/TabBarViewInterface.h"
 
+#include <QAbstractListModel>
 #include <QPointer>
 #include <QHash>
 
@@ -36,6 +37,7 @@ class TabBar;
 namespace KDDockWidgets::Views {
 
 class DockWidget;
+class DockWidgetModel;
 class TabWidget;
 class Stack_qtquick;
 
@@ -45,10 +47,13 @@ class DOCKS_EXPORT TabBar_qtquick : public View_qtquick, public TabBarViewInterf
     Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY
                    tabBarQmlItemChanged)
     Q_PROPERTY(bool tabBarAutoHide READ tabBarAutoHide NOTIFY tabBarAutoHideChanged)
+    Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
 public:
     explicit TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent = nullptr);
-    int tabAt(QPoint localPos) const override;
 
+    DockWidgetModel *dockWidgetModel() const;
+
+    int tabAt(QPoint localPos) const override;
     QQuickItem *tabBarQmlItem() const;
     void setTabBarQmlItem(QQuickItem *);
 
@@ -78,9 +83,53 @@ protected:
 
 private:
     QQuickItem *tabAt(int index) const;
+    DockWidgetModel *const m_dockWidgetModel;
     QPointer<QQuickItem> m_tabBarQmlItem;
     KDBindings::ScopedConnection m_tabBarAutoHideChanged;
 };
+
+class DockWidgetModel : public QAbstractListModel
+{
+    Q_OBJECT
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
+public:
+    enum Role {
+        Role_Title = Qt::UserRole
+    };
+
+    explicit DockWidgetModel(QObject *parent);
+    int count() const;
+    int rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    Controllers::DockWidget *dockWidgetAt(int index) const;
+    Controllers::DockWidget *currentDockWidget() const;
+    void setCurrentDockWidget(Controllers::DockWidget *);
+    void remove(Controllers::DockWidget *);
+    int indexOf(const Controllers::DockWidget *);
+    bool insert(Controllers::DockWidget *dw, int index);
+    bool contains(Controllers::DockWidget *dw) const;
+    int currentIndex() const;
+    void setCurrentIndex(int index);
+
+    // TODOm4: Move to private and make *const
+    Controllers::TabBar *m_tabBar = nullptr;
+
+protected:
+    QHash<int, QByteArray> roleNames() const override;
+
+Q_SIGNALS:
+    void countChanged();
+    void dockWidgetRemoved();
+
+private:
+    void emitDataChangedFor(Controllers::DockWidget *);
+    QVector<Controllers::DockWidget *> m_dockWidgets;
+    QHash<Controllers::DockWidget *, QVector<QMetaObject::Connection>>
+        m_connections; // To make it easy to disconnect from lambdas
+    bool m_removeGuard = false;
+    Controllers::DockWidget *m_currentDockWidget = nullptr;
+};
+
 }
 
 #endif

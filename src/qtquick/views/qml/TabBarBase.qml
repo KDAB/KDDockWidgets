@@ -21,10 +21,10 @@ Item {
     readonly property QtObject groupCpp: parent.groupCpp
 
     /// This is our C++ TabBar_qtquick.cpp
-    readonly property QtObject tabBarCpp: groupCpp ? groupCpp.tabWidget.tabBar : null
+    readonly property QtObject tabBarCpp: groupCpp ? groupCpp.tabBar : null
 
     /// The number of tabs
-    readonly property int count: groupCpp ? groupCpp.tabWidget.dockWidgetModel.count : 0
+    readonly property int count: tabBarCpp ? tabBarCpp.dockWidgetModel.count : 0
 
     property int currentTabIndex: -1
 

@@ -51,7 +51,7 @@ KDDW.TabBarBase {
 
         /// ##HERE## The list of tabs is stored in a C++ model. This repeater populates our tab bar
         Repeater {
-            model: root.groupCpp ? root.groupCpp.tabWidget.dockWidgetModel : 0
+            model: root.groupCpp ? root.groupCpp.tabBar.dockWidgetModel : 0
             Rectangle {
                 id: tab
                 height: parent.height

@@ -19,12 +19,15 @@
 
 #include "TabBar_qtquick.h"
 #include "Stack_qtquick.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
 #include "kddockwidgets/controllers/TabBar.h"
 #include "kddockwidgets/controllers/Stack.h"
 #include "Stack_qtquick.h"
 
 #include <QMetaObject>
 #include <QMouseEvent>
+#include <QDebug>
+#include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
@@ -32,7 +35,11 @@ using namespace KDDockWidgets::Views;
 TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
+    , m_dockWidgetModel(new DockWidgetModel(this))
 {
+    m_dockWidgetModel->m_tabBar = controller;
+    connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
+            [controller] { Q_EMIT controller->countChanged(); });
 }
 
 void TabBar_qtquick::init()
@@ -150,7 +157,7 @@ Stack_qtquick *TabBar_qtquick::stackView() const
 
 void TabBar_qtquick::setCurrentIndex(int index)
 {
-    stackView()->dockWidgetModel()->setCurrentIndex(index);
+    m_dockWidgetModel->setCurrentIndex(index);
 }
 
 void TabBar_qtquick::renameTab(int index, const QString &)
@@ -167,7 +174,7 @@ void TabBar_qtquick::changeTabIcon(int index, const QIcon &)
 
 void TabBar_qtquick::removeDockWidget(Controllers::DockWidget *dw)
 {
-    stackView()->dockWidgetModel()->remove(dw);
+    m_dockWidgetModel->remove(dw);
 }
 
 void TabBar_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
@@ -176,5 +183,169 @@ void TabBar_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, co
     Q_UNUSED(title); // TODO
     Q_UNUSED(icon); // TODO
 
-    stackView()->dockWidgetModel()->insert(dw, index);
+    m_dockWidgetModel->insert(dw, index);
+}
+
+DockWidgetModel *TabBar_qtquick::dockWidgetModel() const
+{
+    return m_dockWidgetModel;
+}
+
+DockWidgetModel::DockWidgetModel(QObject *parent)
+    : QAbstractListModel(parent)
+{
+}
+
+int DockWidgetModel::count() const
+{
+    return m_dockWidgets.size();
+}
+
+int DockWidgetModel::rowCount(const QModelIndex &parent) const
+{
+    return parent.isValid() ? 0 : m_dockWidgets.size();
+}
+
+QVariant DockWidgetModel::data(const QModelIndex &index, int role) const
+{
+    const int row = index.row();
+    if (row < 0 || row >= m_dockWidgets.size())
+        return {};
+
+    Controllers::DockWidget *dw = m_dockWidgets.at(row);
+
+    switch (role) {
+    case Role_Title:
+        return dw->title();
+    }
+
+    return {};
+}
+
+Controllers::DockWidget *DockWidgetModel::dockWidgetAt(int index) const
+{
+    if (index < 0 || index >= m_dockWidgets.size()) {
+        // Can happen. Benign.
+        return nullptr;
+    }
+
+    return m_dockWidgets[index];
+}
+
+bool DockWidgetModel::contains(Controllers::DockWidget *dw) const
+{
+    return m_dockWidgets.contains(dw);
+}
+
+Controllers::DockWidget *DockWidgetModel::currentDockWidget() const
+{
+    return m_currentDockWidget;
+}
+
+void DockWidgetModel::setCurrentDockWidget(Controllers::DockWidget *dw)
+{
+    if (m_currentDockWidget)
+        m_currentDockWidget->setVisible(false);
+
+    m_currentDockWidget = dw;
+    setCurrentIndex(indexOf(dw));
+    if (m_currentDockWidget) {
+        QScopedValueRollback<bool> guard(m_currentDockWidget->d->m_isSettingCurrent, true);
+        m_currentDockWidget->setVisible(true);
+    }
+}
+
+QHash<int, QByteArray> DockWidgetModel::roleNames() const
+{
+    return { { Role_Title, "title" } };
+}
+
+void DockWidgetModel::emitDataChangedFor(Controllers::DockWidget *dw)
+{
+    const int row = indexOf(dw);
+    if (row == -1) {
+        qWarning() << Q_FUNC_INFO << "Couldn't find" << dw;
+    } else {
+        QModelIndex index = this->index(row, 0);
+        Q_EMIT dataChanged(index, index);
+    }
+}
+
+void DockWidgetModel::remove(Controllers::DockWidget *dw)
+{
+    QScopedValueRollback<bool> guard(m_removeGuard, true);
+    const int row = indexOf(dw);
+
+    if (row == -1) {
+        if (!m_removeGuard) {
+            // can happen if there's reentrancy. Some user code reacting
+            // to the signals and call remove for whatever reason.
+            qWarning() << Q_FUNC_INFO << "Nothing to remove"
+                       << static_cast<void *>(dw); // Print address only, as it might be deleted
+                                                   // already
+        }
+    } else {
+        const auto connections = m_connections.take(dw);
+        for (const QMetaObject::Connection &conn : connections)
+            disconnect(conn);
+
+        beginRemoveRows(QModelIndex(), row, row);
+        m_dockWidgets.removeOne(dw);
+        endRemoveRows();
+
+        Q_EMIT countChanged();
+        Q_EMIT dockWidgetRemoved();
+    }
+}
+
+int DockWidgetModel::indexOf(const Controllers::DockWidget *dw)
+{
+    return m_dockWidgets.indexOf(const_cast<Controllers::DockWidget *>(dw));
+}
+
+int DockWidgetModel::currentIndex() const
+{
+    if (!m_currentDockWidget)
+        return -1;
+
+    const int index = m_dockWidgets.indexOf(m_currentDockWidget);
+
+    if (index == -1)
+        qWarning() << Q_FUNC_INFO << "Unexpected null index for" << m_currentDockWidget << this
+                   << "; count=" << count();
+
+    return index;
+}
+
+void DockWidgetModel::setCurrentIndex(int index)
+{
+    Controllers::DockWidget *dw = dockWidgetAt(index);
+
+    if (m_currentDockWidget != dw) {
+        setCurrentDockWidget(dw);
+        m_tabBar->setCurrentIndex(index);
+    }
+}
+
+bool DockWidgetModel::insert(Controllers::DockWidget *dw, int index)
+{
+    if (m_dockWidgets.contains(dw)) {
+        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
+        return false;
+    }
+
+    QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::titleChanged, this,
+                                           [dw, this] { emitDataChangedFor(dw); });
+
+    QMetaObject::Connection conn2 =
+        connect(dw, &QObject::destroyed, this, [dw, this] { remove(dw); });
+
+    m_connections[dw] = { conn, conn2 };
+
+    beginInsertRows(QModelIndex(), index, index);
+    m_dockWidgets.insert(index, dw);
+    endInsertRows();
+
+    Q_EMIT countChanged();
+    return true;
 }

@@ -23,7 +23,6 @@
 #include "View_qtquick.h"
 #include "views/StackViewInterface.h"
 
-#include <QAbstractListModel>
 #include <QVector>
 
 #include "kdbindings/signal.h"
@@ -37,19 +36,12 @@ class TabBar;
 
 namespace Views {
 
-
-class DockWidgetModel;
-
 class DOCKS_EXPORT Stack_qtquick : public View_qtquick, public StackViewInterface
 {
     Q_OBJECT
-    Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
     Q_PROPERTY(QObject *tabBar READ tabBarViewObj NOTIFY tabBarChanged)
 public:
     explicit Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent = nullptr);
-
-    DockWidgetModel *dockWidgetModel() const;
-    Controllers::DockWidget *currentDockWidget() const;
 
     /// @brief Returns the tab bar as a QObject for QML.
     /// As the base class is not a QObject.
@@ -71,50 +63,7 @@ protected:
 
 private:
     Q_DISABLE_COPY(Stack_qtquick)
-    DockWidgetModel *const m_dockWidgetModel;
     KDBindings::ScopedConnection m_tabBarAutoHideChanged;
-};
-
-class DockWidgetModel : public QAbstractListModel
-{
-    Q_OBJECT
-    Q_PROPERTY(int count READ count NOTIFY countChanged)
-public:
-    enum Role {
-        Role_Title = Qt::UserRole
-    };
-
-    explicit DockWidgetModel(QObject *parent);
-    int count() const;
-    int rowCount(const QModelIndex &parent) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-    Controllers::DockWidget *dockWidgetAt(int index) const;
-    Controllers::DockWidget *currentDockWidget() const;
-    void setCurrentDockWidget(Controllers::DockWidget *);
-    void remove(Controllers::DockWidget *);
-    int indexOf(const Controllers::DockWidget *);
-    bool insert(Controllers::DockWidget *dw, int index);
-    bool contains(Controllers::DockWidget *dw) const;
-    int currentIndex() const;
-    void setCurrentIndex(int index);
-
-    // TODOm4: Move to private and make *const
-    Controllers::TabBar *m_tabBar = nullptr;
-
-protected:
-    QHash<int, QByteArray> roleNames() const override;
-
-Q_SIGNALS:
-    void countChanged();
-    void dockWidgetRemoved();
-
-private:
-    void emitDataChangedFor(Controllers::DockWidget *);
-    QVector<Controllers::DockWidget *> m_dockWidgets;
-    QHash<Controllers::DockWidget *, QVector<QMetaObject::Connection>>
-        m_connections; // To make it easy to disconnect from lambdas
-    bool m_removeGuard = false;
-    Controllers::DockWidget *m_currentDockWidget = nullptr;
 };
 
 }
