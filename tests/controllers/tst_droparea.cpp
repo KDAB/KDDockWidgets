@@ -42,7 +42,7 @@ TEST_CASE("DropArea::addWidget hidden")
 
     CHECK(!dw->isOpen());
     CHECK(!dw->toggleAction()->isChecked());
-    dw->show();
+    dw->open();
     CHECK(dw->isOpen());
     CHECK(dw->toggleAction()->isChecked());
 

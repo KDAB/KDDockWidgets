@@ -75,7 +75,7 @@ inline Controllers::DockWidget *createDockWidget(const QString &name, QWidget *w
     dock->setObjectName(name);
     dock->view()->setGeometry(QRect(0, 0, 400, 400));
     if (show) {
-        dock->show();
+        dock->open();
         dock->dptr()->morphIntoFloatingWindow();
         dock->view()->activateWindow();
         Q_ASSERT(dock->window());
@@ -258,7 +258,7 @@ void TestQtWidgets::tst_dockableMainWindows()
     menubar->addMenu("File");
     menubar->addMenu("View");
     menubar->addMenu("Help");
-    m2Container->show();
+    m2Container->open();
 
     auto dock21 = createDockWidget("dock21", new QPushButton("foo"));
     auto dock22 = createDockWidget("dock22", new QPushButton("foo"));
@@ -587,13 +587,13 @@ void TestQtWidgets::tst_floatingWindowDeleted()
             auto myWidget = new QWidget();
             dock1->setGuestView(Views::ViewWrapper_qtwidgets::create((myWidget)));
             dock1->view()->resize(QSize(600, 600));
-            dock1->show();
+            dock1->open();
 
             auto dock2 = newDockWidget(QStringLiteral("DockWidget #2"));
             myWidget = new QWidget();
             dock2->setGuestView(Views::ViewWrapper_qtwidgets::create(myWidget));
             dock2->view()->resize(QSize(600, 600));
-            dock2->show();
+            dock2->open();
 
             dock1->addDockWidgetAsTab(dock2);
         }
@@ -1090,11 +1090,11 @@ void TestQtWidgets::tst_maximumSizePolicy()
     widget->setSizePolicy(SizePolicy::Preferred, SizePolicy::Maximum);
 
     auto dock1 = createDockWidget("dock1", widget);
-    dock1->show();
+    dock1->open();
     dock1->window()->resize(QSize(500, 500));
     auto window1 = dock1->window();
     dock1->close();
-    dock1->show();
+    dock1->open();
     auto oldFw2 = dock1->window();
 
     const int tolerance = 50;
@@ -1142,7 +1142,7 @@ void TestQtWidgets::tst_minSizeChanges()
 
     // 1. d2 is a placeholder, let's change its min size before showing it
     w2->setMinimumSize(QSize(800, 800));
-    d2->show();
+    d2->open();
 
     Item *item2 = layout->itemForFrame(d2->dptr()->group());
 
@@ -1179,7 +1179,7 @@ void TestQtWidgets::tst_maxSizePropagates()
     w->setMinimumSize(QSize(120, 120));
     w->setMaximumSize(QSize(500, 500));
     dock1->setGuestView(w->asWrapper());
-    dock1->show();
+    dock1->open();
 
 
     QCOMPARE(dock1->view()->minSize(), w->minSize());
@@ -1210,8 +1210,8 @@ void TestQtWidgets::tst_maxSizedFloatingWindow()
     w->setMaximumSize(QSize(300, 300));
     dock1->setGuestView(w->asWrapper());
 
-    dock1->show();
-    dock2->show();
+    dock1->open();
+    dock2->open();
 
     auto window1 = dock1->window();
     auto window2 = dock2->window();
@@ -1308,7 +1308,7 @@ void TestQtWidgets::tst_maxSizePropagates2()
     w->setMinimumSize(QSize(120, 120));
     w->setMaximumSize(QSize(300, 500));
     dock1->setGuestView(w->asWrapper());
-    dock1->show();
+    dock1->open();
 
     auto dock2 = newDockWidget("dock2");
     auto dock3 = newDockWidget("dock3");

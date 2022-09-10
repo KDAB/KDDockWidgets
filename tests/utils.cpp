@@ -71,7 +71,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
     dock->setObjectName(name);
     dock->view()->setGeometry(QRect(0, 0, 400, 400));
     if (show) {
-        dock->show();
+        dock->open();
         dock->dptr()->morphIntoFloatingWindow();
         Q_ASSERT(dock->floatingWindow());
         dock->view()->activateWindow();

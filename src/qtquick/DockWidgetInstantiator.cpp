@@ -137,10 +137,16 @@ Q_INVOKABLE bool DockWidgetInstantiator::close()
     return false;
 }
 
-void DockWidgetInstantiator::show()
+void DockWidgetInstantiator::open()
 {
     if (m_dockWidget)
-        m_dockWidget->show();
+        m_dockWidget->open();
+}
+
+void DockWidgetInstantiator::show()
+{
+    // "show" is deprecated vocabulary
+    open();
 }
 
 void DockWidgetInstantiator::raise()

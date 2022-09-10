@@ -63,8 +63,7 @@ TEST_CASE("isOpen")
     // Starts closed
     CHECK(!dw->isOpen());
 
-    // show() makes it open
-    dw->show();
+    dw->open();
     CHECK(dw->isOpen());
     CHECK(dw->isFloating());
 
@@ -73,7 +72,7 @@ TEST_CASE("isOpen")
     CHECK(!dw->isOpen());
 
     // Dockwidget in a non-current tab is not visible, but still counts as open
-    dw->show();
+    dw->open();
     CHECK(dw->isOpen());
     CHECK(dw->isFloating());
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();

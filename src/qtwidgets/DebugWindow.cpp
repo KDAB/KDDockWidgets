@@ -132,7 +132,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     connect(button, &QPushButton::clicked, this, [lineedit] {
         auto dw = DockRegistry::self()->dockByName(lineedit->text());
         if (dw) {
-            dw->show();
+            dw->open();
         } else {
             QMessageBox::warning(
                 nullptr, QStringLiteral("Could not find"),
@@ -158,7 +158,7 @@ DebugWindow::DebugWindow(QWidget *parent)
         QTimer::singleShot(3000, this, [] {
             const auto docks = DockRegistry::self()->dockwidgets();
             for (auto dw : docks) {
-                dw->show();
+                dw->open();
             }
         });
     });
