@@ -879,7 +879,6 @@ void DockWidget::Private::onParentChanged()
 void DockWidget::onShown()
 {
     d->onDockWidgetShown();
-    Q_EMIT shown();
 
     d->maybeRestoreToPreviousPosition();
 
@@ -890,7 +889,6 @@ void DockWidget::onShown()
 void DockWidget::onHidden()
 {
     d->onDockWidgetHidden();
-    Q_EMIT hidden();
 }
 
 void DockWidget::onResize(QSize)

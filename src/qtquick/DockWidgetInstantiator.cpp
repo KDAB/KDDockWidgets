@@ -194,8 +194,6 @@ void DockWidgetInstantiator::componentComplete()
             &DockWidgetInstantiator::actualTitleBarChanged);
     connect(m_dockWidget, &Controllers::DockWidget::optionsChanged, this,
             &DockWidgetInstantiator::optionsChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::shown, this, &DockWidgetInstantiator::shown);
-    connect(m_dockWidget, &Controllers::DockWidget::hidden, this, &DockWidgetInstantiator::hidden);
     connect(m_dockWidget, &Controllers::DockWidget::iconChanged, this,
             &DockWidgetInstantiator::iconChanged);
     connect(m_dockWidget, &Controllers::DockWidget::guestViewChanged, this, [this] {

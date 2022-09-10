@@ -433,11 +433,6 @@ public:
     void onResize(QSize newSize);
 
 Q_SIGNALS:
-    ///@brief signal emitted when the DockWidget is shown. As in QEvent::Show.
-    void shown();
-
-    ///@brief signal emitted when the DockWidget is hidden. As in QEvent::Hide.
-    void hidden();
 
     ///@brief signal emitted when the icon changed
     void iconChanged();
