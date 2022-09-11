@@ -20,6 +20,7 @@ class DropArea_flutter extends View_flutter {
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
     print("DropArea_flutter CTOR");
+    m_fillsParent = true;
   }
 
   Widget createFlutterWidget() {

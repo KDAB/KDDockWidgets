@@ -18,9 +18,18 @@ import 'ViewFactory_flutter.dart';
 class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
   late final WindowOverlayWidget windowOverlayWidget;
 
+  var floatingWindows = <KDDockWidgetBindings.FloatingWindow>[];
+
   @override
   String name() {
     return "flutter";
+  }
+
+  static Platform_flutter plat() {
+    var p = KDDockWidgetBindings.Platform_flutter.platformFlutter();
+
+    return KDDockWidgetBindings.Platform_flutter.fromCache(p.thisCpp)
+        as Platform_flutter;
   }
 
   @override
@@ -45,11 +54,13 @@ class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
 
   @override
   onFloatingWindowCreated(KDDockWidgetBindings.FloatingWindow? fw) {
+    floatingWindows.add(fw!);
     rebuildWindowOverlay();
   }
 
   @override
   onFloatingWindowDestroyed(KDDockWidgetBindings.FloatingWindow? fw) {
+    floatingWindows.remove(fw!);
     rebuildWindowOverlay();
   }
 

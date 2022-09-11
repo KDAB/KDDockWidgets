@@ -12,13 +12,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:KDDockWidgets/FloatingWindow_flutter.dart' as KDDW;
+import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
 
 /// @brief A Widget that hosts a single KDDW FloatingWindow
 /// Since Flutter doesn't support real OS level multi-windows we need
 /// to draw the windows ourselves
 class WindowWidget extends StatefulWidget {
   late final KDDW.FloatingWindow_flutter kddwFloatingWindowView;
-  WindowWidget(this.kddwFloatingWindowView);
+  WindowWidget(KDDWBindings.FloatingWindow fw) {
+    kddwFloatingWindowView =
+        KDDWBindings.View_flutter.fromCache(fw.view().thisCpp)
+            as KDDW.FloatingWindow_flutter;
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -32,10 +37,10 @@ class WindowWidgetState extends State<WindowWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final x = kddwFloatingWindowView.x();
-    final y = kddwFloatingWindowView.y();
-    final width = kddwFloatingWindowView.width();
-    final height = kddwFloatingWindowView.height();
+    final x = kddwFloatingWindowView.m_x;
+    final y = kddwFloatingWindowView.m_y;
+    final width = kddwFloatingWindowView.m_width;
+    final height = kddwFloatingWindowView.m_height;
 
     return Positioned(
         left: x.toDouble(),
