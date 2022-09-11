@@ -16,10 +16,11 @@ import 'package:flutter/material.dart';
 
 class FloatingWindow_flutter extends KDDockWidgetBindings.View_flutter
     with View_mixin {
-  FloatingWindow_flutter(KDDockWidgetBindings.Controller? controller, int type,
-      KDDockWidgetBindings.View? parent,
-      {int windowFlags = 0})
-      : super(controller, type, parent, windowFlags: windowFlags) {
+  FloatingWindow_flutter(KDDockWidgetBindings.Controller? controller,
+      KDDockWidgetBindings.View? parent, {int windowFlags = 0})
+      : super(controller,
+            KDDockWidgetBindings.KDDockWidgets_Type.FloatingWindow, parent,
+            windowFlags: windowFlags) {
     initMixin(this, color: Colors.black12, debugName: "FloatingWindow");
     print("FloatingWindow_flutter CTOR");
   }

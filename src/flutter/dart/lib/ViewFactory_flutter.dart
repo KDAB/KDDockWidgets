@@ -11,6 +11,7 @@
 
 import 'dart:ffi';
 
+import 'package:KDDockWidgets/FloatingWindow_flutter.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'DockWidget_flutter.dart';
@@ -86,5 +87,14 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
       {int options = 0, int layoutSaverOptions = 0, int windowFlags = 0}) {
     return DockWidget_flutter(uniqueName,
         options: options, layoutSaverOptions: layoutSaverOptions);
+  }
+
+  @override
+  KDDockWidgetBindings.View createFloatingWindow(
+      KDDockWidgetBindings.FloatingWindow? controller,
+      {required KDDockWidgetBindings.MainWindow? parent,
+      int windowFlags = 0}) {
+    // TODOm4: What to do with main window pointer
+    return FloatingWindow_flutter(controller, null);
   }
 }
