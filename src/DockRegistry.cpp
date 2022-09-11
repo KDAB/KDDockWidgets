@@ -323,14 +323,16 @@ void DockRegistry::unregisterMainWindow(Controllers::MainWindow *mainWindow)
     maybeDelete();
 }
 
-void DockRegistry::registerFloatingWindow(Controllers::FloatingWindow *window)
+void DockRegistry::registerFloatingWindow(Controllers::FloatingWindow *fw)
 {
-    m_floatingWindows << window;
+    m_floatingWindows << fw;
+    Platform::instance()->onFloatingWindowCreated(fw);
 }
 
-void DockRegistry::unregisterFloatingWindow(Controllers::FloatingWindow *window)
+void DockRegistry::unregisterFloatingWindow(Controllers::FloatingWindow *fw)
 {
-    m_floatingWindows.removeOne(window);
+    m_floatingWindows.removeOne(fw);
+    Platform::instance()->onFloatingWindowDestroyed(fw);
     maybeDelete();
 }
 
