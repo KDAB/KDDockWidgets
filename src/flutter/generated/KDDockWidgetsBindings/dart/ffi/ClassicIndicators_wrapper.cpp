@@ -350,7 +350,7 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallb
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_customEvent>(
             callback);
         break;
-    case 1598:
+    case 1599:
         wrapper->m_dropIndicatorVisibleCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::
                                  Callback_dropIndicatorVisible>(callback);
@@ -364,27 +364,27 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallb
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_eventFilter>(
             callback);
         break;
-    case 1602:
+    case 1603:
         wrapper->m_hover_implCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_hover_impl>(
             callback);
         break;
-    case 1614:
+    case 1615:
         wrapper->m_onHoveredFrameChangedCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::
                                  Callback_onHoveredFrameChanged>(callback);
         break;
-    case 1617:
+    case 1618:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_posForIndicator>(
             callback);
         break;
-    case 890:
+    case 891:
         wrapper->m_setParentView_implCallback =
             reinterpret_cast<KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::
                                  Callback_setParentView_impl>(callback);
         break;
-    case 1630:
+    case 1631:
         wrapper->m_updateVisibilityCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::ClassicIndicators_wrapper::Callback_updateVisibility>(
             callback);

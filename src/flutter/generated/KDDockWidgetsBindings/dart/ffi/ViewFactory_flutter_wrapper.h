@@ -23,8 +23,8 @@
 #include <DropArea.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
-#include <qobject.h>
 #include <qcoreevent.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ViewFactory_flutter_wrapper : public ::KDDockWidgets::ViewFactory_flutter

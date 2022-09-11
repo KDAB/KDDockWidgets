@@ -70,6 +70,7 @@ public:
     onFloatingWindowDestroyed_nocallback(KDDockWidgets::Controllers::FloatingWindow *arg__1);
     virtual QString organizationName() const;
     virtual QString organizationName_nocallback() const;
+    static KDDockWidgets::Platform_flutter *platformFlutter();
     virtual void restoreMouseCursor();
     virtual void restoreMouseCursor_nocallback();
     virtual int screenNumberFor(KDDockWidgets::View *arg__1) const;
@@ -231,6 +232,8 @@ c_KDDockWidgets__Platform_flutter__onFloatingWindowDestroyed_FloatingWindow(void
 // KDDockWidgets::Platform_flutter::organizationName() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Platform_flutter__organizationName(void *thisObj);
+// KDDockWidgets::Platform_flutter::platformFlutter()
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Platform_flutter__platformFlutter();
 // KDDockWidgets::Platform_flutter::restoreMouseCursor()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Platform_flutter__restoreMouseCursor(void *thisObj);

@@ -16,12 +16,12 @@
 #include <DockWidget.h>
 #include <MainWindow.h>
 #include <TabBar.h>
-#include <qpoint.h>
+#include <qrect.h>
 #include <View.h>
 #include <qcoreevent.h>
-#include <qobject.h>
-#include <qrect.h>
+#include <qpoint.h>
 #include <qsize.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_wrapper : public ::KDDockWidgets::Controllers::TitleBar

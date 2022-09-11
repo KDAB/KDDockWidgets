@@ -359,7 +359,7 @@ class MainWindow extends Controller {
         return "c_KDDockWidgets__Controllers__MainWindow__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__MainWindow__eventFilter_QObject_QEvent";
-      case 890:
+      case 891:
         return "c_KDDockWidgets__Controllers__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -373,7 +373,7 @@ class MainWindow extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 890:
+      case 891:
         return "setParentView_impl";
     }
     throw Error();
@@ -399,9 +399,9 @@ class MainWindow extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    final callback890 =
+    final callback891 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback890, 890);
+    registerCallback(thisCpp, callback891, 891);
   }
 }

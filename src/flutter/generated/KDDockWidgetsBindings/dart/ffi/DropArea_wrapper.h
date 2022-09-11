@@ -20,8 +20,8 @@
 #include <KDDockWidgets.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <qcoreevent.h>
 #include <MainWindow.h>
+#include <qcoreevent.h>
 #include <qobject.h>
 #include <FloatingWindow.h>
 

@@ -233,6 +233,10 @@ QString Platform_flutter_wrapper::organizationName_nocallback() const
 {
     return ::KDDockWidgets::Platform_flutter::organizationName();
 }
+KDDockWidgets::Platform_flutter *Platform_flutter_wrapper::platformFlutter()
+{
+    return ::KDDockWidgets::Platform_flutter::platformFlutter();
+}
 void Platform_flutter_wrapper::restoreMouseCursor()
 {
     if (m_restoreMouseCursorCallback) {
@@ -682,6 +686,11 @@ void *c_KDDockWidgets__Platform_flutter__organizationName(void *thisObj)
             return targetPtr->organizationName();
         }
     }() };
+}
+// platformFlutter()
+void *c_static_KDDockWidgets__Platform_flutter__platformFlutter()
+{
+    return KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper::platformFlutter();
 }
 // restoreMouseCursor()
 void c_KDDockWidgets__Platform_flutter__restoreMouseCursor(void *thisObj)

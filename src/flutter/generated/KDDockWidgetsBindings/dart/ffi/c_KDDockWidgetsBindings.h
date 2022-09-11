@@ -1358,6 +1358,8 @@ void c_KDDockWidgets__Platform_flutter__onFloatingWindowDestroyed_FloatingWindow
                                                                                  void *arg__1_);
 // KDDockWidgets::Platform_flutter::organizationName() const
 void *c_KDDockWidgets__Platform_flutter__organizationName(void *thisObj);
+// KDDockWidgets::Platform_flutter::platformFlutter()
+void *c_static_KDDockWidgets__Platform_flutter__platformFlutter();
 // KDDockWidgets::Platform_flutter::restoreMouseCursor()
 void c_KDDockWidgets__Platform_flutter__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::Platform_flutter::screenNumberFor(KDDockWidgets::View * arg__1) const

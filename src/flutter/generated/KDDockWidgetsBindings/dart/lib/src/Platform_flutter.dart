@@ -231,6 +231,16 @@ class Platform_flutter extends Platform {
     return result.thisCpp;
   }
 
+  static // platformFlutter()
+      Platform_flutter platformFlutter() {
+    final voidstar_Func_void func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
+            'c_static_KDDockWidgets__Platform_flutter__platformFlutter')
+        .asFunction();
+    ffi.Pointer<void> result = func();
+    return Platform_flutter.fromCppPointer(result, false);
+  }
+
   static void restoreMouseCursor_calledFromC(ffi.Pointer<void> thisCpp) {
     var dartInstance =
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;

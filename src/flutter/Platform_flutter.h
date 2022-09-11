@@ -26,6 +26,12 @@ class DOCKS_EXPORT Platform_flutter : public Platform
 public:
     Platform_flutter();
     ~Platform_flutter() override;
+
+    static Platform_flutter *platformFlutter()
+    {
+        return static_cast<Platform_flutter *>(Platform::instance());
+    }
+
     const char *name() const override;
     bool hasActivePopup() const override;
     ViewFactory *createDefaultViewFactory() override;

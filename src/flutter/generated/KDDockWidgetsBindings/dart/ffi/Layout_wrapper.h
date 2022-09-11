@@ -19,11 +19,11 @@
 #include <Group.h>
 #include <qlist.h>
 #include <DropArea.h>
-#include <qpoint.h>
-#include <qcoreevent.h>
-#include <qobject.h>
-#include <qstring.h>
 #include <qrect.h>
+#include <qstring.h>
+#include <qcoreevent.h>
+#include <qpoint.h>
+#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Layout_wrapper : public ::KDDockWidgets::Controllers::Layout
