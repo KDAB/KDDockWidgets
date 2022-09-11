@@ -16,6 +16,13 @@ import 'package:flutter/widgets.dart';
 /// Since Flutter doesn't support real OS level multi-windows we need
 /// to draw the floating windows into an overlay
 class WindowOverlayWidget extends StatefulWidget {
+  // We only have one overlay per application
+  static GlobalObjectKey<WindowOverlayWidgetState> globalKey() {
+    return GlobalObjectKey<WindowOverlayWidgetState>("windowOverlayState");
+  }
+
+  WindowOverlayWidget() : super(key: globalKey());
+
   @override
   State<StatefulWidget> createState() {
     return WindowOverlayWidgetState();
@@ -26,5 +33,9 @@ class WindowOverlayWidgetState extends State<WindowOverlayWidget> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: []);
+  }
+
+  onFloatingWindowCountChanged() {
+    print("onFloatingWindowCountChanged!");
   }
 }

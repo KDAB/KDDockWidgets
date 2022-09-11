@@ -10,11 +10,14 @@
 */
 
 import 'package:KDDockWidgets/View_flutter.dart';
+import 'package:KDDockWidgets/WindowOverlayWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
 import 'ViewFactory_flutter.dart';
 
 class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
+  late final WindowOverlayWidget windowOverlayWidget;
+
   @override
   String name() {
     return "flutter";
@@ -41,12 +44,24 @@ class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
   }
 
   @override
-  onFloatingWindowCreated(KDDockWidgetBindings.FloatingWindow? fw) {}
-  onFloatingWindowDestroyed(KDDockWidgetBindings.FloatingWindow? fw) {}
+  onFloatingWindowCreated(KDDockWidgetBindings.FloatingWindow? fw) {
+    rebuildWindowOverlay();
+  }
+
+  @override
+  onFloatingWindowDestroyed(KDDockWidgetBindings.FloatingWindow? fw) {
+    rebuildWindowOverlay();
+  }
+
+  void rebuildWindowOverlay() {
+    final state = WindowOverlayWidget.globalKey().currentState;
+    if (state != null) {
+      state.onFloatingWindowCountChanged();
+    }
+  }
 
   @override
   void dumpManagedBacktrace() {
-    print("Printing!");
     print(StackTrace.current);
   }
 }
