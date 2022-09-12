@@ -417,7 +417,8 @@
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_QT6": "ON"
+                "KDDockWidgets_QT6": "ON",
+                "KDDockWidgets_QTQUICK": "ON"
             }
         },
         {
