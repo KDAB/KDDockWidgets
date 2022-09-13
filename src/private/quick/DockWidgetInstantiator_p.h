@@ -29,7 +29,7 @@ class DockWidgetQuick;
  *
  * "DockWidget {}" in QML won't create a KDDockWidget::DockWidget directly, but instead an
  * DockWidgetInstantiator. DockWidgetInstantiator will then create the DockWidget instance only
- * when the QML parsing ends (and all propreties are set)
+ * when the QML parsing ends (and all properties are set)
  *
  * This allows to pass the correct uniqueName to DockWidget's ctor.
  */
