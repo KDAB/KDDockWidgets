@@ -140,6 +140,8 @@ disable=print-statement,
         exception-escape,
         comprehension-escape,
         consider-using-f-string,
+        useless-option-value,
+        unknown-option-value,
         R0801,I1101,E0401
 
 # Enable the message, report, category or checker with the given id(s). You can
