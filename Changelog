@@ -1,5 +1,5 @@
 * v1.6.0 (unreleased)
- - Minimum Qt6 version is now 6.3.0
+ - Minimum Qt6 version is now 6.2.0
  - Fixed restoring of normal geometry when closing a maximized window (#259)
  - Experimental support for docking into dock widgets which are in a MDI area.
  - Fixed potential crash involving infinite loop between QWidget::create() and QWidget::createWinId()
