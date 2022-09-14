@@ -69,7 +69,7 @@
 #  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
 #  Default=true
 
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.12)
 
 # Allow using a non-KDAB install location.
 set(KDAB_INSTALL
@@ -85,20 +85,16 @@ if(DEFINED CMAKE_INSTALL_PREFIX)
     endif()
 endif()
 
-if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
-    project(KDDockWidgets LANGUAGES CXX)
-else()
-    project(
-        KDDockWidgets
-        DESCRIPTION "An advanced docking system for Qt"
-        HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
-        LANGUAGES CXX
-    )
-endif()
+project(
+    KDDockWidgets
+    DESCRIPTION "An advanced docking system for Qt"
+    HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
+    LANGUAGES CXX
+)
 
 set(${PROJECT_NAME}_VERSION_MAJOR 1)
-set(${PROJECT_NAME}_VERSION_MINOR 5)
-set(${PROJECT_NAME}_VERSION_PATCH 99)
+set(${PROJECT_NAME}_VERSION_MINOR 6)
+set(${PROJECT_NAME}_VERSION_PATCH 0)
 set(${PROJECT_NAME}_VERSION
     ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}
 )
@@ -286,24 +282,25 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
     install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
-    # Generate .pri file for qmake users
-    # (except for older cmake versions and when using the VS generator)
-    if(CMAKE_VERSION VERSION_GREATER "3.11.99" AND NOT CMAKE_CONFIGURATION_TYPES)
-        include(ECMGeneratePriFile)
-        set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
-        ecm_generate_pri_file(
-            BASE_NAME
-            KDDockWidgets
-            LIB_NAME
-            kddockwidgets${${PROJECT_NAME}_LIBRARY_QTID}
-            DEPS
-            ${${PROJECT_NAME}_DEPS}
-            FILENAME_VAR
-            pri_filename
-            INCLUDE_INSTALL_DIR
-            ${CMAKE_INSTALL_INCLUDEDIR}
-        )
-        install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+    # Generate .pri file for qmake users (except when using the VS generator)
+    if(NOT CMAKE_CONFIGURATION_TYPES)
+        if(Qt_VERSION_MAJOR EQUAL 5 OR (Qt_VERSION_MAJOR EQUAL 6 AND Qt6Core_VERSION VERSION_GREATER "6.2"))
+            include(ECMGeneratePriFile)
+            set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
+            ecm_generate_pri_file(
+                BASE_NAME
+                KDDockWidgets
+                LIB_NAME
+                kddockwidgets${${PROJECT_NAME}_LIBRARY_QTID}
+                DEPS
+                ${${PROJECT_NAME}_DEPS}
+                FILENAME_VAR
+                pri_filename
+                INCLUDE_INSTALL_DIR
+                ${CMAKE_INSTALL_INCLUDEDIR}
+            )
+            install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+        endif()
     endif()
 else()
     #Always disable tests, examples, docs when used as a submodule
