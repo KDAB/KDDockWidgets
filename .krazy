@@ -16,6 +16,9 @@ EXCLUDE style
 SKIP /fwd_headers/
 SKIP Doxyfile.cmake
 
+#skip some example files
+SKIP /examples/qtquick/CMakeFiles/
+
 #skip CMake files
 SKIP /KDDockWidgetsConfig.cmake.in
 #skip more files
