@@ -1,4 +1,4 @@
-* v1.6.0 (unreleased)
+* v1.6.0 (14 September 2022)
  - Minimum Qt6 version is now 6.2.0
  - Minimum CMake version is now 3.12.0
  - Fixed restoring of normal geometry when closing a maximized window (#259)
