@@ -137,7 +137,7 @@ endif()
 
 if(KDDockWidgets_QT6)
     set(Qt_VERSION_MAJOR 6)
-    set(QT_MIN_VERSION "6.3.0")
+    set(QT_MIN_VERSION "6.2.0")
     set(KDDockWidgets_LIBRARY_QTID "-qt6")
 else()
     set(Qt_VERSION_MAJOR 5)
