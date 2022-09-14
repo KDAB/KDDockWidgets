@@ -79,12 +79,17 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDDockWidgets_QT6=True -DCMAKE_BUILD_TYPE=
 
 %files devel
 %defattr(-,root,root,-)
+%if 0%{?fedora} > 35
+%{_libdir}/qt6/mkspecs/modules/*
+%endif
+#%dir %{_prefix}/share/mkspecs
+#%dir %{_prefix}/share/mkspecs/features
+#%{_prefix}/share/mkspecs/features/kddockwidgets.prf
 %dir %{_includedir}/kddockwidgets-qt6
 %{_includedir}/kddockwidgets-qt6/kddockwidgets/*
 %dir %{_libdir}/cmake/KDDockWidgets-qt6
 %{_libdir}/cmake/KDDockWidgets-qt6/*
 %{_libdir}/libkddockwidgets-qt6.so
-#%{_prefix}/mkspecs/modules/* ECMGeneratePriFile isn't ported to Qt6 yet
 
 %changelog
 * Wed Sep 14 2022 Allen Winter <allen.winter@kdab.com> 1.6.0
