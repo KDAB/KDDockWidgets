@@ -71,7 +71,7 @@ and adjust to the PYTHONPATH accordingly, as necessary.
 To run the KDDW python example
 
 ```bash
-    export PYTHONPATH=/kddw/install/path # Only if needed
+    export PYTHONPATH=/usr/local/KDAB/KDDockWidgets-1.7.0/lib64/python3.10/site-packages # adapt as needed
     cd python/examples/
     rcc -g python -o rc_assets.py ../../examples/dockwidgets/resources_example.qrc
     python3 main.py
