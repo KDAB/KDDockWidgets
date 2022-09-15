@@ -152,7 +152,7 @@ ongoing effort to make KDDW support multiple "frontends" (QtWidgets, QtQuick and
 like flutter).
 
 1.x will be supported for many years to come, at least for bug fixes and small features.
-Use `v1.5.0` tag for the latest stable. `v1.6.0` will be released soon, so branch `1.6` is also safe.
+Use `v1.6.0` tag for the latest stable.
 
 Use `2.0` if you need non-QtWidgets support, for example `QtQuick/QML`. While `1.6` has support for `QtQuick/QML`
 it won't be receiving bug fixes. `2.0` is under active development, you might encounter minor source/ABI
