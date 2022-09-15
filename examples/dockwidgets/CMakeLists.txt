@@ -25,7 +25,15 @@ endif()
 set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
 
 add_executable(
-    kddockwidgets_example main.cpp MyFrameworkWidgetFactory.cpp MyMainWindow.cpp MyWidget.cpp ${RESOURCES_EXAMPLE_SRC}
+    kddockwidgets_example
+    ${RESOURCES_EXAMPLE_SRC}
+    main.cpp
+    MyFrameworkWidgetFactory.cpp
+    MyMainWindow.cpp
+    MyWidget.cpp
 )
 
-target_link_libraries(kddockwidgets_example PRIVATE KDAB::kddockwidgets)
+target_link_libraries(
+    kddockwidgets_example
+    PRIVATE KDAB::kddockwidgets
+)

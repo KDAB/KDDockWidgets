@@ -33,8 +33,13 @@ option(KDDockWidgets_FUZZER "Builds the fuzzer" ON)
 
 # tst_docks
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
-add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-target_link_libraries(tst_docks kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+add_executable(
+    tst_docks
+    ${TESTING_RESOURCES} ${TESTING_SRCS} tst_docks.cpp
+)
+target_link_libraries(
+    tst_docks kddockwidgets Qt${Qt_VERSION_MAJOR}::Test
+)
 set_compiler_flags(tst_docks)
 
 if(NOT ${PROJECT_NAME}_QTQUICK)
@@ -47,5 +52,10 @@ if(NOT ${PROJECT_NAME}_QTQUICK)
 endif()
 
 # tests_launcher
-add_executable(tests_launcher tests_launcher.cpp)
-target_link_libraries(tests_launcher Qt${Qt_VERSION_MAJOR}::Core)
+add_executable(
+    tests_launcher
+    tests_launcher.cpp
+)
+target_link_libraries(
+    tests_launcher Qt${Qt_VERSION_MAJOR}::Core
+)

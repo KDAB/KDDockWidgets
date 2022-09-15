@@ -9,8 +9,13 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-add_executable(fuzzer main.cpp Fuzzer.cpp Operations.cpp ../Testing.cpp)
+add_executable(
+    fuzzer
+    ../Testing.cpp Fuzzer.cpp main.cpp Operations.cpp
+)
 
 set_property(TARGET fuzzer PROPERTY CXX_STANDARD 17)
-target_link_libraries(fuzzer kddockwidgets Qt${Qt_VERSION_MAJOR}::Widgets Qt${Qt_VERSION_MAJOR}::Test)
+target_link_libraries(
+    fuzzer kddockwidgets Qt${Qt_VERSION_MAJOR}::Widgets Qt${Qt_VERSION_MAJOR}::Test
+)
 set_compiler_flags(fuzzer)

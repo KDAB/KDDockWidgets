@@ -49,7 +49,7 @@ with section("format"):
 
     # If a positional argument group contains more than this many arguments, then
     # force it to a vertical layout.
-    max_pargs_hwrap = 6
+    max_pargs_hwrap = 4
 
     # If a cmdline positional group consumes more than this many lines without
     # nesting, then invalidate the layout (and nest)
@@ -94,7 +94,8 @@ with section("format"):
     keyword_case = 'upper'
 
     # A list of command names which should always be wrapped
-    always_wrap = []
+    always_wrap = ["add_executable", "add_library",
+                   "target_link_libraries", "target_include_directories", "install"]
 
     # If true, the argument lists which are known to be sortable will be sorted
     # lexicographicall
@@ -102,7 +103,7 @@ with section("format"):
 
     # If true, the parsers may infer whether or not an argument list is sortable
     # (without annotation).
-    autosort = False
+    autosort = True
 
     # By default, if cmake-format cannot successfully fit everything into the
     # desired linewidth it will apply the last, most agressive attempt that it

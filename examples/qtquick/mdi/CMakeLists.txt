@@ -26,6 +26,12 @@ set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_qtquick_mdi_exam
                           ${CMAKE_CURRENT_SOURCE_DIR}/../../dockwidgets/resources_example.qrc
 )
 
-add_executable(kddockwidgets_example_mdi_quick main.cpp ${RESOURCES_EXAMPLE_SRC})
+add_executable(
+    kddockwidgets_example_mdi_quick
+    ${RESOURCES_EXAMPLE_SRC} main.cpp
+)
 
-target_link_libraries(kddockwidgets_example_mdi_quick PRIVATE KDAB::kddockwidgets)
+target_link_libraries(
+    kddockwidgets_example_mdi_quick
+    PRIVATE KDAB::kddockwidgets
+)

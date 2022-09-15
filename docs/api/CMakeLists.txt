@@ -79,5 +79,11 @@ set(QCH_INSTALL_DIR
     ${INSTALL_DOC_DIR}
     CACHE STRING "Install location of Qt Assistant help files."
 )
-install(FILES ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch DESTINATION ${QCH_INSTALL_DIR})
-install(FILES ${DOXYGEN_OUTPUT_DIR}/kddockwidgets.tags DESTINATION ${INSTALL_DOC_DIR})
+install(
+    FILES ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch
+    DESTINATION ${QCH_INSTALL_DIR}
+)
+install(
+    FILES ${DOXYGEN_OUTPUT_DIR}/kddockwidgets.tags
+    DESTINATION ${INSTALL_DOC_DIR}
+)

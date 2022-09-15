@@ -27,6 +27,12 @@ set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../dockwidgets/resources_e
 # Just to reuse MyWidget.h
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../dockwidgets/)
 
-add_executable(kddockwidgets_minimal_mdi_example main.cpp ../dockwidgets/MyWidget.cpp ${RESOURCES_EXAMPLE_SRC})
+add_executable(
+    kddockwidgets_minimal_mdi_example
+    ${RESOURCES_EXAMPLE_SRC} ../dockwidgets/MyWidget.cpp main.cpp
+)
 
-target_link_libraries(kddockwidgets_minimal_mdi_example PRIVATE KDAB::kddockwidgets)
+target_link_libraries(
+    kddockwidgets_minimal_mdi_example
+    PRIVATE KDAB::kddockwidgets
+)

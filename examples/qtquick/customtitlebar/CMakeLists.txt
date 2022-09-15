@@ -26,6 +26,12 @@ set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_qtquick_example.
                           ${CMAKE_CURRENT_SOURCE_DIR}/../../dockwidgets/resources_example.qrc
 )
 
-add_executable(kddockwidgets_customtitlebar_quick main.cpp ${RESOURCES_EXAMPLE_SRC})
+add_executable(
+    kddockwidgets_customtitlebar_quick
+    ${RESOURCES_EXAMPLE_SRC} main.cpp
+)
 
-target_link_libraries(kddockwidgets_customtitlebar_quick PRIVATE KDAB::kddockwidgets)
+target_link_libraries(
+    kddockwidgets_customtitlebar_quick
+    PRIVATE KDAB::kddockwidgets
+)

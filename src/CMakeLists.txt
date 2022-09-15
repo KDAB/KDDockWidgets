@@ -14,8 +14,12 @@ if(POLICY CMP0043)
 endif()
 
 add_definitions(
-    -DQT_NO_SIGNALS_SLOTS_KEYWORDS -DQT_USE_QSTRINGBUILDER -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
-    -DQT_STRICT_ITERATORS -DQT_NO_KEYWORDS -DQT_NO_FOREACH
+    -DQT_NO_SIGNALS_SLOTS_KEYWORDS
+    -DQT_USE_QSTRINGBUILDER
+    -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
+    -DQT_STRICT_ITERATORS
+    -DQT_NO_KEYWORDS
+    -DQT_NO_FOREACH
 )
 
 set(DOCKSLIBS_SRCS
@@ -239,8 +243,13 @@ ecm_generate_headers(
 
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
-add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
-add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
+add_library(
+    kddockwidgets
+    ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES}
+)
+add_library(
+    KDAB::kddockwidgets ALIAS kddockwidgets
+)
 set_target_properties(kddockwidgets PROPERTIES OUTPUT_NAME "kddockwidgets${KDDockWidgets_LIBRARY_QTID}")
 set_compiler_flags(kddockwidgets)
 
@@ -353,23 +362,37 @@ if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
     )
 endif()
 
-install(FILES ${camelcase_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-install(FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-install(FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
-install(FILES private/multisplitter/Item_p.h
-        DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter
+install(
+    FILES ${camelcase_HEADERS}
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets
 )
-install(FILES private/multisplitter/Widget.h
-        DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter
+install(
+    FILES ${DOCKS_INSTALLABLE_INCLUDES}
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets
 )
-install(FILES private/multisplitter/Separator_p.h
-        DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter
+install(
+    FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES}
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private
 )
-install(FILES private/indicators/ClassicIndicators_p.h
-        DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators
+install(
+    FILES private/multisplitter/Item_p.h
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter
 )
-install(FILES private/indicators/SegmentedIndicators_p.h
-        DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators
+install(
+    FILES private/multisplitter/Widget.h
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter
+)
+install(
+    FILES private/multisplitter/Separator_p.h
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter
+)
+install(
+    FILES private/indicators/ClassicIndicators_p.h
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators
+)
+install(
+    FILES private/indicators/SegmentedIndicators_p.h
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators
 )
 
 if(KDDockWidgets_QTQUICK)
@@ -409,8 +432,9 @@ ecm_setup_version(
     COMPATIBILITY
     AnyNewerVersion
 )
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h"
-        DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h"
+    DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets
 )
 install(
     EXPORT kddockwidgetsTargets
@@ -419,9 +443,10 @@ install(
     DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
 )
 configure_file(KDDockWidgetsConfig.cmake.in KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
-        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
+    DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
 )
 
 if(${PROJECT_NAME}_DEVELOPER_MODE)
