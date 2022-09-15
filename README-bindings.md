@@ -2,6 +2,28 @@
 
 These are the instructions for building the Python bindings for KDDockWidgets.
 
+Currently unsupported:
+
+- debug builds
+- builds against Qt debug libraries
+- static builds
+- python2 bindings
+- only some 32-bit platforms are supported.  see <https://wiki.qt.io/Qt_for_Python>
+
+Also, there are no plans to support the qmake buildsystem.
+
+## Prerequisites
+
+You will need:
+
+- a compiler with C++14 support (C++17 for Qt6 builds)
+- Python3.7 or higher
+- Qt5 version 5.12 or higher
+- Qt6 version 6.2 or higher
+- QtForPython provided by the Qt project.
+
+## Install PySide2 for Qt5
+
 Make sure you have PySide2, shiboken2 and shiboken2-generator installed.
 As this time, you cannot get shiboken2-generator because the wheels are not on PyPi.
 To use the wheels do this:
@@ -13,26 +35,38 @@ To use the wheels do this:
     shiboken2 pyside2 shiboken2_generator
 ```
 
-For more info visit <https://doc.qt.io/qtforpython/shiboken2/gettingstarted.html>.
+For more info visit <https://doc.qt.io/qtforpython/shiboken2/gettingstarted.html>
 
-afterwards run 'pip3 list | grep PySide2'
+afterwards run:
+
+```bash
+pip3 list | grep PySide
+```
+
 Note the version *must* match the same Qt you intend to use when building KDDockWidgets.
 
-Not supported:
+## Install PySide6 for Qt6
 
-- debug builds
-- static builds
-- python2 bindings
-- only some 32-bit platforms are supported (see <https://wiki.qt.io/Qt_for_Python>)
+Follow the same instructions as [the previous section](#Install PySide2 for Qt5),
+except installing `shiboken6 pyside6 shiboken6_generator` with pip3.
 
-Tell CMake to build the bindings by passing the `-DKDDockWidgets_PYTHON_BINDINGS=True' option,
-followed by the make command.
+## Building KDDockWidgets Python Bindings
 
-The bindings will be installed to the passed `-DCMAKE_INSTALL_PREFIX`, which
-might require setting the `PYTHONPATH` env variable to point to that path when
-running applications.  Alternatively, configure the bindings install location
-by passing `-DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/site-packages`
-to CMake (adjust to the python path on your system).
+Tell CMake to build the bindings by passing the `-DKDDockWidgets_PYTHON_BINDINGS=True' option.
+Then run `cmake --build` as usual.
+
+The bindings will be installed to `CMAKE_INSTALL_PREFIX`, which might require setting
+the `PYTHONPATH` env variable to point to that path when running applications.
+
+For example, if you install to the default location on linux you would:
+
+```bash
+  export PYTHONPATH=/usr/local/KDAB/KDDockWidgets-1.7.0/lib64/python3.10/site-packages
+```
+
+Alternatively, configure the bindings install location by passing (for example)
+`-DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/site-packages` to CMake
+and adjust to the PYTHONPATH accordingly, as necessary.
 
 To run the KDDW python example
 
@@ -43,7 +77,7 @@ To run the KDDW python example
     python3 main.py
 ```
 
-Build Issues
+### Build Issues
 
 - If you see errors like "Unable to locate Clang's built-in include directory"
   then first mROUBLESHOOTINGake sure you have llvm installed.  If you still have problems try
