@@ -155,6 +155,7 @@ public:
     QWidgetOrQuick *widget = nullptr;
     DockWidgetBase *const q;
     DockWidgetBase::Options options;
+    FloatingWindowFlags m_flags = FloatingWindowFlag::FromGlobalConfig;
     const LayoutSaverOptions layoutSaverOptions;
     QAction *const toggleAction;
     QAction *const floatAction;

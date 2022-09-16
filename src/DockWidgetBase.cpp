@@ -1040,3 +1040,17 @@ void DockWidgetBase::Private::saveLastFloatingGeometry()
         lastPosition()->setLastFloatingGeometry(q->window()->geometry());
     }
 }
+
+void DockWidgetBase::setFloatingWindowFlags(FloatingWindowFlags flags)
+{
+    if (auto fw = floatingWindow()) {
+        qWarning() << Q_FUNC_INFO << "Call this function only before having a floating window";
+    } else {
+        d->m_flags = flags;
+    }
+}
+
+KDDockWidgets::FloatingWindowFlags DockWidgetBase::floatingWindowFlags() const
+{
+    return d->m_flags;
+}

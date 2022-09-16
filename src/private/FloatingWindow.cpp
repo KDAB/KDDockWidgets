@@ -10,6 +10,7 @@
 */
 
 #include "FloatingWindow_p.h"
+#include "KDDockWidgets.h"
 #include "MainWindowBase.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
@@ -184,8 +185,20 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent,
     m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
+static FloatingWindowFlags floatingWindowFlagsForFrame(Frame *frame)
+{
+    if (!frame)
+        return FloatingWindowFlag::FromGlobalConfig;
+
+    const auto dockwidgets = frame->dockWidgets();
+    if (!dockwidgets.isEmpty())
+        return dockwidgets.first()->floatingWindowFlags();
+
+    return FloatingWindowFlag::FromGlobalConfig;
+}
+
 FloatingWindow::FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
-    : FloatingWindow(suggestedGeometry, hackFindParentHarder(frame, parent))
+    : FloatingWindow(suggestedGeometry, hackFindParentHarder(frame, parent), floatingWindowFlagsForFrame(frame))
 {
     QScopedValueRollback<bool> guard(m_disableSetVisible, true);
 
