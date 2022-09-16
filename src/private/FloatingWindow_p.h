@@ -222,6 +222,12 @@ public:
     /// be open ended
     static Qt::WindowFlags s_windowFlagsOverride;
 
+    /// @brief Returns whether this floating window supports showing a minimize button
+    bool supportsMinimizeButton() const;
+
+    /// @brief Returns whether this floating window supports showing a maximize button
+    bool supportsMaximizeButton() const;
+
 Q_SIGNALS:
     void activatedChanged();
     void numFramesChanged();

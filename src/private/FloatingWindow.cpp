@@ -729,3 +729,13 @@ void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
         geometry.moveBottom(scrGeom.bottom());
     }
 }
+
+bool FloatingWindow::supportsMinimizeButton() const
+{
+    return (Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton) == Config::Flag_TitleBarHasMinimizeButton; // this specific flag is not base^2
+}
+
+bool FloatingWindow::supportsMaximizeButton() const
+{
+    return Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton;
+}
