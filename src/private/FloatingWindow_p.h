@@ -43,18 +43,20 @@ class DOCKS_EXPORT FloatingWindow
 public:
     enum class Flag {
         None = 0,
-        TitleBarHasMinimizeButton = 1,
-        TitleBarHasMaximizeButton = 2,
-        KeepAboveIfNotUtilityWindow = 4,
-        NativeTitleBar = 8,
-        HideTitleBarWhenTabsVisible = 16,
-        AlwaysTitleBarWhenFloating = 32,
-        DontUseParentForFloatingWindows = 64,
-        DontUseQtToolWindowsForFloatingWindows = 128
+        FromGlobalConfig = 1, // KDDockWidgets::Config is used instead
+        TitleBarHasMinimizeButton = 2,
+        TitleBarHasMaximizeButton = 4,
+        KeepAboveIfNotUtilityWindow = 8,
+        NativeTitleBar = 16,
+        HideTitleBarWhenTabsVisible = 32,
+        AlwaysTitleBarWhenFloating = 64,
+        DontUseParentForFloatingWindows = 128,
+        DontUseQtToolWindowsForFloatingWindows = 256
     };
     Q_DECLARE_FLAGS(Flags, Flag);
 
-    explicit FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent = nullptr);
+    explicit FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent = nullptr,
+                            FloatingWindow::Flags requestedFlags = Flag::FromGlobalConfig);
     explicit FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent = nullptr);
     ~FloatingWindow() override;
 

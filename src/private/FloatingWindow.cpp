@@ -103,8 +103,15 @@ MainWindowBase *actualParent(MainWindowBase *candidate)
         : candidate;
 }
 
-static FloatingWindow::Flags flagsForFloatingWindow()
+static FloatingWindow::Flags flagsForFloatingWindow(FloatingWindow::Flags requestedFlags)
 {
+    if (!(requestedFlags & FloatingWindow::Flag::FromGlobalConfig)) {
+        // User requested specific flags for this floating window
+        return requestedFlags;
+    }
+
+    // Use from KDDockWidgets::Config instead. This is app-wide and not per window.
+
     FloatingWindow::Flags flags = {};
 
     if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton) == Config::Flag_TitleBarHasMinimizeButton)
@@ -134,10 +141,11 @@ static FloatingWindow::Flags flagsForFloatingWindow()
     return flags;
 }
 
-FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent)
+FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent,
+                               FloatingWindow::Flags requestedFlags)
     : QWidgetAdapter(actualParent(parent), windowFlagsToUse())
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
-    , m_flags(flagsForFloatingWindow())
+    , m_flags(flagsForFloatingWindow(requestedFlags))
     , m_dropArea(new DropArea(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
 {
