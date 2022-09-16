@@ -146,9 +146,6 @@ static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedF
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
         flags |= FloatingWindowFlag::DontUseParentForFloatingWindows;
 
-    if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
-        flags |= FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows;
-
     return flags;
 }
 
