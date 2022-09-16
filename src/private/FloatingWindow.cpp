@@ -103,9 +103,23 @@ MainWindowBase *actualParent(MainWindowBase *candidate)
         : candidate;
 }
 
+static FloatingWindow::Flags flagsForFloatingWindow()
+{
+    FloatingWindow::Flags flags = {};
+
+    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton) == Config::Flag_TitleBarHasMinimizeButton)
+        flags |= FloatingWindow::Flag::TitleBarHasMinimizeButton;
+
+    if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton)
+        flags |= FloatingWindow::Flag::TitleBarHasMaximizeButton;
+
+    return flags;
+}
+
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent)
     : QWidgetAdapter(actualParent(parent), windowFlagsToUse())
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
+    , m_flags(flagsForFloatingWindow())
     , m_dropArea(new DropArea(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
 {
@@ -732,10 +746,10 @@ void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
 
 bool FloatingWindow::supportsMinimizeButton() const
 {
-    return (Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton) == Config::Flag_TitleBarHasMinimizeButton; // this specific flag is not base^2
+    return m_flags & Flag::TitleBarHasMinimizeButton;
 }
 
 bool FloatingWindow::supportsMaximizeButton() const
 {
-    return Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton;
+    return m_flags & Flag::TitleBarHasMaximizeButton;
 }
