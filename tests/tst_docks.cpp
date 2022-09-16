@@ -7857,45 +7857,61 @@ void TestDocks::tst_persistentCentralWidget()
 
 void TestDocks::tst_setFloatingWindowFlags()
 {
-    EnsureTopLevelsDeleted e;
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
-    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, false);
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
+        auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, false);
 
-    dock1->setFloatingWindowFlags(FloatingWindowFlag::TitleBarHasMinimizeButton);
-    dock2->setFloatingWindowFlags(FloatingWindowFlag::TitleBarHasMaximizeButton);
+        dock1->setFloatingWindowFlags(FloatingWindowFlag::TitleBarHasMinimizeButton);
+        dock2->setFloatingWindowFlags(FloatingWindowFlag::TitleBarHasMaximizeButton);
 
+        dock1->show();
+        dock2->show();
 
-    dock1->show();
-    dock2->show();
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock2->isFloating());
 
-    QVERIFY(dock1->isFloating());
-    QVERIFY(dock2->isFloating());
+        auto tb1 = dock1->titleBar();
+        auto tb2 = dock2->titleBar();
+        QVERIFY(tb1->isVisible());
+        QVERIFY(tb2->isVisible());
 
-    auto tb1 = dock1->titleBar();
-    auto tb2 = dock2->titleBar();
-    QVERIFY(tb1->isVisible());
-    QVERIFY(tb2->isVisible());
+        QVERIFY(tb1->supportsMinimizeButton());
+        QVERIFY(!tb1->supportsMaximizeButton());
+        QVERIFY(!tb2->supportsMinimizeButton());
+        QVERIFY(tb2->supportsMaximizeButton());
 
-    QVERIFY(tb1->supportsMinimizeButton());
-    QVERIFY(!tb1->supportsMaximizeButton());
-    QVERIFY(!tb2->supportsMinimizeButton());
-    QVERIFY(tb2->supportsMaximizeButton());
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
 
-    LayoutSaver saver;
-    const QByteArray saved = saver.serializeLayout();
+        dock1->close();
+        dock2->close();
 
-    dock1->close();
-    dock2->close();
+        saver.restoreLayout(saved);
 
-    saver.restoreLayout(saved);
+        tb1 = dock1->titleBar();
+        tb2 = dock2->titleBar();
+        QVERIFY(tb1->isVisible());
+        QVERIFY(tb2->isVisible());
 
-    tb1 = dock1->titleBar();
-    tb2 = dock2->titleBar();
-    QVERIFY(tb1->isVisible());
-    QVERIFY(tb2->isVisible());
+        QVERIFY(tb1->supportsMinimizeButton());
+        QVERIFY(!tb1->supportsMaximizeButton());
+        QVERIFY(!tb2->supportsMinimizeButton());
+        QVERIFY(tb2->supportsMaximizeButton());
+    }
 
-    QVERIFY(tb1->supportsMinimizeButton());
-    QVERIFY(!tb1->supportsMaximizeButton());
-    QVERIFY(!tb2->supportsMinimizeButton());
-    QVERIFY(tb2->supportsMaximizeButton());
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
+        auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, false);
+
+        dock1->setFloatingWindowFlags(FloatingWindowFlag::UseQtWindow);
+        dock2->setFloatingWindowFlags(FloatingWindowFlag::UseQtTool);
+
+        dock1->show();
+        dock2->show();
+
+        QVERIFY(dock1->window()->windowFlags() & Qt::Window);
+        QVERIFY(dock2->window()->windowFlags() & Qt::Tool);
+    }
 }
