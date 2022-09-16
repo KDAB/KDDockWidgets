@@ -18,6 +18,8 @@
 #include "DockWidgetBase_p.h"
 #include "DropAreaWithCentralFrame_p.h"
 #include "Frame_p.h"
+#include "KDDockWidgets.h"
+#include "LayoutSaver.h"
 #include "LayoutSaver_p.h"
 #include "MDILayoutWidget_p.h"
 #include "MainWindowMDI.h"
@@ -7851,4 +7853,49 @@ void TestDocks::tst_persistentCentralWidget()
     QVERIFY(!saved.isEmpty());
 
     QVERIFY(saver.restoreLayout(saved));
+}
+
+void TestDocks::tst_setFloatingWindowFlags()
+{
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
+    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, false);
+
+    dock1->setFloatingWindowFlags(FloatingWindowFlag::TitleBarHasMinimizeButton);
+    dock2->setFloatingWindowFlags(FloatingWindowFlag::TitleBarHasMaximizeButton);
+
+
+    dock1->show();
+    dock2->show();
+
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+
+    auto tb1 = dock1->titleBar();
+    auto tb2 = dock2->titleBar();
+    QVERIFY(tb1->isVisible());
+    QVERIFY(tb2->isVisible());
+
+    QVERIFY(tb1->supportsMinimizeButton());
+    QVERIFY(!tb1->supportsMaximizeButton());
+    QVERIFY(!tb2->supportsMinimizeButton());
+    QVERIFY(tb2->supportsMaximizeButton());
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    dock1->close();
+    dock2->close();
+
+    saver.restoreLayout(saved);
+
+    tb1 = dock1->titleBar();
+    tb2 = dock2->titleBar();
+    QVERIFY(tb1->isVisible());
+    QVERIFY(tb2->isVisible());
+
+    QVERIFY(tb1->supportsMinimizeButton());
+    QVERIFY(!tb1->supportsMaximizeButton());
+    QVERIFY(!tb2->supportsMinimizeButton());
+    QVERIFY(tb2->supportsMaximizeButton());
 }
