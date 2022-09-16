@@ -288,6 +288,21 @@ enum TabWidgetOption {
 Q_DECLARE_FLAGS(TabWidgetOptions, TabWidgetOption)
 Q_ENUM_NS(TabWidgetOptions)
 
+/// @internal
+enum class FloatingWindowFlag {
+    None = 0,
+    FromGlobalConfig = 1, // KDDockWidgets::Config is used instead
+    TitleBarHasMinimizeButton = 2,
+    TitleBarHasMaximizeButton = 4,
+    KeepAboveIfNotUtilityWindow = 8,
+    NativeTitleBar = 16,
+    HideTitleBarWhenTabsVisible = 32,
+    AlwaysTitleBarWhenFloating = 64,
+    DontUseParentForFloatingWindows = 128,
+    DontUseQtToolWindowsForFloatingWindows = 256
+};
+Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag);
+
 ///@internal
 inline QString locationStr(Location loc)
 {

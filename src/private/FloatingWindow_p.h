@@ -41,22 +41,8 @@ class DOCKS_EXPORT FloatingWindow
     Q_PROPERTY(KDDockWidgets::TitleBar *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(KDDockWidgets::DropArea *dropArea READ dropArea CONSTANT)
 public:
-    enum class Flag {
-        None = 0,
-        FromGlobalConfig = 1, // KDDockWidgets::Config is used instead
-        TitleBarHasMinimizeButton = 2,
-        TitleBarHasMaximizeButton = 4,
-        KeepAboveIfNotUtilityWindow = 8,
-        NativeTitleBar = 16,
-        HideTitleBarWhenTabsVisible = 32,
-        AlwaysTitleBarWhenFloating = 64,
-        DontUseParentForFloatingWindows = 128,
-        DontUseQtToolWindowsForFloatingWindows = 256
-    };
-    Q_DECLARE_FLAGS(Flags, Flag);
-
     explicit FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent = nullptr,
-                            FloatingWindow::Flags requestedFlags = Flag::FromGlobalConfig);
+                            FloatingWindowFlags requestedFlags = FloatingWindowFlag::FromGlobalConfig);
     explicit FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent = nullptr);
     ~FloatingWindow() override;
 
@@ -258,7 +244,7 @@ protected:
     bool event(QEvent *ev) override;
     void onCloseEvent(QCloseEvent *) override;
 
-    const FloatingWindow::Flags m_flags;
+    const FloatingWindowFlags m_flags;
     QPointer<DropArea> m_dropArea;
     TitleBar *const m_titleBar;
     Qt::WindowState m_lastWindowManagerState = Qt::WindowNoState;
