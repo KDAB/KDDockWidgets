@@ -44,7 +44,11 @@ public:
     enum class Flag {
         None = 0,
         TitleBarHasMinimizeButton = 1,
-        TitleBarHasMaximizeButton = 2
+        TitleBarHasMaximizeButton = 2,
+        KeepAboveIfNotUtilityWindow = 4,
+        NativeTitleBar = 8,
+        HideTitleBarWhenTabsVisible = 16,
+        AlwaysTitleBarWhenFloating = 32
     };
     Q_DECLARE_FLAGS(Flags, Flag);
 

@@ -113,6 +113,18 @@ static FloatingWindow::Flags flagsForFloatingWindow()
     if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton)
         flags |= FloatingWindow::Flag::TitleBarHasMaximizeButton;
 
+    if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
+        flags |= FloatingWindow::Flag::KeepAboveIfNotUtilityWindow;
+
+    if (Config::self().flags() & Config::Flag_NativeTitleBar)
+        flags |= FloatingWindow::Flag::NativeTitleBar;
+
+    if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
+        flags |= FloatingWindow::Flag::HideTitleBarWhenTabsVisible;
+
+    if (Config::self().flags() & Config::Flag_AlwaysTitleBarWhenFloating)
+        flags |= FloatingWindow::Flag::AlwaysTitleBarWhenFloating;
+
     return flags;
 }
 
@@ -140,7 +152,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent)
 
     DockRegistry::self()->registerFloatingWindow(this);
 
-    if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
+    if (m_flags & Flag::KeepAboveIfNotUtilityWindow)
         setWindowFlag(Qt::WindowStaysOnTopHint, true);
 
     if (kddwUsesQtWidgets()) {
@@ -319,7 +331,7 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometry
         suggestedRect.setSize(maxSize.boundedTo(suggestedRect.size()));
 
         if ((hint & SuggestedGeometryHint_GeometryIsFromDocked)
-            && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
+            && (m_flags & Flag::NativeTitleBar)) {
             const QMargins margins = contentMargins();
             suggestedRect.setHeight(suggestedRect.height() - m_titleBar->height() + margins.top()
                                     + margins.bottom());
@@ -465,8 +477,7 @@ void FloatingWindow::updateTitleBarVisibility()
         frame->updateTitleBarVisibility();
 
     if (KDDockWidgets::usesClientTitleBar()) {
-        const auto flags = Config::self().flags();
-        if ((flags & Config::Flag_HideTitleBarWhenTabsVisible) && !(flags & Config::Flag_AlwaysTitleBarWhenFloating)) {
+        if ((m_flags & Flag::HideTitleBarWhenTabsVisible) && !(m_flags & Flag::AlwaysTitleBarWhenFloating)) {
             if (hasSingleFrame()) {
                 visible = !frames().first()->hasTabsVisible();
             }
