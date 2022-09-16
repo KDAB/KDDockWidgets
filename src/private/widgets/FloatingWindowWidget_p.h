@@ -24,7 +24,8 @@ class DOCKS_EXPORT FloatingWindowWidget : public FloatingWindow
 {
     Q_OBJECT
 public:
-    explicit FloatingWindowWidget(QRect suggestedGeometry, MainWindowBase *parent = nullptr);
+    explicit FloatingWindowWidget(QRect suggestedGeometry, MainWindowBase *parent = nullptr,
+                                  FloatingWindowFlags flags = FloatingWindowFlag::FromGlobalConfig);
     explicit FloatingWindowWidget(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent = nullptr);
 
 protected:

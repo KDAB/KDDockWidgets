@@ -85,9 +85,10 @@ Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *p
     return new Layouting::SeparatorWidget(parent);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent,
+                                                           FloatingWindowFlags flags) const
 {
-    return new FloatingWindowWidget(QRect(), parent);
+    return new FloatingWindowWidget(QRect(), parent, flags);
 }
 
 FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent, QRect suggestedGeometry) const
@@ -159,9 +160,9 @@ TitleBar *DefaultWidgetFactory::createTitleBar(FloatingWindow *fw) const
     return new SeparatorQuick(parent);
 }*/
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent, FloatingWindowFlags flags) const
 {
-    return new FloatingWindowQuick(parent);
+    return new FloatingWindowQuick(parent, flags);
 }
 
 FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent, QRect suggestedGeometry) const

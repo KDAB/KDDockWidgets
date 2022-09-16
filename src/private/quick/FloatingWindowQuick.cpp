@@ -104,8 +104,8 @@ QuickView::~QuickView() = default;
 }
 
 
-FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
-    : FloatingWindow(QRect(), parent)
+FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent, FloatingWindowFlags flags)
+    : FloatingWindow(QRect(), parent, flags)
     , m_quickWindow(new QuickView(Config::self().qmlEngine(), this))
 {
     init();

@@ -114,7 +114,8 @@ public:
     ///       Override to provide your own FloatingWindow sub-class. If overridden then
     ///       you also need to override the overloads below.
     ///@param parent Just forward to FloatingWindow's constructor.
-    virtual FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const = 0;
+    virtual FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr,
+                                                 FloatingWindowFlags = FloatingWindowFlag::FromGlobalConfig) const = 0;
 
     ///@brief Called internally by the framework to create a FloatingWindow
     ///       Override to provide your own FloatingWindow sub-class. If overridden then
@@ -170,7 +171,7 @@ public:
     TabWidget *createTabWidget(Frame *parent, TabWidgetOptions = TabWidgetOption_None) const override;
     TabBar *createTabBar(TabWidget *parent) const override;
     Layouting::Separator *createSeparator(Layouting::Widget *parent = nullptr) const override;
-    FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;
+    FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr, FloatingWindowFlags = FloatingWindowFlag::FromGlobalConfig) const override;
     FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr, QRect suggestedGeometry = {}) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea *) const override;
     QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;

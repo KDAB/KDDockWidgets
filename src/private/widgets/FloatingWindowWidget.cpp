@@ -15,6 +15,7 @@
 #include "../Logging_p.h"
 #include "../TitleBar_p.h"
 #include "../Utils_p.h"
+#include "KDDockWidgets.h"
 
 #include <QApplication>
 #include <QPainter>
@@ -24,8 +25,9 @@
 
 using namespace KDDockWidgets;
 
-FloatingWindowWidget::FloatingWindowWidget(QRect suggestedGeometry, MainWindowBase *parent)
-    : FloatingWindow(suggestedGeometry, parent)
+FloatingWindowWidget::FloatingWindowWidget(QRect suggestedGeometry, MainWindowBase *parent,
+                                           FloatingWindowFlags flags)
+    : FloatingWindow(suggestedGeometry, parent, flags)
     , m_vlayout(new QVBoxLayout(this))
 {
     init();

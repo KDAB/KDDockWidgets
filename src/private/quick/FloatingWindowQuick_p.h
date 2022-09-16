@@ -22,7 +22,7 @@ class DOCKS_EXPORT FloatingWindowQuick : public FloatingWindow
 {
     Q_OBJECT
 public:
-    explicit FloatingWindowQuick(MainWindowBase *parent = nullptr);
+    explicit FloatingWindowQuick(MainWindowBase *parent = nullptr, FloatingWindowFlags flags = FloatingWindowFlag::FromGlobalConfig);
     explicit FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent = nullptr);
     ~FloatingWindowQuick();
 

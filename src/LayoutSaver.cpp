@@ -18,6 +18,7 @@
 
 #include "LayoutSaver.h"
 #include "Config.h"
+#include "KDDockWidgets.h"
 #include "MainWindowBase.h"
 #include "DockWidgetBase.h"
 #include "FrameworkWidgetFactory.h"
@@ -268,7 +269,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
                                                       : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
-        auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(parent);
+        auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(parent, static_cast<FloatingWindowFlags>(fw.flags));
         fw.floatingWindowInstance = floatingWindow;
         d->deserializeWindowGeometry(fw, floatingWindow);
         if (!floatingWindow->deserialize(fw)) {
