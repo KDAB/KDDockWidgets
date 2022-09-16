@@ -312,6 +312,9 @@ public:
     /// @brief Returns the resize handler. Used mostly in MDI mode.
     WidgetResizeHandler *resizeHandler() const;
 
+    /// @brief User requested floating window flags for when this group floats
+    FloatingWindowFlags requestedFloatingWindowFlags() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();

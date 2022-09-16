@@ -197,11 +197,7 @@ static FloatingWindowFlags floatingWindowFlagsForFrame(Frame *frame)
     if (!frame)
         return FloatingWindowFlag::FromGlobalConfig;
 
-    const auto dockwidgets = frame->dockWidgets();
-    if (!dockwidgets.isEmpty())
-        return dockwidgets.first()->floatingWindowFlags();
-
-    return FloatingWindowFlag::FromGlobalConfig;
+    return frame->requestedFloatingWindowFlags();
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)

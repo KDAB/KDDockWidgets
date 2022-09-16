@@ -918,3 +918,12 @@ WidgetResizeHandler *Frame::resizeHandler() const
 {
     return m_resizeHandler;
 }
+
+FloatingWindowFlags Frame::requestedFloatingWindowFlags() const
+{
+    const auto dockwidgets = this->dockWidgets();
+    if (!dockwidgets.isEmpty())
+        return dockwidgets.first()->floatingWindowFlags();
+
+    return FloatingWindowFlag::FromGlobalConfig;
+}
