@@ -75,6 +75,12 @@ static Qt::WindowFlags windowFlagsToUse(FloatingWindowFlags requestedFlags)
 
 static MainWindowBase *hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
 {
+    const FloatingWindowFlags requestedFlags = frame ? frame->requestedFloatingWindowFlags() : FloatingWindowFlag::FromGlobalConfig;
+    if (requestedFlags & FloatingWindowFlag::DontUseParentForFloatingWindows) {
+        // User explicitly requested no parent for this floating window
+        return nullptr;
+    }
+
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows) {
         return nullptr;
     }
