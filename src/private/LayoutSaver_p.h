@@ -256,6 +256,7 @@ struct LayoutSaver::FloatingWindow
     QRect geometry;
     QRect normalGeometry;
     int screenIndex;
+    int flags = -1;
     QSize screenSize; // for relative-size restoring
     bool isVisible = true;
 

@@ -125,6 +125,12 @@ static FloatingWindow::Flags flagsForFloatingWindow()
     if (Config::self().flags() & Config::Flag_AlwaysTitleBarWhenFloating)
         flags |= FloatingWindow::Flag::AlwaysTitleBarWhenFloating;
 
+    if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
+        flags |= FloatingWindow::Flag::DontUseParentForFloatingWindows;
+
+    if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
+        flags |= FloatingWindow::Flag::DontUseQtToolWindowsForFloatingWindows;
+
     return flags;
 }
 
@@ -559,6 +565,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.screenSize = screenSizeForWidget(this);
     fw.affinities = affinities();
     fw.windowState = windowStateOverride();
+    fw.flags = m_flags;
 
     auto mainWindow = qobject_cast<MainWindowBase *>(parentWidget());
     fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)

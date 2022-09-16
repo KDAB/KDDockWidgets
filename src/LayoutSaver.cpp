@@ -807,6 +807,7 @@ QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
     map.insert(QStringLiteral("screenSize"), Layouting::sizeToMap(screenSize));
     map.insert(QStringLiteral("isVisible"), isVisible);
     map.insert(QStringLiteral("windowState"), windowState);
+    map.insert(QStringLiteral("flags"), flags);
 
     if (!affinities.isEmpty())
         map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
@@ -821,6 +822,7 @@ void LayoutSaver::FloatingWindow::fromVariantMap(const QVariantMap &map)
     geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
     normalGeometry = Layouting::mapToRect(map.value(QStringLiteral("normalGeometry")).toMap());
     screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
+    flags = map.value(QStringLiteral("flags")).toInt();
     screenSize = Layouting::mapToSize(map.value(QStringLiteral("screenSize")).toMap());
     isVisible = map.value(QStringLiteral("isVisible")).toBool();
     affinities = variantToStringList(map.value(QStringLiteral("affinities")).toList());

@@ -48,7 +48,9 @@ public:
         KeepAboveIfNotUtilityWindow = 4,
         NativeTitleBar = 8,
         HideTitleBarWhenTabsVisible = 16,
-        AlwaysTitleBarWhenFloating = 32
+        AlwaysTitleBarWhenFloating = 32,
+        DontUseParentForFloatingWindows = 64,
+        DontUseQtToolWindowsForFloatingWindows = 128
     };
     Q_DECLARE_FLAGS(Flags, Flag);
 
