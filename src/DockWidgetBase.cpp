@@ -1043,7 +1043,7 @@ void DockWidgetBase::Private::saveLastFloatingGeometry()
 
 void DockWidgetBase::setFloatingWindowFlags(FloatingWindowFlags flags)
 {
-    if (auto fw = floatingWindow()) {
+    if (floatingWindow()) {
         qWarning() << Q_FUNC_INFO << "Call this function only before having a floating window";
     } else {
         d->m_flags = flags;
