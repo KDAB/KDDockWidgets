@@ -128,7 +128,6 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_STATIC": "ON",
-                "CMAKE_UNITY_BUILD": "ON",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             }
         },
