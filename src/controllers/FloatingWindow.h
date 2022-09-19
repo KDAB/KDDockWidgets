@@ -37,6 +37,13 @@ class DOCKS_EXPORT FloatingWindow : public Controller, public Draggable
 {
     Q_OBJECT
 public:
+    enum class Flag {
+        None = 0,
+        TitleBarHasMinimizeButton = 1,
+        TitleBarHasMaximizeButton = 2
+    };
+    Q_DECLARE_FLAGS(Flags, Flag);
+
     explicit FloatingWindow(QRect suggestedGeometry, MainWindow *parent = nullptr);
     explicit FloatingWindow(Controllers::Group *group, QRect suggestedGeometry,
                             MainWindow *parent = nullptr);

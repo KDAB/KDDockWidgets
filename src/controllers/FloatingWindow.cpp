@@ -50,10 +50,26 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
+
+static FloatingWindow::Flags flagsForFloatingWindow()
+{
+    FloatingWindow::Flags flags = {};
+
+    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
+        == Config::Flag_TitleBarHasMinimizeButton)
+        flags |= FloatingWindow::Flag::TitleBarHasMinimizeButton;
+
+    if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton)
+        flags |= FloatingWindow::Flag::TitleBarHasMaximizeButton;
+
+    return flags;
+}
+
 class FloatingWindow::Private
 {
 public:
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
+    const FloatingWindow::Flags m_flags = flagsForFloatingWindow();
 };
 
 /** static */
@@ -727,11 +743,10 @@ void FloatingWindow::setLastWindowManagerState(WindowState state)
 
 bool FloatingWindow::supportsMinimizeButton() const
 {
-    return (Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
-        == Config::Flag_TitleBarHasMinimizeButton; // this specific flag is not base^2
+    return d->m_flags & Flag::TitleBarHasMinimizeButton;
 }
 
 bool FloatingWindow::supportsMaximizeButton() const
 {
-    return Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton;
+    return d->m_flags & Flag::TitleBarHasMaximizeButton;
 }
