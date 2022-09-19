@@ -85,10 +85,6 @@ static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedF
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
         flags |= FloatingWindowFlag::DontUseParentForFloatingWindows;
 
-    if (Config::self().internalFlags()
-        & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
-        flags |= FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows;
-
     return flags;
 }
 
@@ -120,10 +116,20 @@ public:
 /** static */
 Qt::WindowFlags FloatingWindow::s_windowFlagsOverride = {};
 
-static Qt::WindowFlags windowFlagsToUse()
+static Qt::WindowFlags windowFlagsToUse(FloatingWindowFlags requestedFlags)
 {
+    if (requestedFlags & FloatingWindowFlag::UseQtTool) {
+        // User has explicitly chosen Qt::Tool for this FloatingWindow
+        return Qt::Tool;
+    }
+
+    if (requestedFlags & FloatingWindowFlag::UseQtWindow) {
+        // User has explicitly chosen Qt::Window for this FloatingWindow
+        return Qt::Window;
+    }
+
     if (FloatingWindow::s_windowFlagsOverride) {
-        // The user specifically set different flags.
+        // User overridden the default for all FloatingWindows
         return FloatingWindow::s_windowFlagsOverride;
     }
 
@@ -182,8 +188,8 @@ MainWindow *actualParent(MainWindow *candidate)
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
                                FloatingWindowFlags requestedFlags)
     : Controller(Type::FloatingWindow,
-                 Config::self().viewFactory()->createFloatingWindow(this, actualParent(parent),
-                                                                    windowFlagsToUse()))
+                 Config::self().viewFactory()->createFloatingWindow(
+                     this, actualParent(parent), windowFlagsToUse(requestedFlags)))
     , Draggable(view(),
                 KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable
                                                                 // when using a native title bar.
