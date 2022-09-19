@@ -724,3 +724,14 @@ void FloatingWindow::setLastWindowManagerState(WindowState state)
 {
     m_lastWindowManagerState = state;
 }
+
+bool FloatingWindow::supportsMinimizeButton() const
+{
+    return (Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
+        == Config::Flag_TitleBarHasMinimizeButton; // this specific flag is not base^2
+}
+
+bool FloatingWindow::supportsMaximizeButton() const
+{
+    return Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton;
+}

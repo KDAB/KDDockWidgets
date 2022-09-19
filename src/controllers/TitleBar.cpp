@@ -177,19 +177,12 @@ bool TitleBar::supportsFloatingButton() const
 
 bool TitleBar::supportsMaximizeButton() const
 {
-    if (!(Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton))
-        return false;
-
-    return m_floatingWindow != nullptr;
+    return m_floatingWindow && m_floatingWindow->supportsMaximizeButton();
 }
 
 bool TitleBar::supportsMinimizeButton() const
 {
-    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
-        != Config::Flag_TitleBarHasMinimizeButton) // this specific flag is not base^2
-        return false;
-
-    return m_floatingWindow != nullptr;
+    return m_floatingWindow && m_floatingWindow->supportsMinimizeButton();
 }
 
 bool TitleBar::supportsAutoHideButton() const
