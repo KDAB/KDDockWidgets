@@ -51,8 +51,15 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 
-static FloatingWindow::Flags flagsForFloatingWindow()
+static FloatingWindow::Flags flagsForFloatingWindow(FloatingWindow::Flags requestedFlags)
 {
+    if (!(requestedFlags & FloatingWindow::Flag::FromGlobalConfig)) {
+        // User requested specific flags for this floating window
+        return requestedFlags;
+    }
+
+    // Use from KDDockWidgets::Config instead. This is app-wide and not per window.
+
     FloatingWindow::Flags flags = {};
 
     if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
@@ -87,8 +94,13 @@ static FloatingWindow::Flags flagsForFloatingWindow()
 class FloatingWindow::Private
 {
 public:
+    Private(FloatingWindow::Flags requestedFlags)
+        : m_flags(flagsForFloatingWindow(requestedFlags))
+    {
+    }
+
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
-    const FloatingWindow::Flags m_flags = flagsForFloatingWindow();
+    const FloatingWindow::Flags m_flags;
 };
 
 /** static */
@@ -153,7 +165,8 @@ MainWindow *actualParent(MainWindow *candidate)
         : candidate;
 }
 
-FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
+FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
+                               FloatingWindow::Flags requestedFlags)
     : Controller(Type::FloatingWindow,
                  Config::self().viewFactory()->createFloatingWindow(this, actualParent(parent),
                                                                     windowFlagsToUse()))
@@ -163,7 +176,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
                                                                 // Otherwise the
                                                                 // KDDockWidgets::TitleBar is the
                                                                 // draggable
-    , d(new Private())
+    , d(new Private(requestedFlags))
     , m_dropArea(new DropArea(view(), MainWindowOption_None))
     , m_titleBar(new Controllers::TitleBar(this))
 {
