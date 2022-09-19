@@ -517,7 +517,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         auto parent =
             fw.parentIndex == -1 ? nullptr : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
-        auto floatingWindow = new Controllers::FloatingWindow({}, parent);
+        auto floatingWindow =
+            new Controllers::FloatingWindow({}, parent, static_cast<FloatingWindowFlags>(fw.flags));
         fw.floatingWindowInstance = floatingWindow;
         d->deserializeWindowGeometry(fw, floatingWindow->view()->window());
         if (!floatingWindow->deserialize(fw)) {
