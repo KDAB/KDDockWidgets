@@ -51,42 +51,42 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 
-static FloatingWindow::Flags flagsForFloatingWindow(FloatingWindow::Flags requestedFlags)
+static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedFlags)
 {
-    if (!(requestedFlags & FloatingWindow::Flag::FromGlobalConfig)) {
+    if (!(requestedFlags & FloatingWindowFlag::FromGlobalConfig)) {
         // User requested specific flags for this floating window
         return requestedFlags;
     }
 
     // Use from KDDockWidgets::Config instead. This is app-wide and not per window.
 
-    FloatingWindow::Flags flags = {};
+    FloatingWindowFlags flags = {};
 
     if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
         == Config::Flag_TitleBarHasMinimizeButton)
-        flags |= FloatingWindow::Flag::TitleBarHasMinimizeButton;
+        flags |= FloatingWindowFlag::TitleBarHasMinimizeButton;
 
     if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton)
-        flags |= FloatingWindow::Flag::TitleBarHasMaximizeButton;
+        flags |= FloatingWindowFlag::TitleBarHasMaximizeButton;
 
     if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
-        flags |= FloatingWindow::Flag::KeepAboveIfNotUtilityWindow;
+        flags |= FloatingWindowFlag::KeepAboveIfNotUtilityWindow;
 
     if (Config::self().flags() & Config::Flag_NativeTitleBar)
-        flags |= FloatingWindow::Flag::NativeTitleBar;
+        flags |= FloatingWindowFlag::NativeTitleBar;
 
     if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
-        flags |= FloatingWindow::Flag::HideTitleBarWhenTabsVisible;
+        flags |= FloatingWindowFlag::HideTitleBarWhenTabsVisible;
 
     if (Config::self().flags() & Config::Flag_AlwaysTitleBarWhenFloating)
-        flags |= FloatingWindow::Flag::AlwaysTitleBarWhenFloating;
+        flags |= FloatingWindowFlag::AlwaysTitleBarWhenFloating;
 
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
-        flags |= FloatingWindow::Flag::DontUseParentForFloatingWindows;
+        flags |= FloatingWindowFlag::DontUseParentForFloatingWindows;
 
     if (Config::self().internalFlags()
         & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
-        flags |= FloatingWindow::Flag::DontUseQtToolWindowsForFloatingWindows;
+        flags |= FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows;
 
     return flags;
 }
@@ -94,13 +94,13 @@ static FloatingWindow::Flags flagsForFloatingWindow(FloatingWindow::Flags reques
 class FloatingWindow::Private
 {
 public:
-    Private(FloatingWindow::Flags requestedFlags)
+    Private(FloatingWindowFlags requestedFlags)
         : m_flags(flagsForFloatingWindow(requestedFlags))
     {
     }
 
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
-    const FloatingWindow::Flags m_flags;
+    const FloatingWindowFlags m_flags;
 };
 
 /** static */
@@ -166,7 +166,7 @@ MainWindow *actualParent(MainWindow *candidate)
 }
 
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
-                               FloatingWindow::Flags requestedFlags)
+                               FloatingWindowFlags requestedFlags)
     : Controller(Type::FloatingWindow,
                  Config::self().viewFactory()->createFloatingWindow(this, actualParent(parent),
                                                                     windowFlagsToUse()))
@@ -198,7 +198,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
 
     DockRegistry::self()->registerFloatingWindow(this);
 
-    if (d->m_flags & Flag::KeepAboveIfNotUtilityWindow)
+    if (d->m_flags & FloatingWindowFlag::KeepAboveIfNotUtilityWindow)
         view()->setFlag(Qt::WindowStaysOnTopHint, true);
 
     if (Platform::instance()->isQtWidgets()) {
@@ -386,7 +386,7 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometry
         suggestedRect.setSize(maxSize.boundedTo(suggestedRect.size()));
 
         if ((hint & SuggestedGeometryHint_GeometryIsFromDocked)
-            && (d->m_flags & Flag::NativeTitleBar)) {
+            && (d->m_flags & FloatingWindowFlag::NativeTitleBar)) {
             const QMargins margins = contentMargins();
             suggestedRect.setHeight(suggestedRect.height() - m_titleBar->view()->height()
                                     + margins.top() + margins.bottom());
@@ -532,8 +532,8 @@ void FloatingWindow::updateTitleBarVisibility()
         group->updateTitleBarVisibility();
 
     if (KDDockWidgets::usesClientTitleBar()) {
-        if ((d->m_flags & Flag::HideTitleBarWhenTabsVisible)
-            && !(d->m_flags & Flag::AlwaysTitleBarWhenFloating)) {
+        if ((d->m_flags & FloatingWindowFlag::HideTitleBarWhenTabsVisible)
+            && !(d->m_flags & FloatingWindowFlag::AlwaysTitleBarWhenFloating)) {
             if (hasSingleFrame()) {
                 visible = !groups().first()->hasTabsVisible();
             }
@@ -775,10 +775,10 @@ void FloatingWindow::setLastWindowManagerState(WindowState state)
 
 bool FloatingWindow::supportsMinimizeButton() const
 {
-    return d->m_flags & Flag::TitleBarHasMinimizeButton;
+    return d->m_flags & FloatingWindowFlag::TitleBarHasMinimizeButton;
 }
 
 bool FloatingWindow::supportsMaximizeButton() const
 {
-    return d->m_flags & Flag::TitleBarHasMaximizeButton;
+    return d->m_flags & FloatingWindowFlag::TitleBarHasMaximizeButton;
 }
