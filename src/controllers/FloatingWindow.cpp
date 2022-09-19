@@ -15,6 +15,7 @@
 #include "TitleBar.h"
 #include "Group.h"
 #include "Platform.h"
+#include "KDDockWidgets.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Utils_p.h"
 #include "private/WidgetResizeHandler_p.h"
@@ -90,6 +91,19 @@ static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedF
 
     return flags;
 }
+
+static FloatingWindowFlags floatingWindowFlagsForGroup(Group *group)
+{
+    if (!group)
+        return FloatingWindowFlag::FromGlobalConfig;
+
+    const auto dockwidgets = group->dockWidgets();
+    if (!dockwidgets.isEmpty())
+        return dockwidgets.first()->floatingWindowFlags();
+
+    return FloatingWindowFlag::FromGlobalConfig;
+}
+
 
 class FloatingWindow::Private
 {
@@ -225,7 +239,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
 
 FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometry,
                                MainWindow *parent)
-    : FloatingWindow({}, hackFindParentHarder(group, parent))
+    : FloatingWindow({}, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
 {
     QScopedValueRollback<bool> guard(m_disableSetVisible, true);
 

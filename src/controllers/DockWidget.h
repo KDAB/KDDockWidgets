@@ -440,6 +440,15 @@ public:
 
     void onResize(QSize newSize);
 
+    /// @brief Sets the desired floating window flags, in case the defaults aren't desired.
+    /// By default KDDW will use the flags specified in KDDockWidgets::Config to influence
+    /// many aspects regarding windows (minimize,maximize support for example).
+    /// You can use this function to override those "global flags" and specify per-dock widget
+    /// flags. Be sure to not call this before the floating window has already been created.
+    /// It's suggested to call it before the dock widget is shown.
+    void setFloatingWindowFlags(FloatingWindowFlags);
+    KDDockWidgets::FloatingWindowFlags floatingWindowFlags() const;
+
 Q_SIGNALS:
 
     ///@brief signal emitted when the icon changed

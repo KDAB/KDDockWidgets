@@ -1068,3 +1068,17 @@ void DockWidget::Private::setIsOpen(bool is)
     updateToggleAction();
     updateFloatAction();
 }
+
+void DockWidget::setFloatingWindowFlags(FloatingWindowFlags flags)
+{
+    if (floatingWindow()) {
+        qWarning() << Q_FUNC_INFO << "Call this function only before having a floating window";
+    } else {
+        d->m_flags = flags;
+    }
+}
+
+KDDockWidgets::FloatingWindowFlags DockWidget::floatingWindowFlags() const
+{
+    return d->m_flags;
+}

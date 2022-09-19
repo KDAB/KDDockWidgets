@@ -926,3 +926,12 @@ void Group::setParentView_impl(View *parent)
     Controller::setParentView_impl(parent);
     setLayout(parent ? parent->asLayout() : nullptr);
 }
+
+FloatingWindowFlags Group::requestedFloatingWindowFlags() const
+{
+    const auto dockwidgets = this->dockWidgets();
+    if (!dockwidgets.isEmpty())
+        return dockwidgets.first()->floatingWindowFlags();
+
+    return FloatingWindowFlag::FromGlobalConfig;
+}

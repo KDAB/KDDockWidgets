@@ -187,6 +187,7 @@ public:
     std::shared_ptr<View> guest;
     DockWidget *const q;
     DockWidgetOptions options;
+    FloatingWindowFlags m_flags = FloatingWindowFlag::FromGlobalConfig;
     const LayoutSaverOptions layoutSaverOptions;
     QAction *const toggleAction;
     QAction *const floatAction;

@@ -300,6 +300,10 @@ public:
 
     void onDockWidgetCountChanged();
 
+    /// @brief User requested floating window flags for when this group floats
+    FloatingWindowFlags requestedFloatingWindowFlags() const;
+
+
 Q_SIGNALS:
     void numDockWidgetsChanged();
     void hasTabsVisibleChanged();
