@@ -54,7 +54,7 @@
 # frontends to enable. If not specified, frontends will be enabled based on
 # availability of libraries on your system.
 
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.12)
 
 # Allow using a non-KDAB install location.
 set(KDAB_INSTALL
@@ -71,16 +71,12 @@ if(DEFINED CMAKE_INSTALL_PREFIX)
     endif()
 endif()
 
-if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
-    project(KDDockWidgets LANGUAGES CXX)
-else()
-    project(
-        KDDockWidgets
-        DESCRIPTION "An advanced docking system for Qt"
-        HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
-        LANGUAGES CXX
-    )
-endif()
+project(
+    KDDockWidgets
+    DESCRIPTION "An advanced docking system for Qt"
+    HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
+    LANGUAGES CXX
+)
 
 set(KDDockWidgets_VERSION_MAJOR 2)
 set(KDDockWidgets_VERSION_MINOR 0)
@@ -353,23 +349,24 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
     # Generate .pri file for qmake users
-    # (except for older cmake versions and when using the VS generator)
-    if(CMAKE_VERSION VERSION_GREATER "3.11.99" AND NOT CMAKE_CONFIGURATION_TYPES)
-        include(ECMGeneratePriFile)
-        set(PROJECT_VERSION_STRING ${KDDockWidgets_VERSION})
-        ecm_generate_pri_file(
-            BASE_NAME
-            KDDockWidgets
-            LIB_NAME
-            kddockwidgets${${PROJECT_NAME}_LIBRARY_QTID}
-            DEPS
-            ${KDDockWidgets_DEPS}
-            FILENAME_VAR
-            pri_filename
-            INCLUDE_INSTALL_DIR
-            ${CMAKE_INSTALL_INCLUDEDIR}
-        )
-        install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+    if(NOT CMAKE_CONFIGURATION_TYPES)
+        if(Qt_VERSION_MAJOR EQUAL 5 OR (Qt_VERSION_MAJOR EQUAL 6 AND Qt6Core_VERSION VERSION_GREATER "6.2"))
+            include(ECMGeneratePriFile)
+            set(PROJECT_VERSION_STRING ${KDDockWidgets_VERSION})
+            ecm_generate_pri_file(
+                BASE_NAME
+                KDDockWidgets
+                LIB_NAME
+                kddockwidgets${${PROJECT_NAME}_LIBRARY_QTID}
+                DEPS
+                ${KDDockWidgets_DEPS}
+                FILENAME_VAR
+                pri_filename
+                INCLUDE_INSTALL_DIR
+                ${CMAKE_INSTALL_INCLUDEDIR}
+            )
+            install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+        endif()
     endif()
 else()
     # Always disable tests, examples, docs when used as a submodule
