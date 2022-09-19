@@ -9,8 +9,14 @@
   - Uses nlohmann JSON library (MIT) instead of QJsonDocument, for saving/restoring layouts
   - Added Config::setStartDragDistance()
 
-* v1.6.0 (unreleased)
- - Minimum Qt6 version is now 6.3.0
+* v1.7.0 (unreleased)
+ - Introduce DockWidget::setFloatingWindowFlags(flags). Allows for different
+   FloatingWindows to have different window flags. For example, some having
+   Qt::Tool while others having Qt::Window (#314).
+
+* v1.6.0 (14 September 2022)
+ - Minimum Qt6 version is now 6.2.0
+ - Minimum CMake version is now 3.12.0
  - Fixed restoring of normal geometry when closing a maximized window (#259)
  - Experimental support for docking into dock widgets which are in a MDI area.
  - Fixed potential crash involving infinite loop between QWidget::create() and QWidget::createWinId()
