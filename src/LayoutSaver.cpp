@@ -221,6 +221,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::FloatingWindow &window)
     json["normalGeometry"] = window.normalGeometry;
     json["screenIndex"] = window.screenIndex;
     json["screenSize"] = window.screenSize;
+    json["flags"] = window.flags;
     json["isVisible"] = window.isVisible;
     json["windowState"] = window.windowState;
 
@@ -238,6 +239,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
     window.screenIndex = json.value("screenIndex", 0);
     window.screenSize = json.value("screenSize", QSize(800, 600));
     window.isVisible = json.value("isVisible", false);
+    window.flags = json.value("flags", -1);
     window.windowState = ( WindowState )json.value("windowState", 0);
     window.affinities = json.value("affinities", QStringList());
 

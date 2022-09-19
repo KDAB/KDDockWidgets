@@ -74,6 +74,13 @@ static FloatingWindow::Flags flagsForFloatingWindow()
     if (Config::self().flags() & Config::Flag_AlwaysTitleBarWhenFloating)
         flags |= FloatingWindow::Flag::AlwaysTitleBarWhenFloating;
 
+    if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
+        flags |= FloatingWindow::Flag::DontUseParentForFloatingWindows;
+
+    if (Config::self().internalFlags()
+        & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
+        flags |= FloatingWindow::Flag::DontUseQtToolWindowsForFloatingWindows;
+
     return flags;
 }
 
@@ -595,6 +602,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.screenSize = Platform::instance()->screenSizeFor(view());
     fw.affinities = affinities();
     fw.windowState = windowStateOverride();
+    fw.flags = d->m_flags;
 
     Window::Ptr transientParentWindow = view()->transientWindow();
     auto transientMainWindow = DockRegistry::self()->mainWindowForHandle(transientParentWindow);
