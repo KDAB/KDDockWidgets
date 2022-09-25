@@ -484,7 +484,7 @@ void TitleBar::onMinimizeClicked()
     if (!m_floatingWindow)
         return;
 
-    if (KDDockWidgets::usesUtilityWindows()) {
+    if (m_floatingWindow->isUtilityWindow()) {
         // Qt::Tool windows don't appear in the task bar.
         // Unless someone tells me a good reason to allow this situation.
         return;

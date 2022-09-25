@@ -63,6 +63,10 @@ public:
 
     int userType() const;
 
+    /// @brief Returns whether this window is a tool window
+    /// Tool windows don't usually appear in the task bar
+    bool isUtilityWindow() const;
+
     static void ensureRectIsOnScreen(QRect &geometry);
 
 #ifdef Q_OS_WIN

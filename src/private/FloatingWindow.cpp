@@ -801,3 +801,21 @@ bool FloatingWindow::supportsMaximizeButton() const
 {
     return m_flags & FloatingWindowFlag::TitleBarHasMaximizeButton;
 }
+
+namespace KDDockWidgets {
+
+inline bool usesUtilityWindows()
+{
+    const auto flags = Config::self().internalFlags();
+
+    const bool dontUse = (flags & Config::InternalFlag_DontUseParentForFloatingWindows) && (flags & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows);
+
+    return !dontUse;
+}
+
+}
+
+bool FloatingWindow::isUtilityWindow() const
+{
+    return usesUtilityWindows();
+}

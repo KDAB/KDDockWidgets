@@ -120,15 +120,6 @@ inline bool linksToXLib()
 #endif
 }
 
-inline bool usesUtilityWindows()
-{
-    const auto flags = Config::self().internalFlags();
-
-    const bool dontUse = (flags & Config::InternalFlag_DontUseParentForFloatingWindows) && (flags & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows);
-
-    return !dontUse;
-}
-
 inline bool isNormalWindowState(Qt::WindowStates states)
 {
     return !(states & Qt::WindowMaximized) && !(states & Qt::WindowFullScreen);
