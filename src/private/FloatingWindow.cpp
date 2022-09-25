@@ -54,7 +54,7 @@ static Qt::WindowFlags windowFlagsToUse(FloatingWindowFlags requestedFlags)
         return Qt::Tool;
     }
 
-    if (requestedFlags & FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows) {
+    if (requestedFlags & FloatingWindowFlag::UseQtWindow) {
         // User has explicitly chosen Qt::Window for this FloatingWindow
         return Qt::Window;
     }
@@ -153,7 +153,7 @@ static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedF
         flags |= FloatingWindowFlag::DontUseParentForFloatingWindows;
 
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
-        flags |= FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows;
+        flags |= FloatingWindowFlag::UseQtWindow;
 
     return flags;
 }
@@ -807,6 +807,6 @@ bool FloatingWindow::supportsMaximizeButton() const
 
 bool FloatingWindow::isUtilityWindow() const
 {
-    const bool dontUse = (m_flags & FloatingWindowFlag::DontUseParentForFloatingWindows) && (m_flags & FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows);
+    const bool dontUse = (m_flags & FloatingWindowFlag::DontUseParentForFloatingWindows) && (m_flags & FloatingWindowFlag::UseQtWindow);
     return !dontUse;
 }

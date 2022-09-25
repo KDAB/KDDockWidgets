@@ -299,7 +299,7 @@ enum class FloatingWindowFlag {
     HideTitleBarWhenTabsVisible = 32,
     AlwaysTitleBarWhenFloating = 64,
     DontUseParentForFloatingWindows = 128,
-    DontUseQtToolWindowsForFloatingWindows = 256,
+    UseQtWindow = 256,
     UseQtTool = 512,
 };
 Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag);
