@@ -152,6 +152,9 @@ static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedF
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
         flags |= FloatingWindowFlag::DontUseParentForFloatingWindows;
 
+    if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
+        flags |= FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows;
+
     return flags;
 }
 
@@ -802,20 +805,8 @@ bool FloatingWindow::supportsMaximizeButton() const
     return m_flags & FloatingWindowFlag::TitleBarHasMaximizeButton;
 }
 
-namespace KDDockWidgets {
-
-inline bool usesUtilityWindows()
-{
-    const auto flags = Config::self().internalFlags();
-
-    const bool dontUse = (flags & Config::InternalFlag_DontUseParentForFloatingWindows) && (flags & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows);
-
-    return !dontUse;
-}
-
-}
-
 bool FloatingWindow::isUtilityWindow() const
 {
-    return usesUtilityWindows();
+    const bool dontUse = (m_flags & FloatingWindowFlag::DontUseParentForFloatingWindows) && (m_flags & FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows);
+    return !dontUse;
 }
