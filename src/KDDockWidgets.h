@@ -301,7 +301,6 @@ enum class FloatingWindowFlag {
     DontUseParentForFloatingWindows = 128,
     DontUseQtToolWindowsForFloatingWindows = 256,
     UseQtTool = 512,
-    UseQtWindow = 1024,
 };
 Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag);
 

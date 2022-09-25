@@ -7905,7 +7905,7 @@ void TestDocks::tst_setFloatingWindowFlags()
         auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
         auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, false);
 
-        dock1->setFloatingWindowFlags(FloatingWindowFlag::UseQtWindow);
+        dock1->setFloatingWindowFlags(FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows);
         dock2->setFloatingWindowFlags(FloatingWindowFlag::UseQtTool);
 
         dock1->show();
