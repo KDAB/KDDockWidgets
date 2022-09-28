@@ -51,6 +51,8 @@ void TitleBar_qtquick::init()
             &TitleBar_qtquick::floatButtonVisibleChanged);
     connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, this,
             &TitleBar_qtquick::floatButtonToolTipChanged);
+    connect(m_titleBar, &Controllers::TitleBar::numDockWidgetsChanged, this,
+            &TitleBar_qtquick::numDockWidgetsChanged);
 }
 
 #ifdef DOCKS_DEVELOPER_MODE

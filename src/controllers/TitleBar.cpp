@@ -44,6 +44,7 @@ TitleBar::TitleBar(Group *parent)
 {
     init();
     connect(m_group, &Group::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
+    connect(m_group, &Group::numDockWidgetsChanged, this, &TitleBar::numDockWidgetsChanged);
     connect(m_group, &Group::isFocusedChanged, this, &TitleBar::isFocusedChanged);
     connect(m_group, &Group::isInMainWindowChanged, this, &TitleBar::updateAutoHideButton);
 }
@@ -59,6 +60,8 @@ TitleBar::TitleBar(FloatingWindow *parent)
 {
     init();
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
+    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this,
+            &TitleBar::numDockWidgetsChanged);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this,
             &TitleBar::updateMaximizeButton);
     connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);

@@ -85,6 +85,9 @@ Q_SIGNALS:
     void floatButtonVisibleChanged(bool);
     void floatButtonToolTipChanged(const QString &);
 
+    /// Emitted when the number of dock widgets under this titlebar changes
+    void numDockWidgetsChanged();
+
 protected:
     void init() override;
 

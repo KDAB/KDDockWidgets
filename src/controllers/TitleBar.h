@@ -113,6 +113,7 @@ public:
     bool floatButtonVisible() const;
     void setCloseButtonEnabled(bool);
     void setFloatButtonVisible(bool);
+
 Q_SIGNALS:
     void titleChanged();
     void iconChanged();
@@ -120,6 +121,7 @@ Q_SIGNALS:
     void closeButtonEnabledChanged(bool);
     void floatButtonVisibleChanged(bool);
     void floatButtonToolTipChanged(const QString &);
+    void numDockWidgetsChanged();
 
     /// @brief Emitted to tell the views to update their auto-hide button
     void autoHideButtonChanged(bool visible, bool enabled, TitleBarButtonType);
