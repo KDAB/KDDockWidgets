@@ -237,7 +237,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/FloatingWindow_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_wrapper.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_wrapper.cpp
-    # flutter/generated/KDDockWidgetsBindings/dart/ffi/View_wrapper.cpp // TODOm4: Error compiling
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/View_wrapper.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
