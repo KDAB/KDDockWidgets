@@ -6532,6 +6532,25 @@ void TestDocks::tst_currentTabMatchesDockWidget()
     QVERIFY(!dock2->isVisible());
 }
 
+void TestDocks::tst_titlebarNumDockWidgetsChanged()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock0 = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+
+    m->addDockWidget(dock0, Location_OnLeft);
+
+    auto tb = dock0->titleBar();
+    // auto tbView = static_cast<Views::TitleBar_qtquick *>(tb->view());
+
+    int numSignalEmittions = 0;
+    connect(tb, &TitleBar::numDockWidgetsChanged, [&numSignalEmittions] { numSignalEmittions++; });
+    dock0->addDockWidgetAsTab(dock1);
+
+    QVERIFY(numSignalEmittions > 0);
+}
+
 int main(int argc, char *argv[])
 {
     int exitCode = 0;

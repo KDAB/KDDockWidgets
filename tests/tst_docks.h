@@ -206,4 +206,5 @@ private Q_SLOTS:
     void tst_addMDIDockWidget();
     void tst_redockToMDIRestoresPosition();
     void tst_persistentCentralWidget();
+    void tst_titlebarNumDockWidgetsChanged();
 };
