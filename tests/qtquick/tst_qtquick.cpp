@@ -14,6 +14,7 @@
 
 #include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
+#include "qtquick/views/TitleBar_qtquick.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 
 #include "../utils.h"
@@ -37,6 +38,7 @@ public Q_SLOTS:
 private Q_SLOTS:
     void tst_restoreRestoresMainWindowPosition();
     void tst_hoverShowsDropIndicators();
+    void tst_titlebarNumDockWidgetsChanged();
 };
 
 
@@ -112,6 +114,33 @@ void TestQtQuick::tst_hoverShowsDropIndicators()
     dragFloatingWindowTo(fw, mainWindowCenterPos);
 
     QCOMPARE(dock0->dptr()->group()->dockWidgetCount(), 2);
+}
+
+void TestQtQuick::tst_titlebarNumDockWidgetsChanged()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main2.qml");
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+    const auto mainWindows = DockRegistry::self()->mainwindows();
+    MainWindow *m = mainWindows.first();
+    m->window()->window()->setFramePosition(QPoint(500, 800));
+    m->addDockWidget(dock0, Location_OnLeft);
+
+    auto tb = dock0->titleBar();
+    auto tbView = static_cast<Views::TitleBar_qtquick *>(tb->view());
+
+    int numSignalEmittions = 0;
+    connect(tbView, &Views::TitleBar_qtquick::numDockWidgetsChanged,
+            [&numSignalEmittions] { numSignalEmittions++; });
+
+    auto dock1 = createDockWidget(
+        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+
+    dock0->addDockWidgetAsTab(dock1);
+
+    QVERIFY(numSignalEmittions > 0);
 }
 
 int main(int argc, char *argv[])
