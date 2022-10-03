@@ -57,8 +57,7 @@ class TitleBarPositionedWidgetState extends PositionedWidgetState {
               children: [
                 Expanded(
                   child: Text(
-                    "Title",
-                    // titleBarView.asTitleBarController().title().toDartString(),
+                    titleBarView.asTitleBarController().title().toDartString(),
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ),
