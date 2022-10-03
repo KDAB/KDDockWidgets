@@ -115,7 +115,7 @@ public:
     void setWindowIcon(const QIcon &icon) override;
     bool isActiveWindow() const override;
 
-    Q_INVOKABLE void redirectMouseEvents(QObject *from);
+    Q_INVOKABLE void redirectMouseEvents(QQuickItem *from);
     Q_INVOKABLE void showNormal() override;
     Q_INVOKABLE void showMinimized() override;
     Q_INVOKABLE void showMaximized() override;

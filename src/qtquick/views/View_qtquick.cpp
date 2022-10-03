@@ -35,7 +35,7 @@ class MouseEventRedirector : public QObject
 {
     Q_OBJECT
 public:
-    explicit MouseEventRedirector(QObject *eventSource, QObject *eventTarget)
+    explicit MouseEventRedirector(QQuickItem *eventSource, View_qtquick *eventTarget)
         : QObject(eventTarget)
         , m_eventSource(eventSource)
         , m_eventTarget(eventTarget)
@@ -79,8 +79,8 @@ public:
         return false;
     }
 
-    QObject *const m_eventSource;
-    QObject *const m_eventTarget;
+    QQuickItem *const m_eventSource;
+    View_qtquick *const m_eventTarget;
     static QHash<QObject *, MouseEventRedirector *> s_mouseEventRedirectors;
 };
 
@@ -153,7 +153,7 @@ QQuickItem *View_qtquick::createItem(QQmlEngine *engine, const QString &filename
     return qobject_cast<QQuickItem *>(obj);
 }
 
-void View_qtquick::redirectMouseEvents(QObject *source)
+void View_qtquick::redirectMouseEvents(QQuickItem *source)
 {
     if (auto existingRedirector = MouseEventRedirector::redirectorForSource(source)) {
         if (existingRedirector->m_eventTarget == this) {
