@@ -21,8 +21,8 @@
 #include <qsize.h>
 #include <qpoint.h>
 #include <MainWindow.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 #include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

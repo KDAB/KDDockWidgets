@@ -16,12 +16,12 @@
 #include <DockWidget.h>
 #include <MainWindow.h>
 #include <TabBar.h>
-#include <qrect.h>
-#include <View.h>
-#include <qcoreevent.h>
 #include <qpoint.h>
-#include <qsize.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <qrect.h>
+#include <qsize.h>
+#include <View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_wrapper : public ::KDDockWidgets::Controllers::TitleBar
@@ -59,6 +59,7 @@ public:
     virtual bool isWindow_nocallback() const;
     KDDockWidgets::Controllers::MainWindow *mainWindow() const;
     void minimizeButtonChanged(bool visible, bool enabled);
+    void numDockWidgetsChanged();
     void onAutoHideClicked();
     void onCloseClicked();
     bool onDoubleClicked();
@@ -176,6 +177,9 @@ c_KDDockWidgets__Controllers__TitleBar__mainWindow(void *thisObj);
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj, bool visible,
                                                                         bool enabled);
+// KDDockWidgets::Controllers::TitleBar::numDockWidgetsChanged()
+KDDockWidgetsBindings_EXPORT void
+c_KDDockWidgets__Controllers__TitleBar__numDockWidgetsChanged(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::onAutoHideClicked()
 KDDockWidgetsBindings_EXPORT void
 c_KDDockWidgets__Controllers__TitleBar__onAutoHideClicked(void *thisObj);

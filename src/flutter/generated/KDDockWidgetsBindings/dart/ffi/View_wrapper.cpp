@@ -27,10 +27,6 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-View_wrapper::View_wrapper(KDDockWidgets::Controller *controller, KDDockWidgets::Type arg__2)
-    : ::KDDockWidgets::View(controller, arg__2)
-{
-}
 bool View_wrapper::aboutToBeDestroyed() const
 {
     return ::KDDockWidgets::View::aboutToBeDestroyed();
@@ -982,15 +978,7 @@ extern "C" {
 void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper *>(cppObj);
-}
-void *c_KDDockWidgets__View__constructor_Controller_Type(void *controller_, int arg__2)
-{
-    auto controller = reinterpret_cast<KDDockWidgets::Controller *>(controller_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::View_wrapper(
-        controller, static_cast<KDDockWidgets::Type>(arg__2));
-    return reinterpret_cast<void *>(ptr);
-}
-// aboutToBeDestroyed() const
+} // aboutToBeDestroyed() const
 bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj)
 {
     return fromPtr(thisObj)->aboutToBeDestroyed();

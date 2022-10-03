@@ -21,9 +21,9 @@
 #include <qpoint.h>
 #include <KDDockWidgets.h>
 #include <qsize.h>
-#include <View.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class FloatingWindow_wrapper : public ::KDDockWidgets::Controllers::FloatingWindow
@@ -74,6 +74,8 @@ public:
     virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget() const;
     virtual KDDockWidgets::Controllers::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Controllers::Group *singleFrame() const;
+    bool supportsMaximizeButton() const;
+    bool supportsMinimizeButton() const;
     KDDockWidgets::Controllers::TitleBar *titleBar() const;
     static QString tr(const char *s, const char *c, int n);
     void updateTitleAndIcon();
@@ -212,6 +214,12 @@ c_KDDockWidgets__Controllers__FloatingWindow__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::singleFrame() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__FloatingWindow__singleFrame(void *thisObj);
+// KDDockWidgets::Controllers::FloatingWindow::supportsMaximizeButton() const
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__FloatingWindow__supportsMaximizeButton(void *thisObj);
+// KDDockWidgets::Controllers::FloatingWindow::supportsMinimizeButton() const
+KDDockWidgetsBindings_EXPORT bool
+c_KDDockWidgets__Controllers__FloatingWindow__supportsMinimizeButton(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::titleBar() const
 KDDockWidgetsBindings_EXPORT void *
 c_KDDockWidgets__Controllers__FloatingWindow__titleBar(void *thisObj);

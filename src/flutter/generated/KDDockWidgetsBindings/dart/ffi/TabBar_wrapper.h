@@ -16,10 +16,10 @@
 #include <qpoint.h>
 #include <Group.h>
 #include <qrect.h>
-#include <View.h>
+#include <qobject.h>
 #include <qcoreevent.h>
 #include <qsize.h>
-#include <qobject.h>
+#include <View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TabBar_wrapper : public ::KDDockWidgets::Controllers::TabBar

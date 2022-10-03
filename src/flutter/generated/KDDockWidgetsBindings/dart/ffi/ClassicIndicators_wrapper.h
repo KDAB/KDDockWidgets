@@ -15,8 +15,8 @@
 #include <qpoint.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <qcoreevent.h>
 #include <Group.h>
+#include <qcoreevent.h>
 #include <qobject.h>
 #include <View.h>
 

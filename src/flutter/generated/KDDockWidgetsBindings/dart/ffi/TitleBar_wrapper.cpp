@@ -176,6 +176,10 @@ void TitleBar_wrapper::minimizeButtonChanged(bool visible, bool enabled)
 {
     ::KDDockWidgets::Controllers::TitleBar::minimizeButtonChanged(visible, enabled);
 }
+void TitleBar_wrapper::numDockWidgetsChanged()
+{
+    ::KDDockWidgets::Controllers::TitleBar::numDockWidgetsChanged();
+}
 void TitleBar_wrapper::onAutoHideClicked()
 {
     ::KDDockWidgets::Controllers::TitleBar::onAutoHideClicked();
@@ -480,6 +484,11 @@ void c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(voi
 {
     fromPtr(thisObj)->minimizeButtonChanged(visible, enabled);
 }
+// numDockWidgetsChanged()
+void c_KDDockWidgets__Controllers__TitleBar__numDockWidgetsChanged(void *thisObj)
+{
+    fromPtr(thisObj)->numDockWidgetsChanged();
+}
 // onAutoHideClicked()
 void c_KDDockWidgets__Controllers__TitleBar__onAutoHideClicked(void *thisObj)
 {
@@ -642,7 +651,7 @@ void c_KDDockWidgets__Controllers__TitleBar__registerVirtualMethodCallback(void 
             KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_setParentView_impl>(
             callback);
         break;
-    case 1119:
+    case 1120:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_singleDockWidget>(
             callback);

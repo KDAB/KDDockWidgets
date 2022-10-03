@@ -1564,12 +1564,9 @@ int c_KDDockWidgets__Controller__y(void *thisObj);
 void c_KDDockWidgets__Controller__destructor(void *thisObj);
 void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void *callback,
                                                                 int methodId);
-void c_KDDockWidgets__Controller_Finalizer(
-    void *, void *cppObj,
-    void *); // KDDockWidgets::View::View(KDDockWidgets::Controller
-             // * controller, KDDockWidgets::Type arg__2)
-void *c_KDDockWidgets__View__constructor_Controller_Type(void *controller_, int arg__2);
-// KDDockWidgets::View::aboutToBeDestroyed() const
+void c_KDDockWidgets__Controller_Finalizer(void *, void *cppObj,
+                                           void *); // KDDockWidgets::View::aboutToBeDestroyed()
+                                                    // const
 bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
 // KDDockWidgets::View::activateWindow()
 void c_KDDockWidgets__View__activateWindow(void *thisObj);
@@ -2601,6 +2598,8 @@ void *c_KDDockWidgets__Controllers__TitleBar__mainWindow(void *thisObj);
 void c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj,
                                                                              bool visible,
                                                                              bool enabled);
+// KDDockWidgets::Controllers::TitleBar::numDockWidgetsChanged()
+void c_KDDockWidgets__Controllers__TitleBar__numDockWidgetsChanged(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::onAutoHideClicked()
 void c_KDDockWidgets__Controllers__TitleBar__onAutoHideClicked(void *thisObj);
 // KDDockWidgets::Controllers::TitleBar::onCloseClicked()
@@ -3396,6 +3395,10 @@ void c_KDDockWidgets__Controllers__FloatingWindow__setSuggestedGeometry_QRect(vo
 void *c_KDDockWidgets__Controllers__FloatingWindow__singleDockWidget(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::singleFrame() const
 void *c_KDDockWidgets__Controllers__FloatingWindow__singleFrame(void *thisObj);
+// KDDockWidgets::Controllers::FloatingWindow::supportsMaximizeButton() const
+bool c_KDDockWidgets__Controllers__FloatingWindow__supportsMaximizeButton(void *thisObj);
+// KDDockWidgets::Controllers::FloatingWindow::supportsMinimizeButton() const
+bool c_KDDockWidgets__Controllers__FloatingWindow__supportsMinimizeButton(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::titleBar() const
 void *c_KDDockWidgets__Controllers__FloatingWindow__titleBar(void *thisObj);
 // KDDockWidgets::Controllers::FloatingWindow::tr(const char * s, const char * c, int n)

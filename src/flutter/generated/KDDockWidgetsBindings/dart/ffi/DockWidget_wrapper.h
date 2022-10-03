@@ -19,8 +19,8 @@
 #include <MainWindow.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <qcoreevent.h>
 #include <qobject.h>
+#include <qcoreevent.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockWidget_wrapper : public ::KDDockWidgets::Controllers::DockWidget

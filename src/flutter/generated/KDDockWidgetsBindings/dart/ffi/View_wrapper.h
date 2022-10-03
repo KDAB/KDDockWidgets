@@ -30,7 +30,6 @@ class View_wrapper : public ::KDDockWidgets::View
 {
 public:
     ~View_wrapper();
-    View_wrapper(KDDockWidgets::Controller *controller, KDDockWidgets::Type arg__2);
     bool aboutToBeDestroyed() const;
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
@@ -286,9 +285,6 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::View::View(KDDockWidgets::Controller * controller, KDDockWidgets::Type arg__2)
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__View__constructor_Controller_Type(void *controller_, int arg__2);
 // KDDockWidgets::View::aboutToBeDestroyed() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj);
 // KDDockWidgets::View::activateWindow()

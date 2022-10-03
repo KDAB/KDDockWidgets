@@ -286,6 +286,14 @@ class TitleBar extends Controller {
             'c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool')
         .asFunction();
     func(thisCpp, visible ? 1 : 0, enabled ? 1 : 0);
+  } // numDockWidgetsChanged()
+
+  numDockWidgetsChanged() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__TitleBar__numDockWidgetsChanged')
+        .asFunction();
+    func(thisCpp);
   } // onAutoHideClicked()
 
   onAutoHideClicked() {
@@ -383,7 +391,7 @@ class TitleBar extends Controller {
   DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1119))
+            cFunctionSymbolName(1120))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DockWidget.fromCppPointer(result, false);
@@ -549,7 +557,7 @@ class TitleBar extends Controller {
         return "c_KDDockWidgets__Controllers__TitleBar__isWindow";
       case 891:
         return "c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View";
-      case 1119:
+      case 1120:
         return "c_KDDockWidgets__Controllers__TitleBar__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -569,7 +577,7 @@ class TitleBar extends Controller {
         return "isWindow";
       case 891:
         return "setParentView_impl";
-      case 1119:
+      case 1120:
         return "singleDockWidget";
     }
     throw Error();
@@ -607,8 +615,8 @@ class TitleBar extends Controller {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback891, 891);
-    final callback1119 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1120 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         TitleBar.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1119, 1119);
+    registerCallback(thisCpp, callback1120, 1120);
   }
 }

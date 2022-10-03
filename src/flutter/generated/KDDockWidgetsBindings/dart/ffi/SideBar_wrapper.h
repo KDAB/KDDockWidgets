@@ -13,12 +13,12 @@
 #include <qstring.h>
 #include <DockWidget.h>
 #include <MainWindow.h>
-#include <qrect.h>
-#include <View.h>
-#include <qcoreevent.h>
 #include <qpoint.h>
-#include <qsize.h>
 #include <qobject.h>
+#include <qcoreevent.h>
+#include <qrect.h>
+#include <qsize.h>
+#include <View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class SideBar_wrapper : public ::KDDockWidgets::Controllers::SideBar

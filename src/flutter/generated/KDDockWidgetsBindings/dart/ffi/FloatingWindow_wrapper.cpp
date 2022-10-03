@@ -225,6 +225,14 @@ KDDockWidgets::Controllers::Group *FloatingWindow_wrapper::singleFrame() const
 {
     return ::KDDockWidgets::Controllers::FloatingWindow::singleFrame();
 }
+bool FloatingWindow_wrapper::supportsMaximizeButton() const
+{
+    return ::KDDockWidgets::Controllers::FloatingWindow::supportsMaximizeButton();
+}
+bool FloatingWindow_wrapper::supportsMinimizeButton() const
+{
+    return ::KDDockWidgets::Controllers::FloatingWindow::supportsMinimizeButton();
+}
 KDDockWidgets::Controllers::TitleBar *FloatingWindow_wrapper::titleBar() const
 {
     return ::KDDockWidgets::Controllers::FloatingWindow::titleBar();
@@ -516,6 +524,16 @@ void *c_KDDockWidgets__Controllers__FloatingWindow__singleFrame(void *thisObj)
 {
     return fromPtr(thisObj)->singleFrame();
 }
+// supportsMaximizeButton() const
+bool c_KDDockWidgets__Controllers__FloatingWindow__supportsMaximizeButton(void *thisObj)
+{
+    return fromPtr(thisObj)->supportsMaximizeButton();
+}
+// supportsMinimizeButton() const
+bool c_KDDockWidgets__Controllers__FloatingWindow__supportsMinimizeButton(void *thisObj)
+{
+    return fromPtr(thisObj)->supportsMinimizeButton();
+}
 // titleBar() const
 void *c_KDDockWidgets__Controllers__FloatingWindow__titleBar(void *thisObj)
 {
@@ -573,11 +591,11 @@ void c_KDDockWidgets__Controllers__FloatingWindow__registerVirtualMethodCallback
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_eventFilter>(
             callback);
         break;
-    case 1559:
+    case 1560:
         wrapper->m_isMDICallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 1561:
+    case 1562:
         wrapper->m_isWindowCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
@@ -586,7 +604,7 @@ void c_KDDockWidgets__Controllers__FloatingWindow__registerVirtualMethodCallback
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_setParentView_impl>(
             callback);
         break;
-    case 1579:
+    case 1580:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<
             KDDockWidgetsBindings_wrappersNS::FloatingWindow_wrapper::Callback_singleDockWidget>(
             callback);
