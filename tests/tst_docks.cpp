@@ -6542,13 +6542,24 @@ void TestDocks::tst_titlebarNumDockWidgetsChanged()
     m->addDockWidget(dock0, Location_OnLeft);
 
     auto tb = dock0->titleBar();
-    // auto tbView = static_cast<Views::TitleBar_qtquick *>(tb->view());
 
     int numSignalEmittions = 0;
     connect(tb, &TitleBar::numDockWidgetsChanged, [&numSignalEmittions] { numSignalEmittions++; });
     dock0->addDockWidgetAsTab(dock1);
 
     QVERIFY(numSignalEmittions > 0);
+
+    {
+        // Block to manually test that signal is emitted when using LayoutSaver as well
+        // Use debugger or add a connect() in TitleBar's ctor to checks
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+
+        dock0->close();
+        dock1->close();
+
+        saver.restoreLayout(saved);
+    }
 }
 
 int main(int argc, char *argv[])
