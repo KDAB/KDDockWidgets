@@ -395,6 +395,10 @@ void Group::onDockWidgetCountChanged()
         const DockWidget::List docks = dockWidgets();
         for (DockWidget *dock : docks)
             dock->d->updateFloatAction();
+
+        if (auto fw = floatingWindow()) {
+            Q_EMIT fw->numDockWidgetsChanged();
+        }
     }
 
     Q_EMIT numDockWidgetsChanged();

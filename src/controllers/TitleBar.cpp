@@ -60,7 +60,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
 {
     init();
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
-    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this,
+    connect(m_floatingWindow, &FloatingWindow::numDockWidgetsChanged, this,
             &TitleBar::numDockWidgetsChanged);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this,
             &TitleBar::updateMaximizeButton);

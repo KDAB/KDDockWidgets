@@ -198,6 +198,7 @@ public:
 Q_SIGNALS:
     void activatedChanged();
     void numFramesChanged();
+    void numDockWidgetsChanged();
     void windowStateChanged();
 
 private:

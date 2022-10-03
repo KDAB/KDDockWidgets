@@ -248,6 +248,8 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
 
     m_layoutDestroyedConnection =
         connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
+
+    connect(this, &FloatingWindow::numFramesChanged, this, &FloatingWindow::numDockWidgetsChanged);
 }
 
 FloatingWindow::FloatingWindow(Controllers::Group *group, QRect suggestedGeometry,
