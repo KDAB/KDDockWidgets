@@ -154,6 +154,14 @@
           "tst_mainWindowAlwaysHasCentralWidget"
         ],
         "cwd": "${workspaceFolder:kddockwidgets}"
+      },
+      {
+        "name": "tst_qtquick",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder:kddockwidgets}/build-dev/bin/tst_qtquick",
+        "args": [],
+        "cwd": "${workspaceFolder:kddockwidgets}"
       }
     ]
   }
