@@ -36,6 +36,11 @@ inline QPoint eventGlobalPos(QMouseEvent *ev)
     return ev->globalPosition().toPoint();
 }
 
+inline QPoint eventPos(QHoverEvent *ev)
+{
+    return ev->position().toPoint();
+}
+
 #else // Qt 5:
 
 #define QQUICKITEMgeometryChanged geometryChanged
@@ -45,6 +50,11 @@ using qintptr = long;
 using qhashtype = uint;
 
 inline QPoint eventPos(QDropEvent *ev)
+{
+    return ev->pos();
+}
+
+inline QPoint eventPos(QHoverEvent *ev)
 {
     return ev->pos();
 }

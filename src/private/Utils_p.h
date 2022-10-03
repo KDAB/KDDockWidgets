@@ -145,6 +145,20 @@ inline QMouseEvent *mouseEvent(QEvent *e)
     return nullptr;
 }
 
+inline QHoverEvent *hoverEvent(QEvent *e)
+{
+    switch (e->type()) {
+    case QEvent::HoverEnter:
+    case QEvent::HoverLeave:
+    case QEvent::HoverMove:
+        return static_cast<QHoverEvent *>(e);
+    default:
+        break;
+    }
+
+    return nullptr;
+}
+
 inline bool isNonClientMouseEvent(const QEvent *e)
 {
     switch (e->type()) {

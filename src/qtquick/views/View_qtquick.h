@@ -167,8 +167,14 @@ protected:
     bool event(QEvent *) override;
     QQuickItem *createQQuickItem(const QString &filename, QQuickItem *parent) const;
 
+    /// Override in case you want to have different styling on hover
+    virtual void onHoverEvent(QHoverEvent *, QPoint /*globalPos*/)
+    {
+    }
+
 private:
     Q_DISABLE_COPY(View_qtquick)
+    friend class MouseEventRedirector;
     void updateNormalGeometry();
     bool m_inSetParent = false;
     QSize m_sizeHint;

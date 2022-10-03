@@ -61,6 +61,13 @@ public:
 
     bool eventFilter(QObject *source, QEvent *ev) override
     {
+        if (QHoverEvent *hev = hoverEvent(ev)) {
+            /// Don't block the hover events. In case users want to style tabs differently in QML
+            m_eventTarget->onHoverEvent(
+                hev, m_eventSource->mapToGlobal(Qt5Qt6Compat::eventPos(hev)).toPoint());
+            return false;
+        }
+
         QMouseEvent *me = mouseEvent(ev);
         if (!me)
             return false;

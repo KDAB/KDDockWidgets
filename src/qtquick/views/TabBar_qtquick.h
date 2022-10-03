@@ -48,6 +48,7 @@ class DOCKS_EXPORT TabBar_qtquick : public View_qtquick, public TabBarViewInterf
                    tabBarQmlItemChanged)
     Q_PROPERTY(bool tabBarAutoHide READ tabBarAutoHide NOTIFY tabBarAutoHideChanged)
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
+    Q_PROPERTY(int hoveredTabIndex READ hoveredTabIndex NOTIFY hoveredTabIndexChanged)
 public:
     explicit TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent = nullptr);
 
@@ -59,6 +60,8 @@ public:
 
     QString text(int index) const override;
     QRect rectForTab(int index) const override;
+    QRect globalRectForTab(int index) const;
+    int indexForTabPos(QPoint) const;
 
     void moveTabTo(int from, int to) override;
     Q_INVOKABLE void setCurrentIndex(int index) override;
@@ -73,19 +76,30 @@ public:
     void insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
                           const QString &title) override;
 
+    /// @brief Returns the index of the currently hovered tab
+    /// In case you want to style them differently in QML
+    int hoveredTabIndex() const;
+
 Q_SIGNALS:
     void tabBarQmlItemChanged();
     void tabBarAutoHideChanged();
 
+    /// @brief Emitted when the hovered tab changes
+    /// In case you want to style it differently
+    void hoveredTabIndexChanged(int);
+
 protected:
     bool event(QEvent *ev) override;
     void init() override;
+    void onHoverEvent(QHoverEvent *, QPoint globalPos) override;
 
 private:
     QQuickItem *tabAt(int index) const;
+    void setHoveredTabIndex(int);
     DockWidgetModel *const m_dockWidgetModel;
     QPointer<QQuickItem> m_tabBarQmlItem;
     KDBindings::ScopedConnection m_tabBarAutoHideChanged;
+    int m_hoveredTabIndex = -1;
 };
 
 class DockWidgetModel : public QAbstractListModel

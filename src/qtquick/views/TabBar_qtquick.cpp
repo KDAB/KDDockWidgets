@@ -97,6 +97,17 @@ QRect TabBar_qtquick::rectForTab(int index) const
     return {};
 }
 
+QRect TabBar_qtquick::globalRectForTab(int index) const
+{
+    if (QQuickItem *item = tabAt(index)) {
+        QRect r = item->boundingRect().toRect();
+        r.moveTopLeft(item->mapToGlobal(r.topLeft()).toPoint());
+        return r;
+    }
+
+    return {};
+}
+
 bool TabBar_qtquick::event(QEvent *ev)
 {
     switch (ev->type()) {
@@ -188,6 +199,41 @@ void TabBar_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, co
 DockWidgetModel *TabBar_qtquick::dockWidgetModel() const
 {
     return m_dockWidgetModel;
+}
+
+void TabBar_qtquick::onHoverEvent(QHoverEvent *ev, QPoint globalPos)
+{
+    if (ev->type() == QEvent::HoverLeave) {
+        setHoveredTabIndex(-1);
+    } else {
+        setHoveredTabIndex(indexForTabPos(globalPos));
+    }
+}
+
+int TabBar_qtquick::indexForTabPos(QPoint globalPt) const
+{
+    const int count = m_dockWidgetModel->count();
+    for (int i = 0; i < count; i++) {
+        const QRect tabRect = globalRectForTab(i);
+        if (tabRect.contains(globalPt))
+            return i;
+    }
+
+    return -1;
+}
+
+void TabBar_qtquick::setHoveredTabIndex(int idx)
+{
+    if (idx != m_hoveredTabIndex)
+        return;
+
+    m_hoveredTabIndex = idx;
+    Q_EMIT hoveredTabIndexChanged(idx);
+}
+
+int TabBar_qtquick::hoveredTabIndex() const
+{
+    return m_hoveredTabIndex;
 }
 
 DockWidgetModel::DockWidgetModel(Controllers::TabBar *tabBar, QObject *parent)
