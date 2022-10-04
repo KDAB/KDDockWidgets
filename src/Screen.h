@@ -11,12 +11,15 @@
 
 #pragma once
 
-#include "KDDockWidgets_p.h"
+#include "docks_export.h"
 
 #include <QVector>
 
+#include <memory>
+
 QT_BEGIN_NAMESPACE
-class QScreen;
+class QRect;
+class QSize;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
