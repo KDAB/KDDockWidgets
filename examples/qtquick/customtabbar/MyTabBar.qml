@@ -49,6 +49,9 @@ KDDW.TabBarBase {
         anchors.fill: parent
         spacing: 2
 
+        /// Needed only if you want to style hovered tabs differently
+        property int hoveredIndex: -1;
+
         /// ##HERE## The list of tabs is stored in a C++ model. This repeater populates our tab bar
         Repeater {
             model: root.groupCpp ? root.groupCpp.tabBar.dockWidgetModel : 0
@@ -56,7 +59,7 @@ KDDW.TabBarBase {
                 id: tab
                 height: parent.height
                 width: 100
-                color: "orange"
+                color: (tabBar.hoveredIndex == index) ? "#ba7600" : "orange"
                 border.color: "black"
 
                 // ##HERE## Illustrating how to have a different style in case the tab is current
@@ -78,6 +81,14 @@ KDDW.TabBarBase {
                         root.currentTabIndex = index;
                     }
                 }
+            }
+        }
+
+        Connections {
+            target: tabBarCpp
+
+            function onHoveredTabIndexChanged(index) {
+                tabBar.hoveredIndex = index;
             }
         }
     }

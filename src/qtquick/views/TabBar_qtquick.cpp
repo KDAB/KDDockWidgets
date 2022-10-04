@@ -224,7 +224,7 @@ int TabBar_qtquick::indexForTabPos(QPoint globalPt) const
 
 void TabBar_qtquick::setHoveredTabIndex(int idx)
 {
-    if (idx != m_hoveredTabIndex)
+    if (idx == m_hoveredTabIndex)
         return;
 
     m_hoveredTabIndex = idx;

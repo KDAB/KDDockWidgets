@@ -86,7 +86,7 @@ Q_SIGNALS:
 
     /// @brief Emitted when the hovered tab changes
     /// In case you want to style it differently
-    void hoveredTabIndexChanged(int);
+    void hoveredTabIndexChanged(int index);
 
 protected:
     bool event(QEvent *ev) override;
