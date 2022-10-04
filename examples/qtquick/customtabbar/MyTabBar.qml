@@ -26,14 +26,14 @@ KDDW.TabBarBase {
     /// #HERE#. This function required in all derived tab bars. It's called by C++;
     /// Returns the tab bar (QQuickItem*) at the specified index.
     function getTabAtIndex(index) {
-        return tabBar.children[index];
+        return tabBarRow.children[index];
     }
 
     /// #HERE#. This function required in all derived tab bars. It's called by C++;
     /// Returns an int, with the index of the tab that's at the specified position.
     function getTabIndexAtPosition(globalPoint) {
-        for (var i = 0; i < tabBar.children.length; ++i) {
-            var tab = tabBar.children[i];
+        for (var i = 0; i < tabBarRow.children.length; ++i) {
+            var tab = tabBarRow.children[i];
             var localPt = tab.mapFromGlobal(globalPoint.x, globalPoint.y);
             if (tab.contains(localPt)) {
                 return i;
@@ -44,7 +44,7 @@ KDDW.TabBarBase {
     }
 
     Row {
-        id: tabBar
+        id: tabBarRow
 
         anchors.fill: parent
         spacing: 2
@@ -59,7 +59,7 @@ KDDW.TabBarBase {
                 id: tab
                 height: parent.height
                 width: 100
-                color: (tabBar.hoveredIndex == index) ? "#ba7600" : "orange"
+                color: (tabBarRow.hoveredIndex == index) ? "#ba7600" : "orange"
                 border.color: "black"
 
                 // ##HERE## Illustrating how to have a different style in case the tab is current
@@ -88,7 +88,7 @@ KDDW.TabBarBase {
             target: tabBarCpp
 
             function onHoveredTabIndexChanged(index) {
-                tabBar.hoveredIndex = index;
+                tabBarRow.hoveredIndex = index;
             }
         }
     }
