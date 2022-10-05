@@ -78,7 +78,13 @@ QQuickItem *TabBar_qtquick::tabBarQmlItem() const
 
 void TabBar_qtquick::setTabBarQmlItem(QQuickItem *item)
 {
+    if (m_tabBarQmlItem == item) {
+        qWarning() << Q_FUNC_INFO << "Should be called only once";
+        return;
+    }
+
     m_tabBarQmlItem = item;
+    Q_EMIT tabBarQmlItemChanged();
 }
 
 QString TabBar_qtquick::text(int index) const
