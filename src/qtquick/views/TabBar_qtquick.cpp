@@ -126,6 +126,9 @@ bool TabBar_qtquick::event(QEvent *ev)
                 m_tabBar->onMousePress(me->pos());
             else
                 m_tabBar->onMouseDoubleClick(me->pos());
+
+            // Don't call base class, it might have been deleted
+            return true;
         }
 
         break;

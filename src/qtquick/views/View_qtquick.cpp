@@ -80,7 +80,14 @@ public:
 
         // Finally send the event
         m_eventTarget->setProperty("cursorPosition", m_eventSource->property("cursorPosition"));
+        QPointer<QObject> lifeGuard(this);
         qGuiApp->sendEvent(m_eventTarget, me);
+
+        if (!lifeGuard) {
+            // m_eventTarget was deleted, and so was "this"
+            return true;
+        }
+
         m_eventTarget->setProperty("cursorPosition", CursorPosition_Undefined);
 
         return false;
