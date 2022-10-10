@@ -83,6 +83,14 @@
         "cwd": "${workspaceFolder:kddockwidgets}"
       },
       {
+        "name": "qtquick_customtitlebar",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder:kddockwidgets}/build-dev/bin/examples/qtquick_customtitlebar",
+        "args": [],
+        "cwd": "${workspaceFolder:kddockwidgets}"
+      },
+      {
         "name": "tst_docks",
         "type": "lldb",
         "request": "launch",
