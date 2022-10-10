@@ -626,6 +626,7 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
             view()->showNormal();
         }
 
+        Q_EMIT numDockWidgetsChanged();
         return true;
     } else {
         return false;
