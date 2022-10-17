@@ -11,6 +11,7 @@
 
 #include "main.h"
 #include "private/View_p.h"
+#include <kddockwidgets/ViewFactory.h>
 #include "Platform.h"
 #include "Config.h"
 
@@ -32,7 +33,9 @@ TEST_CASE("Platform::name")
 TEST_CASE("Platform::createDefaultViewFactory")
 {
     auto plat = Platform::instance();
-    REQUIRE(plat->createDefaultViewFactory());
+    ViewFactory *vf = plat->createDefaultViewFactory();
+    REQUIRE(vf);
+    delete vf;
 }
 
 TEST_CASE("Platform::startDragDistance")
