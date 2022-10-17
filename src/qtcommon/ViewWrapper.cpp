@@ -19,7 +19,16 @@ using namespace KDDockWidgets;
 
 ViewWrapper::ViewWrapper(Controller *controller, QObject *thisObj)
     : View_qt(controller, Type::ViewWrapper, thisObj)
+    , m_ownsController(controller == nullptr) // Base class created a dummy controller for us
 {
+}
+
+ViewWrapper::~ViewWrapper()
+{
+    if (m_ownsController) {
+        m_inDtor = true;
+        delete controller();
+    }
 }
 
 void ViewWrapper::setMinimumSize(QSize)

@@ -30,6 +30,7 @@ public:
     using Ptr = std::shared_ptr<View>;
 
     explicit ViewWrapper(Controller *controller, QObject *thisObj);
+    ~ViewWrapper() override;
 
     void setMinimumSize(QSize) override;
     QSize maxSizeHint() const override;
@@ -58,6 +59,9 @@ public:
     void render(QPainter *p) override;
     void setMouseTracking(bool) override;
     std::shared_ptr<View> asWrapper() override;
+
+private:
+    const bool m_ownsController;
 };
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) // In Qt6 we can't delete it
