@@ -954,8 +954,7 @@ void TestMultiSplitter::tst_misc2()
     ItemBoxContainer *root1 = createRootWithSingleItem();
     Item *item1 = root1->childItems().constFirst();
     ItemBoxContainer *root2 = createRootWithSingleItem();
-    ItemBoxContainer *root3 = createRootWithSingleItem();
-    Item *item3 = root3->childItems().constFirst();
+    Item *item3 = createItem();
     ItemBoxContainer *root4 = createRootWithSingleItem();
     ItemBoxContainer *root5 = createRootWithSingleItem();
     Item *item5 = root5->childItems().constFirst();
