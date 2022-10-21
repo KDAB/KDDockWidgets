@@ -57,11 +57,10 @@ public:
 
     bool isFullScreen() const override;
 
+    void onScreenChanged(QObject *context, WindowScreenChangedCallback) override;
+
 protected:
     QPointer<QWindow> m_window;
-
-private:
-    QMetaObject::Connection m_connection;
 };
 
 }

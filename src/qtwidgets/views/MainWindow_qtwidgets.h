@@ -79,6 +79,9 @@ public:
     /// main dock widget layout
     QHBoxLayout *internalLayout() const;
 
+    /// @brief for internal use only
+    void updateMargins();
+
 protected:
     QRect centralAreaGeometry() const override;
 

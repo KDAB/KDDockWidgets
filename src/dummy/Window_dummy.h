@@ -46,5 +46,6 @@ public:
     QSize maxSize() const override;
     QPoint fromNativePixels(QPoint) const override;
     bool isFullScreen() const override;
+    void onScreenChanged(QObject *context, WindowScreenChangedCallback) override;
 };
 }

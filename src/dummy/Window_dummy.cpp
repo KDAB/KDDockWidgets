@@ -141,3 +141,7 @@ Screen::Ptr Window_dummy::screen() const
 {
     return {};
 }
+
+void Window_dummy::onScreenChanged(QObject *, WindowScreenChangedCallback)
+{
+}

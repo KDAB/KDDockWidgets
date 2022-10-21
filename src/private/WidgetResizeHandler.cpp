@@ -611,11 +611,12 @@ void WidgetResizeHandler::setupWindow(Window::Ptr window)
 #if defined(Q_OS_WIN)
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         const auto wid = HWND(window->handle());
-        window->screenChanged.connect([wid] {
+        window->onScreenChanged(nullptr, [](QObject *, Window::Ptr window) {
             // Qt honors our frame hijacking usually... but when screen changes we must give it a
             // nudge. Otherwise what Qt thinks is the client area is not what Windows knows it is.
             // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take
             // note of the margins we're using.
+            const auto wid = HWND(window->handle());
             SetWindowPos(wid, 0, 0, 0, 0, 0,
                          SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
         });

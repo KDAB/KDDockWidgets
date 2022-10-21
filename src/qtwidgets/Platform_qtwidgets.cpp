@@ -125,6 +125,7 @@ std::shared_ptr<View> Platform_qtwidgets::qobjectAsView(QObject *obj) const
 
 std::shared_ptr<Window> Platform_qtwidgets::windowFromQWindow(QWindow *qwindow) const
 {
+    Q_ASSERT(qwindow);
     return std::shared_ptr<Window>(new Window_qtwidgets(qwindow));
 }
 

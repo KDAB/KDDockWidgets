@@ -12,6 +12,7 @@
 
 #include "kddockwidgets/Screen_qt.h"
 #include "kddockwidgets/Window_qt.h"
+#include "kddockwidgets/Platform_qt.h"
 
 #include <QWindow>
 #include <QScreen>
@@ -25,13 +26,21 @@ Window_qt::Window_qt(QWindow *window)
     : m_window(window)
 {
     Q_ASSERT(window);
-    m_connection =
-        QObject::connect(window, &QWindow::screenChanged, [this] { screenChanged.emit(); });
 }
 
 Window_qt::~Window_qt()
 {
-    QObject::disconnect(m_connection);
+}
+
+void Window_qt::onScreenChanged(QObject *context, WindowScreenChangedCallback callback)
+{
+    // Window_qt can't have a "screenChanged" signal since it's a short-lived object which
+    // just wraps QWindow API. Instead, connects need to be done directly to QWindow
+    QWindow *window = m_window; // copy before "this" is deleted
+    context = context ? context : m_window;
+    QObject::connect(m_window, &QWindow::screenChanged, context, [context, window, callback] {
+        callback(context, Platform_qt::instance()->windowFromQWindow(window));
+    });
 }
 
 void Window_qt::setWindowState(WindowState state)

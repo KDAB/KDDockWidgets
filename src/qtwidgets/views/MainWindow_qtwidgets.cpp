@@ -68,7 +68,6 @@ public:
 
     ~Private()
     {
-        m_connection.disconnect();
     }
 
     void updateMargins()
@@ -82,7 +81,6 @@ public:
     const bool m_supportsAutoHide;
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
-    KDBindings::ConnectionHandle m_connection;
     QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
 };
 
@@ -131,9 +129,10 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName, MainWindow
         // create(), so they pass a parent, with null flag.
 
         create(); // ensure QWindow exists
-        d->m_connection = window()->screenChanged.connect([this] {
-            d->updateMargins(); // logical dpi might have changed
-            Q_EMIT DockRegistry::self()->windowChangedScreen(window());
+        window()->onScreenChanged(this, [](QObject *context, auto window) {
+            if (auto mw = qobject_cast<MainWindow_qtwidgets *>(context))
+                mw->updateMargins(); // logical dpi might have changed
+            Q_EMIT DockRegistry::self()->windowChangedScreen(window);
         });
     }
 }
@@ -185,4 +184,9 @@ QWidget *MainWindow_qtwidgets::persistentCentralWidget() const
 QHBoxLayout *MainWindow_qtwidgets::internalLayout() const
 {
     return d->m_layout;
+}
+
+void MainWindow_qtwidgets::updateMargins()
+{
+    d->updateMargins();
 }

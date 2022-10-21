@@ -17,8 +17,6 @@
 
 #include <QVector>
 
-#include "kdbindings/signal.h"
-
 namespace KDDockWidgets {
 
 /// @brief Represents a top-level window
@@ -30,6 +28,7 @@ class DOCKS_EXPORT Window
 public:
     using Ptr = std::shared_ptr<Window>;
     using List = QVector<Ptr>;
+    typedef void (*WindowScreenChangedCallback)(QObject *context, Ptr window);
 
     virtual ~Window();
     virtual void setWindowState(WindowState) = 0;
@@ -157,10 +156,9 @@ public:
     int maxWidth() const;
     int maxHeight() const;
 
-    /// @brief Signal emitted when a window changes screen
-    /// Like for example QWindow::screenChanged() for Qt.
-    /// Needs to be emitted by the derived classes.
-    KDBindings::Signal<> screenChanged;
+    /// @brief Registers a callback to be called when window changes screen
+    /// Multiple callbacks can be registered
+    virtual void onScreenChanged(QObject *context, WindowScreenChangedCallback) = 0;
 
 private:
     bool containsView(Controller *) const;
