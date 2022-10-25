@@ -742,7 +742,7 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
     }
 
     if (d->affinities != mw.affinities) {
-        qWarning() << Q_FUNC_INFO << "Affinty name changed from" << d->affinities << "; to"
+        qWarning() << Q_FUNC_INFO << "Affinity name changed from" << d->affinities << "; to"
                    << mw.affinities;
 
         d->affinities = mw.affinities;
