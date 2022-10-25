@@ -182,7 +182,8 @@ QT_END_NAMESPACE
 inline QDebug operator<<(QDebug debug, const nlohmann::json &j)
 {
     QDebugStateSaver s(debug);
-    debug.nospace() << '\n' << j.dump(4).data() << '\n';
+    debug.nospace() << '\n'
+                    << j.dump(4).data() << '\n';
     return debug;
 }
 

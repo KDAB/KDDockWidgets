@@ -398,7 +398,8 @@ void Fuzzer::fuzz(const QStringList &jsonFiles)
 void Fuzzer::fuzz(const QString &jsonFile)
 {
     m_currentJsonFile = jsonFile;
-    qDebug() << "\n" << Q_FUNC_INFO << jsonFile;
+    qDebug() << "\n"
+             << Q_FUNC_INFO << jsonFile;
     QFile file(jsonFile);
     if (file.open(QIODevice::ReadOnly)) {
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());

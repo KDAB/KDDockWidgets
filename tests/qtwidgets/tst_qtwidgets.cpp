@@ -1427,8 +1427,8 @@ void TestQtWidgets::tst_complex()
     Controllers::DockWidget::List docks;
 
     QVector<KDDockWidgets::Location> locations = {
-        Location_OnLeft,   Location_OnLeft,   Location_OnLeft,   Location_OnRight,
-        Location_OnRight,  Location_OnRight,  Location_OnRight,  Location_OnBottom,
+        Location_OnLeft, Location_OnLeft, Location_OnLeft, Location_OnRight,
+        Location_OnRight, Location_OnRight, Location_OnRight, Location_OnBottom,
         Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
         Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
         Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
@@ -1437,24 +1437,24 @@ void TestQtWidgets::tst_complex()
 
     QVector<KDDockWidgets::InitialVisibilityOption> options = {
         InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
-        InitialVisibilityOption::StartHidden,  InitialVisibilityOption::StartHidden,
+        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
         InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartHidden,
-        InitialVisibilityOption::StartHidden,  InitialVisibilityOption::StartHidden,
-        InitialVisibilityOption::StartHidden,  InitialVisibilityOption::StartHidden,
-        InitialVisibilityOption::StartHidden,  InitialVisibilityOption::StartVisible,
+        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartVisible,
         InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartHidden,
-        InitialVisibilityOption::StartHidden,  InitialVisibilityOption::StartHidden,
-        InitialVisibilityOption::StartHidden,  InitialVisibilityOption::StartHidden,
-        InitialVisibilityOption::StartHidden,  InitialVisibilityOption::StartHidden,
+        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
         InitialVisibilityOption::StartHidden
     };
 
-    QVector<bool> floatings = { true,  false, true,  false, false, false, false,
-                                false, false, false, false, false, true,  false,
-                                false, true,  true,  true,  true,  true,  false };
+    QVector<bool> floatings = { true, false, true, false, false, false, false,
+                                false, false, false, false, false, true, false,
+                                false, true, true, true, true, true, false };
 
-    QVector<QSize> minSizes = { QSize(316, 219), QSize(355, 237), QSize(293, 66),  QSize(158, 72),
-                                QSize(30, 141),  QSize(104, 143), QSize(104, 105), QSize(84, 341),
+    QVector<QSize> minSizes = { QSize(316, 219), QSize(355, 237), QSize(293, 66), QSize(158, 72),
+                                QSize(30, 141), QSize(104, 143), QSize(104, 105), QSize(84, 341),
                                 QSize(130, 130), QSize(404, 205), QSize(296, 177), QSize(914, 474),
                                 QSize(355, 237), QSize(104, 104), QSize(104, 138), QSize(1061, 272),
                                 QSize(165, 196), QSize(296, 177), QSize(104, 104), QSize(355, 237),
