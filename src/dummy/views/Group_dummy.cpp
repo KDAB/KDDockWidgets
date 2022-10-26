@@ -32,7 +32,6 @@
 
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "Stack_dummy.h"
 #include "private/WidgetResizeHandler_p.h"
 
 #include <QDebug>

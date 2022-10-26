@@ -19,7 +19,6 @@
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "Group.h"
 #include "private/Draggable_p.h"
-#include "kddockwidgets/docks_export.h"
 
 QT_BEGIN_NAMESPACE
 class QAbstractNativeEventFilter;

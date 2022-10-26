@@ -37,7 +37,6 @@
 #include "qtwidgets/views/ViewWrapper_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "qtcommon/View_qt.h"
-#include "Platform.h"
 
 #include <QObject>
 #include <QPushButton>

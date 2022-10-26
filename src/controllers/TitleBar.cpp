@@ -25,8 +25,6 @@
 #include "controllers/MDILayout.h"
 #include "controllers/Stack.h"
 
-#include "kddockwidgets/ViewFactory.h"
-
 #include <QTimer>
 
 using namespace KDDockWidgets;
