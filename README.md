@@ -13,6 +13,18 @@ Although `KDDockWidgets` is ready to be used out of the box, it can also be seen
 as a framework to allow building very tailored custom docking systems. It tries
 to expose every internal widget and every knob for the app developer to tune.
 
+You will find more information in these places:
+
+- [our official home page](https://www.kdab.com/development-resources/qt-tools/kddockwidgets)
+- [online detailed browsable API reference](https://docs.kdab.com/kddockwidgets)
+- [our example programs](examples/)
+
+We also have an [in browser demo](https://demos.kdab.com/wasm/kddockwidgets/dockwidgets.html).
+Note however that this demo isn't fully featured, as it's running on Qt for WebAssembly.
+
+Additionally, KDAB can provide pre-built Windows binaries for the example programs.
+Contact <info@kdab.com> if interested.
+
 ## Motivation
 
 Throughout the years KDAB contributed and funded bug fixes and features to `QDockWidget`.
@@ -22,15 +34,6 @@ and an equal number of days just to fix dozens of regressions.
 `QDockWidget` mixes GUI code with logic with state, making it very hard
 to move forward with new features. Furthermore, our customers were getting more
 creative with their requests, so it was clear we needed a better docking framework.
-
-You will find more information in these places:
-
-- [our official home page](https://www.kdab.com/development-resources/qt-tools/kddockwidgets)
-- [online detailed browsable API reference](https://docs.kdab.com/kddockwidgets)
-- [our example programs](examples/)
-
-We also have an [in browser demo](https://demos.kdab.com/wasm/kddockwidgets/dockwidgets.html). Note
-however that this demo isn't fully featured, as it's running on Qt for WebAssembly.
 
 ## Features
 
