@@ -486,4 +486,15 @@ if(KDDockWidgets_IS_ROOT_PROJECT)
     include(ECMUninstallTarget)
 endif()
 
+# Deployment
+if(WIN32)
+    add_custom_target(
+        createZipDemo
+        COMMAND cmd /c ${CMAKE_CURRENT_SOURCE_DIR}\\deploy\\create-demo-win-zip.bat
+                ${CMAKE_PROJECT_NAME}-${${PROJECT_NAME}_VERSION}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Target to generate the Zip demo installer for Windows"
+    )
+endif()
+
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
