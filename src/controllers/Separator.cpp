@@ -49,7 +49,6 @@ struct Separator::Private
     Private(View *host)
         : m_hostView(host)
     {
-        Q_UNUSED(rubberBandIsTopLevel);
         s_numSeparators++;
     }
 
