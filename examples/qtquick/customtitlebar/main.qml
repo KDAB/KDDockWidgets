@@ -23,5 +23,20 @@ ApplicationWindow {
         anchors.fill: parent
 
         uniqueName: "MyMainLayout"
+
+        KDDW.DockWidget {
+            id: dock4
+            uniqueName: "dock4"
+            source: "qrc:/Guest4.qml"
+            onIsFocusedChanged: {
+              console.log("Dock4 focus changed to: " + isFocused);
+            }
+        }
+
+        Component.onCompleted: {
+            // The other 3 dock widgets are created via C++ in main.cpp
+            // For illustration purposes, here's a .qml version. Maybe it's te preferred form even.
+            addDockWidget(dock4, KDDW.KDDockWidgets.Location_OnBottom);
+        }
     }
 }
