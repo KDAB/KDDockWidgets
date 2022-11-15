@@ -96,13 +96,33 @@ void DockRegistry::setFocusedDockWidget(Controllers::DockWidget *dw)
     if (m_focusedDockWidget.data() == dw)
         return;
 
-    if (m_focusedDockWidget)
-        Q_EMIT m_focusedDockWidget->isFocusedChanged(false);
+    if (m_focusedDockWidget) {
+        // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
+        // as the FocusScope hasn't been updated yet.
+        // It's just for styling purposes, so can be delayed
+        auto oldDw = m_focusedDockWidget;
+        QMetaObject::invokeMethod(
+            oldDw, [oldDw] {
+                if (oldDw) // QPointer
+                    Q_EMIT oldDw->isFocusedChanged(false);
+            },
+            Qt::QueuedConnection);
+    }
 
     m_focusedDockWidget = dw;
 
-    if (m_focusedDockWidget)
-        Q_EMIT m_focusedDockWidget->isFocusedChanged(true);
+    if (dw) {
+        // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
+        // as the FocusScope hasn't been updated yet.
+        // It's just for styling purposes, so can be delayed
+        QMetaObject::invokeMethod(
+            this, [dw] {
+                if (dw) { // QPointer
+                    Q_EMIT dw->isFocusedChanged(true);
+                }
+            },
+            Qt::QueuedConnection);
+    }
 }
 
 bool DockRegistry::isEmpty(bool excludeBeingDeleted) const

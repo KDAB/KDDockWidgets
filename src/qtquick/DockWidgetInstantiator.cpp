@@ -207,8 +207,6 @@ void DockWidgetInstantiator::componentComplete()
     });
     connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
             &DockWidgetInstantiator::isFocusedChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
-            &DockWidgetInstantiator::isFocusedChanged);
     connect(m_dockWidget, &Controllers::DockWidget::isOverlayedChanged, this,
             &DockWidgetInstantiator::isOverlayedChanged);
     connect(m_dockWidget, &Controllers::DockWidget::isFloatingChanged, this,
