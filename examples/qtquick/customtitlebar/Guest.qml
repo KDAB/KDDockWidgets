@@ -10,6 +10,7 @@
 */
 
 import QtQuick 2.9
+import QtQuick.Controls 2.15
 
 Item {
     anchors.fill: parent
@@ -31,6 +32,16 @@ Item {
                 fill: parent
                 margins: 50
             }
+        }
+    }
+
+    TextField {
+        placeholderText: "TextField just to test focus"
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            margins: 5
         }
     }
 }

@@ -28,6 +28,7 @@ Rectangle {
     readonly property string title: titleBarCpp ? titleBarCpp.title : ""
     readonly property bool floatButtonVisible: titleBarCpp && titleBarCpp.floatButtonVisible
     readonly property bool closeButtonEnabled: titleBarCpp && titleBarCpp.closeButtonEnabled
+    readonly property bool isFocused: titleBarCpp && titleBarCpp.isFocused
 
     // So the tests can send mouse events programmatically
     readonly property QtObject mouseAreaForTests: dragMouseArea

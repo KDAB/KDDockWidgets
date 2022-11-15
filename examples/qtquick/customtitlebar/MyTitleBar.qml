@@ -16,14 +16,14 @@ import "qrc:/kddockwidgets/qtquick/views/qml/" as KDDW
 
 KDDW.TitleBarBase {
     id: root
-    color: "black"
+    color:  "black"
     border.color: "orange"
     border.width: 2
     heightWhenVisible: 50
 
     Text {
-        color: "orange"
-        font.bold: true
+        color: isFocused ? "cyan" : "orange"
+        font.bold: isFocused
         text: root.title
         anchors {
             left: parent.left
@@ -36,7 +36,7 @@ KDDW.TitleBarBase {
         id: closeButton
         enabled: root.closeButtonEnabled
         radius: 5
-        color: "green"
+        color: isFocused ? "cyan" : "green"
         height: root.height - 20
         width: height
         anchors {

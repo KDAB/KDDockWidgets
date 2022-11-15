@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtQuick);
 
     auto &config = KDDockWidgets::Config::self();
-    auto flags = config.flags();
+    auto flags = config.flags() | KDDockWidgets::Config::Flag_TitleBarIsFocusable;
 
     config.setFlags(flags);
     config.setViewFactory(new CustomViewFactory());
