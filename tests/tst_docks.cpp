@@ -2605,6 +2605,12 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     // Focus dock widget 1 first
     QVERIFY(!dw1->isFocused());
     dw1->window()->activateWindow();
+
+    connect(
+        dw1, &Controllers::DockWidget::isFocusedChanged, dw1, [dw1](bool focused) {
+            Q_ASSERT(focused == dw1->isFocused());
+        });
+
     le1->setFocus(Qt::MouseFocusReason);
     QTest::qWait(200);
     QVERIFY(dw1->isFocused());
