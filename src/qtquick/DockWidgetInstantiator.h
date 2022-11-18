@@ -88,9 +88,8 @@ Q_SIGNALS:
     void dockWidgetChanged();
     void actualTitleBarChanged();
     void titleChanged(const QString &title);
-    void shown();
-    void hidden();
     void iconChanged();
+    void closed();
     void guestViewChanged(QQuickItem *);
     void optionsChanged(KDDockWidgets::DockWidgetOptions);
     void isFocusedChanged(bool);

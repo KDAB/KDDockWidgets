@@ -497,6 +497,9 @@ Q_SIGNALS:
     /// @brief Emitted when this dock widget is about to be deleted
     void aboutToDelete(KDDockWidgets::Controllers::DockWidget *);
 
+    /// @brief Emitted when a dock widget is closed
+    void closed();
+
 protected:
     void setParentView_impl(View *parent) override;
 

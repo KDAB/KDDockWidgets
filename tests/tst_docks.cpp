@@ -6568,6 +6568,33 @@ void TestDocks::tst_titlebarNumDockWidgetsChanged()
     }
 }
 
+void TestDocks::tst_closed()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dockA = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    auto dockB = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+
+    int numCloseA = 0;
+    int numCloseB = 0;
+    connect(dockA, &DockWidget::closed, [&] { numCloseA++; });
+    connect(dockB, &DockWidget::closed, [&] { numCloseB++; });
+
+    dockA->setFloating(true);
+    m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
+
+    QCOMPARE(numCloseA, 0);
+    QCOMPARE(numCloseB, 0);
+
+    dockB->close();
+    QCOMPARE(numCloseA, 0);
+    QCOMPARE(numCloseB, 1);
+
+    dockA->closed();
+    QCOMPARE(numCloseA, 1);
+    QCOMPARE(numCloseB, 1);
+}
+
 int main(int argc, char *argv[])
 {
     int exitCode = 0;

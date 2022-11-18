@@ -202,6 +202,8 @@ void DockWidgetInstantiator::componentComplete()
             &DockWidgetInstantiator::optionsChanged);
     connect(m_dockWidget, &Controllers::DockWidget::iconChanged, this,
             &DockWidgetInstantiator::iconChanged);
+    connect(m_dockWidget, &Controllers::DockWidget::closed, this,
+            &DockWidgetInstantiator::closed);
     connect(m_dockWidget, &Controllers::DockWidget::guestViewChanged, this, [this] {
         Q_EMIT guestViewChanged(Views::asQQuickItem(m_dockWidget->guestView().get()));
     });
@@ -215,7 +217,6 @@ void DockWidgetInstantiator::componentComplete()
             &DockWidgetInstantiator::removedFromSideBar);
     connect(m_dockWidget, &Controllers::DockWidget::windowActiveAboutToChange, this,
             &DockWidgetInstantiator::windowActiveAboutToChange);
-
 
     if (m_sourceFilename.isEmpty()) {
         m_dockWidget->setGuestView(Views::View_qtquick::asQQuickWrapper(childItems.constFirst()));
