@@ -536,7 +536,7 @@ if(KDDockWidgets_XLib)
     target_link_libraries(kddockwidgets PRIVATE X11)
 endif()
 
-find_package(nlohmann_json)
+find_package(nlohmann_json QUIET)
 if(nlohmann_json_FOUND)
     target_link_libraries(kddockwidgets PRIVATE nlohmann_json::nlohmann_json)
 else()
