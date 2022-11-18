@@ -7915,3 +7915,21 @@ void TestDocks::tst_setFloatingWindowFlags()
         QVERIFY(dock2->window()->windowFlags() & Qt::Tool);
     }
 }
+
+void TestDocks::tst_crash326()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
+    QPointer<Frame> originalFrame = dock1->d->frame();
+    dock1->close();
+    QVERIFY(dock1->parent() == nullptr);
+    QVERIFY(originalFrame != dock1->d->frame());
+    QVERIFY(originalFrame->beingDeletedLater());
+
+    // In bug #326, the dock widget is reparented to the frame that's being deleted
+    dock1->show();
+    QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
+    QVERIFY(originalFrame != dock1->d->frame());
+}

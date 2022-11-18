@@ -247,6 +247,7 @@ private Q_SLOTS:
     void tst_redockToMDIRestoresPosition();
     void tst_persistentCentralWidget();
     void tst_setFloatingWindowFlags();
+    void tst_crash326();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
