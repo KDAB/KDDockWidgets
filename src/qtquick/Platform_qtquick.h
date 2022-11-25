@@ -14,6 +14,8 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/Platform_qt.h"
 
+#include <QPointer>
+
 QT_BEGIN_NAMESPACE
 class QQmlEngine;
 class QQuickItem;
@@ -69,7 +71,7 @@ public:
 #endif
 private:
     void init();
-    QQmlEngine *m_qmlEngine = nullptr;
+    QPointer<QQmlEngine> m_qmlEngine;
     QtQuickHelpers *const m_qquickHelpers;
 };
 
