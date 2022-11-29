@@ -46,6 +46,13 @@ int main(int argc, char *argv[])
         "z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
     parser.addOption(alwaysTabs);
 
+    QCommandLineOption maximizeButtonOption(
+        "b",
+        QCoreApplication::translate(
+            "main",
+            "Floating dockWidgets have maximize/restore buttons instead of float/dock button"));
+    parser.addOption(maximizeButtonOption);
+
 #ifdef Q_OS_WIN
     QCommandLineOption nativeTitleBar(
         "native-title-bar",
@@ -109,6 +116,9 @@ int main(int argc, char *argv[])
 
     if (parser.isSet(alwaysTabs))
         flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
+
+    if (parser.isSet(maximizeButtonOption))
+        flags |= KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton;
 
     // Set any required flags. The defaults are usually fine.
     KDDockWidgets::Config::self().setFlags(flags);

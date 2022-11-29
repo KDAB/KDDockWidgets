@@ -151,6 +151,11 @@ bool TitleBar::floatButtonVisible() const
     return m_floatButtonVisible;
 }
 
+bool TitleBar::maximizeButtonVisible() const
+{
+    return m_maximizeButtonVisible;
+}
+
 bool TitleBar::supportsFloatingButton() const
 {
     if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton) {
@@ -260,18 +265,16 @@ void TitleBar::updateAutoHideButton()
 
 void TitleBar::updateMaximizeButton()
 {
-    bool visible = false;
-    bool enabled = true;
-    TitleBarButtonType type = TitleBarButtonType::Maximize;
+    m_maximizeButtonVisible = false;
+    m_maximizeButtonType = TitleBarButtonType::Maximize;
 
     if (auto fw = floatingWindow()) {
-        type =
+        m_maximizeButtonType =
             fw->view()->isMaximized() ? TitleBarButtonType::Normal : TitleBarButtonType::Maximize;
-
-        visible = supportsMaximizeButton();
+        m_maximizeButtonVisible = supportsMaximizeButton();
     }
 
-    Q_EMIT maximizeButtonChanged(visible, enabled, type);
+    Q_EMIT maximizeButtonChanged(m_maximizeButtonVisible, /*enabled=*/true, m_maximizeButtonType);
 }
 
 void TitleBar::updateCloseButton()
@@ -599,4 +602,9 @@ TabBar *TitleBar::tabBar() const
     }
 
     return nullptr;
+}
+
+TitleBarButtonType TitleBar::maximizeButtonType() const
+{
+    return m_maximizeButtonType;
 }

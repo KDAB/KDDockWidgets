@@ -39,8 +39,11 @@ class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick, public Views::TitleBa
                    closeButtonEnabledChanged)
     Q_PROPERTY(bool floatButtonVisible READ floatButtonVisible WRITE setFloatButtonVisible NOTIFY
                    floatButtonVisibleChanged)
+    Q_PROPERTY(bool maximizeButtonVisible READ maximizeButtonVisible NOTIFY
+                   maximizeButtonVisibleChanged)
     Q_PROPERTY(QString floatButtonToolTip READ floatButtonToolTip NOTIFY floatButtonToolTipChanged)
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
+    Q_PROPERTY(bool maximizeUsesRestoreIcon READ maximizeUsesRestoreIcon NOTIFY maximizeButtonVisibleChanged)
 
 public:
     explicit TitleBar_qtquick(Controllers::TitleBar *controller, QQuickItem *parent = nullptr);
@@ -61,6 +64,8 @@ protected:
     // QML interface
     bool isFocused() const;
     bool floatButtonVisible() const;
+    bool maximizeButtonVisible() const;
+    bool maximizeUsesRestoreIcon() const;
     bool closeButtonEnabled() const;
     QString floatButtonToolTip() const;
     bool hasIcon() const;
@@ -83,6 +88,7 @@ Q_SIGNALS:
     void isFocusedChanged();
     void closeButtonEnabledChanged(bool);
     void floatButtonVisibleChanged(bool);
+    void maximizeButtonVisibleChanged(bool);
     void floatButtonToolTipChanged(const QString &);
 
     /// Emitted when the number of dock widgets under this titlebar changes

@@ -53,6 +53,8 @@ void TitleBar_qtquick::init()
             &TitleBar_qtquick::floatButtonToolTipChanged);
     connect(m_titleBar, &Controllers::TitleBar::numDockWidgetsChanged, this,
             &TitleBar_qtquick::numDockWidgetsChanged);
+    connect(m_titleBar, &Controllers::TitleBar::maximizeButtonChanged, this,
+            &TitleBar_qtquick::maximizeButtonVisibleChanged);
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
@@ -123,6 +125,16 @@ bool TitleBar_qtquick::isFocused() const
 bool TitleBar_qtquick::floatButtonVisible() const
 {
     return m_titleBar->floatButtonVisible();
+}
+
+bool TitleBar_qtquick::maximizeButtonVisible() const
+{
+    return m_titleBar->maximizeButtonVisible();
+}
+
+bool TitleBar_qtquick::maximizeUsesRestoreIcon() const
+{
+    return m_titleBar->maximizeButtonType() == TitleBarButtonType::Normal;
 }
 
 bool TitleBar_qtquick::closeButtonEnabled() const

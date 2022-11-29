@@ -54,6 +54,22 @@ TitleBarBase {
     }
 
     TitleBarButton {
+        id: maximizeButton
+        visible: root.maximizeButtonVisible
+        imageSource: root.maximizeUsesRestoreIcon ? "qrc:/img/dock-float.png" : "qrc:/img/max.png";
+        anchors {
+            verticalCenter: parent ? parent.verticalCenter : undefined
+            right: closeButton.left
+            topMargin: 5
+            bottomMargin: 5
+            rightMargin: 2
+        }
+        onClicked: {
+            root.maximizeButtonClicked();
+        }
+    }
+
+    TitleBarButton {
         id: closeButton
         enabled: root.closeButtonEnabled
         imageSource: "qrc:/img/close.png"

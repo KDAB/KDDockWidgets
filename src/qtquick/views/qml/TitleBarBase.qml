@@ -27,6 +27,8 @@ Rectangle {
     readonly property QtObject titleBarCpp: parent.titleBarCpp // It's set in the loader
     readonly property string title: titleBarCpp ? titleBarCpp.title : ""
     readonly property bool floatButtonVisible: titleBarCpp && titleBarCpp.floatButtonVisible
+    readonly property bool maximizeButtonVisible: titleBarCpp && titleBarCpp.maximizeButtonVisible
+    readonly property bool maximizeUsesRestoreIcon: titleBarCpp && titleBarCpp.maximizeUsesRestoreIcon
     readonly property bool closeButtonEnabled: titleBarCpp && titleBarCpp.closeButtonEnabled
     readonly property bool isFocused: titleBarCpp && titleBarCpp.isFocused
 
@@ -45,6 +47,9 @@ Rectangle {
 
     /// @brief Signal emitted by a TitleBar.qml component when the float button is clicked
     signal floatButtonClicked();
+
+    /// @brief Signal emitted by a TitleBar.qml component when the maximize button is clicked
+    signal maximizeButtonClicked();
 
     visible: titleBarCpp && titleBarCpp.visible
     height: visible ? heightWhenVisible : 0
@@ -76,5 +81,9 @@ Rectangle {
 
     onFloatButtonClicked: {
         titleBarCpp.onFloatClicked();
+    }
+
+    onMaximizeButtonClicked: {
+        titleBarCpp.onMaximizeClicked();
     }
 }

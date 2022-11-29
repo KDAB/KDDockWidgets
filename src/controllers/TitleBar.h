@@ -111,8 +111,11 @@ public:
 
     bool closeButtonEnabled() const;
     bool floatButtonVisible() const;
+    bool maximizeButtonVisible() const;
     void setCloseButtonEnabled(bool);
     void setFloatButtonVisible(bool);
+
+    TitleBarButtonType maximizeButtonType() const;
 
 Q_SIGNALS:
     void titleChanged();
@@ -155,6 +158,8 @@ private:
     const bool m_supportsAutoHide;
     bool m_closeButtonEnabled = true;
     bool m_floatButtonVisible = true;
+    bool m_maximizeButtonVisible = false;
+    TitleBarButtonType m_maximizeButtonType = TitleBarButtonType::Maximize;
     QString m_floatButtonToolTip;
 };
 
