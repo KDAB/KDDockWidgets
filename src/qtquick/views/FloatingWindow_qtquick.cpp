@@ -137,6 +137,7 @@ FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *cont
     , m_quickWindow(new QuickView(plat()->qmlEngine(), this))
     , m_controller(controller)
 {
+    connect(m_quickWindow, &QWindow::windowStateChanged, this, &FloatingWindow_qtquick::onWindowStateChanged);
 }
 
 FloatingWindow_qtquick::~FloatingWindow_qtquick()
@@ -251,6 +252,12 @@ Layouting::Item *FloatingWindow_qtquick::rootItem() const
     if (auto da = m_controller->dropArea())
         return da->rootItem();
     return nullptr;
+}
+
+void FloatingWindow_qtquick::onWindowStateChanged(Qt::WindowState state)
+{
+    m_controller->setLastWindowManagerState(WindowState(state));
+    Q_EMIT m_controller->windowStateChanged();
 }
 
 #include "FloatingWindow_qtquick.moc"

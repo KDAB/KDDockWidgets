@@ -53,6 +53,7 @@ protected:
     void setGeometry(QRect) override;
 
 private:
+    void onWindowStateChanged(Qt::WindowState);
     int contentsMargins() const;
     int titleBarHeight() const;
     QWindow *candidateParentWindow() const;

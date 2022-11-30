@@ -6595,6 +6595,32 @@ void TestDocks::tst_closed()
     QCOMPARE(numCloseB, 1);
 }
 
+void TestDocks::tst_maximizeButton()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton);
+
+    auto dock0 = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    dock0->show();
+
+    Window::Ptr window = dock0->floatingWindow()->window()->window();
+
+    QVERIFY(window);
+    QCOMPARE(window->windowState(), WindowState::None);
+
+    TitleBar *tb = dock0->titleBar();
+    QVERIFY(tb->isVisible());
+    QVERIFY(tb->maximizeButtonVisible());
+    QCOMPARE(tb->maximizeButtonType(), TitleBarButtonType::Maximize);
+
+    tb->onMaximizeClicked();
+
+    Platform::instance()->tests_waitForResize(dock0->floatingWindow()->view());
+
+    QVERIFY(tb->maximizeButtonVisible());
+    QCOMPARE(tb->maximizeButtonType(), TitleBarButtonType::Normal);
+}
+
 int main(int argc, char *argv[])
 {
     int exitCode = 0;
