@@ -105,8 +105,6 @@ EmbeddedWindow::~EmbeddedWindow() = default;
 
 inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 {
-    static int count = 0;
-    count++;
     // Tests a MainWindow which isn't a top-level window, but is embedded in another window
     auto mainwindow = createMainWindow(QSize(600, 600), MainWindowOption_HasCentralFrame).release();
 
