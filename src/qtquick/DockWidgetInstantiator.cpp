@@ -137,6 +137,11 @@ Q_INVOKABLE bool DockWidgetInstantiator::close()
     return false;
 }
 
+bool DockWidgetInstantiator::isOpen()
+{
+    return m_dockWidget ? m_dockWidget->isOpen() : false;
+}
+
 void DockWidgetInstantiator::open()
 {
     if (m_dockWidget)
