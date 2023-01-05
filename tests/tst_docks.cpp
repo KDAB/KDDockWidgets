@@ -7933,3 +7933,26 @@ void TestDocks::tst_crash326()
     QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
     QVERIFY(originalFrame != dock1->d->frame());
 }
+
+void TestDocks::tst_restoreWithIncompleteFactory()
+{
+    EnsureTopLevelsDeleted e;
+    SetExpectedWarning ignoreWarning("Couldn't find dock widget");
+    KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) -> KDDockWidgets::DockWidgetBase * {
+        if (name.contains(QStringLiteral("centralDockWidget")))
+            return nullptr;
+
+        auto w = new KDDockWidgets::DockWidget(name);
+        w->setWidget(new QWidget());
+        return w;
+    });
+
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None, "MainWindow1");
+
+    LayoutSaver saver;
+    saver.restoreFromFile(":/layouts/restoreWithIncompleteFactory.json");
+
+    auto layout = m->multiSplitter();
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QCOMPARE(layout->separators().size(), 0);
+}
