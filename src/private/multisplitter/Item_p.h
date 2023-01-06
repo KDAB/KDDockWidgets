@@ -310,6 +310,7 @@ public:
     void ref();
     void unref();
     int refCount() const;
+    void turnIntoPlaceholder();
 
     int minLength(Qt::Orientation) const;
     int maxLengthHint(Qt::Orientation) const;
@@ -381,7 +382,6 @@ private:
     friend class ItemContainer;
     friend class ItemBoxContainer;
     friend class ItemFreeContainer;
-    void turnIntoPlaceholder();
     int m_refCount = 0;
     void updateObjectName();
     void onWidgetDestroyed();

@@ -656,8 +656,15 @@ void LayoutSaver::Private::deleteEmptyGroups()
     // Delete their group now.
 
     for (auto group : m_dockRegistry->groups()) {
-        if (!group->beingDeletedLater() && group->isEmpty() && !group->isCentralFrame())
+        if (!group->beingDeletedLater() && group->isEmpty() && !group->isCentralFrame()) {
+            if (auto item = group->layoutItem()) {
+                item->turnIntoPlaceholder();
+            } else {
+                // This doesn't happen. But the warning will make the tests fail if there's a regression.
+                qWarning() << Q_FUNC_INFO << "Expected item for frame";
+            }
             delete group;
+        }
     }
 }
 

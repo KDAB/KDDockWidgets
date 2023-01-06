@@ -1647,7 +1647,6 @@ void TestQtWidgets::tst_restoreWithIncompleteFactory()
     saver.restoreFromFile(":/layouts/restoreWithIncompleteFactory.json");
 
     auto layout = m->multiSplitter();
-    QEXPECT_FAIL("", "To be fixed", Continue);
     QCOMPARE(layout->separators().size(), 0);
 }
 
