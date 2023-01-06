@@ -306,6 +306,7 @@ public:
     void ref();
     void unref();
     int refCount() const;
+    void turnIntoPlaceholder();
 
     int minLength(Qt::Orientation) const;
     int maxLengthHint(Qt::Orientation) const;
@@ -374,7 +375,6 @@ private:
     friend class ItemContainer;
     friend class ItemBoxContainer;
     friend class ItemFreeContainer;
-    void turnIntoPlaceholder();
     bool eventFilter(QObject *o, QEvent *event) override;
     int m_refCount = 0;
     void updateObjectName();

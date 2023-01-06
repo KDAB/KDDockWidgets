@@ -248,7 +248,6 @@ private Q_SLOTS:
     void tst_persistentCentralWidget();
     void tst_setFloatingWindowFlags();
     void tst_crash326();
-    void tst_restoreWithIncompleteFactory();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
@@ -276,6 +275,7 @@ private Q_SLOTS:
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
     void tst_overlayCrash();
+    void tst_restoreWithIncompleteFactory();
 
     // And fix these
     void tst_floatingWindowDeleted();

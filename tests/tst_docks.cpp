@@ -5720,6 +5720,28 @@ void TestDocks::tst_overlayCrash()
     pressOn(tb->mapToGlobal(QPoint(5, 5)), tb);
 }
 
+void TestDocks::tst_restoreWithIncompleteFactory()
+{
+    EnsureTopLevelsDeleted e;
+    SetExpectedWarning ignoreWarning("Couldn't find dock widget");
+    KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) -> KDDockWidgets::DockWidgetBase * {
+        if (name.contains(QStringLiteral("centralDockWidget")))
+            return nullptr;
+
+        auto w = createDockWidget(name, new QPushButton("1"), {}, {}, false);
+        w->setWidget(new QWidget());
+        return w;
+    });
+
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None, "MainWindow1");
+
+    LayoutSaver saver;
+    saver.restoreFromFile(":/layouts/restoreWithIncompleteFactory.json");
+
+    auto layout = m->multiSplitter();
+    QCOMPARE(layout->separators().size(), 0);
+}
+
 void TestDocks::tst_embeddedMainWindow()
 {
     EnsureTopLevelsDeleted e;
@@ -7932,27 +7954,4 @@ void TestDocks::tst_crash326()
     dock1->show();
     QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
     QVERIFY(originalFrame != dock1->d->frame());
-}
-
-void TestDocks::tst_restoreWithIncompleteFactory()
-{
-    EnsureTopLevelsDeleted e;
-    SetExpectedWarning ignoreWarning("Couldn't find dock widget");
-    KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) -> KDDockWidgets::DockWidgetBase * {
-        if (name.contains(QStringLiteral("centralDockWidget")))
-            return nullptr;
-
-        auto w = new KDDockWidgets::DockWidget(name);
-        w->setWidget(new QWidget());
-        return w;
-    });
-
-    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None, "MainWindow1");
-
-    LayoutSaver saver;
-    saver.restoreFromFile(":/layouts/restoreWithIncompleteFactory.json");
-
-    auto layout = m->multiSplitter();
-    QEXPECT_FAIL("", "To be fixed", Continue);
-    QCOMPARE(layout->separators().size(), 0);
 }

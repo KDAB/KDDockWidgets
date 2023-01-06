@@ -411,8 +411,16 @@ void LayoutSaver::Private::deleteEmptyFrames()
     // Delete their frame now.
 
     for (auto frame : m_dockRegistry->frames()) {
-        if (!frame->beingDeletedLater() && frame->isEmpty() && !frame->isCentralFrame())
+        if (!frame->beingDeletedLater() && frame->isEmpty() && !frame->isCentralFrame()) {
+            if (auto item = frame->layoutItem()) {
+                item->turnIntoPlaceholder();
+            } else {
+                // This doesn't happen. But the warning will make the tests fail if there's a regression.
+                qWarning() << Q_FUNC_INFO << "Expected item for frame";
+            }
+
             delete frame;
+        }
     }
 }
 
