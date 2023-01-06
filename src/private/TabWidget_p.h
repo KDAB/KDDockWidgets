@@ -187,7 +187,9 @@ public:
     // Q_SIGNALS: // Not a OQbject
     virtual void currentTabChanged(int index) = 0;
     virtual void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *) = 0;
-    virtual void countChanged() {};
+    virtual void countChanged()
+    {
+    }
 
 protected:
     void onTabInserted();

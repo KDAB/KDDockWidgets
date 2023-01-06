@@ -67,7 +67,9 @@ private:
 protected:
     virtual DropLocation hover_impl(QPoint globalPos) = 0;
     virtual void onHoveredFrameChanged(Frame *);
-    virtual void updateVisibility() {};
+    virtual void updateVisibility()
+    {
+    }
 
     Frame *m_hoveredFrame = nullptr;
     DropArea *const m_dropArea;

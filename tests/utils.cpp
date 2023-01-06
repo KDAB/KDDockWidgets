@@ -94,12 +94,12 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWid
     } else {
         return dock;
     }
-};
+}
 
 DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor color)
 {
     return createDockWidget(name, new MyWidget(name, color));
-};
+}
 
 static QWidgetOrQuick *createGuestWidget(int i)
 {

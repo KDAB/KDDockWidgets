@@ -29,7 +29,7 @@ public:
         None = 0,
         LazyResize = 1
     };
-    Q_DECLARE_FLAGS(Flags, Flag);
+    Q_DECLARE_FLAGS(Flags, Flag)
 
     ///@brief returns the singleton Config instance
     static Config &self();
@@ -72,7 +72,7 @@ private:
     SeparatorFactoryFunc m_separatorFactoryFunc = nullptr;
     Flags m_flags = Flag::None;
 
-    Q_DISABLE_COPY(Config);
+    Q_DISABLE_COPY(Config)
 };
 
 }

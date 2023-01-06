@@ -30,7 +30,7 @@ public:
     DropLocation hover_impl(QPoint) override
     {
         return {};
-    };
+    }
 
     DropLocation dropLocationForPos(QPoint) const
     {

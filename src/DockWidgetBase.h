@@ -81,7 +81,7 @@ public:
                                /// Run "kddockwidgets_mdi_with_docking_example -n" to see it in action
     };
     Q_DECLARE_FLAGS(Options, Option)
-    Q_ENUM(Options);
+    Q_ENUM(Options)
 
     /// @brief Options which will affect LayoutSaver save/restore
     enum class LayoutSaverOption {

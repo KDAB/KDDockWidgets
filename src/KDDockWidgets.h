@@ -302,7 +302,7 @@ enum class FloatingWindowFlag {
     UseQtWindow = 256,
     UseQtTool = 512,
 };
-Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag);
+Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag)
 
 ///@internal
 inline QString locationStr(Location loc)

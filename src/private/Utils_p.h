@@ -411,6 +411,6 @@ inline T *lastParentOfType(const QObject *child)
     return result;
 }
 
-};
+}
 
 #endif
