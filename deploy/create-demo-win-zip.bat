@@ -2,7 +2,7 @@
 rem
 rem This file is part of KDDockWidgets.
 rem
-rem SPDX-FileCopyrightText: 2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+rem SPDX-FileCopyrightText: 2022-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 rem
 rem SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 rem
