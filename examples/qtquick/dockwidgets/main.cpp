@@ -53,6 +53,13 @@ int main(int argc, char *argv[])
             "Floating dockWidgets have maximize/restore buttons instead of float/dock button"));
     parser.addOption(maximizeButtonOption);
 
+    QCommandLineOption minimizeButtonOption(
+        "k",
+        QCoreApplication::translate("main",
+                                    "Floating dockWidgets have a minimize button. Implies not "
+                                    "being an utility window (~Qt::Tool)"));
+    parser.addOption(minimizeButtonOption);
+
 #ifdef Q_OS_WIN
     QCommandLineOption nativeTitleBar(
         "native-title-bar",
@@ -119,6 +126,9 @@ int main(int argc, char *argv[])
 
     if (parser.isSet(maximizeButtonOption))
         flags |= KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton;
+
+    if (parser.isSet(minimizeButtonOption))
+        flags |= KDDockWidgets::Config::Flag_TitleBarHasMinimizeButton;
 
     // Set any required flags. The defaults are usually fine.
     KDDockWidgets::Config::self().setFlags(flags);

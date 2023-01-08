@@ -55,6 +55,8 @@ void TitleBar_qtquick::init()
             &TitleBar_qtquick::numDockWidgetsChanged);
     connect(m_titleBar, &Controllers::TitleBar::maximizeButtonChanged, this,
             &TitleBar_qtquick::maximizeButtonVisibleChanged);
+    connect(m_titleBar, &Controllers::TitleBar::minimizeButtonChanged, this,
+            &TitleBar_qtquick::minimizeButtonVisibleChanged);
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
@@ -125,6 +127,11 @@ bool TitleBar_qtquick::isFocused() const
 bool TitleBar_qtquick::floatButtonVisible() const
 {
     return m_titleBar->floatButtonVisible();
+}
+
+bool TitleBar_qtquick::minimizeButtonVisible() const
+{
+    return m_titleBar->supportsMinimizeButton();
 }
 
 bool TitleBar_qtquick::maximizeButtonVisible() const

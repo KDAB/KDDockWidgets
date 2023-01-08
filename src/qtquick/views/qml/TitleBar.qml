@@ -37,52 +37,49 @@ TitleBarBase {
         }
     }
 
-    TitleBarButton {
-        id: floatButton
-        visible: root.floatButtonVisible
-        imageSource: "qrc:/img/dock-float.png"
-        anchors {
-            verticalCenter: parent ? parent.verticalCenter : undefined
-            right: closeButton.left
-            topMargin: 5
-            bottomMargin: 5
-            rightMargin: 2
-        }
-        onClicked: {
-            root.floatButtonClicked();
-        }
-    }
-
-    TitleBarButton {
-        id: maximizeButton
-        visible: root.maximizeButtonVisible
-        imageSource: root.maximizeUsesRestoreIcon ? "qrc:/img/dock-float.png" : "qrc:/img/max.png";
-        anchors {
-            verticalCenter: parent ? parent.verticalCenter : undefined
-            right: closeButton.left
-            topMargin: 5
-            bottomMargin: 5
-            rightMargin: 2
-        }
-        onClicked: {
-            root.maximizeButtonClicked();
-        }
-    }
-
-    TitleBarButton {
-        id: closeButton
-        enabled: root.closeButtonEnabled
-        imageSource: "qrc:/img/close.png"
+    Row {
         anchors {
             verticalCenter: parent ? parent.verticalCenter : undefined
             right: parent ? parent.right : undefined
             topMargin: 5
             bottomMargin: 5
-            leftMargin: 5
             rightMargin: 2
         }
-        onClicked: {
-            root.closeButtonClicked();
+
+        TitleBarButton {
+            id: minimizeButton
+            visible: root.minimizeButtonVisible
+            imageSource: "qrc:/img/min.png";
+            onClicked: {
+                root.minimizeButtonClicked();
+            }
+        }
+
+        TitleBarButton {
+            id: floatButton
+            visible: root.floatButtonVisible
+            imageSource: "qrc:/img/dock-float.png"
+            onClicked: {
+                root.floatButtonClicked();
+            }
+        }
+
+        TitleBarButton {
+            id: maximizeButton
+            visible: root.maximizeButtonVisible
+            imageSource: root.maximizeUsesRestoreIcon ? "qrc:/img/dock-float.png" : "qrc:/img/max.png";
+            onClicked: {
+                root.maximizeButtonClicked();
+            }
+        }
+
+        TitleBarButton {
+            id: closeButton
+            enabled: root.closeButtonEnabled
+            imageSource: "qrc:/img/close.png"
+            onClicked: {
+                root.closeButtonClicked();
+            }
         }
     }
 }

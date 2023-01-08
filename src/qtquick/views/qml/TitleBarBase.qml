@@ -28,6 +28,7 @@ Rectangle {
     readonly property string title: titleBarCpp ? titleBarCpp.title : ""
     readonly property bool floatButtonVisible: titleBarCpp && titleBarCpp.floatButtonVisible
     readonly property bool maximizeButtonVisible: titleBarCpp && titleBarCpp.maximizeButtonVisible
+    readonly property bool minimizeButtonVisible: titleBarCpp && titleBarCpp.minimizeButtonVisible
     readonly property bool maximizeUsesRestoreIcon: titleBarCpp && titleBarCpp.maximizeUsesRestoreIcon
     readonly property bool closeButtonEnabled: titleBarCpp && titleBarCpp.closeButtonEnabled
     readonly property bool isFocused: titleBarCpp && titleBarCpp.isFocused
@@ -50,6 +51,9 @@ Rectangle {
 
     /// @brief Signal emitted by a TitleBar.qml component when the maximize button is clicked
     signal maximizeButtonClicked();
+
+    /// @brief Signal emitted by a TitleBar.qml component when the minimize button is clicked
+    signal minimizeButtonClicked();
 
     visible: titleBarCpp && titleBarCpp.visible
     height: visible ? heightWhenVisible : 0
@@ -85,5 +89,9 @@ Rectangle {
 
     onMaximizeButtonClicked: {
         titleBarCpp.onMaximizeClicked();
+    }
+
+    onMinimizeButtonClicked: {
+        titleBarCpp.onMinimizeClicked();
     }
 }
