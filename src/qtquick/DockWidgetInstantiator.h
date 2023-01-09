@@ -43,6 +43,7 @@ class DockWidgetInstantiator : public QQuickItem
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
+    Q_PROPERTY(bool isOpen READ isOpen NOTIFY isOpenChanged)
 public:
     QString uniqueName() const;
     void setUniqueName(const QString &);
@@ -59,6 +60,7 @@ public:
 
     bool isFocused() const;
     bool isFloating() const;
+    bool isOpen() const;
     void setFloating(bool);
 
     Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *other,
@@ -95,6 +97,7 @@ Q_SIGNALS:
     void isFocusedChanged(bool);
     void isOverlayedChanged(bool);
     void isFloatingChanged(bool);
+    void isOpenChanged(bool);
     void removedFromSideBar();
     void windowActiveAboutToChange(bool activated);
 

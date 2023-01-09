@@ -498,7 +498,12 @@ Q_SIGNALS:
     void aboutToDelete(KDDockWidgets::Controllers::DockWidget *);
 
     /// @brief Emitted when a dock widget is closed
+    /// This is equivalent to the openedChanged(false) signal
     void closed();
+
+    /// @brief Emitted when a dock widget is opened or closed
+    /// For the false case, closed() is also emitted
+    void isOpenChanged(bool isOpen);
 
 protected:
     void setParentView_impl(View *parent) override;

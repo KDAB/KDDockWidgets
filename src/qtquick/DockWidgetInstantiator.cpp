@@ -86,6 +86,11 @@ bool DockWidgetInstantiator::isFloating() const
     return m_dockWidget && m_dockWidget->isFloating();
 }
 
+bool DockWidgetInstantiator::isOpen() const
+{
+    return m_dockWidget && m_dockWidget->isOpen();
+}
+
 void DockWidgetInstantiator::setFloating(bool is)
 {
     if (m_dockWidget)
@@ -213,6 +218,8 @@ void DockWidgetInstantiator::componentComplete()
             &DockWidgetInstantiator::isOverlayedChanged);
     connect(m_dockWidget, &Controllers::DockWidget::isFloatingChanged, this,
             &DockWidgetInstantiator::isFloatingChanged);
+    connect(m_dockWidget, &Controllers::DockWidget::isOpenChanged, this,
+            &DockWidgetInstantiator::isOpenChanged);
     connect(m_dockWidget, &Controllers::DockWidget::removedFromSideBar, this,
             &DockWidgetInstantiator::removedFromSideBar);
     connect(m_dockWidget, &Controllers::DockWidget::windowActiveAboutToChange, this,

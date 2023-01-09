@@ -1071,6 +1071,8 @@ void DockWidget::Private::setIsOpen(bool is)
     if (!is) {
         Q_EMIT q->closed();
     }
+
+    Q_EMIT q->isOpenChanged(is);
 }
 
 void DockWidget::setFloatingWindowFlags(FloatingWindowFlags flags)
