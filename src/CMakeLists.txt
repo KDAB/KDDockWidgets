@@ -489,6 +489,7 @@ if(KDDW_FRONTEND_QTWIDGETS)
         PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate
     )
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTWIDGETS KDDW_FRONTEND_QT)
+    set_property(SOURCE Action.h PROPERTY SKIP_AUTOMOC ON)
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
