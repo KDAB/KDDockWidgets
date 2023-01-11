@@ -169,7 +169,7 @@ std::shared_ptr<Window> ViewWrapper_qtwidgets::window() const
 
 bool ViewWrapper_qtwidgets::isRootView() const
 {
-    return m_widget->isTopLevel();
+    return m_widget->isWindow();
 }
 
 void ViewWrapper_qtwidgets::setVisible(bool is)
