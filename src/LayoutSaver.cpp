@@ -977,10 +977,24 @@ void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)
     scalingInfo.applyFactorsTo(/*by-ref*/ lastFloatingGeometry);
 }
 
+static QVariantList overlayedGeometriesToList(const QHash<KDDockWidgets::SideBarLocation, QRect> &geometries)
+{
+    QVariantList result;
+    result.reserve(geometries.size());
+    for (auto it = geometries.cbegin(), end = geometries.cend(); it != end; ++it) {
+        QVariantMap map;
+        map.insert(QStringLiteral("location"), static_cast<int>(it.key()));
+        map.insert(QStringLiteral("rect"), Layouting::rectToMap(it.value()));
+        result.push_back(map);
+    }
+    return result;
+}
+
 QVariantMap LayoutSaver::Position::toVariantMap() const
 {
     QVariantMap map;
     map.insert(QStringLiteral("lastFloatingGeometry"), Layouting::rectToMap(lastFloatingGeometry));
+    map.insert(QStringLiteral("lastOverlayedGeometries"), overlayedGeometriesToList(lastOverlayedGeometries));
     map.insert(QStringLiteral("tabIndex"), tabIndex);
     map.insert(QStringLiteral("wasFloating"), wasFloating);
     map.insert(QStringLiteral("placeholders"), toVariantList<LayoutSaver::Placeholder>(placeholders));
@@ -988,9 +1002,22 @@ QVariantMap LayoutSaver::Position::toVariantMap() const
     return map;
 }
 
+static QHash<KDDockWidgets::SideBarLocation, QRect> listToOverlayedGeometries(const QVariantList &list)
+{
+    QHash<KDDockWidgets::SideBarLocation, QRect> result;
+    for (const QVariant &v : list) {
+        const auto map = v.toMap();
+        const auto location = static_cast<KDDockWidgets::SideBarLocation>(map.value(QStringLiteral("location")).toInt());
+        const auto rect = Layouting::mapToRect(map.value(QStringLiteral("rect")).toMap());
+        result.insert(location, rect);
+    }
+    return result;
+}
+
 void LayoutSaver::Position::fromVariantMap(const QVariantMap &map)
 {
     lastFloatingGeometry = Layouting::mapToRect(map.value(QStringLiteral("lastFloatingGeometry")).toMap());
+    lastOverlayedGeometries = listToOverlayedGeometries(map.value(QStringLiteral("lastOverlayedGeometries")).toList());
     tabIndex = map.value(QStringLiteral("tabIndex")).toInt();
     wasFloating = map.value(QStringLiteral("wasFloating")).toBool();
     placeholders = fromVariantList<LayoutSaver::Placeholder>(map.value(QStringLiteral("placeholders")).toList());
