@@ -284,6 +284,7 @@ CursorPositions MainWindow::Private::allowedResizeSides(SideBarLocation loc) con
     case SideBarLocation::South:
         return CursorPosition_Top;
     case SideBarLocation::None:
+    case SideBarLocation::Last:
         return CursorPosition_Undefined;
     }
 
@@ -344,6 +345,7 @@ QRect MainWindow::Private::rectForOverlay(Controllers::Group *group, SideBarLoca
         break;
     }
     case SideBarLocation::None:
+    case SideBarLocation::Last:
         break;
     }
 
@@ -501,6 +503,7 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
             break;
         }
         case SideBarLocation::None:
+        case SideBarLocation::Last:
             qWarning() << Q_FUNC_INFO << "Unexpected sidebar value";
             break;
         }

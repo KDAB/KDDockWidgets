@@ -263,11 +263,12 @@ Q_ENUM_NS(SuggestedGeometryHint)
 
 /// @brief Each main window supports 4 sidebars
 enum class SideBarLocation {
-    None,
+    None = 0,
     North,
     East,
     West,
-    South
+    South,
+    Last
 };
 
 ///@brief describes a type of button you can have in the title bar

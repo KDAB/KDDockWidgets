@@ -284,9 +284,31 @@ void from_json(const nlohmann::json &json, LayoutSaver::Placeholder &placeHolder
     placeHolder.mainWindowUniqueName = json.value("mainWindowUniqueName", QString());
 }
 
+void to_json(nlohmann::json &json, const QHash<KDDockWidgets::SideBarLocation, QRect> &geometries)
+{
+    for (auto it = geometries.cbegin(), end = geometries.cend(); it != end; ++it) {
+        json[QString::number(static_cast<int>(it.key())).toLatin1().data()] = Layouting::rectToMap(it.value());
+    }
+}
+
+void from_json(const nlohmann::json &json, QHash<KDDockWidgets::SideBarLocation, QRect> &geometries)
+{
+    const int numKeys = int(SideBarLocation::Last);
+    const char *keys[numKeys] = { "0", "1", "2", "3", "4" };
+
+    for (int i = 0; i < numKeys; ++i) {
+        auto location = KDDockWidgets::SideBarLocation(i);
+        if (json.contains(keys[i])) {
+            const QRect rect = json.value(keys[i], QRect());
+            geometries.insert(location, rect);
+        }
+    }
+}
+
 void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
 {
     json["lastFloatingGeometry"] = pos.lastFloatingGeometry;
+    json["lastOverlayedGeometries"] = pos.lastOverlayedGeometries;
     json["tabIndex"] = pos.tabIndex;
     json["wasFloating"] = pos.wasFloating;
     json["placeholders"] = pos.placeholders;
@@ -295,6 +317,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
 void from_json(const nlohmann::json &json, LayoutSaver::Position &pos)
 {
     pos.lastFloatingGeometry = json.value("lastFloatingGeometry", QRect());
+    pos.lastOverlayedGeometries = json.value("lastOverlayedGeometries", QHash<KDDockWidgets::SideBarLocation, QRect>());
     pos.tabIndex = json.value("tabIndex", 0);
     pos.wasFloating = json.value("wasFloating", false);
     pos.placeholders = json.value("placeholders", LayoutSaver::Placeholder::List());
