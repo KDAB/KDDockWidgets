@@ -39,7 +39,7 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options, int userTyp
 
     connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
 
-    connect(this, &QWidgetAdapter::itemGeometryChanged, this, [this] {
+    connect(this, &QWidgetAdapter::widgetGeometryChanged, this, [this] {
         for (auto dw : dockWidgets()) {
             Q_EMIT static_cast<DockWidgetQuick *>(dw)->frameGeometryChanged(QWidgetAdapter::geometry());
         }

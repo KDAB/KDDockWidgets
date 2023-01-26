@@ -553,6 +553,9 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
     d->updateOverlayGeometry(dw->d->lastPosition()->lastOverlayedGeometry(sb->location()).size());
+    connect(frame, &QWidgetAdapter::widgetGeometryChanged, this, [dw, loc = sb->location(), frame] {
+        dw->d->lastPosition()->setLastOverlayedGeometry(loc, frame->QWidgetAdapter::geometry());
+    });
 
     frame->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
     frame->QWidgetAdapter::show();
@@ -580,10 +583,7 @@ void MainWindowBase::clearSideBarOverlay(bool deleteFrame)
         return;
     }
 
-    const SideBarLocation loc = d->m_overlayedDockWidget->sideBarLocation();
-    d->m_overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(
-        loc, frame->QWidgetAdapter::geometry());
-
+    frame->disconnect(this);
     frame->unoverlay();
 
     if (deleteFrame) {

@@ -95,10 +95,14 @@ public:
         return isWindow();
     }
 
+Q_SIGNALS:
+    void widgetGeometryChanged();
+
 protected:
     void raiseAndActivate();
     bool event(QEvent *e) override;
     void resizeEvent(QResizeEvent *) override;
+    void moveEvent(QMoveEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;
