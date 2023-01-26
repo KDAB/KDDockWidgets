@@ -67,6 +67,13 @@ void QWidgetAdapter::resizeEvent(QResizeEvent *ev)
 {
     if (!onResize(ev->size()))
         QWidget::resizeEvent(ev);
+    Q_EMIT widgetGeometryChanged();
+}
+
+void QWidgetAdapter::moveEvent(QMoveEvent *ev)
+{
+    QWidget::moveEvent(ev);
+    Q_EMIT widgetGeometryChanged();
 }
 
 void QWidgetAdapter::mousePressEvent(QMouseEvent *)
