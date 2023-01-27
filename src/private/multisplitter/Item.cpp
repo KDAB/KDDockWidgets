@@ -1259,7 +1259,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
         // Empty container is useless, delete it
         if (auto p = parentContainer())
             p->removeItem(this, /*hardDelete=*/true);
-    } else if (!hardRemove && !hasVisibleChildren()) {
+    } else if (!hasVisibleChildren()) {
         if (auto p = parentContainer()) {
             p->removeItem(this, /*hardDelete=*/false);
             setGeometry(QRect());

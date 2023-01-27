@@ -5764,8 +5764,12 @@ void TestDocks::tst_deleteDockWidget()
 
     delete dw1;
 
+    // Frame is deleted delayed
+    QTest::qWait(1000);
+
+    m1->multiSplitter()->dumpLayout();
+
     // Dock3 now occupies everything, separator was deleted
-    QEXPECT_FAIL("", "To be fixed", Continue);
     QVERIFY(m1->multiSplitter()->separators().isEmpty());
 }
 
