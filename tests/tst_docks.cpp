@@ -5742,6 +5742,33 @@ void TestDocks::tst_restoreWithIncompleteFactory()
     QCOMPARE(layout->separators().size(), 0);
 }
 
+void TestDocks::tst_deleteDockWidget()
+{
+    // Tests deleting the dock widget directly
+    // The layout should readjust
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+    auto dw3 = new DockWidgetType(QStringLiteral("3"));
+    m1->addDockWidget(dw3, Location_OnTop);
+
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
+
+    m1->addDockWidget(dw2, KDDockWidgets::Location_OnLeft, dw1);
+    dw2->setFloating(true);
+
+    // There's one separator, separating dock 1 from dock 3
+    QCOMPARE(m1->multiSplitter()->separators().size(), 1);
+
+    delete dw1;
+
+    // Dock3 now occupies everything, separator was deleted
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QVERIFY(m1->multiSplitter()->separators().isEmpty());
+}
+
 void TestDocks::tst_embeddedMainWindow()
 {
     EnsureTopLevelsDeleted e;

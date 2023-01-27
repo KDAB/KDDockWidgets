@@ -276,6 +276,7 @@ private Q_SLOTS:
     void tst_overlayedGeometryIsSaved();
     void tst_overlayCrash();
     void tst_restoreWithIncompleteFactory();
+    void tst_deleteDockWidget();
 
     // And fix these
     void tst_floatingWindowDeleted();
