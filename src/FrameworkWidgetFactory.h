@@ -16,6 +16,10 @@
 #include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
 
+#include <QMap>
+
+#include <utility>
+
 // clazy:excludeall=ctor-missing-parent-argument
 
 /**
@@ -187,11 +191,13 @@ public:
 #endif
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
+    void clearIconCache();
 
     static DropIndicatorType s_dropIndicatorType;
 
 private:
     Q_DISABLE_COPY(DefaultWidgetFactory)
+    mutable QMap<std::pair<TitleBarButtonType, qreal>, QIcon> m_cachedIcons;
 };
 
 }

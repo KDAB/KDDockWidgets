@@ -21,6 +21,8 @@
 #include "private/Utils_p.h"
 #include "private/TabWidget_p.h"
 
+#include <QScopeGuard>
+
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 #include "private/widgets/FrameWidget_p.h"
 #include "private/widgets/TitleBarWidget_p.h"
@@ -239,6 +241,11 @@ QUrl DefaultWidgetFactory::floatingWindowFilename() const
 // iconForButtonType impl is the same for QtQuick and QtWidgets
 QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
 {
+    auto key = std::make_pair(type, dpr);
+    auto it = m_cachedIcons.find(key);
+    if (it != m_cachedIcons.end())
+        return *it;
+
     QString iconName;
     switch (type) {
     case TitleBarButtonType::AutoHide:
@@ -269,6 +276,11 @@ QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr
         return {};
 
     QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
+
+    auto atScopeEnd = qScopeGuard([&icon, this, key] {
+        m_cachedIcons.insert(key, icon);
+    });
+
     if (!scalingFactorIsSupported(dpr))
         return icon;
 
@@ -281,4 +293,9 @@ QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr
     icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
 
     return icon;
+}
+
+void DefaultWidgetFactory::clearIconCache()
+{
+    m_cachedIcons.clear();
 }
