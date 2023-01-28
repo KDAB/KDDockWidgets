@@ -126,7 +126,7 @@ static Qt::WindowFlags windowFlagsToUse(FloatingWindowFlags requestedFlags)
         return Qt::Tool;
     }
 
-    if (requestedFlags & FloatingWindowFlag::UseQtWindow) {
+    if (requestedFlags & FloatingWindowFlag::DontUseQtToolWindowsForFloatingWindows) {
         // User has explicitly chosen Qt::Window for this FloatingWindow
         return Qt::Window;
     }
