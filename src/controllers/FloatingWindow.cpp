@@ -766,10 +766,7 @@ void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
 
     const int screenCount = screens.count();
     for (int i = 0; i < screenCount; i++) {
-        auto scrGeom = screens[i]->geometry();
-
-        // Account for virtual coordinates space
-        scrGeom.moveTopLeft(scrGeom.topLeft() - screens[i]->virtualGeometry().topLeft());
+        const QRect scrGeom = screens[i]->geometry();
 
         // If the rectangle is visible at all, we need do nothing
         if (scrGeom.intersects(geometry))
