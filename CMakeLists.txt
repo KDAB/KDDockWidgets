@@ -274,8 +274,8 @@ macro(set_compiler_flags targetName)
             target_compile_options(${targetName} PRIVATE -Wall -Wextra)
         endif()
 
-        if(APPLE)
-            target_compile_options(${targetName} PRIVATE -Wweak-vtables)
+        if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+            target_compile_options(${targetName} PRIVATE -Wweak-vtables -Wextra-semi)
         endif()
     endif()
 

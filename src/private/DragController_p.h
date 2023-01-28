@@ -48,7 +48,9 @@ public:
     bool isCurrentState() const;
 
     virtual void onEntry() = 0;
-    virtual void onExit() {};
+    virtual void onExit()
+    {
+    }
 
 private:
     MinimalStateMachine *const m_machine;

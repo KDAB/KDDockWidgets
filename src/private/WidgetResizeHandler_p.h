@@ -46,7 +46,7 @@ public:
         Feature_All = Feature_NativeShadow | Feature_NativeResize | Feature_NativeDrag
             | Feature_NativeMaximize
     };
-    Q_DECLARE_FLAGS(Features, Feature);
+    Q_DECLARE_FLAGS(Features, Feature)
 
     struct NativeFeatures
     {

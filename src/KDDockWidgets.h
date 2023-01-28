@@ -86,7 +86,7 @@ enum DockWidgetOption {
           /// "examples/qtwidgets_mdi_with_docking -n" to see it in action
 };
 Q_DECLARE_FLAGS(DockWidgetOptions, DockWidgetOption)
-Q_ENUM_NS(DockWidgetOptions);
+Q_ENUM_NS(DockWidgetOptions)
 
 /// @brief Options which will affect LayoutSaver save/restore
 enum class LayoutSaverOption {
@@ -364,7 +364,7 @@ enum class FloatingWindowFlag {
     UseQtWindow = 256,
     UseQtTool = 512
 };
-Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag);
+Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag)
 
 /// @brief Initializes the desired frontend
 void DOCKS_EXPORT initFrontend(FrontendType);

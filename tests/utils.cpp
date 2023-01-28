@@ -86,13 +86,13 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
     } else {
         return dock;
     }
-};
+}
 
 Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name)
 {
     return createDockWidget(name,
                             Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
-};
+}
 
 std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
 {

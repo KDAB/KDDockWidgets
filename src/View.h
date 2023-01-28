@@ -60,7 +60,9 @@ public:
     explicit View(Controller *controller, Type);
     virtual ~View();
 
-    virtual void init() {};
+    virtual void init()
+    {
+    }
 
     /// @brief Returns a handle for the GUI element
     /// This value only makes sense to the frontend. For example, for QtQuick it might be a
@@ -189,7 +191,9 @@ public:
 
     /// @brief Sets the z order
     /// Not supported on all platforms
-    virtual void setZOrder(int) {};
+    virtual void setZOrder(int)
+    {
+    }
 
     /// @Returns a list of child views
     virtual QVector<std::shared_ptr<View>> childViews() const = 0;

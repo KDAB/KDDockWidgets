@@ -86,7 +86,7 @@ inline Controllers::DockWidget *createDockWidget(const QString &name, QWidget *w
     } else {
         return dock;
     }
-};
+}
 
 class EmbeddedWindow : public QWidget
 {

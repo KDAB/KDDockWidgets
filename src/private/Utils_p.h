@@ -194,6 +194,6 @@ inline bool scalingFactorIsSupported(qreal factor)
 #endif
 }
 
-};
+}
 
 #endif
