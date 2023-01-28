@@ -198,8 +198,9 @@ bool DockRegistry::isProbablyObscured(Window::Ptr window,
     }
 
     // Floating windows are Tool (keep above), unless we disabled it in Config
+    auto fw = floatingWindowForHandle(window);
     const bool targetIsToolWindow =
-        KDDockWidgets::usesUtilityWindows() && floatingWindowForHandle(window) != nullptr;
+        fw && fw->isUtilityWindow();
 
     for (Controllers::MainWindow *mw : m_mainWindows) {
         Window::Ptr mwWindow = mw->view()->window();
