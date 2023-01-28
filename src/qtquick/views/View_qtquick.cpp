@@ -18,6 +18,7 @@
 #include "qtquick/Platform_qtquick.h"
 
 #include <qpa/qplatformwindow.h>
+#include <QtGui/private/qhighdpiscaling_p.h>
 #include <QGuiApplication>
 #include <QFile>
 
@@ -213,7 +214,7 @@ void View_qtquick::updateNormalGeometry()
 
     QRect normalGeometry;
     if (const QPlatformWindow *pw = window->handle()) {
-        normalGeometry = pw->normalGeometry();
+        normalGeometry = QHighDpi::fromNativePixels(pw->normalGeometry(), pw->window());
     }
 
     if (!normalGeometry.isValid() && isNormalWindowState(WindowState(window->windowState()))) {
