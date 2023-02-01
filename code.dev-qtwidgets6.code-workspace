@@ -5,11 +5,8 @@
     }
   ],
   "settings": {
-    "C_Cpp.default.compileCommands": "${workspaceFolder}/build-dev6/compile_commands.json",
-    "C_Cpp.default.cStandard": "c17",
     "files.trimTrailingWhitespace": true,
     "editor.formatOnType": true,
-    "C_Cpp.autocompleteAddParentheses": true,
     "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json"
   },
   "launch": {
