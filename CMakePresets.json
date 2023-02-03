@@ -128,6 +128,17 @@
             }
         },
         {
+            "name": "static6",
+            "displayName": "static6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-static6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_STATIC": "ON",
+                "KDDockWidgets_QT6": "ON"
+            }
+        },
+        {
             "name": "static-qtquick",
             "displayName": "static-qtquick",
             "generator": "Ninja",
