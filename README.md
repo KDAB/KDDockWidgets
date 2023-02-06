@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/KDAB/KDDockWidgets.svg?branch=master)](https://travis-ci.com/KDAB/KDDockWidgets)
 
+![KDDockWidgetsLogo](https://github.com/KDAB/KDDockWidgets/blob/1.7/images/kddockwidgets.png?raw=true)
+
 > ⚠️⚠️: If you're using QtQuick/QML it's recommended to use 2.0 branch. 1.x will continue
 > to receive bug fixes for a long time but only for QtWidgets frontend.
 
