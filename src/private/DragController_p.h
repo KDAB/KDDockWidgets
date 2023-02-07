@@ -106,6 +106,9 @@ public:
     /// Experimental, internal, not for general use.
     void enableFallbackMouseGrabber();
 
+    // Returns the active state
+    StateBase *activeState() const;
+
 Q_SIGNALS:
     void mousePressed();
     void manhattanLengthMove();
@@ -128,7 +131,6 @@ private:
     friend class StateDraggingWayland;
 
     DragController(QObject * = nullptr);
-    StateBase *activeState() const;
     WidgetType *qtTopLevelUnderCursor() const;
     Draggable *draggableForQObject(QObject *o) const;
     QPoint m_pressPos;

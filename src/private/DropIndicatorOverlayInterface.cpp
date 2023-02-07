@@ -31,10 +31,14 @@ DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(DropArea *dropArea)
 
     connect(DockRegistry::self(), &DockRegistry::dropIndicatorsInhibitedChanged, this,
             [this](bool inhibited) {
-                if (inhibited)
+                if (inhibited) {
                     removeHover();
-
-                // if false then simply moving the mouse will make the drop indicators appear again
+                } else {
+                    // Re-add hover. Fastest way is simply faking a mouse move
+                    if (auto state = qobject_cast<StateDragging *>(DragController::instance()->activeState())) {
+                        state->handleMouseMove(QCursor::pos());
+                    }
+                }
             });
 }
 
