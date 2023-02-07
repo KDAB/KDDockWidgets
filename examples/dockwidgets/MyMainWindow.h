@@ -27,6 +27,7 @@ public:
 
 private:
     void createDockWidgets();
+    bool eventFilter(QObject *obj, QEvent *ev) override;
     KDDockWidgets::DockWidgetBase *newDockWidget();
     QMenu *m_toggleMenu = nullptr;
     const bool m_dockWidget0IsNonClosable;
