@@ -66,15 +66,22 @@ LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr
 
 inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
 {
-    if (options == RestoreOption_None) {
-        return InternalRestoreOption::None;
-    } else if (options == RestoreOption_RelativeToMainWindow) {
-        return InternalRestoreOptions(InternalRestoreOption::SkipMainWindowGeometry)
-            | InternalRestoreOption::RelativeFloatingWindowGeometry;
-    } else {
-        qWarning() << Q_FUNC_INFO << "Unknown options" << options;
-        return {};
+    InternalRestoreOptions ret = {};
+    if (options.testFlag(RestoreOption_RelativeToMainWindow)) {
+        ret.setFlag(InternalRestoreOption::SkipMainWindowGeometry);
+        ret.setFlag(InternalRestoreOption::RelativeFloatingWindowGeometry);
+        options.setFlag(RestoreOption_RelativeToMainWindow, false);
     }
+    if (options.testFlag(RestoreOption_AbsoluteFloatingDockWindows)) {
+        ret.setFlag(InternalRestoreOption::RelativeFloatingWindowGeometry, false);
+        options.setFlag(RestoreOption_AbsoluteFloatingDockWindows, false);
+    }
+
+    if (options != RestoreOption_None) {
+        qWarning() << Q_FUNC_INFO << "Unknown options" << options;
+    }
+
+    return ret;
 }
 
 bool LayoutSaver::Private::s_restoreInProgress = false;
