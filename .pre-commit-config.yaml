@@ -1,5 +1,9 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+ci:
+    skip: [pylint]
+    autoupdate_schedule: monthly
+
 exclude: ^(cmake/ECM|cmake/KDAB/|src/3rdparty/)
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
