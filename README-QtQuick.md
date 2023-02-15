@@ -17,3 +17,5 @@ advise users to move to Qt6 as soon as possible.
   This could be solved by going to Nvidia's settings and making sure all monitors have
   the same refresh rate and disabling "Allow Flipping". It's not known why this solves it. Might also
   be a bug in Qt.
+
+- `"EGLFS: OpenGL windows cannot be mixed with others"` QtQuick on EGLFS does not support having more than 1 window. This is a known QtQuick limitation. The QtWidgets stack worksaround this by compositing all windows into a single native window.
