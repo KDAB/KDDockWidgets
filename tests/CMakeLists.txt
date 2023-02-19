@@ -56,10 +56,6 @@ add_executable(tst_multisplitter tst_multisplitter.cpp)
 target_link_libraries(tst_multisplitter kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_multisplitter)
 
-# tests_launcher
-add_executable(tests_launcher tests_launcher.cpp)
-target_link_libraries(tests_launcher Qt${Qt_VERSION_MAJOR}::Core)
-
 add_executable(tst_viewguard tst_viewguard.cpp)
 target_link_libraries(tst_viewguard kddockwidgets kdbindings)
 
