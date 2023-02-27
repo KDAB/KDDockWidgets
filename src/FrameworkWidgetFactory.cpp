@@ -21,8 +21,6 @@
 #include "private/Utils_p.h"
 #include "private/TabWidget_p.h"
 
-#include <QScopeGuard>
-
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 #include "private/widgets/FrameWidget_p.h"
 #include "private/widgets/TitleBarWidget_p.h"
@@ -277,12 +275,11 @@ QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr
 
     QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
 
-    auto atScopeEnd = qScopeGuard([&icon, this, key] {
-        m_cachedIcons.insert(key, icon);
-    });
 
-    if (!scalingFactorIsSupported(dpr))
+    if (!scalingFactorIsSupported(dpr)) {
+        m_cachedIcons.insert(key, icon);
         return icon;
+    }
 
     // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
     // Simply add the high-res files and Qt will pick them when needed
@@ -291,6 +288,7 @@ QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr
         icon.addFile(QStringLiteral(":/img/%1-1.5x.png").arg(iconName));
 
     icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
+    m_cachedIcons.insert(key, icon);
 
     return icon;
 }
