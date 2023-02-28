@@ -240,5 +240,5 @@ bool MyMainWindow::eventFilter(QObject *obj, QEvent *ev)
         break;
     }
 
-    return false;
+    return KDDockWidgets::Views::MainWindow_qtwidgets::eventFilter(obj, ev);
 }
