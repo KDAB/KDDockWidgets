@@ -317,6 +317,9 @@ public:
     void setMDIPopupThreshold(int);
     int mdiPopupThreshold() const;
 
+    /// Prints some debug information
+    void printDebug();
+
 #ifdef KDDOCKWIDGETS_QTQUICK
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
     void setQmlEngine(QQmlEngine *);

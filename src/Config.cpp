@@ -356,4 +356,9 @@ bool Config::dropIndicatorsInhibited() const
     return d->m_dropIndicatorsInhibited;
 }
 
+void Config::printDebug()
+{
+    qDebug() << "Flags: " << d->m_flags << d->m_internalFlags;
+}
+
 }
