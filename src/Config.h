@@ -378,6 +378,9 @@ public:
     /// Platform::startDragDistance() will be used
     int startDragDistance() const;
 
+    /// Prints some debug information
+    void printDebug();
+
 private:
     Q_DISABLE_COPY(Config)
     Config();
