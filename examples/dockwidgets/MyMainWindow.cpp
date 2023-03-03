@@ -22,6 +22,7 @@
 #include <QString>
 #include <QTextEdit>
 #include <QWindow>
+#include <QPushButton>
 #include <QRandomGenerator>
 
 #include <QApplication>
@@ -199,6 +200,18 @@ KDDockWidgets::Views::DockWidget_qtwidgets *MyMainWindow::newDockWidget()
     if (count == 8 && m_maxSizeForDockWidget8) {
         // Set a maximum size on dock #8
         myWidget->setMaximumSize(200, 200);
+        auto button = new QPushButton("dump debug info", myWidget);
+        connect(button, &QPushButton::clicked, this, [myWidget] {
+            KDDockWidgets::Config::self().printDebug();
+
+            qDebug() << "Widget: " << myWidget->geometry() << myWidget->minimumSize() << myWidget->minimumSizeHint() << myWidget->maximumSize() << myWidget->sizeHint() << myWidget->window();
+
+            auto tlw = myWidget->window();
+            qDebug() << "TLW   : " << tlw << tlw->geometry() << tlw->minimumSize() << tlw->minimumSizeHint() << tlw->maximumSize() << tlw->sizeHint();
+
+            auto window = tlw->windowHandle();
+            qDebug() << "Window   : " << window << window->frameGeometry() << window->geometry() << window->minimumSize() << window->maximumSize() << window->frameGeometry() << window->flags();
+        });
     }
 
     if (count == 0 && m_dock0BlocksCloseEvent)
