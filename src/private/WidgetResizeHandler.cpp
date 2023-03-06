@@ -398,6 +398,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Window::Ptr w, MSG *msg,
         const int borderWidth = 8;
         const bool hasFixedWidth = w->minWidth() == w->maxWidth();
         const bool hasFixedHeight = w->minHeight() == w->maxHeight();
+        const bool hasFixedWidthOrHeight = hasFixedWidth || hasFixedHeight;
 
         *result = 0;
         const int xPos = GET_X_LPARAM(msg->lParam);
@@ -405,16 +406,16 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Window::Ptr w, MSG *msg,
         RECT rect;
         GetWindowRect(reinterpret_cast<HWND>(w->handle()), &rect);
 
-        if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos <= rect.bottom
+        if (!hasFixedWidthOrHeight && xPos >= rect.left && xPos <= rect.left + borderWidth && yPos <= rect.bottom
             && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMLEFT;
-        } else if (xPos < rect.right && xPos >= rect.right - borderWidth && yPos <= rect.bottom
+        } else if (!hasFixedWidthOrHeight && xPos < rect.right && xPos >= rect.right - borderWidth && yPos <= rect.bottom
                    && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMRIGHT;
-        } else if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos >= rect.top
+        } else if (!hasFixedWidthOrHeight && xPos >= rect.left && xPos <= rect.left + borderWidth && yPos >= rect.top
                    && yPos <= rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPLEFT;
-        } else if (xPos <= rect.right && xPos >= rect.right - borderWidth && yPos >= rect.top
+        } else if (!hasFixedWidthOrHeight && xPos <= rect.right && xPos >= rect.right - borderWidth && yPos >= rect.top
                    && yPos < rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPRIGHT;
         } else if (!hasFixedWidth && xPos >= rect.left && xPos <= rect.left + borderWidth
