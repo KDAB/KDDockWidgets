@@ -2,6 +2,7 @@
  - Introduce DockWidget::setFloatingWindowFlags(flags). Allows for different
    FloatingWindows to have different window flags. For example, some having
    Qt::Tool while others having Qt::Window (#314).
+ - Fixed fixed-sized windows being able to be resized on Windows (#345)
 
 * v1.6.0 (14 September 2022)
  - Minimum Qt6 version is now 6.2.0

@@ -369,6 +369,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
         const int borderWidth = 8;
         const bool hasFixedWidth = w->minimumWidth() == w->maximumWidth();
         const bool hasFixedHeight = w->minimumHeight() == w->maximumHeight();
+        const bool hasFixedWidthOrHeight = hasFixedWidth || hasFixedHeight;
 
         *result = 0;
         const int xPos = GET_X_LPARAM(msg->lParam);
@@ -376,13 +377,13 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
         RECT rect;
         GetWindowRect(reinterpret_cast<HWND>(w->winId()), &rect);
 
-        if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
+        if (!hasFixedWidthOrHeight && xPos >= rect.left && xPos <= rect.left + borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMLEFT;
-        } else if (xPos < rect.right && xPos >= rect.right - borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
+        } else if (!hasFixedWidthOrHeight && xPos < rect.right && xPos >= rect.right - borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMRIGHT;
-        } else if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos >= rect.top && yPos <= rect.top + borderWidth && features.hasResize()) {
+        } else if (!hasFixedWidthOrHeight && xPos >= rect.left && xPos <= rect.left + borderWidth && yPos >= rect.top && yPos <= rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPLEFT;
-        } else if (xPos <= rect.right && xPos >= rect.right - borderWidth && yPos >= rect.top && yPos < rect.top + borderWidth && features.hasResize()) {
+        } else if (!hasFixedWidthOrHeight && xPos <= rect.right && xPos >= rect.right - borderWidth && yPos >= rect.top && yPos < rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPRIGHT;
         } else if (!hasFixedWidth && xPos >= rect.left && xPos <= rect.left + borderWidth && features.hasResize()) {
             *result = HTLEFT;
