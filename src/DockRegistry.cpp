@@ -116,9 +116,9 @@ void DockRegistry::setFocusedDockWidget(Controllers::DockWidget *dw)
         // as the FocusScope hasn't been updated yet.
         // It's just for styling purposes, so can be delayed
         QMetaObject::invokeMethod(
-            this, [dw] {
-                if (dw) { // QPointer
-                    Q_EMIT dw->isFocusedChanged(true);
+            this, [this] {
+                if (m_focusedDockWidget) { // QPointer
+                    Q_EMIT m_focusedDockWidget->isFocusedChanged(true);
                 }
             },
             Qt::QueuedConnection);
