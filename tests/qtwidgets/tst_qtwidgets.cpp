@@ -154,6 +154,7 @@ private Q_SLOTS:
     void tst_overlayedGeometryIsSaved();
     void tst_overlayCrash();
     void tst_setAsCurrentTab();
+    void tst_crash326();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1605,6 +1606,24 @@ void TestQtWidgets::initTestCase()
 void TestQtWidgets::cleanupTestCase()
 {
     KDDockWidgets::Platform::instance()->uninstallMessageHandler();
+}
+
+void TestQtWidgets::tst_crash326()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
+    QPointer<Group> originalFrame = dock1->d->group();
+    dock1->close();
+    QVERIFY(dock1->parent() == nullptr);
+    QVERIFY(originalFrame != dock1->d->group());
+    QVERIFY(originalFrame->beingDeletedLater());
+
+    // In bug #326, the dock widget is reparented to the frame that's being deleted
+    dock1->show();
+    QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
+    QVERIFY(originalFrame != dock1->d->group());
 }
 
 int main(int argc, char *argv[])
