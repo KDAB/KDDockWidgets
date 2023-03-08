@@ -122,6 +122,11 @@ QAbstractButton *ViewFactory_qtwidgets::createTitleBarButton(QWidget *parent,
 // iconForButtonType impl is the same for QtQuick and QtWidgets
 QIcon ViewFactory_qtwidgets::iconForButtonType(TitleBarButtonType type, qreal dpr) const
 {
+    auto key = std::make_pair(type, dpr);
+    auto it = m_cachedIcons.find(key);
+    if (it != m_cachedIcons.end())
+        return *it;
+
     QString iconName;
     switch (type) {
     case TitleBarButtonType::AutoHide:
@@ -152,8 +157,10 @@ QIcon ViewFactory_qtwidgets::iconForButtonType(TitleBarButtonType type, qreal dp
         return {};
 
     QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
-    if (!scalingFactorIsSupported(dpr))
+    if (!scalingFactorIsSupported(dpr)) {
+        m_cachedIcons.insert(key, icon);
         return icon;
+    }
 
     // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
     // Simply add the high-res files and Qt will pick them when needed
@@ -162,6 +169,7 @@ QIcon ViewFactory_qtwidgets::iconForButtonType(TitleBarButtonType type, qreal dp
         icon.addFile(QStringLiteral(":/img/%1-1.5x.png").arg(iconName));
 
     icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
+    m_cachedIcons.insert(key, icon);
 
     return icon;
 }
@@ -187,4 +195,9 @@ Views::ClassicIndicatorWindowViewInterface *ViewFactory_qtwidgets::createClassic
     Controllers::ClassicIndicators *classicIndicators) const
 {
     return new IndicatorWindow_qtwidgets(classicIndicators);
+}
+
+void ViewFactory_qtwidgets::clearIconCache()
+{
+    m_cachedIcons.clear();
 }

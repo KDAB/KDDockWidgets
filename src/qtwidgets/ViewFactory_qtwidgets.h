@@ -14,6 +14,10 @@
 
 #include "kddockwidgets/ViewFactory.h"
 
+#include <QMap>
+
+#include <utility>
+
 // clazy:excludeall=ctor-missing-parent-argument
 
 /**
@@ -67,6 +71,7 @@ public:
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
     View *createMDILayout(Controllers::MDILayout *, View *parent) const override;
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
+    void clearIconCache();
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
     Views::ClassicIndicatorWindowViewInterface *
@@ -76,6 +81,7 @@ public:
 
 private:
     Q_DISABLE_COPY(ViewFactory_qtwidgets)
+    mutable QMap<std::pair<TitleBarButtonType, qreal>, QIcon> m_cachedIcons;
 };
 
 }
