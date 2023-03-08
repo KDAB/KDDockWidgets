@@ -109,6 +109,9 @@ public:
     /// Experimental, internal, not for general use.
     void enableFallbackMouseGrabber();
 
+    // Returns the active state
+    StateBase *activeState() const;
+
 Q_SIGNALS:
     void mousePressed();
     void manhattanLengthMove();
@@ -128,7 +131,6 @@ private:
     friend class StateDraggingWayland;
 
     DragController(QObject * = nullptr);
-    StateBase *activeState() const;
     std::shared_ptr<View> qtTopLevelUnderCursor() const;
     Draggable *draggableForView(View *) const;
     bool onDnDEvent(View *, QEvent *) override;
