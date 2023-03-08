@@ -155,6 +155,7 @@ private Q_SLOTS:
     void tst_overlayCrash();
     void tst_setAsCurrentTab();
     void tst_crash326();
+    void tst_restoreWithIncompleteFactory();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1625,6 +1626,31 @@ void TestQtWidgets::tst_crash326()
     QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
     QVERIFY(originalFrame != dock1->d->group());
 }
+
+
+void TestQtWidgets::tst_restoreWithIncompleteFactory()
+{
+    EnsureTopLevelsDeleted e;
+    SetExpectedWarning ignoreWarning("Couldn't find dock widget");
+    KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) -> KDDockWidgets::Controllers::DockWidget * {
+        if (name.contains(QStringLiteral("centralDockWidget")))
+            return nullptr;
+
+        auto w = new KDDockWidgets::Views::DockWidget_qtwidgets(name);
+        w->setWidget(new QWidget());
+        return w->asDockWidgetController();
+    });
+
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None, "MainWindow1");
+
+    LayoutSaver saver;
+    saver.restoreFromFile(":/layouts/restoreWithIncompleteFactory.json");
+
+    auto layout = m->multiSplitter();
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QCOMPARE(layout->separators().size(), 0);
+}
+
 
 int main(int argc, char *argv[])
 {
