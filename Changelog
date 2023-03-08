@@ -14,6 +14,16 @@
    FloatingWindows to have different window flags. For example, some having
    Qt::Tool while others having Qt::Window (#314).
  - Fixed fixed-sized windows being able to be resized on Windows (#345)
+ - Allow restoring layouts without touching floating dock widgets
+ - Fix setDropIndicatorsInhibited(false) not showing drop indicators (#334, #337)
+ - Fix relayouting when dock widget is deleted directly (#336)
+ - Minor performance improvement: Cache TitleBar icons
+ - Save side bar overlay geometry when frame is resized
+ - Fixed case of corrupt layout when using setDockWidgetFactoryFunc()
+ - Fix layout scaling factor when main window is native
+ - Fix moving floating windows to negative positions (#321)
+ - Fixed using normal geometry of platform window if fractional scaling is enabled
+ - Allow to specify Qt::Tool or Qt::Window per floating window
 
 * v1.6.0 (14 September 2022)
  - Minimum Qt6 version is now 6.2.0
