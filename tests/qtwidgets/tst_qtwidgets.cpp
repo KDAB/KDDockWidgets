@@ -156,6 +156,7 @@ private Q_SLOTS:
     void tst_setAsCurrentTab();
     void tst_crash326();
     void tst_restoreWithIncompleteFactory();
+    void tst_deleteDockWidget();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1627,7 +1628,6 @@ void TestQtWidgets::tst_crash326()
     QVERIFY(originalFrame != dock1->d->group());
 }
 
-
 void TestQtWidgets::tst_restoreWithIncompleteFactory()
 {
     EnsureTopLevelsDeleted e;
@@ -1648,6 +1648,33 @@ void TestQtWidgets::tst_restoreWithIncompleteFactory()
 
     auto layout = m->multiSplitter();
     QCOMPARE(layout->separators().size(), 0);
+}
+
+void TestQtWidgets::tst_deleteDockWidget()
+{
+    // Tests deleting the dock widget directly
+    // The layout should readjust
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    m1->addDockWidget(dw1, Location_OnBottom);
+    auto dw3 = Config::self().viewFactory()->createDockWidget("dw3")->asDockWidgetController();
+    m1->addDockWidget(dw3, Location_OnTop);
+
+    auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
+
+    m1->addDockWidget(dw2, KDDockWidgets::Location_OnLeft, dw1);
+    dw2->setFloating(true);
+
+    // There's one separator, separating dock 1 from dock 3
+    QCOMPARE(m1->multiSplitter()->separators().size(), 1);
+
+    delete dw1;
+
+    // Dock3 now occupies everything, separator was deleted
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QVERIFY(m1->multiSplitter()->separators().isEmpty());
 }
 
 
