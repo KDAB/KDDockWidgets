@@ -8000,7 +8000,5 @@ void TestDocks::tst_restoreFlagsFromVersion16()
 
     auto floatingWindow = dock1->floatingWindow();
     QVERIFY(floatingWindow);
-
-    QEXPECT_FAIL("", "Fixing", Continue);
     QCOMPARE(floatingWindow->floatingWindowFlags(), FloatingWindowFlag::HideTitleBarWhenTabsVisible);
 }
