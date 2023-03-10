@@ -233,6 +233,9 @@ public:
     /// @brief Returns whether this floating window supports showing a maximize button
     bool supportsMaximizeButton() const;
 
+    /// Returns the per-floating window flags
+    FloatingWindowFlags floatingWindowFlags() const;
+
 Q_SIGNALS:
     void activatedChanged();
     void numFramesChanged();

@@ -248,6 +248,7 @@ private Q_SLOTS:
     void tst_persistentCentralWidget();
     void tst_setFloatingWindowFlags();
     void tst_crash326();
+    void tst_restoreFlagsFromVersion16();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick

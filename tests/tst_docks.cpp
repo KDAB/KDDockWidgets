@@ -7986,3 +7986,21 @@ void TestDocks::tst_crash326()
     QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
     QVERIFY(originalFrame != dock1->d->frame());
 }
+
+void TestDocks::tst_restoreFlagsFromVersion16()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible);
+
+    // Save a layout with a floating window:
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+
+    LayoutSaver saver;
+    saver.restoreFromFile(":/layouts/1.6layoutWithoutFloatingWindowFlags.json");
+
+    auto floatingWindow = dock1->floatingWindow();
+    QVERIFY(floatingWindow);
+
+    QEXPECT_FAIL("", "Fixing", Continue);
+    QCOMPARE(floatingWindow->floatingWindowFlags(), FloatingWindowFlag::HideTitleBarWhenTabsVisible);
+}

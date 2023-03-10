@@ -6,6 +6,7 @@
         <file>layouts/stuck-separator.json</file>
         <file>layouts/layoutEquallyCrash.json</file>
         <file>layouts/restoreWithIncompleteFactory.json</file>
+        <file>layouts/1.6layoutWithoutFloatingWindowFlags.json</file>
         <file>main.qml</file>
         <file>main2.qml</file>
     </qresource>
