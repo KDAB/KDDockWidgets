@@ -1865,18 +1865,16 @@ void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Siz
     const bool lengthChanged = (q->isVertical() && heightChanged) || (q->isHorizontal() && widthChanged);
     const int totalNewLength = q->usableLength();
 
-    std::function<int(const Item::List&)> indexOfCentralFrame;
-    indexOfCentralFrame = [&indexOfCentralFrame] (const Item::List& children) -> int {
-        const Item* centralFrame = nullptr;
-        for (auto* child : children)
-        {
+    std::function<int(const Item::List &)> indexOfCentralFrame;
+    indexOfCentralFrame = [&indexOfCentralFrame](const Item::List &children) -> int {
+        const Item *centralFrame = nullptr;
+        for (auto *child : children) {
             auto guest = child->guestAsQObject();
             const bool isCentralFrame = guest ? guest->objectName().endsWith(QStringLiteral("-persistentCentralDockWidget")) : false;
             if (isCentralFrame) {
                 return children.indexOf(child);
-            }
-            else if (child->isContainer()) {
-                auto container = dynamic_cast<ItemBoxContainer*>(child);
+            } else if (child->isContainer()) {
+                auto container = dynamic_cast<ItemBoxContainer *>(child);
                 int index = indexOfCentralFrame(container->visibleChildren());
                 if (index != -1)
                     return children.indexOf(child);
@@ -1890,22 +1888,20 @@ void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Siz
         int index = children.count() > 1 ? indexOfCentralFrame(children) : -1;
         if (index == -1) {
             strategy = ChildrenResizeStrategy::Percentage;
-        }
-        else {
+        } else {
             int remaining = totalNewLength;
             for (int i = 0; i < count; ++i) {
                 const bool isCentralFrame = i == index;
                 if (isCentralFrame)
                     continue;
 
-                const SizingInfo& itemSize = childSizes[i];
+                const SizingInfo &itemSize = childSizes[i];
                 remaining -= itemSize.length(q->orientation());
             }
-            SizingInfo& itemSize = childSizes[index];
+            SizingInfo &itemSize = childSizes[index];
             if (q->isVertical()) {
                 itemSize.geometry.setSize({ q->width(), remaining });
-            }
-            else {
+            } else {
                 itemSize.geometry.setSize({ remaining, q->height() });
             }
         }
