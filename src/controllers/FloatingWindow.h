@@ -197,6 +197,8 @@ public:
     bool supportsMaximizeButton() const;
 
     void maybeCreateResizeHandler();
+    /// Returns the per-floating window flags
+    FloatingWindowFlags floatingWindowFlags() const;
 
 Q_SIGNALS:
     void activatedChanged();

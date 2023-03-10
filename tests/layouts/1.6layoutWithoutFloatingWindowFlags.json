@@ -1,0 +1,133 @@
+{
+    "allDockWidgets": [
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "placeholders": [
+                    {
+                        "indexOfFloatingWindow": 0,
+                        "isFloatingWindow": true,
+                        "itemIndex": 0
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "1"
+        }
+    ],
+    "closedDockWidgets": [
+    ],
+    "floatingWindows": [
+        {
+            "geometry": {
+                "height": 129,
+                "width": 400,
+                "x": 0,
+                "y": 0
+            },
+            "isVisible": true,
+            "multiSplitterLayout": {
+                "frames": {
+                    "1": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "1"
+                        ],
+                        "geometry": {
+                            "height": 90,
+                            "width": 392,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "id": "1",
+                        "isNull": false,
+                        "mainWindowUniqueName": "",
+                        "objectName": "1",
+                        "options": 0
+                    }
+                },
+                "layout": {
+                    "children": [
+                        {
+                            "guestId": "1",
+                            "isContainer": false,
+                            "isVisible": true,
+                            "objectName": "1",
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 90,
+                                    "width": 392,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "maxSize": {
+                                    "height": 90,
+                                    "width": 524291
+                                },
+                                "minSize": {
+                                    "height": 90,
+                                    "width": 84
+                                }
+                            }
+                        }
+                    ],
+                    "isContainer": true,
+                    "isVisible": false,
+                    "objectName": "",
+                    "orientation": 2,
+                    "sizingInfo": {
+                        "geometry": {
+                            "height": 90,
+                            "width": 392,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "maxSize": {
+                            "height": 16777215,
+                            "width": 16777215
+                        },
+                        "minSize": {
+                            "height": 90,
+                            "width": 80
+                        }
+                    }
+                }
+            },
+            "normalGeometry": {
+                "height": 129,
+                "width": 400,
+                "x": 0,
+                "y": 0
+            },
+            "parentIndex": -1,
+            "screenIndex": 0,
+            "screenSize": {
+                "height": 600,
+                "width": 800
+            },
+            "windowState": 0
+        }
+    ],
+    "mainWindows": [
+    ],
+    "screenInfo": [
+        {
+            "devicePixelRatio": 1,
+            "geometry": {
+                "height": 600,
+                "width": 800,
+                "x": 0,
+                "y": 0
+            },
+            "index": 0,
+            "name": ""
+        }
+    ],
+    "serializationVersion": 3
+}

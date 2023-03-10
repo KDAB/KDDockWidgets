@@ -209,4 +209,5 @@ private Q_SLOTS:
     void tst_titlebarNumDockWidgetsChanged();
     void tst_closed();
     void tst_maximizeButton();
+    void tst_restoreFlagsFromVersion16();
 };

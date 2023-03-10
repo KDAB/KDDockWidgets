@@ -818,3 +818,8 @@ bool FloatingWindow::isUtilityWindow() const
     const bool dontUse = (d->m_flags & FloatingWindowFlag::DontUseParentForFloatingWindows) && (d->m_flags & FloatingWindowFlag::UseQtWindow);
     return !dontUse;
 }
+
+FloatingWindowFlags FloatingWindow::floatingWindowFlags() const
+{
+    return d->m_flags;
+}

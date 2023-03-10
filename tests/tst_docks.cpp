@@ -6638,3 +6638,20 @@ int main(int argc, char *argv[])
 
     return exitCode;
 }
+
+void TestDocks::tst_restoreFlagsFromVersion16()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible);
+
+    // Save a layout with a floating window:
+    auto dock1 = createDockWidget("1");
+
+    LayoutSaver saver;
+    saver.restoreFromFile(":/layouts/1.6layoutWithoutFloatingWindowFlags.json");
+
+    auto floatingWindow = dock1->floatingWindow();
+    QVERIFY(floatingWindow);
+
+    QCOMPARE(floatingWindow->floatingWindowFlags(), FloatingWindowFlag::HideTitleBarWhenTabsVisible);
+}
