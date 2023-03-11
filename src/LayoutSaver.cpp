@@ -246,7 +246,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
     window.screenIndex = json.value("screenIndex", 0);
     window.screenSize = json.value("screenSize", QSize(800, 600));
     window.isVisible = json.value("isVisible", false);
-    window.flags = json.value("flags", -1);
+    window.flags = json.value("flags", int(FloatingWindowFlag::FromGlobalConfig));
     window.windowState = ( WindowState )json.value("windowState", 0);
     window.affinities = json.value("affinities", QStringList());
 
