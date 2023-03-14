@@ -173,10 +173,11 @@ LayoutSaver::Position Position::serialize() const
 
         Layouting::Item *item = itemRef->item;
         LayoutWidget *layout = DockRegistry::self()->layoutForItem(item);
+        Q_ASSERT(layout);
         const auto itemIndex = layout->items().indexOf(item);
 
         auto fw = layout->floatingWindow();
-        auto mainWindow = layout->mainWindow();
+        auto mainWindow = layout->mainWindow(/*honourNesting=*/true);
         Q_ASSERT(mainWindow || fw);
         p.isFloatingWindow = fw;
 

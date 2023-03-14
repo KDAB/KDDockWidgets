@@ -5083,7 +5083,7 @@ void TestDocks::tst_mdi_mixed_with_docking()
     // so test it as well
     LayoutSaver saver;
 
-    // saver.serializeLayout(); // Uncomment once #352 is fixed
+    saver.serializeLayout();
 
     Frame *frameMDI1 = mdiWidget1->d->frame();
     Frame *frame1 = dock1->d->frame();
