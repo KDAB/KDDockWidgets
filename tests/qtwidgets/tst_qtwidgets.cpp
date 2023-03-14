@@ -331,6 +331,12 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
 
+
+    // We don't support LayoutSaver with mdi yet, but it shouldn't crash
+    // so test it as well
+    LayoutSaver saver;
+    // saver.serializeLayout(); // Uncomment once #352 is fixed
+
     Controllers::Group *groupMDI1 = mdiWidget1->d->group();
     Controllers::Group *group1 = dock1->d->group();
     QVERIFY(!group1->isMDI());
