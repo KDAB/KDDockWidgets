@@ -476,7 +476,7 @@ bool DockRegistry::isSane() const
             names.insert(name);
         }
 
-        if (!mainwindow->multiSplitter()->checkSanity())
+        if (!mainwindow->layoutWidget()->checkSanity())
             return false;
     }
 
@@ -684,7 +684,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
 
     for (auto mw : qAsConst(mainWindows)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, mw->affinities())) {
-            mw->multiSplitter()->clearLayout();
+            mw->layoutWidget()->clearLayout();
         }
     }
 }

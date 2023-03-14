@@ -7797,6 +7797,11 @@ void TestDocks::tst_addMDIDockWidget()
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
     auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
     qobject_cast<MDILayoutWidget *>(m->layoutWidget())->addDockWidget(dock0, QPoint(0, 0), {});
+
+    // MDI doesn't support LayoutSaver yet, but it was crashing, so add a test
+    // to catch further crashes
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
 }
 
 void TestDocks::tst_redockToMDIRestoresPosition()
