@@ -9,5 +9,6 @@
         <file>layouts/1.6layoutWithoutFloatingWindowFlags.json</file>
         <file>main.qml</file>
         <file>main2.qml</file>
+        <file>main350.qml</file>
     </qresource>
 </RCC>

@@ -39,6 +39,9 @@ private Q_SLOTS:
     void tst_restoreRestoresMainWindowPosition();
     void tst_hoverShowsDropIndicators();
     void tst_titlebarNumDockWidgetsChanged();
+
+    /// Tests a situation where DockWidgetInstantiator::isFloatingChanged wasn't being emitted (#350)
+    void tst_isFloatingIsEmitted();
 };
 
 
@@ -141,6 +144,41 @@ void TestQtQuick::tst_titlebarNumDockWidgetsChanged()
     dock0->addDockWidgetAsTab(dock1);
 
     QVERIFY(numSignalEmittions > 0);
+}
+
+void TestQtQuick::tst_isFloatingIsEmitted()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main350.qml");
+
+    auto dw4 = DockRegistry::self()->dockByName("dock4");
+    auto dw5 = DockRegistry::self()->dockByName("dock5");
+    QVERIFY(dw4);
+    QVERIFY(dw5);
+
+    dw4->setFloating(true);
+    dw5->addDockWidgetToContainingWindow(dw4, KDDockWidgets::Location_OnLeft);
+    dw4->titleBar()->onFloatClicked();
+
+    QVERIFY(dw4->isFloating());
+    auto mw = DockRegistry::self()->mainWindowByName("MyWindowName-1");
+    QVERIFY(mw);
+
+    auto floatingDropArea = dw4->floatingWindow()->multiSplitter();
+    QVERIFY(floatingDropArea);
+
+    // Add to main window again and make sure signal was emitted
+
+    bool signalReceived = false;
+    connect(dw4, &Controllers::DockWidget::isFloatingChanged, dw4, [&signalReceived] {
+        signalReceived = true;
+    });
+
+    mw->dropArea()->addMultiSplitter(floatingDropArea, KDDockWidgets::Location_OnLeft);
+    QVERIFY(!dw4->isFloating());
+
+    QEXPECT_FAIL("", "Fixing", Continue);
+    QVERIFY(signalReceived);
 }
 
 int main(int argc, char *argv[])
