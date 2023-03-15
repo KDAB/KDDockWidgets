@@ -174,10 +174,13 @@ void TestQtQuick::tst_isFloatingIsEmitted()
         signalReceived = true;
     });
 
+
+    QVERIFY(dw4->isFloating());
+    QVERIFY(dw4->floatAction()->isChecked());
     mw->dropArea()->addMultiSplitter(floatingDropArea, KDDockWidgets::Location_OnLeft);
     QVERIFY(!dw4->isFloating());
+    QVERIFY(!dw4->floatAction()->isChecked());
 
-    QEXPECT_FAIL("", "Fixing", Continue);
     QVERIFY(signalReceived);
 }
 

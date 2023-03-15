@@ -421,11 +421,8 @@ bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location,
         if (!validateAffinity(floatingWindow))
             return false;
 
-        const bool hadSingleFloatingFrame = hasSingleFloatingFrame();
         addMultiSplitter(floatingWindow->dropArea(), location, relativeTo,
                          DefaultSizeMode::FairButFloor);
-        if (hadSingleFloatingFrame != hasSingleFloatingFrame())
-            updateFloatingActions();
 
         floatingWindow->scheduleDeleteLater();
         return true;
@@ -614,6 +611,9 @@ void DropArea::addMultiSplitter(Controllers::DropArea *sourceMultiSplitter, Loca
 {
     qCDebug(addwidget) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
     addWidget(sourceMultiSplitter->view(), location, relativeTo, option);
+
+    // Some widgets changed to/from floating
+    updateFloatingActions();
 }
 
 QVector<Controllers::Separator *> DropArea::separators() const
