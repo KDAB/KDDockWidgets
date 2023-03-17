@@ -187,7 +187,7 @@ LayoutSaver::Position Position::serialize() const
         const auto itemIndex = layout->items().indexOf(item);
 
         auto fw = layout->floatingWindow();
-        auto mainWindow = layout->mainWindow();
+        auto mainWindow = layout->mainWindow(/*honourNesting=*/true);
         Q_ASSERT(mainWindow || fw);
         p.isFloatingWindow = fw;
 

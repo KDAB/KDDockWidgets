@@ -335,7 +335,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     // We don't support LayoutSaver with mdi yet, but it shouldn't crash
     // so test it as well
     LayoutSaver saver;
-    // saver.serializeLayout(); // Uncomment once #352 is fixed
+    saver.serializeLayout();
 
     Controllers::Group *groupMDI1 = mdiWidget1->d->group();
     Controllers::Group *group1 = dock1->d->group();
