@@ -102,7 +102,7 @@ WindowBeingDragged::~WindowBeingDragged()
 {
     grabMouse(false);
 
-    if (!isWayland()) { // Wayland doesn't support setting opacity
+    if (!isWayland() && m_floatingWindow) { // Wayland doesn't support setting opacity
         // Restore opacity to fully opaque if needed
         const qreal opacity = Config::self().draggedWindowOpacity();
         if (!qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity))
