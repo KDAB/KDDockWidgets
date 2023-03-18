@@ -1,0 +1,183 @@
+/*
+  This file is part of KDDockWidgets.
+
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  Author: Sérgio Martins <sergio.martins@kdab.com>
+
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
+*/
+
+// We don't care about performance related checks in the tests
+// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
+
+// A test that was extracted out from tst_docks.cpp as it was too slow
+// By using a separate executable it can be paralellized by ctest.
+
+#include "utils.h"
+#include "Config.h"
+#include "LayoutSaver_p.h"
+#include "Position_p.h"
+#include "WindowBeingDragged_p.h"
+#include "Platform.h"
+#include "multisplitter/Item_p.h"
+#include "kddockwidgets/ViewFactory.h"
+#include "Action.h"
+#include "kddockwidgets/controllers/MDILayout.h"
+#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
+#include "kddockwidgets/controllers/Separator.h"
+#include "kddockwidgets/controllers/TabBar.h"
+#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/controllers/SideBar.h"
+
+#include <QtTest/QtTest>
+
+using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
+using namespace Layouting;
+using namespace KDDockWidgets::Tests;
+
+class TestDocks : public QObject
+{
+    Q_OBJECT
+
+public Q_SLOTS:
+    void initTestCase()
+    {
+        KDDockWidgets::Platform::instance()->installMessageHandler();
+    }
+
+    void cleanupTestCase()
+    {
+        KDDockWidgets::Platform::instance()->uninstallMessageHandler();
+    }
+
+private Q_SLOTS:
+    void tst_dock2FloatingWidgetsTabbed();
+};
+
+void TestDocks::tst_dock2FloatingWidgetsTabbed()
+{
+    EnsureTopLevelsDeleted e;
+
+    if (KDDockWidgets::usesNativeTitleBar())
+        return; // Unit-tests can't drag via tab, yet
+
+    auto dock1 = createDockWidget("doc1");
+    auto fw1 = dock1->floatingWindow();
+    fw1->view()->setGeometry(QRect(500, 500, 400, 400));
+    QVERIFY(dock1);
+    QPointer<Controllers::Group> group1 = dock1->dptr()->group();
+
+    auto titlebar1 = fw1->titleBar();
+    auto dock2 = createDockWidget("doc2");
+
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+
+    QPoint finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
+    drag(titlebar1->view(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
+
+    // It morphed into a FloatingWindow
+    QPointer<Controllers::Group> group2 = dock2->dptr()->group();
+    if (!dock2->floatingWindow()) {
+        qWarning() << "dock2->floatingWindow()=" << dock2->floatingWindow();
+        QVERIFY(false);
+    }
+    QVERIFY(group2);
+    QCOMPARE(group2->dockWidgetCount(), 1);
+
+    releaseOn(finalPoint, titlebar1->view());
+    QCOMPARE(group2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
+    QVERIFY(Platform::instance()->tests_waitForDeleted(group1));
+
+    // 2.3 Detach tab1 to empty space
+    QPoint globalPressPos = dragPointForWidget(group2.data(), 0);
+    Controllers::TabBar *tabBar = group2->stack()->tabBar();
+    QVERIFY(tabBar);
+    drag(tabBar->view(), globalPressPos,
+         group2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
+
+    QVERIFY(group2->dockWidgetCount() == 1);
+    QVERIFY(dock1->floatingWindow());
+
+    // 2.4 Drag the first dock over the second
+    group1 = dock1->dptr()->group();
+    group2 = dock2->dptr()->group();
+    fw1 = dock1->floatingWindow();
+    globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100, 5));
+    finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
+    drag(fw1->titleBar()->view(), globalPressPos, finalPoint);
+
+    QCOMPARE(group2->dockWidgetCount(), 2);
+
+    // 2.5 Detach and drop to the same place, should tab again
+    globalPressPos = dragPointForWidget(group2.data(), 0);
+    tabBar = group2->stack()->tabBar();
+
+    finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
+    drag(tabBar->view(), globalPressPos, finalPoint);
+    QCOMPARE(group2->dockWidgetCount(), 2);
+
+    // 2.6 Drag the tabbed group over a 3rd floating window
+    auto dock3 = createDockWidget("doc3");
+    QTest::qWait(1000); // Test is flaky otherwise
+
+    auto fw2 = dock2->floatingWindow();
+    finalPoint = dock3->window()->geometry().center() + QPoint(7, 7);
+    drag(fw2->titleBar()->view(), group2->mapToGlobal(QPoint(10, 10)), finalPoint);
+
+    QVERIFY(Platform::instance()->tests_waitForDeleted(group1));
+    QVERIFY(Platform::instance()->tests_waitForDeleted(group2));
+    QVERIFY(dock3->dptr()->group());
+    QCOMPARE(dock3->dptr()->group()->dockWidgetCount(), 3);
+
+    auto fw3 = dock3->floatingWindow();
+    QVERIFY(fw3);
+    QVERIFY(fw3->dropArea()->checkSanity());
+
+    // 2.7 Drop the window into a MainWindow
+    {
+        auto m = createMainWindow();
+        m->show();
+        m->view()->setGeometry(QRect(500, 300, 300, 300));
+        QVERIFY(!dock3->isFloating());
+        auto fw3 = dock3->floatingWindow();
+        drag(fw3->titleBar()->view(), dock3->window()->mapToGlobal(QPoint(10, 10)),
+             m->geometry().center());
+        QVERIFY(!dock3->isFloating());
+        QVERIFY(dock3->window()->equals(m->view()));
+        QCOMPARE(dock3->dptr()->group()->dockWidgetCount(), 3);
+        QVERIFY(m->dropArea()->checkSanity());
+
+        delete dock1;
+        delete dock2;
+        delete dock3;
+        QVERIFY(Platform::instance()->tests_waitForDeleted(group2));
+        QVERIFY(Platform::instance()->tests_waitForDeleted(fw3));
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    int exitCode = 0;
+    for (FrontendType type : Platform::frontendTypes()) {
+        qDebug() << "\nTesting platform" << type << ":\n";
+        KDDockWidgets::Platform::tests_initPlatform(argc, argv, type);
+
+        TestDocks test;
+
+        const int code = QTest::qExec(&test, argc, argv);
+        if (code != 0)
+            exitCode = 1;
+        KDDockWidgets::Platform::tests_deinitPlatform();
+    }
+
+    return exitCode;
+}
+
+#include <tst_docks_slow4.moc>

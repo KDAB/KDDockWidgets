@@ -79,7 +79,6 @@ private Q_SLOTS:
     void tst_restoreSimplest();
     void tst_restoreNonClosable();
     void tst_restoreRestoresMainWindowPosition();
-    void tst_invalidLayoutAfterRestore();
     void tst_dontCloseDockWidgetBeforeRestore();
     void tst_dontCloseDockWidgetBeforeRestore2();
     void tst_dontCloseDockWidgetBeforeRestore3();
@@ -127,9 +126,7 @@ private Q_SLOTS:
     void tst_setFloatingWhenSideBySide();
     void tst_dockWindowWithTwoSideBySideFramesIntoCenter();
     void tst_tabTitleChanges();
-    void tst_dockWidgetGetsFocusWhenDocked();
     void tst_setWidget();
-    void tst_isFocused();
     void tst_floatingLastPosAfterDoubleClose();
     void tst_registry();
     void tst_honourGeometryOfHiddenWindow();
@@ -147,9 +144,6 @@ private Q_SLOTS:
     void tst_invalidJSON();
     void tst_unfloatTabbedFloatingWidgets();
     void tst_unfloatTabbedFloatingWidgets2();
-
-    void tst_invalidPlaceholderPosition_data();
-    void tst_invalidPlaceholderPosition();
     void tst_setVisibleFalseWhenSideBySide_data();
     void tst_setVisibleFalseWhenSideBySide();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
@@ -188,13 +182,8 @@ private Q_SLOTS:
     void tst_addToSmallMainWindow4();
     void tst_addToSmallMainWindow5();
     void tst_positionWhenShown();
-    void tst_28NestedWidgets();
-    void tst_28NestedWidgets_data();
     void tst_dragBySingleTab();
-    void tst_dragByTabBar();
-    void tst_dragByTabBar_data();
     void tst_titleBarFocusedWhenTabsChange();
-    void tst_dock2FloatingWidgetsTabbed();
     void tst_deleteOnClose();
     void tst_toggleAction();
     void tst_redocksToPreviousTabIndex();

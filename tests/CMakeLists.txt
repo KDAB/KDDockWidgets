@@ -25,11 +25,27 @@ include_directories(../src)
 include_directories(../src/private)
 add_definitions(-DQT_NO_KEYWORDS)
 
-# tst_docks
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
+
+function(add_slow_test testNumber)
+    add_executable(tst_docks_slow${testNumber} tst_docks_slow${testNumber}.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
+    target_link_libraries(tst_docks_slow${testNumber} kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+    set_compiler_flags(tst_docks_slow${testNumber})
+    add_test(NAME tst_docks_slow${testNumber} COMMAND tst_docks_slow${testNumber})
+endfunction(add_slow_test)
+
+# tst_docks
 add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
 target_link_libraries(tst_docks kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_docks)
+
+add_slow_test(1)
+add_slow_test(2)
+add_slow_test(3)
+add_slow_test(4)
+add_slow_test(5)
+add_slow_test(6)
+add_slow_test(7)
 
 # tst_qtwidgets
 if(KDDW_FRONTEND_QTWIDGETS)
