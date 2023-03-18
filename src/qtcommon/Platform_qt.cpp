@@ -22,7 +22,7 @@
 #include <QGuiApplication>
 #include <QElapsedTimer>
 #include <QScreen>
-
+#include <QTimer>
 
 using namespace KDDockWidgets;
 
@@ -77,6 +77,18 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
             QFAIL("Test caused warning");
         }
     }
+}
+
+static void sleepWithEventLoop(int ms)
+{
+    if (!ms)
+        return;
+
+    QEventLoop loop;
+    QTimer::singleShot(ms, &loop, [&loop] {
+        loop.exit();
+    });
+    loop.exec();
 }
 
 /// @brief Helper class to help us with tests
@@ -318,7 +330,7 @@ bool Platform_qt::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout)
 
     while (!filter.m_got && time.elapsed() < timeout) {
         qGuiApp->processEvents();
-        QTest::qWait(50);
+        Tests::sleepWithEventLoop(50);
     }
 
     return filter.m_got;
@@ -358,7 +370,7 @@ bool Platform_qt::tests_waitForDeleted(View *view, int timeout) const
 
     while (ptr && time.elapsed() < timeout) {
         qGuiApp->processEvents();
-        QTest::qWait(50);
+        Tests::sleepWithEventLoop(50);
     }
 
     const bool wasDeleted = !ptr;
@@ -377,7 +389,7 @@ bool Platform_qt::tests_waitForDeleted(QObject *o, int timeout) const
 
     while (ptr && time.elapsed() < timeout) {
         qGuiApp->processEvents();
-        QTest::qWait(50);
+        Tests::sleepWithEventLoop(50);
     }
 
     const bool wasDeleted = !ptr;
@@ -430,7 +442,7 @@ Platform_qt::Platform_qt(QCoreApplication *)
 
 void Platform_qt::tests_wait(int ms)
 {
-    QTest::qWait(ms);
+    Tests::sleepWithEventLoop(ms);
 }
 
 void Platform_qt::maybeSetOffscreenQPA(int argc, char **argv)
