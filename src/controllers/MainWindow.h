@@ -215,7 +215,7 @@ public:
     DropArea *multiSplitter() const;
 
     ///@internal
-    ///@brief returns the MultiSplitter.
+    ///@brief returns the layout, which is usually MultiSplitter, but can be a MDILayout if using MDI
     Layout *layout() const;
 
     ///@internal
