@@ -10,5 +10,7 @@
         <file>main.qml</file>
         <file>main2.qml</file>
         <file>main350.qml</file>
+        <file>main343.qml</file>
+        <file>main343_2.qml</file>
     </qresource>
 </RCC>

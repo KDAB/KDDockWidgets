@@ -39,6 +39,7 @@ private Q_SLOTS:
     void tst_restoreRestoresMainWindowPosition();
     void tst_hoverShowsDropIndicators();
     void tst_titlebarNumDockWidgetsChanged();
+    void tst_effectiveVisibilityBug();
 
     /// Tests a situation where DockWidgetInstantiator::isFloatingChanged wasn't being emitted (#350)
     void tst_isFloatingIsEmitted();
@@ -182,6 +183,39 @@ void TestQtQuick::tst_isFloatingIsEmitted()
     QVERIFY(!dw4->floatAction()->isChecked());
 
     QVERIFY(signalReceived);
+}
+
+void TestQtQuick::tst_effectiveVisibilityBug()
+{
+    // When saving layout state, we should not store QQuickItem::isVisible(), as that is not the real
+    // "isVisible", as it might depend on the parent being visible or not.
+    // The correct property to store is QQuickItemPrivate::explicitVisible, and not
+    // QQuickItemPrivate::effectiveVisible;
+    //
+    // See issue #343
+
+    QByteArray serialized;
+
+    {
+        EnsureTopLevelsDeleted e;
+        // This main .qml has the DropArea wrapped into an Item with visible: false
+        QQmlApplicationEngine engine(":/main343.qml");
+        LayoutSaver saver;
+        serialized = saver.serializeLayout();
+        QVERIFY(!serialized.isEmpty());
+    }
+
+    EnsureTopLevelsDeleted e;
+    // This main .qml has the DropArea wrapped into an Item with visible: true
+    // restoring should restore the DropArea with visible true
+    QQmlApplicationEngine engine(":/main343_2.qml");
+    LayoutSaver restorer;
+    QVERIFY(restorer.restoreLayout(serialized));
+
+    const auto mainWindows = DockRegistry::self()->mainwindows();
+    QCOMPARE(mainWindows.size(), 1);
+    QEXPECT_FAIL("", "Fixing", Continue);
+    QVERIFY(mainWindows.first()->isVisible());
 }
 
 int main(int argc, char *argv[])
