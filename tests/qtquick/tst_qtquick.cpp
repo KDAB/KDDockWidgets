@@ -214,7 +214,6 @@ void TestQtQuick::tst_effectiveVisibilityBug()
 
     const auto mainWindows = DockRegistry::self()->mainwindows();
     QCOMPARE(mainWindows.size(), 1);
-    QEXPECT_FAIL("", "Fixing", Continue);
     QVERIFY(mainWindows.first()->isVisible());
 }
 

@@ -17,6 +17,7 @@
 #include "kddockwidgets/Window_qtquick.h"
 #include "qtquick/Platform_qtquick.h"
 
+#include <QtQuick/private/qquickitem_p.h>
 #include <qpa/qplatformwindow.h>
 #include <QtGui/private/qhighdpiscaling_p.h>
 #include <QGuiApplication>
@@ -324,7 +325,13 @@ bool View_qtquick::isVisible() const
             return false;
     }
 
-    return QQuickItem::isVisible();
+    // QQuickItemPrivate::explicitVisible is the actual visible state independently from the parent
+    // being visible or not. This is what we want to save with LayoutSaver.
+    // For now, we have no use case to know what is the effectiveVisible state. If we need it, then we'll
+    // need to have more API for this.
+
+    auto priv = QQuickItemPrivate::get(this);
+    return priv->explicitVisible;
 }
 
 void View_qtquick::setVisible(bool is)
