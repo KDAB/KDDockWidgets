@@ -15,8 +15,10 @@
 
 #include <QString>
 #include <QTimer>
+#include <QEventLoop>
+#include <QWindow>
+#include <QGuiApplication>
 #include <QElapsedTimer>
-#include <QtTest/QTest>
 
 using namespace KDDockWidgets;
 
@@ -64,7 +66,8 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
                 Platform::s_warningObserver->onFatal();
 
             Platform::instance()->m_numWarningsEmitted++;
-            QFAIL("Test caused warning");
+            // We don't link to QTest, so no QFAIL here. Bue will be heard by the CI:
+            qFatal("Something is wrong, as KDDW is warnings clean!");
         }
     }
 }

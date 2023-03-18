@@ -515,11 +515,6 @@ if(KDDockWidgets_CODE_COVERAGE)
     target_link_libraries(kddockwidgets PUBLIC coverage_options)
 endif()
 
-if(KDDockWidgets_DEVELOPER_MODE)
-    find_package(Qt${Qt_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
-    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test)
-endif()
-
 target_link_libraries(kddockwidgets PRIVATE kdbindings)
 
 if(WIN32)
