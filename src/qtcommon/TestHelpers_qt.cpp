@@ -15,6 +15,7 @@
 
 #include <QString>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
@@ -80,6 +81,24 @@ static void sleepWithEventLoop(int ms)
     loop.exec();
 }
 
+template<typename Func>
+static bool waitFor(Func func, int timeout)
+{
+
+    QElapsedTimer timer;
+    timer.start();
+
+    while (!func()) {
+        if (timer.elapsed() >= timeout)
+            return false;
+
+        sleepWithEventLoop(100);
+    }
+
+    return true;
+}
+
+
 /// @brief Helper class to help us with tests
 class EventFilter : public QObject
 {
@@ -109,7 +128,12 @@ bool Platform_qt::tests_waitForWindowActive(Window::Ptr window, int timeout) con
 {
     Q_ASSERT(window);
     auto windowqt = static_cast<Window_qt *>(window.get());
-    return QTest::qWaitForWindowActive(windowqt->qtWindow(), timeout);
+    QWindow *qwindow = windowqt->qtWindow();
+
+    return Tests::waitFor([qwindow] {
+        return qwindow && qwindow->isActive();
+    },
+                          timeout);
 }
 
 bool Platform_qt::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout) const
