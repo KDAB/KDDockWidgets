@@ -10,7 +10,6 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FUZZER": "OFF",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
             },
             "warnings": {
@@ -27,7 +26,6 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FUZZER": "OFF",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
             },
@@ -44,7 +42,6 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FUZZER": "OFF",
                 "KDDockWidgets_FRONTENDS": "flutter",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'"
             },
@@ -61,7 +58,6 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FUZZER": "OFF",
                 "KDDockWidgets_CODE_COVERAGE": "ON",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
@@ -157,7 +153,6 @@
                 "KDDockWidgets_QT6": "ON",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FUZZER": "OFF",
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
             },
@@ -176,7 +171,6 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'",
-                "KDDockWidgets_FUZZER": "OFF",
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;dummy"
             },
@@ -193,7 +187,6 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FUZZER": "ON",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
             "warnings": {
@@ -212,7 +205,6 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "KDDockWidgets_FUZZER": "ON",
                 "KDDockWidgets_QT6": "ON",
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
@@ -235,7 +227,6 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FUZZER": "OFF",
                 "CMAKE_C_FLAGS_INIT": "-ftime-trace",
                 "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
@@ -258,7 +249,6 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FUZZER": "OFF",
                 "KDDockWidgets_QT6": "ON",
                 "CMAKE_C_FLAGS_INIT": "-ftime-trace",
                 "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",

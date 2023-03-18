@@ -25,8 +25,6 @@ include_directories(../src)
 include_directories(../src/private)
 add_definitions(-DQT_NO_KEYWORDS)
 
-# Will enable it once needed option(KDDockWidgets_FUZZER "Builds the fuzzer" ON)
-
 # tst_docks
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
