@@ -260,6 +260,7 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers_qtquick.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers_qtwidgets.cpp)
     set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/TestHelpers_flutter.cpp)
+    set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
 set(KDDW_FRONTEND_DUMMY_SRCS
@@ -416,13 +417,13 @@ if(KDDW_FRONTEND_FLUTTER)
     target_include_directories(
         kddockwidgets
         PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgetsBindings>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers/indicators>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers/indicators>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )
 
     # So bindings are exported

@@ -61,6 +61,9 @@ public:
     std::shared_ptr<Screen> primaryScreen() const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
+
+    /// Theses methods are implemented in TestHelpers_qt.cpp
+
     static bool isGammaray();
     explicit Platform_qt(QCoreApplication *);
     bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const override;
