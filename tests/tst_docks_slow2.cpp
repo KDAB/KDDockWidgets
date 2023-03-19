@@ -113,22 +113,6 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     layout->checkSanity();
 }
 
-int main(int argc, char *argv[])
-{
-    int exitCode = 0;
-    for (FrontendType type : Platform::frontendTypes()) {
-        qDebug() << "\nTesting platform" << type << ":\n";
-        KDDockWidgets::Platform::tests_initPlatform(argc, argv, type);
-
-        TestDocks test;
-
-        const int code = QTest::qExec(&test, argc, argv);
-        if (code != 0)
-            exitCode = 1;
-        KDDockWidgets::Platform::tests_deinitPlatform();
-    }
-
-    return exitCode;
-}
+#include "tst_docks_main.h"
 
 #include <tst_docks_slow2.moc>

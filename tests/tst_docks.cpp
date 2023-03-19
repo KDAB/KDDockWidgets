@@ -31,6 +31,8 @@
 #include "kddockwidgets/controllers/Stack.h"
 #include "kddockwidgets/controllers/SideBar.h"
 
+#include "tst_docks_main.h"
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif
@@ -5956,24 +5958,6 @@ void TestDocks::tst_maximizeButton()
 
     QVERIFY(tb->maximizeButtonVisible());
     QCOMPARE(tb->maximizeButtonType(), TitleBarButtonType::Normal);
-}
-
-int main(int argc, char *argv[])
-{
-    int exitCode = 0;
-    for (FrontendType type : Platform::frontendTypes()) {
-        qDebug() << "\nTesting platform" << type << ":\n";
-        KDDockWidgets::Platform::tests_initPlatform(argc, argv, type);
-
-        TestDocks test;
-
-        const int code = QTest::qExec(&test, argc, argv);
-        if (code != 0)
-            exitCode = 1;
-        KDDockWidgets::Platform::tests_deinitPlatform();
-    }
-
-    return exitCode;
 }
 
 void TestDocks::tst_restoreFlagsFromVersion16()
