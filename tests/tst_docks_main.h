@@ -10,11 +10,15 @@
 */
 
 #include "Platform.h"
+#include "utils.h"
+#include "kddockwidgets/ViewFactory.h"
+#include "Window.h"
 
 #include <QDebug>
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Tests;
 using namespace KDDockWidgets::Controllers;
 using namespace Layouting;
 

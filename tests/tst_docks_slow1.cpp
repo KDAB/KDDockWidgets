@@ -59,6 +59,10 @@ public Q_SLOTS:
 private Q_SLOTS:
     void tst_invalidPlaceholderPosition_data();
     void tst_invalidPlaceholderPosition();
+    void tst_startHidden();
+    void tst_startHidden2();
+    void tst_invalidJSON_data();
+    void tst_invalidJSON();
 };
 
 void TestDocks::tst_invalidPlaceholderPosition_data()
@@ -131,6 +135,117 @@ void TestDocks::tst_invalidPlaceholderPosition()
     dock1->deleteLater();
     dock2->deleteLater();
     QVERIFY(Platform::instance()->tests_waitForDeleted(dock2));
+}
+
+void TestDocks::tst_startHidden()
+{
+    // A really simple test for InitialVisibilityOption::StartHidden
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {},
+                                  /*show=*/false);
+    m->addDockWidget(dock1, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
+    delete dock1;
+}
+
+void TestDocks::tst_startHidden2()
+{
+    EnsureTopLevelsDeleted e;
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {},
+                                      {}, false);
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
+                                      {}, false);
+
+        auto dropArea = m->dropArea();
+        Controllers::DropArea *layout = dropArea;
+
+        m->addDockWidget(dock1, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
+        QVERIFY(layout->checkSanity());
+
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->placeholderCount(), 1);
+
+        m->addDockWidget(dock2, Location_OnTop);
+        QVERIFY(layout->checkSanity());
+
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 1);
+
+        qDebug() << dock1->isVisible();
+        dock1->open();
+
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+
+        Platform::instance()->tests_waitForResize(dock2->view());
+    }
+
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {},
+                                      {}, false);
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
+                                      {}, false);
+        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {},
+                                      {}, false);
+
+        auto dropArea = m->dropArea();
+        Controllers::DropArea *layout = dropArea;
+        m->addDockWidget(dock1, Location_OnLeft, nullptr, InitialVisibilityOption::StartHidden);
+
+        m->addDockWidget(dock2, Location_OnBottom, nullptr, InitialVisibilityOption::StartHidden);
+        m->addDockWidget(dock3, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
+
+        dock1->open();
+
+        QCOMPARE(layout->count(), 3);
+        QCOMPARE(layout->placeholderCount(), 2);
+
+        dock2->open();
+        dock3->open();
+        Platform::instance()->tests_waitForResize(dock2->view());
+        layout->checkSanity();
+    }
+}
+
+void TestDocks::tst_invalidJSON_data()
+{
+    // Be sure that the main windows in the json are called "MyMainWindow1" and the dock widgets
+    // dock-x where x starts at 0
+    QTest::addColumn<QString>("layoutFileName");
+    QTest::addColumn<int>("numDockWidgets");
+    QTest::addColumn<QString>("expectedWarning");
+    QTest::addColumn<bool>("expectedResult");
+    QTest::newRow("unsupported-serialization-version")
+        << "unsupported-serialization-version.json" << 10 << "Serialization format is too old"
+        << false;
+    QTest::newRow("invalid") << "invalid.json" << 29 << "" << false;
+    QTest::newRow("overlapping-item") << "overlapping-item.json" << 2 << "Unexpected pos" << true;
+}
+
+void TestDocks::tst_invalidJSON()
+{
+    QFETCH(QString, layoutFileName);
+    QFETCH(int, numDockWidgets);
+    QFETCH(QString, expectedWarning);
+    QFETCH(bool, expectedResult);
+
+    const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None, "MyMainWindow1");
+    for (int i = 0; i < numDockWidgets; ++i) {
+        createDockWidget(QStringLiteral("dock-%1").arg(i),
+                         Platform::instance()->tests_createView({ true }));
+    }
+
+    SetExpectedWarning sew(expectedWarning);
+
+    LayoutSaver restorer;
+    QCOMPARE(restorer.restoreFromFile(absoluteLayoutFileName), expectedResult);
 }
 
 #include "tst_docks_main.h"

@@ -58,6 +58,8 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void tst_dock2FloatingWidgetsTabbed();
+    void tst_restoreSimple();
+    void tst_restoreSimplest();
 };
 
 void TestDocks::tst_dock2FloatingWidgetsTabbed()
@@ -160,6 +162,95 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         QVERIFY(Platform::instance()->tests_waitForDeleted(group2));
         QVERIFY(Platform::instance()->tests_waitForDeleted(fw3));
     }
+}
+
+void TestDocks::tst_restoreSimple()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests restoring a very simple layout, composed of just 1 docked widget
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto layout = m->multiSplitter();
+    auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }));
+    auto dock2 = createDockWidget("two", Platform::instance()->tests_createFocusableView({ true }));
+    auto dock3 =
+        createDockWidget("three", Platform::instance()->tests_createFocusableView({ true }));
+
+    m->addDockWidget(dock1, Location_OnTop);
+
+    // Dock2 floats at 150,150
+    const QPoint dock2FloatingPoint = QPoint(150, 150);
+    dock2->view()->window()->setFramePosition(dock2FloatingPoint);
+    QVERIFY(dock2->isVisible());
+    QTest::qWait(1000); // Wait for group to settle
+
+    const QPoint dock3FloatingPoint = QPoint(200, 200);
+    dock3->view()->window()->setFramePosition(dock3FloatingPoint);
+    dock3->close();
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSimple.json")));
+    auto f1 = dock1->dptr()->group();
+    dock2->window()->move(QPoint(0, 0)); // Move *after* we saved.
+    dock3->window()->move(QPoint(0, 0)); // Move *after* we saved.
+    dock1->close();
+    dock2->close();
+    QVERIFY(!dock2->isVisible());
+    QCOMPARE(layout->count(), 1);
+    QVERIFY(Platform::instance()->tests_waitForDeleted(f1));
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    QCOMPARE(DockRegistry::self()->floatingWindows().size(), 0);
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimple.json")));
+    QVERIFY(layout->checkSanity());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(saver.restoredDockWidgets().size(), 3);
+
+    // Test a crash I got:
+    dock1->setFloating(true);
+    QVERIFY(layout->checkSanity());
+    dock1->setFloating(false);
+
+    auto fw2 = dock2->floatingWindow();
+    QVERIFY(fw2);
+    QVERIFY(fw2->isVisible());
+    QVERIFY(fw2->view()->isRootView());
+
+    QCOMPARE(fw2->view()->window()->framePosition(), dock2FloatingPoint);
+
+    QVERIFY(fw2->view()->window()->transientParent());
+    QVERIFY(m->view()->window()->equals(fw2->view()->window()->transientParent()));
+    QVERIFY(dock2->isFloating());
+    QVERIFY(dock2->isVisible());
+
+    QVERIFY(!dock3->isVisible()); // Remains closed
+    QVERIFY(dock3->view()->parentView() == nullptr);
+
+    dock3->open();
+    dock3->dptr()->morphIntoFloatingWindow(); // as it would take 1 event loop. Do it now so we can
+                                              // compare already.
+
+    QTest::qWait(300);
+    QCOMPARE(dock3->view()->window()->framePosition(), dock3FloatingPoint);
+}
+
+void TestDocks::tst_restoreSimplest()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests restoring a very simple layout, composed of just 1 docked widget
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto layout = m->multiSplitter();
+    auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }));
+    m->addDockWidget(dock1, Location_OnTop);
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSimplest.json")));
+    QTest::qWait(200);
+    QVERIFY(layout->checkSanity());
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));
+    QVERIFY(layout->checkSanity());
 }
 
 #include "tst_docks_main.h"

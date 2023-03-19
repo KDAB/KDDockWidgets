@@ -58,6 +58,10 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void tst_invalidLayoutAfterRestore();
+    void tst_setFloatingWhenSideBySide();
+    void tst_dockWindowWithTwoSideBySideFramesIntoCenter();
+    void tst_dockWindowWithTwoSideBySideFramesIntoRight();
+    void tst_dockWindowWithTwoSideBySideFramesIntoLeft();
 };
 
 void TestDocks::tst_invalidLayoutAfterRestore()
@@ -111,6 +115,143 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QVERIFY(Platform::instance()->tests_waitForDeleted(fw2));
     QCOMPARE(layout->layoutWidth(), oldContentsWidth);
     layout->checkSanity();
+}
+
+void TestDocks::tst_setFloatingWhenSideBySide()
+{
+    // Tests DockWidget::setFloating(false|true) when side-by-side (it should put it where it was)
+    EnsureTopLevelsDeleted e;
+
+    {
+        // 1. Create a MainWindow with two docked dock-widgets, then float the first one.
+        auto m = createMainWindow();
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+
+        QPointer<Controllers::Group> group1 = dock1->dptr()->group();
+        dock1->setFloating(true);
+        QVERIFY(dock1->isFloating());
+        auto fw = dock1->floatingWindow();
+        QVERIFY(fw);
+
+        // 2. Put it back, via setFloating(). It should return to its place.
+        dock1->setFloating(false);
+
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!dock1->isTabbed());
+
+        Platform::instance()->tests_waitForDeleted(fw);
+    }
+
+    {
+        // 2. Tests a case where restoring a dock widget wouldn't make it use all its available
+        // space
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
+        auto dropArea = m->dropArea();
+        Controllers::DropArea *layout = dropArea;
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+        m->addDockWidget(dock3, KDDockWidgets::Location_OnRight);
+        auto f2 = dock2->dptr()->group();
+        Item *item2 = layout->itemForFrame(f2);
+        QVERIFY(item2);
+        dock2->close();
+        dock3->close();
+        Platform::instance()->tests_waitForDeleted(f2);
+        dock2->open();
+        Platform::instance()->tests_waitForResize(dock2->view());
+
+        QCOMPARE(item2->geometry(), dock2->dptr()->group()->view()->geometry());
+        layout->checkSanity();
+
+        // Cleanup
+        dock3->deleteLater();
+        Platform::instance()->tests_waitForDeleted(dock3);
+    }
+}
+
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setInternalFlags(KDDockWidgets::Config::InternalFlag_NoAeroSnap);
+    KDDockWidgets::Config::self().setFlags({});
+
+    auto m = createMainWindow();
+    auto fw = createFloatingWindow();
+    auto dock2 = createDockWidget("doc2");
+    nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
+    QCOMPARE(fw->groups().size(), 2);
+    QVERIFY(fw->dropArea()->checkSanity());
+
+    auto fw2 = createFloatingWindow();
+    fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
+
+    // QtQuick is a bit more async than QWidgets. Wait for the move.
+    Platform::instance()->tests_waitForEvent(fw2->view()->window(), QEvent::Move);
+
+    auto da2 = fw2->dropArea();
+    const QPoint dragDestPos = da2->mapToGlobal(da2->rect().center());
+
+    dragFloatingWindowTo(fw, dragDestPos);
+    QVERIFY(fw2->dropArea()->checkSanity());
+
+    QCOMPARE(fw2->groups().size(), 1);
+    auto f2 = fw2->groups().constFirst();
+    QCOMPARE(f2->dockWidgetCount(), 3);
+    QVERIFY(Platform::instance()->tests_waitForDeleted(fw));
+    delete fw2;
+}
+
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto fw = createFloatingWindow();
+    auto dock2 = createDockWidget("doc2");
+    nestDockWidget(dock2, fw->dropArea(), nullptr,
+                   KDDockWidgets::Location_OnTop); // No we stack on top, unlike in previous test
+    QCOMPARE(fw->groups().size(), 2);
+
+    auto fw2 = createFloatingWindow();
+    fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
+
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
+    QCOMPARE(fw2->groups().size(), 3);
+    QVERIFY(fw2->dropArea()->checkSanity());
+
+    fw2->deleteLater();
+    Platform::instance()->tests_waitForDeleted(fw2);
+}
+
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto fw = createFloatingWindow();
+    fw->setObjectName("fw1");
+
+    auto dock2 = createDockWidget("doc2");
+    nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
+    QCOMPARE(fw->groups().size(), 2);
+
+    auto fw2 = createFloatingWindow();
+    fw2->setObjectName("fw2");
+    fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
+
+    QVERIFY(fw2->dropArea()->checkSanity());
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
+    QCOMPARE(fw2->groups().size(), 3);
+
+    QVERIFY(fw2->dropArea()->checkSanity());
+
+    /// Cleanup
+    fw2->deleteLater();
+    Platform::instance()->tests_waitForDeleted(fw2);
 }
 
 #include "tst_docks_main.h"
