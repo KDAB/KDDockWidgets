@@ -75,9 +75,10 @@ public:
     /// @brief Returns the draggable
     Draggable *draggable() const;
 
+    void updateTransparency(bool enable);
+
 protected:
     explicit WindowBeingDragged(Draggable *);
-    void updateTransparency(bool enable);
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<Controllers::FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;

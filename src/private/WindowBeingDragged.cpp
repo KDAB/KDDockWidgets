@@ -115,9 +115,16 @@ void WindowBeingDragged::updateTransparency(bool enable)
     const bool transparencySupported = !qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity);
     if (transparencySupported) {
         // We're using transparency, set it or unset it:
-        if (!enable)
+        if (enable) {
+            if (Config::self().transparencyOnlyOverDropIndicator()) {
+                if (DragController::instance()->currentDropLocation() == DropLocation_None)
+                    opacity = 1;
+            }
+        } else {
             opacity = 1;
-        m_floatingWindow->view()->setWindowOpacity(1);
+        }
+
+        m_floatingWindow->view()->setWindowOpacity(opacity);
     }
 }
 

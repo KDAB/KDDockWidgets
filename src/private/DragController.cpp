@@ -862,6 +862,14 @@ StateBase *DragController::activeState() const
     return static_cast<StateBase *>(currentState());
 }
 
+DropLocation DragController::currentDropLocation() const
+{
+    if (auto dropArea = dropAreaUnderCursor())
+        return dropArea->currentDropLocation();
+
+    return DropLocation_None;
+}
+
 #if defined(Q_OS_WIN)
 static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 {
@@ -1035,6 +1043,9 @@ static DropArea *deepestDropAreaInTopLevel(std::shared_ptr<View> topLevel, QPoin
 
 DropArea *DragController::dropAreaUnderCursor() const
 {
+    if (!m_windowBeingDragged)
+        return nullptr;
+
     std::shared_ptr<View> topLevel = qtTopLevelUnderCursor();
     if (!topLevel) {
         qCDebug(state) << Q_FUNC_INFO << "No drop area under cursor";

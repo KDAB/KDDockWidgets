@@ -138,6 +138,10 @@ public:
 
     Layouting::ItemBoxContainer *rootItem() const;
 
+    /// Returns the current drop location
+    /// The user needs to be dragging a window and be over a drop indicator, otherwise DropLocation_None is returned
+    DropLocation currentDropLocation() const;
+
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Controllers::MainWindow;

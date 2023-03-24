@@ -253,9 +253,19 @@ public:
     /// 1.0 is fully opaque while 0.0 is fully transparent
     void setDraggedWindowOpacity(qreal opacity);
 
+    /// @brief Sets whether transparency is only set when the dragged window is over a drop indicator
+    /// This is only relevant when using setDraggedWindowOpacity()
+    /// Default is false
+    void setTransparencyOnlyOverDropIndicator(bool only);
+
     ///@brief returns the opacity to use when dragging dock widgets
     /// By default it's 1.0, fully opaque
     qreal draggedWindowOpacity() const;
+
+    /// @brief Returns whether transparency is only set when the dragged window is over a drop indicator
+    /// This is only relevant when using setDraggedWindowOpacity()
+    /// Default is false
+    bool transparencyOnlyOverDropIndicator() const;
 
     /// @brief Allows to disable support for drop indicators while dragging
     /// By default drop indicators will be shown when dragging dock widgets.

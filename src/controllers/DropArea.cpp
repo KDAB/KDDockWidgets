@@ -265,6 +265,8 @@ DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos
         globalPos); // Group is nullptr if MainWindowOption_HasCentralFrame isn't set
     m_dropIndicatorOverlay->setWindowBeingDragged(true);
     m_dropIndicatorOverlay->setHoveredFrame(group);
+    draggedWindow->updateTransparency(true);
+
     return m_dropIndicatorOverlay->hover(globalPos);
 }
 
@@ -688,4 +690,9 @@ bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
 int DropArea::numSideBySide_recursive(Qt::Orientation o) const
 {
     return m_rootItem->numSideBySide_recursive(o);
+}
+
+DropLocation DropArea::currentDropLocation() const
+{
+    return m_dropIndicatorOverlay ? m_dropIndicatorOverlay->currentDropLocation() : DropLocation_None;
 }
