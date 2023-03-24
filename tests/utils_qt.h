@@ -23,6 +23,9 @@
 #include <QDebug>
 #include <QtTest/QTest>
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
 
 namespace KDDockWidgets::Tests {
 
