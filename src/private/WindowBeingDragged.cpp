@@ -65,13 +65,7 @@ WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggabl
     , m_guard(m_draggableView)
 {
     init();
-
-    if (!isWayland()) { // Wayland doesn't support setting opacity
-        // Set opacity while dragging, if needed
-        const qreal opacity = Config::self().draggedWindowOpacity();
-        if (!qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity))
-            fw->view()->setWindowOpacity(opacity);
-    }
+    updateTransparency(/*enable=*/true);
 }
 
 WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
@@ -101,13 +95,7 @@ WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw)
 WindowBeingDragged::~WindowBeingDragged()
 {
     grabMouse(false);
-
-    if (!isWayland() && m_floatingWindow) { // Wayland doesn't support setting opacity
-        // Restore opacity to fully opaque if needed
-        const qreal opacity = Config::self().draggedWindowOpacity();
-        if (!qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity))
-            m_floatingWindow->view()->setWindowOpacity(1);
-    }
+    updateTransparency(/*enable=*/false);
 }
 
 void WindowBeingDragged::init()
@@ -115,6 +103,22 @@ void WindowBeingDragged::init()
     Q_ASSERT(m_floatingWindow);
     grabMouse(true);
     m_floatingWindow->view()->raise();
+}
+
+void WindowBeingDragged::updateTransparency(bool enable)
+{
+    // Wayland doesn't support setting opacity
+    if (isWayland() || !m_floatingWindow)
+        return;
+
+    qreal opacity = Config::self().draggedWindowOpacity();
+    const bool transparencySupported = !qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity);
+    if (transparencySupported) {
+        // We're using transparency, set it or unset it:
+        if (!enable)
+            opacity = 1;
+        m_floatingWindow->view()->setWindowOpacity(1);
+    }
 }
 
 void WindowBeingDragged::grabMouse(bool grab)

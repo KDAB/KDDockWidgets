@@ -77,6 +77,7 @@ public:
 
 protected:
     explicit WindowBeingDragged(Draggable *);
+    void updateTransparency(bool enable);
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<Controllers::FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
