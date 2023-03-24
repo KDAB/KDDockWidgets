@@ -29,7 +29,7 @@
 
 namespace KDDockWidgets::Tests {
 
-int osWindowMinWidth()
+inline int osWindowMinWidth()
 {
 #ifdef Q_OS_WIN
     return GetSystemMetrics(SM_CXMIN);
@@ -48,9 +48,9 @@ inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
         ->asDockWidgetController();
 }
 
-Controllers::DockWidget *createAndNestDockWidget(KDDockWidgets::Controllers::DropArea *dropArea,
-                                                 Controllers::Group *relativeTo,
-                                                 KDDockWidgets::Location location)
+inline Controllers::DockWidget *createAndNestDockWidget(KDDockWidgets::Controllers::DropArea *dropArea,
+                                                        Controllers::Group *relativeTo,
+                                                        KDDockWidgets::Location location)
 {
     static int count = 0;
     count++;
@@ -62,7 +62,7 @@ Controllers::DockWidget *createAndNestDockWidget(KDDockWidgets::Controllers::Dro
     return dock;
 }
 
-std::unique_ptr<KDDockWidgets::Controllers::MainWindow>
+inline std::unique_ptr<KDDockWidgets::Controllers::MainWindow>
 createSimpleNestedMainWindow(Controllers::DockWidget **centralDock,
                              Controllers::DockWidget **leftDock,
                              Controllers::DockWidget **rightDock)
