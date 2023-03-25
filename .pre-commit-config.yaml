@@ -4,7 +4,7 @@ ci:
     skip: [pylint]
     autoupdate_schedule: monthly
 
-exclude: ^(cmake/ECM|cmake/KDAB/|src/3rdparty/)
+exclude: ^(cmake/ECM|cmake/KDAB/|src/3rdparty/|code.dev.code-workspace)
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.4.0
