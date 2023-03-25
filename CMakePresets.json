@@ -9,11 +9,10 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "OFF"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             },
-            "warnings" : {
-                "uninitialized" : true
+            "warnings": {
+                "uninitialized": true
             }
         },
         {
@@ -25,12 +24,11 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "OFF",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "ECM_ENABLE_SANITIZERS": "'address;undefined'"
             },
-            "warnings" : {
-                "uninitialized" : true
+            "warnings": {
+                "uninitialized": true
             }
         },
         {
@@ -41,11 +39,11 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_WERROR": "ON",
-                "KDDockWidgets_EXAMPLES" : "OFF"
+                "KDDockWidgets_EXAMPLES": "OFF"
             },
             "environment": {
                 "CXX": "clazy",
-                "CCACHE_DISABLE" : "ON"
+                "CCACHE_DISABLE": "ON"
             }
         },
         {
@@ -55,13 +53,13 @@
             "binaryDir": "${sourceDir}/build-clazy-qtquick",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_EXAMPLES" : "OFF",
+                "KDDockWidgets_EXAMPLES": "OFF",
                 "KDDockWidgets_WERROR": "ON",
                 "KDDockWidgets_QTQUICK": "ON"
             },
             "environment": {
                 "CXX": "clazy",
-                "CCACHE_DISABLE" : "ON"
+                "CCACHE_DISABLE": "ON"
             }
         },
         {
@@ -80,7 +78,7 @@
             "binaryDir": "${sourceDir}/build-release-no-x11extras",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_X11EXTRAS" : "OFF"
+                "KDDockWidgets_X11EXTRAS": "OFF"
             }
         },
         {
@@ -102,9 +100,8 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QTQUICK": "ON",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "OFF"
+                "ECM_ENABLE_SANITIZERS": "'address;undefined'",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         },
         {
@@ -157,7 +154,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_QT6": "ON",
-                "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
@@ -172,9 +169,8 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QT6": "ON",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "OFF",
-                "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
@@ -189,10 +185,9 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QT6": "ON",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
-                "KDDockWidgets_FUZZER" : "OFF",
-                "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "ECM_ENABLE_SANITIZERS": "'address;undefined'",
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
@@ -206,8 +201,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_QTQUICK": "ON",
-                 "KDDockWidgets_QT6": "ON",
-                 "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+                "KDDockWidgets_QT6": "ON",
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
@@ -221,16 +216,16 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QTQUICK": "ON",
-                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
-                 "KDDockWidgets_QT6": "ON",
-                 "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "ECM_ENABLE_SANITIZERS": "'address;undefined'",
+                "KDDockWidgets_QT6": "ON",
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}",
-                "QML2_IMPORT_PATH" : "$env{QT6_DIR}/imports:$env{QT6_DIR}/qml",
-                "LD_LIBRARY_PATH" : "$env{QT6_DIR}/lib"
+                "QML2_IMPORT_PATH": "$env{QT6_DIR}/imports:$env{QT6_DIR}/qml",
+                "LD_LIBRARY_PATH": "$env{QT6_DIR}/lib"
             }
         },
         {
@@ -241,11 +236,10 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "ON"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             },
-            "warnings" : {
-                "uninitialized" : true
+            "warnings": {
+                "uninitialized": true
             },
             "environment": {
                 "CC": "clang-cl",
@@ -260,11 +254,10 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "KDDockWidgets_FUZZER" : "OFF",
                 "KDDockWidgets_QTQUICK": "ON"
             },
-            "warnings" : {
-                "uninitialized" : true
+            "warnings": {
+                "uninitialized": true
             },
             "environment": {
                 "CC": "clang-cl",
@@ -279,12 +272,11 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "KDDockWidgets_FUZZER" : "ON",
                 "KDDockWidgets_QT6": "ON",
-                "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
-            "warnings" : {
-                "uninitialized" : true
+            "warnings": {
+                "uninitialized": true
             },
             "environment": {
                 "CC": "clang-cl",
@@ -300,20 +292,19 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "KDDockWidgets_FUZZER" : "OFF",
                 "KDDockWidgets_QTQUICK": "ON",
                 "KDDockWidgets_QT6": "ON",
-                "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
-            "warnings" : {
-                "uninitialized" : true
+            "warnings": {
+                "uninitialized": true
             },
             "environment": {
                 "CC": "clang-cl",
                 "CXX": "clang-cl",
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}",
-                "QML2_IMPORT_PATH" : "$env{QT6_DIR}/imports:$env{QT6_DIR}/qml",
-                "LD_LIBRARY_PATH" : "$env{QT6_DIR}/lib"
+                "QML2_IMPORT_PATH": "$env{QT6_DIR}/imports:$env{QT6_DIR}/qml",
+                "LD_LIBRARY_PATH": "$env{QT6_DIR}/lib"
             }
         },
         {
@@ -324,18 +315,17 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "OFF",
-                "CMAKE_C_FLAGS_INIT" : "-ftime-trace",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_C_FLAGS_INIT": "-ftime-trace",
                 "CMAKE_CXX_FLAGS_INIT": "-ftime-trace"
             },
-            "warnings" : {
-                "uninitialized" : true
+            "warnings": {
+                "uninitialized": true
             },
             "environment": {
                 "CC": "clang",
                 "CXX": "clang++",
-                "CCACHE_DISABLE" : "ON"
+                "CCACHE_DISABLE": "ON"
             }
         },
         {
@@ -346,19 +336,18 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "OFF",
-                "KDDockWidgets_QT6" : "ON",
-                "CMAKE_C_FLAGS_INIT" : "-ftime-trace",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "KDDockWidgets_QT6": "ON",
+                "CMAKE_C_FLAGS_INIT": "-ftime-trace",
                 "CMAKE_CXX_FLAGS_INIT": "-ftime-trace"
             },
-            "warnings" : {
-                "uninitialized" : true
+            "warnings": {
+                "uninitialized": true
             },
             "environment": {
                 "CC": "clang",
                 "CXX": "clang++",
-                "CCACHE_DISABLE" : "ON"
+                "CCACHE_DISABLE": "ON"
             }
         },
         {
@@ -459,17 +448,23 @@
         },
         {
             "name": "ci-static",
-            "inherits":["static"],
+            "inherits": [
+                "static"
+            ],
             "binaryDir": "${sourceDir}/build-ci-static"
         },
         {
             "name": "ci-static-qtquick",
-            "inherits":["static-qtquick"],
+            "inherits": [
+                "static-qtquick"
+            ],
             "binaryDir": "${sourceDir}/build-ci-static-qtquick"
         },
         {
             "name": "ci-python",
-            "inherits":["python"],
+            "inherits": [
+                "python"
+            ],
             "binaryDir": "${sourceDir}/build-python"
         }
     ],
@@ -478,16 +473,16 @@
             "name": "clazy",
             "configurePreset": "clazy",
             "environment": {
-                "CLAZY_CHECKS" : "level2,detaching-member,heap-allocated-small-trivial-type,isempty-vs-count,qstring-varargs,qvariant-template-instantiation,raw-environment-function,reserve-candidates,signal-with-return-value,thread-with-slots,no-ctor-missing-parent-argument,no-missing-typeinfo",
-                "CCACHE_DISABLE" : "ON"
+                "CLAZY_CHECKS": "level2,detaching-member,heap-allocated-small-trivial-type,isempty-vs-count,qstring-varargs,qvariant-template-instantiation,raw-environment-function,reserve-candidates,signal-with-return-value,thread-with-slots,no-ctor-missing-parent-argument,no-missing-typeinfo",
+                "CCACHE_DISABLE": "ON"
             }
         },
         {
             "name": "clazy-qtquick",
             "configurePreset": "clazy-qtquick",
             "environment": {
-                "CLAZY_CHECKS" : "level2,detaching-member,heap-allocated-small-trivial-type,isempty-vs-count,qstring-varargs,qvariant-template-instantiation,raw-environment-function,reserve-candidates,signal-with-return-value,thread-with-slots,no-ctor-missing-parent-argument,no-missing-typeinfo",
-                "CCACHE_DISABLE" : "ON"
+                "CLAZY_CHECKS": "level2,detaching-member,heap-allocated-small-trivial-type,isempty-vs-count,qstring-varargs,qvariant-template-instantiation,raw-environment-function,reserve-candidates,signal-with-return-value,thread-with-slots,no-ctor-missing-parent-argument,no-missing-typeinfo",
+                "CCACHE_DISABLE": "ON"
             }
         }
     ]

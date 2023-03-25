@@ -63,11 +63,6 @@
 #  Build the layout linter.
 #  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
 #  Default=true
-#
-# -DKDDockWidgets_FUZZER=[true|false]
-#  Build the fuzzer.
-#  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
-#  Default=true
 
 cmake_minimum_required(VERSION 3.12)
 

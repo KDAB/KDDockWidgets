@@ -62,7 +62,6 @@ creative with their requests, so it was clear we needed a better docking framewo
 - Clean codebase
   - Not mixing GUI with state with logic with animations
   - Great test coverage, even the GUI and DnD operations are tested. 200 tests currently.
-  - Fuzzer for doing random testing and finding bugs
 - Lazy separator resize
 - Reordering tabs with mouse
 - Partial layout save/restore, affecting only a chosen sub-set
