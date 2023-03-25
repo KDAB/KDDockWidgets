@@ -348,7 +348,7 @@ public:
      * @brief Returns whether this dock widget is docked into a main window (as opposed to floating)
      *
      * Note that isFloating() returning false might either mean the dock widget is docked into a
-     * main window or into a floating window (groupped/nested with other dock widgets. Use this
+     * main window or into a floating window (grouped/nested with other dock widgets. Use this
      * function then if you need to disambiguate
      */
     bool isInMainWindow() const;
