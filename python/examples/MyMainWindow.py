@@ -88,17 +88,17 @@ class MyMainWindow(KDDockWidgets.MainWindow):
 
     # pylint: disable=no-self-use
     def _saveLayout(self):
-        #saver = KDDockWidgets.LayoutSaver()
-        #result = saver.saveToFile("mylayout.json")
-        #print("Saving layout to disk. Result=", result)
+        # saver = KDDockWidgets.LayoutSaver()
+        # result = saver.saveToFile("mylayout.json")
+        # print("Saving layout to disk. Result=", result)
         print("Not available")
 
     # pylint: disable=no-self-use
     def _restoreLayout(self):
-        #options = KDDockWidgets.RestoreOption_None
+        # options = KDDockWidgets.RestoreOption_None
         # if self.restoreIsRelative:
         #    options |= KDDockWidgets.RestoreOption_RelativeToMainWindow
-        #saver = KDDockWidgets.LayoutSaver(options)
+        # saver = KDDockWidgets.LayoutSaver(options)
         # saver.restoreFromFile("mylayout.json")
         print("Not available")
 
