@@ -417,13 +417,13 @@ if(KDDW_FRONTEND_FLUTTER)
     target_include_directories(
         kddockwidgets
         PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgetsBindings>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers/indicators>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers/indicators>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )
 
     # So bindings are exported

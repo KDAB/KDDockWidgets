@@ -27,6 +27,7 @@ add_definitions(-DQT_NO_KEYWORDS)
 
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 
+#function to add slow tests along with a corresponding test number
 function(add_slow_test testNumber)
     add_executable(tst_docks_slow${testNumber} tst_docks_slow${testNumber}.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
     target_link_libraries(tst_docks_slow${testNumber} kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
