@@ -3,9 +3,6 @@
     {
       "name": "kddockwidgets",
       "path": "."
-    },
-    {
-      "path": "/data/sources/kddockwidgets-flutter-example"
     }
   ],
   "settings": {
