@@ -471,7 +471,7 @@ if(KDDW_FRONTEND_QT)
         AND NOT KDDockWidgets_QT6
         AND KDDockWidgets_X11EXTRAS
     )
-        find_package(Qt${Qt_VERSION_MAJOR}X11Extras)
+        find_package(Qt${Qt_VERSION_MAJOR}X11Extras CONFIG)
         target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::X11Extras)
     endif()
 endif()
