@@ -318,7 +318,7 @@ elseif(
     AND NOT ${PROJECT_NAME}_QT6
     AND ${PROJECT_NAME}_X11EXTRAS
 )
-    find_package(Qt${Qt_VERSION_MAJOR}X11Extras)
+    find_package(Qt${Qt_VERSION_MAJOR}X11Extras CONFIG)
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::X11Extras)
 endif()
 
