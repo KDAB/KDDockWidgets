@@ -17,8 +17,7 @@
 #include "utils.h"
 #include "Platform.h"
 
-#include <QGuiApplication>
-#include <QtTest/QtTest>
+#include <QtTest/QTest>
 
 using namespace KDDockWidgets::Tests;
 

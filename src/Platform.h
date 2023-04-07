@@ -232,6 +232,10 @@ public:
     /// test and see what's going on
     virtual void tests_wait(int ms) = 0;
 
+    /// Sends a double-click event to the specified receiver
+    virtual void tests_doubleClickOn(QPoint globalPos, View *receiver);
+    void tests_pressOn(QPoint globalPos, View *receiver);
+
     virtual void installMessageHandler() = 0;
     virtual void uninstallMessageHandler() = 0;
 

@@ -20,8 +20,6 @@
 #include "kddockwidgets/controllers/MainWindow.h"
 
 #include <QDebug>
-#include <QPainter>
-#include <QtTest/QtTest>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
@@ -140,24 +138,6 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
         || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget"))
         || msg.contains(
             QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
-}
-
-void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, View *receiver)
-{
-    QCursor::setPos(globalPos);
-    pressOn(globalPos, receiver); // double-click involves an initial press
-
-    MouseEvent ev(Event::MouseButtonDblClick, receiver->mapFromGlobal(globalPos),
-                  receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
-                  Qt::LeftButton, Qt::NoModifier);
-
-    if (auto actualReceiver = receiver->property("titleBarMouseArea").value<QObject *>()) {
-        // QtQuick case, we need to send the event to the mouse area
-        qGuiApp->sendEvent(actualReceiver, &ev);
-    } else {
-        // QtWidgets case
-        Platform::instance()->sendEvent(receiver, &ev);
-    }
 }
 
 void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, Window::Ptr receiver)

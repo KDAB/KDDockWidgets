@@ -17,7 +17,8 @@
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 
-#include <QtTest/QtTest>
+#include <QtTest/QTest>
+#include <QScopedValueRollback>
 
 #include <memory.h>
 

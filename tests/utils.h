@@ -30,7 +30,7 @@
 
 #include <QPointer>
 #include <QVector>
-#include <QtTest/QtTest>
+#include <QtTest/QTest>
 
 #include <memory>
 
@@ -126,7 +126,6 @@ void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropAr
                     Controllers::Group *relativeTo, KDDockWidgets::Location location);
 
 
-void doubleClickOn(QPoint globalPos, View *receiver);
 void doubleClickOn(QPoint globalPos, std::shared_ptr<Window> receiver);
 void pressOn(QPoint globalPos, View *receiver);
 void pressOn(QPoint globalPos, std::shared_ptr<Window> receiver);

@@ -79,6 +79,7 @@ public:
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     void tests_wait(int ms) override;
+    void tests_doubleClickOn(QPoint globalPos, View *receiver) override;
 
     void installMessageHandler() override;
     void uninstallMessageHandler() override;

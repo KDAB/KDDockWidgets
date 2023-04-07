@@ -214,6 +214,24 @@ bool Platform_qt::tests_waitForDeleted(QObject *o, int timeout) const
     return wasDeleted;
 }
 
+void Platform_qt::tests_doubleClickOn(QPoint globalPos, View *receiver)
+{
+    QCursor::setPos(globalPos);
+    tests_pressOn(globalPos, receiver); // double-click involves an initial press
+
+    MouseEvent ev(Event::MouseButtonDblClick, receiver->mapFromGlobal(globalPos),
+                  receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
+                  Qt::LeftButton, Qt::NoModifier);
+
+    if (auto actualReceiver = receiver->property("titleBarMouseArea").value<QObject *>()) {
+        // QtQuick case, we need to send the event to the mouse area
+        qGuiApp->sendEvent(actualReceiver, &ev);
+    } else {
+        // QtWidgets case
+        Platform::instance()->sendEvent(receiver, &ev);
+    }
+}
+
 void Platform_qt::tests_sendEvent(Window::Ptr window, QEvent *ev) const
 {
     qGuiApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);

@@ -35,7 +35,7 @@
 #include "kddockwidgets/controllers/SideBar.h"
 #include "utils_qt.h"
 
-#include <QtTest/QtTest>
+#include <QtTest/QTest>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;

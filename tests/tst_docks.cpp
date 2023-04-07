@@ -34,6 +34,8 @@
 
 #include "tst_docks_main.h"
 
+#include <QSignalSpy>
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif
@@ -3870,9 +3872,9 @@ void TestDocks::tst_raise()
     dock2->raise();
     QVERIFY(!dock1->isCurrentTab());
     QVERIFY(dock2->isCurrentTab());
+    const bool isOffscreen = Platform::instance()->displayType() == Platform::DisplayType::QtOffscreen;
 
-    if (qGuiApp->platformName() != QLatin1String("offscreen")) { // offscreen qpa doesn't seem to
-                                                                 // keep Window Z.
+    if (!isOffscreen) { // offscreen qpa doesn't seem to keep window Z.
         auto dock3 = createDockWidget("3");
         dock3->window()->setGeometry(dock1->window()->geometry());
         dock3->window()->setObjectName("3");
@@ -4123,7 +4125,7 @@ void TestDocks::tst_tabWidgetCurrentIndex()
 void TestDocks::tst_doubleClickTabToDetach()
 {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    // Tests::doubleClickOn(QWindow) doesn't work anymore on Qt6
+    // Platform::instance()->tests_doubleClickOn(QWindow) doesn't work anymore on Qt6
     // which refactored mouse delivery.
     return;
 #endif
@@ -4178,15 +4180,16 @@ void TestDocks::tst_flagDoubleClick()
         Controllers::FloatingWindow *fw2 = dock2->floatingWindow();
         QVERIFY(!fw2->view()->isMaximized());
         Controllers::TitleBar *t2 = dock2->titleBar();
+
         QPoint pos = t2->mapToGlobal(QPoint(5, 5));
-        Tests::doubleClickOn(pos, t2->view());
+        Platform::instance()->tests_doubleClickOn(pos, t2->view());
         QVERIFY(fw2->view()->isMaximized());
         delete fw2;
 
         Controllers::TitleBar *t1 = dock1->titleBar();
         QVERIFY(!t1->isFloating());
         pos = t1->mapToGlobal(QPoint(5, 5));
-        Tests::doubleClickOn(pos, t1->view());
+        Platform::instance()->tests_doubleClickOn(pos, t1->view());
         QVERIFY(t1->isFloating());
         QVERIFY(!dock1->window()->isMaximized());
     }
@@ -4201,13 +4204,13 @@ void TestDocks::tst_flagDoubleClick()
         Controllers::TitleBar *t1 = dock1->titleBar();
         QVERIFY(!t1->isFloating());
         QPoint pos = t1->mapToGlobal(QPoint(5, 5));
-        Tests::doubleClickOn(pos, t1->view());
+        Platform::instance()->tests_doubleClickOn(pos, t1->view());
         QVERIFY(t1->isFloating());
         QVERIFY(dock1->isFloating());
         QVERIFY(!dock1->window()->isMaximized());
 
         pos = t1->mapToGlobal(QPoint(5, 5));
-        Tests::doubleClickOn(pos, t1->view());
+        Platform::instance()->tests_doubleClickOn(pos, t1->view());
         QVERIFY(!dock1->isFloating());
     }
 }

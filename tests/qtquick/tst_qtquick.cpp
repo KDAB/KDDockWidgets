@@ -20,7 +20,7 @@
 #include "../utils.h"
 #include "Window.h"
 
-#include <QtTest/QtTest>
+#include <QtTest/QTest>
 #include <QQmlApplicationEngine>
 
 using namespace KDDockWidgets;

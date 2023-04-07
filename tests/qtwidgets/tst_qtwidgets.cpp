@@ -43,7 +43,7 @@
 #include <QMenuBar>
 #include <QTabBar>
 #include <QVBoxLayout>
-#include <QtTest/QtTest>
+#include <QtTest/QTest>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
