@@ -11,12 +11,9 @@
 
 #pragma once
 
-#include <memory>
+#include "NonQtCompat_p.h"
 
-QT_BEGIN_NAMESPACE
-class QMouseEvent;
-class QEvent;
-QT_END_NAMESPACE
+#include <memory>
 
 namespace KDDockWidgets {
 
@@ -35,25 +32,25 @@ public:
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonPress(View *, QMouseEvent *)
+    virtual bool onMouseButtonPress(View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonRelease(View *, QMouseEvent *)
+    virtual bool onMouseButtonRelease(View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonMove(View *, QMouseEvent *)
+    virtual bool onMouseButtonMove(View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse double click event
-    virtual bool onMouseDoubleClick(View *, QMouseEvent *)
+    virtual bool onMouseDoubleClick(View *, MouseEvent *)
     {
         return false;
     }
@@ -62,13 +59,13 @@ public:
     /// receives all mouse event types, if you return true here then the specialized counterparts
     /// won't be called Example, if true is returned here for a mouse press, then
     /// onMouseButtonPress() won't be called
-    virtual bool onMouseEvent(View *, QMouseEvent *)
+    virtual bool onMouseEvent(View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle drag enter, drag leave, drag move and drop events
-    virtual bool onDnDEvent(View *, QEvent *)
+    virtual bool onDnDEvent(View *, Event *)
     {
         return false;
     }

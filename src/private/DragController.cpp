@@ -27,7 +27,6 @@
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/DockWidget_p.h"
 
-#include <QMouseEvent>
 #include <QCursor>
 #include <QDrag>
 #include <QObject>
@@ -79,7 +78,7 @@ public:
         Platform::instance()->removeGlobalEventFilter(this);
     }
 
-    bool onMouseEvent(View *, QMouseEvent *me) override
+    bool onMouseEvent(View *, MouseEvent *me) override
     {
         if (m_reentrancyGuard || !m_guard)
             return false;
@@ -763,7 +762,7 @@ WindowBeingDragged *DragController::windowBeingDragged() const
     return m_windowBeingDragged.get();
 }
 
-bool DragController::onDnDEvent(View *view, QEvent *e)
+bool DragController::onDnDEvent(View *view, Event *e)
 {
     if (!isWayland())
         return false;
@@ -772,25 +771,25 @@ bool DragController::onDnDEvent(View *view, QEvent *e)
     if (view) {
         if (auto dropArea = view->asDropAreaController()) {
             switch (int(e->type())) {
-            case QEvent::DragEnter:
+            case Event::DragEnter:
                 if (activeState()->handleDragEnter(static_cast<QDragEnterEvent *>(e), dropArea))
                     return true;
                 break;
-            case QEvent::DragLeave:
+            case Event::DragLeave:
                 if (activeState()->handleDragLeave(dropArea))
                     return true;
                 break;
-            case QEvent::DragMove:
+            case Event::DragMove:
                 if (activeState()->handleDragMove(static_cast<QDragMoveEvent *>(e), dropArea))
                     return true;
                 break;
-            case QEvent::Drop:
+            case Event::Drop:
                 if (activeState()->handleDrop(static_cast<QDropEvent *>(e), dropArea))
                     return true;
                 break;
             }
         }
-    } else if (e->type() == QEvent::DragEnter && isDragging()) {
+    } else if (e->type() == Event::DragEnter && isDragging()) {
         // We're dragging a window. Be sure user code doesn't accept DragEnter events.
         return true;
     }
@@ -809,7 +808,7 @@ bool DragController::onMoveEvent(View *)
     return false;
 }
 
-bool DragController::onMouseEvent(View *w, QMouseEvent *me)
+bool DragController::onMouseEvent(View *w, MouseEvent *me)
 {
     if (!w)
         return false;
@@ -818,7 +817,7 @@ bool DragController::onMouseEvent(View *w, QMouseEvent *me)
                          << "; m_nonClientDrag=" << m_nonClientDrag;
 
     switch (me->type()) {
-    case QEvent::NonClientAreaMouseButtonPress: {
+    case Event::NonClientAreaMouseButtonPress: {
         if (auto fw = w->asFloatingWindowController()) {
             if (KDDockWidgets::usesNativeTitleBar()
                 || fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
@@ -829,7 +828,7 @@ bool DragController::onMouseEvent(View *w, QMouseEvent *me)
         }
         return false;
     }
-    case QEvent::MouseButtonPress:
+    case Event::MouseButtonPress:
         // For top-level windows that support native dragging all goes through the NonClient*
         // events. This also forbids dragging a FloatingWindow simply by pressing outside of the
         // title area, in the background
@@ -839,14 +838,14 @@ bool DragController::onMouseEvent(View *w, QMouseEvent *me)
                 draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
         } else
             break;
-    case QEvent::MouseButtonRelease:
-    case QEvent::NonClientAreaMouseButtonRelease:
+    case Event::MouseButtonRelease:
+    case Event::NonClientAreaMouseButtonRelease:
         return activeState()->handleMouseButtonRelease(Qt5Qt6Compat::eventGlobalPos(me));
-    case QEvent::NonClientAreaMouseMove:
-    case QEvent::MouseMove:
+    case Event::NonClientAreaMouseMove:
+    case Event::MouseMove:
         return activeState()->handleMouseMove(Qt5Qt6Compat::eventGlobalPos(me));
-    case QEvent::MouseButtonDblClick:
-    case QEvent::NonClientAreaMouseButtonDblClick:
+    case Event::MouseButtonDblClick:
+    case Event::NonClientAreaMouseButtonDblClick:
         return activeState()->handleMouseDoubleClick();
     default:
         break;

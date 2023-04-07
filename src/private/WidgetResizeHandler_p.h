@@ -23,10 +23,6 @@
 #include <QDebug>
 #include <QAbstractNativeEventFilter>
 
-QT_BEGIN_NAMESPACE
-class QMouseEvent;
-QT_END_NAMESPACE
-
 namespace KDDockWidgets {
 
 namespace Controllers {
@@ -156,11 +152,11 @@ public:
 
 private:
     // EventFilterInterface:
-    bool onMouseEvent(View *, QMouseEvent *) override;
+    bool onMouseEvent(View *, MouseEvent *) override;
     void setTarget(View *w);
-    bool mouseMoveEvent(QMouseEvent *e);
-    void updateCursor(CursorPosition m);
-    void setMouseCursor(Qt::CursorShape cursor);
+    bool mouseMoveEvent(MouseEvent *);
+    void updateCursor(CursorPosition);
+    void setMouseCursor(Qt::CursorShape);
     void restoreMouseCursor();
     CursorPosition cursorPosition(QPoint) const;
     View *mTarget = nullptr;

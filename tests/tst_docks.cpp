@@ -3527,7 +3527,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     dock1->window()->window()->setFramePosition(targetPos);
     QCOMPARE(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
-    Platform::instance()->tests_waitForEvent(dock1->window().get(), QEvent::Move);
+    Platform::instance()->tests_waitForEvent(dock1->window().get(), Event::Move);
 
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
@@ -3588,7 +3588,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     dock1->guestView()->setFocus(Qt::MouseFocusReason);
 
     QVERIFY(dock1->isFocused()
-            || Platform::instance()->tests_waitForEvent(dock1->guestView().get(), QEvent::FocusIn));
+            || Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn));
     QVERIFY(titleBar1->isFocused());
 
     auto group2 = dock2->dptr()->group();

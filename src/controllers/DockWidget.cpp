@@ -32,7 +32,6 @@
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 
-#include <QEvent>
 #include <QTimer>
 #include <QScopedValueRollback>
 

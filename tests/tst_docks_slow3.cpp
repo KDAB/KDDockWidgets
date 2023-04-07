@@ -106,7 +106,7 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 
     QVERIFY(fw1->view()->isActiveWindow());
     dragFloatingWindowTo(fw2, fw1->dropArea(), DropLocation_Left);
-    Platform::instance()->tests_waitForEvent(fw1, QEvent::WindowActivate);
+    Platform::instance()->tests_waitForEvent(fw1, Event::WindowActivate);
 
     /// We dropped into floating window 1, it should still be active
     QVERIFY(fw1->view()->isActiveWindow());

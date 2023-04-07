@@ -22,8 +22,6 @@
 
 #include "Platform.h"
 
-#include <QEvent>
-#include <QMouseEvent>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QWindow>
@@ -107,13 +105,13 @@ int WidgetResizeHandler::widgetResizeHandlerMargin()
     return 4; // pixels
 }
 
-bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
+bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 {
     if (s_disableAllHandlers || !widget)
         return false;
 
-    if (!(e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease
-          || e->type() == QEvent::MouseMove))
+    if (!(e->type() == Event::MouseButtonPress || e->type() == Event::MouseButtonRelease
+          || e->type() == Event::MouseMove))
         return false;
 
     auto me = mouseEvent(e);
@@ -168,7 +166,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
     }
 
     switch (e->type()) {
-    case QEvent::MouseButtonPress: {
+    case Event::MouseButtonPress: {
         if (mTarget->isMaximized())
             break;
 
@@ -191,7 +189,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
 
         return true;
     }
-    case QEvent::MouseButtonRelease: {
+    case Event::MouseButtonRelease: {
         m_resizingInProgress = false;
         if (isMDI()) {
             Q_EMIT DockRegistry::self()->groupInMDIResizeChanged();
@@ -211,7 +209,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
 
         break;
     }
-    case QEvent::MouseMove: {
+    case Event::MouseMove: {
         if (mTarget->isMaximized())
             break;
 
@@ -235,7 +233,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
     return false;
 }
 
-bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
+bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
 {
     const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(e);
     if (!m_resizingInProgress) {

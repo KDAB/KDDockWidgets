@@ -14,6 +14,7 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/View.h"
+#include "kddockwidgets/NonQtCompat_p.h"
 #include "kddockwidgets/private/EventFilterInterface.h"
 
 #include <QVector>
@@ -28,6 +29,7 @@
  * It's a private implementation detail.
  */
 namespace KDDockWidgets {
+
 
 namespace Controllers {
 class FloatingWindow;
@@ -243,14 +245,14 @@ Q_SIGNALS:
 private:
     friend class FocusScope;
     explicit DockRegistry(QObject *parent = nullptr);
-    bool onDockWidgetPressed(Controllers::DockWidget *dw, QMouseEvent *);
+    bool onDockWidgetPressed(Controllers::DockWidget *dw, MouseEvent *);
     void onFocusedViewChanged(std::shared_ptr<View> view);
     void maybeDelete();
     void setFocusedDockWidget(Controllers::DockWidget *);
 
     // EventFilterInterface:
     bool onExposeEvent(std::shared_ptr<Window>) override;
-    bool onMouseButtonPress(View *, QMouseEvent *) override;
+    bool onMouseButtonPress(View *, MouseEvent *) override;
 
     class Private;
     Private *const d;

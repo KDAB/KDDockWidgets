@@ -141,7 +141,7 @@ bool Platform_dummy::tests_waitForResize(Controller *, int timeout) const
     return false;
 }
 
-bool Platform_dummy::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout) const
+bool Platform_dummy::tests_waitForEvent(QObject *w, Event::Type type, int timeout) const
 {
     ( void )w;
     ( void )type;
@@ -149,14 +149,14 @@ bool Platform_dummy::tests_waitForEvent(QObject *w, QEvent::Type type, int timeo
     return false;
 }
 
-bool Platform_dummy::tests_waitForEvent(View *, QEvent::Type type, int timeout) const
+bool Platform_dummy::tests_waitForEvent(View *, Event::Type type, int timeout) const
 {
     ( void )type;
     ( void )timeout;
     return false;
 }
 
-bool Platform_dummy::tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type,
+bool Platform_dummy::tests_waitForEvent(std::shared_ptr<Window>, Event::Type type,
                                         int timeout) const
 {
     ( void )type;
@@ -176,7 +176,7 @@ bool Platform_dummy::tests_waitForDeleted(QObject *, int timeout) const
     return false;
 }
 
-void Platform_dummy::tests_sendEvent(std::shared_ptr<Window> window, QEvent *ev) const
+void Platform_dummy::tests_sendEvent(std::shared_ptr<Window> window, Event *ev) const
 {
     ( void )window;
     ( void )ev;

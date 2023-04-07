@@ -41,7 +41,7 @@ QVector<std::shared_ptr<Window>> Platform_dummy::windows() const
     return {};
 }
 
-void Platform_dummy::sendEvent(View *, QEvent *) const
+void Platform_dummy::sendEvent(View *, Event *) const
 {
 }
 

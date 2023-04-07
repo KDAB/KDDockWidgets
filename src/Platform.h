@@ -14,8 +14,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "View.h"
 #include "kddockwidgets/KDDockWidgets.h"
-
-#include <QEvent>
+#include "kddockwidgets/NonQtCompat_p.h"
 
 #include <vector>
 #include <memory.h>
@@ -71,7 +70,7 @@ public:
     virtual std::shared_ptr<Window> windowAt(QPoint globalPos) const = 0;
 
     /// @brief Sends the specified event to the specified view
-    virtual void sendEvent(View *, QEvent *) const = 0;
+    virtual void sendEvent(View *, Event *) const = 0;
 
     /// @brief Returns the screen index for the specified view or window.
     /// It's up to the platform to decide how screens are ordered, kddw won't care.
@@ -113,7 +112,7 @@ public:
     virtual void ungrabMouse() = 0;
 
     /**
-     * @brief Returns whether we're processing a QEvent::Quit
+     * @brief Returns whether we're processing a Event::Quit
      *
      * Used internally to know if we should let Qt close a NonClosable dock widget at shutdown time.
      */
@@ -193,16 +192,16 @@ public:
 
     /// @brief Waits for the specified view to receive the specified event
     /// Returns true if the view received said event until timeout was reached
-    virtual bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const = 0;
-    virtual bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const = 0;
-    virtual bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type,
+    virtual bool tests_waitForEvent(QObject *w, Event::Type type, int timeout = 5000) const = 0;
+    virtual bool tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
+    virtual bool tests_waitForEvent(std::shared_ptr<Window>, Event::Type type,
                                     int timeout = 5000) const = 0;
 
     /// @brief Waits for the specified view to be deleted
     virtual bool tests_waitForDeleted(View *, int timeout = 2000) const = 0;
     virtual bool tests_waitForDeleted(QObject *, int timeout = 2000) const = 0;
 
-    virtual void tests_sendEvent(std::shared_ptr<Window> window, QEvent *ev) const = 0;
+    virtual void tests_sendEvent(std::shared_ptr<Window> window, Event *ev) const = 0;
 
     /// @brief Creates the platform. Called by the tests at startup.
     /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()

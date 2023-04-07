@@ -22,7 +22,6 @@
 #include "kddockwidgets/controllers/Stack.h"
 
 #include <QMetaObject>
-#include <QMouseEvent>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;

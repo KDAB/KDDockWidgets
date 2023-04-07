@@ -295,6 +295,7 @@ ecm_generate_headers(
     # DefaultWidgetFactory
     LayoutSaver
     # MainWindow MainWindowBase MainWindowMDI
+    # TODOm1
 )
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${KDDW_PUBLIC_HEADERS})

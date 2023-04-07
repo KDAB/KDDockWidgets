@@ -15,13 +15,52 @@
 
 #ifdef QT_GUI_LIB
 #include <QCloseEvent>
+#include <QMouseEvent>
+#include <QHoverEvent>
 #endif
 
 namespace KDDockWidgets {
 
 #ifdef QT_GUI_LIB
 
+using Event = QEvent;
 using CloseEvent = QCloseEvent;
+using MouseEvent = QMouseEvent;
+using HoverEvent = QHoverEvent;
+
+#else
+
+class Event
+{
+public:
+    bool isAccepted() const
+    {
+        return true;
+    }
+
+    void accept()
+    {
+        m_accepted = true;
+    }
+
+    void ignore()
+    {
+        m_accepted = false;
+    }
+
+    bool spontaneous() const
+    {
+        return m_spontaneous;
+    }
+
+    bool m_accepted = false;
+    bool m_spontaneous = false;
+};
+
+class CloseEvent : public Event
+{
+public:
+};
 
 #endif
 
