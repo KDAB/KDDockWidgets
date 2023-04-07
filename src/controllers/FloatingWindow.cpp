@@ -33,11 +33,8 @@
 
 #include "kdbindings/signal.h"
 
-#include <QCloseEvent>
 #include <QScopedValueRollback>
-#include <QGuiApplication>
 #include <QTimer>
-#include <QWindow>
 
 #ifdef Q_OS_WIN
 #ifndef NOMINMAX
@@ -245,7 +242,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
             onVisibleFrameCountChanged(count);
         });
 
-    view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
+    view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
 
     view()->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
 
@@ -605,7 +602,7 @@ void FloatingWindow::updateTitleAndIcon()
     view()->setWindowIcon(icon);
 }
 
-void FloatingWindow::onCloseEvent(QCloseEvent *e)
+void FloatingWindow::onCloseEvent(CloseEvent *e)
 {
     if (e->spontaneous() && anyNonClosable()) {
         // Event from the window system won't close us

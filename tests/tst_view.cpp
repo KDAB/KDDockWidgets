@@ -175,7 +175,7 @@ TEST_CASE("View::closeRequested")
     auto rootView = createViewAndWindow({});
     bool signalArrived = false;
     KDBindings::ScopedConnection connection =
-        rootView->d->closeRequested.connect([&signalArrived](QCloseEvent *ev) {
+        rootView->d->closeRequested.connect([&signalArrived](CloseEvent *ev) {
             signalArrived = true;
             CHECK(ev->isAccepted());
         });

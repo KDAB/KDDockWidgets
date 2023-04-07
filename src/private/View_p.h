@@ -13,6 +13,7 @@
 
 #include "../View.h"
 #include "kdbindings/signal.h"
+#include "NonQtCompat_p.h"
 
 #include <vector>
 #include <memory>
@@ -28,7 +29,7 @@ public:
     KDBindings::Signal<> beingDestroyed;
 
     /// @brief signal emitted when something tried to close this view
-    KDBindings::Signal<QCloseEvent *> closeRequested;
+    KDBindings::Signal<CloseEvent *> closeRequested;
 
     /// @brief signal emitted when constraints change, for example min/max sizes
     KDBindings::Signal<> layoutInvalidated;

@@ -18,6 +18,7 @@
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "Group.h"
+#include "NonQtCompat_p.h"
 #include "private/Draggable_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -220,7 +221,7 @@ private:
     QSize maxSizeHint() const;
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
-    void onCloseEvent(QCloseEvent *);
+    void onCloseEvent(CloseEvent *);
     void updateSizeConstraints();
 
     bool m_disableSetVisible = false;

@@ -15,10 +15,10 @@
 #include "Platform.h"
 #include "ViewGuard.h"
 #include "Window.h"
+#include "NonQtCompat_p.h"
 #include "kddockwidgets/controllers/DropArea.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 
-#include <QCloseEvent>
 #include <QDebug>
 #include <QPainter>
 #include <QtTest/QtTest>

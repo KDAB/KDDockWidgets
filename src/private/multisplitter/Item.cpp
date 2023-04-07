@@ -21,11 +21,10 @@
 #include "Platform.h"
 #include "../Platform_p.h"
 
-#include <QEvent>
 #include <QDebug>
 #include <QScopedValueRollback>
 #include <QTimer>
-#include <QGuiApplication>
+
 #include <algorithm>
 
 #ifdef Q_CC_MSVC

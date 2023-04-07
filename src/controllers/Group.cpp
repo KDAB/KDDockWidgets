@@ -40,7 +40,6 @@
 
 #include "kdbindings/signal.h"
 
-#include <QCloseEvent>
 #include <QTimer>
 
 #define MARGIN_THRESHOLD 100
@@ -96,7 +95,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     setLayout(parent ? parent->asLayout() : nullptr);
     m_stack->setTabBarAutoHide(!alwaysShowsTabs());
     view()->init();
-    view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
+    view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
 
     m_inCtor = false;
 }
@@ -120,7 +119,7 @@ Group::~Group()
     delete d;
 }
 
-void Group::onCloseEvent(QCloseEvent *e)
+void Group::onCloseEvent(CloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
     e->accept(); // Accepted by default (will close unless ignored)

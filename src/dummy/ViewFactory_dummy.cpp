@@ -40,6 +40,7 @@
 
 #include "views/ClassicIndicatorWindowViewInterface.h"
 
+#include <QIcon>
 
 // clazy:excludeall=ctor-missing-parent-argument
 

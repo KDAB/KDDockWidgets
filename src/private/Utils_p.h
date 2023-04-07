@@ -17,18 +17,11 @@
 #include "kddockwidgets/View.h"
 #include "kddockwidgets/Platform.h"
 
-#include <QWindow>
 #include <QMouseEvent>
-#include <QGuiApplication>
 
 #ifdef QT_X11EXTRAS_LIB
 #include <QtX11Extras/QX11Info>
 #endif
-
-QT_BEGIN_NAMESPACE
-class QWidget;
-class QWindow;
-QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

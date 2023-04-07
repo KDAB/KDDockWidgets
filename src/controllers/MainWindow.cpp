@@ -149,7 +149,7 @@ void MainWindow::init(const QString &name)
 
     d->m_visibleWidgetCountConnection =
         d->m_layout->visibleWidgetCountChanged.connect(&MainWindow::groupCountChanged, this);
-    view()->d->closeRequested.connect([this](QCloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
+    view()->d->closeRequested.connect([this](CloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
 }
 
 MainWindow::~MainWindow()

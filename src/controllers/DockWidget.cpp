@@ -33,7 +33,6 @@
 #include "kddockwidgets/ViewFactory.h"
 
 #include <QEvent>
-#include <QCloseEvent>
 #include <QTimer>
 #include <QScopedValueRollback>
 
@@ -1034,7 +1033,7 @@ void DockWidget::Private::saveLastFloatingGeometry()
     }
 }
 
-void DockWidget::Private::onCloseEvent(QCloseEvent *e)
+void DockWidget::Private::onCloseEvent(CloseEvent *e)
 {
     e->accept(); // By default we accept, means DockWidget closes
     if (guest) {

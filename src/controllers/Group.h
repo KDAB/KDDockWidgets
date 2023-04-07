@@ -15,8 +15,8 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/FocusScope.h"
 #include "DockWidget.h"
+#include "kddockwidgets/NonQtCompat_p.h"
 #include "kddockwidgets/LayoutSaver.h"
-
 #include "kddockwidgets/docks_export.h"
 
 #include <QVector>
@@ -358,7 +358,7 @@ private:
     friend class KDDockWidgets::Controllers::Stack;
 
     void scheduleDeleteLater();
-    void onCloseEvent(QCloseEvent *);
+    void onCloseEvent(CloseEvent *);
 
     Layout *m_layout = nullptr;
     WidgetResizeHandler *m_resizeHandler = nullptr;

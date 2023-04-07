@@ -17,6 +17,7 @@
 #include "private/Position_p.h"
 #include "Action.h"
 #include "private/View_p.h"
+#include "NonQtCompat_p.h"
 
 #include <QCoreApplication>
 #include <QString>
@@ -62,7 +63,7 @@ public:
     void init()
     {
         updateTitle();
-        q->view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
+        q->view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
     }
 
     /**
@@ -125,7 +126,7 @@ public:
     bool restoreToPreviousPosition();
     void maybeRestoreToPreviousPosition();
     int currentTabIndex() const;
-    void onCloseEvent(QCloseEvent *e);
+    void onCloseEvent(CloseEvent *);
     void onParentChanged();
 
     /**

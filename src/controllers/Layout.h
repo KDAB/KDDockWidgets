@@ -28,6 +28,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
+#include "kddockwidgets/NonQtCompat_p.h"
 
 #include "kdbindings/signal.h"
 
@@ -203,7 +204,7 @@ public:
 
     Layouting::ItemContainer *rootItem() const;
 
-    void onCloseEvent(QCloseEvent *);
+    void onCloseEvent(CloseEvent *);
 
 protected:
     void setRootItem(Layouting::ItemContainer *root);

@@ -28,9 +28,7 @@
 #include "kddockwidgets/controllers/DockWidget_p.h"
 
 #include <QMouseEvent>
-#include <QGuiApplication>
 #include <QCursor>
-#include <QWindow>
 #include <QDrag>
 #include <QObject>
 #include <QScopedValueRollback>
