@@ -127,13 +127,13 @@ Q_SIGNALS:
     void numDockWidgetsChanged();
 
     /// @brief Emitted to tell the views to update their auto-hide button
-    void autoHideButtonChanged(bool visible, bool enabled, TitleBarButtonType);
+    void autoHideButtonChanged(bool visible, bool enabled, KDDockWidgets::TitleBarButtonType);
 
     /// @brief Emitted to tell the views to update their minimize button
     void minimizeButtonChanged(bool visible, bool enabled);
 
     /// @brief Emitted to tell the views to update their maximize button
-    void maximizeButtonChanged(bool visible, bool enabled, TitleBarButtonType);
+    void maximizeButtonChanged(bool visible, bool enabled, KDDockWidgets::TitleBarButtonType);
 
 protected:
     bool isOverlayed() const;

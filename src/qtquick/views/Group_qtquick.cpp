@@ -84,7 +84,7 @@ void Group_qtquick::init()
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
         for (auto dw : m_group->dockWidgets()) {
             auto dwView = static_cast<DockWidget_qtquick *>(asView_qtquick(dw->view()));
-            dwView->groupGeometryChanged(geometry());
+            Q_EMIT dwView->groupGeometryChanged(geometry());
         }
     });
 

@@ -85,7 +85,7 @@ bool DockWidget_qtwidgets::event(QEvent *e)
 void DockWidget_qtwidgets::resizeEvent(QResizeEvent *e)
 {
     m_dockWidget->onResize(e->size());
-    return QWidget::resizeEvent(e);
+    QWidget::resizeEvent(e);
 }
 
 QWidget *DockWidget_qtwidgets::widget() const

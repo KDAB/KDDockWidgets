@@ -2128,7 +2128,7 @@ void ItemBoxContainer::dumpLayout(int level)
     if (level == 0 && hostView()) {
 
         const auto screens = Platform::instance()->screens();
-        for (auto screen : screens) {
+        for (const auto &screen : screens) {
             qDebug().noquote() << "Screen" << screen->geometry() << screen->availableGeometry()
                                << "; drp=" << screen->devicePixelRatio();
         }

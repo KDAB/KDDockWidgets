@@ -141,7 +141,7 @@ void MainWindowViewInterface::layoutParentContainerEqually(DockWidgetViewInterfa
 void MainWindowViewInterface::moveToSideBar(const QString &dockId)
 {
     if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
-        return m_mainWindow->moveToSideBar(dw);
+        m_mainWindow->moveToSideBar(dw);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
     }

@@ -125,7 +125,7 @@ std::shared_ptr<View> Controller::window() const
 
 void Controller::show() const
 {
-    return view()->show();
+    view()->show();
 }
 
 void Controller::setParentView(View *parent)

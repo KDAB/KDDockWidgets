@@ -90,7 +90,7 @@ public:
 
 Q_SIGNALS:
     ///@brief signal counterpart for setParentView()
-    void parentViewChanged(View *parent);
+    void parentViewChanged(KDDockWidgets::View *parent);
 
     ///@brief signal counterpart for setVisible()
     void visibleChanged(bool);

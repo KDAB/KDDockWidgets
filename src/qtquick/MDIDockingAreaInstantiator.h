@@ -42,7 +42,7 @@ public:
     QStringList affinities() const;
 
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, QPoint localPos,
-                                   InitialOption addingOption = {});
+                                   KDDockWidgets::InitialOption addingOption = {});
 
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
 
