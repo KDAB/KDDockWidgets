@@ -82,6 +82,17 @@
             }
         },
         {
+            "name": "clazy-no-werror",
+            "inherits": [
+                "clazy"
+            ],
+            "displayName": "clazy-no-werror",
+            "binaryDir": "${sourceDir}/build-clazy-no-werror",
+            "cacheVariables": {
+                "KDDockWidgets_WERROR": "OFF"
+            }
+        },
+        {
             "name": "release",
             "displayName": "release",
             "generator": "Ninja",
