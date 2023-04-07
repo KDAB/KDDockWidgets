@@ -57,7 +57,16 @@ public:
         DragLeave,
         DragMove,
         Drop,
+        Move,
+        FocusIn,
+        WindowActivate,
+        LayoutRequest
     };
+
+    explicit Event(Type type)
+        : m_type(type)
+    {
+    }
 
     bool
     isAccepted() const
@@ -82,11 +91,12 @@ public:
 
     Type type() const
     {
-        return {};
+        return m_type;
     }
 
     bool m_accepted = false;
     bool m_spontaneous = false;
+    const Type m_type;
 };
 
 class CloseEvent : public Event
@@ -97,6 +107,8 @@ public:
 class HoverEvent : public Event
 {
 public:
+    using Event::Event;
+
     QPoint pos() const
     {
         return {};
@@ -106,6 +118,11 @@ public:
 class MouseEvent : public Event
 {
 public:
+    explicit MouseEvent(Type type, QPoint, QPoint, QPoint, Qt::MouseButtons, Qt::MouseButtons, Qt::KeyboardModifiers)
+        : Event(type)
+    {
+    }
+
     QPoint pos() const
     {
         return {};
@@ -129,6 +146,8 @@ public:
 class DropEvent : public Event
 {
 public:
+    using Event::Event;
+
     QPoint pos() const
     {
         return {};
@@ -144,16 +163,27 @@ public:
     }
 };
 
-
 class DragMoveEvent : public DropEvent
 {
 public:
-};
+    DragMoveEvent(Type type)
+        : DropEvent(type)
+    {
+    }
 
+    DragMoveEvent()
+        : DropEvent(Event::DragMove)
+    {
+    }
+};
 
 class DragEnterEvent : public DragMoveEvent
 {
 public:
+    DragEnterEvent()
+        : DragMoveEvent(Event::DragEnter)
+    {
+    }
 };
 
 #endif
