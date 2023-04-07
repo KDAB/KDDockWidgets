@@ -13,6 +13,8 @@
 
 // The goal of this file is to provide fallback types when QtGui isn't present
 
+class QMimeData;
+
 #ifdef QT_GUI_LIB
 #include <QCloseEvent>
 #include <QMouseEvent>
@@ -31,6 +33,8 @@ using CloseEvent = QCloseEvent;
 using MouseEvent = QMouseEvent;
 using HoverEvent = QHoverEvent;
 using DropEvent = QDropEvent;
+using DragEnterEvent = QDragEnterEvent;
+using DragMoveEvent = QDragMoveEvent;
 
 #else
 
@@ -111,14 +115,14 @@ public:
         return {};
     }
 
-    int button() const
+    Qt::MouseButton button() const
     {
-        return 0;
+        return {};
     }
 
-    int buttons() const
+    Qt::MouseButtons buttons() const
     {
-        return 0;
+        return {};
     }
 };
 
@@ -129,8 +133,28 @@ public:
     {
         return {};
     }
+
+    QMimeData *mimeData() const
+    {
+        return nullptr;
+    }
+
+    void setDropAction(Qt::DropAction)
+    {
+    }
 };
 
+
+class DragMoveEvent : public DropEvent
+{
+public:
+};
+
+
+class DragEnterEvent : public DragMoveEvent
+{
+public:
+};
 
 #endif
 

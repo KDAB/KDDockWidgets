@@ -183,7 +183,7 @@ public:
     }
 
     // Only interesting for Wayland
-    virtual bool handleDragEnter(QDragEnterEvent *, Controllers::DropArea *)
+    virtual bool handleDragEnter(DragEnterEvent *, Controllers::DropArea *)
     {
         return false;
     }
@@ -191,11 +191,11 @@ public:
     {
         return false;
     }
-    virtual bool handleDragMove(QDragMoveEvent *, Controllers::DropArea *)
+    virtual bool handleDragMove(DragMoveEvent *, Controllers::DropArea *)
     {
         return false;
     }
-    virtual bool handleDrop(QDropEvent *, Controllers::DropArea *)
+    virtual bool handleDrop(DropEvent *, Controllers::DropArea *)
     {
         return false;
     }
@@ -268,11 +268,12 @@ public:
     explicit StateDraggingWayland(DragController *parent);
     ~StateDraggingWayland() override;
     void onEntry() override;
+
     bool handleMouseButtonRelease(QPoint globalPos) override;
-    bool handleDragEnter(QDragEnterEvent *, Controllers::DropArea *) override;
-    bool handleDragMove(QDragMoveEvent *, Controllers::DropArea *) override;
+    bool handleDragEnter(DragEnterEvent *, Controllers::DropArea *) override;
+    bool handleDragMove(DragMoveEvent *, Controllers::DropArea *) override;
     bool handleDragLeave(Controllers::DropArea *) override;
-    bool handleDrop(QDropEvent *, Controllers::DropArea *) override;
+    bool handleDrop(DropEvent *, Controllers::DropArea *) override;
     bool handleMouseMove(QPoint globalPos) override;
     bool m_inQDrag = false;
 };

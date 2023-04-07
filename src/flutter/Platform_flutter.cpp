@@ -41,7 +41,7 @@ QVector<std::shared_ptr<Window>> Platform_flutter::windows() const
     return {};
 }
 
-void Platform_flutter::sendEvent(View *, QEvent *) const
+void Platform_flutter::sendEvent(View *, Event *) const
 {
 }
 

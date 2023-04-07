@@ -600,7 +600,7 @@ bool StateDraggingWayland::handleMouseMove(QPoint)
     return false;
 }
 
-bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropArea)
+bool StateDraggingWayland::handleDragEnter(DragEnterEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
     qCDebug(state) << Q_FUNC_INFO << mimeData << dropArea << q->m_windowBeingDragged.get();
@@ -626,7 +626,7 @@ bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
     return true;
 }
 
-bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
+bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
 {
     qCDebug(state) << Q_FUNC_INFO;
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
@@ -646,7 +646,7 @@ bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
     return true;
 }
 
-bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea)
+bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
@@ -772,7 +772,7 @@ bool DragController::onDnDEvent(View *view, Event *e)
         if (auto dropArea = view->asDropAreaController()) {
             switch (int(e->type())) {
             case Event::DragEnter:
-                if (activeState()->handleDragEnter(static_cast<QDragEnterEvent *>(e), dropArea))
+                if (activeState()->handleDragEnter(static_cast<DragEnterEvent *>(e), dropArea))
                     return true;
                 break;
             case Event::DragLeave:
@@ -780,11 +780,11 @@ bool DragController::onDnDEvent(View *view, Event *e)
                     return true;
                 break;
             case Event::DragMove:
-                if (activeState()->handleDragMove(static_cast<QDragMoveEvent *>(e), dropArea))
+                if (activeState()->handleDragMove(static_cast<DragMoveEvent *>(e), dropArea))
                     return true;
                 break;
             case Event::Drop:
-                if (activeState()->handleDrop(static_cast<QDropEvent *>(e), dropArea))
+                if (activeState()->handleDrop(static_cast<DropEvent *>(e), dropArea))
                     return true;
                 break;
             }
