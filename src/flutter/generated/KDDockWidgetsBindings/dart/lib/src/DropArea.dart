@@ -122,6 +122,14 @@ class DropArea extends Layout {
         .asFunction();
     ffi.Pointer<void> result = func(options);
     return Group.fromCppPointer(result, false);
+  } // currentDropLocation() const
+
+  int currentDropLocation() {
+    final int_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__DropArea__currentDropLocation')
+        .asFunction();
+    return func(thisCpp);
   }
 
   static void customEvent_calledFromC(

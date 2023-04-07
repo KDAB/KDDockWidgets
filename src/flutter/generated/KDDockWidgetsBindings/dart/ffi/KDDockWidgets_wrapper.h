@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <Qt5Qt6Compat_p.h>
+#include <NonQtCompat_p.h>
 #include <qstring.h>
 
 extern "C" {

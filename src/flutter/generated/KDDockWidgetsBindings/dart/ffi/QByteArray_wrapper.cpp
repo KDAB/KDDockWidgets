@@ -522,25 +522,19 @@ void *c_static_QByteArray__fromBase64_QByteArray(void *base64_)
 {
     assert(base64_);
     auto &base64 = *reinterpret_cast<QByteArray *>(base64_);
-    return new Dartagnan::ValueWrapper<QByteArray> {
-        KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromBase64(base64)
-    };
+    return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromBase64(base64) };
 }
 // fromHex(const QByteArray & hexEncoded)
 void *c_static_QByteArray__fromHex_QByteArray(void *hexEncoded_)
 {
     assert(hexEncoded_);
     auto &hexEncoded = *reinterpret_cast<QByteArray *>(hexEncoded_);
-    return new Dartagnan::ValueWrapper<QByteArray> {
-        KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromHex(hexEncoded)
-    };
+    return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromHex(hexEncoded) };
 }
 // fromRawData(const char * arg__1, int size)
 void *c_static_QByteArray__fromRawData_char_int(const char *arg__1, int size)
 {
-    return new Dartagnan::ValueWrapper<QByteArray> {
-        KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromRawData(arg__1, size)
-    };
+    return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromRawData(arg__1, size) };
 }
 // front() const
 char c_QByteArray__front(void *thisObj)
@@ -638,16 +632,12 @@ void *c_QByteArray__mid_int_int(void *thisObj, int index, int len)
 // number(int arg__1, int base)
 void *c_static_QByteArray__number_int_int(int arg__1, int base)
 {
-    return new Dartagnan::ValueWrapper<QByteArray> {
-        KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::number(arg__1, base)
-    };
+    return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::number(arg__1, base) };
 }
 // number(qint64 arg__1, int base)
 void *c_static_QByteArray__number_qint64_int(qint64 arg__1, int base)
 {
-    return new Dartagnan::ValueWrapper<QByteArray> {
-        KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::number(arg__1, base)
-    };
+    return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::number(arg__1, base) };
 }
 // prepend(const QByteArray & a)
 void *c_QByteArray__prepend_QByteArray(void *thisObj, void *a_)
@@ -729,8 +719,7 @@ void *c_QByteArray__replace_char_char(void *thisObj, const char *before, const c
     return &fromPtr(thisObj)->replace(before, after);
 }
 // replace(const char * before, int bsize, const char * after, int asize)
-void *c_QByteArray__replace_char_int_char_int(void *thisObj, const char *before, int bsize,
-                                              const char *after, int asize)
+void *c_QByteArray__replace_char_int_char_int(void *thisObj, const char *before, int bsize, const char *after, int asize)
 {
     return &fromPtr(thisObj)->replace(before, bsize, after, asize);
 }
@@ -747,8 +736,7 @@ void *c_QByteArray__replace_int_int_char(void *thisObj, int index, int len, cons
     return &fromPtr(thisObj)->replace(index, len, s);
 }
 // replace(int index, int len, const char * s, int alen)
-void *c_QByteArray__replace_int_int_char_int(void *thisObj, int index, int len, const char *s,
-                                             int alen)
+void *c_QByteArray__replace_int_int_char_int(void *thisObj, int index, int len, const char *s, int alen)
 {
     return &fromPtr(thisObj)->replace(index, len, s, alen);
 }

@@ -27,9 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-DockWidget_wrapper::DockWidget_wrapper(KDDockWidgets::View *view, const QString &uniqueName,
-                                       QFlags<KDDockWidgets::DockWidgetOption> options,
-                                       QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+DockWidget_wrapper::DockWidget_wrapper(KDDockWidgets::View *view, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
     : ::KDDockWidgets::Controllers::DockWidget(view, uniqueName, options, layoutSaverOptions)
 {
 }
@@ -45,21 +43,21 @@ void DockWidget_wrapper::actualTitleBarChanged()
 {
     ::KDDockWidgets::Controllers::DockWidget::actualTitleBarChanged();
 }
-void DockWidget_wrapper::addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other,
-                                            KDDockWidgets::InitialOption initialOption)
+void DockWidget_wrapper::addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other, KDDockWidgets::InitialOption initialOption)
 {
     ::KDDockWidgets::Controllers::DockWidget::addDockWidgetAsTab(other, initialOption);
 }
-void DockWidget_wrapper::addDockWidgetToContainingWindow(
-    KDDockWidgets::Controllers::DockWidget *other, KDDockWidgets::Location location,
-    KDDockWidgets::Controllers::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption)
+void DockWidget_wrapper::addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget *other, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption)
 {
-    ::KDDockWidgets::Controllers::DockWidget::addDockWidgetToContainingWindow(
-        other, location, relativeTo, initialOption);
+    ::KDDockWidgets::Controllers::DockWidget::addDockWidgetToContainingWindow(other, location, relativeTo, initialOption);
 }
 KDDockWidgets::Controllers::DockWidget *DockWidget_wrapper::byName(const QString &uniqueName)
 {
     return ::KDDockWidgets::Controllers::DockWidget::byName(uniqueName);
+}
+void DockWidget_wrapper::closed()
+{
+    ::KDDockWidgets::Controllers::DockWidget::closed();
 }
 int DockWidget_wrapper::currentTabIndex() const
 {
@@ -167,6 +165,10 @@ bool DockWidget_wrapper::isMainWindow() const
 bool DockWidget_wrapper::isOpen() const
 {
     return ::KDDockWidgets::Controllers::DockWidget::isOpen();
+}
+void DockWidget_wrapper::isOpenChanged(bool isOpen)
+{
+    ::KDDockWidgets::Controllers::DockWidget::isOpenChanged(isOpen);
 }
 bool DockWidget_wrapper::isOverlayed() const
 {
@@ -335,22 +337,17 @@ void c_KDDockWidgets__Controllers__DockWidget_Finalizer(void *, void *cppObj, vo
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper *>(cppObj);
 }
-void *
-c_KDDockWidgets__Controllers__DockWidget__constructor_View_QString_DockWidgetOptions_LayoutSaverOptions(
-    void *view_, const char *uniqueName_, int options_, int layoutSaverOptions_)
+void *c_KDDockWidgets__Controllers__DockWidget__constructor_View_QString_DockWidgetOptions_LayoutSaverOptions(void *view_, const char *uniqueName_, int options_, int layoutSaverOptions_)
 {
     auto view = reinterpret_cast<KDDockWidgets::View *>(view_);
     const auto uniqueName = QString::fromUtf8(uniqueName_);
     auto options = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(options_);
-    auto layoutSaverOptions =
-        static_cast<QFlags<KDDockWidgets::LayoutSaverOption>>(layoutSaverOptions_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper(view, uniqueName, options,
-                                                                        layoutSaverOptions);
+    auto layoutSaverOptions = static_cast<QFlags<KDDockWidgets::LayoutSaverOption>>(layoutSaverOptions_);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper(view, uniqueName, options, layoutSaverOptions);
     return reinterpret_cast<void *>(ptr);
 }
 // aboutToDelete(KDDockWidgets::Controllers::DockWidget * arg__1)
-void c_KDDockWidgets__Controllers__DockWidget__aboutToDelete_DockWidget(void *thisObj,
-                                                                        void *arg__1_)
+void c_KDDockWidgets__Controllers__DockWidget__aboutToDelete_DockWidget(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
     fromPtr(thisObj)->aboutToDelete(arg__1);
@@ -365,34 +362,33 @@ void c_KDDockWidgets__Controllers__DockWidget__actualTitleBarChanged(void *thisO
 {
     fromPtr(thisObj)->actualTitleBarChanged();
 }
-// addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget * other, KDDockWidgets::InitialOption
-// initialOption)
-void c_KDDockWidgets__Controllers__DockWidget__addDockWidgetAsTab_DockWidget_InitialOption(
-    void *thisObj, void *other_, void *initialOption_)
+// addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget * other, KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Controllers__DockWidget__addDockWidgetAsTab_DockWidget_InitialOption(void *thisObj, void *other_, void *initialOption_)
 {
     auto other = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(other_);
     assert(initialOption_);
     auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
     fromPtr(thisObj)->addDockWidgetAsTab(other, initialOption);
 }
-// addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget * other,
-// KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo,
-// KDDockWidgets::InitialOption initialOption)
-void c_KDDockWidgets__Controllers__DockWidget__addDockWidgetToContainingWindow_DockWidget_Location_DockWidget_InitialOption(
-    void *thisObj, void *other_, int location, void *relativeTo_, void *initialOption_)
+// addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget * other, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Controllers__DockWidget__addDockWidgetToContainingWindow_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *other_, int location, void *relativeTo_, void *initialOption_)
 {
     auto other = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(other_);
     auto relativeTo = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(relativeTo_);
     assert(initialOption_);
     auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
-    fromPtr(thisObj)->addDockWidgetToContainingWindow(
-        other, static_cast<KDDockWidgets::Location>(location), relativeTo, initialOption);
+    fromPtr(thisObj)->addDockWidgetToContainingWindow(other, static_cast<KDDockWidgets::Location>(location), relativeTo, initialOption);
 }
 // byName(const QString & uniqueName)
 void *c_static_KDDockWidgets__Controllers__DockWidget__byName_QString(const char *uniqueName_)
 {
     const auto uniqueName = QString::fromUtf8(uniqueName_);
     return KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::byName(uniqueName);
+}
+// closed()
+void c_KDDockWidgets__Controllers__DockWidget__closed(void *thisObj)
+{
+    fromPtr(thisObj)->closed();
 }
 // currentTabIndex() const
 int c_KDDockWidgets__Controllers__DockWidget__currentTabIndex(void *thisObj)
@@ -409,34 +405,14 @@ void c_KDDockWidgets__Controllers__DockWidget__customEvent_QEvent(void *thisObj,
 bool c_KDDockWidgets__Controllers__DockWidget__event_QEvent(void *thisObj, void *event_)
 {
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->event_nocallback(event);
-        } else {
-            return targetPtr->event(event);
-        }
-    }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
 }
 // eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controllers__DockWidget__eventFilter_QObject_QEvent(void *thisObj,
-                                                                          void *watched_,
-                                                                          void *event_)
+bool c_KDDockWidgets__Controllers__DockWidget__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
 {
     auto watched = reinterpret_cast<QObject *>(watched_);
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->eventFilter_nocallback(watched, event);
-        } else {
-            return targetPtr->eventFilter(watched, event);
-        }
-    }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // floatingWindow() const
 void *c_KDDockWidgets__Controllers__DockWidget__floatingWindow(void *thisObj)
@@ -518,6 +494,11 @@ bool c_KDDockWidgets__Controllers__DockWidget__isOpen(void *thisObj)
 {
     return fromPtr(thisObj)->isOpen();
 }
+// isOpenChanged(bool isOpen)
+void c_KDDockWidgets__Controllers__DockWidget__isOpenChanged_bool(void *thisObj, bool isOpen)
+{
+    fromPtr(thisObj)->isOpenChanged(isOpen);
+}
 // isOverlayed() const
 bool c_KDDockWidgets__Controllers__DockWidget__isOverlayed(void *thisObj)
 {
@@ -576,8 +557,7 @@ int c_KDDockWidgets__Controllers__DockWidget__options(void *thisObj)
     return fromPtr(thisObj)->options();
 }
 // optionsChanged(QFlags<KDDockWidgets::DockWidgetOption> arg__1)
-void c_KDDockWidgets__Controllers__DockWidget__optionsChanged_DockWidgetOptions(void *thisObj,
-                                                                                int arg__1_)
+void c_KDDockWidgets__Controllers__DockWidget__optionsChanged_DockWidgetOptions(void *thisObj, int arg__1_)
 {
     auto arg__1 = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(arg__1_);
     fromPtr(thisObj)->optionsChanged(arg__1);
@@ -593,8 +573,7 @@ void c_KDDockWidgets__Controllers__DockWidget__removedFromSideBar(void *thisObj)
     fromPtr(thisObj)->removedFromSideBar();
 }
 // setAffinityName(const QString & name)
-void c_KDDockWidgets__Controllers__DockWidget__setAffinityName_QString(void *thisObj,
-                                                                       const char *name_)
+void c_KDDockWidgets__Controllers__DockWidget__setAffinityName_QString(void *thisObj, const char *name_)
 {
     const auto name = QString::fromUtf8(name_);
     fromPtr(thisObj)->setAffinityName(name);
@@ -636,8 +615,7 @@ void c_KDDockWidgets__Controllers__DockWidget__setMDIZ_int(void *thisObj, int z)
     fromPtr(thisObj)->setMDIZ(z);
 }
 // setOptions(QFlags<KDDockWidgets::DockWidgetOption> arg__1)
-void c_KDDockWidgets__Controllers__DockWidget__setOptions_DockWidgetOptions(void *thisObj,
-                                                                            int arg__1_)
+void c_KDDockWidgets__Controllers__DockWidget__setOptions_DockWidgetOptions(void *thisObj, int arg__1_)
 {
     auto arg__1 = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(arg__1_);
     fromPtr(thisObj)->setOptions(arg__1);
@@ -685,19 +663,15 @@ void *c_KDDockWidgets__Controllers__DockWidget__titleBar(void *thisObj)
     return fromPtr(thisObj)->titleBar();
 }
 // titleChanged(const QString & title)
-void c_KDDockWidgets__Controllers__DockWidget__titleChanged_QString(void *thisObj,
-                                                                    const char *title_)
+void c_KDDockWidgets__Controllers__DockWidget__titleChanged_QString(void *thisObj, const char *title_)
 {
     const auto title = QString::fromUtf8(title_);
     fromPtr(thisObj)->titleChanged(title);
 }
 // tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Controllers__DockWidget__tr_char_char_int(const char *s,
-                                                                        const char *c, int n)
+void *c_static_KDDockWidgets__Controllers__DockWidget__tr_char_char_int(const char *s, const char *c, int n)
 {
-    return new Dartagnan::ValueWrapper<QString> {
-        KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::tr(s, c, n)
-    };
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::tr(s, c, n) };
 }
 // uniqueName() const
 void *c_KDDockWidgets__Controllers__DockWidget__uniqueName(void *thisObj)
@@ -710,8 +684,7 @@ int c_KDDockWidgets__Controllers__DockWidget__userType(void *thisObj)
     return fromPtr(thisObj)->userType();
 }
 // windowActiveAboutToChange(bool activated)
-void c_KDDockWidgets__Controllers__DockWidget__windowActiveAboutToChange_bool(void *thisObj,
-                                                                              bool activated)
+void c_KDDockWidgets__Controllers__DockWidget__windowActiveAboutToChange_bool(void *thisObj, bool activated)
 {
     fromPtr(thisObj)->windowActiveAboutToChange(activated);
 }
@@ -719,29 +692,21 @@ void c_KDDockWidgets__Controllers__DockWidget__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__DockWidget__registerVirtualMethodCallback(void *ptr,
-                                                                             void *callback,
-                                                                             int methodId)
+void c_KDDockWidgets__Controllers__DockWidget__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_customEvent>(callback);
+        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_customEvent>(callback);
         break;
     case 306:
-        wrapper->m_eventCallback =
-            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_event>(
-                callback);
+        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_event>(callback);
         break;
     case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_eventFilter>(callback);
+        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_eventFilter>(callback);
         break;
     case 891:
-        wrapper->m_setParentView_implCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_setParentView_impl>(
-            callback);
+        wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }
 }

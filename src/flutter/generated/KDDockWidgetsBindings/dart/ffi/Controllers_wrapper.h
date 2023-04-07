@@ -12,6 +12,5 @@
 #include <KDDockWidgets.h>
 
 extern "C" {
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj,
-                                                                         void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *);
 }

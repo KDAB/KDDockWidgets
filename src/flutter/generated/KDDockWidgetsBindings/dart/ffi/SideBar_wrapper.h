@@ -13,12 +13,12 @@
 #include <qstring.h>
 #include <DockWidget.h>
 #include <MainWindow.h>
+#include <qrect.h>
 #include <qpoint.h>
+#include <View.h>
 #include <qobject.h>
 #include <qcoreevent.h>
-#include <qrect.h>
 #include <qsize.h>
-#include <View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class SideBar_wrapper : public ::KDDockWidgets::Controllers::SideBar
@@ -55,24 +55,17 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Controllers::SideBar::addDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__SideBar__addDockWidget_DockWidget(void *thisObj, void *dw_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__addDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Controllers::SideBar::clear()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__clear(void *thisObj);
-// KDDockWidgets::Controllers::SideBar::containsDockWidget(KDDockWidgets::Controllers::DockWidget *
-// arg__1) const
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Controllers__SideBar__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::Controllers::SideBar::containsDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::SideBar::customEvent(QEvent * event)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__SideBar__customEvent_QEvent(void *thisObj, void *event_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::SideBar::event(QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__event_QEvent(void *thisObj,
-                                                                                      void *event_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__event_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::SideBar::eventFilter(QObject * watched, QEvent * event)
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Controllers__SideBar__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
-                                                                  void *event_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 // KDDockWidgets::Controllers::SideBar::isEmpty() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__isEmpty(void *thisObj);
 // KDDockWidgets::Controllers::SideBar::isVertical() const
@@ -80,26 +73,16 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__SideBar__isVerti
 // KDDockWidgets::Controllers::SideBar::mainWindow() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__SideBar__mainWindow(void *thisObj);
 // KDDockWidgets::Controllers::SideBar::onButtonClicked(KDDockWidgets::Controllers::DockWidget * dw)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_);
-// KDDockWidgets::Controllers::SideBar::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
-// dw)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__SideBar__removeDockWidget_DockWidget(void *thisObj, void *dw_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_);
+// KDDockWidgets::Controllers::SideBar::removeDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__removeDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Controllers::SideBar::setParentView_impl(KDDockWidgets::View * parent)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__SideBar__setParentView_impl_View(void *thisObj, void *parent_);
-// KDDockWidgets::Controllers::SideBar::toggleOverlay(KDDockWidgets::Controllers::DockWidget *
-// arg__1)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__setParentView_impl_View(void *thisObj, void *parent_);
+// KDDockWidgets::Controllers::SideBar::toggleOverlay(KDDockWidgets::Controllers::DockWidget * arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::SideBar::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *
-c_static_KDDockWidgets__Controllers__SideBar__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__SideBar__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__SideBar__registerVirtualMethodCallback(void *ptr, void *callback,
-                                                                     int methodId);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__SideBar_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__SideBar_Finalizer(void *, void *cppObj, void *);
 }

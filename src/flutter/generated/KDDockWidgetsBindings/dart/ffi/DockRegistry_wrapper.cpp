@@ -56,8 +56,7 @@ void DockRegistry_wrapper::customEvent_nocallback(QEvent *event)
 {
     ::KDDockWidgets::DockRegistry::customEvent(event);
 }
-KDDockWidgets::Controllers::DockWidget *
-DockRegistry_wrapper::dockByName(const QString &arg__1) const
+KDDockWidgets::Controllers::DockWidget *DockRegistry_wrapper::dockByName(const QString &arg__1) const
 {
     return ::KDDockWidgets::DockRegistry::dockByName(arg__1);
 }
@@ -127,13 +126,11 @@ bool DockRegistry_wrapper::itemIsInMainWindow(const Layouting::Item *arg__1) con
 {
     return ::KDDockWidgets::DockRegistry::itemIsInMainWindow(arg__1);
 }
-KDDockWidgets::Controllers::Layout *
-DockRegistry_wrapper::layoutForItem(const Layouting::Item *arg__1) const
+KDDockWidgets::Controllers::Layout *DockRegistry_wrapper::layoutForItem(const Layouting::Item *arg__1) const
 {
     return ::KDDockWidgets::DockRegistry::layoutForItem(arg__1);
 }
-KDDockWidgets::Controllers::MainWindow *
-DockRegistry_wrapper::mainWindowByName(const QString &arg__1) const
+KDDockWidgets::Controllers::MainWindow *DockRegistry_wrapper::mainWindowByName(const QString &arg__1) const
 {
     return ::KDDockWidgets::DockRegistry::mainWindowByName(arg__1);
 }
@@ -141,8 +138,7 @@ void DockRegistry_wrapper::registerDockWidget(KDDockWidgets::Controllers::DockWi
 {
     ::KDDockWidgets::DockRegistry::registerDockWidget(arg__1);
 }
-void DockRegistry_wrapper::registerFloatingWindow(
-    KDDockWidgets::Controllers::FloatingWindow *arg__1)
+void DockRegistry_wrapper::registerFloatingWindow(KDDockWidgets::Controllers::FloatingWindow *arg__1)
 {
     ::KDDockWidgets::DockRegistry::registerFloatingWindow(arg__1);
 }
@@ -162,8 +158,7 @@ KDDockWidgets::DockRegistry *DockRegistry_wrapper::self()
 {
     return ::KDDockWidgets::DockRegistry::self();
 }
-KDDockWidgets::Controllers::SideBar *DockRegistry_wrapper::sideBarForDockWidget(
-    const KDDockWidgets::Controllers::DockWidget *arg__1) const
+KDDockWidgets::Controllers::SideBar *DockRegistry_wrapper::sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget *arg__1) const
 {
     return ::KDDockWidgets::DockRegistry::sideBarForDockWidget(arg__1);
 }
@@ -175,8 +170,7 @@ void DockRegistry_wrapper::unregisterDockWidget(KDDockWidgets::Controllers::Dock
 {
     ::KDDockWidgets::DockRegistry::unregisterDockWidget(arg__1);
 }
-void DockRegistry_wrapper::unregisterFloatingWindow(
-    KDDockWidgets::Controllers::FloatingWindow *arg__1)
+void DockRegistry_wrapper::unregisterFloatingWindow(KDDockWidgets::Controllers::FloatingWindow *arg__1)
 {
     ::KDDockWidgets::DockRegistry::unregisterFloatingWindow(arg__1);
 }
@@ -220,15 +214,13 @@ void c_KDDockWidgets__DockRegistry__clear(void *thisObj)
     fromPtr(thisObj)->clear();
 }
 // containsDockWidget(const QString & uniqueName) const
-bool c_KDDockWidgets__DockRegistry__containsDockWidget_QString(void *thisObj,
-                                                               const char *uniqueName_)
+bool c_KDDockWidgets__DockRegistry__containsDockWidget_QString(void *thisObj, const char *uniqueName_)
 {
     const auto uniqueName = QString::fromUtf8(uniqueName_);
     return fromPtr(thisObj)->containsDockWidget(uniqueName);
 }
 // containsMainWindow(const QString & uniqueName) const
-bool c_KDDockWidgets__DockRegistry__containsMainWindow_QString(void *thisObj,
-                                                               const char *uniqueName_)
+bool c_KDDockWidgets__DockRegistry__containsMainWindow_QString(void *thisObj, const char *uniqueName_)
 {
     const auto uniqueName = QString::fromUtf8(uniqueName_);
     return fromPtr(thisObj)->containsMainWindow(uniqueName);
@@ -246,8 +238,7 @@ void *c_KDDockWidgets__DockRegistry__dockByName_QString(void *thisObj, const cha
     return fromPtr(thisObj)->dockByName(arg__1);
 }
 // dropIndicatorsInhibitedChanged(bool inhibited)
-void c_KDDockWidgets__DockRegistry__dropIndicatorsInhibitedChanged_bool(void *thisObj,
-                                                                        bool inhibited)
+void c_KDDockWidgets__DockRegistry__dropIndicatorsInhibitedChanged_bool(void *thisObj, bool inhibited)
 {
     fromPtr(thisObj)->dropIndicatorsInhibitedChanged(inhibited);
 }
@@ -260,33 +251,14 @@ void c_KDDockWidgets__DockRegistry__ensureAllFloatingWidgetsAreMorphed(void *thi
 bool c_KDDockWidgets__DockRegistry__event_QEvent(void *thisObj, void *event_)
 {
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->event_nocallback(event);
-        } else {
-            return targetPtr->event(event);
-        }
-    }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
 }
 // eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__DockRegistry__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
-                                                               void *event_)
+bool c_KDDockWidgets__DockRegistry__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
 {
     auto watched = reinterpret_cast<QObject *>(watched_);
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->eventFilter_nocallback(watched, event);
-        } else {
-            return targetPtr->eventFilter(watched, event);
-        }
-    }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // focusedDockWidget() const
 void *c_KDDockWidgets__DockRegistry__focusedDockWidget(void *thisObj)
@@ -306,9 +278,7 @@ void c_KDDockWidgets__DockRegistry__groupInMDIResizeChanged(void *thisObj)
 // groups() const
 void *c_KDDockWidgets__DockRegistry__groups(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<const QList<KDDockWidgets::Controllers::Group *>> {
-        fromPtr(thisObj)->groups()
-    };
+    return new Dartagnan::ValueWrapper<const QList<KDDockWidgets::Controllers::Group *>> { fromPtr(thisObj)->groups() };
 }
 // hasFloatingWindows() const
 bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj)
@@ -350,8 +320,7 @@ void c_KDDockWidgets__DockRegistry__registerDockWidget_DockWidget(void *thisObj,
     fromPtr(thisObj)->registerDockWidget(arg__1);
 }
 // registerFloatingWindow(KDDockWidgets::Controllers::FloatingWindow * arg__1)
-void c_KDDockWidgets__DockRegistry__registerFloatingWindow_FloatingWindow(void *thisObj,
-                                                                          void *arg__1_)
+void c_KDDockWidgets__DockRegistry__registerFloatingWindow_FloatingWindow(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::FloatingWindow *>(arg__1_);
     fromPtr(thisObj)->registerFloatingWindow(arg__1);
@@ -388,9 +357,7 @@ void *c_KDDockWidgets__DockRegistry__sideBarForDockWidget_DockWidget(void *thisO
 // tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__DockRegistry__tr_char_char_int(const char *s, const char *c, int n)
 {
-    return new Dartagnan::ValueWrapper<QString> {
-        KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::tr(s, c, n)
-    };
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::tr(s, c, n) };
 }
 // unregisterDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
 void c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget(void *thisObj, void *arg__1_)
@@ -399,8 +366,7 @@ void c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget(void *thisOb
     fromPtr(thisObj)->unregisterDockWidget(arg__1);
 }
 // unregisterFloatingWindow(KDDockWidgets::Controllers::FloatingWindow * arg__1)
-void c_KDDockWidgets__DockRegistry__unregisterFloatingWindow_FloatingWindow(void *thisObj,
-                                                                            void *arg__1_)
+void c_KDDockWidgets__DockRegistry__unregisterFloatingWindow_FloatingWindow(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::FloatingWindow *>(arg__1_);
     fromPtr(thisObj)->unregisterFloatingWindow(arg__1);
@@ -427,22 +393,18 @@ void c_KDDockWidgets__DockRegistry__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__DockRegistry__registerVirtualMethodCallback(void *ptr, void *callback,
-                                                                  int methodId)
+void c_KDDockWidgets__DockRegistry__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::Callback_customEvent>(callback);
+        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::Callback_customEvent>(callback);
         break;
     case 306:
-        wrapper->m_eventCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::Callback_event>(callback);
+        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::Callback_event>(callback);
         break;
     case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::Callback_eventFilter>(callback);
+        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::Callback_eventFilter>(callback);
         break;
     }
 }

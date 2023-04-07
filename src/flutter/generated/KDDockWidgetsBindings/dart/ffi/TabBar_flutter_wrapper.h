@@ -23,8 +23,7 @@ class TabBar_flutter_wrapper : public ::KDDockWidgets::Views::TabBar_flutter
 {
 public:
     ~TabBar_flutter_wrapper();
-    TabBar_flutter_wrapper(KDDockWidgets::Controllers::TabBar *controller,
-                           KDDockWidgets::View *parent = nullptr);
+    TabBar_flutter_wrapper(KDDockWidgets::Controllers::TabBar *controller, KDDockWidgets::View *parent = nullptr);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -280,18 +279,14 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::TabBar_flutter::TabBar_flutter(KDDockWidgets::Controllers::TabBar *
-// controller, KDDockWidgets::View * parent)
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__constructor_TabBar_View(void *controller_, void *parent_);
+// KDDockWidgets::Views::TabBar_flutter::TabBar_flutter(KDDockWidgets::Controllers::TabBar * controller, KDDockWidgets::View * parent)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__constructor_TabBar_View(void *controller_, void *parent_);
 // KDDockWidgets::Views::TabBar_flutter::activateWindow()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__activateWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__activateWindow(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__close(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::createPlatformWindow()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__createPlatformWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__createPlatformWindow(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TabBar_flutter__flags(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::free_impl()
@@ -307,14 +302,11 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__hide(v
 // KDDockWidgets::Views::TabBar_flutter::init()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__init(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::isActiveWindow() const
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Views__TabBar_flutter__isActiveWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__isActiveWindow(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::isMaximized() const
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Views__TabBar_flutter__isMaximized(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__isMaximized(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::isMinimized() const
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Views__TabBar_flutter__isMinimized(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__isMinimized(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::isNull() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__isNull(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::isRootView() const
@@ -322,146 +314,100 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__isRoot
 // KDDockWidgets::Views::TabBar_flutter::isVisible() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__isVisible(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::mapFromGlobal(QPoint globalPt) const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
 // KDDockWidgets::Views::TabBar_flutter::mapTo(KDDockWidgets::View * parent, QPoint pos) const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
 // KDDockWidgets::Views::TabBar_flutter::mapToGlobal(QPoint localPt) const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
 // KDDockWidgets::Views::TabBar_flutter::maxSizeHint() const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__maxSizeHint(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__maxSizeHint(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::minSize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__minSize(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::minimumHeight() const
-KDDockWidgetsBindings_EXPORT int
-c_KDDockWidgets__Views__TabBar_flutter__minimumHeight(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TabBar_flutter__minimumHeight(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::minimumWidth() const
-KDDockWidgetsBindings_EXPORT int
-c_KDDockWidgets__Views__TabBar_flutter__minimumWidth(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TabBar_flutter__minimumWidth(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::move(int x, int y)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__move_int_int(void *thisObj, int x, int y);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::Views::TabBar_flutter::moveTabTo(int from, int to)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__moveTabTo_int_int(void *thisObj, int from, int to);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__moveTabTo_int_int(void *thisObj, int from, int to);
 // KDDockWidgets::Views::TabBar_flutter::normalGeometry() const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__normalGeometry(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::objectName() const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__objectName(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__objectName(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::onChildAdded(KDDockWidgets::View * childView)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::TabBar_flutter::onChildRemoved(KDDockWidgets::View * childView)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__onChildRemoved_View(void *thisObj, void *childView_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::TabBar_flutter::onRebuildRequested()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__onRebuildRequested(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__onRebuildRequested(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::onResize(int w, int h)
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int w, int h);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TabBar_flutter::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__raise(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::raiseAndActivate()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__raiseAndActivate(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__raiseAndActivate(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::rectForTab(int index) const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Views__TabBar_flutter__rectForTab_int(void *thisObj, int index);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__rectForTab_int(void *thisObj, int index);
 // KDDockWidgets::Views::TabBar_flutter::releaseKeyboard()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__releaseKeyboard(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::releaseMouse()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__releaseMouse(void *thisObj);
-// KDDockWidgets::Views::TabBar_flutter::removeDockWidget(KDDockWidgets::Controllers::DockWidget *
-// dw)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__removeDockWidget_DockWidget(void *thisObj, void *dw_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__releaseMouse(void *thisObj);
+// KDDockWidgets::Views::TabBar_flutter::removeDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__removeDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Views::TabBar_flutter::renameTab(int index, const QString & name)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__renameTab_int_QString(void *thisObj, int index,
-                                                              const char *name_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__renameTab_int_QString(void *thisObj, int index, const char *name_);
 // KDDockWidgets::Views::TabBar_flutter::setCurrentIndex(int index)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setCurrentIndex_int(void *thisObj, int index);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setCurrentIndex_int(void *thisObj, int index);
 // KDDockWidgets::Views::TabBar_flutter::setCursor(Qt::CursorShape shape)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setCursor_CursorShape(void *thisObj, int shape);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setCursor_CursorShape(void *thisObj, int shape);
 // KDDockWidgets::Views::TabBar_flutter::setFixedHeight(int h)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setFixedHeight_int(void *thisObj, int h);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::TabBar_flutter::setFixedWidth(int w)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setFixedWidth_int(void *thisObj, int w);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setFixedWidth_int(void *thisObj, int w);
 // KDDockWidgets::Views::TabBar_flutter::setGeometry(QRect geometry)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
 // KDDockWidgets::Views::TabBar_flutter::setHeight(int h)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setHeight_int(void *thisObj, int h);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::Views::TabBar_flutter::setMaximumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setMaximumSize_QSize(void *thisObj, void *sz_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setMaximumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::Views::TabBar_flutter::setMinimumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setMinimumSize_QSize(void *thisObj, void *sz_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::Views::TabBar_flutter::setMouseTracking(bool enable)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setMouseTracking_bool(void *thisObj, bool enable);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::Views::TabBar_flutter::setObjectName(const QString & name)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setObjectName_QString(void *thisObj, const char *name_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::Views::TabBar_flutter::setParent(KDDockWidgets::View * parent)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setParent_View(void *thisObj, void *parent_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::Views::TabBar_flutter::setSize(int w, int h)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setSize_int_int(void *thisObj, int w, int h);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setSize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Views::TabBar_flutter::setVisible(bool visible)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setVisible_bool(void *thisObj, bool visible);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::Views::TabBar_flutter::setWidth(int w)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setWidth_int(void *thisObj, int w);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setWidth_int(void *thisObj, int w);
 // KDDockWidgets::Views::TabBar_flutter::setWindowOpacity(double v)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setWindowOpacity_double(void *thisObj, double v);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setWindowOpacity_double(void *thisObj, double v);
 // KDDockWidgets::Views::TabBar_flutter::setWindowTitle(const QString & title)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setWindowTitle_QString(void *thisObj, const char *title_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setWindowTitle_QString(void *thisObj, const char *title_);
 // KDDockWidgets::Views::TabBar_flutter::setZOrder(int z)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__setZOrder_int(void *thisObj, int z);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setZOrder_int(void *thisObj, int z);
 // KDDockWidgets::Views::TabBar_flutter::show()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__show(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::showMaximized()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__showMaximized(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__showMaximized(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::showMinimized()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__showMinimized(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__showMinimized(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::showNormal()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__showNormal(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::sizeHint() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__sizeHint(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::tabAt(QPoint localPos) const
-KDDockWidgetsBindings_EXPORT int
-c_KDDockWidgets__Views__TabBar_flutter__tabAt_QPoint(void *thisObj, void *localPos_);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__TabBar_flutter__tabAt_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::Views::TabBar_flutter::text(int index) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__text_int(void *thisObj,
-                                                                                    int index);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__text_int(void *thisObj, int index);
 // KDDockWidgets::Views::TabBar_flutter::update()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__update(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void *ptr, void *callback,
-                                                                      int methodId);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Views__TabBar_flutter_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter_Finalizer(void *, void *cppObj, void *);
 }

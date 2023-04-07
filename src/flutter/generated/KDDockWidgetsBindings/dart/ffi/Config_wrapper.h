@@ -23,6 +23,7 @@ public:
     qreal draggedWindowOpacity() const;
     bool dropIndicatorsInhibited() const;
     int mdiPopupThreshold() const;
+    void printDebug();
     static KDDockWidgets::Config &self();
     int separatorThickness() const;
     void setAbsoluteWidgetMaxSize(QSize size);
@@ -32,8 +33,10 @@ public:
     void setMDIPopupThreshold(int arg__1);
     void setSeparatorThickness(int value);
     void setStartDragDistance(int arg__1);
+    void setTransparencyOnlyOverDropIndicator(bool only);
     void setViewFactory(KDDockWidgets::ViewFactory *arg__1);
     int startDragDistance() const;
+    bool transparencyOnlyOverDropIndicator() const;
     KDDockWidgets::ViewFactory *viewFactory() const;
 };
 }
@@ -48,36 +51,34 @@ KDDockWidgetsBindings_EXPORT qreal c_KDDockWidgets__Config__draggedWindowOpacity
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
 // KDDockWidgets::Config::mdiPopupThreshold() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
+// KDDockWidgets::Config::printDebug()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__printDebug(void *thisObj);
 // KDDockWidgets::Config::self()
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Config__self();
 // KDDockWidgets::Config::separatorThickness() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Config__separatorThickness(void *thisObj);
 // KDDockWidgets::Config::setAbsoluteWidgetMaxSize(QSize size)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_);
 // KDDockWidgets::Config::setAbsoluteWidgetMinSize(QSize size)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_);
 // KDDockWidgets::Config::setDraggedWindowOpacity(qreal opacity)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity);
 // KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj,
-                                                                                    int arg__1);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setSeparatorThickness(int value)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj,
-                                                                                     int value);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj, int value);
 // KDDockWidgets::Config::setStartDragDistance(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj,
-                                                                                    int arg__1);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1);
+// KDDockWidgets::Config::setTransparencyOnlyOverDropIndicator(bool only)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setTransparencyOnlyOverDropIndicator_bool(void *thisObj, bool only);
 // KDDockWidgets::Config::setViewFactory(KDDockWidgets::ViewFactory * arg__1)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
 // KDDockWidgets::Config::startDragDistance() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Config__startDragDistance(void *thisObj);
+// KDDockWidgets::Config::transparencyOnlyOverDropIndicator() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Config__transparencyOnlyOverDropIndicator(void *thisObj);
 // KDDockWidgets::Config::viewFactory() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Config__viewFactory(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__destructor(void *thisObj);

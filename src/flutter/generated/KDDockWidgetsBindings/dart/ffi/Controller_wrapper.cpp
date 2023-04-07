@@ -184,8 +184,7 @@ void c_KDDockWidgets__Controller_Finalizer(void *, void *cppObj, void *)
 void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_)
 {
     auto arg__2 = reinterpret_cast<KDDockWidgets::View *>(arg__2_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::Controller_wrapper(
-        static_cast<KDDockWidgets::Type>(type), arg__2);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::Controller_wrapper(static_cast<KDDockWidgets::Type>(type), arg__2);
     return reinterpret_cast<void *>(ptr);
 }
 // close()
@@ -203,33 +202,14 @@ void c_KDDockWidgets__Controller__customEvent_QEvent(void *thisObj, void *event_
 bool c_KDDockWidgets__Controller__event_QEvent(void *thisObj, void *event_)
 {
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->event_nocallback(event);
-        } else {
-            return targetPtr->event(event);
-        }
-    }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
 }
 // eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controller__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
-                                                             void *event_)
+bool c_KDDockWidgets__Controller__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
 {
     auto watched = reinterpret_cast<QObject *>(watched_);
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->eventFilter_nocallback(watched, event);
-        } else {
-            return targetPtr->eventFilter(watched, event);
-        }
-    }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // geometry() const
 void *c_KDDockWidgets__Controller__geometry(void *thisObj)
@@ -304,9 +284,7 @@ void *c_KDDockWidgets__Controller__size(void *thisObj)
 // tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const char *c, int n)
 {
-    return new Dartagnan::ValueWrapper<QString> {
-        KDDockWidgetsBindings_wrappersNS::Controller_wrapper::tr(s, c, n)
-    };
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::Controller_wrapper::tr(s, c, n) };
 }
 // type() const
 int c_KDDockWidgets__Controller__type(void *thisObj)
@@ -342,28 +320,21 @@ void c_KDDockWidgets__Controller__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void *callback,
-                                                                int methodId)
+void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_customEvent>(callback);
+        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_customEvent>(callback);
         break;
     case 306:
-        wrapper->m_eventCallback =
-            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_event>(
-                callback);
+        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_event>(callback);
         break;
     case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_eventFilter>(callback);
+        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_eventFilter>(callback);
         break;
     case 891:
-        wrapper->m_setParentView_implCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_setParentView_impl>(
-            callback);
+        wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }
 }

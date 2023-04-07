@@ -24,12 +24,8 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__CreateViewOptions__constructor();
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__CreateViewOptions__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__CreateViewOptions___get_isVisible(void *thisObj);
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__CreateViewOptions___get_createWindow(void *thisObj);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj,
-                                                                               void *);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__CreateViewOptions___get_createWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
 }

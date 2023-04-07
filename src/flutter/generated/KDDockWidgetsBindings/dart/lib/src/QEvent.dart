@@ -299,12 +299,14 @@ class QEvent {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
+
     }
     return "";
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
+
     }
     throw Error();
   }

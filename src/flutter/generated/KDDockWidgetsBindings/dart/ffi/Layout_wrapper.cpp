@@ -106,8 +106,7 @@ QList<KDDockWidgets::Controllers::Group *> Layout_wrapper::groups() const
 {
     return ::KDDockWidgets::Controllers::Layout::groups();
 }
-QList<KDDockWidgets::Controllers::Group *>
-Layout_wrapper::groupsFrom(KDDockWidgets::View *groupOrMultiSplitter) const
+QList<KDDockWidgets::Controllers::Group *> Layout_wrapper::groupsFrom(KDDockWidgets::View *groupOrMultiSplitter) const
 {
     return ::KDDockWidgets::Controllers::Layout::groupsFrom(groupOrMultiSplitter);
 }
@@ -151,8 +150,7 @@ void Layout_wrapper::removeItem(Layouting::Item *item)
 {
     ::KDDockWidgets::Controllers::Layout::removeItem(item);
 }
-void Layout_wrapper::restorePlaceholder(KDDockWidgets::Controllers::DockWidget *dw,
-                                        Layouting::Item *arg__2, int tabIndex)
+void Layout_wrapper::restorePlaceholder(KDDockWidgets::Controllers::DockWidget *dw, Layouting::Item *arg__2, int tabIndex)
 {
     ::KDDockWidgets::Controllers::Layout::restorePlaceholder(dw, arg__2, tabIndex);
 }
@@ -177,8 +175,7 @@ void Layout_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
 {
     ::KDDockWidgets::Controllers::Layout::setParentView_impl(parent);
 }
-void Layout_wrapper::unrefOldPlaceholders(
-    const QList<KDDockWidgets::Controllers::Group *> &groupsBeingAdded) const
+void Layout_wrapper::unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group *> &groupsBeingAdded) const
 {
     ::KDDockWidgets::Controllers::Layout::unrefOldPlaceholders(groupsBeingAdded);
 }
@@ -215,8 +212,7 @@ void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *
 void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_)
 {
     auto arg__2 = reinterpret_cast<KDDockWidgets::View *>(arg__2_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::Layout_wrapper(
-        static_cast<KDDockWidgets::Type>(arg__1), arg__2);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::Layout_wrapper(static_cast<KDDockWidgets::Type>(arg__1), arg__2);
     return reinterpret_cast<void *>(ptr);
 }
 // asDropArea() const
@@ -266,33 +262,14 @@ void c_KDDockWidgets__Controllers__Layout__dumpLayout(void *thisObj)
 bool c_KDDockWidgets__Controllers__Layout__event_QEvent(void *thisObj, void *event_)
 {
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->event_nocallback(event);
-        } else {
-            return targetPtr->event(event);
-        }
-    }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
 }
 // eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
-                                                                      void *event_)
+bool c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
 {
     auto watched = reinterpret_cast<QObject *>(watched_);
     auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {
-        auto targetPtr = fromPtr(thisObj);
-        auto wrapperPtr =
-            dynamic_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper *>(targetPtr);
-        if (wrapperPtr) {
-            return wrapperPtr->eventFilter_nocallback(watched, event);
-        } else {
-            return targetPtr->eventFilter(watched, event);
-        }
-    }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // floatingWindow() const
 void *c_KDDockWidgets__Controllers__Layout__floatingWindow(void *thisObj)
@@ -302,18 +279,13 @@ void *c_KDDockWidgets__Controllers__Layout__floatingWindow(void *thisObj)
 // groups() const
 void *c_KDDockWidgets__Controllers__Layout__groups(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> {
-        fromPtr(thisObj)->groups()
-    };
+    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> { fromPtr(thisObj)->groups() };
 }
 // groupsFrom(KDDockWidgets::View * groupOrMultiSplitter) const
-void *c_KDDockWidgets__Controllers__Layout__groupsFrom_View(void *thisObj,
-                                                            void *groupOrMultiSplitter_)
+void *c_KDDockWidgets__Controllers__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_)
 {
     auto groupOrMultiSplitter = reinterpret_cast<KDDockWidgets::View *>(groupOrMultiSplitter_);
-    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> {
-        fromWrapperPtr(thisObj)->groupsFrom(groupOrMultiSplitter)
-    };
+    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Controllers::Group *>> { fromWrapperPtr(thisObj)->groupsFrom(groupOrMultiSplitter) };
 }
 // isInMainWindow(bool honourNesting) const
 bool c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting)
@@ -367,12 +339,8 @@ void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *
     auto item = reinterpret_cast<Layouting::Item *>(item_);
     fromPtr(thisObj)->removeItem(item);
 }
-// restorePlaceholder(KDDockWidgets::Controllers::DockWidget * dw, Layouting::Item * arg__2, int
-// tabIndex)
-void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj,
-                                                                                  void *dw_,
-                                                                                  void *arg__2_,
-                                                                                  int tabIndex)
+// restorePlaceholder(KDDockWidgets::Controllers::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
+void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex)
 {
     auto dw = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(dw_);
     auto arg__2 = reinterpret_cast<Layouting::Item *>(arg__2_);
@@ -399,12 +367,10 @@ void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group* > & groupsBeingAdded) const
-void c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group(void *thisObj,
-                                                                            void *groupsBeingAdded_)
+void c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group(void *thisObj, void *groupsBeingAdded_)
 {
     assert(groupsBeingAdded_);
-    auto &groupsBeingAdded =
-        *reinterpret_cast<QList<KDDockWidgets::Controllers::Group *> *>(groupsBeingAdded_);
+    auto &groupsBeingAdded = *reinterpret_cast<QList<KDDockWidgets::Controllers::Group *> *>(groupsBeingAdded_);
     fromWrapperPtr(thisObj)->unrefOldPlaceholders(groupsBeingAdded);
 }
 // updateSizeConstraints()
@@ -426,28 +392,21 @@ void c_KDDockWidgets__Controllers__Layout__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *ptr, void *callback,
-                                                                         int methodId)
+void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
     case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_customEvent>(callback);
+        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_customEvent>(callback);
         break;
     case 306:
-        wrapper->m_eventCallback =
-            reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_event>(
-                callback);
+        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_event>(callback);
         break;
     case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
+        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_eventFilter>(callback);
         break;
     case 891:
-        wrapper->m_setParentView_implCallback = reinterpret_cast<
-            KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(
-            callback);
+        wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }
 }

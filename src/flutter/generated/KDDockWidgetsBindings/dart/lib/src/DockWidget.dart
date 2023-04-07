@@ -99,6 +99,14 @@ class DockWidget extends Controller {
         .asFunction();
     ffi.Pointer<void> result = func(uniqueName?.toNativeUtf8() ?? ffi.nullptr);
     return DockWidget.fromCppPointer(result, false);
+  } // closed()
+
+  closed() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__DockWidget__closed')
+        .asFunction();
+    func(thisCpp);
   } // currentTabIndex() const
 
   int currentTabIndex() {
@@ -276,6 +284,14 @@ class DockWidget extends Controller {
             'c_KDDockWidgets__Controllers__DockWidget__isOpen')
         .asFunction();
     return func(thisCpp) != 0;
+  } // isOpenChanged(bool isOpen)
+
+  isOpenChanged(bool isOpen) {
+    final void_Func_voidstar_bool func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
+            'c_KDDockWidgets__Controllers__DockWidget__isOpenChanged_bool')
+        .asFunction();
+    func(thisCpp, isOpen ? 1 : 0);
   } // isOverlayed() const
 
   bool isOverlayed() {

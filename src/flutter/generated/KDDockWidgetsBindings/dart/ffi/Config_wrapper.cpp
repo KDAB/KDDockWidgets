@@ -47,6 +47,10 @@ int Config_wrapper::mdiPopupThreshold() const
 {
     return ::KDDockWidgets::Config::mdiPopupThreshold();
 }
+void Config_wrapper::printDebug()
+{
+    ::KDDockWidgets::Config::printDebug();
+}
 KDDockWidgets::Config &Config_wrapper::self()
 {
     return ::KDDockWidgets::Config::self();
@@ -83,6 +87,10 @@ void Config_wrapper::setStartDragDistance(int arg__1)
 {
     ::KDDockWidgets::Config::setStartDragDistance(arg__1);
 }
+void Config_wrapper::setTransparencyOnlyOverDropIndicator(bool only)
+{
+    ::KDDockWidgets::Config::setTransparencyOnlyOverDropIndicator(only);
+}
 void Config_wrapper::setViewFactory(KDDockWidgets::ViewFactory *arg__1)
 {
     ::KDDockWidgets::Config::setViewFactory(arg__1);
@@ -90,6 +98,10 @@ void Config_wrapper::setViewFactory(KDDockWidgets::ViewFactory *arg__1)
 int Config_wrapper::startDragDistance() const
 {
     return ::KDDockWidgets::Config::startDragDistance();
+}
+bool Config_wrapper::transparencyOnlyOverDropIndicator() const
+{
+    return ::KDDockWidgets::Config::transparencyOnlyOverDropIndicator();
 }
 KDDockWidgets::ViewFactory *Config_wrapper::viewFactory() const
 {
@@ -136,6 +148,11 @@ bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj)
 int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj)
 {
     return fromPtr(thisObj)->mdiPopupThreshold();
+}
+// printDebug()
+void c_KDDockWidgets__Config__printDebug(void *thisObj)
+{
+    fromPtr(thisObj)->printDebug();
 }
 // self()
 void *c_static_KDDockWidgets__Config__self()
@@ -186,6 +203,11 @@ void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1
 {
     fromPtr(thisObj)->setStartDragDistance(arg__1);
 }
+// setTransparencyOnlyOverDropIndicator(bool only)
+void c_KDDockWidgets__Config__setTransparencyOnlyOverDropIndicator_bool(void *thisObj, bool only)
+{
+    fromPtr(thisObj)->setTransparencyOnlyOverDropIndicator(only);
+}
 // setViewFactory(KDDockWidgets::ViewFactory * arg__1)
 void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_)
 {
@@ -196,6 +218,11 @@ void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *ar
 int c_KDDockWidgets__Config__startDragDistance(void *thisObj)
 {
     return fromPtr(thisObj)->startDragDistance();
+}
+// transparencyOnlyOverDropIndicator() const
+bool c_KDDockWidgets__Config__transparencyOnlyOverDropIndicator(void *thisObj)
+{
+    return fromPtr(thisObj)->transparencyOnlyOverDropIndicator();
 }
 // viewFactory() const
 void *c_KDDockWidgets__Config__viewFactory(void *thisObj)

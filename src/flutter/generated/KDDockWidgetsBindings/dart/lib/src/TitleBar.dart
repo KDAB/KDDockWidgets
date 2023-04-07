@@ -278,6 +278,14 @@ class TitleBar extends Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return MainWindow.fromCppPointer(result, false);
+  } // maximizeButtonVisible() const
+
+  bool maximizeButtonVisible() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__TitleBar__maximizeButtonVisible')
+        .asFunction();
+    return func(thisCpp) != 0;
   } // minimizeButtonChanged(bool visible, bool enabled)
 
   minimizeButtonChanged(bool visible, bool enabled) {
@@ -391,7 +399,7 @@ class TitleBar extends Controller {
   DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1120))
+            cFunctionSymbolName(1121))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DockWidget.fromCppPointer(result, false);
@@ -557,7 +565,7 @@ class TitleBar extends Controller {
         return "c_KDDockWidgets__Controllers__TitleBar__isWindow";
       case 891:
         return "c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View";
-      case 1120:
+      case 1121:
         return "c_KDDockWidgets__Controllers__TitleBar__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -577,7 +585,7 @@ class TitleBar extends Controller {
         return "isWindow";
       case 891:
         return "setParentView_impl";
-      case 1120:
+      case 1121:
         return "singleDockWidget";
     }
     throw Error();
@@ -615,8 +623,8 @@ class TitleBar extends Controller {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback891, 891);
-    final callback1120 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1121 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         TitleBar.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1120, 1120);
+    registerCallback(thisCpp, callback1121, 1121);
   }
 }

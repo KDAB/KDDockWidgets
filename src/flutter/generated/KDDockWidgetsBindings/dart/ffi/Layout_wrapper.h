@@ -19,10 +19,10 @@
 #include <Group.h>
 #include <qlist.h>
 #include <DropArea.h>
+#include <qrect.h>
 #include <qpoint.h>
 #include <qobject.h>
 #include <qcoreevent.h>
-#include <qrect.h>
 #include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -46,8 +46,7 @@ public:
     virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
     KDDockWidgets::Controllers::FloatingWindow *floatingWindow() const;
     QList<KDDockWidgets::Controllers::Group *> groups() const;
-    QList<KDDockWidgets::Controllers::Group *>
-    groupsFrom(KDDockWidgets::View *groupOrMultiSplitter) const;
+    QList<KDDockWidgets::Controllers::Group *> groupsFrom(KDDockWidgets::View *groupOrMultiSplitter) const;
     bool isInMainWindow(bool honourNesting = false) const;
     Layouting::Item *itemForFrame(const KDDockWidgets::Controllers::Group *group) const;
     int layoutHeight() const;
@@ -58,14 +57,12 @@ public:
     KDDockWidgets::Controllers::MainWindow *mainWindow(bool honourNesting = false) const;
     int placeholderCount() const;
     void removeItem(Layouting::Item *item);
-    void restorePlaceholder(KDDockWidgets::Controllers::DockWidget *dw, Layouting::Item *arg__2,
-                            int tabIndex);
+    void restorePlaceholder(KDDockWidgets::Controllers::DockWidget *dw, Layouting::Item *arg__2, int tabIndex);
     void setLayoutMinimumSize(QSize arg__1);
     void setLayoutSize(QSize arg__1);
     virtual void setParentView_impl(KDDockWidgets::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
-    void
-    unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group *> &groupsBeingAdded) const;
+    void unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group *> &groupsBeingAdded) const;
     void updateSizeConstraints();
     void viewAboutToBeDeleted();
     int visibleCount() const;
@@ -80,106 +77,71 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Controllers::Layout::Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View *
-// arg__2)
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_);
+// KDDockWidgets::Controllers::Layout::Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View * arg__2)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_);
 // KDDockWidgets::Controllers::Layout::asDropArea() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__asDropArea(void *thisObj);
 // KDDockWidgets::Controllers::Layout::checkSanity() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__checkSanity(void *thisObj);
 // KDDockWidgets::Controllers::Layout::clearLayout()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj);
-// KDDockWidgets::Controllers::Layout::containsFrame(const KDDockWidgets::Controllers::Group *
-// arg__1) const
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Controllers__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
+// KDDockWidgets::Controllers::Layout::containsFrame(const KDDockWidgets::Controllers::Group * arg__1) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::Layout::containsItem(const Layouting::Item * arg__1) const
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::Layout::count() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__count(void *thisObj);
 // KDDockWidgets::Controllers::Layout::customEvent(QEvent * event)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__customEvent_QEvent(void *thisObj, void *event_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__customEvent_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::Layout::dumpLayout() const
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__dumpLayout(void *thisObj);
 // KDDockWidgets::Controllers::Layout::event(QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__event_QEvent(void *thisObj,
-                                                                                     void *event_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__event_QEvent(void *thisObj, void *event_);
 // KDDockWidgets::Controllers::Layout::eventFilter(QObject * watched, QEvent * event)
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *thisObj, void *watched_,
-                                                                 void *event_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 // KDDockWidgets::Controllers::Layout::floatingWindow() const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__Layout__floatingWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__floatingWindow(void *thisObj);
 // KDDockWidgets::Controllers::Layout::groups() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__groups(void *thisObj);
 // KDDockWidgets::Controllers::Layout::groupsFrom(KDDockWidgets::View * groupOrMultiSplitter) const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_);
 // KDDockWidgets::Controllers::Layout::isInMainWindow(bool honourNesting) const
-KDDockWidgetsBindings_EXPORT bool
-c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
-// KDDockWidgets::Controllers::Layout::itemForFrame(const KDDockWidgets::Controllers::Group * group)
-// const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__Layout__itemForFrame_Group(void *thisObj, void *group_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
+// KDDockWidgets::Controllers::Layout::itemForFrame(const KDDockWidgets::Controllers::Group * group) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__itemForFrame_Group(void *thisObj, void *group_);
 // KDDockWidgets::Controllers::Layout::layoutHeight() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__layoutHeight(void *thisObj);
 // KDDockWidgets::Controllers::Layout::layoutMaximumSizeHint() const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__Layout__layoutMaximumSizeHint(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__layoutMaximumSizeHint(void *thisObj);
 // KDDockWidgets::Controllers::Layout::layoutMinimumSize() const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__Layout__layoutMinimumSize(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__layoutMinimumSize(void *thisObj);
 // KDDockWidgets::Controllers::Layout::layoutSize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__layoutSize(void *thisObj);
 // KDDockWidgets::Controllers::Layout::layoutWidth() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj);
 // KDDockWidgets::Controllers::Layout::mainWindow(bool honourNesting) const
-KDDockWidgetsBindings_EXPORT void *
-c_KDDockWidgets__Controllers__Layout__mainWindow_bool(void *thisObj, bool honourNesting);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__mainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Controllers::Layout::placeholderCount() const
-KDDockWidgetsBindings_EXPORT int
-c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
 // KDDockWidgets::Controllers::Layout::removeItem(Layouting::Item * item)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
-// KDDockWidgets::Controllers::Layout::restorePlaceholder(KDDockWidgets::Controllers::DockWidget *
-// dw, Layouting::Item * arg__2, int tabIndex)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj,
-                                                                             void *dw_,
-                                                                             void *arg__2_,
-                                                                             int tabIndex);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
+// KDDockWidgets::Controllers::Layout::restorePlaceholder(KDDockWidgets::Controllers::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex);
 // KDDockWidgets::Controllers::Layout::setLayoutMinimumSize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::Layout::setLayoutSize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Controllers::Layout::setParentView_impl(KDDockWidgets::View * parent)
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj, void *parent_);
-// KDDockWidgets::Controllers::Layout::unrefOldPlaceholders(const
-// QList<KDDockWidgets::Controllers::Group* > & groupsBeingAdded) const
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group(void *thisObj,
-                                                                       void *groupsBeingAdded_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj, void *parent_);
+// KDDockWidgets::Controllers::Layout::unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group* > & groupsBeingAdded) const
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group(void *thisObj, void *groupsBeingAdded_);
 // KDDockWidgets::Controllers::Layout::updateSizeConstraints()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__updateSizeConstraints(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__updateSizeConstraints(void *thisObj);
 // KDDockWidgets::Controllers::Layout::viewAboutToBeDeleted()
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__viewAboutToBeDeleted(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__viewAboutToBeDeleted(void *thisObj);
 // KDDockWidgets::Controllers::Layout::visibleCount() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__visibleCount(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *ptr, void *callback,
-                                                                    int methodId);
-KDDockWidgetsBindings_EXPORT void
-c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *);
 }

@@ -79,8 +79,7 @@ void c_QEvent_Finalizer(void *, void *cppObj, void *)
 }
 void *c_QEvent__constructor_Type(int type)
 {
-    auto ptr =
-        new KDDockWidgetsBindings_wrappersNS::QEvent_wrapper(static_cast<QEvent::Type>(type));
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::QEvent_wrapper(static_cast<QEvent::Type>(type));
     return reinterpret_cast<void *>(ptr);
 }
 // accept()

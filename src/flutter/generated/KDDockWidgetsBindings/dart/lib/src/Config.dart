@@ -83,6 +83,14 @@ class Config {
             'c_KDDockWidgets__Config__mdiPopupThreshold')
         .asFunction();
     return func(thisCpp);
+  } // printDebug()
+
+  printDebug() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Config__printDebug')
+        .asFunction();
+    func(thisCpp);
   }
 
   static // self()
@@ -157,6 +165,14 @@ class Config {
             'c_KDDockWidgets__Config__setStartDragDistance_int')
         .asFunction();
     func(thisCpp, arg__1);
+  } // setTransparencyOnlyOverDropIndicator(bool only)
+
+  setTransparencyOnlyOverDropIndicator(bool only) {
+    final void_Func_voidstar_bool func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
+            'c_KDDockWidgets__Config__setTransparencyOnlyOverDropIndicator_bool')
+        .asFunction();
+    func(thisCpp, only ? 1 : 0);
   } // setViewFactory(KDDockWidgets::ViewFactory * arg__1)
 
   setViewFactory(ViewFactory? arg__1) {
@@ -173,6 +189,14 @@ class Config {
             'c_KDDockWidgets__Config__startDragDistance')
         .asFunction();
     return func(thisCpp);
+  } // transparencyOnlyOverDropIndicator() const
+
+  bool transparencyOnlyOverDropIndicator() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Config__transparencyOnlyOverDropIndicator')
+        .asFunction();
+    return func(thisCpp) != 0;
   } // viewFactory() const
 
   ViewFactory viewFactory() {

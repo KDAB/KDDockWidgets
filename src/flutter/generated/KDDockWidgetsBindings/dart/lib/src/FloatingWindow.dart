@@ -230,7 +230,7 @@ class FloatingWindow extends Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1560))
+            cFunctionSymbolName(1562))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -245,12 +245,20 @@ class FloatingWindow extends Controller {
     }
     final result = dartInstance.isMDI();
     return result ? 1 : 0;
+  } // isUtilityWindow() const
+
+  bool isUtilityWindow() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__FloatingWindow__isUtilityWindow')
+        .asFunction();
+    return func(thisCpp) != 0;
   } // isWindow() const
 
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1562))
+            cFunctionSymbolName(1565))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -309,6 +317,14 @@ class FloatingWindow extends Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DropArea.fromCppPointer(result, false);
+  } // numDockWidgetsChanged()
+
+  numDockWidgetsChanged() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Controllers__FloatingWindow__numDockWidgetsChanged')
+        .asFunction();
+    func(thisCpp);
   } // numFramesChanged()
 
   numFramesChanged() {
@@ -366,7 +382,7 @@ class FloatingWindow extends Controller {
   DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1580))
+            cFunctionSymbolName(1584))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DockWidget.fromCppPointer(result, false);
@@ -486,13 +502,13 @@ class FloatingWindow extends Controller {
         return "c_KDDockWidgets__Controllers__FloatingWindow__event_QEvent";
       case 307:
         return "c_KDDockWidgets__Controllers__FloatingWindow__eventFilter_QObject_QEvent";
-      case 1560:
-        return "c_KDDockWidgets__Controllers__FloatingWindow__isMDI";
       case 1562:
+        return "c_KDDockWidgets__Controllers__FloatingWindow__isMDI";
+      case 1565:
         return "c_KDDockWidgets__Controllers__FloatingWindow__isWindow";
       case 891:
         return "c_KDDockWidgets__Controllers__FloatingWindow__setParentView_impl_View";
-      case 1580:
+      case 1584:
         return "c_KDDockWidgets__Controllers__FloatingWindow__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -506,13 +522,13 @@ class FloatingWindow extends Controller {
         return "event";
       case 307:
         return "eventFilter";
-      case 1560:
-        return "isMDI";
       case 1562:
+        return "isMDI";
+      case 1565:
         return "isWindow";
       case 891:
         return "setParentView_impl";
-      case 1580:
+      case 1584:
         return "singleDockWidget";
     }
     throw Error();
@@ -538,20 +554,20 @@ class FloatingWindow extends Controller {
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             QObject.eventFilter_calledFromC, callbackExcept307);
     registerCallback(thisCpp, callback307, 307);
-    const callbackExcept1560 = 0;
-    final callback1560 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        FloatingWindow.isMDI_calledFromC, callbackExcept1560);
-    registerCallback(thisCpp, callback1560, 1560);
     const callbackExcept1562 = 0;
     final callback1562 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        FloatingWindow.isWindow_calledFromC, callbackExcept1562);
+        FloatingWindow.isMDI_calledFromC, callbackExcept1562);
     registerCallback(thisCpp, callback1562, 1562);
+    const callbackExcept1565 = 0;
+    final callback1565 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        FloatingWindow.isWindow_calledFromC, callbackExcept1565);
+    registerCallback(thisCpp, callback1565, 1565);
     final callback891 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback891, 891);
-    final callback1580 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1584 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         FloatingWindow.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1580, 1580);
+    registerCallback(thisCpp, callback1584, 1584);
   }
 }
