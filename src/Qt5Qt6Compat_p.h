@@ -12,6 +12,8 @@
 #ifndef KDDOCKWIDGETS_QT5QT6_COMPAT_P_H
 #define KDDOCKWIDGETS_QT5QT6_COMPAT_P_H
 
+#include "NonQtCompat_p.h"
+
 #include <QMouseEvent>
 #include <QDropEvent>
 
@@ -49,17 +51,17 @@ using QEnterEvent = QEvent;
 using qintptr = long;
 using qhashtype = uint;
 
-inline QPoint eventPos(QDropEvent *ev)
+inline QPoint eventPos(DropEvent *ev)
 {
     return ev->pos();
 }
 
-inline QPoint eventPos(QHoverEvent *ev)
+inline QPoint eventPos(HoverEvent *ev)
 {
     return ev->pos();
 }
 
-inline QPoint eventGlobalPos(QMouseEvent *ev)
+inline QPoint eventGlobalPos(MouseEvent *ev)
 {
     return ev->globalPos();
 }

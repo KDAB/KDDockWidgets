@@ -17,6 +17,9 @@
 #include <QCloseEvent>
 #include <QMouseEvent>
 #include <QHoverEvent>
+#include <QDropEvent>
+#else
+#include <QPoint>
 #endif
 
 namespace KDDockWidgets {
@@ -27,13 +30,33 @@ using Event = QEvent;
 using CloseEvent = QCloseEvent;
 using MouseEvent = QMouseEvent;
 using HoverEvent = QHoverEvent;
+using DropEvent = QDropEvent;
 
 #else
 
 class Event
 {
 public:
-    bool isAccepted() const
+    enum Type {
+        MouseButtonPress,
+        MouseButtonDblClick,
+        MouseButtonRelease,
+        MouseMove,
+        NonClientAreaMouseButtonPress,
+        NonClientAreaMouseButtonRelease,
+        NonClientAreaMouseMove,
+        NonClientAreaMouseButtonDblClick,
+        HoverEnter,
+        HoverLeave,
+        HoverMove,
+        DragEnter,
+        DragLeave,
+        DragMove,
+        Drop,
+    };
+
+    bool
+    isAccepted() const
     {
         return true;
     }
@@ -53,6 +76,11 @@ public:
         return m_spontaneous;
     }
 
+    Type type() const
+    {
+        return {};
+    }
+
     bool m_accepted = false;
     bool m_spontaneous = false;
 };
@@ -61,6 +89,48 @@ class CloseEvent : public Event
 {
 public:
 };
+
+class HoverEvent : public Event
+{
+public:
+    QPoint pos() const
+    {
+        return {};
+    }
+};
+
+class MouseEvent : public Event
+{
+public:
+    QPoint pos() const
+    {
+        return {};
+    }
+    QPoint globalPos() const
+    {
+        return {};
+    }
+
+    int button() const
+    {
+        return 0;
+    }
+
+    int buttons() const
+    {
+        return 0;
+    }
+};
+
+class DropEvent : public Event
+{
+public:
+    QPoint pos() const
+    {
+        return {};
+    }
+};
+
 
 #endif
 
