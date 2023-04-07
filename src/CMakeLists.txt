@@ -21,85 +21,46 @@ add_definitions(
 set(KDDW_BACKEND_SRCS
     KDDockWidgets.cpp
     Config.cpp
-    Config.h
-    Qt5Qt6Compat_p.h
     FocusScope.cpp
-    FocusScope.h
     ViewFactory.cpp
-    ViewFactory.h
     LayoutSaver.cpp
-    LayoutSaver.h
     DockRegistry.cpp
-    private/LayoutSaver_p.h
     private/Position.cpp
-    private/Position_p.h
     private/Logging.cpp
-    private/Logging_p.h
     private/Draggable.cpp
-    private/Draggable_p.h
     private/WindowBeingDragged.cpp
-    private/WindowBeingDragged_p.h
     private/DragController.cpp
-    private/DragController_p.h
     private/WidgetResizeHandler.cpp
-    private/WidgetResizeHandler_p.h
-    private/WindowZOrder_x11_p.h
     private/multisplitter/Item.cpp
-    private/multisplitter/Item_p.h
     private/multisplitter/ItemFreeContainer.cpp
-    private/multisplitter/ItemFreeContainer_p.h
     controllers/DockWidget.cpp
-    controllers/DockWidget.h
     controllers/DropArea.cpp
-    controllers/DropArea.h
     controllers/DropIndicatorOverlay.cpp
-    controllers/DropIndicatorOverlay.h
     controllers/FloatingWindow.cpp
-    controllers/FloatingWindow.h
     controllers/Group.cpp
     controllers/Layout.cpp
-    controllers/Layout.h
     controllers/MainWindow.cpp
-    controllers/MainWindow.h
     controllers/MDILayout.cpp
-    controllers/MDILayout.h
     controllers/Separator.cpp
-    controllers/Separator.h
     controllers/SideBar.cpp
-    controllers/SideBar.h
     controllers/Stack.cpp
-    controllers/Stack.h
     controllers/TitleBar.cpp
-    controllers/TitleBar.h
     controllers/TabBar.cpp
-    controllers/TabBar.h
     controllers/indicators/NullIndicators.cpp
-    controllers/indicators/NullIndicators.h
     controllers/indicators/ClassicIndicators.cpp
-    controllers/indicators/ClassicIndicators.h
     controllers/indicators/SegmentedIndicators.cpp
-    controllers/indicators/SegmentedIndicators.h
     Action.cpp
-    Action.h
     Window.cpp
-    Window.h
     Screen.cpp
     View.cpp
-    View.h
     ViewGuard.cpp
-    ViewGuard.h
     Controller.cpp
-    Controller.h
     Platform.cpp
-    Platform.h
     views/ClassicIndicatorWindowViewInterface.cpp
     views/MainWindowMDIViewInterface.cpp
     views/MainWindowViewInterface.cpp
-    views/MainWindowViewInterface.h
     views/GroupViewInterface.cpp
     views/DockWidgetViewInterface.cpp
-    views/DockWidgetViewInterface.h
-    views/GroupViewInterface.h
     views/StackViewInterface.cpp
     views/TabBarViewInterface.cpp
     views/TitleBarViewInterface.cpp
@@ -115,92 +76,54 @@ set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window_qt.cpp qtcommon/
 set(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/Window_qtwidgets.cpp
     qtwidgets/views/View_qtwidgets.cpp
-    qtwidgets/views/View_qtwidgets.h
     qtwidgets/Platform_qtwidgets.cpp
-    qtwidgets/Platform_qtwidgets.h
     qtwidgets/views/ViewWrapper_qtwidgets.cpp
-    qtwidgets/views/ViewWrapper_qtwidgets.h
     qtwidgets/views/FloatingWindow_qtwidgets.cpp
-    qtwidgets/views/FloatingWindow_qtwidgets.h
     qtwidgets/views/DockWidget_qtwidgets.cpp
-    qtwidgets/views/DockWidget_qtwidgets.h
     qtwidgets/views/DropArea_qtwidgets.cpp
-    qtwidgets/views/DropArea_qtwidgets.h
     qtwidgets/views/MDILayout_qtwidgets.cpp
-    qtwidgets/views/MDILayout_qtwidgets.h
     qtwidgets/views/Group_qtwidgets.cpp
     qtwidgets/views/MainWindow_qtwidgets.cpp
-    qtwidgets/views/MainWindow_qtwidgets.h
     qtwidgets/views/MainWindowMDI_qtwidgets.cpp
     qtwidgets/views/MDIArea_qtwidgets.cpp
     qtwidgets/views/RubberBand_qtwidgets.cpp
-    qtwidgets/views/RubberBand_qtwidgets.h
     qtwidgets/views/Separator_qtwidgets.cpp
-    qtwidgets/views/Separator_qtwidgets.h
     qtwidgets/views/TitleBar_qtwidgets.cpp
-    qtwidgets/views/TitleBar_qtwidgets.h
     qtwidgets/views/TabBar_qtwidgets.cpp
-    qtwidgets/views/TabBar_qtwidgets.h
     qtwidgets/views/Stack_qtwidgets.cpp
-    qtwidgets/views/Stack_qtwidgets.h
     qtwidgets/views/SideBar_qtwidgets.cpp
     qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.cpp
-    qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.cpp
-    qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h
     qtwidgets/ViewFactory_qtwidgets.cpp
-    qtwidgets/ViewFactory_qtwidgets.h
     qtwidgets/DebugWindow.cpp
-    qtwidgets/DebugWindow.h
     qtwidgets/ObjectViewer.cpp
-    qtwidgets/ObjectViewer.h
 )
 
 set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/Window_qtquick.cpp
-    qtquick/Window_qtquick.h
     qtquick/Platform_qtquick.cpp
-    qtquick/Platform_qtquick.h
     qtquick/Helpers.cpp
     qtquick/ViewFactory_qtquick.cpp
-    qtquick/ViewFactory_qtquick.h
     qtquick/LayoutSaverInstantiator.cpp
-    qtquick/LayoutSaverInstantiator.h
     qtquick/MainWindowInstantiator.cpp
     qtquick/MDIDockingAreaInstantiator.cpp
     qtquick/DockWidgetInstantiator.cpp
-    qtquick/DockWidgetInstantiator.h
     qtquick/QmlTypes.cpp
-    qtquick/QmlTypes.h
     qtquick/views/DropArea_qtquick.cpp
-    qtquick/views/DropArea_qtquick.h
     qtquick/views/DockWidget_qtquick.cpp
-    qtquick/views/DockWidget_qtquick.h
     qtquick/views/FloatingWindow_qtquick.cpp
-    qtquick/views/FloatingWindow_qtquick.h
     qtquick/views/Group_qtquick.cpp
     qtquick/views/MainWindow_qtquick.cpp
-    qtquick/views/MainWindow_qtquick.h
     qtquick/views/MainWindowMDI_qtquick.cpp
-    qtquick/views/MainWindowMDI_qtquick.h
     qtquick/views/MDILayout_qtquick.cpp
-    qtquick/views/MDILayout_qtquick.h
     qtquick/views/RubberBand_qtquick.cpp
-    qtquick/views/RubberBand_qtquick.h
     qtquick/views/Separator_qtquick.cpp
-    qtquick/views/Separator_qtquick.h
     qtquick/views/Stack_qtquick.cpp
-    qtquick/views/Stack_qtquick.h
     qtquick/views/TabBar_qtquick.cpp
-    qtquick/views/TabBar_qtquick.h
     qtquick/views/TitleBar_qtquick.cpp
-    qtquick/views/TitleBar_qtquick.h
     qtquick/views/View_qtquick.cpp
-    qtquick/views/View_qtquick.h
     qtquick/views/ViewWrapper_qtquick.cpp
-    qtquick/views/ViewWrapper_qtquick.h
     qtquick/views/ClassicIndicatorsWindow_qtquick.cpp
-    qtquick/views/ClassicIndicatorsWindow_qtquick.h
     qtquick/kddockwidgets_qtquick.qrc
 )
 
