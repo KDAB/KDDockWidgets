@@ -15,8 +15,7 @@
 
 class QMimeData;
 
-// #ifdef QT_GUI_LIB
-#ifndef FLUTTER_WITHOUT_QTGUITYPES // Remove once we don't link to QtGui in flutter
+#ifdef QT_GUI_LIB
 #include <QCloseEvent>
 #include <QMouseEvent>
 #include <QHoverEvent>
@@ -34,8 +33,7 @@ class QMimeData;
 
 namespace KDDockWidgets {
 
-// #ifdef QT_GUI_LIB
-#ifndef FLUTTER_WITHOUT_QTGUITYPES
+#ifdef QT_GUI_LIB
 
 using Polygon = QPolygon;
 using Icon = QIcon;

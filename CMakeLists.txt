@@ -219,11 +219,6 @@ if(KDDW_FRONTEND_FLUTTER AND KDDW_FRONTEND_QT)
     message(FATAL_ERROR "The flutter frontend is not compatible with the Qt frontends. Chose a single one.")
 endif()
 
-if(FLUTTER_WITHOUT_QTGUITYPES AND KDDW_FRONTEND_FLUTTER)
-    # TODOm1: Remove
-    add_definitions(-DFLUTTER_WITHOUT_QTGUITYPES)
-endif()
-
 # END frontend enabling
 include(KDQtInstallPaths) # to set QT_INSTALL_FOO variables
 
