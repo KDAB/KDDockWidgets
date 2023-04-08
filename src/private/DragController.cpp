@@ -27,7 +27,6 @@
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/DockWidget_p.h"
 
-#include <QDrag>
 #include <QObject>
 #include <QScopedValueRollback>
 
@@ -574,7 +573,7 @@ void StateDraggingWayland::onEntry()
         std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
 
     auto mimeData = new WaylandMimeData();
-    QDrag drag(this);
+    Drag drag(this);
     drag.setMimeData(mimeData);
     drag.setPixmap(q->m_windowBeingDragged->pixmap());
 

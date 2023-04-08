@@ -24,10 +24,12 @@ class QMimeData;
 #include <QIcon>
 #include <QPixmap>
 #include <QPolygon>
+#include <QDrag>
 #else
 #include <QPoint>
 #include <QRect>
 #include <QList>
+#include <QObject>
 #endif
 
 namespace KDDockWidgets {
@@ -39,6 +41,7 @@ using Polygon = QPolygon;
 using Icon = QIcon;
 using Pixmap = QPixmap;
 using Event = QEvent;
+using Drag = QDrag;
 using CloseEvent = QCloseEvent;
 using FocusEvent = QFocusEvent;
 using MouseEvent = QMouseEvent;
@@ -226,6 +229,26 @@ class Polygon : public QList<QPoint>
 {
 public:
     QRect boundingRect() const
+    {
+        return {};
+    }
+};
+
+// Only used by wayland, no rush in porting
+class Drag
+{
+public:
+    Drag(QObject *)
+    {
+    }
+    void setPixmap(Pixmap)
+    {
+    }
+    void setMimeData(QMimeData *)
+    {
+    }
+
+    Qt::DropAction exec()
     {
         return {};
     }
