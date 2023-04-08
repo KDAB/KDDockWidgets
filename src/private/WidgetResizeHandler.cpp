@@ -23,8 +23,6 @@
 #include "Platform.h"
 
 #include <QDebug>
-#include <QGuiApplication>
-#include <QWindow>
 #include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)

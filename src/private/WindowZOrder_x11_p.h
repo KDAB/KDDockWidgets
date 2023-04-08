@@ -12,7 +12,6 @@
 #pragma once
 
 #include "Window.h"
-#include <QWindow>
 
 #ifdef KDDockWidgets_XLIB
 

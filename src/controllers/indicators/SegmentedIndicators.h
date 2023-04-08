@@ -13,9 +13,9 @@
 #define KD_SEGMENTED_INDICATORS_P_H
 
 #include "controllers/DropIndicatorOverlay.h"
+#include "NonQtCompat_p.h"
 
 #include <QHash>
-#include <QPolygon>
 
 namespace KDDockWidgets {
 
@@ -31,7 +31,7 @@ public:
 
     DropLocation dropLocationForPos(QPoint pos) const;
     QPoint hoveredPt() const;
-    QHash<DropLocation, QPolygon> segments() const;
+    QHash<DropLocation, Polygon> segments() const;
 
     static int s_segmentGirth;
     static int s_segmentPenWidth;
@@ -46,10 +46,10 @@ protected:
     QPoint posForIndicator(DropLocation) const override;
 
 private:
-    QHash<DropLocation, QPolygon> segmentsForRect(QRect, bool inner, bool useOffset = false) const;
+    QHash<DropLocation, Polygon> segmentsForRect(QRect, bool inner, bool useOffset = false) const;
     void updateSegments();
     QPoint m_hoveredPt = {};
-    QHash<DropLocation, QPolygon> m_segments;
+    QHash<DropLocation, Polygon> m_segments;
 };
 
 }

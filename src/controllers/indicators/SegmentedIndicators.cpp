@@ -13,9 +13,6 @@
 #include "controllers/DropArea.h"
 #include "Config.h"
 
-#include <QPainter>
-#include <QPainterPath>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
@@ -64,8 +61,8 @@ DropLocation SegmentedIndicators::dropLocationForPos(QPoint pos) const
     return DropLocation_None;
 }
 
-QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner,
-                                                                   bool useOffset) const
+QHash<DropLocation, Polygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner,
+                                                                  bool useOffset) const
 {
     const int halfPenWidth = s_segmentPenWidth / 2;
 
@@ -92,7 +89,7 @@ QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool
                                            bottomLeft + QPoint(l, -l) };
 
     if (inner) {
-        QPolygon bounds =
+        Polygon bounds =
             QVector<QPoint> { topLeft + QPoint(l, l), topRight + QPoint(-l, l),
                               bottomRight + QPoint(-l, -l), bottomLeft + QPoint(l, -l) };
         const int maxWidth = bounds.boundingRect().width();
@@ -169,7 +166,7 @@ QPoint SegmentedIndicators::hoveredPt() const
     return m_hoveredPt;
 }
 
-QHash<DropLocation, QPolygon> SegmentedIndicators::segments() const
+QHash<DropLocation, Polygon> SegmentedIndicators::segments() const
 {
     return m_segments;
 }

@@ -229,7 +229,7 @@ Controllers::FloatingWindow *TitleBar::floatingWindow() const
     return m_floatingWindow;
 }
 
-void TitleBar::focusInEvent(QFocusEvent *ev)
+void TitleBar::focusInEvent(FocusEvent *ev)
 {
     if (!m_group || !(Config::self().flags() & Config::Flag_TitleBarIsFocusable))
         return;

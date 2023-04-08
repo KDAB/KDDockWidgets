@@ -32,7 +32,6 @@
 
 #include <QPointer>
 #include <QDebug>
-#include <QGuiApplication>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;

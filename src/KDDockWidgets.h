@@ -24,6 +24,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QSize>
 
 #ifdef Q_OS_WIN
 // Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested

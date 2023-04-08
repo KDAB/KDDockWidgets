@@ -94,7 +94,7 @@ public:
     /// It's only nullptr for the case of having a Floating Window with more than one nested Frame
     TabBar *tabBar() const;
 
-    void focusInEvent(QFocusEvent *);
+    void focusInEvent(FocusEvent *);
 
     /// @brief updates the close button enabled state
     void updateButtons();

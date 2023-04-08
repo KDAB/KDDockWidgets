@@ -19,7 +19,6 @@
 #include "Window.h"
 
 #include <QDebug>
-#include <QGuiApplication>
 #include <QRect>
 #include <QSettings>
 

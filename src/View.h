@@ -25,7 +25,6 @@ class Item;
 }
 
 QT_BEGIN_NAMESPACE
-class QFocusEvent;
 class QPainter;
 QT_END_NAMESPACE
 
@@ -155,7 +154,7 @@ public:
     virtual bool onResize(int h, int w);
     bool onResize(QSize);
 
-    virtual bool onFocusInEvent(QFocusEvent *)
+    virtual bool onFocusInEvent(FocusEvent *)
     {
         return false;
     }

@@ -24,6 +24,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/Controller.h"
+#include "kddockwidgets/Action.h"
 
 #include <QVector>
 

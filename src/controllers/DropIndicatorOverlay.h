@@ -16,6 +16,8 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "Controller.h"
 
+#include <QRect>
+
 namespace KDDockWidgets {
 
 namespace Controllers {

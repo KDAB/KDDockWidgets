@@ -22,8 +22,9 @@
 #include "kddockwidgets/controllers/Layout.h"
 #include "kddockwidgets/controllers/FloatingWindow.h"
 
-#include <QPixmap>
+#ifdef QT_GUI_LIB
 #include <QPainter>
+#endif
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
@@ -199,7 +200,7 @@ Draggable *WindowBeingDragged::draggable() const
     return m_draggable;
 }
 
-QPixmap WindowBeingDragged::pixmap() const
+Pixmap WindowBeingDragged::pixmap() const
 {
     return {};
 }
@@ -248,8 +249,9 @@ WindowBeingDraggedWayland::~WindowBeingDraggedWayland()
 {
 }
 
-QPixmap WindowBeingDraggedWayland::pixmap() const
+Pixmap WindowBeingDraggedWayland::pixmap() const
 {
+#ifdef QT_GUI_LIB
     QPixmap pixmap(size());
     QPainter p(&pixmap);
     p.setOpacity(0.7);
@@ -263,6 +265,10 @@ QPixmap WindowBeingDraggedWayland::pixmap() const
     }
 
     return pixmap;
+#else
+    // Wayland not support on our flutter frontend yet
+    return {};
+#endif
 }
 
 QStringList WindowBeingDraggedWayland::affinities() const

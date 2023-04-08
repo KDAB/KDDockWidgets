@@ -22,8 +22,12 @@ class QMimeData;
 #include <QHoverEvent>
 #include <QDropEvent>
 #include <QIcon>
+#include <QPixmap>
+#include <QPolygon>
 #else
 #include <QPoint>
+#include <QRect>
+#include <QList>
 #endif
 
 namespace KDDockWidgets {
@@ -31,9 +35,12 @@ namespace KDDockWidgets {
 // #ifdef QT_GUI_LIB
 #ifndef FLUTTER_WITHOUT_QTGUITYPES
 
+using Polygon = QPolygon;
 using Icon = QIcon;
+using Pixmap = QPixmap;
 using Event = QEvent;
 using CloseEvent = QCloseEvent;
+using FocusEvent = QFocusEvent;
 using MouseEvent = QMouseEvent;
 using HoverEvent = QHoverEvent;
 using DropEvent = QDropEvent;
@@ -190,12 +197,37 @@ public:
     }
 };
 
+class FocusEvent : public Event
+{
+public:
+    Qt::FocusReason reason() const
+    {
+        return {};
+    }
+};
+
 class Icon
 {
 public:
     bool isNull() const
     {
         return true;
+    }
+};
+
+// Only useful on wayland, to set a drag pixmap
+class Pixmap
+{
+public:
+};
+
+// Used by segmented indicators controller
+class Polygon : public QList<QPoint>
+{
+public:
+    QRect boundingRect() const
+    {
+        return {};
     }
 };
 

@@ -14,9 +14,6 @@
 
 #include "NonQtCompat_p.h"
 
-#include <QMouseEvent>
-#include <QDropEvent>
-
 namespace KDDockWidgets {
 namespace Qt5Qt6Compat {
 
@@ -47,7 +44,7 @@ inline QPoint eventPos(QHoverEvent *ev)
 
 #define QQUICKITEMgeometryChanged geometryChanged
 
-using QEnterEvent = QEvent;
+using QEnterEvent = KDDockWidgets::Event;
 using qintptr = long;
 using qhashtype = uint;
 

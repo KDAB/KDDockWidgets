@@ -18,10 +18,6 @@
 
 #include <QPointer>
 
-QT_BEGIN_NAMESPACE
-class QPixmap;
-QT_END_NAMESPACE
-
 namespace KDDockWidgets {
 
 namespace Controllers {
@@ -67,7 +63,7 @@ public:
     virtual QSize maxSize() const;
 
     /// @brief Returns a pixmap representing this Window. For purposes of QDrag. Wayland only.
-    virtual QPixmap pixmap() const;
+    virtual Pixmap pixmap() const;
 
     /// @brief Returns the list of dock widgets being dragged
     virtual QVector<Controllers::DockWidget *> dockWidgets() const;
@@ -95,7 +91,7 @@ public:
     QSize size() const override;
     QSize minSize() const override;
     QSize maxSize() const override;
-    QPixmap pixmap() const override;
+    Pixmap pixmap() const override;
     QStringList affinities() const override;
     QVector<Controllers::DockWidget *> dockWidgets() const override;
 
