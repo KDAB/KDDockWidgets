@@ -431,13 +431,8 @@ if(KDDW_FRONTEND_DUMMY)
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)
-    # TODOm3: Remove Qt
-    if (FLUTTER_WITHOUT_QTGUITYPES)
-        target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Core)
-    else()
-        target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Gui)
-    endif()
-
+    # TODOm3: Remove Qt::Core
+    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Core)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)
 endif()
 
