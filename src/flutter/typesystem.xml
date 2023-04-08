@@ -12,7 +12,7 @@
     <object-type name="QSize" />
     <object-type name="QRect" />
     <object-type name="QPoint" />
-    <object-type name="QEvent">
+    <object-type name="Event">
         <enum-type identified-by-value="Type" />
     </object-type>
 
