@@ -19,7 +19,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 SideBar::SideBar(SideBarLocation location, MainWindow *parent)
     : Controller(Type::SideBar, Config::self().viewFactory()->createSideBar(this, parent->view()))

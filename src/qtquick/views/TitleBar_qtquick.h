@@ -20,7 +20,7 @@
 namespace KDDockWidgets {
 
 
-namespace Controllers {
+namespace Core {
 class TitleBar;
 }
 
@@ -49,7 +49,7 @@ class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick, public Views::TitleBa
 
 
 public:
-    explicit TitleBar_qtquick(Controllers::TitleBar *controller, QQuickItem *parent = nullptr);
+    explicit TitleBar_qtquick(Core::TitleBar *controller, QQuickItem *parent = nullptr);
     ~TitleBar_qtquick() override;
 
 protected:

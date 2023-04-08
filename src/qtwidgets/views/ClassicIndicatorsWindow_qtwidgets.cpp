@@ -16,7 +16,7 @@
 #include "private/Utils_p.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets {
 
@@ -25,7 +25,7 @@ class Indicator : public QWidget
     Q_OBJECT
 public:
     typedef QList<Indicator *> List;
-    explicit Indicator(Controllers::ClassicIndicators *classicIndicators,
+    explicit Indicator(Core::ClassicIndicators *classicIndicators,
                        IndicatorWindow_qtwidgets *parent, DropLocation location);
     void paintEvent(QPaintEvent *) override;
 
@@ -35,7 +35,7 @@ public:
 
     QImage m_image;
     QImage m_imageActive;
-    Controllers::ClassicIndicators *const q;
+    Core::ClassicIndicators *const q;
     bool m_hovered = false;
     const DropLocation m_dropLocation;
 };
@@ -265,7 +265,7 @@ void IndicatorWindow_qtwidgets::updatePositions()
     m_outterTop->move(r.center().x() - halfIndicatorWidth, r.y() + OUTTER_INDICATOR_MARGIN);
     m_outterRight->move(r.x() + width() - indicatorWidth - OUTTER_INDICATOR_MARGIN,
                         r.center().y() - halfIndicatorWidth);
-    Controllers::Group *hoveredFrame = classicIndicators->hoveredFrame();
+    Core::Group *hoveredFrame = classicIndicators->hoveredFrame();
     if (hoveredFrame) {
         QRect hoveredRect = hoveredFrame->view()->geometry();
         m_center->move(r.topLeft() + hoveredRect.center()

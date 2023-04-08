@@ -46,14 +46,14 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 using namespace Layouting;
 
 /// Helper function so we don't write such a big line everywhere
-inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
-                                              DockWidgetOptions opts = {},
-                                              LayoutSaverOptions layoutSaverOptions = {})
+inline Core::DockWidget *newDockWidget(const QString &uniqueName,
+                                       DockWidgetOptions opts = {},
+                                       LayoutSaverOptions layoutSaverOptions = {})
 {
     return Config::self()
         .viewFactory()
@@ -62,10 +62,10 @@ inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
 }
 
 
-inline Controllers::DockWidget *createDockWidget(const QString &name, QWidget *w,
-                                                 DockWidgetOptions options = {},
-                                                 LayoutSaverOptions layoutSaverOptions = {},
-                                                 bool show = true, const QString &affinityName = {})
+inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
+                                          DockWidgetOptions options = {},
+                                          LayoutSaverOptions layoutSaverOptions = {},
+                                          bool show = true, const QString &affinityName = {})
 {
     w->setFocusPolicy(Qt::StrongFocus);
     auto dock = newDockWidget(name, options, layoutSaverOptions);
@@ -91,14 +91,14 @@ inline Controllers::DockWidget *createDockWidget(const QString &name, QWidget *w
 class EmbeddedWindow : public QWidget
 {
 public:
-    explicit EmbeddedWindow(Controllers::MainWindow *m)
+    explicit EmbeddedWindow(Core::MainWindow *m)
         : mainWindow(m)
     {
     }
 
     ~EmbeddedWindow() override;
 
-    Controllers::MainWindow *const mainWindow;
+    Core::MainWindow *const mainWindow;
 };
 EmbeddedWindow::~EmbeddedWindow() = default;
 
@@ -215,7 +215,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
-    QPointer<Controllers::Group> centralFrame = dropArea->centralFrame()->asGroupController();
+    QPointer<Core::Group> centralFrame = dropArea->centralFrame()->asGroupController();
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);
@@ -266,7 +266,7 @@ void TestQtWidgets::tst_dockableMainWindows()
     m2->mainWindow()->addDockWidget(dock22, Location_OnRight);
 
     auto fw = m2Container->floatingWindow();
-    Controllers::TitleBar *fwTitleBar = fw->titleBar();
+    Core::TitleBar *fwTitleBar = fw->titleBar();
 
     QVERIFY(fw->hasSingleFrame());
     QVERIFY(fw->hasSingleDockWidget());
@@ -337,8 +337,8 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     LayoutSaver saver;
     saver.serializeLayout();
 
-    Controllers::Group *groupMDI1 = mdiWidget1->d->group();
-    Controllers::Group *group1 = dock1->d->group();
+    Core::Group *groupMDI1 = mdiWidget1->d->group();
+    Core::Group *group1 = dock1->d->group();
     QVERIFY(!group1->isMDI());
     QVERIFY(groupMDI1->isMDI());
     QVERIFY(!group1->mdiLayout());
@@ -379,7 +379,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     m->setPersistentCentralView(Views::ViewWrapper_qtwidgets::create(mdiArea));
 
 
-    auto createSheet = [](int id) -> Controllers::DockWidget * {
+    auto createSheet = [](int id) -> Core::DockWidget * {
         auto dock =
             newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetOption_MDINestable);
         auto btn = new QPushButton(QStringLiteral("Sheet %1").arg(id));
@@ -400,11 +400,11 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
 
-    Controllers::Group *group1 = mdiWidget1->d->group();
-    Controllers::Group *mdiFrame1 = group1->mdiFrame();
+    Core::Group *group1 = mdiWidget1->d->group();
+    Core::Group *mdiFrame1 = group1->mdiFrame();
 
-    QPointer<Controllers::Group> group2 = mdiWidget2->d->group();
-    QPointer<Controllers::Group> mdiFrame2 = group2->mdiFrame();
+    QPointer<Core::Group> group2 = mdiWidget2->d->group();
+    QPointer<Core::Group> mdiFrame2 = group2->mdiFrame();
     QPointer<DropArea> dropArea2 = group2->mdiDropAreaWrapper();
 
     QPointer<DropArea> dropArea1 = group1->mdiDropAreaWrapper();
@@ -453,7 +453,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     QCOMPARE(dropArea1->visibleCount(), 1);
     QVERIFY(mdiTb1->isVisible());
     QCOMPARE(mdiWidget3->titleBar(), mdiTb1);
-    Controllers::Group *group3 = mdiWidget3->d->group();
+    Core::Group *group3 = mdiWidget3->d->group();
     QVERIFY(!group3->titleBar()->isVisible());
 
     mdiWidget3->close();
@@ -472,7 +472,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     // Test floating:
     group2 = mdiWidget2->d->group();
-    QPointer<Controllers::DockWidget> dwWrapper2 = group2->mdiDockWidgetWrapper();
+    QPointer<Core::DockWidget> dwWrapper2 = group2->mdiDockWidgetWrapper();
     dropArea2 = group2->mdiDropAreaWrapper();
     QVERIFY(mdiWidget2->isVisible());
     QVERIFY(group2->isMDIWrapper());
@@ -527,7 +527,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     QCOMPARE(mdiArea->groups().size(), 1);
 
     QVERIFY(!mdiWidget2->isFloating());
-    Controllers::Group *lastMdiFrame = mdiArea->groups().constFirst();
+    Core::Group *lastMdiFrame = mdiArea->groups().constFirst();
     QVERIFY(lastMdiFrame->titleBar()->isVisible());
     QVERIFY(!lastMdiFrame->titleBar()->isFloating());
     lastMdiFrame->titleBar()->onFloatClicked();
@@ -549,7 +549,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
     auto mdiArea = new Views::MDIArea_qtwidgets();
     m->setPersistentCentralView(Views::ViewWrapper_qtwidgets::create(mdiArea));
 
-    auto createSheet = [](int id) -> Controllers::DockWidget * {
+    auto createSheet = [](int id) -> Core::DockWidget * {
         auto dock =
             newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetOption_MDINestable);
         dock->setGuestView(Views::ViewWrapper_qtwidgets::create(
@@ -565,7 +565,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
 
-    Controllers::Group *group1 = mdiArea->groups().at(0);
+    Core::Group *group1 = mdiArea->groups().at(0);
 
     const QSize sz1 = group1->view()->size();
     const QSize increment(200, 200);
@@ -648,7 +648,7 @@ void TestQtWidgets::tst_closeRemovesFromSideBar()
     QVERIFY(!dw1->isVisible());
     QVERIFY(dw1->isInSideBar());
 
-    Controllers::SideBar *sb = m1->sideBarForDockWidget(dw1);
+    Core::SideBar *sb = m1->sideBarForDockWidget(dw1);
     QVERIFY(sb);
 
     // Overlay it:
@@ -765,7 +765,7 @@ void TestQtWidgets::tst_deleteOnCloseWhenOnSideBar()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    QPointer<Controllers::DockWidget> dock1 = createDockWidget(
+    QPointer<Core::DockWidget> dock1 = createDockWidget(
         "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
         DockWidgetOption_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
@@ -903,7 +903,7 @@ void TestQtWidgets::tst_overlayedGeometryIsSaved()
     m1->moveToSideBar(dw1, SideBarLocation::North);
     m1->overlayOnSideBar(dw1);
 
-    Controllers::Group *group = dw1->dptr()->group();
+    Core::Group *group = dw1->dptr()->group();
     QVERIFY(group->isOverlayed());
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::North);
     QVERIFY(group->height() > 0);
@@ -1200,7 +1200,7 @@ void TestQtWidgets::tst_maxSizePropagates()
     QCOMPARE(dock1->view()->maxSizeHint(), w->maxSizeHint());
 
     // Now let's see if our Frame also has proper size-constraints
-    Controllers::Group *group = dock1->dptr()->group();
+    Core::Group *group = dock1->dptr()->group();
     QCOMPARE(group->view()->maxSizeHint().expandedTo(w->maxSizeHint()),
              group->view()->maxSizeHint());
 }
@@ -1273,7 +1273,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
     m1->addDockWidget(dock2, Location_OnBottom);
 
     auto root = m1->multiSplitter()->rootItem();
-    Controllers::Separator *separator = root->separators().constFirst();
+    Core::Separator *separator = root->separators().constFirst();
     const int min1 = root->minPosForSeparator_global(separator);
     const int max2 = root->maxPosForSeparator_global(separator);
 
@@ -1324,7 +1324,7 @@ void TestQtWidgets::tst_maxSizePropagates2()
     m1->addDockWidget(dock4, Location_OnBottom, dock3);
     m1->addDockWidget(dock1, Location_OnLeft, dock4);
 
-    Controllers::Group *group1 = dock1->dptr()->group();
+    Core::Group *group1 = dock1->dptr()->group();
 
     Layouting::ItemBoxContainer *root = m1->multiSplitter()->rootItem();
     Item *item1 = root->itemForView(group1->view());
@@ -1379,7 +1379,7 @@ void TestQtWidgets::tst_fixedSizePolicy()
     EnsureTopLevelsDeleted e;
     auto button = new QPushButton("one");
     auto dock1 = createDockWidget("dock1", button);
-    Controllers::Group *group = dock1->dptr()->group();
+    Core::Group *group = dock1->dptr()->group();
 
     // Just a precondition from the test. If QPushButton ever changes, replace with a QWidget and
     // set fixed size policy
@@ -1430,7 +1430,7 @@ void TestQtWidgets::tst_complex()
     m->view()->resize(QSize(3266, 2239));
     m->show();
 
-    Controllers::DockWidget::List docks;
+    Core::DockWidget::List docks;
 
     QVector<KDDockWidgets::Location> locations = {
         Location_OnLeft, Location_OnLeft, Location_OnLeft, Location_OnRight,
@@ -1503,7 +1503,7 @@ void TestQtWidgets::tst_deleteOnClose()
     });
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    QPointer<Controllers::DockWidget> dock1 =
+    QPointer<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
                          DockWidgetOption_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
@@ -1526,7 +1526,7 @@ void TestQtWidgets::tstCloseNestedMdi()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
-    QPointer<Controllers::MainWindow> p = m.get();
+    QPointer<Core::MainWindow> p = m.get();
 
     auto mdi = new KDDockWidgets::Views::MDIArea_qtwidgets();
     m->setPersistentCentralView(mdi->asWrapper());
@@ -1544,7 +1544,7 @@ void TestQtWidgets::tstCloseNestedMdi()
 void TestQtWidgets::tstCloseNestedMDIPropagates()
 {
     auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
-    QPointer<Controllers::MainWindow> p = m.get();
+    QPointer<Core::MainWindow> p = m.get();
 
     auto mdi = new KDDockWidgets::Views::MDIArea_qtwidgets();
     m->setPersistentCentralView(mdi->asWrapper());
@@ -1583,7 +1583,7 @@ void TestQtWidgets::tst_setAsCurrentTab()
     dw->addDockWidgetAsTab(dw2);
     dw->addDockWidgetAsTab(dw3);
 
-    Controllers::Group *group = dw->d->group();
+    Core::Group *group = dw->d->group();
     auto tabBar = group->tabBar();
     QTabBar *tabBarWidget = qobject_cast<QTabBar *>(Views::View_qt::asQWidget(tabBar->view()));
 
@@ -1638,7 +1638,7 @@ void TestQtWidgets::tst_restoreWithIncompleteFactory()
 {
     EnsureTopLevelsDeleted e;
     SetExpectedWarning ignoreWarning("Couldn't find dock widget");
-    KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) -> KDDockWidgets::Controllers::DockWidget * {
+    KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) -> KDDockWidgets::Core::DockWidget * {
         if (name.contains(QStringLiteral("centralDockWidget")))
             return nullptr;
 

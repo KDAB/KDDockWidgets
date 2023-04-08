@@ -26,7 +26,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-TabBar_dummy::TabBar_dummy(Controllers::TabBar *controller, View *parent)
+TabBar_dummy::TabBar_dummy(Core::TabBar *controller, View *parent)
     : View_dummy(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
 {

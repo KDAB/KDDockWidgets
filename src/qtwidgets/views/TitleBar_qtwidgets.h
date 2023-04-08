@@ -28,7 +28,7 @@ class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>,
 {
     Q_OBJECT
 public:
-    explicit TitleBar_qtwidgets(Controllers::TitleBar *controller, View *parent = nullptr);
+    explicit TitleBar_qtwidgets(Core::TitleBar *controller, View *parent = nullptr);
 
 #ifdef DOCKS_DEVELOPER_MODE
     // The following are needed for the unit-tests
@@ -44,7 +44,7 @@ protected:
     QSize sizeHint() const override;
     void focusInEvent(QFocusEvent *) override;
 
-    friend class KDDockWidgets::Controllers::TitleBar;
+    friend class KDDockWidgets::Core::TitleBar;
     int buttonAreaWidth() const;
     QRect iconRect() const;
     void updateMargins();

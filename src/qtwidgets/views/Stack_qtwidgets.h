@@ -31,7 +31,7 @@ class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public S
 {
     Q_OBJECT
 public:
-    explicit Stack_qtwidgets(Controllers::Stack *controller, QWidget *parent = nullptr);
+    explicit Stack_qtwidgets(Core::Stack *controller, QWidget *parent = nullptr);
     ~Stack_qtwidgets();
 
     /// @brief Returns the QTabBar associated with this QTabWidget
@@ -42,7 +42,7 @@ public:
     void setDocumentMode(bool) override;
 
     /// @brief Returns the controller
-    Controllers::Stack *stack() const;
+    Core::Stack *stack() const;
 
 public: // TODOm3: make protected
     void mouseDoubleClickEvent(QMouseEvent *) override;

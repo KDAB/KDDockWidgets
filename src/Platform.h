@@ -21,7 +21,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class ClassicIndicators;
 class SegmentedIndicators;
 }
@@ -160,11 +160,11 @@ public:
 
     /// @brief Called when a floating window is created.
     /// Override only if your platform isinterested in knowing this.
-    virtual void onFloatingWindowCreated(Controllers::FloatingWindow *);
+    virtual void onFloatingWindowCreated(Core::FloatingWindow *);
 
     /// @brief Called when a floating window is created.
     /// Override only if your platform isinterested in knowing this.
-    virtual void onFloatingWindowDestroyed(Controllers::FloatingWindow *);
+    virtual void onFloatingWindowDestroyed(Core::FloatingWindow *);
 
     /// Returns the mouse cursor position in screen coordinates
     virtual QPoint cursorPos() const = 0;
@@ -247,7 +247,7 @@ public:
 
     /// @brief Creates a main window. This is not API that the user will use, but used
     /// internally by some tools that need a main window
-    virtual Controllers::MainWindow *
+    virtual Core::MainWindow *
     createMainWindow(const QString &uniqueName, CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
                      View *parent = nullptr, Qt::WindowFlags = {}) const = 0;

@@ -39,7 +39,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Group_flutter::Group_flutter(Controllers::Group *controller, View *parent)
+Group_flutter::Group_flutter(Core::Group *controller, View *parent)
     : View_flutter(controller, Type::Frame, parent)
     , GroupViewInterface(controller)
 {

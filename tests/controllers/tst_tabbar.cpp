@@ -20,17 +20,17 @@ using namespace KDDockWidgets;
 
 TEST_CASE("TabBar ctor")
 {
-    Controllers::Group group(nullptr, {});
-    Controllers::Stack stack(&group, {});
-    Controllers::TabBar tabBar(&stack);
+    Core::Group group(nullptr, {});
+    Core::Stack stack(&group, {});
+    Core::TabBar tabBar(&stack);
     CHECK(tabBar.view()->is(Type::TabBar));
     CHECK(tabBar.view()->asWrapper()->is(Type::TabBar));
 }
 
 TEST_CASE("TabBar indexes")
 {
-    Controllers::Group group(nullptr, {});
-    Controllers::TabBar *tabBar = group.tabBar();
+    Core::Group group(nullptr, {});
+    Core::TabBar *tabBar = group.tabBar();
 
     // Starts empty:
     CHECK_EQ(tabBar->numDockWidgets(), 0);
@@ -117,8 +117,8 @@ TEST_CASE("TabBar indexes")
 TEST_CASE("TabBar dockwidget destroyed")
 {
     /// Tests if indexes are correct if dock widget destroyed itself
-    Controllers::Group group(nullptr, {});
-    Controllers::TabBar *tabBar = group.tabBar();
+    Core::Group group(nullptr, {});
+    Core::TabBar *tabBar = group.tabBar();
 
     // Add 3: [dw0, dw1, dw2]
     auto dw0 = Config::self().viewFactory()->createDockWidget("dock0")->asDockWidgetController();
@@ -155,8 +155,8 @@ TEST_CASE("TabBar dockwidget closed")
 {
     /// Tests if indexes are correct if dock widget are closed (but not destroyed)
     /// Tests if indexes are correct if dock widget destroyed itself
-    Controllers::Group group(nullptr, {});
-    Controllers::TabBar *tabBar = group.tabBar();
+    Core::Group group(nullptr, {});
+    Core::TabBar *tabBar = group.tabBar();
 
     // Add 3: [dw0, dw1, dw2]
     auto dw0 = Config::self().viewFactory()->createDockWidget("dock0")->asDockWidgetController();

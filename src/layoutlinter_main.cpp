@@ -21,7 +21,7 @@
 #include <QGuiApplication>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 static bool lint(const QString &filename)
 {

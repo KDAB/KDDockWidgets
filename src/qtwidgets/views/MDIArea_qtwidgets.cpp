@@ -25,7 +25,7 @@
 #include <QVBoxLayout>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Views;
 
 class MDIArea_qtwidgets::Private
@@ -63,7 +63,7 @@ MDIArea_qtwidgets::~MDIArea_qtwidgets()
     delete d;
 }
 
-void MDIArea_qtwidgets::addDockWidget(Controllers::DockWidget *dw, QPoint localPt,
+void MDIArea_qtwidgets::addDockWidget(Core::DockWidget *dw, QPoint localPt,
                                       InitialOption addingOption)
 {
     if (dw->options() & DockWidgetOption_MDINestable) {
@@ -84,12 +84,12 @@ void MDIArea_qtwidgets::addDockWidget(Controllers::DockWidget *dw, QPoint localP
     d->layout->addDockWidget(dw, localPt, addingOption);
 }
 
-void MDIArea_qtwidgets::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
+void MDIArea_qtwidgets::moveDockWidget(Core::DockWidget *dw, QPoint pos)
 {
     d->layout->moveDockWidget(dw, pos);
 }
 
-void MDIArea_qtwidgets::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
+void MDIArea_qtwidgets::resizeDockWidget(Core::DockWidget *dw, QSize size)
 {
     d->layout->resizeDockWidget(dw, size);
 }
@@ -113,7 +113,7 @@ void MDIArea_qtwidgets::resizeDockWidget(Views::DockWidgetViewInterface *dwView,
     resizeDockWidget(dw, size);
 }
 
-QList<Controllers::Group *> MDIArea_qtwidgets::groups() const
+QList<Core::Group *> MDIArea_qtwidgets::groups() const
 {
     return d->layout->groups();
 }

@@ -16,7 +16,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 
 /**
  * @brief A dummy DropIndicatorOverlay implementation which doesn't do anything.
@@ -27,7 +27,7 @@ class DOCKS_EXPORT NullIndicators : public DropIndicatorOverlay
 {
     Q_OBJECT
 public:
-    explicit NullIndicators(Controllers::DropArea *);
+    explicit NullIndicators(Core::DropArea *);
     ~NullIndicators() override;
     DropLocation hover_impl(QPoint) override
     {

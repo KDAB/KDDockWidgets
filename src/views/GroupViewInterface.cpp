@@ -17,7 +17,7 @@
 namespace KDDockWidgets {
 
 namespace Views {
-GroupViewInterface::GroupViewInterface(Controllers::Group *controller)
+GroupViewInterface::GroupViewInterface(Core::Group *controller)
     : m_group(controller)
 {
 }
@@ -29,7 +29,7 @@ bool GroupViewInterface::isMDI() const
     return m_group->isMDI();
 }
 
-Controllers::Group *GroupViewInterface::group() const
+Core::Group *GroupViewInterface::group() const
 {
     return m_group;
 }
@@ -39,12 +39,12 @@ QRect GroupViewInterface::dragRect() const
     return {};
 }
 
-void GroupViewInterface::removeDockWidget(Controllers::DockWidget *dw)
+void GroupViewInterface::removeDockWidget(Core::DockWidget *dw)
 {
     m_group->tabBar()->removeDockWidget(dw);
 }
 
-void GroupViewInterface::insertDockWidget(Controllers::DockWidget *dw, int index)
+void GroupViewInterface::insertDockWidget(Core::DockWidget *dw, int index)
 {
     m_group->stack()->insertDockWidget(dw, index);
 }

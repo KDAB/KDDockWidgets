@@ -39,19 +39,6 @@ const QList<QObject *> &QObject_wrapper::children() const
 {
     return ::QObject::children();
 }
-void QObject_wrapper::customEvent(QEvent *event)
-{
-    if (m_customEventCallback) {
-        const void *thisPtr = this;
-        m_customEventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        ::QObject::customEvent(event);
-    }
-}
-void QObject_wrapper::customEvent_nocallback(QEvent *event)
-{
-    ::QObject::customEvent(event);
-}
 void QObject_wrapper::deleteLater()
 {
     ::QObject::deleteLater();
@@ -83,32 +70,6 @@ void QObject_wrapper::dumpObjectTree()
 QList<QByteArray> QObject_wrapper::dynamicPropertyNames() const
 {
     return ::QObject::dynamicPropertyNames();
-}
-bool QObject_wrapper::event(QEvent *event)
-{
-    if (m_eventCallback) {
-        const void *thisPtr = this;
-        return m_eventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        return ::QObject::event(event);
-    }
-}
-bool QObject_wrapper::event_nocallback(QEvent *event)
-{
-    return ::QObject::event(event);
-}
-bool QObject_wrapper::eventFilter(QObject *watched, QEvent *event)
-{
-    if (m_eventFilterCallback) {
-        const void *thisPtr = this;
-        return m_eventFilterCallback(const_cast<void *>(thisPtr), watched, event);
-    } else {
-        return ::QObject::eventFilter(watched, event);
-    }
-}
-bool QObject_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
-{
-    return ::QObject::eventFilter(watched, event);
 }
 bool QObject_wrapper::inherits(const char *classname) const
 {
@@ -208,12 +169,6 @@ void *c_QObject__children(void *thisObj)
 {
     return const_cast<void *>(static_cast<const void *>(&fromPtr(thisObj)->children()));
 }
-// customEvent(QEvent * event)
-void c_QObject__customEvent_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    fromWrapperPtr(thisObj)->customEvent_nocallback(event);
-}
 // deleteLater()
 void c_QObject__deleteLater(void *thisObj)
 {
@@ -258,19 +213,6 @@ void c_QObject__dumpObjectTree(void *thisObj)
 void *c_QObject__dynamicPropertyNames(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QList<QByteArray>> { fromPtr(thisObj)->dynamicPropertyNames() };
-}
-// event(QEvent * event)
-bool c_QObject__event_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
-}
-// eventFilter(QObject * watched, QEvent * event)
-bool c_QObject__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
-{
-    auto watched = reinterpret_cast<QObject *>(watched_);
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // inherits(const char * classname) const
 bool c_QObject__inherits_char(void *thisObj, const char *classname)
@@ -364,15 +306,6 @@ void c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int met
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_customEvent>(callback);
-        break;
-    case 306:
-        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_event>(callback);
-        break;
-    case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper::Callback_eventFilter>(callback);
-        break;
     }
 }
 }

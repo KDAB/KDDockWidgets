@@ -28,7 +28,7 @@ namespace Layouting {
 class ItemBoxContainer;
 }
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 
 class DOCKS_EXPORT Separator : public Controller
 {

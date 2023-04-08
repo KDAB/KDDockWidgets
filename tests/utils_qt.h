@@ -39,8 +39,8 @@ inline int osWindowMinWidth()
 }
 
 /// Helper function so we don't write such a big line everywhere
-inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
-                                              DockWidgetOptions opts = {})
+inline Core::DockWidget *newDockWidget(const QString &uniqueName,
+                                       DockWidgetOptions opts = {})
 {
     return Config::self()
         .viewFactory()
@@ -48,9 +48,9 @@ inline Controllers::DockWidget *newDockWidget(const QString &uniqueName,
         ->asDockWidgetController();
 }
 
-inline Controllers::DockWidget *createAndNestDockWidget(KDDockWidgets::Controllers::DropArea *dropArea,
-                                                        Controllers::Group *relativeTo,
-                                                        KDDockWidgets::Location location)
+inline Core::DockWidget *createAndNestDockWidget(KDDockWidgets::Core::DropArea *dropArea,
+                                                 Core::Group *relativeTo,
+                                                 KDDockWidgets::Location location)
 {
     static int count = 0;
     count++;
@@ -62,10 +62,10 @@ inline Controllers::DockWidget *createAndNestDockWidget(KDDockWidgets::Controlle
     return dock;
 }
 
-inline std::unique_ptr<KDDockWidgets::Controllers::MainWindow>
-createSimpleNestedMainWindow(Controllers::DockWidget **centralDock,
-                             Controllers::DockWidget **leftDock,
-                             Controllers::DockWidget **rightDock)
+inline std::unique_ptr<KDDockWidgets::Core::MainWindow>
+createSimpleNestedMainWindow(Core::DockWidget **centralDock,
+                             Core::DockWidget **leftDock,
+                             Core::DockWidget **rightDock)
 {
     auto window = createMainWindow({ 900, 500 });
     *centralDock = createDockWidget("centralDock");

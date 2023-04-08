@@ -15,7 +15,7 @@
 
 namespace KDDockWidgets::Views {
 
-TabBarViewInterface::TabBarViewInterface(Controllers::TabBar *controller)
+TabBarViewInterface::TabBarViewInterface(Core::TabBar *controller)
     : m_tabBar(controller)
 {
 }

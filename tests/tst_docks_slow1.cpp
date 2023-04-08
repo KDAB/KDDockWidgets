@@ -37,7 +37,7 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
@@ -85,7 +85,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
-    Controllers::DropArea *layout = m->multiSplitter();
+    Core::DropArea *layout = m->multiSplitter();
 
     // Stack: 1, 2, 3 vertically
     m->addDockWidget(dock3, Location_OnTop);
@@ -160,7 +160,7 @@ void TestDocks::tst_startHidden2()
                                       {}, false);
 
         auto dropArea = m->dropArea();
-        Controllers::DropArea *layout = dropArea;
+        Core::DropArea *layout = dropArea;
 
         m->addDockWidget(dock1, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
         QVERIFY(layout->checkSanity());
@@ -193,7 +193,7 @@ void TestDocks::tst_startHidden2()
                                       {}, false);
 
         auto dropArea = m->dropArea();
-        Controllers::DropArea *layout = dropArea;
+        Core::DropArea *layout = dropArea;
         m->addDockWidget(dock1, Location_OnLeft, nullptr, InitialVisibilityOption::StartHidden);
 
         m->addDockWidget(dock2, Location_OnBottom, nullptr, InitialVisibilityOption::StartHidden);

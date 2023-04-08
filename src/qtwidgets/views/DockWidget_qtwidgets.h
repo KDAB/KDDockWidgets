@@ -32,7 +32,7 @@ namespace Views {
 /**
  * @brief Represents a dock widget.
  *
- * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
+ * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
 class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>,
                                           public Views::DockWidgetViewInterface
@@ -64,7 +64,7 @@ public:
      * @brief sets the widget which this dock widget hosts.
      * @param widget the widget to show inside this dock widget. Must not be null.
      *
-     * Ownership for @p widget is transferred to Controllers::DockWidget.
+     * Ownership for @p widget is transferred to Core::DockWidget.
      * Ownsership for any previously existing widget is transferred back to the user. Meaning if you
      * call setWidget(A) followed by setWidget(B) then A will have to be deleted by you, while B is
      * owned by the dock widget.

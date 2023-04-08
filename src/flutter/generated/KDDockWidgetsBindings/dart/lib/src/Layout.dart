@@ -59,7 +59,7 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__clearLayout')
         .asFunction();
     func(thisCpp);
-  } // containsFrame(const KDDockWidgets::Controllers::Group * arg__1) const
+  } // containsFrame(const KDDockWidgets::Core::Group * arg__1) const
 
   bool containsFrame(Group? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
@@ -83,18 +83,6 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__count')
         .asFunction();
     return func(thisCpp);
-  }
-
-  static void customEvent_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as Layout;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Layout::customEvent(QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.customEvent(QEvent.fromCppPointer(event));
   } // dumpLayout() const
 
   dumpLayout() {
@@ -103,33 +91,6 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__dumpLayout')
         .asFunction();
     func(thisCpp);
-  }
-
-  static int event_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as Layout;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Layout::event(QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.event(QEvent.fromCppPointer(event));
-    return result ? 1 : 0;
-  }
-
-  static int eventFilter_calledFromC(ffi.Pointer<void> thisCpp,
-      ffi.Pointer<void>? watched, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as Layout;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Layout::eventFilter(QObject * watched, QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.eventFilter(
-        QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
-    return result ? 1 : 0;
   } // floatingWindow() const
 
   FloatingWindow floatingWindow() {
@@ -169,7 +130,7 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool')
         .asFunction();
     return func(thisCpp, honourNesting ? 1 : 0) != 0;
-  } // itemForFrame(const KDDockWidgets::Controllers::Group * group) const
+  } // itemForFrame(const KDDockWidgets::Core::Group * group) const
 
   Item itemForFrame(Group? group) {
     final voidstar_Func_voidstar_voidstar func = _dylib
@@ -255,7 +216,7 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__removeItem_Item')
         .asFunction();
     func(thisCpp, item == null ? ffi.nullptr : item.thisCpp);
-  } // restorePlaceholder(KDDockWidgets::Controllers::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
+  } // restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
 
   restorePlaceholder(DockWidget? dw, Item? arg__2, int tabIndex) {
     final void_Func_voidstar_voidstar_voidstar_int func = _dylib
@@ -294,7 +255,7 @@ class Layout extends Controller {
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));
-  } // unrefOldPlaceholders(const QList<KDDockWidgets::Controllers::Group* > & groupsBeingAdded) const
+  } // unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded) const
 
   unrefOldPlaceholders(QList? groupsBeingAdded) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -339,13 +300,7 @@ class Layout extends Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 295:
-        return "c_KDDockWidgets__Controllers__Layout__customEvent_QEvent";
-      case 306:
-        return "c_KDDockWidgets__Controllers__Layout__event_QEvent";
-      case 307:
-        return "c_KDDockWidgets__Controllers__Layout__eventFilter_QObject_QEvent";
-      case 891:
+      case 881:
         return "c_KDDockWidgets__Controllers__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -353,13 +308,7 @@ class Layout extends Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 295:
-        return "customEvent";
-      case 306:
-        return "event";
-      case 307:
-        return "eventFilter";
-      case 891:
+      case 881:
         return "setParentView_impl";
     }
     throw Error();
@@ -371,23 +320,9 @@ class Layout extends Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback')
         .asFunction();
-    final callback295 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            QObject.customEvent_calledFromC);
-    registerCallback(thisCpp, callback295, 295);
-    const callbackExcept306 = 0;
-    final callback306 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            QObject.event_calledFromC, callbackExcept306);
-    registerCallback(thisCpp, callback306, 306);
-    const callbackExcept307 = 0;
-    final callback307 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
-            QObject.eventFilter_calledFromC, callbackExcept307);
-    registerCallback(thisCpp, callback307, 307);
-    final callback891 =
+    final callback881 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback891, 891);
+    registerCallback(thisCpp, callback881, 881);
   }
 }

@@ -41,18 +41,18 @@ using namespace KDDockWidgets::Views;
 class FloatingWindow_qtwidgets::Private
 {
 public:
-    Private(FloatingWindow_qtwidgets *q, Controllers::FloatingWindow *controller)
+    Private(FloatingWindow_qtwidgets *q, Core::FloatingWindow *controller)
         : m_vlayout(new QVBoxLayout(q))
         , m_controller(controller)
     {
     }
 
     QVBoxLayout *const m_vlayout;
-    Controllers::FloatingWindow *const m_controller;
+    Core::FloatingWindow *const m_controller;
     bool m_connectedToScreenChanged = false;
 };
 
-FloatingWindow_qtwidgets::FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller,
+FloatingWindow_qtwidgets::FloatingWindow_qtwidgets(Core::FloatingWindow *controller,
                                                    QMainWindow *parent, Qt::WindowFlags windowFlags)
     : View_qtwidgets<QWidget>(controller, Type::FloatingWindow, parent, windowFlags)
     , d(new Private(this, controller))
@@ -140,7 +140,7 @@ void FloatingWindow_qtwidgets::updateMargins()
     d->m_vlayout->setContentsMargins(QMargins(4, 4, 4, 4) * logicalDpiFactor(this));
 }
 
-Controllers::FloatingWindow *FloatingWindow_qtwidgets::floatingWindow() const
+Core::FloatingWindow *FloatingWindow_qtwidgets::floatingWindow() const
 {
     return d->m_controller;
 }

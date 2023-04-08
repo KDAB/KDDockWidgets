@@ -31,7 +31,7 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Views;
 
 

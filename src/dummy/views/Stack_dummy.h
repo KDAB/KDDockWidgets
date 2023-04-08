@@ -21,7 +21,7 @@ namespace Views {
 class DOCKS_EXPORT Stack_dummy : public View_dummy, public StackViewInterface
 {
 public:
-    explicit Stack_dummy(Controllers::Stack *controller, QWidget *parent = nullptr);
+    explicit Stack_dummy(Core::Stack *controller, QWidget *parent = nullptr);
     void init() override;
 
 private:

@@ -70,8 +70,8 @@ void MainWindowInstantiator::addDockWidget(QQuickItem *dockWidget, Location loca
     if (!dockWidget || !m_mainWindow)
         return;
 
-    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
-    Controllers::DockWidget *relativeToDw = Platform_qtquick::dockWidgetForItem(relativeTo);
+    Core::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    Core::DockWidget *relativeToDw = Platform_qtquick::dockWidgetForItem(relativeTo);
 
     m_mainWindow->addDockWidget(dw, location, relativeToDw, { option, initialSize });
 }
@@ -87,7 +87,7 @@ void MainWindowInstantiator::layoutParentContainerEqually(QQuickItem *dockWidget
     if (!m_mainWindow || !dockWidget)
         return;
 
-    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    Core::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
     m_mainWindow->layoutParentContainerEqually(dw);
 }
 
@@ -96,7 +96,7 @@ void MainWindowInstantiator::moveToSideBar(QQuickItem *dockWidget)
     if (!m_mainWindow || !dockWidget)
         return;
 
-    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    Core::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
     m_mainWindow->moveToSideBar(dw);
 }
 
@@ -105,7 +105,7 @@ void MainWindowInstantiator::moveToSideBar(QQuickItem *dockWidget, SideBarLocati
     if (!m_mainWindow || !dockWidget)
         return;
 
-    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    Core::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
     m_mainWindow->moveToSideBar(dw, loc);
 }
 
@@ -114,7 +114,7 @@ void MainWindowInstantiator::restoreFromSideBar(QQuickItem *dockWidget)
     if (!m_mainWindow || !dockWidget)
         return;
 
-    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    Core::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
     m_mainWindow->restoreFromSideBar(dw);
 }
 
@@ -123,7 +123,7 @@ void MainWindowInstantiator::overlayOnSideBar(QQuickItem *dockWidget)
     if (!m_mainWindow || !dockWidget)
         return;
 
-    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    Core::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
     m_mainWindow->overlayOnSideBar(dw);
 }
 
@@ -132,7 +132,7 @@ void MainWindowInstantiator::toggleOverlayOnSideBar(QQuickItem *dockWidget)
     if (!m_mainWindow || !dockWidget)
         return;
 
-    Controllers::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
+    Core::DockWidget *dw = Platform_qtquick::dockWidgetForItem(dockWidget);
     m_mainWindow->toggleOverlayOnSideBar(dw);
 }
 
@@ -143,7 +143,7 @@ void MainWindowInstantiator::clearSideBarOverlay(bool deleteFrame)
 }
 
 // TODOm3
-// SideBar *MainWindowInstantiator::sideBarForDockWidget(const Controllers::DockWidget *dw) const
+// SideBar *MainWindowInstantiator::sideBarForDockWidget(const Core::DockWidget *dw) const
 // {
 //     return m_mainWindow ? m_mainWindow->sideBarForDockWidget(dw) : nullptr;
 // }

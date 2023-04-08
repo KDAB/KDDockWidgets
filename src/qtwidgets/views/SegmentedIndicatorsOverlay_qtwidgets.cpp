@@ -16,14 +16,14 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 QColor SegmentedIndicatorsOverlay_qtwidgets::s_segmentPenColor = Qt::black;
 QColor SegmentedIndicatorsOverlay_qtwidgets::s_segmentBrushColor = QColor(0xbb, 0xd5, 0xee, /*alpha=*/200);
 QColor SegmentedIndicatorsOverlay_qtwidgets::s_hoveredSegmentBrushColor = QColor(0x3574c5);
 
 SegmentedIndicatorsOverlay_qtwidgets::SegmentedIndicatorsOverlay_qtwidgets(
-    Controllers::SegmentedIndicators *controller, QWidget *parent)
+    Core::SegmentedIndicators *controller, QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::None, parent)
     , m_controller(controller)
 {

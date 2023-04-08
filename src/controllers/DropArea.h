@@ -33,7 +33,7 @@ namespace KDDockWidgets {
 class Draggable;
 struct WindowBeingDragged;
 
-namespace Controllers {
+namespace Core {
 class Group;
 class DockWidget;
 class Separator;
@@ -62,7 +62,7 @@ public:
     DropLocation hover(WindowBeingDragged *draggedWindow, QPoint globalPos);
     ///@brief Called when a user drops a widget via DND
     bool drop(WindowBeingDragged *droppedWindow, QPoint globalPos);
-    QList<Controllers::Group *> groups() const;
+    QList<Core::Group *> groups() const;
 
     Layouting::Item *centralFrame() const;
     DropIndicatorOverlay *dropIndicatorOverlay() const
@@ -91,15 +91,15 @@ public:
     bool isMDIWrapper() const;
 
     /// Returns the helper dock widget for implementing DockWidget::Option_MDINestable.
-    Controllers::DockWidget *mdiDockWidgetWrapper() const;
+    Core::DockWidget *mdiDockWidgetWrapper() const;
 
-    static Controllers::Group *createCentralFrame(MainWindowOptions options);
+    static Core::Group *createCentralFrame(MainWindowOptions options);
 
     /**
      * @brief Adds a widget to this MultiSplitter.
      */
     void addWidget(View *widget, KDDockWidgets::Location location,
-                   Controllers::Group *relativeTo = nullptr,
+                   Core::Group *relativeTo = nullptr,
                    InitialOption option = DefaultSizeMode::Fair);
 
     /**
@@ -108,8 +108,8 @@ public:
      * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be
      * at left of widgetBar when the whole splitter is dropped into this one.
      */
-    void addMultiSplitter(Controllers::DropArea *splitter, KDDockWidgets::Location location,
-                          Controllers::Group *relativeTo = nullptr,
+    void addMultiSplitter(Core::DropArea *splitter, KDDockWidgets::Location location,
+                          Core::Group *relativeTo = nullptr,
                           InitialOption option = DefaultSizeMode::Fair);
 
     /**
@@ -124,7 +124,7 @@ public:
     bool deserialize(const LayoutSaver::MultiSplitter &) override;
 
     ///@brief returns the list of separators
-    QVector<Controllers::Separator *> separators() const;
+    QVector<Core::Separator *> separators() const;
 
     /// @brief See docs for MainWindowBase::layoutEqually()
     void layoutEqually();
@@ -144,9 +144,9 @@ public:
 
 private:
     Q_DISABLE_COPY(DropArea)
-    friend class Controllers::MainWindow;
-    friend class Controllers::Group;
-    friend class Controllers::FloatingWindow;
+    friend class Core::MainWindow;
+    friend class Core::Group;
+    friend class Core::FloatingWindow;
     friend class ::TestDocks;
     friend class ::TestQtWidgets;
     friend class DropIndicatorOverlay;
@@ -154,7 +154,7 @@ private:
 
     // For debug/hardening
     bool validateInputs(View *widget, KDDockWidgets::Location location,
-                        const Controllers::Group *relativeToFrame, InitialOption option) const;
+                        const Core::Group *relativeToFrame, InitialOption option) const;
 
 
     void setRootItem(Layouting::ItemBoxContainer *);
@@ -173,18 +173,18 @@ private:
     QSize availableSize() const;
 
     template<typename T>
-    bool validateAffinity(T *, Controllers::Group *acceptingGroup = nullptr) const;
-    bool drop(WindowBeingDragged *draggedWindow, Controllers::Group *acceptingGroup, DropLocation);
+    bool validateAffinity(T *, Core::Group *acceptingGroup = nullptr) const;
+    bool drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGroup, DropLocation);
     bool drop(View *droppedwindow, KDDockWidgets::Location location,
-              Controllers::Group *relativeTo);
-    Controllers::Group *groupContainingPos(QPoint globalPos) const;
+              Core::Group *relativeTo);
+    Core::Group *groupContainingPos(QPoint globalPos) const;
     void updateFloatingActions();
 
     bool m_inDestructor = false;
     const bool m_isMDIWrapper;
     QString m_affinityName;
     DropIndicatorOverlay *m_dropIndicatorOverlay = nullptr;
-    Controllers::Group *const m_centralFrame = nullptr;
+    Core::Group *const m_centralFrame = nullptr;
     Layouting::ItemBoxContainer *m_rootItem = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
 };

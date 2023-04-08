@@ -17,7 +17,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Group;
 class DockWidget;
 }
@@ -29,7 +29,7 @@ class Stack_dummy;
 class DOCKS_EXPORT Group_dummy : public View_dummy, public GroupViewInterface
 {
 public:
-    explicit Group_dummy(Controllers::Group *controller, View *parent = nullptr);
+    explicit Group_dummy(Core::Group *controller, View *parent = nullptr);
     ~Group_dummy() override;
 
     QSize minSize() const override;

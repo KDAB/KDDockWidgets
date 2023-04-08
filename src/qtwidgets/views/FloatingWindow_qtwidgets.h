@@ -18,7 +18,7 @@ class QVBoxLayout;
 class QMainWindow;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 class FloatingWindow;
 class Group;
 }
@@ -30,13 +30,13 @@ class DOCKS_EXPORT FloatingWindow_qtwidgets : public View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller,
+    explicit FloatingWindow_qtwidgets(Core::FloatingWindow *controller,
                                       QMainWindow *parent = nullptr,
                                       Qt::WindowFlags windowFlags = {});
 
     ~FloatingWindow_qtwidgets() override;
 
-    Controllers::FloatingWindow *floatingWindow() const;
+    Core::FloatingWindow *floatingWindow() const;
 
 protected:
     void paintEvent(QPaintEvent *) override;

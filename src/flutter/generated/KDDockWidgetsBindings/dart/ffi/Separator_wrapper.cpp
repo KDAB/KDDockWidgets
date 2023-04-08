@@ -28,91 +28,52 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 Separator_wrapper::Separator_wrapper(KDDockWidgets::View *host)
-    : ::KDDockWidgets::Controllers::Separator(host)
+    : ::KDDockWidgets::Core::Separator(host)
 {
-}
-void Separator_wrapper::customEvent(QEvent *event)
-{
-    if (m_customEventCallback) {
-        const void *thisPtr = this;
-        m_customEventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        ::KDDockWidgets::Controllers::Separator::customEvent(event);
-    }
-}
-void Separator_wrapper::customEvent_nocallback(QEvent *event)
-{
-    ::KDDockWidgets::Controllers::Separator::customEvent(event);
-}
-bool Separator_wrapper::event(QEvent *event)
-{
-    if (m_eventCallback) {
-        const void *thisPtr = this;
-        return m_eventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        return ::KDDockWidgets::Controllers::Separator::event(event);
-    }
-}
-bool Separator_wrapper::event_nocallback(QEvent *event)
-{
-    return ::KDDockWidgets::Controllers::Separator::event(event);
-}
-bool Separator_wrapper::eventFilter(QObject *watched, QEvent *event)
-{
-    if (m_eventFilterCallback) {
-        const void *thisPtr = this;
-        return m_eventFilterCallback(const_cast<void *>(thisPtr), watched, event);
-    } else {
-        return ::KDDockWidgets::Controllers::Separator::eventFilter(watched, event);
-    }
-}
-bool Separator_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
-{
-    return ::KDDockWidgets::Controllers::Separator::eventFilter(watched, event);
 }
 bool Separator_wrapper::isResizing()
 {
-    return ::KDDockWidgets::Controllers::Separator::isResizing();
+    return ::KDDockWidgets::Core::Separator::isResizing();
 }
 bool Separator_wrapper::isVertical() const
 {
-    return ::KDDockWidgets::Controllers::Separator::isVertical();
+    return ::KDDockWidgets::Core::Separator::isVertical();
 }
 void Separator_wrapper::move(int p)
 {
-    ::KDDockWidgets::Controllers::Separator::move(p);
+    ::KDDockWidgets::Core::Separator::move(p);
 }
 int Separator_wrapper::numSeparators()
 {
-    return ::KDDockWidgets::Controllers::Separator::numSeparators();
+    return ::KDDockWidgets::Core::Separator::numSeparators();
 }
 void Separator_wrapper::onMouseDoubleClick()
 {
-    ::KDDockWidgets::Controllers::Separator::onMouseDoubleClick();
+    ::KDDockWidgets::Core::Separator::onMouseDoubleClick();
 }
 void Separator_wrapper::onMouseMove(QPoint pos)
 {
-    ::KDDockWidgets::Controllers::Separator::onMouseMove(pos);
+    ::KDDockWidgets::Core::Separator::onMouseMove(pos);
 }
 void Separator_wrapper::onMousePress()
 {
-    ::KDDockWidgets::Controllers::Separator::onMousePress();
+    ::KDDockWidgets::Core::Separator::onMousePress();
 }
 void Separator_wrapper::onMouseReleased()
 {
-    ::KDDockWidgets::Controllers::Separator::onMouseReleased();
+    ::KDDockWidgets::Core::Separator::onMouseReleased();
 }
 int Separator_wrapper::position() const
 {
-    return ::KDDockWidgets::Controllers::Separator::position();
+    return ::KDDockWidgets::Core::Separator::position();
 }
 void Separator_wrapper::setGeometry(QRect r)
 {
-    ::KDDockWidgets::Controllers::Separator::setGeometry(r);
+    ::KDDockWidgets::Core::Separator::setGeometry(r);
 }
 void Separator_wrapper::setGeometry(int pos, int pos2, int length)
 {
-    ::KDDockWidgets::Controllers::Separator::setGeometry(pos, pos2, length);
+    ::KDDockWidgets::Core::Separator::setGeometry(pos, pos2, length);
 }
 void Separator_wrapper::setParentView_impl(KDDockWidgets::View *parent)
 {
@@ -120,21 +81,21 @@ void Separator_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         const void *thisPtr = this;
         m_setParentView_implCallback(const_cast<void *>(thisPtr), parent);
     } else {
-        ::KDDockWidgets::Controllers::Separator::setParentView_impl(parent);
+        ::KDDockWidgets::Core::Separator::setParentView_impl(parent);
     }
 }
 void Separator_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
 {
-    ::KDDockWidgets::Controllers::Separator::setParentView_impl(parent);
+    ::KDDockWidgets::Core::Separator::setParentView_impl(parent);
 }
 Separator_wrapper::~Separator_wrapper()
 {
 }
 
 }
-static KDDockWidgets::Controllers::Separator *fromPtr(void *ptr)
+static KDDockWidgets::Core::Separator *fromPtr(void *ptr)
 {
-    return reinterpret_cast<KDDockWidgets::Controllers::Separator *>(ptr);
+    return reinterpret_cast<KDDockWidgets::Core::Separator *>(ptr);
 }
 static KDDockWidgetsBindings_wrappersNS::Separator_wrapper *fromWrapperPtr(void *ptr)
 {
@@ -150,25 +111,6 @@ void *c_KDDockWidgets__Controllers__Separator__constructor_View(void *host_)
     auto host = reinterpret_cast<KDDockWidgets::View *>(host_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Separator_wrapper(host);
     return reinterpret_cast<void *>(ptr);
-}
-// customEvent(QEvent * event)
-void c_KDDockWidgets__Controllers__Separator__customEvent_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    fromWrapperPtr(thisObj)->customEvent_nocallback(event);
-}
-// event(QEvent * event)
-bool c_KDDockWidgets__Controllers__Separator__event_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
-}
-// eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controllers__Separator__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
-{
-    auto watched = reinterpret_cast<QObject *>(watched_);
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // isResizing()
 bool c_static_KDDockWidgets__Controllers__Separator__isResizing()
@@ -243,16 +185,7 @@ void c_KDDockWidgets__Controllers__Separator__registerVirtualMethodCallback(void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper::Callback_customEvent>(callback);
-        break;
-    case 306:
-        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper::Callback_event>(callback);
-        break;
-    case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper::Callback_eventFilter>(callback);
-        break;
-    case 891:
+    case 881:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

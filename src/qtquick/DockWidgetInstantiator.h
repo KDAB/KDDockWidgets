@@ -52,7 +52,7 @@ public:
     void setSource(const QString &);
 
     KDDockWidgets::Views::DockWidget_qtquick *dockWidget() const;
-    KDDockWidgets::Controllers::DockWidget *controller() const;
+    KDDockWidgets::Core::DockWidget *controller() const;
     QObject *actualTitleBar() const;
 
     QString title() const;
@@ -106,7 +106,7 @@ private:
     QString m_uniqueName;
     QString m_sourceFilename;
     QString m_title;
-    Controllers::DockWidget *m_dockWidget = nullptr;
+    Core::DockWidget *m_dockWidget = nullptr;
 };
 }
 

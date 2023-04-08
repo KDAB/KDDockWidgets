@@ -13,16 +13,16 @@
 #include <Stack.h>
 #include <View.h>
 #include <qpoint.h>
+#include <qstring.h>
 #include <qrect.h>
 #include <qsize.h>
-#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Stack_flutter_wrapper : public ::KDDockWidgets::Views::Stack_flutter
 {
 public:
     ~Stack_flutter_wrapper();
-    Stack_flutter_wrapper(KDDockWidgets::Controllers::Stack *controller, KDDockWidgets::View *parent = nullptr);
+    Stack_flutter_wrapper(KDDockWidgets::Core::Stack *controller, KDDockWidgets::View *parent = nullptr);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -254,7 +254,7 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::Stack_flutter::Stack_flutter(KDDockWidgets::Controllers::Stack * controller, KDDockWidgets::View * parent)
+// KDDockWidgets::Views::Stack_flutter::Stack_flutter(KDDockWidgets::Core::Stack * controller, KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__Stack_flutter__constructor_Stack_View(void *controller_, void *parent_);
 // KDDockWidgets::Views::Stack_flutter::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Stack_flutter__activateWindow(void *thisObj);

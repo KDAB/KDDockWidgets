@@ -25,7 +25,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 class TestQtQuick : public QObject
 {
@@ -171,7 +171,7 @@ void TestQtQuick::tst_isFloatingIsEmitted()
     // Add to main window again and make sure signal was emitted
 
     bool signalReceived = false;
-    connect(dw4, &Controllers::DockWidget::isFloatingChanged, dw4, [&signalReceived] {
+    connect(dw4, &Core::DockWidget::isFloatingChanged, dw4, [&signalReceived] {
         signalReceived = true;
     });
 

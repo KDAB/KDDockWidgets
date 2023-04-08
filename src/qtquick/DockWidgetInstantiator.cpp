@@ -50,7 +50,7 @@ Views::DockWidget_qtquick *DockWidgetInstantiator::dockWidget() const
     return nullptr;
 }
 
-KDDockWidgets::Controllers::DockWidget *DockWidgetInstantiator::controller() const
+KDDockWidgets::Core::DockWidget *DockWidgetInstantiator::controller() const
 {
     return m_dockWidget;
 }
@@ -103,7 +103,7 @@ void DockWidgetInstantiator::addDockWidgetAsTab(QQuickItem *other, InitialVisibi
     if (!other || !m_dockWidget)
         return;
 
-    Controllers::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
+    Core::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
     m_dockWidget->addDockWidgetAsTab(otherDockWidget, option);
 }
 
@@ -115,8 +115,8 @@ void DockWidgetInstantiator::addDockWidgetToContainingWindow(QQuickItem *other, 
     if (!other || !m_dockWidget)
         return;
 
-    Controllers::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
-    Controllers::DockWidget *relativeToDockWidget = Platform_qtquick::dockWidgetForItem(relativeTo);
+    Core::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
+    Core::DockWidget *relativeToDockWidget = Platform_qtquick::dockWidgetForItem(relativeTo);
 
     m_dockWidget->addDockWidgetToContainingWindow(otherDockWidget, location, relativeToDockWidget,
                                                   InitialOption(option, initialSize));
@@ -199,30 +199,30 @@ void DockWidgetInstantiator::componentComplete()
                        ->createDockWidget(m_uniqueName, qmlEngine(this))
                        ->asDockWidgetController();
 
-    connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::titleChanged, this,
             &DockWidgetInstantiator::titleChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::actualTitleBarChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::actualTitleBarChanged, this,
             &DockWidgetInstantiator::actualTitleBarChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::optionsChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::optionsChanged, this,
             &DockWidgetInstantiator::optionsChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::iconChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::iconChanged, this,
             &DockWidgetInstantiator::iconChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::closed, this,
+    connect(m_dockWidget, &Core::DockWidget::closed, this,
             &DockWidgetInstantiator::closed);
-    connect(m_dockWidget, &Controllers::DockWidget::guestViewChanged, this, [this] {
+    connect(m_dockWidget, &Core::DockWidget::guestViewChanged, this, [this] {
         Q_EMIT guestViewChanged(Views::asQQuickItem(m_dockWidget->guestView().get()));
     });
-    connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::isFocusedChanged, this,
             &DockWidgetInstantiator::isFocusedChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::isOverlayedChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::isOverlayedChanged, this,
             &DockWidgetInstantiator::isOverlayedChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::isFloatingChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::isFloatingChanged, this,
             &DockWidgetInstantiator::isFloatingChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::isOpenChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::isOpenChanged, this,
             &DockWidgetInstantiator::isOpenChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::removedFromSideBar, this,
+    connect(m_dockWidget, &Core::DockWidget::removedFromSideBar, this,
             &DockWidgetInstantiator::removedFromSideBar);
-    connect(m_dockWidget, &Controllers::DockWidget::windowActiveAboutToChange, this,
+    connect(m_dockWidget, &Core::DockWidget::windowActiveAboutToChange, this,
             &DockWidgetInstantiator::windowActiveAboutToChange);
 
     if (m_sourceFilename.isEmpty()) {

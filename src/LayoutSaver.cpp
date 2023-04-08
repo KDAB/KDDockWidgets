@@ -62,7 +62,7 @@
  * FloatingWindow::serialize()/deserialize()
  */
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
@@ -431,18 +431,18 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
-    const QVector<Controllers::FloatingWindow *> floatingWindows =
+    const QVector<Core::FloatingWindow *> floatingWindows =
         d->m_dockRegistry->floatingWindows();
     layout.floatingWindows.reserve(floatingWindows.size());
-    for (Controllers::FloatingWindow *floatingWindow : floatingWindows) {
+    for (Core::FloatingWindow *floatingWindow : floatingWindows) {
         if (d->matchesAffinity(floatingWindow->affinities()))
             layout.floatingWindows.push_back(floatingWindow->serialize());
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
-    const Controllers::DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
+    const Core::DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
     layout.closedDockWidgets.reserve(closedDockWidgets.size());
-    for (Controllers::DockWidget *dockWidget : closedDockWidgets) {
+    for (Core::DockWidget *dockWidget : closedDockWidgets) {
         if (d->matchesAffinity(dockWidget->affinities()))
             layout.closedDockWidgets.push_back(dockWidget->d->serialize());
     }
@@ -450,9 +450,9 @@ QByteArray LayoutSaver::serializeLayout() const
     // Save the placeholder info. We do it last, as we also restore it last, since we need all items
     // to be created before restoring the placeholders
 
-    const Controllers::DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
+    const Core::DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
-    for (Controllers::DockWidget *dockWidget : dockWidgets) {
+    for (Core::DockWidget *dockWidget : dockWidgets) {
         if (d->matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
             dw->lastPosition = dockWidget->d->lastPosition()->serialize();
@@ -548,7 +548,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             fw.parentIndex == -1 ? nullptr : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
         auto floatingWindow =
-            new Controllers::FloatingWindow({}, parent, static_cast<FloatingWindowFlags>(fw.flags));
+            new Core::FloatingWindow({}, parent, static_cast<FloatingWindowFlags>(fw.flags));
         fw.floatingWindowInstance = floatingWindow;
         d->deserializeWindowGeometry(fw, floatingWindow->view()->window());
         if (!floatingWindow->deserialize(fw)) {
@@ -561,7 +561,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     // properties
     for (const auto &dw : qAsConst(layout.closedDockWidgets)) {
         if (d->matchesAffinity(dw->affinities)) {
-            Controllers::DockWidget::deserialize(dw);
+            Core::DockWidget::deserialize(dw);
         }
     }
 
@@ -570,7 +570,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(dw->affinities))
             continue;
 
-        if (Controllers::DockWidget *dockWidget = d->m_dockRegistry->dockByName(
+        if (Core::DockWidget *dockWidget = d->m_dockRegistry->dockByName(
                 dw->uniqueName, DockRegistry::DockByNameFlag::ConsultRemapping)) {
             dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
         } else {
@@ -595,12 +595,12 @@ LayoutSaver::Private *LayoutSaver::dptr() const
     return d;
 }
 
-Controllers::DockWidget::List LayoutSaver::restoredDockWidgets() const
+Core::DockWidget::List LayoutSaver::restoredDockWidgets() const
 {
-    const Controllers::DockWidget::List &allDockWidgets = DockRegistry::self()->dockwidgets();
-    Controllers::DockWidget::List result;
+    const Core::DockWidget::List &allDockWidgets = DockRegistry::self()->dockwidgets();
+    Core::DockWidget::List result;
     result.reserve(allDockWidgets.size());
-    for (Controllers::DockWidget *dw : allDockWidgets) {
+    for (Core::DockWidget *dw : allDockWidgets) {
         if (dw->property("kddockwidget_was_restored").toBool())
             result.push_back(dw);
     }
@@ -610,8 +610,8 @@ Controllers::DockWidget::List LayoutSaver::restoredDockWidgets() const
 
 void LayoutSaver::Private::clearRestoredProperty()
 {
-    const Controllers::DockWidget::List &allDockWidgets = DockRegistry::self()->dockwidgets();
-    for (Controllers::DockWidget *dw : allDockWidgets) {
+    const Core::DockWidget::List &allDockWidgets = DockRegistry::self()->dockwidgets();
+    for (Core::DockWidget *dw : allDockWidgets) {
         dw->setProperty("kddockwidget_was_restored", QVariant());
     }
 }
@@ -629,7 +629,7 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, Window::Ptr
         geometry = saved.normalGeometry;
     }
 
-    Controllers::FloatingWindow::ensureRectIsOnScreen(geometry);
+    Core::FloatingWindow::ensureRectIsOnScreen(geometry);
 
     window->setGeometry(geometry);
     window->setVisible(saved.isVisible);
@@ -655,7 +655,7 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainW
     // be loading a new layout.
 
     for (auto mw : DockRegistry::self()->mainWindows(mainWindowNames)) {
-        const Controllers::DockWidget::List docks = mw->layout()->dockWidgets();
+        const Core::DockWidget::List docks = mw->layout()->dockWidgets();
         for (auto dw : docks) {
             if (dw->skipsRestore()) {
                 dw->setFloating(true);
@@ -671,8 +671,8 @@ void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout
     // about so we can restore the MainWindow layout properly
 
     for (auto mw : DockRegistry::self()->mainWindows(layout.mainWindowNames())) {
-        const Controllers::DockWidget::List docks = mw->layout()->dockWidgets();
-        for (Controllers::DockWidget *dw : docks) {
+        const Core::DockWidget::List docks = mw->layout()->dockWidgets();
+        for (Core::DockWidget *dw : docks) {
             if (!layout.containsDockWidget(dw->uniqueName())) {
                 dw->setFloating(true);
             }
@@ -873,7 +873,7 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
     names.reserve(allDockWidgets.size());
     auto registry = DockRegistry::self();
     for (const auto &dw : allDockWidgets) {
-        if (Controllers::DockWidget *dockWidget = registry->dockByName(dw->uniqueName)) {
+        if (Core::DockWidget *dockWidget = registry->dockByName(dw->uniqueName)) {
 
             bool doClose = true;
 
@@ -966,7 +966,7 @@ void LayoutSaver::DockWidget::scaleSizes(const ScalingInfo &scalingInfo)
 
 bool LayoutSaver::DockWidget::skipsRestore() const
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(uniqueName))
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(uniqueName))
         return dw->skipsRestore();
 
     return false;
@@ -1083,7 +1083,7 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
 
-static Screen::Ptr screenForMainWindow(Controllers::MainWindow *mw)
+static Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
 {
     return mw->view()->screen();
 }

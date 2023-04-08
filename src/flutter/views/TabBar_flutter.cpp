@@ -26,7 +26,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-TabBar_flutter::TabBar_flutter(Controllers::TabBar *controller, View *parent)
+TabBar_flutter::TabBar_flutter(Core::TabBar *controller, View *parent)
     : View_flutter(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
 {
@@ -63,12 +63,12 @@ void TabBar_flutter::changeTabIcon(int index, const Icon &)
     qWarning() << Q_FUNC_INFO << "Not implemented" << index;
 }
 
-void TabBar_flutter::removeDockWidget(Controllers::DockWidget *)
+void TabBar_flutter::removeDockWidget(Core::DockWidget *)
 {
     onRebuildRequested();
 }
 
-void TabBar_flutter::insertDockWidget(int, Controllers::DockWidget *, const Icon &,
+void TabBar_flutter::insertDockWidget(int, Core::DockWidget *, const Icon &,
                                       const QString &)
 {
     onRebuildRequested();

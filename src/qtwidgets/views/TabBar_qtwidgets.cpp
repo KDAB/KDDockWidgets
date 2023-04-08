@@ -65,7 +65,7 @@ static MyProxy *proxyStyle()
 }
 
 
-TabBar_qtwidgets::TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *parent)
+TabBar_qtwidgets::TabBar_qtwidgets(Core::TabBar *controller, QWidget *parent)
     : View_qtwidgets(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
     , m_controller(controller)
@@ -75,7 +75,7 @@ TabBar_qtwidgets::TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *par
 
 void TabBar_qtwidgets::init()
 {
-    connect(this, &QTabBar::currentChanged, m_tabBar, &Controllers::TabBar::setCurrentIndex);
+    connect(this, &QTabBar::currentChanged, m_tabBar, &Core::TabBar::setCurrentIndex);
 }
 
 int TabBar_qtwidgets::tabAt(QPoint localPos) const
@@ -174,13 +174,13 @@ void TabBar_qtwidgets::changeTabIcon(int index, const QIcon &icon)
     setTabIcon(index, icon);
 }
 
-void TabBar_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
+void TabBar_qtwidgets::removeDockWidget(Core::DockWidget *dw)
 {
     auto tabWidget = static_cast<QTabWidget *>(View_qt::asQWidget(m_tabBar->stack()));
     tabWidget->removeTab(m_tabBar->indexOfDockWidget(dw));
 }
 
-void TabBar_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+void TabBar_qtwidgets::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
                                         const QString &title)
 {
     auto tabWidget = static_cast<QTabWidget *>(View_qt::asQWidget(m_tabBar->stack()));

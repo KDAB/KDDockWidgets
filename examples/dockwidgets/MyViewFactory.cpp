@@ -23,7 +23,7 @@
 class MyTitleBar : public KDDockWidgets::Views::TitleBar_qtwidgets
 {
 public:
-    explicit MyTitleBar(KDDockWidgets::Controllers::TitleBar *controller, View *parent = nullptr)
+    explicit MyTitleBar(KDDockWidgets::Core::TitleBar *controller, View *parent = nullptr)
         : KDDockWidgets::Views::TitleBar_qtwidgets(controller, parent)
         , m_controller(controller)
     {
@@ -51,7 +51,7 @@ public:
     }
 
 private:
-    KDDockWidgets::Controllers::TitleBar *const m_controller;
+    KDDockWidgets::Core::TitleBar *const m_controller;
 };
 
 MyTitleBar::~MyTitleBar() = default;
@@ -61,7 +61,7 @@ MyTitleBar::~MyTitleBar() = default;
 class MySeparator : public KDDockWidgets::Views::Separator_qtwidgets
 {
 public:
-    explicit MySeparator(KDDockWidgets::Controllers::Separator *controller, View *parent)
+    explicit MySeparator(KDDockWidgets::Core::Separator *controller, View *parent)
         : KDDockWidgets::Views::Separator_qtwidgets(controller, parent)
     {
     }
@@ -78,7 +78,7 @@ public:
 MySeparator::~MySeparator() = default;
 
 KDDockWidgets::View *
-CustomWidgetFactory::createTitleBar(KDDockWidgets::Controllers::TitleBar *controller,
+CustomWidgetFactory::createTitleBar(KDDockWidgets::Core::TitleBar *controller,
                                     KDDockWidgets::View *parent) const
 {
     // Feel free to return MyTitleBar_CSS here instead, but just for education purposes!
@@ -86,7 +86,7 @@ CustomWidgetFactory::createTitleBar(KDDockWidgets::Controllers::TitleBar *contro
 }
 
 KDDockWidgets::View *
-CustomWidgetFactory::createSeparator(KDDockWidgets::Controllers::Separator *controller,
+CustomWidgetFactory::createSeparator(KDDockWidgets::Core::Separator *controller,
                                      KDDockWidgets::View *parent) const
 {
     return new MySeparator(controller, parent);

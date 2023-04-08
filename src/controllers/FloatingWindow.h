@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 class QAbstractNativeEventFilter;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 
 class DropArea;
 class Group;
@@ -39,7 +39,7 @@ public:
     explicit FloatingWindow(
         QRect suggestedGeometry, MainWindow *parent = nullptr,
         FloatingWindowFlags requestedFlags = FloatingWindowFlag::FromGlobalConfig);
-    explicit FloatingWindow(Controllers::Group *group, QRect suggestedGeometry,
+    explicit FloatingWindow(Core::Group *group, QRect suggestedGeometry,
                             MainWindow *parent = nullptr);
     virtual ~FloatingWindow() override;
 
@@ -48,11 +48,11 @@ public:
 
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
-    Controllers::DockWidget *singleDockWidget() const override;
+    Core::DockWidget *singleDockWidget() const override;
     bool isWindow() const override;
 
     const QVector<DockWidget *> dockWidgets() const;
-    const Controllers::Group::List groups() const;
+    const Core::Group::List groups() const;
     DropArea *dropArea() const;
 
     int userType() const;
@@ -74,7 +74,7 @@ public:
      *
      * This TitleBar is hidden if we're using a native title bar.
      */
-    Controllers::TitleBar *titleBar() const
+    Core::TitleBar *titleBar() const
     {
         return m_titleBar;
     }
@@ -111,7 +111,7 @@ public:
     bool hasSingleDockWidget() const;
 
     /// @brief If this floating window has only one Frame, it's returned, otherwise nullptr
-    Controllers::Group *singleFrame() const;
+    Core::Group *singleFrame() const;
 
     /**
      * @brief Returns whether a deleteLater has already been issued
@@ -126,7 +126,7 @@ public:
     /**
      * @brief Returns the MultiSplitter
      */
-    Controllers::DropArea *multiSplitter() const;
+    Core::DropArea *multiSplitter() const;
 
     /**
      * @brief Returns the Layout
@@ -212,7 +212,7 @@ private:
 
 protected:
     QPointer<DropArea> m_dropArea;
-    Controllers::TitleBar *const m_titleBar;
+    Core::TitleBar *const m_titleBar;
     WindowState m_lastWindowManagerState = WindowState::None;
 
 private:

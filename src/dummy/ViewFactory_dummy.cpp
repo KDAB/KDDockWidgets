@@ -56,33 +56,33 @@ View *ViewFactory_dummy::createDockWidget(const QString &, DockWidgetOptions, La
 }
 
 
-View *ViewFactory_dummy::createGroup(Controllers::Group *, View * = nullptr) const
+View *ViewFactory_dummy::createGroup(Core::Group *, View * = nullptr) const
 {
     return {};
 }
 
-View *ViewFactory_dummy::createTitleBar(Controllers::TitleBar *, View *) const
+View *ViewFactory_dummy::createTitleBar(Core::TitleBar *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_dummy::createTabBar(Controllers::TabBar *, View *) const
+View *ViewFactory_dummy::createTabBar(Core::TabBar *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_dummy::createStack(Controllers::Stack *, View *) const
+View *ViewFactory_dummy::createStack(Core::Stack *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_dummy::createSeparator(Controllers::Separator *, View *) const
+View *ViewFactory_dummy::createSeparator(Core::Separator *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_dummy::createFloatingWindow(Controllers::FloatingWindow *,
-                                              Controllers::MainWindow *, Qt::WindowFlags) const
+View *ViewFactory_dummy::createFloatingWindow(Core::FloatingWindow *,
+                                              Core::MainWindow *, Qt::WindowFlags) const
 {
     return {};
 }
@@ -92,7 +92,7 @@ View *ViewFactory_dummy::createRubberBand(View *) const
     return nullptr;
 }
 
-View *ViewFactory_dummy::createSideBar(Controllers::SideBar *, View *) const
+View *ViewFactory_dummy::createSideBar(Core::SideBar *, View *) const
 {
     return {};
 }
@@ -108,24 +108,24 @@ Icon ViewFactory_dummy::iconForButtonType(TitleBarButtonType, qreal) const
     return {};
 }
 
-View *ViewFactory_dummy::createDropArea(Controllers::DropArea *, View *) const
+View *ViewFactory_dummy::createDropArea(Core::DropArea *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_dummy::createMDILayout(Controllers::MDILayout *, View *) const
+View *ViewFactory_dummy::createMDILayout(Core::MDILayout *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_dummy::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *,
+View *ViewFactory_dummy::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *,
                                                                  View *) const
 {
     return {};
 }
 
 Views::ClassicIndicatorWindowViewInterface *
-ViewFactory_dummy::createClassicIndicatorWindow(Controllers::ClassicIndicators *) const
+ViewFactory_dummy::createClassicIndicatorWindow(Core::ClassicIndicators *) const
 {
     return {};
 }

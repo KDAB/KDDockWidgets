@@ -30,7 +30,7 @@
 
 #include "kdbindings/signal.h"
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 class TabBar;
 }
 
@@ -50,7 +50,7 @@ class DOCKS_EXPORT TabBar_qtquick : public View_qtquick, public TabBarViewInterf
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
     Q_PROPERTY(int hoveredTabIndex READ hoveredTabIndex NOTIFY hoveredTabIndexChanged)
 public:
-    explicit TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent = nullptr);
+    explicit TabBar_qtquick(Core::TabBar *controller, QQuickItem *parent = nullptr);
 
     DockWidgetModel *dockWidgetModel() const;
 
@@ -72,8 +72,8 @@ public:
     /// Default true, unless Flag_HideTitleBarWhenTabsVisible
     bool tabBarAutoHide() const;
 
-    void removeDockWidget(Controllers::DockWidget *) override;
-    void insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
+    void removeDockWidget(Core::DockWidget *) override;
+    void insertDockWidget(int index, Core::DockWidget *, const QIcon &,
                           const QString &title) override;
 
     /// @brief Returns the index of the currently hovered tab
@@ -111,17 +111,17 @@ public:
         Role_Title = Qt::UserRole
     };
 
-    explicit DockWidgetModel(Controllers::TabBar *, QObject *parent);
+    explicit DockWidgetModel(Core::TabBar *, QObject *parent);
     int count() const;
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
-    Controllers::DockWidget *dockWidgetAt(int index) const;
-    Controllers::DockWidget *currentDockWidget() const;
-    void setCurrentDockWidget(Controllers::DockWidget *);
-    void remove(Controllers::DockWidget *);
-    int indexOf(const Controllers::DockWidget *);
-    bool insert(Controllers::DockWidget *dw, int index);
-    bool contains(Controllers::DockWidget *dw) const;
+    Core::DockWidget *dockWidgetAt(int index) const;
+    Core::DockWidget *currentDockWidget() const;
+    void setCurrentDockWidget(Core::DockWidget *);
+    void remove(Core::DockWidget *);
+    int indexOf(const Core::DockWidget *);
+    bool insert(Core::DockWidget *dw, int index);
+    bool contains(Core::DockWidget *dw) const;
     int currentIndex() const;
     void setCurrentIndex(int index);
 
@@ -133,14 +133,14 @@ Q_SIGNALS:
     void dockWidgetRemoved();
 
 private:
-    void emitDataChangedFor(Controllers::DockWidget *);
+    void emitDataChangedFor(Core::DockWidget *);
 
-    Controllers::TabBar *const m_tabBar = nullptr;
-    QVector<Controllers::DockWidget *> m_dockWidgets;
-    QHash<Controllers::DockWidget *, QVector<QMetaObject::Connection>>
+    Core::TabBar *const m_tabBar = nullptr;
+    QVector<Core::DockWidget *> m_dockWidgets;
+    QHash<Core::DockWidget *, QVector<QMetaObject::Connection>>
         m_connections; // To make it easy to disconnect from lambdas
     bool m_removeGuard = false;
-    Controllers::DockWidget *m_currentDockWidget = nullptr;
+    Core::DockWidget *m_currentDockWidget = nullptr;
 };
 
 }

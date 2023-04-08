@@ -47,7 +47,7 @@
 static int s_dbg_numFrames = 0;
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets {
 
@@ -81,9 +81,9 @@ Group::Group(View *parent, FrameOptions options, int userType)
     : Controller(Type::Frame, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
     , d(new Private())
-    , m_stack(new Controllers::Stack(this, tabWidgetOptions(options)))
+    , m_stack(new Core::Stack(this, tabWidgetOptions(options)))
     , m_tabBar(m_stack->tabBar())
-    , m_titleBar(new Controllers::TitleBar(this))
+    , m_titleBar(new Core::TitleBar(this))
     , m_options(actualOptions(options))
     , m_userType(userType)
 {
@@ -175,12 +175,12 @@ int Group::nonContentsHeight() const
     return dynamic_cast<Views::GroupViewInterface *>(view())->nonContentsHeight();
 }
 
-Controllers::Stack *Group::stack() const
+Core::Stack *Group::stack() const
 {
     return m_stack;
 }
 
-Controllers::TabBar *Group::tabBar() const
+Core::TabBar *Group::tabBar() const
 {
     return m_stack->tabBar();
 }
@@ -353,7 +353,7 @@ void Group::insertDockWidget(DockWidget *dw, int index)
     dw->d->onParentChanged();
 }
 
-Controllers::DockWidget *Group::dockWidgetAt(int index) const
+Core::DockWidget *Group::dockWidgetAt(int index) const
 {
     if (m_inCtor || m_inDtor)
         return nullptr;
@@ -361,7 +361,7 @@ Controllers::DockWidget *Group::dockWidgetAt(int index) const
     return m_tabBar->dockWidgetAt(index);
 }
 
-Controllers::DockWidget *Group::currentDockWidget() const
+Core::DockWidget *Group::currentDockWidget() const
 {
     if (m_inCtor || m_inDtor)
         return nullptr;
@@ -467,12 +467,12 @@ bool Group::containsMouse(QPoint globalPos) const
     return rect().contains(view()->mapFromGlobal(globalPos));
 }
 
-Controllers::TitleBar *Group::titleBar() const
+Core::TitleBar *Group::titleBar() const
 {
     return m_titleBar;
 }
 
-Controllers::TitleBar *Group::actualTitleBar() const
+Core::TitleBar *Group::actualTitleBar() const
 {
     if (FloatingWindow *fw = floatingWindow()) {
         // If there's nested groups then show each Group's title bar
@@ -497,7 +497,7 @@ Icon Group::icon() const
     return m_titleBar->icon();
 }
 
-const Controllers::DockWidget::List Group::dockWidgets() const
+const Core::DockWidget::List Group::dockWidgets() const
 {
     if (m_inCtor || m_inDtor)
         return {};
@@ -879,7 +879,7 @@ Group *Group::mdiFrame() const
     return nullptr;
 }
 
-Controllers::DockWidget *Group::mdiDockWidgetWrapper() const
+Core::DockWidget *Group::mdiDockWidgetWrapper() const
 {
     if (auto dropArea = mdiDropAreaWrapper())
         return dropArea->view()->parentView()->asDockWidgetController();

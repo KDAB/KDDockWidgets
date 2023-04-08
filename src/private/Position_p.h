@@ -36,7 +36,7 @@ class Item;
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class DockWidget;
 class Group;
 class Layout;
@@ -116,7 +116,7 @@ public:
     }
 
     ///@brief Removes the placeholders that belong to this multisplitter
-    void removePlaceholders(const Controllers::Layout *);
+    void removePlaceholders(const Core::Layout *);
 
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();

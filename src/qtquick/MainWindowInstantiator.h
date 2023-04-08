@@ -20,7 +20,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class MainWindow;
 class SideBar;
 }
@@ -74,7 +74,7 @@ Q_SIGNALS:
 
 private:
     QString m_uniqueName;
-    Controllers::MainWindow *m_mainWindow = nullptr;
+    Core::MainWindow *m_mainWindow = nullptr;
     KDDockWidgets::MainWindowOptions m_options = KDDockWidgets::MainWindowOption_None;
 };
 

@@ -15,7 +15,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 MainWindowMDI_qtwidgets::MainWindowMDI_qtwidgets(const QString &uniqueName, QWidget *parent,
                                                  Qt::WindowFlags flags)

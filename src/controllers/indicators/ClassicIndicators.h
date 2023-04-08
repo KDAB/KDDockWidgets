@@ -22,13 +22,13 @@ namespace Views {
 class ClassicIndicatorWindowViewInterface;
 }
 
-namespace Controllers {
+namespace Core {
 
 class DOCKS_EXPORT ClassicIndicators : public DropIndicatorOverlay
 {
     Q_OBJECT
 public:
-    explicit ClassicIndicators(Controllers::DropArea *dropArea);
+    explicit ClassicIndicators(Core::DropArea *dropArea);
     ~ClassicIndicators() override;
     DropLocation hover_impl(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;

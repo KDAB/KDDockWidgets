@@ -41,7 +41,7 @@ namespace KDDockWidgets {
 DOCKS_EXPORT
 Q_NAMESPACE
 
-namespace Controllers {
+namespace Core {
 class DropArea;
 }
 

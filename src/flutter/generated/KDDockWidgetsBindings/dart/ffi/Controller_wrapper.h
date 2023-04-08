@@ -15,10 +15,9 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>
-#include <qcoreevent.h>
+#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
-#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Controller_wrapper : public ::KDDockWidgets::Controller
@@ -27,12 +26,6 @@ public:
     ~Controller_wrapper();
     Controller_wrapper(KDDockWidgets::Type type, KDDockWidgets::View *arg__2);
     bool close();
-    virtual void customEvent(QEvent *event);
-    virtual void customEvent_nocallback(QEvent *event);
-    virtual bool event(QEvent *event);
-    virtual bool event_nocallback(QEvent *event);
-    virtual bool eventFilter(QObject *watched, QEvent *event);
-    virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
     QRect geometry() const;
     int height() const;
     bool inDtor() const;
@@ -54,12 +47,6 @@ public:
     int width() const;
     int x() const;
     int y() const;
-    typedef void (*Callback_customEvent)(void *, QEvent *event);
-    Callback_customEvent m_customEventCallback = nullptr;
-    typedef bool (*Callback_event)(void *, QEvent *event);
-    Callback_event m_eventCallback = nullptr;
-    typedef bool (*Callback_eventFilter)(void *, QObject *watched, QEvent *event);
-    Callback_eventFilter m_eventFilterCallback = nullptr;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
@@ -69,12 +56,6 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_);
 // KDDockWidgets::Controller::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controller__close(void *thisObj);
-// KDDockWidgets::Controller::customEvent(QEvent * event)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controller__customEvent_QEvent(void *thisObj, void *event_);
-// KDDockWidgets::Controller::event(QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controller__event_QEvent(void *thisObj, void *event_);
-// KDDockWidgets::Controller::eventFilter(QObject * watched, QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controller__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 // KDDockWidgets::Controller::geometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__geometry(void *thisObj);
 // KDDockWidgets::Controller::height() const

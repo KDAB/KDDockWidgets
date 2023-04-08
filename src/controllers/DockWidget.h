@@ -41,7 +41,7 @@ class DockRegistry;
 class LayoutSaver;
 class StateDragging;
 
-namespace Controllers {
+namespace Core {
 
 class MainWindow;
 class FloatingWindow;
@@ -50,9 +50,9 @@ class Layout;
 class TitleBar;
 
 /**
- * @brief The DockWidget base-class. DockWidget and Controllers::DockWidget are only
+ * @brief The DockWidget base-class. DockWidget and Core::DockWidget are only
  * split in two so we can share some code with the QtQuick implementation,
- * which also derives from Controllers::DockWidget.
+ * which also derives from Core::DockWidget.
  *
  * Do not use instantiate directly in user code. Use DockWidget instead.
  */
@@ -88,7 +88,7 @@ public:
      * eventually shown.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
-    void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other,
+    void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *other,
                             KDDockWidgets::InitialOption initialOption = {});
 
     /**
@@ -105,16 +105,16 @@ public:
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetAsTab()
      */
     void
-    addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget *other,
+    addDockWidgetToContainingWindow(KDDockWidgets::Core::DockWidget *other,
                                     KDDockWidgets::Location location,
-                                    KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
+                                    KDDockWidgets::Core::DockWidget *relativeTo = nullptr,
                                     KDDockWidgets::InitialOption initialOption = {});
 
     /**
      * @brief sets the widget which this dock widget hosts.
      * @param widget the widget to show inside this dock widget. Must not be null.
      *
-     * Ownership for @p widget is transferred to Controllers::DockWidget.
+     * Ownership for @p widget is transferred to Core::DockWidget.
      * Ownsership for any previously existing widget is transferred back to the user. Meaning if you
      * call setWidget(A) followed by setWidget(B) then A will have to be deleted by you, while B is
      * owned by the dock widget.
@@ -274,7 +274,7 @@ public:
      * Note that several dock widgets can have the same title bar, in case they are tabbed together.
      * Hidden dock widgets have no associated title bar.
      */
-    Controllers::TitleBar *titleBar() const;
+    Core::TitleBar *titleBar() const;
 
     /**
      * @brief Returns whether this dock widget is open.
@@ -496,7 +496,7 @@ Q_SIGNALS:
     void aboutToDeleteOnClose();
 
     /// @brief Emitted when this dock widget is about to be deleted
-    void aboutToDelete(KDDockWidgets::Controllers::DockWidget *);
+    void aboutToDelete(KDDockWidgets::Core::DockWidget *);
 
     /// @brief Emitted when a dock widget is closed
     /// This is equivalent to the openedChanged(false) signal

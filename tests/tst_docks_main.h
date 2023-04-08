@@ -19,7 +19,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace Layouting;
 
 class TestDocks;

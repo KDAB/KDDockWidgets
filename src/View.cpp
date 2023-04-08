@@ -196,83 +196,83 @@ bool View::is(Type t) const
     return int(m_type) & int(t);
 }
 
-Controllers::FloatingWindow *View::asFloatingWindowController() const
+Core::FloatingWindow *View::asFloatingWindowController() const
 {
     if (m_controller && m_controller->is(Type::FloatingWindow))
-        return qobject_cast<Controllers::FloatingWindow *>(m_controller);
+        return qobject_cast<Core::FloatingWindow *>(m_controller);
 
     return nullptr;
 }
 
-Controllers::Group *View::asGroupController() const
+Core::Group *View::asGroupController() const
 {
     if (m_controller && m_controller->is(Type::Frame))
-        return qobject_cast<Controllers::Group *>(m_controller);
+        return qobject_cast<Core::Group *>(m_controller);
 
     return nullptr;
 }
 
-Controllers::TitleBar *View::asTitleBarController() const
+Core::TitleBar *View::asTitleBarController() const
 {
     if (m_controller && m_controller->is(Type::TitleBar))
-        return qobject_cast<Controllers::TitleBar *>(m_controller);
+        return qobject_cast<Core::TitleBar *>(m_controller);
 
     return nullptr;
 }
 
-Controllers::TabBar *View::asTabBarController() const
+Core::TabBar *View::asTabBarController() const
 {
     if (m_controller && m_controller->is(Type::TabBar))
-        return qobject_cast<Controllers::TabBar *>(m_controller);
+        return qobject_cast<Core::TabBar *>(m_controller);
 
     return nullptr;
 }
 
-Controllers::Stack *View::asStackController() const
+Core::Stack *View::asStackController() const
 {
     if (m_controller && m_controller->is(Type::Stack))
-        return qobject_cast<Controllers::Stack *>(m_controller);
+        return qobject_cast<Core::Stack *>(m_controller);
 
     return nullptr;
 }
 
-Controllers::DockWidget *View::asDockWidgetController() const
+Core::DockWidget *View::asDockWidgetController() const
 {
     if (m_controller && m_controller->is(Type::DockWidget))
-        return qobject_cast<Controllers::DockWidget *>(m_controller);
+        return qobject_cast<Core::DockWidget *>(m_controller);
 
     return nullptr;
 }
 
-Controllers::MainWindow *View::asMainWindowController() const
+Core::MainWindow *View::asMainWindowController() const
 {
     if (m_controller && m_controller->is(Type::MainWindow))
-        return qobject_cast<Controllers::MainWindow *>(m_controller);
+        return qobject_cast<Core::MainWindow *>(m_controller);
 
     return nullptr;
 }
 
-Controllers::DropArea *View::asDropAreaController() const
+Core::DropArea *View::asDropAreaController() const
 {
     if (!m_inDtor && m_controller && m_controller->is(Type::DropArea)) {
-        return qobject_cast<Controllers::DropArea *>(m_controller);
+        return qobject_cast<Core::DropArea *>(m_controller);
     }
     return nullptr;
 }
 
-Controllers::MDILayout *View::asMDILayoutController() const
+Core::MDILayout *View::asMDILayoutController() const
 {
     if (!m_inDtor && m_controller && m_controller->is(Type::MDILayout))
-        return qobject_cast<Controllers::MDILayout *>(m_controller);
+        return qobject_cast<Core::MDILayout *>(m_controller);
 
     return nullptr;
 }
 
-Controllers::Layout *View::asLayout() const
+Core::Layout *View::asLayout() const
 {
-    if (Controllers::DropArea *da = asDropAreaController()) {
+    if (Core::DropArea *da = asDropAreaController()) {
         return da;
-    } else if (Controllers::MDILayout *mdi = asMDILayoutController()) {
+    } else if (Core::MDILayout *mdi = asMDILayoutController()) {
         return mdi;
     }
 

@@ -18,7 +18,7 @@
 
 #include <QPointer>
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 
 class Stack;
 class Group;
@@ -49,9 +49,9 @@ public:
     void setCurrentIndex(int index);
 
     /// @brief Returns the tab index of the specified dock widget
-    int indexOfDockWidget(const Controllers::DockWidget *dw) const;
-    void removeDockWidget(Controllers::DockWidget *dw);
-    void insertDockWidget(int index, Controllers::DockWidget *dw, const Icon &icon,
+    int indexOfDockWidget(const Core::DockWidget *dw) const;
+    void removeDockWidget(Core::DockWidget *dw);
+    void insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
                           const QString &title);
 
     // Draggable
@@ -86,11 +86,11 @@ public:
     ///@brief change the tab's icon
     void changeTabIcon(int index, const Icon &);
 Q_SIGNALS:
-    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
+    void currentDockWidgetChanged(KDDockWidgets::Core::DockWidget *);
     void countChanged();
 
 private:
-    Controllers::Stack *const m_stack;
+    Core::Stack *const m_stack;
     QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
     DockWidget *m_currentDockWidget = nullptr;
     QVector<const DockWidget *> m_dockWidgets;

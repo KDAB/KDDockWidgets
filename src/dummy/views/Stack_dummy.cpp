@@ -22,7 +22,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Stack_dummy::Stack_dummy(Controllers::Stack *controller, QWidget *parent)
+Stack_dummy::Stack_dummy(Core::Stack *controller, QWidget *parent)
     : View_dummy(controller, Type::Stack, parent)
     , StackViewInterface(controller)
 {

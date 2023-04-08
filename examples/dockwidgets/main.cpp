@@ -348,15 +348,15 @@ int main(int argc, char **argv)
         // Here we exemplify adding a restriction to "Dock Widget 8"
         // Dock widget 8 will only be allowed to dock to the outer areas
         auto func = [](KDDockWidgets::DropLocation location,
-                       const KDDockWidgets::Controllers::DockWidget::List &source,
-                       const KDDockWidgets::Controllers::DockWidget::List &target,
-                       Controllers::DropArea *) {
+                       const KDDockWidgets::Core::DockWidget::List &source,
+                       const KDDockWidgets::Core::DockWidget::List &target,
+                       Core::DropArea *) {
             Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already
                               // tabbed dock widgets
 
             const bool isDraggingDW8 =
                 std::find_if(source.cbegin(), source.cend(),
-                             [](KDDockWidgets::Controllers::DockWidget *dw) {
+                             [](KDDockWidgets::Core::DockWidget *dw) {
                                  return dw->uniqueName() == QLatin1String("DockWidget #8");
                              })
                 != source.cend();

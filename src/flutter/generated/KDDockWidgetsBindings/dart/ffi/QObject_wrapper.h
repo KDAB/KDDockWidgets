@@ -11,7 +11,6 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <qobject.h>
 #include <qstring.h>
-#include <qcoreevent.h>
 #include <qlist.h>
 #include <qbytearray.h>
 
@@ -23,8 +22,6 @@ public:
     QObject_wrapper(QObject *parent = nullptr);
     bool blockSignals(bool b);
     const QList<QObject *> &children() const;
-    virtual void customEvent(QEvent *event);
-    virtual void customEvent_nocallback(QEvent *event);
     void deleteLater();
     void destroyed(QObject *arg__1 = nullptr);
     bool disconnect(const QObject *receiver, const char *member = nullptr) const;
@@ -33,10 +30,6 @@ public:
     void dumpObjectInfo();
     void dumpObjectTree();
     QList<QByteArray> dynamicPropertyNames() const;
-    virtual bool event(QEvent *event);
-    virtual bool event_nocallback(QEvent *event);
-    virtual bool eventFilter(QObject *watched, QEvent *event);
-    virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
     bool inherits(const char *classname) const;
     void installEventFilter(QObject *filterObj);
     bool isWidgetType() const;
@@ -53,12 +46,6 @@ public:
     bool signalsBlocked() const;
     int startTimer(int interval);
     static QString tr(const char *s, const char *c, int n);
-    typedef void (*Callback_customEvent)(void *, QEvent *event);
-    Callback_customEvent m_customEventCallback = nullptr;
-    typedef bool (*Callback_event)(void *, QEvent *event);
-    Callback_event m_eventCallback = nullptr;
-    typedef bool (*Callback_eventFilter)(void *, QObject *watched, QEvent *event);
-    Callback_eventFilter m_eventFilterCallback = nullptr;
 };
 }
 extern "C" {
@@ -68,8 +55,6 @@ KDDockWidgetsBindings_EXPORT void *c_QObject__constructor_QObject(void *parent_)
 KDDockWidgetsBindings_EXPORT bool c_QObject__blockSignals_bool(void *thisObj, bool b);
 // QObject::children() const
 KDDockWidgetsBindings_EXPORT void *c_QObject__children(void *thisObj);
-// QObject::customEvent(QEvent * event)
-KDDockWidgetsBindings_EXPORT void c_QObject__customEvent_QEvent(void *thisObj, void *event_);
 // QObject::deleteLater()
 KDDockWidgetsBindings_EXPORT void c_QObject__deleteLater(void *thisObj);
 // QObject::destroyed(QObject * arg__1)
@@ -86,10 +71,6 @@ KDDockWidgetsBindings_EXPORT void c_QObject__dumpObjectInfo(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_QObject__dumpObjectTree(void *thisObj);
 // QObject::dynamicPropertyNames() const
 KDDockWidgetsBindings_EXPORT void *c_QObject__dynamicPropertyNames(void *thisObj);
-// QObject::event(QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_QObject__event_QEvent(void *thisObj, void *event_);
-// QObject::eventFilter(QObject * watched, QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_QObject__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 // QObject::inherits(const char * classname) const
 KDDockWidgetsBindings_EXPORT bool c_QObject__inherits_char(void *thisObj, const char *classname);
 // QObject::installEventFilter(QObject * filterObj)

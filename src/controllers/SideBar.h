@@ -21,7 +21,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 
 class DockWidget;
 class MainWindow;

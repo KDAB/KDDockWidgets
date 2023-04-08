@@ -38,7 +38,7 @@ class MainWindow extends Controller {
         uniqueName?.toNativeUtf8() ?? ffi.nullptr, options);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  } // addDockWidget(KDDockWidgets::Controllers::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+  } // addDockWidget(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
   addDockWidget(DockWidget? dockWidget, int location,
       {required DockWidget? relativeTo, required InitialOption initialOption}) {
     final void_Func_voidstar_voidstar_int_voidstar_voidstar func = _dylib
@@ -53,7 +53,7 @@ class MainWindow extends Controller {
         location,
         relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
         initialOption == null ? ffi.nullptr : initialOption.thisCpp);
-  } // addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget * dockwidget)
+  } // addDockWidgetAsTab(KDDockWidgets::Core::DockWidget * dockwidget)
 
   addDockWidgetAsTab(DockWidget? dockwidget) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -94,18 +94,6 @@ class MainWindow extends Controller {
             'c_KDDockWidgets__Controllers__MainWindow__closeDockWidgets_bool')
         .asFunction();
     return func(thisCpp, force ? 1 : 0) != 0;
-  }
-
-  static void customEvent_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for MainWindow::customEvent(QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.customEvent(QEvent.fromCppPointer(event));
   } // dropArea() const
 
   DropArea dropArea() {
@@ -115,33 +103,6 @@ class MainWindow extends Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DropArea.fromCppPointer(result, false);
-  }
-
-  static int event_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for MainWindow::event(QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.event(QEvent.fromCppPointer(event));
-    return result ? 1 : 0;
-  }
-
-  static int eventFilter_calledFromC(ffi.Pointer<void> thisCpp,
-      ffi.Pointer<void>? watched, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for MainWindow::eventFilter(QObject * watched, QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.eventFilter(
-        QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
-    return result ? 1 : 0;
   } // groupCountChanged(int arg__1)
 
   groupCountChanged(int arg__1) {
@@ -183,7 +144,7 @@ class MainWindow extends Controller {
             'c_KDDockWidgets__Controllers__MainWindow__layoutEqually')
         .asFunction();
     func(thisCpp);
-  } // layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget * dockWidget)
+  } // layoutParentContainerEqually(KDDockWidgets::Core::DockWidget * dockWidget)
 
   layoutParentContainerEqually(DockWidget? dockWidget) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -191,7 +152,7 @@ class MainWindow extends Controller {
             'c_KDDockWidgets__Controllers__MainWindow__layoutParentContainerEqually_DockWidget')
         .asFunction();
     func(thisCpp, dockWidget == null ? ffi.nullptr : dockWidget.thisCpp);
-  } // moveToSideBar(KDDockWidgets::Controllers::DockWidget * dw)
+  } // moveToSideBar(KDDockWidgets::Core::DockWidget * dw)
 
   moveToSideBar(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -232,7 +193,7 @@ class MainWindow extends Controller {
             'c_KDDockWidgets__Controllers__MainWindow__overlayMarginChanged_int')
         .asFunction();
     func(thisCpp, margin);
-  } // overlayOnSideBar(KDDockWidgets::Controllers::DockWidget * dw)
+  } // overlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
 
   overlayOnSideBar(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -249,7 +210,7 @@ class MainWindow extends Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DockWidget.fromCppPointer(result, false);
-  } // restoreFromSideBar(KDDockWidgets::Controllers::DockWidget * dw)
+  } // restoreFromSideBar(KDDockWidgets::Core::DockWidget * dw)
 
   restoreFromSideBar(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -295,7 +256,7 @@ class MainWindow extends Controller {
             'c_KDDockWidgets__Controllers__MainWindow__setUniqueName_QString')
         .asFunction();
     func(thisCpp, uniqueName?.toNativeUtf8() ?? ffi.nullptr);
-  } // sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget * dw) const
+  } // sideBarForDockWidget(const KDDockWidgets::Core::DockWidget * dw) const
 
   SideBar sideBarForDockWidget(DockWidget? dw) {
     final voidstar_Func_voidstar_voidstar func = _dylib
@@ -305,7 +266,7 @@ class MainWindow extends Controller {
     ffi.Pointer<void> result =
         func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
     return SideBar.fromCppPointer(result, false);
-  } // toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidget * dw)
+  } // toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
 
   toggleOverlayOnSideBar(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -353,13 +314,7 @@ class MainWindow extends Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 295:
-        return "c_KDDockWidgets__Controllers__MainWindow__customEvent_QEvent";
-      case 306:
-        return "c_KDDockWidgets__Controllers__MainWindow__event_QEvent";
-      case 307:
-        return "c_KDDockWidgets__Controllers__MainWindow__eventFilter_QObject_QEvent";
-      case 891:
+      case 881:
         return "c_KDDockWidgets__Controllers__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -367,13 +322,7 @@ class MainWindow extends Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 295:
-        return "customEvent";
-      case 306:
-        return "event";
-      case 307:
-        return "eventFilter";
-      case 891:
+      case 881:
         return "setParentView_impl";
     }
     throw Error();
@@ -385,23 +334,9 @@ class MainWindow extends Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Controllers__MainWindow__registerVirtualMethodCallback')
         .asFunction();
-    final callback295 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            QObject.customEvent_calledFromC);
-    registerCallback(thisCpp, callback295, 295);
-    const callbackExcept306 = 0;
-    final callback306 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            QObject.event_calledFromC, callbackExcept306);
-    registerCallback(thisCpp, callback306, 306);
-    const callbackExcept307 = 0;
-    final callback307 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
-            QObject.eventFilter_calledFromC, callbackExcept307);
-    registerCallback(thisCpp, callback307, 307);
-    final callback891 =
+    final callback881 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback891, 891);
+    registerCallback(thisCpp, callback881, 881);
   }
 }

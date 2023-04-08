@@ -115,9 +115,9 @@ View *Platform_dummy::tests_createNonClosableView(View *)
     return {};
 }
 
-Controllers::MainWindow *Platform_dummy::createMainWindow(const QString &, CreateViewOptions,
-                                                          MainWindowOptions, View *,
-                                                          Qt::WindowFlags) const
+Core::MainWindow *Platform_dummy::createMainWindow(const QString &, CreateViewOptions,
+                                                   MainWindowOptions, View *,
+                                                   Qt::WindowFlags) const
 {
     return {};
 }

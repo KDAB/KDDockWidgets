@@ -113,7 +113,7 @@ public:
                      Qt5Qt6Compat::qintptr *result) override
     {
         // To enable aero snap we need to tell Windows where's our custom title bar
-        Controllers::FloatingWindow *fw = m_view->asFloatingWindowController();
+        Core::FloatingWindow *fw = m_view->asFloatingWindowController();
         if (!fw->beingDeleted()
             && WidgetResizeHandler::handleWindowsNativeEvent(fw, eventType, message, result))
             return true;
@@ -130,7 +130,7 @@ QuickView::~QuickView() = default;
 }
 
 
-FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
+FloatingWindow_qtquick::FloatingWindow_qtquick(Core::FloatingWindow *controller,
                                                Views::MainWindow_qtquick *parent,
                                                Qt::WindowFlags flags)
     : Views::View_qtquick(controller, Type::FloatingWindow, parent, flags)

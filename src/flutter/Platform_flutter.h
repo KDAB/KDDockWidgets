@@ -15,7 +15,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class MainWindow;
 }
 
@@ -47,8 +47,8 @@ public:
     QVector<std::shared_ptr<Screen>> screens() const override;
     std::shared_ptr<Screen> primaryScreen() const override;
 
-    void onFloatingWindowCreated(Controllers::FloatingWindow *) override;
-    void onFloatingWindowDestroyed(Controllers::FloatingWindow *) override;
+    void onFloatingWindowCreated(Core::FloatingWindow *) override;
+    void onFloatingWindowDestroyed(Core::FloatingWindow *) override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_flutter(int &argc, char **argv);
@@ -58,7 +58,7 @@ public:
     std::shared_ptr<Window> tests_createWindow() override;
     View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createNonClosableView(View *parent = nullptr) override;
-    Controllers::MainWindow *
+    Core::MainWindow *
     createMainWindow(const QString &uniqueName, CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
                      View *parent = nullptr, Qt::WindowFlags = {}) const override;

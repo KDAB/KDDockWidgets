@@ -31,7 +31,7 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Views;
 
 
@@ -74,7 +74,7 @@ QSize DockWidget_flutter::maxSizeHint() const
     return View_flutter::maxSizeHint();
 }
 
-Controllers::DockWidget *DockWidget_flutter::dockWidget() const
+Core::DockWidget *DockWidget_flutter::dockWidget() const
 {
     return m_dockWidget;
 }

@@ -11,9 +11,9 @@
 
 #include "NullIndicators.h"
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 
-NullIndicators::NullIndicators(Controllers::DropArea *dropArea)
+NullIndicators::NullIndicators(Core::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea)
 {
 }

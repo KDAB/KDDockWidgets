@@ -31,7 +31,7 @@ Item_wrapper::Item_wrapper(KDDockWidgets::View *hostWidget)
     : ::Layouting::Item(hostWidget)
 {
 }
-KDDockWidgets::Controllers::Group *Item_wrapper::asGroupController() const
+KDDockWidgets::Core::Group *Item_wrapper::asGroupController() const
 {
     return ::Layouting::Item::asGroupController();
 }
@@ -48,19 +48,6 @@ bool Item_wrapper::checkSanity_nocallback()
 {
     return ::Layouting::Item::checkSanity();
 }
-void Item_wrapper::customEvent(QEvent *event)
-{
-    if (m_customEventCallback) {
-        const void *thisPtr = this;
-        m_customEventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        ::Layouting::Item::customEvent(event);
-    }
-}
-void Item_wrapper::customEvent_nocallback(QEvent *event)
-{
-    ::Layouting::Item::customEvent(event);
-}
 void Item_wrapper::dumpLayout(int level)
 {
     if (m_dumpLayoutCallback) {
@@ -73,32 +60,6 @@ void Item_wrapper::dumpLayout(int level)
 void Item_wrapper::dumpLayout_nocallback(int level)
 {
     ::Layouting::Item::dumpLayout(level);
-}
-bool Item_wrapper::event(QEvent *event)
-{
-    if (m_eventCallback) {
-        const void *thisPtr = this;
-        return m_eventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        return ::Layouting::Item::event(event);
-    }
-}
-bool Item_wrapper::event_nocallback(QEvent *event)
-{
-    return ::Layouting::Item::event(event);
-}
-bool Item_wrapper::eventFilter(QObject *watched, QEvent *event)
-{
-    if (m_eventFilterCallback) {
-        const void *thisPtr = this;
-        return m_eventFilterCallback(const_cast<void *>(thisPtr), watched, event);
-    } else {
-        return ::Layouting::Item::eventFilter(watched, event);
-    }
-}
-bool Item_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
-{
-    return ::Layouting::Item::eventFilter(watched, event);
 }
 QRect Item_wrapper::geometry() const
 {
@@ -374,29 +335,10 @@ bool c_Layouting__Item__checkSanity(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->checkSanity_nocallback();} else {    return targetPtr->checkSanity();} }();
 }
-// customEvent(QEvent * event)
-void c_Layouting__Item__customEvent_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    fromWrapperPtr(thisObj)->customEvent_nocallback(event);
-}
 // dumpLayout(int level)
 void c_Layouting__Item__dumpLayout_int(void *thisObj, int level)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dumpLayout_nocallback(level);} else {    return targetPtr->dumpLayout(level);} }();
-}
-// event(QEvent * event)
-bool c_Layouting__Item__event_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
-}
-// eventFilter(QObject * watched, QEvent * event)
-bool c_Layouting__Item__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
-{
-    auto watched = reinterpret_cast<QObject *>(watched_);
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // geometry() const
 void *c_Layouting__Item__geometry(void *thisObj)
@@ -657,43 +599,34 @@ void c_Layouting__Item__registerVirtualMethodCallback(void *ptr, void *callback,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 590:
+    case 576:
         wrapper->m_checkSanityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_checkSanity>(callback);
         break;
-    case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_customEvent>(callback);
-        break;
-    case 597:
+    case 583:
         wrapper->m_dumpLayoutCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_dumpLayout>(callback);
         break;
-    case 306:
-        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_event>(callback);
-        break;
-    case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_eventFilter>(callback);
-        break;
-    case 614:
+    case 600:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_isVisible>(callback);
         break;
-    case 623:
+    case 609:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 624:
+    case 610:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_minSize>(callback);
         break;
-    case 641:
+    case 627:
         wrapper->m_setGeometry_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setGeometry_recursive>(callback);
         break;
-    case 643:
+    case 629:
         wrapper->m_setHostViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setHostView>(callback);
         break;
-    case 644:
+    case 630:
         wrapper->m_setIsVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setIsVisible>(callback);
         break;
-    case 658:
+    case 644:
         wrapper->m_updateWidgetGeometriesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_updateWidgetGeometries>(callback);
         break;
-    case 659:
+    case 645:
         wrapper->m_visibleCount_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_visibleCount_recursive>(callback);
         break;
     }

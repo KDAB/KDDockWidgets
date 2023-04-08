@@ -18,7 +18,7 @@
 namespace KDDockWidgets {
 
 
-namespace Controllers {
+namespace Core {
 class TitleBar;
 }
 
@@ -27,7 +27,7 @@ namespace Views {
 class DOCKS_EXPORT TitleBar_flutter : public View_flutter, public Views::TitleBarViewInterface
 {
 public:
-    explicit TitleBar_flutter(Controllers::TitleBar *controller, View *parent = nullptr);
+    explicit TitleBar_flutter(Core::TitleBar *controller, View *parent = nullptr);
     ~TitleBar_flutter() override;
 
 protected:

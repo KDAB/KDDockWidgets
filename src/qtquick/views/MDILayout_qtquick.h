@@ -15,7 +15,7 @@
 #include "View_qtquick.h"
 
 namespace KDDockWidgets {
-namespace Controllers {
+namespace Core {
 class MDILayout;
 }
 
@@ -25,11 +25,11 @@ class DOCKS_EXPORT MDILayout_qtquick : public Views::View_qtquick
 {
     Q_OBJECT
 public:
-    explicit MDILayout_qtquick(Controllers::MDILayout *controller, View *parent);
+    explicit MDILayout_qtquick(Core::MDILayout *controller, View *parent);
     ~MDILayout_qtquick();
 
 private:
-    Controllers::MDILayout *const m_controller;
+    Core::MDILayout *const m_controller;
 };
 
 }

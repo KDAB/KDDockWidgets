@@ -27,7 +27,7 @@
 #include "private/multisplitter/Item_p.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 
 Layout::Layout(Type type, View *view)
@@ -65,7 +65,7 @@ bool Layout::isInMainWindow(bool honourNesting) const
     return mainWindow(honourNesting) != nullptr;
 }
 
-Controllers::MainWindow *Layout::mainWindow(bool honourNesting) const
+Core::MainWindow *Layout::mainWindow(bool honourNesting) const
 {
     // QtQuick doesn't support nesting yet
     honourNesting = honourNesting && Platform::instance()->isQtWidgets();
@@ -73,7 +73,7 @@ Controllers::MainWindow *Layout::mainWindow(bool honourNesting) const
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.
         if (Controller *c = view()->firstParentOfType(Type::MainWindow))
-            return static_cast<Controllers::MainWindow *>(c);
+            return static_cast<Core::MainWindow *>(c);
         return nullptr;
     } else {
         if (auto pw = view()->parentView()) {
@@ -90,7 +90,7 @@ Controllers::MainWindow *Layout::mainWindow(bool honourNesting) const
     return nullptr;
 }
 
-Controllers::FloatingWindow *Layout::floatingWindow() const
+Core::FloatingWindow *Layout::floatingWindow() const
 {
     auto parent = view()->rootView();
     return parent ? parent->asFloatingWindowController() : nullptr;
@@ -146,10 +146,10 @@ void Layout::dumpLayout() const
     m_rootItem->dumpLayout();
 }
 
-void Layout::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *item, int tabIndex)
+void Layout::restorePlaceholder(Core::DockWidget *dw, Layouting::Item *item, int tabIndex)
 {
     if (item->isPlaceholder()) {
-        auto newGroup = new Controllers::Group(view());
+        auto newGroup = new Core::Group(view());
         item->restore(newGroup->view());
     }
 
@@ -165,10 +165,10 @@ void Layout::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *it
     group->setVisible(true);
 }
 
-void Layout::unrefOldPlaceholders(const Controllers::Group::List &groupsBeingAdded) const
+void Layout::unrefOldPlaceholders(const Core::Group::List &groupsBeingAdded) const
 {
-    for (Controllers::Group *group : groupsBeingAdded) {
-        for (Controllers::DockWidget *dw : group->dockWidgets()) {
+    for (Core::Group *group : groupsBeingAdded) {
+        for (Core::DockWidget *dw : group->dockWidgets()) {
             dw->d->lastPosition()->removePlaceholders(this);
         }
     }
@@ -193,7 +193,7 @@ bool Layout::containsItem(const Layouting::Item *item) const
     return m_rootItem->contains_recursive(item);
 }
 
-bool Layout::containsFrame(const Controllers::Group *group) const
+bool Layout::containsFrame(const Core::Group *group) const
 {
     return itemForFrame(group) != nullptr;
 }
@@ -213,7 +213,7 @@ int Layout::placeholderCount() const
     return count() - visibleCount();
 }
 
-Layouting::Item *Layout::itemForFrame(const Controllers::Group *group) const
+Layouting::Item *Layout::itemForFrame(const Core::Group *group) const
 {
     if (!group)
         return nullptr;
@@ -221,17 +221,17 @@ Layouting::Item *Layout::itemForFrame(const Controllers::Group *group) const
     return m_rootItem->itemForView(group->view());
 }
 
-Controllers::DockWidget::List Layout::dockWidgets() const
+Core::DockWidget::List Layout::dockWidgets() const
 {
-    Controllers::DockWidget::List dockWidgets;
-    const Controllers::Group::List groups = this->groups();
-    for (Controllers::Group *group : groups)
+    Core::DockWidget::List dockWidgets;
+    const Core::Group::List groups = this->groups();
+    for (Core::Group *group : groups)
         dockWidgets << group->dockWidgets();
 
     return dockWidgets;
 }
 
-Controllers::Group::List Layout::groupsFrom(View *groupOrMultiSplitter) const
+Core::Group::List Layout::groupsFrom(View *groupOrMultiSplitter) const
 {
     if (auto group = groupOrMultiSplitter->asGroupController())
         return { group };
@@ -242,11 +242,11 @@ Controllers::Group::List Layout::groupsFrom(View *groupOrMultiSplitter) const
     return {};
 }
 
-Controllers::Group::List Layout::groups() const
+Core::Group::List Layout::groups() const
 {
     const Layouting::Item::List items = m_rootItem->items_recursive();
 
-    Controllers::Group::List result;
+    Core::Group::List result;
     result.reserve(items.size());
 
     for (Layouting::Item *item : items) {
@@ -281,7 +281,7 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 {
     QHash<QString, View *> groups;
     for (const LayoutSaver::Group &group : qAsConst(l.groups)) {
-        Controllers::Group *f = Controllers::Group::deserialize(group);
+        Core::Group *f = Core::Group::deserialize(group);
         Q_ASSERT(!group.id.isEmpty());
         groups.insert(group.id, f->view());
     }
@@ -328,7 +328,7 @@ LayoutSaver::MultiSplitter Layout::serialize() const
     return l;
 }
 
-Controllers::DropArea *Layout::asDropArea() const
+Core::DropArea *Layout::asDropArea() const
 {
     return view()->asDropAreaController();
 }
@@ -351,8 +351,8 @@ void Layout::onCloseEvent(CloseEvent *e)
 {
     e->accept(); // Accepted by default (will close unless ignored)
 
-    const Controllers::Group::List groups = this->groups();
-    for (Controllers::Group *group : groups) {
+    const Core::Group::List groups = this->groups();
+    for (Core::Group *group : groups) {
         Platform::instance()->sendEvent(group->view(), e);
         if (!e->isAccepted())
             break; // Stop when the first group prevents closing

@@ -18,7 +18,7 @@
 
 #include "kdbindings/signal.h"
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 
 class Group;
 class TabBar;
@@ -60,7 +60,7 @@ public:
     /**
      * @brief Returns the tab bar
      */
-    Controllers::TabBar *tabBar() const;
+    Core::TabBar *tabBar() const;
 
     ///@brief getter for the group
     Group *group() const;

@@ -32,7 +32,7 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Views;
 
 class DockWidget_qtquick::Private
@@ -65,13 +65,13 @@ DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName, DockWidgetOpti
     init();
     m_dockWidget->init();
 
-    connect(m_dockWidget, &Controllers::DockWidget::isFloatingChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::isFloatingChanged, this,
             &DockWidget_qtquick::isFloatingChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::isFocusedChanged, this,
             &DockWidget_qtquick::isFocusedChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::titleChanged, this,
             &DockWidget_qtquick::titleChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::optionsChanged, this,
+    connect(m_dockWidget, &Core::DockWidget::optionsChanged, this,
             &DockWidget_qtquick::optionsChanged);
 }
 
@@ -86,10 +86,10 @@ void DockWidget_qtquick::init()
     setVisible(false);
 
     auto dw = this->dockWidget();
-    connect(dw, &Controllers::DockWidget::actualTitleBarChanged, this,
+    connect(dw, &Core::DockWidget::actualTitleBarChanged, this,
             &DockWidget_qtquick::actualTitleBarChanged);
 
-    connect(dw, &Controllers::DockWidget::guestViewChanged, this, [this, dw] {
+    connect(dw, &Core::DockWidget::guestViewChanged, this, [this, dw] {
         if (auto guest = dw->guestView()) {
             // TODOm3: Move this logic to the controller
             guest->setParent(this);
@@ -168,7 +168,7 @@ QObject *DockWidget_qtquick::actualTitleBarView() const
 
 QQuickItem *DockWidget_qtquick::groupVisualItem() const
 {
-    if (Controllers::Group *group = this->group()) {
+    if (Core::Group *group = this->group()) {
         if (auto view = asView_qtquick(group->view()))
             return view->visualItem();
     }

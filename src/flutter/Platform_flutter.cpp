@@ -147,11 +147,11 @@ Screen::Ptr Platform_flutter::primaryScreen() const
 }
 
 
-void Platform_flutter::onFloatingWindowCreated(Controllers::FloatingWindow *)
+void Platform_flutter::onFloatingWindowCreated(Core::FloatingWindow *)
 {
 }
 
-void Platform_flutter::onFloatingWindowDestroyed(Controllers::FloatingWindow *)
+void Platform_flutter::onFloatingWindowDestroyed(Core::FloatingWindow *)
 {
 }
 

@@ -105,7 +105,7 @@ TEST_CASE("setAsCurrentTab")
     CHECK(!dw2->isCurrentTab());
     CHECK(!dw3->isCurrentTab());
 
-    Controllers::Group *group = dw->d->group();
+    Core::Group *group = dw->d->group();
     CHECK_EQ(group->currentIndex(), 0);
     CHECK_EQ(group->currentDockWidget(), dw);
 

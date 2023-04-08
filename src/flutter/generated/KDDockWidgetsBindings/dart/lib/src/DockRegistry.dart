@@ -57,18 +57,6 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__containsMainWindow_QString')
         .asFunction();
     return func(thisCpp, uniqueName?.toNativeUtf8() ?? ffi.nullptr) != 0;
-  }
-
-  static void customEvent_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as DockRegistry;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for DockRegistry::customEvent(QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.customEvent(QEvent.fromCppPointer(event));
   } // dockByName(const QString & arg__1) const
 
   DockWidget dockByName(String? arg__1) {
@@ -95,33 +83,6 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__ensureAllFloatingWidgetsAreMorphed')
         .asFunction();
     func(thisCpp);
-  }
-
-  static int event_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as DockRegistry;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for DockRegistry::event(QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.event(QEvent.fromCppPointer(event));
-    return result ? 1 : 0;
-  }
-
-  static int eventFilter_calledFromC(ffi.Pointer<void> thisCpp,
-      ffi.Pointer<void>? watched, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as DockRegistry;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for DockRegistry::eventFilter(QObject * watched, QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.eventFilter(
-        QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
-    return result ? 1 : 0;
   } // focusedDockWidget() const
 
   DockWidget focusedDockWidget() {
@@ -217,7 +178,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__maybeDelete')
         .asFunction();
     func(thisCpp);
-  } // registerDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+  } // registerDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 
   registerDockWidget(DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -225,7 +186,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__registerDockWidget_DockWidget')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // registerFloatingWindow(KDDockWidgets::Controllers::FloatingWindow * arg__1)
+  } // registerFloatingWindow(KDDockWidgets::Core::FloatingWindow * arg__1)
 
   registerFloatingWindow(FloatingWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -233,7 +194,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__registerFloatingWindow_FloatingWindow')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // registerGroup(KDDockWidgets::Controllers::Group * arg__1)
+  } // registerGroup(KDDockWidgets::Core::Group * arg__1)
 
   registerGroup(Group? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -241,7 +202,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__registerGroup_Group')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // registerLayout(KDDockWidgets::Controllers::Layout * arg__1)
+  } // registerLayout(KDDockWidgets::Core::Layout * arg__1)
 
   registerLayout(Layout? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -249,7 +210,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__registerLayout_Layout')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // registerMainWindow(KDDockWidgets::Controllers::MainWindow * arg__1)
+  } // registerMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 
   registerMainWindow(MainWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -267,7 +228,7 @@ class DockRegistry extends QObject {
         .asFunction();
     ffi.Pointer<void> result = func();
     return DockRegistry.fromCppPointer(result, false);
-  } // setFocusedDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+  } // setFocusedDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 
   setFocusedDockWidget(DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -275,7 +236,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__setFocusedDockWidget_DockWidget')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget * arg__1) const
+  } // sideBarForDockWidget(const KDDockWidgets::Core::DockWidget * arg__1) const
 
   SideBar sideBarForDockWidget(DockWidget? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
@@ -296,7 +257,7 @@ class DockRegistry extends QObject {
     ffi.Pointer<void> result = func(
         s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
     return QString.fromCppPointer(result, true);
-  } // unregisterDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+  } // unregisterDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 
   unregisterDockWidget(DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -304,7 +265,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // unregisterFloatingWindow(KDDockWidgets::Controllers::FloatingWindow * arg__1)
+  } // unregisterFloatingWindow(KDDockWidgets::Core::FloatingWindow * arg__1)
 
   unregisterFloatingWindow(FloatingWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -312,7 +273,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__unregisterFloatingWindow_FloatingWindow')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // unregisterGroup(KDDockWidgets::Controllers::Group * arg__1)
+  } // unregisterGroup(KDDockWidgets::Core::Group * arg__1)
 
   unregisterGroup(Group? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -320,7 +281,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__unregisterGroup_Group')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // unregisterLayout(KDDockWidgets::Controllers::Layout * arg__1)
+  } // unregisterLayout(KDDockWidgets::Core::Layout * arg__1)
 
   unregisterLayout(Layout? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -328,7 +289,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__unregisterLayout_Layout')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // unregisterMainWindow(KDDockWidgets::Controllers::MainWindow * arg__1)
+  } // unregisterMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 
   unregisterMainWindow(MainWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -348,24 +309,14 @@ class DockRegistry extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 295:
-        return "c_KDDockWidgets__DockRegistry__customEvent_QEvent";
-      case 306:
-        return "c_KDDockWidgets__DockRegistry__event_QEvent";
-      case 307:
-        return "c_KDDockWidgets__DockRegistry__eventFilter_QObject_QEvent";
+
     }
     return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 295:
-        return "customEvent";
-      case 306:
-        return "event";
-      case 307:
-        return "eventFilter";
+
     }
     throw Error();
   }
@@ -376,19 +327,5 @@ class DockRegistry extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__DockRegistry__registerVirtualMethodCallback')
         .asFunction();
-    final callback295 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            QObject.customEvent_calledFromC);
-    registerCallback(thisCpp, callback295, 295);
-    const callbackExcept306 = 0;
-    final callback306 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            QObject.event_calledFromC, callbackExcept306);
-    registerCallback(thisCpp, callback306, 306);
-    const callbackExcept307 = 0;
-    final callback307 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
-            QObject.eventFilter_calledFromC, callbackExcept307);
-    registerCallback(thisCpp, callback307, 307);
   }
 }

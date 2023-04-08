@@ -23,7 +23,7 @@ class TabBar_flutter_wrapper : public ::KDDockWidgets::Views::TabBar_flutter
 {
 public:
     ~TabBar_flutter_wrapper();
-    TabBar_flutter_wrapper(KDDockWidgets::Controllers::TabBar *controller, KDDockWidgets::View *parent = nullptr);
+    TabBar_flutter_wrapper(KDDockWidgets::Core::TabBar *controller, KDDockWidgets::View *parent = nullptr);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -96,8 +96,8 @@ public:
     virtual void releaseKeyboard_nocallback();
     virtual void releaseMouse();
     virtual void releaseMouse_nocallback();
-    virtual void removeDockWidget(KDDockWidgets::Controllers::DockWidget *dw);
-    virtual void removeDockWidget_nocallback(KDDockWidgets::Controllers::DockWidget *dw);
+    virtual void removeDockWidget(KDDockWidgets::Core::DockWidget *dw);
+    virtual void removeDockWidget_nocallback(KDDockWidgets::Core::DockWidget *dw);
     virtual void renameTab(int index, const QString &name);
     virtual void renameTab_nocallback(int index, const QString &name);
     virtual void setCurrentIndex(int index);
@@ -222,7 +222,7 @@ public:
     Callback_releaseKeyboard m_releaseKeyboardCallback = nullptr;
     typedef void (*Callback_releaseMouse)(void *);
     Callback_releaseMouse m_releaseMouseCallback = nullptr;
-    typedef void (*Callback_removeDockWidget)(void *, KDDockWidgets::Controllers::DockWidget *dw);
+    typedef void (*Callback_removeDockWidget)(void *, KDDockWidgets::Core::DockWidget *dw);
     Callback_removeDockWidget m_removeDockWidgetCallback = nullptr;
     typedef void (*Callback_renameTab)(void *, int index, const QString &name);
     Callback_renameTab m_renameTabCallback = nullptr;
@@ -279,7 +279,7 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::TabBar_flutter::TabBar_flutter(KDDockWidgets::Controllers::TabBar * controller, KDDockWidgets::View * parent)
+// KDDockWidgets::Views::TabBar_flutter::TabBar_flutter(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__constructor_TabBar_View(void *controller_, void *parent_);
 // KDDockWidgets::Views::TabBar_flutter::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__activateWindow(void *thisObj);
@@ -353,7 +353,7 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__rectF
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::releaseMouse()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__releaseMouse(void *thisObj);
-// KDDockWidgets::Views::TabBar_flutter::removeDockWidget(KDDockWidgets::Controllers::DockWidget * dw)
+// KDDockWidgets::Views::TabBar_flutter::removeDockWidget(KDDockWidgets::Core::DockWidget * dw)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__removeDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Views::TabBar_flutter::renameTab(int index, const QString & name)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__renameTab_int_QString(void *thisObj, int index, const char *name_);

@@ -100,7 +100,7 @@ QSize Button::sizeHint() const
     return QSize(m, m);
 }
 
-TitleBar_qtwidgets::TitleBar_qtwidgets(Controllers::TitleBar *controller, View *parent)
+TitleBar_qtwidgets::TitleBar_qtwidgets(Core::TitleBar *controller, View *parent)
     : View_qtwidgets(controller, Type::TitleBar, View_qt::asQWidget(parent))
     , Views::TitleBarViewInterface(controller)
     , m_layout(new QHBoxLayout(this))
@@ -135,22 +135,22 @@ void TitleBar_qtwidgets::init()
     m_autoHideButton->setVisible(false);
 
     connect(m_floatButton, &QAbstractButton::clicked, m_titleBar,
-            &Controllers::TitleBar::onFloatClicked);
+            &Core::TitleBar::onFloatClicked);
     connect(m_closeButton, &QAbstractButton::clicked, m_titleBar,
-            &Controllers::TitleBar::onCloseClicked);
+            &Core::TitleBar::onCloseClicked);
     connect(m_maximizeButton, &QAbstractButton::clicked, m_titleBar,
-            &Controllers::TitleBar::onMaximizeClicked);
+            &Core::TitleBar::onMaximizeClicked);
     connect(m_minimizeButton, &QAbstractButton::clicked, m_titleBar,
-            &Controllers::TitleBar::onMinimizeClicked);
+            &Core::TitleBar::onMinimizeClicked);
     connect(m_autoHideButton, &QAbstractButton::clicked, m_titleBar,
-            &Controllers::TitleBar::onAutoHideClicked);
+            &Core::TitleBar::onAutoHideClicked);
 
     m_minimizeButton->setToolTip(tr("Minimize"));
     m_closeButton->setToolTip(tr("Close"));
 
-    connect(m_titleBar, &Controllers::TitleBar::titleChanged, this, [this] { update(); });
+    connect(m_titleBar, &Core::TitleBar::titleChanged, this, [this] { update(); });
 
-    connect(m_titleBar, &Controllers::TitleBar::iconChanged, this, [this] {
+    connect(m_titleBar, &Core::TitleBar::iconChanged, this, [this] {
         if (m_titleBar->icon().isNull()) {
             m_dockWidgetIcon->setPixmap(QPixmap());
         } else {
@@ -161,18 +161,18 @@ void TitleBar_qtwidgets::init()
     });
 
     m_closeButton->setEnabled(m_titleBar->closeButtonEnabled());
-    connect(m_titleBar, &Controllers::TitleBar::closeButtonEnabledChanged, m_closeButton,
+    connect(m_titleBar, &Core::TitleBar::closeButtonEnabledChanged, m_closeButton,
             &QAbstractButton::setEnabled);
 
-    connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, m_floatButton,
+    connect(m_titleBar, &Core::TitleBar::floatButtonToolTipChanged, m_floatButton,
             &QWidget::setToolTip);
-    connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, m_floatButton,
+    connect(m_titleBar, &Core::TitleBar::floatButtonVisibleChanged, m_floatButton,
             &QWidget::setVisible);
-    connect(m_titleBar, &Controllers::TitleBar::autoHideButtonChanged, this,
+    connect(m_titleBar, &Core::TitleBar::autoHideButtonChanged, this,
             &TitleBar_qtwidgets::updateAutoHideButton);
-    connect(m_titleBar, &Controllers::TitleBar::minimizeButtonChanged, this,
+    connect(m_titleBar, &Core::TitleBar::minimizeButtonChanged, this,
             &TitleBar_qtwidgets::updateMinimizeButton);
-    connect(m_titleBar, &Controllers::TitleBar::maximizeButtonChanged, this,
+    connect(m_titleBar, &Core::TitleBar::maximizeButtonChanged, this,
             &TitleBar_qtwidgets::updateMaximizeButton);
 
     m_floatButton->setVisible(m_titleBar->floatButtonVisible());

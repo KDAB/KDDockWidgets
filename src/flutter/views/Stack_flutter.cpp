@@ -22,7 +22,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Stack_flutter::Stack_flutter(Controllers::Stack *controller, View *parent)
+Stack_flutter::Stack_flutter(Core::Stack *controller, View *parent)
     : View_flutter(controller, Type::Stack, parent)
     , StackViewInterface(controller)
 {

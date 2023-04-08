@@ -20,7 +20,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class FloatingWindow;
 }
 
@@ -36,7 +36,7 @@ class DOCKS_EXPORT FloatingWindow_qtquick : public Views::View_qtquick
     Q_PROPERTY(QObject *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(QObject *dropArea READ dropArea CONSTANT)
 public:
-    explicit FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
+    explicit FloatingWindow_qtquick(Core::FloatingWindow *controller,
                                     Views::MainWindow_qtquick *parent = nullptr,
                                     Qt::WindowFlags flags = {});
     ~FloatingWindow_qtquick();
@@ -60,7 +60,7 @@ private:
     void init() override;
     QQuickView *const m_quickWindow;
     QQuickItem *m_visualItem = nullptr;
-    Controllers::FloatingWindow *const m_controller;
+    Core::FloatingWindow *const m_controller;
     Q_DISABLE_COPY(FloatingWindow_qtquick)
 };
 

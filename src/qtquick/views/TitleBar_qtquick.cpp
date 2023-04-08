@@ -26,7 +26,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 
-TitleBar_qtquick::TitleBar_qtquick(Controllers::TitleBar *controller, QQuickItem *parent)
+TitleBar_qtquick::TitleBar_qtquick(Core::TitleBar *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::TitleBar, parent)
     , Views::TitleBarViewInterface(controller)
 {
@@ -40,22 +40,22 @@ TitleBar_qtquick::~TitleBar_qtquick()
 void TitleBar_qtquick::init()
 {
     // QML interface signals
-    connect(m_titleBar, &Controllers::TitleBar::titleChanged, this,
+    connect(m_titleBar, &Core::TitleBar::titleChanged, this,
             &TitleBar_qtquick::titleChanged);
-    connect(m_titleBar, &Controllers::TitleBar::iconChanged, this, &TitleBar_qtquick::iconChanged);
-    connect(m_titleBar, &Controllers::TitleBar::isFocusedChanged, this,
+    connect(m_titleBar, &Core::TitleBar::iconChanged, this, &TitleBar_qtquick::iconChanged);
+    connect(m_titleBar, &Core::TitleBar::isFocusedChanged, this,
             &TitleBar_qtquick::isFocusedChanged);
-    connect(m_titleBar, &Controllers::TitleBar::closeButtonEnabledChanged, this,
+    connect(m_titleBar, &Core::TitleBar::closeButtonEnabledChanged, this,
             &TitleBar_qtquick::closeButtonEnabledChanged);
-    connect(m_titleBar, &Controllers::TitleBar::floatButtonVisibleChanged, this,
+    connect(m_titleBar, &Core::TitleBar::floatButtonVisibleChanged, this,
             &TitleBar_qtquick::floatButtonVisibleChanged);
-    connect(m_titleBar, &Controllers::TitleBar::floatButtonToolTipChanged, this,
+    connect(m_titleBar, &Core::TitleBar::floatButtonToolTipChanged, this,
             &TitleBar_qtquick::floatButtonToolTipChanged);
-    connect(m_titleBar, &Controllers::TitleBar::numDockWidgetsChanged, this,
+    connect(m_titleBar, &Core::TitleBar::numDockWidgetsChanged, this,
             &TitleBar_qtquick::numDockWidgetsChanged);
-    connect(m_titleBar, &Controllers::TitleBar::maximizeButtonChanged, this,
+    connect(m_titleBar, &Core::TitleBar::maximizeButtonChanged, this,
             &TitleBar_qtquick::maximizeButtonVisibleChanged);
-    connect(m_titleBar, &Controllers::TitleBar::minimizeButtonChanged, this,
+    connect(m_titleBar, &Core::TitleBar::minimizeButtonChanged, this,
             &TitleBar_qtquick::minimizeButtonVisibleChanged);
 }
 

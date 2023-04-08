@@ -23,7 +23,7 @@ namespace KDDockWidgets {
 
 class Indicator;
 
-namespace Controllers {
+namespace Core {
 class ClassicIndicators;
 }
 
@@ -31,7 +31,7 @@ class IndicatorWindow_qtwidgets : public QWidget, public Views::ClassicIndicator
 {
     Q_OBJECT
 public:
-    explicit IndicatorWindow_qtwidgets(Controllers::ClassicIndicators *classicIndicators);
+    explicit IndicatorWindow_qtwidgets(Core::ClassicIndicators *classicIndicators);
 
     DropLocation hover(QPoint globalPos) override;
     void updatePositions() override;
@@ -53,7 +53,7 @@ private:
 
     Indicator *indicatorForLocation(DropLocation loc) const;
 
-    Controllers::ClassicIndicators *const classicIndicators;
+    Core::ClassicIndicators *const classicIndicators;
     Indicator *const m_center;
     Indicator *const m_left;
     Indicator *const m_right;

@@ -31,7 +31,7 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class DockWidget;
 }
 
@@ -104,7 +104,7 @@ public:
      * Useful since some dock widgets can be new, and hence not be included in the last saved
      * layout.
      */
-    QVector<Controllers::DockWidget *> restoredDockWidgets() const;
+    QVector<Core::DockWidget *> restoredDockWidgets() const;
 
     /**
      * @brief Sets the list of affinity names for which restore and save will be applied on.

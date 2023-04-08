@@ -41,7 +41,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Group_qtquick::Group_qtquick(Controllers::Group *controller, QQuickItem *parent)
+Group_qtquick::Group_qtquick(Core::Group *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::Frame, parent)
     , GroupViewInterface(controller)
 {
@@ -49,7 +49,7 @@ Group_qtquick::Group_qtquick(Controllers::Group *controller, QQuickItem *parent)
 
 Group_qtquick::~Group_qtquick()
 {
-    disconnect(m_group, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
+    disconnect(m_group, &Core::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
 
     // The QML item must be deleted with deleteLater(), as we might be currently with its mouse
     // handler in the stack. QML doesn't support it being deleted in that case.
@@ -60,25 +60,25 @@ Group_qtquick::~Group_qtquick()
 
 void Group_qtquick::init()
 {
-    connect(m_group->tabBar(), &Controllers::TabBar::countChanged, this,
+    connect(m_group->tabBar(), &Core::TabBar::countChanged, this,
             &Group_qtquick::updateConstriants);
 
     connect(this, &View_qtquick::geometryUpdated, this,
             [this] { View::d->layoutInvalidated.emit(); });
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
-    connect(m_group, &Controllers::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
-    connect(m_group->tabBar(), &Controllers::TabBar::currentDockWidgetChanged, this,
+    connect(m_group, &Core::Group::isMDIChanged, this, &Group_qtquick::isMDIChanged);
+    connect(m_group->tabBar(), &Core::TabBar::currentDockWidgetChanged, this,
             &Group_qtquick::currentDockWidgetChanged);
 
     // Minor hack: While the controllers keep track of "current widget",
     // the QML StackLayout deals in "current index", these can differ when removing a non-current
     // tab. The currentDockWidgetChanged() won't be emitted but the index did decrement.
     // As a workaround, always emit the signal, which is harmless if not needed.
-    connect(m_group, &Controllers::Group::numDockWidgetsChanged, this,
+    connect(m_group, &Core::Group::numDockWidgetsChanged, this,
             &Group_qtquick::currentDockWidgetChanged);
 
-    connect(m_group, &Controllers::Group::actualTitleBarChanged, this,
+    connect(m_group, &Core::Group::actualTitleBarChanged, this,
             &Group_qtquick::actualTitleBarChanged);
 
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
@@ -114,7 +114,7 @@ void Group_qtquick::updateConstriants()
     View::d->layoutInvalidated.emit();
 }
 
-void Group_qtquick::removeDockWidget(Controllers::DockWidget *dw)
+void Group_qtquick::removeDockWidget(Core::DockWidget *dw)
 {
     m_group->tabBar()->removeDockWidget(dw);
 }
@@ -124,9 +124,9 @@ int Group_qtquick::currentIndex() const
     return m_group->currentIndex();
 }
 
-void Group_qtquick::insertDockWidget(Controllers::DockWidget *dw, int index)
+void Group_qtquick::insertDockWidget(Core::DockWidget *dw, int index)
 {
-    QPointer<Controllers::Group> oldFrame = dw->d->group();
+    QPointer<Core::Group> oldFrame = dw->d->group();
     m_group->tabBar()->insertDockWidget(index, dw, {}, {});
 
     dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());

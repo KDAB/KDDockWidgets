@@ -126,10 +126,10 @@ View *Platform_qtquick::tests_createNonClosableView(View *parent)
     return view;
 }
 
-Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
-                                                            CreateViewOptions viewOpts,
-                                                            MainWindowOptions options, View *parent,
-                                                            Qt::WindowFlags flags) const
+Core::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
+                                                     CreateViewOptions viewOpts,
+                                                     MainWindowOptions options, View *parent,
+                                                     Qt::WindowFlags flags) const
 {
     QQuickItem *parentItem = Views::asQQuickItem(parent);
 

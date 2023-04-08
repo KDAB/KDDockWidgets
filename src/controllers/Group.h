@@ -29,7 +29,7 @@ namespace KDDockWidgets {
 class WidgetResizeHandler;
 }
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 
 class MDILayout;
 class DockWidget;
@@ -92,16 +92,16 @@ public:
     int dockWidgetCount() const;
 
     /// @brief returns the tab widget
-    Controllers::Stack *stack() const;
-    Controllers::TabBar *tabBar() const;
+    Core::Stack *stack() const;
+    Core::TabBar *tabBar() const;
 
     void updateTitleAndIcon();
     void onDockWidgetTitleChanged();
     void updateTitleBarVisibility();
     void updateFloatingActions();
     bool containsMouse(QPoint globalPos) const;
-    Controllers::TitleBar *titleBar() const;
-    Controllers::TitleBar *actualTitleBar() const;
+    Core::TitleBar *titleBar() const;
+    Core::TitleBar *actualTitleBar() const;
     QString title() const;
     Icon icon() const;
     const QVector<DockWidget *> dockWidgets() const;
@@ -287,7 +287,7 @@ public:
     /// @sa isMDI()
     bool hasNestedMDIDockWidgets() const;
 
-    /// @brief See Controllers::DockWidget::userType()
+    /// @brief See Core::DockWidget::userType()
     int userType() const;
 
     /// @brief Returns the resize handler. Used mostly in MDI mode.
@@ -348,14 +348,14 @@ private:
 protected:
     bool m_inDtor = false;
 
-    Controllers::Stack *const m_stack;
-    Controllers::TabBar *const m_tabBar;
-    Controllers::TitleBar *const m_titleBar;
+    Core::Stack *const m_stack;
+    Core::TabBar *const m_tabBar;
+    Core::TitleBar *const m_titleBar;
 
 private:
     Q_DISABLE_COPY(Group)
     friend class ::TestDocks;
-    friend class KDDockWidgets::Controllers::Stack;
+    friend class KDDockWidgets::Core::Stack;
 
     void scheduleDeleteLater();
     void onCloseEvent(CloseEvent *);

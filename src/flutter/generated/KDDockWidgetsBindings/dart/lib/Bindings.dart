@@ -66,7 +66,6 @@ export 'src/KDDockWidgets.dart'
         KDDockWidgets_Type;
 export 'src/Item.dart' show Item;
 export 'src/QByteArray.dart' show QByteArray;
-export 'src/QEvent.dart' show QEvent, QEvent_Type;
 export 'src/QList.dart' show QList;
 export 'src/QObject.dart' show QObject;
 export 'src/QPoint.dart' show QPoint;

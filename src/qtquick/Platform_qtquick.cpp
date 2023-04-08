@@ -227,7 +227,7 @@ void Platform_qtquick::ungrabMouse()
     }
 }
 
-Controllers::DockWidget *Platform_qtquick::dockWidgetForItem(QQuickItem *item)
+Core::DockWidget *Platform_qtquick::dockWidgetForItem(QQuickItem *item)
 {
     if (!item)
         return nullptr;

@@ -12,7 +12,6 @@
 #include <qlist.h>
 #include <qobject.h>
 #include <qstring.h>
-#include <qcoreevent.h>
 #include <qbytearray.h>
 #include <Group.h>
 #include <View.h>

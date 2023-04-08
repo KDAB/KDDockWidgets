@@ -24,9 +24,9 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
-SideBar_qtwidgets::SideBar_qtwidgets(Controllers::SideBar *controller, QWidget *parent)
+SideBar_qtwidgets::SideBar_qtwidgets(Core::SideBar *controller, QWidget *parent)
     : View_qtwidgets(controller, Type::SideBar, parent)
     , SideBarViewInterface(controller)
 {
@@ -44,14 +44,14 @@ void SideBar_qtwidgets::init()
     m_layout->addStretch();
 }
 
-void SideBar_qtwidgets::addDockWidget_Impl(Controllers::DockWidget *dw)
+void SideBar_qtwidgets::addDockWidget_Impl(Core::DockWidget *dw)
 {
     auto button = createButton(dw, this);
     button->setText(dw->title());
-    connect(dw, &Controllers::DockWidget::titleChanged, button, &SideBarButton::setText);
-    connect(dw, &Controllers::DockWidget::isOverlayedChanged, button,
+    connect(dw, &Core::DockWidget::titleChanged, button, &SideBarButton::setText);
+    connect(dw, &Core::DockWidget::isOverlayedChanged, button,
             [button] { button->update(); });
-    connect(dw, &Controllers::DockWidget::removedFromSideBar, button, &QObject::deleteLater);
+    connect(dw, &Core::DockWidget::removedFromSideBar, button, &QObject::deleteLater);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
     connect(button, &SideBarButton::clicked, this, [this, dw] { m_sideBar->onButtonClicked(dw); });
 
@@ -59,18 +59,18 @@ void SideBar_qtwidgets::addDockWidget_Impl(Controllers::DockWidget *dw)
     m_layout->insertWidget(count - 1, button);
 }
 
-void SideBar_qtwidgets::removeDockWidget_Impl(Controllers::DockWidget *)
+void SideBar_qtwidgets::removeDockWidget_Impl(Core::DockWidget *)
 {
     // Nothing is needed. Button is removed automatically.
 }
 
-SideBarButton *SideBar_qtwidgets::createButton(Controllers::DockWidget *dw,
+SideBarButton *SideBar_qtwidgets::createButton(Core::DockWidget *dw,
                                                SideBar_qtwidgets *parent) const
 {
     return new SideBarButton(dw, parent);
 }
 
-SideBarButton::SideBarButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent)
+SideBarButton::SideBarButton(Core::DockWidget *dw, SideBar_qtwidgets *parent)
     : QToolButton(parent)
     , m_sideBar(parent->sideBar())
     , m_dockWidget(dw)

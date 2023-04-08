@@ -20,9 +20,9 @@
 #include "DockRegistry.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
-DropIndicatorOverlay::DropIndicatorOverlay(Controllers::DropArea *dropArea)
+DropIndicatorOverlay::DropIndicatorOverlay(Core::DropArea *dropArea)
     : Controller(Type::DropAreaIndicatorOverlay,
                  Platform::instance()->createView(this, dropArea->view()))
     , m_dropArea(dropArea)
@@ -69,7 +69,7 @@ QRect DropIndicatorOverlay::hoveredFrameRect() const
     return m_hoveredFrameRect;
 }
 
-void DropIndicatorOverlay::setHoveredFrame(Controllers::Group *group)
+void DropIndicatorOverlay::setHoveredFrame(Core::Group *group)
 {
     if (group == m_hoveredFrame)
         return;
@@ -140,9 +140,9 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
     if (!windowBeingDragged)
         return false;
 
-    const Controllers::DockWidget::List source = windowBeingDragged->dockWidgets();
-    const Controllers::DockWidget::List target =
-        m_hoveredFrame ? m_hoveredFrame->dockWidgets() : Controllers::DockWidget::List();
+    const Core::DockWidget::List source = windowBeingDragged->dockWidgets();
+    const Core::DockWidget::List target =
+        m_hoveredFrame ? m_hoveredFrame->dockWidgets() : Core::DockWidget::List();
 
     const bool isInner = dropLoc & DropLocation_Inner;
     const bool isOutter = dropLoc & DropLocation_Outter;
@@ -190,7 +190,7 @@ void DropIndicatorOverlay::onFrameDestroyed()
     setHoveredFrame(nullptr);
 }
 
-void DropIndicatorOverlay::onHoveredFrameChanged(Controllers::Group *)
+void DropIndicatorOverlay::onHoveredFrameChanged(Core::Group *)
 {
 }
 

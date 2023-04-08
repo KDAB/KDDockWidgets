@@ -34,7 +34,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 class DockRegistry::Private
 {
@@ -90,7 +90,7 @@ void DockRegistry::onFocusedViewChanged(std::shared_ptr<View> view)
     setFocusedDockWidget(nullptr);
 }
 
-void DockRegistry::setFocusedDockWidget(Controllers::DockWidget *dw)
+void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
 {
     if (m_focusedDockWidget.data() == dw)
         return;
@@ -178,13 +178,13 @@ QStringList DockRegistry::dockWidgetNames() const
 }
 
 bool DockRegistry::isProbablyObscured(Window::Ptr window,
-                                      Controllers::FloatingWindow *exclude) const
+                                      Core::FloatingWindow *exclude) const
 {
     if (!window)
         return false;
 
     const QRect geo = window->geometry();
-    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+    for (Core::FloatingWindow *fw : m_floatingWindows) {
         Window::Ptr fwWindow = fw->view()->window();
         if (fw == exclude || fwWindow->equals(window))
             continue;
@@ -201,7 +201,7 @@ bool DockRegistry::isProbablyObscured(Window::Ptr window,
     const bool targetIsToolWindow =
         fw && fw->isUtilityWindow();
 
-    for (Controllers::MainWindow *mw : m_mainWindows) {
+    for (Core::MainWindow *mw : m_mainWindows) {
         Window::Ptr mwWindow = mw->view()->window();
 
         if (mwWindow && !mwWindow->equals(window) && !targetIsToolWindow
@@ -217,40 +217,40 @@ bool DockRegistry::isProbablyObscured(Window::Ptr window,
 
 bool DockRegistry::isProbablyObscured(Window::Ptr target, WindowBeingDragged *exclude) const
 {
-    Controllers::FloatingWindow *fw =
+    Core::FloatingWindow *fw =
         exclude ? exclude->floatingWindow() : nullptr; // It's null on Wayland. On wayland obscuring
                                                        // never happens anyway, so not a problem.
 
     return isProbablyObscured(target, fw);
 }
 
-SideBarLocation DockRegistry::sideBarLocationForDockWidget(const Controllers::DockWidget *dw) const
+SideBarLocation DockRegistry::sideBarLocationForDockWidget(const Core::DockWidget *dw) const
 {
-    if (Controllers::SideBar *sb = sideBarForDockWidget(dw))
+    if (Core::SideBar *sb = sideBarForDockWidget(dw))
         return sb->location();
 
     return SideBarLocation::None;
 }
 
-Controllers::SideBar *DockRegistry::sideBarForDockWidget(const Controllers::DockWidget *dw) const
+Core::SideBar *DockRegistry::sideBarForDockWidget(const Core::DockWidget *dw) const
 {
     for (auto mw : m_mainWindows) {
-        if (Controllers::SideBar *sb = mw->sideBarForDockWidget(dw))
+        if (Core::SideBar *sb = mw->sideBarForDockWidget(dw))
             return sb;
     }
 
     return nullptr;
 }
 
-Controllers::Group *DockRegistry::groupInMDIResize() const
+Core::Group *DockRegistry::groupInMDIResize() const
 {
     for (auto mw : m_mainWindows) {
         if (!mw->isMDI())
             continue;
 
         Layout *layout = mw->layout();
-        const QList<Controllers::Group *> groups = layout->groups();
-        for (Controllers::Group *group : groups) {
+        const QList<Core::Group *> groups = layout->groups();
+        for (Core::Group *group : groups) {
             if (WidgetResizeHandler *wrh = group->resizeHandler()) {
                 if (wrh->isResizing())
                     return group;
@@ -261,10 +261,10 @@ Controllers::Group *DockRegistry::groupInMDIResize() const
     return nullptr;
 }
 
-Controllers::MainWindow::List
+Core::MainWindow::List
 DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
-    Controllers::MainWindow::List result;
+    Core::MainWindow::List result;
     result.reserve(m_mainWindows.size());
 
     for (auto mw : m_mainWindows) {
@@ -276,7 +276,7 @@ DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
     return result;
 }
 
-Controllers::Layout *DockRegistry::layoutForItem(const Layouting::Item *item) const
+Core::Layout *DockRegistry::layoutForItem(const Layouting::Item *item) const
 {
     if (!item->hostView())
         return nullptr;
@@ -286,7 +286,7 @@ Controllers::Layout *DockRegistry::layoutForItem(const Layouting::Item *item) co
 
 bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const
 {
-    if (Controllers::Layout *layout = layoutForItem(item)) {
+    if (Core::Layout *layout = layoutForItem(item)) {
         return layout->isInMainWindow(/*honoursNesting=*/true);
     }
 
@@ -304,7 +304,7 @@ DockRegistry *DockRegistry::self()
     return s_dockRegistry;
 }
 
-void DockRegistry::registerDockWidget(Controllers::DockWidget *dock)
+void DockRegistry::registerDockWidget(Core::DockWidget *dock)
 {
     if (dock->uniqueName().isEmpty()) {
         qWarning() << Q_FUNC_INFO << "DockWidget" << dock << " doesn't have an ID";
@@ -316,7 +316,7 @@ void DockRegistry::registerDockWidget(Controllers::DockWidget *dock)
     m_dockWidgets << dock;
 }
 
-void DockRegistry::unregisterDockWidget(Controllers::DockWidget *dock)
+void DockRegistry::unregisterDockWidget(Core::DockWidget *dock)
 {
     if (m_focusedDockWidget == dock)
         m_focusedDockWidget = nullptr;
@@ -325,7 +325,7 @@ void DockRegistry::unregisterDockWidget(Controllers::DockWidget *dock)
     maybeDelete();
 }
 
-void DockRegistry::registerMainWindow(Controllers::MainWindow *mainWindow)
+void DockRegistry::registerMainWindow(Core::MainWindow *mainWindow)
 {
     if (mainWindow->uniqueName().isEmpty()) {
         qWarning() << Q_FUNC_INFO << "MainWindow" << mainWindow << " doesn't have an ID";
@@ -337,46 +337,46 @@ void DockRegistry::registerMainWindow(Controllers::MainWindow *mainWindow)
     m_mainWindows << mainWindow;
 }
 
-void DockRegistry::unregisterMainWindow(Controllers::MainWindow *mainWindow)
+void DockRegistry::unregisterMainWindow(Core::MainWindow *mainWindow)
 {
     m_mainWindows.removeOne(mainWindow);
     maybeDelete();
 }
 
-void DockRegistry::registerFloatingWindow(Controllers::FloatingWindow *fw)
+void DockRegistry::registerFloatingWindow(Core::FloatingWindow *fw)
 {
     m_floatingWindows << fw;
     Platform::instance()->onFloatingWindowCreated(fw);
 }
 
-void DockRegistry::unregisterFloatingWindow(Controllers::FloatingWindow *fw)
+void DockRegistry::unregisterFloatingWindow(Core::FloatingWindow *fw)
 {
     m_floatingWindows.removeOne(fw);
     Platform::instance()->onFloatingWindowDestroyed(fw);
     maybeDelete();
 }
 
-void DockRegistry::registerLayout(Controllers::Layout *layout)
+void DockRegistry::registerLayout(Core::Layout *layout)
 {
     m_layouts << layout;
 }
 
-void DockRegistry::unregisterLayout(Controllers::Layout *layout)
+void DockRegistry::unregisterLayout(Core::Layout *layout)
 {
     m_layouts.removeOne(layout);
 }
 
-void DockRegistry::registerGroup(Controllers::Group *group)
+void DockRegistry::registerGroup(Core::Group *group)
 {
     m_groups << group;
 }
 
-void DockRegistry::unregisterGroup(Controllers::Group *group)
+void DockRegistry::unregisterGroup(Core::Group *group)
 {
     m_groups.removeOne(group);
 }
 
-Controllers::DockWidget *DockRegistry::focusedDockWidget() const
+Core::DockWidget *DockRegistry::focusedDockWidget() const
 {
     return m_focusedDockWidget;
 }
@@ -391,7 +391,7 @@ bool DockRegistry::containsMainWindow(const QString &uniqueName) const
     return mainWindowByName(uniqueName) != nullptr;
 }
 
-Controllers::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags flags) const
+Core::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags flags) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {
         if (dock->uniqueName() == name)
@@ -424,7 +424,7 @@ Controllers::DockWidget *DockRegistry::dockByName(const QString &name, DockByNam
     return nullptr;
 }
 
-Controllers::MainWindow *DockRegistry::mainWindowByName(const QString &name) const
+Core::MainWindow *DockRegistry::mainWindowByName(const QString &name) const
 {
     for (auto mainWindow : qAsConst(m_mainWindows)) {
         if (mainWindow->uniqueName() == name)
@@ -470,14 +470,14 @@ bool DockRegistry::isSane() const
     return true;
 }
 
-const Controllers::DockWidget::List DockRegistry::dockwidgets() const
+const Core::DockWidget::List DockRegistry::dockwidgets() const
 {
     return m_dockWidgets;
 }
 
-const Controllers::DockWidget::List DockRegistry::dockWidgets(const QStringList &names)
+const Core::DockWidget::List DockRegistry::dockWidgets(const QStringList &names)
 {
-    Controllers::DockWidget::List result;
+    Core::DockWidget::List result;
     result.reserve(names.size());
 
     for (auto dw : qAsConst(m_dockWidgets)) {
@@ -488,9 +488,9 @@ const Controllers::DockWidget::List DockRegistry::dockWidgets(const QStringList 
     return result;
 }
 
-const Controllers::MainWindow::List DockRegistry::mainWindows(const QStringList &names)
+const Core::MainWindow::List DockRegistry::mainWindows(const QStringList &names)
 {
-    Controllers::MainWindow::List result;
+    Core::MainWindow::List result;
     result.reserve(names.size());
 
     for (auto mw : qAsConst(m_mainWindows)) {
@@ -501,12 +501,12 @@ const Controllers::MainWindow::List DockRegistry::mainWindows(const QStringList 
     return result;
 }
 
-const Controllers::DockWidget::List DockRegistry::closedDockwidgets() const
+const Core::DockWidget::List DockRegistry::closedDockwidgets() const
 {
-    Controllers::DockWidget::List result;
+    Core::DockWidget::List result;
     result.reserve(m_dockWidgets.size());
 
-    for (Controllers::DockWidget *dw : m_dockWidgets) {
+    for (Core::DockWidget *dw : m_dockWidgets) {
         if (dw->parent() == nullptr && !dw->isVisible())
             result.push_back(dw);
     }
@@ -514,7 +514,7 @@ const Controllers::DockWidget::List DockRegistry::closedDockwidgets() const
     return result;
 }
 
-const Controllers::MainWindow::List DockRegistry::mainwindows() const
+const Core::MainWindow::List DockRegistry::mainwindows() const
 {
     return m_mainWindows;
 }
@@ -533,23 +533,23 @@ const QList<Views::MainWindowViewInterface *> DockRegistry::mainDockingAreas() c
     return areas;
 }
 
-const QVector<Controllers::Layout *> DockRegistry::layouts() const
+const QVector<Core::Layout *> DockRegistry::layouts() const
 {
     return m_layouts;
 }
 
-const Controllers::Group::List DockRegistry::groups() const
+const Core::Group::List DockRegistry::groups() const
 {
     return m_groups;
 }
 
-const QVector<Controllers::FloatingWindow *>
+const QVector<Core::FloatingWindow *>
 DockRegistry::floatingWindows(bool includeBeingDeleted) const
 {
     // Returns all the FloatingWindow which aren't being deleted
-    QVector<Controllers::FloatingWindow *> result;
+    QVector<Core::FloatingWindow *> result;
     result.reserve(m_floatingWindows.size());
-    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+    for (Core::FloatingWindow *fw : m_floatingWindows) {
         if (includeBeingDeleted || !fw->beingDeleted())
             result.push_back(fw);
     }
@@ -561,7 +561,7 @@ const Window::List DockRegistry::floatingQWindows() const
 {
     Window::List windows;
     windows.reserve(m_floatingWindows.size());
-    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+    for (Core::FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted()) {
             if (Window::Ptr window = fw->view()->window()) {
                 windows.push_back(window);
@@ -577,12 +577,12 @@ const Window::List DockRegistry::floatingQWindows() const
 bool DockRegistry::hasFloatingWindows() const
 {
     return std::any_of(m_floatingWindows.begin(), m_floatingWindows.end(),
-                       [](Controllers::FloatingWindow *fw) { return !fw->beingDeleted(); });
+                       [](Core::FloatingWindow *fw) { return !fw->beingDeleted(); });
 }
 
-Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr windowHandle) const
+Core::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr windowHandle) const
 {
-    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+    for (Core::FloatingWindow *fw : m_floatingWindows) {
         if (fw->view()->window()->equals(windowHandle))
             return fw;
     }
@@ -590,9 +590,9 @@ Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr w
     return nullptr;
 }
 
-Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) const
+Core::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) const
 {
-    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+    for (Core::FloatingWindow *fw : m_floatingWindows) {
         Window::Ptr window = fw->view()->window();
         if (window && window->handle() == hwnd)
             return fw;
@@ -601,12 +601,12 @@ Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) con
     return nullptr;
 }
 
-Controllers::MainWindow *DockRegistry::mainWindowForHandle(Window::Ptr window) const
+Core::MainWindow *DockRegistry::mainWindowForHandle(Window::Ptr window) const
 {
     if (!window)
         return nullptr;
 
-    for (Controllers::MainWindow *mw : m_mainWindows) {
+    for (Core::MainWindow *mw : m_mainWindows) {
         if (mw->view()->isInWindow(window))
             return mw;
     }
@@ -620,7 +620,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     windows.reserve(m_floatingWindows.size() + m_mainWindows.size());
 
     if (!excludeFloatingDocks) {
-        for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+        for (Core::FloatingWindow *fw : m_floatingWindows) {
             if (fw->isVisible()) {
                 if (Window::Ptr window = fw->view()->window()) {
                     windows << window;
@@ -631,7 +631,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
         }
     }
 
-    for (Controllers::MainWindow *m : m_mainWindows) {
+    for (Core::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
             if (Window::Ptr window = m->view()->window()) {
                 windows << window;
@@ -650,8 +650,8 @@ void DockRegistry::clear(const QStringList &affinities)
     clear(m_dockWidgets, m_mainWindows, affinities);
 }
 
-void DockRegistry::clear(const Controllers::DockWidget::List &dockWidgets,
-                         const Controllers::MainWindow::List &mainWindows,
+void DockRegistry::clear(const Core::DockWidget::List &dockWidgets,
+                         const Core::MainWindow::List &mainWindows,
                          const QStringList &affinities)
 {
     for (auto dw : qAsConst(dockWidgets)) {
@@ -670,7 +670,7 @@ void DockRegistry::clear(const Controllers::DockWidget::List &dockWidgets,
 
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
-    for (Controllers::DockWidget *dw : qAsConst(m_dockWidgets)) {
+    for (Core::DockWidget *dw : qAsConst(m_dockWidgets)) {
         if (dw->view()->rootView()->equals(dw->view()) && dw->isVisible())
             dw->d->morphIntoFloatingWindow();
     }
@@ -718,7 +718,7 @@ bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
     return false;
 }
 
-bool DockRegistry::onDockWidgetPressed(Controllers::DockWidget *dw, MouseEvent *ev)
+bool DockRegistry::onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *ev)
 {
     // Here we implement "auto-hide". If there's a overlayed dock widget, we hide it if some other
     // dock widget is clicked.
@@ -727,11 +727,11 @@ bool DockRegistry::onDockWidgetPressed(Controllers::DockWidget *dw, MouseEvent *
     if (Platform::instance()->hasActivePopup())
         return false;
 
-    Controllers::MainWindow *mainWindow = dw->mainWindow();
+    Core::MainWindow *mainWindow = dw->mainWindow();
     if (!mainWindow) // Only docked widgets are interesting
         return false;
 
-    if (Controllers::DockWidget *overlayedDockWidget = mainWindow->overlayedDockWidget()) {
+    if (Core::DockWidget *overlayedDockWidget = mainWindow->overlayedDockWidget()) {
         ev->ignore();
         Platform::instance()->sendEvent(overlayedDockWidget->d->group()->view(), ev);
 
@@ -752,7 +752,7 @@ bool DockRegistry::onDockWidgetPressed(Controllers::DockWidget *dw, MouseEvent *
 
 bool DockRegistry::onExposeEvent(Window::Ptr window)
 {
-    if (Controllers::FloatingWindow *fw = floatingWindowForHandle(window)) {
+    if (Core::FloatingWindow *fw = floatingWindowForHandle(window)) {
         // This floating window was exposed
         m_floatingWindows.removeOne(fw);
         m_floatingWindows.append(fw);

@@ -30,7 +30,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class MainWindow;
 class SideBar;
 }
@@ -86,7 +86,7 @@ protected:
     QRect centralAreaGeometry() const override;
 
 private:
-    friend class Controllers::MainWindow;
+    friend class Core::MainWindow;
     using QMainWindow::setCentralWidget;
     void setCentralWidget(QWidget *); // overridden just to make it private
 

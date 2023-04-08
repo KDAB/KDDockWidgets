@@ -24,9 +24,9 @@
 #include "kddockwidgets/ViewFactory.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
-Controllers::TabBar::TabBar(Stack *stack)
+Core::TabBar::TabBar(Stack *stack)
     : Controller(Type::TabBar, Config::self().viewFactory()->createTabBar(this, stack->view()))
     , Draggable(view())
     , m_stack(stack)
@@ -35,16 +35,16 @@ Controllers::TabBar::TabBar(Stack *stack)
     dynamic_cast<Views::TabBarViewInterface *>(view())->setTabsAreMovable(tabsAreMovable());
 }
 
-Controllers::TabBar::~TabBar()
+Core::TabBar::~TabBar()
 {
 }
 
-bool Controllers::TabBar::tabsAreMovable() const
+bool Core::TabBar::tabsAreMovable() const
 {
     return Config::self().flags() & Config::Flag_AllowReorderTabs;
 }
 
-bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
+bool Core::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
 {
     // Here we allow the user to re-order tabs instead of dragging them off.
     // To do that we just return false here, and QTabBar will handle the mouse event, assuming
@@ -81,7 +81,7 @@ bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
     return false;
 }
 
-Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(int index) const
+Core::DockWidget *Core::TabBar::dockWidgetAt(int index) const
 {
     if (index < 0 || index >= numDockWidgets())
         return nullptr;
@@ -89,17 +89,17 @@ Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(int index) const
     return const_cast<DockWidget *>(m_dockWidgets.value(index));
 }
 
-Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) const
+Core::DockWidget *Core::TabBar::dockWidgetAt(QPoint localPos) const
 {
     return dockWidgetAt(dynamic_cast<Views::TabBarViewInterface *>(view())->tabAt(localPos));
 }
 
-int TabBar::indexOfDockWidget(const Controllers::DockWidget *dw) const
+int TabBar::indexOfDockWidget(const Core::DockWidget *dw) const
 {
     return m_dockWidgets.indexOf(dw);
 }
 
-void TabBar::removeDockWidget(Controllers::DockWidget *dw)
+void TabBar::removeDockWidget(Core::DockWidget *dw)
 {
     const bool wasCurrent = dw == m_currentDockWidget;
     const int index = m_dockWidgets.indexOf(dw);
@@ -122,7 +122,7 @@ void TabBar::removeDockWidget(Controllers::DockWidget *dw)
     group()->onDockWidgetCountChanged();
 }
 
-void TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const Icon &icon,
+void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
                               const QString &title)
 {
     if (auto oldGroup = dw->dptr()->group()) {
@@ -141,7 +141,7 @@ void TabBar::insertDockWidget(int index, Controllers::DockWidget *dw, const Icon
     group()->onDockWidgetCountChanged();
 }
 
-std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
+std::unique_ptr<WindowBeingDragged> Core::TabBar::makeWindow()
 {
     auto dock = m_lastPressedDockWidget;
     m_lastPressedDockWidget =
@@ -184,13 +184,13 @@ std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
 }
 
-bool Controllers::TabBar::isWindow() const
+bool Core::TabBar::isWindow() const
 {
     // Same semantics as tab widget, no need to duplicate logic
     return m_stack->isWindow();
 }
 
-void Controllers::TabBar::onMousePress(QPoint localPos)
+void Core::TabBar::onMousePress(QPoint localPos)
 {
     m_lastPressedDockWidget = dockWidgetAt(localPos);
     Group *group = this->group();
@@ -201,34 +201,34 @@ void Controllers::TabBar::onMousePress(QPoint localPos)
     }
 }
 
-void Controllers::TabBar::onMouseDoubleClick(QPoint localPos)
+void Core::TabBar::onMouseDoubleClick(QPoint localPos)
 {
     if (DockWidget *dw = dockWidgetAt(localPos))
         dw->setFloating(true);
 }
 
-bool Controllers::TabBar::hasSingleDockWidget() const
+bool Core::TabBar::hasSingleDockWidget() const
 {
     return numDockWidgets() == 1;
 }
 
-int Controllers::TabBar::numDockWidgets() const
+int Core::TabBar::numDockWidgets() const
 {
     return m_dockWidgets.size();
 }
 
-Controllers::DockWidget *Controllers::TabBar::singleDockWidget() const
+Core::DockWidget *Core::TabBar::singleDockWidget() const
 {
     return m_stack->singleDockWidget();
 }
 
-bool Controllers::TabBar::isMDI() const
+bool Core::TabBar::isMDI() const
 {
     Group *f = group();
     return f && f->isMDI();
 }
 
-Group *Controllers::TabBar::group() const
+Group *Core::TabBar::group() const
 {
     return m_stack->group();
 }
@@ -238,19 +238,19 @@ Stack *TabBar::stack() const
     return m_stack;
 }
 
-void Controllers::TabBar::moveTabTo(int from, int to)
+void Core::TabBar::moveTabTo(int from, int to)
 {
     auto fromDw = m_dockWidgets.takeAt(from);
     m_dockWidgets.insert(to, fromDw);
     dynamic_cast<Views::TabBarViewInterface *>(view())->moveTabTo(from, to);
 }
 
-QString Controllers::TabBar::text(int index) const
+QString Core::TabBar::text(int index) const
 {
     return dynamic_cast<Views::TabBarViewInterface *>(view())->text(index);
 }
 
-QRect Controllers::TabBar::rectForTab(int index) const
+QRect Core::TabBar::rectForTab(int index) const
 {
     return dynamic_cast<Views::TabBarViewInterface *>(view())->rectForTab(index);
 }

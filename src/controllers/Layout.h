@@ -42,14 +42,14 @@ class Separator;
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Group;
 class FloatingWindow;
 class DockWidget;
 class MainWindow;
 }
 
-namespace Controllers {
+namespace Core {
 
 /**
  * @brief The widget (QWidget or QQuickItem) which holds a layout of dock widgets.
@@ -73,9 +73,9 @@ public:
     /// DropAreas/MDIAreas as inside the main window. otherwise, only direct parenting is considered
     bool isInMainWindow(bool honourNesting = false) const;
 
-    Controllers::MainWindow *mainWindow(bool honourNesting = false) const;
+    Core::MainWindow *mainWindow(bool honourNesting = false) const;
 
-    Controllers::FloatingWindow *floatingWindow() const;
+    Core::FloatingWindow *floatingWindow() const;
 
     /**
      * @brief returns the layout's minimum size
@@ -130,7 +130,7 @@ public:
 
 
     /// @brief restores the dockwidget @p dw to its previous position
-    void restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *, int tabIndex);
+    void restorePlaceholder(Core::DockWidget *dw, Layouting::Item *, int tabIndex);
 
     /**
      * @brief The list of items in this layout.
@@ -145,7 +145,7 @@ public:
     /**
      * @brief  Returns true if this layout contains the specified group.
      */
-    bool containsFrame(const Controllers::Group *) const;
+    bool containsFrame(const Core::Group *) const;
 
     /**
      * @brief Returns the number of Item objects in this layout.
@@ -171,15 +171,15 @@ public:
     /**
      * @brief returns the Item that holds @p group in this layout
      */
-    Layouting::Item *itemForFrame(const Controllers::Group *group) const;
+    Layouting::Item *itemForFrame(const Core::Group *group) const;
 
     /**
      * @brief Returns this list of Group objects contained in this layout
      */
-    QList<Controllers::Group *> groups() const;
+    QList<Core::Group *> groups() const;
 
     /// @brief Returns the list of dock widgets contained in this layout
-    QVector<Controllers::DockWidget *> dockWidgets() const;
+    QVector<Core::DockWidget *> dockWidgets() const;
 
     /**
      * @brief Removes an item from this MultiSplitter.
@@ -194,8 +194,8 @@ public:
     virtual bool deserialize(const LayoutSaver::MultiSplitter &);
     LayoutSaver::MultiSplitter serialize() const;
 
-    Controllers::DropArea *asDropArea() const;
-    Controllers::MDILayout *asMDILayout() const;
+    Core::DropArea *asDropArea() const;
+    Core::MDILayout *asMDILayout() const;
 
     /// @brief Emitted when the count of visible widgets changes
     KDBindings::Signal<int> visibleWidgetCountChanged;
@@ -223,14 +223,14 @@ protected:
      * placeholder, otherwise it's unrefed while we're adding causing a segfault. So what this does
      * is making the unrefing happen a bit earlier.
      */
-    void unrefOldPlaceholders(const QList<Controllers::Group *> &groupsBeingAdded) const;
+    void unrefOldPlaceholders(const QList<Core::Group *> &groupsBeingAdded) const;
 
     /**
      * @brief returns the groups contained in @p groupOrMultiSplitter-
      * If groupOrMultiSplitter- is a Group, it returns a list of 1 element, with that group
      * If groupOrMultiSplitter- is a MultiSplitter then it returns a list of all groups it contains
      */
-    QList<Controllers::Group *> groupsFrom(View *groupOrMultiSplitter) const;
+    QList<Core::Group *> groupsFrom(View *groupOrMultiSplitter) const;
 
 private:
     bool onResize(QSize newSize);

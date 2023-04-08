@@ -55,11 +55,11 @@ struct DockDescriptor
 {
     Location loc;
     int relativeToIndex;
-    QPointer<Controllers::DockWidget> createdDock;
+    QPointer<Core::DockWidget> createdDock;
     KDDockWidgets::InitialVisibilityOption option;
 };
 
-inline QPoint dragPointForWidget(Controllers::Group *group, int index)
+inline QPoint dragPointForWidget(Core::Group *group, int index)
 {
     if (group->hasSingleDockWidget()) {
         Q_ASSERT(index == 0);
@@ -106,24 +106,24 @@ struct EnsureTopLevelsDeleted
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-std::unique_ptr<Controllers::MainWindow>
+std::unique_ptr<Core::MainWindow>
 createMainWindow(QSize sz = { 1000, 1000 },
                  KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
                  const QString &name = {}, bool show = true);
 
 
 
-std::unique_ptr<Controllers::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
+std::unique_ptr<Core::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
 
-Controllers::DockWidget *createDockWidget(const QString &name, View *guest,
-                                          DockWidgetOptions options = {},
-                                          LayoutSaverOptions layoutSaverOptions = {},
-                                          bool show = true, const QString &affinityName = {});
+Core::DockWidget *createDockWidget(const QString &name, View *guest,
+                                   DockWidgetOptions options = {},
+                                   LayoutSaverOptions layoutSaverOptions = {},
+                                   bool show = true, const QString &affinityName = {});
 
-Controllers::DockWidget *createDockWidget(const QString &name);
+Core::DockWidget *createDockWidget(const QString &name);
 
-void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea,
-                    Controllers::Group *relativeTo, KDDockWidgets::Location location);
+void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
+                    Core::Group *relativeTo, KDDockWidgets::Location location);
 
 
 void doubleClickOn(QPoint globalPos, std::shared_ptr<Window> receiver);
@@ -133,7 +133,7 @@ void releaseOn(QPoint globalPos, View *receiver);
 void clickOn(QPoint globalPos, View *receiver);
 void moveMouseTo(QPoint globalDest, View *receiver);
 
-inline Controllers::FloatingWindow *createFloatingWindow()
+inline Core::FloatingWindow *createFloatingWindow()
 {
     static int count = 0;
     count++;
@@ -148,8 +148,8 @@ inline View *draggableFor(View *view)
         if (auto group = dw->d->group())
             draggable = group->titleBar()->view();
     } else if (auto fw = view->asFloatingWindowController()) {
-        Controllers::Group *group = fw->hasSingleFrame()
-            ? static_cast<Controllers::Group *>(fw->groups().first())
+        Core::Group *group = fw->hasSingleFrame()
+            ? static_cast<Core::Group *>(fw->groups().first())
             : nullptr;
 
         if ((KDDockWidgets::Config::self().flags()
@@ -203,7 +203,7 @@ inline void drag(View *sourceView, QPoint globalDest,
     drag(draggable, pressGlobalPos, globalDest, buttonActions);
 }
 
-inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalDest,
+inline void dragFloatingWindowTo(Core::FloatingWindow *fw, QPoint globalDest,
                                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
                                      | ButtonAction_Release)
 {
@@ -213,7 +213,7 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalD
     drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
 }
 
-inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, Controllers::DropArea *target,
+inline void dragFloatingWindowTo(Core::FloatingWindow *fw, Core::DropArea *target,
                                  DropLocation dropLocation)
 {
     auto draggable = draggableFor(fw->view());
@@ -224,7 +224,7 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, Controllers::D
          target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
-    Controllers::DropIndicatorOverlay *dropIndicatorOverlay = target->dropIndicatorOverlay();
+    Core::DropIndicatorOverlay *dropIndicatorOverlay = target->dropIndicatorOverlay();
     const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
 
     drag(draggable, QPoint(), dropPoint, ButtonAction_Release);

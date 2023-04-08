@@ -30,7 +30,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class DockWidget;
 class MainWindow;
 class DropArea;
@@ -38,8 +38,8 @@ class DropArea;
 
 class ViewFactory;
 
-typedef KDDockWidgets::Controllers::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
-typedef KDDockWidgets::Controllers::MainWindow *(*MainWindowFactoryFunc)(const QString &name);
+typedef KDDockWidgets::Core::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
+typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString &name);
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
 ///
@@ -54,9 +54,9 @@ typedef KDDockWidgets::Controllers::MainWindow *(*MainWindowFactoryFunc)(const Q
 /// @return true if the docking is allowed.
 /// @sa setDropIndicatorAllowedFunc
 typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
-                                         const QVector<Controllers::DockWidget *> &source,
-                                         const QVector<Controllers::DockWidget *> &target,
-                                         Controllers::DropArea *dropArea);
+                                         const QVector<Core::DockWidget *> &source,
+                                         const QVector<Core::DockWidget *> &target,
+                                         Core::DropArea *dropArea);
 
 /// @deprecated Use DropIndicatorAllowedFunc instead.
 /// @brief Function to allow the user more granularity to disallow dock widgets to tab together
@@ -64,8 +64,8 @@ typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
 /// @param target The dock widgets within an existing docked tab group
 /// @return true if the docking is allowed.
 /// @sa setTabbingAllowedFunc
-typedef bool (*TabbingAllowedFunc)(const QVector<Controllers::DockWidget *> &source,
-                                   const QVector<Controllers::DockWidget *> &target);
+typedef bool (*TabbingAllowedFunc)(const QVector<Core::DockWidget *> &source,
+                                   const QVector<Core::DockWidget *> &target);
 
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.
@@ -290,8 +290,8 @@ public:
      * #include <kddockwidgets/Config.h>
      * (...)
      *
-     * auto func = [] (const KDDockWidgets::Controllers::DockWidget::List &source,
-     *                 const KDDockWidgets::Controllers::DockWidget::List &target)
+     * auto func = [] (const KDDockWidgets::Core::DockWidget::List &source,
+     *                 const KDDockWidgets::Core::DockWidget::List &target)
      * {
      *    // disallows dockFoo to be tabbed with dockBar.
      *    return !(source.contains(dockFoo) && target.contains(dockBar));
@@ -320,9 +320,9 @@ public:
      * (...)
      *
      * auto func = [] (KDDockWidgets::DropLocation loc,
-     *                 const KDDockWidgets::Controllers::DockWidget::List &source,
-     *                 const KDDockWidgets::Controllers::DockWidget::List &target,
-     *                 KDDockWidgets::Controllers::DropArea *)
+     *                 const KDDockWidgets::Core::DockWidget::List &source,
+     *                 const KDDockWidgets::Core::DockWidget::List &target,
+     *                 KDDockWidgets::Core::DropArea *)
      * {
      *    // disallows dockFoo to be docked to outer areas
      *    return !((loc & KDDockWidgets::DropLocation_Outter) && source.contains(dockFoo));

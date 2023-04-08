@@ -29,7 +29,7 @@ class TestMultiSplitter;
 namespace KDDockWidgets {
 class View;
 
-namespace Controllers {
+namespace Core {
 class Group;
 class Separator;
 }
@@ -300,7 +300,7 @@ public:
     QPoint mapFromParent(QPoint) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
-    KDDockWidgets::Controllers::Group *asGroupController() const;
+    KDDockWidgets::Core::Group *asGroupController() const;
     KDDockWidgets::View *guestView() const
     {
         return m_guest;
@@ -458,14 +458,14 @@ public:
     insertItemRelativeTo(Item *item, Item *relativeTo, KDDockWidgets::Location,
                          KDDockWidgets::InitialOption = KDDockWidgets::DefaultSizeMode::Fair);
 
-    void requestSeparatorMove(KDDockWidgets::Controllers::Separator *separator, int delta);
-    int minPosForSeparator(KDDockWidgets::Controllers::Separator *, bool honourMax = true) const;
-    int maxPosForSeparator(KDDockWidgets::Controllers::Separator *, bool honourMax = true) const;
-    int minPosForSeparator_global(KDDockWidgets::Controllers::Separator *,
+    void requestSeparatorMove(KDDockWidgets::Core::Separator *separator, int delta);
+    int minPosForSeparator(KDDockWidgets::Core::Separator *, bool honourMax = true) const;
+    int maxPosForSeparator(KDDockWidgets::Core::Separator *, bool honourMax = true) const;
+    int minPosForSeparator_global(KDDockWidgets::Core::Separator *,
                                   bool honourMax = true) const;
-    int maxPosForSeparator_global(KDDockWidgets::Controllers::Separator *,
+    int maxPosForSeparator_global(KDDockWidgets::Core::Separator *,
                                   bool honourMax = true) const;
-    void requestEqualSize(KDDockWidgets::Controllers::Separator *separator);
+    void requestEqualSize(KDDockWidgets::Core::Separator *separator);
     void layoutEqually();
     void layoutEqually_recursive();
     void removeItem(Item *, bool hardRemove = true) override;
@@ -575,7 +575,7 @@ private:
                          ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
     void applyPositions(const SizingInfo::List &sizes);
 
-    int indexOf(KDDockWidgets::Controllers::Separator *) const;
+    int indexOf(KDDockWidgets::Core::Separator *) const;
     bool isInSimplify() const;
 
 #ifdef DOCKS_DEVELOPER_MODE
@@ -583,8 +583,8 @@ private:
 #endif
 
 public:
-    QVector<KDDockWidgets::Controllers::Separator *> separators_recursive() const;
-    QVector<KDDockWidgets::Controllers::Separator *> separators() const;
+    QVector<KDDockWidgets::Core::Separator *> separators_recursive() const;
+    QVector<KDDockWidgets::Core::Separator *> separators() const;
 
 private:
     void simplify();

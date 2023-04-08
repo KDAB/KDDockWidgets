@@ -39,7 +39,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Group_dummy::Group_dummy(Controllers::Group *controller, View *parent)
+Group_dummy::Group_dummy(Core::Group *controller, View *parent)
     : View_dummy(controller, Type::Frame, parent)
     , GroupViewInterface(controller)
 {

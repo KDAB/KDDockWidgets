@@ -20,7 +20,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Separator_qtquick::Separator_qtquick(Controllers::Separator *controller, QQuickItem *parent)
+Separator_qtquick::Separator_qtquick(Core::Separator *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::Separator, parent)
     , m_controller(controller)
 {

@@ -51,15 +51,15 @@ public:
 
 MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOptions options,
                                        QQuickItem *parent, Qt::WindowFlags flags)
-    : View_qtquick(new Controllers::MainWindow(this, uniqueName, options), Type::MainWindow, parent,
+    : View_qtquick(new Core::MainWindow(this, uniqueName, options), Type::MainWindow, parent,
                    flags)
-    , MainWindowViewInterface(static_cast<Controllers::MainWindow *>(View::controller()))
+    , MainWindowViewInterface(static_cast<Core::MainWindow *>(View::controller()))
     , d(new Private(this))
 {
     MainWindowViewInterface::init(uniqueName);
     makeItemFillParent(this);
 
-    Controllers::Layout *lw = m_mainWindow->layout();
+    Core::Layout *lw = m_mainWindow->layout();
     auto layoutView = asView_qtquick(lw->view());
     makeItemFillParent(layoutView);
 

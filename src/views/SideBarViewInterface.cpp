@@ -15,14 +15,14 @@
 
 namespace KDDockWidgets::Views {
 
-SideBarViewInterface::SideBarViewInterface(Controllers::SideBar *controller)
+SideBarViewInterface::SideBarViewInterface(Core::SideBar *controller)
     : m_sideBar(controller)
 {
 }
 
 SideBarViewInterface::~SideBarViewInterface() = default;
 
-Controllers::SideBar *SideBarViewInterface::sideBar() const
+Core::SideBar *SideBarViewInterface::sideBar() const
 {
     return m_sideBar;
 }

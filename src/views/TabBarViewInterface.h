@@ -22,7 +22,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class DockWidget;
 class TabBar;
 }
@@ -33,7 +33,7 @@ namespace Views {
 class DOCKS_EXPORT TabBarViewInterface
 {
 public:
-    explicit TabBarViewInterface(Controllers::TabBar *);
+    explicit TabBarViewInterface(Core::TabBar *);
     virtual ~TabBarViewInterface();
 
     /// @brief Implement if your frontend will support reordering tabs with mouse
@@ -52,12 +52,12 @@ public:
     virtual void renameTab(int index, const QString &) = 0;
     virtual void changeTabIcon(int index, const Icon &icon) = 0;
 
-    virtual void removeDockWidget(Controllers::DockWidget *dw) = 0;
-    virtual void insertDockWidget(int index, Controllers::DockWidget *dw, const Icon &icon,
+    virtual void removeDockWidget(Core::DockWidget *dw) = 0;
+    virtual void insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
                                   const QString &title) = 0;
 
 protected:
-    Controllers::TabBar *const m_tabBar;
+    Core::TabBar *const m_tabBar;
 };
 
 }

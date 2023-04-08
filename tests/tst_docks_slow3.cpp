@@ -38,7 +38,7 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
@@ -89,14 +89,14 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     QTest::qWait(200);
 
     auto fw1 = dw1->floatingWindow();
-    QPointer<Controllers::FloatingWindow> fw2 = dw2->floatingWindow();
+    QPointer<Core::FloatingWindow> fw2 = dw2->floatingWindow();
 
     // Focus dock widget 1 first
     QVERIFY(!dw1->isFocused());
     dw1->window()->activateWindow();
 
     connect(
-        dw1, &Controllers::DockWidget::isFocusedChanged, dw1, [dw1](bool focused) {
+        dw1, &Core::DockWidget::isFocusedChanged, dw1, [dw1](bool focused) {
             Q_ASSERT(focused == dw1->isFocused());
         });
 
@@ -125,7 +125,7 @@ void TestDocks::tst_closeShowWhenNoCentralFrame()
     // Tests a crash I got when hiding and showing and no central group
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
-    QPointer<Controllers::DockWidget> dock1 =
+    QPointer<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->close();
@@ -184,8 +184,8 @@ void TestDocks::tst_close()
     QVERIFY(!toggleAction->isChecked());
 
     // 1.4 close a FloatingWindow, via DockWidget::close
-    QPointer<Controllers::FloatingWindow> window = dock1->dptr()->morphIntoFloatingWindow();
-    QPointer<Controllers::Group> group1 = dock1->dptr()->group();
+    QPointer<Core::FloatingWindow> window = dock1->dptr()->morphIntoFloatingWindow();
+    QPointer<Core::Group> group1 = dock1->dptr()->group();
     QVERIFY(dock1->isVisible());
     QVERIFY(dock1->window()->controller()->isVisible());
     QVERIFY(group1->isVisible());
@@ -213,9 +213,9 @@ void TestDocks::tst_close()
     QVERIFY(Platform::instance()->tests_waitForDeleted(window));
 
     // 1.6 Check if space is reclaimed after closing left dock
-    Controllers::DockWidget *centralDock;
-    Controllers::DockWidget *leftDock;
-    Controllers::DockWidget *rightDock;
+    Core::DockWidget *centralDock;
+    Core::DockWidget *leftDock;
+    Core::DockWidget *rightDock;
 
     auto mainwindow = createSimpleNestedMainWindow(&centralDock, &leftDock, &rightDock);
     auto da = mainwindow->dropArea();

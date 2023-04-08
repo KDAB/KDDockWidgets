@@ -37,7 +37,7 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
@@ -73,7 +73,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     auto fw1 = dock1->floatingWindow();
     fw1->view()->setGeometry(QRect(500, 500, 400, 400));
     QVERIFY(dock1);
-    QPointer<Controllers::Group> group1 = dock1->dptr()->group();
+    QPointer<Core::Group> group1 = dock1->dptr()->group();
 
     auto titlebar1 = fw1->titleBar();
     auto dock2 = createDockWidget("doc2");
@@ -85,7 +85,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     drag(titlebar1->view(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
 
     // It morphed into a FloatingWindow
-    QPointer<Controllers::Group> group2 = dock2->dptr()->group();
+    QPointer<Core::Group> group2 = dock2->dptr()->group();
     if (!dock2->floatingWindow()) {
         qWarning() << "dock2->floatingWindow()=" << dock2->floatingWindow();
         QVERIFY(false);
@@ -99,7 +99,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // 2.3 Detach tab1 to empty space
     QPoint globalPressPos = dragPointForWidget(group2.data(), 0);
-    Controllers::TabBar *tabBar = group2->stack()->tabBar();
+    Core::TabBar *tabBar = group2->stack()->tabBar();
     QVERIFY(tabBar);
     drag(tabBar->view(), globalPressPos,
          group2->view()->windowGeometry().bottomRight() + QPoint(10, 10));

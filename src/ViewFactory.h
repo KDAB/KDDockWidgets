@@ -23,7 +23,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class DropIndicatorOverlay;
 class DropArea;
 class Separator;
@@ -77,52 +77,52 @@ public:
     ///       widget that holds the titlebar and tab-widget which holds the
     ///       DockWidgets.
     ///@param parent just forward to Frame's constructor
-    virtual View *createGroup(Controllers::Group *, View *parent = nullptr) const = 0;
+    virtual View *createGroup(Core::Group *, View *parent = nullptr) const = 0;
 
     ///@brief Called by the framework to create a TitleBar view
     ///       Override to provide your own TitleBar sub-class.
     ///       Just forward the @p controller and @p parent arguments to the TitleBar view ctor
-    virtual View *createTitleBar(Controllers::TitleBar *controller, View *parent) const = 0;
+    virtual View *createTitleBar(Core::TitleBar *controller, View *parent) const = 0;
 
     ///@brief Called by the framework to create a Stack view
     ///       Override to provide your own Stack sub-class.
     ///@param parent Just forward to Stack's constructor.
-    virtual View *createStack(Controllers::Stack *stack, View *parent) const = 0;
+    virtual View *createStack(Core::Stack *stack, View *parent) const = 0;
 
     ///@brief Called by the framework to create a TabBar view
     ///       Override to provide your own TabBar sub-class.
     ///@param parent Just forward to TabBar's's constructor.
-    virtual View *createTabBar(Controllers::TabBar *tabBar, View *parent = nullptr) const = 0;
+    virtual View *createTabBar(Core::TabBar *tabBar, View *parent = nullptr) const = 0;
 
     ///@brief Called by the framework to create a Separator view
     ///       Override to provide your own Separator sub-class. The Separator allows
     ///       the user to resize nested dock widgets.
     ///@param parent Just forward to Separator's constructor.
-    virtual View *createSeparator(Controllers::Separator *, View *parent = nullptr) const = 0;
+    virtual View *createSeparator(Core::Separator *, View *parent = nullptr) const = 0;
 
     ///@brief Called by the framework to create a FloatingWindow view
     ///       Override to provide your own FloatingWindow sub-class.
     ///@param parent Just forward to FloatingWindow's constructor.
-    virtual View *createFloatingWindow(Controllers::FloatingWindow *controller,
-                                       Controllers::MainWindow *parent = nullptr,
+    virtual View *createFloatingWindow(Core::FloatingWindow *controller,
+                                       Core::MainWindow *parent = nullptr,
                                        Qt::WindowFlags windowFlags = {}) const = 0;
 
 
     /// @brief Creates the window that will show the actual drop indicators. They need a higher
     /// z-order, so this is actually a separate window, not parented to the main window
     virtual Views::ClassicIndicatorWindowViewInterface *
-    createClassicIndicatorWindow(Controllers::ClassicIndicators *) const = 0;
+    createClassicIndicatorWindow(Core::ClassicIndicators *) const = 0;
 
     /// @brief Creates the view that will parent the segmented drop indicators
     virtual View *
-    createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller,
+    createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
                                             View *parent = nullptr) const = 0;
 
     /// @brief Called by the framework to create a DropArea view
-    virtual View *createDropArea(Controllers::DropArea *, View *parent) const = 0;
+    virtual View *createDropArea(Core::DropArea *, View *parent) const = 0;
 
     /// @brief Called by the framework to create a MDI Layout view
-    virtual View *createMDILayout(Controllers::MDILayout *, View *parent) const = 0;
+    virtual View *createMDILayout(Core::MDILayout *, View *parent) const = 0;
 
     ///@brief Called by the framework to create a RubberBand view to show as drop zone
     virtual View *createRubberBand(View *parent) const = 0;
@@ -131,7 +131,7 @@ public:
     ///@param loc The side-bar location without the main window. Just forward into your SideBar
     /// sub-class ctor.
     ///@param parent The MainWindow. Just forward into your SideBar sub-class ctor.
-    virtual View *createSideBar(Controllers::SideBar *, View *parent) const = 0;
+    virtual View *createSideBar(Core::SideBar *, View *parent) const = 0;
 
     /// @brief Returns the icon to be used with the specified @p type
     /// @param dpr the device pixel ratio of the button

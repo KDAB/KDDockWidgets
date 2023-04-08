@@ -15,8 +15,8 @@
 
 TEST_CASE("Stack ctor")
 {
-    Controllers::Group group(nullptr, {});
-    Controllers::Stack stack(&group, {});
+    Core::Group group(nullptr, {});
+    Core::Stack stack(&group, {});
     CHECK(stack.view()->is(Type::Stack));
     CHECK(stack.view()->asWrapper()->is(Type::Stack));
 }

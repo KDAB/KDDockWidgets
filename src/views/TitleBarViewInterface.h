@@ -15,7 +15,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class TitleBar;
 }
 
@@ -25,7 +25,7 @@ namespace Views {
 class DOCKS_EXPORT TitleBarViewInterface
 {
 public:
-    explicit TitleBarViewInterface(Controllers::TitleBar *);
+    explicit TitleBarViewInterface(Core::TitleBar *);
     virtual ~TitleBarViewInterface();
 #ifdef DOCKS_DEVELOPER_MODE
     virtual bool isFloatButtonVisible() const = 0;
@@ -33,7 +33,7 @@ public:
     virtual bool isCloseButtonEnabled() const = 0;
 #endif
 protected:
-    Controllers::TitleBar *const m_titleBar;
+    Core::TitleBar *const m_titleBar;
 };
 
 }

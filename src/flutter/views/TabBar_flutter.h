@@ -27,7 +27,7 @@
 
 #include "kdbindings/signal.h"
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 class TabBar;
 }
 
@@ -39,7 +39,7 @@ class TabWidget;
 class DOCKS_EXPORT TabBar_flutter : public View_flutter, public TabBarViewInterface
 {
 public:
-    explicit TabBar_flutter(Controllers::TabBar *controller, View *parent = nullptr);
+    explicit TabBar_flutter(Core::TabBar *controller, View *parent = nullptr);
     int tabAt(QPoint localPos) const override;
 
     QString text(int index) const override;
@@ -48,8 +48,8 @@ public:
     void moveTabTo(int from, int to) override;
 
     void changeTabIcon(int index, const Icon &icon) override;
-    void removeDockWidget(Controllers::DockWidget *dw) override;
-    void insertDockWidget(int index, Controllers::DockWidget *dw, const Icon &icon,
+    void removeDockWidget(Core::DockWidget *dw) override;
+    void insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
                           const QString &title) override;
     void renameTab(int index, const QString &name) override;
     void setCurrentIndex(int index) override;

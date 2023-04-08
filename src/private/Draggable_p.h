@@ -22,7 +22,7 @@ namespace KDDockWidgets {
 
 class View;
 
-namespace Controllers {
+namespace Core {
 class FloatingWindow;
 class DockWidget;
 }
@@ -83,7 +83,7 @@ public:
      * Example: This draggable is a floating window with only 1 dock widget
      * Example:  This draggable is a title bar with two dock widgets -> nullptr
      */
-    virtual Controllers::DockWidget *singleDockWidget() const = 0;
+    virtual Core::DockWidget *singleDockWidget() const = 0;
 
     ///@brief Returns whether this draggable is a MDI window, being dragged internally within a main
     /// window

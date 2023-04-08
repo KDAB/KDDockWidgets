@@ -53,7 +53,7 @@ public:
 
 VBoxLayout::~VBoxLayout() = default;
 
-Group_qtwidgets::Group_qtwidgets(Controllers::Group *controller, QWidget *parent)
+Group_qtwidgets::Group_qtwidgets(Core::Group *controller, QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::Frame, parent)
     , GroupViewInterface(controller)
 {
@@ -81,7 +81,7 @@ void Group_qtwidgets::free_impl()
 
 int Group_qtwidgets::nonContentsHeight() const
 {
-    Controllers::TitleBar *tb = m_group->titleBar();
+    Core::TitleBar *tb = m_group->titleBar();
     QWidget *tabBar = asQWidget(m_group->tabBar());
 
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);

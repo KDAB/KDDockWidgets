@@ -77,7 +77,7 @@ public:
     }
 
     MainWindow_qtwidgets *const q;
-    Controllers::MainWindow *const m_controller;
+    Core::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
@@ -88,9 +88,9 @@ MyCentralWidget::~MyCentralWidget() = default;
 
 MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName, MainWindowOptions options,
                                            QWidget *parent, Qt::WindowFlags flags)
-    : View_qtwidgets<QMainWindow>(new Controllers::MainWindow(this, uniqueName, options),
+    : View_qtwidgets<QMainWindow>(new Core::MainWindow(this, uniqueName, options),
                                   Type::MainWindow, parent, flags)
-    , MainWindowViewInterface(static_cast<Controllers::MainWindow *>(controller()))
+    , MainWindowViewInterface(static_cast<Core::MainWindow *>(controller()))
     , d(new Private(this))
 {
     MainWindowViewInterface::init(uniqueName);

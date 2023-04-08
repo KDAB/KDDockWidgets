@@ -24,7 +24,7 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Views;
 
 class DockWidget_qtwidgets::Private
@@ -62,7 +62,7 @@ DockWidget_qtwidgets::~DockWidget_qtwidgets()
 
 void DockWidget_qtwidgets::init()
 {
-    connect(m_dockWidget, &Controllers::DockWidget::guestViewChanged, this, [this] {
+    connect(m_dockWidget, &Core::DockWidget::guestViewChanged, this, [this] {
         if (auto guest = dockWidget()->guestView()) {
             d->layout->addWidget(View_qt::asQWidget(guest.get()));
         }

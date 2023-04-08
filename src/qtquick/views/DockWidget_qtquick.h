@@ -28,7 +28,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Group;
 class TitleBar;
 }
@@ -37,7 +37,7 @@ namespace Views {
 /**
  * @brief Represents a dock widget.
  *
- * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
+ * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
 class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick,
                                         public Views::DockWidgetViewInterface

@@ -21,7 +21,7 @@ namespace Views {
 class DOCKS_EXPORT Stack_flutter : public View_flutter, public StackViewInterface
 {
 public:
-    explicit Stack_flutter(Controllers::Stack *controller, View *parent = nullptr);
+    explicit Stack_flutter(Core::Stack *controller, View *parent = nullptr);
 
     bool isPositionDraggable(QPoint p) const override;
     void init() override;

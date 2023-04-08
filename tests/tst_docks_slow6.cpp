@@ -37,7 +37,7 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 

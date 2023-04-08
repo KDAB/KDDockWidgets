@@ -18,7 +18,7 @@
 namespace KDDockWidgets {
 
 
-namespace Controllers {
+namespace Core {
 class TitleBar;
 }
 
@@ -27,7 +27,7 @@ namespace Views {
 class DOCKS_EXPORT TitleBar_dummy : public View_dummy, public Views::TitleBarViewInterface
 {
 public:
-    explicit TitleBar_dummy(Controllers::TitleBar *controller, View *parent = nullptr);
+    explicit TitleBar_dummy(Core::TitleBar *controller, View *parent = nullptr);
     ~TitleBar_dummy() override;
 
 protected:

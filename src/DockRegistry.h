@@ -31,7 +31,7 @@
 namespace KDDockWidgets {
 
 
-namespace Controllers {
+namespace Core {
 class FloatingWindow;
 class Layout;
 class SideBar;
@@ -63,43 +63,43 @@ public:
 
     static DockRegistry *self();
     ~DockRegistry();
-    void registerDockWidget(Controllers::DockWidget *);
-    void unregisterDockWidget(Controllers::DockWidget *);
+    void registerDockWidget(Core::DockWidget *);
+    void unregisterDockWidget(Core::DockWidget *);
 
-    void registerMainWindow(Controllers::MainWindow *);
-    void unregisterMainWindow(Controllers::MainWindow *);
+    void registerMainWindow(Core::MainWindow *);
+    void unregisterMainWindow(Core::MainWindow *);
 
-    void registerFloatingWindow(Controllers::FloatingWindow *);
-    void unregisterFloatingWindow(Controllers::FloatingWindow *);
+    void registerFloatingWindow(Core::FloatingWindow *);
+    void unregisterFloatingWindow(Core::FloatingWindow *);
 
-    void registerLayout(Controllers::Layout *);
-    void unregisterLayout(Controllers::Layout *);
+    void registerLayout(Core::Layout *);
+    void unregisterLayout(Core::Layout *);
 
-    void registerGroup(Controllers::Group *);
-    void unregisterGroup(Controllers::Group *);
+    void registerGroup(Core::Group *);
+    void unregisterGroup(Core::Group *);
 
-    Q_INVOKABLE KDDockWidgets::Controllers::DockWidget *focusedDockWidget() const;
+    Q_INVOKABLE KDDockWidgets::Core::DockWidget *focusedDockWidget() const;
 
     Q_INVOKABLE bool containsDockWidget(const QString &uniqueName) const;
     Q_INVOKABLE bool containsMainWindow(const QString &uniqueName) const;
 
-    Q_INVOKABLE KDDockWidgets::Controllers::DockWidget *
+    Q_INVOKABLE KDDockWidgets::Core::DockWidget *
     dockByName(const QString &, KDDockWidgets::DockRegistry::DockByNameFlags = {}) const;
-    Q_INVOKABLE KDDockWidgets::Controllers::MainWindow *mainWindowByName(const QString &) const;
+    Q_INVOKABLE KDDockWidgets::Core::MainWindow *mainWindowByName(const QString &) const;
 
     bool isSane() const;
 
     ///@brief returns all DockWidget instances
-    const QVector<Controllers::DockWidget *> dockwidgets() const;
+    const QVector<Core::DockWidget *> dockwidgets() const;
 
     ///@brief overload returning only the ones with the specified names
-    const QVector<Controllers::DockWidget *> dockWidgets(const QStringList &names);
+    const QVector<Core::DockWidget *> dockWidgets(const QStringList &names);
 
     ///@brief returns all closed DockWidget instances
-    const QVector<Controllers::DockWidget *> closedDockwidgets() const;
+    const QVector<Core::DockWidget *> closedDockwidgets() const;
 
     ///@brief returns all MainWindow instances
-    const QVector<Controllers::MainWindow *> mainwindows() const;
+    const QVector<Core::MainWindow *> mainwindows() const;
 
     /// @brief returns all MainWindow instances
     /// Like mainwindows(), but with better suited for QtQuick and better terminology
@@ -107,17 +107,17 @@ public:
     const QList<Views::MainWindowViewInterface *> mainDockingAreas() const;
 
     ///@brief overload returning only the ones with the specified names
-    const QVector<Controllers::MainWindow *> mainWindows(const QStringList &names);
+    const QVector<Core::MainWindow *> mainWindows(const QStringList &names);
 
     ///@brief returns the list of Layout instances
-    const QVector<Controllers::Layout *> layouts() const;
+    const QVector<Core::Layout *> layouts() const;
 
     ///@brief returns a list of all Frame instances
-    const QList<Controllers::Group *> groups() const;
+    const QList<Core::Group *> groups() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
-    const QVector<Controllers::FloatingWindow *>
+    const QVector<Core::FloatingWindow *>
     floatingWindows(bool includeBeingDeleted = false) const;
 
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both
@@ -128,14 +128,14 @@ public:
     Q_INVOKABLE bool hasFloatingWindows() const;
 
     ///@brief returns the FloatingWindow with handle @p windowHandle
-    Controllers::FloatingWindow *
+    Core::FloatingWindow *
     floatingWindowForHandle(std::shared_ptr<Window> windowHandle) const;
 
     ///@brief returns the FloatingWindow with handle @p hwnd
-    Controllers::FloatingWindow *floatingWindowForHandle(WId hwnd) const;
+    Core::FloatingWindow *floatingWindowForHandle(WId hwnd) const;
 
     ///@brief returns the MainWindow with handle @p windowHandle
-    Controllers::MainWindow *mainWindowForHandle(std::shared_ptr<Window> windowHandle) const;
+    Core::MainWindow *mainWindowForHandle(std::shared_ptr<Window> windowHandle) const;
 
     ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and
     /// MainWindow instances.
@@ -161,8 +161,8 @@ public:
     /**
      * @brief clear Overload that only clears the specified dockWidgets and main windows.
      */
-    void clear(const QVector<Controllers::DockWidget *> &dockWidgets,
-               const QVector<Controllers::MainWindow *> &mainWindows,
+    void clear(const QVector<Core::DockWidget *> &dockWidgets,
+               const QVector<Core::MainWindow *> &mainWindows,
                const QStringList &affinities);
 
     /**
@@ -193,10 +193,10 @@ public:
     /**
      * @brief Returns all main windows which match at least one of the @p affinities
      */
-    QVector<Controllers::MainWindow *> mainWindowsWithAffinity(const QStringList &affinities) const;
+    QVector<Core::MainWindow *> mainWindowsWithAffinity(const QStringList &affinities) const;
 
     /// @brief Returns the Layout where the specified item is in
-    Controllers::Layout *layoutForItem(const Layouting::Item *) const;
+    Core::Layout *layoutForItem(const Layouting::Item *) const;
 
     /// @brief Returns whether the item is in a main window.
     /// Nesting is honoured. (MDIArea inside DropArea inside MainWindow, for example)
@@ -216,7 +216,7 @@ public:
     /// @param target The window which we want to know if it's probably obscured
     /// @param exclude This window should not be counted as an obscurer. (It's being dragged).
     bool isProbablyObscured(std::shared_ptr<Window> target,
-                            Controllers::FloatingWindow *exclude) const;
+                            Core::FloatingWindow *exclude) const;
 
     /// @overload
     bool isProbablyObscured(std::shared_ptr<Window> target, WindowBeingDragged *exclude) const;
@@ -224,13 +224,13 @@ public:
     ///@brief Returns whether the specified dock widget is in a side bar, and which.
     /// SideBarLocation::None is returned if it's not in a sidebar.
     /// This is only relevant when using the auto-hide and side-bar feature.
-    SideBarLocation sideBarLocationForDockWidget(const Controllers::DockWidget *) const;
+    SideBarLocation sideBarLocationForDockWidget(const Core::DockWidget *) const;
 
     ///@brief Overload that returns the SideBar itself
-    Controllers::SideBar *sideBarForDockWidget(const Controllers::DockWidget *) const;
+    Core::SideBar *sideBarForDockWidget(const Core::DockWidget *) const;
 
     ///@brief Returns the Group which is being resized in a MDI layout. nullptr if none
-    Controllers::Group *groupInMDIResize() const;
+    Core::Group *groupInMDIResize() const;
 
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen
@@ -245,10 +245,10 @@ Q_SIGNALS:
 private:
     friend class FocusScope;
     explicit DockRegistry(QObject *parent = nullptr);
-    bool onDockWidgetPressed(Controllers::DockWidget *dw, MouseEvent *);
+    bool onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *);
     void onFocusedViewChanged(std::shared_ptr<View> view);
     void maybeDelete();
-    void setFocusedDockWidget(Controllers::DockWidget *);
+    void setFocusedDockWidget(Core::DockWidget *);
 
     // EventFilterInterface:
     bool onExposeEvent(std::shared_ptr<Window>) override;
@@ -257,12 +257,12 @@ private:
     class Private;
     Private *const d;
 
-    QVector<Controllers::DockWidget *> m_dockWidgets;
-    QVector<Controllers::MainWindow *> m_mainWindows;
-    QList<Controllers::Group *> m_groups;
-    QVector<Controllers::FloatingWindow *> m_floatingWindows;
-    QVector<Controllers::Layout *> m_layouts;
-    QPointer<Controllers::DockWidget> m_focusedDockWidget;
+    QVector<Core::DockWidget *> m_dockWidgets;
+    QVector<Core::MainWindow *> m_mainWindows;
+    QList<Core::Group *> m_groups;
+    QVector<Core::FloatingWindow *> m_floatingWindows;
+    QVector<Core::Layout *> m_layouts;
+    QPointer<Core::DockWidget> m_focusedDockWidget;
 
     ///@brief Dock widget id remapping, used by LayoutSaver
     ///

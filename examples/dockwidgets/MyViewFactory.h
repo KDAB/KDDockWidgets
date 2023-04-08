@@ -19,8 +19,8 @@ class CustomWidgetFactory : public KDDockWidgets::ViewFactory_qtwidgets
 {
     Q_OBJECT
 public:
-    KDDockWidgets::View *createTitleBar(KDDockWidgets::Controllers::TitleBar *,
+    KDDockWidgets::View *createTitleBar(KDDockWidgets::Core::TitleBar *,
                                         KDDockWidgets::View *parent) const override;
-    KDDockWidgets::View *createSeparator(KDDockWidgets::Controllers::Separator *,
+    KDDockWidgets::View *createSeparator(KDDockWidgets::Core::Separator *,
                                          KDDockWidgets::View *parent = nullptr) const override;
 };

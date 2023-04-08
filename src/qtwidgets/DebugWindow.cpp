@@ -49,7 +49,7 @@
 // clazy:excludeall=range-loop
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Debug;
 
 class DebugAppEventFilter : public QAbstractNativeEventFilter
@@ -329,12 +329,12 @@ void DebugWindow::repaintWidgetRecursive(QWidget *w)
 
 void DebugWindow::dumpDockWidgetInfo()
 {
-    const QVector<Controllers::FloatingWindow *> floatingWindows =
+    const QVector<Core::FloatingWindow *> floatingWindows =
         DockRegistry::self()->floatingWindows();
     const MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
-    const Controllers::DockWidget::List dockWidgets = DockRegistry::self()->dockwidgets();
+    const Core::DockWidget::List dockWidgets = DockRegistry::self()->dockwidgets();
 
-    for (Controllers::FloatingWindow *fw : floatingWindows) {
+    for (Core::FloatingWindow *fw : floatingWindows) {
         qDebug() << fw << "; affinities=" << fw->affinities();
         fw->layout()->dumpLayout();
     }
@@ -344,7 +344,7 @@ void DebugWindow::dumpDockWidgetInfo()
         mw->layout()->dumpLayout();
     }
 
-    for (Controllers::DockWidget *dw : dockWidgets) {
+    for (Core::DockWidget *dw : dockWidgets) {
         qDebug() << dw << "; affinities=";
     }
 }

@@ -15,7 +15,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class DropArea;
 }
 
@@ -25,11 +25,11 @@ class DOCKS_EXPORT DropArea_qtquick : public Views::View_qtquick
 {
     Q_OBJECT
 public:
-    explicit DropArea_qtquick(Controllers::DropArea *, View *parent);
+    explicit DropArea_qtquick(Core::DropArea *, View *parent);
     ~DropArea_qtquick();
 
 private:
-    Controllers::DropArea *const m_dropArea;
+    Core::DropArea *const m_dropArea;
 };
 
 }

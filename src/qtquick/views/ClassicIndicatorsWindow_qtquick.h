@@ -19,7 +19,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class ClassicIndicators;
 }
 
@@ -47,10 +47,10 @@ class IndicatorWindow_qtquick : public QQuickView, public Views::ClassicIndicato
     Q_PROPERTY(KDDockWidgets::DropLocation currentDropLocation READ currentDropLocation NOTIFY
                    currentDropLocationChanged)
 public:
-    explicit IndicatorWindow_qtquick(Controllers::ClassicIndicators *);
+    explicit IndicatorWindow_qtquick(Core::ClassicIndicators *);
 
     Q_INVOKABLE QString iconName(int loc, bool active) const;
-    Controllers::ClassicIndicators *classicIndicators() const;
+    Core::ClassicIndicators *classicIndicators() const;
     QQuickItem *indicatorForLocation(DropLocation loc) const;
 
     DropLocation hover(QPoint globalPos) override;
@@ -85,7 +85,7 @@ private:
     DropLocation locationForIndicator(const QQuickItem *) const;
     QQuickItem *indicatorForPos(QPoint) const;
     QVector<QQuickItem *> indicatorItems() const;
-    Controllers::ClassicIndicators *const m_classicIndicators;
+    Core::ClassicIndicators *const m_classicIndicators;
 };
 }
 

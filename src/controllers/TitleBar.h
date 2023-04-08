@@ -18,7 +18,7 @@
 
 #include <QString>
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 
 class Group;
 class FloatingWindow;
@@ -36,7 +36,7 @@ public:
     bool isMDI() const override;
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     bool isWindow() const override;
-    Controllers::DockWidget *singleDockWidget() const override;
+    Core::DockWidget *singleDockWidget() const override;
 
     void setTitle(const QString &title);
     QString title() const;
@@ -80,7 +80,7 @@ public:
     bool titleBarIsFocusable() const;
 
     ///@brief getter for m_group
-    Controllers::Group *group() const;
+    Core::Group *group() const;
 
     ///@brief getter for m_floatingWindow
     FloatingWindow *floatingWindow() const;
@@ -152,7 +152,7 @@ private:
     QString m_title;
     Icon m_icon;
 
-    Controllers::Group *const m_group;
+    Core::Group *const m_group;
     FloatingWindow *const m_floatingWindow;
     const bool m_supportsAutoHide;
     bool m_closeButtonEnabled = true;

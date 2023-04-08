@@ -15,7 +15,7 @@
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 class Separator;
 }
 
@@ -25,7 +25,7 @@ class DOCKS_EXPORT Separator_qtwidgets : public View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit Separator_qtwidgets(Controllers::Separator *controller, View *parent = nullptr);
+    explicit Separator_qtwidgets(Core::Separator *controller, View *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *) override;
@@ -37,7 +37,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *) override;
 
 private:
-    Controllers::Separator *const m_controller;
+    Core::Separator *const m_controller;
 };
 
 }

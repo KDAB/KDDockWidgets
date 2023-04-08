@@ -20,7 +20,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class DockWidget;
 class Group;
 }
@@ -31,10 +31,10 @@ namespace Views {
 class DOCKS_EXPORT GroupViewInterface
 {
 public:
-    explicit GroupViewInterface(Controllers::Group *);
+    explicit GroupViewInterface(Core::Group *);
     virtual ~GroupViewInterface();
-    virtual void removeDockWidget(Controllers::DockWidget *);
-    virtual void insertDockWidget(Controllers::DockWidget *, int index);
+    virtual void removeDockWidget(Core::DockWidget *);
+    virtual void insertDockWidget(Core::DockWidget *, int index);
 
     /// @brief Returns the height of the "non-dockwidget" part.
     /// i.e.: the height of the titlebar (if any), + height of tabbar (if any) + any margins.
@@ -48,10 +48,10 @@ public:
     virtual QRect dragRect() const;
 
     bool isMDI() const;
-    Controllers::Group *group() const;
+    Core::Group *group() const;
 
 protected:
-    Controllers::Group *const m_group;
+    Core::Group *const m_group;
 };
 
 }

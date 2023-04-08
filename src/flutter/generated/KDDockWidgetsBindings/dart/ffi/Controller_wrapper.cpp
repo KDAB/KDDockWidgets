@@ -35,45 +35,6 @@ bool Controller_wrapper::close()
 {
     return ::KDDockWidgets::Controller::close();
 }
-void Controller_wrapper::customEvent(QEvent *event)
-{
-    if (m_customEventCallback) {
-        const void *thisPtr = this;
-        m_customEventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        ::KDDockWidgets::Controller::customEvent(event);
-    }
-}
-void Controller_wrapper::customEvent_nocallback(QEvent *event)
-{
-    ::KDDockWidgets::Controller::customEvent(event);
-}
-bool Controller_wrapper::event(QEvent *event)
-{
-    if (m_eventCallback) {
-        const void *thisPtr = this;
-        return m_eventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        return ::KDDockWidgets::Controller::event(event);
-    }
-}
-bool Controller_wrapper::event_nocallback(QEvent *event)
-{
-    return ::KDDockWidgets::Controller::event(event);
-}
-bool Controller_wrapper::eventFilter(QObject *watched, QEvent *event)
-{
-    if (m_eventFilterCallback) {
-        const void *thisPtr = this;
-        return m_eventFilterCallback(const_cast<void *>(thisPtr), watched, event);
-    } else {
-        return ::KDDockWidgets::Controller::eventFilter(watched, event);
-    }
-}
-bool Controller_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
-{
-    return ::KDDockWidgets::Controller::eventFilter(watched, event);
-}
 QRect Controller_wrapper::geometry() const
 {
     return ::KDDockWidgets::Controller::geometry();
@@ -192,25 +153,6 @@ bool c_KDDockWidgets__Controller__close(void *thisObj)
 {
     return fromPtr(thisObj)->close();
 }
-// customEvent(QEvent * event)
-void c_KDDockWidgets__Controller__customEvent_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    fromWrapperPtr(thisObj)->customEvent_nocallback(event);
-}
-// event(QEvent * event)
-bool c_KDDockWidgets__Controller__event_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
-}
-// eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controller__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
-{
-    auto watched = reinterpret_cast<QObject *>(watched_);
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
-}
 // geometry() const
 void *c_KDDockWidgets__Controller__geometry(void *thisObj)
 {
@@ -324,16 +266,7 @@ void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_customEvent>(callback);
-        break;
-    case 306:
-        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_event>(callback);
-        break;
-    case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_eventFilter>(callback);
-        break;
-    case 891:
+    case 881:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

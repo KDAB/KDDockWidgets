@@ -21,7 +21,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class SideBar;
 class MainWindow;
 }
@@ -34,14 +34,14 @@ class DockWidgetViewInterface;
 class DOCKS_EXPORT MainWindowViewInterface
 {
 public:
-    explicit MainWindowViewInterface(Controllers::MainWindow *);
+    explicit MainWindowViewInterface(Core::MainWindow *);
     virtual ~MainWindowViewInterface();
     virtual QMargins centerWidgetMargins() const = 0;
     virtual QRect centralAreaGeometry() const = 0;
     virtual void setContentsMargins(int left, int top, int right, int bottom) = 0;
 
     /// @brief Returns the main window controller
-    Controllers::MainWindow *mainWindow() const;
+    Core::MainWindow *mainWindow() const;
 
 
     // controllers/MainWindow.h public interface:
@@ -80,7 +80,7 @@ public:
 
 protected:
     void init(const QString &name);
-    Controllers::MainWindow *const m_mainWindow;
+    Core::MainWindow *const m_mainWindow;
 };
 
 }

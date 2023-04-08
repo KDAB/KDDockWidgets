@@ -13,9 +13,9 @@
 #include <qstring.h>
 #include <qsize.h>
 #include <DockWidget.h>
-#include <qpoint.h>
 #include <qrect.h>
 #include <View.h>
+#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockWidget_flutter_wrapper : public ::KDDockWidgets::Views::DockWidget_flutter
@@ -29,7 +29,7 @@ public:
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
-    KDDockWidgets::Controllers::DockWidget *dockWidget() const;
+    KDDockWidgets::Core::DockWidget *dockWidget() const;
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
     virtual void free_impl();

@@ -24,7 +24,7 @@ class ItemFreeContainer;
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 
 /**
  * @brief The MDILayout class implements a layout suitable for MDI style docking.
@@ -38,25 +38,25 @@ public:
     ~MDILayout() override;
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
-    void addDockWidget(Controllers::DockWidget *dw, QPoint localPt,
+    void addDockWidget(Core::DockWidget *dw, QPoint localPt,
                        InitialOption addingOption = {});
 
     /// @brief Moves a dock widget @p dw to point @p pos
-    void moveDockWidget(Controllers::DockWidget *dw, QPoint pos);
+    void moveDockWidget(Core::DockWidget *dw, QPoint pos);
 
     /// @brief Moves a dock widget @p f to point @p pos
     /// Convenience overload.
-    void moveDockWidget(Controllers::Group *f, QPoint pos);
+    void moveDockWidget(Core::Group *f, QPoint pos);
 
     /// @brief Sets the size of dock widget @p dw to @p size
-    void resizeDockWidget(Controllers::DockWidget *dw, QSize size);
+    void resizeDockWidget(Core::DockWidget *dw, QSize size);
 
     /// @brief Sets the size of dock widget @p f to @p size
     /// Convenience overload.
-    void resizeDockWidget(Controllers::Group *f, QSize size);
+    void resizeDockWidget(Core::Group *f, QSize size);
 
     /// @brief sets the size and position of the dock widget @p f
-    void setDockWidgetGeometry(Controllers::Group *f, QRect);
+    void setDockWidgetGeometry(Core::Group *f, QRect);
 
 private:
     Layouting::ItemFreeContainer *const m_rootItem;

@@ -31,7 +31,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent)
+TabBar_qtquick::TabBar_qtquick(Core::TabBar *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
     , m_dockWidgetModel(new DockWidgetModel(controller, this))
@@ -190,12 +190,12 @@ void TabBar_qtquick::changeTabIcon(int index, const QIcon &)
     qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
-void TabBar_qtquick::removeDockWidget(Controllers::DockWidget *dw)
+void TabBar_qtquick::removeDockWidget(Core::DockWidget *dw)
 {
     m_dockWidgetModel->remove(dw);
 }
 
-void TabBar_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+void TabBar_qtquick::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
                                       const QString &title)
 {
     Q_UNUSED(title); // TODO
@@ -244,7 +244,7 @@ int TabBar_qtquick::hoveredTabIndex() const
     return m_hoveredTabIndex;
 }
 
-DockWidgetModel::DockWidgetModel(Controllers::TabBar *tabBar, QObject *parent)
+DockWidgetModel::DockWidgetModel(Core::TabBar *tabBar, QObject *parent)
     : QAbstractListModel(parent)
     , m_tabBar(tabBar)
 {
@@ -266,7 +266,7 @@ QVariant DockWidgetModel::data(const QModelIndex &index, int role) const
     if (row < 0 || row >= m_dockWidgets.size())
         return {};
 
-    Controllers::DockWidget *dw = m_dockWidgets.at(row);
+    Core::DockWidget *dw = m_dockWidgets.at(row);
 
     switch (role) {
     case Role_Title:
@@ -276,7 +276,7 @@ QVariant DockWidgetModel::data(const QModelIndex &index, int role) const
     return {};
 }
 
-Controllers::DockWidget *DockWidgetModel::dockWidgetAt(int index) const
+Core::DockWidget *DockWidgetModel::dockWidgetAt(int index) const
 {
     if (index < 0 || index >= m_dockWidgets.size()) {
         // Can happen. Benign.
@@ -286,17 +286,17 @@ Controllers::DockWidget *DockWidgetModel::dockWidgetAt(int index) const
     return m_dockWidgets[index];
 }
 
-bool DockWidgetModel::contains(Controllers::DockWidget *dw) const
+bool DockWidgetModel::contains(Core::DockWidget *dw) const
 {
     return m_dockWidgets.contains(dw);
 }
 
-Controllers::DockWidget *DockWidgetModel::currentDockWidget() const
+Core::DockWidget *DockWidgetModel::currentDockWidget() const
 {
     return m_currentDockWidget;
 }
 
-void DockWidgetModel::setCurrentDockWidget(Controllers::DockWidget *dw)
+void DockWidgetModel::setCurrentDockWidget(Core::DockWidget *dw)
 {
     if (m_currentDockWidget)
         m_currentDockWidget->setVisible(false);
@@ -314,7 +314,7 @@ QHash<int, QByteArray> DockWidgetModel::roleNames() const
     return { { Role_Title, "title" } };
 }
 
-void DockWidgetModel::emitDataChangedFor(Controllers::DockWidget *dw)
+void DockWidgetModel::emitDataChangedFor(Core::DockWidget *dw)
 {
     const int row = indexOf(dw);
     if (row == -1) {
@@ -325,7 +325,7 @@ void DockWidgetModel::emitDataChangedFor(Controllers::DockWidget *dw)
     }
 }
 
-void DockWidgetModel::remove(Controllers::DockWidget *dw)
+void DockWidgetModel::remove(Core::DockWidget *dw)
 {
     QScopedValueRollback<bool> guard(m_removeGuard, true);
     const int row = indexOf(dw);
@@ -352,9 +352,9 @@ void DockWidgetModel::remove(Controllers::DockWidget *dw)
     }
 }
 
-int DockWidgetModel::indexOf(const Controllers::DockWidget *dw)
+int DockWidgetModel::indexOf(const Core::DockWidget *dw)
 {
-    return m_dockWidgets.indexOf(const_cast<Controllers::DockWidget *>(dw));
+    return m_dockWidgets.indexOf(const_cast<Core::DockWidget *>(dw));
 }
 
 int DockWidgetModel::currentIndex() const
@@ -373,7 +373,7 @@ int DockWidgetModel::currentIndex() const
 
 void DockWidgetModel::setCurrentIndex(int index)
 {
-    Controllers::DockWidget *dw = dockWidgetAt(index);
+    Core::DockWidget *dw = dockWidgetAt(index);
 
     if (m_currentDockWidget != dw) {
         setCurrentDockWidget(dw);
@@ -381,14 +381,14 @@ void DockWidgetModel::setCurrentIndex(int index)
     }
 }
 
-bool DockWidgetModel::insert(Controllers::DockWidget *dw, int index)
+bool DockWidgetModel::insert(Core::DockWidget *dw, int index)
 {
     if (m_dockWidgets.contains(dw)) {
         qWarning() << Q_FUNC_INFO << "Shouldn't happen";
         return false;
     }
 
-    QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::titleChanged, this,
+    QMetaObject::Connection conn = connect(dw, &Core::DockWidget::titleChanged, this,
                                            [dw, this] { emitDataChangedFor(dw); });
 
     QMetaObject::Connection conn2 =

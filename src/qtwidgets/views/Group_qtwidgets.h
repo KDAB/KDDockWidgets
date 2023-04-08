@@ -14,7 +14,7 @@
 #include "View_qtwidgets.h"
 #include "views/GroupViewInterface.h"
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 class Group;
 }
 
@@ -24,7 +24,7 @@ class DOCKS_EXPORT Group_qtwidgets : public View_qtwidgets<QWidget>, public Grou
 {
     Q_OBJECT
 public:
-    explicit Group_qtwidgets(Controllers::Group *controller, QWidget *parent = nullptr);
+    explicit Group_qtwidgets(Core::Group *controller, QWidget *parent = nullptr);
     void init() override;
 
     int nonContentsHeight() const override;

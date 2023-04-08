@@ -14,15 +14,15 @@
 #include <View.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <qpoint.h>
 #include <qstring.h>
+#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Group_flutter_wrapper : public ::KDDockWidgets::Views::Group_flutter
 {
 public:
     ~Group_flutter_wrapper();
-    Group_flutter_wrapper(KDDockWidgets::Controllers::Group *controller, KDDockWidgets::View *parent = nullptr);
+    Group_flutter_wrapper(KDDockWidgets::Core::Group *controller, KDDockWidgets::View *parent = nullptr);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -251,7 +251,7 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::Group_flutter::Group_flutter(KDDockWidgets::Controllers::Group * controller, KDDockWidgets::View * parent)
+// KDDockWidgets::Views::Group_flutter::Group_flutter(KDDockWidgets::Core::Group * controller, KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__Group_flutter__constructor_Group_View(void *controller_, void *parent_);
 // KDDockWidgets::Views::Group_flutter::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__Group_flutter__activateWindow(void *thisObj);

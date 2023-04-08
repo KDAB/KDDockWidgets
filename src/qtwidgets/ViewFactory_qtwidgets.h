@@ -36,7 +36,7 @@ namespace KDDockWidgets {
 
 class DropIndicatorOverlay;
 
-namespace Controllers {
+namespace Core {
 class DropArea;
 class Separator;
 class TabBar;
@@ -58,25 +58,25 @@ public:
     View *createDockWidget(const QString &uniqueName, DockWidgetOptions = {},
                            LayoutSaverOptions = {}, Qt::WindowFlags = {}) const override;
 
-    View *createGroup(Controllers::Group *, View *parent) const override;
-    View *createTitleBar(Controllers::TitleBar *, View *parent) const override;
-    View *createStack(Controllers::Stack *, View *parent) const override;
-    View *createTabBar(Controllers::TabBar *tabBar, View *parent) const override;
-    View *createSeparator(Controllers::Separator *, View *parent = nullptr) const override;
-    View *createFloatingWindow(Controllers::FloatingWindow *,
-                               Controllers::MainWindow *parent = nullptr,
+    View *createGroup(Core::Group *, View *parent) const override;
+    View *createTitleBar(Core::TitleBar *, View *parent) const override;
+    View *createStack(Core::Stack *, View *parent) const override;
+    View *createTabBar(Core::TabBar *tabBar, View *parent) const override;
+    View *createSeparator(Core::Separator *, View *parent = nullptr) const override;
+    View *createFloatingWindow(Core::FloatingWindow *,
+                               Core::MainWindow *parent = nullptr,
                                Qt::WindowFlags windowFlags = {}) const override;
     View *createRubberBand(View *parent) const override;
-    View *createSideBar(Controllers::SideBar *, View *parent) const override;
-    View *createDropArea(Controllers::DropArea *, View *parent) const override;
-    View *createMDILayout(Controllers::MDILayout *, View *parent) const override;
+    View *createSideBar(Core::SideBar *, View *parent) const override;
+    View *createDropArea(Core::DropArea *, View *parent) const override;
+    View *createMDILayout(Core::MDILayout *, View *parent) const override;
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     void clearIconCache();
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
     Views::ClassicIndicatorWindowViewInterface *
-    createClassicIndicatorWindow(Controllers::ClassicIndicators *) const override;
-    View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller,
+    createClassicIndicatorWindow(Core::ClassicIndicators *) const override;
+    View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
                                                   View *parent = nullptr) const override;
 
 private:

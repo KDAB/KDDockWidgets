@@ -15,7 +15,7 @@
 
 namespace KDDockWidgets::Views {
 
-TitleBarViewInterface::TitleBarViewInterface(Controllers::TitleBar *controller)
+TitleBarViewInterface::TitleBarViewInterface(Core::TitleBar *controller)
     : m_titleBar(controller)
 {
 }

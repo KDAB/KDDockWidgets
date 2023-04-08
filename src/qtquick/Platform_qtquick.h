@@ -26,7 +26,7 @@ namespace KDDockWidgets {
 class QtQuickHelpers;
 class ViewFactory_qtquick;
 
-namespace Controllers {
+namespace Core {
 class DockWidget;
 }
 
@@ -54,7 +54,7 @@ public:
     void ungrabMouse() override;
     static Platform_qtquick *instance();
 
-    static Controllers::DockWidget *dockWidgetForItem(QQuickItem *);
+    static Core::DockWidget *dockWidgetForItem(QQuickItem *);
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtquick(int &argc, char **argv);
@@ -64,7 +64,7 @@ public:
     std::shared_ptr<Window> tests_createWindow() override;
     View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createNonClosableView(View *parent = nullptr) override;
-    Controllers::MainWindow *
+    Core::MainWindow *
     createMainWindow(const QString &uniqueName, CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
                      View *parent = nullptr, Qt::WindowFlags = {}) const override;

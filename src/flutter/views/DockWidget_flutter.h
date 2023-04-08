@@ -21,7 +21,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Group;
 class TitleBar;
 }
@@ -30,7 +30,7 @@ namespace Views {
 /**
  * @brief Represents a dock widget.
  *
- * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
+ * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
 class DOCKS_EXPORT DockWidget_flutter : public Views::View_flutter,
                                         public Views::DockWidgetViewInterface
@@ -63,7 +63,7 @@ public:
     /// @reimp
     QSize maxSizeHint() const override;
 
-    Controllers::DockWidget *dockWidget() const;
+    Core::DockWidget *dockWidget() const;
 
 protected:
     void init() override;

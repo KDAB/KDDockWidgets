@@ -29,7 +29,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Stack_qtwidgets::Stack_qtwidgets(Controllers::Stack *controller, QWidget *parent)
+Stack_qtwidgets::Stack_qtwidgets(Core::Stack *controller, QWidget *parent)
     : View_qtwidgets<QTabWidget>(controller, Type::Stack, parent)
     , StackViewInterface(controller)
 {
@@ -118,12 +118,12 @@ void Stack_qtwidgets::setupTabBarButtons()
     m_cornerWidgetLayout->addWidget(m_closeButton);
 
     connect(m_floatButton, &QAbstractButton::clicked, this, [this] {
-        Controllers::TitleBar *tb = m_stack->group()->titleBar();
+        Core::TitleBar *tb = m_stack->group()->titleBar();
         tb->onFloatClicked();
     });
 
     connect(m_closeButton, &QAbstractButton::clicked, this, [this] {
-        Controllers::TitleBar *tb = m_stack->group()->titleBar();
+        Core::TitleBar *tb = m_stack->group()->titleBar();
         tb->onCloseClicked();
     });
 
@@ -180,7 +180,7 @@ void Stack_qtwidgets::setDocumentMode(bool is)
     QTabWidget::setDocumentMode(is);
 }
 
-Controllers::Stack *Stack_qtwidgets::stack() const
+Core::Stack *Stack_qtwidgets::stack() const
 {
     return m_stack;
 }

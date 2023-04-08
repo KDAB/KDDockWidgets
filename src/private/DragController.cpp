@@ -41,7 +41,7 @@
 #endif
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets {
 ///@brief Custom mouse grabber, for platforms that don't support grabbing the mouse
@@ -277,7 +277,7 @@ void StateDragging::onEntry()
     m_maybeCancelDrag.start();
 #endif
 
-    if (Controllers::DockWidget *dw = q->m_draggable->singleDockWidget()) {
+    if (Core::DockWidget *dw = q->m_draggable->singleDockWidget()) {
         // When we start to drag a floating window which has a single dock widget, we save the
         // position
         if (dw->isFloating())
@@ -485,7 +485,7 @@ void StateInternalMDIDragging::onEntry()
 
     // Raise the dock widget being dragged
     if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
-        if (Controllers::Group *f = tb->group())
+        if (Core::Group *f = tb->group())
             f->view()->raise();
     }
 
@@ -508,7 +508,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
         return false;
     }
 
-    Controllers::Group *group = tb->group();
+    Core::Group *group = tb->group();
     if (!group) {
         // Doesn't happen.
         qWarning() << Q_FUNC_INFO << "null group.";

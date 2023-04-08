@@ -35,7 +35,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class FloatingWindow;
 }
 
@@ -216,7 +216,7 @@ struct LayoutSaver::FloatingWindow
     bool isVisible = true;
 
     // The instance that was created during a restore:
-    Controllers::FloatingWindow *floatingWindowInstance = nullptr;
+    Core::FloatingWindow *floatingWindowInstance = nullptr;
     KDDockWidgets::WindowState windowState = KDDockWidgets::WindowState::None;
 };
 

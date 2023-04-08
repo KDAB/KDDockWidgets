@@ -27,7 +27,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Stack;
 }
 
@@ -37,7 +37,7 @@ class DOCKS_EXPORT Stack_qtquick : public View_qtquick, public StackViewInterfac
 {
     Q_OBJECT
 public:
-    explicit Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent = nullptr);
+    explicit Stack_qtquick(Core::Stack *controller, QQuickItem *parent = nullptr);
 
 private:
     Q_DISABLE_COPY(Stack_qtquick)

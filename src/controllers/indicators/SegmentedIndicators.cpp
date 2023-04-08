@@ -14,7 +14,7 @@
 #include "Config.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 int SegmentedIndicators::s_segmentGirth = 50;
 int SegmentedIndicators::s_segmentPenWidth = 4;
@@ -22,7 +22,7 @@ qreal SegmentedIndicators::s_draggedWindowOpacity = 0.7;
 int SegmentedIndicators::s_centralIndicatorMaxWidth = 300;
 int SegmentedIndicators::s_centralIndicatorMaxHeight = 160;
 
-SegmentedIndicators::SegmentedIndicators(Controllers::DropArea *dropArea)
+SegmentedIndicators::SegmentedIndicators(Core::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea)
 {
     // If the app didn't choose opacity then we choose a suitable default value.

@@ -37,7 +37,7 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
@@ -278,14 +278,14 @@ void TestDocks::tst_28NestedWidgets()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dropArea = m->dropArea();
-    Controllers::DropArea *layout = dropArea;
+    Core::DropArea *layout = dropArea;
 
     int i = 0;
     for (DockDescriptor &desc : docksToCreate) {
         desc.createdDock = createDockWidget(
             QString("%1").arg(i), Platform::instance()->tests_createView({ true }), {}, {}, false);
 
-        Controllers::DockWidget *relativeTo = nullptr;
+        Core::DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docksToCreate.at(desc.relativeToIndex).createdDock;
         m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);

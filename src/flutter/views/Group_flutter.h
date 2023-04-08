@@ -17,7 +17,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Group;
 class DockWidget;
 }
@@ -29,7 +29,7 @@ class Stack_flutter;
 class DOCKS_EXPORT Group_flutter : public View_flutter, public GroupViewInterface
 {
 public:
-    explicit Group_flutter(Controllers::Group *controller, View *parent = nullptr);
+    explicit Group_flutter(Core::Group *controller, View *parent = nullptr);
     ~Group_flutter() override;
 
     /// @reimp

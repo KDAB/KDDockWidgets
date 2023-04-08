@@ -15,7 +15,7 @@
 
 namespace KDDockWidgets::Views {
 
-StackViewInterface::StackViewInterface(Controllers::Stack *controller)
+StackViewInterface::StackViewInterface(Core::Stack *controller)
     : m_stack(controller)
 {
 }

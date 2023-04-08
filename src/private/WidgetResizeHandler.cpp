@@ -89,7 +89,7 @@ void WidgetResizeHandler::setResizeGap(int gap)
 
 bool WidgetResizeHandler::isMDI() const
 {
-    Controllers::Group *group = mTarget->asGroupController();
+    Core::Group *group = mTarget->asGroupController();
     return group && group->isMDI();
 }
 
@@ -212,7 +212,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
             break;
 
         if (isMDI()) {
-            const Controllers::Group *groupBeingResized = DockRegistry::self()->groupInMDIResize();
+            const Core::Group *groupBeingResized = DockRegistry::self()->groupInMDIResize();
             const bool otherGroupBeingResized =
                 groupBeingResized && groupBeingResized->view() != mTarget;
             if (otherGroupBeingResized) {
@@ -345,7 +345,7 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
 #ifdef Q_OS_WIN
 
 /// Handler to enable Aero-snap
-bool WidgetResizeHandler::handleWindowsNativeEvent(Controllers::FloatingWindow *fw,
+bool WidgetResizeHandler::handleWindowsNativeEvent(Core::FloatingWindow *fw,
                                                    const QByteArray &eventType, void *message,
                                                    Qt5Qt6Compat::qintptr *result)
 {
@@ -370,7 +370,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Controllers::FloatingWindow *
             return handleWindowsNativeEvent(fw->view()->window(), msg, result, {});
         } else {
             // Let the title bar handle it. It will re-dock the window.
-            if (Controllers::TitleBar *titleBar = fw->titleBar()) {
+            if (Core::TitleBar *titleBar = fw->titleBar()) {
                 if (titleBar->isVisible()) { // can't be invisible afaik
                     titleBar->onDoubleClicked();
                 }

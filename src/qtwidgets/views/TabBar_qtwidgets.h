@@ -21,7 +21,7 @@ class QMouseEvent;
 class QTabWidget;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 class TabBar;
 class DockWidget;
 }
@@ -32,9 +32,9 @@ class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>, public Tab
 {
     Q_OBJECT
 public:
-    explicit TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *parent = nullptr);
+    explicit TabBar_qtwidgets(Core::TabBar *controller, QWidget *parent = nullptr);
 
-    Controllers::TabBar *tabBar() const;
+    Core::TabBar *tabBar() const;
 
     void setCurrentIndex(int index) override;
 
@@ -45,8 +45,8 @@ public:
     int tabAt(QPoint localPos) const override;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &icon) override;
-    void removeDockWidget(Controllers::DockWidget *) override;
-    void insertDockWidget(int index, Controllers::DockWidget *, const QIcon &,
+    void removeDockWidget(Core::DockWidget *) override;
+    void insertDockWidget(int index, Core::DockWidget *, const QIcon &,
                           const QString &title) override;
     QTabWidget *tabWidget() const;
     void setTabsAreMovable(bool) override;
@@ -65,7 +65,7 @@ protected:
     void tabRemoved(int index) override;
 
 private:
-    Controllers::TabBar *const m_controller;
+    Core::TabBar *const m_controller;
 };
 
 }

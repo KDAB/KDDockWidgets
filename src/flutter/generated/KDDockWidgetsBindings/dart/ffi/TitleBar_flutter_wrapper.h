@@ -12,17 +12,17 @@
 #include <TitleBar_flutter.h>
 #include <TitleBar.h>
 #include <View.h>
-#include <qpoint.h>
+#include <qstring.h>
 #include <qrect.h>
 #include <qsize.h>
-#include <qstring.h>
+#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_flutter_wrapper : public ::KDDockWidgets::Views::TitleBar_flutter
 {
 public:
     ~TitleBar_flutter_wrapper();
-    TitleBar_flutter_wrapper(KDDockWidgets::Controllers::TitleBar *controller, KDDockWidgets::View *parent = nullptr);
+    TitleBar_flutter_wrapper(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::View *parent = nullptr);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -258,7 +258,7 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::TitleBar_flutter::TitleBar_flutter(KDDockWidgets::Controllers::TitleBar * controller, KDDockWidgets::View * parent)
+// KDDockWidgets::Views::TitleBar_flutter::TitleBar_flutter(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TitleBar_flutter__constructor_TitleBar_View(void *controller_, void *parent_);
 // KDDockWidgets::Views::TitleBar_flutter::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TitleBar_flutter__activateWindow(void *thisObj);

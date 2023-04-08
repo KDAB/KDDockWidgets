@@ -17,14 +17,14 @@
 
 namespace KDDockWidgets::Views {
 
-MainWindowViewInterface::MainWindowViewInterface(Controllers::MainWindow *controller)
+MainWindowViewInterface::MainWindowViewInterface(Core::MainWindow *controller)
     : m_mainWindow(controller)
 {
 }
 
 MainWindowViewInterface::~MainWindowViewInterface() = default;
 
-Controllers::MainWindow *MainWindowViewInterface::mainWindow() const
+Core::MainWindow *MainWindowViewInterface::mainWindow() const
 {
     return m_mainWindow;
 }
@@ -140,7 +140,7 @@ void MainWindowViewInterface::layoutParentContainerEqually(DockWidgetViewInterfa
 
 void MainWindowViewInterface::moveToSideBar(const QString &dockId)
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         m_mainWindow->moveToSideBar(dw);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
@@ -150,7 +150,7 @@ void MainWindowViewInterface::moveToSideBar(const QString &dockId)
 void MainWindowViewInterface::moveToSideBar(const QString &dockId,
                                             KDDockWidgets::SideBarLocation loc)
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         return m_mainWindow->moveToSideBar(dw, loc);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
@@ -159,7 +159,7 @@ void MainWindowViewInterface::moveToSideBar(const QString &dockId,
 
 void MainWindowViewInterface::restoreFromSideBar(const QString &dockId)
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         return m_mainWindow->restoreFromSideBar(dw);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
@@ -168,7 +168,7 @@ void MainWindowViewInterface::restoreFromSideBar(const QString &dockId)
 
 void MainWindowViewInterface::overlayOnSideBar(const QString &dockId)
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         return m_mainWindow->overlayOnSideBar(dw);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
@@ -177,7 +177,7 @@ void MainWindowViewInterface::overlayOnSideBar(const QString &dockId)
 
 void MainWindowViewInterface::toggleOverlayOnSideBar(const QString &dockId)
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         return m_mainWindow->toggleOverlayOnSideBar(dw);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
@@ -186,7 +186,7 @@ void MainWindowViewInterface::toggleOverlayOnSideBar(const QString &dockId)
 
 void MainWindowViewInterface::layoutParentContainerEqually(const QString &dockId)
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         return m_mainWindow->layoutParentContainerEqually(dw);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
@@ -195,7 +195,7 @@ void MainWindowViewInterface::layoutParentContainerEqually(const QString &dockId
 
 void MainWindowViewInterface::addDockWidgetAsTab(const QString &dockId)
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         return m_mainWindow->addDockWidgetAsTab(dw);
     } else {
         qWarning() << Q_FUNC_INFO << "Could not find dock widget" << dockId;
@@ -206,7 +206,7 @@ void MainWindowViewInterface::addDockWidget(const QString &dockId, KDDockWidgets
                                             const QString &relativeToDockId,
                                             KDDockWidgets::InitialOption initialOption)
 {
-    if (Controllers::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
+    if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         auto relativeTo = relativeToDockId.isEmpty()
             ? nullptr
             : DockRegistry::self()->dockByName(relativeToDockId);

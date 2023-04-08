@@ -38,7 +38,7 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
@@ -136,7 +136,7 @@ void TestDocks::tst_negativeAnchorPosition()
     auto w3 = Platform::instance()->tests_createView({ true, {}, QSize(133, 343) });
     w3->resize(392, 362);
 
-    Controllers::DropArea *layout = m->multiSplitter();
+    Core::DropArea *layout = m->multiSplitter();
 
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
@@ -181,7 +181,7 @@ void TestDocks::tst_negativeAnchorPosition2()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dropArea = m->dropArea();
-    Controllers::DropArea *layout = dropArea;
+    Core::DropArea *layout = dropArea;
 
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {},
                                   /*show=*/false);
@@ -216,7 +216,7 @@ void TestDocks::tst_negativeAnchorPosition3()
     };
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
-    Controllers::DropArea *layout = dropArea;
+    Core::DropArea *layout = dropArea;
     layout->checkSanity();
 
     auto dock1 = docks.at(1).createdDock;
@@ -242,7 +242,7 @@ void TestDocks::tst_negativeAnchorPosition4()
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
-    Controllers::DropArea *layout = dropArea;
+    Core::DropArea *layout = dropArea;
     layout->checkSanity();
 
     auto dock1 = docks.at(1).createdDock;
@@ -272,7 +272,7 @@ void TestDocks::tst_negativeAnchorPosition5()
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
-    Controllers::DropArea *layout = dropArea;
+    Core::DropArea *layout = dropArea;
     layout->checkSanity();
 
     auto dock0 = docks.at(0).createdDock;
@@ -373,7 +373,7 @@ void TestDocks::tst_crash2()
         auto layout = m->multiSplitter();
         m->setVisible(show);
 
-        Controllers::DockWidget::List docks;
+        Core::DockWidget::List docks;
         const int num = 4;
         for (int i = 0; i < num; ++i)
             docks << newDockWidget(QString::number(i));
@@ -406,7 +406,7 @@ void TestDocks::tst_crash2()
         m->show();
 
         const int num = 3;
-        Controllers::DockWidget::List docks;
+        Core::DockWidget::List docks;
         for (int i = 0; i < num; ++i)
             docks << newDockWidget(QString::number(i));
 

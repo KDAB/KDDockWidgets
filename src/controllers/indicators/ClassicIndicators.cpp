@@ -23,7 +23,7 @@
 #include "controllers/Group.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 static Views::ClassicIndicatorWindowViewInterface *
 createIndicatorWindow(ClassicIndicators *classicIndicators)
@@ -34,7 +34,7 @@ createIndicatorWindow(ClassicIndicators *classicIndicators)
     return window;
 }
 
-ClassicIndicators::ClassicIndicators(Controllers::DropArea *dropArea)
+ClassicIndicators::ClassicIndicators(Core::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea) // Is parented on the drop-area, not a toplevel.
     , m_rubberBand(Config::self().viewFactory()->createRubberBand(
           rubberBandIsTopLevel() ? nullptr : dropArea->view()))
@@ -131,7 +131,7 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     }
 
     KDDockWidgets::Location multisplitterLocation = locationToMultisplitterLocation(location);
-    Controllers::Group *relativeToFrame = nullptr;
+    Core::Group *relativeToFrame = nullptr;
 
     switch (location) {
     case DropLocation_Left:

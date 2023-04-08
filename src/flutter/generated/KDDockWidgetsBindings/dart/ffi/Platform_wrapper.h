@@ -31,10 +31,12 @@ public:
     virtual QString applicationName_nocallback() const;
     virtual KDDockWidgets::ViewFactory *createDefaultViewFactory();
     virtual KDDockWidgets::ViewFactory *createDefaultViewFactory_nocallback();
-    virtual KDDockWidgets::Controllers::MainWindow *createMainWindow(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
-    virtual KDDockWidgets::Controllers::MainWindow *createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
+    virtual KDDockWidgets::Core::MainWindow *createMainWindow(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
+    virtual KDDockWidgets::Core::MainWindow *createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
     virtual KDDockWidgets::View *createView(KDDockWidgets::Controller *arg__1, KDDockWidgets::View *parent = nullptr) const;
     virtual KDDockWidgets::View *createView_nocallback(KDDockWidgets::Controller *arg__1, KDDockWidgets::View *parent = nullptr) const;
+    virtual QPoint cursorPos() const;
+    virtual QPoint cursorPos_nocallback() const;
     virtual void dumpManagedBacktrace();
     virtual void dumpManagedBacktrace_nocallback();
     virtual bool hasActivePopup() const;
@@ -53,10 +55,10 @@ public:
     bool isQtWidgets() const;
     virtual const char *name() const;
     virtual const char *name_nocallback() const;
-    virtual void onFloatingWindowCreated(KDDockWidgets::Controllers::FloatingWindow *arg__1);
-    virtual void onFloatingWindowCreated_nocallback(KDDockWidgets::Controllers::FloatingWindow *arg__1);
-    virtual void onFloatingWindowDestroyed(KDDockWidgets::Controllers::FloatingWindow *arg__1);
-    virtual void onFloatingWindowDestroyed_nocallback(KDDockWidgets::Controllers::FloatingWindow *arg__1);
+    virtual void onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow *arg__1);
+    virtual void onFloatingWindowCreated_nocallback(KDDockWidgets::Core::FloatingWindow *arg__1);
+    virtual void onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow *arg__1);
+    virtual void onFloatingWindowDestroyed_nocallback(KDDockWidgets::Core::FloatingWindow *arg__1);
     virtual QString organizationName() const;
     virtual QString organizationName_nocallback() const;
     virtual void restoreMouseCursor();
@@ -65,6 +67,8 @@ public:
     virtual int screenNumberFor_nocallback(KDDockWidgets::View *arg__1) const;
     virtual QSize screenSizeFor(KDDockWidgets::View *arg__1) const;
     virtual QSize screenSizeFor_nocallback(KDDockWidgets::View *arg__1) const;
+    virtual void setCursorPos(QPoint arg__1);
+    virtual void setCursorPos_nocallback(QPoint arg__1);
     virtual void setMouseCursor(Qt::CursorShape arg__1);
     virtual void setMouseCursor_nocallback(Qt::CursorShape arg__1);
     int startDragDistance() const;
@@ -90,6 +94,10 @@ public:
     virtual bool tests_waitForDeleted_nocallback(KDDockWidgets::View *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForDeleted(QObject *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForDeleted_nocallback(QObject *arg__1, int timeout = 2000) const;
+    virtual bool tests_waitForEvent(KDDockWidgets::View *arg__1, Event::Type type, int timeout = 5000) const;
+    virtual bool tests_waitForEvent_nocallback(KDDockWidgets::View *arg__1, Event::Type type, int timeout = 5000) const;
+    virtual bool tests_waitForEvent(QObject *w, Event::Type type, int timeout = 5000) const;
+    virtual bool tests_waitForEvent_nocallback(QObject *w, Event::Type type, int timeout = 5000) const;
     virtual bool tests_waitForResize(KDDockWidgets::Controller *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForResize_nocallback(KDDockWidgets::Controller *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForResize(KDDockWidgets::View *arg__1, int timeout = 2000) const;
@@ -104,10 +112,12 @@ public:
     Callback_applicationName m_applicationNameCallback = nullptr;
     typedef KDDockWidgets::ViewFactory *(*Callback_createDefaultViewFactory)(void *);
     Callback_createDefaultViewFactory m_createDefaultViewFactoryCallback = nullptr;
-    typedef KDDockWidgets::Controllers::MainWindow *(*Callback_createMainWindow)(void *, const QString &uniqueName, KDDockWidgets::CreateViewOptions *arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View *parent, Qt::WindowFlags arg__5);
+    typedef KDDockWidgets::Core::MainWindow *(*Callback_createMainWindow)(void *, const QString &uniqueName, KDDockWidgets::CreateViewOptions *arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View *parent, Qt::WindowFlags arg__5);
     Callback_createMainWindow m_createMainWindowCallback = nullptr;
     typedef KDDockWidgets::View *(*Callback_createView)(void *, KDDockWidgets::Controller *arg__1, KDDockWidgets::View *parent);
     Callback_createView m_createViewCallback = nullptr;
+    typedef QPoint *(*Callback_cursorPos)(void *);
+    Callback_cursorPos m_cursorPosCallback = nullptr;
     typedef void (*Callback_dumpManagedBacktrace)(void *);
     Callback_dumpManagedBacktrace m_dumpManagedBacktraceCallback = nullptr;
     typedef bool (*Callback_hasActivePopup)(void *);
@@ -122,9 +132,9 @@ public:
     Callback_isProcessingAppQuitEvent m_isProcessingAppQuitEventCallback = nullptr;
     typedef const char *(*Callback_name)(void *);
     Callback_name m_nameCallback = nullptr;
-    typedef void (*Callback_onFloatingWindowCreated)(void *, KDDockWidgets::Controllers::FloatingWindow *arg__1);
+    typedef void (*Callback_onFloatingWindowCreated)(void *, KDDockWidgets::Core::FloatingWindow *arg__1);
     Callback_onFloatingWindowCreated m_onFloatingWindowCreatedCallback = nullptr;
-    typedef void (*Callback_onFloatingWindowDestroyed)(void *, KDDockWidgets::Controllers::FloatingWindow *arg__1);
+    typedef void (*Callback_onFloatingWindowDestroyed)(void *, KDDockWidgets::Core::FloatingWindow *arg__1);
     Callback_onFloatingWindowDestroyed m_onFloatingWindowDestroyedCallback = nullptr;
     typedef QString *(*Callback_organizationName)(void *);
     Callback_organizationName m_organizationNameCallback = nullptr;
@@ -134,6 +144,8 @@ public:
     Callback_screenNumberFor m_screenNumberForCallback = nullptr;
     typedef QSize *(*Callback_screenSizeFor)(void *, KDDockWidgets::View *arg__1);
     Callback_screenSizeFor m_screenSizeForCallback = nullptr;
+    typedef void (*Callback_setCursorPos)(void *, QPoint *arg__1);
+    Callback_setCursorPos m_setCursorPosCallback = nullptr;
     typedef void (*Callback_setMouseCursor)(void *, Qt::CursorShape arg__1);
     Callback_setMouseCursor m_setMouseCursorCallback = nullptr;
     typedef int (*Callback_startDragDistance_impl)(void *);
@@ -156,6 +168,10 @@ public:
     Callback_tests_waitForDeleted m_tests_waitForDeletedCallback = nullptr;
     typedef bool (*Callback_tests_waitForDeleted_2)(void *, QObject *arg__1, int timeout);
     Callback_tests_waitForDeleted_2 m_tests_waitForDeleted_2Callback = nullptr;
+    typedef bool (*Callback_tests_waitForEvent)(void *, KDDockWidgets::View *arg__1, Event::Type type, int timeout);
+    Callback_tests_waitForEvent m_tests_waitForEventCallback = nullptr;
+    typedef bool (*Callback_tests_waitForEvent_2)(void *, QObject *w, Event::Type type, int timeout);
+    Callback_tests_waitForEvent_2 m_tests_waitForEvent_2Callback = nullptr;
     typedef bool (*Callback_tests_waitForResize)(void *, KDDockWidgets::Controller *arg__1, int timeout);
     Callback_tests_waitForResize m_tests_waitForResizeCallback = nullptr;
     typedef bool (*Callback_tests_waitForResize_2)(void *, KDDockWidgets::View *arg__1, int timeout);
@@ -179,6 +195,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform__createDefaultViewF
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
 // KDDockWidgets::Platform::createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform__createView_Controller_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::Platform::cursorPos() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform__cursorPos(void *thisObj);
 // KDDockWidgets::Platform::dumpManagedBacktrace()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform__dumpManagedBacktrace(void *thisObj);
 // KDDockWidgets::Platform::hasActivePopup() const
@@ -201,9 +219,9 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__isQtQuick(void *thi
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__isQtWidgets(void *thisObj);
 // KDDockWidgets::Platform::name() const
 KDDockWidgetsBindings_EXPORT const char *c_KDDockWidgets__Platform__name(void *thisObj);
-// KDDockWidgets::Platform::onFloatingWindowCreated(KDDockWidgets::Controllers::FloatingWindow * arg__1)
+// KDDockWidgets::Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
-// KDDockWidgets::Platform::onFloatingWindowDestroyed(KDDockWidgets::Controllers::FloatingWindow * arg__1)
+// KDDockWidgets::Platform::onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Platform::organizationName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform__organizationName(void *thisObj);
@@ -213,6 +231,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform__restoreMouseCursor(
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Platform::screenSizeFor(KDDockWidgets::View * arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Platform::setCursorPos(QPoint arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform__setCursorPos_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::Platform::setMouseCursor(Qt::CursorShape arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Platform::startDragDistance() const
@@ -241,6 +261,10 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform__tests_wait_int(void
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
+// KDDockWidgets::Platform::tests_waitForEvent(KDDockWidgets::View * arg__1, Event::Type type, int timeout) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
+// KDDockWidgets::Platform::tests_waitForEvent(QObject * w, Event::Type type, int timeout) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
 // KDDockWidgets::Platform::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Platform__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Platform::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const

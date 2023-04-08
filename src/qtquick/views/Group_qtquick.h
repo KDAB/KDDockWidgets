@@ -24,7 +24,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Group;
 class DockWidget;
 }
@@ -46,7 +46,7 @@ class DOCKS_EXPORT Group_qtquick : public View_qtquick, public GroupViewInterfac
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
 
 public:
-    explicit Group_qtquick(Controllers::Group *controller, QQuickItem *parent = nullptr);
+    explicit Group_qtquick(Core::Group *controller, QQuickItem *parent = nullptr);
     ~Group_qtquick() override;
 
     /// @reimp
@@ -64,8 +64,8 @@ public:
     QObject *tabBarObj() const;
 
 protected:
-    void removeDockWidget(Controllers::DockWidget *dw) override;
-    void insertDockWidget(Controllers::DockWidget *dw, int index) override;
+    void removeDockWidget(Core::DockWidget *dw) override;
+    void insertDockWidget(Core::DockWidget *dw, int index) override;
 
     Q_INVOKABLE void setStackLayout(QQuickItem *);
 

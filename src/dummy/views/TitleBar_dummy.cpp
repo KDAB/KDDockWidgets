@@ -22,7 +22,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 
-TitleBar_dummy::TitleBar_dummy(Controllers::TitleBar *controller, View *parent)
+TitleBar_dummy::TitleBar_dummy(Core::TitleBar *controller, View *parent)
     : View_dummy(controller, Type::TitleBar, parent)
     , Views::TitleBarViewInterface(controller)
 {

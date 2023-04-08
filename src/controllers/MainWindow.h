@@ -36,7 +36,7 @@ namespace Views {
 class MainWindowViewInterface;
 }
 
-namespace Controllers {
+namespace Core {
 
 class MDILayout;
 class DropArea;
@@ -68,9 +68,9 @@ public:
      * option.
      * @param dockwidget The dockwidget to dock.
      *
-     * @sa Controllers::DockWidget::addDockWidgetAsTab()
+     * @sa Core::DockWidget::addDockWidgetAsTab()
      */
-    void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *dockwidget);
+    void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *dockwidget);
 
     /**
      * @brief Docks a DockWidget into this main window.
@@ -81,9 +81,9 @@ public:
      * widget as hidden, recording only a placeholder in the tab. So it's restored to tabbed when
      * eventually shown.
      */
-    void addDockWidget(KDDockWidgets::Controllers::DockWidget *dockWidget,
+    void addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget,
                        KDDockWidgets::Location location,
-                       KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
+                       KDDockWidgets::Core::DockWidget *relativeTo = nullptr,
                        KDDockWidgets::InitialOption initialOption = {});
 
     /**
@@ -111,7 +111,7 @@ public:
      * By default the affinity is empty and a dock widget can dock into any main window. Usually you
      * won't ever need to call this function, unless you have requirements where certain dock
      * widgets can only dock into certain main windows. @sa
-     * Controllers::DockWidget::setAffinities().
+     * Core::DockWidget::setAffinities().
      *
      * Note: Call this function right after creating your main window, before docking any dock
      * widgets into a main window and before restoring any layout.
@@ -140,7 +140,7 @@ public:
     /// @brief like layoutEqually() but starts with the container that has @p dockWidget.
     /// While layoutEqually() starts from the root of the layout tree this function starts on a
     /// sub-tree.
-    void layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget *dockWidget);
+    void layoutParentContainerEqually(KDDockWidgets::Core::DockWidget *dockWidget);
 
     ///@brief Moves the dock widget into one of the MainWindow's sidebar.
     /// Means the dock widget is removed from the layout, and the sidebar shows a button that if
@@ -148,34 +148,34 @@ public:
     /// auto-hide functionality.
     ///
     /// The chosen side bar will depend on some heuristics, mostly proximity.
-    void moveToSideBar(KDDockWidgets::Controllers::DockWidget *dw);
+    void moveToSideBar(KDDockWidgets::Core::DockWidget *dw);
 
     /// @brief overload that allows to specify which sidebar to use, instead of using heuristics.
-    void moveToSideBar(KDDockWidgets::Controllers::DockWidget *dw,
+    void moveToSideBar(KDDockWidgets::Core::DockWidget *dw,
                        KDDockWidgets::SideBarLocation location);
 
     /// @brief Removes the dock widget from the sidebar and docks it into the main window again
-    void restoreFromSideBar(KDDockWidgets::Controllers::DockWidget *dw);
+    void restoreFromSideBar(KDDockWidgets::Core::DockWidget *dw);
 
     ///@brief Shows the dock widget overlayed on top of the main window, placed next to the sidebar
-    void overlayOnSideBar(KDDockWidgets::Controllers::DockWidget *dw);
+    void overlayOnSideBar(KDDockWidgets::Core::DockWidget *dw);
 
     ///@brief Shows or hides an overlay. It's assumed the dock widget is already in a side-bar.
-    void toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidget *dw);
+    void toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget *dw);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
     void clearSideBarOverlay(bool deleteFrame = true);
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
-    KDDockWidgets::Controllers::SideBar *
-    sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget *dw) const;
+    KDDockWidgets::Core::SideBar *
+    sideBarForDockWidget(const KDDockWidgets::Core::DockWidget *dw) const;
 
     /// @brief Returns whether the specified sidebar is visible
     bool sideBarIsVisible(KDDockWidgets::SideBarLocation location) const;
 
     /// @brief returns the dock widget which is currently overlayed. nullptr if none.
     /// This is only relevant when using the auto-hide and side-bar feature.
-    Controllers::DockWidget *overlayedDockWidget() const;
+    Core::DockWidget *overlayedDockWidget() const;
 
     /// @brief Returns whether any side bar is visible
     bool anySideBarIsVisible() const;
@@ -202,7 +202,7 @@ public:
     void setContentsMargins(int l, int t, int r, int b);
 
     /// @brief Returns the side bar at the specified location
-    Controllers::SideBar *sideBar(SideBarLocation location) const;
+    Core::SideBar *sideBar(SideBarLocation location) const;
 
     // Internal public API:
 

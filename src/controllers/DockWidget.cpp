@@ -43,7 +43,7 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions options,
                        LayoutSaverOptions layoutSaverOptions)
@@ -106,7 +106,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
         return;
     }
 
-    Controllers::Group *group = d->group();
+    Core::Group *group = d->group();
 
     if (group) {
         if (group->containsDockWidget(other)) {
@@ -282,7 +282,7 @@ void DockWidget::setTitle(const QString &title)
 
 QRect DockWidget::groupGeometry() const
 {
-    if (Controllers::Group *f = d->group())
+    if (Core::Group *f = d->group())
         return f->view()->geometry();
 
     // Means the dock widget isn't visible. Just fallback to its own geometry
@@ -317,7 +317,7 @@ void DockWidget::setOptions(DockWidgetOptions options)
 
 bool DockWidget::isTabbed() const
 {
-    if (Controllers::Group *group = d->group()) {
+    if (Core::Group *group = d->group()) {
         return group->alwaysShowsTabs() || group->dockWidgetCount() > 1;
     } else {
         if (!isFloating())
@@ -328,7 +328,7 @@ bool DockWidget::isTabbed() const
 
 bool DockWidget::isCurrentTab() const
 {
-    if (Controllers::Group *group = d->group()) {
+    if (Core::Group *group = d->group()) {
         return group->currentIndex() == group->indexOfDockWidget(const_cast<DockWidget *>(this));
     } else {
         return true;
@@ -337,13 +337,13 @@ bool DockWidget::isCurrentTab() const
 
 void DockWidget::setAsCurrentTab()
 {
-    if (Controllers::Group *group = d->group())
+    if (Core::Group *group = d->group())
         group->setCurrentDockWidget(this);
 }
 
 int DockWidget::tabIndex() const
 {
-    if (Controllers::Group *group = d->group())
+    if (Core::Group *group = d->group())
         return group->indexOfDockWidget(this);
 
     return 0;
@@ -390,9 +390,9 @@ void DockWidget::forceClose()
     d->forceClose();
 }
 
-Controllers::TitleBar *DockWidget::titleBar() const
+Core::TitleBar *DockWidget::titleBar() const
 {
-    if (Controllers::Group *f = d->group())
+    if (Core::Group *f = d->group())
         return f->actualTitleBar();
 
     return nullptr;
@@ -436,7 +436,7 @@ void DockWidget::raise()
     if (auto fw = floatingWindow()) {
         fw->view()->raise();
         fw->view()->activateWindow();
-    } else if (Controllers::Group *group = d->group()) {
+    } else if (Core::Group *group = d->group()) {
         if (group->isMDI())
             group->view()->raise();
     }
@@ -521,14 +521,14 @@ QSize DockWidget::lastOverlayedSize() const
     return d->m_lastOverlayedSize;
 }
 
-Controllers::DockWidget *DockWidget::byName(const QString &uniqueName)
+Core::DockWidget *DockWidget::byName(const QString &uniqueName)
 {
     return DockRegistry::self()->dockByName(uniqueName);
 }
 
 void DockWidget::setParentView_impl(View *parent)
 {
-    if (Controllers::Group *group = d->group()) {
+    if (Core::Group *group = d->group()) {
         group->tabBar()->removeDockWidget(this);
     }
 
@@ -550,7 +550,7 @@ void DockWidget::setFloatingGeometry(QRect geometry)
     }
 }
 
-Controllers::FloatingWindow *DockWidget::floatingWindow() const
+Core::FloatingWindow *DockWidget::floatingWindow() const
 {
     if (auto fw = view()->rootView()->asFloatingWindowController())
         return fw;
@@ -558,7 +558,7 @@ Controllers::FloatingWindow *DockWidget::floatingWindow() const
     return nullptr;
 }
 
-Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
+Core::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
 {
     if (auto fw = floatingWindow())
         return fw; // Nothing to do
@@ -577,12 +577,12 @@ Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
             }
         }
 
-        auto group = new Controllers::Group();
+        auto group = new Core::Group();
         group->addTab(q);
         geo.setSize(geo.size().boundedTo(group->view()->maxSizeHint()));
         geo.setSize(geo.size().expandedTo(group->view()->minSize()));
-        Controllers::FloatingWindow::ensureRectIsOnScreen(geo);
-        auto floatingWindow = new Controllers::FloatingWindow(group, geo);
+        Core::FloatingWindow::ensureRectIsOnScreen(geo);
+        auto floatingWindow = new Core::FloatingWindow(group, geo);
 
         Layouting::AtomicSanityChecks checks(floatingWindow->dropArea()->rootItem());
         floatingWindow->view()->show();
@@ -638,7 +638,7 @@ DropArea *DockWidget::Private::mdiDropAreaWrapper() const
     return nullptr;
 }
 
-Controllers::DockWidget *DockWidget::Private::mdiDockWidgetWrapper() const
+Core::DockWidget *DockWidget::Private::mdiDockWidgetWrapper() const
 {
     if (isMDIWrapper()) {
         // We are the wrapper
@@ -705,7 +705,7 @@ void DockWidget::Private::updateTitle()
 
 void DockWidget::Private::toggle(bool enabled)
 {
-    if (Controllers::SideBar *sb = sideBar()) {
+    if (Core::SideBar *sb = sideBar()) {
         // The widget is in the sidebar, let's toggle its overlayed state
         QScopedValueRollback<bool> guard(m_removingFromOverlay, true);
         sb->toggleOverlay(q);
@@ -767,7 +767,7 @@ void DockWidget::Private::close()
     setIsOpen(false);
 
     // If it's overlayed and we're closing, we need to close the overlay
-    if (Controllers::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
+    if (Core::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
         auto mainWindow = sb->mainWindow();
         if (mainWindow->overlayedDockWidget() == q) {
             mainWindow->clearSideBarOverlay(/* deleteFrame=*/false);
@@ -784,12 +784,12 @@ void DockWidget::Private::close()
     saveTabIndex();
 
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
-    if (Controllers::Group *group = this->group()) {
+    if (Core::Group *group = this->group()) {
         q->QObject::setParent(nullptr);
         q->setParentView(nullptr);
         group->removeWidget(q);
 
-        if (Controllers::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
+        if (Core::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
             sb->removeDockWidget(q);
         }
     }
@@ -828,7 +828,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
     if (m_lastPosition->wasFloating())
         return; // Nothing to do, it was floating before, now it'll just get visible
 
-    Controllers::Group *group = this->group();
+    Core::Group *group = this->group();
 
     if (group && group->view()->equals(DockRegistry::self()->layoutForItem(layoutItem)->view())) {
         // There's a group already. Means the DockWidget was hidden instead of closed.
@@ -850,7 +850,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
 
 int DockWidget::Private::currentTabIndex() const
 {
-    Controllers::Group *group = this->group();
+    Core::Group *group = this->group();
     return group ? group->indexOfDockWidget(q) : 0;
 }
 
@@ -878,7 +878,7 @@ void DockWidget::onResize(QSize)
     }
 }
 
-Controllers::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
+Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
 {
     auto dr = DockRegistry::self();
     DockWidget *dw =
@@ -991,7 +991,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
 
         // When floating, we remove from the sidebar
         if (checked && q->isOpen()) {
-            if (Controllers::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
+            if (Core::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
                 sb->mainWindow()->clearSideBarOverlay(/* deleteFrame=*/false);
                 sb->removeDockWidget(q);
             }
@@ -1013,7 +1013,7 @@ Position::Ptr &DockWidget::Private::lastPosition()
     return m_lastPosition;
 }
 
-Controllers::Group *DockWidget::Private::group() const
+Core::Group *DockWidget::Private::group() const
 {
     auto p = q->view()->parentView();
     while (p) {

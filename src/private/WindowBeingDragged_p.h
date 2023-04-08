@@ -20,7 +20,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Group;
 class FloatingWindow;
 class Layout;
@@ -31,24 +31,24 @@ class Draggable;
 struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
 {
 public:
-    explicit WindowBeingDragged(Controllers::FloatingWindow *fw, Draggable *draggable);
+    explicit WindowBeingDragged(Core::FloatingWindow *fw, Draggable *draggable);
 
 #ifdef DOCKS_DEVELOPER_MODE
     // For tests.
-    explicit WindowBeingDragged(Controllers::FloatingWindow *fw);
+    explicit WindowBeingDragged(Core::FloatingWindow *fw);
 #endif
 
     virtual ~WindowBeingDragged();
     void init();
 
-    Controllers::FloatingWindow *floatingWindow() const;
+    Core::FloatingWindow *floatingWindow() const;
 
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);
 
     /// @brief returns whether this window being dragged contains the specified drop area
     /// useful since we don't want to drop onto ourselves.
-    bool contains(Controllers::Layout *) const;
+    bool contains(Core::Layout *) const;
 
     ///@brief returns the affinities of the window being dragged
     virtual QStringList affinities() const;
@@ -66,7 +66,7 @@ public:
     virtual Pixmap pixmap() const;
 
     /// @brief Returns the list of dock widgets being dragged
-    virtual QVector<Controllers::DockWidget *> dockWidgets() const;
+    virtual QVector<Core::DockWidget *> dockWidgets() const;
 
     /// @brief Returns the draggable
     Draggable *draggable() const;
@@ -76,7 +76,7 @@ public:
 protected:
     explicit WindowBeingDragged(Draggable *);
     Q_DISABLE_COPY(WindowBeingDragged)
-    QPointer<Controllers::FloatingWindow> m_floatingWindow;
+    QPointer<Core::FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
     View *m_draggableView = nullptr;
     ViewGuard m_guard;
@@ -93,14 +93,14 @@ public:
     QSize maxSize() const override;
     Pixmap pixmap() const override;
     QStringList affinities() const override;
-    QVector<Controllers::DockWidget *> dockWidgets() const override;
+    QVector<Core::DockWidget *> dockWidgets() const override;
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no
     // way to position it) So we're dragging either a group with multiple dock widgets or a single
     // tab, keep them here. It's important to know what we're dragging, so drop rubber band respect
     // min/max sizes.
-    QPointer<Controllers::Group> m_group;
-    QPointer<Controllers::DockWidget> m_dockWidget;
+    QPointer<Core::Group> m_group;
+    QPointer<Core::DockWidget> m_dockWidget;
 };
 
 }

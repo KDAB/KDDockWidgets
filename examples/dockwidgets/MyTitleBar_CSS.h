@@ -42,12 +42,12 @@
 class MyTitleBar_CSS : public KDDockWidgets::Views::TitleBar_qtwidgets
 {
 public:
-    explicit MyTitleBar_CSS(KDDockWidgets::Controllers::TitleBar *controller,
+    explicit MyTitleBar_CSS(KDDockWidgets::Core::TitleBar *controller,
                             View *parent = nullptr)
         : KDDockWidgets::Views::TitleBar_qtwidgets(controller, parent)
     {
         initStyleSheet();
-        connect(controller, &KDDockWidgets::Controllers::TitleBar::isFocusedChanged, this, [this] {
+        connect(controller, &KDDockWidgets::Core::TitleBar::isFocusedChanged, this, [this] {
             // Workaround QTBUG-51236, this makes the [isFocused=true] syntax useful
             setStyleSheet(QString());
             initStyleSheet();

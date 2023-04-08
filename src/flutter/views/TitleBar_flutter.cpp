@@ -22,7 +22,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 
-TitleBar_flutter::TitleBar_flutter(Controllers::TitleBar *controller, View *parent)
+TitleBar_flutter::TitleBar_flutter(Core::TitleBar *controller, View *parent)
     : View_flutter(controller, Type::TitleBar, parent)
     , Views::TitleBarViewInterface(controller)
 {

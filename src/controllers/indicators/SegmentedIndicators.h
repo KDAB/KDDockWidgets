@@ -19,13 +19,13 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 
 class DOCKS_EXPORT SegmentedIndicators : public DropIndicatorOverlay
 {
     Q_OBJECT
 public:
-    explicit SegmentedIndicators(Controllers::DropArea *dropArea);
+    explicit SegmentedIndicators(Core::DropArea *dropArea);
     ~SegmentedIndicators() override;
     DropLocation hover_impl(QPoint globalPos) override;
 

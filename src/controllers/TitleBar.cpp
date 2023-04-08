@@ -28,7 +28,7 @@
 #include <QTimer>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 
 TitleBar::TitleBar(Group *parent)
@@ -219,12 +219,12 @@ bool TitleBar::hasIcon() const
     return !m_icon.isNull();
 }
 
-Controllers::Group *TitleBar::group() const
+Core::Group *TitleBar::group() const
 {
     return m_group;
 }
 
-Controllers::FloatingWindow *TitleBar::floatingWindow() const
+Core::FloatingWindow *TitleBar::floatingWindow() const
 {
     return m_floatingWindow;
 }
@@ -255,7 +255,7 @@ void TitleBar::updateAutoHideButton()
     const bool enabled = true;
     TitleBarButtonType type = TitleBarButtonType::AutoHide;
 
-    if (const Controllers::Group *g = group()) {
+    if (const Core::Group *g = group()) {
         if (g->isOverlayed())
             type = TitleBarButtonType::UnautoHide;
     }
@@ -517,7 +517,7 @@ std::unique_ptr<KDDockWidgets::WindowBeingDragged> TitleBar::makeWindow()
     QRect r = m_group->view()->geometry();
     r.moveTopLeft(m_group->mapToGlobal(QPoint(0, 0)));
 
-    auto floatingWindow = new Controllers::FloatingWindow(m_group, {});
+    auto floatingWindow = new Core::FloatingWindow(m_group, {});
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();
 
@@ -531,7 +531,7 @@ bool TitleBar::isWindow() const
     return m_floatingWindow != nullptr;
 }
 
-Controllers::DockWidget::List TitleBar::dockWidgets() const
+Core::DockWidget::List TitleBar::dockWidgets() const
 {
     if (m_floatingWindow) {
         DockWidget::List result;
@@ -548,7 +548,7 @@ Controllers::DockWidget::List TitleBar::dockWidgets() const
     return {};
 }
 
-Controllers::DockWidget *TitleBar::singleDockWidget() const
+Core::DockWidget *TitleBar::singleDockWidget() const
 {
     const DockWidget::List dockWidgets = this->dockWidgets();
     return dockWidgets.isEmpty() ? nullptr : dockWidgets.first();

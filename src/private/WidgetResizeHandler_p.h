@@ -25,7 +25,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class FloatingWindow;
 }
 
@@ -145,7 +145,7 @@ public:
     static bool isInterestingNativeEvent(unsigned int);
     static bool handleWindowsNativeEvent(Window::Ptr, MSG *msg, Qt5Qt6Compat::qintptr *result,
                                          const NativeFeatures &);
-    static bool handleWindowsNativeEvent(Controllers::FloatingWindow *, const QByteArray &eventType,
+    static bool handleWindowsNativeEvent(Core::FloatingWindow *, const QByteArray &eventType,
                                          void *message, Qt5Qt6Compat::qintptr *result);
 #endif
     static bool s_disableAllHandlers;

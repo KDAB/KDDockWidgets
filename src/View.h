@@ -35,7 +35,7 @@ class Controller;
 class Screen;
 class Window;
 
-namespace Controllers {
+namespace Core {
 class MDILayout;
 class DropArea;
 class DockWidget;
@@ -251,16 +251,16 @@ public:
 
     /// @brief if this view is a FloatingWindow, then returns its controller
     /// Mostly to save the call sites from having too many casts
-    Controllers::FloatingWindow *asFloatingWindowController() const;
-    Controllers::Group *asGroupController() const;
-    Controllers::TitleBar *asTitleBarController() const;
-    Controllers::TabBar *asTabBarController() const;
-    Controllers::Stack *asStackController() const;
-    Controllers::DockWidget *asDockWidgetController() const;
-    Controllers::MainWindow *asMainWindowController() const;
-    Controllers::DropArea *asDropAreaController() const;
-    Controllers::MDILayout *asMDILayoutController() const;
-    Controllers::Layout *asLayout() const;
+    Core::FloatingWindow *asFloatingWindowController() const;
+    Core::Group *asGroupController() const;
+    Core::TitleBar *asTitleBarController() const;
+    Core::TabBar *asTabBarController() const;
+    Core::Stack *asStackController() const;
+    Core::DockWidget *asDockWidgetController() const;
+    Core::MainWindow *asMainWindowController() const;
+    Core::DropArea *asDropAreaController() const;
+    Core::MDILayout *asMDILayoutController() const;
+    Core::Layout *asLayout() const;
 
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Window> window) const;

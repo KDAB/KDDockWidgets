@@ -22,13 +22,13 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
 
 
-std::unique_ptr<Controllers::MainWindow>
+std::unique_ptr<Core::MainWindow>
 KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options,
                                        const QString &name, bool show)
 {
@@ -43,7 +43,7 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     CreateViewOptions viewOpts;
     viewOpts.isVisible = show;
     viewOpts.size = sz;
-    auto ptr = std::unique_ptr<Controllers::MainWindow>(
+    auto ptr = std::unique_ptr<Core::MainWindow>(
         Platform::instance()->createMainWindow(mainWindowName, viewOpts, options));
 
     if (show)
@@ -53,7 +53,7 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     return ptr;
 }
 
-Controllers::DockWidget *
+Core::DockWidget *
 KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWidgetOptions options,
                                        LayoutSaverOptions layoutSaverOptions, bool show,
                                        const QString &affinityName)
@@ -86,7 +86,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
     }
 }
 
-Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name)
+Core::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name)
 {
     return createDockWidget(name,
                             Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
@@ -102,7 +102,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     CreateViewOptions viewOpts;
     viewOpts.isVisible = true;
     viewOpts.size = QSize(1000, 1000);
-    auto m = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(
+    auto m = std::unique_ptr<Core::MainWindow>(Platform::instance()->createMainWindow(
         QStringLiteral("MyMainWindow%1").arg(count), viewOpts, MainWindowOption_None, parent));
     auto layout = m->layout();
     m->show();
@@ -113,7 +113,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
         auto guest = Platform::instance()->tests_createView({ true, {}, { 100, 100 } });
         desc.createdDock =
             createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), guest, {}, {}, false);
-        Controllers::DockWidget *relativeTo = nullptr;
+        Core::DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docks.at(desc.relativeToIndex).createdDock;
 
@@ -215,10 +215,10 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
     }
 }
 
-void KDDockWidgets::Tests::nestDockWidget(Controllers::DockWidget *dock, DropArea *dropArea,
-                                          Controllers::Group *relativeTo, Location location)
+void KDDockWidgets::Tests::nestDockWidget(Core::DockWidget *dock, DropArea *dropArea,
+                                          Core::Group *relativeTo, Location location)
 {
-    auto group = new Controllers::Group();
+    auto group = new Core::Group();
     group->addTab(dock);
     dock->d->group()->setObjectName(dock->objectName());
 

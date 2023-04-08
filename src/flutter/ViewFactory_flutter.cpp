@@ -57,34 +57,34 @@ View *ViewFactory_flutter::createDockWidget(const QString &, DockWidgetOptions, 
 }
 
 
-View *ViewFactory_flutter::createGroup(Controllers::Group *, View *) const
+View *ViewFactory_flutter::createGroup(Core::Group *, View *) const
 {
     Q_ASSERT(false);
     return {};
 }
 
-View *ViewFactory_flutter::createTitleBar(Controllers::TitleBar *, View *) const
+View *ViewFactory_flutter::createTitleBar(Core::TitleBar *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createTabBar(Controllers::TabBar *, View *) const
+View *ViewFactory_flutter::createTabBar(Core::TabBar *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createStack(Controllers::Stack *, View *) const
+View *ViewFactory_flutter::createStack(Core::Stack *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createSeparator(Controllers::Separator *, View *) const
+View *ViewFactory_flutter::createSeparator(Core::Separator *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createFloatingWindow(Controllers::FloatingWindow *,
-                                                Controllers::MainWindow *, Qt::WindowFlags) const
+View *ViewFactory_flutter::createFloatingWindow(Core::FloatingWindow *,
+                                                Core::MainWindow *, Qt::WindowFlags) const
 {
     return {};
 }
@@ -94,7 +94,7 @@ View *ViewFactory_flutter::createRubberBand(View *) const
     return nullptr;
 }
 
-View *ViewFactory_flutter::createSideBar(Controllers::SideBar *, View *) const
+View *ViewFactory_flutter::createSideBar(Core::SideBar *, View *) const
 {
     return {};
 }
@@ -110,25 +110,25 @@ Icon ViewFactory_flutter::iconForButtonType(TitleBarButtonType, qreal) const
     return {};
 }
 
-View *ViewFactory_flutter::createDropArea(Controllers::DropArea *, View *) const
+View *ViewFactory_flutter::createDropArea(Core::DropArea *, View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createMDILayout(Controllers::MDILayout *, View *) const
+View *ViewFactory_flutter::createMDILayout(Core::MDILayout *, View *) const
 {
     return {};
 }
 
 View *
-ViewFactory_flutter::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *,
+ViewFactory_flutter::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *,
                                                              View *) const
 {
     return {};
 }
 
 Views::ClassicIndicatorWindowViewInterface *
-ViewFactory_flutter::createClassicIndicatorWindow(Controllers::ClassicIndicators *) const
+ViewFactory_flutter::createClassicIndicatorWindow(Core::ClassicIndicators *) const
 {
     return {};
 }

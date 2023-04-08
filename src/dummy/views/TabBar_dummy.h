@@ -27,7 +27,7 @@
 
 #include "kdbindings/signal.h"
 
-namespace KDDockWidgets::Controllers {
+namespace KDDockWidgets::Core {
 class TabBar;
 }
 
@@ -39,7 +39,7 @@ class TabWidget;
 class DOCKS_EXPORT TabBar_dummy : public View_dummy, public TabBarViewInterface
 {
 public:
-    explicit TabBar_dummy(Controllers::TabBar *controller, View *parent = nullptr);
+    explicit TabBar_dummy(Core::TabBar *controller, View *parent = nullptr);
     int tabAt(QPoint localPos) const override;
 
     QString text(int index) const override;

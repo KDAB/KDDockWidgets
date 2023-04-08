@@ -28,235 +28,196 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 DockWidget_wrapper::DockWidget_wrapper(KDDockWidgets::View *view, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
-    : ::KDDockWidgets::Controllers::DockWidget(view, uniqueName, options, layoutSaverOptions)
+    : ::KDDockWidgets::Core::DockWidget(view, uniqueName, options, layoutSaverOptions)
 {
 }
-void DockWidget_wrapper::aboutToDelete(KDDockWidgets::Controllers::DockWidget *arg__1)
+void DockWidget_wrapper::aboutToDelete(KDDockWidgets::Core::DockWidget *arg__1)
 {
-    ::KDDockWidgets::Controllers::DockWidget::aboutToDelete(arg__1);
+    ::KDDockWidgets::Core::DockWidget::aboutToDelete(arg__1);
 }
 void DockWidget_wrapper::aboutToDeleteOnClose()
 {
-    ::KDDockWidgets::Controllers::DockWidget::aboutToDeleteOnClose();
+    ::KDDockWidgets::Core::DockWidget::aboutToDeleteOnClose();
 }
 void DockWidget_wrapper::actualTitleBarChanged()
 {
-    ::KDDockWidgets::Controllers::DockWidget::actualTitleBarChanged();
+    ::KDDockWidgets::Core::DockWidget::actualTitleBarChanged();
 }
-void DockWidget_wrapper::addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other, KDDockWidgets::InitialOption initialOption)
+void DockWidget_wrapper::addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *other, KDDockWidgets::InitialOption initialOption)
 {
-    ::KDDockWidgets::Controllers::DockWidget::addDockWidgetAsTab(other, initialOption);
+    ::KDDockWidgets::Core::DockWidget::addDockWidgetAsTab(other, initialOption);
 }
-void DockWidget_wrapper::addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget *other, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption)
+void DockWidget_wrapper::addDockWidgetToContainingWindow(KDDockWidgets::Core::DockWidget *other, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption)
 {
-    ::KDDockWidgets::Controllers::DockWidget::addDockWidgetToContainingWindow(other, location, relativeTo, initialOption);
+    ::KDDockWidgets::Core::DockWidget::addDockWidgetToContainingWindow(other, location, relativeTo, initialOption);
 }
-KDDockWidgets::Controllers::DockWidget *DockWidget_wrapper::byName(const QString &uniqueName)
+KDDockWidgets::Core::DockWidget *DockWidget_wrapper::byName(const QString &uniqueName)
 {
-    return ::KDDockWidgets::Controllers::DockWidget::byName(uniqueName);
+    return ::KDDockWidgets::Core::DockWidget::byName(uniqueName);
 }
 void DockWidget_wrapper::closed()
 {
-    ::KDDockWidgets::Controllers::DockWidget::closed();
+    ::KDDockWidgets::Core::DockWidget::closed();
 }
 int DockWidget_wrapper::currentTabIndex() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::currentTabIndex();
+    return ::KDDockWidgets::Core::DockWidget::currentTabIndex();
 }
-void DockWidget_wrapper::customEvent(QEvent *event)
+KDDockWidgets::Core::FloatingWindow *DockWidget_wrapper::floatingWindow() const
 {
-    if (m_customEventCallback) {
-        const void *thisPtr = this;
-        m_customEventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        ::KDDockWidgets::Controllers::DockWidget::customEvent(event);
-    }
-}
-void DockWidget_wrapper::customEvent_nocallback(QEvent *event)
-{
-    ::KDDockWidgets::Controllers::DockWidget::customEvent(event);
-}
-bool DockWidget_wrapper::event(QEvent *event)
-{
-    if (m_eventCallback) {
-        const void *thisPtr = this;
-        return m_eventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        return ::KDDockWidgets::Controllers::DockWidget::event(event);
-    }
-}
-bool DockWidget_wrapper::event_nocallback(QEvent *event)
-{
-    return ::KDDockWidgets::Controllers::DockWidget::event(event);
-}
-bool DockWidget_wrapper::eventFilter(QObject *watched, QEvent *event)
-{
-    if (m_eventFilterCallback) {
-        const void *thisPtr = this;
-        return m_eventFilterCallback(const_cast<void *>(thisPtr), watched, event);
-    } else {
-        return ::KDDockWidgets::Controllers::DockWidget::eventFilter(watched, event);
-    }
-}
-bool DockWidget_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
-{
-    return ::KDDockWidgets::Controllers::DockWidget::eventFilter(watched, event);
-}
-KDDockWidgets::Controllers::FloatingWindow *DockWidget_wrapper::floatingWindow() const
-{
-    return ::KDDockWidgets::Controllers::DockWidget::floatingWindow();
+    return ::KDDockWidgets::Core::DockWidget::floatingWindow();
 }
 void DockWidget_wrapper::forceClose()
 {
-    ::KDDockWidgets::Controllers::DockWidget::forceClose();
+    ::KDDockWidgets::Core::DockWidget::forceClose();
 }
 QRect DockWidget_wrapper::groupGeometry() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::groupGeometry();
+    return ::KDDockWidgets::Core::DockWidget::groupGeometry();
 }
 void DockWidget_wrapper::guestViewChanged()
 {
-    ::KDDockWidgets::Controllers::DockWidget::guestViewChanged();
+    ::KDDockWidgets::Core::DockWidget::guestViewChanged();
 }
 bool DockWidget_wrapper::hasPreviousDockedLocation() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::hasPreviousDockedLocation();
+    return ::KDDockWidgets::Core::DockWidget::hasPreviousDockedLocation();
 }
 void DockWidget_wrapper::iconChanged()
 {
-    ::KDDockWidgets::Controllers::DockWidget::iconChanged();
+    ::KDDockWidgets::Core::DockWidget::iconChanged();
 }
 void DockWidget_wrapper::init()
 {
-    ::KDDockWidgets::Controllers::DockWidget::init();
+    ::KDDockWidgets::Core::DockWidget::init();
 }
 bool DockWidget_wrapper::isCurrentTab() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isCurrentTab();
+    return ::KDDockWidgets::Core::DockWidget::isCurrentTab();
 }
 bool DockWidget_wrapper::isFloating() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isFloating();
+    return ::KDDockWidgets::Core::DockWidget::isFloating();
 }
 void DockWidget_wrapper::isFloatingChanged(bool arg__1)
 {
-    ::KDDockWidgets::Controllers::DockWidget::isFloatingChanged(arg__1);
+    ::KDDockWidgets::Core::DockWidget::isFloatingChanged(arg__1);
 }
 bool DockWidget_wrapper::isFocused() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isFocused();
+    return ::KDDockWidgets::Core::DockWidget::isFocused();
 }
 void DockWidget_wrapper::isFocusedChanged(bool arg__1)
 {
-    ::KDDockWidgets::Controllers::DockWidget::isFocusedChanged(arg__1);
+    ::KDDockWidgets::Core::DockWidget::isFocusedChanged(arg__1);
 }
 bool DockWidget_wrapper::isInMainWindow() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isInMainWindow();
+    return ::KDDockWidgets::Core::DockWidget::isInMainWindow();
 }
 bool DockWidget_wrapper::isInSideBar() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isInSideBar();
+    return ::KDDockWidgets::Core::DockWidget::isInSideBar();
 }
 bool DockWidget_wrapper::isMainWindow() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isMainWindow();
+    return ::KDDockWidgets::Core::DockWidget::isMainWindow();
 }
 bool DockWidget_wrapper::isOpen() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isOpen();
+    return ::KDDockWidgets::Core::DockWidget::isOpen();
 }
 void DockWidget_wrapper::isOpenChanged(bool isOpen)
 {
-    ::KDDockWidgets::Controllers::DockWidget::isOpenChanged(isOpen);
+    ::KDDockWidgets::Core::DockWidget::isOpenChanged(isOpen);
 }
 bool DockWidget_wrapper::isOverlayed() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isOverlayed();
+    return ::KDDockWidgets::Core::DockWidget::isOverlayed();
 }
 void DockWidget_wrapper::isOverlayedChanged(bool arg__1)
 {
-    ::KDDockWidgets::Controllers::DockWidget::isOverlayedChanged(arg__1);
+    ::KDDockWidgets::Core::DockWidget::isOverlayedChanged(arg__1);
 }
 bool DockWidget_wrapper::isPersistentCentralDockWidget() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isPersistentCentralDockWidget();
+    return ::KDDockWidgets::Core::DockWidget::isPersistentCentralDockWidget();
 }
 bool DockWidget_wrapper::isTabbed() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::isTabbed();
+    return ::KDDockWidgets::Core::DockWidget::isTabbed();
 }
 QSize DockWidget_wrapper::lastOverlayedSize() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::lastOverlayedSize();
+    return ::KDDockWidgets::Core::DockWidget::lastOverlayedSize();
 }
 QFlags<KDDockWidgets::LayoutSaverOption> DockWidget_wrapper::layoutSaverOptions() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::layoutSaverOptions();
+    return ::KDDockWidgets::Core::DockWidget::layoutSaverOptions();
 }
-KDDockWidgets::Controllers::MainWindow *DockWidget_wrapper::mainWindow() const
+KDDockWidgets::Core::MainWindow *DockWidget_wrapper::mainWindow() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::mainWindow();
+    return ::KDDockWidgets::Core::DockWidget::mainWindow();
 }
 void DockWidget_wrapper::moveToSideBar()
 {
-    ::KDDockWidgets::Controllers::DockWidget::moveToSideBar();
+    ::KDDockWidgets::Core::DockWidget::moveToSideBar();
 }
 void DockWidget_wrapper::onResize(QSize newSize)
 {
-    ::KDDockWidgets::Controllers::DockWidget::onResize(newSize);
+    ::KDDockWidgets::Core::DockWidget::onResize(newSize);
 }
 void DockWidget_wrapper::open()
 {
-    ::KDDockWidgets::Controllers::DockWidget::open();
+    ::KDDockWidgets::Core::DockWidget::open();
 }
 QFlags<KDDockWidgets::DockWidgetOption> DockWidget_wrapper::options() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::options();
+    return ::KDDockWidgets::Core::DockWidget::options();
 }
 void DockWidget_wrapper::optionsChanged(QFlags<KDDockWidgets::DockWidgetOption> arg__1)
 {
-    ::KDDockWidgets::Controllers::DockWidget::optionsChanged(arg__1);
+    ::KDDockWidgets::Core::DockWidget::optionsChanged(arg__1);
 }
 void DockWidget_wrapper::raise()
 {
-    ::KDDockWidgets::Controllers::DockWidget::raise();
+    ::KDDockWidgets::Core::DockWidget::raise();
 }
 void DockWidget_wrapper::removedFromSideBar()
 {
-    ::KDDockWidgets::Controllers::DockWidget::removedFromSideBar();
+    ::KDDockWidgets::Core::DockWidget::removedFromSideBar();
 }
 void DockWidget_wrapper::setAffinityName(const QString &name)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setAffinityName(name);
+    ::KDDockWidgets::Core::DockWidget::setAffinityName(name);
 }
 void DockWidget_wrapper::setAsCurrentTab()
 {
-    ::KDDockWidgets::Controllers::DockWidget::setAsCurrentTab();
+    ::KDDockWidgets::Core::DockWidget::setAsCurrentTab();
 }
 bool DockWidget_wrapper::setFloating(bool floats)
 {
-    return ::KDDockWidgets::Controllers::DockWidget::setFloating(floats);
+    return ::KDDockWidgets::Core::DockWidget::setFloating(floats);
 }
 void DockWidget_wrapper::setFloatingGeometry(QRect geo)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setFloatingGeometry(geo);
+    ::KDDockWidgets::Core::DockWidget::setFloatingGeometry(geo);
 }
 void DockWidget_wrapper::setMDIPosition(QPoint pos)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setMDIPosition(pos);
+    ::KDDockWidgets::Core::DockWidget::setMDIPosition(pos);
 }
 void DockWidget_wrapper::setMDISize(QSize size)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setMDISize(size);
+    ::KDDockWidgets::Core::DockWidget::setMDISize(size);
 }
 void DockWidget_wrapper::setMDIZ(int z)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setMDIZ(z);
+    ::KDDockWidgets::Core::DockWidget::setMDIZ(z);
 }
 void DockWidget_wrapper::setOptions(QFlags<KDDockWidgets::DockWidgetOption> arg__1)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setOptions(arg__1);
+    ::KDDockWidgets::Core::DockWidget::setOptions(arg__1);
 }
 void DockWidget_wrapper::setParentView_impl(KDDockWidgets::View *parent)
 {
@@ -264,69 +225,69 @@ void DockWidget_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         const void *thisPtr = this;
         m_setParentView_implCallback(const_cast<void *>(thisPtr), parent);
     } else {
-        ::KDDockWidgets::Controllers::DockWidget::setParentView_impl(parent);
+        ::KDDockWidgets::Core::DockWidget::setParentView_impl(parent);
     }
 }
 void DockWidget_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setParentView_impl(parent);
+    ::KDDockWidgets::Core::DockWidget::setParentView_impl(parent);
 }
 void DockWidget_wrapper::setTitle(const QString &title)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setTitle(title);
+    ::KDDockWidgets::Core::DockWidget::setTitle(title);
 }
 void DockWidget_wrapper::setUserType(int userType)
 {
-    ::KDDockWidgets::Controllers::DockWidget::setUserType(userType);
+    ::KDDockWidgets::Core::DockWidget::setUserType(userType);
 }
 void DockWidget_wrapper::show()
 {
-    ::KDDockWidgets::Controllers::DockWidget::show();
+    ::KDDockWidgets::Core::DockWidget::show();
 }
 bool DockWidget_wrapper::skipsRestore() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::skipsRestore();
+    return ::KDDockWidgets::Core::DockWidget::skipsRestore();
 }
 int DockWidget_wrapper::tabIndex() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::tabIndex();
+    return ::KDDockWidgets::Core::DockWidget::tabIndex();
 }
 QString DockWidget_wrapper::title() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::title();
+    return ::KDDockWidgets::Core::DockWidget::title();
 }
-KDDockWidgets::Controllers::TitleBar *DockWidget_wrapper::titleBar() const
+KDDockWidgets::Core::TitleBar *DockWidget_wrapper::titleBar() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::titleBar();
+    return ::KDDockWidgets::Core::DockWidget::titleBar();
 }
 void DockWidget_wrapper::titleChanged(const QString &title)
 {
-    ::KDDockWidgets::Controllers::DockWidget::titleChanged(title);
+    ::KDDockWidgets::Core::DockWidget::titleChanged(title);
 }
 QString DockWidget_wrapper::tr(const char *s, const char *c, int n)
 {
-    return ::KDDockWidgets::Controllers::DockWidget::tr(s, c, n);
+    return ::KDDockWidgets::Core::DockWidget::tr(s, c, n);
 }
 QString DockWidget_wrapper::uniqueName() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::uniqueName();
+    return ::KDDockWidgets::Core::DockWidget::uniqueName();
 }
 int DockWidget_wrapper::userType() const
 {
-    return ::KDDockWidgets::Controllers::DockWidget::userType();
+    return ::KDDockWidgets::Core::DockWidget::userType();
 }
 void DockWidget_wrapper::windowActiveAboutToChange(bool activated)
 {
-    ::KDDockWidgets::Controllers::DockWidget::windowActiveAboutToChange(activated);
+    ::KDDockWidgets::Core::DockWidget::windowActiveAboutToChange(activated);
 }
 DockWidget_wrapper::~DockWidget_wrapper()
 {
 }
 
 }
-static KDDockWidgets::Controllers::DockWidget *fromPtr(void *ptr)
+static KDDockWidgets::Core::DockWidget *fromPtr(void *ptr)
 {
-    return reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(ptr);
+    return reinterpret_cast<KDDockWidgets::Core::DockWidget *>(ptr);
 }
 static KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper *fromWrapperPtr(void *ptr)
 {
@@ -346,10 +307,10 @@ void *c_KDDockWidgets__Controllers__DockWidget__constructor_View_QString_DockWid
     auto ptr = new KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper(view, uniqueName, options, layoutSaverOptions);
     return reinterpret_cast<void *>(ptr);
 }
-// aboutToDelete(KDDockWidgets::Controllers::DockWidget * arg__1)
+// aboutToDelete(KDDockWidgets::Core::DockWidget * arg__1)
 void c_KDDockWidgets__Controllers__DockWidget__aboutToDelete_DockWidget(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     fromPtr(thisObj)->aboutToDelete(arg__1);
 }
 // aboutToDeleteOnClose()
@@ -362,19 +323,19 @@ void c_KDDockWidgets__Controllers__DockWidget__actualTitleBarChanged(void *thisO
 {
     fromPtr(thisObj)->actualTitleBarChanged();
 }
-// addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget * other, KDDockWidgets::InitialOption initialOption)
+// addDockWidgetAsTab(KDDockWidgets::Core::DockWidget * other, KDDockWidgets::InitialOption initialOption)
 void c_KDDockWidgets__Controllers__DockWidget__addDockWidgetAsTab_DockWidget_InitialOption(void *thisObj, void *other_, void *initialOption_)
 {
-    auto other = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(other_);
+    auto other = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(other_);
     assert(initialOption_);
     auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
     fromPtr(thisObj)->addDockWidgetAsTab(other, initialOption);
 }
-// addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget * other, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+// addDockWidgetToContainingWindow(KDDockWidgets::Core::DockWidget * other, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
 void c_KDDockWidgets__Controllers__DockWidget__addDockWidgetToContainingWindow_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *other_, int location, void *relativeTo_, void *initialOption_)
 {
-    auto other = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(other_);
-    auto relativeTo = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(relativeTo_);
+    auto other = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(other_);
+    auto relativeTo = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(relativeTo_);
     assert(initialOption_);
     auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
     fromPtr(thisObj)->addDockWidgetToContainingWindow(other, static_cast<KDDockWidgets::Location>(location), relativeTo, initialOption);
@@ -394,25 +355,6 @@ void c_KDDockWidgets__Controllers__DockWidget__closed(void *thisObj)
 int c_KDDockWidgets__Controllers__DockWidget__currentTabIndex(void *thisObj)
 {
     return fromPtr(thisObj)->currentTabIndex();
-}
-// customEvent(QEvent * event)
-void c_KDDockWidgets__Controllers__DockWidget__customEvent_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    fromWrapperPtr(thisObj)->customEvent_nocallback(event);
-}
-// event(QEvent * event)
-bool c_KDDockWidgets__Controllers__DockWidget__event_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
-}
-// eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controllers__DockWidget__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
-{
-    auto watched = reinterpret_cast<QObject *>(watched_);
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // floatingWindow() const
 void *c_KDDockWidgets__Controllers__DockWidget__floatingWindow(void *thisObj)
@@ -696,16 +638,7 @@ void c_KDDockWidgets__Controllers__DockWidget__registerVirtualMethodCallback(voi
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_customEvent>(callback);
-        break;
-    case 306:
-        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_event>(callback);
-        break;
-    case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_eventFilter>(callback);
-        break;
-    case 891:
+    case 881:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -26,7 +26,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class SideBar;
 
 class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidget::Private
@@ -37,7 +37,7 @@ public:
     /// middle of operations during reparenting
     struct UpdateActions
     {
-        explicit UpdateActions(Controllers::DockWidget *dock)
+        explicit UpdateActions(Core::DockWidget *dock)
             : dw(dock)
         {
             dw->d->m_willUpdateActions = true;
@@ -51,7 +51,7 @@ public:
 
     private:
         Q_DISABLE_COPY(UpdateActions)
-        Controllers::DockWidget *const dw;
+        Core::DockWidget *const dw;
     };
 
     Private(const QString &dockName, DockWidgetOptions options_,
@@ -72,7 +72,7 @@ public:
      * Note: Being in a FloatingWindow doesn't necessarily mean @ref isFloating() returns true, as
      * the dock widget might be in a floating window with other dock widgets side by side.
      */
-    Controllers::FloatingWindow *floatingWindow() const
+    Core::FloatingWindow *floatingWindow() const
     {
         if (auto fw = q->view()->rootView()->asFloatingWindowController())
             return fw;
@@ -100,7 +100,7 @@ public:
         return nullptr;
     }
 
-    Controllers::SideBar *sideBar() const
+    Core::SideBar *sideBar() const
     {
         return DockRegistry::self()->sideBarForDockWidget(q);
     }
@@ -141,7 +141,7 @@ public:
      *
      * It's nullptr immediately after creation.
      */
-    Controllers::Group *group() const;
+    Core::Group *group() const;
 
     ///@brief If this dock widget is floating, then it saves its geometry
     void saveLastFloatingGeometry();
@@ -156,7 +156,7 @@ public:
      * @brief Creates a FloatingWindow and adds itself into it
      * @return the created FloatingWindow
      */
-    Controllers::FloatingWindow *morphIntoFloatingWindow();
+    Core::FloatingWindow *morphIntoFloatingWindow();
 
     /// @brief calls morphIntoFloatingWindow() if the dock widget is visible and is a top-level
     /// This is called delayed whenever we show a floating dock widget, so we get a FloatingWindow

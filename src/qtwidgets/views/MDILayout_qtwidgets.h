@@ -16,7 +16,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class MDILayout;
 }
 
@@ -26,11 +26,11 @@ class DOCKS_EXPORT MDILayout_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit MDILayout_qtwidgets(Controllers::MDILayout *controller, View *parent);
+    explicit MDILayout_qtwidgets(Core::MDILayout *controller, View *parent);
     ~MDILayout_qtwidgets();
 
 private:
-    Controllers::MDILayout *const m_controller;
+    Core::MDILayout *const m_controller;
 };
 
 }

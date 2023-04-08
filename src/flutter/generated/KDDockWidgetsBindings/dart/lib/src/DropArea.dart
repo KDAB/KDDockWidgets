@@ -39,7 +39,7 @@ class DropArea extends Layout {
         isMDIWrapper ? 1 : 0);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  } // addDockWidget(KDDockWidgets::Controllers::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Controllers::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+  } // addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
   addDockWidget(DockWidget? dw, int location, DockWidget? relativeTo,
       {required InitialOption initialOption}) {
     final void_Func_voidstar_voidstar_int_voidstar_voidstar func = _dylib
@@ -54,7 +54,7 @@ class DropArea extends Layout {
         location,
         relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
         initialOption == null ? ffi.nullptr : initialOption.thisCpp);
-  } // addMultiSplitter(KDDockWidgets::Controllers::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
+  } // addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
 
   addMultiSplitter(DropArea? splitter, int location,
       {required Group? relativeTo, required InitialOption option}) {
@@ -70,7 +70,7 @@ class DropArea extends Layout {
         location,
         relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
         option == null ? ffi.nullptr : option.thisCpp);
-  } // addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo, KDDockWidgets::InitialOption option)
+  } // addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
 
   addWidget(View? widget, int location,
       {required Group? relativeTo, required InitialOption option}) {
@@ -104,7 +104,7 @@ class DropArea extends Layout {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Item.fromCppPointer(result, false);
-  } // containsDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1) const
+  } // containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
 
   bool containsDockWidget(DockWidget? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
@@ -130,19 +130,7 @@ class DropArea extends Layout {
             'c_KDDockWidgets__Controllers__DropArea__currentDropLocation')
         .asFunction();
     return func(thisCpp);
-  }
-
-  static void customEvent_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for DropArea::customEvent(QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.customEvent(QEvent.fromCppPointer(event));
-  } // drop(KDDockWidgets::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Controllers::Group * relativeTo)
+  } // drop(KDDockWidgets::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
 
   bool drop(View? droppedwindow, int location, Group? relativeTo) {
     final bool_Func_voidstar_voidstar_int_voidstar func = _dylib
@@ -166,33 +154,6 @@ class DropArea extends Layout {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DropIndicatorOverlay.fromCppPointer(result, false);
-  }
-
-  static int event_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for DropArea::event(QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.event(QEvent.fromCppPointer(event));
-    return result ? 1 : 0;
-  }
-
-  static int eventFilter_calledFromC(ffi.Pointer<void> thisCpp,
-      ffi.Pointer<void>? watched, ffi.Pointer<void>? event) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for DropArea::eventFilter(QObject * watched, QEvent * event)! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.eventFilter(
-        QObject.fromCppPointer(watched), QEvent.fromCppPointer(event));
-    return result ? 1 : 0;
   } // groupContainingPos(QPoint globalPos) const
 
   Group groupContainingPos(QPoint globalPos) {
@@ -244,7 +205,7 @@ class DropArea extends Layout {
             'c_KDDockWidgets__Controllers__DropArea__layoutEqually')
         .asFunction();
     func(thisCpp);
-  } // layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget * arg__1)
+  } // layoutParentContainerEqually(KDDockWidgets::Core::DockWidget * arg__1)
 
   layoutParentContainerEqually(DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -300,7 +261,7 @@ class DropArea extends Layout {
             'c_KDDockWidgets__Controllers__DropArea__updateFloatingActions')
         .asFunction();
     func(thisCpp);
-  } // validateInputs(KDDockWidgets::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Controllers::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
+  } // validateInputs(KDDockWidgets::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
 
   bool validateInputs(View? widget, int location, Group? relativeToFrame,
       InitialOption option) {
@@ -329,13 +290,7 @@ class DropArea extends Layout {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 295:
-        return "c_KDDockWidgets__Controllers__DropArea__customEvent_QEvent";
-      case 306:
-        return "c_KDDockWidgets__Controllers__DropArea__event_QEvent";
-      case 307:
-        return "c_KDDockWidgets__Controllers__DropArea__eventFilter_QObject_QEvent";
-      case 891:
+      case 881:
         return "c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -343,13 +298,7 @@ class DropArea extends Layout {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 295:
-        return "customEvent";
-      case 306:
-        return "event";
-      case 307:
-        return "eventFilter";
-      case 891:
+      case 881:
         return "setParentView_impl";
     }
     throw Error();
@@ -361,23 +310,9 @@ class DropArea extends Layout {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback')
         .asFunction();
-    final callback295 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            QObject.customEvent_calledFromC);
-    registerCallback(thisCpp, callback295, 295);
-    const callbackExcept306 = 0;
-    final callback306 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
-            QObject.event_calledFromC, callbackExcept306);
-    registerCallback(thisCpp, callback306, 306);
-    const callbackExcept307 = 0;
-    final callback307 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
-            QObject.eventFilter_calledFromC, callbackExcept307);
-    registerCallback(thisCpp, callback307, 307);
-    final callback891 =
+    final callback881 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback891, 891);
+    registerCallback(thisCpp, callback881, 881);
   }
 }

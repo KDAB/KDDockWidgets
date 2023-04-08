@@ -24,7 +24,7 @@
 #endif
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 Separator *Separator::s_separatorBeingDragged = nullptr;
 

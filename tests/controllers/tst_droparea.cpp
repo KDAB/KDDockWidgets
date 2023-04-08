@@ -21,13 +21,13 @@
 TEST_CASE("DropArea CTOR")
 {
     // Tests that ctor runs and doesn't leak
-    Controllers::DropArea da(nullptr, {});
+    Core::DropArea da(nullptr, {});
 }
 
 TEST_CASE("DropArea::addWidget")
 {
-    auto group = new Controllers::Group();
-    Controllers::DropArea da(nullptr, {});
+    auto group = new Core::Group();
+    Core::DropArea da(nullptr, {});
     da.addWidget(group->view(), KDDockWidgets::Location_OnLeft);
 }
 
@@ -36,7 +36,7 @@ TEST_CASE("DropArea::addWidget hidden")
     // Test adding a widget that starts hidden
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    Controllers::DropArea da(nullptr, {});
+    Core::DropArea da(nullptr, {});
     da.addDockWidget(dw, KDDockWidgets::Location_OnLeft, nullptr,
                      InitialVisibilityOption::StartHidden);
 

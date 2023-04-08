@@ -228,10 +228,10 @@ void Platform::removeGlobalEventFilter(EventFilterInterface *filter)
         d->m_globalEventFilters.end());
 }
 
-void Platform::onFloatingWindowCreated(Controllers::FloatingWindow *)
+void Platform::onFloatingWindowCreated(Core::FloatingWindow *)
 {
 }
 
-void Platform::onFloatingWindowDestroyed(Controllers::FloatingWindow *)
+void Platform::onFloatingWindowDestroyed(Core::FloatingWindow *)
 {
 }

@@ -26,7 +26,7 @@
 #include <QPointer>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 Stack::Stack(Group *group, StackOptions options)
     : Controller(Type::Stack, Config::self().viewFactory()->createStack(this, group->view()))
@@ -141,7 +141,7 @@ bool Stack::isWindow() const
     return false;
 }
 
-Controllers::DockWidget *Stack::singleDockWidget() const
+Core::DockWidget *Stack::singleDockWidget() const
 {
     if (m_group->hasSingleDockWidget())
         return m_group->dockWidgets().first();
@@ -196,7 +196,7 @@ bool Stack::tabBarAutoHide() const
     return m_tabBarAutoHide;
 }
 
-Controllers::TabBar *Stack::tabBar() const
+Core::TabBar *Stack::tabBar() const
 {
     return m_tabBar;
 }

@@ -16,10 +16,9 @@
 #include <qpoint.h>
 #include <qrect.h>
 #include <Group.h>
-#include <qcoreevent.h>
+#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
-#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Item_wrapper : public ::Layouting::Item
@@ -27,17 +26,11 @@ class Item_wrapper : public ::Layouting::Item
 public:
     ~Item_wrapper();
     Item_wrapper(KDDockWidgets::View *hostWidget);
-    KDDockWidgets::Controllers::Group *asGroupController() const;
+    KDDockWidgets::Core::Group *asGroupController() const;
     virtual bool checkSanity();
     virtual bool checkSanity_nocallback();
-    virtual void customEvent(QEvent *event);
-    virtual void customEvent_nocallback(QEvent *event);
     virtual void dumpLayout(int level = 0);
     virtual void dumpLayout_nocallback(int level = 0);
-    virtual bool event(QEvent *event);
-    virtual bool event_nocallback(QEvent *event);
-    virtual bool eventFilter(QObject *watched, QEvent *event);
-    virtual bool eventFilter_nocallback(QObject *watched, QEvent *event);
     QRect geometry() const;
     KDDockWidgets::View *guestView() const;
     int height() const;
@@ -90,14 +83,8 @@ public:
     int y() const;
     typedef bool (*Callback_checkSanity)(void *);
     Callback_checkSanity m_checkSanityCallback = nullptr;
-    typedef void (*Callback_customEvent)(void *, QEvent *event);
-    Callback_customEvent m_customEventCallback = nullptr;
     typedef void (*Callback_dumpLayout)(void *, int level);
     Callback_dumpLayout m_dumpLayoutCallback = nullptr;
-    typedef bool (*Callback_event)(void *, QEvent *event);
-    Callback_event m_eventCallback = nullptr;
-    typedef bool (*Callback_eventFilter)(void *, QObject *watched, QEvent *event);
-    Callback_eventFilter m_eventFilterCallback = nullptr;
     typedef bool (*Callback_isVisible)(void *, bool excludeBeingInserted);
     Callback_isVisible m_isVisibleCallback = nullptr;
     typedef QSize *(*Callback_maxSizeHint)(void *);
@@ -123,14 +110,8 @@ KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__constructor_View(void *hos
 KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__asGroupController(void *thisObj);
 // Layouting::Item::checkSanity()
 KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__checkSanity(void *thisObj);
-// Layouting::Item::customEvent(QEvent * event)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__customEvent_QEvent(void *thisObj, void *event_);
 // Layouting::Item::dumpLayout(int level)
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__dumpLayout_int(void *thisObj, int level);
-// Layouting::Item::event(QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__event_QEvent(void *thisObj, void *event_);
-// Layouting::Item::eventFilter(QObject * watched, QEvent * event)
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_);
 // Layouting::Item::geometry() const
 KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__geometry(void *thisObj);
 // Layouting::Item::guestView() const

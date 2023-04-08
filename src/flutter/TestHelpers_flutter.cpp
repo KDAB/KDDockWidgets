@@ -115,9 +115,9 @@ View *Platform_flutter::tests_createNonClosableView(View *)
     return {};
 }
 
-Controllers::MainWindow *Platform_flutter::createMainWindow(const QString &, CreateViewOptions,
-                                                            MainWindowOptions, View *,
-                                                            Qt::WindowFlags) const
+Core::MainWindow *Platform_flutter::createMainWindow(const QString &, CreateViewOptions,
+                                                     MainWindowOptions, View *,
+                                                     Qt::WindowFlags) const
 {
     return {};
 }

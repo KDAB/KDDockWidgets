@@ -15,8 +15,8 @@
 
 TEST_CASE("TitleBar Ctor")
 {
-    auto group = new Controllers::Group(nullptr, {});
-    auto tb = new Controllers::TitleBar(group);
+    auto group = new Core::Group(nullptr, {});
+    auto tb = new Core::TitleBar(group);
     CHECK(tb->view()->is(Type::TitleBar));
     CHECK(tb->view()->asWrapper()->is(Type::TitleBar));
     delete tb;

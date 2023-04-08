@@ -28,117 +28,104 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 Group_wrapper::Group_wrapper(KDDockWidgets::View *parent)
-    : ::KDDockWidgets::Controllers::Group(parent)
+    : ::KDDockWidgets::Core::Group(parent)
 {
 }
-KDDockWidgets::Controllers::TitleBar *Group_wrapper::actualTitleBar() const
+KDDockWidgets::Core::TitleBar *Group_wrapper::actualTitleBar() const
 {
-    return ::KDDockWidgets::Controllers::Group::actualTitleBar();
+    return ::KDDockWidgets::Core::Group::actualTitleBar();
 }
 void Group_wrapper::actualTitleBarChanged()
 {
-    ::KDDockWidgets::Controllers::Group::actualTitleBarChanged();
+    ::KDDockWidgets::Core::Group::actualTitleBarChanged();
 }
-void Group_wrapper::addTab(KDDockWidgets::Controllers::DockWidget *arg__1, KDDockWidgets::InitialOption arg__2)
+void Group_wrapper::addTab(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::InitialOption arg__2)
 {
-    ::KDDockWidgets::Controllers::Group::addTab(arg__1, arg__2);
+    ::KDDockWidgets::Core::Group::addTab(arg__1, arg__2);
 }
-void Group_wrapper::addTab(KDDockWidgets::Controllers::FloatingWindow *floatingWindow, KDDockWidgets::InitialOption arg__2)
+void Group_wrapper::addTab(KDDockWidgets::Core::FloatingWindow *floatingWindow, KDDockWidgets::InitialOption arg__2)
 {
-    ::KDDockWidgets::Controllers::Group::addTab(floatingWindow, arg__2);
+    ::KDDockWidgets::Core::Group::addTab(floatingWindow, arg__2);
 }
-void Group_wrapper::addTab(KDDockWidgets::Controllers::Group *arg__1, KDDockWidgets::InitialOption arg__2)
+void Group_wrapper::addTab(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::InitialOption arg__2)
 {
-    ::KDDockWidgets::Controllers::Group::addTab(arg__1, arg__2);
+    ::KDDockWidgets::Core::Group::addTab(arg__1, arg__2);
 }
 bool Group_wrapper::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
 {
-    return ::KDDockWidgets::Controllers::Group::allDockWidgetsHave(arg__1);
+    return ::KDDockWidgets::Core::Group::allDockWidgetsHave(arg__1);
 }
 bool Group_wrapper::allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const
 {
-    return ::KDDockWidgets::Controllers::Group::allDockWidgetsHave(arg__1);
+    return ::KDDockWidgets::Core::Group::allDockWidgetsHave(arg__1);
 }
 bool Group_wrapper::alwaysShowsTabs() const
 {
-    return ::KDDockWidgets::Controllers::Group::alwaysShowsTabs();
+    return ::KDDockWidgets::Core::Group::alwaysShowsTabs();
 }
 bool Group_wrapper::anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const
 {
-    return ::KDDockWidgets::Controllers::Group::anyDockWidgetsHas(arg__1);
+    return ::KDDockWidgets::Core::Group::anyDockWidgetsHas(arg__1);
 }
 bool Group_wrapper::anyDockWidgetsHas(KDDockWidgets::LayoutSaverOption arg__1) const
 {
-    return ::KDDockWidgets::Controllers::Group::anyDockWidgetsHas(arg__1);
+    return ::KDDockWidgets::Core::Group::anyDockWidgetsHas(arg__1);
 }
 bool Group_wrapper::anyNonClosable() const
 {
-    return ::KDDockWidgets::Controllers::Group::anyNonClosable();
+    return ::KDDockWidgets::Core::Group::anyNonClosable();
 }
 bool Group_wrapper::anyNonDockable() const
 {
-    return ::KDDockWidgets::Controllers::Group::anyNonDockable();
+    return ::KDDockWidgets::Core::Group::anyNonDockable();
 }
 bool Group_wrapper::beingDeletedLater() const
 {
-    return ::KDDockWidgets::Controllers::Group::beingDeletedLater();
+    return ::KDDockWidgets::Core::Group::beingDeletedLater();
 }
 QSize Group_wrapper::biggestDockWidgetMaxSize() const
 {
-    return ::KDDockWidgets::Controllers::Group::biggestDockWidgetMaxSize();
+    return ::KDDockWidgets::Core::Group::biggestDockWidgetMaxSize();
 }
-bool Group_wrapper::containsDockWidget(KDDockWidgets::Controllers::DockWidget *w) const
+bool Group_wrapper::containsDockWidget(KDDockWidgets::Core::DockWidget *w) const
 {
-    return ::KDDockWidgets::Controllers::Group::containsDockWidget(w);
+    return ::KDDockWidgets::Core::Group::containsDockWidget(w);
 }
 bool Group_wrapper::containsMouse(QPoint globalPos) const
 {
-    return ::KDDockWidgets::Controllers::Group::containsMouse(globalPos);
+    return ::KDDockWidgets::Core::Group::containsMouse(globalPos);
 }
-KDDockWidgets::Controllers::DockWidget *Group_wrapper::currentDockWidget() const
+KDDockWidgets::Core::DockWidget *Group_wrapper::currentDockWidget() const
 {
-    return ::KDDockWidgets::Controllers::Group::currentDockWidget();
+    return ::KDDockWidgets::Core::Group::currentDockWidget();
 }
 int Group_wrapper::currentIndex() const
 {
-    return ::KDDockWidgets::Controllers::Group::currentIndex();
+    return ::KDDockWidgets::Core::Group::currentIndex();
 }
 int Group_wrapper::currentTabIndex() const
 {
-    return ::KDDockWidgets::Controllers::Group::currentTabIndex();
-}
-void Group_wrapper::customEvent(QEvent *event)
-{
-    if (m_customEventCallback) {
-        const void *thisPtr = this;
-        m_customEventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        ::KDDockWidgets::Controllers::Group::customEvent(event);
-    }
-}
-void Group_wrapper::customEvent_nocallback(QEvent *event)
-{
-    ::KDDockWidgets::Controllers::Group::customEvent(event);
+    return ::KDDockWidgets::Core::Group::currentTabIndex();
 }
 int Group_wrapper::dbg_numFrames()
 {
-    return ::KDDockWidgets::Controllers::Group::dbg_numFrames();
+    return ::KDDockWidgets::Core::Group::dbg_numFrames();
 }
-KDDockWidgets::Controllers::FloatingWindow *Group_wrapper::detachTab(KDDockWidgets::Controllers::DockWidget *arg__1)
+KDDockWidgets::Core::FloatingWindow *Group_wrapper::detachTab(KDDockWidgets::Core::DockWidget *arg__1)
 {
-    return ::KDDockWidgets::Controllers::Group::detachTab(arg__1);
+    return ::KDDockWidgets::Core::Group::detachTab(arg__1);
 }
-KDDockWidgets::Controllers::DockWidget *Group_wrapper::dockWidgetAt(int index) const
+KDDockWidgets::Core::DockWidget *Group_wrapper::dockWidgetAt(int index) const
 {
-    return ::KDDockWidgets::Controllers::Group::dockWidgetAt(index);
+    return ::KDDockWidgets::Core::Group::dockWidgetAt(index);
 }
 int Group_wrapper::dockWidgetCount() const
 {
-    return ::KDDockWidgets::Controllers::Group::dockWidgetCount();
+    return ::KDDockWidgets::Core::Group::dockWidgetCount();
 }
 QSize Group_wrapper::dockWidgetsMinSize() const
 {
-    return ::KDDockWidgets::Controllers::Group::dockWidgetsMinSize();
+    return ::KDDockWidgets::Core::Group::dockWidgetsMinSize();
 }
 QRect Group_wrapper::dragRect() const
 {
@@ -146,46 +133,20 @@ QRect Group_wrapper::dragRect() const
         const void *thisPtr = this;
         return *m_dragRectCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Controllers::Group::dragRect();
+        return ::KDDockWidgets::Core::Group::dragRect();
     }
 }
 QRect Group_wrapper::dragRect_nocallback() const
 {
-    return ::KDDockWidgets::Controllers::Group::dragRect();
+    return ::KDDockWidgets::Core::Group::dragRect();
 }
-bool Group_wrapper::event(QEvent *event)
+KDDockWidgets::Core::FloatingWindow *Group_wrapper::floatingWindow() const
 {
-    if (m_eventCallback) {
-        const void *thisPtr = this;
-        return m_eventCallback(const_cast<void *>(thisPtr), event);
-    } else {
-        return ::KDDockWidgets::Controllers::Group::event(event);
-    }
-}
-bool Group_wrapper::event_nocallback(QEvent *event)
-{
-    return ::KDDockWidgets::Controllers::Group::event(event);
-}
-bool Group_wrapper::eventFilter(QObject *watched, QEvent *event)
-{
-    if (m_eventFilterCallback) {
-        const void *thisPtr = this;
-        return m_eventFilterCallback(const_cast<void *>(thisPtr), watched, event);
-    } else {
-        return ::KDDockWidgets::Controllers::Group::eventFilter(watched, event);
-    }
-}
-bool Group_wrapper::eventFilter_nocallback(QObject *watched, QEvent *event)
-{
-    return ::KDDockWidgets::Controllers::Group::eventFilter(watched, event);
-}
-KDDockWidgets::Controllers::FloatingWindow *Group_wrapper::floatingWindow() const
-{
-    return ::KDDockWidgets::Controllers::Group::floatingWindow();
+    return ::KDDockWidgets::Core::Group::floatingWindow();
 }
 void Group_wrapper::focusedWidgetChanged()
 {
-    ::KDDockWidgets::Controllers::Group::focusedWidgetChanged();
+    ::KDDockWidgets::Core::Group::focusedWidgetChanged();
 }
 void Group_wrapper::focusedWidgetChangedCallback()
 {
@@ -193,60 +154,60 @@ void Group_wrapper::focusedWidgetChangedCallback()
         const void *thisPtr = this;
         m_focusedWidgetChangedCallbackCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Controllers::Group::focusedWidgetChangedCallback();
+        ::KDDockWidgets::Core::Group::focusedWidgetChangedCallback();
     }
 }
 void Group_wrapper::focusedWidgetChangedCallback_nocallback()
 {
-    ::KDDockWidgets::Controllers::Group::focusedWidgetChangedCallback();
+    ::KDDockWidgets::Core::Group::focusedWidgetChangedCallback();
 }
 bool Group_wrapper::hasNestedMDIDockWidgets() const
 {
-    return ::KDDockWidgets::Controllers::Group::hasNestedMDIDockWidgets();
+    return ::KDDockWidgets::Core::Group::hasNestedMDIDockWidgets();
 }
 bool Group_wrapper::hasSingleDockWidget() const
 {
-    return ::KDDockWidgets::Controllers::Group::hasSingleDockWidget();
+    return ::KDDockWidgets::Core::Group::hasSingleDockWidget();
 }
 bool Group_wrapper::hasTabsVisible() const
 {
-    return ::KDDockWidgets::Controllers::Group::hasTabsVisible();
+    return ::KDDockWidgets::Core::Group::hasTabsVisible();
 }
 void Group_wrapper::hasTabsVisibleChanged()
 {
-    ::KDDockWidgets::Controllers::Group::hasTabsVisibleChanged();
+    ::KDDockWidgets::Core::Group::hasTabsVisibleChanged();
 }
-int Group_wrapper::indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget *arg__1)
+int Group_wrapper::indexOfDockWidget(const KDDockWidgets::Core::DockWidget *arg__1)
 {
-    return ::KDDockWidgets::Controllers::Group::indexOfDockWidget(arg__1);
+    return ::KDDockWidgets::Core::Group::indexOfDockWidget(arg__1);
 }
-void Group_wrapper::insertDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1, int index)
+void Group_wrapper::insertDockWidget(KDDockWidgets::Core::DockWidget *arg__1, int index)
 {
-    ::KDDockWidgets::Controllers::Group::insertDockWidget(arg__1, index);
+    ::KDDockWidgets::Core::Group::insertDockWidget(arg__1, index);
 }
-void Group_wrapper::insertWidget(KDDockWidgets::Controllers::DockWidget *arg__1, int index, KDDockWidgets::InitialOption arg__3)
+void Group_wrapper::insertWidget(KDDockWidgets::Core::DockWidget *arg__1, int index, KDDockWidgets::InitialOption arg__3)
 {
-    ::KDDockWidgets::Controllers::Group::insertWidget(arg__1, index, arg__3);
+    ::KDDockWidgets::Core::Group::insertWidget(arg__1, index, arg__3);
 }
 bool Group_wrapper::isCentralFrame() const
 {
-    return ::KDDockWidgets::Controllers::Group::isCentralFrame();
+    return ::KDDockWidgets::Core::Group::isCentralFrame();
 }
 bool Group_wrapper::isDockable() const
 {
-    return ::KDDockWidgets::Controllers::Group::isDockable();
+    return ::KDDockWidgets::Core::Group::isDockable();
 }
 bool Group_wrapper::isEmpty() const
 {
-    return ::KDDockWidgets::Controllers::Group::isEmpty();
+    return ::KDDockWidgets::Core::Group::isEmpty();
 }
 bool Group_wrapper::isFloating() const
 {
-    return ::KDDockWidgets::Controllers::Group::isFloating();
+    return ::KDDockWidgets::Core::Group::isFloating();
 }
 void Group_wrapper::isFocusedChanged()
 {
-    ::KDDockWidgets::Controllers::Group::isFocusedChanged();
+    ::KDDockWidgets::Core::Group::isFocusedChanged();
 }
 void Group_wrapper::isFocusedChangedCallback()
 {
@@ -254,108 +215,108 @@ void Group_wrapper::isFocusedChangedCallback()
         const void *thisPtr = this;
         m_isFocusedChangedCallbackCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Controllers::Group::isFocusedChangedCallback();
+        ::KDDockWidgets::Core::Group::isFocusedChangedCallback();
     }
 }
 void Group_wrapper::isFocusedChangedCallback_nocallback()
 {
-    ::KDDockWidgets::Controllers::Group::isFocusedChangedCallback();
+    ::KDDockWidgets::Core::Group::isFocusedChangedCallback();
 }
 bool Group_wrapper::isInFloatingWindow() const
 {
-    return ::KDDockWidgets::Controllers::Group::isInFloatingWindow();
+    return ::KDDockWidgets::Core::Group::isInFloatingWindow();
 }
 bool Group_wrapper::isInMainWindow() const
 {
-    return ::KDDockWidgets::Controllers::Group::isInMainWindow();
+    return ::KDDockWidgets::Core::Group::isInMainWindow();
 }
 void Group_wrapper::isInMainWindowChanged()
 {
-    ::KDDockWidgets::Controllers::Group::isInMainWindowChanged();
+    ::KDDockWidgets::Core::Group::isInMainWindowChanged();
 }
 bool Group_wrapper::isMDI() const
 {
-    return ::KDDockWidgets::Controllers::Group::isMDI();
+    return ::KDDockWidgets::Core::Group::isMDI();
 }
 void Group_wrapper::isMDIChanged()
 {
-    ::KDDockWidgets::Controllers::Group::isMDIChanged();
+    ::KDDockWidgets::Core::Group::isMDIChanged();
 }
 bool Group_wrapper::isMDIWrapper() const
 {
-    return ::KDDockWidgets::Controllers::Group::isMDIWrapper();
+    return ::KDDockWidgets::Core::Group::isMDIWrapper();
 }
 bool Group_wrapper::isOverlayed() const
 {
-    return ::KDDockWidgets::Controllers::Group::isOverlayed();
+    return ::KDDockWidgets::Core::Group::isOverlayed();
 }
 bool Group_wrapper::isTheOnlyFrame() const
 {
-    return ::KDDockWidgets::Controllers::Group::isTheOnlyFrame();
+    return ::KDDockWidgets::Core::Group::isTheOnlyFrame();
 }
 Layouting::Item *Group_wrapper::layoutItem() const
 {
-    return ::KDDockWidgets::Controllers::Group::layoutItem();
+    return ::KDDockWidgets::Core::Group::layoutItem();
 }
-KDDockWidgets::Controllers::MainWindow *Group_wrapper::mainWindow() const
+KDDockWidgets::Core::MainWindow *Group_wrapper::mainWindow() const
 {
-    return ::KDDockWidgets::Controllers::Group::mainWindow();
+    return ::KDDockWidgets::Core::Group::mainWindow();
 }
-KDDockWidgets::Controllers::DockWidget *Group_wrapper::mdiDockWidgetWrapper() const
+KDDockWidgets::Core::DockWidget *Group_wrapper::mdiDockWidgetWrapper() const
 {
-    return ::KDDockWidgets::Controllers::Group::mdiDockWidgetWrapper();
+    return ::KDDockWidgets::Core::Group::mdiDockWidgetWrapper();
 }
-KDDockWidgets::Controllers::DropArea *Group_wrapper::mdiDropAreaWrapper() const
+KDDockWidgets::Core::DropArea *Group_wrapper::mdiDropAreaWrapper() const
 {
-    return ::KDDockWidgets::Controllers::Group::mdiDropAreaWrapper();
+    return ::KDDockWidgets::Core::Group::mdiDropAreaWrapper();
 }
-KDDockWidgets::Controllers::Group *Group_wrapper::mdiFrame() const
+KDDockWidgets::Core::Group *Group_wrapper::mdiFrame() const
 {
-    return ::KDDockWidgets::Controllers::Group::mdiFrame();
+    return ::KDDockWidgets::Core::Group::mdiFrame();
 }
 int Group_wrapper::nonContentsHeight() const
 {
-    return ::KDDockWidgets::Controllers::Group::nonContentsHeight();
+    return ::KDDockWidgets::Core::Group::nonContentsHeight();
 }
 void Group_wrapper::numDockWidgetsChanged()
 {
-    ::KDDockWidgets::Controllers::Group::numDockWidgetsChanged();
+    ::KDDockWidgets::Core::Group::numDockWidgetsChanged();
 }
 void Group_wrapper::onDockWidgetCountChanged()
 {
-    ::KDDockWidgets::Controllers::Group::onDockWidgetCountChanged();
+    ::KDDockWidgets::Core::Group::onDockWidgetCountChanged();
 }
 void Group_wrapper::onDockWidgetTitleChanged()
 {
-    ::KDDockWidgets::Controllers::Group::onDockWidgetTitleChanged();
+    ::KDDockWidgets::Core::Group::onDockWidgetTitleChanged();
 }
-void Group_wrapper::removeWidget(KDDockWidgets::Controllers::DockWidget *arg__1)
+void Group_wrapper::removeWidget(KDDockWidgets::Core::DockWidget *arg__1)
 {
-    ::KDDockWidgets::Controllers::Group::removeWidget(arg__1);
+    ::KDDockWidgets::Core::Group::removeWidget(arg__1);
 }
 void Group_wrapper::renameTab(int index, const QString &arg__2)
 {
-    ::KDDockWidgets::Controllers::Group::renameTab(index, arg__2);
+    ::KDDockWidgets::Core::Group::renameTab(index, arg__2);
 }
 void Group_wrapper::restoreToPreviousPosition()
 {
-    ::KDDockWidgets::Controllers::Group::restoreToPreviousPosition();
+    ::KDDockWidgets::Core::Group::restoreToPreviousPosition();
 }
-void Group_wrapper::setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget *arg__1)
+void Group_wrapper::setCurrentDockWidget(KDDockWidgets::Core::DockWidget *arg__1)
 {
-    ::KDDockWidgets::Controllers::Group::setCurrentDockWidget(arg__1);
+    ::KDDockWidgets::Core::Group::setCurrentDockWidget(arg__1);
 }
 void Group_wrapper::setCurrentTabIndex(int index)
 {
-    ::KDDockWidgets::Controllers::Group::setCurrentTabIndex(index);
+    ::KDDockWidgets::Core::Group::setCurrentTabIndex(index);
 }
-void Group_wrapper::setLayout(KDDockWidgets::Controllers::Layout *arg__1)
+void Group_wrapper::setLayout(KDDockWidgets::Core::Layout *arg__1)
 {
-    ::KDDockWidgets::Controllers::Group::setLayout(arg__1);
+    ::KDDockWidgets::Core::Group::setLayout(arg__1);
 }
 void Group_wrapper::setLayoutItem(Layouting::Item *item)
 {
-    ::KDDockWidgets::Controllers::Group::setLayoutItem(item);
+    ::KDDockWidgets::Core::Group::setLayoutItem(item);
 }
 void Group_wrapper::setParentView_impl(KDDockWidgets::View *parent)
 {
@@ -363,61 +324,61 @@ void Group_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         const void *thisPtr = this;
         m_setParentView_implCallback(const_cast<void *>(thisPtr), parent);
     } else {
-        ::KDDockWidgets::Controllers::Group::setParentView_impl(parent);
+        ::KDDockWidgets::Core::Group::setParentView_impl(parent);
     }
 }
 void Group_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
 {
-    ::KDDockWidgets::Controllers::Group::setParentView_impl(parent);
+    ::KDDockWidgets::Core::Group::setParentView_impl(parent);
 }
-KDDockWidgets::Controllers::Stack *Group_wrapper::stack() const
+KDDockWidgets::Core::Stack *Group_wrapper::stack() const
 {
-    return ::KDDockWidgets::Controllers::Group::stack();
+    return ::KDDockWidgets::Core::Group::stack();
 }
-KDDockWidgets::Controllers::TabBar *Group_wrapper::tabBar() const
+KDDockWidgets::Core::TabBar *Group_wrapper::tabBar() const
 {
-    return ::KDDockWidgets::Controllers::Group::tabBar();
+    return ::KDDockWidgets::Core::Group::tabBar();
 }
 QString Group_wrapper::title() const
 {
-    return ::KDDockWidgets::Controllers::Group::title();
+    return ::KDDockWidgets::Core::Group::title();
 }
-KDDockWidgets::Controllers::TitleBar *Group_wrapper::titleBar() const
+KDDockWidgets::Core::TitleBar *Group_wrapper::titleBar() const
 {
-    return ::KDDockWidgets::Controllers::Group::titleBar();
+    return ::KDDockWidgets::Core::Group::titleBar();
 }
 QString Group_wrapper::tr(const char *s, const char *c, int n)
 {
-    return ::KDDockWidgets::Controllers::Group::tr(s, c, n);
+    return ::KDDockWidgets::Core::Group::tr(s, c, n);
 }
 void Group_wrapper::unoverlay()
 {
-    ::KDDockWidgets::Controllers::Group::unoverlay();
+    ::KDDockWidgets::Core::Group::unoverlay();
 }
 void Group_wrapper::updateFloatingActions()
 {
-    ::KDDockWidgets::Controllers::Group::updateFloatingActions();
+    ::KDDockWidgets::Core::Group::updateFloatingActions();
 }
 void Group_wrapper::updateTitleAndIcon()
 {
-    ::KDDockWidgets::Controllers::Group::updateTitleAndIcon();
+    ::KDDockWidgets::Core::Group::updateTitleAndIcon();
 }
 void Group_wrapper::updateTitleBarVisibility()
 {
-    ::KDDockWidgets::Controllers::Group::updateTitleBarVisibility();
+    ::KDDockWidgets::Core::Group::updateTitleBarVisibility();
 }
 int Group_wrapper::userType() const
 {
-    return ::KDDockWidgets::Controllers::Group::userType();
+    return ::KDDockWidgets::Core::Group::userType();
 }
 Group_wrapper::~Group_wrapper()
 {
 }
 
 }
-static KDDockWidgets::Controllers::Group *fromPtr(void *ptr)
+static KDDockWidgets::Core::Group *fromPtr(void *ptr)
 {
-    return reinterpret_cast<KDDockWidgets::Controllers::Group *>(ptr);
+    return reinterpret_cast<KDDockWidgets::Core::Group *>(ptr);
 }
 static KDDockWidgetsBindings_wrappersNS::Group_wrapper *fromWrapperPtr(void *ptr)
 {
@@ -444,26 +405,26 @@ void c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj)
 {
     fromPtr(thisObj)->actualTitleBarChanged();
 }
-// addTab(KDDockWidgets::Controllers::DockWidget * arg__1, KDDockWidgets::InitialOption arg__2)
+// addTab(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::InitialOption arg__2)
 void c_KDDockWidgets__Controllers__Group__addTab_DockWidget_InitialOption(void *thisObj, void *arg__1_, void *arg__2_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     assert(arg__2_);
     auto &arg__2 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__2_);
     fromPtr(thisObj)->addTab(arg__1, arg__2);
 }
-// addTab(KDDockWidgets::Controllers::FloatingWindow * floatingWindow, KDDockWidgets::InitialOption arg__2)
+// addTab(KDDockWidgets::Core::FloatingWindow * floatingWindow, KDDockWidgets::InitialOption arg__2)
 void c_KDDockWidgets__Controllers__Group__addTab_FloatingWindow_InitialOption(void *thisObj, void *floatingWindow_, void *arg__2_)
 {
-    auto floatingWindow = reinterpret_cast<KDDockWidgets::Controllers::FloatingWindow *>(floatingWindow_);
+    auto floatingWindow = reinterpret_cast<KDDockWidgets::Core::FloatingWindow *>(floatingWindow_);
     assert(arg__2_);
     auto &arg__2 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__2_);
     fromPtr(thisObj)->addTab(floatingWindow, arg__2);
 }
-// addTab(KDDockWidgets::Controllers::Group * arg__1, KDDockWidgets::InitialOption arg__2)
+// addTab(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::InitialOption arg__2)
 void c_KDDockWidgets__Controllers__Group__addTab_Group_InitialOption(void *thisObj, void *arg__1_, void *arg__2_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Group *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
     assert(arg__2_);
     auto &arg__2 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__2_);
     fromPtr(thisObj)->addTab(arg__1, arg__2);
@@ -513,10 +474,10 @@ void *c_KDDockWidgets__Controllers__Group__biggestDockWidgetMaxSize(void *thisOb
 {
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->biggestDockWidgetMaxSize() };
 }
-// containsDockWidget(KDDockWidgets::Controllers::DockWidget * w) const
+// containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
 bool c_KDDockWidgets__Controllers__Group__containsDockWidget_DockWidget(void *thisObj, void *w_)
 {
-    auto w = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(w_);
+    auto w = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(w_);
     return fromPtr(thisObj)->containsDockWidget(w);
 }
 // containsMouse(QPoint globalPos) const
@@ -541,21 +502,15 @@ int c_KDDockWidgets__Controllers__Group__currentTabIndex(void *thisObj)
 {
     return fromPtr(thisObj)->currentTabIndex();
 }
-// customEvent(QEvent * event)
-void c_KDDockWidgets__Controllers__Group__customEvent_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    fromWrapperPtr(thisObj)->customEvent_nocallback(event);
-}
 // dbg_numFrames()
 int c_static_KDDockWidgets__Controllers__Group__dbg_numFrames()
 {
     return KDDockWidgetsBindings_wrappersNS::Group_wrapper::dbg_numFrames();
 }
-// detachTab(KDDockWidgets::Controllers::DockWidget * arg__1)
+// detachTab(KDDockWidgets::Core::DockWidget * arg__1)
 void *c_KDDockWidgets__Controllers__Group__detachTab_DockWidget(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     return fromPtr(thisObj)->detachTab(arg__1);
 }
 // dockWidgetAt(int index) const
@@ -577,19 +532,6 @@ void *c_KDDockWidgets__Controllers__Group__dockWidgetsMinSize(void *thisObj)
 void *c_KDDockWidgets__Controllers__Group__dragRect(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dragRect_nocallback();} else {    return targetPtr->dragRect();} }() };
-}
-// event(QEvent * event)
-bool c_KDDockWidgets__Controllers__Group__event_QEvent(void *thisObj, void *event_)
-{
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->event_nocallback(event);} else {    return targetPtr->event(event);} }();
-}
-// eventFilter(QObject * watched, QEvent * event)
-bool c_KDDockWidgets__Controllers__Group__eventFilter_QObject_QEvent(void *thisObj, void *watched_, void *event_)
-{
-    auto watched = reinterpret_cast<QObject *>(watched_);
-    auto event = reinterpret_cast<QEvent *>(event_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->eventFilter_nocallback(watched,event);} else {    return targetPtr->eventFilter(watched,event);} }();
 }
 // floatingWindow() const
 void *c_KDDockWidgets__Controllers__Group__floatingWindow(void *thisObj)
@@ -626,22 +568,22 @@ void c_KDDockWidgets__Controllers__Group__hasTabsVisibleChanged(void *thisObj)
 {
     fromPtr(thisObj)->hasTabsVisibleChanged();
 }
-// indexOfDockWidget(const KDDockWidgets::Controllers::DockWidget * arg__1)
+// indexOfDockWidget(const KDDockWidgets::Core::DockWidget * arg__1)
 int c_KDDockWidgets__Controllers__Group__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     return fromPtr(thisObj)->indexOfDockWidget(arg__1);
 }
-// insertDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1, int index)
+// insertDockWidget(KDDockWidgets::Core::DockWidget * arg__1, int index)
 void c_KDDockWidgets__Controllers__Group__insertDockWidget_DockWidget_int(void *thisObj, void *arg__1_, int index)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     fromPtr(thisObj)->insertDockWidget(arg__1, index);
 }
-// insertWidget(KDDockWidgets::Controllers::DockWidget * arg__1, int index, KDDockWidgets::InitialOption arg__3)
+// insertWidget(KDDockWidgets::Core::DockWidget * arg__1, int index, KDDockWidgets::InitialOption arg__3)
 void c_KDDockWidgets__Controllers__Group__insertWidget_DockWidget_int_InitialOption(void *thisObj, void *arg__1_, int index, void *arg__3_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     assert(arg__3_);
     auto &arg__3 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__3_);
     fromPtr(thisObj)->insertWidget(arg__1, index, arg__3);
@@ -761,10 +703,10 @@ void c_KDDockWidgets__Controllers__Group__onDockWidgetTitleChanged(void *thisObj
 {
     fromPtr(thisObj)->onDockWidgetTitleChanged();
 }
-// removeWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+// removeWidget(KDDockWidgets::Core::DockWidget * arg__1)
 void c_KDDockWidgets__Controllers__Group__removeWidget_DockWidget(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     fromPtr(thisObj)->removeWidget(arg__1);
 }
 // renameTab(int index, const QString & arg__2)
@@ -778,10 +720,10 @@ void c_KDDockWidgets__Controllers__Group__restoreToPreviousPosition(void *thisOb
 {
     fromPtr(thisObj)->restoreToPreviousPosition();
 }
-// setCurrentDockWidget(KDDockWidgets::Controllers::DockWidget * arg__1)
+// setCurrentDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 void c_KDDockWidgets__Controllers__Group__setCurrentDockWidget_DockWidget(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::DockWidget *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     fromPtr(thisObj)->setCurrentDockWidget(arg__1);
 }
 // setCurrentTabIndex(int index)
@@ -789,10 +731,10 @@ void c_KDDockWidgets__Controllers__Group__setCurrentTabIndex_int(void *thisObj, 
 {
     fromPtr(thisObj)->setCurrentTabIndex(index);
 }
-// setLayout(KDDockWidgets::Controllers::Layout * arg__1)
+// setLayout(KDDockWidgets::Core::Layout * arg__1)
 void c_KDDockWidgets__Controllers__Group__setLayout_Layout(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controllers::Layout *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Layout *>(arg__1_);
     fromPtr(thisObj)->setLayout(arg__1);
 }
 // setLayoutItem(Layouting::Item * item)
@@ -865,25 +807,16 @@ void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *pt
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 295:
-        wrapper->m_customEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_customEvent>(callback);
-        break;
-    case 1469:
+    case 1459:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_dragRect>(callback);
         break;
-    case 306:
-        wrapper->m_eventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_event>(callback);
-        break;
-    case 307:
-        wrapper->m_eventFilterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_eventFilter>(callback);
-        break;
-    case 1472:
+    case 1462:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_focusedWidgetChangedCallback>(callback);
         break;
-    case 1489:
+    case 1479:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_isFocusedChangedCallback>(callback);
         break;
-    case 891:
+    case 881:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Group_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

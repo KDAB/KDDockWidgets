@@ -37,7 +37,7 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
@@ -72,7 +72,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
     auto dropArea = m->dropArea();
-    Controllers::DropArea *layout = dropArea;
+    Core::DropArea *layout = dropArea;
     // Stack 1, 2, 3
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
@@ -100,7 +100,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QCOMPARE(layout->placeholderCount(), 0);
 
     // Detach dock2
-    QPointer<Controllers::Group> f2 = dock2->dptr()->group();
+    QPointer<Core::Group> f2 = dock2->dptr()->group();
     f2->detachTab(dock2);
     QVERIFY(!f2.data());
     QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
@@ -130,7 +130,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
-        QPointer<Controllers::Group> group1 = dock1->dptr()->group();
+        QPointer<Core::Group> group1 = dock1->dptr()->group();
         dock1->setFloating(true);
         QVERIFY(dock1->isFloating());
         auto fw = dock1->floatingWindow();
@@ -153,7 +153,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
         auto dropArea = m->dropArea();
-        Controllers::DropArea *layout = dropArea;
+        Core::DropArea *layout = dropArea;
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
         m->addDockWidget(dock3, KDDockWidgets::Location_OnRight);

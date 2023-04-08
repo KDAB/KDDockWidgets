@@ -17,7 +17,7 @@
 #include <QQuickItem>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
+using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets {
 
@@ -67,7 +67,7 @@ static QString iconName(DropLocation loc, bool active)
 }
 
 
-IndicatorWindow_qtquick::IndicatorWindow_qtquick(Controllers::ClassicIndicators *classicIndicators)
+IndicatorWindow_qtquick::IndicatorWindow_qtquick(Core::ClassicIndicators *classicIndicators)
     : QQuickView()
     , m_classicIndicators(classicIndicators)
 {

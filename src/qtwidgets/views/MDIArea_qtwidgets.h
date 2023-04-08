@@ -18,7 +18,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class Group;
 class DockWidget;
 class MDILayout;
@@ -45,14 +45,14 @@ public:
     ~MDIArea_qtwidgets();
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
-    void addDockWidget(Controllers::DockWidget *dw, QPoint localPt,
+    void addDockWidget(Core::DockWidget *dw, QPoint localPt,
                        InitialOption addingOption = {});
 
     /// @brief Moves a dock widget @p dw to point @p pos
-    void moveDockWidget(Controllers::DockWidget *dw, QPoint pos);
+    void moveDockWidget(Core::DockWidget *dw, QPoint pos);
 
     /// @brief Sets the size of dock widget @p dw to @p size
-    void resizeDockWidget(Controllers::DockWidget *dw, QSize size);
+    void resizeDockWidget(Core::DockWidget *dw, QSize size);
 
     /// @brief overloads
     void addDockWidget(Views::DockWidgetViewInterface *, QPoint localPt,
@@ -62,7 +62,7 @@ public:
 
     /// @brief Returns the list of groups in this MDI Area
     /// Each Frame object represents a 'window' emebedded in the MDI Area
-    QList<Controllers::Group *> groups() const;
+    QList<Core::Group *> groups() const;
 
 private:
     class Private;

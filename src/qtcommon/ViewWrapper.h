@@ -16,7 +16,7 @@
 
 namespace KDDockWidgets {
 
-namespace Controllers {
+namespace Core {
 class DropArea;
 }
 
