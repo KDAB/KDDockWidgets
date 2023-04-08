@@ -16,7 +16,6 @@
 #include "KDDockWidgets_p.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/LayoutSaver.h"
-#include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "Group.h"
 #include "NonQtCompat_p.h"
 #include "private/Draggable_p.h"
