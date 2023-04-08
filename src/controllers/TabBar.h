@@ -51,7 +51,7 @@ public:
     /// @brief Returns the tab index of the specified dock widget
     int indexOfDockWidget(const Controllers::DockWidget *dw) const;
     void removeDockWidget(Controllers::DockWidget *dw);
-    void insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+    void insertDockWidget(int index, Controllers::DockWidget *dw, const Icon &icon,
                           const QString &title);
 
     // Draggable
@@ -84,7 +84,7 @@ public:
     void renameTab(int index, const QString &);
 
     ///@brief change the tab's icon
-    void changeTabIcon(int index, const QIcon &);
+    void changeTabIcon(int index, const Icon &);
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
     void countChanged();

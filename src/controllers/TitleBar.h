@@ -17,7 +17,6 @@
 #include "DockWidget.h"
 
 #include <QString>
-#include <QIcon>
 
 namespace KDDockWidgets::Controllers {
 
@@ -50,8 +49,8 @@ public:
     DockWidget::List dockWidgets() const;
 
     ///@brief the icon
-    QIcon icon() const;
-    void setIcon(const QIcon &icon);
+    Icon icon() const;
+    void setIcon(const Icon &icon);
 
     ///@brief returns whether this title bar supports a floating/docking button
     bool supportsFloatingButton() const;
@@ -151,7 +150,7 @@ private:
 
     QPoint m_pressPos;
     QString m_title;
-    QIcon m_icon;
+    Icon m_icon;
 
     Controllers::Group *const m_group;
     FloatingWindow *const m_floatingWindow;

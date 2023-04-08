@@ -121,7 +121,7 @@ public:
     virtual bool testAttribute(Qt::WidgetAttribute) const = 0;
     virtual Qt::WindowFlags flags() const = 0;
     virtual void setWindowTitle(const QString &title) = 0;
-    virtual void setWindowIcon(const QIcon &) = 0;
+    virtual void setWindowIcon(const Icon &) = 0;
 
     /// @brief Installs an event filter in this view to intercept the event it receives
     /// Analogue to QObject::installEventFilter() in the Qt world

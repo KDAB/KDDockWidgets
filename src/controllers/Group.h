@@ -103,7 +103,7 @@ public:
     Controllers::TitleBar *titleBar() const;
     Controllers::TitleBar *actualTitleBar() const;
     QString title() const;
-    QIcon icon() const;
+    Icon icon() const;
     const QVector<DockWidget *> dockWidgets() const;
 
     bool isTheOnlyFrame() const;
@@ -294,7 +294,7 @@ public:
     WidgetResizeHandler *resizeHandler() const;
 
     void renameTab(int index, const QString &);
-    void changeTabIcon(int index, const QIcon &);
+    void changeTabIcon(int index, const Icon &);
     /// @brief Sets the Layout which this group is in
     void setLayout(Layout *);
 

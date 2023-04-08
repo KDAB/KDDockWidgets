@@ -48,8 +48,8 @@ public:
     void open();
     void raise();
     void moveToSideBar();
-    void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
-    QIcon icon(IconPlace place = IconPlace::TitleBar) const;
+    void setIcon(const Icon &icon, IconPlaces places = IconPlace::All);
+    Icon icon(IconPlace place = IconPlace::TitleBar) const;
 
     void setAffinities(const QStringList &);
     void setAffinityName(const QString &name);

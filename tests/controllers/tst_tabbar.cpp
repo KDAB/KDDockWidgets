@@ -16,8 +16,6 @@
 #include "kddockwidgets/Config.h"
 #include "kddockwidgets/ViewFactory.h"
 
-#include <QIcon>
-
 using namespace KDDockWidgets;
 
 TEST_CASE("TabBar ctor")

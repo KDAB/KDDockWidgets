@@ -22,7 +22,6 @@
 #include <QCoreApplication>
 #include <QString>
 #include <QSize>
-#include <QIcon>
 
 
 namespace KDDockWidgets {
@@ -183,8 +182,8 @@ public:
     const QString name;
     QStringList affinities;
     QString title;
-    QIcon titleBarIcon;
-    QIcon tabBarIcon;
+    Icon titleBarIcon;
+    Icon tabBarIcon;
     std::shared_ptr<View> guest;
     DockWidget *const q;
     DockWidgetOptions options;

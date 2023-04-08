@@ -86,7 +86,7 @@ public:
     Qt::WindowFlags flags() const override;
 
     void setWindowTitle(const QString &title) override;
-    void setWindowIcon(const QIcon &icon) override;
+    void setWindowIcon(const Icon &icon) override;
     bool isActiveWindow() const override;
 
     void showNormal() override;

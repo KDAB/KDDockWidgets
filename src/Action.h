@@ -15,11 +15,11 @@
 
 #include <QDebug>
 #include <QObject>
-#include <QIcon>
 
 #if defined(QT_WIDGETS_LIB)
 #include <QAction>
 #else
+#include "NonQtCompat_p.h"
 // A QAction for QtQuick. So it compiles without widgets
 class DOCKS_EXPORT QAction : public QObject
 {
@@ -39,14 +39,14 @@ public:
         return m_checkable;
     }
 
-    void setIcon(const QIcon &)
+    void setIcon(const KDDockWidgets::Icon &)
     {
         qWarning() << "Not implemented for QtQuick";
     }
 
-    QIcon icon() const
+    KDDockWidgets::Icon icon() const
     {
-        qWarning() << "Not implemented for QtQuick";
+        qWarning() << "Not implemented for QtQuick/Flutter";
         return {};
     }
 

@@ -235,7 +235,7 @@ void View_flutter::setWindowTitle(const QString &)
 {
 }
 
-void View_flutter::setWindowIcon(const QIcon &)
+void View_flutter::setWindowIcon(const Icon &)
 {
 }
 

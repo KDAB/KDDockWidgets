@@ -165,7 +165,7 @@ void Group::renameTab(int index, const QString &title)
     m_tabBar->renameTab(index, title);
 }
 
-void Group::changeTabIcon(int index, const QIcon &icon)
+void Group::changeTabIcon(int index, const Icon &icon)
 {
     m_tabBar->changeTabIcon(index, icon);
 }
@@ -492,7 +492,7 @@ QString Group::title() const
     return m_titleBar->title();
 }
 
-QIcon Group::icon() const
+Icon Group::icon() const
 {
     return m_titleBar->icon();
 }

@@ -210,7 +210,7 @@ void View_dummy::setWindowTitle(const QString &)
 {
 }
 
-void View_dummy::setWindowIcon(const QIcon &)
+void View_dummy::setWindowIcon(const Icon &)
 {
 }
 

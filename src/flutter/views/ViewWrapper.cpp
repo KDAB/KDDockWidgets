@@ -236,7 +236,7 @@ void ViewWrapper::setWindowTitle(const QString &title)
     m_wrappedView->setWindowTitle(title);
 }
 
-void ViewWrapper::setWindowIcon(const QIcon &icon)
+void ViewWrapper::setWindowIcon(const Icon &icon)
 {
     m_wrappedView->setWindowIcon(icon);
 }

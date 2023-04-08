@@ -16,7 +16,7 @@
 QT_BEGIN_NAMESPACE
 class QPoint;
 class QRect;
-class QIcon;
+class Icon;
 class QString;
 QT_END_NAMESPACE
 
@@ -50,10 +50,10 @@ public:
     virtual void setCurrentIndex(int index) = 0;
 
     virtual void renameTab(int index, const QString &) = 0;
-    virtual void changeTabIcon(int index, const QIcon &icon) = 0;
+    virtual void changeTabIcon(int index, const Icon &icon) = 0;
 
     virtual void removeDockWidget(Controllers::DockWidget *dw) = 0;
-    virtual void insertDockWidget(int index, Controllers::DockWidget *dw, const QIcon &icon,
+    virtual void insertDockWidget(int index, Controllers::DockWidget *dw, const Icon &icon,
                                   const QString &title) = 0;
 
 protected:

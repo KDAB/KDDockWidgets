@@ -357,7 +357,7 @@ int DockWidget::currentTabIndex() const
     return 0;
 }
 
-void DockWidget::setIcon(const QIcon &icon, IconPlaces places)
+void DockWidget::setIcon(const Icon &icon, IconPlaces places)
 {
     if (places & IconPlace::TitleBar)
         d->titleBarIcon = icon;
@@ -371,7 +371,7 @@ void DockWidget::setIcon(const QIcon &icon, IconPlaces places)
     Q_EMIT iconChanged();
 }
 
-QIcon DockWidget::icon(IconPlace place) const
+Icon DockWidget::icon(IconPlace place) const
 {
     if (place == IconPlace::TitleBar)
         return d->titleBarIcon;

@@ -41,8 +41,6 @@
 #include "views/ClassicIndicatorWindowViewInterface.h"
 
 
-#include <QIcon>
-
 // clazy:excludeall=ctor-missing-parent-argument
 
 using namespace KDDockWidgets;
@@ -107,7 +105,7 @@ QAbstractButton *ViewFactory_flutter::createTitleBarButton(QWidget *, TitleBarBu
 }
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets
-QIcon ViewFactory_flutter::iconForButtonType(TitleBarButtonType, qreal) const
+Icon ViewFactory_flutter::iconForButtonType(TitleBarButtonType, qreal) const
 {
     return {};
 }

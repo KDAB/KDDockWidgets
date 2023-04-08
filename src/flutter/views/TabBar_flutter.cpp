@@ -58,7 +58,7 @@ void TabBar_flutter::moveTabTo(int from, int to)
     // Not implemented yet
 }
 
-void TabBar_flutter::changeTabIcon(int index, const QIcon &)
+void TabBar_flutter::changeTabIcon(int index, const Icon &)
 {
     qWarning() << Q_FUNC_INFO << "Not implemented" << index;
 }
@@ -68,7 +68,7 @@ void TabBar_flutter::removeDockWidget(Controllers::DockWidget *)
     onRebuildRequested();
 }
 
-void TabBar_flutter::insertDockWidget(int, Controllers::DockWidget *, const QIcon &,
+void TabBar_flutter::insertDockWidget(int, Controllers::DockWidget *, const Icon &,
                                       const QString &)
 {
     onRebuildRequested();

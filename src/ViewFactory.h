@@ -135,7 +135,7 @@ public:
 
     /// @brief Returns the icon to be used with the specified @p type
     /// @param dpr the device pixel ratio of the button
-    virtual QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const = 0;
+    virtual Icon iconForButtonType(TitleBarButtonType type, qreal dpr) const = 0;
 
     /// @ The drop indicator type
     static DropIndicatorType s_dropIndicatorType;

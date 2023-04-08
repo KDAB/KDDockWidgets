@@ -585,7 +585,7 @@ QStringList FloatingWindow::affinities() const
 void FloatingWindow::updateTitleAndIcon()
 {
     QString title;
-    QIcon icon;
+    Icon icon;
     if (hasSingleFrame()) {
         const Controllers::Group *group = groups().constFirst();
         title = group->title();

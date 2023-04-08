@@ -14,6 +14,7 @@
 #pragma once
 
 #include "kddockwidgets/ViewFactory.h"
+#include "NonQtCompat_p.h"
 
 // clazy:excludeall=ctor-missing-parent-argument
 
@@ -64,7 +65,7 @@ public:
     View *createSideBar(Controllers::SideBar *, View *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
     View *createMDILayout(Controllers::MDILayout *, View *parent) const override;
-    QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
+    Icon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
     Views::ClassicIndicatorWindowViewInterface *

@@ -20,6 +20,7 @@ class QMimeData;
 #include <QMouseEvent>
 #include <QHoverEvent>
 #include <QDropEvent>
+#include <QIcon>
 #else
 #include <QPoint>
 #endif
@@ -28,6 +29,7 @@ namespace KDDockWidgets {
 
 #ifdef QT_GUI_LIB
 
+using Icon = QIcon;
 using Event = QEvent;
 using CloseEvent = QCloseEvent;
 using MouseEvent = QMouseEvent;
@@ -183,6 +185,15 @@ public:
     DragEnterEvent()
         : DragMoveEvent(Event::DragEnter)
     {
+    }
+};
+
+class Icon
+{
+public:
+    bool isNull() const
+    {
+        return true;
     }
 };
 
