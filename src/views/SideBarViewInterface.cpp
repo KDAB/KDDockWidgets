@@ -10,7 +10,7 @@
 */
 
 #include "SideBarViewInterface.h"
-#include "kddockwidgets/controllers/SideBar.h"
+#include "kddockwidgets/core/SideBar.h"
 
 
 namespace KDDockWidgets::Views {

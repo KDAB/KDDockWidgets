@@ -15,7 +15,7 @@
 
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/ViewFactory.h>
-#include <kddockwidgets/controllers/DockWidget.h>
+#include <kddockwidgets/core/DockWidget.h>
 
 #include <QStyleFactory>
 #include <QApplication>

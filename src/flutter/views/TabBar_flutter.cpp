@@ -18,8 +18,8 @@
  */
 
 #include "TabBar_flutter.h"
-#include "kddockwidgets/controllers/TabBar.h"
-#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/core/TabBar.h"
+#include "kddockwidgets/core/Stack.h"
 
 #include <QMetaObject>
 

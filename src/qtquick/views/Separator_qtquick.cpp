@@ -10,7 +10,7 @@
 */
 
 #include "Separator_qtquick.h"
-#include "kddockwidgets/controllers/Separator.h"
+#include "kddockwidgets/core/Separator.h"
 #include "private/Logging_p.h"
 #include "private/multisplitter/Item_p.h"
 // #include "Rubberband_quick.h"

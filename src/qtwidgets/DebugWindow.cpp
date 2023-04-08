@@ -22,9 +22,9 @@
 #include "LayoutSaver.h"
 #include "Qt5Qt6Compat_p.h"
 
-#include "kddockwidgets/controllers/MainWindow.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/Layout.h"
+#include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/FloatingWindow.h"
+#include "kddockwidgets/core/Layout.h"
 
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 

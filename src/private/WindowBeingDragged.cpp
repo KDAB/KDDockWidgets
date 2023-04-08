@@ -16,11 +16,11 @@
 #include "Utils_p.h"
 #include "Platform.h"
 
-#include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/Group.h"
-#include "kddockwidgets/controllers/Layout.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/core/TitleBar.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/Layout.h"
+#include "kddockwidgets/core/FloatingWindow.h"
 
 #ifdef QT_GUI_LIB
 #include <QPainter>

@@ -11,7 +11,7 @@
 
 #include "MainWindowViewInterface.h"
 #include "DockWidgetViewInterface.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
 
 #include "DockRegistry.h"
 

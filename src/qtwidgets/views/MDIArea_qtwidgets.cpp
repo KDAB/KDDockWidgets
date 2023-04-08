@@ -15,9 +15,9 @@
 
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/views/DockWidgetViewInterface.h"
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/MDILayout.h"
-#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/MDILayout.h"
+#include "kddockwidgets/core/DropArea.h"
 
 #include "qtwidgets/views/View_qtwidgets.h"
 #include "Config.h"

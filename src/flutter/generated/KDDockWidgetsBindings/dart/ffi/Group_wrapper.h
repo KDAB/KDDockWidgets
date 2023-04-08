@@ -23,7 +23,7 @@
 #include <Item_p.h>
 #include <qrect.h>
 #include <DropArea.h>
-#include <controllers/Layout.h>
+#include <core/Layout.h>
 #include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

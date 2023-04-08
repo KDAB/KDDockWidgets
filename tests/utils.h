@@ -18,13 +18,13 @@
 #include "DockRegistry.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "kddockwidgets/controllers/DropIndicatorOverlay.h"
-#include "kddockwidgets/controllers/DropArea.h"
-#include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/DockWidget_p.h"
+#include "kddockwidgets/core/DropIndicatorOverlay.h"
+#include "kddockwidgets/core/DropArea.h"
+#include "kddockwidgets/core/TitleBar.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/FloatingWindow.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/DockWidget_p.h"
 
 #include "Utils_p.h"
 

@@ -17,7 +17,7 @@
 #include "Platform.h"
 #include "utils.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
 #include "Window.h"
 
 #include <QDebug>

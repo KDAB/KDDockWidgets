@@ -14,7 +14,7 @@
 #include <DockWidget.h>
 #include <MainWindow.h>
 #include <FloatingWindow.h>
-#include <controllers/Layout.h>
+#include <core/Layout.h>
 #include <Group.h>
 #include <qlist.h>
 #include <Item_p.h>

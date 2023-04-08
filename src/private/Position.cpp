@@ -19,9 +19,9 @@
 #include "DockRegistry.h"
 #include "LayoutSaver_p.h"
 #include "multisplitter/Item_p.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/Layout.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/FloatingWindow.h"
+#include "kddockwidgets/core/Layout.h"
+#include "kddockwidgets/core/MainWindow.h"
 
 #include <algorithm>
 

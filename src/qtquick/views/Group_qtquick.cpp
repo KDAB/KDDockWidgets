@@ -18,11 +18,11 @@
 
 #include "Group_qtquick.h"
 
-#include "kddockwidgets/controllers/Group.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/DockWidget_p.h"
+#include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/TitleBar.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/DockWidget_p.h"
 
 #include "qtquick/ViewFactory_qtquick.h"
 #include "qtquick/Platform_qtquick.h"

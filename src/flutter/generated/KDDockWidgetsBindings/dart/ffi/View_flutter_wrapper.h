@@ -21,7 +21,7 @@
 #include <Group.h>
 #include <TabBar.h>
 #include <TitleBar.h>
-#include <controllers/Layout.h>
+#include <core/Layout.h>
 #include <DropArea.h>
 #include <MainWindow.h>
 #include <Stack.h>

@@ -10,7 +10,7 @@
 */
 
 #include "DockWidget_qtwidgets.h"
-#include "controllers/DockWidget.h"
+#include "core/DockWidget.h"
 #include "ViewWrapper_qtwidgets.h"
 
 #include <QCloseEvent>

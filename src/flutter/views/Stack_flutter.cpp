@@ -11,8 +11,8 @@
 
 #include "Stack_flutter.h"
 #include "Controller.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/TitleBar.h"
 #include "flutter/ViewFactory_flutter.h"
 #include "DockRegistry.h"
 #include "Config.h"

@@ -10,8 +10,8 @@
 */
 
 #include "MainWindow_qtquick.h"
-#include "kddockwidgets/controllers/Layout.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/Layout.h"
+#include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/private/DockRegistry.h"
 #include "private/multisplitter/Item_p.h"
 #include "Window.h"

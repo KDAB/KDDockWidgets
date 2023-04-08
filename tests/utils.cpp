@@ -16,8 +16,8 @@
 #include "ViewGuard.h"
 #include "Window.h"
 #include "NonQtCompat_p.h"
-#include "kddockwidgets/controllers/DropArea.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/DropArea.h"
+#include "kddockwidgets/core/MainWindow.h"
 
 #include <QDebug>
 

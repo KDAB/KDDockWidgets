@@ -10,7 +10,7 @@
 */
 
 #include "SegmentedIndicatorsOverlay_qtwidgets.h"
-#include "kddockwidgets/controllers/indicators/SegmentedIndicators.h"
+#include "kddockwidgets/core/indicators/SegmentedIndicators.h"
 
 #include <QPainter>
 

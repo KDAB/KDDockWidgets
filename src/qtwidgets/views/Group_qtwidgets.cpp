@@ -14,11 +14,11 @@
 #include "qtwidgets/views/View_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 
-#include "kddockwidgets/controllers/Layout.h"
-#include "kddockwidgets/controllers/Group.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/TabBar.h"
-#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/core/Layout.h"
+#include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/TabBar.h"
+#include "kddockwidgets/core/TitleBar.h"
 #include "Config.h"
 #include "private/View_p.h"
 

@@ -11,7 +11,7 @@
 
 #include "MainWindowMDIViewInterface.h"
 #include "DockWidgetViewInterface.h"
-#include "controllers/MDILayout.h"
+#include "core/MDILayout.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;

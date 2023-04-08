@@ -10,7 +10,7 @@
 */
 
 #include "TitleBarViewInterface.h"
-#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/core/TitleBar.h"
 
 
 namespace KDDockWidgets::Views {

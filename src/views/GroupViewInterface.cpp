@@ -10,9 +10,9 @@
 */
 
 #include "GroupViewInterface.h"
-#include "controllers/Group.h"
-#include "controllers/TabBar.h"
-#include "controllers/Stack.h"
+#include "core/Group.h"
+#include "core/TabBar.h"
+#include "core/Stack.h"
 
 namespace KDDockWidgets {
 

@@ -12,7 +12,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "Platform_dummy.h"
 #include "views/View_dummy.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
 
 using namespace KDDockWidgets;
 

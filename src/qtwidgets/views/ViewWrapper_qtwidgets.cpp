@@ -26,9 +26,9 @@
 #include "qtwidgets/Window_qtwidgets.h"
 #include "qtwidgets/views/MDIArea_qtwidgets.h"
 
-#include "kddockwidgets/controllers/MDILayout.h"
-#include "kddockwidgets/controllers/DropArea.h"
-#include "kddockwidgets/controllers/SideBar.h"
+#include "kddockwidgets/core/MDILayout.h"
+#include "kddockwidgets/core/DropArea.h"
+#include "kddockwidgets/core/SideBar.h"
 
 #include <QWindow>
 #include <QDebug>

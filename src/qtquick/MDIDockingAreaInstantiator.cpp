@@ -12,9 +12,9 @@
 #include "MDIDockingAreaInstantiator.h"
 #include "kddockwidgets/views/MainWindow_qtquick.h"
 #include "qtquick/views/MainWindowMDI_qtquick.h"
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/MainWindow.h"
-#include "../controllers/MDILayout.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/MainWindow.h"
+#include "../core/MDILayout.h"
 
 #include "DockWidgetInstantiator.h"
 

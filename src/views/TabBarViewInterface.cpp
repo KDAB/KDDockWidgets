@@ -10,7 +10,7 @@
 */
 
 #include "TabBarViewInterface.h"
-#include "kddockwidgets/controllers/TabBar.h"
+#include "kddockwidgets/core/TabBar.h"
 
 
 namespace KDDockWidgets::Views {

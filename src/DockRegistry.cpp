@@ -21,12 +21,12 @@
 #include "Window.h"
 #include "views/MainWindowViewInterface.h"
 #include "Platform.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/SideBar.h"
-#include "kddockwidgets/controllers/MainWindow.h"
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/DockWidget_p.h"
-#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/core/FloatingWindow.h"
+#include "kddockwidgets/core/SideBar.h"
+#include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/DockWidget_p.h"
+#include "kddockwidgets/core/DropArea.h"
 
 #include "kdbindings/signal.h"
 

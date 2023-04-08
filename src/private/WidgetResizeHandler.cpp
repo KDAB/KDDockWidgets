@@ -16,9 +16,9 @@
 #include "Utils_p.h"
 #include "DockRegistry.h"
 
-#include "kddockwidgets/controllers/MDILayout.h"
-#include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/core/MDILayout.h"
+#include "kddockwidgets/core/TitleBar.h"
+#include "kddockwidgets/core/FloatingWindow.h"
 
 #include "Platform.h"
 

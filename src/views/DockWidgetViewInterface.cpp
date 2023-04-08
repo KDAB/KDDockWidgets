@@ -10,9 +10,9 @@
 */
 
 #include "DockWidgetViewInterface.h"
-#include "kddockwidgets/controllers/Group.h"
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/DockWidget_p.h"
+#include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/DockWidget_p.h"
 
 namespace KDDockWidgets::Views {
 

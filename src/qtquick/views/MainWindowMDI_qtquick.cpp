@@ -10,8 +10,8 @@
 */
 
 #include "MainWindowMDI_qtquick.h"
-#include "kddockwidgets/controllers/MDILayout.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/MDILayout.h"
+#include "kddockwidgets/core/MainWindow.h"
 #include "MainWindow_qtquick.h"
 
 using namespace KDDockWidgets;

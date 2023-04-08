@@ -10,7 +10,7 @@
 */
 
 #include "StackViewInterface.h"
-#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/core/Stack.h"
 
 
 namespace KDDockWidgets::Views {

@@ -19,9 +19,9 @@
 
 #include "TabBar_qtquick.h"
 #include "Stack_qtquick.h"
-#include "kddockwidgets/controllers/DockWidget_p.h"
-#include "kddockwidgets/controllers/TabBar.h"
-#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/core/DockWidget_p.h"
+#include "kddockwidgets/core/TabBar.h"
+#include "kddockwidgets/core/Stack.h"
 
 #include <QMetaObject>
 #include <QMouseEvent>

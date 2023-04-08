@@ -19,8 +19,8 @@
 #include "FocusScope.h"
 #include "Platform.h"
 #include "ViewGuard.h"
-#include "controllers/DockWidget.h"
-#include "controllers/Group.h"
+#include "core/DockWidget.h"
+#include "core/Group.h"
 #include "DockRegistry.h"
 #include "private/Platform_p.h"
 

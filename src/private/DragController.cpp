@@ -20,12 +20,12 @@
 #include "Platform.h"
 #include "Window.h"
 
-#include "kddockwidgets/controllers/MDILayout.h"
-#include "kddockwidgets/controllers/DropArea.h"
-#include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/Group.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/DockWidget_p.h"
+#include "kddockwidgets/core/MDILayout.h"
+#include "kddockwidgets/core/DropArea.h"
+#include "kddockwidgets/core/TitleBar.h"
+#include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/FloatingWindow.h"
+#include "kddockwidgets/core/DockWidget_p.h"
 
 #include <QObject>
 #include <QScopedValueRollback>

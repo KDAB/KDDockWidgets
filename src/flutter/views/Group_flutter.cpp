@@ -18,11 +18,11 @@
 
 #include "Group_flutter.h"
 
-#include "kddockwidgets/controllers/Group.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/DockWidget_p.h"
+#include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/TitleBar.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/DockWidget_p.h"
 
 #include "flutter/ViewFactory_flutter.h"
 #include "flutter/Platform_flutter.h"

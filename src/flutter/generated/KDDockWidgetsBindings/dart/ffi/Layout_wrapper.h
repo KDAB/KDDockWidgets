@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <controllers/Layout.h>
+#include <core/Layout.h>
 #include <View.h>
 #include <MainWindow.h>
 #include <FloatingWindow.h>

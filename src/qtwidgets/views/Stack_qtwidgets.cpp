@@ -11,8 +11,8 @@
 
 #include "Stack_qtwidgets.h"
 #include "Controller.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/TitleBar.h"
 #include "qtwidgets/ViewFactory_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "DockRegistry.h"

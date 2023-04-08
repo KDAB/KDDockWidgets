@@ -10,8 +10,8 @@
 */
 
 #include "ClassicIndicatorsWindow_qtwidgets.h"
-#include "kddockwidgets/controllers/indicators/ClassicIndicators.h"
-#include "kddockwidgets/controllers/Group.h"
+#include "kddockwidgets/core/indicators/ClassicIndicators.h"
+#include "kddockwidgets/core/Group.h"
 #include "View_qtwidgets.h"
 #include "private/Utils_p.h"
 

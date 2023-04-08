@@ -10,13 +10,13 @@
 */
 
 #include "FloatingWindow_qtwidgets.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/Group.h"
-#include "kddockwidgets/controllers/TitleBar.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/FloatingWindow.h"
+#include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/TitleBar.h"
+#include "kddockwidgets/core/MainWindow.h"
 
 #include "DockRegistry.h"
-#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/core/DropArea.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 #include "private/DragController_p.h"

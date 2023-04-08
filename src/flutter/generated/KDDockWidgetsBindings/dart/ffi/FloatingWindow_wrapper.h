@@ -17,7 +17,7 @@
 #include <DockWidget.h>
 #include <DropArea.h>
 #include <TitleBar.h>
-#include <controllers/Layout.h>
+#include <core/Layout.h>
 #include <qpoint.h>
 #include <KDDockWidgets.h>
 #include <qsize.h>

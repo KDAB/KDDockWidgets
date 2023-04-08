@@ -25,12 +25,12 @@
 
 #include "multisplitter/Item_p.h"
 
-#include "kddockwidgets/controllers/DropArea.h"
-#include "kddockwidgets/controllers/Separator.h"
-#include "kddockwidgets/controllers/Group.h"
-#include "kddockwidgets/controllers/DockWidget.h"
-#include "kddockwidgets/controllers/MainWindow.h"
-#include "kddockwidgets/controllers/SideBar.h"
+#include "kddockwidgets/core/DropArea.h"
+#include "kddockwidgets/core/Separator.h"
+#include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/SideBar.h"
 
 #include "qtwidgets/views/MDIArea_qtwidgets.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"

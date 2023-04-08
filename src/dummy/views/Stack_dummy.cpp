@@ -11,8 +11,8 @@
 
 #include "Stack_dummy.h"
 #include "Controller.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/TitleBar.h"
 #include "dummy/ViewFactory_dummy.h"
 #include "DockRegistry.h"
 #include "Config.h"

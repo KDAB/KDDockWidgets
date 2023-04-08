@@ -15,7 +15,7 @@
 #pragma once
 
 #include <kddockwidgets/views/TitleBar_qtwidgets.h>
-#include <kddockwidgets/controllers/TitleBar.h>
+#include <kddockwidgets/core/TitleBar.h>
 
 /**
  * @brief Shows how to implement a custom titlebar which uses "Qt StyleSheets".

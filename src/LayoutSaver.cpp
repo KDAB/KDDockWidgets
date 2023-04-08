@@ -29,12 +29,12 @@
 #include "private/Utils_p.h"
 #include "Platform.h"
 
-#include "controllers/Layout.h"
-#include "controllers/Group.h"
-#include "controllers/FloatingWindow.h"
-#include "controllers/DockWidget.h"
-#include "controllers/DockWidget_p.h"
-#include "controllers/MainWindow.h"
+#include "core/Layout.h"
+#include "core/Group.h"
+#include "core/FloatingWindow.h"
+#include "core/DockWidget.h"
+#include "core/DockWidget_p.h"
+#include "core/MainWindow.h"
 
 
 #include <qmath.h>

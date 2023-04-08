@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <controllers/DropIndicatorOverlay.h>
+#include <core/DropIndicatorOverlay.h>
 #include <qstring.h>
 #include <DropArea.h>
 #include <Group.h>

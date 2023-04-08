@@ -80,29 +80,29 @@ target_link_libraries(tst_view kddockwidgets kdbindings)
 add_executable(tst_window tst_window.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_window kddockwidgets kdbindings)
 
-add_executable(tst_droparea controllers/tst_droparea.cpp ${TESTING_RESOURCES})
+add_executable(tst_droparea core/tst_droparea.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_droparea kddockwidgets kdbindings)
 
 add_executable(tst_platform tst_platform.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_platform kddockwidgets kdbindings)
 
-add_executable(tst_group controllers/tst_group.cpp ${TESTING_RESOURCES})
+add_executable(tst_group core/tst_group.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_group kddockwidgets kdbindings)
 
-add_executable(tst_titlebar controllers/tst_titlebar.cpp ${TESTING_RESOURCES})
+add_executable(tst_titlebar core/tst_titlebar.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_titlebar kddockwidgets kdbindings)
 
-add_executable(tst_stack controllers/tst_stack.cpp ${TESTING_RESOURCES})
+add_executable(tst_stack core/tst_stack.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_stack kddockwidgets kdbindings)
 
-add_executable(tst_tabbar controllers/tst_tabbar.cpp ${TESTING_RESOURCES})
+add_executable(tst_tabbar core/tst_tabbar.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_tabbar kddockwidgets kdbindings)
 
-add_executable(tst_separator controllers/tst_separator.cpp ${TESTING_RESOURCES})
+add_executable(tst_separator core/tst_separator.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_separator kddockwidgets kdbindings)
 
-add_executable(tst_floatingwindow controllers/tst_floatingwindow.cpp ${TESTING_RESOURCES})
+add_executable(tst_floatingwindow core/tst_floatingwindow.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_floatingwindow kddockwidgets kdbindings)
 
-add_executable(tst_dockwidget controllers/tst_dockwidget.cpp ${TESTING_RESOURCES})
+add_executable(tst_dockwidget core/tst_dockwidget.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_dockwidget kddockwidgets kdbindings)

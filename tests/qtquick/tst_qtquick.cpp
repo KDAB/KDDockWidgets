@@ -15,7 +15,7 @@
 #include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "qtquick/views/TitleBar_qtquick.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
 
 #include "../utils.h"
 #include "Window.h"

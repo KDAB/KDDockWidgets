@@ -12,7 +12,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "Platform_flutter.h"
 #include "views/View_flutter.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
 
 using namespace KDDockWidgets;
 

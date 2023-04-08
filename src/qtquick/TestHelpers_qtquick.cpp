@@ -13,7 +13,7 @@
 #include "Platform_qtquick.h"
 #include "views/View_qtquick.h"
 #include "kddockwidgets/views/MainWindow_qtquick.h"
-#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
 #include "Helpers_p.h"
 #include "private/View_p.h"
 

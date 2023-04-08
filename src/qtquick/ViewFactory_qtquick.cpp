@@ -12,15 +12,15 @@
 #include "ViewFactory_qtquick.h"
 #include "Config.h"
 
-#include "kddockwidgets/controllers/indicators/ClassicIndicators.h"
-#include "kddockwidgets/controllers/indicators/NullIndicators.h"
-#include "kddockwidgets/controllers/indicators/SegmentedIndicators.h"
+#include "kddockwidgets/core/indicators/ClassicIndicators.h"
+#include "kddockwidgets/core/indicators/NullIndicators.h"
+#include "kddockwidgets/core/indicators/SegmentedIndicators.h"
 #include "private/Utils_p.h"
 
-#include "kddockwidgets/controllers/MainWindow.h"
-#include "kddockwidgets/controllers/TabBar.h"
-#include "kddockwidgets/controllers/Stack.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/TabBar.h"
+#include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/FloatingWindow.h"
 
 #include "qtquick/views/FloatingWindow_qtquick.h"
 #include "qtquick/views/DockWidget_qtquick.h"

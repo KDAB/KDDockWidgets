@@ -15,7 +15,7 @@
 #include <qlist.h>
 #include <Group.h>
 #include <Item_p.h>
-#include <controllers/DropIndicatorOverlay.h>
+#include <core/DropIndicatorOverlay.h>
 #include <DockWidget.h>
 #include <KDDockWidgets.h>
 #include <qsize.h>

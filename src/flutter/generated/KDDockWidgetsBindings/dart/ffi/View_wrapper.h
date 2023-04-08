@@ -23,7 +23,7 @@
 #include <DockWidget.h>
 #include <MainWindow.h>
 #include <DropArea.h>
-#include <controllers/Layout.h>
+#include <core/Layout.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class View_wrapper : public ::KDDockWidgets::View

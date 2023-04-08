@@ -16,7 +16,7 @@
 #include <KDDockWidgets.h>
 #include <SideBar.h>
 #include <DropArea.h>
-#include <controllers/Layout.h>
+#include <core/Layout.h>
 #include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>

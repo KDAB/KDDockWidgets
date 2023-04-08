@@ -11,7 +11,7 @@
 
 #include "Helpers_p.h"
 #include "DockRegistry.h"
-#include "controllers/Group.h"
+#include "core/Group.h"
 #include "qtcommon/View_qt.h"
 
 #include <QQuickItem>

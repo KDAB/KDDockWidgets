@@ -33,22 +33,22 @@ set(KDDW_BACKEND_SRCS
     private/WidgetResizeHandler.cpp
     private/multisplitter/Item.cpp
     private/multisplitter/ItemFreeContainer.cpp
-    controllers/DockWidget.cpp
-    controllers/DropArea.cpp
-    controllers/DropIndicatorOverlay.cpp
-    controllers/FloatingWindow.cpp
-    controllers/Group.cpp
-    controllers/Layout.cpp
-    controllers/MainWindow.cpp
-    controllers/MDILayout.cpp
-    controllers/Separator.cpp
-    controllers/SideBar.cpp
-    controllers/Stack.cpp
-    controllers/TitleBar.cpp
-    controllers/TabBar.cpp
-    controllers/indicators/NullIndicators.cpp
-    controllers/indicators/ClassicIndicators.cpp
-    controllers/indicators/SegmentedIndicators.cpp
+    core/DockWidget.cpp
+    core/DropArea.cpp
+    core/DropIndicatorOverlay.cpp
+    core/FloatingWindow.cpp
+    core/Group.cpp
+    core/Layout.cpp
+    core/MainWindow.cpp
+    core/MDILayout.cpp
+    core/Separator.cpp
+    core/SideBar.cpp
+    core/Stack.cpp
+    core/TitleBar.cpp
+    core/TabBar.cpp
+    core/indicators/NullIndicators.cpp
+    core/indicators/ClassicIndicators.cpp
+    core/indicators/SegmentedIndicators.cpp
     Action.cpp
     Window.cpp
     Screen.cpp
@@ -227,20 +227,20 @@ set(KDDW_PRIVATE_HEADERS
 )
 
 set(KDDW_CONTROLLER_HEADERS
-    controllers/DockWidget.h
-    controllers/DockWidget_p.h
-    controllers/DropIndicatorOverlay.h
-    controllers/DropArea.h
-    controllers/FloatingWindow.h
-    controllers/Group.h
-    controllers/Layout.h
-    controllers/MDILayout.h
-    controllers/SideBar.h
-    controllers/TabBar.h
-    controllers/MainWindow.h
-    controllers/Separator.h
-    controllers/Stack.h
-    controllers/TitleBar.h
+    core/DockWidget.h
+    core/DockWidget_p.h
+    core/DropIndicatorOverlay.h
+    core/DropArea.h
+    core/FloatingWindow.h
+    core/Group.h
+    core/Layout.h
+    core/MDILayout.h
+    core/SideBar.h
+    core/TabBar.h
+    core/MainWindow.h
+    core/Separator.h
+    core/Stack.h
+    core/TitleBar.h
 )
 
 set(KDDW_VIEWINTERFACE_HEADERS
@@ -255,8 +255,8 @@ set(KDDW_VIEWINTERFACE_HEADERS
     views/GroupViewInterface.h
 )
 
-set(KDDW_INDICATOR_HEADERS controllers/indicators/NullIndicators.h controllers/indicators/ClassicIndicators.h
-                           controllers/indicators/SegmentedIndicators.h
+set(KDDW_INDICATOR_HEADERS core/indicators/NullIndicators.h core/indicators/ClassicIndicators.h
+                           core/indicators/SegmentedIndicators.h
 )
 
 set(DOCKSLIBS_SRCS ${KDDW_BACKEND_SRCS})
@@ -344,8 +344,8 @@ if(KDDW_FRONTEND_FLUTTER)
         PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgetsBindings>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/controllers/indicators>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/indicators>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -506,9 +506,9 @@ endif()
 # ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 install(FILES ${KDDW_PRIVATE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
-install(FILES ${KDDW_CONTROLLER_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/controllers)
+install(FILES ${KDDW_CONTROLLER_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
 install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/views)
-install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/controllers/indicators)
+install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/indicators)
 
 if(KDDW_FRONTEND_QTWIDGETS)
 

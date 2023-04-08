@@ -19,10 +19,10 @@
 #include "private/Utils_p.h"
 #include "private/multisplitter/Item_p.h"
 
-#include "kddockwidgets/controllers/DropArea.h"
-#include "kddockwidgets/controllers/FloatingWindow.h"
-#include "kddockwidgets/controllers/MainWindow.h"
-#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/core/DropArea.h"
+#include "kddockwidgets/core/FloatingWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/TitleBar.h"
 
 #include "private/WidgetResizeHandler_p.h"
 #include "qtquick/Platform_qtquick.h"
