@@ -102,6 +102,15 @@ void Platform_dummy::restoreMouseCursor()
 {
 }
 
+QPoint Platform_dummy::cursorPos() const
+{
+    return {};
+}
+
+void Platform_dummy::setCursorPos(QPoint)
+{
+}
+
 Platform::DisplayType Platform_dummy::displayType() const
 {
     return {};

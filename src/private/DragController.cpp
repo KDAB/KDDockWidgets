@@ -27,7 +27,6 @@
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/DockWidget_p.h"
 
-#include <QCursor>
 #include <QDrag>
 #include <QObject>
 #include <QScopedValueRollback>
@@ -264,7 +263,7 @@ StateDragging::StateDragging(DragController *parent)
         if (!mouseButtonIsReallyDown && Platform::instance()->isLeftMouseButtonPressed()) {
             qCDebug(state) << "Canceling drag, Qt thinks mouse button is pressed"
                            << "but Windows knows it's not";
-            handleMouseButtonRelease(QCursor::pos());
+            handleMouseButtonRelease(Platform::instance()->cursorPos());
             Q_EMIT q->dragCanceled();
         }
     });
@@ -304,7 +303,8 @@ void StateDragging::onEntry()
             if (needsUndocking) {
                 // Position the window before the drag start, otherwise if you move mouse too fast
                 // there will be an offset Only required when we've undocked/detached a window.
-                window->setPosition(QCursor::pos() - q->m_offset);
+                const QPoint cursorPos = Platform::instance()->cursorPos();
+                window->setPosition(cursorPos - q->m_offset);
             }
 
             // Start the native move
@@ -802,7 +802,7 @@ bool DragController::onMoveEvent(View *)
     if (m_nonClientDrag) {
         // On Windows, non-client mouse moves are only sent at the end, so we must fake it:
         qCDebug(mouseevents) << "DragController::onMoveEvent";
-        activeState()->handleMouseMove(QCursor::pos());
+        activeState()->handleMouseMove(Platform::instance()->cursorPos());
     }
 
     return false;
@@ -932,7 +932,7 @@ static std::shared_ptr<View> qtTopLevelUnderCursor_impl(QPoint globalPos,
 
 std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
 {
-    QPoint globalPos = QCursor::pos();
+    QPoint globalPos = Platform::instance()->cursorPos();
 
     if (KDDockWidgets::isWindows()) { // So -platform offscreen on Windows doesn't use this
 #if defined(Q_OS_WIN)
@@ -1064,7 +1064,7 @@ DropArea *DragController::dropAreaUnderCursor() const
         Q_ASSERT(false);
     }
 
-    if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos(), affinities)) {
+    if (auto dt = deepestDropAreaInTopLevel(topLevel, Platform::instance()->cursorPos(), affinities)) {
         qCDebug(state) << Q_FUNC_INFO << "Found drop area" << dt << dt->view()->rootView().get();
         return dt;
     }

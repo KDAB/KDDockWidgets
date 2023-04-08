@@ -33,7 +33,6 @@
 
 #include <qglobal.h>
 #include <QDebug>
-#include <QCursor>
 
 #include "kdbindings/signal.h"
 
@@ -158,7 +157,7 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
 
 void Platform::tests_doubleClickOn(QPoint globalPos, View *receiver)
 {
-    QCursor::setPos(globalPos);
+    setCursorPos(globalPos);
     tests_pressOn(globalPos, receiver); // double-click involves an initial press
 
     MouseEvent ev(Event::MouseButtonDblClick, receiver->mapFromGlobal(globalPos),
@@ -170,7 +169,7 @@ void Platform::tests_doubleClickOn(QPoint globalPos, View *receiver)
 
 void Platform::tests_pressOn(QPoint globalPos, View *receiver)
 {
-    QCursor::setPos(globalPos);
+    setCursorPos(globalPos);
     MouseEvent ev(Event::MouseButtonPress, receiver->mapFromGlobal(globalPos),
                   receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
                   Qt::LeftButton, Qt::NoModifier);

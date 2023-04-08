@@ -93,5 +93,7 @@ public:
     void restoreMouseCursor() override;
     DisplayType displayType() const override;
     bool isLeftMouseButtonPressed() const override;
+    QPoint cursorPos() const override;
+    void setCursorPos(QPoint) override;
 };
 }

@@ -254,6 +254,16 @@ void Platform_qt::restoreMouseCursor()
     qGuiApp->restoreOverrideCursor();
 }
 
+QPoint Platform_qt::cursorPos() const
+{
+    return QCursor::pos();
+}
+
+void Platform_qt::setCursorPos(QPoint pos)
+{
+    QCursor::setPos(pos);
+}
+
 Platform::DisplayType Platform_qt::displayType() const
 {
     if (qGuiApp->platformName() == QLatin1String("wayland"))

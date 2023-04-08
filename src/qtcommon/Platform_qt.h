@@ -50,6 +50,9 @@ public:
 
     QVector<std::shared_ptr<Screen>> screens() const override;
 
+    QPoint cursorPos() const override;
+    void setCursorPos(QPoint) override;
+
     /// @brief Returns the specified QObject casted to View
     /// Nullptr if it's not a view. TODOm3: This is shared between the
     /// QtQuick and QWidgets impl, but will be remove once we started removing Qt from backend

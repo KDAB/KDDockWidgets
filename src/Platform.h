@@ -166,6 +166,12 @@ public:
     /// Override only if your platform isinterested in knowing this.
     virtual void onFloatingWindowDestroyed(Controllers::FloatingWindow *);
 
+    /// Returns the mouse cursor position in screen coordinates
+    virtual QPoint cursorPos() const = 0;
+
+    /// Sets the mouse cursor position in screen coordinates
+    virtual void setCursorPos(QPoint) = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     class WarningObserver

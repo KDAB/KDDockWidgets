@@ -155,6 +155,15 @@ void Platform_flutter::onFloatingWindowDestroyed(Controllers::FloatingWindow *)
 {
 }
 
+QPoint Platform_flutter::cursorPos() const
+{
+    return {};
+}
+
+void Platform_flutter::setCursorPos(QPoint)
+{
+}
+
 
 #ifdef DOCKS_DEVELOPER_MODE
 

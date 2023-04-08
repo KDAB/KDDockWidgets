@@ -19,8 +19,6 @@
 #include "private/DragController_p.h"
 #include "DockRegistry.h"
 
-#include <QCursor>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
@@ -43,7 +41,7 @@ DropIndicatorOverlay::DropIndicatorOverlay(Controllers::DropArea *dropArea)
                 } else {
                     // Re-add hover. Fastest way is simply faking a mouse move
                     if (auto state = qobject_cast<StateDragging *>(DragController::instance()->activeState())) {
-                        state->handleMouseMove(QCursor::pos());
+                        state->handleMouseMove(Platform::instance()->cursorPos());
                     }
                 }
             });

@@ -142,7 +142,7 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
 
 void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, Window::Ptr receiver)
 {
-    QCursor::setPos(globalPos);
+    Platform::instance()->setCursorPos(globalPos);
     MouseEvent ev(Event::MouseButtonDblClick, receiver->mapFromGlobal(globalPos),
                   receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
                   Qt::NoModifier);
@@ -153,7 +153,7 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, Window::Ptr receiver)
 
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, View *receiver)
 {
-    QCursor::setPos(globalPos);
+    Platform::instance()->setCursorPos(globalPos);
     MouseEvent ev(Event::MouseButtonPress, receiver->mapFromGlobal(globalPos),
                   receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
                   Qt::LeftButton, Qt::NoModifier);
@@ -162,7 +162,7 @@ void KDDockWidgets::Tests::pressOn(QPoint globalPos, View *receiver)
 
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, Window::Ptr receiver)
 {
-    QCursor::setPos(globalPos);
+    Platform::instance()->setCursorPos(globalPos);
     MouseEvent ev(Event::MouseButtonPress, receiver->mapFromGlobal(globalPos),
                   receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
                   Qt::NoModifier);
@@ -200,7 +200,7 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
             globalSrc.setY(globalSrc.y() - 1);
         }
 
-        QCursor::setPos(globalSrc); // Since some code uses QCursor::pos()
+        Platform::instance()->setCursorPos(globalSrc);
         MouseEvent ev(Event::MouseMove, receiver->mapFromGlobal(globalSrc),
                       receiver->rootView()->mapFromGlobal(globalSrc), globalSrc, Qt::LeftButton,
                       Qt::LeftButton, Qt::NoModifier);
