@@ -74,3 +74,5 @@ pubspec.lock
 .dart_tool
 mjb_rejected_*
 mjb_rejected_classes.log
+/examples/flutter/linux/flutter/ephemeral/
+/examples/flutter/build/
