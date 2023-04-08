@@ -143,7 +143,7 @@ endif()
 
 # BEGIN frontend enabling
 if(KDDockWidgets_FRONTENDS)
-    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;dummy;flutter")
+    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;flutter")
 
     foreach(frontend ${KDDockWidgets_FRONTENDS})
         if(NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
@@ -163,13 +163,6 @@ if(KDDockWidgets_FRONTENDS)
     if("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
         find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
         set(KDDW_FRONTEND_QTQUICK ON)
-    endif()
-
-    # dummy
-    if("dummy" IN_LIST KDDockWidgets_FRONTENDS)
-        # For now dummy still depends on Qt
-        find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Gui)
-        set(KDDW_FRONTEND_DUMMY ON)
     endif()
 
     # flutter

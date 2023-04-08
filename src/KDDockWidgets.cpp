@@ -20,10 +20,6 @@
 #include "qtquick/Platform_qtquick.h"
 #endif
 
-#ifdef KDDW_FRONTEND_DUMMY
-#include "dummy/Platform_dummy.h"
-#endif
-
 #ifdef KDDW_FRONTEND_FLUTTER
 #include "flutter/Platform_flutter.h"
 #endif
@@ -44,11 +40,6 @@ void KDDockWidgets::initFrontend(FrontendType type)
     case FrontendType::QtQuick:
 #ifdef KDDW_FRONTEND_QTQUICK
         new Platform_qtquick();
-#endif
-        break;
-    case FrontendType::Dummy:
-#ifdef KDDW_FRONTEND_DUMMY
-        new Platform_dummy();
 #endif
         break;
     case FrontendType::Flutter:

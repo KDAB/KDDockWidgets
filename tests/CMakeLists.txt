@@ -61,12 +61,6 @@ if(KDDW_FRONTEND_QTQUICK)
     set_compiler_flags(tst_qtquick)
 endif()
 
-if(KDDW_FRONTEND_DUMMY)
-    add_executable(tst_dummyplatform tst_dummyplatform.cpp ${TESTING_RESOURCES})
-    target_link_libraries(tst_dummyplatform kddockwidgets kdbindings)
-    set_compiler_flags(tst_dummyplatform)
-endif()
-
 add_executable(tst_multisplitter tst_multisplitter.cpp)
 target_link_libraries(tst_multisplitter kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_multisplitter)

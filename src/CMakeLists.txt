@@ -186,19 +186,6 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
-set(KDDW_FRONTEND_DUMMY_SRCS
-    dummy/ViewFactory_dummy.cpp
-    dummy/Platform_dummy.cpp
-    dummy/Window_dummy.cpp
-    dummy/views/View_dummy.cpp
-    dummy/TestHelpers_dummy.cpp
-    dummy/views/Stack_dummy.cpp
-    dummy/views/DockWidget_dummy.cpp
-    dummy/views/Group_dummy.cpp
-    dummy/views/TabBar_dummy.cpp
-    dummy/views/TitleBar_dummy.cpp
-)
-
 set(KDDW_PUBLIC_HEADERS
     docks_export.h
     Config.h
@@ -275,10 +262,6 @@ endif()
 
 if(KDDW_FRONTEND_FLUTTER)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_FLUTTER_SRCS})
-endif()
-
-if(KDDW_FRONTEND_DUMMY)
-    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_DUMMY_SRCS})
 endif()
 
 # Generate C/C++ CamelCase forwarding headers (only public includes)
@@ -422,12 +405,6 @@ if(KDDW_FRONTEND_QTQUICK)
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
     target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate Qt${Qt_VERSION_MAJOR}::QuickPrivate)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTQUICK KDDW_FRONTEND_QT)
-endif()
-
-if(KDDW_FRONTEND_DUMMY)
-    # TODOm3: Remove Qt
-    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Core)
-    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_DUMMY)
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)
