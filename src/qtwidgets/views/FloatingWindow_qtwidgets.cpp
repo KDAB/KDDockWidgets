@@ -36,7 +36,7 @@
 #endif
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtwidgets;
 
 class FloatingWindow_qtwidgets::Private
 {

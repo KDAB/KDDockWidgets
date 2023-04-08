@@ -25,9 +25,9 @@ class QHBoxLayout;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
-namespace Views {
+namespace qtwidgets {
 
-class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public StackViewInterface
+class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public Views::StackViewInterface
 {
     Q_OBJECT
 public:

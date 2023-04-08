@@ -35,14 +35,14 @@ class MainWindow;
 class SideBar;
 }
 
-namespace Views {
+namespace qtwidgets {
 
 /**
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget DockWidget instances.
  */
 class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>,
-                                          public MainWindowViewInterface
+                                          public Views::MainWindowViewInterface
 {
     Q_OBJECT
 public:

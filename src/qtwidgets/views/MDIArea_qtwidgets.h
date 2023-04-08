@@ -25,8 +25,10 @@ class MDILayout;
 }
 
 namespace Views {
-
 class DockWidgetViewInterface;
+}
+
+namespace qtwidgets {
 
 /**
  * @brief MDIArea allows to host dock widget in MDI mode.
@@ -37,7 +39,7 @@ class DockWidgetViewInterface;
  *
  * See examples/mdi_with_docking/.
  */
-class DOCKS_EXPORT MDIArea_qtwidgets : public Views::View_qtwidgets<QWidget>
+class DOCKS_EXPORT MDIArea_qtwidgets : public qtwidgets::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:

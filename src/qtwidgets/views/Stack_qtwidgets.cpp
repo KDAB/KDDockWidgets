@@ -27,7 +27,7 @@
 #include <QMenu>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtwidgets;
 
 Stack_qtwidgets::Stack_qtwidgets(Core::Stack *controller, QWidget *parent)
     : View_qtwidgets<QTabWidget>(controller, Type::Stack, parent)

@@ -34,7 +34,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtwidgets;
 
 static Controller *controllerForWidget(QWidget *widget)
 {
@@ -215,25 +215,25 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     switch (t) {
 
     case Type::Frame:
-        return qobject_cast<Views::Group_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::Group_qtwidgets *>(m_widget);
     case Type::TitleBar:
-        return qobject_cast<Views::TitleBar_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::TitleBar_qtwidgets *>(m_widget);
     case Type::TabBar:
-        return qobject_cast<Views::TabBar_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::TabBar_qtwidgets *>(m_widget);
     case Type::Stack:
-        return qobject_cast<Views::Stack_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::Stack_qtwidgets *>(m_widget);
     case Type::FloatingWindow:
-        return qobject_cast<Views::FloatingWindow_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::FloatingWindow_qtwidgets *>(m_widget);
     case Type::Separator:
-        return qobject_cast<Views::Separator_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::Separator_qtwidgets *>(m_widget);
     case Type::DockWidget:
-        return qobject_cast<Views::DockWidget_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::DockWidget_qtwidgets *>(m_widget);
     case Type::SideBar:
-        return qobject_cast<Views::SideBar_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::SideBar_qtwidgets *>(m_widget);
     case Type::MainWindow:
-        return qobject_cast<Views::MainWindow_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::MainWindow_qtwidgets *>(m_widget);
     case Type::DropArea:
-        return qobject_cast<Views::DropArea_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::DropArea_qtwidgets *>(m_widget);
     case Type::MDILayout:
         return qobject_cast<MDILayout_qtwidgets *>(m_widget);
     case Type::RubberBand:
@@ -345,12 +345,12 @@ QSize ViewWrapper_qtwidgets::minSize() const
 
 QVector<std::shared_ptr<View>> ViewWrapper_qtwidgets::childViews() const
 {
-    return Views::View_qtwidgets<QWidget>::childViewsFor(m_widget);
+    return qtwidgets::View_qtwidgets<QWidget>::childViewsFor(m_widget);
 }
 
 void ViewWrapper_qtwidgets::setParent(View *parent)
 {
-    Views::View_qtwidgets<QWidget>::setParentFor(m_widget, parent);
+    qtwidgets::View_qtwidgets<QWidget>::setParentFor(m_widget, parent);
 }
 
 bool ViewWrapper_qtwidgets::close()

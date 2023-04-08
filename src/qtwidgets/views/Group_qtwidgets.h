@@ -18,9 +18,9 @@ namespace KDDockWidgets::Core {
 class Group;
 }
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::qtwidgets {
 
-class DOCKS_EXPORT Group_qtwidgets : public View_qtwidgets<QWidget>, public GroupViewInterface
+class DOCKS_EXPORT Group_qtwidgets : public View_qtwidgets<QWidget>, public Views::GroupViewInterface
 {
     Q_OBJECT
 public:

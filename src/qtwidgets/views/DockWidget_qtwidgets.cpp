@@ -25,7 +25,8 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::qtwidgets;
 
 class DockWidget_qtwidgets::Private
 {

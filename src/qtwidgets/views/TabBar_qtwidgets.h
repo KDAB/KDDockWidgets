@@ -26,9 +26,9 @@ class TabBar;
 class DockWidget;
 }
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::qtwidgets {
 
-class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>, public TabBarViewInterface
+class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>, public Views::TabBarViewInterface
 {
     Q_OBJECT
 public:

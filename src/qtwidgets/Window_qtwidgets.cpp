@@ -44,7 +44,7 @@ std::shared_ptr<View> Window_qtwidgets::rootView() const
         return {};
 
     if (QWidget *widget = m_window->property("kddockwidgets_qwidget").value<QWidget *>())
-        return Views::ViewWrapper_qtwidgets::create(widget);
+        return qtwidgets::ViewWrapper_qtwidgets::create(widget);
 
     qWarning() << Q_FUNC_INFO << "Window does not have a root";
     return nullptr;
@@ -90,7 +90,7 @@ void Window_qtwidgets::destroy()
 {
     if (auto v = rootView()) {
         // deleting the QWidget deletes its QWindow
-        delete static_cast<Views::ViewWrapper_qtwidgets *>(v.get())->widget();
+        delete static_cast<qtwidgets::ViewWrapper_qtwidgets *>(v.get())->widget();
     } else {
         Window_qt::destroy();
     }

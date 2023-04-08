@@ -38,32 +38,32 @@ int main(int argc, char **argv)
 
     // # 1. Create our main window
 
-    KDDockWidgets::Views::MainWindow_qtwidgets mainWindow(QStringLiteral("MyMainWindow"));
+    KDDockWidgets::qtwidgets::MainWindow_qtwidgets mainWindow(QStringLiteral("MyMainWindow"));
     mainWindow.setWindowTitle("Main Window");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
+    auto dock1 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
     auto widget1 = new MyWidget();
     dock1->setWidget(widget1);
 
-    auto dock2 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock2"));
+    auto dock2 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock2"));
     auto widget2 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock2->setWidget(widget2);
 
-    auto dock3 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock3"));
+    auto dock3 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock3"));
     auto widget3 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock3->setWidget(widget3);
 
-    auto dock4 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock4"));
+    auto dock4 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock4"));
     auto widget4 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock4->setWidget(widget4);
 
-    auto dock5 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock5"));
+    auto dock5 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock5"));
     auto widget5 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock5->setWidget(widget5);

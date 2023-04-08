@@ -61,12 +61,12 @@ public:
             if (w->isWindow()) {
                 if (ev->type() == QEvent::WindowActivate) {
                     Platform::instance()->d->windowActivated.emit(
-                        Views::ViewWrapper_qtwidgets::create(w));
+                        qtwidgets::ViewWrapper_qtwidgets::create(w));
                 }
 
                 if (ev->type() == QEvent::WindowDeactivate) {
                     Platform::instance()->d->windowDeactivated.emit(
-                        Views::ViewWrapper_qtwidgets::create(w));
+                        qtwidgets::ViewWrapper_qtwidgets::create(w));
                 }
             }
         }
@@ -99,7 +99,7 @@ void Platform_qtwidgets::init()
 #endif
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
-        d->focusedViewChanged.emit(Views::ViewWrapper_qtwidgets::create(obj));
+        d->focusedViewChanged.emit(qtwidgets::ViewWrapper_qtwidgets::create(obj));
     });
 }
 
@@ -120,7 +120,7 @@ bool Platform_qtwidgets::hasActivePopup() const
 
 std::shared_ptr<View> Platform_qtwidgets::qobjectAsView(QObject *obj) const
 {
-    return Views::ViewWrapper_qtwidgets::create(obj);
+    return qtwidgets::ViewWrapper_qtwidgets::create(obj);
 }
 
 std::shared_ptr<Window> Platform_qtwidgets::windowFromQWindow(QWindow *qwindow) const
@@ -172,8 +172,8 @@ int Platform_qtwidgets::startDragDistance_impl() const
 
 View *Platform_qtwidgets::createView(Controller *controller, View *parent) const
 {
-    return new Views::View_qtwidgets<QWidget>(controller, Type::None,
-                                              Views::View_qt::asQWidget(parent));
+    return new qtwidgets::View_qtwidgets<QWidget>(controller, Type::None,
+                                                  Views::View_qt::asQWidget(parent));
 }
 
 bool Platform_qtwidgets::usesFallbackMouseGrabber() const

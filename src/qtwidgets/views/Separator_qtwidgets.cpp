@@ -21,7 +21,7 @@
 #include <QStyleOption>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtwidgets;
 
 Separator_qtwidgets::Separator_qtwidgets(Core::Separator *controller, View *parent)
     : View_qtwidgets(controller, Type::Separator, View_qt::asQWidget(parent))

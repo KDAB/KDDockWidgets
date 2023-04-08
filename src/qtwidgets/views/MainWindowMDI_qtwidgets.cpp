@@ -14,12 +14,12 @@
 #include "kddockwidgets/core/MainWindow.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtwidgets;
 using namespace KDDockWidgets::Core;
 
 MainWindowMDI_qtwidgets::MainWindowMDI_qtwidgets(const QString &uniqueName, QWidget *parent,
                                                  Qt::WindowFlags flags)
-    : Views::MainWindow_qtwidgets(uniqueName, MainWindowOption_MDI, parent, flags)
+    : qtwidgets::MainWindow_qtwidgets(uniqueName, MainWindowOption_MDI, parent, flags)
     , Views::MainWindowMDIViewInterface(mainWindow()->mdiLayout())
 {
 }

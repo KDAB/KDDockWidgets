@@ -14,7 +14,7 @@
 #include <kddockwidgets/DockWidget.h>
 #include <kddockwidgets/MainWindow.h>
 
-class MyMainWindow : public KDDockWidgets::Views::MainWindow_qtwidgets
+class MyMainWindow : public KDDockWidgets::qtwidgets::MainWindow_qtwidgets
 {
     Q_OBJECT
 public:
@@ -30,7 +30,7 @@ public:
 private:
     void createDockWidgets();
     bool eventFilter(QObject *obj, QEvent *ev) override;
-    KDDockWidgets::Views::DockWidget_qtwidgets *newDockWidget();
+    KDDockWidgets::qtwidgets::DockWidget_qtwidgets *newDockWidget();
     QMenu *m_toggleMenu = nullptr;
     const bool m_dockWidget0IsNonClosable;
     const bool m_dockWidget9IsNonDockable;
@@ -38,5 +38,5 @@ private:
     const bool m_maxSizeForDockWidget8;
     const bool m_dockwidget5DoesntCloseBeforeRestore;
     const bool m_dock0BlocksCloseEvent;
-    QVector<KDDockWidgets::Views::DockWidget_qtwidgets *> m_dockwidgets;
+    QVector<KDDockWidgets::qtwidgets::DockWidget_qtwidgets *> m_dockwidgets;
 };

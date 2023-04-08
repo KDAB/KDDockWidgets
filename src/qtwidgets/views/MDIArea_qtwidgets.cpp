@@ -26,7 +26,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtwidgets;
 
 class MDIArea_qtwidgets::Private
 {
@@ -45,7 +45,7 @@ public:
 };
 
 MDIArea_qtwidgets::MDIArea_qtwidgets(QWidget *parent)
-    : Views::View_qtwidgets<QWidget>(nullptr, Type::MDIArea, parent)
+    : qtwidgets::View_qtwidgets<QWidget>(nullptr, Type::MDIArea, parent)
     , d(new Private(this))
 {
 

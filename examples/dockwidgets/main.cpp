@@ -416,7 +416,7 @@ int main(int argc, char **argv)
         mainWindow2->show();
     } else if (usesDockableMainWindows) {
         auto mainWindowDockWidget =
-            new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyMainWindow-2-DW"));
+            new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyMainWindow-2-DW"));
 
         const QString affinity = QStringLiteral("Inner-DockWidgets-2");
         auto dockableMainWindow =

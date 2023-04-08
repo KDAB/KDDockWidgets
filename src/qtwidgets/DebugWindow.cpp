@@ -225,7 +225,7 @@ DebugWindow::DebugWindow(QWidget *parent)
             return;
         auto mainwindow = mainWindows.at(0);
         auto centralWidget =
-            qobject_cast<QMainWindow *>(Views::MainWindow_qtwidgets::asQWidget(mainwindow))
+            qobject_cast<QMainWindow *>(qtwidgets::MainWindow_qtwidgets::asQWidget(mainwindow))
                 ->centralWidget();
         centralWidget->setParent(nullptr, Qt::Window);
         if (!centralWidget->isVisible()) {

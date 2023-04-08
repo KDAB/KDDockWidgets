@@ -16,7 +16,7 @@
 #include <QWidget>
 #include <QPointer>
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::qtwidgets {
 
 /// @brief A View that doesn't own its QWidget
 /// Implements a View API around an existing QWidget

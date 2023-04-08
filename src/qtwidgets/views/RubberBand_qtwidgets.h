@@ -15,7 +15,7 @@
 
 namespace KDDockWidgets {
 
-namespace Views {
+namespace qtwidgets {
 
 class DOCKS_EXPORT RubberBand_qtwidgets : public View_qtwidgets<QRubberBand>
 {

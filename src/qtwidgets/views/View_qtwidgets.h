@@ -23,10 +23,10 @@
 
 #include <memory>
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::qtwidgets {
 
 template<typename Base>
-class DOCKS_EXPORT View_qtwidgets : public Base, public View_qt
+class DOCKS_EXPORT View_qtwidgets : public Base, public Views::View_qt
 {
 public:
     using View::close;

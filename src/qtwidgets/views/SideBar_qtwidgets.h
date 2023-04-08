@@ -30,7 +30,7 @@ namespace Core {
 class SideBar;
 }
 
-namespace Views {
+namespace qtwidgets {
 class SideBar_qtwidgets;
 }
 
@@ -38,7 +38,7 @@ class DOCKS_EXPORT SideBarButton : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit SideBarButton(Core::DockWidget *dw, Views::SideBar_qtwidgets *parent);
+    explicit SideBarButton(Core::DockWidget *dw, qtwidgets::SideBar_qtwidgets *parent);
 
 protected:
     void paintEvent(QPaintEvent *) override;
@@ -50,9 +50,9 @@ private:
     const QPointer<Core::DockWidget> m_dockWidget;
 };
 
-namespace Views {
+namespace qtwidgets {
 
-class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>, public SideBarViewInterface
+class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>, public Views::SideBarViewInterface
 {
     Q_OBJECT
 public:

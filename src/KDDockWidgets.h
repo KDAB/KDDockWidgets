@@ -45,7 +45,7 @@ namespace Core {
 class DropArea;
 }
 
-namespace Views {
+namespace qtwidgets {
 class DockWidget_qtwidgets;
 }
 

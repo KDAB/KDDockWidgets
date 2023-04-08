@@ -27,14 +27,14 @@
 
 namespace KDDockWidgets {
 
-namespace Views {
+namespace qtwidgets {
 
 /**
  * @brief Represents a dock widget.
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>,
+class DOCKS_EXPORT DockWidget_qtwidgets : public qtwidgets::View_qtwidgets<QWidget>,
                                           public Views::DockWidgetViewInterface
 {
     Q_OBJECT

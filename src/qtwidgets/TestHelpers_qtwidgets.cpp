@@ -27,12 +27,12 @@ using namespace KDDockWidgets;
 #ifdef DOCKS_DEVELOPER_MODE
 
 namespace KDDockWidgets {
-class TestView_qtwidgets : public Views::View_qtwidgets<QWidget>
+class TestView_qtwidgets : public qtwidgets::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
     explicit TestView_qtwidgets(CreateViewOptions opts, QWidget *parent)
-        : Views::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
+        : qtwidgets::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
         , m_opts(opts)
     {
         create();
@@ -46,19 +46,19 @@ public:
 
     QSize maxSizeHint() const override
     {
-        return m_opts.maxSize.boundedTo(Views::View_qtwidgets<QWidget>::maximumSize());
+        return m_opts.maxSize.boundedTo(qtwidgets::View_qtwidgets<QWidget>::maximumSize());
     }
 
 private:
     CreateViewOptions m_opts;
 };
 
-class FocusableTestView_qtwidgets : public Views::View_qtwidgets<QLineEdit>
+class FocusableTestView_qtwidgets : public qtwidgets::View_qtwidgets<QLineEdit>
 {
     Q_OBJECT
 public:
     explicit FocusableTestView_qtwidgets(CreateViewOptions opts, QWidget *parent)
-        : Views::View_qtwidgets<QLineEdit>(nullptr, Type::None, parent)
+        : qtwidgets::View_qtwidgets<QLineEdit>(nullptr, Type::None, parent)
         , m_opts(opts)
     {
         create();
@@ -73,19 +73,19 @@ public:
 
     QSize maxSizeHint() const override
     {
-        return m_opts.maxSize.boundedTo(Views::View_qtwidgets<QLineEdit>::maximumSize());
+        return m_opts.maxSize.boundedTo(qtwidgets::View_qtwidgets<QLineEdit>::maximumSize());
     }
 
 private:
     CreateViewOptions m_opts;
 };
 
-class NonClosableTestView_qtwidgets : public Views::View_qtwidgets<QWidget>
+class NonClosableTestView_qtwidgets : public qtwidgets::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
     explicit NonClosableTestView_qtwidgets(QWidget *parent)
-        : Views::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
+        : qtwidgets::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
     {
         create();
     }
@@ -148,9 +148,9 @@ Core::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uniqueName
                                                        View *parent,
                                                        Qt::WindowFlags flags) const
 {
-    auto view = new Views::MainWindow_qtwidgets(
+    auto view = new qtwidgets::MainWindow_qtwidgets(
         uniqueName, options,
-        parent ? static_cast<Views::View_qtwidgets<QMainWindow> *>(parent) : nullptr, flags);
+        parent ? static_cast<qtwidgets::View_qtwidgets<QMainWindow> *>(parent) : nullptr, flags);
 
     if (opts.isVisible)
         view->show();

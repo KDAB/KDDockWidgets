@@ -37,7 +37,7 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtwidgets;
 
 namespace KDDockWidgets {
 class MyCentralWidget : public QWidget
@@ -72,7 +72,7 @@ public:
 
     void updateMargins()
     {
-        const qreal factor = Views::logicalDpiFactor(q);
+        const qreal factor = qtwidgets::logicalDpiFactor(q);
         m_layout->setContentsMargins(m_centerWidgetMargins * factor);
     }
 
@@ -172,7 +172,7 @@ void MainWindow_qtwidgets::setContentsMargins(int left, int top, int right, int 
 
 void MainWindow_qtwidgets::setPersistentCentralWidget(QWidget *widget)
 {
-    m_mainWindow->setPersistentCentralView(Views::ViewWrapper_qtwidgets::create(widget));
+    m_mainWindow->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(widget));
 }
 
 QWidget *MainWindow_qtwidgets::persistentCentralWidget() const
