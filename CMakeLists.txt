@@ -103,6 +103,9 @@ option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
 option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
 
+# TODOm1
+option(FLUTTER_WITHOUT_QTGUITYPES "Temporary option during porting, to test Flutter without QtGui" OFF)
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 
@@ -214,6 +217,11 @@ endif()
 
 if(KDDW_FRONTEND_FLUTTER AND KDDW_FRONTEND_QT)
     message(FATAL_ERROR "The flutter frontend is not compatible with the Qt frontends. Chose a single one.")
+endif()
+
+if(FLUTTER_WITHOUT_QTGUITYPES AND KDDW_FRONTEND_FLUTTER)
+    # TODOm1: Remove
+    add_definitions(-DFLUTTER_WITHOUT_QTGUITYPES)
 endif()
 
 # END frontend enabling

@@ -50,6 +50,17 @@
             }
         },
         {
+            "name": "dev-flutter-no-qtgui",
+            "displayName": "(temporary) Flutter without qtgui",
+            "inherits": [
+                "dev-flutter"
+            ],
+            "binaryDir": "${sourceDir}/build-dev-flutter-no-qtgui",
+            "cacheVariables": {
+                "FLUTTER_WITHOUT_QTGUITYPES": "ON"
+            }
+        },
+        {
             "name": "dev-lcov",
             "displayName": "dev-lcov",
             "generator": "Ninja",
