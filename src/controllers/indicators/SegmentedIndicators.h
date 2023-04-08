@@ -38,9 +38,6 @@ public:
     static int s_centralIndicatorMaxWidth;
     static int s_centralIndicatorMaxHeight;
     static qreal s_draggedWindowOpacity;
-    static QColor s_segmentPenColor;
-    static QColor s_segmentBrushColor;
-    static QColor s_hoveredSegmentBrushColor;
 
 protected:
     QPoint posForIndicator(DropLocation) const override;

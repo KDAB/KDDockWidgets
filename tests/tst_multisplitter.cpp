@@ -19,6 +19,7 @@
 
 #include <QtTest/QTest>
 #include <QScopedValueRollback>
+#include <QPointer>
 
 #include <memory.h>
 

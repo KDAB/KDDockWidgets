@@ -29,6 +29,10 @@ public:
                                                   QWidget *parent = nullptr);
     ~SegmentedIndicatorsOverlay_qtwidgets() override;
 
+    static QColor s_segmentPenColor;
+    static QColor s_segmentBrushColor;
+    static QColor s_hoveredSegmentBrushColor;
+
 protected:
     void paintEvent(QPaintEvent *) override;
 

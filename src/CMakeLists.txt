@@ -426,7 +426,7 @@ endif()
 
 if(KDDW_FRONTEND_DUMMY)
     # TODOm3: Remove Qt
-    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Gui)
+    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Core)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_DUMMY)
 endif()
 

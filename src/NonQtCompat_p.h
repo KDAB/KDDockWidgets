@@ -228,9 +228,19 @@ public:
 class Polygon : public QList<QPoint>
 {
 public:
+    Polygon() = default;
+    Polygon(QVector<QPoint>)
+    {
+    }
+
     QRect boundingRect() const
     {
         return {};
+    }
+
+    bool containsPoint(QPoint, Qt::FillRule) const
+    {
+        return false;
     }
 };
 

@@ -19,9 +19,6 @@ using namespace KDDockWidgets::Controllers;
 int SegmentedIndicators::s_segmentGirth = 50;
 int SegmentedIndicators::s_segmentPenWidth = 4;
 qreal SegmentedIndicators::s_draggedWindowOpacity = 0.7;
-QColor SegmentedIndicators::s_segmentPenColor = Qt::black;
-QColor SegmentedIndicators::s_segmentBrushColor = QColor(0xbb, 0xd5, 0xee, /*alpha=*/200);
-QColor SegmentedIndicators::s_hoveredSegmentBrushColor = QColor(0x3574c5);
 int SegmentedIndicators::s_centralIndicatorMaxWidth = 300;
 int SegmentedIndicators::s_centralIndicatorMaxHeight = 160;
 

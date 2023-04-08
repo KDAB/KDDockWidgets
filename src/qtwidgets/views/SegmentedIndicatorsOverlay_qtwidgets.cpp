@@ -18,6 +18,10 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::Controllers;
 
+QColor SegmentedIndicatorsOverlay_qtwidgets::s_segmentPenColor = Qt::black;
+QColor SegmentedIndicatorsOverlay_qtwidgets::s_segmentBrushColor = QColor(0xbb, 0xd5, 0xee, /*alpha=*/200);
+QColor SegmentedIndicatorsOverlay_qtwidgets::s_hoveredSegmentBrushColor = QColor(0x3574c5);
+
 SegmentedIndicatorsOverlay_qtwidgets::SegmentedIndicatorsOverlay_qtwidgets(
     Controllers::SegmentedIndicators *controller, QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::None, parent)
@@ -52,13 +56,13 @@ void SegmentedIndicatorsOverlay_qtwidgets::drawSegment(QPainter *p, const QPolyg
     if (segment.isEmpty())
         return;
 
-    QPen pen(SegmentedIndicators::s_segmentPenColor);
+    QPen pen(SegmentedIndicatorsOverlay_qtwidgets::s_segmentPenColor);
     pen.setWidth(SegmentedIndicators::s_segmentPenWidth);
     p->setPen(pen);
-    QColor brush(SegmentedIndicators::s_segmentBrushColor);
+    QColor brush(SegmentedIndicatorsOverlay_qtwidgets::s_segmentBrushColor);
 
     if (segment.containsPoint(m_controller->hoveredPt(), Qt::OddEvenFill))
-        brush = SegmentedIndicators::s_hoveredSegmentBrushColor;
+        brush = SegmentedIndicatorsOverlay_qtwidgets::s_hoveredSegmentBrushColor;
 
     p->setBrush(brush);
     p->drawPolygon(segment);
