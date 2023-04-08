@@ -21,15 +21,14 @@
 
 namespace KDDockWidgets {
 
+class EventFilterInterface;
+
 namespace Core {
+struct CreateViewOptions;
 class ClassicIndicators;
 class SegmentedIndicators;
-}
-
-class EventFilterInterface;
 class ViewFactory;
 class Window;
-struct CreateViewOptions;
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
@@ -61,13 +60,13 @@ public:
     virtual std::shared_ptr<View> focusedView() const = 0;
 
     /// @brief Returns all windows
-    virtual QVector<std::shared_ptr<Window>> windows() const = 0;
+    virtual QVector<std::shared_ptr<Core::Window>> windows() const = 0;
 
     /// @brief Creates and returns the default ViewFactory
     virtual ViewFactory *createDefaultViewFactory() = 0;
 
     /// @brief Returns the window at the specified global coordinates
-    virtual std::shared_ptr<Window> windowAt(QPoint globalPos) const = 0;
+    virtual std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const = 0;
 
     /// @brief Sends the specified event to the specified view
     virtual void sendEvent(View *, Event *) const = 0;
@@ -75,7 +74,7 @@ public:
     /// @brief Returns the screen index for the specified view or window.
     /// It's up to the platform to decide how screens are ordered, kddw won't care.
     virtual int screenNumberFor(View *) const = 0;
-    virtual int screenNumberFor(std::shared_ptr<Window>) const = 0;
+    virtual int screenNumberFor(std::shared_ptr<Core::Window>) const = 0;
 
     /// @brief Returns the size of the screen where this view is in
     virtual QSize screenSizeFor(View *) const = 0;
@@ -189,7 +188,7 @@ public:
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true
     /// @sa Window::isActive()
-    virtual bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const = 0;
+    virtual bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const = 0;
 
     /// @brief Waits for the specified view to receive a resize event
     /// Returns true if the view was resized until timeout was reached
@@ -200,14 +199,14 @@ public:
     /// Returns true if the view received said event until timeout was reached
     virtual bool tests_waitForEvent(QObject *w, Event::Type type, int timeout = 5000) const = 0;
     virtual bool tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
-    virtual bool tests_waitForEvent(std::shared_ptr<Window>, Event::Type type,
+    virtual bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
                                     int timeout = 5000) const = 0;
 
     /// @brief Waits for the specified view to be deleted
     virtual bool tests_waitForDeleted(View *, int timeout = 2000) const = 0;
     virtual bool tests_waitForDeleted(QObject *, int timeout = 2000) const = 0;
 
-    virtual void tests_sendEvent(std::shared_ptr<Window> window, Event *ev) const = 0;
+    virtual void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const = 0;
 
     /// @brief Creates the platform. Called by the tests at startup.
     /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()
@@ -219,7 +218,7 @@ public:
 
     /// @brief Creates a Window. For the sole purpose of unit-testing Window.
     /// The created window should be visible.
-    virtual std::shared_ptr<Window> tests_createWindow() = 0;
+    virtual std::shared_ptr<Core::Window> tests_createWindow() = 0;
 
     /// @brief Creates a view with the specified parent
     /// If the parent is null then a new window is created and the returned view will be the root
@@ -309,5 +308,7 @@ struct CreateViewOptions
 };
 
 #endif
+
+}
 
 }

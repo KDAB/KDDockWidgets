@@ -16,7 +16,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
-DropArea_qtwidgets::DropArea_qtwidgets(Core::DropArea *dropArea, View *parent)
+DropArea::DropArea(Core::DropArea *dropArea, View *parent)
     : qtwidgets::View_qtwidgets<QWidget>(dropArea, Type::DropArea, View_qt::asQWidget(parent))
     , m_dropArea(dropArea)
 {
@@ -26,7 +26,7 @@ DropArea_qtwidgets::DropArea_qtwidgets(Core::DropArea *dropArea, View *parent)
     }
 }
 
-DropArea_qtwidgets::~DropArea_qtwidgets()
+DropArea::~DropArea()
 {
     if (!freed())
         m_dropArea->viewAboutToBeDeleted();

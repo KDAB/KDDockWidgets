@@ -266,7 +266,7 @@ bool View_flutter::isMaximized() const
     return {};
 }
 
-std::shared_ptr<Window> View_flutter::window() const
+std::shared_ptr<Core::Window> View_flutter::window() const
 {
     return {};
 }

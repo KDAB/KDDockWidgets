@@ -870,7 +870,7 @@ DropLocation DragController::currentDropLocation() const
 static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 {
     const Window::List windows = Platform::instance()->windows();
-    for (Window::Ptr window : windows) {
+    for (Core::Window::Ptr window : windows) {
         if (!window->isVisible())
             continue;
 

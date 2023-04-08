@@ -57,15 +57,15 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
     s_original(t, context, msg);
 
     if (t == QtWarningMsg) {
-        if (!Platform::s_expectedWarning.isEmpty() && msg.contains(Platform::s_expectedWarning))
+        if (!Core::Platform::s_expectedWarning.isEmpty() && msg.contains(Core::Platform::s_expectedWarning))
             return;
 
         if (!Platform_qt::isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {
 
-            if (Platform::s_warningObserver)
-                Platform::s_warningObserver->onFatal();
+            if (Core::Platform::s_warningObserver)
+                Core::Platform::s_warningObserver->onFatal();
 
-            Platform::instance()->m_numWarningsEmitted++;
+            Core::Platform::instance()->m_numWarningsEmitted++;
             // We don't link to QTest, so no QFAIL here. Bue will be heard by the CI:
             qFatal("Something is wrong, as KDDW is warnings clean!");
         }
@@ -127,7 +127,7 @@ EventFilter::~EventFilter() = default;
 
 }
 
-bool Platform_qt::tests_waitForWindowActive(Window::Ptr window, int timeout) const
+bool Platform_qt::tests_waitForWindowActive(Core::Window::Ptr window, int timeout) const
 {
     Q_ASSERT(window);
     auto windowqt = static_cast<Window_qt *>(window.get());
@@ -169,7 +169,7 @@ bool Platform_qt::tests_waitForResize(Controller *c, int timeout) const
     return tests_waitForResize(c->view(), timeout);
 }
 
-bool Platform_qt::tests_waitForEvent(std::shared_ptr<Window> window, QEvent::Type type,
+bool Platform_qt::tests_waitForEvent(std::shared_ptr<Core::Window> window, QEvent::Type type,
                                      int timeout) const
 {
     auto windowqt = static_cast<Window_qt *>(window.get());
@@ -232,7 +232,7 @@ void Platform_qt::tests_doubleClickOn(QPoint globalPos, View *receiver)
     }
 }
 
-void Platform_qt::tests_sendEvent(Window::Ptr window, QEvent *ev) const
+void Platform_qt::tests_sendEvent(Core::Window::Ptr window, QEvent *ev) const
 {
     qGuiApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);
 }

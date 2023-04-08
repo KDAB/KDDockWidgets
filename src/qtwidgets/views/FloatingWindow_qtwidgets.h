@@ -26,15 +26,15 @@ class Group;
 namespace KDDockWidgets::qtwidgets {
 
 
-class DOCKS_EXPORT FloatingWindow_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT FloatingWindow : public View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit FloatingWindow_qtwidgets(Core::FloatingWindow *controller,
-                                      QMainWindow *parent = nullptr,
-                                      Qt::WindowFlags windowFlags = {});
+    explicit FloatingWindow(Core::FloatingWindow *controller,
+                            QMainWindow *parent = nullptr,
+                            Qt::WindowFlags windowFlags = {});
 
-    ~FloatingWindow_qtwidgets() override;
+    ~FloatingWindow() override;
 
     Core::FloatingWindow *floatingWindow() const;
 
@@ -53,6 +53,6 @@ private:
     Private *const d;
 
     void updateMargins();
-    Q_DISABLE_COPY(FloatingWindow_qtwidgets)
+    Q_DISABLE_COPY(FloatingWindow)
 };
 }

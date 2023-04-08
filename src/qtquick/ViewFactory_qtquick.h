@@ -44,7 +44,7 @@ class MainWindow;
 /**
  * @brief The default ViewFactory for QtQuick frontend.
  */
-class DOCKS_EXPORT ViewFactory_qtquick : public ViewFactory
+class DOCKS_EXPORT ViewFactory_qtquick : public Core::ViewFactory
 {
     Q_OBJECT
 public:

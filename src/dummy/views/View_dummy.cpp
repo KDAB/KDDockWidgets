@@ -241,7 +241,7 @@ bool View_dummy::isMaximized() const
     return {};
 }
 
-std::shared_ptr<Window> View_dummy::window() const
+std::shared_ptr<Core::Window> View_dummy::window() const
 {
     return {};
 }

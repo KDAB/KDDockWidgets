@@ -271,7 +271,7 @@ bool ViewWrapper::isMaximized() const
     return m_wrappedView->isMaximized();
 }
 
-std::shared_ptr<Window> ViewWrapper::window() const
+std::shared_ptr<Core::Window> ViewWrapper::window() const
 {
     return m_wrappedView->window();
 }

@@ -17,6 +17,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
+using namespace KDDockWidgets::qtwidgets;
 
 namespace KDDockWidgets {
 
@@ -26,7 +27,7 @@ class Indicator : public QWidget
 public:
     typedef QList<Indicator *> List;
     explicit Indicator(Core::ClassicIndicators *classicIndicators,
-                       IndicatorWindow_qtwidgets *parent, DropLocation location);
+                       IndicatorWindow *parent, DropLocation location);
     void paintEvent(QPaintEvent *) override;
 
     void setHovered(bool hovered);
@@ -137,7 +138,7 @@ static Qt::WindowFlags flagsForIndicatorWindow()
     return isWayland() ? Qt::Widget : (Qt::Tool | Qt::BypassWindowManagerHint);
 }
 
-IndicatorWindow_qtwidgets::IndicatorWindow_qtwidgets(ClassicIndicators *classicIndicators_)
+IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
     : QWidget(parentForIndicatorWindow(classicIndicators_), flagsForIndicatorWindow())
     , classicIndicators(classicIndicators_)
     , m_center(new Indicator(classicIndicators, this,
@@ -162,15 +163,15 @@ IndicatorWindow_qtwidgets::IndicatorWindow_qtwidgets(ClassicIndicators *classicI
     setAttribute(Qt::WA_TranslucentBackground);
 
     connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged, this,
-            &IndicatorWindow_qtwidgets::updateIndicatorVisibility);
+            &IndicatorWindow::updateIndicatorVisibility);
     connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged, this,
-            &IndicatorWindow_qtwidgets::updateIndicatorVisibility);
+            &IndicatorWindow::updateIndicatorVisibility);
 
     m_indicators << m_center << m_left << m_right << m_top << m_bottom << m_outterBottom
                  << m_outterTop << m_outterLeft << m_outterRight;
 }
 
-Indicator *IndicatorWindow_qtwidgets::indicatorForLocation(DropLocation loc) const
+Indicator *IndicatorWindow::indicatorForLocation(DropLocation loc) const
 {
     switch (loc) {
     case DropLocation_Center:
@@ -202,7 +203,7 @@ Indicator *IndicatorWindow_qtwidgets::indicatorForLocation(DropLocation loc) con
     return nullptr;
 }
 
-void IndicatorWindow_qtwidgets::updateMask()
+void IndicatorWindow::updateMask()
 {
     QRegion region;
 
@@ -216,13 +217,13 @@ void IndicatorWindow_qtwidgets::updateMask()
     setMask(region);
 }
 
-void IndicatorWindow_qtwidgets::resizeEvent(QResizeEvent *ev)
+void IndicatorWindow::resizeEvent(QResizeEvent *ev)
 {
     QWidget::resizeEvent(ev);
     updatePositions();
 }
 
-void IndicatorWindow_qtwidgets::updateIndicatorVisibility()
+void IndicatorWindow::updateIndicatorVisibility()
 {
     for (Indicator *indicator : { m_left, m_right, m_bottom, m_top, m_outterTop, m_outterLeft,
                                   m_outterRight, m_outterBottom, m_center })
@@ -231,13 +232,13 @@ void IndicatorWindow_qtwidgets::updateIndicatorVisibility()
     updateMask();
 }
 
-QPoint IndicatorWindow_qtwidgets::posForIndicator(DropLocation loc) const
+QPoint IndicatorWindow::posForIndicator(DropLocation loc) const
 {
     Indicator *indicator = indicatorForLocation(loc);
     return indicator->mapToGlobal(indicator->rect().center());
 }
 
-DropLocation IndicatorWindow_qtwidgets::hover(QPoint globalPos)
+DropLocation IndicatorWindow::hover(QPoint globalPos)
 {
     DropLocation loc = DropLocation_None;
 
@@ -253,7 +254,7 @@ DropLocation IndicatorWindow_qtwidgets::hover(QPoint globalPos)
     return loc;
 }
 
-void IndicatorWindow_qtwidgets::updatePositions()
+void IndicatorWindow::updatePositions()
 {
     QRect r = rect();
     const int indicatorWidth = m_outterBottom->width();
@@ -277,37 +278,37 @@ void IndicatorWindow_qtwidgets::updatePositions()
     }
 }
 
-void IndicatorWindow_qtwidgets::raise()
+void IndicatorWindow::raise()
 {
     QWidget::raise();
 }
 
-void IndicatorWindow_qtwidgets::setGeometry(QRect rect)
+void IndicatorWindow::setGeometry(QRect rect)
 {
     QWidget::setGeometry(rect);
 }
 
-void IndicatorWindow_qtwidgets::setObjectName(const QString &name)
+void IndicatorWindow::setObjectName(const QString &name)
 {
     QWidget::setObjectName(name);
 }
 
-void IndicatorWindow_qtwidgets::setVisible(bool is)
+void IndicatorWindow::setVisible(bool is)
 {
     QWidget::setVisible(is);
 }
 
-void IndicatorWindow_qtwidgets::resize(QSize size)
+void IndicatorWindow::resize(QSize size)
 {
     QWidget::resize(size);
 }
 
-bool IndicatorWindow_qtwidgets::isWindow() const
+bool IndicatorWindow::isWindow() const
 {
     return QWidget::isWindow();
 }
 
-Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow_qtwidgets *parent,
+Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *parent,
                      DropLocation location)
     : QWidget(parent)
     , q(classicIndicators)

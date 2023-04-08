@@ -14,11 +14,11 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
-RubberBand_qtwidgets::RubberBand_qtwidgets(QWidget *parent)
+RubberBand::RubberBand(QWidget *parent)
     : View_qtwidgets<QRubberBand>(nullptr, Type::RubberBand, parent)
 {
 }
 
-RubberBand_qtwidgets::~RubberBand_qtwidgets()
+RubberBand::~RubberBand()
 {
 }

@@ -51,7 +51,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
                            bool restoreIsRelative, bool maxSizeForDockWidget8,
                            bool dockwidget5DoesntCloseBeforeRestore, bool dock0BlocksCloseEvent,
                            const QString &affinityName, QWidget *parent)
-    : KDDockWidgets::qtwidgets::MainWindow_qtwidgets(uniqueName, options, parent)
+    : KDDockWidgets::qtwidgets::MainWindow(uniqueName, options, parent)
     , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
     , m_dockWidget9IsNonDockable(nonDockableDockWidget9)
     , m_restoreIsRelative(restoreIsRelative)
@@ -75,7 +75,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         count++;
         auto w = newMyWidget();
         w->setGeometry(100, 100, 400, 400);
-        auto dock = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(
+        auto dock = new KDDockWidgets::qtwidgets::DockWidget(
             QStringLiteral("new dock %1").arg(count));
         dock->setWidget(w);
         dock->resize(QSize(600, 600));
@@ -171,7 +171,7 @@ void MyMainWindow::createDockWidgets()
     floatingWindow->move(100, 100);
 }
 
-KDDockWidgets::qtwidgets::DockWidget_qtwidgets *MyMainWindow::newDockWidget()
+KDDockWidgets::qtwidgets::DockWidget *MyMainWindow::newDockWidget()
 {
     static int count = 0;
 
@@ -188,7 +188,7 @@ KDDockWidgets::qtwidgets::DockWidget_qtwidgets *MyMainWindow::newDockWidget()
     if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
         layoutSaverOptions |= KDDockWidgets::LayoutSaverOption::Skip;
 
-    auto dock = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(
+    auto dock = new KDDockWidgets::qtwidgets::DockWidget(
         QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
     dock->setAffinities(affinities()); // optional, just to show the feature. Pass -mi to the
                                        // example to see incompatible dock widgets
@@ -253,5 +253,5 @@ bool MyMainWindow::eventFilter(QObject *obj, QEvent *ev)
         break;
     }
 
-    return KDDockWidgets::qtwidgets::MainWindow_qtwidgets::eventFilter(obj, ev);
+    return KDDockWidgets::qtwidgets::MainWindow::eventFilter(obj, ev);
 }

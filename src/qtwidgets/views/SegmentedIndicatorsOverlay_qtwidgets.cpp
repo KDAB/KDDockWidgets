@@ -18,22 +18,22 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 using namespace KDDockWidgets::Core;
 
-QColor SegmentedIndicatorsOverlay_qtwidgets::s_segmentPenColor = Qt::black;
-QColor SegmentedIndicatorsOverlay_qtwidgets::s_segmentBrushColor = QColor(0xbb, 0xd5, 0xee, /*alpha=*/200);
-QColor SegmentedIndicatorsOverlay_qtwidgets::s_hoveredSegmentBrushColor = QColor(0x3574c5);
+QColor SegmentedIndicatorsOverlay::s_segmentPenColor = Qt::black;
+QColor SegmentedIndicatorsOverlay::s_segmentBrushColor = QColor(0xbb, 0xd5, 0xee, /*alpha=*/200);
+QColor SegmentedIndicatorsOverlay::s_hoveredSegmentBrushColor = QColor(0x3574c5);
 
-SegmentedIndicatorsOverlay_qtwidgets::SegmentedIndicatorsOverlay_qtwidgets(
+SegmentedIndicatorsOverlay::SegmentedIndicatorsOverlay(
     Core::SegmentedIndicators *controller, QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::None, parent)
     , m_controller(controller)
 {
 }
 
-SegmentedIndicatorsOverlay_qtwidgets::~SegmentedIndicatorsOverlay_qtwidgets()
+SegmentedIndicatorsOverlay::~SegmentedIndicatorsOverlay()
 {
 }
 
-void SegmentedIndicatorsOverlay_qtwidgets::paintEvent(QPaintEvent *)
+void SegmentedIndicatorsOverlay::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
@@ -41,7 +41,7 @@ void SegmentedIndicatorsOverlay_qtwidgets::paintEvent(QPaintEvent *)
 }
 
 
-void SegmentedIndicatorsOverlay_qtwidgets::drawSegments(QPainter *p)
+void SegmentedIndicatorsOverlay::drawSegments(QPainter *p)
 {
     const QHash<DropLocation, QPolygon> segments = m_controller->segments();
     for (DropLocation loc :
@@ -51,18 +51,18 @@ void SegmentedIndicatorsOverlay_qtwidgets::drawSegments(QPainter *p)
         drawSegment(p, segments.value(loc));
 }
 
-void SegmentedIndicatorsOverlay_qtwidgets::drawSegment(QPainter *p, const QPolygon &segment)
+void SegmentedIndicatorsOverlay::drawSegment(QPainter *p, const QPolygon &segment)
 {
     if (segment.isEmpty())
         return;
 
-    QPen pen(SegmentedIndicatorsOverlay_qtwidgets::s_segmentPenColor);
+    QPen pen(SegmentedIndicatorsOverlay::s_segmentPenColor);
     pen.setWidth(SegmentedIndicators::s_segmentPenWidth);
     p->setPen(pen);
-    QColor brush(SegmentedIndicatorsOverlay_qtwidgets::s_segmentBrushColor);
+    QColor brush(SegmentedIndicatorsOverlay::s_segmentBrushColor);
 
     if (segment.containsPoint(m_controller->hoveredPt(), Qt::OddEvenFill))
-        brush = SegmentedIndicatorsOverlay_qtwidgets::s_hoveredSegmentBrushColor;
+        brush = SegmentedIndicatorsOverlay::s_hoveredSegmentBrushColor;
 
     p->setBrush(brush);
     p->drawPolygon(segment);

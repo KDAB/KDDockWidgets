@@ -21,7 +21,7 @@ namespace KDDockWidgets {
 
 class EventFilterInterface;
 
-class Platform::Private
+class Core::Platform::Private
 {
 public:
     /// @brief This signal is emitted when the currently focused view changes

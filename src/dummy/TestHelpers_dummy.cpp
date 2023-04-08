@@ -15,6 +15,7 @@
 #include "kddockwidgets/core/MainWindow.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 #ifdef DOCKS_DEVELOPER_MODE
 
@@ -22,7 +23,7 @@ namespace KDDockWidgets {
 class TestView_dummy : public Views::View_dummy
 {
 public:
-    explicit TestView_dummy(CreateViewOptions opts, QWidget *)
+    explicit TestView_dummy(Core::CreateViewOptions opts, QWidget *)
         : Views::View_dummy(nullptr, Type::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
@@ -41,13 +42,13 @@ public:
     }
 
 private:
-    CreateViewOptions m_opts;
+    Core::CreateViewOptions m_opts;
 };
 
 class FocusableTestView_dummy : public Views::View_dummy
 {
 public:
-    explicit FocusableTestView_dummy(CreateViewOptions opts, QWidget *)
+    explicit FocusableTestView_dummy(Core::CreateViewOptions opts, QWidget *)
         : Views::View_dummy(nullptr, Type::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
@@ -66,7 +67,7 @@ public:
     }
 
 private:
-    CreateViewOptions m_opts;
+    Core::CreateViewOptions m_opts;
 };
 
 class NonClosableTestView_dummy : public Views::View_dummy
@@ -100,12 +101,12 @@ void Platform_dummy::tests_deinitPlatform_impl()
 {
 }
 
-View *Platform_dummy::tests_createView(CreateViewOptions, View *)
+View *Platform_dummy::tests_createView(Core::CreateViewOptions, View *)
 {
     return {};
 }
 
-View *Platform_dummy::tests_createFocusableView(CreateViewOptions, View *)
+View *Platform_dummy::tests_createFocusableView(Core::CreateViewOptions, View *)
 {
     return {};
 }
@@ -115,7 +116,7 @@ View *Platform_dummy::tests_createNonClosableView(View *)
     return {};
 }
 
-Core::MainWindow *Platform_dummy::createMainWindow(const QString &, CreateViewOptions,
+Core::MainWindow *Platform_dummy::createMainWindow(const QString &, Core::CreateViewOptions,
                                                    MainWindowOptions, View *,
                                                    Qt::WindowFlags) const
 {
@@ -123,7 +124,7 @@ Core::MainWindow *Platform_dummy::createMainWindow(const QString &, CreateViewOp
 }
 
 
-bool Platform_dummy::tests_waitForWindowActive(std::shared_ptr<Window>, int timeout) const
+bool Platform_dummy::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const
 {
     ( void )timeout;
     return false;
@@ -156,7 +157,7 @@ bool Platform_dummy::tests_waitForEvent(View *, Event::Type type, int timeout) c
     return false;
 }
 
-bool Platform_dummy::tests_waitForEvent(std::shared_ptr<Window>, Event::Type type,
+bool Platform_dummy::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
                                         int timeout) const
 {
     ( void )type;
@@ -176,7 +177,7 @@ bool Platform_dummy::tests_waitForDeleted(QObject *, int timeout) const
     return false;
 }
 
-void Platform_dummy::tests_sendEvent(std::shared_ptr<Window> window, Event *ev) const
+void Platform_dummy::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const
 {
     ( void )window;
     ( void )ev;
@@ -187,7 +188,7 @@ void Platform_dummy::tests_wait(int ms)
     ( void )ms;
 }
 
-std::shared_ptr<Window> Platform_dummy::tests_createWindow()
+std::shared_ptr<Core::Window> Platform_dummy::tests_createWindow()
 {
     return {};
 }

@@ -75,7 +75,7 @@ WId Window_flutter::handle() const
     return {};
 }
 
-bool Window_flutter::equals(std::shared_ptr<Window>) const
+bool Window_flutter::equals(std::shared_ptr<Core::Window>) const
 {
     return {};
 }

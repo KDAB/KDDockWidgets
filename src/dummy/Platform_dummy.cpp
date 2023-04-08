@@ -21,6 +21,7 @@
 
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 Platform_dummy::Platform_dummy()
 {
@@ -36,7 +37,7 @@ std::shared_ptr<View> Platform_dummy::focusedView() const
     return {};
 }
 
-QVector<std::shared_ptr<Window>> Platform_dummy::windows() const
+QVector<std::shared_ptr<Core::Window>> Platform_dummy::windows() const
 {
     return {};
 }
@@ -64,7 +65,7 @@ ViewFactory *Platform_dummy::createDefaultViewFactory()
     return new ViewFactory_dummy();
 }
 
-Window::Ptr Platform_dummy::windowAt(QPoint) const
+Core::Window::Ptr Platform_dummy::windowAt(QPoint) const
 {
     return {};
 }
@@ -74,7 +75,7 @@ int Platform_dummy::screenNumberFor(View *) const
     return -1;
 }
 
-int Platform_dummy::screenNumberFor(std::shared_ptr<Window>) const
+int Platform_dummy::screenNumberFor(std::shared_ptr<Core::Window>) const
 {
     return {};
 }

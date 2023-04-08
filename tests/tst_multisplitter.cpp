@@ -26,6 +26,7 @@
 
 using namespace Layouting;
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 static int st = Item::separatorThickness;
 
@@ -41,12 +42,12 @@ public Q_SLOTS:
     void initTestCase()
     {
         s_testObject = this;
-        Platform::instance()->installMessageHandler();
+        Core::Platform::instance()->installMessageHandler();
     }
 
     void cleanupTestCase()
     {
-        Platform::instance()->uninstallMessageHandler();
+        Core::Platform::instance()->uninstallMessageHandler();
     }
 
 private Q_SLOTS:
@@ -126,7 +127,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
 
 static std::unique_ptr<ItemBoxContainer> createRoot()
 {
-    auto hostWidget = Platform::instance()->tests_createView({});
+    auto hostWidget = Core::Platform::instance()->tests_createView({});
     hostWidget->setObjectName("HostWidget");
     hostWidget->show();
     auto root = new ItemBoxContainer(hostWidget);
@@ -138,18 +139,18 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
 {
     static int count = 0;
     count++;
-    auto hostWidget = Platform::instance()->tests_createView({});
+    auto hostWidget = Core::Platform::instance()->tests_createView({});
     hostWidget->setObjectName("HostWidget");
     hostWidget->show();
     auto item = new Item(hostWidget);
     item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
-    CreateViewOptions opts;
+    Core::CreateViewOptions opts;
     if (minSz.isValid())
         opts.minSize = minSz;
     if (maxSz.isValid())
         opts.maxSize = maxSz;
-    auto guest = Platform::instance()->tests_createView(opts);
+    auto guest = Core::Platform::instance()->tests_createView(opts);
 
     guest->setObjectName(item->objectName());
     item->setGuestView(guest);
@@ -158,7 +159,7 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
 
 static ItemBoxContainer *createRootWithSingleItem()
 {
-    auto host = Platform::instance()->tests_createView({});
+    auto host = Core::Platform::instance()->tests_createView({});
     auto root = new ItemBoxContainer(host);
     root->setSize({ 1000, 1000 });
 
@@ -1856,11 +1857,11 @@ int main(int argc, char **argv)
 {
     for (FrontendType type : Platform::frontendTypes()) {
         qDebug() << "\nTesting platform" << type << ":\n";
-        KDDockWidgets::Platform::tests_initPlatform(argc, argv, type);
+        Platform::tests_initPlatform(argc, argv, type);
         TestMultiSplitter test;
 
         const int exitCode = QTest::qExec(&test, argc, argv);
-        KDDockWidgets::Platform::tests_deinitPlatform();
+        Platform::tests_deinitPlatform();
         if (exitCode != 0)
             return exitCode;
     }

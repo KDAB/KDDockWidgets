@@ -37,21 +37,21 @@ int main(int argc, char **argv)
 
     // # 1. Create our main window
 
-    KDDockWidgets::qtwidgets::MainWindowMDI_qtwidgets mainWindow(QStringLiteral("MyMainWindow"));
+    KDDockWidgets::qtwidgets::MainWindowMDI mainWindow(QStringLiteral("MyMainWindow"));
     mainWindow.setWindowTitle("Main Window");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
+    auto dock1 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock1"));
     auto widget1 = new MyWidget1();
     dock1->setWidget(widget1);
 
-    auto dock2 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock2"));
+    auto dock2 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock2"));
     auto widget2 = new MyWidget2();
     dock2->setWidget(widget2);
 
-    auto dock3 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock3"));
+    auto dock3 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock3"));
     auto widget3 = new MyWidget3();
     dock3->setWidget(widget3);
 

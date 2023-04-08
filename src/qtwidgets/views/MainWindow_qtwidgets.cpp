@@ -53,10 +53,10 @@ public:
 };
 }
 
-class MainWindow_qtwidgets::Private
+class MainWindow::Private
 {
 public:
-    explicit Private(MainWindow_qtwidgets *qq)
+    explicit Private(MainWindow *qq)
         : q(qq)
         , m_controller(qq->mainWindow())
         , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
@@ -76,7 +76,7 @@ public:
         m_layout->setContentsMargins(m_centerWidgetMargins * factor);
     }
 
-    MainWindow_qtwidgets *const q;
+    MainWindow *const q;
     Core::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
     MyCentralWidget *const m_centralWidget;
@@ -86,8 +86,8 @@ public:
 
 MyCentralWidget::~MyCentralWidget() = default;
 
-MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName, MainWindowOptions options,
-                                           QWidget *parent, Qt::WindowFlags flags)
+MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
+                       QWidget *parent, Qt::WindowFlags flags)
     : View_qtwidgets<QMainWindow>(new Core::MainWindow(this, uniqueName, options),
                                   Type::MainWindow, parent, flags)
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(controller()))
@@ -130,29 +130,29 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName, MainWindow
 
         create(); // ensure QWindow exists
         window()->onScreenChanged(this, [](QObject *context, auto window) {
-            if (auto mw = qobject_cast<MainWindow_qtwidgets *>(context))
+            if (auto mw = qobject_cast<MainWindow *>(context))
                 mw->updateMargins(); // logical dpi might have changed
             Q_EMIT DockRegistry::self()->windowChangedScreen(window);
         });
     }
 }
 
-MainWindow_qtwidgets::~MainWindow_qtwidgets()
+MainWindow::~MainWindow()
 {
     delete d;
 }
 
-void MainWindow_qtwidgets::setCentralWidget(QWidget *w)
+void MainWindow::setCentralWidget(QWidget *w)
 {
     QMainWindow::setCentralWidget(w);
 }
 
-QMargins MainWindow_qtwidgets::centerWidgetMargins() const
+QMargins MainWindow::centerWidgetMargins() const
 {
     return d->m_centerWidgetMargins;
 }
 
-void MainWindow_qtwidgets::setCenterWidgetMargins(const QMargins &margins)
+void MainWindow::setCenterWidgetMargins(const QMargins &margins)
 {
     if (d->m_centerWidgetMargins == margins)
         return;
@@ -160,33 +160,33 @@ void MainWindow_qtwidgets::setCenterWidgetMargins(const QMargins &margins)
     d->updateMargins();
 }
 
-QRect MainWindow_qtwidgets::centralAreaGeometry() const
+QRect MainWindow::centralAreaGeometry() const
 {
     return centralWidget()->geometry();
 }
 
-void MainWindow_qtwidgets::setContentsMargins(int left, int top, int right, int bottom)
+void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 {
     QMainWindow::setContentsMargins(left, top, right, bottom);
 }
 
-void MainWindow_qtwidgets::setPersistentCentralWidget(QWidget *widget)
+void MainWindow::setPersistentCentralWidget(QWidget *widget)
 {
     m_mainWindow->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(widget));
 }
 
-QWidget *MainWindow_qtwidgets::persistentCentralWidget() const
+QWidget *MainWindow::persistentCentralWidget() const
 {
     auto view = m_mainWindow->persistentCentralView();
     return View_qt::asQWidget(view.get());
 }
 
-QHBoxLayout *MainWindow_qtwidgets::internalLayout() const
+QHBoxLayout *MainWindow::internalLayout() const
 {
     return d->m_layout;
 }
 
-void MainWindow_qtwidgets::updateMargins()
+void MainWindow::updateMargins()
 {
     d->updateMargins();
 }

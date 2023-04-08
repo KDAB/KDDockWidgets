@@ -19,8 +19,9 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtwidgets;
 
-Window_qtwidgets::~Window_qtwidgets() = default;
+Window::~Window() = default;
 
 inline QWindow *windowForWidget(QWidget *topLevel)
 {
@@ -30,7 +31,7 @@ inline QWindow *windowForWidget(QWidget *topLevel)
     return topLevel->windowHandle();
 }
 
-Window_qtwidgets::Window_qtwidgets(QWidget *topLevel)
+Window::Window(QWidget *topLevel)
     : Window_qt(windowForWidget(topLevel))
 {
     // QWidgetWindow is private API, we have no way for going from QWindow to the top-level QWidget
@@ -38,7 +39,7 @@ Window_qtwidgets::Window_qtwidgets(QWidget *topLevel)
     setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidget *>(topLevel));
 }
 
-std::shared_ptr<View> Window_qtwidgets::rootView() const
+std::shared_ptr<View> Window::rootView() const
 {
     if (!m_window)
         return {};
@@ -50,15 +51,15 @@ std::shared_ptr<View> Window_qtwidgets::rootView() const
     return nullptr;
 }
 
-Window::Ptr Window_qtwidgets::transientParent() const
+Core::Window::Ptr Window::transientParent() const
 {
     if (QWindow *w = m_window->transientParent())
-        return Window::Ptr(new Window_qtwidgets(w));
+        return Core::Window::Ptr(new Window(w));
 
     return nullptr;
 }
 
-void Window_qtwidgets::setGeometry(QRect geo) const
+void Window::setGeometry(QRect geo) const
 {
     if (auto v = rootView()) {
         // In QWidget world QWidget interface is preferred over QWindow
@@ -69,7 +70,7 @@ void Window_qtwidgets::setGeometry(QRect geo) const
     }
 }
 
-void Window_qtwidgets::setVisible(bool is)
+void Window::setVisible(bool is)
 {
     if (auto v = rootView()) {
         // In QWidget world QWidget interface is preferred over QWindow
@@ -80,13 +81,13 @@ void Window_qtwidgets::setVisible(bool is)
     }
 }
 
-bool Window_qtwidgets::supportsHonouringLayoutMinSize() const
+bool Window::supportsHonouringLayoutMinSize() const
 {
     // QWidget's QLayout does this for us and propagates the min-size up to QWindow
     return true;
 }
 
-void Window_qtwidgets::destroy()
+void Window::destroy()
 {
     if (auto v = rootView()) {
         // deleting the QWidget deletes its QWindow

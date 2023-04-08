@@ -22,7 +22,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class DOCKS_EXPORT Window_qt : public Window
+class DOCKS_EXPORT Window_qt : public Core::Window
 {
 public:
     explicit Window_qt(QWindow *);
@@ -37,7 +37,7 @@ public:
     // TODOm3: Remove
     void setProperty(const char *name, const QVariant &value) override;
     QVariant property(const char *name) const override;
-    bool equals(std::shared_ptr<Window> other) const override;
+    bool equals(std::shared_ptr<Core::Window> other) const override;
     void setFramePosition(QPoint targetPos) override;
     void resize(int width, int height) override;
     bool isActive() const override;

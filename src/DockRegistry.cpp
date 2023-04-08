@@ -177,7 +177,7 @@ QStringList DockRegistry::dockWidgetNames() const
     return names;
 }
 
-bool DockRegistry::isProbablyObscured(Window::Ptr window,
+bool DockRegistry::isProbablyObscured(Core::Window::Ptr window,
                                       Core::FloatingWindow *exclude) const
 {
     if (!window)
@@ -215,7 +215,7 @@ bool DockRegistry::isProbablyObscured(Window::Ptr window,
     return false;
 }
 
-bool DockRegistry::isProbablyObscured(Window::Ptr target, WindowBeingDragged *exclude) const
+bool DockRegistry::isProbablyObscured(Core::Window::Ptr target, WindowBeingDragged *exclude) const
 {
     Core::FloatingWindow *fw =
         exclude ? exclude->floatingWindow() : nullptr; // It's null on Wayland. On wayland obscuring
@@ -563,7 +563,7 @@ const Window::List DockRegistry::floatingQWindows() const
     windows.reserve(m_floatingWindows.size());
     for (Core::FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted()) {
-            if (Window::Ptr window = fw->view()->window()) {
+            if (Core::Window::Ptr window = fw->view()->window()) {
                 windows.push_back(window);
             } else {
                 qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -580,7 +580,7 @@ bool DockRegistry::hasFloatingWindows() const
                        [](Core::FloatingWindow *fw) { return !fw->beingDeleted(); });
 }
 
-Core::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr windowHandle) const
+Core::FloatingWindow *DockRegistry::floatingWindowForHandle(Core::Window::Ptr windowHandle) const
 {
     for (Core::FloatingWindow *fw : m_floatingWindows) {
         if (fw->view()->window()->equals(windowHandle))
@@ -601,7 +601,7 @@ Core::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) const
     return nullptr;
 }
 
-Core::MainWindow *DockRegistry::mainWindowForHandle(Window::Ptr window) const
+Core::MainWindow *DockRegistry::mainWindowForHandle(Core::Window::Ptr window) const
 {
     if (!window)
         return nullptr;
@@ -622,7 +622,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     if (!excludeFloatingDocks) {
         for (Core::FloatingWindow *fw : m_floatingWindows) {
             if (fw->isVisible()) {
-                if (Window::Ptr window = fw->view()->window()) {
+                if (Core::Window::Ptr window = fw->view()->window()) {
                     windows << window;
                 } else {
                     qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -633,7 +633,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
 
     for (Core::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
-            if (Window::Ptr window = m->view()->window()) {
+            if (Core::Window::Ptr window = m->view()->window()) {
                 windows << window;
             } else {
                 qWarning() << Q_FUNC_INFO << "MainWindow doesn't have QWindow";
@@ -750,7 +750,7 @@ bool DockRegistry::onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *ev)
     return false;
 }
 
-bool DockRegistry::onExposeEvent(Window::Ptr window)
+bool DockRegistry::onExposeEvent(Core::Window::Ptr window)
 {
     if (Core::FloatingWindow *fw = floatingWindowForHandle(window)) {
         // This floating window was exposed

@@ -340,7 +340,7 @@ public:
 
     std::shared_ptr<View> childViewAt(QPoint localPos) const override;
 
-    std::shared_ptr<Window> window() const override;
+    std::shared_ptr<Core::Window> window() const override;
 
     std::shared_ptr<View> rootView() const override;
 

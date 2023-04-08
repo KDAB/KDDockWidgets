@@ -40,7 +40,7 @@ public:
     bool is(Type) const override;
     std::shared_ptr<View> childViewAt(QPoint) const override;
     QVector<std::shared_ptr<View>> childViews() const override;
-    std::shared_ptr<Window> window() const override;
+    std::shared_ptr<Core::Window> window() const override;
     std::shared_ptr<View> rootView() const override;
     std::shared_ptr<View> parentView() const override;
     void setParent(View *) override; // TODOm3: Rename to setParentView

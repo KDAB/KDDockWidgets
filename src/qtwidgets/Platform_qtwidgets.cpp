@@ -35,6 +35,7 @@ static void initResources()
 #endif
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtwidgets;
 
 static_assert(SizePolicy::Fixed == SizePolicy(QSizePolicy::Fixed), "Enums dont match");
 static_assert(SizePolicy::Minimum == SizePolicy(QSizePolicy::Minimum), "Enums dont match");
@@ -43,7 +44,7 @@ static_assert(SizePolicy::Preferred == SizePolicy(QSizePolicy::Preferred), "Enum
 static_assert(SizePolicy::Expanding == SizePolicy(QSizePolicy::Expanding), "Enums dont match");
 
 
-class Platform_qtwidgets::GlobalEventFilter : public QObject
+class Platform::GlobalEventFilter : public QObject
 {
 public:
     GlobalEventFilter()
@@ -77,15 +78,15 @@ public:
     ~GlobalEventFilter() override;
 };
 
-Platform_qtwidgets::GlobalEventFilter::~GlobalEventFilter() = default;
+Platform::GlobalEventFilter::~GlobalEventFilter() = default;
 
-Platform_qtwidgets::Platform_qtwidgets()
+Platform::Platform()
     : m_globalEventFilter(new GlobalEventFilter())
 {
     init();
 }
 
-void Platform_qtwidgets::init()
+void Platform::init()
 {
 #if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
     initResources();
@@ -103,48 +104,48 @@ void Platform_qtwidgets::init()
     });
 }
 
-Platform_qtwidgets::~Platform_qtwidgets()
+Platform::~Platform()
 {
     delete m_globalEventFilter;
 }
 
-const char *Platform_qtwidgets::name() const
+const char *Platform::name() const
 {
     return "qtwidgets";
 }
 
-bool Platform_qtwidgets::hasActivePopup() const
+bool Platform::hasActivePopup() const
 {
     return qApp->activePopupWidget() != nullptr;
 }
 
-std::shared_ptr<View> Platform_qtwidgets::qobjectAsView(QObject *obj) const
+std::shared_ptr<View> Platform::qobjectAsView(QObject *obj) const
 {
     return qtwidgets::ViewWrapper_qtwidgets::create(obj);
 }
 
-std::shared_ptr<Window> Platform_qtwidgets::windowFromQWindow(QWindow *qwindow) const
+std::shared_ptr<Core::Window> Platform::windowFromQWindow(QWindow *qwindow) const
 {
     Q_ASSERT(qwindow);
-    return std::shared_ptr<Window>(new Window_qtwidgets(qwindow));
+    return std::shared_ptr<Core::Window>(new Window(qwindow));
 }
 
-ViewFactory *Platform_qtwidgets::createDefaultViewFactory()
+Core::ViewFactory *Platform::createDefaultViewFactory()
 {
-    return new ViewFactory_qtwidgets();
+    return new ViewFactory();
 }
 
-Window::Ptr Platform_qtwidgets::windowAt(QPoint globalPos) const
+Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
 {
     if (auto qwindow = qGuiApp->QGuiApplication::topLevelAt(globalPos)) {
-        auto window = new Window_qtwidgets(qwindow);
-        return Window::Ptr(window);
+        auto window = new Window(qwindow);
+        return Core::Window::Ptr(window);
     }
 
     return {};
 }
 
-int Platform_qtwidgets::screenNumberFor(View *view) const
+int Platform::screenNumberFor(View *view) const
 {
     if (auto widget = Views::View_qt::asQWidget(view)) {
         if (QWindow *qtwindow = widget->window()->windowHandle())
@@ -154,7 +155,7 @@ int Platform_qtwidgets::screenNumberFor(View *view) const
     return -1;
 }
 
-QSize Platform_qtwidgets::screenSizeFor(View *view) const
+QSize Platform::screenSizeFor(View *view) const
 {
     if (auto widget = Views::View_qt::asQWidget(view)) {
         if (QScreen *screen = widget->screen()) {
@@ -165,24 +166,24 @@ QSize Platform_qtwidgets::screenSizeFor(View *view) const
     return {};
 }
 
-int Platform_qtwidgets::startDragDistance_impl() const
+int Platform::startDragDistance_impl() const
 {
     return QApplication::startDragDistance();
 }
 
-View *Platform_qtwidgets::createView(Controller *controller, View *parent) const
+View *Platform::createView(Controller *controller, View *parent) const
 {
     return new qtwidgets::View_qtwidgets<QWidget>(controller, Type::None,
                                                   Views::View_qt::asQWidget(parent));
 }
 
-bool Platform_qtwidgets::usesFallbackMouseGrabber() const
+bool Platform::usesFallbackMouseGrabber() const
 {
     // For QtWidgets we just use QWidget::grabMouse()
     return false;
 }
 
-bool Platform_qtwidgets::inDisallowedDragView(QPoint globalPos) const
+bool Platform::inDisallowedDragView(QPoint globalPos) const
 {
     QWidget *widget = qApp->widgetAt(globalPos);
     if (!widget)
@@ -193,7 +194,7 @@ bool Platform_qtwidgets::inDisallowedDragView(QPoint globalPos) const
     return qobject_cast<QAbstractButton *>(widget) || qobject_cast<QLineEdit *>(widget);
 }
 
-void Platform_qtwidgets::ungrabMouse()
+void Platform::ungrabMouse()
 {
     if (QWidget *grabber = QWidget::mouseGrabber())
         grabber->releaseMouse();
@@ -207,9 +208,9 @@ inline QCoreApplication *createCoreApplication(int &argc, char **argv)
     return new QApplication(argc, argv);
 }
 
-Platform_qtwidgets::Platform_qtwidgets(int &argc, char **argv)
+Platform::Platform(int &argc, char **argv)
     : Platform_qt(createCoreApplication(argc, argv))
-    , m_globalEventFilter(new Platform_qtwidgets::GlobalEventFilter())
+    , m_globalEventFilter(new Platform::GlobalEventFilter())
 {
     qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
     qApp->setStyle(QStyleFactory::create(QStringLiteral("fusion")));

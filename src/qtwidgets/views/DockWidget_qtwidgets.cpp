@@ -24,14 +24,12 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Core;
-using namespace KDDockWidgets::qtwidgets;
 using namespace KDDockWidgets::qtwidgets;
 
-class DockWidget_qtwidgets::Private
+class DockWidget::Private
 {
 public:
-    Private(DockWidget_qtwidgets *q)
+    Private(DockWidget *q)
         : layout(new QVBoxLayout(q))
     {
         layout->setSpacing(0);
@@ -44,10 +42,10 @@ public:
     QVBoxLayout *const layout;
 };
 
-DockWidget_qtwidgets::DockWidget_qtwidgets(const QString &uniqueName, DockWidgetOptions options,
-                                           LayoutSaverOptions layoutSaverOptions,
-                                           Qt::WindowFlags windowFlags)
-    : View_qtwidgets<QWidget>(new DockWidget(this, uniqueName, options, layoutSaverOptions),
+DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
+                       LayoutSaverOptions layoutSaverOptions,
+                       Qt::WindowFlags windowFlags)
+    : View_qtwidgets<QWidget>(new Core::DockWidget(this, uniqueName, options, layoutSaverOptions),
                               Type::DockWidget, nullptr, windowFlags)
     , Views::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this))
@@ -56,12 +54,12 @@ DockWidget_qtwidgets::DockWidget_qtwidgets(const QString &uniqueName, DockWidget
     m_dockWidget->init();
 }
 
-DockWidget_qtwidgets::~DockWidget_qtwidgets()
+DockWidget::~DockWidget()
 {
     delete d;
 }
 
-void DockWidget_qtwidgets::init()
+void DockWidget::init()
 {
     connect(m_dockWidget, &Core::DockWidget::guestViewChanged, this, [this] {
         if (auto guest = dockWidget()->guestView()) {
@@ -70,12 +68,12 @@ void DockWidget_qtwidgets::init()
     });
 }
 
-void DockWidget_qtwidgets::setWidget(QWidget *widget)
+void DockWidget::setWidget(QWidget *widget)
 {
     m_dockWidget->setGuestView(ViewWrapper_qtwidgets::create(widget));
 }
 
-bool DockWidget_qtwidgets::event(QEvent *e)
+bool DockWidget::event(QEvent *e)
 {
     if (e->type() == QEvent::Show)
         m_dockWidget->open();
@@ -83,13 +81,13 @@ bool DockWidget_qtwidgets::event(QEvent *e)
     return QWidget::event(e);
 }
 
-void DockWidget_qtwidgets::resizeEvent(QResizeEvent *e)
+void DockWidget::resizeEvent(QResizeEvent *e)
 {
     m_dockWidget->onResize(e->size());
     QWidget::resizeEvent(e);
 }
 
-QWidget *DockWidget_qtwidgets::widget() const
+QWidget *DockWidget::widget() const
 {
     if (auto guest = m_dockWidget->guestView())
         return View_qt::asQWidget(guest.get());

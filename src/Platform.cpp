@@ -37,6 +37,7 @@
 #include "kdbindings/signal.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 static Platform *s_platform = nullptr;
 
@@ -116,7 +117,7 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     switch (type) {
     case FrontendType::QtWidgets:
 #ifdef KDDW_FRONTEND_QTWIDGETS
-        platform = new Platform_qtwidgets(argc, argv);
+        platform = new qtwidgets::Platform(argc, argv);
 #endif
         break;
     case FrontendType::QtQuick:

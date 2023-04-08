@@ -17,7 +17,7 @@
 
 #include <QVector>
 
-namespace KDDockWidgets {
+namespace KDDockWidgets::Core {
 
 /// @brief Represents a top-level window
 /// In Qt for example, this would be equivalent to QWindow.
@@ -26,7 +26,7 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT Window
 {
 public:
-    using Ptr = std::shared_ptr<Window>;
+    using Ptr = std::shared_ptr<Core::Window>;
     using List = QVector<Ptr>;
     typedef void (*WindowScreenChangedCallback)(QObject *context, Ptr window);
 
@@ -68,7 +68,7 @@ public:
     virtual WId handle() const = 0;
 
     /// @brief Returns whether the two Window instances refer to the same underlying platform window
-    virtual bool equals(std::shared_ptr<Window> other) const = 0;
+    virtual bool equals(std::shared_ptr<Core::Window> other) const = 0;
 
     /// @brief Returns whether a window is active
     /// An active window has keyboard focus, and might have its window decos
@@ -165,7 +165,7 @@ private:
     bool containsView(View *) const;
 };
 
-inline bool operator==(Window::Ptr w1, Window::Ptr w2)
+inline bool operator==(Core::Window::Ptr w1, Window::Ptr w2)
 {
     if (!w1 && !w2)
         return true;
@@ -176,6 +176,6 @@ inline bool operator==(Window::Ptr w1, Window::Ptr w2)
     return false;
 }
 
-bool operator!=(Window::Ptr, Window::Ptr) = delete;
+bool operator!=(Core::Window::Ptr, Core::Window::Ptr) = delete;
 
 }

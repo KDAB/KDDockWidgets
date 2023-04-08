@@ -45,15 +45,17 @@ class FloatingWindow;
 class MainWindow;
 }
 
+namespace qtwidgets {
+
 /**
  * @brief The default ViewFactory for QtWidgets frontend.
  */
-class DOCKS_EXPORT ViewFactory_qtwidgets : public ViewFactory
+class DOCKS_EXPORT ViewFactory : public Core::ViewFactory
 {
     Q_OBJECT
 public:
-    ViewFactory_qtwidgets() = default;
-    ~ViewFactory_qtwidgets() override;
+    ViewFactory() = default;
+    ~ViewFactory() override;
 
     View *createDockWidget(const QString &uniqueName, DockWidgetOptions = {},
                            LayoutSaverOptions = {}, Qt::WindowFlags = {}) const override;
@@ -80,9 +82,11 @@ public:
                                                   View *parent = nullptr) const override;
 
 private:
-    Q_DISABLE_COPY(ViewFactory_qtwidgets)
+    Q_DISABLE_COPY(ViewFactory)
     mutable QMap<std::pair<TitleBarButtonType, qreal>, QIcon> m_cachedIcons;
 };
+
+}
 
 }
 

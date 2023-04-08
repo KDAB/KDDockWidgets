@@ -20,11 +20,11 @@ class Group;
 
 namespace KDDockWidgets::qtwidgets {
 
-class DOCKS_EXPORT Group_qtwidgets : public View_qtwidgets<QWidget>, public Views::GroupViewInterface
+class DOCKS_EXPORT Group : public View_qtwidgets<QWidget>, public Views::GroupViewInterface
 {
     Q_OBJECT
 public:
-    explicit Group_qtwidgets(Core::Group *controller, QWidget *parent = nullptr);
+    explicit Group(Core::Group *controller, QWidget *parent = nullptr);
     void init() override;
 
     int nonContentsHeight() const override;

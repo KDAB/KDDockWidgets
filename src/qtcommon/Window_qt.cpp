@@ -81,7 +81,7 @@ QWindow *Window_qt::qtWindow() const
     return m_window;
 }
 
-bool Window_qt::equals(std::shared_ptr<Window> other) const
+bool Window_qt::equals(std::shared_ptr<Core::Window> other) const
 {
     auto otherQt = static_cast<Window_qt *>(other.get());
     return other && otherQt->m_window == m_window;

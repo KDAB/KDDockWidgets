@@ -16,6 +16,8 @@
 #include "kddockwidgets/ViewFactory.h"
 #include "Config.h"
 
+using namespace KDDockWidgets::Core;
+
 TEST_CASE("FloatingWindow Ctor")
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();

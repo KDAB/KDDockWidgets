@@ -19,19 +19,21 @@ namespace Core {
 class MainWindow;
 }
 
+namespace qtwidgets {
+
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
-class DOCKS_EXPORT Platform_qtwidgets : public Platform_qt
+class DOCKS_EXPORT Platform : public Platform_qt
 {
 public:
-    Platform_qtwidgets();
-    ~Platform_qtwidgets() override;
+    Platform();
+    ~Platform() override;
     const char *name() const override;
     bool hasActivePopup() const override;
     std::shared_ptr<View> qobjectAsView(QObject *) const override;
-    std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
-    ViewFactory *createDefaultViewFactory() override;
-    std::shared_ptr<Window> windowAt(QPoint globalPos) const override;
+    std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const override;
+    Core::ViewFactory *createDefaultViewFactory() override;
+    std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
 
     using Platform_qt::screenNumberFor;
     int screenNumberFor(View *) const override;
@@ -44,15 +46,15 @@ public:
     void ungrabMouse() override;
 
 #ifdef DOCKS_DEVELOPER_MODE
-    explicit Platform_qtwidgets(int &argc, char **argv);
+    explicit Platform(int &argc, char **argv);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
-    View *tests_createView(CreateViewOptions, View *parent = nullptr) override;
-    View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) override;
+    View *tests_createView(Core::CreateViewOptions, View *parent = nullptr) override;
+    View *tests_createFocusableView(Core::CreateViewOptions, View *parent = nullptr) override;
     View *tests_createNonClosableView(View *parent = nullptr) override;
-    std::shared_ptr<Window> tests_createWindow() override;
+    std::shared_ptr<Core::Window> tests_createWindow() override;
     Core::MainWindow *
-    createMainWindow(const QString &uniqueName, CreateViewOptions,
+    createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
                      View *parent = nullptr, Qt::WindowFlags = {}) const override;
 #endif
@@ -61,5 +63,6 @@ protected:
     class GlobalEventFilter;
     GlobalEventFilter *const m_globalEventFilter;
 };
+}
 
 }

@@ -71,7 +71,7 @@ public:
             // QWindow. In our case the QQuickItem. I mean, they also go to QWindow, but for our
             // QtWidgets impl we process them at the QWidget level, so use the same approach so we
             // maintain a single code path for processing mouse events
-            Platform::instance()->sendEvent(m_view, ev);
+            Core::Platform::instance()->sendEvent(m_view, ev);
             return true;
         }
 
@@ -205,7 +205,7 @@ void FloatingWindow_qtquick::init()
     }
 
     setParent(m_quickWindow->contentItem());
-    WidgetResizeHandler::setupWindow(Window::Ptr(new Window_qtquick(m_quickWindow)));
+    WidgetResizeHandler::setupWindow(Core::Window::Ptr(new Window_qtquick(m_quickWindow)));
     m_quickWindow->installEventFilter(this); // for window resizing
     m_controller->maybeCreateResizeHandler();
 

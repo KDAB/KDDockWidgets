@@ -41,8 +41,8 @@ namespace qtwidgets {
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget DockWidget instances.
  */
-class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>,
-                                          public Views::MainWindowViewInterface
+class DOCKS_EXPORT MainWindow : public View_qtwidgets<QMainWindow>,
+                                public Views::MainWindowViewInterface
 {
     Q_OBJECT
 public:
@@ -54,13 +54,13 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent QObject *parent to pass to QMainWindow constructor.
     ///@param flags Window flags to  pass to QMainWindow constructor.
-    explicit MainWindow_qtwidgets(const QString &uniqueName, MainWindowOptions options = {},
-                                  QWidget *parent = nullptr,
-                                  Qt::WindowFlags flags = Qt::WindowFlags());
+    explicit MainWindow(const QString &uniqueName, MainWindowOptions options = {},
+                        QWidget *parent = nullptr,
+                        Qt::WindowFlags flags = Qt::WindowFlags());
 
 
     /// @brief Destructor
-    ~MainWindow_qtwidgets() override;
+    ~MainWindow() override;
 
     /// @brief returns the margins for the contents widget
     QMargins centerWidgetMargins() const override;

@@ -33,7 +33,7 @@ using namespace KDDockWidgets::qtwidgets;
 class VBoxLayout : public QVBoxLayout // clazy:exclude=missing-qobject-macro
 {
 public:
-    explicit VBoxLayout(Group_qtwidgets *parent)
+    explicit VBoxLayout(Group *parent)
         : QVBoxLayout(parent)
         , m_groupWidget(parent)
     {
@@ -48,18 +48,18 @@ public:
         m_groupWidget->d->layoutInvalidated.emit();
     }
 
-    Group_qtwidgets *const m_groupWidget;
+    Group *const m_groupWidget;
 };
 
 VBoxLayout::~VBoxLayout() = default;
 
-Group_qtwidgets::Group_qtwidgets(Core::Group *controller, QWidget *parent)
+Group::Group(Core::Group *controller, QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::Frame, parent)
     , GroupViewInterface(controller)
 {
 }
 
-void Group_qtwidgets::init()
+void Group::init()
 {
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
@@ -72,14 +72,14 @@ void Group_qtwidgets::init()
         setAutoFillBackground(true);
 }
 
-void Group_qtwidgets::free_impl()
+void Group::free_impl()
 {
     // TODOm3: just use the base class impl, which uses deleteLater()
     // do it once there's no state here
     delete this;
 }
 
-int Group_qtwidgets::nonContentsHeight() const
+int Group::nonContentsHeight() const
 {
     Core::TitleBar *tb = m_group->titleBar();
     QWidget *tabBar = asQWidget(m_group->tabBar());
@@ -87,7 +87,7 @@ int Group_qtwidgets::nonContentsHeight() const
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
 }
 
-void Group_qtwidgets::paintEvent(QPaintEvent *)
+void Group::paintEvent(QPaintEvent *)
 {
     if (freed())
         return;
@@ -116,7 +116,7 @@ void Group_qtwidgets::paintEvent(QPaintEvent *)
     }
 }
 
-QSize Group_qtwidgets::maxSizeHint() const
+QSize Group::maxSizeHint() const
 {
     if (freed())
         return {};
@@ -126,7 +126,7 @@ QSize Group_qtwidgets::maxSizeHint() const
     return waste + m_group->biggestDockWidgetMaxSize();
 }
 
-QRect Group_qtwidgets::dragRect() const
+QRect Group::dragRect() const
 {
     QRect rect = m_group->dragRect();
     if (rect.isValid())

@@ -14,7 +14,7 @@
 
 TEST_CASE("Separator Ctor")
 {
-    auto hostView = Platform::instance()->createView(nullptr);
+    auto hostView = Core::Platform::instance()->createView(nullptr);
 
     {
         Core::Separator separator(hostView);

@@ -51,18 +51,18 @@ int main(int argc, char **argv)
 
     // # 1. Create our main window
 
-    KDDockWidgets::qtwidgets::MainWindow_qtwidgets mainWindow(
+    KDDockWidgets::qtwidgets::MainWindow mainWindow(
         QStringLiteral("MyMainWindow"), KDDockWidgets::MainWindowOption_HasCentralWidget);
     mainWindow.setWindowTitle("Main Window");
     mainWindow.resize(1600, 1200);
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
+    auto dock1 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock1"));
     auto widget1 = new MyWidget1();
     dock1->setWidget(widget1);
 
-    auto dock2 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock2"));
+    auto dock2 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock2"));
     auto widget2 = new MyWidget2();
     dock2->setWidget(widget2);
 
@@ -79,18 +79,18 @@ int main(int argc, char **argv)
 
     // 4. Create our MDI widgets, which will go into the MDI area
     auto mdiWidget1 =
-        new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MDI widget1"), options);
+        new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MDI widget1"), options);
     mdiWidget1->setWidget(new MyWidget1());
 
     auto mdiWidget2 =
-        new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MDI widget2"), options);
+        new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MDI widget2"), options);
     mdiWidget2->setWidget(new MyWidget2());
 
     auto mdiWidget3 =
-        new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MDI widget3"), options);
+        new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MDI widget3"), options);
     mdiWidget3->setWidget(new MyWidget3());
 
-    auto mdiArea = new KDDockWidgets::qtwidgets::MDIArea_qtwidgets();
+    auto mdiArea = new KDDockWidgets::qtwidgets::MDIArea();
     mainWindow.setPersistentCentralWidget(mdiArea);
 
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));

@@ -23,12 +23,12 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets::qtwidgets {
 
-class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>,
-                                        public Views::TitleBarViewInterface
+class DOCKS_EXPORT TitleBar : public View_qtwidgets<QWidget>,
+                              public Views::TitleBarViewInterface
 {
     Q_OBJECT
 public:
-    explicit TitleBar_qtwidgets(Core::TitleBar *controller, View *parent = nullptr);
+    explicit TitleBar(Core::TitleBar *controller, View *parent = nullptr);
 
 #ifdef DOCKS_DEVELOPER_MODE
     // The following are needed for the unit-tests

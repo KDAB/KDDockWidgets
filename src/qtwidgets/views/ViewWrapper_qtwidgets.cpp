@@ -47,52 +47,52 @@ static Controller *controllerForWidget(QWidget *widget)
         // enum
         switch (Type(i)) {
         case Type::Frame:
-            if (auto view = qobject_cast<Group_qtwidgets *>(widget))
+            if (auto view = qobject_cast<Group *>(widget))
                 return view->controller();
             break;
         case Type::TitleBar:
-            if (auto view = qobject_cast<TitleBar_qtwidgets *>(widget))
+            if (auto view = qobject_cast<TitleBar *>(widget))
                 return view->controller();
             break;
         case Type::TabBar:
-            if (auto view = qobject_cast<TabBar_qtwidgets *>(widget))
+            if (auto view = qobject_cast<TabBar *>(widget))
                 return view->controller();
             break;
         case Type::Stack:
-            if (auto view = qobject_cast<Stack_qtwidgets *>(widget))
+            if (auto view = qobject_cast<Stack *>(widget))
                 return view->controller();
             break;
         case Type::FloatingWindow:
-            if (auto view = qobject_cast<FloatingWindow_qtwidgets *>(widget))
+            if (auto view = qobject_cast<FloatingWindow *>(widget))
                 return view->controller();
             break;
         case Type::Separator:
-            if (auto view = qobject_cast<Separator_qtwidgets *>(widget))
+            if (auto view = qobject_cast<Separator *>(widget))
                 return view->controller();
             break;
         case Type::DockWidget:
-            if (auto view = qobject_cast<DockWidget_qtwidgets *>(widget))
+            if (auto view = qobject_cast<DockWidget *>(widget))
                 return view->controller();
             break;
         case Type::DropArea:
-            if (auto view = qobject_cast<DropArea_qtwidgets *>(widget))
+            if (auto view = qobject_cast<DropArea *>(widget))
                 return view->controller();
             break;
         case Type::MDILayout:
-            if (auto view = qobject_cast<MDILayout_qtwidgets *>(widget))
+            if (auto view = qobject_cast<MDILayout *>(widget))
                 return view->controller();
             break;
 
         case Type::MDIArea:
-            if (auto view = qobject_cast<MDIArea_qtwidgets *>(widget))
+            if (auto view = qobject_cast<MDIArea *>(widget))
                 return view->controller();
             break;
         case Type::SideBar:
-            if (auto view = qobject_cast<SideBar_qtwidgets *>(widget))
+            if (auto view = qobject_cast<SideBar *>(widget))
                 return view->controller();
             break;
         case Type::MainWindow:
-            if (auto view = qobject_cast<MainWindow_qtwidgets *>(widget))
+            if (auto view = qobject_cast<MainWindow *>(widget))
                 return view->controller();
             break;
         case Type::RubberBand:
@@ -159,10 +159,10 @@ void ViewWrapper_qtwidgets::setGeometry(QRect rect)
     m_widget->setGeometry(rect);
 }
 
-std::shared_ptr<Window> ViewWrapper_qtwidgets::window() const
+std::shared_ptr<Core::Window> ViewWrapper_qtwidgets::window() const
 {
     if (m_widget->window()->windowHandle())
-        return std::shared_ptr<Window>(new Window_qtwidgets(m_widget->window()));
+        return std::shared_ptr<Core::Window>(new Window(m_widget->window()));
 
     return nullptr;
 }
@@ -215,31 +215,31 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     switch (t) {
 
     case Type::Frame:
-        return qobject_cast<qtwidgets::Group_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::Group *>(m_widget);
     case Type::TitleBar:
-        return qobject_cast<qtwidgets::TitleBar_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::TitleBar *>(m_widget);
     case Type::TabBar:
-        return qobject_cast<qtwidgets::TabBar_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::TabBar *>(m_widget);
     case Type::Stack:
-        return qobject_cast<qtwidgets::Stack_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::Stack *>(m_widget);
     case Type::FloatingWindow:
-        return qobject_cast<qtwidgets::FloatingWindow_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::FloatingWindow *>(m_widget);
     case Type::Separator:
-        return qobject_cast<qtwidgets::Separator_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::Separator *>(m_widget);
     case Type::DockWidget:
-        return qobject_cast<qtwidgets::DockWidget_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::DockWidget *>(m_widget);
     case Type::SideBar:
-        return qobject_cast<qtwidgets::SideBar_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::SideBar *>(m_widget);
     case Type::MainWindow:
-        return qobject_cast<qtwidgets::MainWindow_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::MainWindow *>(m_widget);
     case Type::DropArea:
-        return qobject_cast<qtwidgets::DropArea_qtwidgets *>(m_widget);
+        return qobject_cast<qtwidgets::DropArea *>(m_widget);
     case Type::MDILayout:
-        return qobject_cast<MDILayout_qtwidgets *>(m_widget);
+        return qobject_cast<MDILayout *>(m_widget);
     case Type::RubberBand:
-        return qobject_cast<RubberBand_qtwidgets *>(m_widget);
+        return qobject_cast<RubberBand *>(m_widget);
     case Type::MDIArea:
-        return qobject_cast<MDIArea_qtwidgets *>(m_widget);
+        return qobject_cast<MDIArea *>(m_widget);
     case Type::LayoutItem:
     case Type::None:
     case Type::DropAreaIndicatorOverlay:

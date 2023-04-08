@@ -43,7 +43,7 @@ class MainWindow;
 /**
  * @brief The default ViewFactory for Flutter frontend
  */
-class DOCKS_EXPORT ViewFactory_flutter : public ViewFactory
+class DOCKS_EXPORT ViewFactory_flutter : public Core::ViewFactory
 {
     Q_OBJECT
 public:

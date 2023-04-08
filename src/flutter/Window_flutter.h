@@ -32,7 +32,7 @@ public:
     QVariant property(const char *name) const override;
     bool isVisible() const override;
     WId handle() const override;
-    bool equals(std::shared_ptr<Window> other) const override;
+    bool equals(std::shared_ptr<Core::Window> other) const override;
     void setFramePosition(QPoint targetPos) override;
     QRect frameGeometry() const override;
     void resize(int width, int height) override;

@@ -126,9 +126,9 @@ void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
                     Core::Group *relativeTo, KDDockWidgets::Location location);
 
 
-void doubleClickOn(QPoint globalPos, std::shared_ptr<Window> receiver);
+void doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver);
 void pressOn(QPoint globalPos, View *receiver);
-void pressOn(QPoint globalPos, std::shared_ptr<Window> receiver);
+void pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver);
 void releaseOn(QPoint globalPos, View *receiver);
 void clickOn(QPoint globalPos, View *receiver);
 void moveMouseTo(QPoint globalDest, View *receiver);

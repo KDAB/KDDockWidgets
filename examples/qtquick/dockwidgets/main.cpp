@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
         internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseParentForFloatingWindows;
 
     if (parser.isSet(noDropIndicators))
-        KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
+        KDDockWidgets::Core::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
 #if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))

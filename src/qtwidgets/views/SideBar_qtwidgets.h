@@ -31,14 +31,14 @@ class SideBar;
 }
 
 namespace qtwidgets {
-class SideBar_qtwidgets;
+class SideBar;
 }
 
 class DOCKS_EXPORT SideBarButton : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit SideBarButton(Core::DockWidget *dw, qtwidgets::SideBar_qtwidgets *parent);
+    explicit SideBarButton(Core::DockWidget *dw, qtwidgets::SideBar *parent);
 
 protected:
     void paintEvent(QPaintEvent *) override;
@@ -52,11 +52,11 @@ private:
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>, public Views::SideBarViewInterface
+class DOCKS_EXPORT SideBar : public View_qtwidgets<QWidget>, public Views::SideBarViewInterface
 {
     Q_OBJECT
 public:
-    explicit SideBar_qtwidgets(Core::SideBar *, QWidget *parent);
+    explicit SideBar(Core::SideBar *, QWidget *parent);
 
 protected:
     void addDockWidget_Impl(Core::DockWidget *dock) override;
@@ -64,7 +64,7 @@ protected:
 
     // virtual so users can provide their own buttons
     virtual SideBarButton *createButton(Core::DockWidget *dw,
-                                        SideBar_qtwidgets *parent) const;
+                                        SideBar *parent) const;
 
 private:
     void init() override;

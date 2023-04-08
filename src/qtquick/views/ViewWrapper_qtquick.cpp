@@ -152,11 +152,11 @@ std::shared_ptr<View> ViewWrapper_qtquick::childViewAt(QPoint p) const
     return child ? View_qtquick::asQQuickWrapper(child) : nullptr;
 }
 
-std::shared_ptr<Window> ViewWrapper_qtquick::window() const
+std::shared_ptr<Core::Window> ViewWrapper_qtquick::window() const
 {
     if (QWindow *w = m_item->window()) {
         auto windowqtquick = new Window_qtquick(w);
-        return std::shared_ptr<Window>(windowqtquick);
+        return std::shared_ptr<Core::Window>(windowqtquick);
     }
 
     return {};
@@ -301,7 +301,7 @@ bool ViewWrapper_qtquick::is(Type t) const
 
 std::shared_ptr<View> ViewWrapper_qtquick::rootView() const
 {
-    if (Window::Ptr window = this->window())
+    if (Core::Window::Ptr window = this->window())
         return window->rootView();
 
     qWarning() << Q_FUNC_INFO << "No window present";

@@ -299,7 +299,7 @@ bool View::isNull() const
     return false;
 }
 
-bool View::isInWindow(std::shared_ptr<Window> window) const
+bool View::isInWindow(std::shared_ptr<Core::Window> window) const
 {
     if (!window)
         return false;
@@ -319,7 +319,7 @@ QSize View::parentSize() const
 
 QRect View::windowGeometry() const
 {
-    if (Window::Ptr window = this->window())
+    if (Core::Window::Ptr window = this->window())
         return window->geometry();
 
     return {};
@@ -333,7 +333,7 @@ void View::closeRootView()
 
 Screen::Ptr View::screen() const
 {
-    if (Window::Ptr window = this->window())
+    if (Core::Window::Ptr window = this->window())
         return window->screen();
 
     return nullptr;
@@ -387,7 +387,7 @@ void View::createPlatformWindow()
     qFatal("Shouldn't be called on this platform");
 }
 
-std::shared_ptr<Window> View::transientWindow() const
+std::shared_ptr<Core::Window> View::transientWindow() const
 {
     if (auto w = window())
         return w->transientParent();

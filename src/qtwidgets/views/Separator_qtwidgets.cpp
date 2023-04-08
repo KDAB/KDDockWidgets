@@ -23,14 +23,14 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
-Separator_qtwidgets::Separator_qtwidgets(Core::Separator *controller, View *parent)
+Separator::Separator(Core::Separator *controller, View *parent)
     : View_qtwidgets(controller, Type::Separator, View_qt::asQWidget(parent))
     , m_controller(controller)
 {
     setMouseTracking(true);
 }
 
-void Separator_qtwidgets::paintEvent(QPaintEvent *ev)
+void Separator::paintEvent(QPaintEvent *ev)
 {
     if (freed())
         return;
@@ -56,7 +56,7 @@ void Separator_qtwidgets::paintEvent(QPaintEvent *ev)
     QWidget::parentWidget()->style()->drawControl(QStyle::CE_Splitter, &opt, &p, this);
 }
 
-void Separator_qtwidgets::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
+void Separator::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
 {
     if (freed())
         return;
@@ -68,12 +68,12 @@ void Separator_qtwidgets::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
         setCursor(Qt::SizeHorCursor);
 }
 
-void Separator_qtwidgets::leaveEvent(QEvent *)
+void Separator::leaveEvent(QEvent *)
 {
     setCursor(Qt::ArrowCursor);
 }
 
-void Separator_qtwidgets::mousePressEvent(QMouseEvent *)
+void Separator::mousePressEvent(QMouseEvent *)
 {
     if (freed())
         return;
@@ -81,7 +81,7 @@ void Separator_qtwidgets::mousePressEvent(QMouseEvent *)
     m_controller->onMousePress();
 }
 
-void Separator_qtwidgets::mouseMoveEvent(QMouseEvent *ev)
+void Separator::mouseMoveEvent(QMouseEvent *ev)
 {
     if (freed())
         return;
@@ -89,7 +89,7 @@ void Separator_qtwidgets::mouseMoveEvent(QMouseEvent *ev)
     m_controller->onMouseMove(mapToParent(ev->pos()));
 }
 
-void Separator_qtwidgets::mouseReleaseEvent(QMouseEvent *)
+void Separator::mouseReleaseEvent(QMouseEvent *)
 {
     if (freed())
         return;
@@ -97,7 +97,7 @@ void Separator_qtwidgets::mouseReleaseEvent(QMouseEvent *)
     m_controller->onMouseReleased();
 }
 
-void Separator_qtwidgets::mouseDoubleClickEvent(QMouseEvent *)
+void Separator::mouseDoubleClickEvent(QMouseEvent *)
 {
     if (freed())
         return;

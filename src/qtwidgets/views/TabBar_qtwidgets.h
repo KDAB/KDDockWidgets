@@ -28,11 +28,11 @@ class DockWidget;
 
 namespace KDDockWidgets::qtwidgets {
 
-class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>, public Views::TabBarViewInterface
+class DOCKS_EXPORT TabBar : public View_qtwidgets<QTabBar>, public Views::TabBarViewInterface
 {
     Q_OBJECT
 public:
-    explicit TabBar_qtwidgets(Core::TabBar *controller, QWidget *parent = nullptr);
+    explicit TabBar(Core::TabBar *controller, QWidget *parent = nullptr);
 
     Core::TabBar *tabBar() const;
 

@@ -12,6 +12,8 @@
 #include "main.h"
 #include "private/View_p.h"
 
+using namespace KDDockWidgets::Core;
+
 TEST_CASE("View::setParent()")
 {
     auto rootView = createViewAndWindow({});
@@ -102,7 +104,7 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
     rootView->setGeometry(initialGeo);
     CHECK_EQ(rootView->pos(), initialGeo.topLeft());
 
-    Window::Ptr window = rootView->window();
+    Core::Window::Ptr window = rootView->window();
     CHECK_EQ(window->geometry(), initialGeo);
 
     CHECK_EQ(rootView->size(), initialGeo.size());

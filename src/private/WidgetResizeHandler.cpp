@@ -42,13 +42,14 @@
 #endif
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 #ifdef Q_OS_WIN
 namespace KDDockWidgets {
 Window::Ptr windowForHandle(WId id)
 {
     const Window::List windows = Platform::instance()->windows();
-    for (Window::Ptr w : windows) {
+    for (Core::Window::Ptr w : windows) {
         if (w->isVisible() && w->handle() == id) {
             return w;
         }
@@ -383,7 +384,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::FloatingWindow *fw,
     return handleWindowsNativeEvent(fw->view()->window(), msg, result, {});
 }
 
-bool WidgetResizeHandler::handleWindowsNativeEvent(Window::Ptr w, MSG *msg,
+bool WidgetResizeHandler::handleWindowsNativeEvent(Core::Window::Ptr w, MSG *msg,
                                                    Qt5Qt6Compat::qintptr *result,
                                                    const NativeFeatures &features)
 {
@@ -600,7 +601,7 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
 }
 
 /** static */
-void WidgetResizeHandler::setupWindow(Window::Ptr window)
+void WidgetResizeHandler::setupWindow(Core::Window::Ptr window)
 {
     // Does some minor setup on our QWindow.
     // Like adding the drop shadow on Windows and two other workarounds.
@@ -693,7 +694,7 @@ CustomFrameHelper::~CustomFrameHelper()
     m_inDtor = true;
 }
 
-void CustomFrameHelper::applyCustomFrame(Window::Ptr window)
+void CustomFrameHelper::applyCustomFrame(Core::Window::Ptr window)
 {
 #ifdef Q_OS_WIN
     WidgetResizeHandler::setupWindow(window);

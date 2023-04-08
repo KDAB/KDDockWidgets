@@ -266,7 +266,7 @@ public:
     {
         s_currentLayoutBeingRestored = this;
 
-        const auto screens = Platform::instance()->screens();
+        const auto screens = Core::Platform::instance()->screens();
         const int numScreens = screens.size();
         screenInfo.reserve(numScreens);
         for (int i = 0; i < numScreens; ++i) {
@@ -331,7 +331,7 @@ public:
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);
 
     template<typename T>
-    void deserializeWindowGeometry(const T &saved, Window::Ptr);
+    void deserializeWindowGeometry(const T &saved, Core::Window::Ptr);
     void deleteEmptyGroups();
     void clearRestoredProperty();
 

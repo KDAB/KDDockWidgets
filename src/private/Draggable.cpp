@@ -57,7 +57,7 @@ View *Draggable::asView() const
 
 bool Draggable::dragCanStart(QPoint pressPos, QPoint globalPos) const
 {
-    return (globalPos - pressPos).manhattanLength() > Platform::instance()->startDragDistance();
+    return (globalPos - pressPos).manhattanLength() > Core::Platform::instance()->startDragDistance();
 }
 
 void Draggable::setWidgetResizeHandler(WidgetResizeHandler *w)

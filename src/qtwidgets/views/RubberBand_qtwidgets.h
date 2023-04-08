@@ -17,12 +17,12 @@ namespace KDDockWidgets {
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT RubberBand_qtwidgets : public View_qtwidgets<QRubberBand>
+class DOCKS_EXPORT RubberBand : public View_qtwidgets<QRubberBand>
 {
     Q_OBJECT
 public:
-    explicit RubberBand_qtwidgets(QWidget *parent = nullptr);
-    ~RubberBand_qtwidgets() override;
+    explicit RubberBand(QWidget *parent = nullptr);
+    ~RubberBand() override;
 };
 
 }

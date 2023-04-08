@@ -17,13 +17,13 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 using namespace KDDockWidgets::Core;
 
-MainWindowMDI_qtwidgets::MainWindowMDI_qtwidgets(const QString &uniqueName, QWidget *parent,
-                                                 Qt::WindowFlags flags)
-    : qtwidgets::MainWindow_qtwidgets(uniqueName, MainWindowOption_MDI, parent, flags)
+MainWindowMDI::MainWindowMDI(const QString &uniqueName, QWidget *parent,
+                             Qt::WindowFlags flags)
+    : qtwidgets::MainWindow(uniqueName, MainWindowOption_MDI, parent, flags)
     , Views::MainWindowMDIViewInterface(mainWindow()->mdiLayout())
 {
 }
 
-MainWindowMDI_qtwidgets::~MainWindowMDI_qtwidgets()
+MainWindowMDI::~MainWindowMDI()
 {
 }

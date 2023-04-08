@@ -38,10 +38,10 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
-class FloatingWindow_qtwidgets::Private
+class FloatingWindow::Private
 {
 public:
-    Private(FloatingWindow_qtwidgets *q, Core::FloatingWindow *controller)
+    Private(FloatingWindow *q, Core::FloatingWindow *controller)
         : m_vlayout(new QVBoxLayout(q))
         , m_controller(controller)
     {
@@ -52,19 +52,19 @@ public:
     bool m_connectedToScreenChanged = false;
 };
 
-FloatingWindow_qtwidgets::FloatingWindow_qtwidgets(Core::FloatingWindow *controller,
-                                                   QMainWindow *parent, Qt::WindowFlags windowFlags)
+FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
+                               QMainWindow *parent, Qt::WindowFlags windowFlags)
     : View_qtwidgets<QWidget>(controller, Type::FloatingWindow, parent, windowFlags)
     , d(new Private(this, controller))
 {
 }
 
-FloatingWindow_qtwidgets::~FloatingWindow_qtwidgets()
+FloatingWindow::~FloatingWindow()
 {
     delete d;
 }
 
-void FloatingWindow_qtwidgets::paintEvent(QPaintEvent *ev)
+void FloatingWindow::paintEvent(QPaintEvent *ev)
 {
     if (Config::self().disabledPaintEvents() & Config::CustomizableWidget_FloatingWindow) {
         QWidget::paintEvent(ev);
@@ -81,7 +81,7 @@ void FloatingWindow_qtwidgets::paintEvent(QPaintEvent *ev)
     p.drawRect(rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth));
 }
 
-bool FloatingWindow_qtwidgets::event(QEvent *ev)
+bool FloatingWindow::event(QEvent *ev)
 {
     if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick
         && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
@@ -122,30 +122,30 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
     return View_qtwidgets<QWidget>::event(ev);
 }
 
-void FloatingWindow_qtwidgets::init()
+void FloatingWindow::init()
 {
     d->m_vlayout->setSpacing(0);
     updateMargins();
     d->m_vlayout->addWidget(View_qt::asQWidget(d->m_controller->titleBar()));
     d->m_vlayout->addWidget(View_qt::asQWidget(d->m_controller->dropArea()));
 
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Window::Ptr w) {
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
         if (isInWindow(w))
             updateMargins();
     });
 }
 
-void FloatingWindow_qtwidgets::updateMargins()
+void FloatingWindow::updateMargins()
 {
     d->m_vlayout->setContentsMargins(QMargins(4, 4, 4, 4) * logicalDpiFactor(this));
 }
 
-Core::FloatingWindow *FloatingWindow_qtwidgets::floatingWindow() const
+Core::FloatingWindow *FloatingWindow::floatingWindow() const
 {
     return d->m_controller;
 }
 
-bool FloatingWindow_qtwidgets::eventFilter(QObject *, QEvent *ev)
+bool FloatingWindow::eventFilter(QObject *, QEvent *ev)
 {
     if (ev->type() == QEvent::WindowStateChange) {
 

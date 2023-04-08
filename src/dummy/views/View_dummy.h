@@ -93,7 +93,7 @@ public:
     bool isMinimized() const override;
     bool isMaximized() const override;
 
-    std::shared_ptr<Window> window() const override;
+    std::shared_ptr<Core::Window> window() const override;
     std::shared_ptr<View> childViewAt(QPoint p) const override;
     std::shared_ptr<View> rootView() const override;
     std::shared_ptr<View> parentView() const override;

@@ -122,20 +122,20 @@ public:
 
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both
     /// QtWidgets and QtQuick
-    const QVector<std::shared_ptr<Window>> floatingQWindows() const;
+    const QVector<std::shared_ptr<Core::Window>> floatingQWindows() const;
 
     ///@brief returns whether if there's at least one floating window
     Q_INVOKABLE bool hasFloatingWindows() const;
 
     ///@brief returns the FloatingWindow with handle @p windowHandle
     Core::FloatingWindow *
-    floatingWindowForHandle(std::shared_ptr<Window> windowHandle) const;
+    floatingWindowForHandle(std::shared_ptr<Core::Window> windowHandle) const;
 
     ///@brief returns the FloatingWindow with handle @p hwnd
     Core::FloatingWindow *floatingWindowForHandle(WId hwnd) const;
 
     ///@brief returns the MainWindow with handle @p windowHandle
-    Core::MainWindow *mainWindowForHandle(std::shared_ptr<Window> windowHandle) const;
+    Core::MainWindow *mainWindowForHandle(std::shared_ptr<Core::Window> windowHandle) const;
 
     ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and
     /// MainWindow instances.
@@ -148,7 +148,7 @@ public:
     /// MainWindow.
     ///
     /// If @p excludeFloatingDocks is true then FloatingWindow won't be returned
-    QVector<std::shared_ptr<Window>> topLevels(bool excludeFloatingDocks = false) const;
+    QVector<std::shared_ptr<Core::Window>> topLevels(bool excludeFloatingDocks = false) const;
 
     /**
      * @brief Closes all dock widgets, and destroys all FloatingWindows
@@ -215,11 +215,11 @@ public:
     /// geometries.
     /// @param target The window which we want to know if it's probably obscured
     /// @param exclude This window should not be counted as an obscurer. (It's being dragged).
-    bool isProbablyObscured(std::shared_ptr<Window> target,
+    bool isProbablyObscured(std::shared_ptr<Core::Window> target,
                             Core::FloatingWindow *exclude) const;
 
     /// @overload
-    bool isProbablyObscured(std::shared_ptr<Window> target, WindowBeingDragged *exclude) const;
+    bool isProbablyObscured(std::shared_ptr<Core::Window> target, WindowBeingDragged *exclude) const;
 
     ///@brief Returns whether the specified dock widget is in a side bar, and which.
     /// SideBarLocation::None is returned if it's not in a sidebar.
@@ -234,7 +234,7 @@ public:
 
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen
-    void windowChangedScreen(std::shared_ptr<Window>);
+    void windowChangedScreen(std::shared_ptr<Core::Window>);
 
     /// @brief emitted when the MDI group that's being resized changed
     void groupInMDIResizeChanged();
@@ -251,7 +251,7 @@ private:
     void setFocusedDockWidget(Core::DockWidget *);
 
     // EventFilterInterface:
-    bool onExposeEvent(std::shared_ptr<Window>) override;
+    bool onExposeEvent(std::shared_ptr<Core::Window>) override;
     bool onMouseButtonPress(View *, MouseEvent *) override;
 
     class Private;

@@ -29,6 +29,8 @@
 #include <QDebug>
 #include <QOperatingSystemVersion>
 
+using namespace KDDockWidgets::Core;
+
 namespace KDDockWidgets {
 
 class Config::Private

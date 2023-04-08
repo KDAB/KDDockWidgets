@@ -62,10 +62,10 @@ std::shared_ptr<View> Window_qtquick::rootView() const
     return {};
 }
 
-Window::Ptr Window_qtquick::transientParent() const
+Core::Window::Ptr Window_qtquick::transientParent() const
 {
     if (QWindow *w = m_window->transientParent())
-        return Window::Ptr(new Window_qtquick(w));
+        return Core::Window::Ptr(new Window_qtquick(w));
 
     return nullptr;
 }

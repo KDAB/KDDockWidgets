@@ -33,9 +33,9 @@ namespace KDDockWidgets {
 class EventFilterInterface;
 class Controller;
 class Screen;
-class Window;
 
 namespace Core {
+class Window;
 class MDILayout;
 class DropArea;
 class DockWidget;
@@ -173,7 +173,7 @@ public:
     /// @brief Returns the window this view is inside
     /// For the Qt frontend, this wraps a QWindow.
     /// Like QWidget::window()
-    virtual std::shared_ptr<Window> window() const = 0;
+    virtual std::shared_ptr<Core::Window> window() const = 0;
 
     /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
     virtual std::shared_ptr<View> parentView() const = 0;
@@ -240,7 +240,7 @@ public:
     void setSize(QSize);
 
     /// @brief Convenience. See Window::transientWindow().
-    std::shared_ptr<Window> transientWindow() const;
+    std::shared_ptr<Core::Window> transientWindow() const;
 
     void closeRootView();
     QRect windowGeometry() const;
@@ -263,7 +263,7 @@ public:
     Core::Layout *asLayout() const;
 
     /// @brief returns whether this view is inside the specified window
-    bool isInWindow(std::shared_ptr<Window> window) const;
+    bool isInWindow(std::shared_ptr<Core::Window> window) const;
 
     /// @brief If true, it means destruction hasn't happen yet but is about to happen.
     /// Useful when a controller is under destructions and wants all related views to stop painting

@@ -20,20 +20,22 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+namespace Core {
 class Window;
+}
 
 /// @brief Baseclass platform for Qt based platform
 /// Useful since QtWidgets and QtQuick share some similarities
-class DOCKS_EXPORT Platform_qt : public Platform
+class DOCKS_EXPORT Platform_qt : public Core::Platform
 {
 public:
     Platform_qt();
     ~Platform_qt() override;
 
     std::shared_ptr<View> focusedView() const override;
-    QVector<std::shared_ptr<Window>> windows() const override;
-    virtual std::shared_ptr<Window> windowFromQWindow(QWindow *) const = 0;
-    int screenNumberFor(std::shared_ptr<Window>) const override;
+    QVector<std::shared_ptr<Core::Window>> windows() const override;
+    virtual std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const = 0;
+    int screenNumberFor(std::shared_ptr<Core::Window>) const override;
 
     void sendEvent(View *, QEvent *) const override;
 
@@ -57,7 +59,7 @@ public:
     /// Nullptr if it's not a view. TODOm3: This is shared between the
     /// QtQuick and QWidgets impl, but will be remove once we started removing Qt from backend
     virtual std::shared_ptr<View> qobjectAsView(QObject *) const = 0;
-    std::shared_ptr<Window> qobjectAsWindow(QObject *) const;
+    std::shared_ptr<Core::Window> qobjectAsWindow(QObject *) const;
 
     static Platform_qt *instance();
 
@@ -69,16 +71,16 @@ public:
 
     static bool isGammaray();
     explicit Platform_qt(QCoreApplication *);
-    bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const override;
+    bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const override;
     bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const override;
-    bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type,
+    bool tests_waitForEvent(std::shared_ptr<Core::Window>, QEvent::Type type,
                             int timeout = 5000) const override;
     bool tests_waitForResize(View *, int timeout = 2000) const override;
     bool tests_waitForResize(Controller *, int timeout = 2000) const override;
     bool tests_waitForDeleted(View *, int timeout = 2000) const override;
     bool tests_waitForDeleted(QObject *, int timeout = 2000) const override;
-    void tests_sendEvent(std::shared_ptr<Window>, QEvent *) const override;
+    void tests_sendEvent(std::shared_ptr<Core::Window>, QEvent *) const override;
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     void tests_wait(int ms) override;

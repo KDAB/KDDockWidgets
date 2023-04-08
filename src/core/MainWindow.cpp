@@ -529,7 +529,7 @@ QRect MainWindow::Private::windowGeometry() const
     /// - QWidgets: Our MainWindow is embedded in another widget
     /// - QtQuick: Our MainWindow is QQuickItem
 
-    if (Window::Ptr window = q->view()->window())
+    if (Core::Window::Ptr window = q->view()->window())
         return window->geometry();
 
     return q->window()->geometry();

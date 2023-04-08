@@ -21,13 +21,13 @@ class SegmentedIndicators;
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT SegmentedIndicatorsOverlay_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT SegmentedIndicatorsOverlay : public View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit SegmentedIndicatorsOverlay_qtwidgets(Core::SegmentedIndicators *controller,
-                                                  QWidget *parent = nullptr);
-    ~SegmentedIndicatorsOverlay_qtwidgets() override;
+    explicit SegmentedIndicatorsOverlay(Core::SegmentedIndicators *controller,
+                                        QWidget *parent = nullptr);
+    ~SegmentedIndicatorsOverlay() override;
 
     static QColor s_segmentPenColor;
     static QColor s_segmentBrushColor;

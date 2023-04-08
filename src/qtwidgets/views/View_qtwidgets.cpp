@@ -72,11 +72,11 @@ View_qtwidgets<QLineEdit>::View_qtwidgets(KDDockWidgets::Controller *controller,
 }
 
 template<class T>
-std::shared_ptr<Window> View_qtwidgets<T>::window() const
+std::shared_ptr<Core::Window> View_qtwidgets<T>::window() const
 {
     if (QWidget *root = QWidget::window()) {
         if (root->window()) {
-            return std::shared_ptr<Window>(new Window_qtwidgets(root));
+            return std::shared_ptr<Core::Window>(new Window(root));
         }
     }
 

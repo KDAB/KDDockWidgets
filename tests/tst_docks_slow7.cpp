@@ -49,12 +49,12 @@ class TestDocks : public QObject
 public Q_SLOTS:
     void initTestCase()
     {
-        KDDockWidgets::Platform::instance()->installMessageHandler();
+        KDDockWidgets::Core::Platform::instance()->installMessageHandler();
     }
 
     void cleanupTestCase()
     {
-        KDDockWidgets::Platform::instance()->uninstallMessageHandler();
+        KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
     }
 
 private Q_SLOTS:

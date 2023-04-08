@@ -46,67 +46,68 @@
 // clazy:excludeall=ctor-missing-parent-argument
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtwidgets;
 
 
-ViewFactory_qtwidgets::~ViewFactory_qtwidgets()
+ViewFactory::~ViewFactory()
 {
 }
 
-View *ViewFactory_qtwidgets::createDockWidget(const QString &uniqueName, DockWidgetOptions options,
-                                              LayoutSaverOptions layoutSaverOptions,
-                                              Qt::WindowFlags windowFlags) const
+View *ViewFactory::createDockWidget(const QString &uniqueName, DockWidgetOptions options,
+                                    LayoutSaverOptions layoutSaverOptions,
+                                    Qt::WindowFlags windowFlags) const
 {
-    return new qtwidgets::DockWidget_qtwidgets(uniqueName, options, layoutSaverOptions, windowFlags);
+    return new qtwidgets::DockWidget(uniqueName, options, layoutSaverOptions, windowFlags);
 }
 
 
-View *ViewFactory_qtwidgets::createGroup(Core::Group *controller,
-                                         View *parent = nullptr) const
+View *ViewFactory::createGroup(Core::Group *controller,
+                               View *parent = nullptr) const
 {
-    return new qtwidgets::Group_qtwidgets(controller, Views::View_qt::asQWidget(parent));
+    return new qtwidgets::Group(controller, Views::View_qt::asQWidget(parent));
 }
 
-View *ViewFactory_qtwidgets::createTitleBar(Core::TitleBar *titleBar, View *parent) const
+View *ViewFactory::createTitleBar(Core::TitleBar *titleBar, View *parent) const
 {
-    return new qtwidgets::TitleBar_qtwidgets(titleBar, parent);
+    return new qtwidgets::TitleBar(titleBar, parent);
 }
 
-View *ViewFactory_qtwidgets::createTabBar(Core::TabBar *tabBar, View *parent) const
+View *ViewFactory::createTabBar(Core::TabBar *tabBar, View *parent) const
 {
-    return new qtwidgets::TabBar_qtwidgets(tabBar, Views::View_qt::asQWidget(parent));
+    return new qtwidgets::TabBar(tabBar, Views::View_qt::asQWidget(parent));
 }
 
-View *ViewFactory_qtwidgets::createStack(Core::Stack *controller, View *parent) const
+View *ViewFactory::createStack(Core::Stack *controller, View *parent) const
 {
-    return new qtwidgets::Stack_qtwidgets(controller, Views::View_qt::asQWidget(parent));
+    return new qtwidgets::Stack(controller, Views::View_qt::asQWidget(parent));
 }
 
-View *ViewFactory_qtwidgets::createSeparator(Core::Separator *controller, View *parent) const
+View *ViewFactory::createSeparator(Core::Separator *controller, View *parent) const
 {
-    return new qtwidgets::Separator_qtwidgets(controller, parent);
+    return new qtwidgets::Separator(controller, parent);
 }
 
-View *ViewFactory_qtwidgets::createFloatingWindow(Core::FloatingWindow *controller,
-                                                  Core::MainWindow *parent,
-                                                  Qt::WindowFlags windowFlags) const
+View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
+                                        Core::MainWindow *parent,
+                                        Qt::WindowFlags windowFlags) const
 {
     auto mainwindow =
         qobject_cast<QMainWindow *>(Views::View_qt::asQWidget(parent ? parent->view() : nullptr));
-    return new qtwidgets::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
+    return new qtwidgets::FloatingWindow(controller, mainwindow, windowFlags);
 }
 
-View *ViewFactory_qtwidgets::createRubberBand(View *parent) const
+View *ViewFactory::createRubberBand(View *parent) const
 {
-    return new qtwidgets::RubberBand_qtwidgets(Views::View_qt::asQWidget(parent));
+    return new qtwidgets::RubberBand(Views::View_qt::asQWidget(parent));
 }
 
-View *ViewFactory_qtwidgets::createSideBar(Core::SideBar *controller, View *parent) const
+View *ViewFactory::createSideBar(Core::SideBar *controller, View *parent) const
 {
-    return new qtwidgets::SideBar_qtwidgets(controller, Views::View_qt::asQWidget(parent));
+    return new qtwidgets::SideBar(controller, Views::View_qt::asQWidget(parent));
 }
 
-QAbstractButton *ViewFactory_qtwidgets::createTitleBarButton(QWidget *parent,
-                                                             TitleBarButtonType type) const
+QAbstractButton *ViewFactory::createTitleBarButton(QWidget *parent,
+                                                   TitleBarButtonType type) const
 {
     if (!parent) {
         qWarning() << Q_FUNC_INFO << "Parent not provided";
@@ -120,7 +121,7 @@ QAbstractButton *ViewFactory_qtwidgets::createTitleBarButton(QWidget *parent,
 }
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets
-QIcon ViewFactory_qtwidgets::iconForButtonType(TitleBarButtonType type, qreal dpr) const
+QIcon ViewFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
 {
     auto key = std::make_pair(type, dpr);
     auto it = m_cachedIcons.constFind(key);
@@ -174,30 +175,30 @@ QIcon ViewFactory_qtwidgets::iconForButtonType(TitleBarButtonType type, qreal dp
     return icon;
 }
 
-View *ViewFactory_qtwidgets::createDropArea(Core::DropArea *controller, View *parent) const
+View *ViewFactory::createDropArea(Core::DropArea *controller, View *parent) const
 {
-    return new qtwidgets::DropArea_qtwidgets(controller, parent);
+    return new qtwidgets::DropArea(controller, parent);
 }
 
-View *ViewFactory_qtwidgets::createMDILayout(Core::MDILayout *controller, View *parent) const
+View *ViewFactory::createMDILayout(Core::MDILayout *controller, View *parent) const
 {
-    return new qtwidgets::MDILayout_qtwidgets(controller, parent);
+    return new qtwidgets::MDILayout(controller, parent);
 }
 
-View *ViewFactory_qtwidgets::createSegmentedDropIndicatorOverlayView(
+View *ViewFactory::createSegmentedDropIndicatorOverlayView(
     Core::SegmentedIndicators *controller, View *parent) const
 {
-    return new qtwidgets::SegmentedIndicatorsOverlay_qtwidgets(controller,
-                                                               Views::View_qt::asQWidget(parent));
+    return new qtwidgets::SegmentedIndicatorsOverlay(controller,
+                                                     Views::View_qt::asQWidget(parent));
 }
 
-Views::ClassicIndicatorWindowViewInterface *ViewFactory_qtwidgets::createClassicIndicatorWindow(
+Views::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
     Core::ClassicIndicators *classicIndicators) const
 {
-    return new IndicatorWindow_qtwidgets(classicIndicators);
+    return new qtwidgets::IndicatorWindow(classicIndicators);
 }
 
-void ViewFactory_qtwidgets::clearIconCache()
+void ViewFactory::clearIconCache()
 {
     m_cachedIcons.clear();
 }

@@ -105,21 +105,21 @@ std::shared_ptr<View> Platform_qtquick::qobjectAsView(QObject *obj) const
     return Views::ViewWrapper_qtquick::create(obj);
 }
 
-std::shared_ptr<Window> Platform_qtquick::windowFromQWindow(QWindow *qwindow) const
+std::shared_ptr<Core::Window> Platform_qtquick::windowFromQWindow(QWindow *qwindow) const
 {
-    return std::shared_ptr<Window>(new Window_qtquick(qwindow));
+    return std::shared_ptr<Core::Window>(new Window_qtquick(qwindow));
 }
 
-ViewFactory *Platform_qtquick::createDefaultViewFactory()
+Core::ViewFactory *Platform_qtquick::createDefaultViewFactory()
 {
     return new ViewFactory_qtquick();
 }
 
-Window::Ptr Platform_qtquick::windowAt(QPoint globalPos) const
+Core::Window::Ptr Platform_qtquick::windowAt(QPoint globalPos) const
 {
     if (auto qwindow = qGuiApp->QGuiApplication::topLevelAt(globalPos)) {
         auto window = new Window_qtquick(qwindow);
-        return Window::Ptr(window);
+        return Core::Window::Ptr(window);
     }
 
     return {};

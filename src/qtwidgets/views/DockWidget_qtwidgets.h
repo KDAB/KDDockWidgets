@@ -34,8 +34,8 @@ namespace qtwidgets {
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtwidgets : public qtwidgets::View_qtwidgets<QWidget>,
-                                          public Views::DockWidgetViewInterface
+class DOCKS_EXPORT DockWidget : public qtwidgets::View_qtwidgets<QWidget>,
+                                public Views::DockWidgetViewInterface
 {
     Q_OBJECT
 public:
@@ -53,12 +53,12 @@ public:
      * when visible, or stays without a parent when hidden. This allows to support docking
      * to different main windows.
      */
-    explicit DockWidget_qtwidgets(const QString &uniqueName, DockWidgetOptions options = {},
-                                  LayoutSaverOptions layoutSaverOptions = {},
-                                  Qt::WindowFlags windowFlags = Qt::Tool);
+    explicit DockWidget(const QString &uniqueName, DockWidgetOptions options = {},
+                        LayoutSaverOptions layoutSaverOptions = {},
+                        Qt::WindowFlags windowFlags = Qt::Tool);
 
     ///@brief destructor
-    ~DockWidget_qtwidgets() override;
+    ~DockWidget() override;
 
     /**
      * @brief sets the widget which this dock widget hosts.

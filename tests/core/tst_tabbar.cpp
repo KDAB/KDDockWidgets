@@ -17,6 +17,7 @@
 #include "kddockwidgets/ViewFactory.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 TEST_CASE("TabBar ctor")
 {

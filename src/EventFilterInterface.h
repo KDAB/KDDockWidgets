@@ -17,7 +17,10 @@
 
 namespace KDDockWidgets {
 
+namespace Core {
 class Window;
+}
+
 class View;
 
 class EventFilterInterface
@@ -26,7 +29,7 @@ public:
     virtual ~EventFilterInterface();
 
     /// @brief Override to handle expose events for a certain window
-    virtual bool onExposeEvent(std::shared_ptr<Window>)
+    virtual bool onExposeEvent(std::shared_ptr<Core::Window>)
     {
         return false;
     }

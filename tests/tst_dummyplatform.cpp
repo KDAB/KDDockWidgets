@@ -29,10 +29,10 @@ int main(int argc, char **argv)
     doctest::Context ctx;
     ctx.applyCommandLine(argc, argv);
 
-    Platform::tests_initPlatform(argc, argv, FrontendType::Dummy);
+    Core::Platform::tests_initPlatform(argc, argv, FrontendType::Dummy);
 
     const int exitCode = ctx.run();
-    Platform::tests_deinitPlatform();
+    Core::Platform::tests_deinitPlatform();
 
     return exitCode;
 }

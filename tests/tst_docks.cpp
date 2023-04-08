@@ -64,12 +64,12 @@ inline int widgetMinLength(Core::Group *group, Qt::Orientation o)
 
 void TestDocks::initTestCase()
 {
-    KDDockWidgets::Platform::instance()->installMessageHandler();
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
 }
 
 void TestDocks::cleanupTestCase()
 {
-    KDDockWidgets::Platform::instance()->uninstallMessageHandler();
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
 }
 
 void TestDocks::tst_simple1()

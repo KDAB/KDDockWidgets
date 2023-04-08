@@ -123,7 +123,7 @@ Core::MainWindow *Platform_flutter::createMainWindow(const QString &, CreateView
 }
 
 
-bool Platform_flutter::tests_waitForWindowActive(std::shared_ptr<Window>, int timeout) const
+bool Platform_flutter::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const
 {
     ( void )timeout;
     return false;
@@ -156,7 +156,7 @@ bool Platform_flutter::tests_waitForEvent(View *, Event::Type type, int timeout)
     return false;
 }
 
-bool Platform_flutter::tests_waitForEvent(std::shared_ptr<Window>, Event::Type type,
+bool Platform_flutter::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
                                           int timeout) const
 {
     ( void )type;
@@ -176,7 +176,7 @@ bool Platform_flutter::tests_waitForDeleted(QObject *, int timeout) const
     return false;
 }
 
-void Platform_flutter::tests_sendEvent(std::shared_ptr<Window> window, Event *ev) const
+void Platform_flutter::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const
 {
     ( void )window;
     ( void )ev;
@@ -187,7 +187,7 @@ void Platform_flutter::tests_wait(int ms)
     ( void )ms;
 }
 
-std::shared_ptr<Window> Platform_flutter::tests_createWindow()
+std::shared_ptr<Core::Window> Platform_flutter::tests_createWindow()
 {
     return {};
 }

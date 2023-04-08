@@ -370,7 +370,7 @@ void View_qtquick::setSize(int w, int h)
 
 std::shared_ptr<View> View_qtquick::rootView() const
 {
-    if (Window::Ptr window = View_qtquick::window())
+    if (Core::Window::Ptr window = View_qtquick::window())
         return window->rootView();
 
     auto thisNonConst = const_cast<View_qtquick *>(this);
@@ -697,11 +697,11 @@ bool View_qtquick::isMaximized() const
     return false;
 }
 
-std::shared_ptr<Window> View_qtquick::window() const
+std::shared_ptr<Core::Window> View_qtquick::window() const
 {
     if (QWindow *w = QQuickItem::window()) {
         auto windowqtquick = new Window_qtquick(w);
-        return std::shared_ptr<Window>(windowqtquick);
+        return std::shared_ptr<Core::Window>(windowqtquick);
     }
 
     return {};

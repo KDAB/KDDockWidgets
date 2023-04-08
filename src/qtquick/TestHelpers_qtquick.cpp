@@ -32,7 +32,7 @@ namespace KDDockWidgets {
 class TestView_qtquick : public Views::View_qtquick
 {
 public:
-    explicit TestView_qtquick(CreateViewOptions opts, QQuickItem *parent)
+    explicit TestView_qtquick(Core::CreateViewOptions opts, QQuickItem *parent)
         : Views::View_qtquick(nullptr, Type::None, parent)
         , m_opts(opts)
     {
@@ -48,7 +48,7 @@ public:
     }
 
 private:
-    CreateViewOptions m_opts;
+    Core::CreateViewOptions m_opts;
 };
 
 TestView_qtquick::~TestView_qtquick() = default;
@@ -88,7 +88,7 @@ void Platform_qtquick::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-View *Platform_qtquick::tests_createView(CreateViewOptions opts, View *parent)
+View *Platform_qtquick::tests_createView(Core::CreateViewOptions opts, View *parent)
 {
     auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
     auto newItem = new TestView_qtquick(opts, parentItem);
@@ -108,7 +108,7 @@ View *Platform_qtquick::tests_createView(CreateViewOptions opts, View *parent)
     return newItem;
 }
 
-View *Platform_qtquick::tests_createFocusableView(CreateViewOptions opts, View *parent)
+View *Platform_qtquick::tests_createFocusableView(Core::CreateViewOptions opts, View *parent)
 {
     auto view = tests_createView(opts, parent);
     view->setFocusPolicy(Qt::StrongFocus);
@@ -118,7 +118,7 @@ View *Platform_qtquick::tests_createFocusableView(CreateViewOptions opts, View *
 
 View *Platform_qtquick::tests_createNonClosableView(View *parent)
 {
-    CreateViewOptions opts;
+    Core::CreateViewOptions opts;
     opts.isVisible = true;
     auto view = tests_createView(opts, parent);
     view->d->closeRequested.connect([](QCloseEvent *ev) { ev->ignore(); });
@@ -127,7 +127,7 @@ View *Platform_qtquick::tests_createNonClosableView(View *parent)
 }
 
 Core::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
-                                                     CreateViewOptions viewOpts,
+                                                     Core::CreateViewOptions viewOpts,
                                                      MainWindowOptions options, View *parent,
                                                      Qt::WindowFlags flags) const
 {
@@ -152,9 +152,9 @@ Core::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
     return view->mainWindow();
 }
 
-std::shared_ptr<Window> Platform_qtquick::tests_createWindow()
+std::shared_ptr<Core::Window> Platform_qtquick::tests_createWindow()
 {
-    CreateViewOptions viewOpts;
+    Core::CreateViewOptions viewOpts;
     viewOpts.isVisible = true;
     auto mainWindow = createMainWindow(QStringLiteral("testWindow"), viewOpts);
     return mainWindow->view()->window();

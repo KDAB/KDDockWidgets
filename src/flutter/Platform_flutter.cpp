@@ -36,7 +36,7 @@ std::shared_ptr<View> Platform_flutter::focusedView() const
     return {};
 }
 
-QVector<std::shared_ptr<Window>> Platform_flutter::windows() const
+QVector<std::shared_ptr<Core::Window>> Platform_flutter::windows() const
 {
     return {};
 }
@@ -74,7 +74,7 @@ int Platform_flutter::screenNumberFor(View *) const
     return -1;
 }
 
-int Platform_flutter::screenNumberFor(std::shared_ptr<Window>) const
+int Platform_flutter::screenNumberFor(std::shared_ptr<Core::Window>) const
 {
     return {};
 }

@@ -27,12 +27,12 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 namespace qtwidgets {
 
-class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public Views::StackViewInterface
+class DOCKS_EXPORT Stack : public View_qtwidgets<QTabWidget>, public Views::StackViewInterface
 {
     Q_OBJECT
 public:
-    explicit Stack_qtwidgets(Core::Stack *controller, QWidget *parent = nullptr);
-    ~Stack_qtwidgets();
+    explicit Stack(Core::Stack *controller, QWidget *parent = nullptr);
+    ~Stack();
 
     /// @brief Returns the QTabBar associated with this QTabWidget
     QTabBar *tabBar() const;
@@ -61,7 +61,7 @@ private:
     QAbstractButton *m_closeButton = nullptr;
     KDBindings::ScopedConnection m_tabBarAutoHideChanged;
 
-    Q_DISABLE_COPY(Stack_qtwidgets)
+    Q_DISABLE_COPY(Stack)
 };
 
 }

@@ -54,11 +54,11 @@ int main(int argc, char *argv[])
     }
 
     // Just take the 1st frontend, any is fine
-    KDDockWidgets::Platform::tests_initPlatform(argc, argv, frontends[0]);
+    KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, frontends[0]);
 
     const int exitCode = lint(qGuiApp->arguments().at(1)) ? 0 : 2;
 
-    KDDockWidgets::Platform::tests_deinitPlatform();
+    KDDockWidgets::Core::Platform::tests_deinitPlatform();
 
     return exitCode;
 }

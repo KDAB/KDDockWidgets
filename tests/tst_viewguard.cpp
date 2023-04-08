@@ -16,6 +16,7 @@
 #include <doctest/doctest.h>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 TEST_CASE("ViewGuard test")
 {

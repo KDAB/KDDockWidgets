@@ -188,9 +188,9 @@ std::shared_ptr<View> Platform_qt::focusedView() const
     return qobjectAsView(qGuiApp->focusObject());
 }
 
-Window::List Platform_qt::windows() const
+Core::Window::List Platform_qt::windows() const
 {
-    Window::List windows;
+    Core::Window::List windows;
     const auto qtwindows = qGuiApp->topLevelWindows();
     windows.reserve(qtwindows.size());
     for (QWindow *qtwindow : qtwindows) {
@@ -200,14 +200,14 @@ Window::List Platform_qt::windows() const
     return windows;
 }
 
-std::shared_ptr<Window> Platform_qt::qobjectAsWindow(QObject *obj) const
+std::shared_ptr<Core::Window> Platform_qt::qobjectAsWindow(QObject *obj) const
 {
     if (auto window = qobject_cast<QWindow *>(obj))
         return windowFromQWindow(window);
     return nullptr;
 }
 
-int Platform_qt::screenNumberFor(std::shared_ptr<Window> window) const
+int Platform_qt::screenNumberFor(std::shared_ptr<Core::Window> window) const
 {
     if (!window)
         return -1;
@@ -264,7 +264,7 @@ void Platform_qt::setCursorPos(QPoint pos)
     QCursor::setPos(pos);
 }
 
-Platform::DisplayType Platform_qt::displayType() const
+Core::Platform::DisplayType Platform_qt::displayType() const
 {
     if (qGuiApp->platformName() == QLatin1String("wayland"))
         return DisplayType::Wayland;

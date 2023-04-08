@@ -37,7 +37,7 @@ public:
     bool isMinimized() const override;
     void setSize(int width, int height) override;
     bool is(Type) const override;
-    std::shared_ptr<Window> window() const override;
+    std::shared_ptr<Core::Window> window() const override;
     std::shared_ptr<View> rootView() const override;
     std::shared_ptr<View> parentView() const override;
     void setParent(View *) override;

@@ -23,6 +23,10 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+namespace Views {
+class ClassicIndicatorWindowViewInterface;
+}
+
 namespace Core {
 class DropIndicatorOverlay;
 class DropArea;
@@ -34,11 +38,6 @@ class MainWindow;
 class ClassicIndicators;
 class SegmentedIndicators;
 class TitleBar;
-}
-
-namespace Views {
-class ClassicIndicatorWindowViewInterface;
-}
 
 /**
  * @brief A factory class for allowing the user to customize some internal views.
@@ -143,6 +142,8 @@ public:
 private:
     Q_DISABLE_COPY(ViewFactory)
 };
+
+}
 
 }
 

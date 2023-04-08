@@ -46,7 +46,7 @@ class DropArea;
 }
 
 namespace qtwidgets {
-class DockWidget_qtwidgets;
+class DockWidget;
 }
 
 enum Location {

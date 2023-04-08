@@ -39,12 +39,12 @@ namespace qtwidgets {
  *
  * See examples/mdi_with_docking/.
  */
-class DOCKS_EXPORT MDIArea_qtwidgets : public qtwidgets::View_qtwidgets<QWidget>
+class DOCKS_EXPORT MDIArea : public qtwidgets::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit MDIArea_qtwidgets(QWidget *parent = nullptr);
-    ~MDIArea_qtwidgets();
+    explicit MDIArea(QWidget *parent = nullptr);
+    ~MDIArea();
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
     void addDockWidget(Core::DockWidget *dw, QPoint localPt,

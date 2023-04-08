@@ -15,13 +15,13 @@
 #include "kddockwidgets/Window.h"
 
 namespace KDDockWidgets {
-class DOCKS_EXPORT Window_dummy : public Window
+class DOCKS_EXPORT Window_dummy : public Core::Window
 {
 public:
     Window_dummy();
     ~Window_dummy() override;
     std::shared_ptr<View> rootView() const override;
-    Window::Ptr transientParent() const override;
+    Core::Window::Ptr transientParent() const override;
     void setGeometry(QRect) const override;
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
@@ -32,7 +32,7 @@ public:
     QVariant property(const char *name) const override;
     bool isVisible() const override;
     WId handle() const override;
-    bool equals(std::shared_ptr<Window> other) const override;
+    bool equals(std::shared_ptr<Core::Window> other) const override;
     void setFramePosition(QPoint targetPos) override;
     QRect frameGeometry() const override;
     void resize(int width, int height) override;

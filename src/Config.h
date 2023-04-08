@@ -34,9 +34,8 @@ namespace Core {
 class DockWidget;
 class MainWindow;
 class DropArea;
-}
-
 class ViewFactory;
+}
 
 typedef KDDockWidgets::Core::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString &name);
@@ -233,10 +232,10 @@ public:
      * Also potentially useful to return QtQuick classes instead of the QtWidget based ones.
      * Ownership is taken.
      */
-    void setViewFactory(ViewFactory *);
+    void setViewFactory(Core::ViewFactory *);
 
     ///@brief getter for the framework widget factory
-    ViewFactory *viewFactory() const;
+    Core::ViewFactory *viewFactory() const;
 
     /**
      * @brief Returns the thickness of the separator.

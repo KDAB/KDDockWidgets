@@ -28,7 +28,7 @@ std::shared_ptr<View> Window_dummy::rootView() const
     return nullptr;
 }
 
-Window::Ptr Window_dummy::transientParent() const
+Core::Window::Ptr Window_dummy::transientParent() const
 {
     return nullptr;
 }
@@ -75,7 +75,7 @@ WId Window_dummy::handle() const
     return {};
 }
 
-bool Window_dummy::equals(std::shared_ptr<Window>) const
+bool Window_dummy::equals(std::shared_ptr<Core::Window>) const
 {
     return {};
 }

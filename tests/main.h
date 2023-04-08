@@ -47,10 +47,10 @@ std::ostream &operator<<(std::ostream &os, QRect r)
 
 using namespace KDDockWidgets;
 
-inline View *createViewAndWindow(CreateViewOptions opts, View *parent = nullptr)
+inline View *createViewAndWindow(Core::CreateViewOptions opts, View *parent = nullptr)
 {
     opts.createWindow = true;
-    return Platform::instance()->tests_createView(opts, parent);
+    return Core::Platform::instance()->tests_createView(opts, parent);
 }
 
 int main(int argc, char **argv)
@@ -62,15 +62,15 @@ int main(int argc, char **argv)
     ctx.applyCommandLine(argc, argv);
     ctx.setOption("no-breaks", true);
 
-    for (FrontendType type : Platform::frontendTypes()) {
+    for (FrontendType type : Core::Platform::frontendTypes()) {
 
-        Platform::tests_initPlatform(argc, argv, type);
+        Core::Platform::tests_initPlatform(argc, argv, type);
 
-        std::cout << "\nStarting tests for Platform" << Platform::instance()->name() << "\n";
+        std::cout << "\nStarting tests for Platform" << Core::Platform::instance()->name() << "\n";
 
         int code = ctx.run();
 
-        if (Platform::instance()->m_numWarningsEmitted > 0) {
+        if (Core::Platform::instance()->m_numWarningsEmitted > 0) {
             std::cout << "ABORTING! Test caused a warning.\n";
             code = 1;
         }
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
         if (code != 0)
             exitCode = code;
 
-        Platform::tests_deinitPlatform();
+        Core::Platform::tests_deinitPlatform();
     }
 
     return exitCode;

@@ -39,12 +39,12 @@
  *   - KDDockWidget::Views::TitleBar_qtwidgets::isFocused is a property, there for needs to
  * workaround the above bug by unsetting the sheet and setting it again.
  */
-class MyTitleBar_CSS : public KDDockWidgets::qtwidgets::TitleBar_qtwidgets
+class MyTitleBar_CSS : public KDDockWidgets::qtwidgets::TitleBar
 {
 public:
     explicit MyTitleBar_CSS(KDDockWidgets::Core::TitleBar *controller,
                             View *parent = nullptr)
-        : KDDockWidgets::qtwidgets::TitleBar_qtwidgets(controller, parent)
+        : KDDockWidgets::qtwidgets::TitleBar(controller, parent)
     {
         initStyleSheet();
         connect(controller, &KDDockWidgets::Core::TitleBar::isFocusedChanged, this, [this] {

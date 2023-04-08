@@ -25,27 +25,27 @@ namespace KDDockWidgets {
 
 inline bool isWayland()
 {
-    return Platform::instance()->displayType() == Platform::DisplayType::Wayland;
+    return Core::Platform::instance()->displayType() == Core::Platform::DisplayType::Wayland;
 }
 
 inline bool isOffscreen()
 {
-    return Platform::instance()->displayType() == Platform::DisplayType::QtOffscreen;
+    return Core::Platform::instance()->displayType() == Core::Platform::DisplayType::QtOffscreen;
 }
 
 inline bool isXCB()
 {
-    return Platform::instance()->displayType() == Platform::DisplayType::X11;
+    return Core::Platform::instance()->displayType() == Core::Platform::DisplayType::X11;
 }
 
 inline bool isEGLFS()
 {
-    return Platform::instance()->displayType() == Platform::DisplayType::QtEGLFS;
+    return Core::Platform::instance()->displayType() == Core::Platform::DisplayType::QtEGLFS;
 }
 
 inline bool isWindows()
 {
-    return Platform::instance()->displayType() == Platform::DisplayType::Windows;
+    return Core::Platform::instance()->displayType() == Core::Platform::DisplayType::Windows;
 }
 
 inline bool usesNativeTitleBar()

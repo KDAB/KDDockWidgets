@@ -15,7 +15,7 @@
 
 // clazy:excludeall=ctor-missing-parent-argument
 
-class CustomWidgetFactory : public KDDockWidgets::ViewFactory_qtwidgets
+class CustomWidgetFactory : public KDDockWidgets::qtwidgets::ViewFactory
 {
     Q_OBJECT
 public:

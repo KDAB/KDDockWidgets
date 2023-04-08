@@ -17,6 +17,8 @@
 
 #include <string>
 
+using namespace KDDockWidgets::Core;
+
 TEST_CASE("Platform::Platform")
 {
     auto plat = Platform::instance();

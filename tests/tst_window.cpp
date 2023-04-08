@@ -13,6 +13,8 @@
 #include "private/View_p.h"
 #include "Platform.h"
 
+using namespace KDDockWidgets::Core;
+
 TEST_CASE("Window CTOR")
 {
     auto window = Platform::instance()->tests_createWindow();

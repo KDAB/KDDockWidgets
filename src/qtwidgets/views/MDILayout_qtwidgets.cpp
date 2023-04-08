@@ -15,14 +15,14 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
-MDILayout_qtwidgets::MDILayout_qtwidgets(Core::MDILayout *controller, View *parent)
+MDILayout::MDILayout(Core::MDILayout *controller, View *parent)
     : qtwidgets::View_qtwidgets<QWidget>(controller, Type::MDILayout, Views::View_qt::asQWidget(parent))
     , m_controller(controller)
 {
     Q_ASSERT(controller);
 }
 
-MDILayout_qtwidgets::~MDILayout_qtwidgets()
+MDILayout::~MDILayout()
 {
     if (!freed())
         m_controller->viewAboutToBeDeleted();

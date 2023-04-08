@@ -27,11 +27,13 @@ namespace Core {
 class ClassicIndicators;
 }
 
-class IndicatorWindow_qtwidgets : public QWidget, public Views::ClassicIndicatorWindowViewInterface
+namespace qtwidgets {
+
+class IndicatorWindow : public QWidget, public Views::ClassicIndicatorWindowViewInterface
 {
     Q_OBJECT
 public:
-    explicit IndicatorWindow_qtwidgets(Core::ClassicIndicators *classicIndicators);
+    explicit IndicatorWindow(Core::ClassicIndicators *classicIndicators);
 
     DropLocation hover(QPoint globalPos) override;
     void updatePositions() override;
@@ -65,6 +67,8 @@ private:
     Indicator *const m_outterTop;
     QVector<Indicator *> m_indicators;
 };
+
+}
 
 }
 

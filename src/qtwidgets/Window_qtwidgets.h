@@ -14,13 +14,14 @@
 #include "kddockwidgets/Window_qt.h"
 
 namespace KDDockWidgets {
-class DOCKS_EXPORT Window_qtwidgets : public Window_qt
+namespace qtwidgets {
+class DOCKS_EXPORT Window : public Window_qt
 {
 public:
     using Window_qt::Window_qt;
 
-    explicit Window_qtwidgets(QWidget *topLevel);
-    ~Window_qtwidgets() override;
+    explicit Window(QWidget *topLevel);
+    ~Window() override;
     std::shared_ptr<View> rootView() const override;
     Window::Ptr transientParent() const override;
     void setGeometry(QRect) const override;
@@ -28,5 +29,5 @@ public:
     bool supportsHonouringLayoutMinSize() const override;
     void destroy() override;
 };
-
+}
 }

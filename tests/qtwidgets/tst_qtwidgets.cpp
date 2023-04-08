@@ -211,7 +211,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
 
     auto m = createMainWindow();
 
-    QWidget *central = dynamic_cast<qtwidgets::MainWindow_qtwidgets *>(m->view())->centralWidget();
+    QWidget *central = dynamic_cast<qtwidgets::MainWindow *>(m->view())->centralWidget();
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
@@ -252,7 +252,7 @@ void TestQtWidgets::tst_dockableMainWindows()
     auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
     m1->addDockWidget(dock1, Location_OnTop);
 
-    auto m2 = new KDDockWidgets::qtwidgets::MainWindow_qtwidgets("mainwindow-dockable");
+    auto m2 = new KDDockWidgets::qtwidgets::MainWindow("mainwindow-dockable");
     auto m2Container = createDockWidget("mainwindow-dw", ( View * )m2);
     auto menubar = m2->menuBar();
     menubar->addMenu("File");
@@ -322,7 +322,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
 
     m->addDockWidget(dock1, Location_OnBottom);
 
-    auto mdiArea = new qtwidgets::MDIArea_qtwidgets();
+    auto mdiArea = new qtwidgets::MDIArea();
     m->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(mdiArea));
 
     auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
@@ -374,7 +374,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     m->addDockWidget(dock1, Location_OnBottom);
 
-    auto mdiArea = new qtwidgets::MDIArea_qtwidgets();
+    auto mdiArea = new qtwidgets::MDIArea();
 
     m->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(mdiArea));
 
@@ -546,7 +546,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
 
     m->addDockWidget(dock1, Location_OnBottom);
 
-    auto mdiArea = new qtwidgets::MDIArea_qtwidgets();
+    auto mdiArea = new qtwidgets::MDIArea();
     m->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(mdiArea));
 
     auto createSheet = [](int id) -> Core::DockWidget * {
@@ -582,12 +582,12 @@ void TestQtWidgets::tst_floatingWindowDeleted()
     // Tests a case where the empty floating dock widget wouldn't be deleted
     // Doesn't repro QTBUG-83030 unfortunately, as we already have an event loop running
     // but let's leave this here nonetheless
-    class MyMainWindow : public KDDockWidgets::qtwidgets::MainWindow_qtwidgets
+    class MyMainWindow : public KDDockWidgets::qtwidgets::MainWindow
     {
     public:
         MyMainWindow()
-            : KDDockWidgets::qtwidgets::MainWindow_qtwidgets("tst_floatingWindowDeleted",
-                                                             MainWindowOption_None)
+            : KDDockWidgets::qtwidgets::MainWindow("tst_floatingWindowDeleted",
+                                                   MainWindowOption_None)
         {
             auto dock1 = newDockWidget(QStringLiteral("DockWidget #1"));
             auto myWidget = new QWidget();
@@ -617,7 +617,7 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     auto lay = new QVBoxLayout(&container);
     auto m = Platform::instance()->createMainWindow("MyMainWindow_tst_addToSmallMainWindow8", {},
                                                     MainWindowOption_None);
-    auto qmainwindow = dynamic_cast<qtwidgets::MainWindow_qtwidgets *>(m->view());
+    auto qmainwindow = dynamic_cast<qtwidgets::MainWindow *>(m->view());
     lay->addWidget(qmainwindow);
     container.resize(100, 100);
     Platform::instance()->tests_waitForEvent(&container, QEvent::Resize);
@@ -1528,10 +1528,10 @@ void TestQtWidgets::tstCloseNestedMdi()
     auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
     QPointer<Core::MainWindow> p = m.get();
 
-    auto mdi = new qtwidgets::MDIArea_qtwidgets();
+    auto mdi = new qtwidgets::MDIArea();
     m->setPersistentCentralView(mdi->asWrapper());
 
-    auto dock1 = new qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
+    auto dock1 = new qtwidgets::DockWidget(QStringLiteral("MyDock1"));
     dock1->setWidget(new QPushButton("1"));
 
     mdi->addDockWidget(dock1, {});
@@ -1546,15 +1546,15 @@ void TestQtWidgets::tstCloseNestedMDIPropagates()
     auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
     QPointer<Core::MainWindow> p = m.get();
 
-    auto mdi = new qtwidgets::MDIArea_qtwidgets();
+    auto mdi = new qtwidgets::MDIArea();
     m->setPersistentCentralView(mdi->asWrapper());
 
-    auto dock1 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
+    auto dock1 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock1"));
     auto nonClosableWidget = Platform::instance()->tests_createNonClosableView();
     dock1->dockWidget()->setGuestView(nonClosableWidget->asWrapper());
     mdi->addDockWidget(dock1, {});
 
-    auto dock2 = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyDock2"));
+    auto dock2 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock2"));
     auto nonClosableWidget2 = Platform::instance()->tests_createNonClosableView();
     dock2->dockWidget()->setGuestView(nonClosableWidget2->asWrapper());
     dock2->open();
@@ -1608,12 +1608,12 @@ void TestQtWidgets::tst_setAsCurrentTab()
 
 void TestQtWidgets::initTestCase()
 {
-    KDDockWidgets::Platform::instance()->installMessageHandler();
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
 }
 
 void TestQtWidgets::cleanupTestCase()
 {
-    KDDockWidgets::Platform::instance()->uninstallMessageHandler();
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
 }
 
 void TestQtWidgets::tst_crash326()
@@ -1642,7 +1642,7 @@ void TestQtWidgets::tst_restoreWithIncompleteFactory()
         if (name.contains(QStringLiteral("centralDockWidget")))
             return nullptr;
 
-        auto w = new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(name);
+        auto w = new KDDockWidgets::qtwidgets::DockWidget(name);
         w->setWidget(new QWidget());
         return w->asDockWidgetController();
     });

@@ -42,7 +42,7 @@ class MainWindow;
 /**
  * @brief The default ViewFactory for Dummy frontend
  */
-class DOCKS_EXPORT ViewFactory_dummy : public ViewFactory
+class DOCKS_EXPORT ViewFactory_dummy : public Core::ViewFactory
 {
     Q_OBJECT
 public:

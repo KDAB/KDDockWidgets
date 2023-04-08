@@ -24,15 +24,14 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
-using namespace KDDockWidgets::Core;
 
-SideBar_qtwidgets::SideBar_qtwidgets(Core::SideBar *controller, QWidget *parent)
+SideBar::SideBar(Core::SideBar *controller, QWidget *parent)
     : View_qtwidgets(controller, Type::SideBar, parent)
     , SideBarViewInterface(controller)
 {
 }
 
-void SideBar_qtwidgets::init()
+void SideBar::init()
 {
     if (m_sideBar->isVertical())
         m_layout = new QVBoxLayout(this);
@@ -44,7 +43,7 @@ void SideBar_qtwidgets::init()
     m_layout->addStretch();
 }
 
-void SideBar_qtwidgets::addDockWidget_Impl(Core::DockWidget *dw)
+void SideBar::addDockWidget_Impl(Core::DockWidget *dw)
 {
     auto button = createButton(dw, this);
     button->setText(dw->title());
@@ -59,18 +58,18 @@ void SideBar_qtwidgets::addDockWidget_Impl(Core::DockWidget *dw)
     m_layout->insertWidget(count - 1, button);
 }
 
-void SideBar_qtwidgets::removeDockWidget_Impl(Core::DockWidget *)
+void SideBar::removeDockWidget_Impl(Core::DockWidget *)
 {
     // Nothing is needed. Button is removed automatically.
 }
 
-SideBarButton *SideBar_qtwidgets::createButton(Core::DockWidget *dw,
-                                               SideBar_qtwidgets *parent) const
+SideBarButton *SideBar::createButton(Core::DockWidget *dw,
+                                     SideBar *parent) const
 {
     return new SideBarButton(dw, parent);
 }
 
-SideBarButton::SideBarButton(Core::DockWidget *dw, SideBar_qtwidgets *parent)
+SideBarButton::SideBarButton(Core::DockWidget *dw, SideBar *parent)
     : QToolButton(parent)
     , m_sideBar(parent->sideBar())
     , m_dockWidget(dw)

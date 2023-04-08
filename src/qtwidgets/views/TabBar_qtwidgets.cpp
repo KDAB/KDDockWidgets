@@ -65,7 +65,7 @@ static MyProxy *proxyStyle()
 }
 
 
-TabBar_qtwidgets::TabBar_qtwidgets(Core::TabBar *controller, QWidget *parent)
+TabBar::TabBar(Core::TabBar *controller, QWidget *parent)
     : View_qtwidgets(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
     , m_controller(controller)
@@ -73,23 +73,23 @@ TabBar_qtwidgets::TabBar_qtwidgets(Core::TabBar *controller, QWidget *parent)
     setStyle(proxyStyle());
 }
 
-void TabBar_qtwidgets::init()
+void TabBar::init()
 {
     connect(this, &QTabBar::currentChanged, m_tabBar, &Core::TabBar::setCurrentIndex);
 }
 
-int TabBar_qtwidgets::tabAt(QPoint localPos) const
+int TabBar::tabAt(QPoint localPos) const
 {
     return QTabBar::tabAt(localPos);
 }
 
-void TabBar_qtwidgets::mousePressEvent(QMouseEvent *e)
+void TabBar::mousePressEvent(QMouseEvent *e)
 {
     m_controller->onMousePress(e->pos());
     QTabBar::mousePressEvent(e);
 }
 
-void TabBar_qtwidgets::mouseMoveEvent(QMouseEvent *e)
+void TabBar::mouseMoveEvent(QMouseEvent *e)
 {
     if (count() > 1) {
         // Only allow to re-order tabs if we have more than 1 tab, otherwise it's just weird.
@@ -97,12 +97,12 @@ void TabBar_qtwidgets::mouseMoveEvent(QMouseEvent *e)
     }
 }
 
-void TabBar_qtwidgets::mouseDoubleClickEvent(QMouseEvent *e)
+void TabBar::mouseDoubleClickEvent(QMouseEvent *e)
 {
     m_controller->onMouseDoubleClick(e->pos());
 }
 
-bool TabBar_qtwidgets::event(QEvent *ev)
+bool TabBar::event(QEvent *ev)
 {
     // Qt has a bug in QWidgetPrivate::deepestFocusProxy(), it doesn't honour visibility
     // of the focus scope. Once an hidden widget is focused the chain is broken and tab
@@ -123,71 +123,71 @@ bool TabBar_qtwidgets::event(QEvent *ev)
     return result;
 }
 
-QString TabBar_qtwidgets::text(int index) const
+QString TabBar::text(int index) const
 {
     return tabText(index);
 }
 
-QRect TabBar_qtwidgets::rectForTab(int index) const
+QRect TabBar::rectForTab(int index) const
 {
     return QTabBar::tabRect(index);
 }
 
-void TabBar_qtwidgets::moveTabTo(int from, int to)
+void TabBar::moveTabTo(int from, int to)
 {
     moveTab(from, to);
 }
 
-void TabBar_qtwidgets::tabInserted(int index)
+void TabBar::tabInserted(int index)
 {
     QTabBar::tabInserted(index);
     Q_EMIT dockWidgetInserted(index);
 }
 
-void TabBar_qtwidgets::tabRemoved(int index)
+void TabBar::tabRemoved(int index)
 {
     QTabBar::tabRemoved(index);
     Q_EMIT dockWidgetRemoved(index);
 }
 
-void TabBar_qtwidgets::setCurrentIndex(int index)
+void TabBar::setCurrentIndex(int index)
 {
     QTabBar::setCurrentIndex(index);
 }
 
-QTabWidget *TabBar_qtwidgets::tabWidget() const
+QTabWidget *TabBar::tabWidget() const
 {
-    if (auto tw = dynamic_cast<Stack_qtwidgets *>(m_controller->stack()->view()))
+    if (auto tw = dynamic_cast<Stack *>(m_controller->stack()->view()))
         return tw;
 
     qWarning() << Q_FUNC_INFO << "Unexpected null QTabWidget";
     return nullptr;
 }
 
-void TabBar_qtwidgets::renameTab(int index, const QString &text)
+void TabBar::renameTab(int index, const QString &text)
 {
     setTabText(index, text);
 }
 
-void TabBar_qtwidgets::changeTabIcon(int index, const QIcon &icon)
+void TabBar::changeTabIcon(int index, const QIcon &icon)
 {
     setTabIcon(index, icon);
 }
 
-void TabBar_qtwidgets::removeDockWidget(Core::DockWidget *dw)
+void TabBar::removeDockWidget(Core::DockWidget *dw)
 {
     auto tabWidget = static_cast<QTabWidget *>(View_qt::asQWidget(m_tabBar->stack()));
     tabWidget->removeTab(m_tabBar->indexOfDockWidget(dw));
 }
 
-void TabBar_qtwidgets::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
-                                        const QString &title)
+void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
+                              const QString &title)
 {
     auto tabWidget = static_cast<QTabWidget *>(View_qt::asQWidget(m_tabBar->stack()));
     tabWidget->insertTab(index, View_qt::asQWidget(dw), icon, title);
 }
 
-void TabBar_qtwidgets::setTabsAreMovable(bool are)
+void TabBar::setTabsAreMovable(bool are)
 {
     QTabBar::setMovable(are);
 }

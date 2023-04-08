@@ -42,7 +42,7 @@ static void travelTree(WId current, Display *disp, Window::List &remaining, Wind
     for (int i = 0; i < int(nchildren); ++i) {
         /// XQueryTree returns a lot more stuff than our top-level stuff, let's search for it:
         auto it =
-            std::find_if(remaining.begin(), remaining.end(), [i, children](Window::Ptr window) {
+            std::find_if(remaining.begin(), remaining.end(), [i, children](Core::Window::Ptr window) {
                 return window->handle() == children[i];
             });
 
@@ -86,7 +86,7 @@ static Window::List orderedWindows(bool &ok)
 namespace KDDockWidgets {
 /// Dummy which is never called, just so code compiles on Windows without
 /// adding more #ifdefery
-static Window::List orderedWindows(bool &ok)
+static Core::Window::List orderedWindows(bool &ok)
 {
     Q_UNUSED(ok);
     Q_UNREACHABLE();

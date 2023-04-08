@@ -18,6 +18,8 @@
 #include "Config.h"
 #include "Platform.h"
 
+using namespace KDDockWidgets::Core;
+
 TEST_CASE("DockWidget Ctor")
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();

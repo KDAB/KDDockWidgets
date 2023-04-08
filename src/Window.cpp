@@ -14,6 +14,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 Window::~Window() = default;
 

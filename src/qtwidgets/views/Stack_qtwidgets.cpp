@@ -29,23 +29,23 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
-Stack_qtwidgets::Stack_qtwidgets(Core::Stack *controller, QWidget *parent)
+Stack::Stack(Core::Stack *controller, QWidget *parent)
     : View_qtwidgets<QTabWidget>(controller, Type::Stack, parent)
     , StackViewInterface(controller)
 {
 }
 
-Stack_qtwidgets::~Stack_qtwidgets()
+Stack::~Stack()
 {
 }
 
-void Stack_qtwidgets::init()
+void Stack::init()
 {
     setTabBar(tabBar());
     setTabsClosable(Config::self().flags() & Config::Flag_TabsHaveCloseButton);
 
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &QTabWidget::customContextMenuRequested, this, &Stack_qtwidgets::showContextMenu);
+    connect(this, &QTabWidget::customContextMenuRequested, this, &Stack::showContextMenu);
 
     // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user
     // presses [x]
@@ -77,7 +77,7 @@ void Stack_qtwidgets::init()
     setDocumentMode(m_stack->options() & StackOption_DocumentMode);
 }
 
-void Stack_qtwidgets::mouseDoubleClickEvent(QMouseEvent *ev)
+void Stack::mouseDoubleClickEvent(QMouseEvent *ev)
 {
     if (m_stack->onMouseDoubleClick(ev->pos())) {
         ev->accept();
@@ -86,7 +86,7 @@ void Stack_qtwidgets::mouseDoubleClickEvent(QMouseEvent *ev)
     }
 }
 
-void Stack_qtwidgets::mousePressEvent(QMouseEvent *ev)
+void Stack::mousePressEvent(QMouseEvent *ev)
 {
     QTabWidget::mousePressEvent(ev);
 
@@ -97,13 +97,13 @@ void Stack_qtwidgets::mousePressEvent(QMouseEvent *ev)
     }
 }
 
-void Stack_qtwidgets::setupTabBarButtons()
+void Stack::setupTabBarButtons()
 {
     if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
         return;
 
     // TODOm3: Make sure people can only inherit from the Default*variants
-    auto factory = static_cast<ViewFactory_qtwidgets *>(Config::self().viewFactory());
+    auto factory = static_cast<ViewFactory *>(Config::self().viewFactory());
     m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
     m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
 
@@ -128,20 +128,20 @@ void Stack_qtwidgets::setupTabBarButtons()
     });
 
     updateMargins();
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Window::Ptr w) {
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
         if (isInWindow(w))
             updateMargins();
     });
 }
 
-void Stack_qtwidgets::updateMargins()
+void Stack::updateMargins()
 {
     const qreal factor = logicalDpiFactor(this);
     m_cornerWidgetLayout->setContentsMargins(QMargins(0, 0, 2, 0) * factor);
     m_cornerWidgetLayout->setSpacing(int(2 * factor));
 }
 
-void Stack_qtwidgets::showContextMenu(QPoint pos)
+void Stack::showContextMenu(QPoint pos)
 {
     if (!(Config::self().flags() & Config::Flag_AllowSwitchingTabsViaMenu))
         return;
@@ -170,22 +170,22 @@ void Stack_qtwidgets::showContextMenu(QPoint pos)
     menu.exec(mapToGlobal(pos));
 }
 
-QTabBar *Stack_qtwidgets::tabBar() const
+QTabBar *Stack::tabBar() const
 {
     return static_cast<QTabBar *>(View_qt::asQWidget((m_stack->tabBar())));
 }
 
-void Stack_qtwidgets::setDocumentMode(bool is)
+void Stack::setDocumentMode(bool is)
 {
     QTabWidget::setDocumentMode(is);
 }
 
-Core::Stack *Stack_qtwidgets::stack() const
+Core::Stack *Stack::stack() const
 {
     return m_stack;
 }
 
-bool Stack_qtwidgets::isPositionDraggable(QPoint p) const
+bool Stack::isPositionDraggable(QPoint p) const
 {
     if (tabPosition() != QTabWidget::North) {
         qWarning() << Q_FUNC_INFO << "Not implemented yet. Only North is supported";

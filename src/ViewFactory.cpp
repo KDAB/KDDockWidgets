@@ -12,6 +12,7 @@
 #include "kddockwidgets/ViewFactory.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 DropIndicatorType ViewFactory::s_dropIndicatorType = DropIndicatorType::Classic;
 

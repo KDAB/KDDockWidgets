@@ -39,6 +39,7 @@
 
 using namespace Layouting;
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 int Layouting::Item::separatorThickness = 5;
 bool Layouting::Item::s_silenceSanityChecks = false;

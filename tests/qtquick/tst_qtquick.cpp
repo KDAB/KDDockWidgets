@@ -48,12 +48,12 @@ private Q_SLOTS:
 
 void TestQtQuick::initTestCase()
 {
-    KDDockWidgets::Platform::instance()->installMessageHandler();
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
 }
 
 void TestQtQuick::cleanupTestCase()
 {
-    KDDockWidgets::Platform::instance()->uninstallMessageHandler();
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
 }
 
 void TestQtQuick::tst_restoreRestoresMainWindowPosition()
@@ -224,11 +224,11 @@ int main(int argc, char *argv[])
     if (std::find(frontends.cbegin(), frontends.cend(), FrontendType::QtQuick) == frontends.cend())
         return 0;
 
-    KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtQuick);
+    Core::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtQuick);
 
     TestQtQuick test;
     const int exitCode = QTest::qExec(&test, argc, argv);
-    KDDockWidgets::Platform::tests_deinitPlatform();
+    Core::Platform::tests_deinitPlatform();
 
     return exitCode;
 }

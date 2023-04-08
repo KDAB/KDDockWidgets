@@ -32,13 +32,13 @@
 
 void KDDockWidgets::initFrontend(FrontendType type)
 {
-    if (Platform::instance())
+    if (Core::Platform::instance())
         return;
 
     switch (type) {
     case FrontendType::QtWidgets:
 #ifdef KDDW_FRONTEND_QTWIDGETS
-        new Platform_qtwidgets();
+        new qtwidgets::Platform();
 #endif
         break;
     case FrontendType::QtQuick:

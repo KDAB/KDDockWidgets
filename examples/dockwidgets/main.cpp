@@ -250,7 +250,7 @@ int main(int argc, char **argv)
     }
 
     if (parser.isSet(segmentedIndicators))
-        KDDockWidgets::ViewFactory::s_dropIndicatorType =
+        KDDockWidgets::Core::ViewFactory::s_dropIndicatorType =
             KDDockWidgets::DropIndicatorType::Segmented;
 
     MainWindowOptions options = MainWindowOption_None;
@@ -276,7 +276,7 @@ int main(int argc, char **argv)
         flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
 
     if (parser.isSet(noDropIndicators))
-        KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
+        KDDockWidgets::Core::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
 #if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
@@ -416,7 +416,7 @@ int main(int argc, char **argv)
         mainWindow2->show();
     } else if (usesDockableMainWindows) {
         auto mainWindowDockWidget =
-            new KDDockWidgets::qtwidgets::DockWidget_qtwidgets(QStringLiteral("MyMainWindow-2-DW"));
+            new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyMainWindow-2-DW"));
 
         const QString affinity = QStringLiteral("Inner-DockWidgets-2");
         auto dockableMainWindow =

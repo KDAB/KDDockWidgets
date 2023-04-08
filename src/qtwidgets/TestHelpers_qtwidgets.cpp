@@ -23,15 +23,16 @@
 #include <QWidget>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtwidgets;
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-namespace KDDockWidgets {
-class TestView_qtwidgets : public qtwidgets::View_qtwidgets<QWidget>
+namespace KDDockWidgets::qtwidgets {
+class TestView : public qtwidgets::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit TestView_qtwidgets(CreateViewOptions opts, QWidget *parent)
+    explicit TestView(Core::CreateViewOptions opts, QWidget *parent)
         : qtwidgets::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
         , m_opts(opts)
     {
@@ -50,14 +51,14 @@ public:
     }
 
 private:
-    CreateViewOptions m_opts;
+    Core::CreateViewOptions m_opts;
 };
 
-class FocusableTestView_qtwidgets : public qtwidgets::View_qtwidgets<QLineEdit>
+class FocusableTestView : public qtwidgets::View_qtwidgets<QLineEdit>
 {
     Q_OBJECT
 public:
-    explicit FocusableTestView_qtwidgets(CreateViewOptions opts, QWidget *parent)
+    explicit FocusableTestView(Core::CreateViewOptions opts, QWidget *parent)
         : qtwidgets::View_qtwidgets<QLineEdit>(nullptr, Type::None, parent)
         , m_opts(opts)
     {
@@ -77,14 +78,14 @@ public:
     }
 
 private:
-    CreateViewOptions m_opts;
+    Core::CreateViewOptions m_opts;
 };
 
-class NonClosableTestView_qtwidgets : public qtwidgets::View_qtwidgets<QWidget>
+class NonClosableTestView : public qtwidgets::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit NonClosableTestView_qtwidgets(QWidget *parent)
+    explicit NonClosableTestView(QWidget *parent)
         : qtwidgets::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
     {
         create();
@@ -98,12 +99,12 @@ public:
 
 }
 
-void Platform_qtwidgets::tests_initPlatform_impl()
+void Platform::tests_initPlatform_impl()
 {
     Platform_qt::tests_initPlatform_impl();
 }
 
-void Platform_qtwidgets::tests_deinitPlatform_impl()
+void Platform::tests_deinitPlatform_impl()
 {
     tests_wait(500); // Some windows are currently being destroyed
 
@@ -112,43 +113,43 @@ void Platform_qtwidgets::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-View *Platform_qtwidgets::tests_createView(CreateViewOptions opts, View *parent)
+View *Platform::tests_createView(Core::CreateViewOptions opts, View *parent)
 {
     QWidget *parentWidget = Views::View_qt::asQWidget(parent);
 
-    auto newWidget = new TestView_qtwidgets(opts, parentWidget);
+    auto newWidget = new TestView(opts, parentWidget);
     if (opts.isVisible)
         newWidget->show();
 
     return newWidget;
 }
 
-View *Platform_qtwidgets::tests_createFocusableView(CreateViewOptions opts, View *parent)
+View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, View *parent)
 {
     QWidget *parentWidget = Views::View_qt::asQWidget(parent);
 
-    auto newWidget = new FocusableTestView_qtwidgets(opts, parentWidget);
+    auto newWidget = new FocusableTestView(opts, parentWidget);
     if (opts.isVisible)
         newWidget->show();
 
     return newWidget;
 }
 
-View *Platform_qtwidgets::tests_createNonClosableView(View *parent)
+View *Platform::tests_createNonClosableView(View *parent)
 {
     QWidget *parentWidget = Views::View_qt::asQWidget(parent);
-    auto newWidget = new NonClosableTestView_qtwidgets(parentWidget);
+    auto newWidget = new NonClosableTestView(parentWidget);
 
     return newWidget;
 }
 
-Core::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uniqueName,
-                                                       CreateViewOptions opts,
-                                                       MainWindowOptions options,
-                                                       View *parent,
-                                                       Qt::WindowFlags flags) const
+Core::MainWindow *Platform::createMainWindow(const QString &uniqueName,
+                                             Core::CreateViewOptions opts,
+                                             MainWindowOptions options,
+                                             View *parent,
+                                             Qt::WindowFlags flags) const
 {
-    auto view = new qtwidgets::MainWindow_qtwidgets(
+    auto view = new qtwidgets::MainWindow(
         uniqueName, options,
         parent ? static_cast<qtwidgets::View_qtwidgets<QMainWindow> *>(parent) : nullptr, flags);
 
@@ -159,11 +160,11 @@ Core::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uniqueName
     return view->mainWindow();
 }
 
-std::shared_ptr<Window> Platform_qtwidgets::tests_createWindow()
+std::shared_ptr<Core::Window> Platform::tests_createWindow()
 {
-    auto window = new Window_qtwidgets(new QWidget());
+    auto window = new Window(new QWidget());
     window->setVisible(true);
-    return std::shared_ptr<Window>(window);
+    return std::shared_ptr<Core::Window>(window);
 }
 
 #endif
