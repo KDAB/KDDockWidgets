@@ -15,8 +15,6 @@
 #include "kddockwidgets/View.h"
 
 #include <QDebug>
-#include <QEvent>
-#include <QResizeEvent>
 
 #include <memory>
 
