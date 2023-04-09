@@ -13,10 +13,10 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/DockWidget_p.h"
 #include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/Platform.h"
 #include "Action.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "Config.h"
-#include "Platform.h"
 
 using namespace KDDockWidgets::Core;
 

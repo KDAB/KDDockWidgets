@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Platform.h"
 #include "utils.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/Window.h"
+#include "kddockwidgets/core/Platform.h"
 
 #include <QDebug>
 #include <QtTest/QTest>

@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/Platform.h"
+#include "kddockwidgets/core/Platform.h"
 
 QT_BEGIN_NAMESPACE
 class QCoreApplication;

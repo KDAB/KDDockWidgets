@@ -18,15 +18,17 @@
 #include "private/WidgetResizeHandler_p.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/multisplitter/Item_p.h"
-#include "core/Window.h"
+
 #include "views/MainWindowViewInterface.h"
-#include "Platform.h"
+
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/DockWidget_p.h"
 #include "kddockwidgets/core/DropArea.h"
+#include "kddockwidgets/core/Platform.h"
+#include "kddockwidgets/core/Window.h"
 
 #include "kdbindings/signal.h"
 

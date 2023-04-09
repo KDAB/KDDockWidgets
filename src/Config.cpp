@@ -17,7 +17,6 @@
  */
 
 #include "Config.h"
-#include "Platform.h"
 #include "View.h"
 #include "private/multisplitter/Item_p.h"
 #include "DockRegistry.h"
@@ -25,6 +24,7 @@
 #include "private/DragController_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "core/Separator.h"
+#include "core/Platform.h"
 
 #include <QDebug>
 #include <QOperatingSystemVersion>

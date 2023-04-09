@@ -15,7 +15,7 @@
 #pragma once
 
 #include "utils.h"
-#include "Platform.h"
+#include "kddockwidgets/core/Platform.h"
 
 #include <QtTest/QTest>
 

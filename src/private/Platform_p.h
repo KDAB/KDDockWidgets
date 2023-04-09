@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../Platform.h"
+#include "core/Platform.h"
 #include "kdbindings/signal.h"
 
 #include <memory>

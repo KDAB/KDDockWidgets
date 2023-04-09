@@ -17,7 +17,6 @@
 #include "LayoutSaver_p.h"
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
-#include "Platform.h"
 #include "multisplitter/Item_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "Action.h"
@@ -30,6 +29,8 @@
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/SideBar.h"
+#include "kddockwidgets/core/Platform.h"
+
 #include "utils_qt.h"
 
 #include "tst_docks_main.h"

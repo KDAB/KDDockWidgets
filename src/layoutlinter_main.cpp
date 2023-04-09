@@ -14,7 +14,7 @@
 
 #include "core/MainWindow.h"
 #include "core/DockWidget.h"
-#include "Platform.h"
+#include "core/Platform.h"
 
 #include <QDebug>
 #include <QString>

@@ -15,7 +15,7 @@
 #include "KDDockWidgets_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
-#include "kddockwidgets/Platform.h"
+#include "kddockwidgets/core/Platform.h"
 #include "core/Window.h"
 
 #include <QDebug>

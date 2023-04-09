@@ -14,7 +14,6 @@
 /// either because they haven't been ported to QtQuick yet or because they are really
 /// QtWidgets specific.
 
-#include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "../utils.h"
 #include "Config.h"
@@ -25,6 +24,7 @@
 
 #include "multisplitter/Item_p.h"
 
+#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/Separator.h"
 #include "kddockwidgets/core/Group.h"

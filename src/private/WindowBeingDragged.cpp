@@ -14,11 +14,11 @@
 #include "DragController_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
-#include "Platform.h"
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/Layout.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 

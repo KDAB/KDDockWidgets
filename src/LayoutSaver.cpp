@@ -27,8 +27,8 @@
 #include "private/Logging_p.h"
 #include "private/Position_p.h"
 #include "private/Utils_p.h"
-#include "Platform.h"
 
+#include "core/Platform.h"
 #include "core/Layout.h"
 #include "core/Group.h"
 #include "core/FloatingWindow.h"

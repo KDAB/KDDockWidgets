@@ -17,8 +17,8 @@
 #include "ItemFreeContainer_p.h"
 #include "kdbindings/signal.h"
 #include "core/Window.h"
+#include "core/Platform.h"
 #include "../View_p.h"
-#include "Platform.h"
 #include "../Platform_p.h"
 
 #include <QDebug>

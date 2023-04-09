@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "View.h"
+#include "../View.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/NonQtCompat_p.h"
 

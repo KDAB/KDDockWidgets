@@ -12,11 +12,11 @@
 /// @file
 /// @brief Here lives the tests that only apply to QtQuick
 
-#include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "qtquick/views/TitleBar.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/Window.h"
+#include "kddockwidgets/core/Platform.h"
 
 #include "../utils.h"
 

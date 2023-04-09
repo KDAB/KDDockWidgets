@@ -12,8 +12,8 @@
 #include "private/multisplitter/Item_p.h"
 #include "View.h"
 #include "kddockwidgets/core/Separator.h"
+#include "kddockwidgets/core/Platform.h"
 
-#include "Platform.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 

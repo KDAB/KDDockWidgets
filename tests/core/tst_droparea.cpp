@@ -12,10 +12,10 @@
 #include "../main.h"
 #include "core/DropArea.h"
 #include "core/Group.h"
-#include "Platform.h"
 #include "Config.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/Platform.h"
 #include "Action.h"
 
 TEST_CASE("DropArea CTOR")

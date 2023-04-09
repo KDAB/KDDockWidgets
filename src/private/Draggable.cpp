@@ -13,8 +13,8 @@
 #include "DragController_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "Utils_p.h"
-#include "Platform.h"
 
+#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 
 using namespace KDDockWidgets;

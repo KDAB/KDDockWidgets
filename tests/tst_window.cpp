@@ -11,7 +11,7 @@
 
 #include "main.h"
 #include "private/View_p.h"
-#include "Platform.h"
+#include "kddockwidgets/core/Platform.h"
 
 using namespace KDDockWidgets::Core;
 

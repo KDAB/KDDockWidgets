@@ -11,7 +11,7 @@
 
 #include "main.h"
 #include "core/ViewGuard.h"
-#include "Platform.h"
+#include "core/Platform.h"
 
 #include <doctest/doctest.h>
 

@@ -19,8 +19,7 @@
 #include "kddockwidgets/core/MDILayout.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/FloatingWindow.h"
-
-#include "Platform.h"
+#include "kddockwidgets/core/Platform.h"
 
 #include <QDebug>
 #include <QScopedValueRollback>

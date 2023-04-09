@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "kddockwidgets/Platform.h"
+#include "kddockwidgets/core/Platform.h"
 
 namespace KDDockWidgets {
 

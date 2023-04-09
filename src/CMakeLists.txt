@@ -50,12 +50,12 @@ set(KDDW_BACKEND_SRCS
     core/Screen.cpp
     core/ViewGuard.cpp
     core/Controller.cpp
+    core/Platform.cpp
     core/indicators/NullIndicators.cpp
     core/indicators/ClassicIndicators.cpp
     core/indicators/SegmentedIndicators.cpp
     Action.cpp
     View.cpp
-    Platform.cpp
     views/ClassicIndicatorWindowViewInterface.cpp
     views/MainWindowMDIViewInterface.cpp
     views/MainWindowViewInterface.cpp
@@ -200,7 +200,7 @@ set(KDDW_PUBLIC_HEADERS
     # ViewFactory.h
     Qt5Qt6Compat_p.h
     NonQtCompat_p.h
-    Platform.h
+    # Platform.h
 )
 
 set(KDDW_PRIVATE_HEADERS

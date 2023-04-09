@@ -22,7 +22,7 @@
 #include "core/DropArea.h"
 #include "core/MDILayout.h"
 
-#include "Platform.h"
+#include "core/Platform.h"
 #include "core/Window.h"
 
 using namespace KDDockWidgets;
