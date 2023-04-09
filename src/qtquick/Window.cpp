@@ -86,7 +86,7 @@ bool Window::supportsHonouringLayoutMinSize() const
     if (auto view = rootView()) {
         // For floating window we have full control. While for anything else we don't know the
         // disposition of the users main.qml
-        return view->is(Type::FloatingWindow);
+        return view->is(Core::Type::FloatingWindow);
     }
 
     return false;

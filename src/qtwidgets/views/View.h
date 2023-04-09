@@ -37,7 +37,7 @@ public:
     using View::resize;
     using View::width;
 
-    explicit View_qtwidgets(KDDockWidgets::Controller *controller, Type type,
+    explicit View_qtwidgets(Core::Controller *controller, Core::Type type,
                             QWidget *parent = nullptr, Qt::WindowFlags windowFlags = {});
 
     ~View_qtwidgets() override = default;

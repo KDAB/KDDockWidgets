@@ -54,7 +54,7 @@ public:
 
 FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
                                QMainWindow *parent, Qt::WindowFlags windowFlags)
-    : View_qtwidgets<QWidget>(controller, Type::FloatingWindow, parent, windowFlags)
+    : View_qtwidgets<QWidget>(controller, Core::Type::FloatingWindow, parent, windowFlags)
     , d(new Private(this, controller))
 {
 }

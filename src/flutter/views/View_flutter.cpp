@@ -20,7 +20,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 
-View_flutter::View_flutter(KDDockWidgets::Controller *controller, Type type, View *parent,
+View_flutter::View_flutter(Core::Controller *controller, Type type, View *parent,
                            Qt::WindowFlags)
     : View(controller, type)
 {

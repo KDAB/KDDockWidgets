@@ -164,7 +164,7 @@ bool Platform_qt::tests_waitForResize(Core::View *view, int timeout) const
     return tests_waitForEvent(Views::View_qt::asQObject(view), QEvent::Resize, timeout);
 }
 
-bool Platform_qt::tests_waitForResize(Controller *c, int timeout) const
+bool Platform_qt::tests_waitForResize(Core::Controller *c, int timeout) const
 {
     return tests_waitForResize(c->view(), timeout);
 }

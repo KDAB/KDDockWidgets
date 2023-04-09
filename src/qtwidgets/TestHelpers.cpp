@@ -33,7 +33,7 @@ class TestView : public qtwidgets::View_qtwidgets<QWidget>
     Q_OBJECT
 public:
     explicit TestView(Core::CreateViewOptions opts, QWidget *parent)
-        : qtwidgets::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
+        : qtwidgets::View_qtwidgets<QWidget>(nullptr, Core::Type::None, parent)
         , m_opts(opts)
     {
         create();
@@ -59,7 +59,7 @@ class FocusableTestView : public qtwidgets::View_qtwidgets<QLineEdit>
     Q_OBJECT
 public:
     explicit FocusableTestView(Core::CreateViewOptions opts, QWidget *parent)
-        : qtwidgets::View_qtwidgets<QLineEdit>(nullptr, Type::None, parent)
+        : qtwidgets::View_qtwidgets<QLineEdit>(nullptr, Core::Type::None, parent)
         , m_opts(opts)
     {
         create();
@@ -86,7 +86,7 @@ class NonClosableTestView : public qtwidgets::View_qtwidgets<QWidget>
     Q_OBJECT
 public:
     explicit NonClosableTestView(QWidget *parent)
-        : qtwidgets::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
+        : qtwidgets::View_qtwidgets<QWidget>(nullptr, Core::Type::None, parent)
     {
         create();
     }

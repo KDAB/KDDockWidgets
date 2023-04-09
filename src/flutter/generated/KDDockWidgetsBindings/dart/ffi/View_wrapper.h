@@ -46,13 +46,13 @@ public:
     virtual bool close();
     virtual bool close_nocallback();
     void closeRootView();
-    KDDockWidgets::Controller *controller() const;
+    Core::Controller *controller() const;
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
     static bool equals(const KDDockWidgets::Core::View *one, const KDDockWidgets::Core::View *two);
     bool equals(const KDDockWidgets::Core::View *other) const;
-    KDDockWidgets::Controller *firstParentOfType(KDDockWidgets::Type arg__1) const;
-    static KDDockWidgets::Controller *firstParentOfType(KDDockWidgets::Core::View *view, KDDockWidgets::Type arg__2);
+    Core::Controller *firstParentOfType(KDDockWidgets::Type arg__1) const;
+    static Core::Controller *firstParentOfType(KDDockWidgets::Core::View *view, KDDockWidgets::Type arg__2);
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
     void free();

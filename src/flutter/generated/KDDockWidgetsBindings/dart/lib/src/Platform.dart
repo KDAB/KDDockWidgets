@@ -151,7 +151,7 @@ class Platform {
         parent: View.fromCppPointer(parent),
         arg__5: arg__5);
     return result.thisCpp;
-  } // createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::Core::View * parent) const
+  } // createView(Core::Controller * arg__1, KDDockWidgets::Core::View * parent) const
 
   View createView(Controller? arg__1, {required View? parent}) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
@@ -172,7 +172,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::createView(Core::Controller * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createView(Controller.fromCppPointer(arg__1),
@@ -827,7 +827,7 @@ class Platform {
         QObject.fromCppPointer(w), type,
         timeout: timeout);
     return result ? 1 : 0;
-  } // tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
+  } // tests_waitForResize(Core::Controller * arg__1, int timeout) const
 
   bool tests_waitForResize(Controller? arg__1, {int timeout = 2000}) {
     final bool_Func_voidstar_voidstar_int func = _dylib
@@ -844,7 +844,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_waitForResize(Core::Controller * arg__1, int timeout) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_waitForResize(

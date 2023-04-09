@@ -21,7 +21,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtquick;
 
 Separator::Separator(Core::Separator *controller, QQuickItem *parent)
-    : Views::View_qtquick(controller, Type::Separator, parent)
+    : Views::View_qtquick(controller, Core::Type::Separator, parent)
     , m_controller(controller)
 {
 }

@@ -77,7 +77,7 @@ public:
     bool tests_waitForEvent(std::shared_ptr<Core::Window>, QEvent::Type type,
                             int timeout = 5000) const override;
     bool tests_waitForResize(Core::View *, int timeout = 2000) const override;
-    bool tests_waitForResize(Controller *, int timeout = 2000) const override;
+    bool tests_waitForResize(Core::Controller *, int timeout = 2000) const override;
     bool tests_waitForDeleted(Core::View *, int timeout = 2000) const override;
     bool tests_waitForDeleted(QObject *, int timeout = 2000) const override;
     void tests_sendEvent(std::shared_ptr<Core::Window>, QEvent *) const override;

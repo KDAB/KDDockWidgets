@@ -15,7 +15,7 @@
 TEST_CASE("Group ctor")
 {
     auto group = new Core::Group(nullptr, {});
-    CHECK(group->view()->is(Type::Frame));
-    CHECK(group->view()->asWrapper()->is(Type::Frame));
+    CHECK(group->view()->is(Core::Type::Frame));
+    CHECK(group->view()->asWrapper()->is(Core::Type::Frame));
     delete group;
 }

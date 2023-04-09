@@ -978,7 +978,7 @@ void c_Layouting__Item_Finalizer(void *, void *cppObj, void *); // KDDockWidgets
 void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1);
 // KDDockWidgets::locationStr(KDDockWidgets::Location loc)
 void *c_static_KDDockWidgets__locationStr_Location(int loc);
-void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Views::asView_flutter(KDDockWidgets::Controller * controller)
+void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Views::asView_flutter(Core::Controller * controller)
 void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_);
 // KDDockWidgets::Views::asView_flutter(KDDockWidgets::Core::View * view)
 void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_);
@@ -1068,7 +1068,7 @@ void *c_KDDockWidgets__Platform__applicationName(void *thisObj);
 void *c_KDDockWidgets__Platform__createDefaultViewFactory(void *thisObj);
 // KDDockWidgets::Platform::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const
 void *c_KDDockWidgets__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
-// KDDockWidgets::Platform::createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::Core::View * parent) const
+// KDDockWidgets::Platform::createView(Core::Controller * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__Platform__createView_Controller_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Platform::cursorPos() const
 void *c_KDDockWidgets__Platform__cursorPos(void *thisObj);
@@ -1140,7 +1140,7 @@ bool c_KDDockWidgets__Platform__tests_waitForDeleted_QObject_int(void *thisObj, 
 bool c_KDDockWidgets__Platform__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
 // KDDockWidgets::Platform::tests_waitForEvent(QObject * w, Event::Type type, int timeout) const
 bool c_KDDockWidgets__Platform__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
-// KDDockWidgets::Platform::tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
+// KDDockWidgets::Platform::tests_waitForResize(Core::Controller * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Platform::tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
@@ -1162,7 +1162,7 @@ void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
 void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
 // KDDockWidgets::Platform_flutter::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const
 void *c_KDDockWidgets__Platform_flutter__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
-// KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::Core::View * parent) const
+// KDDockWidgets::Platform_flutter::createView(Core::Controller * controller, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
 // KDDockWidgets::Platform_flutter::cursorPos() const
 void *c_KDDockWidgets__Platform_flutter__cursorPos(void *thisObj);
@@ -1309,49 +1309,49 @@ bool c_KDDockWidgets__CreateViewOptions___get_createWindow(void *thisObj);
 void c_KDDockWidgets__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
 void c_KDDockWidgets__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
 void c_KDDockWidgets__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
-void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__2)
+void c_KDDockWidgets__Controllers_Finalizer(void *, void *cppObj, void *); // Core::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__2)
 void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_);
-// KDDockWidgets::Controller::close()
+// Core::Controller::close()
 bool c_KDDockWidgets__Controller__close(void *thisObj);
-// KDDockWidgets::Controller::geometry() const
+// Core::Controller::geometry() const
 void *c_KDDockWidgets__Controller__geometry(void *thisObj);
-// KDDockWidgets::Controller::height() const
+// Core::Controller::height() const
 int c_KDDockWidgets__Controller__height(void *thisObj);
-// KDDockWidgets::Controller::inDtor() const
+// Core::Controller::inDtor() const
 bool c_KDDockWidgets__Controller__inDtor(void *thisObj);
-// KDDockWidgets::Controller::isVisible() const
+// Core::Controller::isVisible() const
 bool c_KDDockWidgets__Controller__isVisible(void *thisObj);
-// KDDockWidgets::Controller::mapToGlobal(QPoint arg__1) const
+// Core::Controller::mapToGlobal(QPoint arg__1) const
 void *c_KDDockWidgets__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::Controller::parentViewChanged(KDDockWidgets::Core::View * parent)
+// Core::Controller::parentViewChanged(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controller__parentViewChanged_View(void *thisObj, void *parent_);
-// KDDockWidgets::Controller::pos() const
+// Core::Controller::pos() const
 void *c_KDDockWidgets__Controller__pos(void *thisObj);
-// KDDockWidgets::Controller::rect() const
+// Core::Controller::rect() const
 void *c_KDDockWidgets__Controller__rect(void *thisObj);
-// KDDockWidgets::Controller::setParentView(KDDockWidgets::Core::View * parent)
+// Core::Controller::setParentView(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controller__setParentView_View(void *thisObj, void *parent_);
-// KDDockWidgets::Controller::setParentView_impl(KDDockWidgets::Core::View * parent)
+// Core::Controller::setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controller__setParentView_impl_View(void *thisObj, void *parent_);
-// KDDockWidgets::Controller::setVisible(bool arg__1)
+// Core::Controller::setVisible(bool arg__1)
 void c_KDDockWidgets__Controller__setVisible_bool(void *thisObj, bool arg__1);
-// KDDockWidgets::Controller::show() const
+// Core::Controller::show() const
 void c_KDDockWidgets__Controller__show(void *thisObj);
-// KDDockWidgets::Controller::size() const
+// Core::Controller::size() const
 void *c_KDDockWidgets__Controller__size(void *thisObj);
-// KDDockWidgets::Controller::tr(const char * s, const char * c, int n)
+// Core::Controller::tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Controller__tr_char_char_int(const char *s, const char *c, int n);
-// KDDockWidgets::Controller::type() const
+// Core::Controller::type() const
 int c_KDDockWidgets__Controller__type(void *thisObj);
-// KDDockWidgets::Controller::view() const
+// Core::Controller::view() const
 void *c_KDDockWidgets__Controller__view(void *thisObj);
-// KDDockWidgets::Controller::visibleChanged(bool arg__1)
+// Core::Controller::visibleChanged(bool arg__1)
 void c_KDDockWidgets__Controller__visibleChanged_bool(void *thisObj, bool arg__1);
-// KDDockWidgets::Controller::width() const
+// Core::Controller::width() const
 int c_KDDockWidgets__Controller__width(void *thisObj);
-// KDDockWidgets::Controller::x() const
+// Core::Controller::x() const
 int c_KDDockWidgets__Controller__x(void *thisObj);
-// KDDockWidgets::Controller::y() const
+// Core::Controller::y() const
 int c_KDDockWidgets__Controller__y(void *thisObj);
 void c_KDDockWidgets__Controller__destructor(void *thisObj);
 void c_KDDockWidgets__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
@@ -1541,7 +1541,7 @@ int c_KDDockWidgets__View__x(void *thisObj);
 int c_KDDockWidgets__View__y(void *thisObj);
 void c_KDDockWidgets__View__destructor(void *thisObj);
 void c_KDDockWidgets__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
+void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Views::View_flutter::View_flutter(Core::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
 void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
 // KDDockWidgets::Views::View_flutter::activateWindow()
 void c_KDDockWidgets__Views__View_flutter__activateWindow(void *thisObj);

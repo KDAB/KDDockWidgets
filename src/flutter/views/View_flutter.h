@@ -33,7 +33,7 @@ public:
     using View::resize;
     using View::width;
 
-    explicit View_flutter(KDDockWidgets::Controller *controller, Type type, View *,
+    explicit View_flutter(Core::Controller *controller, Type type, View *,
                           Qt::WindowFlags windowFlags = {});
 
     ~View_flutter() override;

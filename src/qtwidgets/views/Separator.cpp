@@ -24,7 +24,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
 Separator::Separator(Core::Separator *controller, View *parent)
-    : View_qtwidgets(controller, Type::Separator, View_qt::asQWidget(parent))
+    : View_qtwidgets(controller, Core::Type::Separator, View_qt::asQWidget(parent))
     , m_controller(controller)
 {
     setMouseTracking(true);

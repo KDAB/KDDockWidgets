@@ -34,8 +34,8 @@ public:
     virtual KDDockWidgets::ViewFactory *createDefaultViewFactory_nocallback();
     virtual KDDockWidgets::Core::MainWindow *createMainWindow(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::Core::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
     virtual KDDockWidgets::Core::MainWindow *createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::Core::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
-    virtual KDDockWidgets::Core::View *createView(KDDockWidgets::Controller *controller, KDDockWidgets::Core::View *parent = nullptr) const;
-    virtual KDDockWidgets::Core::View *createView_nocallback(KDDockWidgets::Controller *controller, KDDockWidgets::Core::View *parent = nullptr) const;
+    virtual KDDockWidgets::Core::View *createView(Core::Controller *controller, KDDockWidgets::Core::View *parent = nullptr) const;
+    virtual KDDockWidgets::Core::View *createView_nocallback(Core::Controller *controller, KDDockWidgets::Core::View *parent = nullptr) const;
     virtual QPoint cursorPos() const;
     virtual QPoint cursorPos_nocallback() const;
     virtual void dumpManagedBacktrace();
@@ -98,7 +98,7 @@ public:
     Callback_createDefaultViewFactory m_createDefaultViewFactoryCallback = nullptr;
     typedef KDDockWidgets::Core::MainWindow *(*Callback_createMainWindow)(void *, const QString &uniqueName, KDDockWidgets::CreateViewOptions *arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View *parent, Qt::WindowFlags arg__5);
     Callback_createMainWindow m_createMainWindowCallback = nullptr;
-    typedef KDDockWidgets::Core::View *(*Callback_createView)(void *, KDDockWidgets::Controller *controller, KDDockWidgets::Core::View *parent);
+    typedef KDDockWidgets::Core::View *(*Callback_createView)(void *, Core::Controller *controller, KDDockWidgets::Core::View *parent);
     Callback_createView m_createViewCallback = nullptr;
     typedef QPoint *(*Callback_cursorPos)(void *);
     Callback_cursorPos m_cursorPosCallback = nullptr;
@@ -165,7 +165,7 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__applicatio
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
 // KDDockWidgets::Platform_flutter::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
-// KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::Core::View * parent) const
+// KDDockWidgets::Platform_flutter::createView(Core::Controller * controller, KDDockWidgets::Core::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
 // KDDockWidgets::Platform_flutter::cursorPos() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__cursorPos(void *thisObj);

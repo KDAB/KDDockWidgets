@@ -54,7 +54,7 @@ public:
 VBoxLayout::~VBoxLayout() = default;
 
 Group::Group(Core::Group *controller, QWidget *parent)
-    : View_qtwidgets<QWidget>(controller, Type::Frame, parent)
+    : View_qtwidgets<QWidget>(controller, Core::Type::Frame, parent)
     , GroupViewInterface(controller)
 {
 }

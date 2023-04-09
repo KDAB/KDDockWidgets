@@ -76,7 +76,7 @@ KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow_nocallback(c
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::Core::View *Platform_wrapper::createView(KDDockWidgets::Controller *arg__1, KDDockWidgets::Core::View *parent) const
+KDDockWidgets::Core::View *Platform_wrapper::createView(Core::Controller *arg__1, KDDockWidgets::Core::View *parent) const
 {
     if (m_createViewCallback) {
         const void *thisPtr = this;
@@ -86,7 +86,7 @@ KDDockWidgets::Core::View *Platform_wrapper::createView(KDDockWidgets::Controlle
         return {};
     }
 }
-KDDockWidgets::Core::View *Platform_wrapper::createView_nocallback(KDDockWidgets::Controller *arg__1, KDDockWidgets::Core::View *parent) const
+KDDockWidgets::Core::View *Platform_wrapper::createView_nocallback(Core::Controller *arg__1, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -523,7 +523,7 @@ bool Platform_wrapper::tests_waitForEvent_nocallback(QObject *w, Event::Type typ
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-bool Platform_wrapper::tests_waitForResize(KDDockWidgets::Controller *arg__1, int timeout) const
+bool Platform_wrapper::tests_waitForResize(Core::Controller *arg__1, int timeout) const
 {
     if (m_tests_waitForResizeCallback) {
         const void *thisPtr = this;
@@ -533,7 +533,7 @@ bool Platform_wrapper::tests_waitForResize(KDDockWidgets::Controller *arg__1, in
         return {};
     }
 }
-bool Platform_wrapper::tests_waitForResize_nocallback(KDDockWidgets::Controller *arg__1, int timeout) const
+bool Platform_wrapper::tests_waitForResize_nocallback(Core::Controller *arg__1, int timeout) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -641,10 +641,10 @@ void *c_KDDockWidgets__Platform__createMainWindow_QString_CreateViewOptions_Main
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createMainWindow_nocallback(uniqueName,arg__2,options,parent,static_cast<Qt::WindowFlags>(arg__5));} else {    return targetPtr->createMainWindow(uniqueName,arg__2,options,parent,static_cast<Qt::WindowFlags>(arg__5));} }();
 }
-// createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::Core::View * parent) const
+// createView(Core::Controller * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__Platform__createView_Controller_View(void *thisObj, void *arg__1_, void *parent_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controller *>(arg__1_);
+    auto arg__1 = reinterpret_cast<Core::Controller *>(arg__1_);
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createView_nocallback(arg__1,parent);} else {    return targetPtr->createView(arg__1,parent);} }();
 }
@@ -848,10 +848,10 @@ bool c_KDDockWidgets__Platform__tests_waitForEvent_QObject_Type_int(void *thisOb
     auto w = reinterpret_cast<QObject *>(w_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_waitForEvent_nocallback(w,static_cast<Event::Type>(type),timeout);} else {    return targetPtr->tests_waitForEvent(w,static_cast<Event::Type>(type),timeout);} }();
 }
-// tests_waitForResize(KDDockWidgets::Controller * arg__1, int timeout) const
+// tests_waitForResize(Core::Controller * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Controller *>(arg__1_);
+    auto arg__1 = reinterpret_cast<Core::Controller *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_waitForResize_nocallback(arg__1,timeout);} else {    return targetPtr->tests_waitForResize(arg__1,timeout);} }();
 }
 // tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const

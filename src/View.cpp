@@ -352,7 +352,7 @@ bool View::aboutToBeDestroyed() const
 
 
 /** static */
-Controller *View::firstParentOfType(View *view, KDDockWidgets::Type type)
+Controller *View::firstParentOfType(View *view, Type type)
 {
     auto p = view->asWrapper();
     while (p) {
@@ -369,7 +369,7 @@ Controller *View::firstParentOfType(View *view, KDDockWidgets::Type type)
     return nullptr;
 }
 
-Controller *View::firstParentOfType(KDDockWidgets::Type type) const
+Controller *View::firstParentOfType(Type type) const
 {
     return View::firstParentOfType(const_cast<View *>(this), type);
 }

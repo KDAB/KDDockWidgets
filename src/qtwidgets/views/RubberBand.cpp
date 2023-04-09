@@ -15,7 +15,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
 RubberBand::RubberBand(QWidget *parent)
-    : View_qtwidgets<QRubberBand>(nullptr, Type::RubberBand, parent)
+    : View_qtwidgets<QRubberBand>(nullptr, Core::Type::RubberBand, parent)
 {
 }
 

@@ -70,7 +70,7 @@ KDDockWidgets::Core::MainWindow *Platform_flutter_wrapper::createMainWindow_noca
 {
     return ::KDDockWidgets::Platform_flutter::createMainWindow(uniqueName, arg__2, options, parent, arg__5);
 }
-KDDockWidgets::Core::View *Platform_flutter_wrapper::createView(KDDockWidgets::Controller *controller, KDDockWidgets::Core::View *parent) const
+KDDockWidgets::Core::View *Platform_flutter_wrapper::createView(Core::Controller *controller, KDDockWidgets::Core::View *parent) const
 {
     if (m_createViewCallback) {
         const void *thisPtr = this;
@@ -79,7 +79,7 @@ KDDockWidgets::Core::View *Platform_flutter_wrapper::createView(KDDockWidgets::C
         return ::KDDockWidgets::Platform_flutter::createView(controller, parent);
     }
 }
-KDDockWidgets::Core::View *Platform_flutter_wrapper::createView_nocallback(KDDockWidgets::Controller *controller, KDDockWidgets::Core::View *parent) const
+KDDockWidgets::Core::View *Platform_flutter_wrapper::createView_nocallback(Core::Controller *controller, KDDockWidgets::Core::View *parent) const
 {
     return ::KDDockWidgets::Platform_flutter::createView(controller, parent);
 }
@@ -485,10 +485,10 @@ void *c_KDDockWidgets__Platform_flutter__createMainWindow_QString_CreateViewOpti
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createMainWindow_nocallback(uniqueName,arg__2,options,parent,static_cast<Qt::WindowFlags>(arg__5));} else {    return targetPtr->createMainWindow(uniqueName,arg__2,options,parent,static_cast<Qt::WindowFlags>(arg__5));} }();
 }
-// createView(KDDockWidgets::Controller * controller, KDDockWidgets::Core::View * parent) const
+// createView(Core::Controller * controller, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_)
 {
-    auto controller = reinterpret_cast<KDDockWidgets::Controller *>(controller_);
+    auto controller = reinterpret_cast<Core::Controller *>(controller_);
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createView_nocallback(controller,parent);} else {    return targetPtr->createView(controller,parent);} }();
 }

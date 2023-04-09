@@ -105,7 +105,7 @@ void View_wrapper::closeRootView()
 {
     ::KDDockWidgets::View::closeRootView();
 }
-KDDockWidgets::Controller *View_wrapper::controller() const
+Core::Controller *View_wrapper::controller() const
 {
     return ::KDDockWidgets::View::controller();
 }
@@ -130,11 +130,11 @@ bool View_wrapper::equals(const KDDockWidgets::Core::View *other) const
 {
     return ::KDDockWidgets::View::equals(other);
 }
-KDDockWidgets::Controller *View_wrapper::firstParentOfType(KDDockWidgets::Type arg__1) const
+Core::Controller *View_wrapper::firstParentOfType(KDDockWidgets::Type arg__1) const
 {
     return ::KDDockWidgets::View::firstParentOfType(arg__1);
 }
-KDDockWidgets::Controller *View_wrapper::firstParentOfType(KDDockWidgets::Core::View *view, KDDockWidgets::Type arg__2)
+Core::Controller *View_wrapper::firstParentOfType(KDDockWidgets::Core::View *view, KDDockWidgets::Type arg__2)
 {
     return ::KDDockWidgets::View::firstParentOfType(view, arg__2);
 }

@@ -29,7 +29,7 @@ class DOCKS_EXPORT ViewWrapper : public Views::View_qt
 public:
     using Ptr = std::shared_ptr<View>;
 
-    explicit ViewWrapper(Controller *controller, QObject *thisObj);
+    explicit ViewWrapper(Core::Controller *controller, QObject *thisObj);
     ~ViewWrapper() override;
 
     void setMinimumSize(QSize) override;

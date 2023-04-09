@@ -15,7 +15,7 @@
 #include <Controller.h>
 
 extern "C" {
-// KDDockWidgets::Views::asView_flutter(KDDockWidgets::Controller * controller)
+// KDDockWidgets::Views::asView_flutter(Core::Controller * controller)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_);
 // KDDockWidgets::Views::asView_flutter(KDDockWidgets::Core::View * view)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_);

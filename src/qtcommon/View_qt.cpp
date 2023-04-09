@@ -91,7 +91,7 @@ public:
     View_qt *const q;
 };
 
-View_qt::View_qt(Controller *controller, Type type, QObject *thisObj)
+View_qt::View_qt(Core::Controller *controller, Core::Type type, QObject *thisObj)
     : View(controller, type)
     , m_eventFilter(thisObj ? new EventFilter(this, thisObj) : nullptr)
     , m_thisObj(thisObj)
@@ -141,7 +141,7 @@ QWidget *View_qt::asQWidget(View *view)
 }
 
 /*static */
-QWidget *View_qt::asQWidget(Controller *controller)
+QWidget *View_qt::asQWidget(Core::Controller *controller)
 {
     if (!controller)
         return nullptr;

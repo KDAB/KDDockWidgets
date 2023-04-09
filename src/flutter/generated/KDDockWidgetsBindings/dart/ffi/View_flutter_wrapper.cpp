@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-View_flutter_wrapper::View_flutter_wrapper(KDDockWidgets::Controller *controller, KDDockWidgets::Type type, KDDockWidgets::Core::View *arg__3, Qt::WindowFlags windowFlags)
+View_flutter_wrapper::View_flutter_wrapper(Core::Controller *controller, KDDockWidgets::Type type, KDDockWidgets::Core::View *arg__3, Qt::WindowFlags windowFlags)
     : ::KDDockWidgets::Views::View_flutter(controller, type, arg__3, windowFlags)
 {
 }
@@ -774,7 +774,7 @@ void c_KDDockWidgets__Views__View_flutter_Finalizer(void *, void *cppObj, void *
 }
 void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags)
 {
-    auto controller = reinterpret_cast<KDDockWidgets::Controller *>(controller_);
+    auto controller = reinterpret_cast<Core::Controller *>(controller_);
     auto arg__3 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__3_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::View_flutter_wrapper(controller, static_cast<KDDockWidgets::Type>(type), arg__3, static_cast<Qt::WindowFlags>(windowFlags));
     return reinterpret_cast<void *>(ptr);

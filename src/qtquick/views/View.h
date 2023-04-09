@@ -37,7 +37,7 @@ inline QQuickItem *asQQuickItem(Core::View *view)
     return qobject_cast<QQuickItem *>(View_qt::asQObject(view));
 }
 
-inline QQuickItem *asQQuickItem(Controller *controller)
+inline QQuickItem *asQQuickItem(Core::Controller *controller)
 {
     if (!controller)
         return nullptr;
@@ -58,7 +58,7 @@ public:
     using View::resize;
     using View::width;
 
-    explicit View_qtquick(KDDockWidgets::Controller *controller, Type type,
+    explicit View_qtquick(Core::Controller *controller, Core::Type type,
                           QQuickItem *parent = nullptr, Qt::WindowFlags windowFlags = {});
 
     ~View_qtquick() override = default;
@@ -196,7 +196,7 @@ inline View_qtquick *asView_qtquick(Core::View *view)
     return static_cast<View_qtquick *>(view);
 }
 
-inline View_qtquick *asView_qtquick(Controller *controller)
+inline View_qtquick *asView_qtquick(Core::Controller *controller)
 {
     if (!controller)
         return nullptr;

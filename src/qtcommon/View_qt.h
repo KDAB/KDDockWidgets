@@ -19,8 +19,11 @@ class QQuickItem;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
-class Controller;
 class EventFilter;
+
+namespace Core {
+class Controller;
+}
 }
 
 namespace KDDockWidgets::Views {
@@ -28,7 +31,7 @@ namespace KDDockWidgets::Views {
 class DOCKS_EXPORT View_qt : public Core::View
 {
 public:
-    explicit View_qt(Controller *controller, Type type, QObject *thisObj);
+    explicit View_qt(Core::Controller *controller, Core::Type type, QObject *thisObj);
     ~View_qt() override;
 
     QObject *thisObject() const;
@@ -40,7 +43,7 @@ public:
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
     static QWidget *asQWidget(Core::View *);
-    static QWidget *asQWidget(Controller *);
+    static QWidget *asQWidget(Core::Controller *);
 #endif
 
 #ifdef KDDW_FRONTEND_QTQUICK

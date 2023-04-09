@@ -42,7 +42,7 @@ class View {
   View.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
     thisCpp = cppPointer;
   }
-  View.init() {} //View(KDDockWidgets::Controller * controller, KDDockWidgets::Type arg__2)
+  View.init() {} //View(Core::Controller * controller, KDDockWidgets::Type arg__2)
   View(Controller? controller, int arg__2) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(

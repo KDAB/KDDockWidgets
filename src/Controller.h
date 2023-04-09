@@ -17,16 +17,11 @@
 
 #include <memory>
 
-QT_BEGIN_NAMESPACE
-class QWindow;
-QT_END_NAMESPACE
-
 namespace KDDockWidgets {
 
 namespace Core {
-class View;
-}
 
+class View;
 
 enum class Type {
     FIRST = 1, // Keep first
@@ -55,11 +50,11 @@ class DOCKS_EXPORT Controller : public QObject // TODOm4 remove QObject
 {
     Q_OBJECT
 public:
-    explicit Controller(Type type, Core::View *);
+    explicit Controller(Type type, View *);
     virtual ~Controller();
 
     /// @brief Returns the view associated with this controller, if any.
-    Core::View *view() const;
+    View *view() const;
 
     /// @brief Returns the type of this controller
     Type type() const;
@@ -83,30 +78,32 @@ public:
     int x() const;
     int y() const;
     bool close();
-    std::shared_ptr<Core::View> window() const;
+    std::shared_ptr<View> window() const;
     void show() const;
     bool inDtor() const;
 
     /// Sets the parent view
     /// In Qt this would be equivalent to calling view()->setParent(parent);
-    void setParentView(Core::View *parent);
+    void setParentView(View *parent);
 
 Q_SIGNALS:
     ///@brief signal counterpart for setParentView()
-    void parentViewChanged(Core::View *parent);
+    void parentViewChanged(View *parent);
 
     ///@brief signal counterpart for setVisible()
     void visibleChanged(bool);
 
 protected:
-    virtual void setParentView_impl(Core::View *parent);
+    virtual void setParentView_impl(View *parent);
 
 private:
     void setParent(QObject *) = delete;
-    Core::View *m_view = nullptr;
+    View *m_view = nullptr;
     bool m_inDtor = false;
     bool m_isVisible = true;
     const Type m_type;
 };
+
+}
 
 }

@@ -30,13 +30,13 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class Controller;
-
 using HANDLE = const void *;
 using WId = quintptr;
 
 namespace Core {
+
 class EventFilterInterface;
+class Controller;
 class Screen;
 class Window;
 class MDILayout;
@@ -279,10 +279,10 @@ public:
 
     /// @brief Returns the controller of the first parent view of the specified type
     /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
-    static Controller *firstParentOfType(View *view, KDDockWidgets::Type);
+    static Controller *firstParentOfType(View *view, Type);
 
     /// @overload
-    Controller *firstParentOfType(KDDockWidgets::Type) const;
+    Controller *firstParentOfType(Type) const;
 
 public:
     class Private;

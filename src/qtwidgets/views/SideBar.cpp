@@ -26,7 +26,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
 SideBar::SideBar(Core::SideBar *controller, QWidget *parent)
-    : View_qtwidgets(controller, Type::SideBar, parent)
+    : View_qtwidgets(controller, Core::Type::SideBar, parent)
     , SideBarViewInterface(controller)
 {
 }

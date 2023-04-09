@@ -31,7 +31,7 @@ class View_flutter_wrapper : public ::KDDockWidgets::Views::View_flutter
 {
 public:
     ~View_flutter_wrapper();
-    View_flutter_wrapper(KDDockWidgets::Controller *controller, KDDockWidgets::Type type, KDDockWidgets::Core::View *arg__3, Qt::WindowFlags windowFlags = {});
+    View_flutter_wrapper(Core::Controller *controller, KDDockWidgets::Type type, KDDockWidgets::Core::View *arg__3, Qt::WindowFlags windowFlags = {});
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -257,7 +257,7 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::View_flutter::View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
+// KDDockWidgets::Views::View_flutter::View_flutter(Core::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__View_flutter__constructor_Controller_Type_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
 // KDDockWidgets::Views::View_flutter::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__View_flutter__activateWindow(void *thisObj);

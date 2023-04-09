@@ -40,7 +40,7 @@ public:
     QSize screenSizeFor(Core::View *) const override;
 
     int startDragDistance_impl() const override;
-    Core::View *createView(Controller *controller, Core::View *parent = nullptr) const override;
+    Core::View *createView(Core::Controller *controller, Core::View *parent = nullptr) const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
     bool usesFallbackMouseGrabber() const override;
     void ungrabMouse() override;

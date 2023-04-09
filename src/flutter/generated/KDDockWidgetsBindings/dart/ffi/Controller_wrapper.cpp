@@ -28,48 +28,48 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 Controller_wrapper::Controller_wrapper(KDDockWidgets::Type type, KDDockWidgets::Core::View *arg__2)
-    : ::KDDockWidgets::Controller(type, arg__2)
+    : ::Core::Controller(type, arg__2)
 {
 }
 bool Controller_wrapper::close()
 {
-    return ::KDDockWidgets::Controller::close();
+    return ::Core::Controller::close();
 }
 QRect Controller_wrapper::geometry() const
 {
-    return ::KDDockWidgets::Controller::geometry();
+    return ::Core::Controller::geometry();
 }
 int Controller_wrapper::height() const
 {
-    return ::KDDockWidgets::Controller::height();
+    return ::Core::Controller::height();
 }
 bool Controller_wrapper::inDtor() const
 {
-    return ::KDDockWidgets::Controller::inDtor();
+    return ::Core::Controller::inDtor();
 }
 bool Controller_wrapper::isVisible() const
 {
-    return ::KDDockWidgets::Controller::isVisible();
+    return ::Core::Controller::isVisible();
 }
 QPoint Controller_wrapper::mapToGlobal(QPoint arg__1) const
 {
-    return ::KDDockWidgets::Controller::mapToGlobal(arg__1);
+    return ::Core::Controller::mapToGlobal(arg__1);
 }
 void Controller_wrapper::parentViewChanged(KDDockWidgets::Core::View *parent)
 {
-    ::KDDockWidgets::Controller::parentViewChanged(parent);
+    ::Core::Controller::parentViewChanged(parent);
 }
 QPoint Controller_wrapper::pos() const
 {
-    return ::KDDockWidgets::Controller::pos();
+    return ::Core::Controller::pos();
 }
 QRect Controller_wrapper::rect() const
 {
-    return ::KDDockWidgets::Controller::rect();
+    return ::Core::Controller::rect();
 }
 void Controller_wrapper::setParentView(KDDockWidgets::Core::View *parent)
 {
-    ::KDDockWidgets::Controller::setParentView(parent);
+    ::Core::Controller::setParentView(parent);
 }
 void Controller_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
@@ -77,61 +77,61 @@ void Controller_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
         const void *thisPtr = this;
         m_setParentView_implCallback(const_cast<void *>(thisPtr), parent);
     } else {
-        ::KDDockWidgets::Controller::setParentView_impl(parent);
+        ::Core::Controller::setParentView_impl(parent);
     }
 }
 void Controller_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
-    ::KDDockWidgets::Controller::setParentView_impl(parent);
+    ::Core::Controller::setParentView_impl(parent);
 }
 void Controller_wrapper::setVisible(bool arg__1)
 {
-    ::KDDockWidgets::Controller::setVisible(arg__1);
+    ::Core::Controller::setVisible(arg__1);
 }
 void Controller_wrapper::show() const
 {
-    ::KDDockWidgets::Controller::show();
+    ::Core::Controller::show();
 }
 QSize Controller_wrapper::size() const
 {
-    return ::KDDockWidgets::Controller::size();
+    return ::Core::Controller::size();
 }
 QString Controller_wrapper::tr(const char *s, const char *c, int n)
 {
-    return ::KDDockWidgets::Controller::tr(s, c, n);
+    return ::Core::Controller::tr(s, c, n);
 }
 KDDockWidgets::Type Controller_wrapper::type() const
 {
-    return ::KDDockWidgets::Controller::type();
+    return ::Core::Controller::type();
 }
 KDDockWidgets::Core::View *Controller_wrapper::view() const
 {
-    return ::KDDockWidgets::Controller::view();
+    return ::Core::Controller::view();
 }
 void Controller_wrapper::visibleChanged(bool arg__1)
 {
-    ::KDDockWidgets::Controller::visibleChanged(arg__1);
+    ::Core::Controller::visibleChanged(arg__1);
 }
 int Controller_wrapper::width() const
 {
-    return ::KDDockWidgets::Controller::width();
+    return ::Core::Controller::width();
 }
 int Controller_wrapper::x() const
 {
-    return ::KDDockWidgets::Controller::x();
+    return ::Core::Controller::x();
 }
 int Controller_wrapper::y() const
 {
-    return ::KDDockWidgets::Controller::y();
+    return ::Core::Controller::y();
 }
 Controller_wrapper::~Controller_wrapper()
 {
 }
 
 }
-static KDDockWidgets::Controller *fromPtr(void *ptr)
+static Core::Controller *fromPtr(void *ptr)
 {
-    return reinterpret_cast<KDDockWidgets::Controller *>(ptr);
+    return reinterpret_cast<Core::Controller *>(ptr);
 }
 static KDDockWidgetsBindings_wrappersNS::Controller_wrapper *fromWrapperPtr(void *ptr)
 {

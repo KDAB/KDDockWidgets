@@ -14,8 +14,8 @@ import 'TypeHelpers.dart';
 import '../Bindings.dart';
 import '../FinalizerHelpers.dart';
 
-var _dylib = Library.instance()
-    .dylib; // asView_flutter(KDDockWidgets::Controller * controller)
+var _dylib =
+    Library.instance().dylib; // asView_flutter(Core::Controller * controller)
 View_flutter asView_flutter(Controller? controller) {
   final voidstar_Func_voidstar func = _dylib
       .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(

@@ -92,7 +92,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::createView(Core::Controller * controller, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createView(

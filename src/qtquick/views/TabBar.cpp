@@ -33,7 +33,7 @@ using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::qtquick;
 
 TabBar::TabBar(Core::TabBar *controller, QQuickItem *parent)
-    : View_qtquick(controller, Type::TabBar, parent)
+    : View_qtquick(controller, Core::Type::TabBar, parent)
     , TabBarViewInterface(controller)
     , m_dockWidgetModel(new DockWidgetModel(controller, this))
 {
