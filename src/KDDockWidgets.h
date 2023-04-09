@@ -41,10 +41,6 @@ namespace KDDockWidgets {
 DOCKS_EXPORT
 Q_NAMESPACE
 
-namespace Core {
-class DropArea;
-}
-
 namespace qtwidgets {
 class DockWidget;
 }
