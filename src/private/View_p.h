@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../View.h"
+#include "core/View.h"
 #include "kdbindings/signal.h"
 #include "NonQtCompat_p.h"
 

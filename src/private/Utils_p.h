@@ -14,7 +14,7 @@
 
 #include "KDDockWidgets_p.h"
 #include "kddockwidgets/Config.h"
-#include "kddockwidgets/View.h"
+#include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/Platform.h"
 
 #ifdef QT_X11EXTRAS_LIB

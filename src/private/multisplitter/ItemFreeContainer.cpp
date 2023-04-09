@@ -10,7 +10,7 @@
 */
 
 #include "ItemFreeContainer_p.h"
-#include "View.h"
+#include "core/View.h"
 
 using namespace Layouting;
 

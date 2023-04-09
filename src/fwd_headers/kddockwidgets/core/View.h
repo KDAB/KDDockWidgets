@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../View.h"
+#include "../../../core/View.h"

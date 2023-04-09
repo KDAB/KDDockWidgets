@@ -13,7 +13,7 @@
 #define KD_DOCKREGISTRY_P_H
 
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/View.h"
+#include "kddockwidgets/core/View.h"
 #include "kddockwidgets/NonQtCompat_p.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
 

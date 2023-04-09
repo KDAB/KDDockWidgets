@@ -12,7 +12,7 @@
 #ifndef KDDOCKWIDGETS_ViewFactory_H
 #define KDDOCKWIDGETS_ViewFactory_H
 
-#include "../View.h"
+#include "View.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 

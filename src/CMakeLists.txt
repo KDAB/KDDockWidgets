@@ -51,11 +51,11 @@ set(KDDW_BACKEND_SRCS
     core/ViewGuard.cpp
     core/Controller.cpp
     core/Platform.cpp
+    core/View.cpp
     core/indicators/NullIndicators.cpp
     core/indicators/ClassicIndicators.cpp
     core/indicators/SegmentedIndicators.cpp
     Action.cpp
-    View.cpp
     views/ClassicIndicatorWindowViewInterface.cpp
     views/MainWindowMDIViewInterface.cpp
     views/MainWindowViewInterface.cpp
@@ -194,7 +194,7 @@ set(KDDW_PUBLIC_HEADERS
     LayoutSaver.h
     Action.h
     # Controller.h
-    View.h
+    # View.h
     # Window.h
     # Screen.h
     # ViewFactory.h

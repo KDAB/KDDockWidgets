@@ -10,7 +10,6 @@
 */
 
 #include "Item_p.h"
-#include "View.h"
 #include "Config.h"
 #include "kddockwidgets/core/Separator.h"
 #include "kddockwidgets/core/Group.h"
@@ -18,6 +17,7 @@
 #include "kdbindings/signal.h"
 #include "core/Window.h"
 #include "core/Platform.h"
+#include "core/View.h"
 #include "../View_p.h"
 #include "../Platform_p.h"
 

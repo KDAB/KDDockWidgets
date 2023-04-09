@@ -13,9 +13,9 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "core/Controller.h"
+#include "Controller.h"
 
-#include <QSize> // TODOm4 Remove Qt headers, introduce Size and Rect structs
+#include <QSize>
 #include <QRect>
 
 #include <memory>

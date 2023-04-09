@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "kddockwidgets/View.h"
+#include "kddockwidgets/core/View.h"
 
 QT_BEGIN_NAMESPACE
 class QWidget;

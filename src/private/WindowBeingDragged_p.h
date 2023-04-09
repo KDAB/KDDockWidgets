@@ -13,7 +13,7 @@
 #define KD_WINDOWBEINGDRAGGED_P_H
 
 #include "kddockwidgets/docks_export.h"
-#include "View.h"
+#include "core/View.h"
 #include "core/ViewGuard.h"
 
 #include <QPointer>
