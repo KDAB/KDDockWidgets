@@ -12,8 +12,8 @@
 #include "MyViewFactory.h"
 #include "MyTitleBar_CSS.h"
 
-#include <kddockwidgets/views/TitleBar_qtwidgets.h>
-#include <kddockwidgets/views/Separator_qtwidgets.h>
+#include <kddockwidgets/views/TitleBar.h>
+#include <kddockwidgets/views/Separator.h>
 
 #include <QApplication>
 #include <QPainter>

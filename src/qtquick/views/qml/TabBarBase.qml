@@ -17,10 +17,10 @@ Item {
 
     readonly property bool hasCustomMouseEventRedirector: parent.hasCustomMouseEventRedirector
 
-    /// This is our C++ Group_qtquick.cpp
+    /// This is our C++ Group.cpp view
     readonly property QtObject groupCpp: parent.groupCpp
 
-    /// This is our C++ TabBar_qtquick.cpp
+    /// This is our C++ TabBar.cpp view
     readonly property QtObject tabBarCpp: groupCpp ? groupCpp.tabBar : null
 
     /// The number of tabs

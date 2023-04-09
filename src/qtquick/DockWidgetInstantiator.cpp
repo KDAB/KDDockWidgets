@@ -12,9 +12,9 @@
 #include "DockWidgetInstantiator.h"
 #include "DockRegistry.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "ViewFactory_qtquick.h"
+#include "ViewFactory.h"
 #include "Config.h"
-#include "Platform_qtquick.h"
+#include "Platform.h"
 #include "core/DockWidget.h"
 
 using namespace KDDockWidgets;

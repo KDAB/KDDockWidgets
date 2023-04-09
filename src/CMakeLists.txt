@@ -22,7 +22,6 @@ set(KDDW_BACKEND_SRCS
     KDDockWidgets.cpp
     Config.cpp
     FocusScope.cpp
-    ViewFactory.cpp
     LayoutSaver.cpp
     DockRegistry.cpp
     private/Position.cpp
@@ -46,6 +45,7 @@ set(KDDW_BACKEND_SRCS
     core/Stack.cpp
     core/TitleBar.cpp
     core/TabBar.cpp
+    core/ViewFactory.cpp
     core/indicators/NullIndicators.cpp
     core/indicators/ClassicIndicators.cpp
     core/indicators/SegmentedIndicators.cpp
@@ -74,56 +74,56 @@ set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window_qt.cpp qtcommon/
 )
 
 set(KDDW_FRONTEND_QTWIDGETS_SRCS
-    qtwidgets/Window_qtwidgets.cpp
-    qtwidgets/views/View_qtwidgets.cpp
-    qtwidgets/Platform_qtwidgets.cpp
-    qtwidgets/views/ViewWrapper_qtwidgets.cpp
-    qtwidgets/views/FloatingWindow_qtwidgets.cpp
-    qtwidgets/views/DockWidget_qtwidgets.cpp
-    qtwidgets/views/DropArea_qtwidgets.cpp
-    qtwidgets/views/MDILayout_qtwidgets.cpp
-    qtwidgets/views/Group_qtwidgets.cpp
-    qtwidgets/views/MainWindow_qtwidgets.cpp
-    qtwidgets/views/MainWindowMDI_qtwidgets.cpp
-    qtwidgets/views/MDIArea_qtwidgets.cpp
-    qtwidgets/views/RubberBand_qtwidgets.cpp
-    qtwidgets/views/Separator_qtwidgets.cpp
-    qtwidgets/views/TitleBar_qtwidgets.cpp
-    qtwidgets/views/TabBar_qtwidgets.cpp
-    qtwidgets/views/Stack_qtwidgets.cpp
-    qtwidgets/views/SideBar_qtwidgets.cpp
-    qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.cpp
-    qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.cpp
-    qtwidgets/ViewFactory_qtwidgets.cpp
+    qtwidgets/Window.cpp
+    qtwidgets/views/View.cpp
+    qtwidgets/Platform.cpp
+    qtwidgets/views/ViewWrapper.cpp
+    qtwidgets/views/FloatingWindow.cpp
+    qtwidgets/views/DockWidget.cpp
+    qtwidgets/views/DropArea.cpp
+    qtwidgets/views/MDILayout.cpp
+    qtwidgets/views/Group.cpp
+    qtwidgets/views/MainWindow.cpp
+    qtwidgets/views/MainWindowMDI.cpp
+    qtwidgets/views/MDIArea.cpp
+    qtwidgets/views/RubberBand.cpp
+    qtwidgets/views/Separator.cpp
+    qtwidgets/views/TitleBar.cpp
+    qtwidgets/views/TabBar.cpp
+    qtwidgets/views/Stack.cpp
+    qtwidgets/views/SideBar.cpp
+    qtwidgets/views/ClassicIndicatorsWindow.cpp
+    qtwidgets/views/SegmentedIndicatorsOverlay.cpp
+    qtwidgets/ViewFactory.cpp
     qtwidgets/DebugWindow.cpp
     qtwidgets/ObjectViewer.cpp
 )
 
 set(KDDW_FRONTEND_QTQUICK_SRCS
-    qtquick/Window_qtquick.cpp
-    qtquick/Platform_qtquick.cpp
+    qtquick/Window.cpp
+    qtquick/Platform.cpp
     qtquick/Helpers.cpp
-    qtquick/ViewFactory_qtquick.cpp
+    qtquick/ViewFactory.cpp
     qtquick/LayoutSaverInstantiator.cpp
     qtquick/MainWindowInstantiator.cpp
     qtquick/MDIDockingAreaInstantiator.cpp
     qtquick/DockWidgetInstantiator.cpp
     qtquick/QmlTypes.cpp
-    qtquick/views/DropArea_qtquick.cpp
-    qtquick/views/DockWidget_qtquick.cpp
-    qtquick/views/FloatingWindow_qtquick.cpp
-    qtquick/views/Group_qtquick.cpp
-    qtquick/views/MainWindow_qtquick.cpp
-    qtquick/views/MainWindowMDI_qtquick.cpp
-    qtquick/views/MDILayout_qtquick.cpp
-    qtquick/views/RubberBand_qtquick.cpp
-    qtquick/views/Separator_qtquick.cpp
-    qtquick/views/Stack_qtquick.cpp
-    qtquick/views/TabBar_qtquick.cpp
-    qtquick/views/TitleBar_qtquick.cpp
-    qtquick/views/View_qtquick.cpp
-    qtquick/views/ViewWrapper_qtquick.cpp
-    qtquick/views/ClassicIndicatorsWindow_qtquick.cpp
+    qtquick/views/DropArea.cpp
+    qtquick/views/DockWidget.cpp
+    qtquick/views/FloatingWindow.cpp
+    qtquick/views/Group.cpp
+    qtquick/views/MainWindow.cpp
+    qtquick/views/MainWindowMDI.cpp
+    qtquick/views/MDILayout.cpp
+    qtquick/views/RubberBand.cpp
+    qtquick/views/Separator.cpp
+    qtquick/views/Stack.cpp
+    qtquick/views/TabBar.cpp
+    qtquick/views/TitleBar.cpp
+    qtquick/views/View.cpp
+    qtquick/views/ViewWrapper.cpp
+    qtquick/views/ClassicIndicatorsWindow.cpp
     qtquick/kddockwidgets_qtquick.qrc
 )
 
@@ -180,8 +180,8 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
 )
 
 if(KDDockWidgets_DEVELOPER_MODE)
-    set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers_qtquick.cpp)
-    set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers_qtwidgets.cpp)
+    set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)
+    set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers.cpp)
     set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/TestHelpers_flutter.cpp)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
@@ -197,7 +197,7 @@ set(KDDW_PUBLIC_HEADERS
     View.h
     Window.h
     Screen.h
-    ViewFactory.h
+    # ViewFactory.h
     Qt5Qt6Compat_p.h
     NonQtCompat_p.h
     Platform.h
@@ -274,7 +274,7 @@ ecm_generate_headers(
     Config
     # DockWidget DockWidgetBase
     FocusScope
-    ViewFactory,
+    # ViewFactory,
     # DefaultWidgetFactory
     LayoutSaver
     # MainWindow MainWindowBase MainWindowMDI
@@ -489,27 +489,27 @@ install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PAT
 
 if(KDDW_FRONTEND_QTWIDGETS)
 
-    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform_qtwidgets.h qtwidgets/ViewFactory_qtwidgets.h)
+    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform.h qtwidgets/ViewFactory.h)
 
     set(KDDW_QTWIDGET_VIEW_HEADERS
-        qtwidgets/views/DockWidget_qtwidgets.h
-        qtwidgets/views/Separator_qtwidgets.h
-        qtwidgets/views/RubberBand_qtwidgets.h
-        qtwidgets/views/SideBar_qtwidgets.h
-        qtwidgets/views/FloatingWindow_qtwidgets.h
-        qtwidgets/views/View_qtwidgets.h
-        qtwidgets/views/MainWindowMDI_qtwidgets.h
-        qtwidgets/views/ViewWrapper_qtwidgets.h
-        qtwidgets/views/MDILayout_qtwidgets.h
-        qtwidgets/views/MDIArea_qtwidgets.h
-        qtwidgets/views/DropArea_qtwidgets.h
-        qtwidgets/views/Stack_qtwidgets.h
-        qtwidgets/views/Group_qtwidgets.h
-        qtwidgets/views/TabBar_qtwidgets.h
-        qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h
-        qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h
-        qtwidgets/views/MainWindow_qtwidgets.h
-        qtwidgets/views/TitleBar_qtwidgets.h
+        qtwidgets/views/DockWidget.h
+        qtwidgets/views/Separator.h
+        qtwidgets/views/RubberBand.h
+        qtwidgets/views/SideBar.h
+        qtwidgets/views/FloatingWindow.h
+        qtwidgets/views/View.h
+        qtwidgets/views/MainWindowMDI.h
+        qtwidgets/views/ViewWrapper.h
+        qtwidgets/views/MDILayout.h
+        qtwidgets/views/MDIArea.h
+        qtwidgets/views/DropArea.h
+        qtwidgets/views/Stack.h
+        qtwidgets/views/Group.h
+        qtwidgets/views/TabBar.h
+        qtwidgets/views/ClassicIndicatorsWindow.h
+        qtwidgets/views/SegmentedIndicatorsOverlay.h
+        qtwidgets/views/MainWindow.h
+        qtwidgets/views/TitleBar.h
     )
 
     set(KDDW_QTWIDGET_PRETTY_HEADERS fwd_headers/qtwidgets_pretty/kddockwidgets/MainWindow.h
@@ -528,28 +528,28 @@ endif()
 if(KDDW_FRONTEND_QTQUICK)
 
     set(KDDW_QTQUICK_HEADERS
-        qtquick/ViewFactory_qtquick.h qtquick/DockWidgetInstantiator.h qtquick/Platform_qtquick.h
-        qtquick/LayoutSaverInstantiator.h qtquick/MainWindowInstantiator.h qtquick/MDIDockingAreaInstantiator.h
+        qtquick/ViewFactory.h qtquick/DockWidgetInstantiator.h qtquick/Platform.h qtquick/LayoutSaverInstantiator.h
+        qtquick/MainWindowInstantiator.h qtquick/MDIDockingAreaInstantiator.h
     )
 
     set(KDDW_QTQUICK_VIEW_HEADERS
-        qtquick/views/ClassicIndicatorsWindow_qtquick.h
-        qtquick/views/View_qtquick.h
-        qtquick/views/Separator_qtquick.h
-        qtquick/views/MainWindowMDI_qtquick.h
-        qtquick/views/RubberBand_qtquick.h
-        qtquick/views/MainWindow_qtquick.h
-        qtquick/views/Separator_qtquick.h
-        qtquick/views/FloatingWindow_qtquick.h
-        qtquick/views/SideBar_qtquick.h
-        qtquick/views/TabBar_qtquick.h
-        qtquick/views/DockWidget_qtquick.h
-        qtquick/views/Stack_qtquick.h
-        qtquick/views/MDILayout_qtquick.h
-        qtquick/views/DropArea_qtquick.h
-        qtquick/views/Group_qtquick.h
-        qtquick/views/TitleBar_qtquick.h
-        qtquick/views/ViewWrapper_qtquick.h
+        qtquick/views/ClassicIndicatorsWindow.h
+        qtquick/views/View.h
+        qtquick/views/Separator.h
+        qtquick/views/MainWindowMDI.h
+        qtquick/views/RubberBand.h
+        qtquick/views/MainWindow.h
+        qtquick/views/Separator.h
+        qtquick/views/FloatingWindow.h
+        qtquick/views/SideBar.h
+        qtquick/views/TabBar.h
+        qtquick/views/DockWidget.h
+        qtquick/views/Stack.h
+        qtquick/views/MDILayout.h
+        qtquick/views/DropArea.h
+        qtquick/views/Group.h
+        qtquick/views/TitleBar.h
+        qtquick/views/ViewWrapper.h
     )
 
     install(FILES ${KDDW_QTQUICK_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)

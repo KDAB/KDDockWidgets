@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <kddockwidgets/ViewFactory_qtwidgets.h>
+#include <kddockwidgets/ViewFactory.h>
 
 // clazy:excludeall=ctor-missing-parent-argument
 

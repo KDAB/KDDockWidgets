@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "kddockwidgets/views/DockWidget_qtwidgets.h"
+#include "kddockwidgets/views/DockWidget.h"

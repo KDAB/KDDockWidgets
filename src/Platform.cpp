@@ -14,11 +14,11 @@
 #include "EventFilterInterface.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
-#include "qtwidgets/Platform_qtwidgets.h"
+#include "qtwidgets/Platform.h"
 #endif
 
 #ifdef KDDW_FRONTEND_QTQUICK
-#include "qtquick/Platform_qtquick.h"
+#include "qtquick/Platform.h"
 #endif
 
 #ifdef KDDW_FRONTEND_FLUTTER

@@ -10,15 +10,15 @@
 */
 
 #include "MainWindowInstantiator.h"
-#include "kddockwidgets/views/MainWindow_qtquick.h"
-#include "qtquick/views/MainWindowMDI_qtquick.h"
+#include "kddockwidgets/views/MainWindow.h"
+#include "qtquick/views/MainWindowMDI.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/MainWindow.h"
 
 #include "DockWidgetInstantiator.h"
 
 #include "DockRegistry.h"
-#include "Platform_qtquick.h"
+#include "Platform.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtquick;

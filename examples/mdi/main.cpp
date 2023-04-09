@@ -11,7 +11,7 @@
 
 #include "MyWidget.h"
 
-#include <kddockwidgets/views/MainWindowMDI_qtwidgets.h>
+#include <kddockwidgets/views/MainWindowMDI.h>
 #include <kddockwidgets/DockWidget.h>
 
 #include <QStyleFactory>

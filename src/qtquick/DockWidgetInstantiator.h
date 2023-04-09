@@ -12,8 +12,8 @@
 #ifndef KD_DOCKWIDGET_INSTANTIATOR_P_H
 #define KD_DOCKWIDGET_INSTANTIATOR_P_H
 
-#include "qtquick/views/DockWidget_qtquick.h"
-#include "qtquick/views/TitleBar_qtquick.h"
+#include "qtquick/views/DockWidget.h"
+#include "qtquick/views/TitleBar.h"
 
 #include <QQmlParserStatus>
 #include <QQuickItem>

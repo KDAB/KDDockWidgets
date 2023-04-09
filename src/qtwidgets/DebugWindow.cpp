@@ -26,7 +26,7 @@
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Layout.h"
 
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
+#include "qtwidgets/views/MainWindow.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
