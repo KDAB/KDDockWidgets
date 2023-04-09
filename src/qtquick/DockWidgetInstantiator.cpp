@@ -18,6 +18,7 @@
 #include "core/DockWidget.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtquick;
 
 QString DockWidgetInstantiator::uniqueName() const
 {
@@ -41,10 +42,10 @@ void DockWidgetInstantiator::setSource(const QString &source)
     Q_EMIT sourceChanged();
 }
 
-Views::DockWidget_qtquick *DockWidgetInstantiator::dockWidget() const
+qtquick::DockWidget *DockWidgetInstantiator::dockWidget() const
 {
     if (m_dockWidget) {
-        return static_cast<Views::DockWidget_qtquick *>(m_dockWidget->view());
+        return static_cast<qtquick::DockWidget *>(m_dockWidget->view());
     }
 
     return nullptr;
@@ -103,7 +104,7 @@ void DockWidgetInstantiator::addDockWidgetAsTab(QQuickItem *other, InitialVisibi
     if (!other || !m_dockWidget)
         return;
 
-    Core::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
+    Core::DockWidget *otherDockWidget = Platform::dockWidgetForItem(other);
     m_dockWidget->addDockWidgetAsTab(otherDockWidget, option);
 }
 
@@ -115,8 +116,8 @@ void DockWidgetInstantiator::addDockWidgetToContainingWindow(QQuickItem *other, 
     if (!other || !m_dockWidget)
         return;
 
-    Core::DockWidget *otherDockWidget = Platform_qtquick::dockWidgetForItem(other);
-    Core::DockWidget *relativeToDockWidget = Platform_qtquick::dockWidgetForItem(relativeTo);
+    Core::DockWidget *otherDockWidget = Platform::dockWidgetForItem(other);
+    Core::DockWidget *relativeToDockWidget = Platform::dockWidgetForItem(relativeTo);
 
     m_dockWidget->addDockWidgetToContainingWindow(otherDockWidget, location, relativeToDockWidget,
                                                   InitialOption(option, initialSize));
@@ -195,7 +196,7 @@ void DockWidgetInstantiator::componentComplete()
         return;
     }
 
-    m_dockWidget = ViewFactory_qtquick::self()
+    m_dockWidget = ViewFactory::self()
                        ->createDockWidget(m_uniqueName, qmlEngine(this))
                        ->asDockWidgetController();
 

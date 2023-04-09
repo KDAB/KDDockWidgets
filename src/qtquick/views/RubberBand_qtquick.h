@@ -19,11 +19,11 @@
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT RubberBand_qtquick : public View_qtquick
+class DOCKS_EXPORT RubberBand : public Views::View_qtquick
 {
     Q_OBJECT
 public:
-    explicit RubberBand_qtquick(QQuickItem *parent);
+    explicit RubberBand(QQuickItem *parent);
 };
 
 }

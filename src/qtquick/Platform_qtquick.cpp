@@ -46,6 +46,7 @@ static void initResources()
 #endif
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtquick;
 
 inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
 {
@@ -70,13 +71,13 @@ inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
     return nullptr;
 }
 
-Platform_qtquick::Platform_qtquick()
+Platform::Platform()
     : m_qquickHelpers(new QtQuickHelpers())
 {
     init();
 }
 
-void Platform_qtquick::init()
+void Platform::init()
 {
 #if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
     initResources();
@@ -90,42 +91,42 @@ void Platform_qtquick::init()
     });
 }
 
-Platform_qtquick::~Platform_qtquick()
+Platform::~Platform()
 {
     delete m_qquickHelpers;
 }
 
-const char *Platform_qtquick::name() const
+const char *Platform::name() const
 {
     return "qtquick";
 }
 
-std::shared_ptr<View> Platform_qtquick::qobjectAsView(QObject *obj) const
+std::shared_ptr<View> Platform::qobjectAsView(QObject *obj) const
 {
     return Views::ViewWrapper_qtquick::create(obj);
 }
 
-std::shared_ptr<Core::Window> Platform_qtquick::windowFromQWindow(QWindow *qwindow) const
+std::shared_ptr<Core::Window> Platform::windowFromQWindow(QWindow *qwindow) const
 {
-    return std::shared_ptr<Core::Window>(new Window_qtquick(qwindow));
+    return std::shared_ptr<Core::Window>(new Window(qwindow));
 }
 
-Core::ViewFactory *Platform_qtquick::createDefaultViewFactory()
+Core::ViewFactory *Platform::createDefaultViewFactory()
 {
-    return new ViewFactory_qtquick();
+    return new ViewFactory();
 }
 
-Core::Window::Ptr Platform_qtquick::windowAt(QPoint globalPos) const
+Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
 {
     if (auto qwindow = qGuiApp->QGuiApplication::topLevelAt(globalPos)) {
-        auto window = new Window_qtquick(qwindow);
+        auto window = new Window(qwindow);
         return Core::Window::Ptr(window);
     }
 
     return {};
 }
 
-int Platform_qtquick::screenNumberFor(View *view) const
+int Platform::screenNumberFor(View *view) const
 {
     if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
@@ -135,7 +136,7 @@ int Platform_qtquick::screenNumberFor(View *view) const
     return -1;
 }
 
-QSize Platform_qtquick::screenSizeFor(View *view) const
+QSize Platform::screenSizeFor(View *view) const
 {
     if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
@@ -146,15 +147,15 @@ QSize Platform_qtquick::screenSizeFor(View *view) const
     return {};
 }
 
-QQmlEngine *Platform_qtquick::qmlEngine() const
+QQmlEngine *Platform::qmlEngine() const
 {
     if (!m_qmlEngine)
-        qWarning() << "Please call KDDockWidgets::Platform_qtquick::self()->setQmlEngine(engine)";
+        qWarning() << "Please call KDDockWidgets::qtquick::Platform_qtquick::self()->setQmlEngine(engine)";
 
     return m_qmlEngine;
 }
 
-void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
+void Platform::setQmlEngine(QQmlEngine *qmlEngine)
 {
     if (m_qmlEngine) {
         qWarning() << Q_FUNC_INFO << "Already has QML engine";
@@ -177,26 +178,26 @@ void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
                                 Config::self().viewFactory());
 }
 
-ViewFactory_qtquick *Platform_qtquick::viewFactory() const
+ViewFactory *Platform::viewFactory() const
 {
-    return static_cast<ViewFactory_qtquick *>(Config::self().viewFactory());
+    return static_cast<ViewFactory *>(Config::self().viewFactory());
 }
 
-View *Platform_qtquick::createView(Controller *controller, View *parent) const
+View *Platform::createView(Controller *controller, View *parent) const
 {
     return new Views::View_qtquick(controller, Type::None, Views::asQQuickItem(parent));
 }
 
 /** static */
-Platform_qtquick *Platform_qtquick::instance()
+Platform *Platform::instance()
 {
-    auto p = Platform::instance();
+    auto p = Core::Platform::instance();
     if (p->isQtQuick())
-        return static_cast<Platform_qtquick *>(p);
+        return static_cast<Platform *>(p);
     return nullptr;
 }
 
-bool Platform_qtquick::usesFallbackMouseGrabber() const
+bool Platform::usesFallbackMouseGrabber() const
 {
     // For QtQuick we use the global event filter as mouse delivery is flaky
     // For example, the same QQuickItem that receives the press isn't receiving the mouse moves
@@ -204,7 +205,7 @@ bool Platform_qtquick::usesFallbackMouseGrabber() const
     return true;
 }
 
-bool Platform_qtquick::inDisallowedDragView(QPoint globalPos) const
+bool Platform::inDisallowedDragView(QPoint globalPos) const
 {
     auto window = qobject_cast<QQuickWindow *>(qGuiApp->topLevelAt(globalPos));
     if (!window)
@@ -216,7 +217,7 @@ bool Platform_qtquick::inDisallowedDragView(QPoint globalPos) const
     return item->objectName() != QLatin1String("draggableMouseArea");
 }
 
-void Platform_qtquick::ungrabMouse()
+void Platform::ungrabMouse()
 {
     const QWindowList windows = qGuiApp->topLevelWindows();
     for (QWindow *window : windows) {
@@ -227,12 +228,12 @@ void Platform_qtquick::ungrabMouse()
     }
 }
 
-Core::DockWidget *Platform_qtquick::dockWidgetForItem(QQuickItem *item)
+Core::DockWidget *Platform::dockWidgetForItem(QQuickItem *item)
 {
     if (!item)
         return nullptr;
 
-    if (auto dwView = qobject_cast<Views::DockWidget_qtquick *>(item))
+    if (auto dwView = qobject_cast<qtquick::DockWidget *>(item))
         return dwView->dockWidget();
 
     if (auto dwi = qobject_cast<DockWidgetInstantiator *>(item))

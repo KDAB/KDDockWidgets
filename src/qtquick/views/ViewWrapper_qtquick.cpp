@@ -37,6 +37,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
 namespace KDDockWidgets {
 static Controller *controllerForItem(QQuickItem *item)
@@ -50,39 +51,39 @@ static Controller *controllerForItem(QQuickItem *item)
         // enum
         switch (Type(i)) {
         case Type::Frame:
-            if (auto view = qobject_cast<Group_qtquick *>(item))
+            if (auto view = qobject_cast<Group *>(item))
                 return view->controller();
             break;
         case Type::TitleBar:
-            if (auto view = qobject_cast<TitleBar_qtquick *>(item))
+            if (auto view = qobject_cast<TitleBar *>(item))
                 return view->controller();
             break;
         case Type::TabBar:
-            if (auto view = qobject_cast<TabBar_qtquick *>(item))
+            if (auto view = qobject_cast<TabBar *>(item))
                 return view->controller();
             break;
         case Type::Stack:
-            if (auto view = qobject_cast<Stack_qtquick *>(item))
+            if (auto view = qobject_cast<Stack *>(item))
                 return view->controller();
             break;
         case Type::FloatingWindow:
-            if (auto view = qobject_cast<FloatingWindow_qtquick *>(item))
+            if (auto view = qobject_cast<FloatingWindow *>(item))
                 return view->controller();
             break;
         case Type::Separator:
-            if (auto view = qobject_cast<Separator_qtquick *>(item))
+            if (auto view = qobject_cast<Separator *>(item))
                 return view->controller();
             break;
         case Type::DockWidget:
-            if (auto view = qobject_cast<DockWidget_qtquick *>(item))
+            if (auto view = qobject_cast<qtquick::DockWidget *>(item))
                 return view->controller();
             break;
         case Type::DropArea:
-            if (auto view = qobject_cast<DropArea_qtquick *>(item))
+            if (auto view = qobject_cast<DropArea *>(item))
                 return view->controller();
             break;
         case Type::MDILayout:
-            if (auto view = qobject_cast<MDILayout_qtquick *>(item))
+            if (auto view = qobject_cast<MDILayout *>(item))
                 return view->controller();
             break;
 
@@ -91,7 +92,7 @@ static Controller *controllerForItem(QQuickItem *item)
             // Not implemented for QtQuick yet
             break;
         case Type::MainWindow:
-            if (auto view = qobject_cast<MainWindow_qtquick *>(item))
+            if (auto view = qobject_cast<MainWindow *>(item))
                 return view->controller();
             break;
         case Type::RubberBand:
@@ -155,7 +156,7 @@ std::shared_ptr<View> ViewWrapper_qtquick::childViewAt(QPoint p) const
 std::shared_ptr<Core::Window> ViewWrapper_qtquick::window() const
 {
     if (QWindow *w = m_item->window()) {
-        auto windowqtquick = new Window_qtquick(w);
+        auto windowqtquick = new Window(w);
         return std::shared_ptr<Core::Window>(windowqtquick);
     }
 
@@ -260,30 +261,30 @@ bool ViewWrapper_qtquick::is(Type t) const
     switch (t) {
 
     case Type::Frame:
-        return qobject_cast<Views::Group_qtquick *>(m_item);
+        return qobject_cast<Group *>(m_item);
     case Type::TitleBar:
-        return qobject_cast<Views::TitleBar_qtquick *>(m_item);
+        return qobject_cast<TitleBar *>(m_item);
     case Type::TabBar:
-        return qobject_cast<Views::TabBar_qtquick *>(m_item);
+        return qobject_cast<TabBar *>(m_item);
     case Type::Stack:
-        return qobject_cast<Views::Stack_qtquick *>(m_item);
+        return qobject_cast<Stack *>(m_item);
     case Type::FloatingWindow:
-        return qobject_cast<Views::FloatingWindow_qtquick *>(m_item);
+        return qobject_cast<FloatingWindow *>(m_item);
     case Type::Separator:
-        return qobject_cast<Views::Separator_qtquick *>(m_item);
+        return qobject_cast<Separator *>(m_item);
     case Type::DockWidget:
-        return qobject_cast<Views::DockWidget_qtquick *>(m_item);
+        return qobject_cast<qtquick::DockWidget *>(m_item);
     case Type::SideBar:
         return false; // QtQuick doesn't support sidebar yet
-        // return qobject_cast<Views::SideBar_qtquick *>(m_item);
+        // return qobject_cast<SideBar_qtquick *>(m_item);
     case Type::MainWindow:
-        return qobject_cast<Views::MainWindow_qtquick *>(m_item);
+        return qobject_cast<qtquick::MainWindow *>(m_item);
     case Type::DropArea:
-        return qobject_cast<Views::DropArea_qtquick *>(m_item);
+        return qobject_cast<DropArea *>(m_item);
     case Type::MDILayout:
-        return qobject_cast<Views::MDILayout_qtquick *>(m_item);
+        return qobject_cast<MDILayout *>(m_item);
     case Type::RubberBand:
-        return qobject_cast<Views::RubberBand_qtquick *>(m_item);
+        return qobject_cast<RubberBand *>(m_item);
     case Type::MDIArea:
         return false; // Not support by qtquick
     case Type::LayoutItem:

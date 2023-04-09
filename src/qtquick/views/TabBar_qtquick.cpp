@@ -30,8 +30,9 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
-TabBar_qtquick::TabBar_qtquick(Core::TabBar *controller, QQuickItem *parent)
+TabBar::TabBar(Core::TabBar *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::TabBar, parent)
     , TabBarViewInterface(controller)
     , m_dockWidgetModel(new DockWidgetModel(controller, this))
@@ -40,13 +41,13 @@ TabBar_qtquick::TabBar_qtquick(Core::TabBar *controller, QQuickItem *parent)
             [controller] { Q_EMIT controller->countChanged(); });
 }
 
-void TabBar_qtquick::init()
+void TabBar::init()
 {
     m_tabBarAutoHideChanged = m_tabBar->stack()->tabBarAutoHideChanged.connect(
         [this] { Q_EMIT tabBarAutoHideChanged(); });
 }
 
-int TabBar_qtquick::tabAt(QPoint localPt) const
+int TabBar::tabAt(QPoint localPt) const
 {
     // QtQuick's TabBar doesn't provide any API for this.
     // Also note that the ListView's flickable has bogus contentX, so instead just iterate through
@@ -70,12 +71,12 @@ int TabBar_qtquick::tabAt(QPoint localPt) const
     return -1;
 }
 
-QQuickItem *TabBar_qtquick::tabBarQmlItem() const
+QQuickItem *TabBar::tabBarQmlItem() const
 {
     return m_tabBarQmlItem;
 }
 
-void TabBar_qtquick::setTabBarQmlItem(QQuickItem *item)
+void TabBar::setTabBarQmlItem(QQuickItem *item)
 {
     if (m_tabBarQmlItem == item) {
         qWarning() << Q_FUNC_INFO << "Should be called only once";
@@ -86,7 +87,7 @@ void TabBar_qtquick::setTabBarQmlItem(QQuickItem *item)
     Q_EMIT tabBarQmlItemChanged();
 }
 
-QString TabBar_qtquick::text(int index) const
+QString TabBar::text(int index) const
 {
     if (QQuickItem *item = tabAt(index))
         return item->property("text").toString();
@@ -94,7 +95,7 @@ QString TabBar_qtquick::text(int index) const
     return {};
 }
 
-QRect TabBar_qtquick::rectForTab(int index) const
+QRect TabBar::rectForTab(int index) const
 {
     if (QQuickItem *item = tabAt(index))
         return item->boundingRect().toRect();
@@ -102,7 +103,7 @@ QRect TabBar_qtquick::rectForTab(int index) const
     return {};
 }
 
-QRect TabBar_qtquick::globalRectForTab(int index) const
+QRect TabBar::globalRectForTab(int index) const
 {
     if (QQuickItem *item = tabAt(index)) {
         QRect r = item->boundingRect().toRect();
@@ -113,7 +114,7 @@ QRect TabBar_qtquick::globalRectForTab(int index) const
     return {};
 }
 
-bool TabBar_qtquick::event(QEvent *ev)
+bool TabBar::event(QEvent *ev)
 {
     switch (ev->type()) {
     case QEvent::MouseButtonDblClick:
@@ -139,7 +140,7 @@ bool TabBar_qtquick::event(QEvent *ev)
     return View_qtquick::event(ev);
 }
 
-QQuickItem *TabBar_qtquick::tabAt(int index) const
+QQuickItem *TabBar::tabAt(int index) const
 {
     QVariant result;
     const bool res = QMetaObject::invokeMethod(
@@ -152,51 +153,51 @@ QQuickItem *TabBar_qtquick::tabAt(int index) const
     return nullptr;
 }
 
-void TabBar_qtquick::moveTabTo(int from, int to)
+void TabBar::moveTabTo(int from, int to)
 {
     Q_UNUSED(from);
     Q_UNUSED(to);
     // Not implemented yet
 }
 
-bool TabBar_qtquick::tabBarAutoHide() const
+bool TabBar::tabBarAutoHide() const
 {
     return m_tabBar->stack()->tabBarAutoHide();
 }
 
-Stack_qtquick *TabBar_qtquick::stackView() const
+Stack *TabBar::stackView() const
 {
-    if (auto tw = dynamic_cast<Stack_qtquick *>(m_tabBar->stack()->view()))
+    if (auto tw = dynamic_cast<Stack *>(m_tabBar->stack()->view()))
         return tw;
 
     qWarning() << Q_FUNC_INFO << "Unexpected null Stack_qtquick";
     return nullptr;
 }
 
-void TabBar_qtquick::setCurrentIndex(int index)
+void TabBar::setCurrentIndex(int index)
 {
     m_dockWidgetModel->setCurrentIndex(index);
 }
 
-void TabBar_qtquick::renameTab(int index, const QString &)
+void TabBar::renameTab(int index, const QString &)
 {
     Q_UNUSED(index);
     qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
-void TabBar_qtquick::changeTabIcon(int index, const QIcon &)
+void TabBar::changeTabIcon(int index, const QIcon &)
 {
     Q_UNUSED(index);
     qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
-void TabBar_qtquick::removeDockWidget(Core::DockWidget *dw)
+void TabBar::removeDockWidget(Core::DockWidget *dw)
 {
     m_dockWidgetModel->remove(dw);
 }
 
-void TabBar_qtquick::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
-                                      const QString &title)
+void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
+                              const QString &title)
 {
     Q_UNUSED(title); // TODO
     Q_UNUSED(icon); // TODO
@@ -204,12 +205,12 @@ void TabBar_qtquick::insertDockWidget(int index, Core::DockWidget *dw, const QIc
     m_dockWidgetModel->insert(dw, index);
 }
 
-DockWidgetModel *TabBar_qtquick::dockWidgetModel() const
+DockWidgetModel *TabBar::dockWidgetModel() const
 {
     return m_dockWidgetModel;
 }
 
-void TabBar_qtquick::onHoverEvent(QHoverEvent *ev, QPoint globalPos)
+void TabBar::onHoverEvent(QHoverEvent *ev, QPoint globalPos)
 {
     if (ev->type() == QEvent::HoverLeave) {
         setHoveredTabIndex(-1);
@@ -218,7 +219,7 @@ void TabBar_qtquick::onHoverEvent(QHoverEvent *ev, QPoint globalPos)
     }
 }
 
-int TabBar_qtquick::indexForTabPos(QPoint globalPt) const
+int TabBar::indexForTabPos(QPoint globalPt) const
 {
     const int count = m_dockWidgetModel->count();
     for (int i = 0; i < count; i++) {
@@ -230,7 +231,7 @@ int TabBar_qtquick::indexForTabPos(QPoint globalPt) const
     return -1;
 }
 
-void TabBar_qtquick::setHoveredTabIndex(int idx)
+void TabBar::setHoveredTabIndex(int idx)
 {
     if (idx == m_hoveredTabIndex)
         return;
@@ -239,7 +240,7 @@ void TabBar_qtquick::setHoveredTabIndex(int idx)
     Q_EMIT hoveredTabIndexChanged(idx);
 }
 
-int TabBar_qtquick::hoveredTabIndex() const
+int TabBar::hoveredTabIndex() const
 {
     return m_hoveredTabIndex;
 }

@@ -23,7 +23,8 @@ namespace Core {
 class ClassicIndicators;
 }
 
-class IndicatorWindow_qtquick : public QQuickView, public Views::ClassicIndicatorWindowViewInterface
+namespace qtquick {
+class IndicatorWindow : public QQuickView, public Views::ClassicIndicatorWindowViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(bool innerLeftIndicatorVisible READ innerLeftIndicatorVisible NOTIFY
@@ -47,7 +48,7 @@ class IndicatorWindow_qtquick : public QQuickView, public Views::ClassicIndicato
     Q_PROPERTY(KDDockWidgets::DropLocation currentDropLocation READ currentDropLocation NOTIFY
                    currentDropLocationChanged)
 public:
-    explicit IndicatorWindow_qtquick(Core::ClassicIndicators *);
+    explicit IndicatorWindow(Core::ClassicIndicators *);
 
     Q_INVOKABLE QString iconName(int loc, bool active) const;
     Core::ClassicIndicators *classicIndicators() const;
@@ -87,6 +88,7 @@ private:
     QVector<QQuickItem *> indicatorItems() const;
     Core::ClassicIndicators *const m_classicIndicators;
 };
+}
 }
 
 #endif

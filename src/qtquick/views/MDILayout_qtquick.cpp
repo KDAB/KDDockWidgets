@@ -14,15 +14,16 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
-MDILayout_qtquick::MDILayout_qtquick(Core::MDILayout *controller, View *parent)
+MDILayout::MDILayout(Core::MDILayout *controller, View *parent)
     : Views::View_qtquick(controller, Type::MDILayout, asQQuickItem(parent))
     , m_controller(controller)
 {
     Q_ASSERT(controller);
 }
 
-MDILayout_qtquick::~MDILayout_qtquick()
+MDILayout::~MDILayout()
 {
     if (!freed())
         m_controller->viewAboutToBeDeleted();

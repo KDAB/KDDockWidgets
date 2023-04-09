@@ -33,14 +33,14 @@ class Group;
 class TitleBar;
 }
 
-namespace Views {
+namespace qtquick {
 /**
  * @brief Represents a dock widget.
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick,
-                                        public Views::DockWidgetViewInterface
+class DOCKS_EXPORT DockWidget : public Views::View_qtquick,
+                                public Views::DockWidgetViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarView NOTIFY actualTitleBarChanged)
@@ -67,12 +67,12 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget_qtquick(const QString &uniqueName, DockWidgetOptions = {},
-                                LayoutSaverOptions = {}, Qt::WindowFlags = Qt::Tool,
-                                QQmlEngine *engine = nullptr);
+    explicit DockWidget(const QString &uniqueName, DockWidgetOptions = {},
+                        LayoutSaverOptions = {}, Qt::WindowFlags = Qt::Tool,
+                        QQmlEngine *engine = nullptr);
 
     ///@brief destructor
-    ~DockWidget_qtquick() override;
+    ~DockWidget() override;
 
     /// Sets the DockWidget's guest item
     void setGuestItem(const QString &qmlFilename);

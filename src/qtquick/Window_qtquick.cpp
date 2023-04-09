@@ -17,8 +17,9 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtquick;
 
-Window_qtquick::~Window_qtquick()
+Window::~Window()
 {
 }
 
@@ -39,7 +40,7 @@ inline View *topMostKDDWView(QQuickItem *parent)
     return nullptr;
 }
 
-std::shared_ptr<View> Window_qtquick::rootView() const
+std::shared_ptr<View> Window::rootView() const
 {
     if (auto quickwindow = qobject_cast<QQuickWindow *>(m_window)) {
         auto contentItem = quickwindow->contentItem();
@@ -62,22 +63,22 @@ std::shared_ptr<View> Window_qtquick::rootView() const
     return {};
 }
 
-Core::Window::Ptr Window_qtquick::transientParent() const
+Core::Window::Ptr Window::transientParent() const
 {
     if (QWindow *w = m_window->transientParent())
-        return Core::Window::Ptr(new Window_qtquick(w));
+        return Core::Window::Ptr(new Window(w));
 
     return nullptr;
 }
 
-void Window_qtquick::setVisible(bool is)
+void Window::setVisible(bool is)
 {
     Window_qt::setVisible(is);
     if (auto root = rootView())
         root->controller()->setVisible(is);
 }
 
-bool Window_qtquick::supportsHonouringLayoutMinSize() const
+bool Window::supportsHonouringLayoutMinSize() const
 {
     // If this method returns true, then Item.cpp will be strict and issue qWarnings
     // whenever the window is resized lower than the layout's min-size.

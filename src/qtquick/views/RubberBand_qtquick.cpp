@@ -20,7 +20,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-RubberBand_qtquick::RubberBand_qtquick(QQuickItem *parent)
+RubberBand::RubberBand(QQuickItem *parent)
     : View_qtquick(nullptr, Type::RubberBand, parent)
 {
     setVisible(false);

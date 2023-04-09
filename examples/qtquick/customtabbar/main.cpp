@@ -22,7 +22,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-class CustomViewFactory : public KDDockWidgets::ViewFactory_qtquick
+class CustomViewFactory : public KDDockWidgets::qtquick::ViewFactory
 {
 public:
     ~CustomViewFactory() override;
@@ -50,17 +50,17 @@ int main(int argc, char *argv[])
     config.setViewFactory(new CustomViewFactory());
 
     QQmlApplicationEngine appEngine;
-    KDDockWidgets::Platform_qtquick::instance()->setQmlEngine(&appEngine);
+    KDDockWidgets::qtquick::Platform::instance()->setQmlEngine(&appEngine);
     appEngine.load((QUrl("qrc:/main.qml")));
 
-    auto dw1 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #1");
+    auto dw1 = new KDDockWidgets::qtquick::DockWidget("Dock #1");
 
     dw1->setGuestItem(QStringLiteral("qrc:/Guest1.qml"));
 
-    auto dw2 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #2");
+    auto dw2 = new KDDockWidgets::qtquick::DockWidget("Dock #2");
     dw2->setGuestItem(QStringLiteral("qrc:/Guest2.qml"));
 
-    auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
+    auto dw3 = new KDDockWidgets::qtquick::DockWidget("Dock #3");
     dw3->setGuestItem(QStringLiteral("qrc:/Guest3.qml"));
 
     // Access the main area we created in QML with DockingArea {}

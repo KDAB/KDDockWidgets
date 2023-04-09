@@ -25,6 +25,7 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtquick;
 
 #ifdef DOCKS_DEVELOPER_MODE
 
@@ -61,14 +62,14 @@ inline QCoreApplication *createCoreApplication(int &argc, char **argv)
 
 }
 
-Platform_qtquick::Platform_qtquick(int &argc, char **argv)
+Platform::Platform(int &argc, char **argv)
     : Platform_qt(createCoreApplication(argc, argv))
     , m_qquickHelpers(new QtQuickHelpers())
 {
     init();
 }
 
-void Platform_qtquick::tests_initPlatform_impl()
+void Platform::tests_initPlatform_impl()
 {
     Platform_qt::tests_initPlatform_impl();
 
@@ -76,7 +77,7 @@ void Platform_qtquick::tests_initPlatform_impl()
     plat()->setQmlEngine(new QQmlEngine());
 }
 
-void Platform_qtquick::tests_deinitPlatform_impl()
+void Platform::tests_deinitPlatform_impl()
 {
     delete m_qmlEngine;
     auto windows = qGuiApp->topLevelWindows();
@@ -88,7 +89,7 @@ void Platform_qtquick::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-View *Platform_qtquick::tests_createView(Core::CreateViewOptions opts, View *parent)
+View *Platform::tests_createView(Core::CreateViewOptions opts, View *parent)
 {
     auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
     auto newItem = new TestView_qtquick(opts, parentItem);
@@ -108,7 +109,7 @@ View *Platform_qtquick::tests_createView(Core::CreateViewOptions opts, View *par
     return newItem;
 }
 
-View *Platform_qtquick::tests_createFocusableView(Core::CreateViewOptions opts, View *parent)
+View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, View *parent)
 {
     auto view = tests_createView(opts, parent);
     view->setFocusPolicy(Qt::StrongFocus);
@@ -116,7 +117,7 @@ View *Platform_qtquick::tests_createFocusableView(Core::CreateViewOptions opts, 
     return view;
 }
 
-View *Platform_qtquick::tests_createNonClosableView(View *parent)
+View *Platform::tests_createNonClosableView(View *parent)
 {
     Core::CreateViewOptions opts;
     opts.isVisible = true;
@@ -126,10 +127,10 @@ View *Platform_qtquick::tests_createNonClosableView(View *parent)
     return view;
 }
 
-Core::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
-                                                     Core::CreateViewOptions viewOpts,
-                                                     MainWindowOptions options, View *parent,
-                                                     Qt::WindowFlags flags) const
+Core::MainWindow *Platform::createMainWindow(const QString &uniqueName,
+                                             Core::CreateViewOptions viewOpts,
+                                             MainWindowOptions options, View *parent,
+                                             Qt::WindowFlags flags) const
 {
     QQuickItem *parentItem = Views::asQQuickItem(parent);
 
@@ -147,12 +148,12 @@ Core::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
         Platform::instance()->tests_wait(100); // the root object gets sized delayed
     }
 
-    auto view = new Views::MainWindow_qtquick(uniqueName, options, parentItem, flags);
+    auto view = new qtquick::MainWindow(uniqueName, options, parentItem, flags);
 
     return view->mainWindow();
 }
 
-std::shared_ptr<Core::Window> Platform_qtquick::tests_createWindow()
+std::shared_ptr<Core::Window> Platform::tests_createWindow()
 {
     Core::CreateViewOptions viewOpts;
     viewOpts.isVisible = true;

@@ -36,6 +36,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
 namespace KDDockWidgets {
 
@@ -43,7 +44,7 @@ class QuickView : public QQuickView
 {
     Q_OBJECT
 public:
-    explicit QuickView(QQmlEngine *qmlEngine, FloatingWindow_qtquick *view)
+    explicit QuickView(QQmlEngine *qmlEngine, FloatingWindow *view)
         : QQuickView(qmlEngine, nullptr)
         , m_view(view)
     {
@@ -122,7 +123,7 @@ public:
     }
 #endif
 private:
-    FloatingWindow_qtquick *const m_view;
+    FloatingWindow *const m_view;
 };
 
 QuickView::~QuickView() = default;
@@ -130,17 +131,17 @@ QuickView::~QuickView() = default;
 }
 
 
-FloatingWindow_qtquick::FloatingWindow_qtquick(Core::FloatingWindow *controller,
-                                               Views::MainWindow_qtquick *parent,
-                                               Qt::WindowFlags flags)
+FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
+                               qtquick::MainWindow *parent,
+                               Qt::WindowFlags flags)
     : Views::View_qtquick(controller, Type::FloatingWindow, parent, flags)
     , m_quickWindow(new QuickView(plat()->qmlEngine(), this))
     , m_controller(controller)
 {
-    connect(m_quickWindow, &QWindow::windowStateChanged, this, &FloatingWindow_qtquick::onWindowStateChanged);
+    connect(m_quickWindow, &QWindow::windowStateChanged, this, &FloatingWindow::onWindowStateChanged);
 }
 
-FloatingWindow_qtquick::~FloatingWindow_qtquick()
+FloatingWindow::~FloatingWindow()
 {
     m_inDtor = true;
     setParent(static_cast<View *>(nullptr));
@@ -149,7 +150,7 @@ FloatingWindow_qtquick::~FloatingWindow_qtquick()
         delete m_quickWindow;
 }
 
-QSize FloatingWindow_qtquick::minSize() const
+QSize FloatingWindow::minSize() const
 {
     // Doesn't matter if it's not visible. We don't want the min-size to jump around. Also not so
     // easy to track as we don't have layouts
@@ -158,7 +159,7 @@ QSize FloatingWindow_qtquick::minSize() const
         + QSize(margins * 2, margins * 2);
 }
 
-void FloatingWindow_qtquick::setGeometry(QRect geo)
+void FloatingWindow::setGeometry(QRect geo)
 {
     // Not needed with QtWidgets, but needed with QtQuick as we don't have layouts
     geo.setSize(geo.size().expandedTo(minSize()));
@@ -167,26 +168,26 @@ void FloatingWindow_qtquick::setGeometry(QRect geo)
     m_quickWindow->setGeometry(geo);
 }
 
-int FloatingWindow_qtquick::contentsMargins() const
+int FloatingWindow::contentsMargins() const
 {
     return m_visualItem->property("margins").toInt();
 }
 
-int FloatingWindow_qtquick::titleBarHeight() const
+int FloatingWindow::titleBarHeight() const
 {
     return m_visualItem->property("titleBarHeight").toInt();
 }
 
-QWindow *FloatingWindow_qtquick::candidateParentWindow() const
+QWindow *FloatingWindow::candidateParentWindow() const
 {
-    if (auto mainWindow = qobject_cast<MainWindow_qtquick *>(QObject::parent())) {
+    if (auto mainWindow = qobject_cast<MainWindow *>(QObject::parent())) {
         return mainWindow->QQuickItem::window();
     }
 
     return nullptr;
 }
 
-void FloatingWindow_qtquick::init()
+void FloatingWindow::init()
 {
     /* for debug:
       connect(m_quickWindow, &QQuickView::focusObjectChanged, this, [this] (QObject *object) {
@@ -205,7 +206,7 @@ void FloatingWindow_qtquick::init()
     }
 
     setParent(m_quickWindow->contentItem());
-    WidgetResizeHandler::setupWindow(Core::Window::Ptr(new Window_qtquick(m_quickWindow)));
+    WidgetResizeHandler::setupWindow(Core::Window::Ptr(new qtquick::Window(m_quickWindow)));
     m_quickWindow->installEventFilter(this); // for window resizing
     m_controller->maybeCreateResizeHandler();
 
@@ -231,30 +232,30 @@ void FloatingWindow_qtquick::init()
     });
 }
 
-QObject *FloatingWindow_qtquick::titleBar() const
+QObject *FloatingWindow::titleBar() const
 {
     if (auto tb = m_controller->titleBar())
-        return qobject_cast<TitleBar_qtquick *>(asQQuickItem(tb->view()));
+        return qobject_cast<TitleBar *>(asQQuickItem(tb->view()));
 
     return nullptr;
 }
 
-QObject *FloatingWindow_qtquick::dropArea() const
+QObject *FloatingWindow::dropArea() const
 {
     if (auto da = m_controller->dropArea())
-        return qobject_cast<DropArea_qtquick *>(asQQuickItem(da->view()));
+        return qobject_cast<DropArea *>(asQQuickItem(da->view()));
 
     return nullptr;
 }
 
-Layouting::Item *FloatingWindow_qtquick::rootItem() const
+Layouting::Item *FloatingWindow::rootItem() const
 {
     if (auto da = m_controller->dropArea())
         return da->rootItem();
     return nullptr;
 }
 
-void FloatingWindow_qtquick::onWindowStateChanged(Qt::WindowState state)
+void FloatingWindow::onWindowStateChanged(Qt::WindowState state)
 {
     m_controller->setLastWindowManagerState(WindowState(state));
     Q_EMIT m_controller->windowStateChanged();

@@ -19,14 +19,14 @@ namespace Core {
 class MDILayout;
 }
 
-namespace Views {
+namespace qtquick {
 
-class DOCKS_EXPORT MDILayout_qtquick : public Views::View_qtquick
+class DOCKS_EXPORT MDILayout : public Views::View_qtquick
 {
     Q_OBJECT
 public:
-    explicit MDILayout_qtquick(Core::MDILayout *controller, View *parent);
-    ~MDILayout_qtquick();
+    explicit MDILayout(Core::MDILayout *controller, View *parent);
+    ~MDILayout();
 
 private:
     Core::MDILayout *const m_controller;

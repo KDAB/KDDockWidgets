@@ -29,25 +29,25 @@ class Group;
 class DockWidget;
 }
 
-namespace Views {
+namespace qtquick {
 
-class TabBar_qtquick;
-class Stack_qtquick;
+class TabBar;
+class Stack;
 
-class DOCKS_EXPORT Group_qtquick : public View_qtquick, public GroupViewInterface
+class DOCKS_EXPORT Group : public Views::View_qtquick, public Views::GroupViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabBar READ tabBarObj CONSTANT)
-    Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *titleBar READ titleBar CONSTANT)
+    Q_PROPERTY(KDDockWidgets::qtquick::TitleBar *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(int userType READ userType CONSTANT)
-    Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar READ actualTitleBar NOTIFY
+    Q_PROPERTY(KDDockWidgets::qtquick::TitleBar *actualTitleBar READ actualTitleBar NOTIFY
                    actualTitleBarChanged)
     Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentDockWidgetChanged)
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
 
 public:
-    explicit Group_qtquick(Core::Group *controller, QQuickItem *parent = nullptr);
-    ~Group_qtquick() override;
+    explicit Group(Core::Group *controller, QQuickItem *parent = nullptr);
+    ~Group() override;
 
     /// @reimp
     QSize minSize() const override;
@@ -58,8 +58,8 @@ public:
     int currentIndex() const;
 
     // QML interface:
-    KDDockWidgets::Views::TitleBar_qtquick *titleBar() const;
-    KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar() const;
+    KDDockWidgets::qtquick::TitleBar *titleBar() const;
+    KDDockWidgets::qtquick::TitleBar *actualTitleBar() const;
     int userType() const;
     QObject *tabBarObj() const;
 
@@ -81,8 +81,8 @@ public Q_SLOTS:
 
 private:
     void init() override;
-    Stack_qtquick *stackView() const;
-    TabBar_qtquick *tabBarView() const;
+    Stack *stackView() const;
+    TabBar *tabBarView() const;
 
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;

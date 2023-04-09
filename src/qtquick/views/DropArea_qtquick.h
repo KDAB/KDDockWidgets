@@ -19,14 +19,14 @@ namespace Core {
 class DropArea;
 }
 
-namespace Views {
+namespace qtquick {
 
-class DOCKS_EXPORT DropArea_qtquick : public Views::View_qtquick
+class DOCKS_EXPORT DropArea : public Views::View_qtquick
 {
     Q_OBJECT
 public:
-    explicit DropArea_qtquick(Core::DropArea *, View *parent);
-    ~DropArea_qtquick();
+    explicit DropArea(Core::DropArea *, View *parent);
+    ~DropArea();
 
 private:
     Core::DropArea *const m_dropArea;

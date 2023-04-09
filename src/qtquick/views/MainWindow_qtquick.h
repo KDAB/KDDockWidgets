@@ -23,7 +23,7 @@ namespace Core {
 class SideBar;
 }
 
-namespace Views {
+namespace qtquick {
 
 ///@brief A docking area for dock widgets
 /// Named MainWindow as it's the QtWidgets/QMainWindow counterpart.
@@ -33,7 +33,7 @@ namespace Views {
 /// to do. From QML just use DockingArea {}, which will create a this class behind the scenes. It's
 /// mostly an implementation detail unless you want to use C++.
 
-class DOCKS_EXPORT MainWindow_qtquick : public Views::View_qtquick, public MainWindowViewInterface
+class DOCKS_EXPORT MainWindow : public Views::View_qtquick, public Views::MainWindowViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
@@ -47,10 +47,10 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent Visual parent item.
     ///@param flags Window flags to pass to top-level window, in case we're constructing it too
-    explicit MainWindow_qtquick(const QString &uniqueName, MainWindowOptions options = {},
-                                QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
+    explicit MainWindow(const QString &uniqueName, MainWindowOptions options = {},
+                        QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
 
-    ~MainWindow_qtquick() override;
+    ~MainWindow() override;
 
     /// @reimp
     QSize minSize() const override;

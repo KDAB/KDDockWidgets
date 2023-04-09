@@ -18,28 +18,28 @@
 #include <QTimer>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
-Separator_qtquick::Separator_qtquick(Core::Separator *controller, QQuickItem *parent)
-    : View_qtquick(controller, Type::Separator, parent)
+Separator::Separator(Core::Separator *controller, QQuickItem *parent)
+    : Views::View_qtquick(controller, Type::Separator, parent)
     , m_controller(controller)
 {
 }
 
-void Separator_qtquick::init()
+void Separator::init()
 {
     createQQuickItem(QStringLiteral(":/kddockwidgets/qtquick/views/qml/Separator.qml"), this);
 
     // Only set on Separator::init(), so single-shot
-    QTimer::singleShot(0, this, &Separator_qtquick::isVerticalChanged);
+    QTimer::singleShot(0, this, &Separator::isVerticalChanged);
 }
 
-bool Separator_qtquick::isVertical() const
+bool Separator::isVertical() const
 {
     return m_controller->isVertical();
 }
 
-void Separator_qtquick::onMousePressed()
+void Separator::onMousePressed()
 {
     if (freed())
         return;
@@ -47,7 +47,7 @@ void Separator_qtquick::onMousePressed()
     m_controller->onMousePress();
 }
 
-void Separator_qtquick::onMouseMoved(QPointF localPos)
+void Separator::onMouseMoved(QPointF localPos)
 {
     if (freed())
         return;
@@ -56,7 +56,7 @@ void Separator_qtquick::onMouseMoved(QPointF localPos)
     m_controller->onMouseMove(pos.toPoint());
 }
 
-void Separator_qtquick::onMouseReleased()
+void Separator::onMouseReleased()
 {
     if (freed())
         return;
@@ -64,7 +64,7 @@ void Separator_qtquick::onMouseReleased()
     m_controller->onMouseReleased();
 }
 
-void Separator_qtquick::onMouseDoubleClicked()
+void Separator::onMouseDoubleClicked()
 {
     if (freed())
         return;

@@ -13,12 +13,12 @@
 
 #include "kddockwidgets/Window_qt.h"
 
-namespace KDDockWidgets {
-class DOCKS_EXPORT Window_qtquick : public Window_qt
+namespace KDDockWidgets::qtquick {
+class DOCKS_EXPORT Window : public Window_qt
 {
 public:
     using Window_qt::Window_qt;
-    ~Window_qtquick();
+    ~Window();
     std::shared_ptr<View> rootView() const override;
     Window::Ptr transientParent() const override;
     void setVisible(bool) override;

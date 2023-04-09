@@ -41,15 +41,17 @@ class FloatingWindow;
 class MainWindow;
 }
 
+namespace qtquick {
+
 /**
  * @brief The default ViewFactory for QtQuick frontend.
  */
-class DOCKS_EXPORT ViewFactory_qtquick : public Core::ViewFactory
+class DOCKS_EXPORT ViewFactory : public Core::ViewFactory
 {
     Q_OBJECT
 public:
-    ViewFactory_qtquick() = default;
-    ~ViewFactory_qtquick() override;
+    ViewFactory() = default;
+    ~ViewFactory() override;
     View *createDockWidget(const QString &uniqueName, DockWidgetOptions options = {},
                            LayoutSaverOptions layoutSaverOptions = {},
                            Qt::WindowFlags windowFlags = {}) const override;
@@ -82,11 +84,13 @@ public:
     View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
                                                   View *parent = nullptr) const override;
 
-    static ViewFactory_qtquick *self();
+    static ViewFactory *self();
 
 private:
-    Q_DISABLE_COPY(ViewFactory_qtquick)
+    Q_DISABLE_COPY(ViewFactory)
 };
+
+}
 
 }
 

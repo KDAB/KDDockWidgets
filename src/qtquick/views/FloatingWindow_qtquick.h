@@ -24,22 +24,22 @@ namespace Core {
 class FloatingWindow;
 }
 
-namespace Views {
+namespace qtquick {
 
-class MainWindow_qtquick;
-class TitleBar_qtquick;
-class DropArea_qtquick;
+class MainWindow;
+class TitleBar;
+class DropArea;
 
-class DOCKS_EXPORT FloatingWindow_qtquick : public Views::View_qtquick
+class DOCKS_EXPORT FloatingWindow : public Views::View_qtquick
 {
     Q_OBJECT
     Q_PROPERTY(QObject *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(QObject *dropArea READ dropArea CONSTANT)
 public:
-    explicit FloatingWindow_qtquick(Core::FloatingWindow *controller,
-                                    Views::MainWindow_qtquick *parent = nullptr,
-                                    Qt::WindowFlags flags = {});
-    ~FloatingWindow_qtquick();
+    explicit FloatingWindow(Core::FloatingWindow *controller,
+                            qtquick::MainWindow *parent = nullptr,
+                            Qt::WindowFlags flags = {});
+    ~FloatingWindow();
 
     QSize minSize() const override;
 
@@ -61,7 +61,7 @@ private:
     QQuickView *const m_quickWindow;
     QQuickItem *m_visualItem = nullptr;
     Core::FloatingWindow *const m_controller;
-    Q_DISABLE_COPY(FloatingWindow_qtquick)
+    Q_DISABLE_COPY(FloatingWindow)
 };
 
 }

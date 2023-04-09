@@ -700,7 +700,7 @@ bool View_qtquick::isMaximized() const
 std::shared_ptr<Core::Window> View_qtquick::window() const
 {
     if (QWindow *w = QQuickItem::window()) {
-        auto windowqtquick = new Window_qtquick(w);
+        auto windowqtquick = new qtquick::Window(w);
         return std::shared_ptr<Core::Window>(windowqtquick);
     }
 
@@ -836,7 +836,7 @@ QQuickItem *View_qtquick::createQQuickItem(const QString &filename, QQuickItem *
     }
 
     if (!engine)
-        engine = Platform_qtquick::instance()->qmlEngine();
+        engine = qtquick::Platform::instance()->qmlEngine();
 
     if (!engine) {
         qWarning() << Q_FUNC_INFO << "No engine found";

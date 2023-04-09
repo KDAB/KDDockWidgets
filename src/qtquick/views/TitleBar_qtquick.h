@@ -24,9 +24,9 @@ namespace Core {
 class TitleBar;
 }
 
-namespace Views {
+namespace qtquick {
 
-class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick, public Views::TitleBarViewInterface
+class DOCKS_EXPORT TitleBar : public Views::View_qtquick, public Views::TitleBarViewInterface
 {
     Q_OBJECT
     // These properties is just for the unit-tests
@@ -49,8 +49,8 @@ class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick, public Views::TitleBa
 
 
 public:
-    explicit TitleBar_qtquick(Core::TitleBar *controller, QQuickItem *parent = nullptr);
-    ~TitleBar_qtquick() override;
+    explicit TitleBar(Core::TitleBar *controller, QQuickItem *parent = nullptr);
+    ~TitleBar() override;
 
 protected:
 #ifdef DOCKS_DEVELOPER_MODE

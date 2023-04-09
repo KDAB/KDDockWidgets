@@ -39,7 +39,7 @@ void KDDockWidgets::initFrontend(FrontendType type)
         break;
     case FrontendType::QtQuick:
 #ifdef KDDW_FRONTEND_QTQUICK
-        new Platform_qtquick();
+        new qtquick::Platform();
 #endif
         break;
     case FrontendType::Flutter:

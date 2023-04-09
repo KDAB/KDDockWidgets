@@ -22,14 +22,16 @@ namespace KDDockWidgets::Core {
 class Separator;
 }
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets {
 
-class DOCKS_EXPORT Separator_qtquick : public View_qtquick
+namespace qtquick {
+
+class DOCKS_EXPORT Separator : public Views::View_qtquick
 {
     Q_OBJECT
     Q_PROPERTY(bool isVertical READ isVertical NOTIFY isVerticalChanged)
 public:
-    explicit Separator_qtquick(Core::Separator *controller, QQuickItem *parent = nullptr);
+    explicit Separator(Core::Separator *controller, QQuickItem *parent = nullptr);
     bool isVertical() const;
     void init() override;
 
@@ -46,6 +48,8 @@ Q_SIGNALS:
 private:
     Core::Separator *const m_controller;
 };
+
+}
 
 }
 

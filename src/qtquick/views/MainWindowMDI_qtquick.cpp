@@ -15,16 +15,16 @@
 #include "MainWindow_qtquick.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::Core;
+using namespace KDDockWidgets::qtquick;
 
-MainWindowMDI_qtquick::MainWindowMDI_qtquick(const QString &uniqueName, QQuickItem *parent,
-                                             Qt::WindowFlags flags)
-    : Views::MainWindow_qtquick(uniqueName, MainWindowOption_MDI, parent, flags)
+MainWindowMDI::MainWindowMDI(const QString &uniqueName, QQuickItem *parent,
+                             Qt::WindowFlags flags)
+    : qtquick::MainWindow(uniqueName, MainWindowOption_MDI, parent, flags)
     , Views::MainWindowMDIViewInterface(mainWindow()->mdiLayout())
 {
 }
 
-MainWindowMDI_qtquick::~MainWindowMDI_qtquick()
+MainWindowMDI::~MainWindowMDI()
 {
 }

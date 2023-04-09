@@ -24,24 +24,26 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 class QtQuickHelpers;
-class ViewFactory_qtquick;
 
 namespace Core {
 class DockWidget;
 }
 
+namespace qtquick {
+class ViewFactory;
+
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
-class DOCKS_EXPORT Platform_qtquick : public Platform_qt
+class DOCKS_EXPORT Platform : public Platform_qt
 {
 public:
-    Platform_qtquick();
-    ~Platform_qtquick() override;
+    Platform();
+    ~Platform() override;
     const char *name() const override;
     std::shared_ptr<View> qobjectAsView(QObject *) const override;
     std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const override;
     Core::ViewFactory *createDefaultViewFactory() override;
-    ViewFactory_qtquick *viewFactory() const;
+    qtquick::ViewFactory *viewFactory() const;
     std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
     using Platform_qt::screenNumberFor;
     int screenNumberFor(View *) const override;
@@ -52,12 +54,12 @@ public:
     bool usesFallbackMouseGrabber() const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
     void ungrabMouse() override;
-    static Platform_qtquick *instance();
+    static Platform *instance();
 
     static Core::DockWidget *dockWidgetForItem(QQuickItem *);
 
 #ifdef DOCKS_DEVELOPER_MODE
-    explicit Platform_qtquick(int &argc, char **argv);
+    explicit Platform(int &argc, char **argv);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     View *tests_createView(Core::CreateViewOptions, View *parent = nullptr) override;
@@ -75,9 +77,11 @@ private:
     QtQuickHelpers *const m_qquickHelpers;
 };
 
-inline Platform_qtquick *plat()
+}
+
+inline qtquick::Platform *plat()
 {
-    return static_cast<Platform_qtquick *>(Core::Platform::instance());
+    return static_cast<qtquick::Platform *>(Core::Platform::instance());
 }
 
 }

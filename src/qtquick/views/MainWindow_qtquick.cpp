@@ -21,12 +21,13 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
 namespace KDDockWidgets {
-class MainWindow_qtquick::Private
+class MainWindow::Private
 {
 public:
-    Private(MainWindow_qtquick *qq)
+    Private(MainWindow *qq)
         : q(qq)
     {
     }
@@ -44,13 +45,13 @@ public:
         }
     }
 
-    MainWindow_qtquick *const q;
+    MainWindow *const q;
 };
 }
 
 
-MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOptions options,
-                                       QQuickItem *parent, Qt::WindowFlags flags)
+MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
+                       QQuickItem *parent, Qt::WindowFlags flags)
     : View_qtquick(new Core::MainWindow(this, uniqueName, options), Type::MainWindow, parent,
                    flags)
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(View::controller()))
@@ -64,7 +65,7 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
     makeItemFillParent(layoutView);
 
     // MainWindowQuick has the same constraints as Layout, so just forward the signal
-    connect(layoutView, &View_qtquick::geometryUpdated, this, &MainWindow_qtquick::geometryUpdated);
+    connect(layoutView, &View_qtquick::geometryUpdated, this, &MainWindow::geometryUpdated);
 
     connect(layoutView, &View_qtquick::geometryUpdated, this,
             [this] { d->onLayoutGeometryUpdated(); });
@@ -83,7 +84,7 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
     }
 }
 
-MainWindow_qtquick::~MainWindow_qtquick()
+MainWindow::~MainWindow()
 {
     if (isRootView()) {
         if (auto window = this->window()) {
@@ -95,29 +96,29 @@ MainWindow_qtquick::~MainWindow_qtquick()
     delete d;
 }
 
-QSize MainWindow_qtquick::minSize() const
+QSize MainWindow::minSize() const
 {
     return m_mainWindow->layout()->layoutMinimumSize();
 }
 
-QSize MainWindow_qtquick::maxSizeHint() const
+QSize MainWindow::maxSizeHint() const
 {
     return m_mainWindow->layout()->layoutMaximumSizeHint();
 }
 
-QMargins MainWindow_qtquick::centerWidgetMargins() const
+QMargins MainWindow::centerWidgetMargins() const
 {
     qDebug() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";
     return {};
 }
 
-QRect MainWindow_qtquick::centralAreaGeometry() const
+QRect MainWindow::centralAreaGeometry() const
 {
     qFatal("Not implemented");
     return {};
 }
 
-void MainWindow_qtquick::setContentsMargins(int left, int top, int right, int bottom)
+void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 {
     Q_UNUSED(left);
     Q_UNUSED(right);

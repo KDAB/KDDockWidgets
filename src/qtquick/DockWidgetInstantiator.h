@@ -37,7 +37,7 @@ class DockWidgetInstantiator : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
-    Q_PROPERTY(KDDockWidgets::Views::DockWidget_qtquick *dockWidget READ dockWidget NOTIFY
+    Q_PROPERTY(KDDockWidgets::qtquick::DockWidget *dockWidget READ dockWidget NOTIFY
                    dockWidgetChanged)
     Q_PROPERTY(QObject *actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
@@ -51,7 +51,7 @@ public:
     QString source() const;
     void setSource(const QString &);
 
-    KDDockWidgets::Views::DockWidget_qtquick *dockWidget() const;
+    KDDockWidgets::qtquick::DockWidget *dockWidget() const;
     KDDockWidgets::Core::DockWidget *controller() const;
     QObject *actualTitleBar() const;
 

@@ -32,13 +32,12 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Core;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
-class DockWidget_qtquick::Private
+class qtquick::DockWidget::Private
 {
 public:
-    Private(DockWidget_qtquick *view, QQmlEngine *qmlengine)
+    Private(DockWidget *view, QQmlEngine *qmlengine)
         : q(view)
         , m_visualItem(
               q->createItem(qmlengine, plat()->viewFactory()->dockwidgetFilename().toString()))
@@ -49,15 +48,15 @@ public:
         m_visualItem->setParentItem(view);
     }
 
-    DockWidget_qtquick *const q;
+    DockWidget *const q;
     QQuickItem *const m_visualItem;
     QQmlEngine *const m_qmlEngine;
 };
 
-DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName, DockWidgetOptions options,
-                                       LayoutSaverOptions layoutSaverOptions,
-                                       Qt::WindowFlags windowFlags, QQmlEngine *engine)
-    : View_qtquick(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget,
+DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
+                       LayoutSaverOptions layoutSaverOptions,
+                       Qt::WindowFlags windowFlags, QQmlEngine *engine)
+    : View_qtquick(new Core::DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget,
                    nullptr, windowFlags)
     , Views::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this, engine ? engine : plat()->qmlEngine()))
@@ -66,28 +65,28 @@ DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName, DockWidgetOpti
     m_dockWidget->init();
 
     connect(m_dockWidget, &Core::DockWidget::isFloatingChanged, this,
-            &DockWidget_qtquick::isFloatingChanged);
+            &DockWidget::isFloatingChanged);
     connect(m_dockWidget, &Core::DockWidget::isFocusedChanged, this,
-            &DockWidget_qtquick::isFocusedChanged);
+            &DockWidget::isFocusedChanged);
     connect(m_dockWidget, &Core::DockWidget::titleChanged, this,
-            &DockWidget_qtquick::titleChanged);
+            &DockWidget::titleChanged);
     connect(m_dockWidget, &Core::DockWidget::optionsChanged, this,
-            &DockWidget_qtquick::optionsChanged);
+            &DockWidget::optionsChanged);
 }
 
-DockWidget_qtquick::~DockWidget_qtquick()
+DockWidget::~DockWidget()
 {
     delete d;
 }
 
-void DockWidget_qtquick::init()
+void DockWidget::init()
 {
     // To mimic what QtWidgets does when creating a new QWidget.
     setVisible(false);
 
     auto dw = this->dockWidget();
     connect(dw, &Core::DockWidget::actualTitleBarChanged, this,
-            &DockWidget_qtquick::actualTitleBarChanged);
+            &DockWidget::actualTitleBarChanged);
 
     connect(dw, &Core::DockWidget::guestViewChanged, this, [this, dw] {
         if (auto guest = dw->guestView()) {
@@ -100,7 +99,7 @@ void DockWidget_qtquick::init()
     });
 }
 
-void DockWidget_qtquick::setGuestItem(const QString &qmlFilename)
+void DockWidget::setGuestItem(const QString &qmlFilename)
 {
     QQuickItem *guest = createItem(d->m_qmlEngine, qmlFilename);
     if (!guest)
@@ -109,7 +108,7 @@ void DockWidget_qtquick::setGuestItem(const QString &qmlFilename)
     setGuestItem(guest);
 }
 
-void DockWidget_qtquick::setGuestItem(QQuickItem *item)
+void DockWidget::setGuestItem(QQuickItem *item)
 {
     auto wrapper = asQQuickWrapper(item);
     wrapper->setParent(this);
@@ -117,7 +116,7 @@ void DockWidget_qtquick::setGuestItem(QQuickItem *item)
     dockWidget()->setGuestView(wrapper);
 }
 
-QQuickItem *DockWidget_qtquick::guestItem() const
+QQuickItem *DockWidget::guestItem() const
 {
     if (auto guest = m_dockWidget->guestView())
         return dynamic_cast<QQuickItem *>(guest.get());
@@ -125,7 +124,7 @@ QQuickItem *DockWidget_qtquick::guestItem() const
     return nullptr;
 }
 
-bool DockWidget_qtquick::event(QEvent *e)
+bool DockWidget::event(QEvent *e)
 {
     if (dockWidget()->d->m_isSettingCurrent)
         return View_qtquick::event(e);
@@ -137,7 +136,7 @@ bool DockWidget_qtquick::event(QEvent *e)
     return View_qtquick::event(e);
 }
 
-QSize DockWidget_qtquick::minSize() const
+QSize DockWidget::minSize() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests min-size is the same as the widget's, there's no spacing or margins.
@@ -147,7 +146,7 @@ QSize DockWidget_qtquick::minSize() const
     return View_qtquick::minSize();
 }
 
-QSize DockWidget_qtquick::maxSizeHint() const
+QSize DockWidget::maxSizeHint() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests max-size is the same as the widget's, there's no spacing or margins.
@@ -157,30 +156,30 @@ QSize DockWidget_qtquick::maxSizeHint() const
     return View_qtquick::maxSizeHint();
 }
 
-QObject *DockWidget_qtquick::actualTitleBarView() const
+QObject *DockWidget::actualTitleBarView() const
 {
     if (auto tb = actualTitleBar()) {
-        return static_cast<Views::TitleBar_qtquick *>(tb->view());
+        return static_cast<qtquick::TitleBar *>(tb->view());
     }
 
     return nullptr;
 }
 
-QQuickItem *DockWidget_qtquick::groupVisualItem() const
+QQuickItem *DockWidget::groupVisualItem() const
 {
     if (Core::Group *group = this->group()) {
-        if (auto view = asView_qtquick(group->view()))
+        if (auto view = Views::asView_qtquick(group->view()))
             return view->visualItem();
     }
 
     return nullptr;
 }
 
-void DockWidget_qtquick::onGeometryUpdated()
+void DockWidget::onGeometryUpdated()
 {
     if (auto group = this->group()) {
         if (auto view = group->view()) {
-            auto groupView = static_cast<Group_qtquick *>(asView_qtquick(view));
+            auto groupView = static_cast<Group *>(Views::asView_qtquick(view));
             groupView->updateConstriants();
             groupView->updateGeometry();
         }

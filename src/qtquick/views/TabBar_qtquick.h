@@ -34,14 +34,18 @@ namespace KDDockWidgets::Core {
 class TabBar;
 }
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets {
 
+namespace Views {
 class DockWidget;
-class DockWidgetModel;
 class TabWidget;
-class Stack_qtquick;
+}
 
-class DOCKS_EXPORT TabBar_qtquick : public View_qtquick, public TabBarViewInterface
+namespace qtquick {
+class Stack;
+class DockWidgetModel;
+
+class DOCKS_EXPORT TabBar : public Views::View_qtquick, public Views::TabBarViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY
@@ -50,7 +54,7 @@ class DOCKS_EXPORT TabBar_qtquick : public View_qtquick, public TabBarViewInterf
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
     Q_PROPERTY(int hoveredTabIndex READ hoveredTabIndex NOTIFY hoveredTabIndexChanged)
 public:
-    explicit TabBar_qtquick(Core::TabBar *controller, QQuickItem *parent = nullptr);
+    explicit TabBar(Core::TabBar *controller, QQuickItem *parent = nullptr);
 
     DockWidgetModel *dockWidgetModel() const;
 
@@ -65,7 +69,7 @@ public:
 
     void moveTabTo(int from, int to) override;
     Q_INVOKABLE void setCurrentIndex(int index) override;
-    Stack_qtquick *stackView() const;
+    Stack *stackView() const;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &icon) override;
     /// Returns whether the tab bar should hide when there's only 1 tab visible
@@ -142,6 +146,8 @@ private:
     bool m_removeGuard = false;
     Core::DockWidget *m_currentDockWidget = nullptr;
 };
+
+}
 
 }
 

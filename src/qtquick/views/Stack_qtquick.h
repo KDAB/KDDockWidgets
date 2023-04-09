@@ -31,16 +31,16 @@ namespace Core {
 class Stack;
 }
 
-namespace Views {
+namespace qtquick {
 
-class DOCKS_EXPORT Stack_qtquick : public View_qtquick, public StackViewInterface
+class DOCKS_EXPORT Stack : public Views::View_qtquick, public Views::StackViewInterface
 {
     Q_OBJECT
 public:
-    explicit Stack_qtquick(Core::Stack *controller, QQuickItem *parent = nullptr);
+    explicit Stack(Core::Stack *controller, QQuickItem *parent = nullptr);
 
 private:
-    Q_DISABLE_COPY(Stack_qtquick)
+    Q_DISABLE_COPY(Stack)
 };
 
 }

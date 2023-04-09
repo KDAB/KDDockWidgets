@@ -18,22 +18,22 @@
 
 namespace KDDockWidgets {
 
-namespace Views {
+namespace qtquick {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI_qtquick : public Views::MainWindow_qtquick,
-                                           public Views::MainWindowMDIViewInterface
+class DOCKS_EXPORT MainWindowMDI : public qtquick::MainWindow,
+                                   public Views::MainWindowMDIViewInterface
 {
     Q_OBJECT
 public:
     using Views::MainWindowMDIViewInterface::addDockWidget;
 
     ///@brief Constructor. See base class documentation
-    explicit MainWindowMDI_qtquick(const QString &uniqueName, QQuickItem *parent = nullptr,
-                                   Qt::WindowFlags flags = Qt::WindowFlags());
+    explicit MainWindowMDI(const QString &uniqueName, QQuickItem *parent = nullptr,
+                           Qt::WindowFlags flags = Qt::WindowFlags());
 
     ///@brief Destructor
-    ~MainWindowMDI_qtquick() override;
+    ~MainWindowMDI() override;
 };
 
 }
