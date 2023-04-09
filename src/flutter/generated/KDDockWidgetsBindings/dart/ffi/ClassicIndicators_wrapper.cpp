@@ -95,7 +95,7 @@ void ClassicIndicators_wrapper::setDropLocation(KDDockWidgets::DropLocation arg_
 {
     ::KDDockWidgets::Core::ClassicIndicators::setDropLocation(arg__1);
 }
-void ClassicIndicators_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void ClassicIndicators_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -104,7 +104,7 @@ void ClassicIndicators_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::ClassicIndicators::setParentView_impl(parent);
     }
 }
-void ClassicIndicators_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void ClassicIndicators_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::ClassicIndicators::setParentView_impl(parent);
 }
@@ -189,10 +189,10 @@ void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocati
 {
     fromPtr(thisObj)->setDropLocation(static_cast<KDDockWidgets::DropLocation>(arg__1));
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__ClassicIndicators__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // tr(const char * s, const char * c, int n)

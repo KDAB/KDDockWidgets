@@ -15,6 +15,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 Controller::Controller(Type type, View *view)
     : m_view(view)

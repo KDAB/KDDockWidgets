@@ -30,7 +30,7 @@ class DOCKS_EXPORT FocusScope
     Q_DISABLE_COPY(FocusScope)
 public:
     ///@brief constructor
-    explicit FocusScope(View *thisView);
+    explicit FocusScope(Core::View *thisView);
     virtual ~FocusScope();
 
     ///@brief Returns true if this FocusScope is focused.

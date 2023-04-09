@@ -37,9 +37,9 @@ namespace KDDockWidgets {
 
 namespace Core {
 class FloatingWindow;
+class View;
 }
 
-class View;
 class DockRegistry;
 
 /// @brief A more granular version of KDDockWidgets::RestoreOption

@@ -74,7 +74,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View * parent, Qt::WindowFlags arg__5) const! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createMainWindow(
@@ -92,7 +92,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::createView(KDDockWidgets::Controller * controller, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createView(
@@ -270,7 +270,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::screenNumberFor(KDDockWidgets::View * arg__1) const! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::screenNumberFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.screenNumberFor(View.fromCppPointer(arg__1));
@@ -283,7 +283,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::screenSizeFor(KDDockWidgets::View * arg__1) const! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::screenSizeFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.screenSizeFor(View.fromCppPointer(arg__1));
@@ -334,7 +334,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_createFocusableView(
@@ -349,7 +349,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::tests_createNonClosableView(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::tests_createNonClosableView(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_createNonClosableView(
@@ -365,7 +365,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_createView(
@@ -391,7 +391,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::View * receiver)! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.tests_doubleClickOn(

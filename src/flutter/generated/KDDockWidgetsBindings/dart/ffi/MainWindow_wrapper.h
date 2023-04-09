@@ -26,7 +26,7 @@ class MainWindow_wrapper : public ::KDDockWidgets::Core::MainWindow
 {
 public:
     ~MainWindow_wrapper();
-    MainWindow_wrapper(KDDockWidgets::View *view, const QString &uniqueName, QFlags<KDDockWidgets::MainWindowOption> options);
+    MainWindow_wrapper(KDDockWidgets::Core::View *view, const QString &uniqueName, QFlags<KDDockWidgets::MainWindowOption> options);
     void addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo = nullptr, KDDockWidgets::InitialOption initialOption = {});
     void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *dockwidget);
     bool anySideBarIsVisible() const;
@@ -49,20 +49,20 @@ public:
     void restoreFromSideBar(KDDockWidgets::Core::DockWidget *dw);
     void setContentsMargins(int l, int t, int r, int b);
     void setOverlayMargin(int margin);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setUniqueName(const QString &uniqueName);
     KDDockWidgets::Core::SideBar *sideBarForDockWidget(const KDDockWidgets::Core::DockWidget *dw) const;
     void toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget *dw);
     static QString tr(const char *s, const char *c, int n);
     QString uniqueName() const;
     void uniqueNameChanged();
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
 }
 extern "C" {
-// KDDockWidgets::Core::MainWindow::MainWindow(KDDockWidgets::View * view, const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
+// KDDockWidgets::Core::MainWindow::MainWindow(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__MainWindow__constructor_View_QString_MainWindowOptions(void *view_, const char *uniqueName_, int options_);
 // KDDockWidgets::Core::MainWindow::addDockWidget(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dockWidget_, int location, void *relativeTo_, void *initialOption_);
@@ -108,7 +108,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__MainWindow__rest
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__MainWindow__setContentsMargins_int_int_int_int(void *thisObj, int l, int t, int r, int b);
 // KDDockWidgets::Core::MainWindow::setOverlayMargin(int margin)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__MainWindow__setOverlayMargin_int(void *thisObj, int margin);
-// KDDockWidgets::Core::MainWindow::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::MainWindow::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__MainWindow__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::MainWindow::setUniqueName(const QString & uniqueName)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__MainWindow__setUniqueName_QString(void *thisObj, const char *uniqueName_);

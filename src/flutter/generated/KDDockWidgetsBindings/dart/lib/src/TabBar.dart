@@ -256,7 +256,7 @@ class TabBar extends Controller {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as TabBar;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for TabBar::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for TabBar::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

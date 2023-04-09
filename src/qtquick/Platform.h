@@ -40,17 +40,17 @@ public:
     Platform();
     ~Platform() override;
     const char *name() const override;
-    std::shared_ptr<View> qobjectAsView(QObject *) const override;
+    std::shared_ptr<Core::View> qobjectAsView(QObject *) const override;
     std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const override;
     Core::ViewFactory *createDefaultViewFactory() override;
     qtquick::ViewFactory *viewFactory() const;
     std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
     using Platform_qt::screenNumberFor;
-    int screenNumberFor(View *) const override;
-    QSize screenSizeFor(View *) const override;
+    int screenNumberFor(Core::View *) const override;
+    QSize screenSizeFor(Core::View *) const override;
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;
-    View *createView(Controller *controller, View *parent = nullptr) const override;
+    Core::View *createView(Controller *controller, Core::View *parent = nullptr) const override;
     bool usesFallbackMouseGrabber() const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
     void ungrabMouse() override;
@@ -62,14 +62,14 @@ public:
     explicit Platform(int &argc, char **argv);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
-    View *tests_createView(Core::CreateViewOptions, View *parent = nullptr) override;
+    Core::View *tests_createView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
     std::shared_ptr<Core::Window> tests_createWindow() override;
-    View *tests_createFocusableView(Core::CreateViewOptions, View *parent = nullptr) override;
-    View *tests_createNonClosableView(View *parent = nullptr) override;
+    Core::View *tests_createFocusableView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
+    Core::View *tests_createNonClosableView(Core::View *parent = nullptr) override;
     Core::MainWindow *
     createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                     View *parent = nullptr, Qt::WindowFlags = {}) const override;
+                     Core::View *parent = nullptr, Qt::WindowFlags = {}) const override;
 #endif
 private:
     void init();

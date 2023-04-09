@@ -23,7 +23,7 @@ class TabBar_flutter_wrapper : public ::KDDockWidgets::Views::TabBar_flutter
 {
 public:
     ~TabBar_flutter_wrapper();
-    TabBar_flutter_wrapper(KDDockWidgets::Core::TabBar *controller, KDDockWidgets::View *parent = nullptr);
+    TabBar_flutter_wrapper(KDDockWidgets::Core::TabBar *controller, KDDockWidgets::Core::View *parent = nullptr);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
     virtual bool close();
@@ -58,8 +58,8 @@ public:
     virtual bool isVisible_nocallback() const;
     virtual QPoint mapFromGlobal(QPoint globalPt) const;
     virtual QPoint mapFromGlobal_nocallback(QPoint globalPt) const;
-    virtual QPoint mapTo(KDDockWidgets::View *parent, QPoint pos) const;
-    virtual QPoint mapTo_nocallback(KDDockWidgets::View *parent, QPoint pos) const;
+    virtual QPoint mapTo(KDDockWidgets::Core::View *parent, QPoint pos) const;
+    virtual QPoint mapTo_nocallback(KDDockWidgets::Core::View *parent, QPoint pos) const;
     virtual QPoint mapToGlobal(QPoint localPt) const;
     virtual QPoint mapToGlobal_nocallback(QPoint localPt) const;
     virtual QSize maxSizeHint() const;
@@ -78,10 +78,10 @@ public:
     virtual QRect normalGeometry_nocallback() const;
     virtual QString objectName() const;
     virtual QString objectName_nocallback() const;
-    virtual void onChildAdded(KDDockWidgets::View *childView);
-    virtual void onChildAdded_nocallback(KDDockWidgets::View *childView);
-    virtual void onChildRemoved(KDDockWidgets::View *childView);
-    virtual void onChildRemoved_nocallback(KDDockWidgets::View *childView);
+    virtual void onChildAdded(KDDockWidgets::Core::View *childView);
+    virtual void onChildAdded_nocallback(KDDockWidgets::Core::View *childView);
+    virtual void onChildRemoved(KDDockWidgets::Core::View *childView);
+    virtual void onChildRemoved_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onRebuildRequested();
     virtual void onRebuildRequested_nocallback();
     virtual bool onResize(int w, int h);
@@ -120,8 +120,8 @@ public:
     virtual void setMouseTracking_nocallback(bool enable);
     virtual void setObjectName(const QString &name);
     virtual void setObjectName_nocallback(const QString &name);
-    virtual void setParent(KDDockWidgets::View *parent);
-    virtual void setParent_nocallback(KDDockWidgets::View *parent);
+    virtual void setParent(KDDockWidgets::Core::View *parent);
+    virtual void setParent_nocallback(KDDockWidgets::Core::View *parent);
     virtual void setSize(int w, int h);
     virtual void setSize_nocallback(int w, int h);
     virtual void setVisible(bool visible);
@@ -184,7 +184,7 @@ public:
     Callback_isVisible m_isVisibleCallback = nullptr;
     typedef QPoint *(*Callback_mapFromGlobal)(void *, QPoint *globalPt);
     Callback_mapFromGlobal m_mapFromGlobalCallback = nullptr;
-    typedef QPoint *(*Callback_mapTo)(void *, KDDockWidgets::View *parent, QPoint *pos);
+    typedef QPoint *(*Callback_mapTo)(void *, KDDockWidgets::Core::View *parent, QPoint *pos);
     Callback_mapTo m_mapToCallback = nullptr;
     typedef QPoint *(*Callback_mapToGlobal)(void *, QPoint *localPt);
     Callback_mapToGlobal m_mapToGlobalCallback = nullptr;
@@ -204,9 +204,9 @@ public:
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
     typedef QString *(*Callback_objectName)(void *);
     Callback_objectName m_objectNameCallback = nullptr;
-    typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::View *childView);
+    typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
-    typedef void (*Callback_onChildRemoved)(void *, KDDockWidgets::View *childView);
+    typedef void (*Callback_onChildRemoved)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
     typedef void (*Callback_onRebuildRequested)(void *);
     Callback_onRebuildRequested m_onRebuildRequestedCallback = nullptr;
@@ -246,7 +246,7 @@ public:
     Callback_setMouseTracking m_setMouseTrackingCallback = nullptr;
     typedef void (*Callback_setObjectName)(void *, const QString &name);
     Callback_setObjectName m_setObjectNameCallback = nullptr;
-    typedef void (*Callback_setParent)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParent)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParent m_setParentCallback = nullptr;
     typedef void (*Callback_setSize_2)(void *, int w, int h);
     Callback_setSize_2 m_setSize_2Callback = nullptr;
@@ -279,7 +279,7 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::TabBar_flutter::TabBar_flutter(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::View * parent)
+// KDDockWidgets::Views::TabBar_flutter::TabBar_flutter(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__constructor_TabBar_View(void *controller_, void *parent_);
 // KDDockWidgets::Views::TabBar_flutter::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__activateWindow(void *thisObj);
@@ -315,7 +315,7 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__isRoot
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__TabBar_flutter__isVisible(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::mapFromGlobal(QPoint globalPt) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
-// KDDockWidgets::Views::TabBar_flutter::mapTo(KDDockWidgets::View * parent, QPoint pos) const
+// KDDockWidgets::Views::TabBar_flutter::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
 // KDDockWidgets::Views::TabBar_flutter::mapToGlobal(QPoint localPt) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
@@ -335,9 +335,9 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__moveTa
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__normalGeometry(void *thisObj);
 // KDDockWidgets::Views::TabBar_flutter::objectName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__TabBar_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::TabBar_flutter::onChildAdded(KDDockWidgets::View * childView)
+// KDDockWidgets::Views::TabBar_flutter::onChildAdded(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__onChildAdded_View(void *thisObj, void *childView_);
-// KDDockWidgets::Views::TabBar_flutter::onChildRemoved(KDDockWidgets::View * childView)
+// KDDockWidgets::Views::TabBar_flutter::onChildRemoved(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::Views::TabBar_flutter::onRebuildRequested()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__onRebuildRequested(void *thisObj);
@@ -377,7 +377,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setMin
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::Views::TabBar_flutter::setObjectName(const QString & name)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setObjectName_QString(void *thisObj, const char *name_);
-// KDDockWidgets::Views::TabBar_flutter::setParent(KDDockWidgets::View * parent)
+// KDDockWidgets::Views::TabBar_flutter::setParent(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::Views::TabBar_flutter::setSize(int w, int h)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__TabBar_flutter__setSize_int_int(void *thisObj, int w, int h);

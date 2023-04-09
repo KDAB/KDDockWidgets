@@ -49,8 +49,8 @@ public:
     void renameTab(int index, const QString &arg__2);
     void setCurrentDockWidget(KDDockWidgets::Core::DockWidget *dw);
     void setCurrentIndex(int index);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Core::Stack *stack() const;
@@ -63,7 +63,7 @@ public:
     Callback_isMDI m_isMDICallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
     typedef KDDockWidgets::Core::DockWidget *(*Callback_singleDockWidget)(void *);
     Callback_singleDockWidget m_singleDockWidgetCallback = nullptr;
@@ -114,7 +114,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TabBar__renameTa
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TabBar__setCurrentDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::TabBar::setCurrentIndex(int index)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TabBar__setCurrentIndex_int(void *thisObj, int index);
-// KDDockWidgets::Core::TabBar::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::TabBar::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TabBar__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::TabBar::singleDockWidget() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__TabBar__singleDockWidget(void *thisObj);

@@ -34,6 +34,9 @@ class EventFilterInterface;
 class Controller;
 class Screen;
 
+using HANDLE = const void *;
+using WId = quintptr;
+
 namespace Core {
 class Window;
 class MDILayout;
@@ -46,10 +49,6 @@ class Stack;
 class TabBar;
 class TitleBar;
 class MainWindow;
-}
-
-using HANDLE = const void *;
-using WId = quintptr;
 
 class DOCKS_EXPORT View
 {
@@ -310,6 +309,8 @@ inline QDebug operator<<(QDebug deb, View *view)
 
     view->toQDebug(deb);
     return deb;
+}
+
 }
 
 }

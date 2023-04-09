@@ -57,7 +57,7 @@ class Item extends QObject {
             'c_static_Layouting__Item___set_s_silenceSanityChecks_bool')
         .asFunction();
     func(s_silenceSanityChecks_ ? 1 : 0);
-  } //Item(KDDockWidgets::View * hostWidget)
+  } //Item(KDDockWidgets::Core::View * hostWidget)
 
   Item(View? hostWidget) : super.init() {
     final voidstar_Func_voidstar func = _dylib
@@ -357,7 +357,7 @@ class Item extends QObject {
             'c_Layouting__Item__refCount')
         .asFunction();
     return func(thisCpp);
-  } // restore(KDDockWidgets::View * guestView)
+  } // restore(KDDockWidgets::Core::View * guestView)
 
   restore(View? guestView) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -400,7 +400,7 @@ class Item extends QObject {
       throw Error();
     }
     dartInstance.setGeometry_recursive(QRect.fromCppPointer(rect));
-  } // setGuestView(KDDockWidgets::View * arg__1)
+  } // setGuestView(KDDockWidgets::Core::View * arg__1)
 
   setGuestView(View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -408,7 +408,7 @@ class Item extends QObject {
             'c_Layouting__Item__setGuestView_View')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // setHostView(KDDockWidgets::View * arg__1)
+  } // setHostView(KDDockWidgets::Core::View * arg__1)
 
   setHostView(View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -423,7 +423,7 @@ class Item extends QObject {
     var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Item::setHostView(KDDockWidgets::View * arg__1)! (${thisCpp.address})");
+          "Dart instance not found for Item::setHostView(KDDockWidgets::Core::View * arg__1)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setHostView(View.fromCppPointer(arg__1));

@@ -26,7 +26,7 @@ class MainWindow extends Controller {
       if (instance != null) return instance as MainWindow;
     }
     return MainWindow.fromCppPointer(cppPointer, needsAutoDelete);
-  } //MainWindow(KDDockWidgets::View * view, const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
+  } //MainWindow(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
   MainWindow(View? view, String? uniqueName, int options) : super.init() {
     final voidstar_Func_voidstar_voidstar_int func = _dylib
         .lookup<
@@ -244,7 +244,7 @@ class MainWindow extends Controller {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for MainWindow::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

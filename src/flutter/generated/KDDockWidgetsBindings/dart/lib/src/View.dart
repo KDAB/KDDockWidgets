@@ -224,7 +224,7 @@ class View {
     dartInstance.createPlatformWindow();
   }
 
-  static // equals(const KDDockWidgets::View * one, const KDDockWidgets::View * two)
+  static // equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
       bool equals(View? one, View? two) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
@@ -233,7 +233,7 @@ class View {
     return func(one == null ? ffi.nullptr : one.thisCpp,
             two == null ? ffi.nullptr : two.thisCpp) !=
         0;
-  } // equals(const KDDockWidgets::View * other) const
+  } // equals(const KDDockWidgets::Core::View * other) const
 
   bool equals_2(View? other) {
     final bool_Func_voidstar_voidstar func = _dylib
@@ -252,7 +252,7 @@ class View {
     return Controller.fromCppPointer(result, false);
   }
 
-  static // firstParentOfType(KDDockWidgets::View * view, KDDockWidgets::Type arg__2)
+  static // firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::Type arg__2)
       Controller firstParentOfType_2(View? view, int arg__2) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
@@ -585,7 +585,7 @@ class View {
     }
     final result = dartInstance.mapFromGlobal(QPoint.fromCppPointer(arg__1));
     return result.thisCpp;
-  } // mapTo(KDDockWidgets::View * arg__1, QPoint arg__2) const
+  } // mapTo(KDDockWidgets::Core::View * arg__1, QPoint arg__2) const
 
   QPoint mapTo(View? arg__1, QPoint arg__2) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
@@ -606,7 +606,7 @@ class View {
     var dartInstance = View.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for View::mapTo(KDDockWidgets::View * arg__1, QPoint arg__2) const! (${thisCpp.address})");
+          "Dart instance not found for View::mapTo(KDDockWidgets::Core::View * arg__1, QPoint arg__2) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.mapTo(
@@ -1096,7 +1096,7 @@ class View {
       throw Error();
     }
     dartInstance.setObjectName(QString.fromCppPointer(arg__1).toDartString());
-  } // setParent(KDDockWidgets::View * arg__1)
+  } // setParent(KDDockWidgets::Core::View * arg__1)
 
   setParent(View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -1111,7 +1111,7 @@ class View {
     var dartInstance = View.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for View::setParent(KDDockWidgets::View * arg__1)! (${thisCpp.address})");
+          "Dart instance not found for View::setParent(KDDockWidgets::Core::View * arg__1)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParent(View.fromCppPointer(arg__1));

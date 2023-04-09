@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-DockWidget_wrapper::DockWidget_wrapper(KDDockWidgets::View *view, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+DockWidget_wrapper::DockWidget_wrapper(KDDockWidgets::Core::View *view, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
     : ::KDDockWidgets::Core::DockWidget(view, uniqueName, options, layoutSaverOptions)
 {
 }
@@ -219,7 +219,7 @@ void DockWidget_wrapper::setOptions(QFlags<KDDockWidgets::DockWidgetOption> arg_
 {
     ::KDDockWidgets::Core::DockWidget::setOptions(arg__1);
 }
-void DockWidget_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void DockWidget_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -228,7 +228,7 @@ void DockWidget_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::DockWidget::setParentView_impl(parent);
     }
 }
-void DockWidget_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void DockWidget_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::DockWidget::setParentView_impl(parent);
 }
@@ -300,7 +300,7 @@ void c_KDDockWidgets__Controllers__DockWidget_Finalizer(void *, void *cppObj, vo
 }
 void *c_KDDockWidgets__Controllers__DockWidget__constructor_View_QString_DockWidgetOptions_LayoutSaverOptions(void *view_, const char *uniqueName_, int options_, int layoutSaverOptions_)
 {
-    auto view = reinterpret_cast<KDDockWidgets::View *>(view_);
+    auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
     const auto uniqueName = QString::fromUtf8(uniqueName_);
     auto options = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(options_);
     auto layoutSaverOptions = static_cast<QFlags<KDDockWidgets::LayoutSaverOption>>(layoutSaverOptions_);
@@ -562,10 +562,10 @@ void c_KDDockWidgets__Controllers__DockWidget__setOptions_DockWidgetOptions(void
     auto arg__1 = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(arg__1_);
     fromPtr(thisObj)->setOptions(arg__1);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__DockWidget__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setTitle(const QString & title)

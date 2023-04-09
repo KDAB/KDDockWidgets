@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-Item_wrapper::Item_wrapper(KDDockWidgets::View *hostWidget)
+Item_wrapper::Item_wrapper(KDDockWidgets::Core::View *hostWidget)
     : ::Layouting::Item(hostWidget)
 {
 }
@@ -65,7 +65,7 @@ QRect Item_wrapper::geometry() const
 {
     return ::Layouting::Item::geometry();
 }
-KDDockWidgets::View *Item_wrapper::guestView() const
+KDDockWidgets::Core::View *Item_wrapper::guestView() const
 {
     return ::Layouting::Item::guestView();
 }
@@ -73,7 +73,7 @@ int Item_wrapper::height() const
 {
     return ::Layouting::Item::height();
 }
-KDDockWidgets::View *Item_wrapper::hostView() const
+KDDockWidgets::Core::View *Item_wrapper::hostView() const
 {
     return ::Layouting::Item::hostView();
 }
@@ -176,7 +176,7 @@ int Item_wrapper::refCount() const
 {
     return ::Layouting::Item::refCount();
 }
-void Item_wrapper::restore(KDDockWidgets::View *guestView)
+void Item_wrapper::restore(KDDockWidgets::Core::View *guestView)
 {
     ::Layouting::Item::restore(guestView);
 }
@@ -201,11 +201,11 @@ void Item_wrapper::setGeometry_recursive_nocallback(QRect rect)
 {
     ::Layouting::Item::setGeometry_recursive(rect);
 }
-void Item_wrapper::setGuestView(KDDockWidgets::View *arg__1)
+void Item_wrapper::setGuestView(KDDockWidgets::Core::View *arg__1)
 {
     ::Layouting::Item::setGuestView(arg__1);
 }
-void Item_wrapper::setHostView(KDDockWidgets::View *arg__1)
+void Item_wrapper::setHostView(KDDockWidgets::Core::View *arg__1)
 {
     if (m_setHostViewCallback) {
         const void *thisPtr = this;
@@ -214,7 +214,7 @@ void Item_wrapper::setHostView(KDDockWidgets::View *arg__1)
         ::Layouting::Item::setHostView(arg__1);
     }
 }
-void Item_wrapper::setHostView_nocallback(KDDockWidgets::View *arg__1)
+void Item_wrapper::setHostView_nocallback(KDDockWidgets::Core::View *arg__1)
 {
     ::Layouting::Item::setHostView(arg__1);
 }
@@ -321,7 +321,7 @@ void c_Layouting__Item_Finalizer(void *, void *cppObj, void *)
 }
 void *c_Layouting__Item__constructor_View(void *hostWidget_)
 {
-    auto hostWidget = reinterpret_cast<KDDockWidgets::View *>(hostWidget_);
+    auto hostWidget = reinterpret_cast<KDDockWidgets::Core::View *>(hostWidget_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Item_wrapper(hostWidget);
     return reinterpret_cast<void *>(ptr);
 }
@@ -460,10 +460,10 @@ int c_Layouting__Item__refCount(void *thisObj)
 {
     return fromPtr(thisObj)->refCount();
 }
-// restore(KDDockWidgets::View * guestView)
+// restore(KDDockWidgets::Core::View * guestView)
 void c_Layouting__Item__restore_View(void *thisObj, void *guestView_)
 {
-    auto guestView = reinterpret_cast<KDDockWidgets::View *>(guestView_);
+    auto guestView = reinterpret_cast<KDDockWidgets::Core::View *>(guestView_);
     fromPtr(thisObj)->restore(guestView);
 }
 // setBeingInserted(bool arg__1)
@@ -485,16 +485,16 @@ void c_Layouting__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_)
     auto &rect = *reinterpret_cast<QRect *>(rect_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setGeometry_recursive_nocallback(rect);} else {    return targetPtr->setGeometry_recursive(rect);} }();
 }
-// setGuestView(KDDockWidgets::View * arg__1)
+// setGuestView(KDDockWidgets::Core::View * arg__1)
 void c_Layouting__Item__setGuestView_View(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     fromPtr(thisObj)->setGuestView(arg__1);
 }
-// setHostView(KDDockWidgets::View * arg__1)
+// setHostView(KDDockWidgets::Core::View * arg__1)
 void c_Layouting__Item__setHostView_View(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setHostView_nocallback(arg__1);} else {    return targetPtr->setHostView(arg__1);} }();
 }
 // setIsVisible(bool arg__1)

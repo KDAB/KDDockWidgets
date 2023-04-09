@@ -61,7 +61,7 @@ public:
         const int minH =
             Base::minimumHeight() > 0 ? Base::minimumHeight() : minimumSizeHint().height();
 
-        return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
+        return QSize(minW, minH).expandedTo(Core::View::hardcodedMinimumSize());
     }
 
     QSize minimumSizeHint() const override

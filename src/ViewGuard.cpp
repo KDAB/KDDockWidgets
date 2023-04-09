@@ -14,6 +14,7 @@
 #include "private/View_p.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 ViewGuard::ViewGuard(View *view)
 {

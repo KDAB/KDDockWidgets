@@ -28,7 +28,7 @@ class Layout_wrapper : public ::KDDockWidgets::Core::Layout
 {
 public:
     ~Layout_wrapper();
-    Layout_wrapper(KDDockWidgets::Type arg__1, KDDockWidgets::View *arg__2);
+    Layout_wrapper(KDDockWidgets::Type arg__1, KDDockWidgets::Core::View *arg__2);
     KDDockWidgets::Core::DropArea *asDropArea() const;
     bool checkSanity() const;
     void clearLayout();
@@ -38,7 +38,7 @@ public:
     void dumpLayout() const;
     KDDockWidgets::Core::FloatingWindow *floatingWindow() const;
     QList<KDDockWidgets::Core::Group *> groups() const;
-    QList<KDDockWidgets::Core::Group *> groupsFrom(KDDockWidgets::View *groupOrMultiSplitter) const;
+    QList<KDDockWidgets::Core::Group *> groupsFrom(KDDockWidgets::Core::View *groupOrMultiSplitter) const;
     bool isInMainWindow(bool honourNesting = false) const;
     Layouting::Item *itemForFrame(const KDDockWidgets::Core::Group *group) const;
     int layoutHeight() const;
@@ -52,18 +52,18 @@ public:
     void restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, Layouting::Item *arg__2, int tabIndex);
     void setLayoutMinimumSize(QSize arg__1);
     void setLayoutSize(QSize arg__1);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group *> &groupsBeingAdded) const;
     void updateSizeConstraints();
     void viewAboutToBeDeleted();
     int visibleCount() const;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
 }
 extern "C" {
-// KDDockWidgets::Core::Layout::Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View * arg__2)
+// KDDockWidgets::Core::Layout::Layout(KDDockWidgets::Type arg__1, KDDockWidgets::Core::View * arg__2)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_);
 // KDDockWidgets::Core::Layout::asDropArea() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__asDropArea(void *thisObj);
@@ -83,7 +83,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__dumpLayo
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::Layout::groups() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__groups(void *thisObj);
-// KDDockWidgets::Core::Layout::groupsFrom(KDDockWidgets::View * groupOrMultiSplitter) const
+// KDDockWidgets::Core::Layout::groupsFrom(KDDockWidgets::Core::View * groupOrMultiSplitter) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_);
 // KDDockWidgets::Core::Layout::isInMainWindow(bool honourNesting) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
@@ -111,7 +111,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__restoreP
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::setLayoutSize(QSize arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Layout::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::Layout::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Layout::unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded) const
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group(void *thisObj, void *groupsBeingAdded_);

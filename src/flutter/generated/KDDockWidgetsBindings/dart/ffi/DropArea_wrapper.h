@@ -28,10 +28,10 @@ class DropArea_wrapper : public ::KDDockWidgets::Core::DropArea
 {
 public:
     ~DropArea_wrapper();
-    DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper = false);
+    DropArea_wrapper(KDDockWidgets::Core::View *parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper = false);
     void addDockWidget(KDDockWidgets::Core::DockWidget *dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption = {});
     void addMultiSplitter(KDDockWidgets::Core::DropArea *splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
-    void addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
+    void addWidget(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
     Layouting::Item *centralFrame() const;
     bool containsDockWidget(KDDockWidgets::Core::DockWidget *arg__1) const;
     static KDDockWidgets::Core::Group *createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options);
@@ -45,21 +45,21 @@ public:
     void layoutParentContainerEqually(KDDockWidgets::Core::DockWidget *arg__1);
     KDDockWidgets::Core::DockWidget *mdiDockWidgetWrapper() const;
     void removeHover();
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     static QString tr(const char *s, const char *c, int n);
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
 }
 extern "C" {
-// KDDockWidgets::Core::DropArea::DropArea(KDDockWidgets::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+// KDDockWidgets::Core::DropArea::DropArea(KDDockWidgets::Core::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
 // KDDockWidgets::Core::DropArea::addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_);
 // KDDockWidgets::Core::DropArea::addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_);
-// KDDockWidgets::Core::DropArea::addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
+// KDDockWidgets::Core::DropArea::addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeTo_, void *option_);
 // KDDockWidgets::Core::DropArea::centralFrame() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DropArea__centralFrame(void *thisObj);
@@ -87,7 +87,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__layout
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DropArea__mdiDockWidgetWrapper(void *thisObj);
 // KDDockWidgets::Core::DropArea::removeHover()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__removeHover(void *thisObj);
-// KDDockWidgets::Core::DropArea::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::DropArea::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::DropArea::tr(const char * s, const char * c, int n)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__DropArea__tr_char_char_int(const char *s, const char *c, int n);

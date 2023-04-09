@@ -78,8 +78,8 @@ protected:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<Core::FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
-    View *m_draggableView = nullptr;
-    ViewGuard m_guard;
+    Core::View *m_draggableView = nullptr;
+    Core::ViewGuard m_guard;
 };
 
 struct WindowBeingDraggedWayland : public WindowBeingDragged

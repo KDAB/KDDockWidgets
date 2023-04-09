@@ -27,11 +27,11 @@
 class TestMultiSplitter;
 
 namespace KDDockWidgets {
-class View;
 
 namespace Core {
 class Group;
 class Separator;
+class View;
 }
 
 }
@@ -255,7 +255,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject
 public:
     typedef QVector<Item *> List;
 
-    explicit Item(KDDockWidgets::View *hostWidget, ItemContainer *parent = nullptr);
+    explicit Item(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent = nullptr);
     ~Item() override;
 
     /// @brief returns whether this item is a root container
@@ -301,11 +301,11 @@ public:
     int mapFromRoot(int p, Qt::Orientation) const;
 
     KDDockWidgets::Core::Group *asGroupController() const;
-    KDDockWidgets::View *guestView() const
+    KDDockWidgets::Core::View *guestView() const
     {
         return m_guest;
     }
-    void setGuestView(KDDockWidgets::View *);
+    void setGuestView(KDDockWidgets::Core::View *);
 
     void ref();
     void unref();
@@ -315,8 +315,8 @@ public:
     int minLength(Qt::Orientation) const;
     int maxLengthHint(Qt::Orientation) const;
 
-    KDDockWidgets::View *hostView() const;
-    void restore(KDDockWidgets::View *guestView);
+    KDDockWidgets::Core::View *hostView() const;
+    void restore(KDDockWidgets::Core::View *guestView);
 
     QVector<int> pathFromRoot() const;
 
@@ -333,14 +333,14 @@ public:
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(QRect rect);
     virtual void dumpLayout(int level = 0);
-    virtual void setHostView(KDDockWidgets::View *);
+    virtual void setHostView(KDDockWidgets::Core::View *);
     virtual QVariantMap toVariantMap() const;
     virtual void fillFromVariantMap(const QVariantMap &map,
-                                    const QHash<QString, KDDockWidgets::View *> &widgets);
+                                    const QHash<QString, KDDockWidgets::Core::View *> &widgets);
 
-    static Item *createFromVariantMap(KDDockWidgets::View *hostWidget, ItemContainer *parent,
+    static Item *createFromVariantMap(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent,
                                       const QVariantMap &map,
-                                      const QHash<QString, KDDockWidgets::View *> &widgets);
+                                      const QHash<QString, KDDockWidgets::Core::View *> &widgets);
 
     KDBindings::Signal<> geometryChanged;
     KDBindings::Signal<> xChanged;
@@ -353,7 +353,7 @@ public:
 
 protected:
     friend class ::TestMultiSplitter;
-    explicit Item(bool isContainer, KDDockWidgets::View *hostWidget, ItemContainer *parent);
+    explicit Item(bool isContainer, KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
     void setPos(QPoint);
@@ -386,8 +386,8 @@ private:
     void updateObjectName();
     void onWidgetDestroyed();
     bool m_isVisible = false;
-    KDDockWidgets::View *m_hostWidget = nullptr;
-    KDDockWidgets::View *m_guest = nullptr;
+    KDDockWidgets::Core::View *m_hostWidget = nullptr;
+    KDDockWidgets::Core::View *m_guest = nullptr;
 
     QMetaObject::Connection m_parentChangedConnection;
     KDBindings::ConnectionHandle m_minSizeChangedHandle;
@@ -402,8 +402,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS ItemContainer : public Item
 {
     Q_OBJECT
 public:
-    explicit ItemContainer(KDDockWidgets::View *hostWidget, ItemContainer *parent);
-    explicit ItemContainer(KDDockWidgets::View *hostWidget);
+    explicit ItemContainer(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
+    explicit ItemContainer(KDDockWidgets::Core::View *hostWidget);
     ~ItemContainer();
 
     virtual void removeItem(Item *, bool hardRemove = true) = 0;
@@ -418,7 +418,7 @@ public:
     const List childItems() const;
     bool isEmpty() const;
     bool contains(const Item *item) const;
-    Item *itemForView(const KDDockWidgets::View *) const;
+    Item *itemForView(const KDDockWidgets::Core::View *) const;
     Item::List visibleChildren(bool includeBeingInserted = false) const;
     Item::List items_recursive() const;
     bool contains_recursive(const Item *item) const;
@@ -447,8 +447,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS ItemBoxContainer : public ItemContainer
 {
     Q_OBJECT
 public:
-    explicit ItemBoxContainer(KDDockWidgets::View *hostWidget, ItemContainer *parent);
-    explicit ItemBoxContainer(KDDockWidgets::View *hostWidget);
+    explicit ItemBoxContainer(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
+    explicit ItemBoxContainer(KDDockWidgets::Core::View *hostWidget);
     ~ItemBoxContainer();
     void insertItem(Item *item, int index,
                     KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
@@ -482,7 +482,7 @@ public:
                             KDDockWidgets::Location) const;
     QVariantMap toVariantMap() const override;
     void fillFromVariantMap(const QVariantMap &map,
-                            const QHash<QString, KDDockWidgets::View *> &widgets) override;
+                            const QHash<QString, KDDockWidgets::Core::View *> &widgets) override;
     void clear() override;
     Qt::Orientation orientation() const;
     bool isVertical() const;
@@ -567,7 +567,7 @@ private:
     void positionItems(SizingInfo::List &sizes);
     Item *itemAt(QPoint p) const;
     Item *itemAt_recursive(QPoint p) const;
-    void setHostView(KDDockWidgets::View *) override;
+    void setHostView(KDDockWidgets::Core::View *) override;
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;
     void setLength_recursive(int length, Qt::Orientation) override;

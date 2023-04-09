@@ -90,6 +90,6 @@ void MDIDockingAreaInstantiator::componentComplete()
         return;
     }
 
-    View *view = new qtquick::MainWindowMDI(m_uniqueName, this);
+    Core::View *view = new qtquick::MainWindowMDI(m_uniqueName, this);
     m_mainWindow = view->asMainWindowController();
 }

@@ -32,12 +32,12 @@ public:
     Platform_qt();
     ~Platform_qt() override;
 
-    std::shared_ptr<View> focusedView() const override;
+    std::shared_ptr<Core::View> focusedView() const override;
     QVector<std::shared_ptr<Core::Window>> windows() const override;
     virtual std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const = 0;
     int screenNumberFor(std::shared_ptr<Core::Window>) const override;
 
-    void sendEvent(View *, QEvent *) const override;
+    void sendEvent(Core::View *, QEvent *) const override;
 
     bool isProcessingAppQuitEvent() const override;
 
@@ -58,7 +58,7 @@ public:
     /// @brief Returns the specified QObject casted to View
     /// Nullptr if it's not a view. TODOm3: This is shared between the
     /// QtQuick and QWidgets impl, but will be remove once we started removing Qt from backend
-    virtual std::shared_ptr<View> qobjectAsView(QObject *) const = 0;
+    virtual std::shared_ptr<Core::View> qobjectAsView(QObject *) const = 0;
     std::shared_ptr<Core::Window> qobjectAsWindow(QObject *) const;
 
     static Platform_qt *instance();
@@ -73,18 +73,18 @@ public:
     explicit Platform_qt(QCoreApplication *);
     bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const override;
     bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const override;
-    bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const override;
+    bool tests_waitForEvent(Core::View *, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(std::shared_ptr<Core::Window>, QEvent::Type type,
                             int timeout = 5000) const override;
-    bool tests_waitForResize(View *, int timeout = 2000) const override;
+    bool tests_waitForResize(Core::View *, int timeout = 2000) const override;
     bool tests_waitForResize(Controller *, int timeout = 2000) const override;
-    bool tests_waitForDeleted(View *, int timeout = 2000) const override;
+    bool tests_waitForDeleted(Core::View *, int timeout = 2000) const override;
     bool tests_waitForDeleted(QObject *, int timeout = 2000) const override;
     void tests_sendEvent(std::shared_ptr<Core::Window>, QEvent *) const override;
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     void tests_wait(int ms) override;
-    void tests_doubleClickOn(QPoint globalPos, View *receiver) override;
+    void tests_doubleClickOn(QPoint globalPos, Core::View *receiver) override;
 
     void installMessageHandler() override;
     void uninstallMessageHandler() override;

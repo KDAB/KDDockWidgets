@@ -49,52 +49,52 @@ ViewFactory::~ViewFactory()
 {
 }
 
-View *ViewFactory::createDockWidget(const QString &uniqueName, DockWidgetOptions options,
-                                    LayoutSaverOptions layoutSaverOptions,
-                                    Qt::WindowFlags windowFlags) const
+Core::View *ViewFactory::createDockWidget(const QString &uniqueName, DockWidgetOptions options,
+                                          LayoutSaverOptions layoutSaverOptions,
+                                          Qt::WindowFlags windowFlags) const
 {
     return createDockWidget(uniqueName, /*engine=*/nullptr, options, layoutSaverOptions,
                             windowFlags);
 }
 
-View *ViewFactory::createDockWidget(const QString &uniqueName, QQmlEngine *qmlEngine,
-                                    DockWidgetOptions options,
-                                    LayoutSaverOptions layoutSaverOptions,
-                                    Qt::WindowFlags windowFlags) const
+Core::View *ViewFactory::createDockWidget(const QString &uniqueName, QQmlEngine *qmlEngine,
+                                          DockWidgetOptions options,
+                                          LayoutSaverOptions layoutSaverOptions,
+                                          Qt::WindowFlags windowFlags) const
 {
     return new qtquick::DockWidget(uniqueName, options, layoutSaverOptions, windowFlags,
                                    qmlEngine);
 }
 
-View *ViewFactory::createGroup(Core::Group *controller, View *parent) const
+Core::View *ViewFactory::createGroup(Core::Group *controller, Core::View *parent) const
 {
     return new Group(controller, Views::asQQuickItem(parent));
 }
 
-View *ViewFactory::createTitleBar(Core::TitleBar *titleBar, View *parent) const
+Core::View *ViewFactory::createTitleBar(Core::TitleBar *titleBar, Core::View *parent) const
 {
     return new TitleBar(titleBar, Views::asQQuickItem(parent));
 }
 
-View *ViewFactory::createTabBar(Core::TabBar *controller, View *parent) const
+Core::View *ViewFactory::createTabBar(Core::TabBar *controller, Core::View *parent) const
 {
     return new TabBar(controller, Views::asQQuickItem(parent));
 }
 
-View *ViewFactory::createStack(Core::Stack *controller, View *parent) const
+Core::View *ViewFactory::createStack(Core::Stack *controller, Core::View *parent) const
 {
     return new Stack(controller, Views::asQQuickItem(parent));
 }
 
-View *ViewFactory::createSeparator(Core::Separator *controller, View *parent) const
+Core::View *ViewFactory::createSeparator(Core::Separator *controller, Core::View *parent) const
 {
     return new Separator(
         controller, parent ? static_cast<Views::View_qtquick *>(parent) : nullptr);
 }
 
-View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
-                                        Core::MainWindow *parent,
-                                        Qt::WindowFlags flags) const
+Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
+                                              Core::MainWindow *parent,
+                                              Qt::WindowFlags flags) const
 {
 
     auto mainwindow = parent
@@ -103,12 +103,12 @@ View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
     return new FloatingWindow(controller, mainwindow, flags);
 }
 
-View *ViewFactory::createRubberBand(View *parent) const
+Core::View *ViewFactory::createRubberBand(Core::View *parent) const
 {
     return new Views::RubberBand(Views::asQQuickItem(parent));
 }
 
-View *ViewFactory::createSideBar(Core::SideBar *, View *) const
+Core::View *ViewFactory::createSideBar(Core::SideBar *, Core::View *) const
 {
     return {};
 }
@@ -160,12 +160,12 @@ QIcon ViewFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
     return icon;
 }
 
-View *ViewFactory::createDropArea(Core::DropArea *controller, View *parent) const
+Core::View *ViewFactory::createDropArea(Core::DropArea *controller, Core::View *parent) const
 {
     return new DropArea(controller, parent);
 }
 
-View *ViewFactory::createMDILayout(Core::MDILayout *controller, View *parent) const
+Core::View *ViewFactory::createMDILayout(Core::MDILayout *controller, Core::View *parent) const
 {
     return new MDILayout(controller, parent);
 }
@@ -195,9 +195,9 @@ QUrl ViewFactory::tabbarFilename() const
     return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/TabBar.qml"));
 }
 
-View *
+Core::View *
 ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *,
-                                                     View *) const
+                                                     Core::View *) const
 {
     return nullptr;
 }

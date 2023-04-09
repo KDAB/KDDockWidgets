@@ -94,7 +94,7 @@ void Stack_wrapper::setDocumentMode(bool arg__1)
 {
     ::KDDockWidgets::Core::Stack::setDocumentMode(arg__1);
 }
-void Stack_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void Stack_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -103,7 +103,7 @@ void Stack_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::Stack::setParentView_impl(parent);
     }
 }
-void Stack_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void Stack_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::Stack::setParentView_impl(parent);
 }
@@ -210,10 +210,10 @@ void c_KDDockWidgets__Controllers__Stack__setDocumentMode_bool(void *thisObj, bo
 {
     fromPtr(thisObj)->setDocumentMode(arg__1);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__Stack__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setTabBarAutoHide(bool arg__1)

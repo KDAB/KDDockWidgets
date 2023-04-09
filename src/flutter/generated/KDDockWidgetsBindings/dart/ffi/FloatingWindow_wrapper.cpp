@@ -153,7 +153,7 @@ void FloatingWindow_wrapper::scheduleDeleteLater()
 {
     ::KDDockWidgets::Core::FloatingWindow::scheduleDeleteLater();
 }
-void FloatingWindow_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void FloatingWindow_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -162,7 +162,7 @@ void FloatingWindow_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::FloatingWindow::setParentView_impl(parent);
     }
 }
-void FloatingWindow_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void FloatingWindow_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::FloatingWindow::setParentView_impl(parent);
 }
@@ -387,10 +387,10 @@ void c_KDDockWidgets__Controllers__FloatingWindow__scheduleDeleteLater(void *thi
 {
     fromPtr(thisObj)->scheduleDeleteLater();
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__FloatingWindow__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setSuggestedGeometry(QRect suggestedRect)

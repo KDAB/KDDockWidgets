@@ -89,7 +89,7 @@ void Platform::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-View *Platform::tests_createView(Core::CreateViewOptions opts, View *parent)
+Core::View *Platform::tests_createView(Core::CreateViewOptions opts, Core::View *parent)
 {
     auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
     auto newItem = new TestView_qtquick(opts, parentItem);
@@ -109,7 +109,7 @@ View *Platform::tests_createView(Core::CreateViewOptions opts, View *parent)
     return newItem;
 }
 
-View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, View *parent)
+Core::View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, Core::View *parent)
 {
     auto view = tests_createView(opts, parent);
     view->setFocusPolicy(Qt::StrongFocus);
@@ -117,7 +117,7 @@ View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, View *pa
     return view;
 }
 
-View *Platform::tests_createNonClosableView(View *parent)
+Core::View *Platform::tests_createNonClosableView(Core::View *parent)
 {
     Core::CreateViewOptions opts;
     opts.isVisible = true;
@@ -129,7 +129,7 @@ View *Platform::tests_createNonClosableView(View *parent)
 
 Core::MainWindow *Platform::createMainWindow(const QString &uniqueName,
                                              Core::CreateViewOptions viewOpts,
-                                             MainWindowOptions options, View *parent,
+                                             MainWindowOptions options, Core::View *parent,
                                              Qt::WindowFlags flags) const
 {
     QQuickItem *parentItem = Views::asQQuickItem(parent);

@@ -25,7 +25,7 @@ class EventFilter;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT View_qt : public View
+class DOCKS_EXPORT View_qt : public Core::View
 {
 public:
     explicit View_qt(Controller *controller, Type type, QObject *thisObj);
@@ -39,12 +39,12 @@ public:
     static QObject *asQObject(View *);
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
-    static QWidget *asQWidget(View *);
+    static QWidget *asQWidget(Core::View *);
     static QWidget *asQWidget(Controller *);
 #endif
 
 #ifdef KDDW_FRONTEND_QTQUICK
-    static QQuickItem *asQQuickItem(View *);
+    static QQuickItem *asQQuickItem(Core::View *);
 #endif
 
 

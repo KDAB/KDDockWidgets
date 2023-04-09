@@ -35,8 +35,8 @@ public:
     virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
     virtual QPoint posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
     void setDropLocation(KDDockWidgets::DropLocation arg__1);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     static QString tr(const char *s, const char *c, int n);
     virtual void updateVisibility();
     virtual void updateVisibility_nocallback();
@@ -48,7 +48,7 @@ public:
     Callback_onHoveredFrameChanged m_onHoveredFrameChangedCallback = nullptr;
     typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
     typedef void (*Callback_updateVisibility)(void *);
     Callback_updateVisibility m_updateVisibilityCallback = nullptr;
@@ -71,7 +71,7 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__ClassicIndicator
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicIndicators::setDropLocation(KDDockWidgets::DropLocation arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocation(void *thisObj, int arg__1);
-// KDDockWidgets::Core::ClassicIndicators::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::ClassicIndicators::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::ClassicIndicators::tr(const char * s, const char * c, int n)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s, const char *c, int n);

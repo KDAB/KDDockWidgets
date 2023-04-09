@@ -61,8 +61,8 @@ public:
     void onMinimizeClicked();
     void setCloseButtonEnabled(bool arg__1);
     void setFloatButtonVisible(bool arg__1);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setTitle(const QString &title);
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
@@ -81,7 +81,7 @@ public:
     Callback_isMDI m_isMDICallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
     typedef KDDockWidgets::Core::DockWidget *(*Callback_singleDockWidget)(void *);
     Callback_singleDockWidget m_singleDockWidgetCallback = nullptr;
@@ -154,7 +154,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TitleBar__onMini
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TitleBar__setCloseButtonEnabled_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::TitleBar::setFloatButtonVisible(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TitleBar__setFloatButtonVisible_bool(void *thisObj, bool arg__1);
-// KDDockWidgets::Core::TitleBar::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::TitleBar::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::TitleBar::setTitle(const QString & title)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__TitleBar__setTitle_QString(void *thisObj, const char *title_);

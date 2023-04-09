@@ -165,7 +165,7 @@ void ViewWrapper::setMouseTracking(bool)
     qFatal("Not implemented");
 }
 
-std::shared_ptr<View> ViewWrapper::asWrapper()
+std::shared_ptr<Core::View> ViewWrapper::asWrapper()
 {
     if (auto sharedptr = d->m_thisWeakPtr.lock())
         return sharedptr;

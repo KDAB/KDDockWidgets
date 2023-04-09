@@ -25,7 +25,7 @@ class DockWidget_wrapper : public ::KDDockWidgets::Core::DockWidget
 {
 public:
     ~DockWidget_wrapper();
-    DockWidget_wrapper(KDDockWidgets::View *view, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options = {}, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions = {});
+    DockWidget_wrapper(KDDockWidgets::Core::View *view, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options = {}, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions = {});
     void aboutToDelete(KDDockWidgets::Core::DockWidget *arg__1);
     void aboutToDeleteOnClose();
     void actualTitleBarChanged();
@@ -73,8 +73,8 @@ public:
     void setMDISize(QSize size);
     void setMDIZ(int z);
     void setOptions(QFlags<KDDockWidgets::DockWidgetOption> arg__1);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setTitle(const QString &title);
     void setUserType(int userType);
     void show();
@@ -87,12 +87,12 @@ public:
     QString uniqueName() const;
     int userType() const;
     void windowActiveAboutToChange(bool activated);
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
 }
 extern "C" {
-// KDDockWidgets::Core::DockWidget::DockWidget(KDDockWidgets::View * view, const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+// KDDockWidgets::Core::DockWidget::DockWidget(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__DockWidget__constructor_View_QString_DockWidgetOptions_LayoutSaverOptions(void *view_, const char *uniqueName_, int options_, int layoutSaverOptions_);
 // KDDockWidgets::Core::DockWidget::aboutToDelete(KDDockWidgets::Core::DockWidget * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__aboutToDelete_DockWidget(void *thisObj, void *arg__1_);
@@ -188,7 +188,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__setM
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__setMDIZ_int(void *thisObj, int z);
 // KDDockWidgets::Core::DockWidget::setOptions(QFlags<KDDockWidgets::DockWidgetOption> arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__setOptions_DockWidgetOptions(void *thisObj, int arg__1_);
-// KDDockWidgets::Core::DockWidget::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::DockWidget::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::DockWidget::setTitle(const QString & title)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DockWidget__setTitle_QString(void *thisObj, const char *title_);

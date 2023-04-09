@@ -142,7 +142,7 @@ void TabBar_wrapper::setCurrentIndex(int index)
 {
     ::KDDockWidgets::Core::TabBar::setCurrentIndex(index);
 }
-void TabBar_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void TabBar_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -151,7 +151,7 @@ void TabBar_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::TabBar::setParentView_impl(parent);
     }
 }
-void TabBar_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void TabBar_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::TabBar::setParentView_impl(parent);
 }
@@ -328,10 +328,10 @@ void c_KDDockWidgets__Controllers__TabBar__setCurrentIndex_int(void *thisObj, in
 {
     fromPtr(thisObj)->setCurrentIndex(index);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__TabBar__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // singleDockWidget() const

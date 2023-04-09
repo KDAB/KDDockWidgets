@@ -150,7 +150,7 @@ class Stack extends Controller {
     var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Stack;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Stack::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Stack::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

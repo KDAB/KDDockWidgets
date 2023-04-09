@@ -26,7 +26,7 @@ class DropArea extends Layout {
       if (instance != null) return instance as DropArea;
     }
     return DropArea.fromCppPointer(cppPointer, needsAutoDelete);
-  } //DropArea(KDDockWidgets::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+  } //DropArea(KDDockWidgets::Core::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
   DropArea(View? parent, int options, {bool isMDIWrapper = false})
       : super.init() {
     final voidstar_Func_voidstar_int_bool func = _dylib
@@ -70,7 +70,7 @@ class DropArea extends Layout {
         location,
         relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
         option == null ? ffi.nullptr : option.thisCpp);
-  } // addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
+  } // addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
 
   addWidget(View? widget, int location,
       {required Group? relativeTo, required InitialOption option}) {
@@ -130,7 +130,7 @@ class DropArea extends Layout {
             'c_KDDockWidgets__Controllers__DropArea__currentDropLocation')
         .asFunction();
     return func(thisCpp);
-  } // drop(KDDockWidgets::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
+  } // drop(KDDockWidgets::Core::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
 
   bool drop(View? droppedwindow, int location, Group? relativeTo) {
     final bool_Func_voidstar_voidstar_int_voidstar func = _dylib
@@ -238,7 +238,7 @@ class DropArea extends Layout {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for DropArea::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for DropArea::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));
@@ -261,7 +261,7 @@ class DropArea extends Layout {
             'c_KDDockWidgets__Controllers__DropArea__updateFloatingActions')
         .asFunction();
     func(thisCpp);
-  } // validateInputs(KDDockWidgets::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
+  } // validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
 
   bool validateInputs(View? widget, int location, Group? relativeToFrame,
       InitialOption option) {

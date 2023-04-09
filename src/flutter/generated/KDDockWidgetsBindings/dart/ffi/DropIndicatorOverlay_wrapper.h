@@ -44,8 +44,8 @@ public:
     void removeHover();
     void setCurrentDropLocation(KDDockWidgets::DropLocation location);
     void setHoveredFrame(KDDockWidgets::Core::Group *arg__1);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setWindowBeingDragged(bool arg__1);
     static QString tr(const char *s, const char *c, int n);
     virtual void updateVisibility();
@@ -58,7 +58,7 @@ public:
     Callback_onHoveredFrameChanged m_onHoveredFrameChangedCallback = nullptr;
     typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
     typedef void (*Callback_updateVisibility)(void *);
     Callback_updateVisibility m_updateVisibilityCallback = nullptr;
@@ -99,7 +99,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropIndicatorOve
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int location);
 // KDDockWidgets::Core::DropIndicatorOverlay::setHoveredFrame(KDDockWidgets::Core::Group * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setHoveredFrame_Group(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::DropIndicatorOverlay::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::DropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::DropIndicatorOverlay::setWindowBeingDragged(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setWindowBeingDragged_bool(void *thisObj, bool arg__1);

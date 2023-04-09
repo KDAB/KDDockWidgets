@@ -119,7 +119,7 @@ bool Platform::hasActivePopup() const
     return qApp->activePopupWidget() != nullptr;
 }
 
-std::shared_ptr<View> Platform::qobjectAsView(QObject *obj) const
+std::shared_ptr<Core::View> Platform::qobjectAsView(QObject *obj) const
 {
     return qtwidgets::ViewWrapper_qtwidgets::create(obj);
 }
@@ -145,7 +145,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
     return {};
 }
 
-int Platform::screenNumberFor(View *view) const
+int Platform::screenNumberFor(Core::View *view) const
 {
     if (auto widget = Views::View_qt::asQWidget(view)) {
         if (QWindow *qtwindow = widget->window()->windowHandle())
@@ -155,7 +155,7 @@ int Platform::screenNumberFor(View *view) const
     return -1;
 }
 
-QSize Platform::screenSizeFor(View *view) const
+QSize Platform::screenSizeFor(Core::View *view) const
 {
     if (auto widget = Views::View_qt::asQWidget(view)) {
         if (QScreen *screen = widget->screen()) {
@@ -171,7 +171,7 @@ int Platform::startDragDistance_impl() const
     return QApplication::startDragDistance();
 }
 
-View *Platform::createView(Controller *controller, View *parent) const
+Core::View *Platform::createView(Controller *controller, Core::View *parent) const
 {
     return new qtwidgets::View_qtwidgets<QWidget>(controller, Type::None,
                                                   Views::View_qt::asQWidget(parent));

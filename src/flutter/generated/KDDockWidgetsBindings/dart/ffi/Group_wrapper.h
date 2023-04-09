@@ -31,7 +31,7 @@ class Group_wrapper : public ::KDDockWidgets::Core::Group
 {
 public:
     ~Group_wrapper();
-    Group_wrapper(KDDockWidgets::View *parent = nullptr);
+    Group_wrapper(KDDockWidgets::Core::View *parent = nullptr);
     KDDockWidgets::Core::TitleBar *actualTitleBar() const;
     void actualTitleBarChanged();
     void addTab(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::InitialOption arg__2 = {});
@@ -100,8 +100,8 @@ public:
     void setCurrentTabIndex(int index);
     void setLayout(KDDockWidgets::Core::Layout *arg__1);
     void setLayoutItem(Layouting::Item *item);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     KDDockWidgets::Core::Stack *stack() const;
     KDDockWidgets::Core::TabBar *tabBar() const;
     QString title() const;
@@ -118,12 +118,12 @@ public:
     Callback_focusedWidgetChangedCallback m_focusedWidgetChangedCallbackCallback = nullptr;
     typedef void (*Callback_isFocusedChangedCallback)(void *);
     Callback_isFocusedChangedCallback m_isFocusedChangedCallbackCallback = nullptr;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
 }
 extern "C" {
-// KDDockWidgets::Core::Group::Group(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::Group::Group(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__constructor_View(void *parent_);
 // KDDockWidgets::Core::Group::actualTitleBar() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__actualTitleBar(void *thisObj);
@@ -255,7 +255,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setCurren
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setLayout_Layout(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Group::setLayoutItem(Layouting::Item * item)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setLayoutItem_Item(void *thisObj, void *item_);
-// KDDockWidgets::Core::Group::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::Group::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Group::stack() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__stack(void *thisObj);

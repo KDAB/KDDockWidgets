@@ -26,7 +26,7 @@ class Layout extends Controller {
       if (instance != null) return instance as Layout;
     }
     return Layout.fromCppPointer(cppPointer, needsAutoDelete);
-  } //Layout(KDDockWidgets::Type arg__1, KDDockWidgets::View * arg__2)
+  } //Layout(KDDockWidgets::Type arg__1, KDDockWidgets::Core::View * arg__2)
   Layout(int arg__1, View? arg__2) : super.init() {
     final voidstar_Func_int_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_voidstar_FFI>>(
@@ -109,7 +109,7 @@ class Layout extends Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QList<Group>.fromCppPointer(result, true);
-  } // groupsFrom(KDDockWidgets::View * groupOrMultiSplitter) const
+  } // groupsFrom(KDDockWidgets::Core::View * groupOrMultiSplitter) const
 
   QList groupsFrom(View? groupOrMultiSplitter) {
     final voidstar_Func_voidstar_voidstar func = _dylib
@@ -251,7 +251,7 @@ class Layout extends Controller {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as Layout;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Layout::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Layout::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

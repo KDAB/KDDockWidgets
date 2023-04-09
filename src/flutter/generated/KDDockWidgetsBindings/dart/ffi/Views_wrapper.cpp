@@ -33,10 +33,10 @@ void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_
     auto controller = reinterpret_cast<KDDockWidgets::Controller *>(controller_);
     return Views::asView_flutter(controller);
 }
-// asView_flutter(KDDockWidgets::View * view)
+// asView_flutter(KDDockWidgets::Core::View * view)
 void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_)
 {
-    auto view = reinterpret_cast<KDDockWidgets::View *>(view_);
+    auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
     return Views::asView_flutter(view);
 }
 }

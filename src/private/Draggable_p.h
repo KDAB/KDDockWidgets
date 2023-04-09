@@ -20,11 +20,10 @@
 
 namespace KDDockWidgets {
 
-class View;
-
 namespace Core {
 class FloatingWindow;
 class DockWidget;
+class View;
 }
 
 class WidgetResizeHandler;
@@ -42,9 +41,9 @@ class DOCKS_EXPORT Draggable
 public:
     typedef QVector<Draggable *> List;
 
-    explicit Draggable(View *thisView, bool enabled = true);
+    explicit Draggable(Core::View *thisView, bool enabled = true);
     virtual ~Draggable();
-    View *asView() const;
+    Core::View *asView() const;
 
     /**
      * If this draggable is already a window, do nothing.

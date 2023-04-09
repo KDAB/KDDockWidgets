@@ -26,7 +26,7 @@ class Group extends Controller {
       if (instance != null) return instance as Group;
     }
     return Group.fromCppPointer(cppPointer, needsAutoDelete);
-  } //Group(KDDockWidgets::View * parent)
+  } //Group(KDDockWidgets::Core::View * parent)
   Group({required View? parent}) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -623,7 +623,7 @@ class Group extends Controller {
     var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Group;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Group::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

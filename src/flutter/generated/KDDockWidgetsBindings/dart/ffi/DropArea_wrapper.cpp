@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-DropArea_wrapper::DropArea_wrapper(KDDockWidgets::View *parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+DropArea_wrapper::DropArea_wrapper(KDDockWidgets::Core::View *parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
     : ::KDDockWidgets::Core::DropArea(parent, options, isMDIWrapper)
 {
 }
@@ -39,7 +39,7 @@ void DropArea_wrapper::addMultiSplitter(KDDockWidgets::Core::DropArea *splitter,
 {
     ::KDDockWidgets::Core::DropArea::addMultiSplitter(splitter, location, relativeTo, option);
 }
-void DropArea_wrapper::addWidget(KDDockWidgets::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo, KDDockWidgets::InitialOption option)
+void DropArea_wrapper::addWidget(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo, KDDockWidgets::InitialOption option)
 {
     ::KDDockWidgets::Core::DropArea::addWidget(widget, location, relativeTo, option);
 }
@@ -95,7 +95,7 @@ void DropArea_wrapper::removeHover()
 {
     ::KDDockWidgets::Core::DropArea::removeHover();
 }
-void DropArea_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void DropArea_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -104,7 +104,7 @@ void DropArea_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::DropArea::setParentView_impl(parent);
     }
 }
-void DropArea_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void DropArea_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::DropArea::setParentView_impl(parent);
 }
@@ -132,7 +132,7 @@ void c_KDDockWidgets__Controllers__DropArea_Finalizer(void *, void *cppObj, void
 }
 void *c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     auto options = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(options_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::DropArea_wrapper(parent, options, isMDIWrapper);
     return reinterpret_cast<void *>(ptr);
@@ -155,10 +155,10 @@ void c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location_
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
     fromPtr(thisObj)->addMultiSplitter(splitter, static_cast<KDDockWidgets::Location>(location), relativeTo, option);
 }
-// addWidget(KDDockWidgets::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
+// addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
 void c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeTo_, void *option_)
 {
-    auto widget = reinterpret_cast<KDDockWidgets::View *>(widget_);
+    auto widget = reinterpret_cast<KDDockWidgets::Core::View *>(widget_);
     auto relativeTo = reinterpret_cast<KDDockWidgets::Core::Group *>(relativeTo_);
     assert(option_);
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
@@ -232,10 +232,10 @@ void c_KDDockWidgets__Controllers__DropArea__removeHover(void *thisObj)
 {
     fromPtr(thisObj)->removeHover();
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // tr(const char * s, const char * c, int n)

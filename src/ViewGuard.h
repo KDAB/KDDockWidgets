@@ -17,6 +17,8 @@
 #include "kdbindings/signal.h"
 
 namespace KDDockWidgets {
+
+namespace Core {
 class View;
 
 /// @brief This class provides a weak reference to a view
@@ -43,6 +45,7 @@ private:
     KDBindings::ConnectionHandle m_onDestroy;
 };
 
+}
 }
 
 #endif

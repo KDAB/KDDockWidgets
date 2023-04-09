@@ -61,7 +61,7 @@ KDDockWidgets::ViewFactory *Platform_wrapper::createDefaultViewFactory_nocallbac
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View *parent, Qt::WindowFlags arg__5) const
+KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View *parent, Qt::WindowFlags arg__5) const
 {
     if (m_createMainWindowCallback) {
         const void *thisPtr = this;
@@ -71,12 +71,12 @@ KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow(const QStrin
         return {};
     }
 }
-KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View *parent, Qt::WindowFlags arg__5) const
+KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View *parent, Qt::WindowFlags arg__5) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *Platform_wrapper::createView(KDDockWidgets::Controller *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *Platform_wrapper::createView(KDDockWidgets::Controller *arg__1, KDDockWidgets::Core::View *parent) const
 {
     if (m_createViewCallback) {
         const void *thisPtr = this;
@@ -86,7 +86,7 @@ KDDockWidgets::View *Platform_wrapper::createView(KDDockWidgets::Controller *arg
         return {};
     }
 }
-KDDockWidgets::View *Platform_wrapper::createView_nocallback(KDDockWidgets::Controller *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *Platform_wrapper::createView_nocallback(KDDockWidgets::Controller *arg__1, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -279,7 +279,7 @@ void Platform_wrapper::restoreMouseCursor_nocallback()
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return;
 }
-int Platform_wrapper::screenNumberFor(KDDockWidgets::View *arg__1) const
+int Platform_wrapper::screenNumberFor(KDDockWidgets::Core::View *arg__1) const
 {
     if (m_screenNumberForCallback) {
         const void *thisPtr = this;
@@ -289,12 +289,12 @@ int Platform_wrapper::screenNumberFor(KDDockWidgets::View *arg__1) const
         return {};
     }
 }
-int Platform_wrapper::screenNumberFor_nocallback(KDDockWidgets::View *arg__1) const
+int Platform_wrapper::screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-QSize Platform_wrapper::screenSizeFor(KDDockWidgets::View *arg__1) const
+QSize Platform_wrapper::screenSizeFor(KDDockWidgets::Core::View *arg__1) const
 {
     if (m_screenSizeForCallback) {
         const void *thisPtr = this;
@@ -304,7 +304,7 @@ QSize Platform_wrapper::screenSizeFor(KDDockWidgets::View *arg__1) const
         return {};
     }
 }
-QSize Platform_wrapper::screenSizeFor_nocallback(KDDockWidgets::View *arg__1) const
+QSize Platform_wrapper::screenSizeFor_nocallback(KDDockWidgets::Core::View *arg__1) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -356,7 +356,7 @@ int Platform_wrapper::startDragDistance_impl_nocallback() const
 {
     return ::KDDockWidgets::Platform::startDragDistance_impl();
 }
-KDDockWidgets::View *Platform_wrapper::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
+KDDockWidgets::Core::View *Platform_wrapper::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent)
 {
     if (m_tests_createFocusableViewCallback) {
         const void *thisPtr = this;
@@ -366,12 +366,12 @@ KDDockWidgets::View *Platform_wrapper::tests_createFocusableView(KDDockWidgets::
         return {};
     }
 }
-KDDockWidgets::View *Platform_wrapper::tests_createFocusableView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
+KDDockWidgets::Core::View *Platform_wrapper::tests_createFocusableView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent)
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *Platform_wrapper::tests_createNonClosableView(KDDockWidgets::View *parent)
+KDDockWidgets::Core::View *Platform_wrapper::tests_createNonClosableView(KDDockWidgets::Core::View *parent)
 {
     if (m_tests_createNonClosableViewCallback) {
         const void *thisPtr = this;
@@ -381,12 +381,12 @@ KDDockWidgets::View *Platform_wrapper::tests_createNonClosableView(KDDockWidgets
         return {};
     }
 }
-KDDockWidgets::View *Platform_wrapper::tests_createNonClosableView_nocallback(KDDockWidgets::View *parent)
+KDDockWidgets::Core::View *Platform_wrapper::tests_createNonClosableView_nocallback(KDDockWidgets::Core::View *parent)
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *Platform_wrapper::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
+KDDockWidgets::Core::View *Platform_wrapper::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent)
 {
     if (m_tests_createViewCallback) {
         const void *thisPtr = this;
@@ -396,7 +396,7 @@ KDDockWidgets::View *Platform_wrapper::tests_createView(KDDockWidgets::CreateVie
         return {};
     }
 }
-KDDockWidgets::View *Platform_wrapper::tests_createView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View *parent)
+KDDockWidgets::Core::View *Platform_wrapper::tests_createView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent)
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -418,7 +418,7 @@ void Platform_wrapper::tests_deinitPlatform_impl_nocallback()
 {
     ::KDDockWidgets::Platform::tests_deinitPlatform_impl();
 }
-void Platform_wrapper::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::View *receiver)
+void Platform_wrapper::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View *receiver)
 {
     if (m_tests_doubleClickOnCallback) {
         const void *thisPtr = this;
@@ -427,7 +427,7 @@ void Platform_wrapper::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::View
         ::KDDockWidgets::Platform::tests_doubleClickOn(globalPos, receiver);
     }
 }
-void Platform_wrapper::tests_doubleClickOn_nocallback(QPoint globalPos, KDDockWidgets::View *receiver)
+void Platform_wrapper::tests_doubleClickOn_nocallback(QPoint globalPos, KDDockWidgets::Core::View *receiver)
 {
     ::KDDockWidgets::Platform::tests_doubleClickOn(globalPos, receiver);
 }
@@ -444,7 +444,7 @@ void Platform_wrapper::tests_initPlatform_impl_nocallback()
 {
     ::KDDockWidgets::Platform::tests_initPlatform_impl();
 }
-void Platform_wrapper::tests_pressOn(QPoint globalPos, KDDockWidgets::View *receiver)
+void Platform_wrapper::tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View *receiver)
 {
     ::KDDockWidgets::Platform::tests_pressOn(globalPos, receiver);
 }
@@ -463,7 +463,7 @@ void Platform_wrapper::tests_wait_nocallback(int ms)
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return;
 }
-bool Platform_wrapper::tests_waitForDeleted(KDDockWidgets::View *arg__1, int timeout) const
+bool Platform_wrapper::tests_waitForDeleted(KDDockWidgets::Core::View *arg__1, int timeout) const
 {
     if (m_tests_waitForDeletedCallback) {
         const void *thisPtr = this;
@@ -473,7 +473,7 @@ bool Platform_wrapper::tests_waitForDeleted(KDDockWidgets::View *arg__1, int tim
         return {};
     }
 }
-bool Platform_wrapper::tests_waitForDeleted_nocallback(KDDockWidgets::View *arg__1, int timeout) const
+bool Platform_wrapper::tests_waitForDeleted_nocallback(KDDockWidgets::Core::View *arg__1, int timeout) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -493,7 +493,7 @@ bool Platform_wrapper::tests_waitForDeleted_nocallback(QObject *arg__1, int time
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-bool Platform_wrapper::tests_waitForEvent(KDDockWidgets::View *arg__1, Event::Type type, int timeout) const
+bool Platform_wrapper::tests_waitForEvent(KDDockWidgets::Core::View *arg__1, Event::Type type, int timeout) const
 {
     if (m_tests_waitForEventCallback) {
         const void *thisPtr = this;
@@ -503,7 +503,7 @@ bool Platform_wrapper::tests_waitForEvent(KDDockWidgets::View *arg__1, Event::Ty
         return {};
     }
 }
-bool Platform_wrapper::tests_waitForEvent_nocallback(KDDockWidgets::View *arg__1, Event::Type type, int timeout) const
+bool Platform_wrapper::tests_waitForEvent_nocallback(KDDockWidgets::Core::View *arg__1, Event::Type type, int timeout) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -538,7 +538,7 @@ bool Platform_wrapper::tests_waitForResize_nocallback(KDDockWidgets::Controller 
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-bool Platform_wrapper::tests_waitForResize(KDDockWidgets::View *arg__1, int timeout) const
+bool Platform_wrapper::tests_waitForResize(KDDockWidgets::Core::View *arg__1, int timeout) const
 {
     if (m_tests_waitForResize_2Callback) {
         const void *thisPtr = this;
@@ -548,7 +548,7 @@ bool Platform_wrapper::tests_waitForResize(KDDockWidgets::View *arg__1, int time
         return {};
     }
 }
-bool Platform_wrapper::tests_waitForResize_nocallback(KDDockWidgets::View *arg__1, int timeout) const
+bool Platform_wrapper::tests_waitForResize_nocallback(KDDockWidgets::Core::View *arg__1, int timeout) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -631,21 +631,21 @@ void *c_KDDockWidgets__Platform__createDefaultViewFactory(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDefaultViewFactory_nocallback();} else {    return targetPtr->createDefaultViewFactory();} }();
 }
-// createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View * parent, Qt::WindowFlags arg__5) const
+// createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const
 void *c_KDDockWidgets__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5)
 {
     const auto uniqueName = QString::fromUtf8(uniqueName_);
     assert(arg__2_);
     auto &arg__2 = *reinterpret_cast<KDDockWidgets::CreateViewOptions *>(arg__2_);
     auto options = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(options_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createMainWindow_nocallback(uniqueName,arg__2,options,parent,static_cast<Qt::WindowFlags>(arg__5));} else {    return targetPtr->createMainWindow(uniqueName,arg__2,options,parent,static_cast<Qt::WindowFlags>(arg__5));} }();
 }
-// createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::View * parent) const
+// createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__Platform__createView_Controller_View(void *thisObj, void *arg__1_, void *parent_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Controller *>(arg__1_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createView_nocallback(arg__1,parent);} else {    return targetPtr->createView(arg__1,parent);} }();
 }
 // cursorPos() const
@@ -732,16 +732,16 @@ void c_KDDockWidgets__Platform__restoreMouseCursor(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->restoreMouseCursor_nocallback();} else {    return targetPtr->restoreMouseCursor();} }();
 }
-// screenNumberFor(KDDockWidgets::View * arg__1) const
+// screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 int c_KDDockWidgets__Platform__screenNumberFor_View(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->screenNumberFor_nocallback(arg__1);} else {    return targetPtr->screenNumberFor(arg__1);} }();
 }
-// screenSizeFor(KDDockWidgets::View * arg__1) const
+// screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 void *c_KDDockWidgets__Platform__screenSizeFor_View(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->screenSizeFor_nocallback(arg__1);} else {    return targetPtr->screenSizeFor(arg__1);} }() };
 }
 // setCursorPos(QPoint arg__1)
@@ -766,26 +766,26 @@ int c_KDDockWidgets__Platform__startDragDistance_impl(void *thisObj)
 {
     return fromWrapperPtr(thisObj)->startDragDistance_impl_nocallback();
 }
-// tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+// tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::CreateViewOptions *>(arg__1_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_createFocusableView_nocallback(arg__1,parent);} else {    return targetPtr->tests_createFocusableView(arg__1,parent);} }();
 }
-// tests_createNonClosableView(KDDockWidgets::View * parent)
+// tests_createNonClosableView(KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__Platform__tests_createNonClosableView_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_createNonClosableView_nocallback(parent);} else {    return targetPtr->tests_createNonClosableView(parent);} }();
 }
-// tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+// tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__Platform__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::CreateViewOptions *>(arg__1_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_createView_nocallback(arg__1,parent);} else {    return targetPtr->tests_createView(arg__1,parent);} }();
 }
 // tests_deinitPlatform()
@@ -798,12 +798,12 @@ void c_KDDockWidgets__Platform__tests_deinitPlatform_impl(void *thisObj)
 {
     fromWrapperPtr(thisObj)->tests_deinitPlatform_impl_nocallback();
 }
-// tests_doubleClickOn(QPoint globalPos, KDDockWidgets::View * receiver)
+// tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
 void c_KDDockWidgets__Platform__tests_doubleClickOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_)
 {
     assert(globalPos_);
     auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
-    auto receiver = reinterpret_cast<KDDockWidgets::View *>(receiver_);
+    auto receiver = reinterpret_cast<KDDockWidgets::Core::View *>(receiver_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_doubleClickOn_nocallback(globalPos,receiver);} else {    return targetPtr->tests_doubleClickOn(globalPos,receiver);} }();
 }
 // tests_initPlatform_impl()
@@ -811,12 +811,12 @@ void c_KDDockWidgets__Platform__tests_initPlatform_impl(void *thisObj)
 {
     fromWrapperPtr(thisObj)->tests_initPlatform_impl_nocallback();
 }
-// tests_pressOn(QPoint globalPos, KDDockWidgets::View * receiver)
+// tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
 void c_KDDockWidgets__Platform__tests_pressOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_)
 {
     assert(globalPos_);
     auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
-    auto receiver = reinterpret_cast<KDDockWidgets::View *>(receiver_);
+    auto receiver = reinterpret_cast<KDDockWidgets::Core::View *>(receiver_);
     fromPtr(thisObj)->tests_pressOn(globalPos, receiver);
 }
 // tests_wait(int ms)
@@ -824,10 +824,10 @@ void c_KDDockWidgets__Platform__tests_wait_int(void *thisObj, int ms)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_wait_nocallback(ms);} else {    return targetPtr->tests_wait(ms);} }();
 }
-// tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
+// tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_waitForDeleted_nocallback(arg__1,timeout);} else {    return targetPtr->tests_waitForDeleted(arg__1,timeout);} }();
 }
 // tests_waitForDeleted(QObject * arg__1, int timeout) const
@@ -836,10 +836,10 @@ bool c_KDDockWidgets__Platform__tests_waitForDeleted_QObject_int(void *thisObj, 
     auto arg__1 = reinterpret_cast<QObject *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_waitForDeleted_nocallback(arg__1,timeout);} else {    return targetPtr->tests_waitForDeleted(arg__1,timeout);} }();
 }
-// tests_waitForEvent(KDDockWidgets::View * arg__1, Event::Type type, int timeout) const
+// tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::Type type, int timeout) const
 bool c_KDDockWidgets__Platform__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_waitForEvent_nocallback(arg__1,static_cast<Event::Type>(type),timeout);} else {    return targetPtr->tests_waitForEvent(arg__1,static_cast<Event::Type>(type),timeout);} }();
 }
 // tests_waitForEvent(QObject * w, Event::Type type, int timeout) const
@@ -854,10 +854,10 @@ bool c_KDDockWidgets__Platform__tests_waitForResize_Controller_int(void *thisObj
     auto arg__1 = reinterpret_cast<KDDockWidgets::Controller *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_waitForResize_nocallback(arg__1,timeout);} else {    return targetPtr->tests_waitForResize(arg__1,timeout);} }();
 }
-// tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
+// tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const
 bool c_KDDockWidgets__Platform__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::View *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_waitForResize_nocallback(arg__1,timeout);} else {    return targetPtr->tests_waitForResize(arg__1,timeout);} }();
 }
 // ungrabMouse()

@@ -24,7 +24,7 @@ View_flutter asView_flutter(Controller? controller) {
   ffi.Pointer<void> result =
       func(controller == null ? ffi.nullptr : controller.thisCpp);
   return View_flutter.fromCppPointer(result, false);
-} // asView_flutter(KDDockWidgets::View * view)
+} // asView_flutter(KDDockWidgets::Core::View * view)
 
 View_flutter asView_flutter_2(View? view) {
   final voidstar_Func_voidstar func = _dylib

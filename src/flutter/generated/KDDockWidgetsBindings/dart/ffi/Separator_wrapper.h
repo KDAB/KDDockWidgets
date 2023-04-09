@@ -21,7 +21,7 @@ class Separator_wrapper : public ::KDDockWidgets::Core::Separator
 {
 public:
     ~Separator_wrapper();
-    Separator_wrapper(KDDockWidgets::View *host);
+    Separator_wrapper(KDDockWidgets::Core::View *host);
     static bool isResizing();
     bool isVertical() const;
     void move(int p);
@@ -33,14 +33,14 @@ public:
     int position() const;
     void setGeometry(QRect r);
     void setGeometry(int pos, int pos2, int length);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
 }
 extern "C" {
-// KDDockWidgets::Core::Separator::Separator(KDDockWidgets::View * host)
+// KDDockWidgets::Core::Separator::Separator(KDDockWidgets::Core::View * host)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Separator__constructor_View(void *host_);
 // KDDockWidgets::Core::Separator::isResizing()
 KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Controllers__Separator__isResizing();
@@ -64,7 +64,7 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Separator__positi
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__setGeometry_QRect(void *thisObj, void *r_);
 // KDDockWidgets::Core::Separator::setGeometry(int pos, int pos2, int length)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length);
-// KDDockWidgets::Core::Separator::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::Separator::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__setParentView_impl_View(void *thisObj, void *parent_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);

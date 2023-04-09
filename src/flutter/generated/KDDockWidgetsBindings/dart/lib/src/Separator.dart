@@ -26,7 +26,7 @@ class Separator extends Controller {
       if (instance != null) return instance as Separator;
     }
     return Separator.fromCppPointer(cppPointer, needsAutoDelete);
-  } //Separator(KDDockWidgets::View * host)
+  } //Separator(KDDockWidgets::Core::View * host)
   Separator(View? host) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
@@ -150,7 +150,7 @@ class Separator extends Controller {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as Separator;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Separator::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Separator::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

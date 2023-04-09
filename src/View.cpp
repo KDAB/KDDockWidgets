@@ -26,6 +26,7 @@
 #include "Window.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets {
 static qint64 s_nextId = 1;

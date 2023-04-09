@@ -25,16 +25,16 @@ class Item_wrapper : public ::Layouting::Item
 {
 public:
     ~Item_wrapper();
-    Item_wrapper(KDDockWidgets::View *hostWidget);
+    Item_wrapper(KDDockWidgets::Core::View *hostWidget);
     KDDockWidgets::Core::Group *asGroupController() const;
     virtual bool checkSanity();
     virtual bool checkSanity_nocallback();
     virtual void dumpLayout(int level = 0);
     virtual void dumpLayout_nocallback(int level = 0);
     QRect geometry() const;
-    KDDockWidgets::View *guestView() const;
+    KDDockWidgets::Core::View *guestView() const;
     int height() const;
-    KDDockWidgets::View *hostView() const;
+    KDDockWidgets::Core::View *hostView() const;
     bool isBeingInserted() const;
     bool isContainer() const;
     bool isMDI() const;
@@ -56,14 +56,14 @@ public:
     QRect rect() const;
     void ref();
     int refCount() const;
-    void restore(KDDockWidgets::View *guestView);
+    void restore(KDDockWidgets::Core::View *guestView);
     void setBeingInserted(bool arg__1);
     void setGeometry(QRect rect);
     virtual void setGeometry_recursive(QRect rect);
     virtual void setGeometry_recursive_nocallback(QRect rect);
-    void setGuestView(KDDockWidgets::View *arg__1);
-    virtual void setHostView(KDDockWidgets::View *arg__1);
-    virtual void setHostView_nocallback(KDDockWidgets::View *arg__1);
+    void setGuestView(KDDockWidgets::Core::View *arg__1);
+    virtual void setHostView(KDDockWidgets::Core::View *arg__1);
+    virtual void setHostView_nocallback(KDDockWidgets::Core::View *arg__1);
     virtual void setIsVisible(bool arg__1);
     virtual void setIsVisible_nocallback(bool arg__1);
     void setMaxSizeHint(QSize arg__1);
@@ -93,7 +93,7 @@ public:
     Callback_minSize m_minSizeCallback = nullptr;
     typedef void (*Callback_setGeometry_recursive)(void *, QRect *rect);
     Callback_setGeometry_recursive m_setGeometry_recursiveCallback = nullptr;
-    typedef void (*Callback_setHostView)(void *, KDDockWidgets::View *arg__1);
+    typedef void (*Callback_setHostView)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_setHostView m_setHostViewCallback = nullptr;
     typedef void (*Callback_setIsVisible)(void *, bool arg__1);
     Callback_setIsVisible m_setIsVisibleCallback = nullptr;
@@ -104,7 +104,7 @@ public:
 };
 }
 extern "C" {
-// Layouting::Item::Item(KDDockWidgets::View * hostWidget)
+// Layouting::Item::Item(KDDockWidgets::Core::View * hostWidget)
 KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__constructor_View(void *hostWidget_);
 // Layouting::Item::asGroupController() const
 KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__asGroupController(void *thisObj);
@@ -156,7 +156,7 @@ KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__rect(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__ref(void *thisObj);
 // Layouting::Item::refCount() const
 KDDockWidgetsBindings_EXPORT int c_Layouting__Item__refCount(void *thisObj);
-// Layouting::Item::restore(KDDockWidgets::View * guestView)
+// Layouting::Item::restore(KDDockWidgets::Core::View * guestView)
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__restore_View(void *thisObj, void *guestView_);
 // Layouting::Item::setBeingInserted(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
@@ -164,9 +164,9 @@ KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setBeingInserted_bool(void 
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setGeometry_QRect(void *thisObj, void *rect_);
 // Layouting::Item::setGeometry_recursive(QRect rect)
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_);
-// Layouting::Item::setGuestView(KDDockWidgets::View * arg__1)
+// Layouting::Item::setGuestView(KDDockWidgets::Core::View * arg__1)
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setGuestView_View(void *thisObj, void *arg__1_);
-// Layouting::Item::setHostView(KDDockWidgets::View * arg__1)
+// Layouting::Item::setHostView(KDDockWidgets::Core::View * arg__1)
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setHostView_View(void *thisObj, void *arg__1_);
 // Layouting::Item::setIsVisible(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setIsVisible_bool(void *thisObj, bool arg__1);

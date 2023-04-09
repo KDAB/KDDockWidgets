@@ -26,7 +26,7 @@ class View_flutter extends View {
       if (instance != null) return instance as View_flutter;
     }
     return View_flutter.fromCppPointer(cppPointer, needsAutoDelete);
-  } //View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::View * arg__3, Qt::WindowFlags windowFlags)
+  } //View_flutter(KDDockWidgets::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
   View_flutter(Controller? controller, int type, View? arg__3,
       {int windowFlags = 0})
       : super.init() {
@@ -246,7 +246,7 @@ class View_flutter extends View {
         View.s_dartInstanceByCppPtr[thisCpp.address] as View_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for View_flutter::mapTo(KDDockWidgets::View * parent, QPoint pos) const! (${thisCpp.address})");
+          "Dart instance not found for View_flutter::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.mapTo(
@@ -349,7 +349,7 @@ class View_flutter extends View {
     }
     final result = dartInstance.objectName();
     return result.thisCpp;
-  } // onChildAdded(KDDockWidgets::View * childView)
+  } // onChildAdded(KDDockWidgets::Core::View * childView)
 
   onChildAdded(View? childView) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -365,11 +365,11 @@ class View_flutter extends View {
         View.s_dartInstanceByCppPtr[thisCpp.address] as View_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for View_flutter::onChildAdded(KDDockWidgets::View * childView)! (${thisCpp.address})");
+          "Dart instance not found for View_flutter::onChildAdded(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.onChildAdded(View.fromCppPointer(childView));
-  } // onChildRemoved(KDDockWidgets::View * childView)
+  } // onChildRemoved(KDDockWidgets::Core::View * childView)
 
   onChildRemoved(View? childView) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -385,7 +385,7 @@ class View_flutter extends View {
         View.s_dartInstanceByCppPtr[thisCpp.address] as View_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for View_flutter::onChildRemoved(KDDockWidgets::View * childView)! (${thisCpp.address})");
+          "Dart instance not found for View_flutter::onChildRemoved(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.onChildRemoved(View.fromCppPointer(childView));
@@ -565,7 +565,7 @@ class View_flutter extends View {
         View.s_dartInstanceByCppPtr[thisCpp.address] as View_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for View_flutter::setParent(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for View_flutter::setParent(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParent(View.fromCppPointer(parent));

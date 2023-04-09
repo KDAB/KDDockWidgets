@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-Group_flutter_wrapper::Group_flutter_wrapper(KDDockWidgets::Core::Group *controller, KDDockWidgets::View *parent)
+Group_flutter_wrapper::Group_flutter_wrapper(KDDockWidgets::Core::Group *controller, KDDockWidgets::Core::View *parent)
     : ::KDDockWidgets::Views::Group_flutter(controller, parent)
 {
 }
@@ -256,7 +256,7 @@ QPoint Group_flutter_wrapper::mapFromGlobal_nocallback(QPoint globalPt) const
 {
     return ::KDDockWidgets::Views::Group_flutter::mapFromGlobal(globalPt);
 }
-QPoint Group_flutter_wrapper::mapTo(KDDockWidgets::View *parent, QPoint pos) const
+QPoint Group_flutter_wrapper::mapTo(KDDockWidgets::Core::View *parent, QPoint pos) const
 {
     if (m_mapToCallback) {
         const void *thisPtr = this;
@@ -265,7 +265,7 @@ QPoint Group_flutter_wrapper::mapTo(KDDockWidgets::View *parent, QPoint pos) con
         return ::KDDockWidgets::Views::Group_flutter::mapTo(parent, pos);
     }
 }
-QPoint Group_flutter_wrapper::mapTo_nocallback(KDDockWidgets::View *parent, QPoint pos) const
+QPoint Group_flutter_wrapper::mapTo_nocallback(KDDockWidgets::Core::View *parent, QPoint pos) const
 {
     return ::KDDockWidgets::Views::Group_flutter::mapTo(parent, pos);
 }
@@ -386,7 +386,7 @@ QString Group_flutter_wrapper::objectName_nocallback() const
 {
     return ::KDDockWidgets::Views::Group_flutter::objectName();
 }
-void Group_flutter_wrapper::onChildAdded(KDDockWidgets::View *childView)
+void Group_flutter_wrapper::onChildAdded(KDDockWidgets::Core::View *childView)
 {
     if (m_onChildAddedCallback) {
         const void *thisPtr = this;
@@ -395,11 +395,11 @@ void Group_flutter_wrapper::onChildAdded(KDDockWidgets::View *childView)
         ::KDDockWidgets::Views::Group_flutter::onChildAdded(childView);
     }
 }
-void Group_flutter_wrapper::onChildAdded_nocallback(KDDockWidgets::View *childView)
+void Group_flutter_wrapper::onChildAdded_nocallback(KDDockWidgets::Core::View *childView)
 {
     ::KDDockWidgets::Views::Group_flutter::onChildAdded(childView);
 }
-void Group_flutter_wrapper::onChildRemoved(KDDockWidgets::View *childView)
+void Group_flutter_wrapper::onChildRemoved(KDDockWidgets::Core::View *childView)
 {
     if (m_onChildRemovedCallback) {
         const void *thisPtr = this;
@@ -408,7 +408,7 @@ void Group_flutter_wrapper::onChildRemoved(KDDockWidgets::View *childView)
         ::KDDockWidgets::Views::Group_flutter::onChildRemoved(childView);
     }
 }
-void Group_flutter_wrapper::onChildRemoved_nocallback(KDDockWidgets::View *childView)
+void Group_flutter_wrapper::onChildRemoved_nocallback(KDDockWidgets::Core::View *childView)
 {
     ::KDDockWidgets::Views::Group_flutter::onChildRemoved(childView);
 }
@@ -594,7 +594,7 @@ void Group_flutter_wrapper::setObjectName_nocallback(const QString &name)
 {
     ::KDDockWidgets::Views::Group_flutter::setObjectName(name);
 }
-void Group_flutter_wrapper::setParent(KDDockWidgets::View *parent)
+void Group_flutter_wrapper::setParent(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentCallback) {
         const void *thisPtr = this;
@@ -603,7 +603,7 @@ void Group_flutter_wrapper::setParent(KDDockWidgets::View *parent)
         ::KDDockWidgets::Views::Group_flutter::setParent(parent);
     }
 }
-void Group_flutter_wrapper::setParent_nocallback(KDDockWidgets::View *parent)
+void Group_flutter_wrapper::setParent_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Views::Group_flutter::setParent(parent);
 }
@@ -784,7 +784,7 @@ void c_KDDockWidgets__Views__Group_flutter_Finalizer(void *, void *cppObj, void 
 void *c_KDDockWidgets__Views__Group_flutter__constructor_Group_View(void *controller_, void *parent_)
 {
     auto controller = reinterpret_cast<KDDockWidgets::Core::Group *>(controller_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper(controller, parent);
     return reinterpret_cast<void *>(ptr);
 }
@@ -880,10 +880,10 @@ void *c_KDDockWidgets__Views__Group_flutter__mapFromGlobal_QPoint(void *thisObj,
     auto &globalPt = *reinterpret_cast<QPoint *>(globalPt_);
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(globalPt);} else {    return targetPtr->mapFromGlobal(globalPt);} }() };
 }
-// mapTo(KDDockWidgets::View * parent, QPoint pos) const
+// mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const
 void *c_KDDockWidgets__Views__Group_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     assert(pos_);
     auto &pos = *reinterpret_cast<QPoint *>(pos_);
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(parent,pos);} else {    return targetPtr->mapTo(parent,pos);} }() };
@@ -935,16 +935,16 @@ void *c_KDDockWidgets__Views__Group_flutter__objectName(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->objectName_nocallback();} else {    return targetPtr->objectName();} }() };
 }
-// onChildAdded(KDDockWidgets::View * childView)
+// onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__Views__Group_flutter__onChildAdded_View(void *thisObj, void *childView_)
 {
-    auto childView = reinterpret_cast<KDDockWidgets::View *>(childView_);
+    auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildAdded_nocallback(childView);} else {    return targetPtr->onChildAdded(childView);} }();
 }
-// onChildRemoved(KDDockWidgets::View * childView)
+// onChildRemoved(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__Views__Group_flutter__onChildRemoved_View(void *thisObj, void *childView_)
 {
-    auto childView = reinterpret_cast<KDDockWidgets::View *>(childView_);
+    auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildRemoved_nocallback(childView);} else {    return targetPtr->onChildRemoved(childView);} }();
 }
 // onResize(int w, int h)
@@ -1024,10 +1024,10 @@ void c_KDDockWidgets__Views__Group_flutter__setObjectName_QString(void *thisObj,
     const auto name = QString::fromUtf8(name_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setObjectName_nocallback(name);} else {    return targetPtr->setObjectName(name);} }();
 }
-// setParent(KDDockWidgets::View * parent)
+// setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Views__Group_flutter__setParent_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Group_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setParent_nocallback(parent);} else {    return targetPtr->setParent(parent);} }();
 }
 // setSize(int w, int h)

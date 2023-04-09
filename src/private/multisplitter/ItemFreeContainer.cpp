@@ -14,12 +14,12 @@
 
 using namespace Layouting;
 
-ItemFreeContainer::ItemFreeContainer(KDDockWidgets::View *hostWidget, ItemContainer *parent)
+ItemFreeContainer::ItemFreeContainer(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent)
     : ItemContainer(hostWidget, parent)
 {
 }
 
-ItemFreeContainer::ItemFreeContainer(KDDockWidgets::View *hostWidget)
+ItemFreeContainer::ItemFreeContainer(KDDockWidgets::Core::View *hostWidget)
     : ItemContainer(hostWidget)
 {
 }

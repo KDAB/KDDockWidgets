@@ -46,7 +46,7 @@ KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 {
     if (m_createDockWidgetCallback) {
         const void *thisPtr = this;
@@ -56,12 +56,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createDockWidget(const QString &unique
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createDropArea(KDDockWidgets::Core::DropArea *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createDropArea(KDDockWidgets::Core::DropArea *arg__1, KDDockWidgets::Core::View *parent) const
 {
     if (m_createDropAreaCallback) {
         const void *thisPtr = this;
@@ -71,12 +71,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createDropArea(KDDockWidgets::Core::Dr
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createDropArea_nocallback(KDDockWidgets::Core::DropArea *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createDropArea_nocallback(KDDockWidgets::Core::DropArea *arg__1, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createFloatingWindow(KDDockWidgets::Core::FloatingWindow *controller, KDDockWidgets::Core::MainWindow *parent, Qt::WindowFlags windowFlags) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createFloatingWindow(KDDockWidgets::Core::FloatingWindow *controller, KDDockWidgets::Core::MainWindow *parent, Qt::WindowFlags windowFlags) const
 {
     if (m_createFloatingWindowCallback) {
         const void *thisPtr = this;
@@ -86,12 +86,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createFloatingWindow(KDDockWidgets::Co
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createFloatingWindow_nocallback(KDDockWidgets::Core::FloatingWindow *controller, KDDockWidgets::Core::MainWindow *parent, Qt::WindowFlags windowFlags) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createFloatingWindow_nocallback(KDDockWidgets::Core::FloatingWindow *controller, KDDockWidgets::Core::MainWindow *parent, Qt::WindowFlags windowFlags) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createGroup(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createGroup(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::Core::View *parent) const
 {
     if (m_createGroupCallback) {
         const void *thisPtr = this;
@@ -101,12 +101,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createGroup(KDDockWidgets::Core::Group
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createGroup_nocallback(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createGroup_nocallback(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createRubberBand(KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createRubberBand(KDDockWidgets::Core::View *parent) const
 {
     if (m_createRubberBandCallback) {
         const void *thisPtr = this;
@@ -116,12 +116,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createRubberBand(KDDockWidgets::View *
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createRubberBand_nocallback(KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createRubberBand_nocallback(KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createSeparator(KDDockWidgets::Core::Separator *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createSeparator(KDDockWidgets::Core::Separator *arg__1, KDDockWidgets::Core::View *parent) const
 {
     if (m_createSeparatorCallback) {
         const void *thisPtr = this;
@@ -131,12 +131,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createSeparator(KDDockWidgets::Core::S
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createSeparator_nocallback(KDDockWidgets::Core::Separator *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createSeparator_nocallback(KDDockWidgets::Core::Separator *arg__1, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createSideBar(KDDockWidgets::Core::SideBar *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createSideBar(KDDockWidgets::Core::SideBar *arg__1, KDDockWidgets::Core::View *parent) const
 {
     if (m_createSideBarCallback) {
         const void *thisPtr = this;
@@ -146,12 +146,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createSideBar(KDDockWidgets::Core::Sid
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createSideBar_nocallback(KDDockWidgets::Core::SideBar *arg__1, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createSideBar_nocallback(KDDockWidgets::Core::SideBar *arg__1, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createStack(KDDockWidgets::Core::Stack *stack, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createStack(KDDockWidgets::Core::Stack *stack, KDDockWidgets::Core::View *parent) const
 {
     if (m_createStackCallback) {
         const void *thisPtr = this;
@@ -161,12 +161,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createStack(KDDockWidgets::Core::Stack
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createStack_nocallback(KDDockWidgets::Core::Stack *stack, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createStack_nocallback(KDDockWidgets::Core::Stack *stack, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createTabBar(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createTabBar(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::Core::View *parent) const
 {
     if (m_createTabBarCallback) {
         const void *thisPtr = this;
@@ -176,12 +176,12 @@ KDDockWidgets::View *ViewFactory_wrapper::createTabBar(KDDockWidgets::Core::TabB
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createTabBar_nocallback(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createTabBar_nocallback(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::View *ViewFactory_wrapper::createTitleBar(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createTitleBar(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent) const
 {
     if (m_createTitleBarCallback) {
         const void *thisPtr = this;
@@ -191,7 +191,7 @@ KDDockWidgets::View *ViewFactory_wrapper::createTitleBar(KDDockWidgets::Core::Ti
         return {};
     }
 }
-KDDockWidgets::View *ViewFactory_wrapper::createTitleBar_nocallback(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::View *parent) const
+KDDockWidgets::Core::View *ViewFactory_wrapper::createTitleBar_nocallback(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -237,11 +237,11 @@ void *c_KDDockWidgets__ViewFactory__createDockWidget_QString_DockWidgetOptions_L
     auto layoutSaverOptions = static_cast<QFlags<KDDockWidgets::LayoutSaverOption>>(layoutSaverOptions_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDockWidget_nocallback(uniqueName,options,layoutSaverOptions,static_cast<Qt::WindowFlags>(windowFlags));} else {    return targetPtr->createDockWidget(uniqueName,options,layoutSaverOptions,static_cast<Qt::WindowFlags>(windowFlags));} }();
 }
-// createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::View * parent) const
+// createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DropArea *>(arg__1_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createDropArea_nocallback(arg__1,parent);} else {    return targetPtr->createDropArea(arg__1,parent);} }();
 }
 // createFloatingWindow(KDDockWidgets::Core::FloatingWindow * controller, KDDockWidgets::Core::MainWindow * parent, Qt::WindowFlags windowFlags) const
@@ -251,52 +251,52 @@ void *c_KDDockWidgets__ViewFactory__createFloatingWindow_FloatingWindow_MainWind
     auto parent = reinterpret_cast<KDDockWidgets::Core::MainWindow *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createFloatingWindow_nocallback(controller,parent,static_cast<Qt::WindowFlags>(windowFlags));} else {    return targetPtr->createFloatingWindow(controller,parent,static_cast<Qt::WindowFlags>(windowFlags));} }();
 }
-// createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::View * parent) const
+// createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createGroup_nocallback(arg__1,parent);} else {    return targetPtr->createGroup(arg__1,parent);} }();
 }
-// createRubberBand(KDDockWidgets::View * parent) const
+// createRubberBand(KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createRubberBand_nocallback(parent);} else {    return targetPtr->createRubberBand(parent);} }();
 }
-// createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::View * parent) const
+// createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createSeparator_Separator_View(void *thisObj, void *arg__1_, void *parent_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Separator *>(arg__1_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createSeparator_nocallback(arg__1,parent);} else {    return targetPtr->createSeparator(arg__1,parent);} }();
 }
-// createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::View * parent) const
+// createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createSideBar_SideBar_View(void *thisObj, void *arg__1_, void *parent_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::SideBar *>(arg__1_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createSideBar_nocallback(arg__1,parent);} else {    return targetPtr->createSideBar(arg__1,parent);} }();
 }
-// createStack(KDDockWidgets::Core::Stack * stack, KDDockWidgets::View * parent) const
+// createStack(KDDockWidgets::Core::Stack * stack, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createStack_Stack_View(void *thisObj, void *stack_, void *parent_)
 {
     auto stack = reinterpret_cast<KDDockWidgets::Core::Stack *>(stack_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createStack_nocallback(stack,parent);} else {    return targetPtr->createStack(stack,parent);} }();
 }
-// createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::View * parent) const
+// createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_)
 {
     auto tabBar = reinterpret_cast<KDDockWidgets::Core::TabBar *>(tabBar_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createTabBar_nocallback(tabBar,parent);} else {    return targetPtr->createTabBar(tabBar,parent);} }();
 }
-// createTitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::View * parent) const
+// createTitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__ViewFactory__createTitleBar_TitleBar_View(void *thisObj, void *controller_, void *parent_)
 {
     auto controller = reinterpret_cast<KDDockWidgets::Core::TitleBar *>(controller_);
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createTitleBar_nocallback(controller,parent);} else {    return targetPtr->createTitleBar(controller,parent);} }();
 }
 // tr(const char * s, const char * c, int n)

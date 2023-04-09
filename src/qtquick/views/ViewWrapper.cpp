@@ -147,7 +147,7 @@ void ViewWrapper_qtquick::setGeometry(QRect rect)
     ViewWrapper_qtquick::move(rect.topLeft().x(), rect.topLeft().y());
 }
 
-std::shared_ptr<View> ViewWrapper_qtquick::childViewAt(QPoint p) const
+std::shared_ptr<Core::View> ViewWrapper_qtquick::childViewAt(QPoint p) const
 {
     auto child = m_item->childAt(p.x(), p.y());
     return child ? View_qtquick::asQQuickWrapper(child) : nullptr;
@@ -300,7 +300,7 @@ bool ViewWrapper_qtquick::is(Type t) const
     return false;
 }
 
-std::shared_ptr<View> ViewWrapper_qtquick::rootView() const
+std::shared_ptr<Core::View> ViewWrapper_qtquick::rootView() const
 {
     if (Core::Window::Ptr window = this->window())
         return window->rootView();
@@ -309,7 +309,7 @@ std::shared_ptr<View> ViewWrapper_qtquick::rootView() const
     return {};
 }
 
-std::shared_ptr<View> ViewWrapper_qtquick::parentView() const
+std::shared_ptr<Core::View> ViewWrapper_qtquick::parentView() const
 {
     return View_qtquick::parentViewFor(m_item);
 }
@@ -411,7 +411,7 @@ QSize ViewWrapper_qtquick::minSize() const
     }
 }
 
-QVector<std::shared_ptr<View>> ViewWrapper_qtquick::childViews() const
+QVector<std::shared_ptr<Core::View>> ViewWrapper_qtquick::childViews() const
 {
     QVector<std::shared_ptr<View>> result;
     const auto childItems = m_item->childItems();
@@ -440,12 +440,12 @@ bool ViewWrapper_qtquick::close()
     return View_qtquick::close(m_item);
 }
 
-View *ViewWrapper_qtquick::unwrap()
+Core::View *ViewWrapper_qtquick::unwrap()
 {
     return qobject_cast<View_qtquick *>(m_item);
 }
 
-const View *ViewWrapper_qtquick::unwrap() const
+const Core::View *ViewWrapper_qtquick::unwrap() const
 {
     return qobject_cast<const View_qtquick *>(m_item);
 }
@@ -467,13 +467,13 @@ SizePolicy ViewWrapper_qtquick::horizontalSizePolicy() const
 }
 
 /*static*/
-std::shared_ptr<View> ViewWrapper_qtquick::create(QObject *item)
+std::shared_ptr<Core::View> ViewWrapper_qtquick::create(QObject *item)
 {
     return create(qobject_cast<QQuickItem *>(item));
 }
 
 /*static*/
-std::shared_ptr<View> ViewWrapper_qtquick::create(QQuickItem *item)
+std::shared_ptr<Core::View> ViewWrapper_qtquick::create(QQuickItem *item)
 {
     if (!item)
         return {};

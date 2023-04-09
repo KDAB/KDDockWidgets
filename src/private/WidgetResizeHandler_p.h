@@ -109,7 +109,7 @@ public:
      * sidebar overlay)
      * @param target The target widget that will be resized. Also acts as parent QObject.
      */
-    explicit WidgetResizeHandler(EventFilterMode, WindowMode, View *target);
+    explicit WidgetResizeHandler(EventFilterMode, WindowMode, Core::View *target);
     ~WidgetResizeHandler() override;
 
     /**
@@ -152,15 +152,15 @@ public:
 
 private:
     // EventFilterInterface:
-    bool onMouseEvent(View *, MouseEvent *) override;
-    void setTarget(View *w);
+    bool onMouseEvent(Core::View *, MouseEvent *) override;
+    void setTarget(Core::View *w);
     bool mouseMoveEvent(MouseEvent *);
     void updateCursor(CursorPosition);
     void setMouseCursor(Qt::CursorShape);
     void restoreMouseCursor();
     CursorPosition cursorPosition(QPoint) const;
-    View *mTarget = nullptr;
-    ViewGuard mTargetGuard = nullptr;
+    Core::View *mTarget = nullptr;
+    Core::ViewGuard mTargetGuard = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
     bool m_resizingInProgress = false;

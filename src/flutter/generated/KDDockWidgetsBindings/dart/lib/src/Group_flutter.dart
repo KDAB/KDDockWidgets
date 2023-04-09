@@ -26,7 +26,7 @@ class Group_flutter extends View_flutter {
       if (instance != null) return instance as Group_flutter;
     }
     return Group_flutter.fromCppPointer(cppPointer, needsAutoDelete);
-  } //Group_flutter(KDDockWidgets::Core::Group * controller, KDDockWidgets::View * parent)
+  } //Group_flutter(KDDockWidgets::Core::Group * controller, KDDockWidgets::Core::View * parent)
   Group_flutter(Group? controller, {required View? parent}) : super.init() {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
@@ -271,7 +271,7 @@ class Group_flutter extends View_flutter {
         View.s_dartInstanceByCppPtr[thisCpp.address] as Group_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group_flutter::mapTo(KDDockWidgets::View * parent, QPoint pos) const! (${thisCpp.address})");
+          "Dart instance not found for Group_flutter::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.mapTo(
@@ -402,7 +402,7 @@ class Group_flutter extends View_flutter {
         View.s_dartInstanceByCppPtr[thisCpp.address] as Group_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group_flutter::onChildAdded(KDDockWidgets::View * childView)! (${thisCpp.address})");
+          "Dart instance not found for Group_flutter::onChildAdded(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.onChildAdded(View.fromCppPointer(childView));
@@ -414,7 +414,7 @@ class Group_flutter extends View_flutter {
         View.s_dartInstanceByCppPtr[thisCpp.address] as Group_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group_flutter::onChildRemoved(KDDockWidgets::View * childView)! (${thisCpp.address})");
+          "Dart instance not found for Group_flutter::onChildRemoved(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.onChildRemoved(View.fromCppPointer(childView));
@@ -586,7 +586,7 @@ class Group_flutter extends View_flutter {
         View.s_dartInstanceByCppPtr[thisCpp.address] as Group_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group_flutter::setParent(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Group_flutter::setParent(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParent(View.fromCppPointer(parent));

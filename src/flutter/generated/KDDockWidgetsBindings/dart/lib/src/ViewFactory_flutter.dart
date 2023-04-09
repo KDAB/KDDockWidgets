@@ -79,7 +79,7 @@ class ViewFactory_flutter extends ViewFactory {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory_flutter::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory_flutter::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createDropArea(
@@ -112,7 +112,7 @@ class ViewFactory_flutter extends ViewFactory {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory_flutter::createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory_flutter::createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createGroup(Group.fromCppPointer(arg__1),
@@ -126,7 +126,7 @@ class ViewFactory_flutter extends ViewFactory {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory_flutter::createRubberBand(KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory_flutter::createRubberBand(KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createRubberBand(View.fromCppPointer(parent));
@@ -141,7 +141,7 @@ class ViewFactory_flutter extends ViewFactory {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory_flutter::createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory_flutter::createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createSeparator(
@@ -156,7 +156,7 @@ class ViewFactory_flutter extends ViewFactory {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory_flutter::createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory_flutter::createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createSideBar(
@@ -170,7 +170,7 @@ class ViewFactory_flutter extends ViewFactory {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory_flutter::createStack(KDDockWidgets::Core::Stack * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory_flutter::createStack(KDDockWidgets::Core::Stack * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createStack(
@@ -184,7 +184,7 @@ class ViewFactory_flutter extends ViewFactory {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory_flutter::createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory_flutter::createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createTabBar(TabBar.fromCppPointer(tabBar),
@@ -198,7 +198,7 @@ class ViewFactory_flutter extends ViewFactory {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory_flutter::createTitleBar(KDDockWidgets::Core::TitleBar * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory_flutter::createTitleBar(KDDockWidgets::Core::TitleBar * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createTitleBar(

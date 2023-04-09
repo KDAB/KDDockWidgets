@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-Controller_wrapper::Controller_wrapper(KDDockWidgets::Type type, KDDockWidgets::View *arg__2)
+Controller_wrapper::Controller_wrapper(KDDockWidgets::Type type, KDDockWidgets::Core::View *arg__2)
     : ::KDDockWidgets::Controller(type, arg__2)
 {
 }
@@ -55,7 +55,7 @@ QPoint Controller_wrapper::mapToGlobal(QPoint arg__1) const
 {
     return ::KDDockWidgets::Controller::mapToGlobal(arg__1);
 }
-void Controller_wrapper::parentViewChanged(KDDockWidgets::View *parent)
+void Controller_wrapper::parentViewChanged(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Controller::parentViewChanged(parent);
 }
@@ -67,11 +67,11 @@ QRect Controller_wrapper::rect() const
 {
     return ::KDDockWidgets::Controller::rect();
 }
-void Controller_wrapper::setParentView(KDDockWidgets::View *parent)
+void Controller_wrapper::setParentView(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Controller::setParentView(parent);
 }
-void Controller_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void Controller_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -80,7 +80,7 @@ void Controller_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Controller::setParentView_impl(parent);
     }
 }
-void Controller_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void Controller_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Controller::setParentView_impl(parent);
 }
@@ -104,7 +104,7 @@ KDDockWidgets::Type Controller_wrapper::type() const
 {
     return ::KDDockWidgets::Controller::type();
 }
-KDDockWidgets::View *Controller_wrapper::view() const
+KDDockWidgets::Core::View *Controller_wrapper::view() const
 {
     return ::KDDockWidgets::Controller::view();
 }
@@ -144,7 +144,7 @@ void c_KDDockWidgets__Controller_Finalizer(void *, void *cppObj, void *)
 }
 void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_)
 {
-    auto arg__2 = reinterpret_cast<KDDockWidgets::View *>(arg__2_);
+    auto arg__2 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__2_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Controller_wrapper(static_cast<KDDockWidgets::Type>(type), arg__2);
     return reinterpret_cast<void *>(ptr);
 }
@@ -180,10 +180,10 @@ void *c_KDDockWidgets__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapToGlobal(arg__1) };
 }
-// parentViewChanged(KDDockWidgets::View * parent)
+// parentViewChanged(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controller__parentViewChanged_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromPtr(thisObj)->parentViewChanged(parent);
 }
 // pos() const
@@ -196,16 +196,16 @@ void *c_KDDockWidgets__Controller__rect(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->rect() };
 }
-// setParentView(KDDockWidgets::View * parent)
+// setParentView(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controller__setParentView_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromPtr(thisObj)->setParentView(parent);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controller__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setVisible(bool arg__1)

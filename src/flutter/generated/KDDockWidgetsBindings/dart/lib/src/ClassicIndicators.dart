@@ -145,7 +145,7 @@ class ClassicIndicators extends DropIndicatorOverlay {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ClassicIndicators::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for ClassicIndicators::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

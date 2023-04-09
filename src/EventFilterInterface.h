@@ -19,9 +19,8 @@ namespace KDDockWidgets {
 
 namespace Core {
 class Window;
-}
-
 class View;
+}
 
 class EventFilterInterface
 {
@@ -35,25 +34,25 @@ public:
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonPress(View *, MouseEvent *)
+    virtual bool onMouseButtonPress(Core::View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonRelease(View *, MouseEvent *)
+    virtual bool onMouseButtonRelease(Core::View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonMove(View *, MouseEvent *)
+    virtual bool onMouseButtonMove(Core::View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse double click event
-    virtual bool onMouseDoubleClick(View *, MouseEvent *)
+    virtual bool onMouseDoubleClick(Core::View *, MouseEvent *)
     {
         return false;
     }
@@ -62,19 +61,19 @@ public:
     /// receives all mouse event types, if you return true here then the specialized counterparts
     /// won't be called Example, if true is returned here for a mouse press, then
     /// onMouseButtonPress() won't be called
-    virtual bool onMouseEvent(View *, MouseEvent *)
+    virtual bool onMouseEvent(Core::View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle drag enter, drag leave, drag move and drop events
-    virtual bool onDnDEvent(View *, Event *)
+    virtual bool onDnDEvent(Core::View *, Event *)
     {
         return false;
     }
 
     /// @brief Override to handle a move event
-    virtual bool onMoveEvent(View *)
+    virtual bool onMoveEvent(Core::View *)
     {
         return false;
     }

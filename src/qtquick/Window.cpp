@@ -23,7 +23,7 @@ Window::~Window()
 {
 }
 
-inline View *topMostKDDWView(QQuickItem *parent)
+inline Core::View *topMostKDDWView(QQuickItem *parent)
 {
     if (!parent)
         return {};
@@ -40,11 +40,11 @@ inline View *topMostKDDWView(QQuickItem *parent)
     return nullptr;
 }
 
-std::shared_ptr<View> Window::rootView() const
+std::shared_ptr<Core::View> Window::rootView() const
 {
     if (auto quickwindow = qobject_cast<QQuickWindow *>(m_window)) {
         auto contentItem = quickwindow->contentItem();
-        if (View *view = topMostKDDWView(contentItem)) {
+        if (Core::View *view = topMostKDDWView(contentItem)) {
             // This block is for retrocompatibility with 1.x. For QtQuick the topmost "widget" is a
             // KDDW known widget and not any arbitrary user QtQuickItem.
             // TODOm3: I'd like to change it so it's normalized.

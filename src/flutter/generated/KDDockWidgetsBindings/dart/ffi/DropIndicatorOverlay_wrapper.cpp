@@ -135,7 +135,7 @@ void DropIndicatorOverlay_wrapper::setHoveredFrame(KDDockWidgets::Core::Group *a
 {
     ::KDDockWidgets::Core::DropIndicatorOverlay::setHoveredFrame(arg__1);
 }
-void DropIndicatorOverlay_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void DropIndicatorOverlay_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -144,7 +144,7 @@ void DropIndicatorOverlay_wrapper::setParentView_impl(KDDockWidgets::View *paren
         ::KDDockWidgets::Core::DropIndicatorOverlay::setParentView_impl(parent);
     }
 }
-void DropIndicatorOverlay_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void DropIndicatorOverlay_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::DropIndicatorOverlay::setParentView_impl(parent);
 }
@@ -280,10 +280,10 @@ void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setHoveredFrame_Group(v
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
     fromPtr(thisObj)->setHoveredFrame(arg__1);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__DropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setWindowBeingDragged(bool arg__1)

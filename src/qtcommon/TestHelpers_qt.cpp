@@ -154,12 +154,12 @@ bool Platform_qt::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout)
     return filter.m_got;
 }
 
-bool Platform_qt::tests_waitForEvent(View *view, QEvent::Type type, int timeout) const
+bool Platform_qt::tests_waitForEvent(Core::View *view, QEvent::Type type, int timeout) const
 {
     return tests_waitForEvent(Views::View_qt::asQObject(view), type, timeout);
 }
 
-bool Platform_qt::tests_waitForResize(View *view, int timeout) const
+bool Platform_qt::tests_waitForResize(Core::View *view, int timeout) const
 {
     return tests_waitForEvent(Views::View_qt::asQObject(view), QEvent::Resize, timeout);
 }
@@ -176,7 +176,7 @@ bool Platform_qt::tests_waitForEvent(std::shared_ptr<Core::Window> window, QEven
     return tests_waitForEvent(windowqt->qtWindow(), type, timeout);
 }
 
-bool Platform_qt::tests_waitForDeleted(View *view, int timeout) const
+bool Platform_qt::tests_waitForDeleted(Core::View *view, int timeout) const
 {
     QObject *o = view ? Views::View_qt::asQObject(view) : nullptr;
     if (!o)
@@ -214,7 +214,7 @@ bool Platform_qt::tests_waitForDeleted(QObject *o, int timeout) const
     return wasDeleted;
 }
 
-void Platform_qt::tests_doubleClickOn(QPoint globalPos, View *receiver)
+void Platform_qt::tests_doubleClickOn(QPoint globalPos, Core::View *receiver)
 {
     QCursor::setPos(globalPos);
     tests_pressOn(globalPos, receiver); // double-click involves an initial press

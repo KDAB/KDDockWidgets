@@ -368,7 +368,7 @@ void View_qtquick::setSize(int w, int h)
     QQuickItem::setSize(QSizeF(w, h));
 }
 
-std::shared_ptr<View> View_qtquick::rootView() const
+std::shared_ptr<Core::View> View_qtquick::rootView() const
 {
     if (Core::Window::Ptr window = View_qtquick::window())
         return window->rootView();
@@ -707,14 +707,14 @@ std::shared_ptr<Core::Window> View_qtquick::window() const
     return {};
 }
 
-std::shared_ptr<View> View_qtquick::childViewAt(QPoint p) const
+std::shared_ptr<Core::View> View_qtquick::childViewAt(QPoint p) const
 {
     auto child = QQuickItem::childAt(p.x(), p.y());
     return child ? asQQuickWrapper(child) : nullptr;
 }
 
 /*static*/
-std::shared_ptr<View> View_qtquick::parentViewFor(const QQuickItem *item)
+std::shared_ptr<Core::View> View_qtquick::parentViewFor(const QQuickItem *item)
 {
     auto p = item->parentItem();
     if (QQuickWindow *window = item->window()) {
@@ -728,17 +728,17 @@ std::shared_ptr<View> View_qtquick::parentViewFor(const QQuickItem *item)
 }
 
 /* static */
-std::shared_ptr<View> View_qtquick::asQQuickWrapper(QQuickItem *item)
+std::shared_ptr<Core::View> View_qtquick::asQQuickWrapper(QQuickItem *item)
 {
     return ViewWrapper_qtquick::create(item);
 }
 
-std::shared_ptr<View> View_qtquick::parentView() const
+std::shared_ptr<Core::View> View_qtquick::parentView() const
 {
     return parentViewFor(this);
 }
 
-std::shared_ptr<View> View_qtquick::asWrapper()
+std::shared_ptr<Core::View> View_qtquick::asWrapper()
 {
     return ViewWrapper_qtquick::create(this);
 }
@@ -808,7 +808,7 @@ void View_qtquick::setMouseTracking(bool enable)
     m_mouseTrackingEnabled = enable;
 }
 
-QVector<std::shared_ptr<View>> View_qtquick::childViews() const
+QVector<std::shared_ptr<Core::View>> View_qtquick::childViews() const
 {
     QVector<std::shared_ptr<View>> result;
     const auto childItems = QQuickItem::childItems();

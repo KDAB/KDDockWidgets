@@ -37,8 +37,8 @@ public:
     int numDockWidgets() const;
     bool onMouseDoubleClick(QPoint localPos);
     void setDocumentMode(bool arg__1);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setTabBarAutoHide(bool arg__1);
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
@@ -51,7 +51,7 @@ public:
     Callback_isPositionDraggable m_isPositionDraggableCallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
     typedef KDDockWidgets::Core::DockWidget *(*Callback_singleDockWidget)(void *);
     Callback_singleDockWidget m_singleDockWidgetCallback = nullptr;
@@ -78,7 +78,7 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Stack__numDockWid
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::Core::Stack::setDocumentMode(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__setDocumentMode_bool(void *thisObj, bool arg__1);
-// KDDockWidgets::Core::Stack::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::Stack::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Stack::setTabBarAutoHide(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Stack__setTabBarAutoHide_bool(void *thisObj, bool arg__1);

@@ -113,7 +113,7 @@ void Platform::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-View *Platform::tests_createView(Core::CreateViewOptions opts, View *parent)
+Core::View *Platform::tests_createView(Core::CreateViewOptions opts, Core::View *parent)
 {
     QWidget *parentWidget = Views::View_qt::asQWidget(parent);
 
@@ -124,7 +124,7 @@ View *Platform::tests_createView(Core::CreateViewOptions opts, View *parent)
     return newWidget;
 }
 
-View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, View *parent)
+Core::View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, Core::View *parent)
 {
     QWidget *parentWidget = Views::View_qt::asQWidget(parent);
 
@@ -135,7 +135,7 @@ View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, View *pa
     return newWidget;
 }
 
-View *Platform::tests_createNonClosableView(View *parent)
+Core::View *Platform::tests_createNonClosableView(Core::View *parent)
 {
     QWidget *parentWidget = Views::View_qt::asQWidget(parent);
     auto newWidget = new NonClosableTestView(parentWidget);
@@ -146,7 +146,7 @@ View *Platform::tests_createNonClosableView(View *parent)
 Core::MainWindow *Platform::createMainWindow(const QString &uniqueName,
                                              Core::CreateViewOptions opts,
                                              MainWindowOptions options,
-                                             View *parent,
+                                             Core::View *parent,
                                              Qt::WindowFlags flags) const
 {
     auto view = new qtwidgets::MainWindow(

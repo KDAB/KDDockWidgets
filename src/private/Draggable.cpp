@@ -18,6 +18,7 @@
 #include "kddockwidgets/core/FloatingWindow.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 class Draggable::Private
 {

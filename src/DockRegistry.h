@@ -246,13 +246,13 @@ private:
     friend class FocusScope;
     explicit DockRegistry(QObject *parent = nullptr);
     bool onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *);
-    void onFocusedViewChanged(std::shared_ptr<View> view);
+    void onFocusedViewChanged(std::shared_ptr<Core::View> view);
     void maybeDelete();
     void setFocusedDockWidget(Core::DockWidget *);
 
     // EventFilterInterface:
     bool onExposeEvent(std::shared_ptr<Core::Window>) override;
-    bool onMouseButtonPress(View *, MouseEvent *) override;
+    bool onMouseButtonPress(Core::View *, MouseEvent *) override;
 
     class Private;
     Private *const d;

@@ -26,7 +26,7 @@ class TabBar_flutter extends View_flutter {
       if (instance != null) return instance as TabBar_flutter;
     }
     return TabBar_flutter.fromCppPointer(cppPointer, needsAutoDelete);
-  } //TabBar_flutter(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::View * parent)
+  } //TabBar_flutter(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::Core::View * parent)
   TabBar_flutter(TabBar? controller, {required View? parent}) : super.init() {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
@@ -242,7 +242,7 @@ class TabBar_flutter extends View_flutter {
         View.s_dartInstanceByCppPtr[thisCpp.address] as TabBar_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for TabBar_flutter::mapTo(KDDockWidgets::View * parent, QPoint pos) const! (${thisCpp.address})");
+          "Dart instance not found for TabBar_flutter::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.mapTo(
@@ -373,7 +373,7 @@ class TabBar_flutter extends View_flutter {
         View.s_dartInstanceByCppPtr[thisCpp.address] as TabBar_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for TabBar_flutter::onChildAdded(KDDockWidgets::View * childView)! (${thisCpp.address})");
+          "Dart instance not found for TabBar_flutter::onChildAdded(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.onChildAdded(View.fromCppPointer(childView));
@@ -385,7 +385,7 @@ class TabBar_flutter extends View_flutter {
         View.s_dartInstanceByCppPtr[thisCpp.address] as TabBar_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for TabBar_flutter::onChildRemoved(KDDockWidgets::View * childView)! (${thisCpp.address})");
+          "Dart instance not found for TabBar_flutter::onChildRemoved(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.onChildRemoved(View.fromCppPointer(childView));
@@ -658,7 +658,7 @@ class TabBar_flutter extends View_flutter {
         View.s_dartInstanceByCppPtr[thisCpp.address] as TabBar_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for TabBar_flutter::setParent(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for TabBar_flutter::setParent(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParent(View.fromCppPointer(parent));

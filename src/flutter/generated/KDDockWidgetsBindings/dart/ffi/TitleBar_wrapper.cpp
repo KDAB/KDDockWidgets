@@ -177,7 +177,7 @@ void TitleBar_wrapper::setFloatButtonVisible(bool arg__1)
 {
     ::KDDockWidgets::Core::TitleBar::setFloatButtonVisible(arg__1);
 }
-void TitleBar_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void TitleBar_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -186,7 +186,7 @@ void TitleBar_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::TitleBar::setParentView_impl(parent);
     }
 }
-void TitleBar_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void TitleBar_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::TitleBar::setParentView_impl(parent);
 }
@@ -437,10 +437,10 @@ void c_KDDockWidgets__Controllers__TitleBar__setFloatButtonVisible_bool(void *th
 {
     fromPtr(thisObj)->setFloatButtonVisible(arg__1);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setTitle(const QString & title)

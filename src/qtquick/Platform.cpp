@@ -101,7 +101,7 @@ const char *Platform::name() const
     return "qtquick";
 }
 
-std::shared_ptr<View> Platform::qobjectAsView(QObject *obj) const
+std::shared_ptr<Core::View> Platform::qobjectAsView(QObject *obj) const
 {
     return Views::ViewWrapper_qtquick::create(obj);
 }
@@ -126,7 +126,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
     return {};
 }
 
-int Platform::screenNumberFor(View *view) const
+int Platform::screenNumberFor(Core::View *view) const
 {
     if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
@@ -136,7 +136,7 @@ int Platform::screenNumberFor(View *view) const
     return -1;
 }
 
-QSize Platform::screenSizeFor(View *view) const
+QSize Platform::screenSizeFor(Core::View *view) const
 {
     if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
@@ -183,7 +183,7 @@ ViewFactory *Platform::viewFactory() const
     return static_cast<ViewFactory *>(Config::self().viewFactory());
 }
 
-View *Platform::createView(Controller *controller, View *parent) const
+Core::View *Platform::createView(Controller *controller, Core::View *parent) const
 {
     return new Views::View_qtquick(controller, Type::None, Views::asQQuickItem(parent));
 }

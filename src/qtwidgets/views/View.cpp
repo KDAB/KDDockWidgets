@@ -118,7 +118,7 @@ void View_qtwidgets<T>::setMinimumSize(QSize sz)
 
 
 template<class T>
-std::shared_ptr<View> View_qtwidgets<T>::childViewAt(QPoint localPos) const
+std::shared_ptr<Core::View> View_qtwidgets<T>::childViewAt(QPoint localPos) const
 {
     if (QWidget *child = QWidget::childAt(localPos))
         return ViewWrapper_qtwidgets::create(child);
@@ -127,7 +127,7 @@ std::shared_ptr<View> View_qtwidgets<T>::childViewAt(QPoint localPos) const
 }
 
 template<class T>
-std::shared_ptr<View> View_qtwidgets<T>::rootView() const
+std::shared_ptr<Core::View> View_qtwidgets<T>::rootView() const
 {
     if (auto w = QWidget::window()) {
         return ViewWrapper_qtwidgets::create(w);
@@ -137,7 +137,7 @@ std::shared_ptr<View> View_qtwidgets<T>::rootView() const
 }
 
 template<class T>
-std::shared_ptr<View> View_qtwidgets<T>::parentView() const
+std::shared_ptr<Core::View> View_qtwidgets<T>::parentView() const
 {
     if (QWidget *p = QWidget::parentWidget()) {
         return ViewWrapper_qtwidgets::create(p);
@@ -147,14 +147,14 @@ std::shared_ptr<View> View_qtwidgets<T>::parentView() const
 }
 
 template<class T>
-std::shared_ptr<View> View_qtwidgets<T>::asWrapper()
+std::shared_ptr<Core::View> View_qtwidgets<T>::asWrapper()
 {
     return ViewWrapper_qtwidgets::create(this);
 }
 
 /* static */
 template<class T>
-QVector<std::shared_ptr<View>> View_qtwidgets<T>::childViewsFor(const QWidget *parent)
+QVector<std::shared_ptr<Core::View>> View_qtwidgets<T>::childViewsFor(const QWidget *parent)
 {
     QVector<std::shared_ptr<View>> result;
     const QObjectList children = parent->children();

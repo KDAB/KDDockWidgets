@@ -26,7 +26,7 @@ class DockWidget extends Controller {
       if (instance != null) return instance as DockWidget;
     }
     return DockWidget.fromCppPointer(cppPointer, needsAutoDelete);
-  } //DockWidget(KDDockWidgets::View * view, const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+  } //DockWidget(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
   DockWidget(View? view, String? uniqueName,
       {int options = 0, int layoutSaverOptions = 0})
       : super.init() {
@@ -439,7 +439,7 @@ class DockWidget extends Controller {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as DockWidget;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for DockWidget::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for DockWidget::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

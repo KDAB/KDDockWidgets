@@ -57,8 +57,8 @@ public:
     void numDockWidgetsChanged();
     void numFramesChanged();
     void scheduleDeleteLater();
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setSuggestedGeometry(QRect suggestedRect);
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
@@ -75,7 +75,7 @@ public:
     Callback_isMDI m_isMDICallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
     typedef KDDockWidgets::Core::DockWidget *(*Callback_singleDockWidget)(void *);
     Callback_singleDockWidget m_singleDockWidgetCallback = nullptr;
@@ -136,7 +136,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__numFramesChanged(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::scheduleDeleteLater()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__scheduleDeleteLater(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Core::FloatingWindow::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::setSuggestedGeometry(QRect suggestedRect)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__setSuggestedGeometry_QRect(void *thisObj, void *suggestedRect_);

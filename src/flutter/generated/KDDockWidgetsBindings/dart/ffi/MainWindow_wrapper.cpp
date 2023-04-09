@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-MainWindow_wrapper::MainWindow_wrapper(KDDockWidgets::View *view, const QString &uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
+MainWindow_wrapper::MainWindow_wrapper(KDDockWidgets::Core::View *view, const QString &uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
     : ::KDDockWidgets::Core::MainWindow(view, uniqueName, options)
 {
 }
@@ -119,7 +119,7 @@ void MainWindow_wrapper::setOverlayMargin(int margin)
 {
     ::KDDockWidgets::Core::MainWindow::setOverlayMargin(margin);
 }
-void MainWindow_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void MainWindow_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -128,7 +128,7 @@ void MainWindow_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::MainWindow::setParentView_impl(parent);
     }
 }
-void MainWindow_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void MainWindow_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::MainWindow::setParentView_impl(parent);
 }
@@ -176,7 +176,7 @@ void c_KDDockWidgets__Controllers__MainWindow_Finalizer(void *, void *cppObj, vo
 }
 void *c_KDDockWidgets__Controllers__MainWindow__constructor_View_QString_MainWindowOptions(void *view_, const char *uniqueName_, int options_)
 {
-    auto view = reinterpret_cast<KDDockWidgets::View *>(view_);
+    auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
     const auto uniqueName = QString::fromUtf8(uniqueName_);
     auto options = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(options_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::MainWindow_wrapper(view, uniqueName, options);
@@ -301,10 +301,10 @@ void c_KDDockWidgets__Controllers__MainWindow__setOverlayMargin_int(void *thisOb
 {
     fromPtr(thisObj)->setOverlayMargin(margin);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__MainWindow__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setUniqueName(const QString & uniqueName)

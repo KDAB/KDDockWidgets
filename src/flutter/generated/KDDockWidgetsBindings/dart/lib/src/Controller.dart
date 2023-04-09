@@ -26,7 +26,7 @@ class Controller extends QObject {
       if (instance != null) return instance as Controller;
     }
     return Controller.fromCppPointer(cppPointer, needsAutoDelete);
-  } //Controller(KDDockWidgets::Type type, KDDockWidgets::View * arg__2)
+  } //Controller(KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__2)
   Controller(int type, View? arg__2) : super.init() {
     final voidstar_Func_int_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_voidstar_FFI>>(
@@ -85,7 +85,7 @@ class Controller extends QObject {
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
     return QPoint.fromCppPointer(result, true);
-  } // parentViewChanged(KDDockWidgets::View * parent)
+  } // parentViewChanged(KDDockWidgets::Core::View * parent)
 
   parentViewChanged(View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -111,7 +111,7 @@ class Controller extends QObject {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
-  } // setParentView(KDDockWidgets::View * parent)
+  } // setParentView(KDDockWidgets::Core::View * parent)
 
   setParentView(View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -119,7 +119,7 @@ class Controller extends QObject {
             'c_KDDockWidgets__Controller__setParentView_View')
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
-  } // setParentView_impl(KDDockWidgets::View * parent)
+  } // setParentView_impl(KDDockWidgets::Core::View * parent)
 
   setParentView_impl(View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -135,7 +135,7 @@ class Controller extends QObject {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as Controller;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Controller::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Controller::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

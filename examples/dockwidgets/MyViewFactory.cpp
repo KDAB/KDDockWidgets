@@ -77,17 +77,17 @@ public:
 
 MySeparator::~MySeparator() = default;
 
-KDDockWidgets::View *
+KDDockWidgets::Core::View *
 CustomWidgetFactory::createTitleBar(KDDockWidgets::Core::TitleBar *controller,
-                                    KDDockWidgets::View *parent) const
+                                    KDDockWidgets::Core::View *parent) const
 {
     // Feel free to return MyTitleBar_CSS here instead, but just for education purposes!
     return new MyTitleBar(controller, parent);
 }
 
-KDDockWidgets::View *
+KDDockWidgets::Core::View *
 CustomWidgetFactory::createSeparator(KDDockWidgets::Core::Separator *controller,
-                                     KDDockWidgets::View *parent) const
+                                     KDDockWidgets::Core::View *parent) const
 {
     return new MySeparator(controller, parent);
 }

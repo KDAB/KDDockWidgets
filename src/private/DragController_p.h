@@ -95,8 +95,8 @@ public:
     bool isInClientDrag() const;
     bool isIdle() const;
 
-    void grabMouseFor(View *);
-    void releaseMouse(View *);
+    void grabMouseFor(Core::View *);
+    void releaseMouse(Core::View *);
 
     Core::FloatingWindow *floatingWindowBeingDragged() const;
 
@@ -135,18 +135,18 @@ private:
     friend class StateDraggingWayland;
 
     DragController(QObject * = nullptr);
-    std::shared_ptr<View> qtTopLevelUnderCursor() const;
-    Draggable *draggableForView(View *) const;
-    bool onDnDEvent(View *, Event *) override;
-    bool onMoveEvent(View *) override;
-    bool onMouseEvent(View *, MouseEvent *) override;
+    std::shared_ptr<Core::View> qtTopLevelUnderCursor() const;
+    Draggable *draggableForView(Core::View *) const;
+    bool onDnDEvent(Core::View *, Event *) override;
+    bool onMoveEvent(Core::View *) override;
+    bool onMouseEvent(Core::View *, MouseEvent *) override;
 
     QPoint m_pressPos;
     QPoint m_offset;
 
     QVector<Draggable *> m_draggables;
     Draggable *m_draggable = nullptr;
-    ViewGuard m_draggableGuard =
+    Core::ViewGuard m_draggableGuard =
         nullptr; // Just so we know if the draggable was destroyed for some reason
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;
     Core::DropArea *m_currentDropArea = nullptr;

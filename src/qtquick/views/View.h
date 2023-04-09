@@ -29,7 +29,7 @@ namespace KDDockWidgets::Views {
 
 class MouseEventRedirector;
 
-inline QQuickItem *asQQuickItem(View *view)
+inline QQuickItem *asQQuickItem(Core::View *view)
 {
     if (!view)
         return nullptr;
@@ -189,7 +189,7 @@ private:
     MouseEventRedirector *m_mouseEventRedirector = nullptr;
 };
 
-inline View_qtquick *asView_qtquick(View *view)
+inline View_qtquick *asView_qtquick(Core::View *view)
 {
     if (!view)
         return nullptr;

@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-Layout_wrapper::Layout_wrapper(KDDockWidgets::Type arg__1, KDDockWidgets::View *arg__2)
+Layout_wrapper::Layout_wrapper(KDDockWidgets::Type arg__1, KDDockWidgets::Core::View *arg__2)
     : ::KDDockWidgets::Core::Layout(arg__1, arg__2)
 {
 }
@@ -67,7 +67,7 @@ QList<KDDockWidgets::Core::Group *> Layout_wrapper::groups() const
 {
     return ::KDDockWidgets::Core::Layout::groups();
 }
-QList<KDDockWidgets::Core::Group *> Layout_wrapper::groupsFrom(KDDockWidgets::View *groupOrMultiSplitter) const
+QList<KDDockWidgets::Core::Group *> Layout_wrapper::groupsFrom(KDDockWidgets::Core::View *groupOrMultiSplitter) const
 {
     return ::KDDockWidgets::Core::Layout::groupsFrom(groupOrMultiSplitter);
 }
@@ -123,7 +123,7 @@ void Layout_wrapper::setLayoutSize(QSize arg__1)
 {
     ::KDDockWidgets::Core::Layout::setLayoutSize(arg__1);
 }
-void Layout_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void Layout_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -132,7 +132,7 @@ void Layout_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::Layout::setParentView_impl(parent);
     }
 }
-void Layout_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void Layout_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::Layout::setParentView_impl(parent);
 }
@@ -172,7 +172,7 @@ void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *
 }
 void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_)
 {
-    auto arg__2 = reinterpret_cast<KDDockWidgets::View *>(arg__2_);
+    auto arg__2 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__2_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Layout_wrapper(static_cast<KDDockWidgets::Type>(arg__1), arg__2);
     return reinterpret_cast<void *>(ptr);
 }
@@ -223,10 +223,10 @@ void *c_KDDockWidgets__Controllers__Layout__groups(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Core::Group *>> { fromPtr(thisObj)->groups() };
 }
-// groupsFrom(KDDockWidgets::View * groupOrMultiSplitter) const
+// groupsFrom(KDDockWidgets::Core::View * groupOrMultiSplitter) const
 void *c_KDDockWidgets__Controllers__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_)
 {
-    auto groupOrMultiSplitter = reinterpret_cast<KDDockWidgets::View *>(groupOrMultiSplitter_);
+    auto groupOrMultiSplitter = reinterpret_cast<KDDockWidgets::Core::View *>(groupOrMultiSplitter_);
     return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Core::Group *>> { fromWrapperPtr(thisObj)->groupsFrom(groupOrMultiSplitter) };
 }
 // isInMainWindow(bool honourNesting) const
@@ -302,10 +302,10 @@ void c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize(void *thisObj, vo
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromPtr(thisObj)->setLayoutSize(arg__1);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded) const

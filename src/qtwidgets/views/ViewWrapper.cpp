@@ -110,13 +110,13 @@ static Controller *controllerForWidget(QWidget *widget)
 }
 
 /*static*/
-std::shared_ptr<View> ViewWrapper_qtwidgets::create(QObject *widget)
+std::shared_ptr<Core::View> ViewWrapper_qtwidgets::create(QObject *widget)
 {
     return create(qobject_cast<QWidget *>(widget));
 }
 
 /*static*/
-std::shared_ptr<View> ViewWrapper_qtwidgets::create(QWidget *widget)
+std::shared_ptr<Core::View> ViewWrapper_qtwidgets::create(QWidget *widget)
 {
     if (!widget)
         return {};
@@ -253,26 +253,26 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     return false;
 }
 
-std::shared_ptr<View> ViewWrapper_qtwidgets::rootView() const
+std::shared_ptr<Core::View> ViewWrapper_qtwidgets::rootView() const
 {
     if (auto w = m_widget->window())
-        return std::shared_ptr<View>(new ViewWrapper_qtwidgets(w));
+        return std::shared_ptr<Core::View>(new ViewWrapper_qtwidgets(w));
 
     return {};
 }
 
-std::shared_ptr<View> ViewWrapper_qtwidgets::parentView() const
+std::shared_ptr<Core::View> ViewWrapper_qtwidgets::parentView() const
 {
     if (auto p = m_widget->parentWidget())
-        return std::shared_ptr<View>(new ViewWrapper_qtwidgets(p));
+        return std::shared_ptr<Core::View>(new ViewWrapper_qtwidgets(p));
 
     return {};
 }
 
-std::shared_ptr<View> ViewWrapper_qtwidgets::childViewAt(QPoint localPos) const
+std::shared_ptr<Core::View> ViewWrapper_qtwidgets::childViewAt(QPoint localPos) const
 {
     if (QWidget *child = m_widget->childAt(localPos))
-        return std::shared_ptr<View>(new ViewWrapper_qtwidgets(child));
+        return std::shared_ptr<Core::View>(new ViewWrapper_qtwidgets(child));
 
     return {};
 }
@@ -343,7 +343,7 @@ QSize ViewWrapper_qtwidgets::minSize() const
     return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
 }
 
-QVector<std::shared_ptr<View>> ViewWrapper_qtwidgets::childViews() const
+QVector<std::shared_ptr<Core::View>> ViewWrapper_qtwidgets::childViews() const
 {
     return qtwidgets::View_qtwidgets<QWidget>::childViewsFor(m_widget);
 }

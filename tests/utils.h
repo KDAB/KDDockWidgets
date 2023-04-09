@@ -115,7 +115,7 @@ createMainWindow(QSize sz = { 1000, 1000 },
 
 std::unique_ptr<Core::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
 
-Core::DockWidget *createDockWidget(const QString &name, View *guest,
+Core::DockWidget *createDockWidget(const QString &name, Core::View *guest,
                                    DockWidgetOptions options = {},
                                    LayoutSaverOptions layoutSaverOptions = {},
                                    bool show = true, const QString &affinityName = {});
@@ -127,11 +127,11 @@ void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
 
 
 void doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver);
-void pressOn(QPoint globalPos, View *receiver);
+void pressOn(QPoint globalPos, Core::View *receiver);
 void pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver);
-void releaseOn(QPoint globalPos, View *receiver);
-void clickOn(QPoint globalPos, View *receiver);
-void moveMouseTo(QPoint globalDest, View *receiver);
+void releaseOn(QPoint globalPos, Core::View *receiver);
+void clickOn(QPoint globalPos, Core::View *receiver);
+void moveMouseTo(QPoint globalDest, Core::View *receiver);
 
 inline Core::FloatingWindow *createFloatingWindow()
 {
@@ -141,9 +141,9 @@ inline Core::FloatingWindow *createFloatingWindow()
     return dock->d->morphIntoFloatingWindow();
 }
 
-inline View *draggableFor(View *view)
+inline Core::View *draggableFor(Core::View *view)
 {
-    View *draggable = nullptr;
+    Core::View *draggable = nullptr;
     if (auto dw = view->asDockWidgetController()) {
         if (auto group = dw->d->group())
             draggable = group->titleBar()->view();
@@ -167,7 +167,7 @@ inline View *draggableFor(View *view)
     return draggable;
 }
 
-inline void drag(View *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
+inline void drag(Core::View *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
                      | ButtonAction_Release)
 {
@@ -189,13 +189,13 @@ inline void drag(View *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
         releaseOn(globalDest, sourceWidget);
 }
 
-inline void drag(View *sourceView, QPoint globalDest,
+inline void drag(Core::View *sourceView, QPoint globalDest,
                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
                      | ButtonAction_Release)
 {
     Q_ASSERT(sourceView && sourceView->controller()->isVisible());
 
-    View *draggable = draggableFor(sourceView);
+    Core::View *draggable = draggableFor(sourceView);
 
     Q_ASSERT(draggable && draggable->controller()->isVisible());
     const QPoint pressGlobalPos = draggable->mapToGlobal(QPoint(15, 15));
@@ -207,7 +207,7 @@ inline void dragFloatingWindowTo(Core::FloatingWindow *fw, QPoint globalDest,
                                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
                                      | ButtonAction_Release)
 {
-    View *draggable = draggableFor(fw->view());
+    Core::View *draggable = draggableFor(fw->view());
     Q_ASSERT(draggable);
     Q_ASSERT(draggable->controller()->isVisible());
     drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);

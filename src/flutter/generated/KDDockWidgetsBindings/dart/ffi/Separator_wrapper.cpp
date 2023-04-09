@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-Separator_wrapper::Separator_wrapper(KDDockWidgets::View *host)
+Separator_wrapper::Separator_wrapper(KDDockWidgets::Core::View *host)
     : ::KDDockWidgets::Core::Separator(host)
 {
 }
@@ -75,7 +75,7 @@ void Separator_wrapper::setGeometry(int pos, int pos2, int length)
 {
     ::KDDockWidgets::Core::Separator::setGeometry(pos, pos2, length);
 }
-void Separator_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void Separator_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -84,7 +84,7 @@ void Separator_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::Separator::setParentView_impl(parent);
     }
 }
-void Separator_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void Separator_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::Separator::setParentView_impl(parent);
 }
@@ -108,7 +108,7 @@ void c_KDDockWidgets__Controllers__Separator_Finalizer(void *, void *cppObj, voi
 }
 void *c_KDDockWidgets__Controllers__Separator__constructor_View(void *host_)
 {
-    auto host = reinterpret_cast<KDDockWidgets::View *>(host_);
+    auto host = reinterpret_cast<KDDockWidgets::Core::View *>(host_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Separator_wrapper(host);
     return reinterpret_cast<void *>(ptr);
 }
@@ -171,10 +171,10 @@ void c_KDDockWidgets__Controllers__Separator__setGeometry_int_int_int(void *this
 {
     fromPtr(thisObj)->setGeometry(pos, pos2, length);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__Separator__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 void c_KDDockWidgets__Controllers__Separator__destructor(void *thisObj)

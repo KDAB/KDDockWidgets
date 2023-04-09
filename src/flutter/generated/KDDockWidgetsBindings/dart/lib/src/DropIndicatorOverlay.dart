@@ -243,7 +243,7 @@ class DropIndicatorOverlay extends Controller {
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as DropIndicatorOverlay;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for DropIndicatorOverlay::setParentView_impl(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for DropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParentView_impl(View.fromCppPointer(parent));

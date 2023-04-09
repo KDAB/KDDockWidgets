@@ -189,7 +189,7 @@ void MainWindowInstantiator::componentComplete()
 
     const auto mainWindowOptions = MainWindowOptions(m_options);
 
-    View *view = nullptr;
+    Core::View *view = nullptr;
     if (mainWindowOptions & MainWindowOption_MDI)
         view = new qtquick::MainWindowMDI(m_uniqueName, this);
     else

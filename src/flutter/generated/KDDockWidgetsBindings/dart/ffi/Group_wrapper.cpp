@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-Group_wrapper::Group_wrapper(KDDockWidgets::View *parent)
+Group_wrapper::Group_wrapper(KDDockWidgets::Core::View *parent)
     : ::KDDockWidgets::Core::Group(parent)
 {
 }
@@ -318,7 +318,7 @@ void Group_wrapper::setLayoutItem(Layouting::Item *item)
 {
     ::KDDockWidgets::Core::Group::setLayoutItem(item);
 }
-void Group_wrapper::setParentView_impl(KDDockWidgets::View *parent)
+void Group_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
         const void *thisPtr = this;
@@ -327,7 +327,7 @@ void Group_wrapper::setParentView_impl(KDDockWidgets::View *parent)
         ::KDDockWidgets::Core::Group::setParentView_impl(parent);
     }
 }
-void Group_wrapper::setParentView_impl_nocallback(KDDockWidgets::View *parent)
+void Group_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::Group::setParentView_impl(parent);
 }
@@ -391,7 +391,7 @@ void c_KDDockWidgets__Controllers__Group_Finalizer(void *, void *cppObj, void *)
 }
 void *c_KDDockWidgets__Controllers__Group__constructor_View(void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Group_wrapper(parent);
     return reinterpret_cast<void *>(ptr);
 }
@@ -743,10 +743,10 @@ void c_KDDockWidgets__Controllers__Group__setLayoutItem_Item(void *thisObj, void
     auto item = reinterpret_cast<Layouting::Item *>(item_);
     fromPtr(thisObj)->setLayoutItem(item);
 }
-// setParentView_impl(KDDockWidgets::View * parent)
+// setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__Group__setParentView_impl_View(void *thisObj, void *parent_)
 {
-    auto parent = reinterpret_cast<KDDockWidgets::View *>(parent_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // stack() const

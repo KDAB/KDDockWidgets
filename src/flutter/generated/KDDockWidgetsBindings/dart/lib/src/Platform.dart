@@ -108,7 +108,7 @@ class Platform {
     }
     final result = dartInstance.createDefaultViewFactory();
     return result.thisCpp;
-  } // createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View * parent, Qt::WindowFlags arg__5) const
+  } // createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const
 
   MainWindow createMainWindow(String? uniqueName, CreateViewOptions arg__2,
       {int options =
@@ -141,7 +141,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::View * parent, Qt::WindowFlags arg__5) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createMainWindow(
@@ -151,7 +151,7 @@ class Platform {
         parent: View.fromCppPointer(parent),
         arg__5: arg__5);
     return result.thisCpp;
-  } // createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::View * parent) const
+  } // createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::Core::View * parent) const
 
   View createView(Controller? arg__1, {required View? parent}) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
@@ -172,7 +172,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::createView(KDDockWidgets::Controller * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createView(Controller.fromCppPointer(arg__1),
@@ -445,7 +445,7 @@ class Platform {
       throw Error();
     }
     dartInstance.restoreMouseCursor();
-  } // screenNumberFor(KDDockWidgets::View * arg__1) const
+  } // screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 
   int screenNumberFor(View? arg__1) {
     final int_Func_voidstar_voidstar func = _dylib
@@ -460,12 +460,12 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::screenNumberFor(KDDockWidgets::View * arg__1) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.screenNumberFor(View.fromCppPointer(arg__1));
     return result;
-  } // screenSizeFor(KDDockWidgets::View * arg__1) const
+  } // screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 
   QSize screenSizeFor(View? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
@@ -482,7 +482,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::screenSizeFor(KDDockWidgets::View * arg__1) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.screenSizeFor(View.fromCppPointer(arg__1));
@@ -552,7 +552,7 @@ class Platform {
     }
     final result = dartInstance.startDragDistance_impl();
     return result;
-  } // tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+  } // tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 
   View tests_createFocusableView(CreateViewOptions arg__1,
       {required View? parent}) {
@@ -576,14 +576,14 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_createFocusableView(
         CreateViewOptions.fromCppPointer(arg__1),
         parent: View.fromCppPointer(parent));
     return result.thisCpp;
-  } // tests_createNonClosableView(KDDockWidgets::View * parent)
+  } // tests_createNonClosableView(KDDockWidgets::Core::View * parent)
 
   View tests_createNonClosableView({required View? parent}) {
     final voidstar_Func_voidstar_voidstar func = _dylib
@@ -600,13 +600,13 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_createNonClosableView(KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_createNonClosableView(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_createNonClosableView(
         parent: View.fromCppPointer(parent));
     return result.thisCpp;
-  } // tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)
+  } // tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 
   View tests_createView(CreateViewOptions arg__1, {required View? parent}) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
@@ -629,7 +629,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_createView(
@@ -663,7 +663,7 @@ class Platform {
       throw Error();
     }
     dartInstance.tests_deinitPlatform_impl();
-  } // tests_doubleClickOn(QPoint globalPos, KDDockWidgets::View * receiver)
+  } // tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
 
   tests_doubleClickOn(QPoint globalPos, View? receiver) {
     final void_Func_voidstar_voidstar_voidstar func = _dylib
@@ -679,7 +679,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::View * receiver)! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.tests_doubleClickOn(
@@ -702,7 +702,7 @@ class Platform {
       throw Error();
     }
     dartInstance.tests_initPlatform_impl();
-  } // tests_pressOn(QPoint globalPos, KDDockWidgets::View * receiver)
+  } // tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
 
   tests_pressOn(QPoint globalPos, View? receiver) {
     final void_Func_voidstar_voidstar_voidstar func = _dylib
@@ -729,7 +729,7 @@ class Platform {
       throw Error();
     }
     dartInstance.tests_wait(ms);
-  } // tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const
+  } // tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const
 
   bool tests_waitForDeleted(View? arg__1, {int timeout = 2000}) {
     final bool_Func_voidstar_voidstar_int func = _dylib
@@ -746,7 +746,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_waitForDeleted(KDDockWidgets::View * arg__1, int timeout) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance
@@ -776,7 +776,7 @@ class Platform {
         QObject.fromCppPointer(arg__1),
         timeout: timeout);
     return result ? 1 : 0;
-  } // tests_waitForEvent(KDDockWidgets::View * arg__1, Event::Type type, int timeout) const
+  } // tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::Type type, int timeout) const
 
   bool tests_waitForEvent(View? arg__1, int type, {int timeout = 5000}) {
     final bool_Func_voidstar_voidstar_int_int func = _dylib
@@ -795,7 +795,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_waitForEvent(KDDockWidgets::View * arg__1, Event::Type type, int timeout) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::Type type, int timeout) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_waitForEvent(
@@ -851,7 +851,7 @@ class Platform {
         Controller.fromCppPointer(arg__1),
         timeout: timeout);
     return result ? 1 : 0;
-  } // tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const
+  } // tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const
 
   bool tests_waitForResize_2(View? arg__1, {int timeout = 2000}) {
     final bool_Func_voidstar_voidstar_int func = _dylib
@@ -868,7 +868,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_waitForResize(KDDockWidgets::View * arg__1, int timeout) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance

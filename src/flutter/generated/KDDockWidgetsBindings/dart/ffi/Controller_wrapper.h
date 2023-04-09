@@ -24,35 +24,35 @@ class Controller_wrapper : public ::KDDockWidgets::Controller
 {
 public:
     ~Controller_wrapper();
-    Controller_wrapper(KDDockWidgets::Type type, KDDockWidgets::View *arg__2);
+    Controller_wrapper(KDDockWidgets::Type type, KDDockWidgets::Core::View *arg__2);
     bool close();
     QRect geometry() const;
     int height() const;
     bool inDtor() const;
     bool isVisible() const;
     QPoint mapToGlobal(QPoint arg__1) const;
-    void parentViewChanged(KDDockWidgets::View *parent);
+    void parentViewChanged(KDDockWidgets::Core::View *parent);
     QPoint pos() const;
     QRect rect() const;
-    void setParentView(KDDockWidgets::View *parent);
-    virtual void setParentView_impl(KDDockWidgets::View *parent);
-    virtual void setParentView_impl_nocallback(KDDockWidgets::View *parent);
+    void setParentView(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
+    virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setVisible(bool arg__1);
     void show() const;
     QSize size() const;
     static QString tr(const char *s, const char *c, int n);
     KDDockWidgets::Type type() const;
-    KDDockWidgets::View *view() const;
+    KDDockWidgets::Core::View *view() const;
     void visibleChanged(bool arg__1);
     int width() const;
     int x() const;
     int y() const;
-    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::View *parent);
+    typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
 }
 extern "C" {
-// KDDockWidgets::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::View * arg__2)
+// KDDockWidgets::Controller::Controller(KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__2)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__constructor_Type_View(int type, void *arg__2_);
 // KDDockWidgets::Controller::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controller__close(void *thisObj);
@@ -66,15 +66,15 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controller__inDtor(void *this
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controller__isVisible(void *thisObj);
 // KDDockWidgets::Controller::mapToGlobal(QPoint arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::Controller::parentViewChanged(KDDockWidgets::View * parent)
+// KDDockWidgets::Controller::parentViewChanged(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controller__parentViewChanged_View(void *thisObj, void *parent_);
 // KDDockWidgets::Controller::pos() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__pos(void *thisObj);
 // KDDockWidgets::Controller::rect() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controller__rect(void *thisObj);
-// KDDockWidgets::Controller::setParentView(KDDockWidgets::View * parent)
+// KDDockWidgets::Controller::setParentView(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controller__setParentView_View(void *thisObj, void *parent_);
-// KDDockWidgets::Controller::setParentView_impl(KDDockWidgets::View * parent)
+// KDDockWidgets::Controller::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controller__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Controller::setVisible(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controller__setVisible_bool(void *thisObj, bool arg__1);

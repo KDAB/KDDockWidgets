@@ -49,10 +49,10 @@ public:
     KDDockWidgets::Controller *controller() const;
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
-    static bool equals(const KDDockWidgets::View *one, const KDDockWidgets::View *two);
-    bool equals(const KDDockWidgets::View *other) const;
+    static bool equals(const KDDockWidgets::Core::View *one, const KDDockWidgets::Core::View *two);
+    bool equals(const KDDockWidgets::Core::View *other) const;
     KDDockWidgets::Controller *firstParentOfType(KDDockWidgets::Type arg__1) const;
-    static KDDockWidgets::Controller *firstParentOfType(KDDockWidgets::View *view, KDDockWidgets::Type arg__2);
+    static KDDockWidgets::Controller *firstParentOfType(KDDockWidgets::Core::View *view, KDDockWidgets::Type arg__2);
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
     void free();
@@ -88,8 +88,8 @@ public:
     virtual bool isVisible_nocallback() const;
     virtual QPoint mapFromGlobal(QPoint arg__1) const;
     virtual QPoint mapFromGlobal_nocallback(QPoint arg__1) const;
-    virtual QPoint mapTo(KDDockWidgets::View *arg__1, QPoint arg__2) const;
-    virtual QPoint mapTo_nocallback(KDDockWidgets::View *arg__1, QPoint arg__2) const;
+    virtual QPoint mapTo(KDDockWidgets::Core::View *arg__1, QPoint arg__2) const;
+    virtual QPoint mapTo_nocallback(KDDockWidgets::Core::View *arg__1, QPoint arg__2) const;
     virtual QPoint mapToGlobal(QPoint arg__1) const;
     virtual QPoint mapToGlobal_nocallback(QPoint arg__1) const;
     virtual QSize maxSizeHint() const;
@@ -142,8 +142,8 @@ public:
     virtual void setMouseTracking_nocallback(bool arg__1);
     virtual void setObjectName(const QString &arg__1);
     virtual void setObjectName_nocallback(const QString &arg__1);
-    virtual void setParent(KDDockWidgets::View *arg__1);
-    virtual void setParent_nocallback(KDDockWidgets::View *arg__1);
+    virtual void setParent(KDDockWidgets::Core::View *arg__1);
+    virtual void setParent_nocallback(KDDockWidgets::Core::View *arg__1);
     void setSize(QSize arg__1);
     virtual void setSize(int width, int height);
     virtual void setSize_nocallback(int width, int height);
@@ -209,7 +209,7 @@ public:
     Callback_isVisible m_isVisibleCallback = nullptr;
     typedef QPoint *(*Callback_mapFromGlobal)(void *, QPoint *arg__1);
     Callback_mapFromGlobal m_mapFromGlobalCallback = nullptr;
-    typedef QPoint *(*Callback_mapTo)(void *, KDDockWidgets::View *arg__1, QPoint *arg__2);
+    typedef QPoint *(*Callback_mapTo)(void *, KDDockWidgets::Core::View *arg__1, QPoint *arg__2);
     Callback_mapTo m_mapToCallback = nullptr;
     typedef QPoint *(*Callback_mapToGlobal)(void *, QPoint *arg__1);
     Callback_mapToGlobal m_mapToGlobalCallback = nullptr;
@@ -255,7 +255,7 @@ public:
     Callback_setMouseTracking m_setMouseTrackingCallback = nullptr;
     typedef void (*Callback_setObjectName)(void *, const QString &arg__1);
     Callback_setObjectName m_setObjectNameCallback = nullptr;
-    typedef void (*Callback_setParent)(void *, KDDockWidgets::View *arg__1);
+    typedef void (*Callback_setParent)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_setParent m_setParentCallback = nullptr;
     typedef void (*Callback_setSize_2)(void *, int width, int height);
     Callback_setSize_2 m_setSize_2Callback = nullptr;
@@ -316,13 +316,13 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__closeRootView(void *thi
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__controller(void *thisObj);
 // KDDockWidgets::View::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__createPlatformWindow(void *thisObj);
-// KDDockWidgets::View::equals(const KDDockWidgets::View * one, const KDDockWidgets::View * two)
+// KDDockWidgets::View::equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
 KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__View__equals_View_View(void *one_, void *two_);
-// KDDockWidgets::View::equals(const KDDockWidgets::View * other) const
+// KDDockWidgets::View::equals(const KDDockWidgets::Core::View * other) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__equals_View(void *thisObj, void *other_);
 // KDDockWidgets::View::firstParentOfType(KDDockWidgets::Type arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__firstParentOfType_Type(void *thisObj, int arg__1);
-// KDDockWidgets::View::firstParentOfType(KDDockWidgets::View * view, KDDockWidgets::Type arg__2)
+// KDDockWidgets::View::firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::Type arg__2)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__View__firstParentOfType_View_Type(void *view_, int arg__2);
 // KDDockWidgets::View::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__View__flags(void *thisObj);
@@ -366,7 +366,7 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__isRootView(void *thisOb
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__View__isVisible(void *thisObj);
 // KDDockWidgets::View::mapFromGlobal(QPoint arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__mapFromGlobal_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::View::mapTo(KDDockWidgets::View * arg__1, QPoint arg__2) const
+// KDDockWidgets::View::mapTo(KDDockWidgets::Core::View * arg__1, QPoint arg__2) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__mapTo_View_QPoint(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::View::mapToGlobal(QPoint arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__View__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
@@ -428,7 +428,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__setMinimumSize_QSize(vo
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__setMouseTracking_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::View::setObjectName(const QString & arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__setObjectName_QString(void *thisObj, const char *arg__1_);
-// KDDockWidgets::View::setParent(KDDockWidgets::View * arg__1)
+// KDDockWidgets::View::setParent(KDDockWidgets::Core::View * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__setParent_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::View::setSize(QSize arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__View__setSize_QSize(void *thisObj, void *arg__1_);
