@@ -11,7 +11,7 @@
 
 #include "utils.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "NonQtCompat_p.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"

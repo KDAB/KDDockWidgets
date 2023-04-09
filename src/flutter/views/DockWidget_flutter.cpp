@@ -10,7 +10,7 @@
 */
 
 #include "DockWidget_flutter.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"

@@ -16,7 +16,7 @@
 #include "Config.h"
 #include "Platform.h"
 #include "Controller.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 
 
 #ifdef Q_OS_WIN

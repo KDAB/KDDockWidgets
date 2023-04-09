@@ -15,7 +15,7 @@
 #include "kddockwidgets/core/Platform.h"
 
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 
 #include <QtTest/QTest>
 #include <QScopedValueRollback>

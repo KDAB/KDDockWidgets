@@ -13,7 +13,7 @@
 #define KDDOCKWIDGETS_ViewFactory_flutter_H
 #pragma once
 
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "NonQtCompat_p.h"
 
 // clazy:excludeall=ctor-missing-parent-argument

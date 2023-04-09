@@ -14,7 +14,7 @@
 #include "core/Group.h"
 #include "Config.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
 #include "Action.h"
 

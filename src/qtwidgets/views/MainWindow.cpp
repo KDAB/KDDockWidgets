@@ -18,7 +18,7 @@
 
 #include "MainWindow.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "ViewWrapper.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"

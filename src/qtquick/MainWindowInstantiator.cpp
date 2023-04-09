@@ -10,7 +10,7 @@
 */
 
 #include "MainWindowInstantiator.h"
-#include "kddockwidgets/views/MainWindow.h"
+#include "kddockwidgets/core/MainWindow.h"
 #include "qtquick/views/MainWindowMDI.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/MainWindow.h"

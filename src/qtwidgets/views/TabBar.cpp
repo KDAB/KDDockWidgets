@@ -18,7 +18,7 @@
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/private/DockRegistry.h"
 
 #include <QMouseEvent>

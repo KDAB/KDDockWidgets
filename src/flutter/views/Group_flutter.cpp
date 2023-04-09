@@ -31,7 +31,7 @@
 #include "Stack_flutter.h"
 
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "private/WidgetResizeHandler_p.h"
 
 #include <QDebug>

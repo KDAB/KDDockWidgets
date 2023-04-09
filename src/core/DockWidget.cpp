@@ -30,7 +30,7 @@
 #include "private/multisplitter/Item_p.h"
 
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 
 #include <QTimer>
 #include <QScopedValueRollback>

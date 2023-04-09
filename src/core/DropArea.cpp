@@ -11,7 +11,7 @@
 
 #include "DropArea.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "DockRegistry.h"
 #include "Platform.h"
 #include "private/Draggable_p.h"

@@ -9,13 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "kddockwidgets/core/ViewFactory.h"
-
-using namespace KDDockWidgets;
-using namespace KDDockWidgets::Core;
-
-DropIndicatorType ViewFactory::s_dropIndicatorType = DropIndicatorType::Classic;
-
-ViewFactory::~ViewFactory()
-{
-}
+#include "../../../../qtquick/views/Group.h"

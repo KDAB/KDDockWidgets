@@ -15,7 +15,7 @@
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Platform.h"
 #include "Action.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "Config.h"
 
 using namespace KDDockWidgets::Core;

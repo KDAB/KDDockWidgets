@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "View.h"
+#include "kddockwidgets/View.h"
 #include "Screen.h"
-#include "KDDockWidgets_p.h"
+#include "../KDDockWidgets_p.h"
 
 #include <QVector>
 

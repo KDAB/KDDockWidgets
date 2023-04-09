@@ -10,7 +10,7 @@
 */
 
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 
 #include "core/MainWindow.h"
 #include "core/DockWidget.h"

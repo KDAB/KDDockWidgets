@@ -10,6 +10,7 @@
 */
 
 #include "utils.h"
+
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/Window.h"
 #include "kddockwidgets/core/Platform.h"

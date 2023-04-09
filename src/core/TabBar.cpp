@@ -21,7 +21,7 @@
 #include "private/DragController_p.h"
 #include "private/Utils_p.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

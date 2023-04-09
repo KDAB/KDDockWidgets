@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "kddockwidgets/views/MainWindow.h"
+#include "kddockwidgets/core/MainWindow.h"

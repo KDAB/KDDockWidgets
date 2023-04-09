@@ -13,7 +13,7 @@
 #include "private/Position_p.h"
 #include "Config.h"
 #include "Platform.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "private/Utils_p.h"
 #include "private/View_p.h"
 
