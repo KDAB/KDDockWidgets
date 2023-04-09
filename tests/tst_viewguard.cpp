@@ -10,7 +10,7 @@
 */
 
 #include "main.h"
-#include "ViewGuard.h"
+#include "core/ViewGuard.h"
 #include "Platform.h"
 
 #include <doctest/doctest.h>

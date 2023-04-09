@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../Controller.h"
+#include "Controller.h"
 
 #include <QVector>
 #include <QPoint>

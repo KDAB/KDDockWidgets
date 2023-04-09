@@ -16,7 +16,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/Platform.h"
-#include "Window.h"
+#include "core/Window.h"
 
 #include <QDebug>
 #include <QRect>

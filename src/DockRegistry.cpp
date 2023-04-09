@@ -18,7 +18,7 @@
 #include "private/WidgetResizeHandler_p.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/multisplitter/Item_p.h"
-#include "Window.h"
+#include "core/Window.h"
 #include "views/MainWindowViewInterface.h"
 #include "Platform.h"
 #include "kddockwidgets/core/FloatingWindow.h"

@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../Controller.h"
+#include "Controller.h"
 
 #include "KDDockWidgets_p.h"
 #include "kddockwidgets/docks_export.h"

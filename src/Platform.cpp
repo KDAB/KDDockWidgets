@@ -11,7 +11,7 @@
 
 #include "Platform.h"
 #include "private/Platform_p.h"
-#include "EventFilterInterface.h"
+#include "core/EventFilterInterface.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"

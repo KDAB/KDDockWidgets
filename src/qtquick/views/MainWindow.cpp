@@ -12,9 +12,9 @@
 #include "MainWindow.h"
 #include "kddockwidgets/core/Layout.h"
 #include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/Window.h"
 #include "kddockwidgets/private/DockRegistry.h"
 #include "private/multisplitter/Item_p.h"
-#include "Window.h"
 
 #include <QDebug>
 #include <QTimer>

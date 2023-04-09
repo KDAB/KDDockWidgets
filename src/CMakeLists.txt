@@ -21,7 +21,6 @@ add_definitions(
 set(KDDW_BACKEND_SRCS
     KDDockWidgets.cpp
     Config.cpp
-    FocusScope.cpp
     LayoutSaver.cpp
     DockRegistry.cpp
     private/Position.cpp
@@ -32,6 +31,7 @@ set(KDDW_BACKEND_SRCS
     private/WidgetResizeHandler.cpp
     private/multisplitter/Item.cpp
     private/multisplitter/ItemFreeContainer.cpp
+    core/FocusScope.cpp
     core/DockWidget.cpp
     core/DropArea.cpp
     core/DropIndicatorOverlay.cpp
@@ -46,15 +46,15 @@ set(KDDW_BACKEND_SRCS
     core/TitleBar.cpp
     core/TabBar.cpp
     core/ViewFactory.cpp
+    core/Window.cpp
+    core/Screen.cpp
+    core/ViewGuard.cpp
+    core/Controller.cpp
     core/indicators/NullIndicators.cpp
     core/indicators/ClassicIndicators.cpp
     core/indicators/SegmentedIndicators.cpp
     Action.cpp
-    Window.cpp
-    Screen.cpp
     View.cpp
-    ViewGuard.cpp
-    Controller.cpp
     Platform.cpp
     views/ClassicIndicatorWindowViewInterface.cpp
     views/MainWindowMDIViewInterface.cpp
@@ -190,13 +190,13 @@ set(KDDW_PUBLIC_HEADERS
     docks_export.h
     Config.h
     KDDockWidgets.h
-    FocusScope.h
+    # FocusScope.h
     LayoutSaver.h
     Action.h
-    Controller.h
+    # Controller.h
     View.h
-    Window.h
-    Screen.h
+    # Window.h
+    # Screen.h
     # ViewFactory.h
     Qt5Qt6Compat_p.h
     NonQtCompat_p.h
@@ -273,7 +273,7 @@ ecm_generate_headers(
     HEADER_NAMES
     Config
     # DockWidget DockWidgetBase
-    FocusScope
+    # FocusScope
     # ViewFactory,
     # DefaultWidgetFactory
     LayoutSaver

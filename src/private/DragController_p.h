@@ -15,7 +15,7 @@
 #include "kddockwidgets/docks_export.h"
 
 #include "WindowBeingDragged_p.h"
-#include "EventFilterInterface.h"
+#include "core/EventFilterInterface.h"
 
 #include <QPoint>
 #include <QMimeData>

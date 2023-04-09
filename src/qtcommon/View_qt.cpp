@@ -12,8 +12,8 @@
 #include "View_qt.h"
 #include "private/Utils_p.h"
 #include "private/View_p.h"
-#include "kddockwidgets/Controller.h"
-#include "EventFilterInterface.h"
+#include "kddockwidgets/core/Controller.h"
+#include "core/EventFilterInterface.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include <QWidget>

@@ -12,7 +12,7 @@
 #pragma once
 
 #include "Screen.h"
-#include "kddockwidgets/Window.h"
+#include "kddockwidgets/core/Window.h"
 
 namespace KDDockWidgets {
 class DOCKS_EXPORT Window_flutter : public Window

@@ -13,7 +13,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 
 #include "Platform.h"
-#include "Window.h"
+#include "kddockwidgets/core/Window.h"
 
 #include <QRect>
 #include <QSize>

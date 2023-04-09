@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../Window.h"
+#include "../../../core/Controller.h"

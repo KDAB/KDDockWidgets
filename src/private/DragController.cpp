@@ -18,8 +18,8 @@
 #include "Config.h"
 #include "WindowZOrder_x11_p.h"
 #include "Platform.h"
-#include "Window.h"
 
+#include "kddockwidgets/core/Window.h"
 #include "kddockwidgets/core/MDILayout.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/TitleBar.h"

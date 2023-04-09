@@ -10,14 +10,14 @@
 */
 
 #include "Stack.h"
-#include "Controller.h"
+#include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/TitleBar.h"
+#include "kddockwidgets/core/Window.h"
 #include "qtwidgets/ViewFactory.h"
 #include "qtwidgets/views/DockWidget.h"
 #include "DockRegistry.h"
 #include "Config.h"
-#include "Window.h"
 #include "private/View_p.h"
 
 #include <QMouseEvent>

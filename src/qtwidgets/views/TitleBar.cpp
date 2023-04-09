@@ -13,13 +13,13 @@
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/FloatingWindow.h"
+#include "kddockwidgets/core/Window.h"
 
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/private/DockRegistry.h"
 #include "qtwidgets/ViewFactory.h"
-#include "Window.h"
 
 #include <QPainter>
 #include <QStyle>

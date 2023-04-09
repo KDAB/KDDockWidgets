@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "kddockwidgets/Controller.h"
+#include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/FocusScope.h"
+#include "kddockwidgets/core/FocusScope.h"
 #include "DockWidget.h"
 #include "kddockwidgets/NonQtCompat_p.h"
 #include "kddockwidgets/LayoutSaver.h"

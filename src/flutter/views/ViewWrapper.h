@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "kddockwidgets/Controller.h"
+#include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/View.h"
 
 #include <QDebug>

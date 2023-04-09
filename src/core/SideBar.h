@@ -17,7 +17,7 @@
 #include "kddockwidgets/docks_export.h"
 
 #include "kddockwidgets/KDDockWidgets.h"
-#include "../Controller.h"
+#include "Controller.h"
 
 namespace KDDockWidgets {
 

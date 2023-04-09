@@ -24,8 +24,8 @@
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/SideBar.h"
+#include "kddockwidgets/core/Window.h"
 
-#include "Window.h"
 #include "DockRegistry.h"
 #include "private/Logging_p.h"
 

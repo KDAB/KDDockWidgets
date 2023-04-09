@@ -18,7 +18,7 @@
 #include "utils.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/MainWindow.h"
-#include "Window.h"
+#include "kddockwidgets/core/Window.h"
 
 #include <QDebug>
 #include <QtTest/QTest>

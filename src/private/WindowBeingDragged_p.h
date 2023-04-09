@@ -14,7 +14,7 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "View.h"
-#include "ViewGuard.h"
+#include "core/ViewGuard.h"
 
 #include <QPointer>
 

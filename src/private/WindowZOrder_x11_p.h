@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "Window.h"
+#include "core/Window.h"
 
 #ifdef KDDockWidgets_XLIB
 

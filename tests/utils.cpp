@@ -13,11 +13,11 @@
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "Platform.h"
-#include "ViewGuard.h"
-#include "Window.h"
 #include "NonQtCompat_p.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"
+#include "core/ViewGuard.h"
+#include "kddockwidgets/core/Window.h"
 
 #include <QDebug>
 

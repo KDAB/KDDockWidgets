@@ -16,9 +16,9 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "qtquick/views/TitleBar.h"
 #include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/Window.h"
 
 #include "../utils.h"
-#include "Window.h"
 
 #include <QtTest/QTest>
 #include <QQmlApplicationEngine>

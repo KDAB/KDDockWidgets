@@ -23,7 +23,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
-#include "kddockwidgets/Controller.h"
+#include "kddockwidgets/core/Controller.h"
 
 #include <QVector>
 #include <QMargins>

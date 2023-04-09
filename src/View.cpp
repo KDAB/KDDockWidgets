@@ -23,7 +23,7 @@
 #include "core/MDILayout.h"
 
 #include "Platform.h"
-#include "Window.h"
+#include "core/Window.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
