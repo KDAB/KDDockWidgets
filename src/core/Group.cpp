@@ -78,7 +78,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 }
 
 Group::Group(View *parent, FrameOptions options, int userType)
-    : Controller(Type::Frame, Config::self().viewFactory()->createGroup(this, parent))
+    : Controller(ViewType::Frame, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
     , d(new Private())
     , m_stack(new Core::Stack(this, tabWidgetOptions(options)))
@@ -529,7 +529,7 @@ FloatingWindow *Group::floatingWindow() const
 
     auto p = view()->parentView();
     while (p) {
-        if (p->is(Type::MainWindow))
+        if (p->is(ViewType::MainWindow))
             return nullptr;
 
         if (auto fw = p->asFloatingWindowController())

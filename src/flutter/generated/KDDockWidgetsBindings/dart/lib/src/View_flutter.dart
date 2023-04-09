@@ -26,7 +26,7 @@ class View_flutter extends View {
       if (instance != null) return instance as View_flutter;
     }
     return View_flutter.fromCppPointer(cppPointer, needsAutoDelete);
-  } //View_flutter(Core::Controller * controller, KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
+  } //View_flutter(Core::Controller * controller, KDDockWidgets::ViewType type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
   View_flutter(Controller? controller, int type, View? arg__3,
       {int windowFlags = 0})
       : super.init() {

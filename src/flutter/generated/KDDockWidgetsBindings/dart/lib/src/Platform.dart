@@ -776,7 +776,7 @@ class Platform {
         QObject.fromCppPointer(arg__1),
         timeout: timeout);
     return result ? 1 : 0;
-  } // tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::Type type, int timeout) const
+  } // tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::ViewType type, int timeout) const
 
   bool tests_waitForEvent(View? arg__1, int type, {int timeout = 5000}) {
     final bool_Func_voidstar_voidstar_int_int func = _dylib
@@ -795,14 +795,14 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::Type type, int timeout) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::ViewType type, int timeout) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_waitForEvent(
         View.fromCppPointer(arg__1), type,
         timeout: timeout);
     return result ? 1 : 0;
-  } // tests_waitForEvent(QObject * w, Event::Type type, int timeout) const
+  } // tests_waitForEvent(QObject * w, Event::ViewType type, int timeout) const
 
   bool tests_waitForEvent_2(QObject? w, int type, {int timeout = 5000}) {
     final bool_Func_voidstar_voidstar_int_int func = _dylib
@@ -820,7 +820,7 @@ class Platform {
     var dartInstance = Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::tests_waitForEvent(QObject * w, Event::Type type, int timeout) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::tests_waitForEvent(QObject * w, Event::ViewType type, int timeout) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_waitForEvent_2(

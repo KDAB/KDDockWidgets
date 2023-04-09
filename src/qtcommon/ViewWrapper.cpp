@@ -18,7 +18,7 @@ using namespace KDDockWidgets;
 
 
 ViewWrapper::ViewWrapper(Core::Controller *controller, QObject *thisObj)
-    : View_qt(controller, Core::Type::ViewWrapper, thisObj)
+    : View_qt(controller, Core::ViewType::ViewWrapper, thisObj)
     , m_ownsController(controller == nullptr) // Base class created a dummy controller for us
 {
 }

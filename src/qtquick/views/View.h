@@ -58,7 +58,7 @@ public:
     using View::resize;
     using View::width;
 
-    explicit View_qtquick(Core::Controller *controller, Core::Type type,
+    explicit View_qtquick(Core::Controller *controller, Core::ViewType type,
                           QQuickItem *parent = nullptr, Qt::WindowFlags windowFlags = {});
 
     ~View_qtquick() override = default;

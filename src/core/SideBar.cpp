@@ -22,7 +22,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 SideBar::SideBar(SideBarLocation location, MainWindow *parent)
-    : Controller(Type::SideBar, Config::self().viewFactory()->createSideBar(this, parent->view()))
+    : Controller(ViewType::SideBar, Config::self().viewFactory()->createSideBar(this, parent->view()))
     , m_mainWindow(parent)
     , m_location(location)
     , m_orientation((location == SideBarLocation::North || location == SideBarLocation::South)

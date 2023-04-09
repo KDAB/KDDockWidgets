@@ -133,7 +133,7 @@ public:
 };
 
 MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions options)
-    : Controller(Type::MainWindow, view)
+    : Controller(ViewType::MainWindow, view)
     , d(new Private(this, uniqueName, options))
 {
 }

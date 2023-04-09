@@ -23,7 +23,7 @@ namespace Core {
 
 class View;
 
-enum class Type {
+enum class ViewType {
     FIRST = 1, // Keep first
     None = 0,
     Frame = 1,
@@ -50,17 +50,17 @@ class DOCKS_EXPORT Controller : public QObject // TODOm4 remove QObject
 {
     Q_OBJECT
 public:
-    explicit Controller(Type type, View *);
+    explicit Controller(ViewType type, View *);
     virtual ~Controller();
 
     /// @brief Returns the view associated with this controller, if any.
     View *view() const;
 
     /// @brief Returns the type of this controller
-    Type type() const;
+    ViewType type() const;
 
     /// @brief Returns whether this controller is of the specified type
-    bool is(Type) const;
+    bool is(ViewType) const;
 
     /// Returns whether the view is visible
     bool isVisible() const;
@@ -101,7 +101,7 @@ private:
     View *m_view = nullptr;
     bool m_inDtor = false;
     bool m_isVisible = true;
-    const Type m_type;
+    const ViewType m_type;
 };
 
 }

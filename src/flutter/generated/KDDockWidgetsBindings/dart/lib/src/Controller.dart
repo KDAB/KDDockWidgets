@@ -26,7 +26,7 @@ class Controller extends QObject {
       if (instance != null) return instance as Controller;
     }
     return Controller.fromCppPointer(cppPointer, needsAutoDelete);
-  } //Controller(KDDockWidgets::Type type, KDDockWidgets::Core::View * arg__2)
+  } //Controller(KDDockWidgets::ViewType type, KDDockWidgets::Core::View * arg__2)
   Controller(int type, View? arg__2) : super.init() {
     final voidstar_Func_int_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_voidstar_FFI>>(

@@ -21,7 +21,7 @@ using namespace KDDockWidgets::Core;
 TEST_CASE("FloatingWindow Ctor")
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    CHECK(dw->view()->rootView()->is(Type::DockWidget));
+    CHECK(dw->view()->rootView()->is(ViewType::DockWidget));
     dw->view()->show();
 
     /// Wait for FloatingWindow to be created
@@ -30,9 +30,9 @@ TEST_CASE("FloatingWindow Ctor")
     auto rootView = dw->view()->rootView();
     REQUIRE(rootView);
 
-    CHECK(rootView->is(Type::FloatingWindow));
+    CHECK(rootView->is(ViewType::FloatingWindow));
     REQUIRE(rootView->controller());
-    CHECK(rootView->controller()->is(Type::FloatingWindow));
+    CHECK(rootView->controller()->is(ViewType::FloatingWindow));
     CHECK(rootView->controller()->isVisible());
 
     Core::FloatingWindow *fw = dw->floatingWindow();

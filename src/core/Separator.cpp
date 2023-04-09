@@ -69,7 +69,7 @@ struct Separator::Private
 };
 
 Separator::Separator(View *host)
-    : Controller(Type::Separator, Config::self().viewFactory()->createSeparator(this, host))
+    : Controller(ViewType::Separator, Config::self().viewFactory()->createSeparator(this, host))
     , d(new Private(host))
 {
     Q_ASSERT(view());

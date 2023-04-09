@@ -24,7 +24,7 @@ QColor SegmentedIndicatorsOverlay::s_hoveredSegmentBrushColor = QColor(0x3574c5)
 
 SegmentedIndicatorsOverlay::SegmentedIndicatorsOverlay(
     Core::SegmentedIndicators *controller, QWidget *parent)
-    : View_qtwidgets<QWidget>(controller, Type::None, parent)
+    : View_qtwidgets<QWidget>(controller, ViewType::None, parent)
     , m_controller(controller)
 {
 }

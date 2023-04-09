@@ -147,7 +147,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
         // margins, and would show resize cursor. We only want to continue if the cursor is near the
         // margins of our own group (mTarget)
 
-        auto f = widget->firstParentOfType(Type::Frame);
+        auto f = widget->firstParentOfType(ViewType::Frame);
         auto group = f ? f->view()->asGroupController() : nullptr;
         if (group && group->isMDIWrapper()) {
             // We don't care about the inner Option_MDINestable helper group

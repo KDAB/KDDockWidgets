@@ -37,7 +37,7 @@ public:
     bool isMinimized() const override;
     QSize maxSizeHint() const override;
     void setSize(int width, int height) override;
-    bool is(Core::Type) const override;
+    bool is(Core::ViewType) const override;
     std::shared_ptr<View> childViewAt(QPoint) const override;
     QVector<std::shared_ptr<View>> childViews() const override;
     std::shared_ptr<Core::Window> window() const override;

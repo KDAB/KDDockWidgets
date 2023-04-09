@@ -173,7 +173,7 @@ int Platform::startDragDistance_impl() const
 
 Core::View *Platform::createView(Core::Controller *controller, Core::View *parent) const
 {
-    return new qtwidgets::View_qtwidgets<QWidget>(controller, Core::Type::None,
+    return new qtwidgets::View_qtwidgets<QWidget>(controller, Core::ViewType::None,
                                                   Views::View_qt::asQWidget(parent));
 }
 

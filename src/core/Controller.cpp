@@ -17,7 +17,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-Controller::Controller(Type type, View *view)
+Controller::Controller(ViewType type, View *view)
     : m_view(view)
     , m_type(type)
 {
@@ -30,12 +30,12 @@ Controller::~Controller()
         m_view->free();
 }
 
-Type Controller::type() const
+ViewType Controller::type() const
 {
     return m_type;
 }
 
-bool Controller::is(Type t) const
+bool Controller::is(ViewType t) const
 {
     return int(m_type) & int(t);
 }

@@ -29,7 +29,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 Stack::Stack(Group *group, StackOptions options)
-    : Controller(Type::Stack, Config::self().viewFactory()->createStack(this, group->view()))
+    : Controller(ViewType::Stack, Config::self().viewFactory()->createStack(this, group->view()))
     , Draggable(view(),
                 Config::self().flags()
                     & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))

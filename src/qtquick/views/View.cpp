@@ -121,7 +121,7 @@ static QQuickItem *actualParentItem(QQuickItem *candidateParentItem, Qt::WindowF
     return flagsAreTopLevelFlags(flags) ? nullptr : candidateParentItem;
 }
 
-View_qtquick::View_qtquick(Core::Controller *controller, Core::Type type, QQuickItem *parent,
+View_qtquick::View_qtquick(Core::Controller *controller, Core::ViewType type, QQuickItem *parent,
                            Qt::WindowFlags flags)
     : QQuickItem(actualParentItem(parent, flags))
     , View_qt(controller, type, this)

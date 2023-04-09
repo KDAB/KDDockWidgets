@@ -33,7 +33,7 @@ using namespace KDDockWidgets::Core;
 
 TitleBar::TitleBar(Group *parent)
     : Controller(
-        Type::TitleBar,
+        ViewType::TitleBar,
         Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
     , m_group(parent)
@@ -49,7 +49,7 @@ TitleBar::TitleBar(Group *parent)
 
 TitleBar::TitleBar(FloatingWindow *parent)
     : Controller(
-        Type::TitleBar,
+        ViewType::TitleBar,
         Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
     , m_group(nullptr)
@@ -106,10 +106,10 @@ bool TitleBar::isMDI() const
 {
     auto p = view()->asWrapper();
     while (p) {
-        if (p->is(Type::MDILayout))
+        if (p->is(ViewType::MDILayout))
             return true;
 
-        if (p->is(Type::DropArea)) {
+        if (p->is(ViewType::DropArea)) {
             // Note that the TitleBar can be inside a DropArea that's inside a MDIArea
             // so we need this additional check
             return false;

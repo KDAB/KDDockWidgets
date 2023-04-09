@@ -47,7 +47,7 @@ using namespace KDDockWidgets::Core;
 
 DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions options,
                        LayoutSaverOptions layoutSaverOptions)
-    : Controller(Type::DockWidget, view)
+    : Controller(ViewType::DockWidget, view)
     , d(new Private(name, options, layoutSaverOptions, this))
 {
     DockRegistry::self()->registerDockWidget(this);
@@ -445,7 +445,7 @@ void DockWidget::raise()
 bool DockWidget::isMainWindow() const
 {
     if (auto guest = guestView())
-        return guest->is(Type::MainWindow);
+        return guest->is(ViewType::MainWindow);
     return false;
 }
 
@@ -648,7 +648,7 @@ Core::DockWidget *DockWidget::Private::mdiDockWidgetWrapper() const
     auto p = q->view()->parentView();
     while (p) {
 
-        if (p->is(Type::DropArea) || p->is(Type::MDILayout)) {
+        if (p->is(ViewType::DropArea) || p->is(ViewType::MDILayout)) {
             if (auto dropArea = p->asDropAreaController()) {
                 if (dropArea->isMDIWrapper())
                     return dropArea->mdiDockWidgetWrapper();

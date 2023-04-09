@@ -24,7 +24,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
 template<>
-View_qtwidgets<QWidget>::View_qtwidgets(Core::Controller *controller, Core::Type type,
+View_qtwidgets<QWidget>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
                                         QWidget *parent, Qt::WindowFlags windowFlags)
     : QWidget(parent, windowFlags)
     , View_qt(controller, type, this)
@@ -32,7 +32,7 @@ View_qtwidgets<QWidget>::View_qtwidgets(Core::Controller *controller, Core::Type
 }
 
 template<>
-View_qtwidgets<QTabBar>::View_qtwidgets(Core::Controller *controller, Core::Type type,
+View_qtwidgets<QTabBar>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
                                         QWidget *parent, Qt::WindowFlags)
     : QTabBar(parent)
     , View_qt(controller, type, this)
@@ -40,7 +40,7 @@ View_qtwidgets<QTabBar>::View_qtwidgets(Core::Controller *controller, Core::Type
 }
 
 template<>
-View_qtwidgets<QTabWidget>::View_qtwidgets(Core::Controller *controller, Core::Type type,
+View_qtwidgets<QTabWidget>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
                                            QWidget *parent, Qt::WindowFlags)
     : QTabWidget(parent)
     , View_qt(controller, type, this)
@@ -48,7 +48,7 @@ View_qtwidgets<QTabWidget>::View_qtwidgets(Core::Controller *controller, Core::T
 }
 
 template<>
-View_qtwidgets<QMainWindow>::View_qtwidgets(Core::Controller *controller, Core::Type type,
+View_qtwidgets<QMainWindow>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
                                             QWidget *parent, Qt::WindowFlags)
     : QMainWindow(parent)
     , View_qt(controller, type, this)
@@ -56,7 +56,7 @@ View_qtwidgets<QMainWindow>::View_qtwidgets(Core::Controller *controller, Core::
 }
 
 template<>
-View_qtwidgets<QRubberBand>::View_qtwidgets(Core::Controller *controller, Core::Type type,
+View_qtwidgets<QRubberBand>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
                                             QWidget *parent, Qt::WindowFlags)
     : QRubberBand(QRubberBand::Rectangle, parent)
     , View_qt(controller, type, this)
@@ -64,7 +64,7 @@ View_qtwidgets<QRubberBand>::View_qtwidgets(Core::Controller *controller, Core::
 }
 
 template<>
-View_qtwidgets<QLineEdit>::View_qtwidgets(Core::Controller *controller, Core::Type type,
+View_qtwidgets<QLineEdit>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
                                           QWidget *parent, Qt::WindowFlags)
     : QLineEdit(parent)
     , View_qt(controller, type, this)

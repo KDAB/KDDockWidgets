@@ -31,7 +31,7 @@ namespace KDDockWidgets::Views {
 class DOCKS_EXPORT View_qt : public Core::View
 {
 public:
-    explicit View_qt(Core::Controller *controller, Core::Type type, QObject *thisObj);
+    explicit View_qt(Core::Controller *controller, Core::ViewType type, QObject *thisObj);
     ~View_qt() override;
 
     QObject *thisObject() const;

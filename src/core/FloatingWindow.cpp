@@ -195,7 +195,7 @@ MainWindow *actualParent(MainWindow *candidate)
 
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
                                FloatingWindowFlags requestedFlags)
-    : Controller(Type::FloatingWindow,
+    : Controller(ViewType::FloatingWindow,
                  Config::self().viewFactory()->createFloatingWindow(
                      this, actualParent(parent), windowFlagsToUse(requestedFlags)))
     , Draggable(view(),

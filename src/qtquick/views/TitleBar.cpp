@@ -28,7 +28,7 @@ using namespace KDDockWidgets::qtquick;
 
 
 TitleBar::TitleBar(Core::TitleBar *controller, QQuickItem *parent)
-    : View_qtquick(controller, Core::Type::TitleBar, parent)
+    : View_qtquick(controller, Core::ViewType::TitleBar, parent)
     , Views::TitleBarViewInterface(controller)
 {
     setFixedHeight(30);

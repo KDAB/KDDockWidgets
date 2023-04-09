@@ -30,7 +30,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 
-Layout::Layout(Type type, View *view)
+Layout::Layout(ViewType type, View *view)
     : Controller(type, view)
 {
     Q_ASSERT(view);
@@ -72,7 +72,7 @@ Core::MainWindow *Layout::mainWindow(bool honourNesting) const
 
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.
-        if (Controller *c = view()->firstParentOfType(Type::MainWindow))
+        if (Controller *c = view()->firstParentOfType(ViewType::MainWindow))
             return static_cast<Core::MainWindow *>(c);
         return nullptr;
     } else {

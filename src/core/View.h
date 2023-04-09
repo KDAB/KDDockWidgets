@@ -53,7 +53,7 @@ class MainWindow;
 class DOCKS_EXPORT View
 {
 public:
-    explicit View(Controller *controller, Type);
+    explicit View(Controller *controller, ViewType);
     virtual ~View();
 
     virtual void init()
@@ -183,7 +183,7 @@ public:
     /// @brief Returns whether the view is of the specified type
     /// Virtual so it can be overridden by ViewWrapper. When we're wrapping an existing GUI element
     /// only the specific frontend can know what's the actual type
-    virtual bool is(Type) const;
+    virtual bool is(ViewType) const;
 
     /// @brief Sets the z order
     /// Not supported on all platforms
@@ -201,7 +201,7 @@ public:
     QString id() const;
 
     ///@brief Returns the type of this view
-    Type type() const;
+    ViewType type() const;
 
     /// @brief Deletes this view.
     /// The default impl will just do a normal C++ "delete", but derived classes are free
@@ -279,10 +279,10 @@ public:
 
     /// @brief Returns the controller of the first parent view of the specified type
     /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
-    static Controller *firstParentOfType(View *view, Type);
+    static Controller *firstParentOfType(View *view, ViewType);
 
     /// @overload
-    Controller *firstParentOfType(Type) const;
+    Controller *firstParentOfType(ViewType) const;
 
 public:
     class Private;
@@ -298,7 +298,7 @@ private:
     bool m_freed = false;
     bool m_aboutToBeDestroyed = false;
     const QString m_id;
-    const Type m_type;
+    const ViewType m_type;
 };
 
 /// for debug purposes

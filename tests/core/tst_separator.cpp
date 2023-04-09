@@ -18,8 +18,8 @@ TEST_CASE("Separator Ctor")
 
     {
         Core::Separator separator(hostView);
-        CHECK(separator.view()->is(Core::Type::Separator));
-        CHECK(separator.view()->asWrapper()->is(Core::Type::Separator));
+        CHECK(separator.view()->is(Core::ViewType::Separator));
+        CHECK(separator.view()->asWrapper()->is(Core::ViewType::Separator));
     }
 
     delete hostView;

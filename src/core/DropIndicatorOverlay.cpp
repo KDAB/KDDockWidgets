@@ -23,7 +23,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 DropIndicatorOverlay::DropIndicatorOverlay(Core::DropArea *dropArea)
-    : Controller(Type::DropAreaIndicatorOverlay,
+    : Controller(ViewType::DropAreaIndicatorOverlay,
                  Platform::instance()->createView(this, dropArea->view()))
     , m_dropArea(dropArea)
 {

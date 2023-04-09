@@ -23,8 +23,8 @@ using namespace KDDockWidgets::Core;
 TEST_CASE("DockWidget Ctor")
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    CHECK(dw->view()->is(Type::DockWidget));
-    CHECK(dw->view()->asWrapper()->is(Type::DockWidget));
+    CHECK(dw->view()->is(ViewType::DockWidget));
+    CHECK(dw->view()->asWrapper()->is(ViewType::DockWidget));
     dw->view()->show();
 
     delete dw;

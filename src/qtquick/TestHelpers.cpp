@@ -34,7 +34,7 @@ class TestView_qtquick : public Views::View_qtquick
 {
 public:
     explicit TestView_qtquick(Core::CreateViewOptions opts, QQuickItem *parent)
-        : Views::View_qtquick(nullptr, Core::Type::None, parent)
+        : Views::View_qtquick(nullptr, Core::ViewType::None, parent)
         , m_opts(opts)
     {
         setMinimumSize(opts.minSize);

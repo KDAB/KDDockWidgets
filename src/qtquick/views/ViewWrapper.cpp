@@ -46,60 +46,60 @@ static Core::Controller *controllerForItem(QQuickItem *item)
     // you call someview->window(). This function let's us retrieve the actual controller of the
     // stray QWidget.
 
-    for (int i = int(Core::Type::FIRST); i <= int(::Core::Type::LAST); i *= 2) {
+    for (int i = int(Core::ViewType::FIRST); i <= int(::Core::ViewType::LAST); i *= 2) {
         // Using a for+switch pattern so that compiler reminds us if new enumerators are added to
         // enum
-        switch (Core::Type(i)) {
-        case Core::Type::Frame:
+        switch (Core::ViewType(i)) {
+        case Core::ViewType::Frame:
             if (auto view = qobject_cast<Group *>(item))
                 return view->controller();
             break;
-        case Core::Type::TitleBar:
+        case Core::ViewType::TitleBar:
             if (auto view = qobject_cast<TitleBar *>(item))
                 return view->controller();
             break;
-        case Core::Type::TabBar:
+        case Core::ViewType::TabBar:
             if (auto view = qobject_cast<TabBar *>(item))
                 return view->controller();
             break;
-        case Core::Type::Stack:
+        case Core::ViewType::Stack:
             if (auto view = qobject_cast<Stack *>(item))
                 return view->controller();
             break;
-        case Core::Type::FloatingWindow:
+        case Core::ViewType::FloatingWindow:
             if (auto view = qobject_cast<FloatingWindow *>(item))
                 return view->controller();
             break;
-        case Core::Type::Separator:
+        case Core::ViewType::Separator:
             if (auto view = qobject_cast<Separator *>(item))
                 return view->controller();
             break;
-        case Core::Type::DockWidget:
+        case Core::ViewType::DockWidget:
             if (auto view = qobject_cast<qtquick::DockWidget *>(item))
                 return view->controller();
             break;
-        case Core::Type::DropArea:
+        case Core::ViewType::DropArea:
             if (auto view = qobject_cast<DropArea *>(item))
                 return view->controller();
             break;
-        case Core::Type::MDILayout:
+        case Core::ViewType::MDILayout:
             if (auto view = qobject_cast<MDILayout *>(item))
                 return view->controller();
             break;
 
-        case Core::Type::MDIArea:
-        case Core::Type::SideBar:
+        case Core::ViewType::MDIArea:
+        case Core::ViewType::SideBar:
             // Not implemented for QtQuick yet
             break;
-        case Core::Type::MainWindow:
+        case Core::ViewType::MainWindow:
             if (auto view = qobject_cast<MainWindow *>(item))
                 return view->controller();
             break;
-        case Core::Type::RubberBand:
-        case Core::Type::LayoutItem:
-        case Core::Type::ViewWrapper:
-        case Core::Type::DropAreaIndicatorOverlay:
-        case Core::Type::None:
+        case Core::ViewType::RubberBand:
+        case Core::ViewType::LayoutItem:
+        case Core::ViewType::ViewWrapper:
+        case Core::ViewType::DropAreaIndicatorOverlay:
+        case Core::ViewType::None:
             // skip internal types
             continue;
         }
@@ -253,46 +253,46 @@ void ViewWrapper_qtquick::setSize(int w, int h)
     m_item->setSize(QSizeF(w, h));
 }
 
-bool ViewWrapper_qtquick::is(Core::Type t) const
+bool ViewWrapper_qtquick::is(Core::ViewType t) const
 {
-    if (t == Core::Type::ViewWrapper)
+    if (t == Core::ViewType::ViewWrapper)
         return true;
 
     switch (t) {
 
-    case Core::Type::Frame:
+    case Core::ViewType::Frame:
         return qobject_cast<Group *>(m_item);
-    case Core::Type::TitleBar:
+    case Core::ViewType::TitleBar:
         return qobject_cast<TitleBar *>(m_item);
-    case Core::Type::TabBar:
+    case Core::ViewType::TabBar:
         return qobject_cast<TabBar *>(m_item);
-    case Core::Type::Stack:
+    case Core::ViewType::Stack:
         return qobject_cast<Stack *>(m_item);
-    case Core::Type::FloatingWindow:
+    case Core::ViewType::FloatingWindow:
         return qobject_cast<FloatingWindow *>(m_item);
-    case Core::Type::Separator:
+    case Core::ViewType::Separator:
         return qobject_cast<Separator *>(m_item);
-    case Core::Type::DockWidget:
+    case Core::ViewType::DockWidget:
         return qobject_cast<qtquick::DockWidget *>(m_item);
-    case Core::Type::SideBar:
+    case Core::ViewType::SideBar:
         return false; // QtQuick doesn't support sidebar yet
         // return qobject_cast<SideBar_qtquick *>(m_item);
-    case Core::Type::MainWindow:
+    case Core::ViewType::MainWindow:
         return qobject_cast<qtquick::MainWindow *>(m_item);
-    case Core::Type::DropArea:
+    case Core::ViewType::DropArea:
         return qobject_cast<DropArea *>(m_item);
-    case Core::Type::MDILayout:
+    case Core::ViewType::MDILayout:
         return qobject_cast<MDILayout *>(m_item);
-    case Core::Type::RubberBand:
+    case Core::ViewType::RubberBand:
         return qobject_cast<RubberBand *>(m_item);
-    case Core::Type::MDIArea:
+    case Core::ViewType::MDIArea:
         return false; // Not support by qtquick
-    case Core::Type::LayoutItem:
-    case Core::Type::None:
-    case Core::Type::DropAreaIndicatorOverlay:
+    case Core::ViewType::LayoutItem:
+    case Core::ViewType::None:
+    case Core::ViewType::DropAreaIndicatorOverlay:
         qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
         return false;
-    case Core::Type::ViewWrapper:
+    case Core::ViewType::ViewWrapper:
         return true;
     }
 

@@ -684,7 +684,7 @@ bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
         return false;
 
     // When clicking on a MDI Frame we raise the window
-    if (Controller *c = view->firstParentOfType(Type::Frame)) {
+    if (Controller *c = view->firstParentOfType(ViewType::Frame)) {
         auto group = static_cast<Group *>(c);
         if (group->isMDI())
             group->view()->raise();
@@ -694,7 +694,7 @@ bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
     if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
         return false;
 
-    if (view->is(Type::Frame)) {
+    if (view->is(ViewType::Frame)) {
         // break recursion
         return false;
     }

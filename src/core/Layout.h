@@ -65,7 +65,7 @@ namespace Core {
 class DOCKS_EXPORT Layout : public Controller
 {
 public:
-    explicit Layout(Type, View *);
+    explicit Layout(ViewType, View *);
     ~Layout();
 
     /// @brief Returns whether this layout is in a MainWindow

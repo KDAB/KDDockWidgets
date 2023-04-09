@@ -217,7 +217,7 @@ class QEvent {
   QEvent.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
     thisCpp = cppPointer;
   }
-  QEvent.init() {} //QEvent(QEvent::Type type)
+  QEvent.init() {} //QEvent(QEvent::ViewType type)
   QEvent(int type) {
     final voidstar_Func_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_FFI>>(

@@ -60,7 +60,7 @@ createDropIndicatorOverlay(Core::DropArea *dropArea)
 }
 
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
-    : Layout(Type::DropArea, Config::self().viewFactory()->createDropArea(this, parent))
+    : Layout(ViewType::DropArea, Config::self().viewFactory()->createDropArea(this, parent))
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))
@@ -505,11 +505,11 @@ bool DropArea::validateInputs(View *widget, Location location,
         return false;
     }
 
-    const bool isDockWidget = widget->is(Type::DockWidget);
+    const bool isDockWidget = widget->is(ViewType::DockWidget);
     const bool isStartHidden = option.startsHidden();
 
-    const bool isLayout = widget->is(Type::DropArea) || widget->is(Type::MDILayout);
-    if (!widget->is(Type::Frame) && !isLayout && !isDockWidget) {
+    const bool isLayout = widget->is(ViewType::DropArea) || widget->is(ViewType::MDILayout);
+    if (!widget->is(ViewType::Frame) && !isLayout && !isDockWidget) {
         qWarning() << Q_FUNC_INFO << "Unknown widget type" << widget;
         return false;
     }

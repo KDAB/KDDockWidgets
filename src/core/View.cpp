@@ -31,20 +31,20 @@ using namespace KDDockWidgets::Core;
 namespace KDDockWidgets {
 static qint64 s_nextId = 1;
 
-Controller *maybeCreateController(Controller *controller, Type type, View *view)
+Controller *maybeCreateController(Controller *controller, ViewType type, View *view)
 {
     if (controller)
         return controller;
 
-    if (type == Type::ViewWrapper)
-        return new Controller(Type::ViewWrapper, view);
+    if (type == ViewType::ViewWrapper)
+        return new Controller(ViewType::ViewWrapper, view);
 
-    return new Controller(Type::None, view);
+    return new Controller(ViewType::None, view);
 }
 
 }
 
-View::View(Controller *controller, Type type)
+View::View(Controller *controller, ViewType type)
     : d(new Private())
     , m_controller(maybeCreateController(controller, type, this))
     , m_id(QString::number(KDDockWidgets::s_nextId++))
@@ -57,7 +57,7 @@ View::~View()
     m_inDtor = true;
     d->beingDestroyed.emit();
 
-    if (!freed() && !is(Type::ViewWrapper)) {
+    if (!freed() && !is(ViewType::ViewWrapper)) {
         // TODOm3
         // Views should be deleted via View::free()!
         // However some of our deletes are coming from widgets parent destroying their children
@@ -74,7 +74,7 @@ QString View::id() const
     return m_id;
 }
 
-Type View::type() const
+ViewType View::type() const
 {
     return m_type;
 }
@@ -192,14 +192,14 @@ QSize View::hardcodedMinimumSize()
     return Layouting::Item::hardcodedMinimumSize;
 }
 
-bool View::is(Type t) const
+bool View::is(ViewType t) const
 {
     return int(m_type) & int(t);
 }
 
 Core::FloatingWindow *View::asFloatingWindowController() const
 {
-    if (m_controller && m_controller->is(Type::FloatingWindow))
+    if (m_controller && m_controller->is(ViewType::FloatingWindow))
         return qobject_cast<Core::FloatingWindow *>(m_controller);
 
     return nullptr;
@@ -207,7 +207,7 @@ Core::FloatingWindow *View::asFloatingWindowController() const
 
 Core::Group *View::asGroupController() const
 {
-    if (m_controller && m_controller->is(Type::Frame))
+    if (m_controller && m_controller->is(ViewType::Frame))
         return qobject_cast<Core::Group *>(m_controller);
 
     return nullptr;
@@ -215,7 +215,7 @@ Core::Group *View::asGroupController() const
 
 Core::TitleBar *View::asTitleBarController() const
 {
-    if (m_controller && m_controller->is(Type::TitleBar))
+    if (m_controller && m_controller->is(ViewType::TitleBar))
         return qobject_cast<Core::TitleBar *>(m_controller);
 
     return nullptr;
@@ -223,7 +223,7 @@ Core::TitleBar *View::asTitleBarController() const
 
 Core::TabBar *View::asTabBarController() const
 {
-    if (m_controller && m_controller->is(Type::TabBar))
+    if (m_controller && m_controller->is(ViewType::TabBar))
         return qobject_cast<Core::TabBar *>(m_controller);
 
     return nullptr;
@@ -231,7 +231,7 @@ Core::TabBar *View::asTabBarController() const
 
 Core::Stack *View::asStackController() const
 {
-    if (m_controller && m_controller->is(Type::Stack))
+    if (m_controller && m_controller->is(ViewType::Stack))
         return qobject_cast<Core::Stack *>(m_controller);
 
     return nullptr;
@@ -239,7 +239,7 @@ Core::Stack *View::asStackController() const
 
 Core::DockWidget *View::asDockWidgetController() const
 {
-    if (m_controller && m_controller->is(Type::DockWidget))
+    if (m_controller && m_controller->is(ViewType::DockWidget))
         return qobject_cast<Core::DockWidget *>(m_controller);
 
     return nullptr;
@@ -247,7 +247,7 @@ Core::DockWidget *View::asDockWidgetController() const
 
 Core::MainWindow *View::asMainWindowController() const
 {
-    if (m_controller && m_controller->is(Type::MainWindow))
+    if (m_controller && m_controller->is(ViewType::MainWindow))
         return qobject_cast<Core::MainWindow *>(m_controller);
 
     return nullptr;
@@ -255,7 +255,7 @@ Core::MainWindow *View::asMainWindowController() const
 
 Core::DropArea *View::asDropAreaController() const
 {
-    if (!m_inDtor && m_controller && m_controller->is(Type::DropArea)) {
+    if (!m_inDtor && m_controller && m_controller->is(ViewType::DropArea)) {
         return qobject_cast<Core::DropArea *>(m_controller);
     }
     return nullptr;
@@ -263,7 +263,7 @@ Core::DropArea *View::asDropAreaController() const
 
 Core::MDILayout *View::asMDILayoutController() const
 {
-    if (!m_inDtor && m_controller && m_controller->is(Type::MDILayout))
+    if (!m_inDtor && m_controller && m_controller->is(ViewType::MDILayout))
         return qobject_cast<Core::MDILayout *>(m_controller);
 
     return nullptr;
@@ -352,7 +352,7 @@ bool View::aboutToBeDestroyed() const
 
 
 /** static */
-Controller *View::firstParentOfType(View *view, Type type)
+Controller *View::firstParentOfType(View *view, ViewType type)
 {
     auto p = view->asWrapper();
     while (p) {
@@ -369,7 +369,7 @@ Controller *View::firstParentOfType(View *view, Type type)
     return nullptr;
 }
 
-Controller *View::firstParentOfType(Type type) const
+Controller *View::firstParentOfType(ViewType type) const
 {
     return View::firstParentOfType(const_cast<View *>(this), type);
 }

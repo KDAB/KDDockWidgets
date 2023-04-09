@@ -42,7 +42,7 @@ class View {
   View.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
     thisCpp = cppPointer;
   }
-  View.init() {} //View(Core::Controller * controller, KDDockWidgets::Type arg__2)
+  View.init() {} //View(Core::Controller * controller, KDDockWidgets::ViewType arg__2)
   View(Controller? controller, int arg__2) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
@@ -241,7 +241,7 @@ class View {
             'c_KDDockWidgets__View__equals_View')
         .asFunction();
     return func(thisCpp, other == null ? ffi.nullptr : other.thisCpp) != 0;
-  } // firstParentOfType(KDDockWidgets::Type arg__1) const
+  } // firstParentOfType(KDDockWidgets::ViewType arg__1) const
 
   Controller firstParentOfType(int arg__1) {
     final voidstar_Func_voidstar_int func = _dylib
@@ -252,7 +252,7 @@ class View {
     return Controller.fromCppPointer(result, false);
   }
 
-  static // firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::Type arg__2)
+  static // firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::ViewType arg__2)
       Controller firstParentOfType_2(View? view, int arg__2) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(

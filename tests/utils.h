@@ -159,7 +159,7 @@ inline Core::View *draggableFor(Core::View *view)
         } else {
             draggable = fw->titleBar()->view();
         }
-    } else if (view->is(Core::Type::Stack) || view->is(Core::Type::TitleBar)) {
+    } else if (view->is(Core::ViewType::Stack) || view->is(Core::ViewType::TitleBar)) {
         draggable = view;
     }
 

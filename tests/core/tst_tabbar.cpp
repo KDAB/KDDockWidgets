@@ -24,8 +24,8 @@ TEST_CASE("TabBar ctor")
     Core::Group group(nullptr, {});
     Core::Stack stack(&group, {});
     Core::TabBar tabBar(&stack);
-    CHECK(tabBar.view()->is(Type::TabBar));
-    CHECK(tabBar.view()->asWrapper()->is(Type::TabBar));
+    CHECK(tabBar.view()->is(ViewType::TabBar));
+    CHECK(tabBar.view()->asWrapper()->is(ViewType::TabBar));
 }
 
 TEST_CASE("TabBar indexes")

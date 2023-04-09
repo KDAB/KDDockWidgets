@@ -47,7 +47,7 @@ public:
     bool lastFocusedIsTabWidget() const
     {
         return m_lastFocusedInScope && !m_lastFocusedInScope->isNull()
-            && m_lastFocusedInScope->is(Type::Stack);
+            && m_lastFocusedInScope->is(ViewType::Stack);
     }
 
     ~Private() override;
@@ -127,7 +127,7 @@ void FocusScope::Private::onFocusedViewChanged(std::shared_ptr<View> view)
     const bool is = isInFocusScope(view);
     const bool focusViewChanged = !m_lastFocusedInScope || m_lastFocusedInScope->isNull()
         || !m_lastFocusedInScope->equals(view);
-    if (is && focusViewChanged && !view->is(Type::TitleBar)) {
+    if (is && focusViewChanged && !view->is(ViewType::TitleBar)) {
         m_lastFocusedInScope = view;
         setIsFocused(is);
         /* Q_EMIT */ q->focusedWidgetChangedCallback();
