@@ -163,8 +163,8 @@ bool FloatingWindow::eventFilter(QObject *, QEvent *ev)
 }
 
 #if defined(Q_OS_WIN)
-bool FloatingWindow_qtwidgets::nativeEvent(const QByteArray &eventType, void *message,
-                                           Qt5Qt6Compat::qintptr *result)
+bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message,
+                                 Qt5Qt6Compat::qintptr *result)
 {
     auto fw = floatingWindow();
     if (fw->beingDeleted())

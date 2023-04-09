@@ -185,7 +185,7 @@ private:
 class NCHITTESTEventFilter : public QAbstractNativeEventFilter
 {
 public:
-    explicit NCHITTESTEventFilter(View *fw)
+    explicit NCHITTESTEventFilter(Core::View *fw)
         : m_floatingWindow(fw)
         , m_guard(fw)
     {
@@ -193,8 +193,8 @@ public:
     bool nativeEventFilter(const QByteArray &eventType, void *message,
                            Qt5Qt6Compat::qintptr *result) override;
 
-    View *m_floatingWindow;
-    ViewGuard m_guard = nullptr;
+    Core::View *m_floatingWindow;
+    Core::ViewGuard m_guard = nullptr;
 };
 
 #endif // Q_OS_WIN

@@ -37,6 +37,7 @@
 #include <QTimer>
 
 #ifdef Q_OS_WIN
+#include <QGuiApplication>
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif

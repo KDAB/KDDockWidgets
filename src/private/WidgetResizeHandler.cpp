@@ -31,6 +31,7 @@
 #endif
 
 #if defined(Q_OS_WIN)
+#include <QGuiApplication>
 #include <QtGui/private/qhighdpiscaling_p.h>
 #include <windowsx.h>
 #include <windows.h>
