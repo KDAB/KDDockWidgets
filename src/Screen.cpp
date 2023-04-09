@@ -11,6 +11,6 @@
 
 #include "Screen.h"
 
-using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 Screen::~Screen() = default;

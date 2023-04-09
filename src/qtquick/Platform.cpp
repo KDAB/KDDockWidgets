@@ -173,7 +173,7 @@ void Platform::setQmlEngine(QQmlEngine *qmlEngine)
     QQmlContext *context = qmlEngine->rootContext();
     context->setContextProperty(QStringLiteral("_kddwHelpers"), m_qquickHelpers);
     context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
-    context->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
+    context->setContextProperty(QStringLiteral("_kddwDragController"), Core::DragController::instance());
     context->setContextProperty(QStringLiteral("_kddw_widgetFactory"),
                                 Config::self().viewFactory());
 }

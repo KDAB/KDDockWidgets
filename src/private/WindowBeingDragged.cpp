@@ -59,7 +59,7 @@ static Draggable *bestDraggable(Draggable *draggable)
     }
 }
 
-WindowBeingDragged::WindowBeingDragged(Core::FloatingWindow *fw, Draggable *draggable)
+WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
     : m_floatingWindow(fw)
     , m_draggable(bestDraggable(draggable))
     , m_draggableView(m_draggable ? m_draggable->asView() : nullptr)
@@ -84,7 +84,7 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
 #ifdef DOCKS_DEVELOPER_MODE
 
 // Just used by tests
-WindowBeingDragged::WindowBeingDragged(Core::FloatingWindow *fw)
+WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw)
     : m_floatingWindow(fw)
     , m_draggable(nullptr)
     , m_guard(nullptr)
@@ -170,7 +170,7 @@ QSize WindowBeingDragged::maxSize() const
     return {};
 }
 
-bool WindowBeingDragged::contains(Core::Layout *layout) const
+bool WindowBeingDragged::contains(Layout *layout) const
 {
     if (!layout)
         return false;
@@ -187,7 +187,7 @@ bool WindowBeingDragged::contains(Core::Layout *layout) const
     return false;
 }
 
-QVector<Core::DockWidget *> WindowBeingDragged::dockWidgets() const
+QVector<DockWidget *> WindowBeingDragged::dockWidgets() const
 {
     if (m_floatingWindow)
         return m_floatingWindow->dockWidgets();
@@ -205,7 +205,7 @@ Pixmap WindowBeingDragged::pixmap() const
     return {};
 }
 
-Core::FloatingWindow *WindowBeingDragged::floatingWindow() const
+FloatingWindow *WindowBeingDragged::floatingWindow() const
 {
     return m_floatingWindow;
 }
@@ -225,7 +225,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         if (auto fw = tb->floatingWindow()) {
             // case #1: we're dragging the whole floating window by its titlebar
             m_floatingWindow = fw;
-        } else if (Core::Group *group = tb->group()) {
+        } else if (Group *group = tb->group()) {
             m_group = group;
         } else {
             qWarning() << Q_FUNC_INFO << "Shouldn't happen. TitleBar of what ?";
@@ -283,7 +283,7 @@ QStringList WindowBeingDraggedWayland::affinities() const
     return {};
 }
 
-QVector<Core::DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
+QVector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::dockWidgets();

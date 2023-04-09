@@ -17,11 +17,11 @@
 #include <memory>
 #include <vector>
 
-namespace KDDockWidgets {
+namespace KDDockWidgets::Core {
 
 class EventFilterInterface;
 
-class Core::Platform::Private
+class Platform::Private
 {
 public:
     /// @brief This signal is emitted when the currently focused view changes

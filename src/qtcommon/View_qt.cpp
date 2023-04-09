@@ -48,7 +48,7 @@ public:
 
     bool handleMoveEvent()
     {
-        for (EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
+        for (Core::EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
             if (filter->onMoveEvent(q))
                 return true;
         }
@@ -58,7 +58,7 @@ public:
 
     bool handleMouseEvent(QMouseEvent *ev)
     {
-        for (EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
+        for (Core::EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
 
             if (filter->onMouseEvent(q, ev))
                 return true;

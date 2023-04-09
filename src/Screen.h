@@ -22,7 +22,7 @@ class QRect;
 class QSize;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets {
+namespace KDDockWidgets::Core {
 
 /// @brief Represents a Screen
 /// In Qt for example, this would be equivalent to QScreen.

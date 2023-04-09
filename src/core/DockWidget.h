@@ -36,13 +36,12 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-class DragController;
 class DockRegistry;
 class LayoutSaver;
-class StateDragging;
 
 namespace Core {
 
+class DragController;
 class MainWindow;
 class FloatingWindow;
 class Group;

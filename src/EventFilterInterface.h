@@ -18,9 +18,9 @@
 namespace KDDockWidgets {
 
 namespace Core {
+
 class Window;
 class View;
-}
 
 class EventFilterInterface
 {
@@ -28,31 +28,31 @@ public:
     virtual ~EventFilterInterface();
 
     /// @brief Override to handle expose events for a certain window
-    virtual bool onExposeEvent(std::shared_ptr<Core::Window>)
+    virtual bool onExposeEvent(std::shared_ptr<Window>)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonPress(Core::View *, MouseEvent *)
+    virtual bool onMouseButtonPress(View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonRelease(Core::View *, MouseEvent *)
+    virtual bool onMouseButtonRelease(View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonMove(Core::View *, MouseEvent *)
+    virtual bool onMouseButtonMove(View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse double click event
-    virtual bool onMouseDoubleClick(Core::View *, MouseEvent *)
+    virtual bool onMouseDoubleClick(View *, MouseEvent *)
     {
         return false;
     }
@@ -61,22 +61,24 @@ public:
     /// receives all mouse event types, if you return true here then the specialized counterparts
     /// won't be called Example, if true is returned here for a mouse press, then
     /// onMouseButtonPress() won't be called
-    virtual bool onMouseEvent(Core::View *, MouseEvent *)
+    virtual bool onMouseEvent(View *, MouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle drag enter, drag leave, drag move and drop events
-    virtual bool onDnDEvent(Core::View *, Event *)
+    virtual bool onDnDEvent(View *, Event *)
     {
         return false;
     }
 
     /// @brief Override to handle a move event
-    virtual bool onMoveEvent(Core::View *)
+    virtual bool onMoveEvent(View *)
     {
         return false;
     }
 };
+
+}
 
 }

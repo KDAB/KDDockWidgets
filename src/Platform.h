@@ -21,9 +21,8 @@
 
 namespace KDDockWidgets {
 
-class EventFilterInterface;
-
 namespace Core {
+class EventFilterInterface;
 struct CreateViewOptions;
 class ClassicIndicators;
 class SegmentedIndicators;

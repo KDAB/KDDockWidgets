@@ -20,14 +20,15 @@
 
 namespace KDDockWidgets {
 
+
+class WidgetResizeHandler;
+
 namespace Core {
+
+struct WindowBeingDragged;
 class FloatingWindow;
 class DockWidget;
 class View;
-}
-
-class WidgetResizeHandler;
-struct WindowBeingDragged;
 
 /**
  * @brief Represents something that can be dragged.
@@ -41,9 +42,9 @@ class DOCKS_EXPORT Draggable
 public:
     typedef QVector<Draggable *> List;
 
-    explicit Draggable(Core::View *thisView, bool enabled = true);
+    explicit Draggable(View *thisView, bool enabled = true);
     virtual ~Draggable();
-    Core::View *asView() const;
+    View *asView() const;
 
     /**
      * If this draggable is already a window, do nothing.
@@ -82,7 +83,7 @@ public:
      * Example: This draggable is a floating window with only 1 dock widget
      * Example:  This draggable is a title bar with two dock widgets -> nullptr
      */
-    virtual Core::DockWidget *singleDockWidget() const = 0;
+    virtual DockWidget *singleDockWidget() const = 0;
 
     ///@brief Returns whether this draggable is a MDI window, being dragged internally within a main
     /// window
@@ -115,6 +116,9 @@ private:
     Private *const d;
     Q_DISABLE_COPY(Draggable)
 };
+
+}
+
 }
 
 #endif

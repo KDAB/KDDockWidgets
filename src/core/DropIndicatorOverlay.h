@@ -29,13 +29,13 @@ class DOCKS_EXPORT DropIndicatorOverlay : public Controller
 {
     Q_OBJECT
 public:
-    explicit DropIndicatorOverlay(Core::DropArea *dropArea);
-    void setHoveredFrame(Core::Group *);
+    explicit DropIndicatorOverlay(DropArea *dropArea);
+    void setHoveredFrame(Group *);
     void setWindowBeingDragged(bool);
     QRect hoveredFrameRect() const;
     bool isHovered() const;
     DropLocation currentDropLocation() const;
-    Core::Group *hoveredFrame() const
+    Group *hoveredFrame() const
     {
         return m_hoveredFrame;
     }
@@ -56,7 +56,7 @@ public:
     static KDDockWidgets::Location multisplitterLocationFor(DropLocation);
 
 Q_SIGNALS:
-    void hoveredFrameChanged(Core::Group *);
+    void hoveredFrameChanged(Group *);
     void hoveredFrameRectChanged();
     void currentDropLocationChanged();
 
@@ -68,13 +68,13 @@ private:
 
 protected:
     virtual DropLocation hover_impl(QPoint globalPos) = 0;
-    virtual void onHoveredFrameChanged(Core::Group *);
+    virtual void onHoveredFrameChanged(Group *);
     virtual void updateVisibility()
     {
     }
 
-    Core::Group *m_hoveredFrame = nullptr;
-    Core::DropArea *const m_dropArea;
+    Group *m_hoveredFrame = nullptr;
+    DropArea *const m_dropArea;
     bool m_draggedWindowIsHovering = false;
 };
 

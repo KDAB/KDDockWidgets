@@ -21,7 +21,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class Screen_qt final : public Screen
+class Screen_qt final : public Core::Screen
 {
 public:
     Screen_qt(QScreen *);

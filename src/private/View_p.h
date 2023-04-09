@@ -20,10 +20,9 @@
 
 namespace KDDockWidgets {
 
-class EventFilterInterface;
-
 namespace Core {
 
+class EventFilterInterface;
 class View::Private
 {
 public:

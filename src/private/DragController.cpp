@@ -43,7 +43,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-namespace KDDockWidgets {
+namespace KDDockWidgets::Core {
 ///@brief Custom mouse grabber, for platforms that don't support grabbing the mouse
 class FallbackMouseGrabber : public QObject,
                              public EventFilterInterface /// clazy:exclude=missing-qobject-macro
@@ -277,7 +277,7 @@ void StateDragging::onEntry()
     m_maybeCancelDrag.start();
 #endif
 
-    if (Core::DockWidget *dw = q->m_draggable->singleDockWidget()) {
+    if (DockWidget *dw = q->m_draggable->singleDockWidget()) {
         // When we start to drag a floating window which has a single dock widget, we save the
         // position
         if (dw->isFloating())
@@ -485,7 +485,7 @@ void StateInternalMDIDragging::onEntry()
 
     // Raise the dock widget being dragged
     if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
-        if (Core::Group *f = tb->group())
+        if (Group *f = tb->group())
             f->view()->raise();
     }
 
@@ -508,7 +508,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
         return false;
     }
 
-    Core::Group *group = tb->group();
+    Group *group = tb->group();
     if (!group) {
         // Doesn't happen.
         qWarning() << Q_FUNC_INFO << "null group.";
@@ -870,7 +870,7 @@ DropLocation DragController::currentDropLocation() const
 static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 {
     const Window::List windows = Platform::instance()->windows();
-    for (Core::Window::Ptr window : windows) {
+    for (Window::Ptr window : windows) {
         if (!window->isVisible())
             continue;
 

@@ -117,7 +117,7 @@ QPoint Window_qt::mapToGlobal(QPoint localPos) const
     return m_window->mapToGlobal(localPos);
 }
 
-Screen::Ptr Window_qt::screen() const
+Core::Screen::Ptr Window_qt::screen() const
 {
     return std::make_shared<Screen_qt>(m_window->screen());
 }

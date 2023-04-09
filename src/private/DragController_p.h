@@ -24,17 +24,15 @@
 #include <memory>
 
 namespace KDDockWidgets {
+namespace Core {
 
 class StateBase;
 class StateNone;
 class StateInternalMDIDragging;
-class Draggable;
 class FallbackMouseGrabber;
 class MinimalStateMachine;
-
-namespace Core {
 class DropArea;
-}
+class Draggable;
 
 class State : public QObject
 {
@@ -95,13 +93,13 @@ public:
     bool isInClientDrag() const;
     bool isIdle() const;
 
-    void grabMouseFor(Core::View *);
-    void releaseMouse(Core::View *);
+    void grabMouseFor(View *);
+    void releaseMouse(View *);
 
-    Core::FloatingWindow *floatingWindowBeingDragged() const;
+    FloatingWindow *floatingWindowBeingDragged() const;
 
     /// @brief Returns the current drop area under the mouse
-    Core::DropArea *dropAreaUnderCursor() const;
+    DropArea *dropAreaUnderCursor() const;
 
     ///@brief Returns the window being dragged
     WindowBeingDragged *windowBeingDragged() const;
@@ -136,7 +134,7 @@ private:
 
     DragController(QObject * = nullptr);
     std::shared_ptr<Core::View> qtTopLevelUnderCursor() const;
-    Draggable *draggableForView(Core::View *) const;
+    Core::Draggable *draggableForView(Core::View *) const;
     bool onDnDEvent(Core::View *, Event *) override;
     bool onMoveEvent(Core::View *) override;
     bool onMouseEvent(Core::View *, MouseEvent *) override;
@@ -144,8 +142,8 @@ private:
     QPoint m_pressPos;
     QPoint m_offset;
 
-    QVector<Draggable *> m_draggables;
-    Draggable *m_draggable = nullptr;
+    QVector<Core::Draggable *> m_draggables;
+    Core::Draggable *m_draggable = nullptr;
     Core::ViewGuard m_draggableGuard =
         nullptr; // Just so we know if the draggable was destroyed for some reason
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;
@@ -164,7 +162,7 @@ public:
     ~StateBase();
 
     // Not using QEvent here, to abstract platform differences regarding production of such events
-    virtual bool handleMouseButtonPress(Draggable * /*receiver*/, QPoint /*globalPos*/,
+    virtual bool handleMouseButtonPress(Core::Draggable * /*receiver*/, QPoint /*globalPos*/,
                                         QPoint /*pos*/)
     {
         return false;
@@ -183,19 +181,19 @@ public:
     }
 
     // Only interesting for Wayland
-    virtual bool handleDragEnter(DragEnterEvent *, Core::DropArea *)
+    virtual bool handleDragEnter(DragEnterEvent *, DropArea *)
     {
         return false;
     }
-    virtual bool handleDragLeave(Core::DropArea *)
+    virtual bool handleDragLeave(DropArea *)
     {
         return false;
     }
-    virtual bool handleDragMove(DragMoveEvent *, Core::DropArea *)
+    virtual bool handleDragMove(DragMoveEvent *, DropArea *)
     {
         return false;
     }
-    virtual bool handleDrop(DropEvent *, Core::DropArea *)
+    virtual bool handleDrop(DropEvent *, DropArea *)
     {
         return false;
     }
@@ -270,10 +268,10 @@ public:
     void onEntry() override;
 
     bool handleMouseButtonRelease(QPoint globalPos) override;
-    bool handleDragEnter(DragEnterEvent *, Core::DropArea *) override;
-    bool handleDragMove(DragMoveEvent *, Core::DropArea *) override;
-    bool handleDragLeave(Core::DropArea *) override;
-    bool handleDrop(DropEvent *, Core::DropArea *) override;
+    bool handleDragEnter(DragEnterEvent *, DropArea *) override;
+    bool handleDragMove(DragMoveEvent *, DropArea *) override;
+    bool handleDragLeave(DropArea *) override;
+    bool handleDrop(DropEvent *, DropArea *) override;
     bool handleMouseMove(QPoint globalPos) override;
     bool m_inQDrag = false;
 };
@@ -285,6 +283,8 @@ class WaylandMimeData : public QMimeData
     Q_OBJECT
 public:
 };
+
+}
 
 }
 

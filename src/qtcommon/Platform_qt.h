@@ -50,7 +50,7 @@ public:
     DisplayType displayType() const override;
     bool isLeftMouseButtonPressed() const override;
 
-    QVector<std::shared_ptr<Screen>> screens() const override;
+    QVector<std::shared_ptr<Core::Screen>> screens() const override;
 
     QPoint cursorPos() const override;
     void setCursorPos(QPoint) override;
@@ -63,7 +63,7 @@ public:
 
     static Platform_qt *instance();
 
-    std::shared_ptr<Screen> primaryScreen() const override;
+    std::shared_ptr<Core::Screen> primaryScreen() const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
 

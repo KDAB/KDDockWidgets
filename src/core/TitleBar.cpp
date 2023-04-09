@@ -480,7 +480,7 @@ bool TitleBar::closeButtonEnabled() const
     return m_closeButtonEnabled;
 }
 
-std::unique_ptr<KDDockWidgets::WindowBeingDragged> TitleBar::makeWindow()
+std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 {
     if (!isVisible() && view()->rootView()->controller()->isVisible()
         && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {

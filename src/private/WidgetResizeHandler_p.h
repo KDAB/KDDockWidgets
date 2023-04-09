@@ -29,7 +29,7 @@ namespace Core {
 class FloatingWindow;
 }
 
-class DOCKS_EXPORT WidgetResizeHandler : public QObject, public EventFilterInterface
+class DOCKS_EXPORT WidgetResizeHandler : public QObject, public Core::EventFilterInterface
 {
     Q_OBJECT
 public:

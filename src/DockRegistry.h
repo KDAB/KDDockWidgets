@@ -38,6 +38,7 @@ class SideBar;
 class MainWindow;
 class DockWidget;
 class Group;
+struct WindowBeingDragged;
 }
 
 namespace Views {
@@ -46,9 +47,8 @@ class MainWindowViewInterface;
 }
 
 class MainWindowMDI;
-struct WindowBeingDragged;
 
-class DOCKS_EXPORT DockRegistry : public QObject, public EventFilterInterface
+class DOCKS_EXPORT DockRegistry : public QObject, public Core::EventFilterInterface
 {
     Q_OBJECT
 
@@ -219,7 +219,7 @@ public:
                             Core::FloatingWindow *exclude) const;
 
     /// @overload
-    bool isProbablyObscured(std::shared_ptr<Core::Window> target, WindowBeingDragged *exclude) const;
+    bool isProbablyObscured(std::shared_ptr<Core::Window> target, Core::WindowBeingDragged *exclude) const;
 
     ///@brief Returns whether the specified dock widget is in a side bar, and which.
     /// SideBarLocation::None is returned if it's not in a sidebar.

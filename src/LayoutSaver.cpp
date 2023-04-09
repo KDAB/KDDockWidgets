@@ -1083,7 +1083,7 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
 
-static Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
+static Core::Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
 {
     return mw->view()->screen();
 }

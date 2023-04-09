@@ -30,14 +30,14 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-class Draggable;
-struct WindowBeingDragged;
-
 namespace Core {
+
 class Group;
+class Draggable;
 class DockWidget;
 class Separator;
 class DropIndicatorOverlay;
+struct WindowBeingDragged;
 
 /**
  * MultiSplitter is simply a wrapper around Layouting::Item in which the hosted widgets are
