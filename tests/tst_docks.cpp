@@ -43,7 +43,6 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
 inline int lengthForSize(QSize sz, Qt::Orientation o)

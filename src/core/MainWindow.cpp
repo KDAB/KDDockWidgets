@@ -352,21 +352,21 @@ QRect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation lo
     return rect;
 }
 
-static SideBarLocation opposedSideBarLocationForBorder(Layouting::LayoutBorderLocation loc)
+static SideBarLocation opposedSideBarLocationForBorder(Core::LayoutBorderLocation loc)
 {
     switch (loc) {
-    case Layouting::LayoutBorderLocation_North:
+    case Core::LayoutBorderLocation_North:
         return SideBarLocation::South;
-    case Layouting::LayoutBorderLocation_East:
+    case Core::LayoutBorderLocation_East:
         return SideBarLocation::West;
-    case Layouting::LayoutBorderLocation_West:
+    case Core::LayoutBorderLocation_West:
         return SideBarLocation::East;
-    case Layouting::LayoutBorderLocation_South:
+    case Core::LayoutBorderLocation_South:
         return SideBarLocation::North;
-    case Layouting::LayoutBorderLocation_All:
-    case Layouting::LayoutBorderLocation_Verticals:
-    case Layouting::LayoutBorderLocation_Horizontals:
-    case Layouting::LayoutBorderLocation_None:
+    case Core::LayoutBorderLocation_All:
+    case Core::LayoutBorderLocation_Verticals:
+    case Core::LayoutBorderLocation_Horizontals:
+    case Core::LayoutBorderLocation_None:
         break;
     }
 
@@ -374,21 +374,21 @@ static SideBarLocation opposedSideBarLocationForBorder(Layouting::LayoutBorderLo
     return SideBarLocation::None;
 }
 
-static SideBarLocation sideBarLocationForBorder(Layouting::LayoutBorderLocations loc)
+static SideBarLocation sideBarLocationForBorder(Core::LayoutBorderLocations loc)
 {
     switch (loc) {
-    case Layouting::LayoutBorderLocation_North:
+    case Core::LayoutBorderLocation_North:
         return SideBarLocation::North;
-    case Layouting::LayoutBorderLocation_East:
+    case Core::LayoutBorderLocation_East:
         return SideBarLocation::East;
-    case Layouting::LayoutBorderLocation_West:
+    case Core::LayoutBorderLocation_West:
         return SideBarLocation::West;
-    case Layouting::LayoutBorderLocation_South:
+    case Core::LayoutBorderLocation_South:
         return SideBarLocation::South;
-    case Layouting::LayoutBorderLocation_All:
-    case Layouting::LayoutBorderLocation_Verticals:
-    case Layouting::LayoutBorderLocation_Horizontals:
-    case Layouting::LayoutBorderLocation_None:
+    case Core::LayoutBorderLocation_All:
+    case Core::LayoutBorderLocation_Verticals:
+    case Core::LayoutBorderLocation_Horizontals:
+    case Core::LayoutBorderLocation_None:
         break;
     }
 
@@ -397,53 +397,53 @@ static SideBarLocation sideBarLocationForBorder(Layouting::LayoutBorderLocations
 
 SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) const
 {
-    Layouting::Item *item = q->layout()->itemForFrame(dw->d->group());
+    Core::Item *item = q->layout()->itemForFrame(dw->d->group());
     if (!item) {
         qWarning() << Q_FUNC_INFO << "No item for dock widget";
         return SideBarLocation::None;
     }
 
-    const Layouting::LayoutBorderLocations borders = item->adjacentLayoutBorders();
+    const Core::LayoutBorderLocations borders = item->adjacentLayoutBorders();
     const qreal aspectRatio = dw->width() / (std::max(1, dw->height()) * 1.0);
 
     /// 1. It's touching all borders
-    if (borders == Layouting::LayoutBorderLocation_All) {
+    if (borders == Core::LayoutBorderLocation_All) {
         return aspectRatio > 1.0 ? SideBarLocation::South : SideBarLocation::East;
     }
 
     /// 2. It's touching 3 borders
     for (auto borderLoc :
-         { Layouting::LayoutBorderLocation_North, Layouting::LayoutBorderLocation_East,
-           Layouting::LayoutBorderLocation_West, Layouting::LayoutBorderLocation_South }) {
-        if (borders == (Layouting::LayoutBorderLocation_All & ~borderLoc))
+         { Core::LayoutBorderLocation_North, Core::LayoutBorderLocation_East,
+           Core::LayoutBorderLocation_West, Core::LayoutBorderLocation_South }) {
+        if (borders == (Core::LayoutBorderLocation_All & ~borderLoc))
             return opposedSideBarLocationForBorder(borderLoc);
     }
 
     /// 3. It's touching left and right borders
-    if ((borders & Layouting::LayoutBorderLocation_Verticals)
-        == Layouting::LayoutBorderLocation_Verticals) {
+    if ((borders & Core::LayoutBorderLocation_Verticals)
+        == Core::LayoutBorderLocation_Verticals) {
         // We could measure the distance to the top though.
         return SideBarLocation::South;
     }
 
     /// 4. It's touching top and bottom borders
-    if ((borders & Layouting::LayoutBorderLocation_Horizontals)
-        == Layouting::LayoutBorderLocation_Horizontals) {
+    if ((borders & Core::LayoutBorderLocation_Horizontals)
+        == Core::LayoutBorderLocation_Horizontals) {
         // We could measure the distance to the left though.
         return SideBarLocation::East;
     }
 
     // 5. It's in a corner
-    if (borders == (Layouting::LayoutBorderLocation_West | Layouting::LayoutBorderLocation_South)) {
+    if (borders == (Core::LayoutBorderLocation_West | Core::LayoutBorderLocation_South)) {
         return aspectRatio > 1.0 ? SideBarLocation::South : SideBarLocation::West;
     } else if (borders
-               == (Layouting::LayoutBorderLocation_East | Layouting::LayoutBorderLocation_South)) {
+               == (Core::LayoutBorderLocation_East | Core::LayoutBorderLocation_South)) {
         return aspectRatio > 1.0 ? SideBarLocation::South : SideBarLocation::East;
     } else if (borders
-               == (Layouting::LayoutBorderLocation_West | Layouting::LayoutBorderLocation_North)) {
+               == (Core::LayoutBorderLocation_West | Core::LayoutBorderLocation_North)) {
         return aspectRatio > 1.0 ? SideBarLocation::North : SideBarLocation::West;
     } else if (borders
-               == (Layouting::LayoutBorderLocation_East | Layouting::LayoutBorderLocation_North)) {
+               == (Core::LayoutBorderLocation_East | Core::LayoutBorderLocation_North)) {
         return aspectRatio > 1.0 ? SideBarLocation::North : SideBarLocation::East;
     }
 

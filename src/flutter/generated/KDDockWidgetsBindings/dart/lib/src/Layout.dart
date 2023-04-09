@@ -67,7 +67,7 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__containsFrame_Group')
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
-  } // containsItem(const Layouting::Item * arg__1) const
+  } // containsItem(const Core::Item * arg__1) const
 
   bool containsItem(Item? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
@@ -208,7 +208,7 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__placeholderCount')
         .asFunction();
     return func(thisCpp);
-  } // removeItem(Layouting::Item * item)
+  } // removeItem(Core::Item * item)
 
   removeItem(Item? item) {
     final void_Func_voidstar_voidstar func = _dylib
@@ -216,7 +216,7 @@ class Layout extends Controller {
             'c_KDDockWidgets__Controllers__Layout__removeItem_Item')
         .asFunction();
     func(thisCpp, item == null ? ffi.nullptr : item.thisCpp);
-  } // restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
+  } // restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Core::Item * arg__2, int tabIndex)
 
   restorePlaceholder(DockWidget? dw, Item? arg__2, int tabIndex) {
     final void_Func_voidstar_voidstar_voidstar_int func = _dylib

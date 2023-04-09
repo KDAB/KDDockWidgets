@@ -168,13 +168,13 @@ void View::resize(int w, int h)
 QSize View::boundedMaxSize(QSize min, QSize max)
 {
     // Max should be bigger than min, but not bigger than the hardcoded max
-    max = max.boundedTo(Layouting::Item::hardcodedMaximumSize);
+    max = max.boundedTo(Core::Item::hardcodedMaximumSize);
 
     // 0 interpreted as not having max
     if (max.width() <= 0)
-        max.setWidth(Layouting::Item::hardcodedMaximumSize.width());
+        max.setWidth(Core::Item::hardcodedMaximumSize.width());
     if (max.height() <= 0)
-        max.setHeight(Layouting::Item::hardcodedMaximumSize.height());
+        max.setHeight(Core::Item::hardcodedMaximumSize.height());
 
     max = max.expandedTo(min);
 
@@ -189,7 +189,7 @@ Controller *View::controller() const
 /** static */
 QSize View::hardcodedMinimumSize()
 {
-    return Layouting::Item::hardcodedMinimumSize;
+    return Core::Item::hardcodedMinimumSize;
 }
 
 bool View::is(ViewType t) const

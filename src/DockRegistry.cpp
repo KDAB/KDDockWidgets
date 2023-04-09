@@ -278,7 +278,7 @@ DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
     return result;
 }
 
-Core::Layout *DockRegistry::layoutForItem(const Layouting::Item *item) const
+Core::Layout *DockRegistry::layoutForItem(const Item *item) const
 {
     if (!item->hostView())
         return nullptr;
@@ -286,7 +286,7 @@ Core::Layout *DockRegistry::layoutForItem(const Layouting::Item *item) const
     return item->hostView()->asLayout();
 }
 
-bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const
+bool DockRegistry::itemIsInMainWindow(const Item *item) const
 {
     if (Core::Layout *layout = layoutForItem(item)) {
         return layout->isInMainWindow(/*honoursNesting=*/true);

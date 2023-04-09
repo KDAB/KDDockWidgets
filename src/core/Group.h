@@ -214,7 +214,7 @@ public:
 
     ///@brief returns the layout item that either contains this Frame in the layout or is a
     /// placeholder
-    Layouting::Item *layoutItem() const;
+    Core::Item *layoutItem() const;
 
     ///@brief For tests-only. Returns the number of Frame instances in the whole application.
     static int dbg_numFrames();
@@ -234,7 +234,7 @@ public:
     QStringList affinities() const;
 
     ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
-    void setLayoutItem(Layouting::Item *item);
+    void setLayoutItem(Core::Item *item);
 
     /**
      * Returns the drag rect in global coordinates. This is usually the title bar rect.
@@ -363,7 +363,7 @@ private:
     Layout *m_layout = nullptr;
     WidgetResizeHandler *m_resizeHandler = nullptr;
     FrameOptions m_options = FrameOption_None;
-    QPointer<Layouting::Item> m_layoutItem;
+    QPointer<Core::Item> m_layoutItem;
     bool m_updatingTitleBar = false;
     bool m_beingDeleted = false;
     int m_userType = 0;

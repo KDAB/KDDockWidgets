@@ -29,16 +29,10 @@ class TestMultiSplitter;
 namespace KDDockWidgets {
 
 namespace Core {
+
 class Group;
 class Separator;
 class View;
-}
-
-}
-
-namespace Layouting {
-Q_NAMESPACE
-
 class ItemContainer;
 class ItemBoxContainer;
 class Item;
@@ -48,7 +42,6 @@ enum Side {
     Side1,
     Side2
 };
-Q_ENUM_NS(Side)
 
 enum class GrowthStrategy {
     BothSidesEqually,
@@ -69,14 +62,12 @@ enum class ChildrenResizeStrategy {
                         ///< first
     Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
-Q_ENUM_NS(ChildrenResizeStrategy)
 
 enum class NeighbourSqueezeStrategy {
     AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
     ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the
                              ///< next neighbour is squezed, and so forth
 };
-Q_ENUM_NS(NeighbourSqueezeStrategy)
 
 enum LayoutBorderLocation {
     LayoutBorderLocation_None = 0,
@@ -151,17 +142,17 @@ struct SizingInfo
 
     int length(Qt::Orientation o) const
     {
-        return Layouting::length(size(), o);
+        return Core::length(size(), o);
     }
 
     int minLength(Qt::Orientation o) const
     {
-        return Layouting::length(minSize, o);
+        return Core::length(minSize, o);
     }
 
     int maxLengthHint(Qt::Orientation o) const
     {
-        return qMax(minLength(o), Layouting::length(maxSizeHint, o));
+        return qMax(minLength(o), Core::length(maxSizeHint, o));
     }
 
     int availableLength(Qt::Orientation o) const
@@ -181,7 +172,7 @@ struct SizingInfo
 
     int position(Qt::Orientation o) const
     {
-        return Layouting::pos(pos(), o);
+        return Core::pos(pos(), o);
     }
 
     int edge(Qt::Orientation o) const
@@ -347,9 +338,9 @@ public:
     KDBindings::Signal<> yChanged;
     KDBindings::Signal<> widthChanged;
     KDBindings::Signal<> heightChanged;
-    KDBindings::Signal<Layouting::Item *, bool> visibleChanged;
-    KDBindings::Signal<Layouting::Item *> minSizeChanged;
-    KDBindings::Signal<Layouting::Item *> maxSizeChanged;
+    KDBindings::Signal<Core::Item *, bool> visibleChanged;
+    KDBindings::Signal<Core::Item *> minSizeChanged;
+    KDBindings::Signal<Core::Item *> maxSizeChanged;
 
 protected:
     friend class ::TestMultiSplitter;
@@ -589,7 +580,7 @@ public:
 private:
     void simplify();
     static bool s_inhibitSimplify;
-    friend class Layouting::Item;
+    friend class Core::Item;
     friend class ::TestMultiSplitter;
     struct Private;
     Private *const d;
@@ -622,5 +613,7 @@ struct AtomicSanityChecks
     Item *const m_root;
     Q_DISABLE_COPY(AtomicSanityChecks)
 };
+
+}
 
 }

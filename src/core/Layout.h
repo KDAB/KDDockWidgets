@@ -14,7 +14,7 @@
  * @brief A widget that supports an arbitrary number of splitters (called Separators) in any
  * combination of vertical/horizontal.
  *
- * This is a widget wrapper around the multisplitter layout (Layouting::Item)
+ * This is a widget wrapper around the multisplitter layout (Core::Item)
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
@@ -34,12 +34,6 @@
 
 #include <QList>
 
-namespace Layouting {
-class Item;
-class ItemContainer;
-class Separator;
-}
-
 namespace KDDockWidgets {
 
 namespace Core {
@@ -47,9 +41,9 @@ class Group;
 class FloatingWindow;
 class DockWidget;
 class MainWindow;
-}
-
-namespace Core {
+class Item;
+class ItemContainer;
+class Separator;
 
 /**
  * @brief The widget (QWidget or QQuickItem) which holds a layout of dock widgets.
@@ -58,7 +52,7 @@ namespace Core {
  * different layouts, like MDI layouts, which are very different than traditional dock widget
  * layouts.
  *
- * This class makes the bridge between the GUI world (QWidget) and Layouting::Item world.
+ * This class makes the bridge between the GUI world (QWidget) and Core::Item world.
  * It's suitable to be set as a main window central widget for instance. The actual layouting is
  * then done by the root Item.
  */
@@ -130,17 +124,17 @@ public:
 
 
     /// @brief restores the dockwidget @p dw to its previous position
-    void restorePlaceholder(Core::DockWidget *dw, Layouting::Item *, int tabIndex);
+    void restorePlaceholder(Core::DockWidget *dw, Core::Item *, int tabIndex);
 
     /**
      * @brief The list of items in this layout.
      */
-    const QVector<Layouting::Item *> items() const;
+    const QVector<Core::Item *> items() const;
 
     /**
      * @brief Returns true if this layout contains the specified item.
      */
-    bool containsItem(const Layouting::Item *) const;
+    bool containsItem(const Core::Item *) const;
 
     /**
      * @brief  Returns true if this layout contains the specified group.
@@ -171,7 +165,7 @@ public:
     /**
      * @brief returns the Item that holds @p group in this layout
      */
-    Layouting::Item *itemForFrame(const Core::Group *group) const;
+    Core::Item *itemForFrame(const Core::Group *group) const;
 
     /**
      * @brief Returns this list of Group objects contained in this layout
@@ -184,7 +178,7 @@ public:
     /**
      * @brief Removes an item from this MultiSplitter.
      */
-    void removeItem(Layouting::Item *item);
+    void removeItem(Core::Item *item);
 
     /**
      * @brief Updates the min size of this layout.
@@ -202,12 +196,12 @@ public:
 
     void viewAboutToBeDeleted();
 
-    Layouting::ItemContainer *rootItem() const;
+    Core::ItemContainer *rootItem() const;
 
     void onCloseEvent(CloseEvent *);
 
 protected:
-    void setRootItem(Layouting::ItemContainer *root);
+    void setRootItem(Core::ItemContainer *root);
     /**
      * @brief setter for the minimum size
      * @ref minimumSize
@@ -235,7 +229,7 @@ protected:
 private:
     bool onResize(QSize newSize);
     bool m_inResizeEvent = false;
-    Layouting::ItemContainer *m_rootItem = nullptr;
+    Core::ItemContainer *m_rootItem = nullptr;
     KDBindings::ConnectionHandle m_minSizeChangedHandler;
     bool m_viewDeleted = false;
 };

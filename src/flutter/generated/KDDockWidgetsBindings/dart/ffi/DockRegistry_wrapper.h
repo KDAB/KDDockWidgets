@@ -41,8 +41,8 @@ public:
     bool hasFloatingWindows() const;
     bool isEmpty(bool excludeBeingDeleted = false) const;
     bool isSane() const;
-    bool itemIsInMainWindow(const Layouting::Item *arg__1) const;
-    KDDockWidgets::Core::Layout *layoutForItem(const Layouting::Item *arg__1) const;
+    bool itemIsInMainWindow(const Core::Item *arg__1) const;
+    KDDockWidgets::Core::Layout *layoutForItem(const Core::Item *arg__1) const;
     KDDockWidgets::Core::MainWindow *mainWindowByName(const QString &arg__1) const;
     void registerDockWidget(KDDockWidgets::Core::DockWidget *arg__1);
     void registerFloatingWindow(KDDockWidgets::Core::FloatingWindow *arg__1);
@@ -88,9 +88,9 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__DockRegistry__hasFloatingWind
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__DockRegistry__isEmpty_bool(void *thisObj, bool excludeBeingDeleted);
 // KDDockWidgets::DockRegistry::isSane() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__DockRegistry__isSane(void *thisObj);
-// KDDockWidgets::DockRegistry::itemIsInMainWindow(const Layouting::Item * arg__1) const
+// KDDockWidgets::DockRegistry::itemIsInMainWindow(const Core::Item * arg__1) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__DockRegistry__itemIsInMainWindow_Item(void *thisObj, void *arg__1_);
-// KDDockWidgets::DockRegistry::layoutForItem(const Layouting::Item * arg__1) const
+// KDDockWidgets::DockRegistry::layoutForItem(const Core::Item * arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__layoutForItem_Item(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::mainWindowByName(const QString & arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__mainWindowByName_QString(void *thisObj, const char *arg__1_);

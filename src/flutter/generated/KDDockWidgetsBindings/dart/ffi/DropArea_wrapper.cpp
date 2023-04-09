@@ -43,7 +43,7 @@ void DropArea_wrapper::addWidget(KDDockWidgets::Core::View *widget, KDDockWidget
 {
     ::KDDockWidgets::Core::DropArea::addWidget(widget, location, relativeTo, option);
 }
-Layouting::Item *DropArea_wrapper::centralFrame() const
+Core::Item *DropArea_wrapper::centralFrame() const
 {
     return ::KDDockWidgets::Core::DropArea::centralFrame();
 }

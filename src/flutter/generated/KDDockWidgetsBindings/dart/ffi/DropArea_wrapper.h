@@ -32,7 +32,7 @@ public:
     void addDockWidget(KDDockWidgets::Core::DockWidget *dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption = {});
     void addMultiSplitter(KDDockWidgets::Core::DropArea *splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
     void addWidget(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
-    Layouting::Item *centralFrame() const;
+    Core::Item *centralFrame() const;
     bool containsDockWidget(KDDockWidgets::Core::DockWidget *arg__1) const;
     static KDDockWidgets::Core::Group *createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options);
     KDDockWidgets::DropLocation currentDropLocation() const;

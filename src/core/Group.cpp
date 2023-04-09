@@ -594,7 +594,7 @@ bool Group::anyNonDockable() const
     return false;
 }
 
-void Group::setLayoutItem(Layouting::Item *item)
+void Group::setLayoutItem(Item *item)
 {
     if (item == m_layoutItem)
         return;
@@ -615,7 +615,7 @@ void Group::setLayoutItem(Layouting::Item *item)
     }
 }
 
-Layouting::Item *Group::layoutItem() const
+Item *Group::layoutItem() const
 {
     return m_layoutItem;
 }
@@ -767,7 +767,7 @@ void Group::scheduleDeleteLater()
 
 QSize Group::dockWidgetsMinSize() const
 {
-    QSize size = Layouting::Item::hardcodedMinimumSize;
+    QSize size = Item::hardcodedMinimumSize;
     for (DockWidget *dw : dockWidgets())
         size = size.expandedTo(dw->view()->minSize());
 
@@ -776,24 +776,24 @@ QSize Group::dockWidgetsMinSize() const
 
 QSize Group::biggestDockWidgetMaxSize() const
 {
-    QSize size = Layouting::Item::hardcodedMaximumSize;
+    QSize size = Item::hardcodedMaximumSize;
     for (DockWidget *dw : dockWidgets()) {
         const QSize dwMax = dw->view()->maxSizeHint();
-        if (size == Layouting::Item::hardcodedMaximumSize) {
+        if (size == Item::hardcodedMaximumSize) {
             size = dwMax;
             continue;
         }
 
-        const bool hasMaxSize = dwMax != Layouting::Item::hardcodedMaximumSize;
+        const bool hasMaxSize = dwMax != Item::hardcodedMaximumSize;
         if (hasMaxSize)
             size = dwMax.expandedTo(size);
     }
 
     // Interpret 0 max-size as not having one too.
     if (size.width() == 0)
-        size.setWidth(Layouting::Item::hardcodedMaximumSize.width());
+        size.setWidth(Item::hardcodedMaximumSize.width());
     if (size.height() == 0)
-        size.setHeight(Layouting::Item::hardcodedMaximumSize.height());
+        size.setHeight(Item::hardcodedMaximumSize.height());
 
     return size;
 }

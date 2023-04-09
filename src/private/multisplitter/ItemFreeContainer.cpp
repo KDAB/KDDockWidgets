@@ -12,14 +12,14 @@
 #include "ItemFreeContainer_p.h"
 #include "core/View.h"
 
-using namespace Layouting;
+using namespace KDDockWidgets::Core;
 
-ItemFreeContainer::ItemFreeContainer(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent)
+ItemFreeContainer::ItemFreeContainer(View *hostWidget, ItemContainer *parent)
     : ItemContainer(hostWidget, parent)
 {
 }
 
-ItemFreeContainer::ItemFreeContainer(KDDockWidgets::Core::View *hostWidget)
+ItemFreeContainer::ItemFreeContainer(View *hostWidget)
     : ItemContainer(hostWidget)
 {
 }

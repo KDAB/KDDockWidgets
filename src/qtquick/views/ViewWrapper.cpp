@@ -235,8 +235,8 @@ QSize ViewWrapper_qtquick::maxSizeHint() const
         return view->maxSizeHint();
     } else {
         const QSize max = m_item->property("kddockwidgets_max_size").toSize();
-        return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
-                             : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
+        return max.isEmpty() ? Core::Item::hardcodedMaximumSize
+                             : max.boundedTo(Core::Item::hardcodedMaximumSize);
     }
 }
 
@@ -407,7 +407,7 @@ QSize ViewWrapper_qtquick::minSize() const
         return view->minSize();
     } else {
         const QSize min = m_item->property("kddockwidgets_min_size").toSize();
-        return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
+        return min.expandedTo(Core::Item::hardcodedMinimumSize);
     }
 }
 

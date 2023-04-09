@@ -28,12 +28,12 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 Item_wrapper::Item_wrapper(KDDockWidgets::Core::View *hostWidget)
-    : ::Layouting::Item(hostWidget)
+    : ::Core::Item(hostWidget)
 {
 }
 KDDockWidgets::Core::Group *Item_wrapper::asGroupController() const
 {
-    return ::Layouting::Item::asGroupController();
+    return ::Core::Item::asGroupController();
 }
 bool Item_wrapper::checkSanity()
 {
@@ -41,12 +41,12 @@ bool Item_wrapper::checkSanity()
         const void *thisPtr = this;
         return m_checkSanityCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::Layouting::Item::checkSanity();
+        return ::Core::Item::checkSanity();
     }
 }
 bool Item_wrapper::checkSanity_nocallback()
 {
-    return ::Layouting::Item::checkSanity();
+    return ::Core::Item::checkSanity();
 }
 void Item_wrapper::dumpLayout(int level)
 {
@@ -54,48 +54,48 @@ void Item_wrapper::dumpLayout(int level)
         const void *thisPtr = this;
         m_dumpLayoutCallback(const_cast<void *>(thisPtr), level);
     } else {
-        ::Layouting::Item::dumpLayout(level);
+        ::Core::Item::dumpLayout(level);
     }
 }
 void Item_wrapper::dumpLayout_nocallback(int level)
 {
-    ::Layouting::Item::dumpLayout(level);
+    ::Core::Item::dumpLayout(level);
 }
 QRect Item_wrapper::geometry() const
 {
-    return ::Layouting::Item::geometry();
+    return ::Core::Item::geometry();
 }
 KDDockWidgets::Core::View *Item_wrapper::guestView() const
 {
-    return ::Layouting::Item::guestView();
+    return ::Core::Item::guestView();
 }
 int Item_wrapper::height() const
 {
-    return ::Layouting::Item::height();
+    return ::Core::Item::height();
 }
 KDDockWidgets::Core::View *Item_wrapper::hostView() const
 {
-    return ::Layouting::Item::hostView();
+    return ::Core::Item::hostView();
 }
 bool Item_wrapper::isBeingInserted() const
 {
-    return ::Layouting::Item::isBeingInserted();
+    return ::Core::Item::isBeingInserted();
 }
 bool Item_wrapper::isContainer() const
 {
-    return ::Layouting::Item::isContainer();
+    return ::Core::Item::isContainer();
 }
 bool Item_wrapper::isMDI() const
 {
-    return ::Layouting::Item::isMDI();
+    return ::Core::Item::isMDI();
 }
 bool Item_wrapper::isPlaceholder() const
 {
-    return ::Layouting::Item::isPlaceholder();
+    return ::Core::Item::isPlaceholder();
 }
 bool Item_wrapper::isRoot() const
 {
-    return ::Layouting::Item::isRoot();
+    return ::Core::Item::isRoot();
 }
 bool Item_wrapper::isVisible(bool excludeBeingInserted) const
 {
@@ -103,32 +103,32 @@ bool Item_wrapper::isVisible(bool excludeBeingInserted) const
         const void *thisPtr = this;
         return m_isVisibleCallback(const_cast<void *>(thisPtr), excludeBeingInserted);
     } else {
-        return ::Layouting::Item::isVisible(excludeBeingInserted);
+        return ::Core::Item::isVisible(excludeBeingInserted);
     }
 }
 bool Item_wrapper::isVisible_nocallback(bool excludeBeingInserted) const
 {
-    return ::Layouting::Item::isVisible(excludeBeingInserted);
+    return ::Core::Item::isVisible(excludeBeingInserted);
 }
 QPoint Item_wrapper::mapFromParent(QPoint arg__1) const
 {
-    return ::Layouting::Item::mapFromParent(arg__1);
+    return ::Core::Item::mapFromParent(arg__1);
 }
 QPoint Item_wrapper::mapFromRoot(QPoint arg__1) const
 {
-    return ::Layouting::Item::mapFromRoot(arg__1);
+    return ::Core::Item::mapFromRoot(arg__1);
 }
 QRect Item_wrapper::mapFromRoot(QRect arg__1) const
 {
-    return ::Layouting::Item::mapFromRoot(arg__1);
+    return ::Core::Item::mapFromRoot(arg__1);
 }
 QPoint Item_wrapper::mapToRoot(QPoint arg__1) const
 {
-    return ::Layouting::Item::mapToRoot(arg__1);
+    return ::Core::Item::mapToRoot(arg__1);
 }
 QRect Item_wrapper::mapToRoot(QRect arg__1) const
 {
-    return ::Layouting::Item::mapToRoot(arg__1);
+    return ::Core::Item::mapToRoot(arg__1);
 }
 QSize Item_wrapper::maxSizeHint() const
 {
@@ -136,12 +136,12 @@ QSize Item_wrapper::maxSizeHint() const
         const void *thisPtr = this;
         return *m_maxSizeHintCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::Layouting::Item::maxSizeHint();
+        return ::Core::Item::maxSizeHint();
     }
 }
 QSize Item_wrapper::maxSizeHint_nocallback() const
 {
-    return ::Layouting::Item::maxSizeHint();
+    return ::Core::Item::maxSizeHint();
 }
 QSize Item_wrapper::minSize() const
 {
@@ -149,44 +149,44 @@ QSize Item_wrapper::minSize() const
         const void *thisPtr = this;
         return *m_minSizeCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::Layouting::Item::minSize();
+        return ::Core::Item::minSize();
     }
 }
 QSize Item_wrapper::minSize_nocallback() const
 {
-    return ::Layouting::Item::minSize();
+    return ::Core::Item::minSize();
 }
 QSize Item_wrapper::missingSize() const
 {
-    return ::Layouting::Item::missingSize();
+    return ::Core::Item::missingSize();
 }
 QPoint Item_wrapper::pos() const
 {
-    return ::Layouting::Item::pos();
+    return ::Core::Item::pos();
 }
 QRect Item_wrapper::rect() const
 {
-    return ::Layouting::Item::rect();
+    return ::Core::Item::rect();
 }
 void Item_wrapper::ref()
 {
-    ::Layouting::Item::ref();
+    ::Core::Item::ref();
 }
 int Item_wrapper::refCount() const
 {
-    return ::Layouting::Item::refCount();
+    return ::Core::Item::refCount();
 }
 void Item_wrapper::restore(KDDockWidgets::Core::View *guestView)
 {
-    ::Layouting::Item::restore(guestView);
+    ::Core::Item::restore(guestView);
 }
 void Item_wrapper::setBeingInserted(bool arg__1)
 {
-    ::Layouting::Item::setBeingInserted(arg__1);
+    ::Core::Item::setBeingInserted(arg__1);
 }
 void Item_wrapper::setGeometry(QRect rect)
 {
-    ::Layouting::Item::setGeometry(rect);
+    ::Core::Item::setGeometry(rect);
 }
 void Item_wrapper::setGeometry_recursive(QRect rect)
 {
@@ -194,16 +194,16 @@ void Item_wrapper::setGeometry_recursive(QRect rect)
         const void *thisPtr = this;
         m_setGeometry_recursiveCallback(const_cast<void *>(thisPtr), &rect);
     } else {
-        ::Layouting::Item::setGeometry_recursive(rect);
+        ::Core::Item::setGeometry_recursive(rect);
     }
 }
 void Item_wrapper::setGeometry_recursive_nocallback(QRect rect)
 {
-    ::Layouting::Item::setGeometry_recursive(rect);
+    ::Core::Item::setGeometry_recursive(rect);
 }
 void Item_wrapper::setGuestView(KDDockWidgets::Core::View *arg__1)
 {
-    ::Layouting::Item::setGuestView(arg__1);
+    ::Core::Item::setGuestView(arg__1);
 }
 void Item_wrapper::setHostView(KDDockWidgets::Core::View *arg__1)
 {
@@ -211,12 +211,12 @@ void Item_wrapper::setHostView(KDDockWidgets::Core::View *arg__1)
         const void *thisPtr = this;
         m_setHostViewCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        ::Layouting::Item::setHostView(arg__1);
+        ::Core::Item::setHostView(arg__1);
     }
 }
 void Item_wrapper::setHostView_nocallback(KDDockWidgets::Core::View *arg__1)
 {
-    ::Layouting::Item::setHostView(arg__1);
+    ::Core::Item::setHostView(arg__1);
 }
 void Item_wrapper::setIsVisible(bool arg__1)
 {
@@ -224,44 +224,44 @@ void Item_wrapper::setIsVisible(bool arg__1)
         const void *thisPtr = this;
         m_setIsVisibleCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        ::Layouting::Item::setIsVisible(arg__1);
+        ::Core::Item::setIsVisible(arg__1);
     }
 }
 void Item_wrapper::setIsVisible_nocallback(bool arg__1)
 {
-    ::Layouting::Item::setIsVisible(arg__1);
+    ::Core::Item::setIsVisible(arg__1);
 }
 void Item_wrapper::setMaxSizeHint(QSize arg__1)
 {
-    ::Layouting::Item::setMaxSizeHint(arg__1);
+    ::Core::Item::setMaxSizeHint(arg__1);
 }
 void Item_wrapper::setMinSize(QSize arg__1)
 {
-    ::Layouting::Item::setMinSize(arg__1);
+    ::Core::Item::setMinSize(arg__1);
 }
 void Item_wrapper::setPos(QPoint arg__1)
 {
-    ::Layouting::Item::setPos(arg__1);
+    ::Core::Item::setPos(arg__1);
 }
 void Item_wrapper::setSize(QSize arg__1)
 {
-    ::Layouting::Item::setSize(arg__1);
+    ::Core::Item::setSize(arg__1);
 }
 QSize Item_wrapper::size() const
 {
-    return ::Layouting::Item::size();
+    return ::Core::Item::size();
 }
 QString Item_wrapper::tr(const char *s, const char *c, int n)
 {
-    return ::Layouting::Item::tr(s, c, n);
+    return ::Core::Item::tr(s, c, n);
 }
 void Item_wrapper::turnIntoPlaceholder()
 {
-    ::Layouting::Item::turnIntoPlaceholder();
+    ::Core::Item::turnIntoPlaceholder();
 }
 void Item_wrapper::unref()
 {
-    ::Layouting::Item::unref();
+    ::Core::Item::unref();
 }
 void Item_wrapper::updateWidgetGeometries()
 {
@@ -269,12 +269,12 @@ void Item_wrapper::updateWidgetGeometries()
         const void *thisPtr = this;
         m_updateWidgetGeometriesCallback(const_cast<void *>(thisPtr));
     } else {
-        ::Layouting::Item::updateWidgetGeometries();
+        ::Core::Item::updateWidgetGeometries();
     }
 }
 void Item_wrapper::updateWidgetGeometries_nocallback()
 {
-    ::Layouting::Item::updateWidgetGeometries();
+    ::Core::Item::updateWidgetGeometries();
 }
 int Item_wrapper::visibleCount_recursive() const
 {
@@ -282,33 +282,33 @@ int Item_wrapper::visibleCount_recursive() const
         const void *thisPtr = this;
         return m_visibleCount_recursiveCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::Layouting::Item::visibleCount_recursive();
+        return ::Core::Item::visibleCount_recursive();
     }
 }
 int Item_wrapper::visibleCount_recursive_nocallback() const
 {
-    return ::Layouting::Item::visibleCount_recursive();
+    return ::Core::Item::visibleCount_recursive();
 }
 int Item_wrapper::width() const
 {
-    return ::Layouting::Item::width();
+    return ::Core::Item::width();
 }
 int Item_wrapper::x() const
 {
-    return ::Layouting::Item::x();
+    return ::Core::Item::x();
 }
 int Item_wrapper::y() const
 {
-    return ::Layouting::Item::y();
+    return ::Core::Item::y();
 }
 Item_wrapper::~Item_wrapper()
 {
 }
 
 }
-static Layouting::Item *fromPtr(void *ptr)
+static Core::Item *fromPtr(void *ptr)
 {
-    return reinterpret_cast<Layouting::Item *>(ptr);
+    return reinterpret_cast<Core::Item *>(ptr);
 }
 static KDDockWidgetsBindings_wrappersNS::Item_wrapper *fromWrapperPtr(void *ptr)
 {

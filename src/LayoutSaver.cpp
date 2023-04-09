@@ -294,7 +294,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::Placeholder &placeHolder
 void to_json(nlohmann::json &json, const QHash<KDDockWidgets::SideBarLocation, QRect> &geometries)
 {
     for (auto it = geometries.cbegin(), end = geometries.cend(); it != end; ++it) {
-        json[QString::number(static_cast<int>(it.key())).toLatin1().data()] = Layouting::rectToMap(it.value());
+        json[QString::number(static_cast<int>(it.key())).toLatin1().data()] = Core::rectToMap(it.value());
     }
 }
 

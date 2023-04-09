@@ -48,7 +48,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
-using namespace Layouting;
 
 /// Helper function so we don't write such a big line everywhere
 inline Core::DockWidget *newDockWidget(const QString &uniqueName,
@@ -1326,7 +1325,7 @@ void TestQtWidgets::tst_maxSizePropagates2()
 
     Core::Group *group1 = dock1->dptr()->group();
 
-    Layouting::ItemBoxContainer *root = m1->multiSplitter()->rootItem();
+    Core::ItemBoxContainer *root = m1->multiSplitter()->rootItem();
     Item *item1 = root->itemForView(group1->view());
     auto vertSep1 = root->separators().constFirst();
     const int min1 = root->minPosForSeparator_global(vertSep1);
@@ -1394,7 +1393,7 @@ void TestQtWidgets::tst_fixedSizePolicy()
              SizePolicy(button->sizePolicy().horizontalPolicy()));
 
     QCOMPARE(group->view()->maxSizeHint().height(),
-             qMax(buttonMaxHeight, Layouting::Item::hardcodedMinimumSize.height()));
+             qMax(buttonMaxHeight, Core::Item::hardcodedMinimumSize.height()));
 }
 
 void TestQtWidgets::tst_restoreFloatingMaximizedState()

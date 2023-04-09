@@ -77,7 +77,7 @@ public:
         }
 
         if (ev->type() == QEvent::Expose) {
-            Layouting::AtomicSanityChecks checks(m_view->rootItem());
+            Core::AtomicSanityChecks checks(m_view->rootItem());
             auto res = QQuickView::event(ev);
             return res;
         } else {
@@ -105,7 +105,7 @@ public:
         if (m_view->asFloatingWindowController()->beingDeleted())
             return;
 
-        Layouting::AtomicSanityChecks checks(m_view->rootItem());
+        Core::AtomicSanityChecks checks(m_view->rootItem());
         m_view->View::setSize(size());
     }
 
@@ -248,7 +248,7 @@ QObject *FloatingWindow::dropArea() const
     return nullptr;
 }
 
-Layouting::Item *FloatingWindow::rootItem() const
+Core::Item *FloatingWindow::rootItem() const
 {
     if (auto da = m_controller->dropArea())
         return da->rootItem();

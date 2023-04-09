@@ -24,11 +24,9 @@ namespace KDDockWidgets {
 class Config;
 }
 
-namespace Layouting {
-class ItemBoxContainer;
-}
-
 namespace KDDockWidgets::Core {
+
+class ItemBoxContainer;
 
 class DOCKS_EXPORT Separator : public Controller
 {
@@ -38,14 +36,14 @@ public:
     explicit Separator(View *host);
     virtual ~Separator() override;
 
-    void init(Layouting::ItemBoxContainer *parentContainer, Qt::Orientation orientation);
+    void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation);
     bool isVertical() const;
     void move(int p);
     int position() const;
     Qt::Orientation orientation() const;
     void setGeometry(QRect r);
     void setGeometry(int pos, int pos2, int length);
-    Layouting::ItemBoxContainer *parentContainer() const;
+    Core::ItemBoxContainer *parentContainer() const;
 
     ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other
     /// work while we're not in the final size

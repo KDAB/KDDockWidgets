@@ -37,18 +37,17 @@
 
 // clazy:excludeall=missing-typeinfo,old-style-connect
 
-using namespace Layouting;
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-int Layouting::Item::separatorThickness = 5;
-bool Layouting::Item::s_silenceSanityChecks = false;
+int Core::Item::separatorThickness = 5;
+bool Core::Item::s_silenceSanityChecks = false;
 
 // There are the defaults. They can be changed by the user via Config.h API.
-QSize Layouting::Item::hardcodedMinimumSize = QSize(80, 90);
-QSize Layouting::Item::hardcodedMaximumSize = QSize(16777215, 16777215);
+QSize Core::Item::hardcodedMinimumSize = QSize(80, 90);
+QSize Core::Item::hardcodedMaximumSize = QSize(16777215, 16777215);
 
-bool Layouting::ItemBoxContainer::s_inhibitSimplify = false;
+bool Core::ItemBoxContainer::s_inhibitSimplify = false;
 
 inline bool locationIsVertical(Location loc)
 {
@@ -91,7 +90,7 @@ inline QRect adjustedRect(QRect r, Qt::Orientation o, int p1, int p2)
     return r;
 }
 
-namespace Layouting {
+namespace KDDockWidgets::Core {
 struct LengthOnSide
 {
     int length = 0;
@@ -564,12 +563,12 @@ bool Item::isContainer() const
 
 int Item::minLength(Qt::Orientation o) const
 {
-    return Layouting::length(minSize(), o);
+    return Core::length(minSize(), o);
 }
 
 int Item::maxLengthHint(Qt::Orientation o) const
 {
-    return Layouting::length(maxSizeHint(), o);
+    return Core::length(maxSizeHint(), o);
 }
 
 void Item::setLength(int length, Qt::Orientation o)
@@ -591,7 +590,7 @@ void Item::setLength_recursive(int length, Qt::Orientation o)
 
 int Item::length(Qt::Orientation o) const
 {
-    return Layouting::length(size(), o);
+    return Core::length(size(), o);
 }
 
 int Item::availableLength(Qt::Orientation o) const
@@ -1043,7 +1042,7 @@ bool ItemBoxContainer::checkSanity()
     for (Item *item : children) {
         if (!item->isVisible())
             continue;
-        const int pos = Layouting::pos(item->pos(), d->m_orientation);
+        const int pos = Core::pos(item->pos(), d->m_orientation);
         if (expectedPos != pos) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected pos" << pos << "; expected=" << expectedPos
@@ -1051,10 +1050,10 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        expectedPos = pos + Layouting::length(item->size(), d->m_orientation) + separatorThickness;
+        expectedPos = pos + Core::length(item->size(), d->m_orientation) + separatorThickness;
     }
 
-    const int h1 = Layouting::length(size(), oppositeOrientation(d->m_orientation));
+    const int h1 = Core::length(size(), oppositeOrientation(d->m_orientation));
     for (Item *item : children) {
         if (item->parentContainer() != this) {
             qWarning() << "Invalid parent container for" << item
@@ -1070,7 +1069,7 @@ bool ItemBoxContainer::checkSanity()
 
         if (item->isVisible()) {
             // Check the children height (if horizontal, and vice-versa)
-            const int h2 = Layouting::length(item->size(), oppositeOrientation(d->m_orientation));
+            const int h2 = Core::length(item->size(), oppositeOrientation(d->m_orientation));
             if (h1 != h2) {
                 root()->dumpLayout();
                 qWarning() << Q_FUNC_INFO << "Invalid size for item." << item
@@ -1129,7 +1128,7 @@ bool ItemBoxContainer::checkSanity()
     const QSize expectedSeparatorSize = isVertical() ? QSize(width(), Item::separatorThickness)
                                                      : QSize(Item::separatorThickness, height());
 
-    const int pos2 = Layouting::pos(mapToRoot(QPoint(0, 0)), oppositeOrientation(d->m_orientation));
+    const int pos2 = Core::pos(mapToRoot(QPoint(0, 0)), oppositeOrientation(d->m_orientation));
 
     for (int i = 0; i < d->m_separators.size(); ++i) {
         KDDockWidgets::Core::Separator *separator = d->m_separators.at(i);
@@ -1163,10 +1162,10 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        const int separatorPos2 = Layouting::pos(separatorWidget->geometry().topLeft(),
-                                                 oppositeOrientation(d->m_orientation));
-        if (Layouting::pos(separatorWidget->geometry().topLeft(),
-                           oppositeOrientation(d->m_orientation))
+        const int separatorPos2 = Core::pos(separatorWidget->geometry().topLeft(),
+                                            oppositeOrientation(d->m_orientation));
+        if (Core::pos(separatorWidget->geometry().topLeft(),
+                      oppositeOrientation(d->m_orientation))
             != pos2) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected position pos2=" << separatorPos2
@@ -1419,7 +1418,7 @@ void ItemBoxContainer::onChildMinSizeChanged(Item *child)
     if (!missingForChild.isNull()) {
         // Child has some growing to do. It will grow left and right equally, (and top-bottom), as
         // needed.
-        growItem(child, Layouting::length(missingForChild, d->m_orientation),
+        growItem(child, Core::length(missingForChild, d->m_orientation),
                  GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
     }
 
@@ -1528,7 +1527,7 @@ QRect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *
                                                   Location loc) const
 {
     const QSize minSize = item->minSize();
-    const int itemMin = Layouting::length(minSize, d->m_orientation);
+    const int itemMin = Core::length(minSize, d->m_orientation);
     const int available = availableLength() - Item::separatorThickness;
     if (relativeTo) {
         int suggestedPos = 0;
@@ -1653,7 +1652,7 @@ void ItemBoxContainer::positionItems(SizingInfo::List &sizes)
 
         // If the layout is horizontal, the item will have the height of the container. And
         // vice-versa
-        const int oppositeLength = Layouting::length(size(), oppositeOrientation);
+        const int oppositeLength = Core::length(size(), oppositeOrientation);
         sizing.setLength(oppositeLength, oppositeOrientation);
         sizing.setPos(0, oppositeOrientation);
 
@@ -1770,7 +1769,7 @@ int ItemBoxContainer::usableLength() const
     const auto numVisibleChildren = children.size();
 
     if (children.size() <= 1)
-        return Layouting::length(size(), d->m_orientation);
+        return Core::length(size(), d->m_orientation);
 
     const int separatorWaste = separatorThickness * (numVisibleChildren - 1);
     return length() - separatorWaste;
@@ -1916,7 +1915,7 @@ void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize,
         }
     } else if (strategy == ChildrenResizeStrategy::Side1SeparatorMove
                || strategy == ChildrenResizeStrategy::Side2SeparatorMove) {
-        int remaining = Layouting::length(
+        int remaining = Core::length(
             newSize - oldSize,
             m_orientation); // This is how much we need to give to children (when growing the
                             // container), or to take from them when shrinking the container
@@ -2253,7 +2252,7 @@ void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbo
      * layouts, in the nesting hierarchy. The excess goes away when inserting a widget that can grow
      * indefinitely, it eats all the current excess.
      */
-    const int proposed = qMax(Layouting::length(item->size(), d->m_orientation),
+    const int proposed = qMax(Core::length(item->size(), d->m_orientation),
                               excessLength - Item::separatorThickness);
     const int newLength = qBound(min, proposed, max);
 
@@ -2694,7 +2693,7 @@ int ItemBoxContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Or
 
         for (int i = start; i <= end; ++i)
             neighbourMaxLength =
-                qMin(Layouting::length(root()->size(), d->m_orientation),
+                qMin(Core::length(root()->size(), d->m_orientation),
                      neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
 
         return neighbourMaxLength;
@@ -3184,7 +3183,7 @@ void ItemBoxContainer::Private::updateSeparators_recursive()
 int ItemBoxContainer::Private::excessLength() const
 {
     // Returns how much bigger this layout is than its max-size
-    return qMax(0, Layouting::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
+    return qMax(0, Core::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
 }
 
 void ItemBoxContainer::simplify()
@@ -3568,8 +3567,8 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
 }
 
 SizingInfo::SizingInfo()
-    : minSize(Layouting::Item::hardcodedMinimumSize)
-    , maxSizeHint(Layouting::Item::hardcodedMaximumSize)
+    : minSize(Core::Item::hardcodedMinimumSize)
+    , maxSizeHint(Core::Item::hardcodedMaximumSize)
 {
 }
 

@@ -47,7 +47,7 @@ bool Layout_wrapper::containsFrame(const KDDockWidgets::Core::Group *arg__1) con
 {
     return ::KDDockWidgets::Core::Layout::containsFrame(arg__1);
 }
-bool Layout_wrapper::containsItem(const Layouting::Item *arg__1) const
+bool Layout_wrapper::containsItem(const Core::Item *arg__1) const
 {
     return ::KDDockWidgets::Core::Layout::containsItem(arg__1);
 }
@@ -75,7 +75,7 @@ bool Layout_wrapper::isInMainWindow(bool honourNesting) const
 {
     return ::KDDockWidgets::Core::Layout::isInMainWindow(honourNesting);
 }
-Layouting::Item *Layout_wrapper::itemForFrame(const KDDockWidgets::Core::Group *group) const
+Core::Item *Layout_wrapper::itemForFrame(const KDDockWidgets::Core::Group *group) const
 {
     return ::KDDockWidgets::Core::Layout::itemForFrame(group);
 }
@@ -107,11 +107,11 @@ int Layout_wrapper::placeholderCount() const
 {
     return ::KDDockWidgets::Core::Layout::placeholderCount();
 }
-void Layout_wrapper::removeItem(Layouting::Item *item)
+void Layout_wrapper::removeItem(Core::Item *item)
 {
     ::KDDockWidgets::Core::Layout::removeItem(item);
 }
-void Layout_wrapper::restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, Layouting::Item *arg__2, int tabIndex)
+void Layout_wrapper::restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, Core::Item *arg__2, int tabIndex)
 {
     ::KDDockWidgets::Core::Layout::restorePlaceholder(dw, arg__2, tabIndex);
 }
@@ -197,10 +197,10 @@ bool c_KDDockWidgets__Controllers__Layout__containsFrame_Group(void *thisObj, vo
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
     return fromPtr(thisObj)->containsFrame(arg__1);
 }
-// containsItem(const Layouting::Item * arg__1) const
+// containsItem(const Core::Item * arg__1) const
 bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<Layouting::Item *>(arg__1_);
+    auto arg__1 = reinterpret_cast<Core::Item *>(arg__1_);
     return fromPtr(thisObj)->containsItem(arg__1);
 }
 // count() const
@@ -275,17 +275,17 @@ int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj)
 {
     return fromPtr(thisObj)->placeholderCount();
 }
-// removeItem(Layouting::Item * item)
+// removeItem(Core::Item * item)
 void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_)
 {
-    auto item = reinterpret_cast<Layouting::Item *>(item_);
+    auto item = reinterpret_cast<Core::Item *>(item_);
     fromPtr(thisObj)->removeItem(item);
 }
-// restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
+// restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Core::Item * arg__2, int tabIndex)
 void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex)
 {
     auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
-    auto arg__2 = reinterpret_cast<Layouting::Item *>(arg__2_);
+    auto arg__2 = reinterpret_cast<Core::Item *>(arg__2_);
     fromPtr(thisObj)->restorePlaceholder(dw, arg__2, tabIndex);
 }
 // setLayoutMinimumSize(QSize arg__1)

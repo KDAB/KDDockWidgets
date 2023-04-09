@@ -440,14 +440,14 @@ QSize View_qtquick::sizeHint() const
 QSize View_qtquick::minSize() const
 {
     const QSize min = property("kddockwidgets_min_size").toSize();
-    return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
+    return min.expandedTo(Core::Item::hardcodedMinimumSize);
 }
 
 QSize View_qtquick::maxSizeHint() const
 {
     const QSize max = property("kddockwidgets_max_size").toSize();
-    return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
-                         : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
+    return max.isEmpty() ? Core::Item::hardcodedMaximumSize
+                         : max.boundedTo(Core::Item::hardcodedMaximumSize);
 }
 
 QRect View_qtquick::geometry() const

@@ -135,7 +135,7 @@ ViewFactory *Config::viewFactory() const
 
 int Config::separatorThickness() const
 {
-    return Layouting::Item::separatorThickness;
+    return Item::separatorThickness;
 }
 
 void Config::setSeparatorThickness(int value)
@@ -152,7 +152,7 @@ void Config::setSeparatorThickness(int value)
         return;
     }
 
-    Layouting::Item::separatorThickness = value;
+    Item::separatorThickness = value;
 }
 
 void Config::setDraggedWindowOpacity(qreal opacity)
@@ -204,12 +204,12 @@ void Config::setAbsoluteWidgetMinSize(QSize size)
         return;
     }
 
-    Layouting::Item::hardcodedMinimumSize = size;
+    Item::hardcodedMinimumSize = size;
 }
 
 QSize Config::absoluteWidgetMinSize() const
 {
-    return Layouting::Item::hardcodedMinimumSize;
+    return Item::hardcodedMinimumSize;
 }
 
 void Config::setAbsoluteWidgetMaxSize(QSize size)
@@ -221,12 +221,12 @@ void Config::setAbsoluteWidgetMaxSize(QSize size)
         return;
     }
 
-    Layouting::Item::hardcodedMaximumSize = size;
+    Item::hardcodedMaximumSize = size;
 }
 
 QSize Config::absoluteWidgetMaxSize() const
 {
-    return Layouting::Item::hardcodedMaximumSize;
+    return Item::hardcodedMaximumSize;
 }
 
 Config::InternalFlags Config::internalFlags() const

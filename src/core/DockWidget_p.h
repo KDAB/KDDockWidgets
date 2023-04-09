@@ -106,7 +106,7 @@ public:
     }
 
     ///@brief adds the current layout item containing this dock widget
-    void addPlaceholderItem(Layouting::Item *);
+    void addPlaceholderItem(Core::Item *);
 
     ///@brief returns the last position, just for tests.
     Position::Ptr &lastPosition();

@@ -876,97 +876,97 @@ void *c_QByteArray__trimmed(void *thisObj);
 void c_QByteArray__truncate_int(void *thisObj, int pos);
 void c_QByteArray__destructor(void *thisObj);
 void c_QByteArray_Finalizer(void *, void *cppObj, void *);
-void c_Layouting_Finalizer(void *, void *cppObj, void *); // Layouting::Item::Item(KDDockWidgets::Core::View * hostWidget)
+void c_Layouting_Finalizer(void *, void *cppObj, void *); // Core::Item::Item(KDDockWidgets::Core::View * hostWidget)
 void *c_Layouting__Item__constructor_View(void *hostWidget_);
-// Layouting::Item::asGroupController() const
+// Core::Item::asGroupController() const
 void *c_Layouting__Item__asGroupController(void *thisObj);
-// Layouting::Item::checkSanity()
+// Core::Item::checkSanity()
 bool c_Layouting__Item__checkSanity(void *thisObj);
-// Layouting::Item::dumpLayout(int level)
+// Core::Item::dumpLayout(int level)
 void c_Layouting__Item__dumpLayout_int(void *thisObj, int level);
-// Layouting::Item::geometry() const
+// Core::Item::geometry() const
 void *c_Layouting__Item__geometry(void *thisObj);
-// Layouting::Item::guestView() const
+// Core::Item::guestView() const
 void *c_Layouting__Item__guestView(void *thisObj);
-// Layouting::Item::height() const
+// Core::Item::height() const
 int c_Layouting__Item__height(void *thisObj);
-// Layouting::Item::hostView() const
+// Core::Item::hostView() const
 void *c_Layouting__Item__hostView(void *thisObj);
-// Layouting::Item::isBeingInserted() const
+// Core::Item::isBeingInserted() const
 bool c_Layouting__Item__isBeingInserted(void *thisObj);
-// Layouting::Item::isContainer() const
+// Core::Item::isContainer() const
 bool c_Layouting__Item__isContainer(void *thisObj);
-// Layouting::Item::isMDI() const
+// Core::Item::isMDI() const
 bool c_Layouting__Item__isMDI(void *thisObj);
-// Layouting::Item::isPlaceholder() const
+// Core::Item::isPlaceholder() const
 bool c_Layouting__Item__isPlaceholder(void *thisObj);
-// Layouting::Item::isRoot() const
+// Core::Item::isRoot() const
 bool c_Layouting__Item__isRoot(void *thisObj);
-// Layouting::Item::isVisible(bool excludeBeingInserted) const
+// Core::Item::isVisible(bool excludeBeingInserted) const
 bool c_Layouting__Item__isVisible_bool(void *thisObj, bool excludeBeingInserted);
-// Layouting::Item::mapFromParent(QPoint arg__1) const
+// Core::Item::mapFromParent(QPoint arg__1) const
 void *c_Layouting__Item__mapFromParent_QPoint(void *thisObj, void *arg__1_);
-// Layouting::Item::mapFromRoot(QPoint arg__1) const
+// Core::Item::mapFromRoot(QPoint arg__1) const
 void *c_Layouting__Item__mapFromRoot_QPoint(void *thisObj, void *arg__1_);
-// Layouting::Item::mapFromRoot(QRect arg__1) const
+// Core::Item::mapFromRoot(QRect arg__1) const
 void *c_Layouting__Item__mapFromRoot_QRect(void *thisObj, void *arg__1_);
-// Layouting::Item::mapToRoot(QPoint arg__1) const
+// Core::Item::mapToRoot(QPoint arg__1) const
 void *c_Layouting__Item__mapToRoot_QPoint(void *thisObj, void *arg__1_);
-// Layouting::Item::mapToRoot(QRect arg__1) const
+// Core::Item::mapToRoot(QRect arg__1) const
 void *c_Layouting__Item__mapToRoot_QRect(void *thisObj, void *arg__1_);
-// Layouting::Item::maxSizeHint() const
+// Core::Item::maxSizeHint() const
 void *c_Layouting__Item__maxSizeHint(void *thisObj);
-// Layouting::Item::minSize() const
+// Core::Item::minSize() const
 void *c_Layouting__Item__minSize(void *thisObj);
-// Layouting::Item::missingSize() const
+// Core::Item::missingSize() const
 void *c_Layouting__Item__missingSize(void *thisObj);
-// Layouting::Item::pos() const
+// Core::Item::pos() const
 void *c_Layouting__Item__pos(void *thisObj);
-// Layouting::Item::rect() const
+// Core::Item::rect() const
 void *c_Layouting__Item__rect(void *thisObj);
-// Layouting::Item::ref()
+// Core::Item::ref()
 void c_Layouting__Item__ref(void *thisObj);
-// Layouting::Item::refCount() const
+// Core::Item::refCount() const
 int c_Layouting__Item__refCount(void *thisObj);
-// Layouting::Item::restore(KDDockWidgets::Core::View * guestView)
+// Core::Item::restore(KDDockWidgets::Core::View * guestView)
 void c_Layouting__Item__restore_View(void *thisObj, void *guestView_);
-// Layouting::Item::setBeingInserted(bool arg__1)
+// Core::Item::setBeingInserted(bool arg__1)
 void c_Layouting__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
-// Layouting::Item::setGeometry(QRect rect)
+// Core::Item::setGeometry(QRect rect)
 void c_Layouting__Item__setGeometry_QRect(void *thisObj, void *rect_);
-// Layouting::Item::setGeometry_recursive(QRect rect)
+// Core::Item::setGeometry_recursive(QRect rect)
 void c_Layouting__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_);
-// Layouting::Item::setGuestView(KDDockWidgets::Core::View * arg__1)
+// Core::Item::setGuestView(KDDockWidgets::Core::View * arg__1)
 void c_Layouting__Item__setGuestView_View(void *thisObj, void *arg__1_);
-// Layouting::Item::setHostView(KDDockWidgets::Core::View * arg__1)
+// Core::Item::setHostView(KDDockWidgets::Core::View * arg__1)
 void c_Layouting__Item__setHostView_View(void *thisObj, void *arg__1_);
-// Layouting::Item::setIsVisible(bool arg__1)
+// Core::Item::setIsVisible(bool arg__1)
 void c_Layouting__Item__setIsVisible_bool(void *thisObj, bool arg__1);
-// Layouting::Item::setMaxSizeHint(QSize arg__1)
+// Core::Item::setMaxSizeHint(QSize arg__1)
 void c_Layouting__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_);
-// Layouting::Item::setMinSize(QSize arg__1)
+// Core::Item::setMinSize(QSize arg__1)
 void c_Layouting__Item__setMinSize_QSize(void *thisObj, void *arg__1_);
-// Layouting::Item::setPos(QPoint arg__1)
+// Core::Item::setPos(QPoint arg__1)
 void c_Layouting__Item__setPos_QPoint(void *thisObj, void *arg__1_);
-// Layouting::Item::setSize(QSize arg__1)
+// Core::Item::setSize(QSize arg__1)
 void c_Layouting__Item__setSize_QSize(void *thisObj, void *arg__1_);
-// Layouting::Item::size() const
+// Core::Item::size() const
 void *c_Layouting__Item__size(void *thisObj);
-// Layouting::Item::tr(const char * s, const char * c, int n)
+// Core::Item::tr(const char * s, const char * c, int n)
 void *c_static_Layouting__Item__tr_char_char_int(const char *s, const char *c, int n);
-// Layouting::Item::turnIntoPlaceholder()
+// Core::Item::turnIntoPlaceholder()
 void c_Layouting__Item__turnIntoPlaceholder(void *thisObj);
-// Layouting::Item::unref()
+// Core::Item::unref()
 void c_Layouting__Item__unref(void *thisObj);
-// Layouting::Item::updateWidgetGeometries()
+// Core::Item::updateWidgetGeometries()
 void c_Layouting__Item__updateWidgetGeometries(void *thisObj);
-// Layouting::Item::visibleCount_recursive() const
+// Core::Item::visibleCount_recursive() const
 int c_Layouting__Item__visibleCount_recursive(void *thisObj);
-// Layouting::Item::width() const
+// Core::Item::width() const
 int c_Layouting__Item__width(void *thisObj);
-// Layouting::Item::x() const
+// Core::Item::x() const
 int c_Layouting__Item__x(void *thisObj);
-// Layouting::Item::y() const
+// Core::Item::y() const
 int c_Layouting__Item__y(void *thisObj);
 void c_Layouting__Item__destructor(void *thisObj);
 int c_static_Layouting__Item___get_separatorThickness();
@@ -1267,9 +1267,9 @@ bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj);
 bool c_KDDockWidgets__DockRegistry__isEmpty_bool(void *thisObj, bool excludeBeingDeleted);
 // KDDockWidgets::DockRegistry::isSane() const
 bool c_KDDockWidgets__DockRegistry__isSane(void *thisObj);
-// KDDockWidgets::DockRegistry::itemIsInMainWindow(const Layouting::Item * arg__1) const
+// KDDockWidgets::DockRegistry::itemIsInMainWindow(const Core::Item * arg__1) const
 bool c_KDDockWidgets__DockRegistry__itemIsInMainWindow_Item(void *thisObj, void *arg__1_);
-// KDDockWidgets::DockRegistry::layoutForItem(const Layouting::Item * arg__1) const
+// KDDockWidgets::DockRegistry::layoutForItem(const Core::Item * arg__1) const
 void *c_KDDockWidgets__DockRegistry__layoutForItem_Item(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::mainWindowByName(const QString & arg__1) const
 void *c_KDDockWidgets__DockRegistry__mainWindowByName_QString(void *thisObj, const char *arg__1_);
@@ -2573,7 +2573,7 @@ bool c_KDDockWidgets__Controllers__Layout__checkSanity(void *thisObj);
 void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj);
 // KDDockWidgets::Core::Layout::containsFrame(const KDDockWidgets::Core::Group * arg__1) const
 bool c_KDDockWidgets__Controllers__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Layout::containsItem(const Layouting::Item * arg__1) const
+// KDDockWidgets::Core::Layout::containsItem(const Core::Item * arg__1) const
 bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::count() const
 int c_KDDockWidgets__Controllers__Layout__count(void *thisObj);
@@ -2603,9 +2603,9 @@ int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj);
 void *c_KDDockWidgets__Controllers__Layout__mainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Core::Layout::placeholderCount() const
 int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
-// KDDockWidgets::Core::Layout::removeItem(Layouting::Item * item)
+// KDDockWidgets::Core::Layout::removeItem(Core::Item * item)
 void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
-// KDDockWidgets::Core::Layout::restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
+// KDDockWidgets::Core::Layout::restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Core::Item * arg__2, int tabIndex)
 void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex);
 // KDDockWidgets::Core::Layout::setLayoutMinimumSize(QSize arg__1)
 void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
@@ -2793,7 +2793,7 @@ void c_KDDockWidgets__Controllers__Group__setCurrentDockWidget_DockWidget(void *
 void c_KDDockWidgets__Controllers__Group__setCurrentTabIndex_int(void *thisObj, int index);
 // KDDockWidgets::Core::Group::setLayout(KDDockWidgets::Core::Layout * arg__1)
 void c_KDDockWidgets__Controllers__Group__setLayout_Layout(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Group::setLayoutItem(Layouting::Item * item)
+// KDDockWidgets::Core::Group::setLayoutItem(Core::Item * item)
 void c_KDDockWidgets__Controllers__Group__setLayoutItem_Item(void *thisObj, void *item_);
 // KDDockWidgets::Core::Group::setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Controllers__Group__setParentView_impl_View(void *thisObj, void *parent_);

@@ -379,7 +379,7 @@ const Core::Group::List FloatingWindow::groups() const
 
 QSize FloatingWindow::maxSizeHint() const
 {
-    QSize result = Layouting::Item::hardcodedMaximumSize;
+    QSize result = Core::Item::hardcodedMaximumSize;
 
     if (!m_dropArea) {
         // Still early, no layout set
@@ -403,13 +403,13 @@ QSize FloatingWindow::maxSizeHint() const
     // Semantically the result is fine, but bound it so we don't get:
     // QWidget::setMaximumSize: (/KDDockWidgets::FloatingWindowWidget) The largest allowed size is
     // (16777215,16777215)
-    return result.boundedTo(Layouting::Item::hardcodedMaximumSize);
+    return result.boundedTo(Core::Item::hardcodedMaximumSize);
 }
 
 void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
 {
     const QSize maxSize = maxSizeHint();
-    const bool hasMaxSize = maxSize != Layouting::Item::hardcodedMaximumSize;
+    const bool hasMaxSize = maxSize != Core::Item::hardcodedMaximumSize;
     if (hasMaxSize) {
         // Resize to new size but preserve center
         const QPoint originalCenter = suggestedRect.center();

@@ -47,7 +47,7 @@ public:
     QObject *titleBar() const;
     QObject *dropArea() const;
 
-    Layouting::Item *rootItem() const;
+    Core::Item *rootItem() const;
 
 protected:
     void setGeometry(QRect) override;

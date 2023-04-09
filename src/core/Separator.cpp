@@ -61,8 +61,8 @@ struct Separator::Private
     QRect geometry;
     int lazyPosition = 0;
     View *lazyResizeRubberBand = nullptr;
-    Layouting::ItemBoxContainer *parentContainer = nullptr;
-    Layouting::Side lastMoveDirection = Layouting::Side1;
+    Core::ItemBoxContainer *parentContainer = nullptr;
+    Core::Side lastMoveDirection = Core::Side1;
     const bool usesLazyResize = Config::self().flags() & Config::Flag_LazyResize;
 
     View *const m_hostView;
@@ -81,7 +81,7 @@ Separator::~Separator()
     delete d;
 }
 
-void Separator::init(Layouting::ItemBoxContainer *parentContainer, Qt::Orientation orientation)
+void Separator::init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation)
 {
     if (!parentContainer) {
         qWarning() << Q_FUNC_INFO << "null parentContainer";
@@ -149,11 +149,11 @@ void Separator::setGeometry(int pos, int pos2, int length)
     QRect newGeo = d->geometry;
     if (isVertical()) {
         // The separator itself is horizontal
-        newGeo.setSize(QSize(length, Layouting::Item::separatorThickness));
+        newGeo.setSize(QSize(length, Core::Item::separatorThickness));
         newGeo.moveTo(pos2, pos);
     } else {
         // The separator itself is vertical
-        newGeo.setSize(QSize(Layouting::Item::separatorThickness, length));
+        newGeo.setSize(QSize(Core::Item::separatorThickness, length));
         newGeo.moveTo(pos, pos2);
     }
 
@@ -255,7 +255,7 @@ void Separator::onMouseMove(QPoint pos)
 #endif
     }
 
-    const int positionToGoTo = Layouting::pos(pos, d->orientation);
+    const int positionToGoTo = Core::pos(pos, d->orientation);
     const int minPos = d->parentContainer->minPosForSeparator_global(this);
     const int maxPos = d->parentContainer->maxPosForSeparator_global(this);
 
@@ -272,9 +272,9 @@ void Separator::onMouseMove(QPoint pos)
     }
 
     d->lastMoveDirection = positionToGoTo < position()
-        ? Layouting::Side1
-        : (positionToGoTo > position() ? Layouting::Side2
-                                       : Layouting::Side1); // Last case shouldn't happen though.
+        ? Core::Side1
+        : (positionToGoTo > position() ? Core::Side2
+                                       : Core::Side1); // Last case shouldn't happen though.
 
     if (d->lazyResizeRubberBand)
         setLazyPosition(positionToGoTo);
@@ -282,7 +282,7 @@ void Separator::onMouseMove(QPoint pos)
         d->parentContainer->requestSeparatorMove(this, positionToGoTo - position());
 }
 
-Layouting::ItemBoxContainer *Separator::parentContainer() const
+Core::ItemBoxContainer *Separator::parentContainer() const
 {
     return d->parentContainer;
 }

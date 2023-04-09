@@ -30,13 +30,10 @@
 
 #include <memory>
 
-namespace Layouting {
-class Item;
-}
-
 namespace KDDockWidgets {
 
 namespace Core {
+class Item;
 class DockWidget;
 class Group;
 class Layout;
@@ -45,13 +42,13 @@ class Layout;
 // Just a RAII class so we don't forget to unref
 struct ItemRef
 {
-    explicit ItemRef(const QMetaObject::Connection &, Layouting::Item *);
+    explicit ItemRef(const QMetaObject::Connection &, Core::Item *);
     ~ItemRef();
 
     bool isInMainWindow() const;
 
-    Layouting::Item *const item;
-    const QPointer<Layouting::Item> guard;
+    Core::Item *const item;
+    const QPointer<Core::Item> guard;
     const QMetaObject::Connection connection;
 
 private:
@@ -102,11 +99,11 @@ public:
     bool m_wasFloating = false;
 
     ///@brief Adds the last layout item where the dock widget was (or is)
-    void addPlaceholderItem(Layouting::Item *placeholder);
+    void addPlaceholderItem(Core::Item *placeholder);
 
-    Layouting::Item *layoutItem() const;
+    Core::Item *layoutItem() const;
 
-    bool containsPlaceholder(Layouting::Item *) const;
+    bool containsPlaceholder(Core::Item *) const;
     void removePlaceholders();
 
     /// @brief Returns the last places where the dock widget was or is
@@ -122,7 +119,7 @@ public:
     void removeNonMainWindowPlaceholders();
 
     ///@brief removes the Item @p placeholder
-    void removePlaceholder(Layouting::Item *placeholder);
+    void removePlaceholder(Core::Item *placeholder);
 
     void saveTabIndex(int tabIndex, bool isFloating)
     {
@@ -145,7 +142,7 @@ public:
         return m_lastFloatingGeometry;
     }
 
-    Layouting::Item *lastItem() const
+    Core::Item *lastItem() const
     {
         return layoutItem();
     }

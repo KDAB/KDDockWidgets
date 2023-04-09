@@ -32,7 +32,7 @@ Position::~Position()
     m_placeholders.clear();
 }
 
-void Position::addPlaceholderItem(Layouting::Item *placeholder)
+void Position::addPlaceholderItem(Core::Item *placeholder)
 {
     Q_ASSERT(placeholder);
 
@@ -65,7 +65,7 @@ void Position::addPlaceholderItem(Layouting::Item *placeholder)
     // meaningful names in separated variables
 }
 
-Layouting::Item *Position::layoutItem() const
+Core::Item *Position::layoutItem() const
 {
     // Return the layout item that is in a MainWindow, that's where we restore the dock widget to.
     // In the future we might want to restore it to FloatingWindows.
@@ -78,7 +78,7 @@ Layouting::Item *Position::layoutItem() const
     return nullptr;
 }
 
-bool Position::containsPlaceholder(Layouting::Item *item) const
+bool Position::containsPlaceholder(Core::Item *item) const
 {
     for (const auto &itemRef : m_placeholders)
         if (itemRef->item == item)
@@ -116,7 +116,7 @@ void Position::removeNonMainWindowPlaceholders()
     }
 }
 
-void Position::removePlaceholder(Layouting::Item *placeholder)
+void Position::removePlaceholder(Core::Item *placeholder)
 {
     if (m_clearing) // reentrancy guard
         return;
@@ -161,9 +161,9 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             layout = mainWindow->layout();
         }
 
-        const Layouting::Item::List &items = layout->items();
+        const Core::Item::List &items = layout->items();
         if (itemIndex >= 0 && itemIndex < items.size()) {
-            Layouting::Item *item = items.at(itemIndex);
+            Core::Item *item = items.at(itemIndex);
             addPlaceholderItem(item);
         } else {
             // Shouldn't happen, maybe even assert
@@ -182,7 +182,7 @@ LayoutSaver::Position Position::serialize() const
     for (auto &itemRef : m_placeholders) {
         LayoutSaver::Placeholder p;
 
-        Layouting::Item *item = itemRef->item;
+        Core::Item *item = itemRef->item;
         Core::Layout *layout = DockRegistry::self()->layoutForItem(item);
         const auto itemIndex = layout->items().indexOf(item);
 
@@ -215,7 +215,7 @@ LayoutSaver::Position Position::serialize() const
     return l;
 }
 
-ItemRef::ItemRef(const QMetaObject::Connection &conn, Layouting::Item *it)
+ItemRef::ItemRef(const QMetaObject::Connection &conn, Core::Item *it)
     : item(it)
     , guard(it)
     , connection(conn)

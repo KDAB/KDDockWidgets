@@ -24,8 +24,6 @@
 
 #include <memory.h>
 
-
-using namespace Layouting;
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 

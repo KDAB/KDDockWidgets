@@ -83,11 +83,11 @@ bool DockRegistry_wrapper::isSane() const
 {
     return ::KDDockWidgets::DockRegistry::isSane();
 }
-bool DockRegistry_wrapper::itemIsInMainWindow(const Layouting::Item *arg__1) const
+bool DockRegistry_wrapper::itemIsInMainWindow(const Core::Item *arg__1) const
 {
     return ::KDDockWidgets::DockRegistry::itemIsInMainWindow(arg__1);
 }
-KDDockWidgets::Core::Layout *DockRegistry_wrapper::layoutForItem(const Layouting::Item *arg__1) const
+KDDockWidgets::Core::Layout *DockRegistry_wrapper::layoutForItem(const Core::Item *arg__1) const
 {
     return ::KDDockWidgets::DockRegistry::layoutForItem(arg__1);
 }
@@ -237,16 +237,16 @@ bool c_KDDockWidgets__DockRegistry__isSane(void *thisObj)
 {
     return fromPtr(thisObj)->isSane();
 }
-// itemIsInMainWindow(const Layouting::Item * arg__1) const
+// itemIsInMainWindow(const Core::Item * arg__1) const
 bool c_KDDockWidgets__DockRegistry__itemIsInMainWindow_Item(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<Layouting::Item *>(arg__1_);
+    auto arg__1 = reinterpret_cast<Core::Item *>(arg__1_);
     return fromPtr(thisObj)->itemIsInMainWindow(arg__1);
 }
-// layoutForItem(const Layouting::Item * arg__1) const
+// layoutForItem(const Core::Item * arg__1) const
 void *c_KDDockWidgets__DockRegistry__layoutForItem_Item(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<Layouting::Item *>(arg__1_);
+    auto arg__1 = reinterpret_cast<Core::Item *>(arg__1_);
     return fromPtr(thisObj)->layoutForItem(arg__1);
 }
 // mainWindowByName(const QString & arg__1) const

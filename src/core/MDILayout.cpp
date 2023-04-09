@@ -21,7 +21,7 @@ using namespace KDDockWidgets::Core;
 
 MDILayout::MDILayout(View *parent)
     : Layout(ViewType::MDILayout, Config::self().viewFactory()->createMDILayout(this, parent))
-    , m_rootItem(new Layouting::ItemFreeContainer(view()))
+    , m_rootItem(new Core::ItemFreeContainer(view()))
 {
     setRootItem(m_rootItem);
 }
@@ -45,7 +45,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, QPoint localPt,
         group->setLayoutItem(nullptr);
     }
 
-    Layouting::Item *newItem = new Layouting::Item(view());
+    Core::Item *newItem = new Core::Item(view());
     if (group) {
         newItem->setGuestView(group->view());
     } else {
@@ -68,7 +68,7 @@ void MDILayout::setDockWidgetGeometry(Core::Group *group, QRect geometry)
     if (!group)
         return;
 
-    Layouting::Item *item = itemForFrame(group);
+    Core::Item *item = itemForFrame(group);
     if (!item) {
         qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << group;
         return;
@@ -87,7 +87,7 @@ void MDILayout::moveDockWidget(Core::Group *group, QPoint pos)
     if (!group)
         return;
 
-    Layouting::Item *item = itemForFrame(group);
+    Core::Item *item = itemForFrame(group);
     if (!item) {
         qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << group;
         return;
@@ -108,7 +108,7 @@ void MDILayout::resizeDockWidget(Core::Group *group, QSize size)
     if (!group)
         return;
 
-    Layouting::Item *item = itemForFrame(group);
+    Core::Item *item = itemForFrame(group);
     if (!item) {
         qWarning() << Q_FUNC_INFO << "Group not found in the layout" << group << group->isMDI()
                    << group->isMDIWrapper();

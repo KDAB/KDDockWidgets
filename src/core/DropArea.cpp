@@ -65,7 +65,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     , m_dropIndicatorOverlay(createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))
 {
-    setRootItem(new Layouting::ItemBoxContainer(view()));
+    setRootItem(new Core::ItemBoxContainer(view()));
     DockRegistry::self()->registerLayout(this);
 
     if (parent)
@@ -108,10 +108,10 @@ DropArea::~DropArea()
 
 Core::Group::List DropArea::groups() const
 {
-    const Layouting::Item::List children = m_rootItem->items_recursive();
+    const Core::Item::List children = m_rootItem->items_recursive();
     Core::Group::List groups;
 
-    for (const Layouting::Item *child : children) {
+    for (const Core::Item *child : children) {
         if (auto view = child->guestView()) {
             if (!view->freed()) {
                 if (auto group = view->asGroupController()) {
@@ -126,8 +126,8 @@ Core::Group::List DropArea::groups() const
 
 Core::Group *DropArea::groupContainingPos(QPoint globalPos) const
 {
-    const Layouting::Item::List &items = this->items();
-    for (Layouting::Item *item : items) {
+    const Core::Item::List &items = this->items();
+    for (Core::Item *item : items) {
         auto group = item->asGroupController();
         if (!group || !group->isVisible()) {
             continue;
@@ -146,9 +146,9 @@ void DropArea::updateFloatingActions()
         group->updateFloatingActions();
 }
 
-Layouting::Item *DropArea::centralFrame() const
+Core::Item *DropArea::centralFrame() const
 {
-    for (Layouting::Item *item : this->items()) {
+    for (Core::Item *item : this->items()) {
         if (auto group = item->asGroupController()) {
             if (group->isCentralFrame())
                 return item;
@@ -242,7 +242,7 @@ QStringList DropArea::affinities() const
 
 void DropArea::layoutParentContainerEqually(Core::DockWidget *dw)
 {
-    Layouting::Item *item = itemForFrame(dw->d->group());
+    Core::Item *item = itemForFrame(dw->d->group());
     if (!item) {
         qWarning() << Q_FUNC_INFO << "Item not found for" << dw << dw->d->group();
         return;
@@ -524,7 +524,7 @@ bool DropArea::validateInputs(View *widget, Location location,
         return false;
     }
 
-    Layouting::Item *item = itemForFrame(widget->asGroupController());
+    Core::Item *item = itemForFrame(widget->asGroupController());
 
     if (containsItem(item)) {
         qWarning() << Q_FUNC_INFO << "DropArea::addWidget: Already contains" << widget;
@@ -538,7 +538,7 @@ bool DropArea::validateInputs(View *widget, Location location,
 
     const bool relativeToThis = relativeToFrame == nullptr;
 
-    Layouting::Item *relativeToItem = itemForFrame(relativeToFrame);
+    Core::Item *relativeToItem = itemForFrame(relativeToFrame);
     if (!relativeToThis && !containsItem(relativeToItem)) {
         qWarning() << "DropArea::addWidget: Doesn't contain relativeTo:"
                    << "; relativeToFrame=" << relativeToFrame
@@ -566,11 +566,11 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
     if (!validateInputs(w, location, relativeToWidget, option))
         return;
 
-    Layouting::Item *relativeTo = itemForFrame(relativeToWidget);
+    Core::Item *relativeTo = itemForFrame(relativeToWidget);
     if (!relativeTo)
         relativeTo = m_rootItem;
 
-    Layouting::Item *newItem = nullptr;
+    Core::Item *newItem = nullptr;
 
     Core::Group::List groups = groupsFrom(w);
     unrefOldPlaceholders(groups);
@@ -578,10 +578,10 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
     auto thisView = view();
 
     if (group) {
-        newItem = new Layouting::Item(thisView);
+        newItem = new Core::Item(thisView);
         newItem->setGuestView(group->view());
     } else if (dw) {
-        newItem = new Layouting::Item(thisView);
+        newItem = new Core::Item(thisView);
         group = new Core::Group();
         newItem->setGuestView(group->view());
         group->addTab(dw, option);
@@ -602,7 +602,7 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
-    Layouting::ItemBoxContainer::insertItemRelativeTo(newItem, relativeTo, location, option);
+    Core::ItemBoxContainer::insertItemRelativeTo(newItem, relativeTo, location, option);
 
     if (dw && option.startsHidden())
         delete group;
@@ -644,7 +644,7 @@ void DropArea::layoutEqually()
     layoutEqually(m_rootItem);
 }
 
-void DropArea::layoutEqually(Layouting::ItemBoxContainer *container)
+void DropArea::layoutEqually(Core::ItemBoxContainer *container)
 {
     if (container) {
         container->layoutEqually_recursive();
@@ -653,21 +653,21 @@ void DropArea::layoutEqually(Layouting::ItemBoxContainer *container)
     }
 }
 
-void DropArea::setRootItem(Layouting::ItemBoxContainer *root)
+void DropArea::setRootItem(Core::ItemBoxContainer *root)
 {
     Layout::setRootItem(root);
     m_rootItem = root;
 }
 
-Layouting::ItemBoxContainer *DropArea::rootItem() const
+Core::ItemBoxContainer *DropArea::rootItem() const
 {
     return m_rootItem;
 }
 
 QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
-                            const Layouting::Item *relativeTo) const
+                            const Core::Item *relativeTo) const
 {
-    Layouting::Item item(nullptr);
+    Core::Item item(nullptr);
     if (!wbd)
         return {};
 
@@ -675,7 +675,7 @@ QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
     item.setMinSize(wbd->minSize());
     item.setMaxSizeHint(wbd->maxSize());
 
-    Layouting::ItemBoxContainer *container =
+    Core::ItemBoxContainer *container =
         relativeTo ? relativeTo->parentBoxContainer() : m_rootItem;
 
     return container->suggestedDropRect(&item, relativeTo, location);
@@ -683,7 +683,7 @@ QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
 
 bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
 {
-    setRootItem(new Layouting::ItemBoxContainer(view()));
+    setRootItem(new Core::ItemBoxContainer(view()));
     return Layout::deserialize(l);
 }
 

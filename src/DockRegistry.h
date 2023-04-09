@@ -196,11 +196,11 @@ public:
     QVector<Core::MainWindow *> mainWindowsWithAffinity(const QStringList &affinities) const;
 
     /// @brief Returns the Layout where the specified item is in
-    Core::Layout *layoutForItem(const Layouting::Item *) const;
+    Core::Layout *layoutForItem(const Core::Item *) const;
 
     /// @brief Returns whether the item is in a main window.
     /// Nesting is honoured. (MDIArea inside DropArea inside MainWindow, for example)
-    bool itemIsInMainWindow(const Layouting::Item *) const;
+    bool itemIsInMainWindow(const Core::Item *) const;
 
     bool affinitiesMatch(const QStringList &affinities1, const QStringList &affinities2) const;
 

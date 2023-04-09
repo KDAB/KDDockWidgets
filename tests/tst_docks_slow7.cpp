@@ -39,7 +39,6 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
 class TestDocks : public QObject

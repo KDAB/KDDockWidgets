@@ -608,7 +608,7 @@ class Group extends Controller {
             'c_KDDockWidgets__Controllers__Group__setLayout_Layout')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // setLayoutItem(Layouting::Item * item)
+  } // setLayoutItem(Core::Item * item)
 
   setLayoutItem(Item? item) {
     final void_Func_voidstar_voidstar func = _dylib

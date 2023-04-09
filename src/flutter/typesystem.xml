@@ -57,7 +57,7 @@
         <enum-type name="LayoutSaverOption" flags="LayoutSaverOptions" />
         <enum-type name="DockWidgetOption" flags="DockWidgetOptions" />
 
-        <namespace-type name="Controllers">
+        <namespace-type name="Core">
             <object-type name="Layout" />
             <object-type name="DropArea" />
             <object-type name="Group" />
@@ -71,6 +71,7 @@
             <object-type name="DockWidget" />
             <object-type name="ClassicIndicators" />
             <object-type name="MainWindow" />
+             <object-type name="Item" />
         </namespace-type>
 
         <namespace-type name="Views">
@@ -86,8 +87,7 @@
     </namespace-type>
 
     <namespace-type name="Layouting">
-        <object-type name="Item" />
-        <!-- <object-type name="ItemContainer" /> -->
-    </namespace-type>
 
+    <!-- <object-type name="ItemContainer" /> -->
+    </namespace-type>
 </typesystem>

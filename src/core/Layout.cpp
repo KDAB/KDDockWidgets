@@ -96,7 +96,7 @@ Core::FloatingWindow *Layout::floatingWindow() const
     return parent ? parent->asFloatingWindowController() : nullptr;
 }
 
-void Layout::setRootItem(Layouting::ItemContainer *root)
+void Layout::setRootItem(Core::ItemContainer *root)
 {
     delete m_rootItem;
     m_rootItem = root;
@@ -146,7 +146,7 @@ void Layout::dumpLayout() const
     m_rootItem->dumpLayout();
 }
 
-void Layout::restorePlaceholder(Core::DockWidget *dw, Layouting::Item *item, int tabIndex)
+void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabIndex)
 {
     if (item->isPlaceholder()) {
         auto newGroup = new Core::Group(view());
@@ -183,12 +183,12 @@ void Layout::setLayoutSize(QSize size)
     }
 }
 
-const Layouting::Item::List Layout::items() const
+const Core::Item::List Layout::items() const
 {
     return m_rootItem->items_recursive();
 }
 
-bool Layout::containsItem(const Layouting::Item *item) const
+bool Layout::containsItem(const Core::Item *item) const
 {
     return m_rootItem->contains_recursive(item);
 }
@@ -213,7 +213,7 @@ int Layout::placeholderCount() const
     return count() - visibleCount();
 }
 
-Layouting::Item *Layout::itemForFrame(const Core::Group *group) const
+Core::Item *Layout::itemForFrame(const Core::Group *group) const
 {
     if (!group)
         return nullptr;
@@ -244,12 +244,12 @@ Core::Group::List Layout::groupsFrom(View *groupOrMultiSplitter) const
 
 Core::Group::List Layout::groups() const
 {
-    const Layouting::Item::List items = m_rootItem->items_recursive();
+    const Core::Item::List items = m_rootItem->items_recursive();
 
     Core::Group::List result;
     result.reserve(items.size());
 
-    for (Layouting::Item *item : items) {
+    for (Core::Item *item : items) {
         if (auto group = item->asGroupController()) {
             result.push_back(group);
         }
@@ -258,7 +258,7 @@ Core::Group::List Layout::groups() const
     return result;
 }
 
-void Layout::removeItem(Layouting::Item *item)
+void Layout::removeItem(Core::Item *item)
 {
     if (!item) {
         qWarning() << Q_FUNC_INFO << "nullptr item";
@@ -315,9 +315,9 @@ LayoutSaver::MultiSplitter Layout::serialize() const
 {
     LayoutSaver::MultiSplitter l;
     l.layout = m_rootItem->toVariantMap();
-    const Layouting::Item::List items = m_rootItem->items_recursive();
+    const Core::Item::List items = m_rootItem->items_recursive();
     l.groups.reserve(items.size());
-    for (Layouting::Item *item : items) {
+    for (Core::Item *item : items) {
         if (!item->isContainer()) {
             if (auto group = item->asGroupController()) {
                 l.groups.insert(group->view()->id(), group->serialize());
@@ -341,7 +341,7 @@ MDILayout *Layout::asMDILayout() const
     return nullptr;
 }
 
-Layouting::ItemContainer *Layout::rootItem() const
+Core::ItemContainer *Layout::rootItem() const
 {
     return m_rootItem;
 }

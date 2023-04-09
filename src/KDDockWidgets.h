@@ -32,17 +32,17 @@
 #define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
 #endif
 
-namespace Layouting {
-class Item;
-class ItemBoxContainer;
-}
-
 namespace KDDockWidgets {
 DOCKS_EXPORT
 Q_NAMESPACE
 
 namespace qtwidgets {
 class DockWidget;
+}
+
+namespace Core {
+class Item;
+class ItemBoxContainer;
 }
 
 enum Location {
@@ -216,8 +216,8 @@ struct InitialOption
     }
 
 private:
-    friend class Layouting::Item;
-    friend class Layouting::ItemBoxContainer;
+    friend class Core::Item;
+    friend class Core::ItemBoxContainer;
 
     DefaultSizeMode sizeMode = DefaultSizeMode::Fair;
 };

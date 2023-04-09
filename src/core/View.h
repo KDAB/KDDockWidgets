@@ -20,10 +20,6 @@
 
 #include <memory>
 
-namespace Layouting {
-class Item;
-}
-
 QT_BEGIN_NAMESPACE
 class QPainter;
 QT_END_NAMESPACE
@@ -35,6 +31,7 @@ using WId = quintptr;
 
 namespace Core {
 
+class Item;
 class EventFilterInterface;
 class Controller;
 class Screen;

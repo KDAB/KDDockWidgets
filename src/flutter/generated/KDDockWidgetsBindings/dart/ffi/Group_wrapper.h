@@ -84,7 +84,7 @@ public:
     bool isMDIWrapper() const;
     bool isOverlayed() const;
     bool isTheOnlyFrame() const;
-    Layouting::Item *layoutItem() const;
+    Core::Item *layoutItem() const;
     KDDockWidgets::Core::MainWindow *mainWindow() const;
     KDDockWidgets::Core::DockWidget *mdiDockWidgetWrapper() const;
     KDDockWidgets::Core::DropArea *mdiDropAreaWrapper() const;
@@ -99,7 +99,7 @@ public:
     void setCurrentDockWidget(KDDockWidgets::Core::DockWidget *arg__1);
     void setCurrentTabIndex(int index);
     void setLayout(KDDockWidgets::Core::Layout *arg__1);
-    void setLayoutItem(Layouting::Item *item);
+    void setLayoutItem(Core::Item *item);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     KDDockWidgets::Core::Stack *stack() const;
@@ -253,7 +253,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setCurren
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setCurrentTabIndex_int(void *thisObj, int index);
 // KDDockWidgets::Core::Group::setLayout(KDDockWidgets::Core::Layout * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setLayout_Layout(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Group::setLayoutItem(Layouting::Item * item)
+// KDDockWidgets::Core::Group::setLayoutItem(Core::Item * item)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setLayoutItem_Item(void *thisObj, void *item_);
 // KDDockWidgets::Core::Group::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setParentView_impl_View(void *thisObj, void *parent_);

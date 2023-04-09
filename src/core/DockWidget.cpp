@@ -584,7 +584,7 @@ Core::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
         Core::FloatingWindow::ensureRectIsOnScreen(geo);
         auto floatingWindow = new Core::FloatingWindow(group, geo);
 
-        Layouting::AtomicSanityChecks checks(floatingWindow->dropArea()->rootItem());
+        Core::AtomicSanityChecks checks(floatingWindow->dropArea()->rootItem());
         floatingWindow->view()->show();
         setIsOpen(true);
 
@@ -805,7 +805,7 @@ bool DockWidget::Private::restoreToPreviousPosition()
     if (!m_lastPosition->isValid())
         return false;
 
-    Layouting::Item *item = m_lastPosition->lastItem();
+    Core::Item *item = m_lastPosition->lastItem();
 
     Layout *layout = DockRegistry::self()->layoutForItem(item);
     Q_ASSERT(layout);
@@ -821,7 +821,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
     if (!m_lastPosition->isValid())
         return;
 
-    Layouting::Item *layoutItem = m_lastPosition->lastItem();
+    Core::Item *layoutItem = m_lastPosition->lastItem();
     if (!layoutItem)
         return; // nothing to do, no last position
 
@@ -1002,7 +1002,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
     floatAction->setCheckable(true);
 }
 
-void DockWidget::Private::addPlaceholderItem(Layouting::Item *item)
+void DockWidget::Private::addPlaceholderItem(Core::Item *item)
 {
     Q_ASSERT(item);
     m_lastPosition->addPlaceholderItem(item);

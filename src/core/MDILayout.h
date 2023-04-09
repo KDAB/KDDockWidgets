@@ -18,13 +18,12 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/docks_export.h"
 
-namespace Layouting {
-class ItemFreeContainer;
-}
 
 namespace KDDockWidgets {
 
 namespace Core {
+
+class ItemFreeContainer;
 
 /**
  * @brief The MDILayout class implements a layout suitable for MDI style docking.
@@ -59,7 +58,7 @@ public:
     void setDockWidgetGeometry(Core::Group *f, QRect);
 
 private:
-    Layouting::ItemFreeContainer *const m_rootItem;
+    Core::ItemFreeContainer *const m_rootItem;
 };
 
 }

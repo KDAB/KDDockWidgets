@@ -79,8 +79,8 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
         auto timer = new QTimer(this);
         timer->setSingleShot(true);
         timer->start();
-        Layouting::Item::s_silenceSanityChecks = true;
-        timer->callOnTimeout([] { Layouting::Item::s_silenceSanityChecks = false; });
+        Core::Item::s_silenceSanityChecks = true;
+        timer->callOnTimeout([] { Core::Item::s_silenceSanityChecks = false; });
     }
 }
 

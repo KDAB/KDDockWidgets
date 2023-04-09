@@ -254,7 +254,7 @@ bool Group_wrapper::isTheOnlyFrame() const
 {
     return ::KDDockWidgets::Core::Group::isTheOnlyFrame();
 }
-Layouting::Item *Group_wrapper::layoutItem() const
+Core::Item *Group_wrapper::layoutItem() const
 {
     return ::KDDockWidgets::Core::Group::layoutItem();
 }
@@ -314,7 +314,7 @@ void Group_wrapper::setLayout(KDDockWidgets::Core::Layout *arg__1)
 {
     ::KDDockWidgets::Core::Group::setLayout(arg__1);
 }
-void Group_wrapper::setLayoutItem(Layouting::Item *item)
+void Group_wrapper::setLayoutItem(Core::Item *item)
 {
     ::KDDockWidgets::Core::Group::setLayoutItem(item);
 }
@@ -737,10 +737,10 @@ void c_KDDockWidgets__Controllers__Group__setLayout_Layout(void *thisObj, void *
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Layout *>(arg__1_);
     fromPtr(thisObj)->setLayout(arg__1);
 }
-// setLayoutItem(Layouting::Item * item)
+// setLayoutItem(Core::Item * item)
 void c_KDDockWidgets__Controllers__Group__setLayoutItem_Item(void *thisObj, void *item_)
 {
-    auto item = reinterpret_cast<Layouting::Item *>(item_);
+    auto item = reinterpret_cast<Core::Item *>(item_);
     fromPtr(thisObj)->setLayoutItem(item);
 }
 // setParentView_impl(KDDockWidgets::Core::View * parent)

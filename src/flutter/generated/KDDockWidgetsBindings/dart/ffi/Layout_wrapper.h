@@ -33,14 +33,14 @@ public:
     bool checkSanity() const;
     void clearLayout();
     bool containsFrame(const KDDockWidgets::Core::Group *arg__1) const;
-    bool containsItem(const Layouting::Item *arg__1) const;
+    bool containsItem(const Core::Item *arg__1) const;
     int count() const;
     void dumpLayout() const;
     KDDockWidgets::Core::FloatingWindow *floatingWindow() const;
     QList<KDDockWidgets::Core::Group *> groups() const;
     QList<KDDockWidgets::Core::Group *> groupsFrom(KDDockWidgets::Core::View *groupOrMultiSplitter) const;
     bool isInMainWindow(bool honourNesting = false) const;
-    Layouting::Item *itemForFrame(const KDDockWidgets::Core::Group *group) const;
+    Core::Item *itemForFrame(const KDDockWidgets::Core::Group *group) const;
     int layoutHeight() const;
     QSize layoutMaximumSizeHint() const;
     QSize layoutMinimumSize() const;
@@ -48,8 +48,8 @@ public:
     int layoutWidth() const;
     KDDockWidgets::Core::MainWindow *mainWindow(bool honourNesting = false) const;
     int placeholderCount() const;
-    void removeItem(Layouting::Item *item);
-    void restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, Layouting::Item *arg__2, int tabIndex);
+    void removeItem(Core::Item *item);
+    void restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, Core::Item *arg__2, int tabIndex);
     void setLayoutMinimumSize(QSize arg__1);
     void setLayoutSize(QSize arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
@@ -73,7 +73,7 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__checkSan
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj);
 // KDDockWidgets::Core::Layout::containsFrame(const KDDockWidgets::Core::Group * arg__1) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Layout::containsItem(const Layouting::Item * arg__1) const
+// KDDockWidgets::Core::Layout::containsItem(const Core::Item * arg__1) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::count() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__count(void *thisObj);
@@ -103,9 +103,9 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__layoutWid
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Layout__mainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Core::Layout::placeholderCount() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj);
-// KDDockWidgets::Core::Layout::removeItem(Layouting::Item * item)
+// KDDockWidgets::Core::Layout::removeItem(Core::Item * item)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_);
-// KDDockWidgets::Core::Layout::restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Layouting::Item * arg__2, int tabIndex)
+// KDDockWidgets::Core::Layout::restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Core::Item * arg__2, int tabIndex)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex);
 // KDDockWidgets::Core::Layout::setLayoutMinimumSize(QSize arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);

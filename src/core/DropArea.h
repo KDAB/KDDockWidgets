@@ -40,8 +40,8 @@ class DropIndicatorOverlay;
 struct WindowBeingDragged;
 
 /**
- * MultiSplitter is simply a wrapper around Layouting::Item in which the hosted widgets are
- * of class KDDockWidgets::Frame. The stuff in Layouting:: being agnostic and generic, not specific
+ * MultiSplitter is simply a wrapper around Core::Item in which the hosted widgets are
+ * of class KDDockWidgets::Frame. The stuff in Core:: being agnostic and generic, not specific
  * to KDDW.
  *
  * A MultiSplitter is like a QSplitter but supports mixing vertical and horizontal splitters in
@@ -64,7 +64,7 @@ public:
     bool drop(WindowBeingDragged *droppedWindow, QPoint globalPos);
     QList<Core::Group *> groups() const;
 
-    Layouting::Item *centralFrame() const;
+    Core::Item *centralFrame() const;
     DropIndicatorOverlay *dropIndicatorOverlay() const
     {
         return m_dropIndicatorOverlay;
@@ -119,7 +119,7 @@ public:
      * words, the result will be exactly the same as the geometry the widget will get.
      */
     QRect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
-                      const Layouting::Item *relativeTo) const;
+                      const Core::Item *relativeTo) const;
 
     bool deserialize(const LayoutSaver::MultiSplitter &) override;
 
@@ -130,13 +130,13 @@ public:
     void layoutEqually();
 
     /// @brief overload that just resizes widgets within a sub-tree
-    void layoutEqually(Layouting::ItemBoxContainer *);
+    void layoutEqually(Core::ItemBoxContainer *);
 
     /// @brief Returns the number of items layed-out horizontally or vertically
     /// But honours nesting
     int numSideBySide_recursive(Qt::Orientation) const;
 
-    Layouting::ItemBoxContainer *rootItem() const;
+    Core::ItemBoxContainer *rootItem() const;
 
     /// Returns the current drop location
     /// The user needs to be dragging a window and be over a drop indicator, otherwise DropLocation_None is returned
@@ -157,7 +157,7 @@ private:
                         const Core::Group *relativeToFrame, InitialOption option) const;
 
 
-    void setRootItem(Layouting::ItemBoxContainer *);
+    void setRootItem(Core::ItemBoxContainer *);
 
     /**
      * @brief Like @ref availableLengthForDrop but just returns the total available width or height
@@ -185,7 +185,7 @@ private:
     QString m_affinityName;
     DropIndicatorOverlay *m_dropIndicatorOverlay = nullptr;
     Core::Group *const m_centralFrame = nullptr;
-    Layouting::ItemBoxContainer *m_rootItem = nullptr;
+    Core::ItemBoxContainer *m_rootItem = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
 };
 }
