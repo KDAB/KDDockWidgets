@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "core/multisplitter/Item_p.h"
+#include "core/layouting/Item_p.h"
 
 #include "kddockwidgets/core/Separator.h"
 #include "kddockwidgets/core/Platform.h"

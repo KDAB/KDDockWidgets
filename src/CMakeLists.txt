@@ -53,8 +53,8 @@ set(KDDW_BACKEND_SRCS
     core/indicators/NullIndicators.cpp
     core/indicators/ClassicIndicators.cpp
     core/indicators/SegmentedIndicators.cpp
-    core/multisplitter/Item.cpp
-    core/multisplitter/ItemFreeContainer.cpp
+    core/layouting/Item.cpp
+    core/layouting/ItemFreeContainer.cpp
     Action.cpp
     views/ClassicIndicatorWindowViewInterface.cpp
     views/MainWindowMDIViewInterface.cpp

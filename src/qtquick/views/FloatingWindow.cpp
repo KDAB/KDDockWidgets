@@ -17,7 +17,7 @@
 
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
-#include "core/multisplitter/Item_p.h"
+#include "core/layouting/Item_p.h"
 
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/FloatingWindow.h"

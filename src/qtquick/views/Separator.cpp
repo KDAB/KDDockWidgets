@@ -12,7 +12,7 @@
 #include "Separator.h"
 #include "kddockwidgets/core/Separator.h"
 #include "private/Logging_p.h"
-#include "core/multisplitter/Item_p.h"
+#include "core/layouting/Item_p.h"
 // #include "Rubberband_quick.h"
 
 #include <QTimer>

@@ -20,7 +20,7 @@
 #include "LayoutSaver_p.h"
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
-#include "core/multisplitter/Item_p.h"
+#include "core/layouting/Item_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "Action.h"
 #include "kddockwidgets/core/MDILayout.h"

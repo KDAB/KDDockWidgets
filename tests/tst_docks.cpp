@@ -17,7 +17,7 @@
 #include "LayoutSaver_p.h"
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
-#include "core/multisplitter/Item_p.h"
+#include "core/layouting/Item_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "Action.h"
 #include "kddockwidgets/core/MDILayout.h"
@@ -3154,7 +3154,7 @@ void TestDocks::tst_availableSizeWithPlaceholders()
 void TestDocks::tst_anchorFollowingItselfAssert()
 {
     // 1. Tests that we don't assert in Anchor::setFollowee()
-    //  ASSERT: "this != m_followee" in file ../src/multisplitter/Anchor.cpp
+    //  ASSERT: "this != m_followee" in file ../src/layouting/Anchor.cpp
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },

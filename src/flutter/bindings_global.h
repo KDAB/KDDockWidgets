@@ -61,7 +61,7 @@
 #include "../Config.h"
 #include "../DockRegistry.h"
 
-#include "../private/multisplitter/Item_p.h"
+#include "../private/layouting/Item_p.h"
 
 // TODO: kdbindings is choking shiboken
 // #include "Window_flutter.h"

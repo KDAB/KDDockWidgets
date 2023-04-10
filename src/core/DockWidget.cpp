@@ -27,7 +27,7 @@
 #include "private/Position_p.h"
 #include "private/Platform_p.h"
 #include "Platform.h"
-#include "core/multisplitter/Item_p.h"
+#include "core/layouting/Item_p.h"
 
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"

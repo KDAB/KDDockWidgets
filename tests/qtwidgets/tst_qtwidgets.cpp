@@ -22,7 +22,7 @@
 #include "WindowBeingDragged_p.h"
 #include "kddockwidgets/ViewFactory.h"
 
-#include "core/multisplitter/Item_p.h"
+#include "core/layouting/Item_p.h"
 
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/DropArea.h"

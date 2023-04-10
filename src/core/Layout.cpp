@@ -24,7 +24,7 @@
 #include "core/FloatingWindow.h"
 #include "core/MainWindow.h"
 
-#include "core/multisplitter/Item_p.h"
+#include "core/layouting/Item_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

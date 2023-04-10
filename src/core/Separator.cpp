@@ -10,7 +10,7 @@
 */
 
 #include "Separator.h"
-#include "multisplitter/Item_p.h"
+#include "layouting/Item_p.h"
 #include "View.h"
 #include "private/Logging_p.h"
 #include "Config.h"
