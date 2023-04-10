@@ -27,7 +27,7 @@
 #include "DockWidget_p.h"
 #include "DropArea.h"
 
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 #include "View.h"
 #include "private/View_p.h"
 

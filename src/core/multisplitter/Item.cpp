@@ -18,8 +18,8 @@
 #include "core/Window.h"
 #include "core/Platform.h"
 #include "core/View.h"
-#include "../View_p.h"
-#include "../Platform_p.h"
+#include "private/View_p.h"
+#include "private/Platform_p.h"
 
 #include <QDebug>
 #include <QScopedValueRollback>

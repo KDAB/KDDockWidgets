@@ -10,7 +10,7 @@
 */
 
 #include "MDILayout.h"
-#include "private/multisplitter/ItemFreeContainer_p.h"
+#include "core/multisplitter/ItemFreeContainer_p.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "core/Group.h"

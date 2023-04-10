@@ -17,7 +17,7 @@
 #include "private/Draggable_p.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 #include "private/WindowBeingDragged_p.h"
 
 #include "core/Group.h"

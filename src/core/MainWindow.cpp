@@ -27,7 +27,7 @@
 #include "private/WidgetResizeHandler_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "private/LayoutSaver_p.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 #include "Platform.h"
 #include "core/DockWidget_p.h"
 #include "core/Group.h"

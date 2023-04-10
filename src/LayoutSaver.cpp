@@ -21,7 +21,7 @@
 #include "kddockwidgets/ViewFactory.h"
 #include "nlohmann_qt_helpers.h"
 
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 #include "private/LayoutSaver_p.h"
 #include "DockRegistry.h"
 #include "private/Logging_p.h"

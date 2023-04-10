@@ -29,8 +29,6 @@ set(KDDW_BACKEND_SRCS
     private/WindowBeingDragged.cpp
     private/DragController.cpp
     private/WidgetResizeHandler.cpp
-    private/multisplitter/Item.cpp
-    private/multisplitter/ItemFreeContainer.cpp
     core/FocusScope.cpp
     core/DockWidget.cpp
     core/DropArea.cpp
@@ -55,6 +53,8 @@ set(KDDW_BACKEND_SRCS
     core/indicators/NullIndicators.cpp
     core/indicators/ClassicIndicators.cpp
     core/indicators/SegmentedIndicators.cpp
+    core/multisplitter/Item.cpp
+    core/multisplitter/ItemFreeContainer.cpp
     Action.cpp
     views/ClassicIndicatorWindowViewInterface.cpp
     views/MainWindowMDIViewInterface.cpp
@@ -329,7 +329,7 @@ if(KDDW_FRONTEND_FLUTTER)
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/indicators>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/multisplitter>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )

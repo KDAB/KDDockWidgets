@@ -17,7 +17,7 @@
  */
 
 #include "Config.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 #include "DockRegistry.h"
 #include "private/Utils_p.h"
 #include "private/DragController_p.h"

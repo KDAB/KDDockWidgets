@@ -19,7 +19,7 @@
 #include "qtquick/views/Group.h"
 #include "qtquick/views/MainWindow.h"
 #include "qtquick/views/Separator.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 // #include "qtquick/views/SideBar.h"
 #include "qtquick/views/Stack.h"
 #include "qtquick/views/TabBar.h"

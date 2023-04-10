@@ -14,7 +14,7 @@
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/Window.h"
 #include "kddockwidgets/private/DockRegistry.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 
 #include <QDebug>
 #include <QTimer>

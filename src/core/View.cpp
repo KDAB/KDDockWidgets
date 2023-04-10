@@ -11,7 +11,7 @@
 
 #include "View.h"
 #include "private/View_p.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 
 #include "core/FloatingWindow.h"
 #include "core/Group.h"

@@ -36,7 +36,7 @@
 #include "private/LayoutSaver_p.h"
 #include "private/Position_p.h"
 #include "private/WidgetResizeHandler_p.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 
 #include "kdbindings/signal.h"
 

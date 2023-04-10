@@ -18,7 +18,7 @@
 #include "Position_p.h"
 #include "DockRegistry.h"
 #include "LayoutSaver_p.h"
-#include "multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Layout.h"
 #include "kddockwidgets/core/MainWindow.h"

@@ -13,7 +13,7 @@
 #include "private/Utils_p.h"
 #include "private/View_p.h"
 #include "ViewWrapper.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 #include "kddockwidgets/qtquick/Window.h"
 #include "qtquick/Platform.h"
 

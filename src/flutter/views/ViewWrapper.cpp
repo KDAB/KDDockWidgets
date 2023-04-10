@@ -11,7 +11,7 @@
 
 #include "ViewWrapper.h"
 #include "private/View_p.h"
-#include "private/multisplitter/Item_p.h"
+#include "core/multisplitter/Item_p.h"
 #include "../Window_flutter.h"
 #include "View_flutter.h"
 
