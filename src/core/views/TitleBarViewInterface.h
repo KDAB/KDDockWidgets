@@ -16,10 +16,8 @@
 namespace KDDockWidgets {
 
 namespace Core {
-class TitleBar;
-}
 
-namespace Views {
+class TitleBar;
 
 /// @brief The interface that TitleBar views should implement
 class DOCKS_EXPORT TitleBarViewInterface

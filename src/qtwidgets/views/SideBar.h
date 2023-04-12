@@ -52,7 +52,7 @@ private:
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT SideBar : public View_qtwidgets<QWidget>, public Views::SideBarViewInterface
+class DOCKS_EXPORT SideBar : public View_qtwidgets<QWidget>, public Core::SideBarViewInterface
 {
     Q_OBJECT
 public:

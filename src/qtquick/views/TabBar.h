@@ -30,22 +30,18 @@
 
 #include "kdbindings/signal.h"
 
-namespace KDDockWidgets::Core {
+namespace KDDockWidgets {
+
+namespace Core {
 class TabBar;
 }
 
-namespace KDDockWidgets {
-
-namespace Views {
-class DockWidget;
-class TabWidget;
-}
-
 namespace qtquick {
+
 class Stack;
 class DockWidgetModel;
 
-class DOCKS_EXPORT TabBar : public Views::View_qtquick, public Views::TabBarViewInterface
+class DOCKS_EXPORT TabBar : public Views::View_qtquick, public Core::TabBarViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY

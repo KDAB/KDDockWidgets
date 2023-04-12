@@ -20,7 +20,7 @@ using namespace KDDockWidgets::Core;
 MainWindowMDI::MainWindowMDI(const QString &uniqueName, QWidget *parent,
                              Qt::WindowFlags flags)
     : qtwidgets::MainWindow(uniqueName, MainWindowOption_MDI, parent, flags)
-    , Views::MainWindowMDIViewInterface(mainWindow()->mdiLayout())
+    , Core::MainWindowMDIViewInterface(mainWindow()->mdiLayout())
 {
 }
 

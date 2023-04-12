@@ -172,7 +172,7 @@ void Group::changeTabIcon(int index, const Icon &icon)
 
 int Group::nonContentsHeight() const
 {
-    return dynamic_cast<Views::GroupViewInterface *>(view())->nonContentsHeight();
+    return dynamic_cast<Core::GroupViewInterface *>(view())->nonContentsHeight();
 }
 
 Core::Stack *Group::stack() const
@@ -284,7 +284,7 @@ void Group::removeWidget(DockWidget *dw)
     disconnect(dw, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
     disconnect(dw, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
 
-    dynamic_cast<Views::GroupViewInterface *>(view())->removeDockWidget(dw);
+    dynamic_cast<Core::GroupViewInterface *>(view())->removeDockWidget(dw);
 }
 
 FloatingWindow *Group::detachTab(DockWidget *dockWidget)
@@ -349,7 +349,7 @@ void Group::insertDockWidget(DockWidget *dw, int index)
     if (m_inCtor || m_inDtor)
         return;
 
-    dynamic_cast<Views::GroupViewInterface *>(view())->insertDockWidget(dw, index);
+    dynamic_cast<Core::GroupViewInterface *>(view())->insertDockWidget(dw, index);
     dw->d->onParentChanged();
 }
 
@@ -809,7 +809,7 @@ QRect Group::dragRect() const
     if (rect.isValid())
         return rect;
 
-    return dynamic_cast<Views::GroupViewInterface *>(view())->dragRect();
+    return dynamic_cast<Core::GroupViewInterface *>(view())->dragRect();
 }
 
 MainWindow *Group::mainWindow() const

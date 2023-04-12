@@ -20,9 +20,7 @@ class QSize;
 class QString;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets {
-
-namespace Views {
+namespace KDDockWidgets::Core {
 
 /// @brief The window that will hold the classic indicators
 /// This is a window so it can be over the window that is being dragged
@@ -41,7 +39,5 @@ public:
     virtual void setGeometry(QRect) = 0;
     virtual bool isWindow() const = 0;
 };
-
-}
 
 }

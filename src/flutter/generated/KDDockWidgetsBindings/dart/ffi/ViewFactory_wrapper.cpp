@@ -31,7 +31,7 @@ ViewFactory_wrapper::ViewFactory_wrapper()
     : ::KDDockWidgets::ViewFactory()
 {
 }
-KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators *arg__1) const
+KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators *arg__1) const
 {
     if (m_createClassicIndicatorWindowCallback) {
         const void *thisPtr = this;
@@ -41,7 +41,7 @@ KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::
         return {};
     }
 }
-KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicIndicators *arg__1) const
+KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicIndicators *arg__1) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};

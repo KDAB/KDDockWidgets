@@ -43,7 +43,7 @@ using namespace KDDockWidgets::qtquick;
 
 Group::Group(Core::Group *controller, QQuickItem *parent)
     : Views::View_qtquick(controller, Core::ViewType::Frame, parent)
-    , Views::GroupViewInterface(controller)
+    , Core::GroupViewInterface(controller)
 {
 }
 

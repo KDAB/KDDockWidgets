@@ -94,20 +94,20 @@ void MDIArea::resizeDockWidget(Core::DockWidget *dw, QSize size)
     d->layout->resizeDockWidget(dw, size);
 }
 
-void MDIArea::addDockWidget(Views::DockWidgetViewInterface *dwView, QPoint localPt,
+void MDIArea::addDockWidget(Core::DockWidgetViewInterface *dwView, QPoint localPt,
                             InitialOption addingOption)
 {
     auto dw = dwView ? dwView->dockWidget() : nullptr;
     addDockWidget(dw, localPt, addingOption);
 }
 
-void MDIArea::moveDockWidget(Views::DockWidgetViewInterface *dwView, QPoint pos)
+void MDIArea::moveDockWidget(Core::DockWidgetViewInterface *dwView, QPoint pos)
 {
     auto dw = dwView ? dwView->dockWidget() : nullptr;
     moveDockWidget(dw, pos);
 }
 
-void MDIArea::resizeDockWidget(Views::DockWidgetViewInterface *dwView, QSize size)
+void MDIArea::resizeDockWidget(Core::DockWidgetViewInterface *dwView, QSize size)
 {
     auto dw = dwView ? dwView->dockWidget() : nullptr;
     resizeDockWidget(dw, size);

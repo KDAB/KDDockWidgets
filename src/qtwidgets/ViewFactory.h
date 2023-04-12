@@ -76,7 +76,7 @@ public:
     void clearIconCache();
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
-    Views::ClassicIndicatorWindowViewInterface *
+    Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicIndicators *) const override;
     Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
                                                         Core::View *parent = nullptr) const override;

@@ -15,7 +15,7 @@
 
 #include "DockRegistry.h"
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::Core {
 
 MainWindowViewInterface::MainWindowViewInterface(Core::MainWindow *controller)
     : m_mainWindow(controller)

@@ -40,7 +40,7 @@ namespace qtquick {
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
 class DOCKS_EXPORT DockWidget : public Views::View_qtquick,
-                                public Views::DockWidgetViewInterface
+                                public Core::DockWidgetViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarView NOTIFY actualTitleBarChanged)
@@ -52,8 +52,8 @@ class DOCKS_EXPORT DockWidget : public Views::View_qtquick,
     Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY
                    optionsChanged)
 public:
-    using Views::DockWidgetViewInterface::raise;
-    using Views::DockWidgetViewInterface::show;
+    using Core::DockWidgetViewInterface::raise;
+    using Core::DockWidgetViewInterface::show;
 
     /**
      * @brief constructs a new DockWidget

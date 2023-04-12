@@ -38,13 +38,11 @@ class SideBar;
 class MainWindow;
 class DockWidget;
 class Group;
+class MainWindowMDIViewInterface;
+class MainWindowViewInterface;
 struct WindowBeingDragged;
 }
 
-namespace Views {
-class MainWindowMDIViewInterface;
-class MainWindowViewInterface;
-}
 
 class MainWindowMDI;
 
@@ -104,7 +102,7 @@ public:
     /// @brief returns all MainWindow instances
     /// Like mainwindows(), but with better suited for QtQuick and better terminology
     /// as we're phasing out the "MainWindow" name there
-    const QList<Views::MainWindowViewInterface *> mainDockingAreas() const;
+    const QList<Core::MainWindowViewInterface *> mainDockingAreas() const;
 
     ///@brief overload returning only the ones with the specified names
     const QVector<Core::MainWindow *> mainWindows(const QStringList &names);

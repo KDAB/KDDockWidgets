@@ -22,9 +22,6 @@ namespace Core {
 class Group;
 class DockWidget;
 class MDILayout;
-}
-
-namespace Views {
 class DockWidgetViewInterface;
 }
 
@@ -57,10 +54,10 @@ public:
     void resizeDockWidget(Core::DockWidget *dw, QSize size);
 
     /// @brief overloads
-    void addDockWidget(Views::DockWidgetViewInterface *, QPoint localPt,
+    void addDockWidget(Core::DockWidgetViewInterface *, QPoint localPt,
                        InitialOption addingOption = {});
-    void moveDockWidget(Views::DockWidgetViewInterface *, QPoint pos);
-    void resizeDockWidget(Views::DockWidgetViewInterface *, QSize size);
+    void moveDockWidget(Core::DockWidgetViewInterface *, QPoint pos);
+    void resizeDockWidget(Core::DockWidgetViewInterface *, QSize size);
 
     /// @brief Returns the list of groups in this MDI Area
     /// Each Frame object represents a 'window' emebedded in the MDI Area

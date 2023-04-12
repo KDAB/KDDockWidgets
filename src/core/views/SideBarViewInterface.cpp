@@ -13,16 +13,16 @@
 #include "kddockwidgets/core/SideBar.h"
 
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::Core {
 
-SideBarViewInterface::SideBarViewInterface(Core::SideBar *controller)
+SideBarViewInterface::SideBarViewInterface(SideBar *controller)
     : m_sideBar(controller)
 {
 }
 
 SideBarViewInterface::~SideBarViewInterface() = default;
 
-Core::SideBar *SideBarViewInterface::sideBar() const
+SideBar *SideBarViewInterface::sideBar() const
 {
     return m_sideBar;
 }

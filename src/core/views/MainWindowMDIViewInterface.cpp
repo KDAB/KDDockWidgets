@@ -14,10 +14,9 @@
 #include "core/MDILayout.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::Core;
 
-MainWindowMDIViewInterface::MainWindowMDIViewInterface(Core::MDILayout *layout)
+MainWindowMDIViewInterface::MainWindowMDIViewInterface(MDILayout *layout)
     : m_mdiLayout(layout)
 {
 }
@@ -25,7 +24,7 @@ MainWindowMDIViewInterface::MainWindowMDIViewInterface(Core::MDILayout *layout)
 void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget, QPoint localPos,
                                                InitialOption addingOption)
 {
-    Core::DockWidget *dw = dockWidget ? dockWidget->dockWidget() : nullptr;
+    DockWidget *dw = dockWidget ? dockWidget->dockWidget() : nullptr;
     m_mdiLayout->addDockWidget(dw, localPos, addingOption);
 }
 

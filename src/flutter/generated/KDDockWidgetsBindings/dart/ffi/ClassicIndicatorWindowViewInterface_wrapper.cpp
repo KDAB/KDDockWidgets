@@ -28,7 +28,7 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 ClassicIndicatorWindowViewInterface_wrapper::ClassicIndicatorWindowViewInterface_wrapper()
-    : ::KDDockWidgets::Views::ClassicIndicatorWindowViewInterface()
+    : ::KDDockWidgets::Core::ClassicIndicatorWindowViewInterface()
 {
 }
 KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover(QPoint arg__1)
@@ -171,9 +171,9 @@ ClassicIndicatorWindowViewInterface_wrapper::~ClassicIndicatorWindowViewInterfac
 }
 
 }
-static KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *fromPtr(void *ptr)
+static KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *fromPtr(void *ptr)
 {
-    return reinterpret_cast<KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *>(ptr);
+    return reinterpret_cast<KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *>(ptr);
 }
 static KDDockWidgetsBindings_wrappersNS::ClassicIndicatorWindowViewInterface_wrapper *fromWrapperPtr(void *ptr)
 {

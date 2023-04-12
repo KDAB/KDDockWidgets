@@ -13,7 +13,6 @@
 #include "kddockwidgets/core/MDILayout.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::qtquick;
 
 MDILayout::MDILayout(Core::MDILayout *controller, View *parent)

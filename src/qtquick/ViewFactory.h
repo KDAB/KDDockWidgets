@@ -79,7 +79,7 @@ public:
     virtual QUrl floatingWindowFilename() const;
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
-    Views::ClassicIndicatorWindowViewInterface *
+    Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicIndicators *) const override;
     Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
                                                         Core::View *parent = nullptr) const override;

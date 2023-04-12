@@ -24,7 +24,7 @@ class TitleBar;
 
 namespace Views {
 
-class DOCKS_EXPORT TitleBar_flutter : public View_flutter, public Views::TitleBarViewInterface
+class DOCKS_EXPORT TitleBar_flutter : public View_flutter, public Core::TitleBarViewInterface
 {
 public:
     explicit TitleBar_flutter(Core::TitleBar *controller, View *parent = nullptr);

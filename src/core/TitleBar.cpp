@@ -200,17 +200,17 @@ bool TitleBar::supportsAutoHideButton() const
 #ifdef DOCKS_DEVELOPER_MODE
 bool TitleBar::isFloatButtonVisible() const
 {
-    return dynamic_cast<Views::TitleBarViewInterface *>(view())->isFloatButtonVisible();
+    return dynamic_cast<Core::TitleBarViewInterface *>(view())->isFloatButtonVisible();
 }
 
 bool TitleBar::isCloseButtonVisible() const
 {
-    return dynamic_cast<Views::TitleBarViewInterface *>(view())->isCloseButtonVisible();
+    return dynamic_cast<Core::TitleBarViewInterface *>(view())->isCloseButtonVisible();
 }
 
 bool TitleBar::isCloseButtonEnabled() const
 {
-    return dynamic_cast<Views::TitleBarViewInterface *>(view())->isCloseButtonEnabled();
+    return dynamic_cast<Core::TitleBarViewInterface *>(view())->isCloseButtonEnabled();
 }
 #endif
 

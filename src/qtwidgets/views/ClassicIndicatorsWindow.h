@@ -29,7 +29,7 @@ class ClassicIndicators;
 
 namespace qtwidgets {
 
-class IndicatorWindow : public QWidget, public Views::ClassicIndicatorWindowViewInterface
+class IndicatorWindow : public QWidget, public Core::ClassicIndicatorWindowViewInterface
 {
     Q_OBJECT
 public:

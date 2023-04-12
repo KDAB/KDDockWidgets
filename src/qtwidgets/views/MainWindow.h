@@ -42,7 +42,7 @@ namespace qtwidgets {
  * to dock KDDockWidget DockWidget instances.
  */
 class DOCKS_EXPORT MainWindow : public View_qtwidgets<QMainWindow>,
-                                public Views::MainWindowViewInterface
+                                public Core::MainWindowViewInterface
 {
     Q_OBJECT
 public:

@@ -16,25 +16,23 @@
 namespace KDDockWidgets {
 
 namespace Core {
+
 class DockWidget;
 class SideBar;
-}
-
-namespace Views {
 
 /// @brief The interface that SideBar views should implement
 class DOCKS_EXPORT SideBarViewInterface
 {
 public:
-    explicit SideBarViewInterface(Core::SideBar *);
+    explicit SideBarViewInterface(SideBar *);
     virtual ~SideBarViewInterface();
-    virtual void addDockWidget_Impl(Core::DockWidget *dock) = 0;
-    virtual void removeDockWidget_Impl(Core::DockWidget *dock) = 0;
+    virtual void addDockWidget_Impl(DockWidget *dock) = 0;
+    virtual void removeDockWidget_Impl(DockWidget *dock) = 0;
 
-    Core::SideBar *sideBar() const;
+    SideBar *sideBar() const;
 
 protected:
-    Core::SideBar *const m_sideBar;
+    SideBar *const m_sideBar;
 };
 
 }

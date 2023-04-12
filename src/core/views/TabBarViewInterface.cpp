@@ -13,9 +13,9 @@
 #include "kddockwidgets/core/TabBar.h"
 
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::Core {
 
-TabBarViewInterface::TabBarViewInterface(Core::TabBar *controller)
+TabBarViewInterface::TabBarViewInterface(TabBar *controller)
     : m_tabBar(controller)
 {
 }

@@ -127,7 +127,7 @@ ViewFactory_flutter::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndi
     return {};
 }
 
-Views::ClassicIndicatorWindowViewInterface *
+Core::ClassicIndicatorWindowViewInterface *
 ViewFactory_flutter::createClassicIndicatorWindow(Core::ClassicIndicators *) const
 {
     return {};

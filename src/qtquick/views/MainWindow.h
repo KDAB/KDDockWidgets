@@ -33,7 +33,7 @@ namespace qtquick {
 /// to do. From QML just use DockingArea {}, which will create a this class behind the scenes. It's
 /// mostly an implementation detail unless you want to use C++.
 
-class DOCKS_EXPORT MainWindow : public Views::View_qtquick, public Views::MainWindowViewInterface
+class DOCKS_EXPORT MainWindow : public Views::View_qtquick, public Core::MainWindowViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QStringList affinities READ affinities CONSTANT)

@@ -11,7 +11,7 @@
 
 #include "ClassicIndicatorWindowViewInterface.h"
 
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::Core;
 
 ClassicIndicatorWindowViewInterface::~ClassicIndicatorWindowViewInterface()
 {

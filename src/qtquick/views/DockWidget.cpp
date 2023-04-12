@@ -58,7 +58,7 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
                        Qt::WindowFlags windowFlags, QQmlEngine *engine)
     : View_qtquick(new Core::DockWidget(this, uniqueName, options, layoutSaverOptions), Core::ViewType::DockWidget,
                    nullptr, windowFlags)
-    , Views::DockWidgetViewInterface(asDockWidgetController())
+    , Core::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this, engine ? engine : plat()->qmlEngine()))
 {
     init();

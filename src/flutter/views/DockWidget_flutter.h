@@ -33,11 +33,11 @@ namespace Views {
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
 class DOCKS_EXPORT DockWidget_flutter : public Views::View_flutter,
-                                        public Views::DockWidgetViewInterface
+                                        public Core::DockWidgetViewInterface
 {
 public:
-    using Views::DockWidgetViewInterface::raise;
-    using Views::DockWidgetViewInterface::show;
+    using Core::DockWidgetViewInterface::raise;
+    using Core::DockWidgetViewInterface::show;
 
     /**
      * @brief constructs a new DockWidget

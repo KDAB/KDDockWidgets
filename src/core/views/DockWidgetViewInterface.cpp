@@ -14,26 +14,26 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/DockWidget_p.h"
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::Core {
 
-DockWidgetViewInterface::DockWidgetViewInterface(Core::DockWidget *controller)
+DockWidgetViewInterface::DockWidgetViewInterface(DockWidget *controller)
     : m_dockWidget(controller)
 {
 }
 
-Core::Group *DockWidgetViewInterface::group() const
+Group *DockWidgetViewInterface::group() const
 {
     return m_dockWidget->dptr()->group();
 }
 
-Core::DockWidget *DockWidgetViewInterface::dockWidget() const
+DockWidget *DockWidgetViewInterface::dockWidget() const
 {
     return m_dockWidget;
 }
 
-Core::TitleBar *DockWidgetViewInterface::actualTitleBar() const
+TitleBar *DockWidgetViewInterface::actualTitleBar() const
 {
-    if (Core::Group *group = this->group())
+    if (Group *group = this->group())
         return group->actualTitleBar();
     return nullptr;
 }
@@ -118,7 +118,7 @@ void DockWidgetViewInterface::moveToSideBar()
 void DockWidgetViewInterface::addDockWidgetAsTab(DockWidgetViewInterface *other,
                                                  KDDockWidgets::InitialOption initialOption)
 {
-    Core::DockWidget *dw = other ? other->dockWidget() : nullptr;
+    DockWidget *dw = other ? other->dockWidget() : nullptr;
     m_dockWidget->addDockWidgetAsTab(dw, initialOption);
 }
 
@@ -126,8 +126,8 @@ void DockWidgetViewInterface::addDockWidgetToContainingWindow(
     DockWidgetViewInterface *other, KDDockWidgets::Location location,
     DockWidgetViewInterface *relativeTo, KDDockWidgets::InitialOption initialOption)
 {
-    Core::DockWidget *dw = other ? other->dockWidget() : nullptr;
-    Core::DockWidget *relativeToDw = relativeTo ? relativeTo->dockWidget() : nullptr;
+    DockWidget *dw = other ? other->dockWidget() : nullptr;
+    DockWidget *relativeToDw = relativeTo ? relativeTo->dockWidget() : nullptr;
     m_dockWidget->addDockWidgetToContainingWindow(dw, location, relativeToDw, initialOption);
 }
 

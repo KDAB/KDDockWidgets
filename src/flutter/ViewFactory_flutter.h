@@ -68,7 +68,7 @@ public:
     Icon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
-    Views::ClassicIndicatorWindowViewInterface *
+    Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicIndicators *) const override;
 
     View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,

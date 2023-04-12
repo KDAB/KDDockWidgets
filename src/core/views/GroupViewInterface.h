@@ -23,18 +23,15 @@ namespace KDDockWidgets {
 namespace Core {
 class DockWidget;
 class Group;
-}
-
-namespace Views {
 
 /// @brief The interface that Frame views should implement
 class DOCKS_EXPORT GroupViewInterface
 {
 public:
-    explicit GroupViewInterface(Core::Group *);
+    explicit GroupViewInterface(Group *);
     virtual ~GroupViewInterface();
-    virtual void removeDockWidget(Core::DockWidget *);
-    virtual void insertDockWidget(Core::DockWidget *, int index);
+    virtual void removeDockWidget(DockWidget *);
+    virtual void insertDockWidget(DockWidget *, int index);
 
     /// @brief Returns the height of the "non-dockwidget" part.
     /// i.e.: the height of the titlebar (if any), + height of tabbar (if any) + any margins.
@@ -48,10 +45,10 @@ public:
     virtual QRect dragRect() const;
 
     bool isMDI() const;
-    Core::Group *group() const;
+    Group *group() const;
 
 protected:
-    Core::Group *const m_group;
+    Group *const m_group;
 };
 
 }

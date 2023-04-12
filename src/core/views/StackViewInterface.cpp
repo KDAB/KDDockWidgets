@@ -13,9 +13,9 @@
 #include "kddockwidgets/core/Stack.h"
 
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::Core {
 
-StackViewInterface::StackViewInterface(Core::Stack *controller)
+StackViewInterface::StackViewInterface(Stack *controller)
     : m_stack(controller)
 {
 }

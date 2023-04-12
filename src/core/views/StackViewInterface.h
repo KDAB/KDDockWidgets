@@ -20,16 +20,14 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 namespace Core {
-class Stack;
-}
 
-namespace Views {
+class Stack;
 
 /// @brief The interface that Stack views share
 class DOCKS_EXPORT StackViewInterface
 {
 public:
-    explicit StackViewInterface(Core::Stack *);
+    explicit StackViewInterface(Stack *);
     virtual ~StackViewInterface();
 
     /// @brief Reimplement if you want to support dragging by QTabWidget instead of TitleBar
@@ -44,7 +42,7 @@ public:
     virtual void setDocumentMode(bool);
 
 protected:
-    Core::Stack *const m_stack;
+    Stack *const m_stack;
 };
 
 }

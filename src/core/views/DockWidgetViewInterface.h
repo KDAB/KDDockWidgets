@@ -17,23 +17,21 @@
 namespace KDDockWidgets {
 
 namespace Core {
+
 class DockWidget;
 class Group;
 class TitleBar;
-}
-
-namespace Views {
 
 /// @brief The interface that DockWidget views should implement
 class DOCKS_EXPORT DockWidgetViewInterface
 {
 public:
-    explicit DockWidgetViewInterface(Core::DockWidget *);
+    explicit DockWidgetViewInterface(DockWidget *);
     virtual ~DockWidgetViewInterface();
 
-    Core::Group *group() const;
-    Core::DockWidget *dockWidget() const;
-    Core::TitleBar *actualTitleBar() const;
+    Group *group() const;
+    DockWidget *dockWidget() const;
+    TitleBar *actualTitleBar() const;
 
     bool isFocused() const;
     bool isFloating() const;
@@ -71,7 +69,7 @@ public:
     void show();
 
 protected:
-    Core::DockWidget *const m_dockWidget;
+    DockWidget *const m_dockWidget;
 };
 
 }

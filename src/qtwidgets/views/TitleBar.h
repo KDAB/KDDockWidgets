@@ -24,7 +24,7 @@ QT_END_NAMESPACE
 namespace KDDockWidgets::qtwidgets {
 
 class DOCKS_EXPORT TitleBar : public View_qtwidgets<QWidget>,
-                              public Views::TitleBarViewInterface
+                              public Core::TitleBarViewInterface
 {
     Q_OBJECT
 public:

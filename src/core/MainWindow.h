@@ -32,12 +32,9 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-namespace Views {
-class MainWindowViewInterface;
-}
-
 namespace Core {
 
+class MainWindowViewInterface;
 class MDILayout;
 class DropArea;
 class Group;
@@ -248,7 +245,7 @@ private:
     class Private;
     Private *const d;
 
-    friend class KDDockWidgets::Views::MainWindowViewInterface;
+    friend class KDDockWidgets::Core::MainWindowViewInterface;
     friend class ::TestDocks;
     friend class KDDockWidgets::LayoutSaver;
     bool deserialize(const LayoutSaver::MainWindow &);

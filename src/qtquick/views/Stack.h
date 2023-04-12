@@ -33,7 +33,7 @@ class Stack;
 
 namespace qtquick {
 
-class DOCKS_EXPORT Stack : public Views::View_qtquick, public Views::StackViewInterface
+class DOCKS_EXPORT Stack : public Views::View_qtquick, public Core::StackViewInterface
 {
     Q_OBJECT
 public:

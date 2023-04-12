@@ -191,7 +191,7 @@ Core::View *ViewFactory::createSegmentedDropIndicatorOverlayView(
                                                      Views::View_qt::asQWidget(parent));
 }
 
-Views::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
+Core::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
     Core::ClassicIndicators *classicIndicators) const
 {
     return new qtwidgets::IndicatorWindow(classicIndicators);

@@ -31,7 +31,7 @@ ViewFactory_flutter_wrapper::ViewFactory_flutter_wrapper()
     : ::KDDockWidgets::ViewFactory_flutter()
 {
 }
-KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_flutter_wrapper::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators *arg__1) const
+KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_flutter_wrapper::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators *arg__1) const
 {
     if (m_createClassicIndicatorWindowCallback) {
         const void *thisPtr = this;
@@ -40,7 +40,7 @@ KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_flutter_w
         return ::KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(arg__1);
     }
 }
-KDDockWidgets::Views::ClassicIndicatorWindowViewInterface *ViewFactory_flutter_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicIndicators *arg__1) const
+KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_flutter_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicIndicators *arg__1) const
 {
     return ::KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(arg__1);
 }

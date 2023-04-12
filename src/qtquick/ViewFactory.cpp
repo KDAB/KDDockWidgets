@@ -202,7 +202,7 @@ ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *
     return nullptr;
 }
 
-Views::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
+Core::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
     Core::ClassicIndicators *classicIndicators) const
 {
     return new IndicatorWindow(classicIndicators);

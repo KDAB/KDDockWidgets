@@ -24,7 +24,7 @@ class ClassicIndicators;
 }
 
 namespace qtquick {
-class IndicatorWindow : public QQuickView, public Views::ClassicIndicatorWindowViewInterface
+class IndicatorWindow : public QQuickView, public Core::ClassicIndicatorWindowViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(bool innerLeftIndicatorVisible READ innerLeftIndicatorVisible NOTIFY

@@ -52,7 +52,7 @@ StackOptions Stack::options() const
 
 bool Stack::isPositionDraggable(QPoint p) const
 {
-    return dynamic_cast<Views::StackViewInterface *>(view())->isPositionDraggable(p);
+    return dynamic_cast<Core::StackViewInterface *>(view())->isPositionDraggable(p);
 }
 
 void Stack::addDockWidget(DockWidget *dock)
@@ -208,5 +208,5 @@ int Stack::numDockWidgets() const
 
 void Stack::setDocumentMode(bool is)
 {
-    dynamic_cast<Views::StackViewInterface *>(view())->setDocumentMode(is);
+    dynamic_cast<Core::StackViewInterface *>(view())->setDocumentMode(is);
 }

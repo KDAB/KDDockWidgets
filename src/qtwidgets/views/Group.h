@@ -20,7 +20,7 @@ class Group;
 
 namespace KDDockWidgets::qtwidgets {
 
-class DOCKS_EXPORT Group : public View_qtwidgets<QWidget>, public Views::GroupViewInterface
+class DOCKS_EXPORT Group : public View_qtwidgets<QWidget>, public Core::GroupViewInterface
 {
     Q_OBJECT
 public:

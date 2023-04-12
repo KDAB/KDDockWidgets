@@ -29,11 +29,11 @@ namespace qtwidgets {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
 class DOCKS_EXPORT MainWindowMDI : public qtwidgets::MainWindow,
-                                   public Views::MainWindowMDIViewInterface
+                                   public Core::MainWindowMDIViewInterface
 {
     Q_OBJECT
 public:
-    using Views::MainWindowMDIViewInterface::addDockWidget;
+    using Core::MainWindowMDIViewInterface::addDockWidget;
 
     ///@brief Constructor. See base class documentation
     explicit MainWindowMDI(const QString &uniqueName, QWidget *parent = nullptr,

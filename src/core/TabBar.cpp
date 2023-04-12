@@ -32,7 +32,7 @@ Core::TabBar::TabBar(Stack *stack)
     , m_stack(stack)
 {
     view()->init();
-    dynamic_cast<Views::TabBarViewInterface *>(view())->setTabsAreMovable(tabsAreMovable());
+    dynamic_cast<Core::TabBarViewInterface *>(view())->setTabsAreMovable(tabsAreMovable());
 }
 
 Core::TabBar::~TabBar()
@@ -60,7 +60,7 @@ bool Core::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
     }
 
     const int index =
-        dynamic_cast<Views::TabBarViewInterface *>(view())->tabAt(view()->mapFromGlobal(pos));
+        dynamic_cast<Core::TabBarViewInterface *>(view())->tabAt(view()->mapFromGlobal(pos));
     if (index == -1)
         return defaultResult;
 
@@ -91,7 +91,7 @@ Core::DockWidget *Core::TabBar::dockWidgetAt(int index) const
 
 Core::DockWidget *Core::TabBar::dockWidgetAt(QPoint localPos) const
 {
-    return dockWidgetAt(dynamic_cast<Views::TabBarViewInterface *>(view())->tabAt(localPos));
+    return dockWidgetAt(dynamic_cast<Core::TabBarViewInterface *>(view())->tabAt(localPos));
 }
 
 int TabBar::indexOfDockWidget(const Core::DockWidget *dw) const
@@ -115,7 +115,7 @@ void TabBar::removeDockWidget(Core::DockWidget *dw)
     m_removeGuard = true;
     // The view might call setCurrenteIndex() before our m_dockWidgets reflectig the state.
     // m_removeGuard protects against that.
-    dynamic_cast<Views::TabBarViewInterface *>(view())->removeDockWidget(dw);
+    dynamic_cast<Core::TabBarViewInterface *>(view())->removeDockWidget(dw);
     m_removeGuard = false;
 
     m_dockWidgets.removeOne(dw);
@@ -136,7 +136,7 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
     m_dockWidgets.insert(index, dw);
     connect(dw, &DockWidget::aboutToDelete, this, &TabBar::removeDockWidget);
 
-    dynamic_cast<Views::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
+    dynamic_cast<Core::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
 
     group()->onDockWidgetCountChanged();
 }
@@ -242,17 +242,17 @@ void Core::TabBar::moveTabTo(int from, int to)
 {
     auto fromDw = m_dockWidgets.takeAt(from);
     m_dockWidgets.insert(to, fromDw);
-    dynamic_cast<Views::TabBarViewInterface *>(view())->moveTabTo(from, to);
+    dynamic_cast<Core::TabBarViewInterface *>(view())->moveTabTo(from, to);
 }
 
 QString Core::TabBar::text(int index) const
 {
-    return dynamic_cast<Views::TabBarViewInterface *>(view())->text(index);
+    return dynamic_cast<Core::TabBarViewInterface *>(view())->text(index);
 }
 
 QRect Core::TabBar::rectForTab(int index) const
 {
-    return dynamic_cast<Views::TabBarViewInterface *>(view())->rectForTab(index);
+    return dynamic_cast<Core::TabBarViewInterface *>(view())->rectForTab(index);
 }
 
 DockWidget *TabBar::currentDockWidget() const
@@ -290,15 +290,15 @@ void TabBar::setCurrentIndex(int index)
 
     m_currentDockWidget = newCurrentDw;
     Q_EMIT currentDockWidgetChanged(newCurrentDw);
-    dynamic_cast<Views::TabBarViewInterface *>(view())->setCurrentIndex(index);
+    dynamic_cast<Core::TabBarViewInterface *>(view())->setCurrentIndex(index);
 }
 
 void TabBar::renameTab(int index, const QString &text)
 {
-    dynamic_cast<Views::TabBarViewInterface *>(view())->renameTab(index, text);
+    dynamic_cast<Core::TabBarViewInterface *>(view())->renameTab(index, text);
 }
 
 void TabBar::changeTabIcon(int index, const Icon &icon)
 {
-    dynamic_cast<Views::TabBarViewInterface *>(view())->changeTabIcon(index, icon);
+    dynamic_cast<Core::TabBarViewInterface *>(view())->changeTabIcon(index, icon);
 }

@@ -46,7 +46,7 @@ void SideBar::addDockWidget(DockWidget *dw)
     connect(dw, &DockWidget::aboutToDelete, this, &SideBar::removeDockWidget);
 
     m_dockWidgets << dw;
-    dynamic_cast<Views::SideBarViewInterface *>(view())->addDockWidget_Impl(dw);
+    dynamic_cast<Core::SideBarViewInterface *>(view())->addDockWidget_Impl(dw);
     updateSize();
 }
 
@@ -59,7 +59,7 @@ void SideBar::removeDockWidget(DockWidget *dw)
 
     disconnect(dw, &DockWidget::aboutToDelete, this, &SideBar::removeDockWidget);
     m_dockWidgets.removeOne(dw);
-    dynamic_cast<Views::SideBarViewInterface *>(view())->removeDockWidget_Impl(dw);
+    dynamic_cast<Core::SideBarViewInterface *>(view())->removeDockWidget_Impl(dw);
     Q_EMIT dw->removedFromSideBar();
     updateSize();
 }

@@ -837,13 +837,13 @@ std::shared_ptr<View> MainWindow::persistentCentralView() const
 
 void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 {
-    auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
+    auto v = dynamic_cast<Core::MainWindowViewInterface *>(view());
     v->setContentsMargins(left, top, right, bottom);
 }
 
 QMargins MainWindow::centerWidgetMargins() const
 {
-    auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
+    auto v = dynamic_cast<Core::MainWindowViewInterface *>(view());
     return v->centerWidgetMargins();
 }
 
@@ -854,7 +854,7 @@ Core::SideBar *MainWindow::sideBar(SideBarLocation loc) const
 
 QRect MainWindow::centralAreaGeometry() const
 {
-    auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
+    auto v = dynamic_cast<Core::MainWindowViewInterface *>(view());
     return v->centralAreaGeometry();
 }
 

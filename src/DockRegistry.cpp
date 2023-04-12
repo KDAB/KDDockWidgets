@@ -520,13 +520,13 @@ const Core::MainWindow::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
-const QList<Views::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
+const QList<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
 {
-    QList<Views::MainWindowViewInterface *> areas;
+    QList<Core::MainWindowViewInterface *> areas;
 
     for (auto mw : m_mainWindows) {
         if (View *view = mw->view()) {
-            auto viewInterface = dynamic_cast<Views::MainWindowViewInterface *>(view);
+            auto viewInterface = dynamic_cast<Core::MainWindowViewInterface *>(view);
             areas << viewInterface;
         }
     }

@@ -23,11 +23,9 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace Views {
-class ClassicIndicatorWindowViewInterface;
-}
-
 namespace Core {
+
+class ClassicIndicatorWindowViewInterface;
 class DropIndicatorOverlay;
 class DropArea;
 class Separator;
@@ -109,7 +107,7 @@ public:
 
     /// @brief Creates the window that will show the actual drop indicators. They need a higher
     /// z-order, so this is actually a separate window, not parented to the main window
-    virtual Views::ClassicIndicatorWindowViewInterface *
+    virtual Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicIndicators *) const = 0;
 
     /// @brief Creates the view that will parent the segmented drop indicators

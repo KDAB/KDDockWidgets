@@ -25,7 +25,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-static Views::ClassicIndicatorWindowViewInterface *
+static Core::ClassicIndicatorWindowViewInterface *
 createIndicatorWindow(ClassicIndicators *classicIndicators)
 {
     auto window = Config::self().viewFactory()->createClassicIndicatorWindow(classicIndicators);

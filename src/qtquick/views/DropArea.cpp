@@ -14,7 +14,6 @@
 #include "kddockwidgets/core/DropArea.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::qtquick;
 
 DropArea::DropArea(Core::DropArea *dropArea, View *parent)

@@ -13,7 +13,7 @@
 #include "kddockwidgets/core/TitleBar.h"
 
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::Core {
 
 TitleBarViewInterface::TitleBarViewInterface(Core::TitleBar *controller)
     : m_titleBar(controller)

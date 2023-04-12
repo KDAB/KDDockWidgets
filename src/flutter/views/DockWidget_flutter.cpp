@@ -39,7 +39,7 @@ DockWidget_flutter::DockWidget_flutter(const QString &uniqueName, DockWidgetOpti
                                        LayoutSaverOptions layoutSaverOptions)
     : View_flutter(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget,
                    nullptr)
-    , Views::DockWidgetViewInterface(asDockWidgetController())
+    , Core::DockWidgetViewInterface(asDockWidgetController())
 {
     init();
     m_dockWidget->init();

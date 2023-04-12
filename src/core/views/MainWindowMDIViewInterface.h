@@ -19,19 +19,16 @@
 namespace KDDockWidgets {
 
 namespace Core {
+
 class DockWidget;
 class MDILayout;
-}
-
-namespace Views {
-
 class DockWidgetViewInterface;
 
 /// @brief Interface for MainWindowMDI views
 class DOCKS_EXPORT MainWindowMDIViewInterface
 {
 public:
-    explicit MainWindowMDIViewInterface(Core::MDILayout *);
+    explicit MainWindowMDIViewInterface(MDILayout *);
 
     ///@brief Constructor. See base class documentation
     explicit MainWindowMDIViewInterface(const QString &uniqueName, QWidget *parent = nullptr,
@@ -48,7 +45,7 @@ public:
                        InitialOption addingOption = {});
 
 private:
-    Core::MDILayout *const m_mdiLayout;
+    MDILayout *const m_mdiLayout;
 };
 
 }
