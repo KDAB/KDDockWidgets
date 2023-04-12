@@ -19,9 +19,6 @@
 #include "LayoutSaver.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "nlohmann_qt_helpers.h"
-
-#include "core/layouting/Item_p.h"
 #include "private/LayoutSaver_p.h"
 #include "DockRegistry.h"
 #include "private/Logging_p.h"
@@ -35,7 +32,8 @@
 #include "core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/MainWindow.h"
-
+#include "core/nlohmann_qt_helpers.h"
+#include "core/layouting/Item_p.h"
 
 #include <qmath.h>
 #include <QDebug>
