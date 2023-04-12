@@ -12,7 +12,7 @@
 #include "ClassicIndicators.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "views/ClassicIndicatorWindowViewInterface.h"
+#include "core/views/ClassicIndicatorWindowViewInterface.h"
 
 #include "core/DropArea.h"
 #include "private/DragController_p.h"

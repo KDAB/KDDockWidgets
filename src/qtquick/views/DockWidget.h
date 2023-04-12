@@ -19,7 +19,7 @@
 #ifndef KD_DOCKWIDGET_QUICK_H
 #define KD_DOCKWIDGET_QUICK_H
 
-#include "kddockwidgets/views/DockWidgetViewInterface.h"
+#include "kddockwidgets/core/views/DockWidgetViewInterface.h"
 #include "View.h"
 
 QT_BEGIN_NAMESPACE

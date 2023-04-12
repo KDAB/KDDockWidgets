@@ -20,7 +20,7 @@
 #define KD_MAINWINDOW_H
 
 #include "View.h"
-#include "kddockwidgets/views/MainWindowViewInterface.h"
+#include "kddockwidgets/core/views/MainWindowViewInterface.h"
 
 #include <QMainWindow>
 

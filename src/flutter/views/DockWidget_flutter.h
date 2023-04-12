@@ -16,7 +16,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "kddockwidgets/views/DockWidgetViewInterface.h"
+#include "kddockwidgets/core/views/DockWidgetViewInterface.h"
 #include "View_flutter.h"
 
 namespace KDDockWidgets {

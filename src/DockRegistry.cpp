@@ -19,8 +19,7 @@
 #include "private/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
 
-#include "views/MainWindowViewInterface.h"
-
+#include "kddockwidgets/core/views/MainWindowViewInterface.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/MainWindow.h"

@@ -13,7 +13,7 @@
 #define KD_CLASSICINDICATORS_WINDOW_QTWIDGETS_H
 #pragma once
 
-#include "views/ClassicIndicatorWindowViewInterface.h"
+#include "core/views/ClassicIndicatorWindowViewInterface.h"
 
 #include <QImage>
 #include <QWidget>

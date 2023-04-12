@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../views/DockWidgetViewInterface.h"
+#include "../../../../core/views/TitleBarViewInterface.h"

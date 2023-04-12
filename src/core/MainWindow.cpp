@@ -32,7 +32,7 @@
 #include "core/DockWidget_p.h"
 #include "core/Group.h"
 #include "core/SideBar.h"
-#include "kddockwidgets/views/MainWindowViewInterface.h"
+#include "kddockwidgets/core/views/MainWindowViewInterface.h"
 
 
 using namespace KDDockWidgets;

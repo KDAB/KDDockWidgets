@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View.h"
-#include "views/GroupViewInterface.h"
+#include "core/views/GroupViewInterface.h"
 
 namespace KDDockWidgets::Core {
 class Group;

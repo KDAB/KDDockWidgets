@@ -20,7 +20,7 @@
 #define KD_DOCKWIDGET_WIDGETS_H
 #pragma once
 
-#include "kddockwidgets/views/DockWidgetViewInterface.h"
+#include "kddockwidgets/core/views/DockWidgetViewInterface.h"
 #include "View.h"
 
 // clazy:excludeall=ctor-missing-parent-argument

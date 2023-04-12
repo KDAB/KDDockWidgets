@@ -13,7 +13,7 @@
 #define KD_MAIN_WINDOW_QUICK_P_H
 
 #include "View.h"
-#include "kddockwidgets/views/MainWindowViewInterface.h"
+#include "kddockwidgets/core/views/MainWindowViewInterface.h"
 
 #include <QString>
 

@@ -13,7 +13,7 @@
 #pragma once
 
 #include "View.h"
-#include "views/StackViewInterface.h"
+#include "core/views/StackViewInterface.h"
 
 #include <QTabWidget>
 

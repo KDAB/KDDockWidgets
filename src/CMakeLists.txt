@@ -56,15 +56,15 @@ set(KDDW_BACKEND_SRCS
     core/indicators/SegmentedIndicators.cpp
     core/layouting/Item.cpp
     core/layouting/ItemFreeContainer.cpp
-    views/ClassicIndicatorWindowViewInterface.cpp
-    views/MainWindowMDIViewInterface.cpp
-    views/MainWindowViewInterface.cpp
-    views/GroupViewInterface.cpp
-    views/DockWidgetViewInterface.cpp
-    views/StackViewInterface.cpp
-    views/TabBarViewInterface.cpp
-    views/TitleBarViewInterface.cpp
-    views/SideBarViewInterface.cpp
+    core/views/ClassicIndicatorWindowViewInterface.cpp
+    core/views/MainWindowMDIViewInterface.cpp
+    core/views/MainWindowViewInterface.cpp
+    core/views/GroupViewInterface.cpp
+    core/views/DockWidgetViewInterface.cpp
+    core/views/StackViewInterface.cpp
+    core/views/TabBarViewInterface.cpp
+    core/views/TitleBarViewInterface.cpp
+    core/views/SideBarViewInterface.cpp
     kddockwidgets_resources.qrc
 )
 

@@ -14,7 +14,7 @@
 #include "private/View_p.h"
 
 #include "kddockwidgets/ViewFactory.h"
-#include "kddockwidgets/views/DockWidgetViewInterface.h"
+#include "kddockwidgets/core/views/DockWidgetViewInterface.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/MDILayout.h"
 #include "kddockwidgets/core/DropArea.h"

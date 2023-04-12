@@ -13,7 +13,7 @@
 #define KD_MAINWINDOW_MDI_QTQUICK_H
 #pragma once
 
-#include "kddockwidgets/views/MainWindowMDIViewInterface.h"
+#include "kddockwidgets/core/views/MainWindowMDIViewInterface.h"
 #include "kddockwidgets/qtquick/views/MainWindow.h"
 
 namespace KDDockWidgets {

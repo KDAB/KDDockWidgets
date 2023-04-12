@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../views/TabBarViewInterface.h"
+#include "../../../../core/views/GroupViewInterface.h"

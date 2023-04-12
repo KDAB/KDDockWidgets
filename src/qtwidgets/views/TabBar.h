@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View.h"
-#include "views/TabBarViewInterface.h"
+#include "core/views/TabBarViewInterface.h"
 
 #include <QTabBar>
 

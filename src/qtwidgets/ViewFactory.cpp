@@ -21,6 +21,7 @@
 #include "kddockwidgets/core/indicators/NullIndicators.h"
 #include "kddockwidgets/core/indicators/SegmentedIndicators.h"
 #include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/views/ClassicIndicatorWindowViewInterface.h"
 
 #include "qtwidgets/views/ClassicIndicatorsWindow.h"
 #include "qtwidgets/views/SegmentedIndicatorsOverlay.h"
@@ -37,8 +38,6 @@
 #include "qtwidgets/views/MainWindow.h"
 #include "qtwidgets/views/MDILayout.h"
 #include "qtwidgets/views/RubberBand.h"
-
-#include "views/ClassicIndicatorWindowViewInterface.h"
 
 #include <QToolButton>
 

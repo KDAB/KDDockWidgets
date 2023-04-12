@@ -14,7 +14,7 @@
 
 #include "View.h"
 #include "kddockwidgets/docks_export.h"
-#include "views/SideBarViewInterface.h"
+#include "core/views/SideBarViewInterface.h"
 
 #include <QToolButton>
 #include <QPointer>
