@@ -29,6 +29,7 @@ set(KDDW_BACKEND_SRCS
     private/WindowBeingDragged.cpp
     private/DragController.cpp
     private/WidgetResizeHandler.cpp
+    core/Action.cpp
     core/FocusScope.cpp
     core/DockWidget.cpp
     core/DropArea.cpp
@@ -55,7 +56,6 @@ set(KDDW_BACKEND_SRCS
     core/indicators/SegmentedIndicators.cpp
     core/layouting/Item.cpp
     core/layouting/ItemFreeContainer.cpp
-    Action.cpp
     views/ClassicIndicatorWindowViewInterface.cpp
     views/MainWindowMDIViewInterface.cpp
     views/MainWindowViewInterface.cpp
@@ -192,7 +192,7 @@ set(KDDW_PUBLIC_HEADERS
     KDDockWidgets.h
     # FocusScope.h
     LayoutSaver.h
-    Action.h
+    #Action.h
     # Controller.h
     # View.h
     # Window.h

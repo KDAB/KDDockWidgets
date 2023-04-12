@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/Action.h"
+#include "kddockwidgets/core/Action.h"
 
 namespace KDDockWidgets {
 

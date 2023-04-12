@@ -16,7 +16,7 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
-#include "Action.h"
+#include "kddockwidgets/core/Action.h"
 
 TEST_CASE("DropArea CTOR")
 {
