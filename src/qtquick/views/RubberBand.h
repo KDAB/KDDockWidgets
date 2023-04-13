@@ -17,9 +17,9 @@
 
 #include <QQuickItem>
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::qtquick {
 
-class DOCKS_EXPORT RubberBand : public Views::View_qtquick
+class DOCKS_EXPORT RubberBand : public View_qtquick
 {
     Q_OBJECT
 public:

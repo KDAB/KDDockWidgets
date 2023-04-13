@@ -227,7 +227,7 @@ int Platform_qt::screenNumberForQWindow(QWindow *window) const
 
 void Platform_qt::sendEvent(View *view, QEvent *ev) const
 {
-    qGuiApp->sendEvent(Views::View_qt::asQObject(view), ev);
+    qGuiApp->sendEvent(qtcommon::View_qt::asQObject(view), ev);
 }
 
 bool Platform_qt::isProcessingAppQuitEvent() const

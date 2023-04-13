@@ -147,7 +147,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
 
 int Platform::screenNumberFor(Core::View *view) const
 {
-    if (auto widget = Views::View_qt::asQWidget(view)) {
+    if (auto widget = qtcommon::View_qt::asQWidget(view)) {
         if (QWindow *qtwindow = widget->window()->windowHandle())
             return screenNumberForQWindow(qtwindow);
     }
@@ -157,7 +157,7 @@ int Platform::screenNumberFor(Core::View *view) const
 
 QSize Platform::screenSizeFor(Core::View *view) const
 {
-    if (auto widget = Views::View_qt::asQWidget(view)) {
+    if (auto widget = qtcommon::View_qt::asQWidget(view)) {
         if (QScreen *screen = widget->screen()) {
             return screen->size();
         }
@@ -174,7 +174,7 @@ int Platform::startDragDistance_impl() const
 Core::View *Platform::createView(Core::Controller *controller, Core::View *parent) const
 {
     return new qtwidgets::View_qtwidgets<QWidget>(controller, Core::ViewType::None,
-                                                  Views::View_qt::asQWidget(parent));
+                                                  qtcommon::View_qt::asQWidget(parent));
 }
 
 bool Platform::usesFallbackMouseGrabber() const

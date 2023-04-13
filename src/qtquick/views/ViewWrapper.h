@@ -16,7 +16,7 @@
 #include <QQuickItem>
 #include <QPointer>
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::qtquick {
 
 /// @brief A View that doesn't own its QQuickItem
 /// Implements a View API around an existing QQuickItem

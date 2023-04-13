@@ -28,7 +28,7 @@ inline Core::View *topMostKDDWView(QQuickItem *parent)
     if (!parent)
         return {};
 
-    if (auto v = qobject_cast<Views::View_qtquick *>(parent))
+    if (auto v = qobject_cast<qtquick::View_qtquick *>(parent))
         return v;
 
     const auto children = parent->childItems();
@@ -53,7 +53,7 @@ std::shared_ptr<Core::View> Window::rootView() const
             const auto children = contentItem->childItems();
             Q_ASSERT(!children.isEmpty());
 
-            return Views::View_qtquick::asQQuickWrapper(contentItem->childItems().first());
+            return qtquick::View_qtquick::asQQuickWrapper(contentItem->childItems().first());
         }
     } else {
         qWarning() << Q_FUNC_INFO << "Expected QQuickView";

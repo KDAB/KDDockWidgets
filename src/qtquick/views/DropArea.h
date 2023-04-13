@@ -21,7 +21,7 @@ class DropArea;
 
 namespace qtquick {
 
-class DOCKS_EXPORT DropArea : public Views::View_qtquick
+class DOCKS_EXPORT DropArea : public qtquick::View_qtquick
 {
     Q_OBJECT
 public:

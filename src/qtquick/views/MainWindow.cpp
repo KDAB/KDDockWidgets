@@ -20,7 +20,6 @@
 #include <QTimer>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::qtquick;
 
 namespace KDDockWidgets {

@@ -21,7 +21,7 @@ class MDILayout;
 
 namespace qtquick {
 
-class DOCKS_EXPORT MDILayout : public Views::View_qtquick
+class DOCKS_EXPORT MDILayout : public qtquick::View_qtquick
 {
     Q_OBJECT
 public:

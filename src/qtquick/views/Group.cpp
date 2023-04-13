@@ -42,7 +42,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtquick;
 
 Group::Group(Core::Group *controller, QQuickItem *parent)
-    : Views::View_qtquick(controller, Core::ViewType::Frame, parent)
+    : qtquick::View_qtquick(controller, Core::ViewType::Frame, parent)
     , Core::GroupViewInterface(controller)
 {
 }
@@ -83,7 +83,7 @@ void Group::init()
 
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
         for (auto dw : m_group->dockWidgets()) {
-            auto dwView = static_cast<DockWidget *>(Views::asView_qtquick(dw->view()));
+            auto dwView = static_cast<DockWidget *>(qtquick::asView_qtquick(dw->view()));
             Q_EMIT dwView->groupGeometryChanged(geometry());
         }
     });
@@ -129,7 +129,7 @@ void Group::insertDockWidget(Core::DockWidget *dw, int index)
     QPointer<Core::Group> oldFrame = dw->d->group();
     m_group->tabBar()->insertDockWidget(index, dw, {}, {});
 
-    dw->setParentView(Views::ViewWrapper_qtquick::create(m_stackLayout).get());
+    dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
     makeItemFillParent(View_qtquick::asQQuickItem(dw->view()));
     m_group->setCurrentDockWidget(dw);
 

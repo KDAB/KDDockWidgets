@@ -24,7 +24,7 @@ class DropArea;
 /// A view wrapper is a view that doesn't own the native GUI element(QWidget, QQuickItem etc.)
 /// It just adds View API to an existing GUI element. Useful for GUI elements that are not created
 /// by KDDW. this is optional
-class DOCKS_EXPORT ViewWrapper : public Views::View_qt
+class DOCKS_EXPORT ViewWrapper : public qtcommon::View_qt
 {
 public:
     using Ptr = std::shared_ptr<View>;

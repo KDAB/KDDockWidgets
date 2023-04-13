@@ -24,9 +24,9 @@
 #include <QFile>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::qtquick {
 
 /**
  * @brief Event filter which redirects mouse events from one QObject to another.
@@ -537,7 +537,7 @@ void View_qtquick::setParent(QQuickItem *parentItem)
 
 void View_qtquick::setParent(View *parent)
 {
-    setParent(Views::asQQuickItem(parent));
+    setParent(qtquick::asQQuickItem(parent));
 }
 
 void View_qtquick::raiseAndActivate()

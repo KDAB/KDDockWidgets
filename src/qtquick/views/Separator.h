@@ -26,7 +26,7 @@ namespace KDDockWidgets {
 
 namespace qtquick {
 
-class DOCKS_EXPORT Separator : public Views::View_qtquick
+class DOCKS_EXPORT Separator : public qtquick::View_qtquick
 {
     Q_OBJECT
     Q_PROPERTY(bool isVertical READ isVertical NOTIFY isVerticalChanged)

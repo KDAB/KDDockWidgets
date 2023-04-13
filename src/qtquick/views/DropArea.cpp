@@ -17,7 +17,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtquick;
 
 DropArea::DropArea(Core::DropArea *dropArea, View *parent)
-    : Views::View_qtquick(dropArea, Core::ViewType::DropArea, asQQuickItem(parent))
+    : qtquick::View_qtquick(dropArea, Core::ViewType::DropArea, asQQuickItem(parent))
     , m_dropArea(dropArea)
 {
     Q_ASSERT(dropArea);

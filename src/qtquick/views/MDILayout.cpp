@@ -16,7 +16,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtquick;
 
 MDILayout::MDILayout(Core::MDILayout *controller, View *parent)
-    : Views::View_qtquick(controller, Core::ViewType::MDILayout, asQQuickItem(parent))
+    : qtquick::View_qtquick(controller, Core::ViewType::MDILayout, asQQuickItem(parent))
     , m_controller(controller)
 {
     Q_ASSERT(controller);

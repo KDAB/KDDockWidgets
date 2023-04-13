@@ -25,7 +25,7 @@
 
 #include <memory>
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::qtquick {
 
 class MouseEventRedirector;
 
@@ -34,7 +34,7 @@ inline QQuickItem *asQQuickItem(Core::View *view)
     if (!view)
         return nullptr;
 
-    return qobject_cast<QQuickItem *>(View_qt::asQObject(view));
+    return qobject_cast<QQuickItem *>(qtcommon::View_qt::asQObject(view));
 }
 
 inline QQuickItem *asQQuickItem(Core::Controller *controller)
@@ -45,7 +45,7 @@ inline QQuickItem *asQQuickItem(Core::Controller *controller)
     return asQQuickItem(controller->view());
 }
 
-class DOCKS_EXPORT View_qtquick : public QQuickItem, public View_qt
+class DOCKS_EXPORT View_qtquick : public QQuickItem, public qtcommon::View_qt
 {
     Q_OBJECT
 public:
@@ -219,4 +219,4 @@ inline qreal logicalDpiFactor(const QQuickItem *item)
     return 1;
 }
 
-} // namespace KDDockWidgets::Views
+}

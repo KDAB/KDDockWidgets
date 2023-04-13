@@ -168,7 +168,7 @@ QObject *DockWidget::actualTitleBarView() const
 QQuickItem *DockWidget::groupVisualItem() const
 {
     if (Core::Group *group = this->group()) {
-        if (auto view = Views::asView_qtquick(group->view()))
+        if (auto view = qtquick::asView_qtquick(group->view()))
             return view->visualItem();
     }
 
@@ -179,7 +179,7 @@ void DockWidget::onGeometryUpdated()
 {
     if (auto group = this->group()) {
         if (auto view = group->view()) {
-            auto groupView = static_cast<Group *>(Views::asView_qtquick(view));
+            auto groupView = static_cast<Group *>(qtquick::asView_qtquick(view));
             groupView->updateConstriants();
             groupView->updateGeometry();
         }

@@ -21,7 +21,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtquick;
 
 Stack::Stack(Core::Stack *controller, QQuickItem *parent)
-    : Views::View_qtquick(controller, Core::ViewType::Stack, parent)
+    : qtquick::View_qtquick(controller, Core::ViewType::Stack, parent)
     , Core::StackViewInterface(controller)
 {
 }

@@ -51,7 +51,7 @@ private:
 
 namespace qtquick {
 
-class DOCKS_EXPORT SideBar_qtquick : public Views::View_qtquick<QQuickItem>, public SideBarViewInterface
+class DOCKS_EXPORT SideBar_qtquick : public qtquick::View_qtquick<QQuickItem>, public SideBarViewInterface
 {
     Q_OBJECT
 public:

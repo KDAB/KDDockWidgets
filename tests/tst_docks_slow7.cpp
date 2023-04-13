@@ -229,7 +229,7 @@ void TestDocks::tst_negativeAnchorPosition4()
 {
     // 1. Tests that we don't get a warning
     // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name =
-    // "left") KDDockWidgets::Views::MainWindow(0x55e726beb8d0)
+    // "left") KDDockWidgets::MainWindow(0x55e726beb8d0)
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },

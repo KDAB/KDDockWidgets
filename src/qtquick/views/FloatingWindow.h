@@ -30,7 +30,7 @@ class MainWindow;
 class TitleBar;
 class DropArea;
 
-class DOCKS_EXPORT FloatingWindow : public Views::View_qtquick
+class DOCKS_EXPORT FloatingWindow : public qtquick::View_qtquick
 {
     Q_OBJECT
     Q_PROPERTY(QObject *titleBar READ titleBar CONSTANT)

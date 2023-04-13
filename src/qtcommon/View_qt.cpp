@@ -23,7 +23,7 @@
 #include <QQuickItem>
 #endif
 
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtcommon;
 
 class View_qt::EventFilter : public QObject
 {

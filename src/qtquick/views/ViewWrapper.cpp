@@ -36,7 +36,6 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::qtquick;
 
 namespace KDDockWidgets {
@@ -427,7 +426,7 @@ void ViewWrapper_qtquick::setParent(View *parent)
     if (auto view = unwrap()) {
         view->setParent(parent);
     } else {
-        auto parentItem = Views::asQQuickItem(parent);
+        auto parentItem = qtquick::asQQuickItem(parent);
         m_item->QQuickItem::setParent(parentItem);
         m_item->QQuickItem::setParentItem(parentItem);
     }

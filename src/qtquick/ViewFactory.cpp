@@ -68,28 +68,28 @@ Core::View *ViewFactory::createDockWidget(const QString &uniqueName, QQmlEngine 
 
 Core::View *ViewFactory::createGroup(Core::Group *controller, Core::View *parent) const
 {
-    return new Group(controller, Views::asQQuickItem(parent));
+    return new Group(controller, qtquick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createTitleBar(Core::TitleBar *titleBar, Core::View *parent) const
 {
-    return new TitleBar(titleBar, Views::asQQuickItem(parent));
+    return new TitleBar(titleBar, qtquick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createTabBar(Core::TabBar *controller, Core::View *parent) const
 {
-    return new TabBar(controller, Views::asQQuickItem(parent));
+    return new TabBar(controller, qtquick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createStack(Core::Stack *controller, Core::View *parent) const
 {
-    return new Stack(controller, Views::asQQuickItem(parent));
+    return new Stack(controller, qtquick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createSeparator(Core::Separator *controller, Core::View *parent) const
 {
     return new Separator(
-        controller, parent ? static_cast<Views::View_qtquick *>(parent) : nullptr);
+        controller, parent ? static_cast<qtquick::View_qtquick *>(parent) : nullptr);
 }
 
 Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
@@ -98,14 +98,14 @@ Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
 {
 
     auto mainwindow = parent
-        ? qobject_cast<qtquick::MainWindow *>(Views::asQQuickItem(parent->view()))
+        ? qobject_cast<qtquick::MainWindow *>(qtquick::asQQuickItem(parent->view()))
         : nullptr;
     return new FloatingWindow(controller, mainwindow, flags);
 }
 
 Core::View *ViewFactory::createRubberBand(Core::View *parent) const
 {
-    return new Views::RubberBand(Views::asQQuickItem(parent));
+    return new RubberBand(qtquick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createSideBar(Core::SideBar *, Core::View *) const

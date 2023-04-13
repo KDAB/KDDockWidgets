@@ -30,11 +30,11 @@ using namespace KDDockWidgets::qtquick;
 #ifdef DOCKS_DEVELOPER_MODE
 
 namespace KDDockWidgets {
-class TestView_qtquick : public Views::View_qtquick
+class TestView_qtquick : public qtquick::View_qtquick
 {
 public:
     explicit TestView_qtquick(Core::CreateViewOptions opts, QQuickItem *parent)
-        : Views::View_qtquick(nullptr, Core::ViewType::None, parent)
+        : qtquick::View_qtquick(nullptr, Core::ViewType::None, parent)
         , m_opts(opts)
     {
         setMinimumSize(opts.minSize);
@@ -91,7 +91,7 @@ void Platform::tests_deinitPlatform_impl()
 
 Core::View *Platform::tests_createView(Core::CreateViewOptions opts, Core::View *parent)
 {
-    auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
+    auto parentItem = parent ? qtquick::asQQuickItem(parent) : nullptr;
     auto newItem = new TestView_qtquick(opts, parentItem);
 
     if (!parentItem && opts.createWindow) {
@@ -101,7 +101,7 @@ Core::View *Platform::tests_createView(Core::CreateViewOptions opts, Core::View 
         newItem->QQuickItem::setParentItem(view->contentItem());
         newItem->QQuickItem::setParent(view->contentItem());
         if (opts.isVisible)
-            newItem->Views::View_qtquick::setVisible(true);
+            newItem->qtquick::View_qtquick::setVisible(true);
 
         QTest::qWait(100); // the root object gets sized delayed
     }
@@ -132,7 +132,7 @@ Core::MainWindow *Platform::createMainWindow(const QString &uniqueName,
                                              MainWindowOptions options, Core::View *parent,
                                              Qt::WindowFlags flags) const
 {
-    QQuickItem *parentItem = Views::asQQuickItem(parent);
+    QQuickItem *parentItem = qtquick::asQQuickItem(parent);
 
     if (!parentItem) {
         auto view = new QQuickView(m_qmlEngine, nullptr);

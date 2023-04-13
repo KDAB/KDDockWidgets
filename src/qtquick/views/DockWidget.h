@@ -39,7 +39,7 @@ namespace qtquick {
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget : public Views::View_qtquick,
+class DOCKS_EXPORT DockWidget : public qtquick::View_qtquick,
                                 public Core::DockWidgetViewInterface
 {
     Q_OBJECT

@@ -1584,7 +1584,7 @@ void TestQtWidgets::tst_setAsCurrentTab()
 
     Core::Group *group = dw->d->group();
     auto tabBar = group->tabBar();
-    QTabBar *tabBarWidget = qobject_cast<QTabBar *>(Views::View_qt::asQWidget(tabBar->view()));
+    QTabBar *tabBarWidget = qobject_cast<QTabBar *>(qtcommon::View_qt::asQWidget(tabBar->view()));
 
     QVERIFY(!dw->isCurrentTab());
     QVERIFY(!dw2->isCurrentTab());

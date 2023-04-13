@@ -26,7 +26,7 @@
 namespace KDDockWidgets::qtwidgets {
 
 template<typename Base>
-class DOCKS_EXPORT View_qtwidgets : public Base, public Views::View_qt
+class DOCKS_EXPORT View_qtwidgets : public Base, public qtcommon::View_qt
 {
 public:
     using View::close;
@@ -431,4 +431,4 @@ inline void setTopLevelGeometry(QRect geometry, const QWidget *widget)
         topLevel->setGeometry(geometry);
 }
 
-} // namespace KDDockWidgets::Views
+}

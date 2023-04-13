@@ -18,7 +18,7 @@
 using namespace KDDockWidgets;
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::qtquick;
 
 RubberBand::RubberBand(QQuickItem *parent)
     : View_qtquick(nullptr, Core::ViewType::RubberBand, parent)

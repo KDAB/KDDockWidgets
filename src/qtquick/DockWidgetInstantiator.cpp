@@ -211,7 +211,7 @@ void DockWidgetInstantiator::componentComplete()
     connect(m_dockWidget, &Core::DockWidget::closed, this,
             &DockWidgetInstantiator::closed);
     connect(m_dockWidget, &Core::DockWidget::guestViewChanged, this, [this] {
-        Q_EMIT guestViewChanged(Views::asQQuickItem(m_dockWidget->guestView().get()));
+        Q_EMIT guestViewChanged(qtquick::asQQuickItem(m_dockWidget->guestView().get()));
     });
     connect(m_dockWidget, &Core::DockWidget::isFocusedChanged, this,
             &DockWidgetInstantiator::isFocusedChanged);
@@ -227,7 +227,7 @@ void DockWidgetInstantiator::componentComplete()
             &DockWidgetInstantiator::windowActiveAboutToChange);
 
     if (m_sourceFilename.isEmpty()) {
-        m_dockWidget->setGuestView(Views::View_qtquick::asQQuickWrapper(childItems.constFirst()));
+        m_dockWidget->setGuestView(qtquick::View_qtquick::asQQuickWrapper(childItems.constFirst()));
     } else {
         auto view = this->dockWidget();
         view->setGuestItem(m_sourceFilename);

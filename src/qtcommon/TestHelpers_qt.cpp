@@ -156,12 +156,12 @@ bool Platform_qt::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout)
 
 bool Platform_qt::tests_waitForEvent(Core::View *view, QEvent::Type type, int timeout) const
 {
-    return tests_waitForEvent(Views::View_qt::asQObject(view), type, timeout);
+    return tests_waitForEvent(qtcommon::View_qt::asQObject(view), type, timeout);
 }
 
 bool Platform_qt::tests_waitForResize(Core::View *view, int timeout) const
 {
-    return tests_waitForEvent(Views::View_qt::asQObject(view), QEvent::Resize, timeout);
+    return tests_waitForEvent(qtcommon::View_qt::asQObject(view), QEvent::Resize, timeout);
 }
 
 bool Platform_qt::tests_waitForResize(Core::Controller *c, int timeout) const
@@ -178,7 +178,7 @@ bool Platform_qt::tests_waitForEvent(std::shared_ptr<Core::Window> window, QEven
 
 bool Platform_qt::tests_waitForDeleted(Core::View *view, int timeout) const
 {
-    QObject *o = view ? Views::View_qt::asQObject(view) : nullptr;
+    QObject *o = view ? qtcommon::View_qt::asQObject(view) : nullptr;
     if (!o)
         return true;
 

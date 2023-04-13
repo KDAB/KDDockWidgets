@@ -87,7 +87,7 @@ void Platform::init()
     QQuickWindow::setDefaultAlphaBuffer(true);
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
-        d->focusedViewChanged.emit(Views::ViewWrapper_qtquick::create(obj));
+        d->focusedViewChanged.emit(ViewWrapper_qtquick::create(obj));
     });
 }
 
@@ -103,7 +103,7 @@ const char *Platform::name() const
 
 std::shared_ptr<Core::View> Platform::qobjectAsView(QObject *obj) const
 {
-    return Views::ViewWrapper_qtquick::create(obj);
+    return ViewWrapper_qtquick::create(obj);
 }
 
 std::shared_ptr<Core::Window> Platform::windowFromQWindow(QWindow *qwindow) const
@@ -128,7 +128,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
 
 int Platform::screenNumberFor(Core::View *view) const
 {
-    if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asQObject(view))) {
+    if (auto item = qobject_cast<QQuickItem *>(qtcommon::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
             return screenNumberForQWindow(qtwindow);
     }
@@ -138,7 +138,7 @@ int Platform::screenNumberFor(Core::View *view) const
 
 QSize Platform::screenSizeFor(Core::View *view) const
 {
-    if (auto item = qobject_cast<QQuickItem *>(Views::View_qt::asQObject(view))) {
+    if (auto item = qobject_cast<QQuickItem *>(qtcommon::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
             if (QScreen *screen = qtwindow->screen())
                 return screen->size();
@@ -185,7 +185,7 @@ ViewFactory *Platform::viewFactory() const
 
 Core::View *Platform::createView(Core::Controller *controller, Core::View *parent) const
 {
-    return new Views::View_qtquick(controller, Core::ViewType::None, Views::asQQuickItem(parent));
+    return new qtquick::View_qtquick(controller, Core::ViewType::None, qtquick::asQQuickItem(parent));
 }
 
 /** static */
