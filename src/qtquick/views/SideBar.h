@@ -39,13 +39,13 @@ class SideBarButton : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit SideBarButton(Core::DockWidget *dw, Views::SideBar_qtquick *parent);
+    explicit SideBarButton(Core::DockWidget *dw, qtquick::SideBar *parent);
     bool isVertical() const;
     void paintEvent(QPaintEvent *) override;
     QSize sizeHint() const override;
 
 private:
-    Views::SideBar_qtquick *const m_sideBar;
+    qtquick::SideBar *const m_sideBar;
     const QPointer<Core::DockWidget> m_dockWidget;
 };
 
