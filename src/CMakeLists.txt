@@ -209,7 +209,11 @@ set(KDDW_PRIVATE_HEADERS
     private/LayoutSaver_p.h
     private/WindowBeingDragged_p.h
     private/WidgetResizeHandler_p.h
-    DockRegistry.h
+    core/DockRegistry.h
+    core/Controller.h
+    core/ViewFactory.h
+    core/Platform.h
+    core/Action.h
 )
 
 set(KDDW_CONTROLLER_HEADERS
