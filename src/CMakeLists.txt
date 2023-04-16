@@ -75,8 +75,8 @@ set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window_qt.cpp qtcommon/
 
 set(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/Window.cpp
-    qtwidgets/views/View.cpp
     qtwidgets/Platform.cpp
+    qtwidgets/views/View.cpp
     qtwidgets/views/ViewWrapper.cpp
     qtwidgets/views/FloatingWindow.cpp
     qtwidgets/views/DockWidget.cpp
@@ -97,6 +97,27 @@ set(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/ViewFactory.cpp
     qtwidgets/DebugWindow.cpp
     qtwidgets/ObjectViewer.cpp
+)
+
+set(KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS
+    qtwidgets/views/View.h
+    qtwidgets/views/ViewWrapper.h
+    qtwidgets/views/FloatingWindow.h
+    qtwidgets/views/DockWidget.h
+    qtwidgets/views/DropArea.h
+    qtwidgets/views/MDILayout.h
+    qtwidgets/views/Group.h
+    qtwidgets/views/MainWindow.h
+    qtwidgets/views/MainWindowMDI.h
+    qtwidgets/views/MDIArea.h
+    qtwidgets/views/RubberBand.h
+    qtwidgets/views/Separator.h
+    qtwidgets/views/TitleBar.h
+    qtwidgets/views/TabBar.h
+    qtwidgets/views/Stack.h
+    qtwidgets/views/SideBar.h
+    qtwidgets/views/ClassicIndicatorsWindow.h
+    qtwidgets/views/SegmentedIndicatorsOverlay.h
 )
 
 set(KDDW_FRONTEND_QTQUICK_SRCS
@@ -125,6 +146,24 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/views/ViewWrapper.cpp
     qtquick/views/ClassicIndicatorsWindow.cpp
     qtquick/kddockwidgets_qtquick.qrc
+)
+
+set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
+    qtquick/views/DropArea.h
+    qtquick/views/DockWidget.h
+    qtquick/views/FloatingWindow.h
+    qtquick/views/Group.h
+    qtquick/views/MainWindow.h
+    qtquick/views/MainWindowMDI.h
+    qtquick/views/MDILayout.h
+    qtquick/views/RubberBand.h
+    qtquick/views/Separator.h
+    qtquick/views/Stack.h
+    qtquick/views/TabBar.h
+    qtquick/views/TitleBar.h
+    qtquick/views/View.h
+    qtquick/views/ViewWrapper.h
+    qtquick/views/ClassicIndicatorsWindow.h
 )
 
 set(KDDW_FRONTEND_DARTBINDINGS_SRCS
@@ -523,6 +562,7 @@ if(KDDW_FRONTEND_QTWIDGETS)
 
     install(FILES ${KDDW_QTWIDGET_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
     install(FILES ${KDDW_QTWIDGET_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/)
+    install(FILES ${KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/views/)
 
     if(KDockWidgets_PRETTY_QTWIDGETS_HEADERS)
         install(FILES ${KDDW_QTWIDGET_PRETTY_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
@@ -557,6 +597,7 @@ if(KDDW_FRONTEND_QTQUICK)
 
     install(FILES ${KDDW_QTQUICK_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)
     install(FILES ${KDDW_QTQUICK_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)
+    install(FILES ${KDDW_FRONTEND_QTQUICK_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick/views)
 endif()
 
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
