@@ -22,7 +22,6 @@ set(KDDW_BACKEND_SRCS
     KDDockWidgets.cpp
     Config.cpp
     LayoutSaver.cpp
-    DockRegistry.cpp
     private/Position.cpp
     private/Logging.cpp
     private/Draggable.cpp
@@ -30,6 +29,7 @@ set(KDDW_BACKEND_SRCS
     private/DragController.cpp
     private/WidgetResizeHandler.cpp
     core/Action.cpp
+    core/DockRegistry.cpp
     core/FocusScope.cpp
     core/DockWidget.cpp
     core/DropArea.cpp
@@ -227,6 +227,7 @@ set(KDDW_CONTROLLER_HEADERS
     core/Separator.h
     core/Stack.h
     core/TitleBar.h
+    core/View.h
     core/EventFilterInterface.h
 )
 

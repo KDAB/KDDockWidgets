@@ -14,8 +14,8 @@
 #include "Config.h"
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"
-#include "DockRegistry.h"
 
+#include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/MDILayout.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/FloatingWindow.h"

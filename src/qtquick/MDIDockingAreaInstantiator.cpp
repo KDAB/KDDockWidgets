@@ -14,11 +14,11 @@
 #include "qtquick/views/MainWindowMDI.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/MainWindow.h"
-#include "../core/MDILayout.h"
+#include "kddockwidgets/core/DockRegistry.h"
+#include "kddockwidgets/core/MDILayout.h"
 
 #include "DockWidgetInstantiator.h"
 
-#include "DockRegistry.h"
 #include "Platform.h"
 
 using namespace KDDockWidgets;

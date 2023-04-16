@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../DockRegistry.h"
+#include "../../../core/DockRegistry.h"

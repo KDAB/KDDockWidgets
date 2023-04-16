@@ -25,8 +25,8 @@
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Window.h"
+#include "kddockwidgets/core/DockRegistry.h"
 
-#include "DockRegistry.h"
 #include "private/Logging_p.h"
 
 #include <QPainter>

@@ -19,7 +19,7 @@
 #include "private/Logging_p.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "kddockwidgets/private/DockRegistry.h"
+#include "kddockwidgets/core/DockRegistry.h"
 
 #include <QMouseEvent>
 #include <QApplication>

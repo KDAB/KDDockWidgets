@@ -15,9 +15,9 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 #include "Config.h"
-#include "DockRegistry.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
+#include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/DropIndicatorOverlay.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/TitleBar.h"

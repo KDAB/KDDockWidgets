@@ -18,7 +18,7 @@
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "kddockwidgets/private/DockRegistry.h"
+#include "kddockwidgets/core/DockRegistry.h"
 #include "qtwidgets/ViewFactory.h"
 
 #include <QPainter>

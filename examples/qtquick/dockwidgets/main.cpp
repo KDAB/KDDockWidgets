@@ -11,7 +11,7 @@
 
 
 #include <kddockwidgets/Config.h>
-#include <kddockwidgets/private/DockRegistry.h>
+#include <kddockwidgets/core/DockRegistry.h>
 #include <kddockwidgets/qtquick/ViewFactory.h>
 #include <kddockwidgets/qtquick/Platform.h>
 #include <kddockwidgets/qtquick/views/DockWidget.h>

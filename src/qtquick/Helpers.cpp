@@ -10,7 +10,7 @@
 */
 
 #include "Helpers_p.h"
-#include "DockRegistry.h"
+#include "core/DockRegistry.h"
 #include "core/Group.h"
 #include "qtcommon/View_qt.h"
 

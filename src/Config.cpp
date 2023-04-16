@@ -18,7 +18,7 @@
 
 #include "Config.h"
 #include "core/layouting/Item_p.h"
-#include "DockRegistry.h"
+#include "core/DockRegistry.h"
 #include "private/Utils_p.h"
 #include "private/DragController_p.h"
 #include "kddockwidgets/ViewFactory.h"

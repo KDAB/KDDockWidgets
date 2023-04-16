@@ -19,7 +19,7 @@
 #include "Window.h"
 #include "views/View.h"
 #include "qtquick/Window.h"
-#include "DockRegistry.h"
+#include "core/DockRegistry.h"
 #include "private/DragController_p.h"
 #include "private/Platform_p.h"
 #include "ViewFactory.h"

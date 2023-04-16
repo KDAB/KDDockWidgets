@@ -11,9 +11,9 @@
 
 #include "MainWindowViewInterface.h"
 #include "DockWidgetViewInterface.h"
-#include "kddockwidgets/core/MainWindow.h"
 
-#include "DockRegistry.h"
+#include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/DockRegistry.h"
 
 namespace KDDockWidgets::Core {
 

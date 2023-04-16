@@ -15,12 +15,13 @@
 #include "core/views/ClassicIndicatorWindowViewInterface.h"
 
 #include "core/DropArea.h"
+#include "core/DockRegistry.h"
+#include "core/Group.h"
+
 #include "private/DragController_p.h"
 #include "private/Logging_p.h"
-#include "DockRegistry.h"
 #include "private/Utils_p.h"
 
-#include "core/Group.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

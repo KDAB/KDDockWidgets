@@ -14,10 +14,9 @@
 #include "qtquick/views/MainWindowMDI.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/DockRegistry.h"
 
 #include "DockWidgetInstantiator.h"
-
-#include "DockRegistry.h"
 #include "Platform.h"
 
 using namespace KDDockWidgets;

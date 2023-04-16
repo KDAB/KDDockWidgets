@@ -14,9 +14,9 @@
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/MainWindow.h"
-
-#include "DockRegistry.h"
+#include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/DropArea.h"
+
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 #include "private/DragController_p.h"

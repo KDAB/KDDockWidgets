@@ -16,12 +16,12 @@
  */
 
 #include "Position_p.h"
-#include "DockRegistry.h"
 #include "LayoutSaver_p.h"
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Layout.h"
 #include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/DockRegistry.h"
 
 #include <algorithm>
 

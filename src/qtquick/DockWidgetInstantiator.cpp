@@ -10,7 +10,7 @@
 */
 
 #include "DockWidgetInstantiator.h"
-#include "DockRegistry.h"
+#include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "ViewFactory.h"
 #include "Config.h"

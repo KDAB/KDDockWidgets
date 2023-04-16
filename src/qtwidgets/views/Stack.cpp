@@ -16,7 +16,7 @@
 #include "kddockwidgets/core/Window.h"
 #include "qtwidgets/ViewFactory.h"
 #include "qtwidgets/views/DockWidget.h"
-#include "DockRegistry.h"
+#include "core/DockRegistry.h"
 #include "Config.h"
 #include "private/View_p.h"
 
