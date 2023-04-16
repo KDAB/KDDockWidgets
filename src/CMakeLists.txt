@@ -210,7 +210,6 @@ set(KDDW_PRIVATE_HEADERS
     private/WindowBeingDragged_p.h
     private/WidgetResizeHandler_p.h
     DockRegistry.h
-    #EventFilterInterface.h # No ABI guarantees for now, so copy to private/
 )
 
 set(KDDW_CONTROLLER_HEADERS
@@ -228,6 +227,7 @@ set(KDDW_CONTROLLER_HEADERS
     core/Separator.h
     core/Stack.h
     core/TitleBar.h
+    core/EventFilterInterface.h
 )
 
 set(KDDW_VIEWINTERFACE_HEADERS
@@ -482,9 +482,9 @@ endif()
 # install(FILES ${camelcase_HEADERS} DESTINATION
 # ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-install(FILES ${KDDW_PRIVATE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
+install(FILES ${KDDW_PRIVATE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
 install(FILES ${KDDW_CONTROLLER_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
-install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/views)
+install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/views)
 install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/indicators)
 
 if(KDDW_FRONTEND_QTWIDGETS)
@@ -517,16 +517,14 @@ if(KDDW_FRONTEND_QTWIDGETS)
     )
 
     install(FILES ${KDDW_QTWIDGET_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-    install(FILES ${KDDW_QTWIDGET_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/views)
+    install(FILES ${KDDW_QTWIDGET_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/)
 
     if(KDockWidgets_PRETTY_QTWIDGETS_HEADERS)
         install(FILES ${KDDW_QTWIDGET_PRETTY_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
     endif()
-
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
-
     set(KDDW_QTQUICK_HEADERS
         qtquick/ViewFactory.h qtquick/DockWidgetInstantiator.h qtquick/Platform.h qtquick/LayoutSaverInstantiator.h
         qtquick/MainWindowInstantiator.h qtquick/MDIDockingAreaInstantiator.h
@@ -553,12 +551,12 @@ if(KDDW_FRONTEND_QTQUICK)
     )
 
     install(FILES ${KDDW_QTQUICK_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-    install(FILES ${KDDW_QTQUICK_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/views)
+    install(FILES ${KDDW_QTQUICK_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)
 endif()
 
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
-    set(KDDW_QT_HEADERS qtcommon/Platform_qt.h qtcommon/View_qt.h)
-    install(FILES ${KDDW_QT_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+    set(KDDW_QTCOMMON_HEADERS qtcommon/Platform_qt.h qtcommon/View_qt.h)
+    install(FILES ${KDDW_QTCOMMON_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtcommon)
 endif()
 
 # Generate library version files

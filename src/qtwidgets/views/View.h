@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/core/Controller.h"
-#include "kddockwidgets/View_qt.h"
+#include "kddockwidgets/qtcommon/View_qt.h"
 
 #include <QDebug>
 #include <QEvent>

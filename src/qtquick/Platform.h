@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/Platform_qt.h"
+#include "kddockwidgets/qtcommon/Platform_qt.h"
 
 #include <QPointer>
 
