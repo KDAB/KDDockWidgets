@@ -76,3 +76,7 @@ mjb_rejected_*
 mjb_rejected_classes.log
 /examples/flutter/linux/flutter/ephemeral/
 /examples/flutter/build/
+.qt
+/examples/qtquick/customtabbar/qtquick_customtabbar
+/examples/qtquick/customtitlebar/qtquick_customtitlebar
+/examples/qtquick/dockwidgets/qtquick_dockwidgets
