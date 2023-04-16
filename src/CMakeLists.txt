@@ -210,7 +210,7 @@ set(KDDW_PRIVATE_HEADERS
     private/WindowBeingDragged_p.h
     private/WidgetResizeHandler_p.h
     DockRegistry.h
-    EventFilterInterface.h # No ABI guarantees for now, so copy to private/
+    #EventFilterInterface.h # No ABI guarantees for now, so copy to private/
 )
 
 set(KDDW_CONTROLLER_HEADERS
@@ -231,15 +231,15 @@ set(KDDW_CONTROLLER_HEADERS
 )
 
 set(KDDW_VIEWINTERFACE_HEADERS
-    views/StackViewInterface.h
-    views/SideBarViewInterface.h
-    views/ClassicIndicatorWindowViewInterface.h
-    views/TabBarViewInterface.h
-    views/TitleBarViewInterface.h
-    views/DockWidgetViewInterface.h
-    views/MainWindowMDIViewInterface.h
-    views/MainWindowViewInterface.h
-    views/GroupViewInterface.h
+    core/views/StackViewInterface.h
+    core/views/SideBarViewInterface.h
+    core/views/ClassicIndicatorWindowViewInterface.h
+    core/views/TabBarViewInterface.h
+    core/views/TitleBarViewInterface.h
+    core/views/DockWidgetViewInterface.h
+    core/views/MainWindowMDIViewInterface.h
+    core/views/MainWindowViewInterface.h
+    core/views/GroupViewInterface.h
 )
 
 set(KDDW_INDICATOR_HEADERS core/indicators/NullIndicators.h core/indicators/ClassicIndicators.h
