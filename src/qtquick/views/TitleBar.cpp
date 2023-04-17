@@ -11,15 +11,15 @@
 
 #include "TitleBar.h"
 
-#include "private/DragController_p.h"
+#include "core/DragController_p.h"
 
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/TitleBar.h"
 
-#include "private/Logging_p.h"
-#include "private/WindowBeingDragged_p.h"
-#include "private/Utils_p.h"
+#include "core/Logging_p.h"
+#include "core/WindowBeingDragged_p.h"
+#include "core/Utils_p.h"
 
 
 using namespace KDDockWidgets;

@@ -25,8 +25,7 @@
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/DockWidget_p.h"
-
-#include "Utils_p.h"
+#include "kddockwidgets/core/Utils_p.h"
 
 #include <QPointer>
 #include <QVector>

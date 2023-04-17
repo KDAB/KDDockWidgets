@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../private/FloatingWindow_p.h"
+#include "../../../core/WidgetResizeHandler_p.h"

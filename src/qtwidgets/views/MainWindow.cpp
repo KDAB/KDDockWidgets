@@ -27,7 +27,7 @@
 #include "kddockwidgets/core/Window.h"
 #include "kddockwidgets/core/DockRegistry.h"
 
-#include "private/Logging_p.h"
+#include "core/Logging_p.h"
 
 #include <QPainter>
 #include <QScreen>

@@ -10,8 +10,8 @@
 */
 
 #include "View.h"
-#include "private/Utils_p.h"
-#include "private/View_p.h"
+#include "core/Utils_p.h"
+#include "core/View_p.h"
 #include "ViewWrapper.h"
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/qtquick/Window.h"

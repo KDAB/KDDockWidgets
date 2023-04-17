@@ -13,7 +13,7 @@
 #include "kddockwidgets/core/indicators/ClassicIndicators.h"
 #include "kddockwidgets/core/Group.h"
 #include "View.h"
-#include "private/Utils_p.h"
+#include "core/Utils_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

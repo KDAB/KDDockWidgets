@@ -10,7 +10,7 @@
 */
 
 #include "View.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 #include "core/layouting/Item_p.h"
 
 #include "core/FloatingWindow.h"

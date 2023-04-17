@@ -11,7 +11,7 @@
 
 #include "View.h"
 #include "../Window.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 #include "ViewWrapper.h"
 
 #include <QTabBar>

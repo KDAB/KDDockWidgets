@@ -10,8 +10,8 @@
 */
 
 #include "View_qt.h"
-#include "private/Utils_p.h"
-#include "private/View_p.h"
+#include "core/Utils_p.h"
+#include "core/View_p.h"
 #include "kddockwidgets/core/Controller.h"
 #include "core/EventFilterInterface.h"
 

@@ -16,7 +16,7 @@
 #include "DebugWindow.h"
 #include "views/ViewWrapper.h"
 #include "views/View.h"
-#include "private/Platform_p.h"
+#include "core/Platform_p.h"
 #include "ViewFactory.h"
 
 #include <QScreen>

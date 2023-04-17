@@ -10,7 +10,7 @@
 */
 
 #include "main.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
 #include "Config.h"

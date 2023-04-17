@@ -12,7 +12,7 @@
 #include "ViewWrapper.h"
 #include "qtquick/views/RubberBand.h"
 #include "qtquick/views/View.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 
 #include "qtquick/views/DockWidget.h"
 #include "qtquick/views/FloatingWindow.h"

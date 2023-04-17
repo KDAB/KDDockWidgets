@@ -17,9 +17,9 @@
 
 #include "utils.h"
 #include "Config.h"
-#include "LayoutSaver_p.h"
-#include "Position_p.h"
-#include "WindowBeingDragged_p.h"
+#include "core/LayoutSaver_p.h"
+#include "core/Position_p.h"
+#include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/Action.h"

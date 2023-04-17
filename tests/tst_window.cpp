@@ -10,7 +10,7 @@
 */
 
 #include "main.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 #include "kddockwidgets/core/Platform.h"
 
 using namespace KDDockWidgets::Core;

@@ -10,7 +10,7 @@
 */
 
 #include "ViewWrapper.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 #include "qtwidgets/views/DockWidget.h"
 #include "qtwidgets/views/DropArea.h"
 #include "qtwidgets/views/FloatingWindow.h"

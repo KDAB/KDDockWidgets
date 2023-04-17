@@ -15,8 +15,8 @@
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Window.h"
 
-#include "private/Utils_p.h"
-#include "private/Logging_p.h"
+#include "core/Utils_p.h"
+#include "core/Logging_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/DockRegistry.h"
 #include "qtwidgets/ViewFactory.h"

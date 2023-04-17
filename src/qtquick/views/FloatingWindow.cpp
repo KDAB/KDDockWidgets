@@ -15,8 +15,8 @@
 
 #include "TitleBar.h"
 
-#include "private/Logging_p.h"
-#include "private/Utils_p.h"
+#include "core/Logging_p.h"
+#include "core/Utils_p.h"
 #include "core/layouting/Item_p.h"
 
 #include "kddockwidgets/core/DropArea.h"
@@ -24,7 +24,7 @@
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/TitleBar.h"
 
-#include "private/WidgetResizeHandler_p.h"
+#include "core/WidgetResizeHandler_p.h"
 #include "qtquick/Platform.h"
 #include "qtquick/Window.h"
 #include "qtquick/views/MainWindow.h"

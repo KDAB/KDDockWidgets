@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include <kddockwidgets/views/TitleBar.h>
+#include <kddockwidgets/qtwidgets/views/TitleBar.h>
 #include <kddockwidgets/core/TitleBar.h>
 
 /**

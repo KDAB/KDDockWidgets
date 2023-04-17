@@ -20,8 +20,8 @@
 #include "views/View.h"
 #include "qtquick/Window.h"
 #include "core/DockRegistry.h"
-#include "private/DragController_p.h"
-#include "private/Platform_p.h"
+#include "core/DragController_p.h"
+#include "core/Platform_p.h"
 #include "ViewFactory.h"
 #include "views/ViewWrapper.h"
 

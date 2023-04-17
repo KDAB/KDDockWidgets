@@ -30,12 +30,12 @@
 #include "DockRegistry.h"
 #include "DockWidget_p.h"
 
-#include "private/Logging_p.h"
-#include "private/Utils_p.h"
-#include "private/View_p.h"
-#include "private/LayoutSaver_p.h"
-#include "private/Position_p.h"
-#include "private/WidgetResizeHandler_p.h"
+#include "core/Logging_p.h"
+#include "core/Utils_p.h"
+#include "core/View_p.h"
+#include "core/LayoutSaver_p.h"
+#include "core/Position_p.h"
+#include "core/WidgetResizeHandler_p.h"
 #include "core/layouting/Item_p.h"
 
 #include "kdbindings/signal.h"

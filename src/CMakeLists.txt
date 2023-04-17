@@ -22,12 +22,12 @@ set(KDDW_BACKEND_SRCS
     KDDockWidgets.cpp
     Config.cpp
     LayoutSaver.cpp
-    private/Position.cpp
-    private/Logging.cpp
-    private/Draggable.cpp
-    private/WindowBeingDragged.cpp
-    private/DragController.cpp
-    private/WidgetResizeHandler.cpp
+    core/Position.cpp
+    core/Logging.cpp
+    core/Draggable.cpp
+    core/WindowBeingDragged.cpp
+    core/DragController.cpp
+    core/WidgetResizeHandler.cpp
     core/Action.cpp
     core/DockRegistry.cpp
     core/FocusScope.cpp
@@ -242,19 +242,6 @@ set(KDDW_PUBLIC_HEADERS
     # Platform.h
 )
 
-set(KDDW_PRIVATE_HEADERS
-    private/DragController_p.h
-    private/Draggable_p.h
-    private/LayoutSaver_p.h
-    private/WindowBeingDragged_p.h
-    private/WidgetResizeHandler_p.h
-    core/DockRegistry.h
-    core/Controller.h
-    core/ViewFactory.h
-    core/Platform.h
-    core/Action.h
-)
-
 set(KDDW_CORE_HEADERS
     core/DockWidget.h
     core/DockWidget_p.h
@@ -272,6 +259,16 @@ set(KDDW_CORE_HEADERS
     core/TitleBar.h
     core/View.h
     core/EventFilterInterface.h
+    core/DragController_p.h
+    core/Draggable_p.h
+    core/LayoutSaver_p.h
+    core/WindowBeingDragged_p.h
+    core/WidgetResizeHandler_p.h
+    core/DockRegistry.h
+    core/Controller.h
+    core/ViewFactory.h
+    core/Platform.h
+    core/Action.h
 )
 
 set(KDDW_VIEWINTERFACE_HEADERS
@@ -526,7 +523,6 @@ endif()
 # install(FILES ${camelcase_HEADERS} DESTINATION
 # ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-install(FILES ${KDDW_PRIVATE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
 install(FILES ${KDDW_CORE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
 install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/views)
 install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/indicators)
@@ -562,7 +558,9 @@ if(KDDW_FRONTEND_QTWIDGETS)
 
     install(FILES ${KDDW_QTWIDGET_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
     install(FILES ${KDDW_QTWIDGET_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/)
-    install(FILES ${KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/views/)
+    install(FILES ${KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS}
+            DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/views/
+    )
 
     if(KDockWidgets_PRETTY_QTWIDGETS_HEADERS)
         install(FILES ${KDDW_QTWIDGET_PRETTY_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
@@ -597,7 +595,9 @@ if(KDDW_FRONTEND_QTQUICK)
 
     install(FILES ${KDDW_QTQUICK_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)
     install(FILES ${KDDW_QTQUICK_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)
-    install(FILES ${KDDW_FRONTEND_QTQUICK_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick/views)
+    install(FILES ${KDDW_FRONTEND_QTQUICK_VIEW_HEADERS}
+            DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick/views
+    )
 endif()
 
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)

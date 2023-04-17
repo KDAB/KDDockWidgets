@@ -8,4 +8,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../../private/indicators/SegmentedIndicators_p.h"
+#include "../../../../core/indicators/SegmentedIndicators_p.h"

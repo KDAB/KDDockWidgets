@@ -10,7 +10,7 @@
 */
 
 #include "DropArea.h"
-#include "private/Utils_p.h"
+#include "core/Utils_p.h"
 #include "kddockwidgets/core/DropArea.h"
 
 using namespace KDDockWidgets;

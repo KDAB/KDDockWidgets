@@ -15,7 +15,7 @@
 #include "kddockwidgets/core/indicators/ClassicIndicators.h"
 #include "kddockwidgets/core/indicators/NullIndicators.h"
 #include "kddockwidgets/core/indicators/SegmentedIndicators.h"
-#include "private/Utils_p.h"
+#include "core/Utils_p.h"
 
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/TabBar.h"

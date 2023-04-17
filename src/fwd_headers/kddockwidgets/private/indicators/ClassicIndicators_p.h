@@ -8,4 +8,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../../private/indicators/ClassicIndicators_p.h"
+#include "../../../../core/indicators/ClassicIndicators_p.h"

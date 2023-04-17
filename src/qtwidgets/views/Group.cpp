@@ -20,7 +20,7 @@
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "Config.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 
 #include <QPainter>
 #include <QTabBar>

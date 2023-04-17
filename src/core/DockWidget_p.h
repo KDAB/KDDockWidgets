@@ -14,9 +14,9 @@
 
 #include "DockWidget.h"
 #include "DockRegistry.h"
-#include "private/Position_p.h"
+#include "core/Position_p.h"
 #include "Action.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 #include "NonQtCompat_p.h"
 
 #include <QCoreApplication>

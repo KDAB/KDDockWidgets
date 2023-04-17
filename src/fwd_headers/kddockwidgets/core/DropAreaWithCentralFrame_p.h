@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../private/DragController_p.h"
+#include "../../../core/DropAreaWithCentralFrame_p.h"

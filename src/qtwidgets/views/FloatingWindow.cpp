@@ -17,10 +17,10 @@
 #include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/DropArea.h"
 
-#include "private/Logging_p.h"
-#include "private/Utils_p.h"
-#include "private/DragController_p.h"
-#include "private/WidgetResizeHandler_p.h"
+#include "core/Logging_p.h"
+#include "core/Utils_p.h"
+#include "core/DragController_p.h"
+#include "core/WidgetResizeHandler_p.h"
 
 #include "TitleBar.h"
 

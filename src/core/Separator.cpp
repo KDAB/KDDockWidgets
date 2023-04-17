@@ -12,7 +12,7 @@
 #include "Separator.h"
 #include "layouting/Item_p.h"
 #include "View.h"
-#include "private/Logging_p.h"
+#include "core/Logging_p.h"
 #include "Config.h"
 #include "Platform.h"
 #include "Controller.h"

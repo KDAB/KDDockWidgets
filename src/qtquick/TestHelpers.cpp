@@ -15,7 +15,7 @@
 #include "kddockwidgets/qtquick/views/MainWindow.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "Helpers_p.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 
 #include <QGuiApplication>
 #include <QQmlEngine>

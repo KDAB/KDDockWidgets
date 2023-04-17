@@ -16,7 +16,7 @@
 #include "core/DropArea.h"
 #include "core/Group.h"
 
-#include "private/DragController_p.h"
+#include "core/DragController_p.h"
 #include "DockRegistry.h"
 
 using namespace KDDockWidgets;

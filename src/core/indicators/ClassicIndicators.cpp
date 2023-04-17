@@ -18,9 +18,9 @@
 #include "core/DockRegistry.h"
 #include "core/Group.h"
 
-#include "private/DragController_p.h"
-#include "private/Logging_p.h"
-#include "private/Utils_p.h"
+#include "core/DragController_p.h"
+#include "core/Logging_p.h"
+#include "core/Utils_p.h"
 
 
 using namespace KDDockWidgets;

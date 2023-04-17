@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../../private/widgets/SideBarWidget_p.h"
+#include "../../../../core/widgets/SideBarWidget_p.h"

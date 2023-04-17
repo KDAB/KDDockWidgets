@@ -10,7 +10,7 @@
 */
 
 #include "Platform.h"
-#include "private/Platform_p.h"
+#include "core/Platform_p.h"
 #include "core/EventFilterInterface.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS

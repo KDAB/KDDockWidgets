@@ -12,9 +12,9 @@
 #include "Stack.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "private/Logging_p.h"
-#include "private/Utils_p.h"
-#include "private/WindowBeingDragged_p.h"
+#include "core/Logging_p.h"
+#include "core/Utils_p.h"
+#include "core/WindowBeingDragged_p.h"
 #include "DockWidget_p.h"
 
 #include "views/StackViewInterface.h"

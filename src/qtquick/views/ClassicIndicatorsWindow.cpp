@@ -11,7 +11,7 @@
 
 #include "ClassicIndicatorsWindow.h"
 #include "kddockwidgets/core/indicators/ClassicIndicators.h"
-#include "private/Utils_p.h"
+#include "core/Utils_p.h"
 
 #include <QQmlContext>
 #include <QQuickItem>

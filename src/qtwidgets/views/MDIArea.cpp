@@ -11,7 +11,7 @@
 
 #include "MDIArea.h"
 
-#include "private/View_p.h"
+#include "core/View_p.h"
 
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/views/DockWidgetViewInterface.h"

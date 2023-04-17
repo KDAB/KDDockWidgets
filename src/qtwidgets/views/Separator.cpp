@@ -13,7 +13,7 @@
 #include "View.h"
 
 #include "Config.h"
-#include "private/Logging_p.h"
+#include "core/Logging_p.h"
 #include "kddockwidgets/core/Separator.h"
 
 #include <QMouseEvent>

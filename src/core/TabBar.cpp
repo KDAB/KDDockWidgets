@@ -10,7 +10,7 @@
 */
 
 #include "TabBar.h"
-#include "private/Draggable_p.h"
+#include "core/Draggable_p.h"
 #include "Controller.h"
 #include "core/Stack.h"
 #include "core/FloatingWindow.h"
@@ -18,8 +18,8 @@
 #include "views/TabBarViewInterface.h"
 #include "Platform.h"
 
-#include "private/DragController_p.h"
-#include "private/Utils_p.h"
+#include "core/DragController_p.h"
+#include "core/Utils_p.h"
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 

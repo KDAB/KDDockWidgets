@@ -12,7 +12,7 @@
 #include "ViewFactory.h"
 #include "Config.h"
 
-#include "private/Utils_p.h"
+#include "core/Utils_p.h"
 
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"

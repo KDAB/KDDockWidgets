@@ -10,7 +10,7 @@
 */
 
 #include "ViewWrapper.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 
 #include <QDebug>
 

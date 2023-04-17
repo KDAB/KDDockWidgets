@@ -9,13 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "private/LayoutSaver_p.h"
-#include "private/Position_p.h"
+#include "core/LayoutSaver_p.h"
+#include "core/Position_p.h"
 #include "Config.h"
 #include "Platform.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "private/Utils_p.h"
-#include "private/View_p.h"
+#include "core/Utils_p.h"
+#include "core/View_p.h"
 
 #include "core/Layout.h"
 #include "core/DropArea.h"

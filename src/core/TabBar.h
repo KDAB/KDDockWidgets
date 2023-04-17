@@ -13,7 +13,7 @@
 
 #include "Controller.h"
 #include "Group.h"
-#include "../private/Draggable_p.h"
+#include "../core/Draggable_p.h"
 #include "DockWidget.h"
 
 #include <QPointer>

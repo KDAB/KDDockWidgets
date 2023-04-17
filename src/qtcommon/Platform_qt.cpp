@@ -13,8 +13,8 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/qtcommon/Window_qt.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
-#include "private/Platform_p.h"
-#include "private/Utils_p.h"
+#include "core/Platform_p.h"
+#include "core/Utils_p.h"
 #include "qtcommon/View_qt.h"
 
 #include <QWindow>
