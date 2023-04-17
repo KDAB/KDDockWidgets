@@ -80,3 +80,7 @@ mjb_rejected_classes.log
 /examples/qtquick/customtabbar/qtquick_customtabbar
 /examples/qtquick/customtitlebar/qtquick_customtitlebar
 /examples/qtquick/dockwidgets/qtquick_dockwidgets
+/examples/dockwidgets/qtwidgets_dockwidgets
+/examples/mdi/qtwidgets_mdi
+/examples/mdi_with_docking/qtwidgets_mdi_with_docking
+/examples/minimal/qtwidgets_minimal

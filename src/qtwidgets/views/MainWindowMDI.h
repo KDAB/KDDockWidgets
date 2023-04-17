@@ -21,7 +21,7 @@
 #pragma once
 
 #include "kddockwidgets/core/views/MainWindowMDIViewInterface.h"
-#include "kddockwidgets/views/MainWindow.h"
+#include "kddockwidgets/qtwidgets/views/MainWindow.h"
 
 namespace KDDockWidgets {
 

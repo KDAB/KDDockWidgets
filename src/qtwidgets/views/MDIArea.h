@@ -14,7 +14,7 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/views/View.h"
+#include "kddockwidgets/qtwidgets/views/View.h"
 
 namespace KDDockWidgets {
 
