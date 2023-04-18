@@ -134,7 +134,7 @@ ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QObject *widget)
 }
 
 ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QWidget *widget)
-    : ViewWrapper(controllerForWidget(widget), widget)
+    : qtcommon::ViewWrapper(controllerForWidget(widget), widget)
     , m_widget(widget)
 {
 }

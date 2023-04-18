@@ -20,6 +20,8 @@ namespace Core {
 class DropArea;
 }
 
+namespace qtcommon {
+
 /// @brief The base class for view wrappers
 /// A view wrapper is a view that doesn't own the native GUI element(QWidget, QQuickItem etc.)
 /// It just adds View API to an existing GUI element. Useful for GUI elements that are not created
@@ -69,5 +71,7 @@ bool operator==(ViewWrapper::Ptr, ViewWrapper::Ptr) = delete;
 #endif
 
 bool operator!=(ViewWrapper::Ptr, ViewWrapper::Ptr) = delete;
+
+}
 
 }

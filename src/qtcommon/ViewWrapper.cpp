@@ -15,6 +15,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtcommon;
 
 
 ViewWrapper::ViewWrapper(Core::Controller *controller, QObject *thisObj)

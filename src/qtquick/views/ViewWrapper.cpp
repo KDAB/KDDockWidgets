@@ -114,7 +114,7 @@ ViewWrapper_qtquick::ViewWrapper_qtquick(QObject *item)
 }
 
 ViewWrapper_qtquick::ViewWrapper_qtquick(QQuickItem *item)
-    : ViewWrapper(controllerForItem(item), item)
+    : qtcommon::ViewWrapper(controllerForItem(item), item)
     , m_item(item)
 {
 }

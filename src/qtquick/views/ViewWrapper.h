@@ -21,7 +21,7 @@ namespace KDDockWidgets::qtquick {
 /// @brief A View that doesn't own its QQuickItem
 /// Implements a View API around an existing QQuickItem
 /// Useful for items that are not created by KDDW.
-class DOCKS_EXPORT ViewWrapper_qtquick : public ViewWrapper
+class DOCKS_EXPORT ViewWrapper_qtquick : public qtcommon::ViewWrapper
 {
 public:
     QRect geometry() const override;
