@@ -150,7 +150,7 @@ QSize Platform::screenSizeFor(Core::View *view) const
 QQmlEngine *Platform::qmlEngine() const
 {
     if (!m_qmlEngine)
-        qWarning() << "Please call KDDockWidgets::qtquick::Platform_qtquick::self()->setQmlEngine(engine)";
+        qWarning() << "Please call KDDockWidgets::qtquick::Platform::self()->setQmlEngine(engine)";
 
     return m_qmlEngine;
 }

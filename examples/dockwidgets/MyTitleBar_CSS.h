@@ -20,7 +20,7 @@
 /**
  * @brief Shows how to implement a custom titlebar which uses "Qt StyleSheets".
  *
- * Derive from KDDockWidgets::ViewFactory_qtwidgets and override the createTitleBar() method.
+ * Derive from KDDockWidgets::qtwidgets::ViewFactory and override the createTitleBar() method.
  *
  * To try it out, modify examples/dockwidgets/MyViewFactory.cpp to return a MyTitleBar_CSS instance.
  * Run the example with: ./bin/examples/qtwidgets_dockwidgets -p
@@ -31,12 +31,12 @@
  *   - The Qt maintainers have manifested intention to deprecated stylesheets.
  *   - Stylesheets are supported for built-in QWidgets (QPushButton, QComboBox, etc.), any widget
  *   that's not in Qt needs to be crafted by the user, that includes, for example, having to paint
- *   your background manually. KDDockWidget::Views::TitleBar_qtwidgets does this for your
+ *   your background manually. KDDockWidget::qtwidgets::TitleBar does this for your
  * convenience though.
  *   - Qt stylesheets don't react to property changes (known old bug in Qt), for example:
  *     QLineEdit[readOnly="true"] { color: gray }
  *     this won't trigger when readOnly changes to false, you need to set/unset. This is QTBUG-51236
- *   - KDDockWidget::Views::TitleBar_qtwidgets::isFocused is a property, there for needs to
+ *   - KDDockWidget::qtwidgets::TitleBar::isFocused is a property, there for needs to
  * workaround the above bug by unsetting the sheet and setting it again.
  */
 class MyTitleBar_CSS : public KDDockWidgets::qtwidgets::TitleBar

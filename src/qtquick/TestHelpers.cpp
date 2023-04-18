@@ -29,11 +29,12 @@ using namespace KDDockWidgets::qtquick;
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-namespace KDDockWidgets {
-class TestView_qtquick : public qtquick::View
+namespace KDDockWidgets::qtquick {
+
+class TestView : public qtquick::View
 {
 public:
-    explicit TestView_qtquick(Core::CreateViewOptions opts, QQuickItem *parent)
+    explicit TestView(Core::CreateViewOptions opts, QQuickItem *parent)
         : qtquick::View(nullptr, Core::ViewType::None, parent)
         , m_opts(opts)
     {
@@ -41,7 +42,7 @@ public:
         setMaximumSize(opts.maxSize);
     }
 
-    ~TestView_qtquick();
+    ~TestView();
 
     QSize sizeHint() const override
     {
@@ -52,7 +53,7 @@ private:
     Core::CreateViewOptions m_opts;
 };
 
-TestView_qtquick::~TestView_qtquick() = default;
+TestView::~TestView() = default;
 
 inline QCoreApplication *createCoreApplication(int &argc, char **argv)
 {
@@ -92,7 +93,7 @@ void Platform::tests_deinitPlatform_impl()
 Core::View *Platform::tests_createView(Core::CreateViewOptions opts, Core::View *parent)
 {
     auto parentItem = parent ? qtquick::asQQuickItem(parent) : nullptr;
-    auto newItem = new TestView_qtquick(opts, parentItem);
+    auto newItem = new TestView(opts, parentItem);
 
     if (!parentItem && opts.createWindow) {
         auto view = new QQuickView(m_qmlEngine, nullptr);

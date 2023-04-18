@@ -275,7 +275,7 @@ bool ViewWrapper::is(Core::ViewType t) const
         return qobject_cast<qtquick::DockWidget *>(m_item);
     case Core::ViewType::SideBar:
         return false; // QtQuick doesn't support sidebar yet
-        // return qobject_cast<SideBar_qtquick *>(m_item);
+        // return qobject_cast<SideBar *>(m_item);
     case Core::ViewType::MainWindow:
         return qobject_cast<qtquick::MainWindow *>(m_item);
     case Core::ViewType::DropArea:

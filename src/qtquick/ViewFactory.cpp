@@ -213,7 +213,7 @@ ViewFactory *ViewFactory::self()
     auto factory = qobject_cast<ViewFactory *>(Config::self().viewFactory());
 
     if (!factory)
-        qWarning() << Q_FUNC_INFO << "Expected a ViewFactory_qtquick subclass, not"
+        qWarning() << Q_FUNC_INFO << "Expected a ViewFactory subclass, not"
                    << Config::self().viewFactory();
 
     return factory;
