@@ -50,6 +50,23 @@
             }
         },
         {
+            "name": "dev-flutter-no-bindings",
+            "displayName": "dev-flutter-no-bindings",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-flutter-no-bindings",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "KDDockWidgets_FRONTENDS": "flutter",
+                "KDDockWidgets_FLUTTER_NO_BINDINGS": "ON",
+                "ECM_ENABLE_SANITIZERS": "'address;undefined'"
+            },
+            "warnings": {
+                "uninitialized": true
+            }
+        },
+        {
             "name": "dev-lcov",
             "displayName": "dev-lcov",
             "generator": "Ninja",

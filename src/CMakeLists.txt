@@ -215,8 +215,11 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/views/Group_flutter.cpp
     flutter/views/TabBar_flutter.cpp
     flutter/views/TitleBar_flutter.cpp
-    ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
 )
+
+if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
+    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ${KDDW_FRONTEND_DARTBINDINGS_SRCS})
+endif()
 
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)

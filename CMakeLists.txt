@@ -102,6 +102,7 @@ option(KDDockWidgets_X11EXTRAS
 option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
 option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
+option(KDDockWidgets_FLUTTER_NO_BINDINGS "Don't build flutter bindings, only the flutter frontend" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
