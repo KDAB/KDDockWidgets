@@ -32,7 +32,7 @@ class SideBar;
 }
 
 namespace qtquick {
-class SideBar_qtquick;
+class SideBar;
 }
 
 class SideBarButton : public QToolButton
@@ -51,11 +51,11 @@ private:
 
 namespace qtquick {
 
-class DOCKS_EXPORT SideBar_qtquick : public qtquick::View_qtquick<QQuickItem>, public SideBarViewInterface
+class DOCKS_EXPORT SideBar : public qtquick::View_qtquick<QQuickItem>, public SideBarViewInterface
 {
     Q_OBJECT
 public:
-    explicit SideBar_qtquick(Core::SideBar *, QQuickItem *parent);
+    explicit SideBar(Core::SideBar *, QQuickItem *parent);
 
     void init() override;
     bool isVertical() const; // TODOm3: Move to a potential base class
@@ -64,7 +64,7 @@ public:
     void removeDockWidget_Impl(Core::DockWidget *) override;
 
     // virtual so users can provide their own buttons
-    virtual SideBarButton *createButton(Core::DockWidget *dw, SideBar_qtquick *parent) const;
+    virtual SideBarButton *createButton(Core::DockWidget *dw, SideBar *parent) const;
 
 private:
     QBoxLayout *m_layout = nullptr;
