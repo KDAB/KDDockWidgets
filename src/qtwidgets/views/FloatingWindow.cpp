@@ -54,7 +54,7 @@ public:
 
 FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
                                QMainWindow *parent, Qt::WindowFlags windowFlags)
-    : View_qtwidgets<QWidget>(controller, Core::ViewType::FloatingWindow, parent, windowFlags)
+    : View<QWidget>(controller, Core::ViewType::FloatingWindow, parent, windowFlags)
     , d(new Private(this, controller))
 {
 }
@@ -119,7 +119,7 @@ bool FloatingWindow::event(QEvent *ev)
         return QWidget::parent()->event(ev); // TODOm3: Move to base class
     }
 
-    return View_qtwidgets<QWidget>::event(ev);
+    return View<QWidget>::event(ev);
 }
 
 void FloatingWindow::init()

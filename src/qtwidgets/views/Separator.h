@@ -21,11 +21,11 @@ class Separator;
 
 namespace KDDockWidgets::qtwidgets {
 
-class DOCKS_EXPORT Separator : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT Separator : public View<QWidget>
 {
     Q_OBJECT
 public:
-    explicit Separator(Core::Separator *controller, View *parent = nullptr);
+    explicit Separator(Core::Separator *controller, Core::View *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *) override;

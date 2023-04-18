@@ -17,7 +17,7 @@ namespace KDDockWidgets {
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT RubberBand : public View_qtwidgets<QRubberBand>
+class DOCKS_EXPORT RubberBand : public View<QRubberBand>
 {
     Q_OBJECT
 public:

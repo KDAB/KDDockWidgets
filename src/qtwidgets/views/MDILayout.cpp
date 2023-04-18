@@ -15,8 +15,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
-MDILayout::MDILayout(Core::MDILayout *controller, View *parent)
-    : qtwidgets::View_qtwidgets<QWidget>(controller, Core::ViewType::MDILayout, qtcommon::View_qt::asQWidget(parent))
+MDILayout::MDILayout(Core::MDILayout *controller, Core::View *parent)
+    : qtwidgets::View<QWidget>(controller, Core::ViewType::MDILayout, qtcommon::View_qt::asQWidget(parent))
     , m_controller(controller)
 {
     Q_ASSERT(controller);

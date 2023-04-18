@@ -45,7 +45,7 @@ public:
 };
 
 MDIArea::MDIArea(QWidget *parent)
-    : qtwidgets::View_qtwidgets<QWidget>(nullptr, ViewType::MDIArea, parent)
+    : qtwidgets::View<QWidget>(nullptr, ViewType::MDIArea, parent)
     , d(new Private(this))
 {
 

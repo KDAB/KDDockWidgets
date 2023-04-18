@@ -88,8 +88,8 @@ MyCentralWidget::~MyCentralWidget() = default;
 
 MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
                        QWidget *parent, Qt::WindowFlags flags)
-    : View_qtwidgets<QMainWindow>(new Core::MainWindow(this, uniqueName, options),
-                                  Core::ViewType::MainWindow, parent, flags)
+    : View<QMainWindow>(new Core::MainWindow(this, uniqueName, options),
+                        Core::ViewType::MainWindow, parent, flags)
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(controller()))
     , d(new Private(this))
 {

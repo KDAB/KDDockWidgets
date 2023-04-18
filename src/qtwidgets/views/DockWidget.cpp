@@ -45,8 +45,8 @@ public:
 DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
                        LayoutSaverOptions layoutSaverOptions,
                        Qt::WindowFlags windowFlags)
-    : View_qtwidgets<QWidget>(new Core::DockWidget(this, uniqueName, options, layoutSaverOptions),
-                              Core::ViewType::DockWidget, nullptr, windowFlags)
+    : View<QWidget>(new Core::DockWidget(this, uniqueName, options, layoutSaverOptions),
+                    Core::ViewType::DockWidget, nullptr, windowFlags)
     , Core::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this))
 {

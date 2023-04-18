@@ -23,7 +23,7 @@
 class MyTitleBar : public KDDockWidgets::qtwidgets::TitleBar
 {
 public:
-    explicit MyTitleBar(KDDockWidgets::Core::TitleBar *controller, View *parent = nullptr)
+    explicit MyTitleBar(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent = nullptr)
         : KDDockWidgets::qtwidgets::TitleBar(controller, parent)
         , m_controller(controller)
     {
@@ -61,7 +61,7 @@ MyTitleBar::~MyTitleBar() = default;
 class MySeparator : public KDDockWidgets::qtwidgets::Separator
 {
 public:
-    explicit MySeparator(KDDockWidgets::Core::Separator *controller, View *parent)
+    explicit MySeparator(KDDockWidgets::Core::Separator *controller, KDDockWidgets::Core::View *parent)
         : KDDockWidgets::qtwidgets::Separator(controller, parent)
     {
     }

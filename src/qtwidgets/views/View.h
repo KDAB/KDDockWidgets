@@ -26,21 +26,21 @@
 namespace KDDockWidgets::qtwidgets {
 
 template<typename Base>
-class DOCKS_EXPORT View_qtwidgets : public Base, public qtcommon::View_qt
+class DOCKS_EXPORT View : public Base, public qtcommon::View_qt
 {
 public:
-    using View::close;
-    using View::height;
-    using View::minimumHeight;
-    using View::minimumWidth;
-    using View::rect;
-    using View::resize;
-    using View::width;
+    using Core::View::close;
+    using Core::View::height;
+    using Core::View::minimumHeight;
+    using Core::View::minimumWidth;
+    using Core::View::rect;
+    using Core::View::resize;
+    using Core::View::width;
 
-    explicit View_qtwidgets(Core::Controller *controller, Core::ViewType type,
-                            QWidget *parent = nullptr, Qt::WindowFlags windowFlags = {});
+    explicit View(Core::Controller *controller, Core::ViewType type,
+                  QWidget *parent = nullptr, Qt::WindowFlags windowFlags = {});
 
-    ~View_qtwidgets() override = default;
+    ~View() override = default;
 
     void free_impl() override
     {
@@ -170,7 +170,7 @@ public:
         Base::update();
     }
 
-    static void setParentFor(QWidget *widget, View *parent)
+    static void setParentFor(QWidget *widget, Core::View *parent)
     {
         if (!parent) {
             widget->QWidget::setParent(nullptr);
@@ -185,7 +185,7 @@ public:
         }
     }
 
-    void setParent(View *parent) override
+    void setParent(Core::View *parent) override
     {
         setParentFor(this, parent);
     }
@@ -223,7 +223,7 @@ public:
         return Base::mapFromGlobal(globalPt);
     }
 
-    QPoint mapTo(View *someAncestor, QPoint pos) const override
+    QPoint mapTo(Core::View *someAncestor, QPoint pos) const override
     {
         return QWidget::mapTo(View_qt::asQWidget(someAncestor), pos);
     }
@@ -338,15 +338,15 @@ public:
         return QWidget::hasFocus();
     }
 
-    std::shared_ptr<View> childViewAt(QPoint localPos) const override;
+    std::shared_ptr<Core::View> childViewAt(QPoint localPos) const override;
 
     std::shared_ptr<Core::Window> window() const override;
 
-    std::shared_ptr<View> rootView() const override;
+    std::shared_ptr<Core::View> rootView() const override;
 
-    std::shared_ptr<View> parentView() const override;
+    std::shared_ptr<Core::View> parentView() const override;
 
-    std::shared_ptr<View> asWrapper() override;
+    std::shared_ptr<Core::View> asWrapper() override;
 
     void grabMouse() override
     {
@@ -383,9 +383,9 @@ public:
         return QWidget::property(name);
     }
 
-    static QVector<std::shared_ptr<View>> childViewsFor(const QWidget *parent);
+    static QVector<std::shared_ptr<Core::View>> childViewsFor(const QWidget *parent);
 
-    QVector<std::shared_ptr<View>> childViews() const override
+    QVector<std::shared_ptr<Core::View>> childViews() const override
     {
         return childViewsFor(this);
     }
@@ -401,7 +401,7 @@ protected:
     }
 
 private:
-    Q_DISABLE_COPY(View_qtwidgets)
+    Q_DISABLE_COPY(View)
 };
 
 inline qreal logicalDpiFactor(const QWidget *w)

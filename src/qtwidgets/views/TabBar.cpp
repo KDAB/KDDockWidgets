@@ -66,7 +66,7 @@ static MyProxy *proxyStyle()
 
 
 TabBar::TabBar(Core::TabBar *controller, QWidget *parent)
-    : View_qtwidgets(controller, Core::ViewType::TabBar, parent)
+    : View(controller, Core::ViewType::TabBar, parent)
     , TabBarViewInterface(controller)
     , m_controller(controller)
 {

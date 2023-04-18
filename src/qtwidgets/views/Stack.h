@@ -27,7 +27,7 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 namespace qtwidgets {
 
-class DOCKS_EXPORT Stack : public View_qtwidgets<QTabWidget>, public Core::StackViewInterface
+class DOCKS_EXPORT Stack : public View<QTabWidget>, public Core::StackViewInterface
 {
     Q_OBJECT
 public:

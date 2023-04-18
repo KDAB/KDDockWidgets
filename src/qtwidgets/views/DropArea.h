@@ -31,11 +31,11 @@ class DropArea;
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT DropArea : public qtwidgets::View_qtwidgets<QWidget>
+class DOCKS_EXPORT DropArea : public qtwidgets::View<QWidget>
 {
     Q_OBJECT
 public:
-    explicit DropArea(Core::DropArea *, View *parent);
+    explicit DropArea(Core::DropArea *, Core::View *parent);
     ~DropArea();
 
 private:

@@ -173,8 +173,8 @@ int Platform::startDragDistance_impl() const
 
 Core::View *Platform::createView(Core::Controller *controller, Core::View *parent) const
 {
-    return new qtwidgets::View_qtwidgets<QWidget>(controller, Core::ViewType::None,
-                                                  qtcommon::View_qt::asQWidget(parent));
+    return new qtwidgets::View<QWidget>(controller, Core::ViewType::None,
+                                        qtcommon::View_qt::asQWidget(parent));
 }
 
 bool Platform::usesFallbackMouseGrabber() const

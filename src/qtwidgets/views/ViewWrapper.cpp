@@ -317,7 +317,7 @@ void ViewWrapper::setWindowTitle(const QString &title)
     m_widget->setWindowTitle(title);
 }
 
-QPoint ViewWrapper::mapTo(View *someAncestor, QPoint pos) const
+QPoint ViewWrapper::mapTo(Core::View *someAncestor, QPoint pos) const
 {
     return m_widget->mapTo(View_qt::asQWidget(someAncestor), pos);
 }
@@ -345,12 +345,12 @@ QSize ViewWrapper::minSize() const
 
 QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
 {
-    return qtwidgets::View_qtwidgets<QWidget>::childViewsFor(m_widget);
+    return qtwidgets::View<QWidget>::childViewsFor(m_widget);
 }
 
-void ViewWrapper::setParent(View *parent)
+void ViewWrapper::setParent(Core::View *parent)
 {
-    qtwidgets::View_qtwidgets<QWidget>::setParentFor(m_widget, parent);
+    qtwidgets::View<QWidget>::setParentFor(m_widget, parent);
 }
 
 bool ViewWrapper::close()

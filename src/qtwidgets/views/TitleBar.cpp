@@ -100,8 +100,8 @@ QSize Button::sizeHint() const
     return QSize(m, m);
 }
 
-TitleBar::TitleBar(Core::TitleBar *controller, View *parent)
-    : View_qtwidgets(controller, Core::ViewType::TitleBar, View_qt::asQWidget(parent))
+TitleBar::TitleBar(Core::TitleBar *controller, Core::View *parent)
+    : View(controller, Core::ViewType::TitleBar, View_qt::asQWidget(parent))
     , Core::TitleBarViewInterface(controller)
     , m_layout(new QHBoxLayout(this))
 {

@@ -26,7 +26,7 @@ class Group;
 namespace KDDockWidgets::qtwidgets {
 
 
-class DOCKS_EXPORT FloatingWindow : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT FloatingWindow : public View<QWidget>
 {
     Q_OBJECT
 public:

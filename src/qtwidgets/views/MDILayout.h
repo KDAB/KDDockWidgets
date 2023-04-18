@@ -22,11 +22,11 @@ class MDILayout;
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT MDILayout : public qtwidgets::View_qtwidgets<QWidget>
+class DOCKS_EXPORT MDILayout : public qtwidgets::View<QWidget>
 {
     Q_OBJECT
 public:
-    explicit MDILayout(Core::MDILayout *controller, View *parent);
+    explicit MDILayout(Core::MDILayout *controller, Core::View *parent);
     ~MDILayout();
 
 private:

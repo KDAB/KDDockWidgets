@@ -21,7 +21,7 @@ class SegmentedIndicators;
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT SegmentedIndicatorsOverlay : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT SegmentedIndicatorsOverlay : public View<QWidget>
 {
     Q_OBJECT
 public:

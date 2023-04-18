@@ -43,7 +43,7 @@ class MyTitleBar_CSS : public KDDockWidgets::qtwidgets::TitleBar
 {
 public:
     explicit MyTitleBar_CSS(KDDockWidgets::Core::TitleBar *controller,
-                            View *parent = nullptr)
+                            KDDockWidgets::Core::View *parent = nullptr)
         : KDDockWidgets::qtwidgets::TitleBar(controller, parent)
     {
         initStyleSheet();

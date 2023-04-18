@@ -24,55 +24,55 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
 template<>
-View_qtwidgets<QWidget>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
-                                        QWidget *parent, Qt::WindowFlags windowFlags)
+View<QWidget>::View(Core::Controller *controller, Core::ViewType type,
+                    QWidget *parent, Qt::WindowFlags windowFlags)
     : QWidget(parent, windowFlags)
     , View_qt(controller, type, this)
 {
 }
 
 template<>
-View_qtwidgets<QTabBar>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
-                                        QWidget *parent, Qt::WindowFlags)
+View<QTabBar>::View(Core::Controller *controller, Core::ViewType type,
+                    QWidget *parent, Qt::WindowFlags)
     : QTabBar(parent)
     , View_qt(controller, type, this)
 {
 }
 
 template<>
-View_qtwidgets<QTabWidget>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
-                                           QWidget *parent, Qt::WindowFlags)
+View<QTabWidget>::View(Core::Controller *controller, Core::ViewType type,
+                       QWidget *parent, Qt::WindowFlags)
     : QTabWidget(parent)
     , View_qt(controller, type, this)
 {
 }
 
 template<>
-View_qtwidgets<QMainWindow>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
-                                            QWidget *parent, Qt::WindowFlags)
+View<QMainWindow>::View(Core::Controller *controller, Core::ViewType type,
+                        QWidget *parent, Qt::WindowFlags)
     : QMainWindow(parent)
     , View_qt(controller, type, this)
 {
 }
 
 template<>
-View_qtwidgets<QRubberBand>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
-                                            QWidget *parent, Qt::WindowFlags)
+View<QRubberBand>::View(Core::Controller *controller, Core::ViewType type,
+                        QWidget *parent, Qt::WindowFlags)
     : QRubberBand(QRubberBand::Rectangle, parent)
     , View_qt(controller, type, this)
 {
 }
 
 template<>
-View_qtwidgets<QLineEdit>::View_qtwidgets(Core::Controller *controller, Core::ViewType type,
-                                          QWidget *parent, Qt::WindowFlags)
+View<QLineEdit>::View(Core::Controller *controller, Core::ViewType type,
+                      QWidget *parent, Qt::WindowFlags)
     : QLineEdit(parent)
     , View_qt(controller, type, this)
 {
 }
 
 template<class T>
-std::shared_ptr<Core::Window> View_qtwidgets<T>::window() const
+std::shared_ptr<Core::Window> View<T>::window() const
 {
     if (QWidget *root = QWidget::window()) {
         if (root->window()) {
@@ -84,7 +84,7 @@ std::shared_ptr<Core::Window> View_qtwidgets<T>::window() const
 }
 
 template<class T>
-void View_qtwidgets<T>::setMaximumSize(QSize sz)
+void View<T>::setMaximumSize(QSize sz)
 {
     if (sz != QWidget::maximumSize()) {
         T::setMaximumSize(sz);
@@ -93,7 +93,7 @@ void View_qtwidgets<T>::setMaximumSize(QSize sz)
 }
 
 template<class T>
-bool View_qtwidgets<T>::event(QEvent *e)
+bool View<T>::event(QEvent *e)
 {
     if (e->type() == QEvent::LayoutRequest)
         d->layoutInvalidated.emit();
@@ -102,13 +102,13 @@ bool View_qtwidgets<T>::event(QEvent *e)
 }
 
 template<class T>
-void View_qtwidgets<T>::closeEvent(QCloseEvent *ev)
+void View<T>::closeEvent(QCloseEvent *ev)
 {
     d->closeRequested.emit(ev);
 }
 
 template<class T>
-void View_qtwidgets<T>::setMinimumSize(QSize sz)
+void View<T>::setMinimumSize(QSize sz)
 {
     if (sz != QWidget::minimumSize()) {
         QWidget::setMinimumSize(sz);
@@ -118,7 +118,7 @@ void View_qtwidgets<T>::setMinimumSize(QSize sz)
 
 
 template<class T>
-std::shared_ptr<Core::View> View_qtwidgets<T>::childViewAt(QPoint localPos) const
+std::shared_ptr<Core::View> View<T>::childViewAt(QPoint localPos) const
 {
     if (QWidget *child = QWidget::childAt(localPos))
         return ViewWrapper::create(child);
@@ -127,7 +127,7 @@ std::shared_ptr<Core::View> View_qtwidgets<T>::childViewAt(QPoint localPos) cons
 }
 
 template<class T>
-std::shared_ptr<Core::View> View_qtwidgets<T>::rootView() const
+std::shared_ptr<Core::View> View<T>::rootView() const
 {
     if (auto w = QWidget::window()) {
         return ViewWrapper::create(w);
@@ -137,7 +137,7 @@ std::shared_ptr<Core::View> View_qtwidgets<T>::rootView() const
 }
 
 template<class T>
-std::shared_ptr<Core::View> View_qtwidgets<T>::parentView() const
+std::shared_ptr<Core::View> View<T>::parentView() const
 {
     if (QWidget *p = QWidget::parentWidget()) {
         return ViewWrapper::create(p);
@@ -147,16 +147,16 @@ std::shared_ptr<Core::View> View_qtwidgets<T>::parentView() const
 }
 
 template<class T>
-std::shared_ptr<Core::View> View_qtwidgets<T>::asWrapper()
+std::shared_ptr<Core::View> View<T>::asWrapper()
 {
     return ViewWrapper::create(this);
 }
 
 /* static */
 template<class T>
-QVector<std::shared_ptr<Core::View>> View_qtwidgets<T>::childViewsFor(const QWidget *parent)
+QVector<std::shared_ptr<Core::View>> View<T>::childViewsFor(const QWidget *parent)
 {
-    QVector<std::shared_ptr<View>> result;
+    QVector<std::shared_ptr<Core::View>> result;
     const QObjectList children = parent->children();
     result.reserve(children.size());
     for (QObject *child : children) {
@@ -169,10 +169,10 @@ QVector<std::shared_ptr<Core::View>> View_qtwidgets<T>::childViewsFor(const QWid
 }
 
 namespace KDDockWidgets::qtwidgets {
-template class View_qtwidgets<QWidget>;
-template class View_qtwidgets<QMainWindow>;
-template class View_qtwidgets<QLineEdit>;
-template class View_qtwidgets<QRubberBand>;
-template class View_qtwidgets<QTabWidget>;
-template class View_qtwidgets<QTabBar>;
+template class View<QWidget>;
+template class View<QMainWindow>;
+template class View<QLineEdit>;
+template class View<QRubberBand>;
+template class View<QTabWidget>;
+template class View<QTabBar>;
 }

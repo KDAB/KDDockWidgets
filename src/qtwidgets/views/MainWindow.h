@@ -41,7 +41,7 @@ namespace qtwidgets {
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget DockWidget instances.
  */
-class DOCKS_EXPORT MainWindow : public View_qtwidgets<QMainWindow>,
+class DOCKS_EXPORT MainWindow : public View<QMainWindow>,
                                 public Core::MainWindowViewInterface
 {
     Q_OBJECT

@@ -36,7 +36,7 @@ namespace qtwidgets {
  *
  * See examples/mdi_with_docking/.
  */
-class DOCKS_EXPORT MDIArea : public qtwidgets::View_qtwidgets<QWidget>
+class DOCKS_EXPORT MDIArea : public qtwidgets::View<QWidget>
 {
     Q_OBJECT
 public:

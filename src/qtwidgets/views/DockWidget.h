@@ -34,7 +34,7 @@ namespace qtwidgets {
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget : public qtwidgets::View_qtwidgets<QWidget>,
+class DOCKS_EXPORT DockWidget : public qtwidgets::View<QWidget>,
                                 public Core::DockWidgetViewInterface
 {
     Q_OBJECT

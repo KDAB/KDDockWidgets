@@ -30,7 +30,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
 
 Stack::Stack(Core::Stack *controller, QWidget *parent)
-    : View_qtwidgets<QTabWidget>(controller, Core::ViewType::Stack, parent)
+    : View<QTabWidget>(controller, Core::ViewType::Stack, parent)
     , StackViewInterface(controller)
 {
 }
