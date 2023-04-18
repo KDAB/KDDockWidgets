@@ -11,7 +11,7 @@
 
 #include "ClassicIndicators.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 #include "core/views/ClassicIndicatorWindowViewInterface.h"
 
 #include "core/DropArea.h"

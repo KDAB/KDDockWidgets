@@ -14,7 +14,7 @@
 
 #include "Window_flutter.h"
 #include "views/View_flutter.h"
-#include "private/Platform_p.h"
+#include "core/Platform_p.h"
 #include "ViewFactory_flutter.h"
 
 #include <memory.h>
@@ -31,7 +31,7 @@ void Platform_flutter::init()
 {
 }
 
-std::shared_ptr<View> Platform_flutter::focusedView() const
+std::shared_ptr<Core::View> Platform_flutter::focusedView() const
 {
     return {};
 }
@@ -41,7 +41,7 @@ QVector<std::shared_ptr<Core::Window>> Platform_flutter::windows() const
     return {};
 }
 
-void Platform_flutter::sendEvent(View *, Event *) const
+void Platform_flutter::sendEvent(Core::View *, Event *) const
 {
 }
 
@@ -59,17 +59,17 @@ bool Platform_flutter::hasActivePopup() const
     return false;
 }
 
-ViewFactory *Platform_flutter::createDefaultViewFactory()
+Core::ViewFactory *Platform_flutter::createDefaultViewFactory()
 {
     return new ViewFactory_flutter();
 }
 
-Window::Ptr Platform_flutter::windowAt(QPoint) const
+Core::Window::Ptr Platform_flutter::windowAt(QPoint) const
 {
     return {};
 }
 
-int Platform_flutter::screenNumberFor(View *) const
+int Platform_flutter::screenNumberFor(Core::View *) const
 {
     return -1;
 }
@@ -102,7 +102,7 @@ void Platform_flutter::restoreMouseCursor()
 {
 }
 
-Platform::DisplayType Platform_flutter::displayType() const
+Core::Platform::DisplayType Platform_flutter::displayType() const
 {
     return {};
 }
@@ -112,12 +112,12 @@ bool Platform_flutter::isLeftMouseButtonPressed() const
     return {};
 }
 
-QSize Platform_flutter::screenSizeFor(View *) const
+QSize Platform_flutter::screenSizeFor(Core::View *) const
 {
     return {};
 }
 
-View *Platform_flutter::createView(Controller *, View *) const
+Core::View *Platform_flutter::createView(Core::Controller *, Core::View *) const
 {
     return nullptr;
 }
@@ -136,12 +136,12 @@ void Platform_flutter::ungrabMouse()
 {
 }
 
-Screen::List Platform_flutter::screens() const
+Core::Screen::List Platform_flutter::screens() const
 {
     return {};
 }
 
-Screen::Ptr Platform_flutter::primaryScreen() const
+Core::Screen::Ptr Platform_flutter::primaryScreen() const
 {
     return {};
 }

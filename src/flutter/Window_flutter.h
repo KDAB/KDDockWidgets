@@ -15,12 +15,12 @@
 #include "kddockwidgets/core/Window.h"
 
 namespace KDDockWidgets {
-class DOCKS_EXPORT Window_flutter : public Window
+class DOCKS_EXPORT Window_flutter : public Core::Window
 {
 public:
     Window_flutter();
     ~Window_flutter() override;
-    std::shared_ptr<View> rootView() const override;
+    std::shared_ptr<Core::View> rootView() const override;
     Window::Ptr transientParent() const override;
     void setGeometry(QRect) const override;
     void setVisible(bool) override;
@@ -40,7 +40,7 @@ public:
     WindowState windowState() const override;
     QPoint mapFromGlobal(QPoint globalPos) const override;
     QPoint mapToGlobal(QPoint localPos) const override;
-    Screen::Ptr screen() const override;
+    Core::Screen::Ptr screen() const override;
     void destroy() override;
     QSize minSize() const override;
     QSize maxSize() const override;

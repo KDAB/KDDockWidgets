@@ -18,10 +18,10 @@
 namespace KDDockWidgets {
 namespace Views {
 
-class DOCKS_EXPORT Stack_flutter : public View_flutter, public StackViewInterface
+class DOCKS_EXPORT Stack_flutter : public View_flutter, public Core::StackViewInterface
 {
 public:
-    explicit Stack_flutter(Core::Stack *controller, View *parent = nullptr);
+    explicit Stack_flutter(Core::Stack *controller, Core::View *parent = nullptr);
 
     bool isPositionDraggable(QPoint p) const override;
     void init() override;

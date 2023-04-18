@@ -18,7 +18,7 @@
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Action.h"
 #include "kddockwidgets/core/MDILayout.h"
 #include "kddockwidgets/core/DropArea.h"

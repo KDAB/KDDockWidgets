@@ -10,7 +10,7 @@
 */
 
 #include "ViewWrapper.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 #include "core/layouting/Item_p.h"
 #include "../Window_flutter.h"
 #include "View_flutter.h"
@@ -23,7 +23,7 @@ using namespace KDDockWidgets::Views;
 
 
 ViewWrapper::ViewWrapper(View_flutter *wrapped)
-    : View(wrapped->controller(), Type::ViewWrapper)
+    : View(wrapped->controller(), Core::ViewType::ViewWrapper)
     , m_wrappedView(wrapped)
 {
 }
@@ -62,7 +62,7 @@ void ViewWrapper::setSize(int w, int h)
     m_wrappedView->setSize(w, h);
 }
 
-std::shared_ptr<View> ViewWrapper::rootView() const
+std::shared_ptr<Core::View> ViewWrapper::rootView() const
 {
     return m_wrappedView->rootView();
 }
@@ -276,17 +276,17 @@ std::shared_ptr<Core::Window> ViewWrapper::window() const
     return m_wrappedView->window();
 }
 
-std::shared_ptr<View> ViewWrapper::childViewAt(QPoint pos) const
+std::shared_ptr<Core::View> ViewWrapper::childViewAt(QPoint pos) const
 {
     return m_wrappedView->childViewAt(pos);
 }
 
-std::shared_ptr<View> ViewWrapper::parentView() const
+std::shared_ptr<Core::View> ViewWrapper::parentView() const
 {
     return m_wrappedView->parentView();
 }
 
-std::shared_ptr<View> ViewWrapper::asWrapper()
+std::shared_ptr<Core::View> ViewWrapper::asWrapper()
 {
     return m_thisWeakPtr.lock();
 }
@@ -356,7 +356,7 @@ void ViewWrapper::setMouseTracking(bool tracking)
     m_wrappedView->setMouseTracking(tracking);
 }
 
-QVector<std::shared_ptr<View>> ViewWrapper::childViews() const
+QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
 {
     return m_wrappedView->childViews();
 }
@@ -377,7 +377,7 @@ bool ViewWrapper::onResize(int w, int h)
     return View::onResize(w, h);
 }
 
-/*static*/ std::shared_ptr<View> ViewWrapper::create(View_flutter *wrapped)
+/*static*/ std::shared_ptr<Core::View> ViewWrapper::create(View_flutter *wrapped)
 {
     auto wrapper = new ViewWrapper(wrapped);
     auto ptr = std::shared_ptr<ViewWrapper>(wrapper);

@@ -10,7 +10,7 @@
 */
 
 #include "DockWidget_flutter.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
@@ -37,7 +37,7 @@ using namespace KDDockWidgets::Views;
 
 DockWidget_flutter::DockWidget_flutter(const QString &uniqueName, DockWidgetOptions options,
                                        LayoutSaverOptions layoutSaverOptions)
-    : View_flutter(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget,
+    : View_flutter(new DockWidget(this, uniqueName, options, layoutSaverOptions), Core::ViewType::DockWidget,
                    nullptr)
     , Core::DockWidgetViewInterface(asDockWidgetController())
 {

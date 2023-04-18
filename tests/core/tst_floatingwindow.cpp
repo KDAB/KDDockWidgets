@@ -13,7 +13,7 @@
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "Config.h"
 
 using namespace KDDockWidgets::Core;

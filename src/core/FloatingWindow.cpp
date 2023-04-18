@@ -21,7 +21,7 @@
 #include "core/WidgetResizeHandler_p.h"
 #include "DockRegistry.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 #include "core/DragController_p.h"
 #include "core/LayoutSaver_p.h"
 #include "DockWidget_p.h"

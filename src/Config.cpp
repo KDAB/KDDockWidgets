@@ -21,7 +21,7 @@
 #include "core/DockRegistry.h"
 #include "core/Utils_p.h"
 #include "core/DragController_p.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 #include "core/Separator.h"
 #include "core/Platform.h"
 #include "core/View.h"

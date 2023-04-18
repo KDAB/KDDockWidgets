@@ -11,7 +11,7 @@
 
 #include "TitleBar_flutter.h"
 
-#include "private/DragController_p.h"
+#include "core/DragController_p.h"
 
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/FloatingWindow.h"
@@ -23,7 +23,7 @@ using namespace KDDockWidgets::Views;
 
 
 TitleBar_flutter::TitleBar_flutter(Core::TitleBar *controller, View *parent)
-    : View_flutter(controller, Type::TitleBar, parent)
+    : View_flutter(controller, Core::ViewType::TitleBar, parent)
     , Core::TitleBarViewInterface(controller)
 {
     setFixedHeight(30);

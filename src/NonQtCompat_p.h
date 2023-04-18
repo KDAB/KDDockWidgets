@@ -53,7 +53,7 @@ using DragMoveEvent = QDragMoveEvent;
 class Event
 {
 public:
-    enum ViewType {
+    enum Type {
         MouseButtonPress,
         MouseButtonDblClick,
         MouseButtonRelease,
@@ -75,7 +75,7 @@ public:
         LayoutRequest
     };
 
-    explicit Event(ViewType type)
+    explicit Event(Type type)
         : m_type(type)
     {
     }
@@ -101,14 +101,14 @@ public:
         return m_spontaneous;
     }
 
-    ViewType type() const
+    Type type() const
     {
         return m_type;
     }
 
     bool m_accepted = false;
     bool m_spontaneous = false;
-    const ViewType m_type;
+    const Type m_type;
 };
 
 class CloseEvent : public Event
@@ -130,7 +130,7 @@ public:
 class MouseEvent : public Event
 {
 public:
-    explicit MouseEvent(ViewType type, QPoint, QPoint, QPoint, Qt::MouseButtons, Qt::MouseButtons, Qt::KeyboardModifiers)
+    explicit MouseEvent(Type type, QPoint, QPoint, QPoint, Qt::MouseButtons, Qt::MouseButtons, Qt::KeyboardModifiers)
         : Event(type)
     {
     }
@@ -178,7 +178,7 @@ public:
 class DragMoveEvent : public DropEvent
 {
 public:
-    DragMoveEvent(ViewType type)
+    DragMoveEvent(Type type)
         : DropEvent(type)
     {
     }

@@ -21,7 +21,7 @@ class MainWindow;
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
-class DOCKS_EXPORT Platform_flutter : public Platform
+class DOCKS_EXPORT Platform_flutter : public Core::Platform
 {
 public:
     Platform_flutter();
@@ -37,15 +37,15 @@ public:
     Core::ViewFactory *createDefaultViewFactory() override;
     std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
 
-    int screenNumberFor(View *) const override;
-    QSize screenSizeFor(View *) const override;
+    int screenNumberFor(Core::View *) const override;
+    QSize screenSizeFor(Core::View *) const override;
 
-    View *createView(Controller *controller, View *parent = nullptr) const override;
+    Core::View *createView(Core::Controller *controller, Core::View *parent = nullptr) const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
     bool usesFallbackMouseGrabber() const override;
     void ungrabMouse() override;
-    QVector<std::shared_ptr<Screen>> screens() const override;
-    std::shared_ptr<Screen> primaryScreen() const override;
+    QVector<std::shared_ptr<Core::Screen>> screens() const override;
+    std::shared_ptr<Core::Screen> primaryScreen() const override;
 
     void onFloatingWindowCreated(Core::FloatingWindow *) override;
     void onFloatingWindowDestroyed(Core::FloatingWindow *) override;
@@ -54,32 +54,32 @@ public:
     explicit Platform_flutter(int &argc, char **argv);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
-    View *tests_createView(CreateViewOptions, View *parent = nullptr) override;
+    Core::View *tests_createView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
     std::shared_ptr<Core::Window> tests_createWindow() override;
-    View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) override;
-    View *tests_createNonClosableView(View *parent = nullptr) override;
+    Core::View *tests_createFocusableView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
+    Core::View *tests_createNonClosableView(Core::View *parent = nullptr) override;
     Core::MainWindow *
-    createMainWindow(const QString &uniqueName, CreateViewOptions,
+    createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                     View *parent = nullptr, Qt::WindowFlags = {}) const override;
+                     Core::View *parent = nullptr, Qt::WindowFlags = {}) const override;
 #endif
 protected:
     void init();
 
     // Platform interface
 public:
-    std::shared_ptr<View> focusedView() const override;
+    std::shared_ptr<Core::View> focusedView() const override;
     QVector<std::shared_ptr<Core::Window>> windows() const override;
-    void sendEvent(View *, Event *) const override;
+    void sendEvent(Core::View *, Event *) const override;
     int screenNumberFor(std::shared_ptr<Core::Window>) const override;
 #ifdef DOCKS_DEVELOPER_MODE
     bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const override;
-    bool tests_waitForResize(View *, int timeout) const override;
-    bool tests_waitForResize(Controller *, int timeout) const override;
+    bool tests_waitForResize(Core::View *, int timeout) const override;
+    bool tests_waitForResize(Core::Controller *, int timeout) const override;
     bool tests_waitForEvent(QObject *w, Event::Type type, int timeout) const override;
-    bool tests_waitForEvent(View *, Event::Type type, int timeout) const override;
+    bool tests_waitForEvent(Core::View *, Event::Type type, int timeout) const override;
     bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type, int timeout) const override;
-    bool tests_waitForDeleted(View *, int timeout) const override;
+    bool tests_waitForDeleted(Core::View *, int timeout) const override;
     bool tests_waitForDeleted(QObject *, int timeout) const override;
     void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
     void tests_wait(int ms) override;

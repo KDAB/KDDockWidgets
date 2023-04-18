@@ -23,12 +23,12 @@ Window_flutter::Window_flutter()
 
 Window_flutter::~Window_flutter() = default;
 
-std::shared_ptr<View> Window_flutter::rootView() const
+std::shared_ptr<Core::View> Window_flutter::rootView() const
 {
     return nullptr;
 }
 
-Window::Ptr Window_flutter::transientParent() const
+Core::Window::Ptr Window_flutter::transientParent() const
 {
     return nullptr;
 }
@@ -137,7 +137,7 @@ bool Window_flutter::isFullScreen() const
     return {};
 }
 
-Screen::Ptr Window_flutter::screen() const
+Core::Screen::Ptr Window_flutter::screen() const
 {
     return {};
 }

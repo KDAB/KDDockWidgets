@@ -36,10 +36,10 @@ namespace KDDockWidgets::Views {
 class DockWidget;
 class TabWidget;
 
-class DOCKS_EXPORT TabBar_flutter : public View_flutter, public TabBarViewInterface
+class DOCKS_EXPORT TabBar_flutter : public View_flutter, public Core::TabBarViewInterface
 {
 public:
-    explicit TabBar_flutter(Core::TabBar *controller, View *parent = nullptr);
+    explicit TabBar_flutter(Core::TabBar *controller, Core::View *parent = nullptr);
     int tabAt(QPoint localPos) const override;
 
     QString text(int index) const override;

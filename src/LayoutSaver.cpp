@@ -18,7 +18,7 @@
 
 #include "LayoutSaver.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Logging_p.h"
 #include "core/Position_p.h"

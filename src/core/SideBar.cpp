@@ -12,7 +12,7 @@
 #include "SideBar.h"
 #include "DockWidget.h"
 #include "MainWindow.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 #include "views/SideBarViewInterface.h"
 #include "Config.h"
 

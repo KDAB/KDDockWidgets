@@ -12,7 +12,7 @@
 #include "ViewFactory_flutter.h"
 #include "Config.h"
 
-#include "private/Utils_p.h"
+#include "core/Utils_p.h"
 
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
@@ -50,51 +50,51 @@ ViewFactory_flutter::~ViewFactory_flutter()
 {
 }
 
-View *ViewFactory_flutter::createDockWidget(const QString &, DockWidgetOptions, LayoutSaverOptions,
-                                            Qt::WindowFlags) const
+Core::View *ViewFactory_flutter::createDockWidget(const QString &, DockWidgetOptions, LayoutSaverOptions,
+                                                  Qt::WindowFlags) const
 {
     return {};
 }
 
 
-View *ViewFactory_flutter::createGroup(Core::Group *, View *) const
+Core::View *ViewFactory_flutter::createGroup(Core::Group *, Core::View *) const
 {
     Q_ASSERT(false);
     return {};
 }
 
-View *ViewFactory_flutter::createTitleBar(Core::TitleBar *, View *) const
+Core::View *ViewFactory_flutter::createTitleBar(Core::TitleBar *, Core::View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createTabBar(Core::TabBar *, View *) const
+Core::View *ViewFactory_flutter::createTabBar(Core::TabBar *, Core::View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createStack(Core::Stack *, View *) const
+Core::View *ViewFactory_flutter::createStack(Core::Stack *, Core::View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createSeparator(Core::Separator *, View *) const
+Core::View *ViewFactory_flutter::createSeparator(Core::Separator *, Core::View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createFloatingWindow(Core::FloatingWindow *,
-                                                Core::MainWindow *, Qt::WindowFlags) const
+Core::View *ViewFactory_flutter::createFloatingWindow(Core::FloatingWindow *,
+                                                      Core::MainWindow *, Qt::WindowFlags) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createRubberBand(View *) const
+Core::View *ViewFactory_flutter::createRubberBand(Core::View *) const
 {
     return nullptr;
 }
 
-View *ViewFactory_flutter::createSideBar(Core::SideBar *, View *) const
+Core::View *ViewFactory_flutter::createSideBar(Core::SideBar *, Core::View *) const
 {
     return {};
 }
@@ -110,19 +110,19 @@ Icon ViewFactory_flutter::iconForButtonType(TitleBarButtonType, qreal) const
     return {};
 }
 
-View *ViewFactory_flutter::createDropArea(Core::DropArea *, View *) const
+Core::View *ViewFactory_flutter::createDropArea(Core::DropArea *, Core::View *) const
 {
     return {};
 }
 
-View *ViewFactory_flutter::createMDILayout(Core::MDILayout *, View *) const
+Core::View *ViewFactory_flutter::createMDILayout(Core::MDILayout *, Core::View *) const
 {
     return {};
 }
 
-View *
+Core::View *
 ViewFactory_flutter::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *,
-                                                             View *) const
+                                                             Core::View *) const
 {
     return {};
 }

@@ -14,7 +14,7 @@
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

@@ -22,19 +22,18 @@ namespace KDDockWidgets::Views {
 
 class View_flutter;
 
-class DOCKS_EXPORT ViewWrapper : public View
+class DOCKS_EXPORT ViewWrapper : public Core::View
 {
 public:
-    using View::close;
-    using View::height;
-    using View::minimumHeight;
-
-    using View::minimumWidth;
-    using View::rect;
-    using View::resize;
+    using Core::View::close;
+    using Core::View::height;
+    using Core::View::minimumHeight;
+    using Core::View::minimumWidth;
+    using Core::View::rect;
+    using Core::View::resize;
     using View::width;
 
-    static std::shared_ptr<View> create(View_flutter *wrapped);
+    static std::shared_ptr<Core::View> create(View_flutter *wrapped);
     ~ViewWrapper() override;
 
     void free_impl() override;
@@ -61,7 +60,7 @@ public:
     void hide() override;
     void updateGeometry();
     void update() override;
-    void setParent(View *parent) override;
+    void setParent(Core::View *parent) override;
     void raiseAndActivate() override;
     void activateWindow() override;
     void raise() override;
@@ -69,7 +68,7 @@ public:
     bool isRootView() const override;
     QPoint mapToGlobal(QPoint localPt) const override;
     QPoint mapFromGlobal(QPoint globalPt) const override;
-    QPoint mapTo(View *parent, QPoint pos) const override;
+    QPoint mapTo(Core::View *parent, QPoint pos) const override;
     void setWindowOpacity(double v) override;
     void setSizePolicy(SizePolicy hPolicy, SizePolicy vPolicy) override;
     SizePolicy verticalSizePolicy() const override;
@@ -95,10 +94,10 @@ public:
     bool isMaximized() const override;
 
     std::shared_ptr<Core::Window> window() const override;
-    std::shared_ptr<View> childViewAt(QPoint p) const override;
-    std::shared_ptr<View> rootView() const override;
-    std::shared_ptr<View> parentView() const override;
-    std::shared_ptr<View> asWrapper() override;
+    std::shared_ptr<Core::View> childViewAt(QPoint p) const override;
+    std::shared_ptr<Core::View> rootView() const override;
+    std::shared_ptr<Core::View> parentView() const override;
+    std::shared_ptr<Core::View> asWrapper() override;
 
     void setObjectName(const QString &name) override;
     void grabMouse() override;
@@ -113,7 +112,7 @@ public:
     void render(QPainter *) override;
     void setCursor(Qt::CursorShape shape) override;
     void setMouseTracking(bool enable) override;
-    QVector<std::shared_ptr<View>> childViews() const override;
+    QVector<std::shared_ptr<Core::View>> childViews() const override;
     void setZOrder(int z) override;
     HANDLE handle() const override;
 

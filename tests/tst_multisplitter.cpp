@@ -14,9 +14,9 @@
 #include "kddockwidgets/core/Separator.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/View.h"
+#include "kddockwidgets/core/ViewFactory.h"
 
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
 
 #include <QtTest/QTest>
 #include <QScopedValueRollback>

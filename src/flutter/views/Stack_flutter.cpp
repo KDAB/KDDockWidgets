@@ -17,13 +17,13 @@
 #include "DockRegistry.h"
 #include "Config.h"
 #include "Window.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 Stack_flutter::Stack_flutter(Core::Stack *controller, View *parent)
-    : View_flutter(controller, Type::Stack, parent)
+    : View_flutter(controller, Core::ViewType::Stack, parent)
     , StackViewInterface(controller)
 {
 }

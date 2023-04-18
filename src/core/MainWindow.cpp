@@ -25,7 +25,7 @@
 #include "core/Utils_p.h"
 #include "core/Logging_p.h"
 #include "core/WidgetResizeHandler_p.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 #include "core/LayoutSaver_p.h"
 #include "core/layouting/Item_p.h"
 #include "Platform.h"

@@ -31,8 +31,8 @@
 #include "Stack_flutter.h"
 
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
-#include "private/WidgetResizeHandler_p.h"
+#include "core/ViewFactory.h"
+#include "core/WidgetResizeHandler_p.h"
 
 #include <QDebug>
 
@@ -40,7 +40,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 Group_flutter::Group_flutter(Core::Group *controller, View *parent)
-    : View_flutter(controller, Type::Frame, parent)
+    : View_flutter(controller, Core::ViewType::Frame, parent)
     , GroupViewInterface(controller)
 {
 }

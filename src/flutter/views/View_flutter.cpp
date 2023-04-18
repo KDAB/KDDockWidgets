@@ -10,7 +10,7 @@
 */
 
 #include "View_flutter.h"
-#include "private/View_p.h"
+#include "core/View_p.h"
 #include "core/layouting/Item_p.h"
 #include "../Window_flutter.h"
 #include "ViewWrapper.h"
@@ -20,7 +20,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 
-View_flutter::View_flutter(Core::Controller *controller, Type type, View *parent,
+View_flutter::View_flutter(Core::Controller *controller, Core::ViewType type, Core::View *parent,
                            Qt::WindowFlags)
     : View(controller, type)
 {
@@ -67,7 +67,7 @@ void View_flutter::setSize(int w, int h)
     qDebug() << "View_flutter::setSize()" << w << h << this;
 }
 
-std::shared_ptr<View> View_flutter::rootView() const
+std::shared_ptr<Core::View> View_flutter::rootView() const
 {
     if (m_parentView)
         return m_parentView->rootView();
@@ -271,12 +271,12 @@ std::shared_ptr<Core::Window> View_flutter::window() const
     return {};
 }
 
-std::shared_ptr<View> View_flutter::childViewAt(QPoint) const
+std::shared_ptr<Core::View> View_flutter::childViewAt(QPoint) const
 {
     return {};
 }
 
-std::shared_ptr<View> View_flutter::parentView() const
+std::shared_ptr<Core::View> View_flutter::parentView() const
 {
     // qDebug() << Q_FUNC_INFO << "parent is" << ( void * )m_parentView << "this=" << ( void * )this
     //          << int(type());
@@ -287,7 +287,7 @@ std::shared_ptr<View> View_flutter::parentView() const
     return {};
 }
 
-std::shared_ptr<View> View_flutter::asWrapper()
+std::shared_ptr<Core::View> View_flutter::asWrapper()
 {
     return ViewWrapper::create(this);
 }
@@ -349,7 +349,7 @@ void View_flutter::setMouseTracking(bool)
 {
 }
 
-QVector<std::shared_ptr<View>> View_flutter::childViews() const
+QVector<std::shared_ptr<Core::View>> View_flutter::childViews() const
 {
     return {};
 }

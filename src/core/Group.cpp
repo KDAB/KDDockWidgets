@@ -12,7 +12,7 @@
 #include "Group.h"
 
 #include "kddockwidgets/Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 
 #include "Controller.h"
 #include "View.h"

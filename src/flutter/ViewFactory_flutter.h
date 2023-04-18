@@ -13,7 +13,7 @@
 #define KDDOCKWIDGETS_ViewFactory_flutter_H
 #pragma once
 
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 #include "NonQtCompat_p.h"
 
 // clazy:excludeall=ctor-missing-parent-argument
@@ -50,29 +50,29 @@ public:
     ViewFactory_flutter() = default;
     ~ViewFactory_flutter() override;
 
-    View *createDockWidget(const QString &uniqueName, DockWidgetOptions = {},
-                           LayoutSaverOptions = {}, Qt::WindowFlags = {}) const override;
+    Core::View *createDockWidget(const QString &uniqueName, DockWidgetOptions = {},
+                                 LayoutSaverOptions = {}, Qt::WindowFlags = {}) const override;
 
-    View *createGroup(Core::Group *, View *parent = nullptr) const override;
-    View *createTitleBar(Core::TitleBar *, View *parent) const override;
-    View *createStack(Core::Stack *, View *parent) const override;
-    View *createTabBar(Core::TabBar *tabBar, View *parent = nullptr) const override;
-    View *createSeparator(Core::Separator *, View *parent = nullptr) const override;
-    View *createFloatingWindow(Core::FloatingWindow *,
-                               Core::MainWindow *parent = nullptr,
-                               Qt::WindowFlags windowFlags = {}) const override;
-    View *createRubberBand(View *parent) const override;
-    View *createSideBar(Core::SideBar *, View *parent) const override;
-    View *createDropArea(Core::DropArea *, View *parent) const override;
-    View *createMDILayout(Core::MDILayout *, View *parent) const override;
+    Core::View *createGroup(Core::Group *, Core::View *parent = nullptr) const override;
+    Core::View *createTitleBar(Core::TitleBar *, Core::View *parent) const override;
+    Core::View *createStack(Core::Stack *, Core::View *parent) const override;
+    Core::View *createTabBar(Core::TabBar *tabBar, Core::View *parent = nullptr) const override;
+    Core::View *createSeparator(Core::Separator *, Core::View *parent = nullptr) const override;
+    Core::View *createFloatingWindow(Core::FloatingWindow *,
+                                     Core::MainWindow *parent = nullptr,
+                                     Qt::WindowFlags windowFlags = {}) const override;
+    Core::View *createRubberBand(Core::View *parent) const override;
+    Core::View *createSideBar(Core::SideBar *, Core::View *parent) const override;
+    Core::View *createDropArea(Core::DropArea *, Core::View *parent) const override;
+    Core::View *createMDILayout(Core::MDILayout *, Core::View *parent) const override;
     Icon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
     Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicIndicators *) const override;
 
-    View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
-                                                  View *parent = nullptr) const override;
+    Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
+                                                        Core::View *parent = nullptr) const override;
 
 private:
     Q_DISABLE_COPY(ViewFactory_flutter)

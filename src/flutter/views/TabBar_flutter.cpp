@@ -27,7 +27,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 TabBar_flutter::TabBar_flutter(Core::TabBar *controller, View *parent)
-    : View_flutter(controller, Type::TabBar, parent)
+    : View_flutter(controller, Core::ViewType::TabBar, parent)
     , TabBarViewInterface(controller)
 {
 }

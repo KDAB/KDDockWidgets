@@ -30,7 +30,7 @@
 #include "core/layouting/Item_p.h"
 
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 
 #include <QTimer>
 #include <QScopedValueRollback>

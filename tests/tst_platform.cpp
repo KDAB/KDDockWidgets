@@ -11,7 +11,7 @@
 
 #include "main.h"
 #include "core/View_p.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
 #include "Config.h"
 

@@ -11,7 +11,7 @@
 
 #include "Stack.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "core/ViewFactory.h"
 #include "core/Logging_p.h"
 #include "core/Utils_p.h"
 #include "core/WindowBeingDragged_p.h"
