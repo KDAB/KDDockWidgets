@@ -108,18 +108,18 @@ static Core::Controller *controllerForItem(QQuickItem *item)
 }
 }
 
-ViewWrapper_qtquick::ViewWrapper_qtquick(QObject *item)
-    : ViewWrapper_qtquick(qobject_cast<QQuickItem *>(item))
+ViewWrapper::ViewWrapper(QObject *item)
+    : ViewWrapper(qobject_cast<QQuickItem *>(item))
 {
 }
 
-ViewWrapper_qtquick::ViewWrapper_qtquick(QQuickItem *item)
+ViewWrapper::ViewWrapper(QQuickItem *item)
     : qtcommon::ViewWrapper(controllerForItem(item), item)
     , m_item(item)
 {
 }
 
-QRect ViewWrapper_qtquick::geometry() const
+QRect ViewWrapper::geometry() const
 {
     if (isRootView()) {
         if (QWindow *w = m_item->window()) {
@@ -130,29 +130,29 @@ QRect ViewWrapper_qtquick::geometry() const
     return QRect(QPointF(m_item->x(), m_item->y()).toPoint(), m_item->size().toSize());
 }
 
-QPoint ViewWrapper_qtquick::mapToGlobal(QPoint localPt) const
+QPoint ViewWrapper::mapToGlobal(QPoint localPt) const
 {
     return m_item->mapToGlobal(localPt).toPoint();
 }
 
-QPoint ViewWrapper_qtquick::mapFromGlobal(QPoint globalPt) const
+QPoint ViewWrapper::mapFromGlobal(QPoint globalPt) const
 {
     return m_item->mapFromGlobal(globalPt).toPoint();
 }
 
-void ViewWrapper_qtquick::setGeometry(QRect rect)
+void ViewWrapper::setGeometry(QRect rect)
 {
     setSize(rect.width(), rect.height());
-    ViewWrapper_qtquick::move(rect.topLeft().x(), rect.topLeft().y());
+    ViewWrapper::move(rect.topLeft().x(), rect.topLeft().y());
 }
 
-std::shared_ptr<Core::View> ViewWrapper_qtquick::childViewAt(QPoint p) const
+std::shared_ptr<Core::View> ViewWrapper::childViewAt(QPoint p) const
 {
     auto child = m_item->childAt(p.x(), p.y());
     return child ? View_qtquick::asQQuickWrapper(child) : nullptr;
 }
 
-std::shared_ptr<Core::Window> ViewWrapper_qtquick::window() const
+std::shared_ptr<Core::Window> ViewWrapper::window() const
 {
     if (QWindow *w = m_item->window()) {
         auto windowqtquick = new Window(w);
@@ -162,12 +162,12 @@ std::shared_ptr<Core::Window> ViewWrapper_qtquick::window() const
     return {};
 }
 
-bool ViewWrapper_qtquick::isRootView() const
+bool ViewWrapper::isRootView() const
 {
     return View_qtquick::isRootView(m_item);
 }
 
-void ViewWrapper_qtquick::setVisible(bool is)
+void ViewWrapper::setVisible(bool is)
 {
     if (isRootView()) {
         if (QWindow *w = m_item->window()) {
@@ -182,7 +182,7 @@ void ViewWrapper_qtquick::setVisible(bool is)
     m_item->setVisible(is);
 }
 
-bool ViewWrapper_qtquick::isVisible() const
+bool ViewWrapper::isVisible() const
 {
     if (QWindow *w = m_item->window()) {
         if (!w->isVisible())
@@ -192,7 +192,7 @@ bool ViewWrapper_qtquick::isVisible() const
     return m_item->isVisible();
 }
 
-void ViewWrapper_qtquick::move(int x, int y)
+void ViewWrapper::move(int x, int y)
 {
     if (isRootView()) {
         if (QWindow *w = m_item->window()) {
@@ -206,13 +206,13 @@ void ViewWrapper_qtquick::move(int x, int y)
     setAttribute(Qt::WA_Moved);
 }
 
-void ViewWrapper_qtquick::activateWindow()
+void ViewWrapper::activateWindow()
 {
     if (QWindow *w = m_item->window())
         w->requestActivate();
 }
 
-bool ViewWrapper_qtquick::isMaximized() const
+bool ViewWrapper::isMaximized() const
 {
     if (QWindow *w = m_item->window())
         return w->windowStates() & Qt::WindowMaximized;
@@ -220,7 +220,7 @@ bool ViewWrapper_qtquick::isMaximized() const
     return false;
 }
 
-bool ViewWrapper_qtquick::isMinimized() const
+bool ViewWrapper::isMinimized() const
 {
     if (QWindow *w = m_item->window())
         return w->windowStates() & Qt::WindowMinimized;
@@ -228,7 +228,7 @@ bool ViewWrapper_qtquick::isMinimized() const
     return false;
 }
 
-QSize ViewWrapper_qtquick::maxSizeHint() const
+QSize ViewWrapper::maxSizeHint() const
 {
     if (auto view = unwrap()) {
         return view->maxSizeHint();
@@ -239,7 +239,7 @@ QSize ViewWrapper_qtquick::maxSizeHint() const
     }
 }
 
-void ViewWrapper_qtquick::setSize(int w, int h)
+void ViewWrapper::setSize(int w, int h)
 {
     if (isRootView()) {
         if (QWindow *window = m_item->window()) {
@@ -252,7 +252,7 @@ void ViewWrapper_qtquick::setSize(int w, int h)
     m_item->setSize(QSizeF(w, h));
 }
 
-bool ViewWrapper_qtquick::is(Core::ViewType t) const
+bool ViewWrapper::is(Core::ViewType t) const
 {
     if (t == Core::ViewType::ViewWrapper)
         return true;
@@ -299,7 +299,7 @@ bool ViewWrapper_qtquick::is(Core::ViewType t) const
     return false;
 }
 
-std::shared_ptr<Core::View> ViewWrapper_qtquick::rootView() const
+std::shared_ptr<Core::View> ViewWrapper::rootView() const
 {
     if (Core::Window::Ptr window = this->window())
         return window->rootView();
@@ -308,22 +308,22 @@ std::shared_ptr<Core::View> ViewWrapper_qtquick::rootView() const
     return {};
 }
 
-std::shared_ptr<Core::View> ViewWrapper_qtquick::parentView() const
+std::shared_ptr<Core::View> ViewWrapper::parentView() const
 {
     return View_qtquick::parentViewFor(m_item);
 }
 
-void ViewWrapper_qtquick::grabMouse()
+void ViewWrapper::grabMouse()
 {
     m_item->grabMouse();
 }
 
-void ViewWrapper_qtquick::releaseMouse()
+void ViewWrapper::releaseMouse()
 {
     m_item->ungrabMouse();
 }
 
-Qt::FocusPolicy ViewWrapper_qtquick::focusPolicy() const
+Qt::FocusPolicy ViewWrapper::focusPolicy() const
 {
     if (auto view = unwrap()) {
         return view->focusPolicy();
@@ -333,13 +333,13 @@ Qt::FocusPolicy ViewWrapper_qtquick::focusPolicy() const
     }
 }
 
-void ViewWrapper_qtquick::setFocus(Qt::FocusReason reason)
+void ViewWrapper::setFocus(Qt::FocusReason reason)
 {
     m_item->QQuickItem::setFocus(true, reason);
     m_item->forceActiveFocus(reason);
 }
 
-void ViewWrapper_qtquick::setFocusPolicy(Qt::FocusPolicy policy)
+void ViewWrapper::setFocusPolicy(Qt::FocusPolicy policy)
 {
     if (auto view = unwrap()) {
         view->setFocusPolicy(policy);
@@ -348,33 +348,33 @@ void ViewWrapper_qtquick::setFocusPolicy(Qt::FocusPolicy policy)
     }
 }
 
-bool ViewWrapper_qtquick::hasFocus() const
+bool ViewWrapper::hasFocus() const
 {
     return m_item->hasActiveFocus();
 }
 
-QString ViewWrapper_qtquick::objectName() const
+QString ViewWrapper::objectName() const
 {
     return m_item->objectName();
 }
 
-QVariant ViewWrapper_qtquick::property(const char *name) const
+QVariant ViewWrapper::property(const char *name) const
 {
     return m_item->property(name);
 }
 
-bool ViewWrapper_qtquick::isNull() const
+bool ViewWrapper::isNull() const
 {
     return m_item.data() == nullptr;
 }
 
-void ViewWrapper_qtquick::setWindowTitle(const QString &title)
+void ViewWrapper::setWindowTitle(const QString &title)
 {
     if (QWindow *w = m_item->window())
         w->setTitle(title);
 }
 
-QPoint ViewWrapper_qtquick::mapTo(View *parent, QPoint pos) const
+QPoint ViewWrapper::mapTo(View *parent, QPoint pos) const
 {
     if (!parent)
         return {};
@@ -383,7 +383,7 @@ QPoint ViewWrapper_qtquick::mapTo(View *parent, QPoint pos) const
     return parentItem->mapFromGlobal(m_item->mapToGlobal(pos)).toPoint();
 }
 
-bool ViewWrapper_qtquick::testAttribute(Qt::WidgetAttribute attr) const
+bool ViewWrapper::testAttribute(Qt::WidgetAttribute attr) const
 {
     if (auto view = unwrap()) {
         // Only real views have min size
@@ -394,12 +394,12 @@ bool ViewWrapper_qtquick::testAttribute(Qt::WidgetAttribute attr) const
     }
 }
 
-void ViewWrapper_qtquick::setCursor(Qt::CursorShape shape)
+void ViewWrapper::setCursor(Qt::CursorShape shape)
 {
     m_item->QQuickItem::setCursor(shape);
 }
 
-QSize ViewWrapper_qtquick::minSize() const
+QSize ViewWrapper::minSize() const
 {
     if (auto view = unwrap()) {
         // Only real views have min size
@@ -410,7 +410,7 @@ QSize ViewWrapper_qtquick::minSize() const
     }
 }
 
-QVector<std::shared_ptr<Core::View>> ViewWrapper_qtquick::childViews() const
+QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
 {
     QVector<std::shared_ptr<View>> result;
     const auto childItems = m_item->childItems();
@@ -421,7 +421,7 @@ QVector<std::shared_ptr<Core::View>> ViewWrapper_qtquick::childViews() const
     return result;
 }
 
-void ViewWrapper_qtquick::setParent(View *parent)
+void ViewWrapper::setParent(View *parent)
 {
     if (auto view = unwrap()) {
         view->setParent(parent);
@@ -434,22 +434,22 @@ void ViewWrapper_qtquick::setParent(View *parent)
     m_item->setVisible(false);
 }
 
-bool ViewWrapper_qtquick::close()
+bool ViewWrapper::close()
 {
     return View_qtquick::close(m_item);
 }
 
-Core::View *ViewWrapper_qtquick::unwrap()
+Core::View *ViewWrapper::unwrap()
 {
     return qobject_cast<View_qtquick *>(m_item);
 }
 
-const Core::View *ViewWrapper_qtquick::unwrap() const
+const Core::View *ViewWrapper::unwrap() const
 {
     return qobject_cast<const View_qtquick *>(m_item);
 }
 
-SizePolicy ViewWrapper_qtquick::verticalSizePolicy() const
+SizePolicy ViewWrapper::verticalSizePolicy() const
 {
     if (auto view = unwrap()) {
         return view->verticalSizePolicy();
@@ -457,7 +457,7 @@ SizePolicy ViewWrapper_qtquick::verticalSizePolicy() const
     return {};
 }
 
-SizePolicy ViewWrapper_qtquick::horizontalSizePolicy() const
+SizePolicy ViewWrapper::horizontalSizePolicy() const
 {
     if (auto view = unwrap()) {
         return view->horizontalSizePolicy();
@@ -466,18 +466,18 @@ SizePolicy ViewWrapper_qtquick::horizontalSizePolicy() const
 }
 
 /*static*/
-std::shared_ptr<Core::View> ViewWrapper_qtquick::create(QObject *item)
+std::shared_ptr<Core::View> ViewWrapper::create(QObject *item)
 {
     return create(qobject_cast<QQuickItem *>(item));
 }
 
 /*static*/
-std::shared_ptr<Core::View> ViewWrapper_qtquick::create(QQuickItem *item)
+std::shared_ptr<Core::View> ViewWrapper::create(QQuickItem *item)
 {
     if (!item)
         return {};
 
-    auto wrapper = new ViewWrapper_qtquick(item);
+    auto wrapper = new ViewWrapper(item);
     auto sharedptr = std::shared_ptr<View>(wrapper);
     wrapper->d->m_thisWeakPtr = sharedptr;
 

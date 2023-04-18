@@ -110,56 +110,56 @@ static Core::Controller *controllerForWidget(QWidget *widget)
 }
 
 /*static*/
-std::shared_ptr<Core::View> ViewWrapper_qtwidgets::create(QObject *widget)
+std::shared_ptr<Core::View> ViewWrapper::create(QObject *widget)
 {
     return create(qobject_cast<QWidget *>(widget));
 }
 
 /*static*/
-std::shared_ptr<Core::View> ViewWrapper_qtwidgets::create(QWidget *widget)
+std::shared_ptr<Core::View> ViewWrapper::create(QWidget *widget)
 {
     if (!widget)
         return {};
 
-    auto wrapper = new ViewWrapper_qtwidgets(widget);
+    auto wrapper = new ViewWrapper(widget);
     auto sharedptr = std::shared_ptr<View>(wrapper);
     wrapper->d->m_thisWeakPtr = sharedptr;
 
     return sharedptr;
 }
 
-ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QObject *widget)
-    : ViewWrapper_qtwidgets(qobject_cast<QWidget *>(widget))
+ViewWrapper::ViewWrapper(QObject *widget)
+    : ViewWrapper(qobject_cast<QWidget *>(widget))
 {
 }
 
-ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QWidget *widget)
+ViewWrapper::ViewWrapper(QWidget *widget)
     : qtcommon::ViewWrapper(controllerForWidget(widget), widget)
     , m_widget(widget)
 {
 }
 
-QRect ViewWrapper_qtwidgets::geometry() const
+QRect ViewWrapper::geometry() const
 {
     return m_widget->geometry();
 }
 
-QPoint ViewWrapper_qtwidgets::mapToGlobal(QPoint localPt) const
+QPoint ViewWrapper::mapToGlobal(QPoint localPt) const
 {
     return m_widget->mapToGlobal(localPt);
 }
 
-QPoint ViewWrapper_qtwidgets::mapFromGlobal(QPoint globalPt) const
+QPoint ViewWrapper::mapFromGlobal(QPoint globalPt) const
 {
     return m_widget->mapFromGlobal(globalPt);
 }
 
-void ViewWrapper_qtwidgets::setGeometry(QRect rect)
+void ViewWrapper::setGeometry(QRect rect)
 {
     m_widget->setGeometry(rect);
 }
 
-std::shared_ptr<Core::Window> ViewWrapper_qtwidgets::window() const
+std::shared_ptr<Core::Window> ViewWrapper::window() const
 {
     if (m_widget->window()->windowHandle())
         return std::shared_ptr<Core::Window>(new Window(m_widget->window()));
@@ -167,47 +167,47 @@ std::shared_ptr<Core::Window> ViewWrapper_qtwidgets::window() const
     return nullptr;
 }
 
-bool ViewWrapper_qtwidgets::isRootView() const
+bool ViewWrapper::isRootView() const
 {
     return m_widget->isWindow();
 }
 
-void ViewWrapper_qtwidgets::setVisible(bool is)
+void ViewWrapper::setVisible(bool is)
 {
     m_widget->setVisible(is);
 }
 
-bool ViewWrapper_qtwidgets::isVisible() const
+bool ViewWrapper::isVisible() const
 {
     return m_widget->isVisible();
 }
 
-void ViewWrapper_qtwidgets::move(int x, int y)
+void ViewWrapper::move(int x, int y)
 {
     m_widget->move(x, y);
 }
 
-void ViewWrapper_qtwidgets::activateWindow()
+void ViewWrapper::activateWindow()
 {
     m_widget->activateWindow();
 }
 
-bool ViewWrapper_qtwidgets::isMaximized() const
+bool ViewWrapper::isMaximized() const
 {
     return m_widget->isMaximized();
 }
 
-bool ViewWrapper_qtwidgets::isMinimized() const
+bool ViewWrapper::isMinimized() const
 {
     return m_widget->isMinimized();
 }
 
-void ViewWrapper_qtwidgets::setSize(int x, int y)
+void ViewWrapper::setSize(int x, int y)
 {
     m_widget->resize(x, y);
 }
 
-bool ViewWrapper_qtwidgets::is(Core::ViewType t) const
+bool ViewWrapper::is(Core::ViewType t) const
 {
     if (t == Core::ViewType::ViewWrapper)
         return true;
@@ -253,86 +253,86 @@ bool ViewWrapper_qtwidgets::is(Core::ViewType t) const
     return false;
 }
 
-std::shared_ptr<Core::View> ViewWrapper_qtwidgets::rootView() const
+std::shared_ptr<Core::View> ViewWrapper::rootView() const
 {
     if (auto w = m_widget->window())
-        return std::shared_ptr<Core::View>(new ViewWrapper_qtwidgets(w));
+        return std::shared_ptr<Core::View>(new ViewWrapper(w));
 
     return {};
 }
 
-std::shared_ptr<Core::View> ViewWrapper_qtwidgets::parentView() const
+std::shared_ptr<Core::View> ViewWrapper::parentView() const
 {
     if (auto p = m_widget->parentWidget())
-        return std::shared_ptr<Core::View>(new ViewWrapper_qtwidgets(p));
+        return std::shared_ptr<Core::View>(new ViewWrapper(p));
 
     return {};
 }
 
-std::shared_ptr<Core::View> ViewWrapper_qtwidgets::childViewAt(QPoint localPos) const
+std::shared_ptr<Core::View> ViewWrapper::childViewAt(QPoint localPos) const
 {
     if (QWidget *child = m_widget->childAt(localPos))
-        return std::shared_ptr<Core::View>(new ViewWrapper_qtwidgets(child));
+        return std::shared_ptr<Core::View>(new ViewWrapper(child));
 
     return {};
 }
 
-void ViewWrapper_qtwidgets::grabMouse()
+void ViewWrapper::grabMouse()
 {
     m_widget->grabMouse();
 }
 
-void ViewWrapper_qtwidgets::releaseMouse()
+void ViewWrapper::releaseMouse()
 {
     m_widget->releaseMouse();
 }
 
-void ViewWrapper_qtwidgets::setFocus(Qt::FocusReason reason)
+void ViewWrapper::setFocus(Qt::FocusReason reason)
 {
     m_widget->setFocus(reason);
 }
 
-QString ViewWrapper_qtwidgets::objectName() const
+QString ViewWrapper::objectName() const
 {
     return m_widget->QWidget::objectName();
 }
 
-QVariant ViewWrapper_qtwidgets::property(const char *name) const
+QVariant ViewWrapper::property(const char *name) const
 {
     return m_widget->property(name);
 }
 
-bool ViewWrapper_qtwidgets::isNull() const
+bool ViewWrapper::isNull() const
 {
     return m_widget.data() == nullptr;
 }
 
-QWidget *ViewWrapper_qtwidgets::widget() const
+QWidget *ViewWrapper::widget() const
 {
     return m_widget;
 }
 
-void ViewWrapper_qtwidgets::setWindowTitle(const QString &title)
+void ViewWrapper::setWindowTitle(const QString &title)
 {
     m_widget->setWindowTitle(title);
 }
 
-QPoint ViewWrapper_qtwidgets::mapTo(View *someAncestor, QPoint pos) const
+QPoint ViewWrapper::mapTo(View *someAncestor, QPoint pos) const
 {
     return m_widget->mapTo(View_qt::asQWidget(someAncestor), pos);
 }
 
-bool ViewWrapper_qtwidgets::testAttribute(Qt::WidgetAttribute attr) const
+bool ViewWrapper::testAttribute(Qt::WidgetAttribute attr) const
 {
     return m_widget->testAttribute(attr);
 }
 
-void ViewWrapper_qtwidgets::setCursor(Qt::CursorShape cursor)
+void ViewWrapper::setCursor(Qt::CursorShape cursor)
 {
     m_widget->setCursor(cursor);
 }
 
-QSize ViewWrapper_qtwidgets::minSize() const
+QSize ViewWrapper::minSize() const
 {
     const int minW = m_widget->minimumWidth() > 0 ? m_widget->minimumWidth()
                                                   : m_widget->minimumSizeHint().width();
@@ -343,47 +343,47 @@ QSize ViewWrapper_qtwidgets::minSize() const
     return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
 }
 
-QVector<std::shared_ptr<Core::View>> ViewWrapper_qtwidgets::childViews() const
+QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
 {
     return qtwidgets::View_qtwidgets<QWidget>::childViewsFor(m_widget);
 }
 
-void ViewWrapper_qtwidgets::setParent(View *parent)
+void ViewWrapper::setParent(View *parent)
 {
     qtwidgets::View_qtwidgets<QWidget>::setParentFor(m_widget, parent);
 }
 
-bool ViewWrapper_qtwidgets::close()
+bool ViewWrapper::close()
 {
     return m_widget->close();
 }
 
-Qt::FocusPolicy ViewWrapper_qtwidgets::focusPolicy() const
+Qt::FocusPolicy ViewWrapper::focusPolicy() const
 {
     return m_widget->focusPolicy();
 }
 
-void ViewWrapper_qtwidgets::setFocusPolicy(Qt::FocusPolicy policy)
+void ViewWrapper::setFocusPolicy(Qt::FocusPolicy policy)
 {
     m_widget->setFocusPolicy(policy);
 }
 
-bool ViewWrapper_qtwidgets::hasFocus() const
+bool ViewWrapper::hasFocus() const
 {
     return m_widget->hasFocus();
 }
 
-SizePolicy ViewWrapper_qtwidgets::horizontalSizePolicy() const
+SizePolicy ViewWrapper::horizontalSizePolicy() const
 {
     return SizePolicy(m_widget->sizePolicy().horizontalPolicy());
 }
 
-SizePolicy ViewWrapper_qtwidgets::verticalSizePolicy() const
+SizePolicy ViewWrapper::verticalSizePolicy() const
 {
     return SizePolicy(m_widget->sizePolicy().verticalPolicy());
 }
 
-QSize ViewWrapper_qtwidgets::maxSizeHint() const
+QSize ViewWrapper::maxSizeHint() const
 {
     return m_widget->maximumSize();
 }

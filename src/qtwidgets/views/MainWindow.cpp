@@ -172,7 +172,7 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 
 void MainWindow::setPersistentCentralWidget(QWidget *widget)
 {
-    m_mainWindow->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(widget));
+    m_mainWindow->setPersistentCentralView(qtwidgets::ViewWrapper::create(widget));
 }
 
 QWidget *MainWindow::persistentCentralWidget() const

@@ -62,12 +62,12 @@ public:
             if (w->isWindow()) {
                 if (ev->type() == QEvent::WindowActivate) {
                     Platform::instance()->d->windowActivated.emit(
-                        qtwidgets::ViewWrapper_qtwidgets::create(w));
+                        qtwidgets::ViewWrapper::create(w));
                 }
 
                 if (ev->type() == QEvent::WindowDeactivate) {
                     Platform::instance()->d->windowDeactivated.emit(
-                        qtwidgets::ViewWrapper_qtwidgets::create(w));
+                        qtwidgets::ViewWrapper::create(w));
                 }
             }
         }
@@ -100,7 +100,7 @@ void Platform::init()
 #endif
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
-        d->focusedViewChanged.emit(qtwidgets::ViewWrapper_qtwidgets::create(obj));
+        d->focusedViewChanged.emit(qtwidgets::ViewWrapper::create(obj));
     });
 }
 
@@ -121,7 +121,7 @@ bool Platform::hasActivePopup() const
 
 std::shared_ptr<Core::View> Platform::qobjectAsView(QObject *obj) const
 {
-    return qtwidgets::ViewWrapper_qtwidgets::create(obj);
+    return qtwidgets::ViewWrapper::create(obj);
 }
 
 std::shared_ptr<Core::Window> Platform::windowFromQWindow(QWindow *qwindow) const

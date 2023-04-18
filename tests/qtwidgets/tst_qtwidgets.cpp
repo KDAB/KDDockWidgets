@@ -68,7 +68,7 @@ inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
     w->setFocusPolicy(Qt::StrongFocus);
     auto dock = newDockWidget(name, options, layoutSaverOptions);
     dock->setAffinityName(affinityName);
-    dock->setGuestView(qtwidgets::ViewWrapper_qtwidgets::create(w));
+    dock->setGuestView(qtwidgets::ViewWrapper::create(w));
     dock->setObjectName(name);
     dock->view()->setGeometry(QRect(0, 0, 400, 400));
     if (show) {
@@ -321,7 +321,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     m->addDockWidget(dock1, Location_OnBottom);
 
     auto mdiArea = new qtwidgets::MDIArea();
-    m->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(mdiArea));
+    m->setPersistentCentralView(qtwidgets::ViewWrapper::create(mdiArea));
 
     auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
     auto mdiWidget2 = createDockWidget("mdi2", new QPushButton("mdi12"));
@@ -374,14 +374,14 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     auto mdiArea = new qtwidgets::MDIArea();
 
-    m->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(mdiArea));
+    m->setPersistentCentralView(qtwidgets::ViewWrapper::create(mdiArea));
 
 
     auto createSheet = [](int id) -> Core::DockWidget * {
         auto dock =
             newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetOption_MDINestable);
         auto btn = new QPushButton(QStringLiteral("Sheet %1").arg(id));
-        dock->setGuestView(qtwidgets::ViewWrapper_qtwidgets::create(btn));
+        dock->setGuestView(qtwidgets::ViewWrapper::create(btn));
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
 
         return dock;
@@ -545,12 +545,12 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
     m->addDockWidget(dock1, Location_OnBottom);
 
     auto mdiArea = new qtwidgets::MDIArea();
-    m->setPersistentCentralView(qtwidgets::ViewWrapper_qtwidgets::create(mdiArea));
+    m->setPersistentCentralView(qtwidgets::ViewWrapper::create(mdiArea));
 
     auto createSheet = [](int id) -> Core::DockWidget * {
         auto dock =
             newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetOption_MDINestable);
-        dock->setGuestView(qtwidgets::ViewWrapper_qtwidgets::create(
+        dock->setGuestView(qtwidgets::ViewWrapper::create(
             new QPushButton(QStringLiteral("Sheet %1").arg(id))));
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
 
@@ -589,13 +589,13 @@ void TestQtWidgets::tst_floatingWindowDeleted()
         {
             auto dock1 = newDockWidget(QStringLiteral("DockWidget #1"));
             auto myWidget = new QWidget();
-            dock1->setGuestView(qtwidgets::ViewWrapper_qtwidgets::create((myWidget)));
+            dock1->setGuestView(qtwidgets::ViewWrapper::create((myWidget)));
             dock1->view()->resize(QSize(600, 600));
             dock1->open();
 
             auto dock2 = newDockWidget(QStringLiteral("DockWidget #2"));
             myWidget = new QWidget();
-            dock2->setGuestView(qtwidgets::ViewWrapper_qtwidgets::create(myWidget));
+            dock2->setGuestView(qtwidgets::ViewWrapper::create(myWidget));
             dock2->view()->resize(QSize(600, 600));
             dock2->open();
 
@@ -1027,7 +1027,7 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
 
     layout->checkSanity();
 
-    delete static_cast<qtwidgets::ViewWrapper_qtwidgets *>(m->window().get())->widget();
+    delete static_cast<qtwidgets::ViewWrapper *>(m->window().get())->widget();
 }
 
 void TestQtWidgets::tst_restoreResizesLayout()

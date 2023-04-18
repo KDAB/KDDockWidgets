@@ -21,7 +21,7 @@ namespace KDDockWidgets::qtwidgets {
 /// @brief A View that doesn't own its QWidget
 /// Implements a View API around an existing QWidget
 /// Useful for widgets that are not created by KDDW.
-class DOCKS_EXPORT ViewWrapper_qtwidgets : public qtcommon::ViewWrapper
+class DOCKS_EXPORT ViewWrapper : public qtcommon::ViewWrapper
 {
 public:
     QRect geometry() const override;
@@ -67,8 +67,8 @@ public:
     static std::shared_ptr<View> create(QWidget *widget);
 
 private:
-    explicit ViewWrapper_qtwidgets(QObject *widget);
-    explicit ViewWrapper_qtwidgets(QWidget *widget);
+    explicit ViewWrapper(QObject *widget);
+    explicit ViewWrapper(QWidget *widget);
     QPointer<QWidget> m_widget;
 };
 

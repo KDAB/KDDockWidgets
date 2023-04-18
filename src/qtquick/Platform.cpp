@@ -87,7 +87,7 @@ void Platform::init()
     QQuickWindow::setDefaultAlphaBuffer(true);
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
-        d->focusedViewChanged.emit(ViewWrapper_qtquick::create(obj));
+        d->focusedViewChanged.emit(ViewWrapper::create(obj));
     });
 }
 
@@ -103,7 +103,7 @@ const char *Platform::name() const
 
 std::shared_ptr<Core::View> Platform::qobjectAsView(QObject *obj) const
 {
-    return ViewWrapper_qtquick::create(obj);
+    return ViewWrapper::create(obj);
 }
 
 std::shared_ptr<Core::Window> Platform::windowFromQWindow(QWindow *qwindow) const

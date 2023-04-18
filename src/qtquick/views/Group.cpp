@@ -129,7 +129,7 @@ void Group::insertDockWidget(Core::DockWidget *dw, int index)
     QPointer<Core::Group> oldFrame = dw->d->group();
     m_group->tabBar()->insertDockWidget(index, dw, {}, {});
 
-    dw->setParentView(ViewWrapper_qtquick::create(m_stackLayout).get());
+    dw->setParentView(ViewWrapper::create(m_stackLayout).get());
     makeItemFillParent(View_qtquick::asQQuickItem(dw->view()));
     m_group->setCurrentDockWidget(dw);
 

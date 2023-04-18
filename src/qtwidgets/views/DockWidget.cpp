@@ -70,7 +70,7 @@ void DockWidget::init()
 
 void DockWidget::setWidget(QWidget *widget)
 {
-    m_dockWidget->setGuestView(ViewWrapper_qtwidgets::create(widget));
+    m_dockWidget->setGuestView(ViewWrapper::create(widget));
 }
 
 bool DockWidget::event(QEvent *e)
