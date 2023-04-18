@@ -56,8 +56,8 @@ public:
 DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
                        LayoutSaverOptions layoutSaverOptions,
                        Qt::WindowFlags windowFlags, QQmlEngine *engine)
-    : View_qtquick(new Core::DockWidget(this, uniqueName, options, layoutSaverOptions), Core::ViewType::DockWidget,
-                   nullptr, windowFlags)
+    : View(new Core::DockWidget(this, uniqueName, options, layoutSaverOptions), Core::ViewType::DockWidget,
+           nullptr, windowFlags)
     , Core::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this, engine ? engine : plat()->qmlEngine()))
 {
@@ -127,13 +127,13 @@ QQuickItem *DockWidget::guestItem() const
 bool DockWidget::event(QEvent *e)
 {
     if (dockWidget()->d->m_isSettingCurrent)
-        return View_qtquick::event(e);
+        return View::event(e);
 
     if (e->type() == QEvent::Show) {
         dockWidget()->open();
     }
 
-    return View_qtquick::event(e);
+    return View::event(e);
 }
 
 QSize DockWidget::minSize() const
@@ -143,7 +143,7 @@ QSize DockWidget::minSize() const
         return guestWidget->minSize();
     }
 
-    return View_qtquick::minSize();
+    return View::minSize();
 }
 
 QSize DockWidget::maxSizeHint() const
@@ -153,7 +153,7 @@ QSize DockWidget::maxSizeHint() const
         return guestWidget->maxSizeHint();
     }
 
-    return View_qtquick::maxSizeHint();
+    return View::maxSizeHint();
 }
 
 QObject *DockWidget::actualTitleBarView() const

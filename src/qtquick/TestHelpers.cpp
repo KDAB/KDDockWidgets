@@ -30,11 +30,11 @@ using namespace KDDockWidgets::qtquick;
 #ifdef DOCKS_DEVELOPER_MODE
 
 namespace KDDockWidgets {
-class TestView_qtquick : public qtquick::View_qtquick
+class TestView_qtquick : public qtquick::View
 {
 public:
     explicit TestView_qtquick(Core::CreateViewOptions opts, QQuickItem *parent)
-        : qtquick::View_qtquick(nullptr, Core::ViewType::None, parent)
+        : qtquick::View(nullptr, Core::ViewType::None, parent)
         , m_opts(opts)
     {
         setMinimumSize(opts.minSize);
@@ -101,7 +101,7 @@ Core::View *Platform::tests_createView(Core::CreateViewOptions opts, Core::View 
         newItem->QQuickItem::setParentItem(view->contentItem());
         newItem->QQuickItem::setParent(view->contentItem());
         if (opts.isVisible)
-            newItem->qtquick::View_qtquick::setVisible(true);
+            newItem->qtquick::View::setVisible(true);
 
         QTest::qWait(100); // the root object gets sized delayed
     }

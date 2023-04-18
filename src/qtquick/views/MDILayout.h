@@ -21,11 +21,11 @@ class MDILayout;
 
 namespace qtquick {
 
-class DOCKS_EXPORT MDILayout : public qtquick::View_qtquick
+class DOCKS_EXPORT MDILayout : public qtquick::View
 {
     Q_OBJECT
 public:
-    explicit MDILayout(Core::MDILayout *controller, View *parent);
+    explicit MDILayout(Core::MDILayout *controller, Core::View *parent);
     ~MDILayout();
 
 private:

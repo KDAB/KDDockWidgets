@@ -19,7 +19,7 @@
 
 namespace KDDockWidgets::qtquick {
 
-class DOCKS_EXPORT RubberBand : public View_qtquick
+class DOCKS_EXPORT RubberBand : public View
 {
     Q_OBJECT
 public:

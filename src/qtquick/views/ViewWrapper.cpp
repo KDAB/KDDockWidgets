@@ -149,7 +149,7 @@ void ViewWrapper::setGeometry(QRect rect)
 std::shared_ptr<Core::View> ViewWrapper::childViewAt(QPoint p) const
 {
     auto child = m_item->childAt(p.x(), p.y());
-    return child ? View_qtquick::asQQuickWrapper(child) : nullptr;
+    return child ? qtquick::View::asQQuickWrapper(child) : nullptr;
 }
 
 std::shared_ptr<Core::Window> ViewWrapper::window() const
@@ -164,7 +164,7 @@ std::shared_ptr<Core::Window> ViewWrapper::window() const
 
 bool ViewWrapper::isRootView() const
 {
-    return View_qtquick::isRootView(m_item);
+    return qtquick::View::isRootView(m_item);
 }
 
 void ViewWrapper::setVisible(bool is)
@@ -310,7 +310,7 @@ std::shared_ptr<Core::View> ViewWrapper::rootView() const
 
 std::shared_ptr<Core::View> ViewWrapper::parentView() const
 {
-    return View_qtquick::parentViewFor(m_item);
+    return qtquick::View::parentViewFor(m_item);
 }
 
 void ViewWrapper::grabMouse()
@@ -415,7 +415,7 @@ QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
     QVector<std::shared_ptr<View>> result;
     const auto childItems = m_item->childItems();
     for (QQuickItem *child : childItems) {
-        result << View_qtquick::asQQuickWrapper(child);
+        result << qtquick::View::asQQuickWrapper(child);
     }
 
     return result;
@@ -436,17 +436,17 @@ void ViewWrapper::setParent(View *parent)
 
 bool ViewWrapper::close()
 {
-    return View_qtquick::close(m_item);
+    return qtquick::View::close(m_item);
 }
 
 Core::View *ViewWrapper::unwrap()
 {
-    return qobject_cast<View_qtquick *>(m_item);
+    return qobject_cast<qtquick::View *>(m_item);
 }
 
 const Core::View *ViewWrapper::unwrap() const
 {
-    return qobject_cast<const View_qtquick *>(m_item);
+    return qobject_cast<const qtquick::View *>(m_item);
 }
 
 SizePolicy ViewWrapper::verticalSizePolicy() const

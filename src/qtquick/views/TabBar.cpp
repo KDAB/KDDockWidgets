@@ -32,7 +32,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtquick;
 
 TabBar::TabBar(Core::TabBar *controller, QQuickItem *parent)
-    : View_qtquick(controller, Core::ViewType::TabBar, parent)
+    : View(controller, Core::ViewType::TabBar, parent)
     , TabBarViewInterface(controller)
     , m_dockWidgetModel(new DockWidgetModel(controller, this))
 {
@@ -136,7 +136,7 @@ bool TabBar::event(QEvent *ev)
         break;
     }
 
-    return View_qtquick::event(ev);
+    return View::event(ev);
 }
 
 QQuickItem *TabBar::tabAt(int index) const

@@ -38,12 +38,12 @@ public:
     QSize maxSizeHint() const override;
     void setSize(int width, int height) override;
     bool is(Core::ViewType) const override;
-    std::shared_ptr<View> childViewAt(QPoint) const override;
-    QVector<std::shared_ptr<View>> childViews() const override;
+    std::shared_ptr<Core::View> childViewAt(QPoint) const override;
+    QVector<std::shared_ptr<Core::View>> childViews() const override;
     std::shared_ptr<Core::Window> window() const override;
-    std::shared_ptr<View> rootView() const override;
-    std::shared_ptr<View> parentView() const override;
-    void setParent(View *) override; // TODOm3: Rename to setParentView
+    std::shared_ptr<Core::View> rootView() const override;
+    std::shared_ptr<Core::View> parentView() const override;
+    void setParent(Core::View *) override; // TODOm3: Rename to setParentView
     void grabMouse() override;
     void releaseMouse() override;
     void setFocus(Qt::FocusReason) override;
@@ -52,7 +52,7 @@ public:
     QVariant property(const char *) const override;
     bool isNull() const override;
     void setWindowTitle(const QString &title) override;
-    QPoint mapTo(View *someAncestor, QPoint pos) const override;
+    QPoint mapTo(Core::View *someAncestor, QPoint pos) const override;
     bool testAttribute(Qt::WidgetAttribute) const override;
     void setCursor(Qt::CursorShape) override;
     QSize minSize() const override;
@@ -62,11 +62,11 @@ public:
     SizePolicy verticalSizePolicy() const override;
     SizePolicy horizontalSizePolicy() const override;
 
-    const View *unwrap() const;
-    View *unwrap();
+    const Core::View *unwrap() const;
+    Core::View *unwrap();
 
-    static std::shared_ptr<View> create(QObject *widget);
-    static std::shared_ptr<View> create(QQuickItem *widget);
+    static std::shared_ptr<Core::View> create(QObject *widget);
+    static std::shared_ptr<Core::View> create(QQuickItem *widget);
 
 private:
     explicit ViewWrapper(QObject *widget);

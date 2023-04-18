@@ -185,7 +185,7 @@ ViewFactory *Platform::viewFactory() const
 
 Core::View *Platform::createView(Core::Controller *controller, Core::View *parent) const
 {
-    return new qtquick::View_qtquick(controller, Core::ViewType::None, qtquick::asQQuickItem(parent));
+    return new qtquick::View(controller, Core::ViewType::None, qtquick::asQQuickItem(parent));
 }
 
 /** static */

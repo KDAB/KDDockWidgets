@@ -34,7 +34,7 @@ public:
     void onLayoutGeometryUpdated()
     {
         const QSize minSz = q->minSize();
-        const bool mainWindowIsTooSmall = minSz.expandedTo(q->View::size()) != q->View::size();
+        const bool mainWindowIsTooSmall = minSz.expandedTo(q->Core::View::size()) != q->Core::View::size();
         if (mainWindowIsTooSmall) {
             if (q->isRootView()) {
                 // If we're a top-level, let's go ahead and resize the QWindow
@@ -51,8 +51,8 @@ public:
 
 MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
                        QQuickItem *parent, Qt::WindowFlags flags)
-    : View_qtquick(new Core::MainWindow(this, uniqueName, options), Core::ViewType::MainWindow, parent,
-                   flags)
+    : View(new Core::MainWindow(this, uniqueName, options), Core::ViewType::MainWindow, parent,
+           flags)
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(View::controller()))
     , d(new Private(this))
 {
@@ -64,9 +64,9 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
     makeItemFillParent(layoutView);
 
     // MainWindowQuick has the same constraints as Layout, so just forward the signal
-    connect(layoutView, &View_qtquick::geometryUpdated, this, &MainWindow::geometryUpdated);
+    connect(layoutView, &View::geometryUpdated, this, &MainWindow::geometryUpdated);
 
-    connect(layoutView, &View_qtquick::geometryUpdated, this,
+    connect(layoutView, &View::geometryUpdated, this,
             [this] { d->onLayoutGeometryUpdated(); });
 
     {

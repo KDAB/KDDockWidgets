@@ -41,7 +41,7 @@ namespace qtquick {
 class Stack;
 class DockWidgetModel;
 
-class DOCKS_EXPORT TabBar : public qtquick::View_qtquick, public Core::TabBarViewInterface
+class DOCKS_EXPORT TabBar : public qtquick::View, public Core::TabBarViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY

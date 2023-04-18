@@ -34,7 +34,7 @@ namespace qtquick {
 class TabBar;
 class Stack;
 
-class DOCKS_EXPORT Group : public qtquick::View_qtquick, public Core::GroupViewInterface
+class DOCKS_EXPORT Group : public qtquick::View, public Core::GroupViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabBar READ tabBarObj CONSTANT)

@@ -96,7 +96,7 @@ public:
 
     void updateSize()
     {
-        resize(m_view->View::size());
+        resize(m_view->Core::View::size());
     }
 
     void updateRootItemSize()
@@ -105,7 +105,7 @@ public:
             return;
 
         Core::AtomicSanityChecks checks(m_view->rootItem());
-        m_view->View::setSize(size());
+        m_view->Core::View::setSize(size());
     }
 
 #ifdef Q_OS_WIN
@@ -133,7 +133,7 @@ QuickView::~QuickView() = default;
 FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
                                qtquick::MainWindow *parent,
                                Qt::WindowFlags flags)
-    : qtquick::View_qtquick(controller, Core::ViewType::FloatingWindow, parent, flags)
+    : qtquick::View(controller, Core::ViewType::FloatingWindow, parent, flags)
     , m_quickWindow(new QuickView(plat()->qmlEngine(), this))
     , m_controller(controller)
 {
@@ -143,7 +143,7 @@ FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
 FloatingWindow::~FloatingWindow()
 {
     m_inDtor = true;
-    setParent(static_cast<View *>(nullptr));
+    setParent(static_cast<Core::View *>(nullptr));
     if (qobject_cast<QQuickView *>(m_quickWindow)) // QObject cast just to make sure the QWindow is
                                                    // not in ~QObject already
         delete m_quickWindow;
@@ -214,7 +214,7 @@ void FloatingWindow::init()
     Q_ASSERT(m_visualItem);
 
     // Ensure our window size is never smaller than our min-size
-    View::setSize(View::size().expandedTo(minSize()));
+    Core::View::setSize(Core::View::size().expandedTo(minSize()));
 
     m_visualItem->setParent(this);
     m_visualItem->setParentItem(this);

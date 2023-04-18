@@ -45,23 +45,23 @@ inline QQuickItem *asQQuickItem(Core::Controller *controller)
     return asQQuickItem(controller->view());
 }
 
-class DOCKS_EXPORT View_qtquick : public QQuickItem, public qtcommon::View_qt
+class DOCKS_EXPORT View : public QQuickItem, public qtcommon::View_qt
 {
     Q_OBJECT
 public:
-    using View::close;
-    using View::height;
-    using View::minimumHeight;
+    using Core::View::close;
+    using Core::View::height;
+    using Core::View::minimumHeight;
 
-    using View::minimumWidth;
-    using View::rect;
-    using View::resize;
-    using View::width;
+    using Core::View::minimumWidth;
+    using Core::View::rect;
+    using Core::View::resize;
+    using Core::View::width;
 
-    explicit View_qtquick(Core::Controller *controller, Core::ViewType type,
-                          QQuickItem *parent = nullptr, Qt::WindowFlags windowFlags = {});
+    explicit View(Core::Controller *controller, Core::ViewType type,
+                  QQuickItem *parent = nullptr, Qt::WindowFlags windowFlags = {});
 
-    ~View_qtquick() override = default;
+    ~View() override = default;
 
     void free_impl() override;
     QSize sizeHint() const override;
@@ -87,7 +87,7 @@ public:
     void hide() override;
     void updateGeometry();
     void update() override;
-    void setParent(View *parent) override;
+    void setParent(Core::View *parent) override;
     void setParent(QQuickItem *parent);
     void raiseAndActivate() override;
     void activateWindow() override;
@@ -98,7 +98,7 @@ public:
     QQuickView *quickView() const;
     QPoint mapToGlobal(QPoint localPt) const override;
     QPoint mapFromGlobal(QPoint globalPt) const override;
-    QPoint mapTo(View *parent, QPoint pos) const override;
+    QPoint mapTo(Core::View *parent, QPoint pos) const override;
     void setWindowOpacity(double v) override;
     void setSizePolicy(SizePolicy, SizePolicy) override;
     SizePolicy verticalSizePolicy() const override;
@@ -124,11 +124,11 @@ public:
     bool isMaximized() const override;
 
     std::shared_ptr<Core::Window> window() const override;
-    std::shared_ptr<View> childViewAt(QPoint p) const override;
-    std::shared_ptr<View> rootView() const override;
-    std::shared_ptr<View> parentView() const override;
+    std::shared_ptr<Core::View> childViewAt(QPoint p) const override;
+    std::shared_ptr<Core::View> rootView() const override;
+    std::shared_ptr<Core::View> parentView() const override;
 
-    std::shared_ptr<View> asWrapper() override;
+    std::shared_ptr<Core::View> asWrapper() override;
 
     void grabMouse() override;
     void releaseMouse() override;
@@ -142,7 +142,7 @@ public:
     void render(QPainter *) override;
     void setCursor(Qt::CursorShape shape) override;
     void setMouseTracking(bool enable) override;
-    QVector<std::shared_ptr<View>> childViews() const override;
+    QVector<std::shared_ptr<Core::View>> childViews() const override;
     void setZOrder(int) override;
     virtual QQuickItem *visualItem() const;
 
@@ -152,8 +152,8 @@ public:
 
     /// @brief Convenience to create a QQuickItem
     static QQuickItem *createItem(QQmlEngine *engine, const QString &filename);
-    static std::shared_ptr<View> parentViewFor(const QQuickItem *);
-    static std::shared_ptr<View> asQQuickWrapper(QQuickItem *item);
+    static std::shared_ptr<Core::View> parentViewFor(const QQuickItem *);
+    static std::shared_ptr<Core::View> asQQuickWrapper(QQuickItem *item);
 
 Q_SIGNALS:
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change
@@ -173,7 +173,7 @@ protected:
     }
 
 private:
-    Q_DISABLE_COPY(View_qtquick)
+    Q_DISABLE_COPY(View)
     friend class MouseEventRedirector;
     void updateNormalGeometry();
     bool m_inSetParent = false;
@@ -189,19 +189,19 @@ private:
     MouseEventRedirector *m_mouseEventRedirector = nullptr;
 };
 
-inline View_qtquick *asView_qtquick(Core::View *view)
+inline View *asView_qtquick(Core::View *view)
 {
     if (!view)
         return nullptr;
-    return static_cast<View_qtquick *>(view);
+    return static_cast<View *>(view);
 }
 
-inline View_qtquick *asView_qtquick(Core::Controller *controller)
+inline View *asView_qtquick(Core::Controller *controller)
 {
     if (!controller)
         return nullptr;
 
-    return static_cast<View_qtquick *>(controller->view());
+    return static_cast<View *>(controller->view());
 }
 
 inline qreal logicalDpiFactor(const QQuickItem *item)

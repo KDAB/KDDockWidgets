@@ -227,7 +227,7 @@ void DockWidgetInstantiator::componentComplete()
             &DockWidgetInstantiator::windowActiveAboutToChange);
 
     if (m_sourceFilename.isEmpty()) {
-        m_dockWidget->setGuestView(qtquick::View_qtquick::asQQuickWrapper(childItems.constFirst()));
+        m_dockWidget->setGuestView(qtquick::View::asQQuickWrapper(childItems.constFirst()));
     } else {
         auto view = this->dockWidget();
         view->setGuestItem(m_sourceFilename);

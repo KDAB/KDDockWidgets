@@ -42,7 +42,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtquick;
 
 Group::Group(Core::Group *controller, QQuickItem *parent)
-    : qtquick::View_qtquick(controller, Core::ViewType::Frame, parent)
+    : qtquick::View(controller, Core::ViewType::Frame, parent)
     , Core::GroupViewInterface(controller)
 {
 }
@@ -63,8 +63,8 @@ void Group::init()
     connect(m_group->tabBar(), &Core::TabBar::countChanged, this,
             &Group::updateConstriants);
 
-    connect(this, &View_qtquick::geometryUpdated, this,
-            [this] { View::d->layoutInvalidated.emit(); });
+    connect(this, &View::geometryUpdated, this,
+            [this] { Core::View::d->layoutInvalidated.emit(); });
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
     connect(m_group, &Core::Group::isMDIChanged, this, &Group::isMDIChanged);
@@ -81,7 +81,7 @@ void Group::init()
     connect(m_group, &Core::Group::actualTitleBarChanged, this,
             &Group::actualTitleBarChanged);
 
-    connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
+    connect(this, &View::itemGeometryChanged, this, [this] {
         for (auto dw : m_group->dockWidgets()) {
             auto dwView = static_cast<DockWidget *>(qtquick::asView_qtquick(dw->view()));
             Q_EMIT dwView->groupGeometryChanged(geometry());
@@ -111,7 +111,7 @@ void Group::updateConstriants()
     setProperty("kddockwidgets_min_size", minSize());
     setProperty("kddockwidgets_max_size", maxSizeHint());
 
-    View::d->layoutInvalidated.emit();
+    Core::View::d->layoutInvalidated.emit();
 }
 
 void Group::removeDockWidget(Core::DockWidget *dw)
@@ -130,7 +130,7 @@ void Group::insertDockWidget(Core::DockWidget *dw, int index)
     m_group->tabBar()->insertDockWidget(index, dw, {}, {});
 
     dw->setParentView(ViewWrapper::create(m_stackLayout).get());
-    makeItemFillParent(View_qtquick::asQQuickItem(dw->view()));
+    makeItemFillParent(View::asQQuickItem(dw->view()));
     m_group->setCurrentDockWidget(dw);
 
     if (oldFrame && oldFrame->beingDeletedLater()) {

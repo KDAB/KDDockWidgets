@@ -21,11 +21,11 @@ class DropArea;
 
 namespace qtquick {
 
-class DOCKS_EXPORT DropArea : public qtquick::View_qtquick
+class DOCKS_EXPORT DropArea : public qtquick::View
 {
     Q_OBJECT
 public:
-    explicit DropArea(Core::DropArea *, View *parent);
+    explicit DropArea(Core::DropArea *, Core::View *parent);
     ~DropArea();
 
 private:

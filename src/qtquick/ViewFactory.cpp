@@ -89,7 +89,7 @@ Core::View *ViewFactory::createStack(Core::Stack *controller, Core::View *parent
 Core::View *ViewFactory::createSeparator(Core::Separator *controller, Core::View *parent) const
 {
     return new Separator(
-        controller, parent ? static_cast<qtquick::View_qtquick *>(parent) : nullptr);
+        controller, parent ? static_cast<qtquick::View *>(parent) : nullptr);
 }
 
 Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
