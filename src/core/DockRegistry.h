@@ -40,6 +40,7 @@ class DockWidget;
 class Group;
 class MainWindowMDIViewInterface;
 class MainWindowViewInterface;
+class FocusScope;
 struct WindowBeingDragged;
 }
 
@@ -241,7 +242,7 @@ Q_SIGNALS:
     void dropIndicatorsInhibitedChanged(bool inhibited);
 
 private:
-    friend class FocusScope;
+    friend class Core::FocusScope;
     explicit DockRegistry(QObject *parent = nullptr);
     bool onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *);
     void onFocusedViewChanged(std::shared_ptr<Core::View> view);
