@@ -68,12 +68,11 @@
             <enum-type name="ViewType" />
         </namespace-type>
 
-        <object-type name="ViewFactory_flutter" />
-        <object-type name="Platform_flutter">
-            <enum-type identified-by-value="DisplayType" />
-        </object-type>
-
         <namespace-type name="flutter">
+            <object-type name="ViewFactory_flutter" />
+            <object-type name="Platform_flutter">
+                <enum-type identified-by-value="DisplayType" />
+            </object-type>
             <object-type name="View_flutter" />
             <object-type name="Stack_flutter" />
             <object-type name="TitleBar_flutter" />

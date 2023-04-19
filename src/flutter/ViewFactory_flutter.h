@@ -40,6 +40,8 @@ class FloatingWindow;
 class MainWindow;
 }
 
+namespace flutter {
+
 /**
  * @brief The default ViewFactory for Flutter frontend
  */
@@ -77,6 +79,8 @@ public:
 private:
     Q_DISABLE_COPY(ViewFactory_flutter)
 };
+
+}
 
 }
 

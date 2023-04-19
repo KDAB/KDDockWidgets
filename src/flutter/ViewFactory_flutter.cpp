@@ -44,7 +44,7 @@
 // clazy:excludeall=ctor-missing-parent-argument
 
 using namespace KDDockWidgets;
-
+using namespace KDDockWidgets::flutter;
 
 ViewFactory_flutter::~ViewFactory_flutter()
 {

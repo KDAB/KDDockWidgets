@@ -21,6 +21,7 @@
 
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::flutter;
 
 Platform_flutter::Platform_flutter()
 {

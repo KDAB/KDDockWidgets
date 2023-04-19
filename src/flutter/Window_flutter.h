@@ -14,7 +14,8 @@
 #include "Screen.h"
 #include "kddockwidgets/core/Window.h"
 
-namespace KDDockWidgets {
+namespace KDDockWidgets::flutter {
+
 class DOCKS_EXPORT Window_flutter : public Core::Window
 {
 public:

@@ -19,6 +19,8 @@ namespace Core {
 class MainWindow;
 }
 
+namespace flutter {
+
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
 class DOCKS_EXPORT Platform_flutter : public Core::Platform
@@ -96,4 +98,7 @@ public:
     QPoint cursorPos() const override;
     void setCursorPos(QPoint) override;
 };
+
+}
+
 }

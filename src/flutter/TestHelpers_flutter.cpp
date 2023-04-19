@@ -15,10 +15,12 @@
 #include "kddockwidgets/core/MainWindow.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::flutter;
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-namespace KDDockWidgets {
+namespace KDDockWidgets::flutter {
+
 class TestView_flutter : public flutter::View_flutter
 {
 public:
