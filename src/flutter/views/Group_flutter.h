@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View_flutter.h"
-#include "views/GroupViewInterface.h"
+#include "core/views/GroupViewInterface.h"
 #include "TitleBar_flutter.h"
 
 namespace KDDockWidgets {

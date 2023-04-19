@@ -31,11 +31,12 @@
 #define QT_NO_CAST_FROM_BYTEARRAY
 #endif
 
+#ifndef QT_NO_KEYWORDS
 #define QT_NO_KEYWORDS
+#endif
 
 #include "Platform_flutter.h"
 #include "ViewFactory_flutter.h"
-
 #include "views/View_flutter.h"
 #include "views/Stack_flutter.h"
 #include "views/Group_flutter.h"
@@ -43,6 +44,7 @@
 #include "views/TitleBar_flutter.h"
 #include "views/DockWidget_flutter.h"
 
+#include "../core/ViewFactory.h"
 #include "../core/Layout.h"
 #include "../core/DropArea.h"
 #include "../core/Group.h"
@@ -55,13 +57,13 @@
 #include "../core/FloatingWindow.h"
 #include "../core/DropIndicatorOverlay.h"
 #include "../core/indicators/ClassicIndicators.h"
-#include "../views/ClassicIndicatorWindowViewInterface.h"
+#include "../core/layouting/Item_p.h"
+#include "../core/views/ClassicIndicatorWindowViewInterface.h"
+#include "../core/DockRegistry.h"
 
 #include "../KDDockWidgets.h"
 #include "../Config.h"
-#include "../DockRegistry.h"
 
-#include "../private/layouting/Item_p.h"
 
 // TODO: kdbindings is choking shiboken
 // #include "Window_flutter.h"

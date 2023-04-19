@@ -13,7 +13,7 @@
     <object-type name="QRect" />
     <object-type name="QPoint" />
     <object-type name="Event">
-        <enum-type identified-by-value="ViewType" />
+        <enum-type identified-by-value="Type" />
     </object-type>
 
     <object-type name="QObject" />
@@ -29,24 +29,12 @@
         <enum-type name="WindowFlags" />
     </namespace-type>
 
-
     <namespace-type name="KDDockWidgets">
-        <object-type name="View" />
-        <object-type name="ViewFactory" />
-        <object-type name="ViewFactory_flutter" />
-        <object-type name="Controller" />
         <object-type name="Config" />
         <object-type name="DockRegistry" />
         <value-type name="CreateViewOptions" />
         <value-type name="InitialOption" />
-
-        <object-type name="Platform" />
-        <object-type name="Platform_flutter">
-            <enum-type identified-by-value="DisplayType" />
-        </object-type>
-
         <enum-type name="MainWindowOption" flags="MainWindowOptions" />
-        <enum-type name="ViewType" />
         <enum-type name="DropLocation" />
         <enum-type name="Location" />
         <enum-type name="InitialVisibilityOption" />
@@ -58,6 +46,10 @@
         <enum-type name="DockWidgetOption" flags="DockWidgetOptions" />
 
         <namespace-type name="Core">
+            <object-type name="Platform" />
+            <object-type name="View" />
+            <object-type name="ViewFactory" />
+            <object-type name="Controller" />
             <object-type name="Layout" />
             <object-type name="DropArea" />
             <object-type name="Group" />
@@ -71,23 +63,23 @@
             <object-type name="DockWidget" />
             <object-type name="ClassicIndicators" />
             <object-type name="MainWindow" />
-             <object-type name="Item" />
+            <object-type name="ClassicIndicatorWindowViewInterface" />
+            <object-type name="Item" />
+            <enum-type name="ViewType" />
         </namespace-type>
 
         <namespace-type name="Views">
+            <object-type name="ViewFactory_flutter" />
+            <object-type name="Platform_flutter">
+                <enum-type identified-by-value="DisplayType" />
+            </object-type>
             <object-type name="View_flutter" />
             <object-type name="Stack_flutter" />
             <object-type name="TitleBar_flutter" />
             <object-type name="TabBar_flutter" />
             <object-type name="Group_flutter" />
             <object-type name="DockWidget_flutter" />
-            <object-type name="ClassicIndicatorWindowViewInterface" />
         </namespace-type>
 
-    </namespace-type>
-
-    <namespace-type name="Layouting">
-
-    <!-- <object-type name="ItemContainer" /> -->
     </namespace-type>
 </typesystem>

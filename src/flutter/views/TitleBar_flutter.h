@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "views/TitleBarViewInterface.h"
+#include "core/views/TitleBarViewInterface.h"
 #include "View_flutter.h"
 
 namespace KDDockWidgets {

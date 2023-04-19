@@ -13,7 +13,7 @@
 #pragma once
 
 #include "View_flutter.h"
-#include "views/StackViewInterface.h"
+#include "core/views/StackViewInterface.h"
 
 namespace KDDockWidgets {
 namespace Views {

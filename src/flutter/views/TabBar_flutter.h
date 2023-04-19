@@ -20,7 +20,7 @@
 #pragma once
 
 #include "View_flutter.h"
-#include "views/TabBarViewInterface.h"
+#include "core/views/TabBarViewInterface.h"
 
 #include <QPointer>
 #include <QHash>
