@@ -73,7 +73,7 @@
             <enum-type identified-by-value="DisplayType" />
         </object-type>
 
-        <namespace-type name="Views">
+        <namespace-type name="flutter">
             <object-type name="View_flutter" />
             <object-type name="Stack_flutter" />
             <object-type name="TitleBar_flutter" />

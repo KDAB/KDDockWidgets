@@ -22,7 +22,7 @@ class Group;
 class DockWidget;
 }
 
-namespace Views {
+namespace flutter {
 
 class Stack_flutter;
 

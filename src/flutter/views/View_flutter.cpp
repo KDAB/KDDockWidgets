@@ -17,7 +17,7 @@
 
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::flutter;
 
 
 View_flutter::View_flutter(Core::Controller *controller, Core::ViewType type, Core::View *parent,

@@ -31,7 +31,7 @@ namespace KDDockWidgets::Core {
 class TabBar;
 }
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::flutter {
 
 class DockWidget;
 class TabWidget;

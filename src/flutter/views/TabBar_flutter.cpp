@@ -24,7 +24,7 @@
 #include <QMetaObject>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::flutter;
 
 TabBar_flutter::TabBar_flutter(Core::TabBar *controller, View *parent)
     : View_flutter(controller, Core::ViewType::TabBar, parent)

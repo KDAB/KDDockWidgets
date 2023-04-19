@@ -19,7 +19,7 @@
 // TODOm4: Make this class available for other frontends ?
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::flutter;
 
 
 ViewWrapper::ViewWrapper(View_flutter *wrapped)

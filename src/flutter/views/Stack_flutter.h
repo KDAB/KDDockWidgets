@@ -16,7 +16,7 @@
 #include "core/views/StackViewInterface.h"
 
 namespace KDDockWidgets {
-namespace Views {
+namespace flutter {
 
 class DOCKS_EXPORT Stack_flutter : public View_flutter, public Core::StackViewInterface
 {

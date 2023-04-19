@@ -18,7 +18,7 @@
 
 #include <memory>
 
-namespace KDDockWidgets::Views {
+namespace KDDockWidgets::flutter {
 
 class View_flutter;
 
@@ -124,4 +124,4 @@ private:
     Q_DISABLE_COPY(ViewWrapper)
 };
 
-} // namespace KDDockWidgets::Views
+} // namespace KDDockWidgets::flutter

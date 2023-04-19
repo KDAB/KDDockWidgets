@@ -20,7 +20,7 @@
 #include "core/View_p.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::flutter;
 
 Stack_flutter::Stack_flutter(Core::Stack *controller, View *parent)
     : View_flutter(controller, Core::ViewType::Stack, parent)

@@ -32,7 +32,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::flutter;
 
 
 DockWidget_flutter::DockWidget_flutter(const QString &uniqueName, DockWidgetOptions options,

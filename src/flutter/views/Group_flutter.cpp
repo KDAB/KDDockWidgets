@@ -37,7 +37,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::flutter;
 
 Group_flutter::Group_flutter(Core::Group *controller, View *parent)
     : View_flutter(controller, Core::ViewType::Frame, parent)

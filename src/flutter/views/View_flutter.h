@@ -18,8 +18,7 @@
 
 #include <memory>
 
-namespace KDDockWidgets::Views {
-
+namespace KDDockWidgets::flutter {
 
 class DOCKS_EXPORT View_flutter : public Core::View
 {
@@ -151,4 +150,4 @@ inline View_flutter *asView_flutter(Core::Controller *controller)
     return static_cast<View_flutter *>(controller->view());
 }
 
-} // namespace KDDockWidgets::Views
+} // namespace KDDockWidgets::flutter

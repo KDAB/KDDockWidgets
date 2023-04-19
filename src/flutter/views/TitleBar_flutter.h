@@ -22,7 +22,7 @@ namespace Core {
 class TitleBar;
 }
 
-namespace Views {
+namespace flutter {
 
 class DOCKS_EXPORT TitleBar_flutter : public View_flutter, public Core::TitleBarViewInterface
 {

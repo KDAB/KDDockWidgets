@@ -19,11 +19,11 @@ using namespace KDDockWidgets;
 #ifdef DOCKS_DEVELOPER_MODE
 
 namespace KDDockWidgets {
-class TestView_flutter : public Views::View_flutter
+class TestView_flutter : public flutter::View_flutter
 {
 public:
     explicit TestView_flutter(Core::CreateViewOptions opts, QWidget *)
-        : Views::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
+        : flutter::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
     }
@@ -44,11 +44,11 @@ private:
     Core::CreateViewOptions m_opts;
 };
 
-class FocusableTestView_flutter : public Views::View_flutter
+class FocusableTestView_flutter : public flutter::View_flutter
 {
 public:
     explicit FocusableTestView_flutter(Core::CreateViewOptions opts, QWidget *)
-        : Views::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
+        : flutter::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
     }
@@ -69,11 +69,11 @@ private:
     Core::CreateViewOptions m_opts;
 };
 
-class NonClosableTestView_flutter : public Views::View_flutter
+class NonClosableTestView_flutter : public flutter::View_flutter
 {
 public:
     explicit NonClosableTestView_flutter(QWidget *)
-        : Views::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
+        : flutter::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
     {
     }
 

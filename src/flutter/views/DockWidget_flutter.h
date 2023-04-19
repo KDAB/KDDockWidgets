@@ -26,13 +26,13 @@ class Group;
 class TitleBar;
 }
 
-namespace Views {
+namespace flutter {
 /**
  * @brief Represents a dock widget.
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_flutter : public Views::View_flutter,
+class DOCKS_EXPORT DockWidget_flutter : public flutter::View_flutter,
                                         public Core::DockWidgetViewInterface
 {
 public:
