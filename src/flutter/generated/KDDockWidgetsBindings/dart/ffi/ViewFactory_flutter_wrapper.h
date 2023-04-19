@@ -11,8 +11,8 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <ViewFactory_flutter.h>
 #include <qstring.h>
-#include <View.h>
-#include <Group.h>
+#include <core/View.h>
+#include <core/Group.h>
 #include <TitleBar.h>
 #include <Stack.h>
 #include <TabBar.h>

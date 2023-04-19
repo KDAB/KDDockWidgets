@@ -30,7 +30,7 @@ class TitleBar extends Controller {
   TitleBar(FloatingWindow? parent) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__constructor_FloatingWindow')
+            'c_KDDockWidgets__Core__TitleBar__constructor_FloatingWindow')
         .asFunction();
     thisCpp = func(parent == null ? ffi.nullptr : parent.thisCpp);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
@@ -39,7 +39,7 @@ class TitleBar extends Controller {
   TitleBar.ctor2(Group? parent) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__constructor_Group')
+            'c_KDDockWidgets__Core__TitleBar__constructor_Group')
         .asFunction();
     thisCpp = func(parent == null ? ffi.nullptr : parent.thisCpp);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
@@ -48,7 +48,7 @@ class TitleBar extends Controller {
   bool closeButtonEnabled() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabled')
+            'c_KDDockWidgets__Core__TitleBar__closeButtonEnabled')
         .asFunction();
     return func(thisCpp) != 0;
   } // closeButtonEnabledChanged(bool arg__1)
@@ -56,7 +56,7 @@ class TitleBar extends Controller {
   closeButtonEnabledChanged(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabledChanged_bool')
+            'c_KDDockWidgets__Core__TitleBar__closeButtonEnabledChanged_bool')
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   } // floatButtonToolTip() const
@@ -64,7 +64,7 @@ class TitleBar extends Controller {
   QString floatButtonToolTip() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTip')
+            'c_KDDockWidgets__Core__TitleBar__floatButtonToolTip')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QString.fromCppPointer(result, true);
@@ -73,7 +73,7 @@ class TitleBar extends Controller {
   floatButtonToolTipChanged(String? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTipChanged_QString')
+            'c_KDDockWidgets__Core__TitleBar__floatButtonToolTipChanged_QString')
         .asFunction();
     func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   } // floatButtonVisible() const
@@ -81,7 +81,7 @@ class TitleBar extends Controller {
   bool floatButtonVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__floatButtonVisible')
+            'c_KDDockWidgets__Core__TitleBar__floatButtonVisible')
         .asFunction();
     return func(thisCpp) != 0;
   } // floatButtonVisibleChanged(bool arg__1)
@@ -89,7 +89,7 @@ class TitleBar extends Controller {
   floatButtonVisibleChanged(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__floatButtonVisibleChanged_bool')
+            'c_KDDockWidgets__Core__TitleBar__floatButtonVisibleChanged_bool')
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   } // floatingWindow() const
@@ -97,7 +97,7 @@ class TitleBar extends Controller {
   FloatingWindow floatingWindow() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__floatingWindow')
+            'c_KDDockWidgets__Core__TitleBar__floatingWindow')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return FloatingWindow.fromCppPointer(result, false);
@@ -106,7 +106,7 @@ class TitleBar extends Controller {
   Group group() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__group')
+            'c_KDDockWidgets__Core__TitleBar__group')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Group.fromCppPointer(result, false);
@@ -115,7 +115,7 @@ class TitleBar extends Controller {
   bool hasIcon() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__hasIcon')
+            'c_KDDockWidgets__Core__TitleBar__hasIcon')
         .asFunction();
     return func(thisCpp) != 0;
   } // iconChanged()
@@ -123,7 +123,7 @@ class TitleBar extends Controller {
   iconChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__iconChanged')
+            'c_KDDockWidgets__Core__TitleBar__iconChanged')
         .asFunction();
     func(thisCpp);
   } // init()
@@ -131,7 +131,7 @@ class TitleBar extends Controller {
   init() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__init')
+            'c_KDDockWidgets__Core__TitleBar__init')
         .asFunction();
     func(thisCpp);
   } // isCloseButtonEnabled() const
@@ -139,7 +139,7 @@ class TitleBar extends Controller {
   bool isCloseButtonEnabled() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__isCloseButtonEnabled')
+            'c_KDDockWidgets__Core__TitleBar__isCloseButtonEnabled')
         .asFunction();
     return func(thisCpp) != 0;
   } // isCloseButtonVisible() const
@@ -147,7 +147,7 @@ class TitleBar extends Controller {
   bool isCloseButtonVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__isCloseButtonVisible')
+            'c_KDDockWidgets__Core__TitleBar__isCloseButtonVisible')
         .asFunction();
     return func(thisCpp) != 0;
   } // isFloatButtonVisible() const
@@ -155,7 +155,7 @@ class TitleBar extends Controller {
   bool isFloatButtonVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__isFloatButtonVisible')
+            'c_KDDockWidgets__Core__TitleBar__isFloatButtonVisible')
         .asFunction();
     return func(thisCpp) != 0;
   } // isFloating() const
@@ -163,7 +163,7 @@ class TitleBar extends Controller {
   bool isFloating() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__isFloating')
+            'c_KDDockWidgets__Core__TitleBar__isFloating')
         .asFunction();
     return func(thisCpp) != 0;
   } // isFocused() const
@@ -171,7 +171,7 @@ class TitleBar extends Controller {
   bool isFocused() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__isFocused')
+            'c_KDDockWidgets__Core__TitleBar__isFocused')
         .asFunction();
     return func(thisCpp) != 0;
   } // isFocusedChanged()
@@ -179,7 +179,7 @@ class TitleBar extends Controller {
   isFocusedChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__isFocusedChanged')
+            'c_KDDockWidgets__Core__TitleBar__isFocusedChanged')
         .asFunction();
     func(thisCpp);
   } // isMDI() const
@@ -187,7 +187,7 @@ class TitleBar extends Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1086))
+            cFunctionSymbolName(1076))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -207,7 +207,7 @@ class TitleBar extends Controller {
   bool isOverlayed() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__isOverlayed')
+            'c_KDDockWidgets__Core__TitleBar__isOverlayed')
         .asFunction();
     return func(thisCpp) != 0;
   } // isWindow() const
@@ -215,7 +215,7 @@ class TitleBar extends Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1089))
+            cFunctionSymbolName(1079))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -235,7 +235,7 @@ class TitleBar extends Controller {
   MainWindow mainWindow() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__mainWindow')
+            'c_KDDockWidgets__Core__TitleBar__mainWindow')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return MainWindow.fromCppPointer(result, false);
@@ -244,7 +244,7 @@ class TitleBar extends Controller {
   bool maximizeButtonVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__maximizeButtonVisible')
+            'c_KDDockWidgets__Core__TitleBar__maximizeButtonVisible')
         .asFunction();
     return func(thisCpp) != 0;
   } // minimizeButtonChanged(bool visible, bool enabled)
@@ -252,7 +252,7 @@ class TitleBar extends Controller {
   minimizeButtonChanged(bool visible, bool enabled) {
     final void_Func_voidstar_bool_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool')
+            'c_KDDockWidgets__Core__TitleBar__minimizeButtonChanged_bool_bool')
         .asFunction();
     func(thisCpp, visible ? 1 : 0, enabled ? 1 : 0);
   } // numDockWidgetsChanged()
@@ -260,7 +260,7 @@ class TitleBar extends Controller {
   numDockWidgetsChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__numDockWidgetsChanged')
+            'c_KDDockWidgets__Core__TitleBar__numDockWidgetsChanged')
         .asFunction();
     func(thisCpp);
   } // onAutoHideClicked()
@@ -268,7 +268,7 @@ class TitleBar extends Controller {
   onAutoHideClicked() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__onAutoHideClicked')
+            'c_KDDockWidgets__Core__TitleBar__onAutoHideClicked')
         .asFunction();
     func(thisCpp);
   } // onCloseClicked()
@@ -276,7 +276,7 @@ class TitleBar extends Controller {
   onCloseClicked() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__onCloseClicked')
+            'c_KDDockWidgets__Core__TitleBar__onCloseClicked')
         .asFunction();
     func(thisCpp);
   } // onDoubleClicked()
@@ -284,7 +284,7 @@ class TitleBar extends Controller {
   bool onDoubleClicked() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__onDoubleClicked')
+            'c_KDDockWidgets__Core__TitleBar__onDoubleClicked')
         .asFunction();
     return func(thisCpp) != 0;
   } // onFloatClicked()
@@ -292,7 +292,7 @@ class TitleBar extends Controller {
   onFloatClicked() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__onFloatClicked')
+            'c_KDDockWidgets__Core__TitleBar__onFloatClicked')
         .asFunction();
     func(thisCpp);
   } // onMaximizeClicked()
@@ -300,7 +300,7 @@ class TitleBar extends Controller {
   onMaximizeClicked() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__onMaximizeClicked')
+            'c_KDDockWidgets__Core__TitleBar__onMaximizeClicked')
         .asFunction();
     func(thisCpp);
   } // onMinimizeClicked()
@@ -308,7 +308,7 @@ class TitleBar extends Controller {
   onMinimizeClicked() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__onMinimizeClicked')
+            'c_KDDockWidgets__Core__TitleBar__onMinimizeClicked')
         .asFunction();
     func(thisCpp);
   } // setCloseButtonEnabled(bool arg__1)
@@ -316,7 +316,7 @@ class TitleBar extends Controller {
   setCloseButtonEnabled(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__setCloseButtonEnabled_bool')
+            'c_KDDockWidgets__Core__TitleBar__setCloseButtonEnabled_bool')
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   } // setFloatButtonToolTip(const QString & arg__1)
@@ -324,7 +324,7 @@ class TitleBar extends Controller {
   setFloatButtonToolTip(String? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__setFloatButtonToolTip_QString')
+            'c_KDDockWidgets__Core__TitleBar__setFloatButtonToolTip_QString')
         .asFunction();
     func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   } // setFloatButtonVisible(bool arg__1)
@@ -332,7 +332,7 @@ class TitleBar extends Controller {
   setFloatButtonVisible(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__setFloatButtonVisible_bool')
+            'c_KDDockWidgets__Core__TitleBar__setFloatButtonVisible_bool')
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -352,7 +352,7 @@ class TitleBar extends Controller {
   setTitle(String? title) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__setTitle_QString')
+            'c_KDDockWidgets__Core__TitleBar__setTitle_QString')
         .asFunction();
     func(thisCpp, title?.toNativeUtf8() ?? ffi.nullptr);
   } // singleDockWidget() const
@@ -360,7 +360,7 @@ class TitleBar extends Controller {
   DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1111))
+            cFunctionSymbolName(1101))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DockWidget.fromCppPointer(result, false);
@@ -382,7 +382,7 @@ class TitleBar extends Controller {
   bool supportsAutoHideButton() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__supportsAutoHideButton')
+            'c_KDDockWidgets__Core__TitleBar__supportsAutoHideButton')
         .asFunction();
     return func(thisCpp) != 0;
   } // supportsFloatingButton() const
@@ -390,7 +390,7 @@ class TitleBar extends Controller {
   bool supportsFloatingButton() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__supportsFloatingButton')
+            'c_KDDockWidgets__Core__TitleBar__supportsFloatingButton')
         .asFunction();
     return func(thisCpp) != 0;
   } // supportsMaximizeButton() const
@@ -398,7 +398,7 @@ class TitleBar extends Controller {
   bool supportsMaximizeButton() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__supportsMaximizeButton')
+            'c_KDDockWidgets__Core__TitleBar__supportsMaximizeButton')
         .asFunction();
     return func(thisCpp) != 0;
   } // supportsMinimizeButton() const
@@ -406,7 +406,7 @@ class TitleBar extends Controller {
   bool supportsMinimizeButton() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__supportsMinimizeButton')
+            'c_KDDockWidgets__Core__TitleBar__supportsMinimizeButton')
         .asFunction();
     return func(thisCpp) != 0;
   } // tabBar() const
@@ -414,7 +414,7 @@ class TitleBar extends Controller {
   TabBar tabBar() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__tabBar')
+            'c_KDDockWidgets__Core__TitleBar__tabBar')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return TabBar.fromCppPointer(result, false);
@@ -423,7 +423,7 @@ class TitleBar extends Controller {
   QString title() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__title')
+            'c_KDDockWidgets__Core__TitleBar__title')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QString.fromCppPointer(result, true);
@@ -432,7 +432,7 @@ class TitleBar extends Controller {
   bool titleBarIsFocusable() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__titleBarIsFocusable')
+            'c_KDDockWidgets__Core__TitleBar__titleBarIsFocusable')
         .asFunction();
     return func(thisCpp) != 0;
   } // titleChanged()
@@ -440,7 +440,7 @@ class TitleBar extends Controller {
   titleChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__titleChanged')
+            'c_KDDockWidgets__Core__TitleBar__titleChanged')
         .asFunction();
     func(thisCpp);
   } // toggleMaximized()
@@ -448,7 +448,7 @@ class TitleBar extends Controller {
   toggleMaximized() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__toggleMaximized')
+            'c_KDDockWidgets__Core__TitleBar__toggleMaximized')
         .asFunction();
     func(thisCpp);
   }
@@ -457,7 +457,7 @@ class TitleBar extends Controller {
       QString tr(String? s, String? c, int n) {
     final voidstar_Func_string_string_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__Controllers__TitleBar__tr_char_char_int')
+            'c_static_KDDockWidgets__Core__TitleBar__tr_char_char_int')
         .asFunction();
     ffi.Pointer<void> result = func(
         s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
@@ -467,7 +467,7 @@ class TitleBar extends Controller {
   updateAutoHideButton() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__updateAutoHideButton')
+            'c_KDDockWidgets__Core__TitleBar__updateAutoHideButton')
         .asFunction();
     func(thisCpp);
   } // updateButtons()
@@ -475,7 +475,7 @@ class TitleBar extends Controller {
   updateButtons() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__updateButtons')
+            'c_KDDockWidgets__Core__TitleBar__updateButtons')
         .asFunction();
     func(thisCpp);
   } // updateCloseButton()
@@ -483,7 +483,7 @@ class TitleBar extends Controller {
   updateCloseButton() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__updateCloseButton')
+            'c_KDDockWidgets__Core__TitleBar__updateCloseButton')
         .asFunction();
     func(thisCpp);
   } // updateFloatButton()
@@ -491,7 +491,7 @@ class TitleBar extends Controller {
   updateFloatButton() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__updateFloatButton')
+            'c_KDDockWidgets__Core__TitleBar__updateFloatButton')
         .asFunction();
     func(thisCpp);
   } // updateMaximizeButton()
@@ -499,7 +499,7 @@ class TitleBar extends Controller {
   updateMaximizeButton() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__updateMaximizeButton')
+            'c_KDDockWidgets__Core__TitleBar__updateMaximizeButton')
         .asFunction();
     func(thisCpp);
   }
@@ -507,34 +507,34 @@ class TitleBar extends Controller {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__destructor')
+            'c_KDDockWidgets__Core__TitleBar__destructor')
         .asFunction();
     func(thisCpp);
   }
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1086:
-        return "c_KDDockWidgets__Controllers__TitleBar__isMDI";
-      case 1089:
-        return "c_KDDockWidgets__Controllers__TitleBar__isWindow";
-      case 881:
-        return "c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View";
-      case 1111:
-        return "c_KDDockWidgets__Controllers__TitleBar__singleDockWidget";
+      case 1076:
+        return "c_KDDockWidgets__Core__TitleBar__isMDI";
+      case 1079:
+        return "c_KDDockWidgets__Core__TitleBar__isWindow";
+      case 871:
+        return "c_KDDockWidgets__Core__TitleBar__setParentView_impl_View";
+      case 1101:
+        return "c_KDDockWidgets__Core__TitleBar__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1086:
+      case 1076:
         return "isMDI";
-      case 1089:
+      case 1079:
         return "isWindow";
-      case 881:
+      case 871:
         return "setParentView_impl";
-      case 1111:
+      case 1101:
         return "singleDockWidget";
     }
     throw Error();
@@ -544,22 +544,22 @@ class TitleBar extends Controller {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__Controllers__TitleBar__registerVirtualMethodCallback')
+            'c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1086 = 0;
-    final callback1086 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        TitleBar.isMDI_calledFromC, callbackExcept1086);
-    registerCallback(thisCpp, callback1086, 1086);
-    const callbackExcept1089 = 0;
-    final callback1089 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        TitleBar.isWindow_calledFromC, callbackExcept1089);
-    registerCallback(thisCpp, callback1089, 1089);
-    final callback881 =
+    const callbackExcept1076 = 0;
+    final callback1076 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        TitleBar.isMDI_calledFromC, callbackExcept1076);
+    registerCallback(thisCpp, callback1076, 1076);
+    const callbackExcept1079 = 0;
+    final callback1079 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        TitleBar.isWindow_calledFromC, callbackExcept1079);
+    registerCallback(thisCpp, callback1079, 1079);
+    final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback881, 881);
-    final callback1111 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback871, 871);
+    final callback1101 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         TitleBar.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1111, 1111);
+    registerCallback(thisCpp, callback1101, 1101);
   }
 }

@@ -11,8 +11,8 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <ViewFactory.h>
 #include <qstring.h>
-#include <View.h>
-#include <Group.h>
+#include <core/View.h>
+#include <core/Group.h>
 #include <TitleBar.h>
 #include <Stack.h>
 #include <TabBar.h>
@@ -28,7 +28,7 @@
 #include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
-class ViewFactory_wrapper : public ::KDDockWidgets::ViewFactory
+class ViewFactory_wrapper : public ::KDDockWidgets::Core::ViewFactory
 {
 public:
     ~ViewFactory_wrapper();
@@ -81,33 +81,33 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::ViewFactory::ViewFactory()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__constructor();
-// KDDockWidgets::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
-// KDDockWidgets::ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int options_, int layoutSaverOptions_, int windowFlags);
-// KDDockWidgets::ViewFactory::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory::createFloatingWindow(KDDockWidgets::Core::FloatingWindow * controller, KDDockWidgets::Core::MainWindow * parent, Qt::WindowFlags windowFlags) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags(void *thisObj, void *controller_, void *parent_, int windowFlags);
-// KDDockWidgets::ViewFactory::createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory::createRubberBand(KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
-// KDDockWidgets::ViewFactory::createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createSeparator_Separator_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory::createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createSideBar_SideBar_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory::createStack(KDDockWidgets::Core::Stack * stack, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createStack_Stack_View(void *thisObj, void *stack_, void *parent_);
-// KDDockWidgets::ViewFactory::createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_);
-// KDDockWidgets::ViewFactory::createTitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory__createTitleBar_TitleBar_View(void *thisObj, void *controller_, void *parent_);
-// KDDockWidgets::ViewFactory::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__ViewFactory__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__ViewFactory_Finalizer(void *, void *cppObj, void *);
+// KDDockWidgets::Core::ViewFactory::ViewFactory()
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__constructor();
+// KDDockWidgets::Core::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int options_, int layoutSaverOptions_, int windowFlags);
+// KDDockWidgets::Core::ViewFactory::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::Core::ViewFactory::createFloatingWindow(KDDockWidgets::Core::FloatingWindow * controller, KDDockWidgets::Core::MainWindow * parent, Qt::WindowFlags windowFlags) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags(void *thisObj, void *controller_, void *parent_, int windowFlags);
+// KDDockWidgets::Core::ViewFactory::createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::Core::ViewFactory::createRubberBand(KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createRubberBand_View(void *thisObj, void *parent_);
+// KDDockWidgets::Core::ViewFactory::createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createSeparator_Separator_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::Core::ViewFactory::createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createSideBar_SideBar_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::Core::ViewFactory::createStack(KDDockWidgets::Core::Stack * stack, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createStack_Stack_View(void *thisObj, void *stack_, void *parent_);
+// KDDockWidgets::Core::ViewFactory::createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_);
+// KDDockWidgets::Core::ViewFactory::createTitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createTitleBar_TitleBar_View(void *thisObj, void *controller_, void *parent_);
+// KDDockWidgets::Core::ViewFactory::tr(const char * s, const char * c, int n)
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ViewFactory__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ViewFactory_Finalizer(void *, void *cppObj, void *);
 }

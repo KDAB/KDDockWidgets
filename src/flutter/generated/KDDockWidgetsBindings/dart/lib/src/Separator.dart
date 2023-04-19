@@ -30,7 +30,7 @@ class Separator extends Controller {
   Separator(View? host) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__constructor_View')
+            'c_KDDockWidgets__Core__Separator__constructor_View')
         .asFunction();
     thisCpp = func(host == null ? ffi.nullptr : host.thisCpp);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
@@ -39,7 +39,7 @@ class Separator extends Controller {
   bool isBeingDragged() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__isBeingDragged')
+            'c_KDDockWidgets__Core__Separator__isBeingDragged')
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -48,7 +48,7 @@ class Separator extends Controller {
       bool isResizing() {
     final bool_Func_void func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_void_FFI>>(
-            'c_static_KDDockWidgets__Controllers__Separator__isResizing')
+            'c_static_KDDockWidgets__Core__Separator__isResizing')
         .asFunction();
     return func() != 0;
   } // isVertical() const
@@ -56,7 +56,7 @@ class Separator extends Controller {
   bool isVertical() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__isVertical')
+            'c_KDDockWidgets__Core__Separator__isVertical')
         .asFunction();
     return func(thisCpp) != 0;
   } // move(int p)
@@ -64,7 +64,7 @@ class Separator extends Controller {
   move(int p) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__move_int')
+            'c_KDDockWidgets__Core__Separator__move_int')
         .asFunction();
     func(thisCpp, p);
   }
@@ -73,7 +73,7 @@ class Separator extends Controller {
       int numSeparators() {
     final int_Func_void func = _dylib
         .lookup<ffi.NativeFunction<int_Func_void_FFI>>(
-            'c_static_KDDockWidgets__Controllers__Separator__numSeparators')
+            'c_static_KDDockWidgets__Core__Separator__numSeparators')
         .asFunction();
     return func();
   } // onMouseDoubleClick()
@@ -81,7 +81,7 @@ class Separator extends Controller {
   onMouseDoubleClick() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__onMouseDoubleClick')
+            'c_KDDockWidgets__Core__Separator__onMouseDoubleClick')
         .asFunction();
     func(thisCpp);
   } // onMouseMove(QPoint pos)
@@ -89,7 +89,7 @@ class Separator extends Controller {
   onMouseMove(QPoint pos) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__onMouseMove_QPoint')
+            'c_KDDockWidgets__Core__Separator__onMouseMove_QPoint')
         .asFunction();
     func(thisCpp, pos == null ? ffi.nullptr : pos.thisCpp);
   } // onMousePress()
@@ -97,7 +97,7 @@ class Separator extends Controller {
   onMousePress() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__onMousePress')
+            'c_KDDockWidgets__Core__Separator__onMousePress')
         .asFunction();
     func(thisCpp);
   } // onMouseReleased()
@@ -105,7 +105,7 @@ class Separator extends Controller {
   onMouseReleased() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__onMouseReleased')
+            'c_KDDockWidgets__Core__Separator__onMouseReleased')
         .asFunction();
     func(thisCpp);
   } // position() const
@@ -113,7 +113,7 @@ class Separator extends Controller {
   int position() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__position')
+            'c_KDDockWidgets__Core__Separator__position')
         .asFunction();
     return func(thisCpp);
   } // setGeometry(QRect r)
@@ -121,7 +121,7 @@ class Separator extends Controller {
   setGeometry(QRect r) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__setGeometry_QRect')
+            'c_KDDockWidgets__Core__Separator__setGeometry_QRect')
         .asFunction();
     func(thisCpp, r == null ? ffi.nullptr : r.thisCpp);
   } // setGeometry(int pos, int pos2, int length)
@@ -131,7 +131,7 @@ class Separator extends Controller {
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__setGeometry_int_int_int')
+            'c_KDDockWidgets__Core__Separator__setGeometry_int_int_int')
         .asFunction();
     func(thisCpp, pos, pos2, length);
   } // setLazyPosition(int arg__1)
@@ -139,7 +139,7 @@ class Separator extends Controller {
   setLazyPosition(int arg__1) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__setLazyPosition_int')
+            'c_KDDockWidgets__Core__Separator__setLazyPosition_int')
         .asFunction();
     func(thisCpp, arg__1);
   }
@@ -159,7 +159,7 @@ class Separator extends Controller {
   bool usesLazyResize() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__usesLazyResize')
+            'c_KDDockWidgets__Core__Separator__usesLazyResize')
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -167,22 +167,22 @@ class Separator extends Controller {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__destructor')
+            'c_KDDockWidgets__Core__Separator__destructor')
         .asFunction();
     func(thisCpp);
   }
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 881:
-        return "c_KDDockWidgets__Controllers__Separator__setParentView_impl_View";
+      case 871:
+        return "c_KDDockWidgets__Core__Separator__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 881:
+      case 871:
         return "setParentView_impl";
     }
     throw Error();
@@ -192,11 +192,11 @@ class Separator extends Controller {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__Controllers__Separator__registerVirtualMethodCallback')
+            'c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback')
         .asFunction();
-    final callback881 =
+    final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback881, 881);
+    registerCallback(thisCpp, callback871, 871);
   }
 }

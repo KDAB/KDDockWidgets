@@ -27,7 +27,7 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-Layout_wrapper::Layout_wrapper(KDDockWidgets::Type arg__1, KDDockWidgets::Core::View *arg__2)
+Layout_wrapper::Layout_wrapper(KDDockWidgets::Core::ViewType arg__1, KDDockWidgets::Core::View *arg__2)
     : ::KDDockWidgets::Core::Layout(arg__1, arg__2)
 {
 }
@@ -47,7 +47,7 @@ bool Layout_wrapper::containsFrame(const KDDockWidgets::Core::Group *arg__1) con
 {
     return ::KDDockWidgets::Core::Layout::containsFrame(arg__1);
 }
-bool Layout_wrapper::containsItem(const Core::Item *arg__1) const
+bool Layout_wrapper::containsItem(const KDDockWidgets::Core::Item *arg__1) const
 {
     return ::KDDockWidgets::Core::Layout::containsItem(arg__1);
 }
@@ -75,7 +75,7 @@ bool Layout_wrapper::isInMainWindow(bool honourNesting) const
 {
     return ::KDDockWidgets::Core::Layout::isInMainWindow(honourNesting);
 }
-Core::Item *Layout_wrapper::itemForFrame(const KDDockWidgets::Core::Group *group) const
+KDDockWidgets::Core::Item *Layout_wrapper::itemForFrame(const KDDockWidgets::Core::Group *group) const
 {
     return ::KDDockWidgets::Core::Layout::itemForFrame(group);
 }
@@ -107,11 +107,11 @@ int Layout_wrapper::placeholderCount() const
 {
     return ::KDDockWidgets::Core::Layout::placeholderCount();
 }
-void Layout_wrapper::removeItem(Core::Item *item)
+void Layout_wrapper::removeItem(KDDockWidgets::Core::Item *item)
 {
     ::KDDockWidgets::Core::Layout::removeItem(item);
 }
-void Layout_wrapper::restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, Core::Item *arg__2, int tabIndex)
+void Layout_wrapper::restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, KDDockWidgets::Core::Item *arg__2, int tabIndex)
 {
     ::KDDockWidgets::Core::Layout::restorePlaceholder(dw, arg__2, tabIndex);
 }
@@ -166,179 +166,179 @@ static KDDockWidgetsBindings_wrappersNS::Layout_wrapper *fromWrapperPtr(void *pt
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Controllers__Layout_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__Layout_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper *>(cppObj);
 }
-void *c_KDDockWidgets__Controllers__Layout__constructor_Type_View(int arg__1, void *arg__2_)
+void *c_KDDockWidgets__Core__Layout__constructor_ViewType_View(int arg__1, void *arg__2_)
 {
     auto arg__2 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__2_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::Layout_wrapper(static_cast<KDDockWidgets::Type>(arg__1), arg__2);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::Layout_wrapper(static_cast<KDDockWidgets::Core::ViewType>(arg__1), arg__2);
     return reinterpret_cast<void *>(ptr);
 }
 // asDropArea() const
-void *c_KDDockWidgets__Controllers__Layout__asDropArea(void *thisObj)
+void *c_KDDockWidgets__Core__Layout__asDropArea(void *thisObj)
 {
     return fromPtr(thisObj)->asDropArea();
 }
 // checkSanity() const
-bool c_KDDockWidgets__Controllers__Layout__checkSanity(void *thisObj)
+bool c_KDDockWidgets__Core__Layout__checkSanity(void *thisObj)
 {
     return fromPtr(thisObj)->checkSanity();
 }
 // clearLayout()
-void c_KDDockWidgets__Controllers__Layout__clearLayout(void *thisObj)
+void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj)
 {
     fromPtr(thisObj)->clearLayout();
 }
 // containsFrame(const KDDockWidgets::Core::Group * arg__1) const
-bool c_KDDockWidgets__Controllers__Layout__containsFrame_Group(void *thisObj, void *arg__1_)
+bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
     return fromPtr(thisObj)->containsFrame(arg__1);
 }
-// containsItem(const Core::Item * arg__1) const
-bool c_KDDockWidgets__Controllers__Layout__containsItem_Item(void *thisObj, void *arg__1_)
+// containsItem(const KDDockWidgets::Core::Item * arg__1) const
+bool c_KDDockWidgets__Core__Layout__containsItem_Item(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<Core::Item *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Item *>(arg__1_);
     return fromPtr(thisObj)->containsItem(arg__1);
 }
 // count() const
-int c_KDDockWidgets__Controllers__Layout__count(void *thisObj)
+int c_KDDockWidgets__Core__Layout__count(void *thisObj)
 {
     return fromPtr(thisObj)->count();
 }
 // dumpLayout() const
-void c_KDDockWidgets__Controllers__Layout__dumpLayout(void *thisObj)
+void c_KDDockWidgets__Core__Layout__dumpLayout(void *thisObj)
 {
     fromPtr(thisObj)->dumpLayout();
 }
 // floatingWindow() const
-void *c_KDDockWidgets__Controllers__Layout__floatingWindow(void *thisObj)
+void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj)
 {
     return fromPtr(thisObj)->floatingWindow();
 }
 // groups() const
-void *c_KDDockWidgets__Controllers__Layout__groups(void *thisObj)
+void *c_KDDockWidgets__Core__Layout__groups(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Core::Group *>> { fromPtr(thisObj)->groups() };
 }
 // groupsFrom(KDDockWidgets::Core::View * groupOrMultiSplitter) const
-void *c_KDDockWidgets__Controllers__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_)
+void *c_KDDockWidgets__Core__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_)
 {
     auto groupOrMultiSplitter = reinterpret_cast<KDDockWidgets::Core::View *>(groupOrMultiSplitter_);
     return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Core::Group *>> { fromWrapperPtr(thisObj)->groupsFrom(groupOrMultiSplitter) };
 }
 // isInMainWindow(bool honourNesting) const
-bool c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting)
+bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting)
 {
     return fromPtr(thisObj)->isInMainWindow(honourNesting);
 }
 // itemForFrame(const KDDockWidgets::Core::Group * group) const
-void *c_KDDockWidgets__Controllers__Layout__itemForFrame_Group(void *thisObj, void *group_)
+void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_)
 {
     auto group = reinterpret_cast<KDDockWidgets::Core::Group *>(group_);
     return fromPtr(thisObj)->itemForFrame(group);
 }
 // layoutHeight() const
-int c_KDDockWidgets__Controllers__Layout__layoutHeight(void *thisObj)
+int c_KDDockWidgets__Core__Layout__layoutHeight(void *thisObj)
 {
     return fromPtr(thisObj)->layoutHeight();
 }
 // layoutMaximumSizeHint() const
-void *c_KDDockWidgets__Controllers__Layout__layoutMaximumSizeHint(void *thisObj)
+void *c_KDDockWidgets__Core__Layout__layoutMaximumSizeHint(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->layoutMaximumSizeHint() };
 }
 // layoutMinimumSize() const
-void *c_KDDockWidgets__Controllers__Layout__layoutMinimumSize(void *thisObj)
+void *c_KDDockWidgets__Core__Layout__layoutMinimumSize(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->layoutMinimumSize() };
 }
 // layoutSize() const
-void *c_KDDockWidgets__Controllers__Layout__layoutSize(void *thisObj)
+void *c_KDDockWidgets__Core__Layout__layoutSize(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->layoutSize() };
 }
 // layoutWidth() const
-int c_KDDockWidgets__Controllers__Layout__layoutWidth(void *thisObj)
+int c_KDDockWidgets__Core__Layout__layoutWidth(void *thisObj)
 {
     return fromPtr(thisObj)->layoutWidth();
 }
 // mainWindow(bool honourNesting) const
-void *c_KDDockWidgets__Controllers__Layout__mainWindow_bool(void *thisObj, bool honourNesting)
+void *c_KDDockWidgets__Core__Layout__mainWindow_bool(void *thisObj, bool honourNesting)
 {
     return fromPtr(thisObj)->mainWindow(honourNesting);
 }
 // placeholderCount() const
-int c_KDDockWidgets__Controllers__Layout__placeholderCount(void *thisObj)
+int c_KDDockWidgets__Core__Layout__placeholderCount(void *thisObj)
 {
     return fromPtr(thisObj)->placeholderCount();
 }
-// removeItem(Core::Item * item)
-void c_KDDockWidgets__Controllers__Layout__removeItem_Item(void *thisObj, void *item_)
+// removeItem(KDDockWidgets::Core::Item * item)
+void c_KDDockWidgets__Core__Layout__removeItem_Item(void *thisObj, void *item_)
 {
-    auto item = reinterpret_cast<Core::Item *>(item_);
+    auto item = reinterpret_cast<KDDockWidgets::Core::Item *>(item_);
     fromPtr(thisObj)->removeItem(item);
 }
-// restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Core::Item * arg__2, int tabIndex)
-void c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex)
+// restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Core::Item * arg__2, int tabIndex)
+void c_KDDockWidgets__Core__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex)
 {
     auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
-    auto arg__2 = reinterpret_cast<Core::Item *>(arg__2_);
+    auto arg__2 = reinterpret_cast<KDDockWidgets::Core::Item *>(arg__2_);
     fromPtr(thisObj)->restorePlaceholder(dw, arg__2, tabIndex);
 }
 // setLayoutMinimumSize(QSize arg__1)
-void c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromWrapperPtr(thisObj)->setLayoutMinimumSize(arg__1);
 }
 // setLayoutSize(QSize arg__1)
-void c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromPtr(thisObj)->setLayoutSize(arg__1);
 }
 // setParentView_impl(KDDockWidgets::Core::View * parent)
-void c_KDDockWidgets__Controllers__Layout__setParentView_impl_View(void *thisObj, void *parent_)
+void c_KDDockWidgets__Core__Layout__setParentView_impl_View(void *thisObj, void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded) const
-void c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group(void *thisObj, void *groupsBeingAdded_)
+void c_KDDockWidgets__Core__Layout__unrefOldPlaceholders_QList_Group(void *thisObj, void *groupsBeingAdded_)
 {
     assert(groupsBeingAdded_);
     auto &groupsBeingAdded = *reinterpret_cast<QList<KDDockWidgets::Core::Group *> *>(groupsBeingAdded_);
     fromWrapperPtr(thisObj)->unrefOldPlaceholders(groupsBeingAdded);
 }
 // updateSizeConstraints()
-void c_KDDockWidgets__Controllers__Layout__updateSizeConstraints(void *thisObj)
+void c_KDDockWidgets__Core__Layout__updateSizeConstraints(void *thisObj)
 {
     fromPtr(thisObj)->updateSizeConstraints();
 }
 // viewAboutToBeDeleted()
-void c_KDDockWidgets__Controllers__Layout__viewAboutToBeDeleted(void *thisObj)
+void c_KDDockWidgets__Core__Layout__viewAboutToBeDeleted(void *thisObj)
 {
     fromPtr(thisObj)->viewAboutToBeDeleted();
 }
 // visibleCount() const
-int c_KDDockWidgets__Controllers__Layout__visibleCount(void *thisObj)
+int c_KDDockWidgets__Core__Layout__visibleCount(void *thisObj)
 {
     return fromPtr(thisObj)->visibleCount();
 }
-void c_KDDockWidgets__Controllers__Layout__destructor(void *thisObj)
+void c_KDDockWidgets__Core__Layout__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 881:
+    case 871:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

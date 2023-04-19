@@ -265,268 +265,268 @@ static KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper *fromWrapperPtr(void *
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Controllers__TitleBar_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__TitleBar_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper *>(cppObj);
 }
-void *c_KDDockWidgets__Controllers__TitleBar__constructor_FloatingWindow(void *parent_)
+void *c_KDDockWidgets__Core__TitleBar__constructor_FloatingWindow(void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Core::FloatingWindow *>(parent_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper(parent);
     return reinterpret_cast<void *>(ptr);
 }
-void *c_KDDockWidgets__Controllers__TitleBar__constructor_Group(void *parent_)
+void *c_KDDockWidgets__Core__TitleBar__constructor_Group(void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Core::Group *>(parent_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper(parent);
     return reinterpret_cast<void *>(ptr);
 }
 // closeButtonEnabled() const
-bool c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabled(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__closeButtonEnabled(void *thisObj)
 {
     return fromPtr(thisObj)->closeButtonEnabled();
 }
 // closeButtonEnabledChanged(bool arg__1)
-void c_KDDockWidgets__Controllers__TitleBar__closeButtonEnabledChanged_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Core__TitleBar__closeButtonEnabledChanged_bool(void *thisObj, bool arg__1)
 {
     fromPtr(thisObj)->closeButtonEnabledChanged(arg__1);
 }
 // floatButtonToolTip() const
-void *c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTip(void *thisObj)
+void *c_KDDockWidgets__Core__TitleBar__floatButtonToolTip(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->floatButtonToolTip() };
 }
 // floatButtonToolTipChanged(const QString & arg__1)
-void c_KDDockWidgets__Controllers__TitleBar__floatButtonToolTipChanged_QString(void *thisObj, const char *arg__1_)
+void c_KDDockWidgets__Core__TitleBar__floatButtonToolTipChanged_QString(void *thisObj, const char *arg__1_)
 {
     const auto arg__1 = QString::fromUtf8(arg__1_);
     fromPtr(thisObj)->floatButtonToolTipChanged(arg__1);
 }
 // floatButtonVisible() const
-bool c_KDDockWidgets__Controllers__TitleBar__floatButtonVisible(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__floatButtonVisible(void *thisObj)
 {
     return fromPtr(thisObj)->floatButtonVisible();
 }
 // floatButtonVisibleChanged(bool arg__1)
-void c_KDDockWidgets__Controllers__TitleBar__floatButtonVisibleChanged_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Core__TitleBar__floatButtonVisibleChanged_bool(void *thisObj, bool arg__1)
 {
     fromPtr(thisObj)->floatButtonVisibleChanged(arg__1);
 }
 // floatingWindow() const
-void *c_KDDockWidgets__Controllers__TitleBar__floatingWindow(void *thisObj)
+void *c_KDDockWidgets__Core__TitleBar__floatingWindow(void *thisObj)
 {
     return fromPtr(thisObj)->floatingWindow();
 }
 // group() const
-void *c_KDDockWidgets__Controllers__TitleBar__group(void *thisObj)
+void *c_KDDockWidgets__Core__TitleBar__group(void *thisObj)
 {
     return fromPtr(thisObj)->group();
 }
 // hasIcon() const
-bool c_KDDockWidgets__Controllers__TitleBar__hasIcon(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__hasIcon(void *thisObj)
 {
     return fromPtr(thisObj)->hasIcon();
 }
 // iconChanged()
-void c_KDDockWidgets__Controllers__TitleBar__iconChanged(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__iconChanged(void *thisObj)
 {
     fromPtr(thisObj)->iconChanged();
 }
 // isCloseButtonEnabled() const
-bool c_KDDockWidgets__Controllers__TitleBar__isCloseButtonEnabled(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__isCloseButtonEnabled(void *thisObj)
 {
     return fromPtr(thisObj)->isCloseButtonEnabled();
 }
 // isCloseButtonVisible() const
-bool c_KDDockWidgets__Controllers__TitleBar__isCloseButtonVisible(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__isCloseButtonVisible(void *thisObj)
 {
     return fromPtr(thisObj)->isCloseButtonVisible();
 }
 // isFloatButtonVisible() const
-bool c_KDDockWidgets__Controllers__TitleBar__isFloatButtonVisible(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__isFloatButtonVisible(void *thisObj)
 {
     return fromPtr(thisObj)->isFloatButtonVisible();
 }
 // isFloating() const
-bool c_KDDockWidgets__Controllers__TitleBar__isFloating(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__isFloating(void *thisObj)
 {
     return fromPtr(thisObj)->isFloating();
 }
 // isFocused() const
-bool c_KDDockWidgets__Controllers__TitleBar__isFocused(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__isFocused(void *thisObj)
 {
     return fromPtr(thisObj)->isFocused();
 }
 // isFocusedChanged()
-void c_KDDockWidgets__Controllers__TitleBar__isFocusedChanged(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__isFocusedChanged(void *thisObj)
 {
     fromPtr(thisObj)->isFocusedChanged();
 }
 // isMDI() const
-bool c_KDDockWidgets__Controllers__TitleBar__isMDI(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__isMDI(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
 }
 // isOverlayed() const
-bool c_KDDockWidgets__Controllers__TitleBar__isOverlayed(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__isOverlayed(void *thisObj)
 {
     return fromWrapperPtr(thisObj)->isOverlayed();
 }
 // isWindow() const
-bool c_KDDockWidgets__Controllers__TitleBar__isWindow(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__isWindow(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
 }
 // mainWindow() const
-void *c_KDDockWidgets__Controllers__TitleBar__mainWindow(void *thisObj)
+void *c_KDDockWidgets__Core__TitleBar__mainWindow(void *thisObj)
 {
     return fromPtr(thisObj)->mainWindow();
 }
 // maximizeButtonVisible() const
-bool c_KDDockWidgets__Controllers__TitleBar__maximizeButtonVisible(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__maximizeButtonVisible(void *thisObj)
 {
     return fromPtr(thisObj)->maximizeButtonVisible();
 }
 // minimizeButtonChanged(bool visible, bool enabled)
-void c_KDDockWidgets__Controllers__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj, bool visible, bool enabled)
+void c_KDDockWidgets__Core__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj, bool visible, bool enabled)
 {
     fromPtr(thisObj)->minimizeButtonChanged(visible, enabled);
 }
 // numDockWidgetsChanged()
-void c_KDDockWidgets__Controllers__TitleBar__numDockWidgetsChanged(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__numDockWidgetsChanged(void *thisObj)
 {
     fromPtr(thisObj)->numDockWidgetsChanged();
 }
 // onAutoHideClicked()
-void c_KDDockWidgets__Controllers__TitleBar__onAutoHideClicked(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__onAutoHideClicked(void *thisObj)
 {
     fromPtr(thisObj)->onAutoHideClicked();
 }
 // onCloseClicked()
-void c_KDDockWidgets__Controllers__TitleBar__onCloseClicked(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__onCloseClicked(void *thisObj)
 {
     fromPtr(thisObj)->onCloseClicked();
 }
 // onDoubleClicked()
-bool c_KDDockWidgets__Controllers__TitleBar__onDoubleClicked(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__onDoubleClicked(void *thisObj)
 {
     return fromPtr(thisObj)->onDoubleClicked();
 }
 // onFloatClicked()
-void c_KDDockWidgets__Controllers__TitleBar__onFloatClicked(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__onFloatClicked(void *thisObj)
 {
     fromPtr(thisObj)->onFloatClicked();
 }
 // onMaximizeClicked()
-void c_KDDockWidgets__Controllers__TitleBar__onMaximizeClicked(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__onMaximizeClicked(void *thisObj)
 {
     fromPtr(thisObj)->onMaximizeClicked();
 }
 // onMinimizeClicked()
-void c_KDDockWidgets__Controllers__TitleBar__onMinimizeClicked(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__onMinimizeClicked(void *thisObj)
 {
     fromPtr(thisObj)->onMinimizeClicked();
 }
 // setCloseButtonEnabled(bool arg__1)
-void c_KDDockWidgets__Controllers__TitleBar__setCloseButtonEnabled_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Core__TitleBar__setCloseButtonEnabled_bool(void *thisObj, bool arg__1)
 {
     fromPtr(thisObj)->setCloseButtonEnabled(arg__1);
 }
 // setFloatButtonVisible(bool arg__1)
-void c_KDDockWidgets__Controllers__TitleBar__setFloatButtonVisible_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Core__TitleBar__setFloatButtonVisible_bool(void *thisObj, bool arg__1)
 {
     fromPtr(thisObj)->setFloatButtonVisible(arg__1);
 }
 // setParentView_impl(KDDockWidgets::Core::View * parent)
-void c_KDDockWidgets__Controllers__TitleBar__setParentView_impl_View(void *thisObj, void *parent_)
+void c_KDDockWidgets__Core__TitleBar__setParentView_impl_View(void *thisObj, void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setTitle(const QString & title)
-void c_KDDockWidgets__Controllers__TitleBar__setTitle_QString(void *thisObj, const char *title_)
+void c_KDDockWidgets__Core__TitleBar__setTitle_QString(void *thisObj, const char *title_)
 {
     const auto title = QString::fromUtf8(title_);
     fromPtr(thisObj)->setTitle(title);
 }
 // singleDockWidget() const
-void *c_KDDockWidgets__Controllers__TitleBar__singleDockWidget(void *thisObj)
+void *c_KDDockWidgets__Core__TitleBar__singleDockWidget(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->singleDockWidget_nocallback();} else {    return targetPtr->singleDockWidget();} }();
 }
 // supportsAutoHideButton() const
-bool c_KDDockWidgets__Controllers__TitleBar__supportsAutoHideButton(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__supportsAutoHideButton(void *thisObj)
 {
     return fromPtr(thisObj)->supportsAutoHideButton();
 }
 // supportsFloatingButton() const
-bool c_KDDockWidgets__Controllers__TitleBar__supportsFloatingButton(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__supportsFloatingButton(void *thisObj)
 {
     return fromPtr(thisObj)->supportsFloatingButton();
 }
 // supportsMaximizeButton() const
-bool c_KDDockWidgets__Controllers__TitleBar__supportsMaximizeButton(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__supportsMaximizeButton(void *thisObj)
 {
     return fromPtr(thisObj)->supportsMaximizeButton();
 }
 // supportsMinimizeButton() const
-bool c_KDDockWidgets__Controllers__TitleBar__supportsMinimizeButton(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__supportsMinimizeButton(void *thisObj)
 {
     return fromPtr(thisObj)->supportsMinimizeButton();
 }
 // tabBar() const
-void *c_KDDockWidgets__Controllers__TitleBar__tabBar(void *thisObj)
+void *c_KDDockWidgets__Core__TitleBar__tabBar(void *thisObj)
 {
     return fromPtr(thisObj)->tabBar();
 }
 // title() const
-void *c_KDDockWidgets__Controllers__TitleBar__title(void *thisObj)
+void *c_KDDockWidgets__Core__TitleBar__title(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->title() };
 }
 // titleBarIsFocusable() const
-bool c_KDDockWidgets__Controllers__TitleBar__titleBarIsFocusable(void *thisObj)
+bool c_KDDockWidgets__Core__TitleBar__titleBarIsFocusable(void *thisObj)
 {
     return fromPtr(thisObj)->titleBarIsFocusable();
 }
 // titleChanged()
-void c_KDDockWidgets__Controllers__TitleBar__titleChanged(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__titleChanged(void *thisObj)
 {
     fromPtr(thisObj)->titleChanged();
 }
 // toggleMaximized()
-void c_KDDockWidgets__Controllers__TitleBar__toggleMaximized(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__toggleMaximized(void *thisObj)
 {
     fromPtr(thisObj)->toggleMaximized();
 }
 // tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Controllers__TitleBar__tr_char_char_int(const char *s, const char *c, int n)
+void *c_static_KDDockWidgets__Core__TitleBar__tr_char_char_int(const char *s, const char *c, int n)
 {
     return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::tr(s, c, n) };
 }
 // updateButtons()
-void c_KDDockWidgets__Controllers__TitleBar__updateButtons(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__updateButtons(void *thisObj)
 {
     fromPtr(thisObj)->updateButtons();
 }
-void c_KDDockWidgets__Controllers__TitleBar__destructor(void *thisObj)
+void c_KDDockWidgets__Core__TitleBar__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__TitleBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1086:
+    case 1076:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 1089:
+    case 1079:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
-    case 881:
+    case 871:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1111:
+    case 1101:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::TitleBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

@@ -9,13 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <KDDockWidgets.h>
 #include <View_flutter.h>
-#include <View.h>
-#include <Controller.h>
+#include <core/View.h>
+#include <core/Controller.h>
 
 extern "C" {
-// KDDockWidgets::Views::asView_flutter(Core::Controller * controller)
+// KDDockWidgets::Views::asView_flutter(KDDockWidgets::Core::Controller * controller)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_);
 // KDDockWidgets::Views::asView_flutter(KDDockWidgets::Core::View * view)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_);

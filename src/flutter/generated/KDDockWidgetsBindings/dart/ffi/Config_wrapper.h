@@ -34,10 +34,10 @@ public:
     void setSeparatorThickness(int value);
     void setStartDragDistance(int arg__1);
     void setTransparencyOnlyOverDropIndicator(bool only);
-    void setViewFactory(KDDockWidgets::ViewFactory *arg__1);
+    void setViewFactory(KDDockWidgets::Core::ViewFactory *arg__1);
     int startDragDistance() const;
     bool transparencyOnlyOverDropIndicator() const;
-    KDDockWidgets::ViewFactory *viewFactory() const;
+    KDDockWidgets::Core::ViewFactory *viewFactory() const;
 };
 }
 extern "C" {
@@ -73,7 +73,7 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setSeparatorThickness
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setStartDragDistance_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setTransparencyOnlyOverDropIndicator(bool only)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setTransparencyOnlyOverDropIndicator_bool(void *thisObj, bool only);
-// KDDockWidgets::Config::setViewFactory(KDDockWidgets::ViewFactory * arg__1)
+// KDDockWidgets::Config::setViewFactory(KDDockWidgets::Core::ViewFactory * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_);
 // KDDockWidgets::Config::startDragDistance() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Config__startDragDistance(void *thisObj);

@@ -11,17 +11,17 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <Item_p.h>
 #include <qstring.h>
-#include <View.h>
+#include <core/View.h>
 #include <qsize.h>
 #include <qpoint.h>
 #include <qrect.h>
-#include <Group.h>
+#include <core/Group.h>
 #include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
-class Item_wrapper : public ::Core::Item
+class Item_wrapper : public ::KDDockWidgets::Core::Item
 {
 public:
     ~Item_wrapper();
@@ -104,103 +104,103 @@ public:
 };
 }
 extern "C" {
-// Core::Item::Item(KDDockWidgets::Core::View * hostWidget)
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__constructor_View(void *hostWidget_);
-// Core::Item::asGroupController() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__asGroupController(void *thisObj);
-// Core::Item::checkSanity()
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__checkSanity(void *thisObj);
-// Core::Item::dumpLayout(int level)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__dumpLayout_int(void *thisObj, int level);
-// Core::Item::geometry() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__geometry(void *thisObj);
-// Core::Item::guestView() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__guestView(void *thisObj);
-// Core::Item::height() const
-KDDockWidgetsBindings_EXPORT int c_Layouting__Item__height(void *thisObj);
-// Core::Item::hostView() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__hostView(void *thisObj);
-// Core::Item::isBeingInserted() const
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__isBeingInserted(void *thisObj);
-// Core::Item::isContainer() const
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__isContainer(void *thisObj);
-// Core::Item::isMDI() const
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__isMDI(void *thisObj);
-// Core::Item::isPlaceholder() const
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__isPlaceholder(void *thisObj);
-// Core::Item::isRoot() const
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__isRoot(void *thisObj);
-// Core::Item::isVisible(bool excludeBeingInserted) const
-KDDockWidgetsBindings_EXPORT bool c_Layouting__Item__isVisible_bool(void *thisObj, bool excludeBeingInserted);
-// Core::Item::mapFromParent(QPoint arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__mapFromParent_QPoint(void *thisObj, void *arg__1_);
-// Core::Item::mapFromRoot(QPoint arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__mapFromRoot_QPoint(void *thisObj, void *arg__1_);
-// Core::Item::mapFromRoot(QRect arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__mapFromRoot_QRect(void *thisObj, void *arg__1_);
-// Core::Item::mapToRoot(QPoint arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__mapToRoot_QPoint(void *thisObj, void *arg__1_);
-// Core::Item::mapToRoot(QRect arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__mapToRoot_QRect(void *thisObj, void *arg__1_);
-// Core::Item::maxSizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__maxSizeHint(void *thisObj);
-// Core::Item::minSize() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__minSize(void *thisObj);
-// Core::Item::missingSize() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__missingSize(void *thisObj);
-// Core::Item::pos() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__pos(void *thisObj);
-// Core::Item::rect() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__rect(void *thisObj);
-// Core::Item::ref()
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__ref(void *thisObj);
-// Core::Item::refCount() const
-KDDockWidgetsBindings_EXPORT int c_Layouting__Item__refCount(void *thisObj);
-// Core::Item::restore(KDDockWidgets::Core::View * guestView)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__restore_View(void *thisObj, void *guestView_);
-// Core::Item::setBeingInserted(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
-// Core::Item::setGeometry(QRect rect)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setGeometry_QRect(void *thisObj, void *rect_);
-// Core::Item::setGeometry_recursive(QRect rect)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_);
-// Core::Item::setGuestView(KDDockWidgets::Core::View * arg__1)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setGuestView_View(void *thisObj, void *arg__1_);
-// Core::Item::setHostView(KDDockWidgets::Core::View * arg__1)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setHostView_View(void *thisObj, void *arg__1_);
-// Core::Item::setIsVisible(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setIsVisible_bool(void *thisObj, bool arg__1);
-// Core::Item::setMaxSizeHint(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_);
-// Core::Item::setMinSize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setMinSize_QSize(void *thisObj, void *arg__1_);
-// Core::Item::setPos(QPoint arg__1)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setPos_QPoint(void *thisObj, void *arg__1_);
-// Core::Item::setSize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__setSize_QSize(void *thisObj, void *arg__1_);
-// Core::Item::size() const
-KDDockWidgetsBindings_EXPORT void *c_Layouting__Item__size(void *thisObj);
-// Core::Item::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_Layouting__Item__tr_char_char_int(const char *s, const char *c, int n);
-// Core::Item::turnIntoPlaceholder()
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__turnIntoPlaceholder(void *thisObj);
-// Core::Item::unref()
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__unref(void *thisObj);
-// Core::Item::updateWidgetGeometries()
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__updateWidgetGeometries(void *thisObj);
-// Core::Item::visibleCount_recursive() const
-KDDockWidgetsBindings_EXPORT int c_Layouting__Item__visibleCount_recursive(void *thisObj);
-// Core::Item::width() const
-KDDockWidgetsBindings_EXPORT int c_Layouting__Item__width(void *thisObj);
-// Core::Item::x() const
-KDDockWidgetsBindings_EXPORT int c_Layouting__Item__x(void *thisObj);
-// Core::Item::y() const
-KDDockWidgetsBindings_EXPORT int c_Layouting__Item__y(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT int c_static_Layouting__Item___get_separatorThickness();
-KDDockWidgetsBindings_EXPORT bool c_static_Layouting__Item___get_s_silenceSanityChecks();
-KDDockWidgetsBindings_EXPORT void c_static_Layouting__Item___set_separatorThickness_int(int separatorThickness_);
-KDDockWidgetsBindings_EXPORT void c_static_Layouting__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_Layouting__Item_Finalizer(void *, void *cppObj, void *);
+// KDDockWidgets::Core::Item::Item(KDDockWidgets::Core::View * hostWidget)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__constructor_View(void *hostWidget_);
+// KDDockWidgets::Core::Item::asGroupController() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__asGroupController(void *thisObj);
+// KDDockWidgets::Core::Item::checkSanity()
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__checkSanity(void *thisObj);
+// KDDockWidgets::Core::Item::dumpLayout(int level)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__dumpLayout_int(void *thisObj, int level);
+// KDDockWidgets::Core::Item::geometry() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__geometry(void *thisObj);
+// KDDockWidgets::Core::Item::guestView() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__guestView(void *thisObj);
+// KDDockWidgets::Core::Item::height() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Item__height(void *thisObj);
+// KDDockWidgets::Core::Item::hostView() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__hostView(void *thisObj);
+// KDDockWidgets::Core::Item::isBeingInserted() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isBeingInserted(void *thisObj);
+// KDDockWidgets::Core::Item::isContainer() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isContainer(void *thisObj);
+// KDDockWidgets::Core::Item::isMDI() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isMDI(void *thisObj);
+// KDDockWidgets::Core::Item::isPlaceholder() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isPlaceholder(void *thisObj);
+// KDDockWidgets::Core::Item::isRoot() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isRoot(void *thisObj);
+// KDDockWidgets::Core::Item::isVisible(bool excludeBeingInserted) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isVisible_bool(void *thisObj, bool excludeBeingInserted);
+// KDDockWidgets::Core::Item::mapFromParent(QPoint arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromParent_QPoint(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapFromRoot(QPoint arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromRoot_QPoint(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapFromRoot(QRect arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromRoot_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapToRoot(QPoint arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapToRoot_QPoint(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapToRoot(QRect arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapToRoot_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::maxSizeHint() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__maxSizeHint(void *thisObj);
+// KDDockWidgets::Core::Item::minSize() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__minSize(void *thisObj);
+// KDDockWidgets::Core::Item::missingSize() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__missingSize(void *thisObj);
+// KDDockWidgets::Core::Item::pos() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__pos(void *thisObj);
+// KDDockWidgets::Core::Item::rect() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__rect(void *thisObj);
+// KDDockWidgets::Core::Item::ref()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__ref(void *thisObj);
+// KDDockWidgets::Core::Item::refCount() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Item__refCount(void *thisObj);
+// KDDockWidgets::Core::Item::restore(KDDockWidgets::Core::View * guestView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__restore_View(void *thisObj, void *guestView_);
+// KDDockWidgets::Core::Item::setBeingInserted(bool arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Core::Item::setGeometry(QRect rect)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setGeometry_QRect(void *thisObj, void *rect_);
+// KDDockWidgets::Core::Item::setGeometry_recursive(QRect rect)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_);
+// KDDockWidgets::Core::Item::setGuestView(KDDockWidgets::Core::View * arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setGuestView_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setHostView(KDDockWidgets::Core::View * arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setHostView_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setIsVisible(bool arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setIsVisible_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Core::Item::setMaxSizeHint(QSize arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setMinSize(QSize arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setMinSize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setPos(QPoint arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setPos_QPoint(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setSize(QSize arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setSize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::size() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__size(void *thisObj);
+// KDDockWidgets::Core::Item::tr(const char * s, const char * c, int n)
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__Item__tr_char_char_int(const char *s, const char *c, int n);
+// KDDockWidgets::Core::Item::turnIntoPlaceholder()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__turnIntoPlaceholder(void *thisObj);
+// KDDockWidgets::Core::Item::unref()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__unref(void *thisObj);
+// KDDockWidgets::Core::Item::updateWidgetGeometries()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__updateWidgetGeometries(void *thisObj);
+// KDDockWidgets::Core::Item::visibleCount_recursive() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Item__visibleCount_recursive(void *thisObj);
+// KDDockWidgets::Core::Item::width() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Item__width(void *thisObj);
+// KDDockWidgets::Core::Item::x() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Item__x(void *thisObj);
+// KDDockWidgets::Core::Item::y() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Item__y(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_static_KDDockWidgets__Core__Item___get_separatorThickness();
+KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Core__Item___get_s_silenceSanityChecks();
+KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__Item___set_separatorThickness_int(int separatorThickness_);
+KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item_Finalizer(void *, void *cppObj, void *);
 }

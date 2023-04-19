@@ -13,15 +13,15 @@
 #include <qstring.h>
 #include <qrect.h>
 #include <MainWindow.h>
-#include <Group.h>
-#include <DockWidget.h>
+#include <core/Group.h>
+#include <core/DockWidget.h>
 #include <DropArea.h>
 #include <TitleBar.h>
 #include <core/Layout.h>
 #include <qpoint.h>
 #include <KDDockWidgets.h>
 #include <qsize.h>
-#include <View.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class FloatingWindow_wrapper : public ::KDDockWidgets::Core::FloatingWindow
@@ -83,84 +83,84 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Core::Group * group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_Group_QRect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_QRect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::FloatingWindow(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_, void *parent_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::activatedChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__activatedChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__activatedChanged(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::addDockWidget(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
 // KDDockWidgets::Core::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1);
 // KDDockWidgets::Core::FloatingWindow::allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__allDockWidgetsHave_LayoutSaverOption(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__allDockWidgetsHave_LayoutSaverOption(void *thisObj, int arg__1);
 // KDDockWidgets::Core::FloatingWindow::anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__anyDockWidgetsHas_DockWidgetOption(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__anyDockWidgetsHas_DockWidgetOption(void *thisObj, int arg__1);
 // KDDockWidgets::Core::FloatingWindow::anyDockWidgetsHas(KDDockWidgets::LayoutSaverOption arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__anyDockWidgetsHas_LayoutSaverOption(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__anyDockWidgetsHas_LayoutSaverOption(void *thisObj, int arg__1);
 // KDDockWidgets::Core::FloatingWindow::anyNonClosable() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__anyNonClosable(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__anyNonClosable(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::anyNonDockable() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__anyNonDockable(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__anyNonDockable(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::beingDeleted() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__beingDeleted(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__beingDeleted(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::dragRect() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__dragRect(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__dragRect(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::dropArea() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__dropArea(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__dropArea(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::ensureRectIsOnScreen(QRect & geometry)
-KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Controllers__FloatingWindow__ensureRectIsOnScreen_QRect(void *geometry_);
+KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_QRect(void *geometry_);
 // KDDockWidgets::Core::FloatingWindow::hasSingleDockWidget() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__hasSingleDockWidget(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__hasSingleDockWidget(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::hasSingleFrame() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__hasSingleFrame(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::isInDragArea(QPoint globalPoint) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__isInDragArea_QPoint(void *thisObj, void *globalPoint_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__isInDragArea_QPoint(void *thisObj, void *globalPoint_);
 // KDDockWidgets::Core::FloatingWindow::isMDI() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__isMDI(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__isMDI(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::isUtilityWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__isUtilityWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__isUtilityWindow(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::isWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__isWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__isWindow(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::layout() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__layout(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__layout(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::mainWindow() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__mainWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__mainWindow(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::maybeCreateResizeHandler()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__maybeCreateResizeHandler(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__maybeCreateResizeHandler(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::multiSplitter() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__multiSplitter(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__multiSplitter(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::numDockWidgetsChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__numDockWidgetsChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__numDockWidgetsChanged(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::numFramesChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__numFramesChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__numFramesChanged(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::scheduleDeleteLater()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__scheduleDeleteLater(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__scheduleDeleteLater(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::setParentView_impl(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__setParentView_impl_View(void *thisObj, void *parent_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::setSuggestedGeometry(QRect suggestedRect)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__setSuggestedGeometry_QRect(void *thisObj, void *suggestedRect_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_QRect(void *thisObj, void *suggestedRect_);
 // KDDockWidgets::Core::FloatingWindow::singleDockWidget() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__singleDockWidget(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__singleDockWidget(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::singleFrame() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__singleFrame(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__singleFrame(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::supportsMaximizeButton() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__supportsMaximizeButton(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__supportsMaximizeButton(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::supportsMinimizeButton() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__FloatingWindow__supportsMinimizeButton(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__supportsMinimizeButton(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::titleBar() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__FloatingWindow__titleBar(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__titleBar(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__FloatingWindow__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__FloatingWindow__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::FloatingWindow::updateTitleAndIcon()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__updateTitleAndIcon(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__updateTitleAndIcon(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::updateTitleBarVisibility()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__updateTitleBarVisibility(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__updateTitleBarVisibility(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::userType() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__FloatingWindow__userType(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__FloatingWindow__userType(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::windowStateChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__windowStateChanged(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__FloatingWindow_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__windowStateChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow_Finalizer(void *, void *cppObj, void *);
 }

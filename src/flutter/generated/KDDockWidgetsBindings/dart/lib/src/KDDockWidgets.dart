@@ -55,7 +55,6 @@ class KDDockWidgets_FrontendType {
   static const QtWidgets = 1;
   static const QtQuick = 2;
   static const Flutter = 3;
-  static const Dummy = 4;
 }
 
 class KDDockWidgets_DefaultSizeMode {
@@ -91,28 +90,6 @@ class KDDockWidgets_DropLocation {
   static const DropLocation_Outter = 480;
   static const DropLocation_Horizontal = 165;
   static const DropLocation_Vertical = 330;
-}
-
-class KDDockWidgets_Type {
-  static const FIRST = 1;
-  static const None = 0;
-  static const Frame = 1;
-  static const TitleBar = 2;
-  static const TabBar = 4;
-  static const Stack = 8;
-  static const FloatingWindow = 16;
-  static const Separator = 32;
-  static const DockWidget = 64;
-  static const MDIArea = 128;
-  static const LayoutItem = 256;
-  static const SideBar = 512;
-  static const MainWindow = 1024;
-  static const ViewWrapper = 2048;
-  static const DropArea = 4096;
-  static const MDILayout = 8192;
-  static const RubberBand = 16384;
-  static const DropAreaIndicatorOverlay = 32768;
-  static const LAST = 16384;
 } // initFrontend(KDDockWidgets::FrontendType arg__1)
 
 initFrontend(int arg__1) {

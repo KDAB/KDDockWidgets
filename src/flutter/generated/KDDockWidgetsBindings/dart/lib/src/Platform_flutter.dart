@@ -74,7 +74,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::createMainWindow(const QString & uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createMainWindow(
@@ -92,7 +92,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::createView(Core::Controller * controller, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::createView(KDDockWidgets::Core::Controller * controller, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createView(
@@ -334,7 +334,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_createFocusableView(
@@ -365,7 +365,7 @@ class Platform_flutter extends Platform {
         Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform_flutter;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform_flutter::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for Platform_flutter::tests_createView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.tests_createView(
@@ -464,67 +464,67 @@ class Platform_flutter extends Platform {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 715:
+      case 697:
         return "c_KDDockWidgets__Platform_flutter__applicationName";
-      case 716:
+      case 698:
         return "c_KDDockWidgets__Platform_flutter__createDefaultViewFactory";
-      case 717:
+      case 699:
         return "c_KDDockWidgets__Platform_flutter__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags";
-      case 718:
+      case 700:
         return "c_KDDockWidgets__Platform_flutter__createView_Controller_View";
-      case 719:
+      case 701:
         return "c_KDDockWidgets__Platform_flutter__cursorPos";
-      case 720:
+      case 702:
         return "c_KDDockWidgets__Platform_flutter__dumpManagedBacktrace";
-      case 722:
+      case 704:
         return "c_KDDockWidgets__Platform_flutter__hasActivePopup";
-      case 723:
+      case 705:
         return "c_KDDockWidgets__Platform_flutter__inDisallowedDragView_QPoint";
-      case 724:
+      case 706:
         return "c_KDDockWidgets__Platform_flutter__installMessageHandler";
-      case 726:
+      case 708:
         return "c_KDDockWidgets__Platform_flutter__isLeftMouseButtonPressed";
-      case 727:
+      case 709:
         return "c_KDDockWidgets__Platform_flutter__isProcessingAppQuitEvent";
-      case 731:
+      case 713:
         return "c_KDDockWidgets__Platform_flutter__name";
-      case 732:
+      case 714:
         return "c_KDDockWidgets__Platform_flutter__onFloatingWindowCreated_FloatingWindow";
-      case 733:
+      case 715:
         return "c_KDDockWidgets__Platform_flutter__onFloatingWindowDestroyed_FloatingWindow";
-      case 734:
+      case 716:
         return "c_KDDockWidgets__Platform_flutter__organizationName";
-      case 735:
+      case 717:
         return "c_KDDockWidgets__Platform_flutter__restoreMouseCursor";
-      case 736:
+      case 718:
         return "c_KDDockWidgets__Platform_flutter__screenNumberFor_View";
-      case 737:
+      case 719:
         return "c_KDDockWidgets__Platform_flutter__screenSizeFor_View";
-      case 738:
+      case 720:
         return "c_KDDockWidgets__Platform_flutter__setCursorPos_QPoint";
-      case 739:
+      case 721:
         return "c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape";
-      case 741:
+      case 723:
         return "c_KDDockWidgets__Platform_flutter__startDragDistance_impl";
-      case 742:
+      case 724:
         return "c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View";
-      case 743:
+      case 725:
         return "c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View";
-      case 744:
+      case 726:
         return "c_KDDockWidgets__Platform_flutter__tests_createView_CreateViewOptions_View";
-      case 746:
+      case 728:
         return "c_KDDockWidgets__Platform_flutter__tests_deinitPlatform_impl";
-      case 747:
+      case 729:
         return "c_KDDockWidgets__Platform_flutter__tests_doubleClickOn_QPoint_View";
-      case 749:
+      case 731:
         return "c_KDDockWidgets__Platform_flutter__tests_initPlatform_impl";
-      case 751:
+      case 733:
         return "c_KDDockWidgets__Platform_flutter__tests_wait_int";
-      case 758:
+      case 740:
         return "c_KDDockWidgets__Platform_flutter__ungrabMouse";
-      case 759:
+      case 741:
         return "c_KDDockWidgets__Platform_flutter__uninstallMessageHandler";
-      case 760:
+      case 742:
         return "c_KDDockWidgets__Platform_flutter__usesFallbackMouseGrabber";
     }
     return super.cFunctionSymbolName(methodId);
@@ -532,67 +532,67 @@ class Platform_flutter extends Platform {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 715:
+      case 697:
         return "applicationName";
-      case 716:
+      case 698:
         return "createDefaultViewFactory";
-      case 717:
+      case 699:
         return "createMainWindow";
-      case 718:
+      case 700:
         return "createView";
-      case 719:
+      case 701:
         return "cursorPos";
-      case 720:
+      case 702:
         return "dumpManagedBacktrace";
-      case 722:
+      case 704:
         return "hasActivePopup";
-      case 723:
+      case 705:
         return "inDisallowedDragView";
-      case 724:
+      case 706:
         return "installMessageHandler";
-      case 726:
+      case 708:
         return "isLeftMouseButtonPressed";
-      case 727:
+      case 709:
         return "isProcessingAppQuitEvent";
-      case 731:
+      case 713:
         return "name";
-      case 732:
+      case 714:
         return "onFloatingWindowCreated";
-      case 733:
+      case 715:
         return "onFloatingWindowDestroyed";
-      case 734:
+      case 716:
         return "organizationName";
-      case 735:
+      case 717:
         return "restoreMouseCursor";
-      case 736:
+      case 718:
         return "screenNumberFor";
-      case 737:
+      case 719:
         return "screenSizeFor";
-      case 738:
+      case 720:
         return "setCursorPos";
-      case 739:
+      case 721:
         return "setMouseCursor";
-      case 741:
+      case 723:
         return "startDragDistance_impl";
-      case 742:
+      case 724:
         return "tests_createFocusableView";
-      case 743:
+      case 725:
         return "tests_createNonClosableView";
-      case 744:
+      case 726:
         return "tests_createView";
-      case 746:
+      case 728:
         return "tests_deinitPlatform_impl";
-      case 747:
+      case 729:
         return "tests_doubleClickOn";
-      case 749:
+      case 731:
         return "tests_initPlatform_impl";
-      case 751:
+      case 733:
         return "tests_wait";
-      case 758:
+      case 740:
         return "ungrabMouse";
-      case 759:
+      case 741:
         return "uninstallMessageHandler";
-      case 760:
+      case 742:
         return "usesFallbackMouseGrabber";
     }
     throw Error();
@@ -604,123 +604,123 @@ class Platform_flutter extends Platform {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback')
         .asFunction();
-    final callback715 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback697 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Platform_flutter.applicationName_calledFromC);
-    registerCallback(thisCpp, callback715, 715);
-    final callback716 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback697, 697);
+    final callback698 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Platform_flutter.createDefaultViewFactory_calledFromC);
-    registerCallback(thisCpp, callback716, 716);
-    final callback717 = ffi.Pointer.fromFunction<
+    registerCallback(thisCpp, callback698, 698);
+    final callback699 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_voidstar_ffi_Int32_FFI>(
         Platform_flutter.createMainWindow_calledFromC);
-    registerCallback(thisCpp, callback717, 717);
-    final callback718 =
+    registerCallback(thisCpp, callback699, 699);
+    final callback700 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             Platform_flutter.createView_calledFromC);
-    registerCallback(thisCpp, callback718, 718);
-    final callback719 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback700, 700);
+    final callback701 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Platform_flutter.cursorPos_calledFromC);
-    registerCallback(thisCpp, callback719, 719);
-    final callback720 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback701, 701);
+    final callback702 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform.dumpManagedBacktrace_calledFromC);
-    registerCallback(thisCpp, callback720, 720);
-    const callbackExcept722 = 0;
-    final callback722 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        Platform_flutter.hasActivePopup_calledFromC, callbackExcept722);
-    registerCallback(thisCpp, callback722, 722);
-    const callbackExcept723 = 0;
-    final callback723 =
+    registerCallback(thisCpp, callback702, 702);
+    const callbackExcept704 = 0;
+    final callback704 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        Platform_flutter.hasActivePopup_calledFromC, callbackExcept704);
+    registerCallback(thisCpp, callback704, 704);
+    const callbackExcept705 = 0;
+    final callback705 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
             Platform_flutter.inDisallowedDragView_calledFromC,
-            callbackExcept723);
-    registerCallback(thisCpp, callback723, 723);
-    final callback724 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+            callbackExcept705);
+    registerCallback(thisCpp, callback705, 705);
+    final callback706 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.installMessageHandler_calledFromC);
-    registerCallback(thisCpp, callback724, 724);
-    const callbackExcept726 = 0;
-    final callback726 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback706, 706);
+    const callbackExcept708 = 0;
+    final callback708 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         Platform_flutter.isLeftMouseButtonPressed_calledFromC,
-        callbackExcept726);
-    registerCallback(thisCpp, callback726, 726);
-    const callbackExcept727 = 0;
-    final callback727 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        callbackExcept708);
+    registerCallback(thisCpp, callback708, 708);
+    const callbackExcept709 = 0;
+    final callback709 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         Platform_flutter.isProcessingAppQuitEvent_calledFromC,
-        callbackExcept727);
-    registerCallback(thisCpp, callback727, 727);
-    final callback731 = ffi.Pointer.fromFunction<string_Func_voidstar_FFI>(
+        callbackExcept709);
+    registerCallback(thisCpp, callback709, 709);
+    final callback713 = ffi.Pointer.fromFunction<string_Func_voidstar_FFI>(
         Platform_flutter.name_calledFromC);
-    registerCallback(thisCpp, callback731, 731);
-    final callback732 =
+    registerCallback(thisCpp, callback713, 713);
+    final callback714 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Platform_flutter.onFloatingWindowCreated_calledFromC);
-    registerCallback(thisCpp, callback732, 732);
-    final callback733 =
+    registerCallback(thisCpp, callback714, 714);
+    final callback715 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Platform_flutter.onFloatingWindowDestroyed_calledFromC);
-    registerCallback(thisCpp, callback733, 733);
-    final callback734 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback715, 715);
+    final callback716 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Platform_flutter.organizationName_calledFromC);
-    registerCallback(thisCpp, callback734, 734);
-    final callback735 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback716, 716);
+    final callback717 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.restoreMouseCursor_calledFromC);
-    registerCallback(thisCpp, callback735, 735);
-    const callbackExcept736 = 0;
-    final callback736 =
+    registerCallback(thisCpp, callback717, 717);
+    const callbackExcept718 = 0;
+    final callback718 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            Platform_flutter.screenNumberFor_calledFromC, callbackExcept736);
-    registerCallback(thisCpp, callback736, 736);
-    final callback737 =
+            Platform_flutter.screenNumberFor_calledFromC, callbackExcept718);
+    registerCallback(thisCpp, callback718, 718);
+    final callback719 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             Platform_flutter.screenSizeFor_calledFromC);
-    registerCallback(thisCpp, callback737, 737);
-    final callback738 =
+    registerCallback(thisCpp, callback719, 719);
+    final callback720 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Platform_flutter.setCursorPos_calledFromC);
-    registerCallback(thisCpp, callback738, 738);
-    final callback739 =
+    registerCallback(thisCpp, callback720, 720);
+    final callback721 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             Platform_flutter.setMouseCursor_calledFromC);
-    registerCallback(thisCpp, callback739, 739);
-    const callbackExcept741 = 0;
-    final callback741 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        Platform.startDragDistance_impl_calledFromC, callbackExcept741);
-    registerCallback(thisCpp, callback741, 741);
-    final callback742 =
+    registerCallback(thisCpp, callback721, 721);
+    const callbackExcept723 = 0;
+    final callback723 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        Platform.startDragDistance_impl_calledFromC, callbackExcept723);
+    registerCallback(thisCpp, callback723, 723);
+    final callback724 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             Platform_flutter.tests_createFocusableView_calledFromC);
-    registerCallback(thisCpp, callback742, 742);
-    final callback743 =
+    registerCallback(thisCpp, callback724, 724);
+    final callback725 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             Platform_flutter.tests_createNonClosableView_calledFromC);
-    registerCallback(thisCpp, callback743, 743);
-    final callback744 =
+    registerCallback(thisCpp, callback725, 725);
+    final callback726 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             Platform_flutter.tests_createView_calledFromC);
-    registerCallback(thisCpp, callback744, 744);
-    final callback746 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback726, 726);
+    final callback728 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.tests_deinitPlatform_impl_calledFromC);
-    registerCallback(thisCpp, callback746, 746);
-    final callback747 =
+    registerCallback(thisCpp, callback728, 728);
+    final callback729 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_voidstar_FFI>(
             Platform.tests_doubleClickOn_calledFromC);
-    registerCallback(thisCpp, callback747, 747);
-    final callback749 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback729, 729);
+    final callback731 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.tests_initPlatform_impl_calledFromC);
-    registerCallback(thisCpp, callback749, 749);
-    final callback751 =
+    registerCallback(thisCpp, callback731, 731);
+    final callback733 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             Platform_flutter.tests_wait_calledFromC);
-    registerCallback(thisCpp, callback751, 751);
-    final callback758 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback733, 733);
+    final callback740 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.ungrabMouse_calledFromC);
-    registerCallback(thisCpp, callback758, 758);
-    final callback759 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback740, 740);
+    final callback741 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Platform_flutter.uninstallMessageHandler_calledFromC);
-    registerCallback(thisCpp, callback759, 759);
-    const callbackExcept760 = 0;
-    final callback760 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback741, 741);
+    const callbackExcept742 = 0;
+    final callback742 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         Platform_flutter.usesFallbackMouseGrabber_calledFromC,
-        callbackExcept760);
-    registerCallback(thisCpp, callback760, 760);
+        callbackExcept742);
+    registerCallback(thisCpp, callback742, 742);
   }
 }

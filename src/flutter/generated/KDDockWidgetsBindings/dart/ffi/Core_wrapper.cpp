@@ -8,7 +8,7 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "Views_wrapper.h"
+#include "Core_wrapper.h"
 
 
 #include <QDebug>
@@ -27,16 +27,4 @@ struct ValueWrapper
 
 }
 extern "C" {
-// asView_flutter(KDDockWidgets::Core::Controller * controller)
-void *c_static_KDDockWidgets__Views__asView_flutter_Controller(void *controller_)
-{
-    auto controller = reinterpret_cast<KDDockWidgets::Core::Controller *>(controller_);
-    return Views::asView_flutter(controller);
-}
-// asView_flutter(KDDockWidgets::Core::View * view)
-void *c_static_KDDockWidgets__Views__asView_flutter_View(void *view_)
-{
-    auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
-    return Views::asView_flutter(view);
-}
 }

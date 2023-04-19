@@ -29,7 +29,7 @@ struct ValueWrapper
 namespace KDDockWidgetsBindings_wrappersNS {
 bool View_wrapper::aboutToBeDestroyed() const
 {
-    return ::KDDockWidgets::View::aboutToBeDestroyed();
+    return ::KDDockWidgets::Core::View::aboutToBeDestroyed();
 }
 void View_wrapper::activateWindow()
 {
@@ -48,43 +48,43 @@ void View_wrapper::activateWindow_nocallback()
 }
 KDDockWidgets::Core::DockWidget *View_wrapper::asDockWidgetController() const
 {
-    return ::KDDockWidgets::View::asDockWidgetController();
+    return ::KDDockWidgets::Core::View::asDockWidgetController();
 }
 KDDockWidgets::Core::DropArea *View_wrapper::asDropAreaController() const
 {
-    return ::KDDockWidgets::View::asDropAreaController();
+    return ::KDDockWidgets::Core::View::asDropAreaController();
 }
 KDDockWidgets::Core::FloatingWindow *View_wrapper::asFloatingWindowController() const
 {
-    return ::KDDockWidgets::View::asFloatingWindowController();
+    return ::KDDockWidgets::Core::View::asFloatingWindowController();
 }
 KDDockWidgets::Core::Group *View_wrapper::asGroupController() const
 {
-    return ::KDDockWidgets::View::asGroupController();
+    return ::KDDockWidgets::Core::View::asGroupController();
 }
 KDDockWidgets::Core::Layout *View_wrapper::asLayout() const
 {
-    return ::KDDockWidgets::View::asLayout();
+    return ::KDDockWidgets::Core::View::asLayout();
 }
 KDDockWidgets::Core::MainWindow *View_wrapper::asMainWindowController() const
 {
-    return ::KDDockWidgets::View::asMainWindowController();
+    return ::KDDockWidgets::Core::View::asMainWindowController();
 }
 KDDockWidgets::Core::Stack *View_wrapper::asStackController() const
 {
-    return ::KDDockWidgets::View::asStackController();
+    return ::KDDockWidgets::Core::View::asStackController();
 }
 KDDockWidgets::Core::TabBar *View_wrapper::asTabBarController() const
 {
-    return ::KDDockWidgets::View::asTabBarController();
+    return ::KDDockWidgets::Core::View::asTabBarController();
 }
 KDDockWidgets::Core::TitleBar *View_wrapper::asTitleBarController() const
 {
-    return ::KDDockWidgets::View::asTitleBarController();
+    return ::KDDockWidgets::Core::View::asTitleBarController();
 }
 QSize View_wrapper::boundedMaxSize(QSize min, QSize max)
 {
-    return ::KDDockWidgets::View::boundedMaxSize(min, max);
+    return ::KDDockWidgets::Core::View::boundedMaxSize(min, max);
 }
 bool View_wrapper::close()
 {
@@ -103,11 +103,11 @@ bool View_wrapper::close_nocallback()
 }
 void View_wrapper::closeRootView()
 {
-    ::KDDockWidgets::View::closeRootView();
+    ::KDDockWidgets::Core::View::closeRootView();
 }
-Core::Controller *View_wrapper::controller() const
+KDDockWidgets::Core::Controller *View_wrapper::controller() const
 {
-    return ::KDDockWidgets::View::controller();
+    return ::KDDockWidgets::Core::View::controller();
 }
 void View_wrapper::createPlatformWindow()
 {
@@ -115,28 +115,28 @@ void View_wrapper::createPlatformWindow()
         const void *thisPtr = this;
         m_createPlatformWindowCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::View::createPlatformWindow();
+        ::KDDockWidgets::Core::View::createPlatformWindow();
     }
 }
 void View_wrapper::createPlatformWindow_nocallback()
 {
-    ::KDDockWidgets::View::createPlatformWindow();
+    ::KDDockWidgets::Core::View::createPlatformWindow();
 }
 bool View_wrapper::equals(const KDDockWidgets::Core::View *one, const KDDockWidgets::Core::View *two)
 {
-    return ::KDDockWidgets::View::equals(one, two);
+    return ::KDDockWidgets::Core::View::equals(one, two);
 }
 bool View_wrapper::equals(const KDDockWidgets::Core::View *other) const
 {
-    return ::KDDockWidgets::View::equals(other);
+    return ::KDDockWidgets::Core::View::equals(other);
 }
-Core::Controller *View_wrapper::firstParentOfType(KDDockWidgets::Type arg__1) const
+KDDockWidgets::Core::Controller *View_wrapper::firstParentOfType(KDDockWidgets::Core::View *view, KDDockWidgets::Core::ViewType arg__2)
 {
-    return ::KDDockWidgets::View::firstParentOfType(arg__1);
+    return ::KDDockWidgets::Core::View::firstParentOfType(view, arg__2);
 }
-Core::Controller *View_wrapper::firstParentOfType(KDDockWidgets::Core::View *view, KDDockWidgets::Type arg__2)
+KDDockWidgets::Core::Controller *View_wrapper::firstParentOfType(KDDockWidgets::Core::ViewType arg__1) const
 {
-    return ::KDDockWidgets::View::firstParentOfType(view, arg__2);
+    return ::KDDockWidgets::Core::View::firstParentOfType(arg__1);
 }
 Qt::WindowFlags View_wrapper::flags() const
 {
@@ -155,7 +155,7 @@ Qt::WindowFlags View_wrapper::flags_nocallback() const
 }
 void View_wrapper::free()
 {
-    ::KDDockWidgets::View::free();
+    ::KDDockWidgets::Core::View::free();
 }
 void View_wrapper::free_impl()
 {
@@ -163,16 +163,16 @@ void View_wrapper::free_impl()
         const void *thisPtr = this;
         m_free_implCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::View::free_impl();
+        ::KDDockWidgets::Core::View::free_impl();
     }
 }
 void View_wrapper::free_impl_nocallback()
 {
-    ::KDDockWidgets::View::free_impl();
+    ::KDDockWidgets::Core::View::free_impl();
 }
 bool View_wrapper::freed() const
 {
-    return ::KDDockWidgets::View::freed();
+    return ::KDDockWidgets::Core::View::freed();
 }
 QRect View_wrapper::geometry() const
 {
@@ -191,7 +191,7 @@ QRect View_wrapper::geometry_nocallback() const
 }
 QRect View_wrapper::globalGeometry() const
 {
-    return ::KDDockWidgets::View::globalGeometry();
+    return ::KDDockWidgets::Core::View::globalGeometry();
 }
 void View_wrapper::grabMouse()
 {
@@ -210,7 +210,7 @@ void View_wrapper::grabMouse_nocallback()
 }
 QSize View_wrapper::hardcodedMinimumSize()
 {
-    return ::KDDockWidgets::View::hardcodedMinimumSize();
+    return ::KDDockWidgets::Core::View::hardcodedMinimumSize();
 }
 bool View_wrapper::hasFocus() const
 {
@@ -229,7 +229,7 @@ bool View_wrapper::hasFocus_nocallback() const
 }
 int View_wrapper::height() const
 {
-    return ::KDDockWidgets::View::height();
+    return ::KDDockWidgets::Core::View::height();
 }
 void View_wrapper::hide()
 {
@@ -248,11 +248,11 @@ void View_wrapper::hide_nocallback()
 }
 QString View_wrapper::id() const
 {
-    return ::KDDockWidgets::View::id();
+    return ::KDDockWidgets::Core::View::id();
 }
 bool View_wrapper::inDtor() const
 {
-    return ::KDDockWidgets::View::inDtor();
+    return ::KDDockWidgets::Core::View::inDtor();
 }
 void View_wrapper::init()
 {
@@ -260,12 +260,12 @@ void View_wrapper::init()
         const void *thisPtr = this;
         m_initCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::View::init();
+        ::KDDockWidgets::Core::View::init();
     }
 }
 void View_wrapper::init_nocallback()
 {
-    ::KDDockWidgets::View::init();
+    ::KDDockWidgets::Core::View::init();
 }
 bool View_wrapper::isActiveWindow() const
 {
@@ -318,12 +318,12 @@ bool View_wrapper::isNull() const
         const void *thisPtr = this;
         return m_isNullCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::View::isNull();
+        return ::KDDockWidgets::Core::View::isNull();
     }
 }
 bool View_wrapper::isNull_nocallback() const
 {
-    return ::KDDockWidgets::View::isNull();
+    return ::KDDockWidgets::Core::View::isNull();
 }
 bool View_wrapper::isRootView() const
 {
@@ -436,12 +436,12 @@ int View_wrapper::minimumHeight() const
         const void *thisPtr = this;
         return m_minimumHeightCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::View::minimumHeight();
+        return ::KDDockWidgets::Core::View::minimumHeight();
     }
 }
 int View_wrapper::minimumHeight_nocallback() const
 {
-    return ::KDDockWidgets::View::minimumHeight();
+    return ::KDDockWidgets::Core::View::minimumHeight();
 }
 int View_wrapper::minimumWidth() const
 {
@@ -449,16 +449,16 @@ int View_wrapper::minimumWidth() const
         const void *thisPtr = this;
         return m_minimumWidthCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::View::minimumWidth();
+        return ::KDDockWidgets::Core::View::minimumWidth();
     }
 }
 int View_wrapper::minimumWidth_nocallback() const
 {
-    return ::KDDockWidgets::View::minimumWidth();
+    return ::KDDockWidgets::Core::View::minimumWidth();
 }
 void View_wrapper::move(QPoint arg__1)
 {
-    ::KDDockWidgets::View::move(arg__1);
+    ::KDDockWidgets::Core::View::move(arg__1);
 }
 void View_wrapper::move(int x, int y)
 {
@@ -507,7 +507,7 @@ QString View_wrapper::objectName_nocallback() const
 }
 bool View_wrapper::onResize(QSize arg__1)
 {
-    return ::KDDockWidgets::View::onResize(arg__1);
+    return ::KDDockWidgets::Core::View::onResize(arg__1);
 }
 bool View_wrapper::onResize(int h, int w)
 {
@@ -515,20 +515,20 @@ bool View_wrapper::onResize(int h, int w)
         const void *thisPtr = this;
         return m_onResize_2Callback(const_cast<void *>(thisPtr), h, w);
     } else {
-        return ::KDDockWidgets::View::onResize(h, w);
+        return ::KDDockWidgets::Core::View::onResize(h, w);
     }
 }
 bool View_wrapper::onResize_nocallback(int h, int w)
 {
-    return ::KDDockWidgets::View::onResize(h, w);
+    return ::KDDockWidgets::Core::View::onResize(h, w);
 }
 QSize View_wrapper::parentSize() const
 {
-    return ::KDDockWidgets::View::parentSize();
+    return ::KDDockWidgets::Core::View::parentSize();
 }
 QPoint View_wrapper::pos() const
 {
-    return ::KDDockWidgets::View::pos();
+    return ::KDDockWidgets::Core::View::pos();
 }
 void View_wrapper::raise()
 {
@@ -562,7 +562,7 @@ void View_wrapper::raiseAndActivate_nocallback()
 }
 QRect View_wrapper::rect() const
 {
-    return ::KDDockWidgets::View::rect();
+    return ::KDDockWidgets::Core::View::rect();
 }
 void View_wrapper::releaseKeyboard()
 {
@@ -596,15 +596,15 @@ void View_wrapper::releaseMouse_nocallback()
 }
 void View_wrapper::resize(QSize arg__1)
 {
-    ::KDDockWidgets::View::resize(arg__1);
+    ::KDDockWidgets::Core::View::resize(arg__1);
 }
 void View_wrapper::resize(int w, int h)
 {
-    ::KDDockWidgets::View::resize(w, h);
+    ::KDDockWidgets::Core::View::resize(w, h);
 }
 void View_wrapper::setAboutToBeDestroyed()
 {
-    ::KDDockWidgets::View::setAboutToBeDestroyed();
+    ::KDDockWidgets::Core::View::setAboutToBeDestroyed();
 }
 void View_wrapper::setCursor(Qt::CursorShape arg__1)
 {
@@ -758,7 +758,7 @@ void View_wrapper::setParent_nocallback(KDDockWidgets::Core::View *arg__1)
 }
 void View_wrapper::setSize(QSize arg__1)
 {
-    ::KDDockWidgets::View::setSize(arg__1);
+    ::KDDockWidgets::Core::View::setSize(arg__1);
 }
 void View_wrapper::setSize(int width, int height)
 {
@@ -841,12 +841,12 @@ void View_wrapper::setZOrder(int arg__1)
         const void *thisPtr = this;
         m_setZOrderCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        ::KDDockWidgets::View::setZOrder(arg__1);
+        ::KDDockWidgets::Core::View::setZOrder(arg__1);
     }
 }
 void View_wrapper::setZOrder_nocallback(int arg__1)
 {
-    ::KDDockWidgets::View::setZOrder(arg__1);
+    ::KDDockWidgets::Core::View::setZOrder(arg__1);
 }
 void View_wrapper::show()
 {
@@ -910,7 +910,7 @@ void View_wrapper::showNormal_nocallback()
 }
 QSize View_wrapper::size() const
 {
-    return ::KDDockWidgets::View::size();
+    return ::KDDockWidgets::Core::View::size();
 }
 QSize View_wrapper::sizeHint() const
 {
@@ -918,16 +918,16 @@ QSize View_wrapper::sizeHint() const
         const void *thisPtr = this;
         return *m_sizeHintCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::View::sizeHint();
+        return ::KDDockWidgets::Core::View::sizeHint();
     }
 }
 QSize View_wrapper::sizeHint_nocallback() const
 {
-    return ::KDDockWidgets::View::sizeHint();
+    return ::KDDockWidgets::Core::View::sizeHint();
 }
-KDDockWidgets::Type View_wrapper::type() const
+KDDockWidgets::Core::ViewType View_wrapper::type() const
 {
-    return ::KDDockWidgets::View::type();
+    return ::KDDockWidgets::Core::View::type();
 }
 void View_wrapper::update()
 {
@@ -946,19 +946,19 @@ void View_wrapper::update_nocallback()
 }
 int View_wrapper::width() const
 {
-    return ::KDDockWidgets::View::width();
+    return ::KDDockWidgets::Core::View::width();
 }
 QRect View_wrapper::windowGeometry() const
 {
-    return ::KDDockWidgets::View::windowGeometry();
+    return ::KDDockWidgets::Core::View::windowGeometry();
 }
 int View_wrapper::x() const
 {
-    return ::KDDockWidgets::View::x();
+    return ::KDDockWidgets::Core::View::x();
 }
 int View_wrapper::y() const
 {
-    return ::KDDockWidgets::View::y();
+    return ::KDDockWidgets::Core::View::y();
 }
 View_wrapper::~View_wrapper()
 {
@@ -974,66 +974,66 @@ static KDDockWidgetsBindings_wrappersNS::View_wrapper *fromWrapperPtr(void *ptr)
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__View_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__View_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper *>(cppObj);
 } // aboutToBeDestroyed() const
-bool c_KDDockWidgets__View__aboutToBeDestroyed(void *thisObj)
+bool c_KDDockWidgets__Core__View__aboutToBeDestroyed(void *thisObj)
 {
     return fromPtr(thisObj)->aboutToBeDestroyed();
 }
 // activateWindow()
-void c_KDDockWidgets__View__activateWindow(void *thisObj)
+void c_KDDockWidgets__Core__View__activateWindow(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->activateWindow_nocallback();} else {    return targetPtr->activateWindow();} }();
 }
 // asDockWidgetController() const
-void *c_KDDockWidgets__View__asDockWidgetController(void *thisObj)
+void *c_KDDockWidgets__Core__View__asDockWidgetController(void *thisObj)
 {
     return fromPtr(thisObj)->asDockWidgetController();
 }
 // asDropAreaController() const
-void *c_KDDockWidgets__View__asDropAreaController(void *thisObj)
+void *c_KDDockWidgets__Core__View__asDropAreaController(void *thisObj)
 {
     return fromPtr(thisObj)->asDropAreaController();
 }
 // asFloatingWindowController() const
-void *c_KDDockWidgets__View__asFloatingWindowController(void *thisObj)
+void *c_KDDockWidgets__Core__View__asFloatingWindowController(void *thisObj)
 {
     return fromPtr(thisObj)->asFloatingWindowController();
 }
 // asGroupController() const
-void *c_KDDockWidgets__View__asGroupController(void *thisObj)
+void *c_KDDockWidgets__Core__View__asGroupController(void *thisObj)
 {
     return fromPtr(thisObj)->asGroupController();
 }
 // asLayout() const
-void *c_KDDockWidgets__View__asLayout(void *thisObj)
+void *c_KDDockWidgets__Core__View__asLayout(void *thisObj)
 {
     return fromPtr(thisObj)->asLayout();
 }
 // asMainWindowController() const
-void *c_KDDockWidgets__View__asMainWindowController(void *thisObj)
+void *c_KDDockWidgets__Core__View__asMainWindowController(void *thisObj)
 {
     return fromPtr(thisObj)->asMainWindowController();
 }
 // asStackController() const
-void *c_KDDockWidgets__View__asStackController(void *thisObj)
+void *c_KDDockWidgets__Core__View__asStackController(void *thisObj)
 {
     return fromPtr(thisObj)->asStackController();
 }
 // asTabBarController() const
-void *c_KDDockWidgets__View__asTabBarController(void *thisObj)
+void *c_KDDockWidgets__Core__View__asTabBarController(void *thisObj)
 {
     return fromPtr(thisObj)->asTabBarController();
 }
 // asTitleBarController() const
-void *c_KDDockWidgets__View__asTitleBarController(void *thisObj)
+void *c_KDDockWidgets__Core__View__asTitleBarController(void *thisObj)
 {
     return fromPtr(thisObj)->asTitleBarController();
 }
 // boundedMaxSize(QSize min, QSize max)
-void *c_static_KDDockWidgets__View__boundedMaxSize_QSize_QSize(void *min_, void *max_)
+void *c_static_KDDockWidgets__Core__View__boundedMaxSize_QSize_QSize(void *min_, void *max_)
 {
     assert(min_);
     auto &min = *reinterpret_cast<QSize *>(min_);
@@ -1042,158 +1042,158 @@ void *c_static_KDDockWidgets__View__boundedMaxSize_QSize_QSize(void *min_, void 
     return new Dartagnan::ValueWrapper<QSize> { KDDockWidgetsBindings_wrappersNS::View_wrapper::boundedMaxSize(min, max) };
 }
 // close()
-bool c_KDDockWidgets__View__close(void *thisObj)
+bool c_KDDockWidgets__Core__View__close(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->close_nocallback();} else {    return targetPtr->close();} }();
 }
 // closeRootView()
-void c_KDDockWidgets__View__closeRootView(void *thisObj)
+void c_KDDockWidgets__Core__View__closeRootView(void *thisObj)
 {
     fromPtr(thisObj)->closeRootView();
 }
 // controller() const
-void *c_KDDockWidgets__View__controller(void *thisObj)
+void *c_KDDockWidgets__Core__View__controller(void *thisObj)
 {
     return fromPtr(thisObj)->controller();
 }
 // createPlatformWindow()
-void c_KDDockWidgets__View__createPlatformWindow(void *thisObj)
+void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createPlatformWindow_nocallback();} else {    return targetPtr->createPlatformWindow();} }();
 }
 // equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
-bool c_static_KDDockWidgets__View__equals_View_View(void *one_, void *two_)
+bool c_static_KDDockWidgets__Core__View__equals_View_View(void *one_, void *two_)
 {
     auto one = reinterpret_cast<KDDockWidgets::Core::View *>(one_);
     auto two = reinterpret_cast<KDDockWidgets::Core::View *>(two_);
     return KDDockWidgetsBindings_wrappersNS::View_wrapper::equals(one, two);
 }
 // equals(const KDDockWidgets::Core::View * other) const
-bool c_KDDockWidgets__View__equals_View(void *thisObj, void *other_)
+bool c_KDDockWidgets__Core__View__equals_View(void *thisObj, void *other_)
 {
     auto other = reinterpret_cast<KDDockWidgets::Core::View *>(other_);
     return fromPtr(thisObj)->equals(other);
 }
-// firstParentOfType(KDDockWidgets::Type arg__1) const
-void *c_KDDockWidgets__View__firstParentOfType_Type(void *thisObj, int arg__1)
-{
-    return fromPtr(thisObj)->firstParentOfType(static_cast<KDDockWidgets::Type>(arg__1));
-}
-// firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::Type arg__2)
-void *c_static_KDDockWidgets__View__firstParentOfType_View_Type(void *view_, int arg__2)
+// firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::Core::ViewType arg__2)
+void *c_static_KDDockWidgets__Core__View__firstParentOfType_View_ViewType(void *view_, int arg__2)
 {
     auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
-    return KDDockWidgetsBindings_wrappersNS::View_wrapper::firstParentOfType(view, static_cast<KDDockWidgets::Type>(arg__2));
+    return KDDockWidgetsBindings_wrappersNS::View_wrapper::firstParentOfType(view, static_cast<KDDockWidgets::Core::ViewType>(arg__2));
+}
+// firstParentOfType(KDDockWidgets::Core::ViewType arg__1) const
+void *c_KDDockWidgets__Core__View__firstParentOfType_ViewType(void *thisObj, int arg__1)
+{
+    return fromPtr(thisObj)->firstParentOfType(static_cast<KDDockWidgets::Core::ViewType>(arg__1));
 }
 // flags() const
-int c_KDDockWidgets__View__flags(void *thisObj)
+int c_KDDockWidgets__Core__View__flags(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->flags_nocallback();} else {    return targetPtr->flags();} }();
 }
 // free()
-void c_KDDockWidgets__View__free(void *thisObj)
+void c_KDDockWidgets__Core__View__free(void *thisObj)
 {
     fromPtr(thisObj)->free();
 }
 // free_impl()
-void c_KDDockWidgets__View__free_impl(void *thisObj)
+void c_KDDockWidgets__Core__View__free_impl(void *thisObj)
 {
     fromWrapperPtr(thisObj)->free_impl_nocallback();
 }
 // freed() const
-bool c_KDDockWidgets__View__freed(void *thisObj)
+bool c_KDDockWidgets__Core__View__freed(void *thisObj)
 {
     return fromPtr(thisObj)->freed();
 }
 // geometry() const
-void *c_KDDockWidgets__View__geometry(void *thisObj)
+void *c_KDDockWidgets__Core__View__geometry(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
 }
 // globalGeometry() const
-void *c_KDDockWidgets__View__globalGeometry(void *thisObj)
+void *c_KDDockWidgets__Core__View__globalGeometry(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->globalGeometry() };
 }
 // grabMouse()
-void c_KDDockWidgets__View__grabMouse(void *thisObj)
+void c_KDDockWidgets__Core__View__grabMouse(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->grabMouse_nocallback();} else {    return targetPtr->grabMouse();} }();
 }
 // hardcodedMinimumSize()
-void *c_static_KDDockWidgets__View__hardcodedMinimumSize()
+void *c_static_KDDockWidgets__Core__View__hardcodedMinimumSize()
 {
     return new Dartagnan::ValueWrapper<QSize> { KDDockWidgetsBindings_wrappersNS::View_wrapper::hardcodedMinimumSize() };
 }
 // hasFocus() const
-bool c_KDDockWidgets__View__hasFocus(void *thisObj)
+bool c_KDDockWidgets__Core__View__hasFocus(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hasFocus_nocallback();} else {    return targetPtr->hasFocus();} }();
 }
 // height() const
-int c_KDDockWidgets__View__height(void *thisObj)
+int c_KDDockWidgets__Core__View__height(void *thisObj)
 {
     return fromPtr(thisObj)->height();
 }
 // hide()
-void c_KDDockWidgets__View__hide(void *thisObj)
+void c_KDDockWidgets__Core__View__hide(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hide_nocallback();} else {    return targetPtr->hide();} }();
 }
 // id() const
-void *c_KDDockWidgets__View__id(void *thisObj)
+void *c_KDDockWidgets__Core__View__id(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->id() };
 }
 // inDtor() const
-bool c_KDDockWidgets__View__inDtor(void *thisObj)
+bool c_KDDockWidgets__Core__View__inDtor(void *thisObj)
 {
     return fromPtr(thisObj)->inDtor();
 }
 // init()
-void c_KDDockWidgets__View__init(void *thisObj)
+void c_KDDockWidgets__Core__View__init(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->init_nocallback();} else {    return targetPtr->init();} }();
 }
 // isActiveWindow() const
-bool c_KDDockWidgets__View__isActiveWindow(void *thisObj)
+bool c_KDDockWidgets__Core__View__isActiveWindow(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isActiveWindow_nocallback();} else {    return targetPtr->isActiveWindow();} }();
 }
 // isMaximized() const
-bool c_KDDockWidgets__View__isMaximized(void *thisObj)
+bool c_KDDockWidgets__Core__View__isMaximized(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMaximized_nocallback();} else {    return targetPtr->isMaximized();} }();
 }
 // isMinimized() const
-bool c_KDDockWidgets__View__isMinimized(void *thisObj)
+bool c_KDDockWidgets__Core__View__isMinimized(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMinimized_nocallback();} else {    return targetPtr->isMinimized();} }();
 }
 // isNull() const
-bool c_KDDockWidgets__View__isNull(void *thisObj)
+bool c_KDDockWidgets__Core__View__isNull(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isNull_nocallback();} else {    return targetPtr->isNull();} }();
 }
 // isRootView() const
-bool c_KDDockWidgets__View__isRootView(void *thisObj)
+bool c_KDDockWidgets__Core__View__isRootView(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isRootView_nocallback();} else {    return targetPtr->isRootView();} }();
 }
 // isVisible() const
-bool c_KDDockWidgets__View__isVisible(void *thisObj)
+bool c_KDDockWidgets__Core__View__isVisible(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback();} else {    return targetPtr->isVisible();} }();
 }
 // mapFromGlobal(QPoint arg__1) const
-void *c_KDDockWidgets__View__mapFromGlobal_QPoint(void *thisObj, void *arg__1_)
+void *c_KDDockWidgets__Core__View__mapFromGlobal_QPoint(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(arg__1);} else {    return targetPtr->mapFromGlobal(arg__1);} }() };
 }
 // mapTo(KDDockWidgets::Core::View * arg__1, QPoint arg__2) const
-void *c_KDDockWidgets__View__mapTo_View_QPoint(void *thisObj, void *arg__1_, void *arg__2_)
+void *c_KDDockWidgets__Core__View__mapTo_View_QPoint(void *thisObj, void *arg__1_, void *arg__2_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     assert(arg__2_);
@@ -1201,439 +1201,439 @@ void *c_KDDockWidgets__View__mapTo_View_QPoint(void *thisObj, void *arg__1_, voi
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(arg__1,arg__2);} else {    return targetPtr->mapTo(arg__1,arg__2);} }() };
 }
 // mapToGlobal(QPoint arg__1) const
-void *c_KDDockWidgets__View__mapToGlobal_QPoint(void *thisObj, void *arg__1_)
+void *c_KDDockWidgets__Core__View__mapToGlobal_QPoint(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(arg__1);} else {    return targetPtr->mapToGlobal(arg__1);} }() };
 }
 // maxSizeHint() const
-void *c_KDDockWidgets__View__maxSizeHint(void *thisObj)
+void *c_KDDockWidgets__Core__View__maxSizeHint(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
 }
 // minSize() const
-void *c_KDDockWidgets__View__minSize(void *thisObj)
+void *c_KDDockWidgets__Core__View__minSize(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
 }
 // minimumHeight() const
-int c_KDDockWidgets__View__minimumHeight(void *thisObj)
+int c_KDDockWidgets__Core__View__minimumHeight(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minimumHeight_nocallback();} else {    return targetPtr->minimumHeight();} }();
 }
 // minimumWidth() const
-int c_KDDockWidgets__View__minimumWidth(void *thisObj)
+int c_KDDockWidgets__Core__View__minimumWidth(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minimumWidth_nocallback();} else {    return targetPtr->minimumWidth();} }();
 }
 // move(QPoint arg__1)
-void c_KDDockWidgets__View__move_QPoint(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__View__move_QPoint(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     fromPtr(thisObj)->move(arg__1);
 }
 // move(int x, int y)
-void c_KDDockWidgets__View__move_int_int(void *thisObj, int x, int y)
+void c_KDDockWidgets__Core__View__move_int_int(void *thisObj, int x, int y)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->move_nocallback(x,y);} else {    return targetPtr->move(x,y);} }();
 }
 // normalGeometry() const
-void *c_KDDockWidgets__View__normalGeometry(void *thisObj)
+void *c_KDDockWidgets__Core__View__normalGeometry(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
 }
 // objectName() const
-void *c_KDDockWidgets__View__objectName(void *thisObj)
+void *c_KDDockWidgets__Core__View__objectName(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->objectName_nocallback();} else {    return targetPtr->objectName();} }() };
 }
 // onResize(QSize arg__1)
-bool c_KDDockWidgets__View__onResize_QSize(void *thisObj, void *arg__1_)
+bool c_KDDockWidgets__Core__View__onResize_QSize(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     return fromPtr(thisObj)->onResize(arg__1);
 }
 // onResize(int h, int w)
-bool c_KDDockWidgets__View__onResize_int_int(void *thisObj, int h, int w)
+bool c_KDDockWidgets__Core__View__onResize_int_int(void *thisObj, int h, int w)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
 }
 // parentSize() const
-void *c_KDDockWidgets__View__parentSize(void *thisObj)
+void *c_KDDockWidgets__Core__View__parentSize(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->parentSize() };
 }
 // pos() const
-void *c_KDDockWidgets__View__pos(void *thisObj)
+void *c_KDDockWidgets__Core__View__pos(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->pos() };
 }
 // raise()
-void c_KDDockWidgets__View__raise(void *thisObj)
+void c_KDDockWidgets__Core__View__raise(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raise_nocallback();} else {    return targetPtr->raise();} }();
 }
 // raiseAndActivate()
-void c_KDDockWidgets__View__raiseAndActivate(void *thisObj)
+void c_KDDockWidgets__Core__View__raiseAndActivate(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseAndActivate_nocallback();} else {    return targetPtr->raiseAndActivate();} }();
 }
 // rect() const
-void *c_KDDockWidgets__View__rect(void *thisObj)
+void *c_KDDockWidgets__Core__View__rect(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->rect() };
 }
 // releaseKeyboard()
-void c_KDDockWidgets__View__releaseKeyboard(void *thisObj)
+void c_KDDockWidgets__Core__View__releaseKeyboard(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->releaseKeyboard_nocallback();} else {    return targetPtr->releaseKeyboard();} }();
 }
 // releaseMouse()
-void c_KDDockWidgets__View__releaseMouse(void *thisObj)
+void c_KDDockWidgets__Core__View__releaseMouse(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->releaseMouse_nocallback();} else {    return targetPtr->releaseMouse();} }();
 }
 // resize(QSize arg__1)
-void c_KDDockWidgets__View__resize_QSize(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__View__resize_QSize(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromPtr(thisObj)->resize(arg__1);
 }
 // resize(int w, int h)
-void c_KDDockWidgets__View__resize_int_int(void *thisObj, int w, int h)
+void c_KDDockWidgets__Core__View__resize_int_int(void *thisObj, int w, int h)
 {
     fromPtr(thisObj)->resize(w, h);
 }
 // setAboutToBeDestroyed()
-void c_KDDockWidgets__View__setAboutToBeDestroyed(void *thisObj)
+void c_KDDockWidgets__Core__View__setAboutToBeDestroyed(void *thisObj)
 {
     fromPtr(thisObj)->setAboutToBeDestroyed();
 }
 // setCursor(Qt::CursorShape arg__1)
-void c_KDDockWidgets__View__setCursor_CursorShape(void *thisObj, int arg__1)
+void c_KDDockWidgets__Core__View__setCursor_CursorShape(void *thisObj, int arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setCursor_nocallback(static_cast<Qt::CursorShape>(arg__1));} else {    return targetPtr->setCursor(static_cast<Qt::CursorShape>(arg__1));} }();
 }
 // setFixedHeight(int arg__1)
-void c_KDDockWidgets__View__setFixedHeight_int(void *thisObj, int arg__1)
+void c_KDDockWidgets__Core__View__setFixedHeight_int(void *thisObj, int arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setFixedHeight_nocallback(arg__1);} else {    return targetPtr->setFixedHeight(arg__1);} }();
 }
 // setFixedWidth(int arg__1)
-void c_KDDockWidgets__View__setFixedWidth_int(void *thisObj, int arg__1)
+void c_KDDockWidgets__Core__View__setFixedWidth_int(void *thisObj, int arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setFixedWidth_nocallback(arg__1);} else {    return targetPtr->setFixedWidth(arg__1);} }();
 }
 // setGeometry(QRect arg__1)
-void c_KDDockWidgets__View__setGeometry_QRect(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__View__setGeometry_QRect(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setGeometry_nocallback(arg__1);} else {    return targetPtr->setGeometry(arg__1);} }();
 }
 // setHeight(int height)
-void c_KDDockWidgets__View__setHeight_int(void *thisObj, int height)
+void c_KDDockWidgets__Core__View__setHeight_int(void *thisObj, int height)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setHeight_nocallback(height);} else {    return targetPtr->setHeight(height);} }();
 }
 // setMaximumSize(QSize sz)
-void c_KDDockWidgets__View__setMaximumSize_QSize(void *thisObj, void *sz_)
+void c_KDDockWidgets__Core__View__setMaximumSize_QSize(void *thisObj, void *sz_)
 {
     assert(sz_);
     auto &sz = *reinterpret_cast<QSize *>(sz_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMaximumSize_nocallback(sz);} else {    return targetPtr->setMaximumSize(sz);} }();
 }
 // setMinimumSize(QSize arg__1)
-void c_KDDockWidgets__View__setMinimumSize_QSize(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__View__setMinimumSize_QSize(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMinimumSize_nocallback(arg__1);} else {    return targetPtr->setMinimumSize(arg__1);} }();
 }
 // setMouseTracking(bool arg__1)
-void c_KDDockWidgets__View__setMouseTracking_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Core__View__setMouseTracking_bool(void *thisObj, bool arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMouseTracking_nocallback(arg__1);} else {    return targetPtr->setMouseTracking(arg__1);} }();
 }
 // setObjectName(const QString & arg__1)
-void c_KDDockWidgets__View__setObjectName_QString(void *thisObj, const char *arg__1_)
+void c_KDDockWidgets__Core__View__setObjectName_QString(void *thisObj, const char *arg__1_)
 {
     const auto arg__1 = QString::fromUtf8(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setObjectName_nocallback(arg__1);} else {    return targetPtr->setObjectName(arg__1);} }();
 }
 // setParent(KDDockWidgets::Core::View * arg__1)
-void c_KDDockWidgets__View__setParent_View(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__View__setParent_View(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setParent_nocallback(arg__1);} else {    return targetPtr->setParent(arg__1);} }();
 }
 // setSize(QSize arg__1)
-void c_KDDockWidgets__View__setSize_QSize(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__View__setSize_QSize(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     fromPtr(thisObj)->setSize(arg__1);
 }
 // setSize(int width, int height)
-void c_KDDockWidgets__View__setSize_int_int(void *thisObj, int width, int height)
+void c_KDDockWidgets__Core__View__setSize_int_int(void *thisObj, int width, int height)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setSize_nocallback(width,height);} else {    return targetPtr->setSize(width,height);} }();
 }
 // setVisible(bool arg__1)
-void c_KDDockWidgets__View__setVisible_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Core__View__setVisible_bool(void *thisObj, bool arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setVisible_nocallback(arg__1);} else {    return targetPtr->setVisible(arg__1);} }();
 }
 // setWidth(int width)
-void c_KDDockWidgets__View__setWidth_int(void *thisObj, int width)
+void c_KDDockWidgets__Core__View__setWidth_int(void *thisObj, int width)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWidth_nocallback(width);} else {    return targetPtr->setWidth(width);} }();
 }
 // setWindowOpacity(double arg__1)
-void c_KDDockWidgets__View__setWindowOpacity_double(void *thisObj, double arg__1)
+void c_KDDockWidgets__Core__View__setWindowOpacity_double(void *thisObj, double arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWindowOpacity_nocallback(arg__1);} else {    return targetPtr->setWindowOpacity(arg__1);} }();
 }
 // setWindowTitle(const QString & title)
-void c_KDDockWidgets__View__setWindowTitle_QString(void *thisObj, const char *title_)
+void c_KDDockWidgets__Core__View__setWindowTitle_QString(void *thisObj, const char *title_)
 {
     const auto title = QString::fromUtf8(title_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWindowTitle_nocallback(title);} else {    return targetPtr->setWindowTitle(title);} }();
 }
 // setZOrder(int arg__1)
-void c_KDDockWidgets__View__setZOrder_int(void *thisObj, int arg__1)
+void c_KDDockWidgets__Core__View__setZOrder_int(void *thisObj, int arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setZOrder_nocallback(arg__1);} else {    return targetPtr->setZOrder(arg__1);} }();
 }
 // show()
-void c_KDDockWidgets__View__show(void *thisObj)
+void c_KDDockWidgets__Core__View__show(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->show_nocallback();} else {    return targetPtr->show();} }();
 }
 // showMaximized()
-void c_KDDockWidgets__View__showMaximized(void *thisObj)
+void c_KDDockWidgets__Core__View__showMaximized(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showMaximized_nocallback();} else {    return targetPtr->showMaximized();} }();
 }
 // showMinimized()
-void c_KDDockWidgets__View__showMinimized(void *thisObj)
+void c_KDDockWidgets__Core__View__showMinimized(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showMinimized_nocallback();} else {    return targetPtr->showMinimized();} }();
 }
 // showNormal()
-void c_KDDockWidgets__View__showNormal(void *thisObj)
+void c_KDDockWidgets__Core__View__showNormal(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showNormal_nocallback();} else {    return targetPtr->showNormal();} }();
 }
 // size() const
-void *c_KDDockWidgets__View__size(void *thisObj)
+void *c_KDDockWidgets__Core__View__size(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->size() };
 }
 // sizeHint() const
-void *c_KDDockWidgets__View__sizeHint(void *thisObj)
+void *c_KDDockWidgets__Core__View__sizeHint(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->sizeHint_nocallback();} else {    return targetPtr->sizeHint();} }() };
 }
 // type() const
-int c_KDDockWidgets__View__type(void *thisObj)
+int c_KDDockWidgets__Core__View__type(void *thisObj)
 {
     return int(fromPtr(thisObj)->type());
 }
 // update()
-void c_KDDockWidgets__View__update(void *thisObj)
+void c_KDDockWidgets__Core__View__update(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->update_nocallback();} else {    return targetPtr->update();} }();
 }
 // width() const
-int c_KDDockWidgets__View__width(void *thisObj)
+int c_KDDockWidgets__Core__View__width(void *thisObj)
 {
     return fromPtr(thisObj)->width();
 }
 // windowGeometry() const
-void *c_KDDockWidgets__View__windowGeometry(void *thisObj)
+void *c_KDDockWidgets__Core__View__windowGeometry(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->windowGeometry() };
 }
 // x() const
-int c_KDDockWidgets__View__x(void *thisObj)
+int c_KDDockWidgets__Core__View__x(void *thisObj)
 {
     return fromPtr(thisObj)->x();
 }
 // y() const
-int c_KDDockWidgets__View__y(void *thisObj)
+int c_KDDockWidgets__Core__View__y(void *thisObj)
 {
     return fromPtr(thisObj)->y();
 }
-void c_KDDockWidgets__View__destructor(void *thisObj)
+void c_KDDockWidgets__Core__View__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 896:
+    case 886:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_activateWindow>(callback);
         break;
-    case 907:
+    case 897:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_close>(callback);
         break;
-    case 910:
+    case 900:
         wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_createPlatformWindow>(callback);
         break;
-    case 915:
+    case 905:
         wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_flags>(callback);
         break;
-    case 917:
+    case 907:
         wrapper->m_free_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_free_impl>(callback);
         break;
-    case 919:
+    case 909:
         wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_geometry>(callback);
         break;
-    case 921:
+    case 911:
         wrapper->m_grabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_grabMouse>(callback);
         break;
-    case 924:
+    case 914:
         wrapper->m_hasFocusCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_hasFocus>(callback);
         break;
-    case 926:
+    case 916:
         wrapper->m_hideCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_hide>(callback);
         break;
-    case 929:
+    case 919:
         wrapper->m_initCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_init>(callback);
         break;
-    case 931:
+    case 921:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isActiveWindow>(callback);
         break;
-    case 932:
+    case 922:
         wrapper->m_isMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isMaximized>(callback);
         break;
-    case 933:
+    case 923:
         wrapper->m_isMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isMinimized>(callback);
         break;
-    case 934:
+    case 924:
         wrapper->m_isNullCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isNull>(callback);
         break;
-    case 935:
+    case 925:
         wrapper->m_isRootViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isRootView>(callback);
         break;
-    case 936:
+    case 926:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_isVisible>(callback);
         break;
-    case 937:
+    case 927:
         wrapper->m_mapFromGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_mapFromGlobal>(callback);
         break;
-    case 938:
+    case 928:
         wrapper->m_mapToCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_mapTo>(callback);
         break;
-    case 939:
+    case 929:
         wrapper->m_mapToGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_mapToGlobal>(callback);
         break;
-    case 940:
+    case 930:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 941:
+    case 931:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_minSize>(callback);
         break;
-    case 942:
+    case 932:
         wrapper->m_minimumHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_minimumHeight>(callback);
         break;
-    case 943:
+    case 933:
         wrapper->m_minimumWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_minimumWidth>(callback);
         break;
-    case 945:
+    case 935:
         wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_move_2>(callback);
         break;
-    case 946:
+    case 936:
         wrapper->m_normalGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_normalGeometry>(callback);
         break;
-    case 947:
+    case 937:
         wrapper->m_objectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_objectName>(callback);
         break;
-    case 949:
+    case 939:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_onResize_2>(callback);
         break;
-    case 952:
+    case 942:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_raise>(callback);
         break;
-    case 953:
+    case 943:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 955:
+    case 945:
         wrapper->m_releaseKeyboardCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_releaseKeyboard>(callback);
         break;
-    case 956:
+    case 946:
         wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_releaseMouse>(callback);
         break;
-    case 960:
+    case 950:
         wrapper->m_setCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setCursor>(callback);
         break;
-    case 961:
+    case 951:
         wrapper->m_setFixedHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setFixedHeight>(callback);
         break;
-    case 962:
+    case 952:
         wrapper->m_setFixedWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setFixedWidth>(callback);
         break;
-    case 963:
+    case 953:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setGeometry>(callback);
         break;
-    case 964:
+    case 954:
         wrapper->m_setHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setHeight>(callback);
         break;
-    case 965:
+    case 955:
         wrapper->m_setMaximumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setMaximumSize>(callback);
         break;
-    case 966:
+    case 956:
         wrapper->m_setMinimumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setMinimumSize>(callback);
         break;
-    case 967:
+    case 957:
         wrapper->m_setMouseTrackingCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setMouseTracking>(callback);
         break;
-    case 968:
+    case 958:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setObjectName>(callback);
         break;
-    case 969:
+    case 959:
         wrapper->m_setParentCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setParent>(callback);
         break;
-    case 971:
+    case 961:
         wrapper->m_setSize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setSize_2>(callback);
         break;
-    case 972:
+    case 962:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setVisible>(callback);
         break;
-    case 973:
+    case 963:
         wrapper->m_setWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setWidth>(callback);
         break;
-    case 974:
+    case 964:
         wrapper->m_setWindowOpacityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setWindowOpacity>(callback);
         break;
-    case 975:
+    case 965:
         wrapper->m_setWindowTitleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setWindowTitle>(callback);
         break;
-    case 976:
+    case 966:
         wrapper->m_setZOrderCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_setZOrder>(callback);
         break;
-    case 977:
+    case 967:
         wrapper->m_showCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_show>(callback);
         break;
-    case 978:
+    case 968:
         wrapper->m_showMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_showMaximized>(callback);
         break;
-    case 979:
+    case 969:
         wrapper->m_showMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_showMinimized>(callback);
         break;
-    case 980:
+    case 970:
         wrapper->m_showNormalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_showNormal>(callback);
         break;
-    case 982:
+    case 972:
         wrapper->m_sizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_sizeHint>(callback);
         break;
-    case 984:
+    case 974:
         wrapper->m_updateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::View_wrapper::Callback_update>(callback);
         break;
     }

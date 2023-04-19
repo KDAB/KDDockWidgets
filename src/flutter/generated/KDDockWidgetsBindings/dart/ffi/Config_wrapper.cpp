@@ -91,7 +91,7 @@ void Config_wrapper::setTransparencyOnlyOverDropIndicator(bool only)
 {
     ::KDDockWidgets::Config::setTransparencyOnlyOverDropIndicator(only);
 }
-void Config_wrapper::setViewFactory(KDDockWidgets::ViewFactory *arg__1)
+void Config_wrapper::setViewFactory(KDDockWidgets::Core::ViewFactory *arg__1)
 {
     ::KDDockWidgets::Config::setViewFactory(arg__1);
 }
@@ -103,7 +103,7 @@ bool Config_wrapper::transparencyOnlyOverDropIndicator() const
 {
     return ::KDDockWidgets::Config::transparencyOnlyOverDropIndicator();
 }
-KDDockWidgets::ViewFactory *Config_wrapper::viewFactory() const
+KDDockWidgets::Core::ViewFactory *Config_wrapper::viewFactory() const
 {
     return ::KDDockWidgets::Config::viewFactory();
 }
@@ -208,10 +208,10 @@ void c_KDDockWidgets__Config__setTransparencyOnlyOverDropIndicator_bool(void *th
 {
     fromPtr(thisObj)->setTransparencyOnlyOverDropIndicator(only);
 }
-// setViewFactory(KDDockWidgets::ViewFactory * arg__1)
+// setViewFactory(KDDockWidgets::Core::ViewFactory * arg__1)
 void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::ViewFactory *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::ViewFactory *>(arg__1_);
     fromPtr(thisObj)->setViewFactory(arg__1);
 }
 // startDragDistance() const

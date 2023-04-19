@@ -150,118 +150,118 @@ static KDDockWidgetsBindings_wrappersNS::Stack_wrapper *fromWrapperPtr(void *ptr
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Controllers__Stack_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__Stack_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper *>(cppObj);
 } // addDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
-void c_KDDockWidgets__Controllers__Stack__addDockWidget_DockWidget(void *thisObj, void *arg__1_)
+void c_KDDockWidgets__Core__Stack__addDockWidget_DockWidget(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     fromPtr(thisObj)->addDockWidget(arg__1);
 }
 // contains(KDDockWidgets::Core::DockWidget * dw) const
-bool c_KDDockWidgets__Controllers__Stack__contains_DockWidget(void *thisObj, void *dw_)
+bool c_KDDockWidgets__Core__Stack__contains_DockWidget(void *thisObj, void *dw_)
 {
     auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
     return fromPtr(thisObj)->contains(dw);
 }
 // group() const
-void *c_KDDockWidgets__Controllers__Stack__group(void *thisObj)
+void *c_KDDockWidgets__Core__Stack__group(void *thisObj)
 {
     return fromPtr(thisObj)->group();
 }
 // insertDockWidget(KDDockWidgets::Core::DockWidget * dockwidget, int index)
-bool c_KDDockWidgets__Controllers__Stack__insertDockWidget_DockWidget_int(void *thisObj, void *dockwidget_, int index)
+bool c_KDDockWidgets__Core__Stack__insertDockWidget_DockWidget_int(void *thisObj, void *dockwidget_, int index)
 {
     auto dockwidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockwidget_);
     return fromPtr(thisObj)->insertDockWidget(dockwidget, index);
 }
 // isMDI() const
-bool c_KDDockWidgets__Controllers__Stack__isMDI(void *thisObj)
+bool c_KDDockWidgets__Core__Stack__isMDI(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
 }
 // isPositionDraggable(QPoint p) const
-bool c_KDDockWidgets__Controllers__Stack__isPositionDraggable_QPoint(void *thisObj, void *p_)
+bool c_KDDockWidgets__Core__Stack__isPositionDraggable_QPoint(void *thisObj, void *p_)
 {
     assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isPositionDraggable_nocallback(p);} else {    return targetPtr->isPositionDraggable(p);} }();
 }
 // isWindow() const
-bool c_KDDockWidgets__Controllers__Stack__isWindow(void *thisObj)
+bool c_KDDockWidgets__Core__Stack__isWindow(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
 }
 // numDockWidgets() const
-int c_KDDockWidgets__Controllers__Stack__numDockWidgets(void *thisObj)
+int c_KDDockWidgets__Core__Stack__numDockWidgets(void *thisObj)
 {
     return fromPtr(thisObj)->numDockWidgets();
 }
 // onMouseDoubleClick(QPoint localPos)
-bool c_KDDockWidgets__Controllers__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_)
+bool c_KDDockWidgets__Core__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_)
 {
     assert(localPos_);
     auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
     return fromPtr(thisObj)->onMouseDoubleClick(localPos);
 }
 // setDocumentMode(bool arg__1)
-void c_KDDockWidgets__Controllers__Stack__setDocumentMode_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Core__Stack__setDocumentMode_bool(void *thisObj, bool arg__1)
 {
     fromPtr(thisObj)->setDocumentMode(arg__1);
 }
 // setParentView_impl(KDDockWidgets::Core::View * parent)
-void c_KDDockWidgets__Controllers__Stack__setParentView_impl_View(void *thisObj, void *parent_)
+void c_KDDockWidgets__Core__Stack__setParentView_impl_View(void *thisObj, void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
 // setTabBarAutoHide(bool arg__1)
-void c_KDDockWidgets__Controllers__Stack__setTabBarAutoHide_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__Core__Stack__setTabBarAutoHide_bool(void *thisObj, bool arg__1)
 {
     fromPtr(thisObj)->setTabBarAutoHide(arg__1);
 }
 // singleDockWidget() const
-void *c_KDDockWidgets__Controllers__Stack__singleDockWidget(void *thisObj)
+void *c_KDDockWidgets__Core__Stack__singleDockWidget(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->singleDockWidget_nocallback();} else {    return targetPtr->singleDockWidget();} }();
 }
 // tabBar() const
-void *c_KDDockWidgets__Controllers__Stack__tabBar(void *thisObj)
+void *c_KDDockWidgets__Core__Stack__tabBar(void *thisObj)
 {
     return fromPtr(thisObj)->tabBar();
 }
 // tabBarAutoHide() const
-bool c_KDDockWidgets__Controllers__Stack__tabBarAutoHide(void *thisObj)
+bool c_KDDockWidgets__Core__Stack__tabBarAutoHide(void *thisObj)
 {
     return fromPtr(thisObj)->tabBarAutoHide();
 }
 // tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Controllers__Stack__tr_char_char_int(const char *s, const char *c, int n)
+void *c_static_KDDockWidgets__Core__Stack__tr_char_char_int(const char *s, const char *c, int n)
 {
     return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::Stack_wrapper::tr(s, c, n) };
 }
-void c_KDDockWidgets__Controllers__Stack__destructor(void *thisObj)
+void c_KDDockWidgets__Core__Stack__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__Stack__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Core__Stack__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1190:
+    case 1180:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isMDI>(callback);
         break;
-    case 1191:
+    case 1181:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isPositionDraggable>(callback);
         break;
-    case 1193:
+    case 1183:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_isWindow>(callback);
         break;
-    case 881:
+    case 871:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1205:
+    case 1195:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

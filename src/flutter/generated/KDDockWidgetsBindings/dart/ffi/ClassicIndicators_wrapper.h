@@ -15,8 +15,8 @@
 #include <qpoint.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <Group.h>
-#include <View.h>
+#include <core/View.h>
+#include <core/Group.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class ClassicIndicators_wrapper : public ::KDDockWidgets::Core::ClassicIndicators
@@ -56,28 +56,28 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::ClassicIndicators::ClassicIndicators(KDDockWidgets::Core::DropArea * dropArea)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__ClassicIndicators__constructor_DropArea(void *dropArea_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicIndicators__constructor_DropArea(void *dropArea_);
 // KDDockWidgets::Core::ClassicIndicators::dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__ClassicIndicators__dropIndicatorVisible_DropLocation(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__ClassicIndicators__dropIndicatorVisible_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicIndicators::hover_impl(QPoint globalPos)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__ClassicIndicators__hover_impl_QPoint(void *thisObj, void *globalPos_);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__ClassicIndicators__hover_impl_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::ClassicIndicators::indicatorsVisibleChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__indicatorsVisibleChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicators__indicatorsVisibleChanged(void *thisObj);
 // KDDockWidgets::Core::ClassicIndicators::onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__onHoveredFrameChanged_Group(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicators__onHoveredFrameChanged_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ClassicIndicators::onResize(QSize newSize)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_);
 // KDDockWidgets::Core::ClassicIndicators::posForIndicator(KDDockWidgets::DropLocation arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__ClassicIndicators__posForIndicator_DropLocation(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicIndicators__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicIndicators::setDropLocation(KDDockWidgets::DropLocation arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__setDropLocation_DropLocation(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicators__setDropLocation_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicIndicators::setParentView_impl(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__setParentView_impl_View(void *thisObj, void *parent_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicators__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::ClassicIndicators::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__ClassicIndicators__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__ClassicIndicators__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::ClassicIndicators::updateVisibility()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__updateVisibility(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__ClassicIndicators_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicators__updateVisibility(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicators__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicators__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicators_Finalizer(void *, void *cppObj, void *);
 }

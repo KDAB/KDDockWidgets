@@ -102,90 +102,90 @@ static KDDockWidgetsBindings_wrappersNS::Separator_wrapper *fromWrapperPtr(void 
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Controllers__Separator_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__Separator_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper *>(cppObj);
 }
-void *c_KDDockWidgets__Controllers__Separator__constructor_View(void *host_)
+void *c_KDDockWidgets__Core__Separator__constructor_View(void *host_)
 {
     auto host = reinterpret_cast<KDDockWidgets::Core::View *>(host_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Separator_wrapper(host);
     return reinterpret_cast<void *>(ptr);
 }
 // isResizing()
-bool c_static_KDDockWidgets__Controllers__Separator__isResizing()
+bool c_static_KDDockWidgets__Core__Separator__isResizing()
 {
     return KDDockWidgetsBindings_wrappersNS::Separator_wrapper::isResizing();
 }
 // isVertical() const
-bool c_KDDockWidgets__Controllers__Separator__isVertical(void *thisObj)
+bool c_KDDockWidgets__Core__Separator__isVertical(void *thisObj)
 {
     return fromPtr(thisObj)->isVertical();
 }
 // move(int p)
-void c_KDDockWidgets__Controllers__Separator__move_int(void *thisObj, int p)
+void c_KDDockWidgets__Core__Separator__move_int(void *thisObj, int p)
 {
     fromPtr(thisObj)->move(p);
 }
 // numSeparators()
-int c_static_KDDockWidgets__Controllers__Separator__numSeparators()
+int c_static_KDDockWidgets__Core__Separator__numSeparators()
 {
     return KDDockWidgetsBindings_wrappersNS::Separator_wrapper::numSeparators();
 }
 // onMouseDoubleClick()
-void c_KDDockWidgets__Controllers__Separator__onMouseDoubleClick(void *thisObj)
+void c_KDDockWidgets__Core__Separator__onMouseDoubleClick(void *thisObj)
 {
     fromPtr(thisObj)->onMouseDoubleClick();
 }
 // onMouseMove(QPoint pos)
-void c_KDDockWidgets__Controllers__Separator__onMouseMove_QPoint(void *thisObj, void *pos_)
+void c_KDDockWidgets__Core__Separator__onMouseMove_QPoint(void *thisObj, void *pos_)
 {
     assert(pos_);
     auto &pos = *reinterpret_cast<QPoint *>(pos_);
     fromPtr(thisObj)->onMouseMove(pos);
 }
 // onMousePress()
-void c_KDDockWidgets__Controllers__Separator__onMousePress(void *thisObj)
+void c_KDDockWidgets__Core__Separator__onMousePress(void *thisObj)
 {
     fromPtr(thisObj)->onMousePress();
 }
 // onMouseReleased()
-void c_KDDockWidgets__Controllers__Separator__onMouseReleased(void *thisObj)
+void c_KDDockWidgets__Core__Separator__onMouseReleased(void *thisObj)
 {
     fromPtr(thisObj)->onMouseReleased();
 }
 // position() const
-int c_KDDockWidgets__Controllers__Separator__position(void *thisObj)
+int c_KDDockWidgets__Core__Separator__position(void *thisObj)
 {
     return fromPtr(thisObj)->position();
 }
 // setGeometry(QRect r)
-void c_KDDockWidgets__Controllers__Separator__setGeometry_QRect(void *thisObj, void *r_)
+void c_KDDockWidgets__Core__Separator__setGeometry_QRect(void *thisObj, void *r_)
 {
     assert(r_);
     auto &r = *reinterpret_cast<QRect *>(r_);
     fromPtr(thisObj)->setGeometry(r);
 }
 // setGeometry(int pos, int pos2, int length)
-void c_KDDockWidgets__Controllers__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length)
+void c_KDDockWidgets__Core__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length)
 {
     fromPtr(thisObj)->setGeometry(pos, pos2, length);
 }
 // setParentView_impl(KDDockWidgets::Core::View * parent)
-void c_KDDockWidgets__Controllers__Separator__setParentView_impl_View(void *thisObj, void *parent_)
+void c_KDDockWidgets__Core__Separator__setParentView_impl_View(void *thisObj, void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
-void c_KDDockWidgets__Controllers__Separator__destructor(void *thisObj)
+void c_KDDockWidgets__Core__Separator__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Controllers__Separator__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 881:
+    case 871:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Separator_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <Group.h>
+#include <core/Group.h>
 #include <qstring.h>
-#include <View.h>
-#include <DockWidget.h>
+#include <core/View.h>
+#include <core/DockWidget.h>
 #include <KDDockWidgets.h>
 #include <FloatingWindow.h>
 #include <Stack.h>
@@ -84,7 +84,7 @@ public:
     bool isMDIWrapper() const;
     bool isOverlayed() const;
     bool isTheOnlyFrame() const;
-    Core::Item *layoutItem() const;
+    KDDockWidgets::Core::Item *layoutItem() const;
     KDDockWidgets::Core::MainWindow *mainWindow() const;
     KDDockWidgets::Core::DockWidget *mdiDockWidgetWrapper() const;
     KDDockWidgets::Core::DropArea *mdiDropAreaWrapper() const;
@@ -99,7 +99,7 @@ public:
     void setCurrentDockWidget(KDDockWidgets::Core::DockWidget *arg__1);
     void setCurrentTabIndex(int index);
     void setLayout(KDDockWidgets::Core::Layout *arg__1);
-    void setLayoutItem(Core::Item *item);
+    void setLayoutItem(KDDockWidgets::Core::Item *item);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     KDDockWidgets::Core::Stack *stack() const;
@@ -124,160 +124,160 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::Group::Group(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__constructor_View(void *parent_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__constructor_View(void *parent_);
 // KDDockWidgets::Core::Group::actualTitleBar() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__actualTitleBar(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__actualTitleBar(void *thisObj);
 // KDDockWidgets::Core::Group::actualTitleBarChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__actualTitleBarChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__actualTitleBarChanged(void *thisObj);
 // KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::InitialOption arg__2)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__addTab_DockWidget_InitialOption(void *thisObj, void *arg__1_, void *arg__2_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__addTab_DockWidget_InitialOption(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::FloatingWindow * floatingWindow, KDDockWidgets::InitialOption arg__2)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__addTab_FloatingWindow_InitialOption(void *thisObj, void *floatingWindow_, void *arg__2_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__addTab_FloatingWindow_InitialOption(void *thisObj, void *floatingWindow_, void *arg__2_);
 // KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::InitialOption arg__2)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__addTab_Group_InitialOption(void *thisObj, void *arg__1_, void *arg__2_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__addTab_Group_InitialOption(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::Group::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1);
 // KDDockWidgets::Core::Group::allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__allDockWidgetsHave_LayoutSaverOption(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__allDockWidgetsHave_LayoutSaverOption(void *thisObj, int arg__1);
 // KDDockWidgets::Core::Group::alwaysShowsTabs() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__alwaysShowsTabs(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__alwaysShowsTabs(void *thisObj);
 // KDDockWidgets::Core::Group::anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__anyDockWidgetsHas_DockWidgetOption(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__anyDockWidgetsHas_DockWidgetOption(void *thisObj, int arg__1);
 // KDDockWidgets::Core::Group::anyDockWidgetsHas(KDDockWidgets::LayoutSaverOption arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__anyDockWidgetsHas_LayoutSaverOption(void *thisObj, int arg__1);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__anyDockWidgetsHas_LayoutSaverOption(void *thisObj, int arg__1);
 // KDDockWidgets::Core::Group::anyNonClosable() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__anyNonClosable(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__anyNonClosable(void *thisObj);
 // KDDockWidgets::Core::Group::anyNonDockable() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__anyNonDockable(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__anyNonDockable(void *thisObj);
 // KDDockWidgets::Core::Group::beingDeletedLater() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__beingDeletedLater(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__beingDeletedLater(void *thisObj);
 // KDDockWidgets::Core::Group::biggestDockWidgetMaxSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__biggestDockWidgetMaxSize(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__biggestDockWidgetMaxSize(void *thisObj);
 // KDDockWidgets::Core::Group::containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__containsDockWidget_DockWidget(void *thisObj, void *w_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__containsDockWidget_DockWidget(void *thisObj, void *w_);
 // KDDockWidgets::Core::Group::containsMouse(QPoint globalPos) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__containsMouse_QPoint(void *thisObj, void *globalPos_);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__containsMouse_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::Group::currentDockWidget() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__currentDockWidget(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__currentDockWidget(void *thisObj);
 // KDDockWidgets::Core::Group::currentIndex() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Group__currentIndex(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Group__currentIndex(void *thisObj);
 // KDDockWidgets::Core::Group::currentTabIndex() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Group__currentTabIndex(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Group__currentTabIndex(void *thisObj);
 // KDDockWidgets::Core::Group::dbg_numFrames()
-KDDockWidgetsBindings_EXPORT int c_static_KDDockWidgets__Controllers__Group__dbg_numFrames();
+KDDockWidgetsBindings_EXPORT int c_static_KDDockWidgets__Core__Group__dbg_numFrames();
 // KDDockWidgets::Core::Group::detachTab(KDDockWidgets::Core::DockWidget * arg__1)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__detachTab_DockWidget(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__detachTab_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Group::dockWidgetAt(int index) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__dockWidgetAt_int(void *thisObj, int index);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__dockWidgetAt_int(void *thisObj, int index);
 // KDDockWidgets::Core::Group::dockWidgetCount() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Group__dockWidgetCount(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Group__dockWidgetCount(void *thisObj);
 // KDDockWidgets::Core::Group::dockWidgetsMinSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__dockWidgetsMinSize(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__dockWidgetsMinSize(void *thisObj);
 // KDDockWidgets::Core::Group::dragRect() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__dragRect(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__dragRect(void *thisObj);
 // KDDockWidgets::Core::Group::floatingWindow() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__floatingWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::Group::focusedWidgetChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__focusedWidgetChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__focusedWidgetChanged(void *thisObj);
 // KDDockWidgets::Core::Group::focusedWidgetChangedCallback()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__focusedWidgetChangedCallback(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__focusedWidgetChangedCallback(void *thisObj);
 // KDDockWidgets::Core::Group::hasNestedMDIDockWidgets() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__hasNestedMDIDockWidgets(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__hasNestedMDIDockWidgets(void *thisObj);
 // KDDockWidgets::Core::Group::hasSingleDockWidget() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__hasSingleDockWidget(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__hasSingleDockWidget(void *thisObj);
 // KDDockWidgets::Core::Group::hasTabsVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__hasTabsVisible(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__hasTabsVisible(void *thisObj);
 // KDDockWidgets::Core::Group::hasTabsVisibleChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__hasTabsVisibleChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__hasTabsVisibleChanged(void *thisObj);
 // KDDockWidgets::Core::Group::indexOfDockWidget(const KDDockWidgets::Core::DockWidget * arg__1)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Group__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Group__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Group::insertDockWidget(KDDockWidgets::Core::DockWidget * arg__1, int index)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__insertDockWidget_DockWidget_int(void *thisObj, void *arg__1_, int index);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__insertDockWidget_DockWidget_int(void *thisObj, void *arg__1_, int index);
 // KDDockWidgets::Core::Group::insertWidget(KDDockWidgets::Core::DockWidget * arg__1, int index, KDDockWidgets::InitialOption arg__3)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__insertWidget_DockWidget_int_InitialOption(void *thisObj, void *arg__1_, int index, void *arg__3_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__insertWidget_DockWidget_int_InitialOption(void *thisObj, void *arg__1_, int index, void *arg__3_);
 // KDDockWidgets::Core::Group::isCentralFrame() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isCentralFrame(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isCentralFrame(void *thisObj);
 // KDDockWidgets::Core::Group::isDockable() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isDockable(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isDockable(void *thisObj);
 // KDDockWidgets::Core::Group::isEmpty() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isEmpty(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isEmpty(void *thisObj);
 // KDDockWidgets::Core::Group::isFloating() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isFloating(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isFloating(void *thisObj);
 // KDDockWidgets::Core::Group::isFocusedChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__isFocusedChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__isFocusedChanged(void *thisObj);
 // KDDockWidgets::Core::Group::isFocusedChangedCallback()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__isFocusedChangedCallback(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__isFocusedChangedCallback(void *thisObj);
 // KDDockWidgets::Core::Group::isInFloatingWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isInFloatingWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isInFloatingWindow(void *thisObj);
 // KDDockWidgets::Core::Group::isInMainWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isInMainWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isInMainWindow(void *thisObj);
 // KDDockWidgets::Core::Group::isInMainWindowChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__isInMainWindowChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__isInMainWindowChanged(void *thisObj);
 // KDDockWidgets::Core::Group::isMDI() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isMDI(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isMDI(void *thisObj);
 // KDDockWidgets::Core::Group::isMDIChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__isMDIChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__isMDIChanged(void *thisObj);
 // KDDockWidgets::Core::Group::isMDIWrapper() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isMDIWrapper(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Core::Group::isOverlayed() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isOverlayed(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isOverlayed(void *thisObj);
 // KDDockWidgets::Core::Group::isTheOnlyFrame() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Group__isTheOnlyFrame(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isTheOnlyFrame(void *thisObj);
 // KDDockWidgets::Core::Group::layoutItem() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__layoutItem(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__layoutItem(void *thisObj);
 // KDDockWidgets::Core::Group::mainWindow() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__mainWindow(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__mainWindow(void *thisObj);
 // KDDockWidgets::Core::Group::mdiDockWidgetWrapper() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__mdiDockWidgetWrapper(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__mdiDockWidgetWrapper(void *thisObj);
 // KDDockWidgets::Core::Group::mdiDropAreaWrapper() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__mdiDropAreaWrapper(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__mdiDropAreaWrapper(void *thisObj);
 // KDDockWidgets::Core::Group::mdiFrame() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__mdiFrame(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__mdiFrame(void *thisObj);
 // KDDockWidgets::Core::Group::nonContentsHeight() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Group__nonContentsHeight(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Group__nonContentsHeight(void *thisObj);
 // KDDockWidgets::Core::Group::numDockWidgetsChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__numDockWidgetsChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__numDockWidgetsChanged(void *thisObj);
 // KDDockWidgets::Core::Group::onDockWidgetCountChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onDockWidgetCountChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__onDockWidgetCountChanged(void *thisObj);
 // KDDockWidgets::Core::Group::onDockWidgetTitleChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__onDockWidgetTitleChanged(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__onDockWidgetTitleChanged(void *thisObj);
 // KDDockWidgets::Core::Group::removeWidget(KDDockWidgets::Core::DockWidget * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__removeWidget_DockWidget(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__removeWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Group::renameTab(int index, const QString & arg__2)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__renameTab_int_QString(void *thisObj, int index, const char *arg__2_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__renameTab_int_QString(void *thisObj, int index, const char *arg__2_);
 // KDDockWidgets::Core::Group::restoreToPreviousPosition()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__restoreToPreviousPosition(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__restoreToPreviousPosition(void *thisObj);
 // KDDockWidgets::Core::Group::setCurrentDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setCurrentDockWidget_DockWidget(void *thisObj, void *arg__1_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__setCurrentDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Group::setCurrentTabIndex(int index)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setCurrentTabIndex_int(void *thisObj, int index);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__setCurrentTabIndex_int(void *thisObj, int index);
 // KDDockWidgets::Core::Group::setLayout(KDDockWidgets::Core::Layout * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setLayout_Layout(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Group::setLayoutItem(Core::Item * item)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setLayoutItem_Item(void *thisObj, void *item_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__setLayout_Layout(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Group::setLayoutItem(KDDockWidgets::Core::Item * item)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__setLayoutItem_Item(void *thisObj, void *item_);
 // KDDockWidgets::Core::Group::setParentView_impl(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__setParentView_impl_View(void *thisObj, void *parent_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Group::stack() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__stack(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__stack(void *thisObj);
 // KDDockWidgets::Core::Group::tabBar() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__tabBar(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__tabBar(void *thisObj);
 // KDDockWidgets::Core::Group::title() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__title(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__title(void *thisObj);
 // KDDockWidgets::Core::Group::titleBar() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Group__titleBar(void *thisObj);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__titleBar(void *thisObj);
 // KDDockWidgets::Core::Group::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Controllers__Group__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__Group__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::Group::unoverlay()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__unoverlay(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__unoverlay(void *thisObj);
 // KDDockWidgets::Core::Group::updateFloatingActions()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__updateFloatingActions(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__updateFloatingActions(void *thisObj);
 // KDDockWidgets::Core::Group::updateTitleAndIcon()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__updateTitleAndIcon(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__updateTitleAndIcon(void *thisObj);
 // KDDockWidgets::Core::Group::updateTitleBarVisibility()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__updateTitleBarVisibility(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__updateTitleBarVisibility(void *thisObj);
 // KDDockWidgets::Core::Group::userType() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Group__userType(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Group_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Group__userType(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group_Finalizer(void *, void *cppObj, void *);
 }

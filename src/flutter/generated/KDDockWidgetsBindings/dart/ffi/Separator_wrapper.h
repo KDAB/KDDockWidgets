@@ -10,11 +10,11 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <Separator.h>
-#include <View.h>
+#include <core/View.h>
 #include <qrect.h>
 #include <qpoint.h>
-#include <qsize.h>
 #include <qstring.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Separator_wrapper : public ::KDDockWidgets::Core::Separator
@@ -41,32 +41,32 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::Separator::Separator(KDDockWidgets::Core::View * host)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Controllers__Separator__constructor_View(void *host_);
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Separator__constructor_View(void *host_);
 // KDDockWidgets::Core::Separator::isResizing()
-KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Controllers__Separator__isResizing();
+KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Core__Separator__isResizing();
 // KDDockWidgets::Core::Separator::isVertical() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Controllers__Separator__isVertical(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Separator__isVertical(void *thisObj);
 // KDDockWidgets::Core::Separator::move(int p)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__move_int(void *thisObj, int p);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__move_int(void *thisObj, int p);
 // KDDockWidgets::Core::Separator::numSeparators()
-KDDockWidgetsBindings_EXPORT int c_static_KDDockWidgets__Controllers__Separator__numSeparators();
+KDDockWidgetsBindings_EXPORT int c_static_KDDockWidgets__Core__Separator__numSeparators();
 // KDDockWidgets::Core::Separator::onMouseDoubleClick()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__onMouseDoubleClick(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMouseDoubleClick(void *thisObj);
 // KDDockWidgets::Core::Separator::onMouseMove(QPoint pos)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__onMouseMove_QPoint(void *thisObj, void *pos_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMouseMove_QPoint(void *thisObj, void *pos_);
 // KDDockWidgets::Core::Separator::onMousePress()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__onMousePress(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMousePress(void *thisObj);
 // KDDockWidgets::Core::Separator::onMouseReleased()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__onMouseReleased(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMouseReleased(void *thisObj);
 // KDDockWidgets::Core::Separator::position() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Controllers__Separator__position(void *thisObj);
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Separator__position(void *thisObj);
 // KDDockWidgets::Core::Separator::setGeometry(QRect r)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__setGeometry_QRect(void *thisObj, void *r_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__setGeometry_QRect(void *thisObj, void *r_);
 // KDDockWidgets::Core::Separator::setGeometry(int pos, int pos2, int length)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length);
 // KDDockWidgets::Core::Separator::setParentView_impl(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__setParentView_impl_View(void *thisObj, void *parent_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Controllers__Separator_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__setParentView_impl_View(void *thisObj, void *parent_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator_Finalizer(void *, void *cppObj, void *);
 }

@@ -9,8 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 export 'src/Config.dart' show Config;
-export 'src/DockWidget.dart' show DockWidget;
+export 'src/ClassicIndicatorWindowViewInterface.dart'
+    show ClassicIndicatorWindowViewInterface;
 export 'src/ClassicIndicators.dart' show ClassicIndicators;
+export 'src/DockWidget.dart' show DockWidget;
 export 'src/DropIndicatorOverlay.dart' show DropIndicatorOverlay;
 export 'src/FloatingWindow.dart' show FloatingWindow;
 export 'src/Group.dart' show Group;
@@ -31,14 +33,14 @@ export 'src/View_flutter.dart' show View_flutter;
 export 'src/View.dart' show View;
 export 'src/Controller.dart' show Controller;
 export 'src/CreateViewOptions.dart' show CreateViewOptions;
-export 'src/DockRegistry.dart' show DockRegistry;
-export 'src/InitialOption.dart' show InitialOption;
+export 'src/Item.dart' show Item;
 export 'src/Platform_flutter.dart' show Platform_flutter;
 export 'src/Platform.dart' show Platform;
 export 'src/ViewFactory_flutter.dart' show ViewFactory_flutter;
 export 'src/ViewFactory.dart' show ViewFactory;
-export 'src/ClassicIndicatorWindowViewInterface.dart'
-    show ClassicIndicatorWindowViewInterface;
+export 'src/Core.dart' show Core_ViewType;
+export 'src/DockRegistry.dart' show DockRegistry;
+export 'src/InitialOption.dart' show InitialOption;
 export 'src/Views.dart' show asView_flutter, asView_flutter;
 export 'src/KDDockWidgets.dart'
     show
@@ -62,9 +64,7 @@ export 'src/KDDockWidgets.dart'
         KDDockWidgets_DefaultSizeMode,
         KDDockWidgets_AddingOption,
         KDDockWidgets_InitialVisibilityOption,
-        KDDockWidgets_DropLocation,
-        KDDockWidgets_Type;
-export 'src/Item.dart' show Item;
+        KDDockWidgets_DropLocation;
 export 'src/QByteArray.dart' show QByteArray;
 export 'src/QList.dart' show QList;
 export 'src/QObject.dart' show QObject;

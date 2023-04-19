@@ -33,7 +33,7 @@ class DropArea extends Layout {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_ffi_Int32_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__constructor_View_MainWindowOptions_bool')
+            'c_KDDockWidgets__Core__DropArea__constructor_View_MainWindowOptions_bool')
         .asFunction();
     thisCpp = func(parent == null ? ffi.nullptr : parent.thisCpp, options,
         isMDIWrapper ? 1 : 0);
@@ -46,7 +46,7 @@ class DropArea extends Layout {
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_voidstar_ffi_Int32_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption')
+            'c_KDDockWidgets__Core__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption')
         .asFunction();
     func(
         thisCpp,
@@ -62,7 +62,7 @@ class DropArea extends Layout {
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_voidstar_ffi_Int32_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption')
+            'c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption')
         .asFunction();
     func(
         thisCpp,
@@ -78,7 +78,7 @@ class DropArea extends Layout {
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_voidstar_ffi_Int32_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__addWidget_View_Location_Group_InitialOption')
+            'c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOption')
         .asFunction();
     func(
         thisCpp,
@@ -91,7 +91,7 @@ class DropArea extends Layout {
   QSize availableSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__availableSize')
+            'c_KDDockWidgets__Core__DropArea__availableSize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -100,7 +100,7 @@ class DropArea extends Layout {
   Item centralFrame() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__centralFrame')
+            'c_KDDockWidgets__Core__DropArea__centralFrame')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Item.fromCppPointer(result, false);
@@ -109,7 +109,7 @@ class DropArea extends Layout {
   bool containsDockWidget(DockWidget? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__containsDockWidget_DockWidget')
+            'c_KDDockWidgets__Core__DropArea__containsDockWidget_DockWidget')
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   }
@@ -118,7 +118,7 @@ class DropArea extends Layout {
       Group createCentralFrame(int options) {
     final voidstar_Func_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__Controllers__DropArea__createCentralFrame_MainWindowOptions')
+            'c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions')
         .asFunction();
     ffi.Pointer<void> result = func(options);
     return Group.fromCppPointer(result, false);
@@ -127,7 +127,7 @@ class DropArea extends Layout {
   int currentDropLocation() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__currentDropLocation')
+            'c_KDDockWidgets__Core__DropArea__currentDropLocation')
         .asFunction();
     return func(thisCpp);
   } // drop(KDDockWidgets::Core::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
@@ -137,7 +137,7 @@ class DropArea extends Layout {
         .lookup<
                 ffi.NativeFunction<
                     bool_Func_voidstar_voidstar_ffi_Int32_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__drop_View_Location_Group')
+            'c_KDDockWidgets__Core__DropArea__drop_View_Location_Group')
         .asFunction();
     return func(
             thisCpp,
@@ -150,7 +150,7 @@ class DropArea extends Layout {
   DropIndicatorOverlay dropIndicatorOverlay() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__dropIndicatorOverlay')
+            'c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DropIndicatorOverlay.fromCppPointer(result, false);
@@ -159,7 +159,7 @@ class DropArea extends Layout {
   Group groupContainingPos(QPoint globalPos) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__groupContainingPos_QPoint')
+            'c_KDDockWidgets__Core__DropArea__groupContainingPos_QPoint')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp);
@@ -169,7 +169,7 @@ class DropArea extends Layout {
   QList groups() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__groups')
+            'c_KDDockWidgets__Core__DropArea__groups')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QList<Group>.fromCppPointer(result, true);
@@ -178,7 +178,7 @@ class DropArea extends Layout {
   bool hasSingleFloatingFrame() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__hasSingleFloatingFrame')
+            'c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame')
         .asFunction();
     return func(thisCpp) != 0;
   } // hasSingleFrame() const
@@ -186,7 +186,7 @@ class DropArea extends Layout {
   bool hasSingleFrame() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__hasSingleFrame')
+            'c_KDDockWidgets__Core__DropArea__hasSingleFrame')
         .asFunction();
     return func(thisCpp) != 0;
   } // isMDIWrapper() const
@@ -194,7 +194,7 @@ class DropArea extends Layout {
   bool isMDIWrapper() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__isMDIWrapper')
+            'c_KDDockWidgets__Core__DropArea__isMDIWrapper')
         .asFunction();
     return func(thisCpp) != 0;
   } // layoutEqually()
@@ -202,7 +202,7 @@ class DropArea extends Layout {
   layoutEqually() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__layoutEqually')
+            'c_KDDockWidgets__Core__DropArea__layoutEqually')
         .asFunction();
     func(thisCpp);
   } // layoutParentContainerEqually(KDDockWidgets::Core::DockWidget * arg__1)
@@ -210,7 +210,7 @@ class DropArea extends Layout {
   layoutParentContainerEqually(DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__layoutParentContainerEqually_DockWidget')
+            'c_KDDockWidgets__Core__DropArea__layoutParentContainerEqually_DockWidget')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // mdiDockWidgetWrapper() const
@@ -218,7 +218,7 @@ class DropArea extends Layout {
   DockWidget mdiDockWidgetWrapper() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__mdiDockWidgetWrapper')
+            'c_KDDockWidgets__Core__DropArea__mdiDockWidgetWrapper')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DockWidget.fromCppPointer(result, false);
@@ -227,7 +227,7 @@ class DropArea extends Layout {
   removeHover() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__removeHover')
+            'c_KDDockWidgets__Core__DropArea__removeHover')
         .asFunction();
     func(thisCpp);
   }
@@ -248,7 +248,7 @@ class DropArea extends Layout {
       QString tr(String? s, String? c, int n) {
     final voidstar_Func_string_string_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__Controllers__DropArea__tr_char_char_int')
+            'c_static_KDDockWidgets__Core__DropArea__tr_char_char_int')
         .asFunction();
     ffi.Pointer<void> result = func(
         s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
@@ -258,7 +258,7 @@ class DropArea extends Layout {
   updateFloatingActions() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__updateFloatingActions')
+            'c_KDDockWidgets__Core__DropArea__updateFloatingActions')
         .asFunction();
     func(thisCpp);
   } // validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
@@ -269,7 +269,7 @@ class DropArea extends Layout {
         .lookup<
                 ffi.NativeFunction<
                     bool_Func_voidstar_voidstar_ffi_Int32_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__validateInputs_View_Location_Group_InitialOption')
+            'c_KDDockWidgets__Core__DropArea__validateInputs_View_Location_Group_InitialOption')
         .asFunction();
     return func(
             thisCpp,
@@ -283,22 +283,22 @@ class DropArea extends Layout {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__destructor')
+            'c_KDDockWidgets__Core__DropArea__destructor')
         .asFunction();
     func(thisCpp);
   }
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 881:
-        return "c_KDDockWidgets__Controllers__DropArea__setParentView_impl_View";
+      case 871:
+        return "c_KDDockWidgets__Core__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 881:
+      case 871:
         return "setParentView_impl";
     }
     throw Error();
@@ -308,11 +308,11 @@ class DropArea extends Layout {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__Controllers__DropArea__registerVirtualMethodCallback')
+            'c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback')
         .asFunction();
-    final callback881 =
+    final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback881, 881);
+    registerCallback(thisCpp, callback871, 871);
   }
 }

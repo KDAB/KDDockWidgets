@@ -142,7 +142,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__isSane')
         .asFunction();
     return func(thisCpp) != 0;
-  } // itemIsInMainWindow(const Core::Item * arg__1) const
+  } // itemIsInMainWindow(const KDDockWidgets::Core::Item * arg__1) const
 
   bool itemIsInMainWindow(Item? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
@@ -150,7 +150,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__itemIsInMainWindow_Item')
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
-  } // layoutForItem(const Core::Item * arg__1) const
+  } // layoutForItem(const KDDockWidgets::Core::Item * arg__1) const
 
   Layout layoutForItem(Item? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib

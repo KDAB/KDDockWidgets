@@ -173,7 +173,7 @@ class Config {
             'c_KDDockWidgets__Config__setTransparencyOnlyOverDropIndicator_bool')
         .asFunction();
     func(thisCpp, only ? 1 : 0);
-  } // setViewFactory(KDDockWidgets::ViewFactory * arg__1)
+  } // setViewFactory(KDDockWidgets::Core::ViewFactory * arg__1)
 
   setViewFactory(ViewFactory? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib

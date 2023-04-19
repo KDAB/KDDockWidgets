@@ -11,11 +11,11 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <Stack_flutter.h>
 #include <Stack.h>
-#include <View.h>
+#include <core/View.h>
 #include <qpoint.h>
+#include <qsize.h>
 #include <qstring.h>
 #include <qrect.h>
-#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Stack_flutter_wrapper : public ::KDDockWidgets::Views::Stack_flutter

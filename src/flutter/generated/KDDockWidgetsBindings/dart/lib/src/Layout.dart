@@ -26,11 +26,11 @@ class Layout extends Controller {
       if (instance != null) return instance as Layout;
     }
     return Layout.fromCppPointer(cppPointer, needsAutoDelete);
-  } //Layout(KDDockWidgets::ViewType arg__1, KDDockWidgets::Core::View * arg__2)
+  } //Layout(KDDockWidgets::Core::ViewType arg__1, KDDockWidgets::Core::View * arg__2)
   Layout(int arg__1, View? arg__2) : super.init() {
     final voidstar_Func_int_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__constructor_Type_View')
+            'c_KDDockWidgets__Core__Layout__constructor_ViewType_View')
         .asFunction();
     thisCpp = func(arg__1, arg__2 == null ? ffi.nullptr : arg__2.thisCpp);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
@@ -39,7 +39,7 @@ class Layout extends Controller {
   DropArea asDropArea() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__asDropArea')
+            'c_KDDockWidgets__Core__Layout__asDropArea')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DropArea.fromCppPointer(result, false);
@@ -48,7 +48,7 @@ class Layout extends Controller {
   bool checkSanity() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__checkSanity')
+            'c_KDDockWidgets__Core__Layout__checkSanity')
         .asFunction();
     return func(thisCpp) != 0;
   } // clearLayout()
@@ -56,7 +56,7 @@ class Layout extends Controller {
   clearLayout() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__clearLayout')
+            'c_KDDockWidgets__Core__Layout__clearLayout')
         .asFunction();
     func(thisCpp);
   } // containsFrame(const KDDockWidgets::Core::Group * arg__1) const
@@ -64,15 +64,15 @@ class Layout extends Controller {
   bool containsFrame(Group? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__containsFrame_Group')
+            'c_KDDockWidgets__Core__Layout__containsFrame_Group')
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
-  } // containsItem(const Core::Item * arg__1) const
+  } // containsItem(const KDDockWidgets::Core::Item * arg__1) const
 
   bool containsItem(Item? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__containsItem_Item')
+            'c_KDDockWidgets__Core__Layout__containsItem_Item')
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   } // count() const
@@ -80,7 +80,7 @@ class Layout extends Controller {
   int count() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__count')
+            'c_KDDockWidgets__Core__Layout__count')
         .asFunction();
     return func(thisCpp);
   } // dumpLayout() const
@@ -88,7 +88,7 @@ class Layout extends Controller {
   dumpLayout() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__dumpLayout')
+            'c_KDDockWidgets__Core__Layout__dumpLayout')
         .asFunction();
     func(thisCpp);
   } // floatingWindow() const
@@ -96,7 +96,7 @@ class Layout extends Controller {
   FloatingWindow floatingWindow() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__floatingWindow')
+            'c_KDDockWidgets__Core__Layout__floatingWindow')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return FloatingWindow.fromCppPointer(result, false);
@@ -105,7 +105,7 @@ class Layout extends Controller {
   QList groups() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__groups')
+            'c_KDDockWidgets__Core__Layout__groups')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QList<Group>.fromCppPointer(result, true);
@@ -114,7 +114,7 @@ class Layout extends Controller {
   QList groupsFrom(View? groupOrMultiSplitter) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__groupsFrom_View')
+            'c_KDDockWidgets__Core__Layout__groupsFrom_View')
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -127,7 +127,7 @@ class Layout extends Controller {
   bool isInMainWindow({bool honourNesting = false}) {
     final bool_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__isInMainWindow_bool')
+            'c_KDDockWidgets__Core__Layout__isInMainWindow_bool')
         .asFunction();
     return func(thisCpp, honourNesting ? 1 : 0) != 0;
   } // itemForFrame(const KDDockWidgets::Core::Group * group) const
@@ -135,7 +135,7 @@ class Layout extends Controller {
   Item itemForFrame(Group? group) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__itemForFrame_Group')
+            'c_KDDockWidgets__Core__Layout__itemForFrame_Group')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, group == null ? ffi.nullptr : group.thisCpp);
@@ -145,7 +145,7 @@ class Layout extends Controller {
   int layoutHeight() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__layoutHeight')
+            'c_KDDockWidgets__Core__Layout__layoutHeight')
         .asFunction();
     return func(thisCpp);
   } // layoutMaximumSizeHint() const
@@ -153,7 +153,7 @@ class Layout extends Controller {
   QSize layoutMaximumSizeHint() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__layoutMaximumSizeHint')
+            'c_KDDockWidgets__Core__Layout__layoutMaximumSizeHint')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -162,7 +162,7 @@ class Layout extends Controller {
   QSize layoutMinimumSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__layoutMinimumSize')
+            'c_KDDockWidgets__Core__Layout__layoutMinimumSize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -171,7 +171,7 @@ class Layout extends Controller {
   QSize layoutSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__layoutSize')
+            'c_KDDockWidgets__Core__Layout__layoutSize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -180,7 +180,7 @@ class Layout extends Controller {
   int layoutWidth() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__layoutWidth')
+            'c_KDDockWidgets__Core__Layout__layoutWidth')
         .asFunction();
     return func(thisCpp);
   } // mainWindow(bool honourNesting) const
@@ -188,7 +188,7 @@ class Layout extends Controller {
   MainWindow mainWindow({bool honourNesting = false}) {
     final voidstar_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__mainWindow_bool')
+            'c_KDDockWidgets__Core__Layout__mainWindow_bool')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, honourNesting ? 1 : 0);
     return MainWindow.fromCppPointer(result, false);
@@ -197,7 +197,7 @@ class Layout extends Controller {
   bool onResize(QSize newSize) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__onResize_QSize')
+            'c_KDDockWidgets__Core__Layout__onResize_QSize')
         .asFunction();
     return func(thisCpp, newSize == null ? ffi.nullptr : newSize.thisCpp) != 0;
   } // placeholderCount() const
@@ -205,25 +205,25 @@ class Layout extends Controller {
   int placeholderCount() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__placeholderCount')
+            'c_KDDockWidgets__Core__Layout__placeholderCount')
         .asFunction();
     return func(thisCpp);
-  } // removeItem(Core::Item * item)
+  } // removeItem(KDDockWidgets::Core::Item * item)
 
   removeItem(Item? item) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__removeItem_Item')
+            'c_KDDockWidgets__Core__Layout__removeItem_Item')
         .asFunction();
     func(thisCpp, item == null ? ffi.nullptr : item.thisCpp);
-  } // restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, Core::Item * arg__2, int tabIndex)
+  } // restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Core::Item * arg__2, int tabIndex)
 
   restorePlaceholder(DockWidget? dw, Item? arg__2, int tabIndex) {
     final void_Func_voidstar_voidstar_voidstar_int func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__restorePlaceholder_DockWidget_Item_int')
+            'c_KDDockWidgets__Core__Layout__restorePlaceholder_DockWidget_Item_int')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp,
         arg__2 == null ? ffi.nullptr : arg__2.thisCpp, tabIndex);
@@ -232,7 +232,7 @@ class Layout extends Controller {
   setLayoutMinimumSize(QSize arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__setLayoutMinimumSize_QSize')
+            'c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_QSize')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // setLayoutSize(QSize arg__1)
@@ -240,7 +240,7 @@ class Layout extends Controller {
   setLayoutSize(QSize arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__setLayoutSize_QSize')
+            'c_KDDockWidgets__Core__Layout__setLayoutSize_QSize')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -260,7 +260,7 @@ class Layout extends Controller {
   unrefOldPlaceholders(QList? groupsBeingAdded) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__unrefOldPlaceholders_QList_Group')
+            'c_KDDockWidgets__Core__Layout__unrefOldPlaceholders_QList_Group')
         .asFunction();
     func(thisCpp,
         groupsBeingAdded == null ? ffi.nullptr : groupsBeingAdded.thisCpp);
@@ -269,7 +269,7 @@ class Layout extends Controller {
   updateSizeConstraints() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__updateSizeConstraints')
+            'c_KDDockWidgets__Core__Layout__updateSizeConstraints')
         .asFunction();
     func(thisCpp);
   } // viewAboutToBeDeleted()
@@ -277,7 +277,7 @@ class Layout extends Controller {
   viewAboutToBeDeleted() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__viewAboutToBeDeleted')
+            'c_KDDockWidgets__Core__Layout__viewAboutToBeDeleted')
         .asFunction();
     func(thisCpp);
   } // visibleCount() const
@@ -285,7 +285,7 @@ class Layout extends Controller {
   int visibleCount() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__visibleCount')
+            'c_KDDockWidgets__Core__Layout__visibleCount')
         .asFunction();
     return func(thisCpp);
   }
@@ -293,22 +293,22 @@ class Layout extends Controller {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__destructor')
+            'c_KDDockWidgets__Core__Layout__destructor')
         .asFunction();
     func(thisCpp);
   }
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 881:
-        return "c_KDDockWidgets__Controllers__Layout__setParentView_impl_View";
+      case 871:
+        return "c_KDDockWidgets__Core__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 881:
+      case 871:
         return "setParentView_impl";
     }
     throw Error();
@@ -318,11 +318,11 @@ class Layout extends Controller {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__Controllers__Layout__registerVirtualMethodCallback')
+            'c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback')
         .asFunction();
-    final callback881 =
+    final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback881, 881);
+    registerCallback(thisCpp, callback871, 871);
   }
 }

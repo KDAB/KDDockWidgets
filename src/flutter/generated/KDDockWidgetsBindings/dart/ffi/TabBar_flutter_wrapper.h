@@ -11,11 +11,11 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <TabBar_flutter.h>
 #include <TabBar.h>
-#include <View.h>
+#include <core/View.h>
 #include <qpoint.h>
 #include <qstring.h>
 #include <qrect.h>
-#include <DockWidget.h>
+#include <core/DockWidget.h>
 #include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

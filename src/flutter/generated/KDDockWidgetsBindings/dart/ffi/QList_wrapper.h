@@ -13,9 +13,9 @@
 #include <qobject.h>
 #include <qstring.h>
 #include <qbytearray.h>
-#include <Group.h>
-#include <View.h>
-#include <DockWidget.h>
+#include <core/Group.h>
+#include <core/View.h>
+#include <core/DockWidget.h>
 #include <KDDockWidgets.h>
 #include <FloatingWindow.h>
 #include <Stack.h>

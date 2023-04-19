@@ -10,12 +10,12 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <Group_flutter.h>
-#include <Group.h>
-#include <View.h>
+#include <core/Group.h>
+#include <core/View.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <qstring.h>
 #include <qpoint.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Group_flutter_wrapper : public ::KDDockWidgets::Views::Group_flutter

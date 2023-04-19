@@ -17,7 +17,7 @@ import '../FinalizerHelpers.dart';
 var _dylib = Library.instance().dylib;
 final _finalizer =
     _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
-        'c_KDDockWidgets__CreateViewOptions_Finalizer');
+        'c_KDDockWidgets__Core__CreateViewOptions_Finalizer');
 
 class CreateViewOptions {
   static var s_dartInstanceByCppPtr = Map<int, CreateViewOptions>();
@@ -49,7 +49,7 @@ class CreateViewOptions {
   bool get isVisible {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__CreateViewOptions___get_isVisible')
+            'c_KDDockWidgets__Core__CreateViewOptions___get_isVisible')
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -57,7 +57,7 @@ class CreateViewOptions {
   set isVisible(bool isVisible_) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__CreateViewOptions___set_isVisible_bool')
+            'c_KDDockWidgets__Core__CreateViewOptions___set_isVisible_bool')
         .asFunction();
     func(thisCpp, isVisible_ ? 1 : 0);
   }
@@ -65,7 +65,7 @@ class CreateViewOptions {
   bool get createWindow {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__CreateViewOptions___get_createWindow')
+            'c_KDDockWidgets__Core__CreateViewOptions___get_createWindow')
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -73,7 +73,7 @@ class CreateViewOptions {
   set createWindow(bool createWindow_) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__CreateViewOptions___set_createWindow_bool')
+            'c_KDDockWidgets__Core__CreateViewOptions___set_createWindow_bool')
         .asFunction();
     func(thisCpp, createWindow_ ? 1 : 0);
   } //CreateViewOptions()
@@ -81,7 +81,7 @@ class CreateViewOptions {
   CreateViewOptions() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
-            'c_KDDockWidgets__CreateViewOptions__constructor')
+            'c_KDDockWidgets__Core__CreateViewOptions__constructor')
         .asFunction();
     thisCpp = func();
     CreateViewOptions.s_dartInstanceByCppPtr[thisCpp.address] = this;
@@ -89,7 +89,7 @@ class CreateViewOptions {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__CreateViewOptions__destructor')
+            'c_KDDockWidgets__Core__CreateViewOptions__destructor')
         .asFunction();
     func(thisCpp);
   }

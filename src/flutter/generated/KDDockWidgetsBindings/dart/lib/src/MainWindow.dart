@@ -32,7 +32,7 @@ class MainWindow extends Controller {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__constructor_View_QString_MainWindowOptions')
+            'c_KDDockWidgets__Core__MainWindow__constructor_View_QString_MainWindowOptions')
         .asFunction();
     thisCpp = func(view == null ? ffi.nullptr : view.thisCpp,
         uniqueName?.toNativeUtf8() ?? ffi.nullptr, options);
@@ -45,7 +45,7 @@ class MainWindow extends Controller {
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_voidstar_ffi_Int32_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption')
+            'c_KDDockWidgets__Core__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption')
         .asFunction();
     func(
         thisCpp,
@@ -58,7 +58,7 @@ class MainWindow extends Controller {
   addDockWidgetAsTab(DockWidget? dockwidget) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__addDockWidgetAsTab_DockWidget')
+            'c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget')
         .asFunction();
     func(thisCpp, dockwidget == null ? ffi.nullptr : dockwidget.thisCpp);
   } // anySideBarIsVisible() const
@@ -66,7 +66,7 @@ class MainWindow extends Controller {
   bool anySideBarIsVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__anySideBarIsVisible')
+            'c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible')
         .asFunction();
     return func(thisCpp) != 0;
   } // centralAreaGeometry() const
@@ -74,7 +74,7 @@ class MainWindow extends Controller {
   QRect centralAreaGeometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__centralAreaGeometry')
+            'c_KDDockWidgets__Core__MainWindow__centralAreaGeometry')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -83,7 +83,7 @@ class MainWindow extends Controller {
   clearSideBarOverlay({bool deleteFrame = true}) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__clearSideBarOverlay_bool')
+            'c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool')
         .asFunction();
     func(thisCpp, deleteFrame ? 1 : 0);
   } // closeDockWidgets(bool force)
@@ -91,7 +91,7 @@ class MainWindow extends Controller {
   bool closeDockWidgets({bool force = false}) {
     final bool_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__closeDockWidgets_bool')
+            'c_KDDockWidgets__Core__MainWindow__closeDockWidgets_bool')
         .asFunction();
     return func(thisCpp, force ? 1 : 0) != 0;
   } // dropArea() const
@@ -99,7 +99,7 @@ class MainWindow extends Controller {
   DropArea dropArea() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__dropArea')
+            'c_KDDockWidgets__Core__MainWindow__dropArea')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DropArea.fromCppPointer(result, false);
@@ -108,7 +108,7 @@ class MainWindow extends Controller {
   groupCountChanged(int arg__1) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__groupCountChanged_int')
+            'c_KDDockWidgets__Core__MainWindow__groupCountChanged_int')
         .asFunction();
     func(thisCpp, arg__1);
   } // init(const QString & name)
@@ -116,7 +116,7 @@ class MainWindow extends Controller {
   init(String? name) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__init_QString')
+            'c_KDDockWidgets__Core__MainWindow__init_QString')
         .asFunction();
     func(thisCpp, name?.toNativeUtf8() ?? ffi.nullptr);
   } // isMDI() const
@@ -124,7 +124,7 @@ class MainWindow extends Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__isMDI')
+            'c_KDDockWidgets__Core__MainWindow__isMDI')
         .asFunction();
     return func(thisCpp) != 0;
   } // layout() const
@@ -132,7 +132,7 @@ class MainWindow extends Controller {
   Layout layout() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__layout')
+            'c_KDDockWidgets__Core__MainWindow__layout')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Layout.fromCppPointer(result, false);
@@ -141,7 +141,7 @@ class MainWindow extends Controller {
   layoutEqually() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__layoutEqually')
+            'c_KDDockWidgets__Core__MainWindow__layoutEqually')
         .asFunction();
     func(thisCpp);
   } // layoutParentContainerEqually(KDDockWidgets::Core::DockWidget * dockWidget)
@@ -149,7 +149,7 @@ class MainWindow extends Controller {
   layoutParentContainerEqually(DockWidget? dockWidget) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__layoutParentContainerEqually_DockWidget')
+            'c_KDDockWidgets__Core__MainWindow__layoutParentContainerEqually_DockWidget')
         .asFunction();
     func(thisCpp, dockWidget == null ? ffi.nullptr : dockWidget.thisCpp);
   } // moveToSideBar(KDDockWidgets::Core::DockWidget * dw)
@@ -157,7 +157,7 @@ class MainWindow extends Controller {
   moveToSideBar(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__moveToSideBar_DockWidget')
+            'c_KDDockWidgets__Core__MainWindow__moveToSideBar_DockWidget')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   } // multiSplitter() const
@@ -165,7 +165,7 @@ class MainWindow extends Controller {
   DropArea multiSplitter() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__multiSplitter')
+            'c_KDDockWidgets__Core__MainWindow__multiSplitter')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DropArea.fromCppPointer(result, false);
@@ -174,7 +174,7 @@ class MainWindow extends Controller {
   int options() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__options')
+            'c_KDDockWidgets__Core__MainWindow__options')
         .asFunction();
     return func(thisCpp);
   } // overlayMargin() const
@@ -182,7 +182,7 @@ class MainWindow extends Controller {
   int overlayMargin() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__overlayMargin')
+            'c_KDDockWidgets__Core__MainWindow__overlayMargin')
         .asFunction();
     return func(thisCpp);
   } // overlayMarginChanged(int margin)
@@ -190,7 +190,7 @@ class MainWindow extends Controller {
   overlayMarginChanged(int margin) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__overlayMarginChanged_int')
+            'c_KDDockWidgets__Core__MainWindow__overlayMarginChanged_int')
         .asFunction();
     func(thisCpp, margin);
   } // overlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
@@ -198,7 +198,7 @@ class MainWindow extends Controller {
   overlayOnSideBar(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__overlayOnSideBar_DockWidget')
+            'c_KDDockWidgets__Core__MainWindow__overlayOnSideBar_DockWidget')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   } // overlayedDockWidget() const
@@ -206,7 +206,7 @@ class MainWindow extends Controller {
   DockWidget overlayedDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__overlayedDockWidget')
+            'c_KDDockWidgets__Core__MainWindow__overlayedDockWidget')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return DockWidget.fromCppPointer(result, false);
@@ -215,7 +215,7 @@ class MainWindow extends Controller {
   restoreFromSideBar(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__restoreFromSideBar_DockWidget')
+            'c_KDDockWidgets__Core__MainWindow__restoreFromSideBar_DockWidget')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   } // setContentsMargins(int l, int t, int r, int b)
@@ -225,7 +225,7 @@ class MainWindow extends Controller {
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__setContentsMargins_int_int_int_int')
+            'c_KDDockWidgets__Core__MainWindow__setContentsMargins_int_int_int_int')
         .asFunction();
     func(thisCpp, l, t, r, b);
   } // setOverlayMargin(int margin)
@@ -233,7 +233,7 @@ class MainWindow extends Controller {
   setOverlayMargin(int margin) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__setOverlayMargin_int')
+            'c_KDDockWidgets__Core__MainWindow__setOverlayMargin_int')
         .asFunction();
     func(thisCpp, margin);
   }
@@ -253,7 +253,7 @@ class MainWindow extends Controller {
   setUniqueName(String? uniqueName) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__setUniqueName_QString')
+            'c_KDDockWidgets__Core__MainWindow__setUniqueName_QString')
         .asFunction();
     func(thisCpp, uniqueName?.toNativeUtf8() ?? ffi.nullptr);
   } // sideBarForDockWidget(const KDDockWidgets::Core::DockWidget * dw) const
@@ -261,7 +261,7 @@ class MainWindow extends Controller {
   SideBar sideBarForDockWidget(DockWidget? dw) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__sideBarForDockWidget_DockWidget')
+            'c_KDDockWidgets__Core__MainWindow__sideBarForDockWidget_DockWidget')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
@@ -271,7 +271,7 @@ class MainWindow extends Controller {
   toggleOverlayOnSideBar(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__toggleOverlayOnSideBar_DockWidget')
+            'c_KDDockWidgets__Core__MainWindow__toggleOverlayOnSideBar_DockWidget')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   }
@@ -280,7 +280,7 @@ class MainWindow extends Controller {
       QString tr(String? s, String? c, int n) {
     final voidstar_Func_string_string_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__Controllers__MainWindow__tr_char_char_int')
+            'c_static_KDDockWidgets__Core__MainWindow__tr_char_char_int')
         .asFunction();
     ffi.Pointer<void> result = func(
         s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
@@ -290,7 +290,7 @@ class MainWindow extends Controller {
   QString uniqueName() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__uniqueName')
+            'c_KDDockWidgets__Core__MainWindow__uniqueName')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QString.fromCppPointer(result, true);
@@ -299,7 +299,7 @@ class MainWindow extends Controller {
   uniqueNameChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__uniqueNameChanged')
+            'c_KDDockWidgets__Core__MainWindow__uniqueNameChanged')
         .asFunction();
     func(thisCpp);
   }
@@ -307,22 +307,22 @@ class MainWindow extends Controller {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__destructor')
+            'c_KDDockWidgets__Core__MainWindow__destructor')
         .asFunction();
     func(thisCpp);
   }
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 881:
-        return "c_KDDockWidgets__Controllers__MainWindow__setParentView_impl_View";
+      case 871:
+        return "c_KDDockWidgets__Core__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 881:
+      case 871:
         return "setParentView_impl";
     }
     throw Error();
@@ -332,11 +332,11 @@ class MainWindow extends Controller {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__Controllers__MainWindow__registerVirtualMethodCallback')
+            'c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback')
         .asFunction();
-    final callback881 =
+    final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback881, 881);
+    registerCallback(thisCpp, callback871, 871);
   }
 }

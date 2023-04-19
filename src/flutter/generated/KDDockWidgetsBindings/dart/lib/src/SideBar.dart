@@ -30,7 +30,7 @@ class SideBar extends Controller {
   addDockWidget(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__addDockWidget_DockWidget')
+            'c_KDDockWidgets__Core__SideBar__addDockWidget_DockWidget')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   } // clear()
@@ -38,7 +38,7 @@ class SideBar extends Controller {
   clear() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__clear')
+            'c_KDDockWidgets__Core__SideBar__clear')
         .asFunction();
     func(thisCpp);
   } // containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
@@ -46,7 +46,7 @@ class SideBar extends Controller {
   bool containsDockWidget(DockWidget? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__containsDockWidget_DockWidget')
+            'c_KDDockWidgets__Core__SideBar__containsDockWidget_DockWidget')
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   } // isEmpty() const
@@ -54,7 +54,7 @@ class SideBar extends Controller {
   bool isEmpty() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__isEmpty')
+            'c_KDDockWidgets__Core__SideBar__isEmpty')
         .asFunction();
     return func(thisCpp) != 0;
   } // isVertical() const
@@ -62,7 +62,7 @@ class SideBar extends Controller {
   bool isVertical() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__isVertical')
+            'c_KDDockWidgets__Core__SideBar__isVertical')
         .asFunction();
     return func(thisCpp) != 0;
   } // mainWindow() const
@@ -70,7 +70,7 @@ class SideBar extends Controller {
   MainWindow mainWindow() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__mainWindow')
+            'c_KDDockWidgets__Core__SideBar__mainWindow')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return MainWindow.fromCppPointer(result, false);
@@ -79,7 +79,7 @@ class SideBar extends Controller {
   onButtonClicked(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__onButtonClicked_DockWidget')
+            'c_KDDockWidgets__Core__SideBar__onButtonClicked_DockWidget')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   } // removeDockWidget(KDDockWidgets::Core::DockWidget * dw)
@@ -87,7 +87,7 @@ class SideBar extends Controller {
   removeDockWidget(DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__removeDockWidget_DockWidget')
+            'c_KDDockWidgets__Core__SideBar__removeDockWidget_DockWidget')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   }
@@ -107,7 +107,7 @@ class SideBar extends Controller {
   toggleOverlay(DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__toggleOverlay_DockWidget')
+            'c_KDDockWidgets__Core__SideBar__toggleOverlay_DockWidget')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -116,7 +116,7 @@ class SideBar extends Controller {
       QString tr(String? s, String? c, int n) {
     final voidstar_Func_string_string_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__Controllers__SideBar__tr_char_char_int')
+            'c_static_KDDockWidgets__Core__SideBar__tr_char_char_int')
         .asFunction();
     ffi.Pointer<void> result = func(
         s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
@@ -126,7 +126,7 @@ class SideBar extends Controller {
   updateSize() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__updateSize')
+            'c_KDDockWidgets__Core__SideBar__updateSize')
         .asFunction();
     func(thisCpp);
   }
@@ -134,22 +134,22 @@ class SideBar extends Controller {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__destructor')
+            'c_KDDockWidgets__Core__SideBar__destructor')
         .asFunction();
     func(thisCpp);
   }
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 881:
-        return "c_KDDockWidgets__Controllers__SideBar__setParentView_impl_View";
+      case 871:
+        return "c_KDDockWidgets__Core__SideBar__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 881:
+      case 871:
         return "setParentView_impl";
     }
     throw Error();
@@ -159,11 +159,11 @@ class SideBar extends Controller {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__Controllers__SideBar__registerVirtualMethodCallback')
+            'c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback')
         .asFunction();
-    final callback881 =
+    final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback881, 881);
+    registerCallback(thisCpp, callback871, 871);
   }
 }

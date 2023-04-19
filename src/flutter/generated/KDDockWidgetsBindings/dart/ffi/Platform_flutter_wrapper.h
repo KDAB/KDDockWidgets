@@ -11,12 +11,12 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <Platform_flutter.h>
 #include <ViewFactory.h>
-#include <View.h>
+#include <core/View.h>
 #include <qsize.h>
-#include <Controller.h>
+#include <core/Controller.h>
 #include <qpoint.h>
 #include <FloatingWindow.h>
-#include <Platform.h>
+#include <core/Platform.h>
 #include <MainWindow.h>
 #include <qstring.h>
 #include <qobject.h>
@@ -30,12 +30,12 @@ public:
     Platform_flutter_wrapper();
     virtual QString applicationName() const;
     virtual QString applicationName_nocallback() const;
-    virtual KDDockWidgets::ViewFactory *createDefaultViewFactory();
-    virtual KDDockWidgets::ViewFactory *createDefaultViewFactory_nocallback();
-    virtual KDDockWidgets::Core::MainWindow *createMainWindow(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::Core::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
-    virtual KDDockWidgets::Core::MainWindow *createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::Core::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
-    virtual KDDockWidgets::Core::View *createView(Core::Controller *controller, KDDockWidgets::Core::View *parent = nullptr) const;
-    virtual KDDockWidgets::Core::View *createView_nocallback(Core::Controller *controller, KDDockWidgets::Core::View *parent = nullptr) const;
+    virtual KDDockWidgets::Core::ViewFactory *createDefaultViewFactory();
+    virtual KDDockWidgets::Core::ViewFactory *createDefaultViewFactory_nocallback();
+    virtual KDDockWidgets::Core::MainWindow *createMainWindow(const QString &uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::Core::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
+    virtual KDDockWidgets::Core::MainWindow *createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::Core::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
+    virtual KDDockWidgets::Core::View *createView(KDDockWidgets::Core::Controller *controller, KDDockWidgets::Core::View *parent = nullptr) const;
+    virtual KDDockWidgets::Core::View *createView_nocallback(KDDockWidgets::Core::Controller *controller, KDDockWidgets::Core::View *parent = nullptr) const;
     virtual QPoint cursorPos() const;
     virtual QPoint cursorPos_nocallback() const;
     virtual void dumpManagedBacktrace();
@@ -72,12 +72,12 @@ public:
     virtual void setMouseCursor_nocallback(Qt::CursorShape arg__1);
     virtual int startDragDistance_impl() const;
     virtual int startDragDistance_impl_nocallback() const;
-    virtual KDDockWidgets::Core::View *tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
-    virtual KDDockWidgets::Core::View *tests_createFocusableView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
+    virtual KDDockWidgets::Core::View *tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
+    virtual KDDockWidgets::Core::View *tests_createFocusableView_nocallback(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
     virtual KDDockWidgets::Core::View *tests_createNonClosableView(KDDockWidgets::Core::View *parent = nullptr);
     virtual KDDockWidgets::Core::View *tests_createNonClosableView_nocallback(KDDockWidgets::Core::View *parent = nullptr);
-    virtual KDDockWidgets::Core::View *tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
-    virtual KDDockWidgets::Core::View *tests_createView_nocallback(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
+    virtual KDDockWidgets::Core::View *tests_createView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
+    virtual KDDockWidgets::Core::View *tests_createView_nocallback(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
     virtual void tests_deinitPlatform_impl();
     virtual void tests_deinitPlatform_impl_nocallback();
     virtual void tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View *receiver);
@@ -94,11 +94,11 @@ public:
     virtual bool usesFallbackMouseGrabber_nocallback() const;
     typedef QString *(*Callback_applicationName)(void *);
     Callback_applicationName m_applicationNameCallback = nullptr;
-    typedef KDDockWidgets::ViewFactory *(*Callback_createDefaultViewFactory)(void *);
+    typedef KDDockWidgets::Core::ViewFactory *(*Callback_createDefaultViewFactory)(void *);
     Callback_createDefaultViewFactory m_createDefaultViewFactoryCallback = nullptr;
-    typedef KDDockWidgets::Core::MainWindow *(*Callback_createMainWindow)(void *, const QString &uniqueName, KDDockWidgets::CreateViewOptions *arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View *parent, Qt::WindowFlags arg__5);
+    typedef KDDockWidgets::Core::MainWindow *(*Callback_createMainWindow)(void *, const QString &uniqueName, KDDockWidgets::Core::CreateViewOptions *arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View *parent, Qt::WindowFlags arg__5);
     Callback_createMainWindow m_createMainWindowCallback = nullptr;
-    typedef KDDockWidgets::Core::View *(*Callback_createView)(void *, Core::Controller *controller, KDDockWidgets::Core::View *parent);
+    typedef KDDockWidgets::Core::View *(*Callback_createView)(void *, KDDockWidgets::Core::Controller *controller, KDDockWidgets::Core::View *parent);
     Callback_createView m_createViewCallback = nullptr;
     typedef QPoint *(*Callback_cursorPos)(void *);
     Callback_cursorPos m_cursorPosCallback = nullptr;
@@ -134,11 +134,11 @@ public:
     Callback_setMouseCursor m_setMouseCursorCallback = nullptr;
     typedef int (*Callback_startDragDistance_impl)(void *);
     Callback_startDragDistance_impl m_startDragDistance_implCallback = nullptr;
-    typedef KDDockWidgets::Core::View *(*Callback_tests_createFocusableView)(void *, KDDockWidgets::CreateViewOptions *arg__1, KDDockWidgets::Core::View *parent);
+    typedef KDDockWidgets::Core::View *(*Callback_tests_createFocusableView)(void *, KDDockWidgets::Core::CreateViewOptions *arg__1, KDDockWidgets::Core::View *parent);
     Callback_tests_createFocusableView m_tests_createFocusableViewCallback = nullptr;
     typedef KDDockWidgets::Core::View *(*Callback_tests_createNonClosableView)(void *, KDDockWidgets::Core::View *parent);
     Callback_tests_createNonClosableView m_tests_createNonClosableViewCallback = nullptr;
-    typedef KDDockWidgets::Core::View *(*Callback_tests_createView)(void *, KDDockWidgets::CreateViewOptions *arg__1, KDDockWidgets::Core::View *parent);
+    typedef KDDockWidgets::Core::View *(*Callback_tests_createView)(void *, KDDockWidgets::Core::CreateViewOptions *arg__1, KDDockWidgets::Core::View *parent);
     Callback_tests_createView m_tests_createViewCallback = nullptr;
     typedef void (*Callback_tests_deinitPlatform_impl)(void *);
     Callback_tests_deinitPlatform_impl m_tests_deinitPlatform_implCallback = nullptr;
@@ -163,9 +163,9 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__constructo
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__applicationName(void *thisObj);
 // KDDockWidgets::Platform_flutter::createDefaultViewFactory()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createDefaultViewFactory(void *thisObj);
-// KDDockWidgets::Platform_flutter::createMainWindow(const QString & uniqueName, KDDockWidgets::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const
+// KDDockWidgets::Platform_flutter::createMainWindow(const QString & uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
-// KDDockWidgets::Platform_flutter::createView(Core::Controller * controller, KDDockWidgets::Core::View * parent) const
+// KDDockWidgets::Platform_flutter::createView(KDDockWidgets::Core::Controller * controller, KDDockWidgets::Core::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
 // KDDockWidgets::Platform_flutter::cursorPos() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__cursorPos(void *thisObj);
@@ -205,11 +205,11 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__setCursorPo
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Platform_flutter::startDragDistance_impl() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Platform_flutter__startDragDistance_impl(void *thisObj);
-// KDDockWidgets::Platform_flutter::tests_createFocusableView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
+// KDDockWidgets::Platform_flutter::tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Platform_flutter::tests_createNonClosableView(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View(void *thisObj, void *parent_);
-// KDDockWidgets::Platform_flutter::tests_createView(KDDockWidgets::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
+// KDDockWidgets::Platform_flutter::tests_createView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Platform_flutter__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Platform_flutter::tests_deinitPlatform_impl()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Platform_flutter__tests_deinitPlatform_impl(void *thisObj);
