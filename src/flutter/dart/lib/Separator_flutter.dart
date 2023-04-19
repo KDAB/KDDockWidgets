@@ -22,8 +22,7 @@ class Separator_flutter extends View_flutter {
 
   Separator_flutter(KDDockWidgetBindings.Separator? separator,
       {required KDDockWidgetBindings.View? parent})
-      : super(separator, KDDockWidgetBindings.KDDockWidgets_Type.Separator,
-            parent) {
+      : super(separator, KDDockWidgetBindings.Core_ViewType.Separator, parent) {
     m_controller = separator!;
     m_color = Colors.blueGrey;
     debugName = "Separator";

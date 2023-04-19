@@ -22,8 +22,8 @@ class FloatingWindow_flutter extends KDDockWidgetBindings.View_flutter
 
   FloatingWindow_flutter(KDDockWidgetBindings.Controller? controller,
       KDDockWidgetBindings.View? parent, {int windowFlags = 0})
-      : super(controller,
-            KDDockWidgetBindings.KDDockWidgets_Type.FloatingWindow, parent,
+      : super(controller, KDDockWidgetBindings.Core_ViewType.FloatingWindow,
+            parent,
             windowFlags: windowFlags) {
     m_controller = controller! as KDDockWidgetBindings.FloatingWindow;
     m_fillsParent = true;
