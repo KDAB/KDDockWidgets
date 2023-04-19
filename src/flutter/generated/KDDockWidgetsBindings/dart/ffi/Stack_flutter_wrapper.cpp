@@ -28,7 +28,7 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 Stack_flutter_wrapper::Stack_flutter_wrapper(KDDockWidgets::Core::Stack *controller, KDDockWidgets::Core::View *parent)
-    : ::KDDockWidgets::Views::Stack_flutter(controller, parent)
+    : ::KDDockWidgets::flutter::Stack_flutter(controller, parent)
 {
 }
 void Stack_flutter_wrapper::activateWindow()
@@ -37,12 +37,12 @@ void Stack_flutter_wrapper::activateWindow()
         const void *thisPtr = this;
         m_activateWindowCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::activateWindow();
+        ::KDDockWidgets::flutter::Stack_flutter::activateWindow();
     }
 }
 void Stack_flutter_wrapper::activateWindow_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::activateWindow();
+    ::KDDockWidgets::flutter::Stack_flutter::activateWindow();
 }
 bool Stack_flutter_wrapper::close()
 {
@@ -50,12 +50,12 @@ bool Stack_flutter_wrapper::close()
         const void *thisPtr = this;
         return m_closeCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::close();
+        return ::KDDockWidgets::flutter::Stack_flutter::close();
     }
 }
 bool Stack_flutter_wrapper::close_nocallback()
 {
-    return ::KDDockWidgets::Views::Stack_flutter::close();
+    return ::KDDockWidgets::flutter::Stack_flutter::close();
 }
 void Stack_flutter_wrapper::createPlatformWindow()
 {
@@ -63,12 +63,12 @@ void Stack_flutter_wrapper::createPlatformWindow()
         const void *thisPtr = this;
         m_createPlatformWindowCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::createPlatformWindow();
+        ::KDDockWidgets::flutter::Stack_flutter::createPlatformWindow();
     }
 }
 void Stack_flutter_wrapper::createPlatformWindow_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::createPlatformWindow();
+    ::KDDockWidgets::flutter::Stack_flutter::createPlatformWindow();
 }
 Qt::WindowFlags Stack_flutter_wrapper::flags() const
 {
@@ -76,12 +76,12 @@ Qt::WindowFlags Stack_flutter_wrapper::flags() const
         const void *thisPtr = this;
         return m_flagsCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::flags();
+        return ::KDDockWidgets::flutter::Stack_flutter::flags();
     }
 }
 Qt::WindowFlags Stack_flutter_wrapper::flags_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::flags();
+    return ::KDDockWidgets::flutter::Stack_flutter::flags();
 }
 void Stack_flutter_wrapper::free_impl()
 {
@@ -89,12 +89,12 @@ void Stack_flutter_wrapper::free_impl()
         const void *thisPtr = this;
         m_free_implCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::free_impl();
+        ::KDDockWidgets::flutter::Stack_flutter::free_impl();
     }
 }
 void Stack_flutter_wrapper::free_impl_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::free_impl();
+    ::KDDockWidgets::flutter::Stack_flutter::free_impl();
 }
 QRect Stack_flutter_wrapper::geometry() const
 {
@@ -102,12 +102,12 @@ QRect Stack_flutter_wrapper::geometry() const
         const void *thisPtr = this;
         return *m_geometryCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::geometry();
+        return ::KDDockWidgets::flutter::Stack_flutter::geometry();
     }
 }
 QRect Stack_flutter_wrapper::geometry_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::geometry();
+    return ::KDDockWidgets::flutter::Stack_flutter::geometry();
 }
 void Stack_flutter_wrapper::grabMouse()
 {
@@ -115,12 +115,12 @@ void Stack_flutter_wrapper::grabMouse()
         const void *thisPtr = this;
         m_grabMouseCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::grabMouse();
+        ::KDDockWidgets::flutter::Stack_flutter::grabMouse();
     }
 }
 void Stack_flutter_wrapper::grabMouse_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::grabMouse();
+    ::KDDockWidgets::flutter::Stack_flutter::grabMouse();
 }
 bool Stack_flutter_wrapper::hasFocus() const
 {
@@ -128,12 +128,12 @@ bool Stack_flutter_wrapper::hasFocus() const
         const void *thisPtr = this;
         return m_hasFocusCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::hasFocus();
+        return ::KDDockWidgets::flutter::Stack_flutter::hasFocus();
     }
 }
 bool Stack_flutter_wrapper::hasFocus_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::hasFocus();
+    return ::KDDockWidgets::flutter::Stack_flutter::hasFocus();
 }
 void Stack_flutter_wrapper::hide()
 {
@@ -141,12 +141,12 @@ void Stack_flutter_wrapper::hide()
         const void *thisPtr = this;
         m_hideCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::hide();
+        ::KDDockWidgets::flutter::Stack_flutter::hide();
     }
 }
 void Stack_flutter_wrapper::hide_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::hide();
+    ::KDDockWidgets::flutter::Stack_flutter::hide();
 }
 void Stack_flutter_wrapper::init()
 {
@@ -154,12 +154,12 @@ void Stack_flutter_wrapper::init()
         const void *thisPtr = this;
         m_initCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::init();
+        ::KDDockWidgets::flutter::Stack_flutter::init();
     }
 }
 void Stack_flutter_wrapper::init_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::init();
+    ::KDDockWidgets::flutter::Stack_flutter::init();
 }
 bool Stack_flutter_wrapper::isActiveWindow() const
 {
@@ -167,12 +167,12 @@ bool Stack_flutter_wrapper::isActiveWindow() const
         const void *thisPtr = this;
         return m_isActiveWindowCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::isActiveWindow();
+        return ::KDDockWidgets::flutter::Stack_flutter::isActiveWindow();
     }
 }
 bool Stack_flutter_wrapper::isActiveWindow_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::isActiveWindow();
+    return ::KDDockWidgets::flutter::Stack_flutter::isActiveWindow();
 }
 bool Stack_flutter_wrapper::isMaximized() const
 {
@@ -180,12 +180,12 @@ bool Stack_flutter_wrapper::isMaximized() const
         const void *thisPtr = this;
         return m_isMaximizedCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::isMaximized();
+        return ::KDDockWidgets::flutter::Stack_flutter::isMaximized();
     }
 }
 bool Stack_flutter_wrapper::isMaximized_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::isMaximized();
+    return ::KDDockWidgets::flutter::Stack_flutter::isMaximized();
 }
 bool Stack_flutter_wrapper::isMinimized() const
 {
@@ -193,12 +193,12 @@ bool Stack_flutter_wrapper::isMinimized() const
         const void *thisPtr = this;
         return m_isMinimizedCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::isMinimized();
+        return ::KDDockWidgets::flutter::Stack_flutter::isMinimized();
     }
 }
 bool Stack_flutter_wrapper::isMinimized_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::isMinimized();
+    return ::KDDockWidgets::flutter::Stack_flutter::isMinimized();
 }
 bool Stack_flutter_wrapper::isNull() const
 {
@@ -206,12 +206,12 @@ bool Stack_flutter_wrapper::isNull() const
         const void *thisPtr = this;
         return m_isNullCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::isNull();
+        return ::KDDockWidgets::flutter::Stack_flutter::isNull();
     }
 }
 bool Stack_flutter_wrapper::isNull_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::isNull();
+    return ::KDDockWidgets::flutter::Stack_flutter::isNull();
 }
 bool Stack_flutter_wrapper::isPositionDraggable(QPoint p) const
 {
@@ -219,12 +219,12 @@ bool Stack_flutter_wrapper::isPositionDraggable(QPoint p) const
         const void *thisPtr = this;
         return m_isPositionDraggableCallback(const_cast<void *>(thisPtr), &p);
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::isPositionDraggable(p);
+        return ::KDDockWidgets::flutter::Stack_flutter::isPositionDraggable(p);
     }
 }
 bool Stack_flutter_wrapper::isPositionDraggable_nocallback(QPoint p) const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::isPositionDraggable(p);
+    return ::KDDockWidgets::flutter::Stack_flutter::isPositionDraggable(p);
 }
 bool Stack_flutter_wrapper::isRootView() const
 {
@@ -232,12 +232,12 @@ bool Stack_flutter_wrapper::isRootView() const
         const void *thisPtr = this;
         return m_isRootViewCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::isRootView();
+        return ::KDDockWidgets::flutter::Stack_flutter::isRootView();
     }
 }
 bool Stack_flutter_wrapper::isRootView_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::isRootView();
+    return ::KDDockWidgets::flutter::Stack_flutter::isRootView();
 }
 bool Stack_flutter_wrapper::isVisible() const
 {
@@ -245,12 +245,12 @@ bool Stack_flutter_wrapper::isVisible() const
         const void *thisPtr = this;
         return m_isVisibleCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::isVisible();
+        return ::KDDockWidgets::flutter::Stack_flutter::isVisible();
     }
 }
 bool Stack_flutter_wrapper::isVisible_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::isVisible();
+    return ::KDDockWidgets::flutter::Stack_flutter::isVisible();
 }
 QPoint Stack_flutter_wrapper::mapFromGlobal(QPoint globalPt) const
 {
@@ -258,12 +258,12 @@ QPoint Stack_flutter_wrapper::mapFromGlobal(QPoint globalPt) const
         const void *thisPtr = this;
         return *m_mapFromGlobalCallback(const_cast<void *>(thisPtr), &globalPt);
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::mapFromGlobal(globalPt);
+        return ::KDDockWidgets::flutter::Stack_flutter::mapFromGlobal(globalPt);
     }
 }
 QPoint Stack_flutter_wrapper::mapFromGlobal_nocallback(QPoint globalPt) const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::mapFromGlobal(globalPt);
+    return ::KDDockWidgets::flutter::Stack_flutter::mapFromGlobal(globalPt);
 }
 QPoint Stack_flutter_wrapper::mapTo(KDDockWidgets::Core::View *parent, QPoint pos) const
 {
@@ -271,12 +271,12 @@ QPoint Stack_flutter_wrapper::mapTo(KDDockWidgets::Core::View *parent, QPoint po
         const void *thisPtr = this;
         return *m_mapToCallback(const_cast<void *>(thisPtr), parent, &pos);
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::mapTo(parent, pos);
+        return ::KDDockWidgets::flutter::Stack_flutter::mapTo(parent, pos);
     }
 }
 QPoint Stack_flutter_wrapper::mapTo_nocallback(KDDockWidgets::Core::View *parent, QPoint pos) const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::mapTo(parent, pos);
+    return ::KDDockWidgets::flutter::Stack_flutter::mapTo(parent, pos);
 }
 QPoint Stack_flutter_wrapper::mapToGlobal(QPoint localPt) const
 {
@@ -284,12 +284,12 @@ QPoint Stack_flutter_wrapper::mapToGlobal(QPoint localPt) const
         const void *thisPtr = this;
         return *m_mapToGlobalCallback(const_cast<void *>(thisPtr), &localPt);
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::mapToGlobal(localPt);
+        return ::KDDockWidgets::flutter::Stack_flutter::mapToGlobal(localPt);
     }
 }
 QPoint Stack_flutter_wrapper::mapToGlobal_nocallback(QPoint localPt) const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::mapToGlobal(localPt);
+    return ::KDDockWidgets::flutter::Stack_flutter::mapToGlobal(localPt);
 }
 QSize Stack_flutter_wrapper::maxSizeHint() const
 {
@@ -297,12 +297,12 @@ QSize Stack_flutter_wrapper::maxSizeHint() const
         const void *thisPtr = this;
         return *m_maxSizeHintCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::maxSizeHint();
+        return ::KDDockWidgets::flutter::Stack_flutter::maxSizeHint();
     }
 }
 QSize Stack_flutter_wrapper::maxSizeHint_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::maxSizeHint();
+    return ::KDDockWidgets::flutter::Stack_flutter::maxSizeHint();
 }
 QSize Stack_flutter_wrapper::minSize() const
 {
@@ -310,12 +310,12 @@ QSize Stack_flutter_wrapper::minSize() const
         const void *thisPtr = this;
         return *m_minSizeCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::minSize();
+        return ::KDDockWidgets::flutter::Stack_flutter::minSize();
     }
 }
 QSize Stack_flutter_wrapper::minSize_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::minSize();
+    return ::KDDockWidgets::flutter::Stack_flutter::minSize();
 }
 int Stack_flutter_wrapper::minimumHeight() const
 {
@@ -323,12 +323,12 @@ int Stack_flutter_wrapper::minimumHeight() const
         const void *thisPtr = this;
         return m_minimumHeightCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::minimumHeight();
+        return ::KDDockWidgets::flutter::Stack_flutter::minimumHeight();
     }
 }
 int Stack_flutter_wrapper::minimumHeight_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::minimumHeight();
+    return ::KDDockWidgets::flutter::Stack_flutter::minimumHeight();
 }
 int Stack_flutter_wrapper::minimumWidth() const
 {
@@ -336,12 +336,12 @@ int Stack_flutter_wrapper::minimumWidth() const
         const void *thisPtr = this;
         return m_minimumWidthCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::minimumWidth();
+        return ::KDDockWidgets::flutter::Stack_flutter::minimumWidth();
     }
 }
 int Stack_flutter_wrapper::minimumWidth_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::minimumWidth();
+    return ::KDDockWidgets::flutter::Stack_flutter::minimumWidth();
 }
 void Stack_flutter_wrapper::move(int x, int y)
 {
@@ -349,12 +349,12 @@ void Stack_flutter_wrapper::move(int x, int y)
         const void *thisPtr = this;
         m_move_2Callback(const_cast<void *>(thisPtr), x, y);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::move(x, y);
+        ::KDDockWidgets::flutter::Stack_flutter::move(x, y);
     }
 }
 void Stack_flutter_wrapper::move_nocallback(int x, int y)
 {
-    ::KDDockWidgets::Views::Stack_flutter::move(x, y);
+    ::KDDockWidgets::flutter::Stack_flutter::move(x, y);
 }
 QRect Stack_flutter_wrapper::normalGeometry() const
 {
@@ -362,12 +362,12 @@ QRect Stack_flutter_wrapper::normalGeometry() const
         const void *thisPtr = this;
         return *m_normalGeometryCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::normalGeometry();
+        return ::KDDockWidgets::flutter::Stack_flutter::normalGeometry();
     }
 }
 QRect Stack_flutter_wrapper::normalGeometry_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::normalGeometry();
+    return ::KDDockWidgets::flutter::Stack_flutter::normalGeometry();
 }
 QString Stack_flutter_wrapper::objectName() const
 {
@@ -375,12 +375,12 @@ QString Stack_flutter_wrapper::objectName() const
         const void *thisPtr = this;
         return *m_objectNameCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::objectName();
+        return ::KDDockWidgets::flutter::Stack_flutter::objectName();
     }
 }
 QString Stack_flutter_wrapper::objectName_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::objectName();
+    return ::KDDockWidgets::flutter::Stack_flutter::objectName();
 }
 void Stack_flutter_wrapper::onChildAdded(KDDockWidgets::Core::View *childView)
 {
@@ -388,12 +388,12 @@ void Stack_flutter_wrapper::onChildAdded(KDDockWidgets::Core::View *childView)
         const void *thisPtr = this;
         m_onChildAddedCallback(const_cast<void *>(thisPtr), childView);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::onChildAdded(childView);
+        ::KDDockWidgets::flutter::Stack_flutter::onChildAdded(childView);
     }
 }
 void Stack_flutter_wrapper::onChildAdded_nocallback(KDDockWidgets::Core::View *childView)
 {
-    ::KDDockWidgets::Views::Stack_flutter::onChildAdded(childView);
+    ::KDDockWidgets::flutter::Stack_flutter::onChildAdded(childView);
 }
 void Stack_flutter_wrapper::onChildRemoved(KDDockWidgets::Core::View *childView)
 {
@@ -401,12 +401,12 @@ void Stack_flutter_wrapper::onChildRemoved(KDDockWidgets::Core::View *childView)
         const void *thisPtr = this;
         m_onChildRemovedCallback(const_cast<void *>(thisPtr), childView);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::onChildRemoved(childView);
+        ::KDDockWidgets::flutter::Stack_flutter::onChildRemoved(childView);
     }
 }
 void Stack_flutter_wrapper::onChildRemoved_nocallback(KDDockWidgets::Core::View *childView)
 {
-    ::KDDockWidgets::Views::Stack_flutter::onChildRemoved(childView);
+    ::KDDockWidgets::flutter::Stack_flutter::onChildRemoved(childView);
 }
 bool Stack_flutter_wrapper::onResize(int w, int h)
 {
@@ -414,12 +414,12 @@ bool Stack_flutter_wrapper::onResize(int w, int h)
         const void *thisPtr = this;
         return m_onResize_2Callback(const_cast<void *>(thisPtr), w, h);
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::onResize(w, h);
+        return ::KDDockWidgets::flutter::Stack_flutter::onResize(w, h);
     }
 }
 bool Stack_flutter_wrapper::onResize_nocallback(int w, int h)
 {
-    return ::KDDockWidgets::Views::Stack_flutter::onResize(w, h);
+    return ::KDDockWidgets::flutter::Stack_flutter::onResize(w, h);
 }
 void Stack_flutter_wrapper::raise()
 {
@@ -427,12 +427,12 @@ void Stack_flutter_wrapper::raise()
         const void *thisPtr = this;
         m_raiseCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::raise();
+        ::KDDockWidgets::flutter::Stack_flutter::raise();
     }
 }
 void Stack_flutter_wrapper::raise_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::raise();
+    ::KDDockWidgets::flutter::Stack_flutter::raise();
 }
 void Stack_flutter_wrapper::raiseAndActivate()
 {
@@ -440,12 +440,12 @@ void Stack_flutter_wrapper::raiseAndActivate()
         const void *thisPtr = this;
         m_raiseAndActivateCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::raiseAndActivate();
+        ::KDDockWidgets::flutter::Stack_flutter::raiseAndActivate();
     }
 }
 void Stack_flutter_wrapper::raiseAndActivate_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::raiseAndActivate();
+    ::KDDockWidgets::flutter::Stack_flutter::raiseAndActivate();
 }
 void Stack_flutter_wrapper::releaseKeyboard()
 {
@@ -453,12 +453,12 @@ void Stack_flutter_wrapper::releaseKeyboard()
         const void *thisPtr = this;
         m_releaseKeyboardCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::releaseKeyboard();
+        ::KDDockWidgets::flutter::Stack_flutter::releaseKeyboard();
     }
 }
 void Stack_flutter_wrapper::releaseKeyboard_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::releaseKeyboard();
+    ::KDDockWidgets::flutter::Stack_flutter::releaseKeyboard();
 }
 void Stack_flutter_wrapper::releaseMouse()
 {
@@ -466,12 +466,12 @@ void Stack_flutter_wrapper::releaseMouse()
         const void *thisPtr = this;
         m_releaseMouseCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::releaseMouse();
+        ::KDDockWidgets::flutter::Stack_flutter::releaseMouse();
     }
 }
 void Stack_flutter_wrapper::releaseMouse_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::releaseMouse();
+    ::KDDockWidgets::flutter::Stack_flutter::releaseMouse();
 }
 void Stack_flutter_wrapper::setCursor(Qt::CursorShape shape)
 {
@@ -479,12 +479,12 @@ void Stack_flutter_wrapper::setCursor(Qt::CursorShape shape)
         const void *thisPtr = this;
         m_setCursorCallback(const_cast<void *>(thisPtr), shape);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setCursor(shape);
+        ::KDDockWidgets::flutter::Stack_flutter::setCursor(shape);
     }
 }
 void Stack_flutter_wrapper::setCursor_nocallback(Qt::CursorShape shape)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setCursor(shape);
+    ::KDDockWidgets::flutter::Stack_flutter::setCursor(shape);
 }
 void Stack_flutter_wrapper::setDocumentMode(bool arg__1)
 {
@@ -492,12 +492,12 @@ void Stack_flutter_wrapper::setDocumentMode(bool arg__1)
         const void *thisPtr = this;
         m_setDocumentModeCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setDocumentMode(arg__1);
+        ::KDDockWidgets::flutter::Stack_flutter::setDocumentMode(arg__1);
     }
 }
 void Stack_flutter_wrapper::setDocumentMode_nocallback(bool arg__1)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setDocumentMode(arg__1);
+    ::KDDockWidgets::flutter::Stack_flutter::setDocumentMode(arg__1);
 }
 void Stack_flutter_wrapper::setFixedHeight(int h)
 {
@@ -505,12 +505,12 @@ void Stack_flutter_wrapper::setFixedHeight(int h)
         const void *thisPtr = this;
         m_setFixedHeightCallback(const_cast<void *>(thisPtr), h);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setFixedHeight(h);
+        ::KDDockWidgets::flutter::Stack_flutter::setFixedHeight(h);
     }
 }
 void Stack_flutter_wrapper::setFixedHeight_nocallback(int h)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setFixedHeight(h);
+    ::KDDockWidgets::flutter::Stack_flutter::setFixedHeight(h);
 }
 void Stack_flutter_wrapper::setFixedWidth(int w)
 {
@@ -518,12 +518,12 @@ void Stack_flutter_wrapper::setFixedWidth(int w)
         const void *thisPtr = this;
         m_setFixedWidthCallback(const_cast<void *>(thisPtr), w);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setFixedWidth(w);
+        ::KDDockWidgets::flutter::Stack_flutter::setFixedWidth(w);
     }
 }
 void Stack_flutter_wrapper::setFixedWidth_nocallback(int w)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setFixedWidth(w);
+    ::KDDockWidgets::flutter::Stack_flutter::setFixedWidth(w);
 }
 void Stack_flutter_wrapper::setGeometry(QRect geometry)
 {
@@ -531,12 +531,12 @@ void Stack_flutter_wrapper::setGeometry(QRect geometry)
         const void *thisPtr = this;
         m_setGeometryCallback(const_cast<void *>(thisPtr), &geometry);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setGeometry(geometry);
+        ::KDDockWidgets::flutter::Stack_flutter::setGeometry(geometry);
     }
 }
 void Stack_flutter_wrapper::setGeometry_nocallback(QRect geometry)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setGeometry(geometry);
+    ::KDDockWidgets::flutter::Stack_flutter::setGeometry(geometry);
 }
 void Stack_flutter_wrapper::setHeight(int h)
 {
@@ -544,12 +544,12 @@ void Stack_flutter_wrapper::setHeight(int h)
         const void *thisPtr = this;
         m_setHeightCallback(const_cast<void *>(thisPtr), h);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setHeight(h);
+        ::KDDockWidgets::flutter::Stack_flutter::setHeight(h);
     }
 }
 void Stack_flutter_wrapper::setHeight_nocallback(int h)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setHeight(h);
+    ::KDDockWidgets::flutter::Stack_flutter::setHeight(h);
 }
 void Stack_flutter_wrapper::setMaximumSize(QSize sz)
 {
@@ -557,12 +557,12 @@ void Stack_flutter_wrapper::setMaximumSize(QSize sz)
         const void *thisPtr = this;
         m_setMaximumSizeCallback(const_cast<void *>(thisPtr), &sz);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setMaximumSize(sz);
+        ::KDDockWidgets::flutter::Stack_flutter::setMaximumSize(sz);
     }
 }
 void Stack_flutter_wrapper::setMaximumSize_nocallback(QSize sz)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setMaximumSize(sz);
+    ::KDDockWidgets::flutter::Stack_flutter::setMaximumSize(sz);
 }
 void Stack_flutter_wrapper::setMinimumSize(QSize sz)
 {
@@ -570,12 +570,12 @@ void Stack_flutter_wrapper::setMinimumSize(QSize sz)
         const void *thisPtr = this;
         m_setMinimumSizeCallback(const_cast<void *>(thisPtr), &sz);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setMinimumSize(sz);
+        ::KDDockWidgets::flutter::Stack_flutter::setMinimumSize(sz);
     }
 }
 void Stack_flutter_wrapper::setMinimumSize_nocallback(QSize sz)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setMinimumSize(sz);
+    ::KDDockWidgets::flutter::Stack_flutter::setMinimumSize(sz);
 }
 void Stack_flutter_wrapper::setMouseTracking(bool enable)
 {
@@ -583,12 +583,12 @@ void Stack_flutter_wrapper::setMouseTracking(bool enable)
         const void *thisPtr = this;
         m_setMouseTrackingCallback(const_cast<void *>(thisPtr), enable);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setMouseTracking(enable);
+        ::KDDockWidgets::flutter::Stack_flutter::setMouseTracking(enable);
     }
 }
 void Stack_flutter_wrapper::setMouseTracking_nocallback(bool enable)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setMouseTracking(enable);
+    ::KDDockWidgets::flutter::Stack_flutter::setMouseTracking(enable);
 }
 void Stack_flutter_wrapper::setObjectName(const QString &name)
 {
@@ -596,12 +596,12 @@ void Stack_flutter_wrapper::setObjectName(const QString &name)
         const void *thisPtr = this;
         m_setObjectNameCallback(const_cast<void *>(thisPtr), name);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setObjectName(name);
+        ::KDDockWidgets::flutter::Stack_flutter::setObjectName(name);
     }
 }
 void Stack_flutter_wrapper::setObjectName_nocallback(const QString &name)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setObjectName(name);
+    ::KDDockWidgets::flutter::Stack_flutter::setObjectName(name);
 }
 void Stack_flutter_wrapper::setParent(KDDockWidgets::Core::View *parent)
 {
@@ -609,12 +609,12 @@ void Stack_flutter_wrapper::setParent(KDDockWidgets::Core::View *parent)
         const void *thisPtr = this;
         m_setParentCallback(const_cast<void *>(thisPtr), parent);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setParent(parent);
+        ::KDDockWidgets::flutter::Stack_flutter::setParent(parent);
     }
 }
 void Stack_flutter_wrapper::setParent_nocallback(KDDockWidgets::Core::View *parent)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setParent(parent);
+    ::KDDockWidgets::flutter::Stack_flutter::setParent(parent);
 }
 void Stack_flutter_wrapper::setSize(int w, int h)
 {
@@ -622,12 +622,12 @@ void Stack_flutter_wrapper::setSize(int w, int h)
         const void *thisPtr = this;
         m_setSize_2Callback(const_cast<void *>(thisPtr), w, h);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setSize(w, h);
+        ::KDDockWidgets::flutter::Stack_flutter::setSize(w, h);
     }
 }
 void Stack_flutter_wrapper::setSize_nocallback(int w, int h)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setSize(w, h);
+    ::KDDockWidgets::flutter::Stack_flutter::setSize(w, h);
 }
 void Stack_flutter_wrapper::setVisible(bool visible)
 {
@@ -635,12 +635,12 @@ void Stack_flutter_wrapper::setVisible(bool visible)
         const void *thisPtr = this;
         m_setVisibleCallback(const_cast<void *>(thisPtr), visible);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setVisible(visible);
+        ::KDDockWidgets::flutter::Stack_flutter::setVisible(visible);
     }
 }
 void Stack_flutter_wrapper::setVisible_nocallback(bool visible)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setVisible(visible);
+    ::KDDockWidgets::flutter::Stack_flutter::setVisible(visible);
 }
 void Stack_flutter_wrapper::setWidth(int w)
 {
@@ -648,12 +648,12 @@ void Stack_flutter_wrapper::setWidth(int w)
         const void *thisPtr = this;
         m_setWidthCallback(const_cast<void *>(thisPtr), w);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setWidth(w);
+        ::KDDockWidgets::flutter::Stack_flutter::setWidth(w);
     }
 }
 void Stack_flutter_wrapper::setWidth_nocallback(int w)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setWidth(w);
+    ::KDDockWidgets::flutter::Stack_flutter::setWidth(w);
 }
 void Stack_flutter_wrapper::setWindowOpacity(double v)
 {
@@ -661,12 +661,12 @@ void Stack_flutter_wrapper::setWindowOpacity(double v)
         const void *thisPtr = this;
         m_setWindowOpacityCallback(const_cast<void *>(thisPtr), v);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setWindowOpacity(v);
+        ::KDDockWidgets::flutter::Stack_flutter::setWindowOpacity(v);
     }
 }
 void Stack_flutter_wrapper::setWindowOpacity_nocallback(double v)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setWindowOpacity(v);
+    ::KDDockWidgets::flutter::Stack_flutter::setWindowOpacity(v);
 }
 void Stack_flutter_wrapper::setWindowTitle(const QString &title)
 {
@@ -674,12 +674,12 @@ void Stack_flutter_wrapper::setWindowTitle(const QString &title)
         const void *thisPtr = this;
         m_setWindowTitleCallback(const_cast<void *>(thisPtr), title);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setWindowTitle(title);
+        ::KDDockWidgets::flutter::Stack_flutter::setWindowTitle(title);
     }
 }
 void Stack_flutter_wrapper::setWindowTitle_nocallback(const QString &title)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setWindowTitle(title);
+    ::KDDockWidgets::flutter::Stack_flutter::setWindowTitle(title);
 }
 void Stack_flutter_wrapper::setZOrder(int z)
 {
@@ -687,12 +687,12 @@ void Stack_flutter_wrapper::setZOrder(int z)
         const void *thisPtr = this;
         m_setZOrderCallback(const_cast<void *>(thisPtr), z);
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::setZOrder(z);
+        ::KDDockWidgets::flutter::Stack_flutter::setZOrder(z);
     }
 }
 void Stack_flutter_wrapper::setZOrder_nocallback(int z)
 {
-    ::KDDockWidgets::Views::Stack_flutter::setZOrder(z);
+    ::KDDockWidgets::flutter::Stack_flutter::setZOrder(z);
 }
 void Stack_flutter_wrapper::show()
 {
@@ -700,12 +700,12 @@ void Stack_flutter_wrapper::show()
         const void *thisPtr = this;
         m_showCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::show();
+        ::KDDockWidgets::flutter::Stack_flutter::show();
     }
 }
 void Stack_flutter_wrapper::show_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::show();
+    ::KDDockWidgets::flutter::Stack_flutter::show();
 }
 void Stack_flutter_wrapper::showMaximized()
 {
@@ -713,12 +713,12 @@ void Stack_flutter_wrapper::showMaximized()
         const void *thisPtr = this;
         m_showMaximizedCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::showMaximized();
+        ::KDDockWidgets::flutter::Stack_flutter::showMaximized();
     }
 }
 void Stack_flutter_wrapper::showMaximized_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::showMaximized();
+    ::KDDockWidgets::flutter::Stack_flutter::showMaximized();
 }
 void Stack_flutter_wrapper::showMinimized()
 {
@@ -726,12 +726,12 @@ void Stack_flutter_wrapper::showMinimized()
         const void *thisPtr = this;
         m_showMinimizedCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::showMinimized();
+        ::KDDockWidgets::flutter::Stack_flutter::showMinimized();
     }
 }
 void Stack_flutter_wrapper::showMinimized_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::showMinimized();
+    ::KDDockWidgets::flutter::Stack_flutter::showMinimized();
 }
 void Stack_flutter_wrapper::showNormal()
 {
@@ -739,12 +739,12 @@ void Stack_flutter_wrapper::showNormal()
         const void *thisPtr = this;
         m_showNormalCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::showNormal();
+        ::KDDockWidgets::flutter::Stack_flutter::showNormal();
     }
 }
 void Stack_flutter_wrapper::showNormal_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::showNormal();
+    ::KDDockWidgets::flutter::Stack_flutter::showNormal();
 }
 QSize Stack_flutter_wrapper::sizeHint() const
 {
@@ -752,12 +752,12 @@ QSize Stack_flutter_wrapper::sizeHint() const
         const void *thisPtr = this;
         return *m_sizeHintCallback(const_cast<void *>(thisPtr));
     } else {
-        return ::KDDockWidgets::Views::Stack_flutter::sizeHint();
+        return ::KDDockWidgets::flutter::Stack_flutter::sizeHint();
     }
 }
 QSize Stack_flutter_wrapper::sizeHint_nocallback() const
 {
-    return ::KDDockWidgets::Views::Stack_flutter::sizeHint();
+    return ::KDDockWidgets::flutter::Stack_flutter::sizeHint();
 }
 void Stack_flutter_wrapper::update()
 {
@@ -765,32 +765,32 @@ void Stack_flutter_wrapper::update()
         const void *thisPtr = this;
         m_updateCallback(const_cast<void *>(thisPtr));
     } else {
-        ::KDDockWidgets::Views::Stack_flutter::update();
+        ::KDDockWidgets::flutter::Stack_flutter::update();
     }
 }
 void Stack_flutter_wrapper::update_nocallback()
 {
-    ::KDDockWidgets::Views::Stack_flutter::update();
+    ::KDDockWidgets::flutter::Stack_flutter::update();
 }
 Stack_flutter_wrapper::~Stack_flutter_wrapper()
 {
 }
 
 }
-static KDDockWidgets::Views::Stack_flutter *fromPtr(void *ptr)
+static KDDockWidgets::flutter::Stack_flutter *fromPtr(void *ptr)
 {
-    return reinterpret_cast<KDDockWidgets::Views::Stack_flutter *>(ptr);
+    return reinterpret_cast<KDDockWidgets::flutter::Stack_flutter *>(ptr);
 }
 static KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper *fromWrapperPtr(void *ptr)
 {
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Views__Stack_flutter_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__flutter__Stack_flutter_Finalizer(void *, void *cppObj, void *)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper *>(cppObj);
 }
-void *c_KDDockWidgets__Views__Stack_flutter__constructor_Stack_View(void *controller_, void *parent_)
+void *c_KDDockWidgets__flutter__Stack_flutter__constructor_Stack_View(void *controller_, void *parent_)
 {
     auto controller = reinterpret_cast<KDDockWidgets::Core::Stack *>(controller_);
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
@@ -798,101 +798,101 @@ void *c_KDDockWidgets__Views__Stack_flutter__constructor_Stack_View(void *contro
     return reinterpret_cast<void *>(ptr);
 }
 // activateWindow()
-void c_KDDockWidgets__Views__Stack_flutter__activateWindow(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__activateWindow(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->activateWindow_nocallback();} else {    return targetPtr->activateWindow();} }();
 }
 // close()
-bool c_KDDockWidgets__Views__Stack_flutter__close(void *thisObj)
+bool c_KDDockWidgets__flutter__Stack_flutter__close(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->close_nocallback();} else {    return targetPtr->close();} }();
 }
 // createPlatformWindow()
-void c_KDDockWidgets__Views__Stack_flutter__createPlatformWindow(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__createPlatformWindow(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createPlatformWindow_nocallback();} else {    return targetPtr->createPlatformWindow();} }();
 }
 // flags() const
-int c_KDDockWidgets__Views__Stack_flutter__flags(void *thisObj)
+int c_KDDockWidgets__flutter__Stack_flutter__flags(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->flags_nocallback();} else {    return targetPtr->flags();} }();
 }
 // free_impl()
-void c_KDDockWidgets__Views__Stack_flutter__free_impl(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__free_impl(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->free_impl_nocallback();} else {    return targetPtr->free_impl();} }();
 }
 // geometry() const
-void *c_KDDockWidgets__Views__Stack_flutter__geometry(void *thisObj)
+void *c_KDDockWidgets__flutter__Stack_flutter__geometry(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
 }
 // grabMouse()
-void c_KDDockWidgets__Views__Stack_flutter__grabMouse(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__grabMouse(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->grabMouse_nocallback();} else {    return targetPtr->grabMouse();} }();
 }
 // hasFocus() const
-bool c_KDDockWidgets__Views__Stack_flutter__hasFocus(void *thisObj)
+bool c_KDDockWidgets__flutter__Stack_flutter__hasFocus(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hasFocus_nocallback();} else {    return targetPtr->hasFocus();} }();
 }
 // hide()
-void c_KDDockWidgets__Views__Stack_flutter__hide(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__hide(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hide_nocallback();} else {    return targetPtr->hide();} }();
 }
 // init()
-void c_KDDockWidgets__Views__Stack_flutter__init(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__init(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->init_nocallback();} else {    return targetPtr->init();} }();
 }
 // isActiveWindow() const
-bool c_KDDockWidgets__Views__Stack_flutter__isActiveWindow(void *thisObj)
+bool c_KDDockWidgets__flutter__Stack_flutter__isActiveWindow(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isActiveWindow_nocallback();} else {    return targetPtr->isActiveWindow();} }();
 }
 // isMaximized() const
-bool c_KDDockWidgets__Views__Stack_flutter__isMaximized(void *thisObj)
+bool c_KDDockWidgets__flutter__Stack_flutter__isMaximized(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMaximized_nocallback();} else {    return targetPtr->isMaximized();} }();
 }
 // isMinimized() const
-bool c_KDDockWidgets__Views__Stack_flutter__isMinimized(void *thisObj)
+bool c_KDDockWidgets__flutter__Stack_flutter__isMinimized(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMinimized_nocallback();} else {    return targetPtr->isMinimized();} }();
 }
 // isNull() const
-bool c_KDDockWidgets__Views__Stack_flutter__isNull(void *thisObj)
+bool c_KDDockWidgets__flutter__Stack_flutter__isNull(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isNull_nocallback();} else {    return targetPtr->isNull();} }();
 }
 // isPositionDraggable(QPoint p) const
-bool c_KDDockWidgets__Views__Stack_flutter__isPositionDraggable_QPoint(void *thisObj, void *p_)
+bool c_KDDockWidgets__flutter__Stack_flutter__isPositionDraggable_QPoint(void *thisObj, void *p_)
 {
     assert(p_);
     auto &p = *reinterpret_cast<QPoint *>(p_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isPositionDraggable_nocallback(p);} else {    return targetPtr->isPositionDraggable(p);} }();
 }
 // isRootView() const
-bool c_KDDockWidgets__Views__Stack_flutter__isRootView(void *thisObj)
+bool c_KDDockWidgets__flutter__Stack_flutter__isRootView(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isRootView_nocallback();} else {    return targetPtr->isRootView();} }();
 }
 // isVisible() const
-bool c_KDDockWidgets__Views__Stack_flutter__isVisible(void *thisObj)
+bool c_KDDockWidgets__flutter__Stack_flutter__isVisible(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback();} else {    return targetPtr->isVisible();} }();
 }
 // mapFromGlobal(QPoint globalPt) const
-void *c_KDDockWidgets__Views__Stack_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_)
+void *c_KDDockWidgets__flutter__Stack_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_)
 {
     assert(globalPt_);
     auto &globalPt = *reinterpret_cast<QPoint *>(globalPt_);
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(globalPt);} else {    return targetPtr->mapFromGlobal(globalPt);} }() };
 }
 // mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const
-void *c_KDDockWidgets__Views__Stack_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_)
+void *c_KDDockWidgets__flutter__Stack_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     assert(pos_);
@@ -900,213 +900,213 @@ void *c_KDDockWidgets__Views__Stack_flutter__mapTo_View_QPoint(void *thisObj, vo
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(parent,pos);} else {    return targetPtr->mapTo(parent,pos);} }() };
 }
 // mapToGlobal(QPoint localPt) const
-void *c_KDDockWidgets__Views__Stack_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_)
+void *c_KDDockWidgets__flutter__Stack_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_)
 {
     assert(localPt_);
     auto &localPt = *reinterpret_cast<QPoint *>(localPt_);
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(localPt);} else {    return targetPtr->mapToGlobal(localPt);} }() };
 }
 // maxSizeHint() const
-void *c_KDDockWidgets__Views__Stack_flutter__maxSizeHint(void *thisObj)
+void *c_KDDockWidgets__flutter__Stack_flutter__maxSizeHint(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
 }
 // minSize() const
-void *c_KDDockWidgets__Views__Stack_flutter__minSize(void *thisObj)
+void *c_KDDockWidgets__flutter__Stack_flutter__minSize(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
 }
 // minimumHeight() const
-int c_KDDockWidgets__Views__Stack_flutter__minimumHeight(void *thisObj)
+int c_KDDockWidgets__flutter__Stack_flutter__minimumHeight(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minimumHeight_nocallback();} else {    return targetPtr->minimumHeight();} }();
 }
 // minimumWidth() const
-int c_KDDockWidgets__Views__Stack_flutter__minimumWidth(void *thisObj)
+int c_KDDockWidgets__flutter__Stack_flutter__minimumWidth(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minimumWidth_nocallback();} else {    return targetPtr->minimumWidth();} }();
 }
 // move(int x, int y)
-void c_KDDockWidgets__Views__Stack_flutter__move_int_int(void *thisObj, int x, int y)
+void c_KDDockWidgets__flutter__Stack_flutter__move_int_int(void *thisObj, int x, int y)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->move_nocallback(x,y);} else {    return targetPtr->move(x,y);} }();
 }
 // normalGeometry() const
-void *c_KDDockWidgets__Views__Stack_flutter__normalGeometry(void *thisObj)
+void *c_KDDockWidgets__flutter__Stack_flutter__normalGeometry(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
 }
 // objectName() const
-void *c_KDDockWidgets__Views__Stack_flutter__objectName(void *thisObj)
+void *c_KDDockWidgets__flutter__Stack_flutter__objectName(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->objectName_nocallback();} else {    return targetPtr->objectName();} }() };
 }
 // onChildAdded(KDDockWidgets::Core::View * childView)
-void c_KDDockWidgets__Views__Stack_flutter__onChildAdded_View(void *thisObj, void *childView_)
+void c_KDDockWidgets__flutter__Stack_flutter__onChildAdded_View(void *thisObj, void *childView_)
 {
     auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildAdded_nocallback(childView);} else {    return targetPtr->onChildAdded(childView);} }();
 }
 // onChildRemoved(KDDockWidgets::Core::View * childView)
-void c_KDDockWidgets__Views__Stack_flutter__onChildRemoved_View(void *thisObj, void *childView_)
+void c_KDDockWidgets__flutter__Stack_flutter__onChildRemoved_View(void *thisObj, void *childView_)
 {
     auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildRemoved_nocallback(childView);} else {    return targetPtr->onChildRemoved(childView);} }();
 }
 // onResize(int w, int h)
-bool c_KDDockWidgets__Views__Stack_flutter__onResize_int_int(void *thisObj, int w, int h)
+bool c_KDDockWidgets__flutter__Stack_flutter__onResize_int_int(void *thisObj, int w, int h)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(w,h);} else {    return targetPtr->onResize(w,h);} }();
 }
 // raise()
-void c_KDDockWidgets__Views__Stack_flutter__raise(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__raise(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raise_nocallback();} else {    return targetPtr->raise();} }();
 }
 // raiseAndActivate()
-void c_KDDockWidgets__Views__Stack_flutter__raiseAndActivate(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__raiseAndActivate(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseAndActivate_nocallback();} else {    return targetPtr->raiseAndActivate();} }();
 }
 // releaseKeyboard()
-void c_KDDockWidgets__Views__Stack_flutter__releaseKeyboard(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__releaseKeyboard(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->releaseKeyboard_nocallback();} else {    return targetPtr->releaseKeyboard();} }();
 }
 // releaseMouse()
-void c_KDDockWidgets__Views__Stack_flutter__releaseMouse(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__releaseMouse(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->releaseMouse_nocallback();} else {    return targetPtr->releaseMouse();} }();
 }
 // setCursor(Qt::CursorShape shape)
-void c_KDDockWidgets__Views__Stack_flutter__setCursor_CursorShape(void *thisObj, int shape)
+void c_KDDockWidgets__flutter__Stack_flutter__setCursor_CursorShape(void *thisObj, int shape)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setCursor_nocallback(static_cast<Qt::CursorShape>(shape));} else {    return targetPtr->setCursor(static_cast<Qt::CursorShape>(shape));} }();
 }
 // setDocumentMode(bool arg__1)
-void c_KDDockWidgets__Views__Stack_flutter__setDocumentMode_bool(void *thisObj, bool arg__1)
+void c_KDDockWidgets__flutter__Stack_flutter__setDocumentMode_bool(void *thisObj, bool arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setDocumentMode_nocallback(arg__1);} else {    return targetPtr->setDocumentMode(arg__1);} }();
 }
 // setFixedHeight(int h)
-void c_KDDockWidgets__Views__Stack_flutter__setFixedHeight_int(void *thisObj, int h)
+void c_KDDockWidgets__flutter__Stack_flutter__setFixedHeight_int(void *thisObj, int h)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setFixedHeight_nocallback(h);} else {    return targetPtr->setFixedHeight(h);} }();
 }
 // setFixedWidth(int w)
-void c_KDDockWidgets__Views__Stack_flutter__setFixedWidth_int(void *thisObj, int w)
+void c_KDDockWidgets__flutter__Stack_flutter__setFixedWidth_int(void *thisObj, int w)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setFixedWidth_nocallback(w);} else {    return targetPtr->setFixedWidth(w);} }();
 }
 // setGeometry(QRect geometry)
-void c_KDDockWidgets__Views__Stack_flutter__setGeometry_QRect(void *thisObj, void *geometry_)
+void c_KDDockWidgets__flutter__Stack_flutter__setGeometry_QRect(void *thisObj, void *geometry_)
 {
     assert(geometry_);
     auto &geometry = *reinterpret_cast<QRect *>(geometry_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setGeometry_nocallback(geometry);} else {    return targetPtr->setGeometry(geometry);} }();
 }
 // setHeight(int h)
-void c_KDDockWidgets__Views__Stack_flutter__setHeight_int(void *thisObj, int h)
+void c_KDDockWidgets__flutter__Stack_flutter__setHeight_int(void *thisObj, int h)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setHeight_nocallback(h);} else {    return targetPtr->setHeight(h);} }();
 }
 // setMaximumSize(QSize sz)
-void c_KDDockWidgets__Views__Stack_flutter__setMaximumSize_QSize(void *thisObj, void *sz_)
+void c_KDDockWidgets__flutter__Stack_flutter__setMaximumSize_QSize(void *thisObj, void *sz_)
 {
     assert(sz_);
     auto &sz = *reinterpret_cast<QSize *>(sz_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMaximumSize_nocallback(sz);} else {    return targetPtr->setMaximumSize(sz);} }();
 }
 // setMinimumSize(QSize sz)
-void c_KDDockWidgets__Views__Stack_flutter__setMinimumSize_QSize(void *thisObj, void *sz_)
+void c_KDDockWidgets__flutter__Stack_flutter__setMinimumSize_QSize(void *thisObj, void *sz_)
 {
     assert(sz_);
     auto &sz = *reinterpret_cast<QSize *>(sz_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMinimumSize_nocallback(sz);} else {    return targetPtr->setMinimumSize(sz);} }();
 }
 // setMouseTracking(bool enable)
-void c_KDDockWidgets__Views__Stack_flutter__setMouseTracking_bool(void *thisObj, bool enable)
+void c_KDDockWidgets__flutter__Stack_flutter__setMouseTracking_bool(void *thisObj, bool enable)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMouseTracking_nocallback(enable);} else {    return targetPtr->setMouseTracking(enable);} }();
 }
 // setObjectName(const QString & name)
-void c_KDDockWidgets__Views__Stack_flutter__setObjectName_QString(void *thisObj, const char *name_)
+void c_KDDockWidgets__flutter__Stack_flutter__setObjectName_QString(void *thisObj, const char *name_)
 {
     const auto name = QString::fromUtf8(name_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setObjectName_nocallback(name);} else {    return targetPtr->setObjectName(name);} }();
 }
 // setParent(KDDockWidgets::Core::View * parent)
-void c_KDDockWidgets__Views__Stack_flutter__setParent_View(void *thisObj, void *parent_)
+void c_KDDockWidgets__flutter__Stack_flutter__setParent_View(void *thisObj, void *parent_)
 {
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setParent_nocallback(parent);} else {    return targetPtr->setParent(parent);} }();
 }
 // setSize(int w, int h)
-void c_KDDockWidgets__Views__Stack_flutter__setSize_int_int(void *thisObj, int w, int h)
+void c_KDDockWidgets__flutter__Stack_flutter__setSize_int_int(void *thisObj, int w, int h)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setSize_nocallback(w,h);} else {    return targetPtr->setSize(w,h);} }();
 }
 // setVisible(bool visible)
-void c_KDDockWidgets__Views__Stack_flutter__setVisible_bool(void *thisObj, bool visible)
+void c_KDDockWidgets__flutter__Stack_flutter__setVisible_bool(void *thisObj, bool visible)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setVisible_nocallback(visible);} else {    return targetPtr->setVisible(visible);} }();
 }
 // setWidth(int w)
-void c_KDDockWidgets__Views__Stack_flutter__setWidth_int(void *thisObj, int w)
+void c_KDDockWidgets__flutter__Stack_flutter__setWidth_int(void *thisObj, int w)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWidth_nocallback(w);} else {    return targetPtr->setWidth(w);} }();
 }
 // setWindowOpacity(double v)
-void c_KDDockWidgets__Views__Stack_flutter__setWindowOpacity_double(void *thisObj, double v)
+void c_KDDockWidgets__flutter__Stack_flutter__setWindowOpacity_double(void *thisObj, double v)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWindowOpacity_nocallback(v);} else {    return targetPtr->setWindowOpacity(v);} }();
 }
 // setWindowTitle(const QString & title)
-void c_KDDockWidgets__Views__Stack_flutter__setWindowTitle_QString(void *thisObj, const char *title_)
+void c_KDDockWidgets__flutter__Stack_flutter__setWindowTitle_QString(void *thisObj, const char *title_)
 {
     const auto title = QString::fromUtf8(title_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWindowTitle_nocallback(title);} else {    return targetPtr->setWindowTitle(title);} }();
 }
 // setZOrder(int z)
-void c_KDDockWidgets__Views__Stack_flutter__setZOrder_int(void *thisObj, int z)
+void c_KDDockWidgets__flutter__Stack_flutter__setZOrder_int(void *thisObj, int z)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setZOrder_nocallback(z);} else {    return targetPtr->setZOrder(z);} }();
 }
 // show()
-void c_KDDockWidgets__Views__Stack_flutter__show(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__show(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->show_nocallback();} else {    return targetPtr->show();} }();
 }
 // showMaximized()
-void c_KDDockWidgets__Views__Stack_flutter__showMaximized(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__showMaximized(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showMaximized_nocallback();} else {    return targetPtr->showMaximized();} }();
 }
 // showMinimized()
-void c_KDDockWidgets__Views__Stack_flutter__showMinimized(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__showMinimized(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showMinimized_nocallback();} else {    return targetPtr->showMinimized();} }();
 }
 // showNormal()
-void c_KDDockWidgets__Views__Stack_flutter__showNormal(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__showNormal(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showNormal_nocallback();} else {    return targetPtr->showNormal();} }();
 }
 // sizeHint() const
-void *c_KDDockWidgets__Views__Stack_flutter__sizeHint(void *thisObj)
+void *c_KDDockWidgets__flutter__Stack_flutter__sizeHint(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->sizeHint_nocallback();} else {    return targetPtr->sizeHint();} }() };
 }
 // update()
-void c_KDDockWidgets__Views__Stack_flutter__update(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__update(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Stack_flutter_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->update_nocallback();} else {    return targetPtr->update();} }();
 }
-void c_KDDockWidgets__Views__Stack_flutter__destructor(void *thisObj)
+void c_KDDockWidgets__flutter__Stack_flutter__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-void c_KDDockWidgets__Views__Stack_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+void c_KDDockWidgets__flutter__Stack_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {

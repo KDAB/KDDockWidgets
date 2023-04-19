@@ -13,12 +13,12 @@
 #include <qstring.h>
 #include <qsize.h>
 #include <core/DockWidget.h>
-#include <qpoint.h>
 #include <qrect.h>
+#include <qpoint.h>
 #include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
-class DockWidget_flutter_wrapper : public ::KDDockWidgets::Views::DockWidget_flutter
+class DockWidget_flutter_wrapper : public ::KDDockWidgets::flutter::DockWidget_flutter
 {
 public:
     ~DockWidget_flutter_wrapper();
@@ -247,121 +247,121 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Views::DockWidget_flutter::DockWidget_flutter(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__constructor_QString_DockWidgetOptions_LayoutSaverOptions(const char *uniqueName_, int options_, int layoutSaverOptions_);
-// KDDockWidgets::Views::DockWidget_flutter::activateWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__activateWindow(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::close()
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__close(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::createPlatformWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__createPlatformWindow(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::dockWidget() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__dockWidget(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::flags() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__DockWidget_flutter__flags(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::free_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__free_impl(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::geometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__geometry(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::grabMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__grabMouse(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::hasFocus() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__hasFocus(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::hide()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__hide(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::init()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__init(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::isActiveWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__isActiveWindow(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::isMaximized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__isMaximized(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::isMinimized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__isMinimized(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::isNull() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__isNull(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::isRootView() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__isRootView(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::isVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__isVisible(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::mapFromGlobal(QPoint globalPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
-// KDDockWidgets::Views::DockWidget_flutter::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
-// KDDockWidgets::Views::DockWidget_flutter::mapToGlobal(QPoint localPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
-// KDDockWidgets::Views::DockWidget_flutter::maxSizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__maxSizeHint(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::minSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__minSize(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::minimumHeight() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__DockWidget_flutter__minimumHeight(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::minimumWidth() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Views__DockWidget_flutter__minimumWidth(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::move(int x, int y)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__move_int_int(void *thisObj, int x, int y);
-// KDDockWidgets::Views::DockWidget_flutter::normalGeometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__normalGeometry(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::objectName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__objectName(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::onChildAdded(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__onChildAdded_View(void *thisObj, void *childView_);
-// KDDockWidgets::Views::DockWidget_flutter::onChildRemoved(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__onChildRemoved_View(void *thisObj, void *childView_);
-// KDDockWidgets::Views::DockWidget_flutter::onResize(int w, int h)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Views__DockWidget_flutter__onResize_int_int(void *thisObj, int w, int h);
-// KDDockWidgets::Views::DockWidget_flutter::raise()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__raise(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::raiseAndActivate()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__raiseAndActivate(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::releaseKeyboard()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__releaseKeyboard(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::releaseMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__releaseMouse(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::setCursor(Qt::CursorShape shape)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setCursor_CursorShape(void *thisObj, int shape);
-// KDDockWidgets::Views::DockWidget_flutter::setFixedHeight(int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setFixedHeight_int(void *thisObj, int h);
-// KDDockWidgets::Views::DockWidget_flutter::setFixedWidth(int w)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::Views::DockWidget_flutter::setGeometry(QRect geometry)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
-// KDDockWidgets::Views::DockWidget_flutter::setHeight(int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setHeight_int(void *thisObj, int h);
-// KDDockWidgets::Views::DockWidget_flutter::setMaximumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setMaximumSize_QSize(void *thisObj, void *sz_);
-// KDDockWidgets::Views::DockWidget_flutter::setMinimumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setMinimumSize_QSize(void *thisObj, void *sz_);
-// KDDockWidgets::Views::DockWidget_flutter::setMouseTracking(bool enable)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::Views::DockWidget_flutter::setObjectName(const QString & name)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setObjectName_QString(void *thisObj, const char *name_);
-// KDDockWidgets::Views::DockWidget_flutter::setParent(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setParent_View(void *thisObj, void *parent_);
-// KDDockWidgets::Views::DockWidget_flutter::setSize(int w, int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setSize_int_int(void *thisObj, int w, int h);
-// KDDockWidgets::Views::DockWidget_flutter::setVisible(bool visible)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setVisible_bool(void *thisObj, bool visible);
-// KDDockWidgets::Views::DockWidget_flutter::setWidth(int w)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setWidth_int(void *thisObj, int w);
-// KDDockWidgets::Views::DockWidget_flutter::setWindowOpacity(double v)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setWindowOpacity_double(void *thisObj, double v);
-// KDDockWidgets::Views::DockWidget_flutter::setWindowTitle(const QString & title)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setWindowTitle_QString(void *thisObj, const char *title_);
-// KDDockWidgets::Views::DockWidget_flutter::setZOrder(int z)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__setZOrder_int(void *thisObj, int z);
-// KDDockWidgets::Views::DockWidget_flutter::show()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__show(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::showMaximized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__showMaximized(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::showMinimized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__showMinimized(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::showNormal()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__showNormal(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::sizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Views__DockWidget_flutter__sizeHint(void *thisObj);
-// KDDockWidgets::Views::DockWidget_flutter::update()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__update(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Views__DockWidget_flutter_Finalizer(void *, void *cppObj, void *);
+// KDDockWidgets::flutter::DockWidget_flutter::DockWidget_flutter(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__constructor_QString_DockWidgetOptions_LayoutSaverOptions(const char *uniqueName_, int options_, int layoutSaverOptions_);
+// KDDockWidgets::flutter::DockWidget_flutter::activateWindow()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__activateWindow(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::close()
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__close(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::createPlatformWindow()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__createPlatformWindow(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::dockWidget() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__dockWidget(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::flags() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__DockWidget_flutter__flags(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::free_impl()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__free_impl(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::geometry() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__geometry(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::grabMouse()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__grabMouse(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::hasFocus() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__hasFocus(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::hide()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__hide(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::init()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__init(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::isActiveWindow() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__isActiveWindow(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::isMaximized() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__isMaximized(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::isMinimized() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::isNull() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__isNull(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::isRootView() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__isRootView(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::isVisible() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__isVisible(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::mapFromGlobal(QPoint globalPt) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
+// KDDockWidgets::flutter::DockWidget_flutter::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
+// KDDockWidgets::flutter::DockWidget_flutter::mapToGlobal(QPoint localPt) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__mapToGlobal_QPoint(void *thisObj, void *localPt_);
+// KDDockWidgets::flutter::DockWidget_flutter::maxSizeHint() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__maxSizeHint(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::minSize() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__minSize(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::minimumHeight() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__DockWidget_flutter__minimumHeight(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::minimumWidth() const
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__DockWidget_flutter__minimumWidth(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::move(int x, int y)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__move_int_int(void *thisObj, int x, int y);
+// KDDockWidgets::flutter::DockWidget_flutter::normalGeometry() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__normalGeometry(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::objectName() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__objectName(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::onChildAdded(KDDockWidgets::Core::View * childView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::DockWidget_flutter::onChildRemoved(KDDockWidgets::Core::View * childView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::DockWidget_flutter::onResize(int w, int h)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget_flutter__onResize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::DockWidget_flutter::raise()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__raise(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::raiseAndActivate()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::releaseKeyboard()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__releaseKeyboard(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::releaseMouse()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__releaseMouse(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::setCursor(Qt::CursorShape shape)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setCursor_CursorShape(void *thisObj, int shape);
+// KDDockWidgets::flutter::DockWidget_flutter::setFixedHeight(int h)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setFixedHeight_int(void *thisObj, int h);
+// KDDockWidgets::flutter::DockWidget_flutter::setFixedWidth(int w)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setFixedWidth_int(void *thisObj, int w);
+// KDDockWidgets::flutter::DockWidget_flutter::setGeometry(QRect geometry)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setGeometry_QRect(void *thisObj, void *geometry_);
+// KDDockWidgets::flutter::DockWidget_flutter::setHeight(int h)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setHeight_int(void *thisObj, int h);
+// KDDockWidgets::flutter::DockWidget_flutter::setMaximumSize(QSize sz)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setMaximumSize_QSize(void *thisObj, void *sz_);
+// KDDockWidgets::flutter::DockWidget_flutter::setMinimumSize(QSize sz)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setMinimumSize_QSize(void *thisObj, void *sz_);
+// KDDockWidgets::flutter::DockWidget_flutter::setMouseTracking(bool enable)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setMouseTracking_bool(void *thisObj, bool enable);
+// KDDockWidgets::flutter::DockWidget_flutter::setObjectName(const QString & name)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setObjectName_QString(void *thisObj, const char *name_);
+// KDDockWidgets::flutter::DockWidget_flutter::setParent(KDDockWidgets::Core::View * parent)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setParent_View(void *thisObj, void *parent_);
+// KDDockWidgets::flutter::DockWidget_flutter::setSize(int w, int h)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::DockWidget_flutter::setVisible(bool visible)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setVisible_bool(void *thisObj, bool visible);
+// KDDockWidgets::flutter::DockWidget_flutter::setWidth(int w)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setWidth_int(void *thisObj, int w);
+// KDDockWidgets::flutter::DockWidget_flutter::setWindowOpacity(double v)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setWindowOpacity_double(void *thisObj, double v);
+// KDDockWidgets::flutter::DockWidget_flutter::setWindowTitle(const QString & title)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setWindowTitle_QString(void *thisObj, const char *title_);
+// KDDockWidgets::flutter::DockWidget_flutter::setZOrder(int z)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__setZOrder_int(void *thisObj, int z);
+// KDDockWidgets::flutter::DockWidget_flutter::show()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__show(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::showMaximized()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__showMaximized(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::showMinimized()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__showMinimized(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::showNormal()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__showNormal(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::sizeHint() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget_flutter__sizeHint(void *thisObj);
+// KDDockWidgets::flutter::DockWidget_flutter::update()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__update(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_flutter_Finalizer(void *, void *cppObj, void *);
 }

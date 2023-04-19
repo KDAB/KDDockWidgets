@@ -25,7 +25,7 @@
 #include <ClassicIndicators.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
-class ViewFactory_flutter_wrapper : public ::KDDockWidgets::ViewFactory_flutter
+class ViewFactory_flutter_wrapper : public ::KDDockWidgets::flutter::ViewFactory_flutter
 {
 public:
     ~ViewFactory_flutter_wrapper();
@@ -78,33 +78,33 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::ViewFactory_flutter::ViewFactory_flutter()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__constructor();
-// KDDockWidgets::ViewFactory_flutter::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
-// KDDockWidgets::ViewFactory_flutter::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int arg__2_, int arg__3_, int arg__4);
-// KDDockWidgets::ViewFactory_flutter::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory_flutter::createFloatingWindow(KDDockWidgets::Core::FloatingWindow * arg__1, KDDockWidgets::Core::MainWindow * parent, Qt::WindowFlags windowFlags) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags(void *thisObj, void *arg__1_, void *parent_, int windowFlags);
-// KDDockWidgets::ViewFactory_flutter::createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory_flutter::createRubberBand(KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View(void *thisObj, void *parent_);
-// KDDockWidgets::ViewFactory_flutter::createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory_flutter::createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createSideBar_SideBar_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory_flutter::createStack(KDDockWidgets::Core::Stack * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory_flutter::createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_);
-// KDDockWidgets::ViewFactory_flutter::createTitleBar(KDDockWidgets::Core::TitleBar * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__ViewFactory_flutter__createTitleBar_TitleBar_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::ViewFactory_flutter::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__ViewFactory_flutter__tr_char_char_int(const char *s, const char *c, int n);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__ViewFactory_flutter__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__ViewFactory_flutter_Finalizer(void *, void *cppObj, void *);
+// KDDockWidgets::flutter::ViewFactory_flutter::ViewFactory_flutter()
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__constructor();
+// KDDockWidgets::flutter::ViewFactory_flutter::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::ViewFactory_flutter::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int arg__2_, int arg__3_, int arg__4);
+// KDDockWidgets::flutter::ViewFactory_flutter::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createDropArea_DropArea_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::flutter::ViewFactory_flutter::createFloatingWindow(KDDockWidgets::Core::FloatingWindow * arg__1, KDDockWidgets::Core::MainWindow * parent, Qt::WindowFlags windowFlags) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags(void *thisObj, void *arg__1_, void *parent_, int windowFlags);
+// KDDockWidgets::flutter::ViewFactory_flutter::createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createGroup_Group_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::flutter::ViewFactory_flutter::createRubberBand(KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createRubberBand_View(void *thisObj, void *parent_);
+// KDDockWidgets::flutter::ViewFactory_flutter::createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createSeparator_Separator_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::flutter::ViewFactory_flutter::createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createSideBar_SideBar_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::flutter::ViewFactory_flutter::createStack(KDDockWidgets::Core::Stack * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createStack_Stack_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::flutter::ViewFactory_flutter::createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_);
+// KDDockWidgets::flutter::ViewFactory_flutter::createTitleBar(KDDockWidgets::Core::TitleBar * arg__1, KDDockWidgets::Core::View * parent) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory_flutter__createTitleBar_TitleBar_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::flutter::ViewFactory_flutter::tr(const char * s, const char * c, int n)
+KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__ViewFactory_flutter__tr_char_char_int(const char *s, const char *c, int n);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory_flutter__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory_flutter__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory_flutter_Finalizer(void *, void *cppObj, void *);
 }

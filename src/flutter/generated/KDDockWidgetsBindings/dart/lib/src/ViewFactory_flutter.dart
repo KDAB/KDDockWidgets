@@ -32,7 +32,7 @@ class ViewFactory_flutter extends ViewFactory {
   ViewFactory_flutter() : super.init() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
-            'c_KDDockWidgets__ViewFactory_flutter__constructor')
+            'c_KDDockWidgets__flutter__ViewFactory_flutter__constructor')
         .asFunction();
     thisCpp = func();
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
@@ -210,7 +210,7 @@ class ViewFactory_flutter extends ViewFactory {
       QString tr(String? s, String? c, int n) {
     final voidstar_Func_string_string_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__ViewFactory_flutter__tr_char_char_int')
+            'c_static_KDDockWidgets__flutter__ViewFactory_flutter__tr_char_char_int')
         .asFunction();
     ffi.Pointer<void> result = func(
         s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
@@ -220,7 +220,7 @@ class ViewFactory_flutter extends ViewFactory {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__ViewFactory_flutter__destructor')
+            'c_KDDockWidgets__flutter__ViewFactory_flutter__destructor')
         .asFunction();
     func(thisCpp);
   }
@@ -228,27 +228,27 @@ class ViewFactory_flutter extends ViewFactory {
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
       case 657:
-        return "c_KDDockWidgets__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createClassicIndicatorWindow_ClassicIndicators";
       case 658:
-        return "c_KDDockWidgets__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
       case 659:
-        return "c_KDDockWidgets__ViewFactory_flutter__createDropArea_DropArea_View";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createDropArea_DropArea_View";
       case 660:
-        return "c_KDDockWidgets__ViewFactory_flutter__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags";
       case 661:
-        return "c_KDDockWidgets__ViewFactory_flutter__createGroup_Group_View";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createGroup_Group_View";
       case 662:
-        return "c_KDDockWidgets__ViewFactory_flutter__createRubberBand_View";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createRubberBand_View";
       case 663:
-        return "c_KDDockWidgets__ViewFactory_flutter__createSeparator_Separator_View";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createSeparator_Separator_View";
       case 664:
-        return "c_KDDockWidgets__ViewFactory_flutter__createSideBar_SideBar_View";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createSideBar_SideBar_View";
       case 665:
-        return "c_KDDockWidgets__ViewFactory_flutter__createStack_Stack_View";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createStack_Stack_View";
       case 666:
-        return "c_KDDockWidgets__ViewFactory_flutter__createTabBar_TabBar_View";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createTabBar_TabBar_View";
       case 667:
-        return "c_KDDockWidgets__ViewFactory_flutter__createTitleBar_TitleBar_View";
+        return "c_KDDockWidgets__flutter__ViewFactory_flutter__createTitleBar_TitleBar_View";
     }
     return super.cFunctionSymbolName(methodId);
   }
@@ -285,7 +285,7 @@ class ViewFactory_flutter extends ViewFactory {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__ViewFactory_flutter__registerVirtualMethodCallback')
+            'c_KDDockWidgets__flutter__ViewFactory_flutter__registerVirtualMethodCallback')
         .asFunction();
     final callback657 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(

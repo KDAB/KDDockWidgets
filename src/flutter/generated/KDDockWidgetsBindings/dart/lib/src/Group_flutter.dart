@@ -30,7 +30,7 @@ class Group_flutter extends View_flutter {
   Group_flutter(Group? controller, {required View? parent}) : super.init() {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Views__Group_flutter__constructor_Group_View')
+            'c_KDDockWidgets__flutter__Group_flutter__constructor_Group_View')
         .asFunction();
     thisCpp = func(controller == null ? ffi.nullptr : controller.thisCpp,
         parent == null ? ffi.nullptr : parent.thisCpp);
@@ -74,7 +74,7 @@ class Group_flutter extends View_flutter {
   int currentIndex() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Views__Group_flutter__currentIndex')
+            'c_KDDockWidgets__flutter__Group_flutter__currentIndex')
         .asFunction();
     return func(thisCpp);
   } // dragRect() const
@@ -730,7 +730,7 @@ class Group_flutter extends View_flutter {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Views__Group_flutter__destructor')
+            'c_KDDockWidgets__flutter__Group_flutter__destructor')
         .asFunction();
     func(thisCpp);
   }
@@ -738,119 +738,119 @@ class Group_flutter extends View_flutter {
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
       case 886:
-        return "c_KDDockWidgets__Views__Group_flutter__activateWindow";
+        return "c_KDDockWidgets__flutter__Group_flutter__activateWindow";
       case 897:
-        return "c_KDDockWidgets__Views__Group_flutter__close";
+        return "c_KDDockWidgets__flutter__Group_flutter__close";
       case 900:
-        return "c_KDDockWidgets__Views__Group_flutter__createPlatformWindow";
+        return "c_KDDockWidgets__flutter__Group_flutter__createPlatformWindow";
       case 1044:
-        return "c_KDDockWidgets__Views__Group_flutter__dragRect";
+        return "c_KDDockWidgets__flutter__Group_flutter__dragRect";
       case 905:
-        return "c_KDDockWidgets__Views__Group_flutter__flags";
+        return "c_KDDockWidgets__flutter__Group_flutter__flags";
       case 907:
-        return "c_KDDockWidgets__Views__Group_flutter__free_impl";
+        return "c_KDDockWidgets__flutter__Group_flutter__free_impl";
       case 909:
-        return "c_KDDockWidgets__Views__Group_flutter__geometry";
+        return "c_KDDockWidgets__flutter__Group_flutter__geometry";
       case 911:
-        return "c_KDDockWidgets__Views__Group_flutter__grabMouse";
+        return "c_KDDockWidgets__flutter__Group_flutter__grabMouse";
       case 914:
-        return "c_KDDockWidgets__Views__Group_flutter__hasFocus";
+        return "c_KDDockWidgets__flutter__Group_flutter__hasFocus";
       case 916:
-        return "c_KDDockWidgets__Views__Group_flutter__hide";
+        return "c_KDDockWidgets__flutter__Group_flutter__hide";
       case 919:
-        return "c_KDDockWidgets__Views__Group_flutter__init";
+        return "c_KDDockWidgets__flutter__Group_flutter__init";
       case 921:
-        return "c_KDDockWidgets__Views__Group_flutter__isActiveWindow";
+        return "c_KDDockWidgets__flutter__Group_flutter__isActiveWindow";
       case 922:
-        return "c_KDDockWidgets__Views__Group_flutter__isMaximized";
+        return "c_KDDockWidgets__flutter__Group_flutter__isMaximized";
       case 923:
-        return "c_KDDockWidgets__Views__Group_flutter__isMinimized";
+        return "c_KDDockWidgets__flutter__Group_flutter__isMinimized";
       case 924:
-        return "c_KDDockWidgets__Views__Group_flutter__isNull";
+        return "c_KDDockWidgets__flutter__Group_flutter__isNull";
       case 925:
-        return "c_KDDockWidgets__Views__Group_flutter__isRootView";
+        return "c_KDDockWidgets__flutter__Group_flutter__isRootView";
       case 926:
-        return "c_KDDockWidgets__Views__Group_flutter__isVisible";
+        return "c_KDDockWidgets__flutter__Group_flutter__isVisible";
       case 927:
-        return "c_KDDockWidgets__Views__Group_flutter__mapFromGlobal_QPoint";
+        return "c_KDDockWidgets__flutter__Group_flutter__mapFromGlobal_QPoint";
       case 928:
-        return "c_KDDockWidgets__Views__Group_flutter__mapTo_View_QPoint";
+        return "c_KDDockWidgets__flutter__Group_flutter__mapTo_View_QPoint";
       case 929:
-        return "c_KDDockWidgets__Views__Group_flutter__mapToGlobal_QPoint";
+        return "c_KDDockWidgets__flutter__Group_flutter__mapToGlobal_QPoint";
       case 930:
-        return "c_KDDockWidgets__Views__Group_flutter__maxSizeHint";
+        return "c_KDDockWidgets__flutter__Group_flutter__maxSizeHint";
       case 931:
-        return "c_KDDockWidgets__Views__Group_flutter__minSize";
+        return "c_KDDockWidgets__flutter__Group_flutter__minSize";
       case 932:
-        return "c_KDDockWidgets__Views__Group_flutter__minimumHeight";
+        return "c_KDDockWidgets__flutter__Group_flutter__minimumHeight";
       case 933:
-        return "c_KDDockWidgets__Views__Group_flutter__minimumWidth";
+        return "c_KDDockWidgets__flutter__Group_flutter__minimumWidth";
       case 935:
-        return "c_KDDockWidgets__Views__Group_flutter__move_int_int";
+        return "c_KDDockWidgets__flutter__Group_flutter__move_int_int";
       case 1045:
-        return "c_KDDockWidgets__Views__Group_flutter__nonContentsHeight";
+        return "c_KDDockWidgets__flutter__Group_flutter__nonContentsHeight";
       case 936:
-        return "c_KDDockWidgets__Views__Group_flutter__normalGeometry";
+        return "c_KDDockWidgets__flutter__Group_flutter__normalGeometry";
       case 937:
-        return "c_KDDockWidgets__Views__Group_flutter__objectName";
+        return "c_KDDockWidgets__flutter__Group_flutter__objectName";
       case 1004:
-        return "c_KDDockWidgets__Views__Group_flutter__onChildAdded_View";
+        return "c_KDDockWidgets__flutter__Group_flutter__onChildAdded_View";
       case 1005:
-        return "c_KDDockWidgets__Views__Group_flutter__onChildRemoved_View";
+        return "c_KDDockWidgets__flutter__Group_flutter__onChildRemoved_View";
       case 939:
-        return "c_KDDockWidgets__Views__Group_flutter__onResize_int_int";
+        return "c_KDDockWidgets__flutter__Group_flutter__onResize_int_int";
       case 942:
-        return "c_KDDockWidgets__Views__Group_flutter__raise";
+        return "c_KDDockWidgets__flutter__Group_flutter__raise";
       case 943:
-        return "c_KDDockWidgets__Views__Group_flutter__raiseAndActivate";
+        return "c_KDDockWidgets__flutter__Group_flutter__raiseAndActivate";
       case 945:
-        return "c_KDDockWidgets__Views__Group_flutter__releaseKeyboard";
+        return "c_KDDockWidgets__flutter__Group_flutter__releaseKeyboard";
       case 946:
-        return "c_KDDockWidgets__Views__Group_flutter__releaseMouse";
+        return "c_KDDockWidgets__flutter__Group_flutter__releaseMouse";
       case 950:
-        return "c_KDDockWidgets__Views__Group_flutter__setCursor_CursorShape";
+        return "c_KDDockWidgets__flutter__Group_flutter__setCursor_CursorShape";
       case 951:
-        return "c_KDDockWidgets__Views__Group_flutter__setFixedHeight_int";
+        return "c_KDDockWidgets__flutter__Group_flutter__setFixedHeight_int";
       case 952:
-        return "c_KDDockWidgets__Views__Group_flutter__setFixedWidth_int";
+        return "c_KDDockWidgets__flutter__Group_flutter__setFixedWidth_int";
       case 953:
-        return "c_KDDockWidgets__Views__Group_flutter__setGeometry_QRect";
+        return "c_KDDockWidgets__flutter__Group_flutter__setGeometry_QRect";
       case 954:
-        return "c_KDDockWidgets__Views__Group_flutter__setHeight_int";
+        return "c_KDDockWidgets__flutter__Group_flutter__setHeight_int";
       case 955:
-        return "c_KDDockWidgets__Views__Group_flutter__setMaximumSize_QSize";
+        return "c_KDDockWidgets__flutter__Group_flutter__setMaximumSize_QSize";
       case 956:
-        return "c_KDDockWidgets__Views__Group_flutter__setMinimumSize_QSize";
+        return "c_KDDockWidgets__flutter__Group_flutter__setMinimumSize_QSize";
       case 957:
-        return "c_KDDockWidgets__Views__Group_flutter__setMouseTracking_bool";
+        return "c_KDDockWidgets__flutter__Group_flutter__setMouseTracking_bool";
       case 958:
-        return "c_KDDockWidgets__Views__Group_flutter__setObjectName_QString";
+        return "c_KDDockWidgets__flutter__Group_flutter__setObjectName_QString";
       case 959:
-        return "c_KDDockWidgets__Views__Group_flutter__setParent_View";
+        return "c_KDDockWidgets__flutter__Group_flutter__setParent_View";
       case 961:
-        return "c_KDDockWidgets__Views__Group_flutter__setSize_int_int";
+        return "c_KDDockWidgets__flutter__Group_flutter__setSize_int_int";
       case 962:
-        return "c_KDDockWidgets__Views__Group_flutter__setVisible_bool";
+        return "c_KDDockWidgets__flutter__Group_flutter__setVisible_bool";
       case 963:
-        return "c_KDDockWidgets__Views__Group_flutter__setWidth_int";
+        return "c_KDDockWidgets__flutter__Group_flutter__setWidth_int";
       case 964:
-        return "c_KDDockWidgets__Views__Group_flutter__setWindowOpacity_double";
+        return "c_KDDockWidgets__flutter__Group_flutter__setWindowOpacity_double";
       case 965:
-        return "c_KDDockWidgets__Views__Group_flutter__setWindowTitle_QString";
+        return "c_KDDockWidgets__flutter__Group_flutter__setWindowTitle_QString";
       case 966:
-        return "c_KDDockWidgets__Views__Group_flutter__setZOrder_int";
+        return "c_KDDockWidgets__flutter__Group_flutter__setZOrder_int";
       case 967:
-        return "c_KDDockWidgets__Views__Group_flutter__show";
+        return "c_KDDockWidgets__flutter__Group_flutter__show";
       case 968:
-        return "c_KDDockWidgets__Views__Group_flutter__showMaximized";
+        return "c_KDDockWidgets__flutter__Group_flutter__showMaximized";
       case 969:
-        return "c_KDDockWidgets__Views__Group_flutter__showMinimized";
+        return "c_KDDockWidgets__flutter__Group_flutter__showMinimized";
       case 970:
-        return "c_KDDockWidgets__Views__Group_flutter__showNormal";
+        return "c_KDDockWidgets__flutter__Group_flutter__showNormal";
       case 972:
-        return "c_KDDockWidgets__Views__Group_flutter__sizeHint";
+        return "c_KDDockWidgets__flutter__Group_flutter__sizeHint";
       case 974:
-        return "c_KDDockWidgets__Views__Group_flutter__update";
+        return "c_KDDockWidgets__flutter__Group_flutter__update";
     }
     return super.cFunctionSymbolName(methodId);
   }
@@ -979,7 +979,7 @@ class Group_flutter extends View_flutter {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__Views__Group_flutter__registerVirtualMethodCallback')
+            'c_KDDockWidgets__flutter__Group_flutter__registerVirtualMethodCallback')
         .asFunction();
     final callback886 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         View_flutter.activateWindow_calledFromC);

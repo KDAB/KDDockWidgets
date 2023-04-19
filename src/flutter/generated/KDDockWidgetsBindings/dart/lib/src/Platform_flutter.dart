@@ -31,7 +31,7 @@ class Platform_flutter extends Platform {
   Platform_flutter() : super.init() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
-            'c_KDDockWidgets__Platform_flutter__constructor')
+            'c_KDDockWidgets__flutter__Platform_flutter__constructor')
         .asFunction();
     thisCpp = func();
     Platform.s_dartInstanceByCppPtr[thisCpp.address] = this;
@@ -153,7 +153,7 @@ class Platform_flutter extends Platform {
   init() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Platform_flutter__init')
+            'c_KDDockWidgets__flutter__Platform_flutter__init')
         .asFunction();
     func(thisCpp);
   }
@@ -247,7 +247,7 @@ class Platform_flutter extends Platform {
       Platform_flutter platformFlutter() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
-            'c_static_KDDockWidgets__Platform_flutter__platformFlutter')
+            'c_static_KDDockWidgets__flutter__Platform_flutter__platformFlutter')
         .asFunction();
     ffi.Pointer<void> result = func();
     return Platform_flutter.fromCppPointer(result, false);
@@ -457,7 +457,7 @@ class Platform_flutter extends Platform {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Platform_flutter__destructor')
+            'c_KDDockWidgets__flutter__Platform_flutter__destructor')
         .asFunction();
     func(thisCpp);
   }
@@ -465,67 +465,67 @@ class Platform_flutter extends Platform {
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
       case 697:
-        return "c_KDDockWidgets__Platform_flutter__applicationName";
+        return "c_KDDockWidgets__flutter__Platform_flutter__applicationName";
       case 698:
-        return "c_KDDockWidgets__Platform_flutter__createDefaultViewFactory";
+        return "c_KDDockWidgets__flutter__Platform_flutter__createDefaultViewFactory";
       case 699:
-        return "c_KDDockWidgets__Platform_flutter__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags";
+        return "c_KDDockWidgets__flutter__Platform_flutter__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags";
       case 700:
-        return "c_KDDockWidgets__Platform_flutter__createView_Controller_View";
+        return "c_KDDockWidgets__flutter__Platform_flutter__createView_Controller_View";
       case 701:
-        return "c_KDDockWidgets__Platform_flutter__cursorPos";
+        return "c_KDDockWidgets__flutter__Platform_flutter__cursorPos";
       case 702:
-        return "c_KDDockWidgets__Platform_flutter__dumpManagedBacktrace";
+        return "c_KDDockWidgets__flutter__Platform_flutter__dumpManagedBacktrace";
       case 704:
-        return "c_KDDockWidgets__Platform_flutter__hasActivePopup";
+        return "c_KDDockWidgets__flutter__Platform_flutter__hasActivePopup";
       case 705:
-        return "c_KDDockWidgets__Platform_flutter__inDisallowedDragView_QPoint";
+        return "c_KDDockWidgets__flutter__Platform_flutter__inDisallowedDragView_QPoint";
       case 706:
-        return "c_KDDockWidgets__Platform_flutter__installMessageHandler";
+        return "c_KDDockWidgets__flutter__Platform_flutter__installMessageHandler";
       case 708:
-        return "c_KDDockWidgets__Platform_flutter__isLeftMouseButtonPressed";
+        return "c_KDDockWidgets__flutter__Platform_flutter__isLeftMouseButtonPressed";
       case 709:
-        return "c_KDDockWidgets__Platform_flutter__isProcessingAppQuitEvent";
+        return "c_KDDockWidgets__flutter__Platform_flutter__isProcessingAppQuitEvent";
       case 713:
-        return "c_KDDockWidgets__Platform_flutter__name";
+        return "c_KDDockWidgets__flutter__Platform_flutter__name";
       case 714:
-        return "c_KDDockWidgets__Platform_flutter__onFloatingWindowCreated_FloatingWindow";
+        return "c_KDDockWidgets__flutter__Platform_flutter__onFloatingWindowCreated_FloatingWindow";
       case 715:
-        return "c_KDDockWidgets__Platform_flutter__onFloatingWindowDestroyed_FloatingWindow";
+        return "c_KDDockWidgets__flutter__Platform_flutter__onFloatingWindowDestroyed_FloatingWindow";
       case 716:
-        return "c_KDDockWidgets__Platform_flutter__organizationName";
+        return "c_KDDockWidgets__flutter__Platform_flutter__organizationName";
       case 717:
-        return "c_KDDockWidgets__Platform_flutter__restoreMouseCursor";
+        return "c_KDDockWidgets__flutter__Platform_flutter__restoreMouseCursor";
       case 718:
-        return "c_KDDockWidgets__Platform_flutter__screenNumberFor_View";
+        return "c_KDDockWidgets__flutter__Platform_flutter__screenNumberFor_View";
       case 719:
-        return "c_KDDockWidgets__Platform_flutter__screenSizeFor_View";
+        return "c_KDDockWidgets__flutter__Platform_flutter__screenSizeFor_View";
       case 720:
-        return "c_KDDockWidgets__Platform_flutter__setCursorPos_QPoint";
+        return "c_KDDockWidgets__flutter__Platform_flutter__setCursorPos_QPoint";
       case 721:
-        return "c_KDDockWidgets__Platform_flutter__setMouseCursor_CursorShape";
+        return "c_KDDockWidgets__flutter__Platform_flutter__setMouseCursor_CursorShape";
       case 723:
-        return "c_KDDockWidgets__Platform_flutter__startDragDistance_impl";
+        return "c_KDDockWidgets__flutter__Platform_flutter__startDragDistance_impl";
       case 724:
-        return "c_KDDockWidgets__Platform_flutter__tests_createFocusableView_CreateViewOptions_View";
+        return "c_KDDockWidgets__flutter__Platform_flutter__tests_createFocusableView_CreateViewOptions_View";
       case 725:
-        return "c_KDDockWidgets__Platform_flutter__tests_createNonClosableView_View";
+        return "c_KDDockWidgets__flutter__Platform_flutter__tests_createNonClosableView_View";
       case 726:
-        return "c_KDDockWidgets__Platform_flutter__tests_createView_CreateViewOptions_View";
+        return "c_KDDockWidgets__flutter__Platform_flutter__tests_createView_CreateViewOptions_View";
       case 728:
-        return "c_KDDockWidgets__Platform_flutter__tests_deinitPlatform_impl";
+        return "c_KDDockWidgets__flutter__Platform_flutter__tests_deinitPlatform_impl";
       case 729:
-        return "c_KDDockWidgets__Platform_flutter__tests_doubleClickOn_QPoint_View";
+        return "c_KDDockWidgets__flutter__Platform_flutter__tests_doubleClickOn_QPoint_View";
       case 731:
-        return "c_KDDockWidgets__Platform_flutter__tests_initPlatform_impl";
+        return "c_KDDockWidgets__flutter__Platform_flutter__tests_initPlatform_impl";
       case 733:
-        return "c_KDDockWidgets__Platform_flutter__tests_wait_int";
+        return "c_KDDockWidgets__flutter__Platform_flutter__tests_wait_int";
       case 740:
-        return "c_KDDockWidgets__Platform_flutter__ungrabMouse";
+        return "c_KDDockWidgets__flutter__Platform_flutter__ungrabMouse";
       case 741:
-        return "c_KDDockWidgets__Platform_flutter__uninstallMessageHandler";
+        return "c_KDDockWidgets__flutter__Platform_flutter__uninstallMessageHandler";
       case 742:
-        return "c_KDDockWidgets__Platform_flutter__usesFallbackMouseGrabber";
+        return "c_KDDockWidgets__flutter__Platform_flutter__usesFallbackMouseGrabber";
     }
     return super.cFunctionSymbolName(methodId);
   }
@@ -602,7 +602,7 @@ class Platform_flutter extends Platform {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__Platform_flutter__registerVirtualMethodCallback')
+            'c_KDDockWidgets__flutter__Platform_flutter__registerVirtualMethodCallback')
         .asFunction();
     final callback697 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Platform_flutter.applicationName_calledFromC);
