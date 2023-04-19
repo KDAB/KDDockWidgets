@@ -15,6 +15,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::flutter;
 
 Window_flutter::Window_flutter()
     : Window()
