@@ -13,9 +13,9 @@
 #include <TitleBar.h>
 #include <core/View.h>
 #include <qpoint.h>
+#include <qrect.h>
 #include <qstring.h>
 #include <qsize.h>
-#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class TitleBar_flutter_wrapper : public ::KDDockWidgets::flutter::TitleBar_flutter

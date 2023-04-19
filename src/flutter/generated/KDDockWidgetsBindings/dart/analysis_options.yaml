@@ -1,3 +1,0 @@
-linter:
-  rules:
-    non_native_function_type_argument_to_pointer: false

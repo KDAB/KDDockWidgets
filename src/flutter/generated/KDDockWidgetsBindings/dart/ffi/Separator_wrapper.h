@@ -13,8 +13,8 @@
 #include <core/View.h>
 #include <qrect.h>
 #include <qpoint.h>
-#include <qstring.h>
 #include <qsize.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Separator_wrapper : public ::KDDockWidgets::Core::Separator
