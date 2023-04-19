@@ -19,9 +19,9 @@
 #include <core/Group.h>
 #include <qlist.h>
 #include <DropArea.h>
-#include <qstring.h>
 #include <qpoint.h>
 #include <qrect.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Layout_wrapper : public ::KDDockWidgets::Core::Layout

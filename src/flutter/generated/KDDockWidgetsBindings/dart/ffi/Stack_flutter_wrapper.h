@@ -13,9 +13,9 @@
 #include <Stack.h>
 #include <core/View.h>
 #include <qpoint.h>
-#include <qrect.h>
 #include <qstring.h>
 #include <qsize.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Stack_flutter_wrapper : public ::KDDockWidgets::flutter::Stack_flutter
