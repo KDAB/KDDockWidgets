@@ -372,9 +372,9 @@ if(KDDW_FRONTEND_FLUTTER)
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/layouting>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/indicators>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/multisplitter>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )
 

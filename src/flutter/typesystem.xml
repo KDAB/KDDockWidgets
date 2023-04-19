@@ -32,7 +32,6 @@
     <namespace-type name="KDDockWidgets">
         <object-type name="Config" />
         <object-type name="DockRegistry" />
-        <value-type name="CreateViewOptions" />
         <value-type name="InitialOption" />
         <enum-type name="MainWindowOption" flags="MainWindowOptions" />
         <enum-type name="DropLocation" />
@@ -46,6 +45,7 @@
         <enum-type name="DockWidgetOption" flags="DockWidgetOptions" />
 
         <namespace-type name="Core">
+            <value-type name="CreateViewOptions" />
             <object-type name="Platform" />
             <object-type name="View" />
             <object-type name="ViewFactory" />
@@ -68,11 +68,12 @@
             <enum-type name="ViewType" />
         </namespace-type>
 
+        <object-type name="ViewFactory_flutter" />
+        <object-type name="Platform_flutter">
+            <enum-type identified-by-value="DisplayType" />
+        </object-type>
+
         <namespace-type name="Views">
-            <object-type name="ViewFactory_flutter" />
-            <object-type name="Platform_flutter">
-                <enum-type identified-by-value="DisplayType" />
-            </object-type>
             <object-type name="View_flutter" />
             <object-type name="Stack_flutter" />
             <object-type name="TitleBar_flutter" />

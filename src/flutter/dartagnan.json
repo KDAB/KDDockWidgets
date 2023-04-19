@@ -3,6 +3,6 @@
     "supportsQtSignals": false,
     "bindingsLibrary": "kddockwidgets",
     "pureVirtualClassOverrides": [
-        "KDDockWidgets::View"
+        "KDDockWidgets::Core::View"
     ]
 }
