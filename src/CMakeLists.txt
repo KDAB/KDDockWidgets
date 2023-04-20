@@ -167,40 +167,40 @@ set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
 )
 
 set(KDDW_FRONTEND_DARTBINDINGS_SRCS
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QRect_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QObject_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QList_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QSize_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QPoint_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Platform_flutter_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/View_flutter_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DropArea_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Layout_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/ViewFactory_flutter_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicatorWindowViewInterface_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicators_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Controller_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_flutter_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Separator_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_flutter_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_flutter_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_flutter_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_flutter_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/SideBar_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/FloatingWindow_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_wrapper.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/View_wrapper.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QRect_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QObject_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QList_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QSize_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QPoint_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Platform_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/View_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/DropArea_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Layout_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/ViewFactory_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicatorWindowViewInterface_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicators_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Controller_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Separator_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/SideBar_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/FloatingWindow_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/View_c.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
