@@ -1,0 +1,356 @@
+/*
+  This file is part of KDDockWidgets.
+
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  Author: Sérgio Martins <sergio.martins@kdab.com>
+
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
+*/
+#include "MainWindow_c.h"
+
+
+#include <QDebug>
+
+
+namespace Dartagnan {
+
+typedef int (*CleanupCallback)(void *thisPtr);
+static CleanupCallback s_cleanupCallback = nullptr;
+
+template<typename T>
+struct ValueWrapper
+{
+    T value;
+};
+
+}
+namespace KDDockWidgetsBindings_wrappersNS {
+MainWindow_wrapper::MainWindow_wrapper(KDDockWidgets::Core::View *view, const QString &uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
+    : ::KDDockWidgets::Core::MainWindow(view, uniqueName, options)
+{
+}
+void MainWindow_wrapper::addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption)
+{
+    ::KDDockWidgets::Core::MainWindow::addDockWidget(dockWidget, location, relativeTo, initialOption);
+}
+void MainWindow_wrapper::addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *dockwidget)
+{
+    ::KDDockWidgets::Core::MainWindow::addDockWidgetAsTab(dockwidget);
+}
+bool MainWindow_wrapper::anySideBarIsVisible() const
+{
+    return ::KDDockWidgets::Core::MainWindow::anySideBarIsVisible();
+}
+QRect MainWindow_wrapper::centralAreaGeometry() const
+{
+    return ::KDDockWidgets::Core::MainWindow::centralAreaGeometry();
+}
+void MainWindow_wrapper::clearSideBarOverlay(bool deleteFrame)
+{
+    ::KDDockWidgets::Core::MainWindow::clearSideBarOverlay(deleteFrame);
+}
+bool MainWindow_wrapper::closeDockWidgets(bool force)
+{
+    return ::KDDockWidgets::Core::MainWindow::closeDockWidgets(force);
+}
+KDDockWidgets::Core::DropArea *MainWindow_wrapper::dropArea() const
+{
+    return ::KDDockWidgets::Core::MainWindow::dropArea();
+}
+void MainWindow_wrapper::groupCountChanged(int arg__1)
+{
+    ::KDDockWidgets::Core::MainWindow::groupCountChanged(arg__1);
+}
+bool MainWindow_wrapper::isMDI() const
+{
+    return ::KDDockWidgets::Core::MainWindow::isMDI();
+}
+KDDockWidgets::Core::Layout *MainWindow_wrapper::layout() const
+{
+    return ::KDDockWidgets::Core::MainWindow::layout();
+}
+void MainWindow_wrapper::layoutEqually()
+{
+    ::KDDockWidgets::Core::MainWindow::layoutEqually();
+}
+void MainWindow_wrapper::layoutParentContainerEqually(KDDockWidgets::Core::DockWidget *dockWidget)
+{
+    ::KDDockWidgets::Core::MainWindow::layoutParentContainerEqually(dockWidget);
+}
+void MainWindow_wrapper::moveToSideBar(KDDockWidgets::Core::DockWidget *dw)
+{
+    ::KDDockWidgets::Core::MainWindow::moveToSideBar(dw);
+}
+KDDockWidgets::Core::DropArea *MainWindow_wrapper::multiSplitter() const
+{
+    return ::KDDockWidgets::Core::MainWindow::multiSplitter();
+}
+QFlags<KDDockWidgets::MainWindowOption> MainWindow_wrapper::options() const
+{
+    return ::KDDockWidgets::Core::MainWindow::options();
+}
+int MainWindow_wrapper::overlayMargin() const
+{
+    return ::KDDockWidgets::Core::MainWindow::overlayMargin();
+}
+void MainWindow_wrapper::overlayMarginChanged(int margin)
+{
+    ::KDDockWidgets::Core::MainWindow::overlayMarginChanged(margin);
+}
+void MainWindow_wrapper::overlayOnSideBar(KDDockWidgets::Core::DockWidget *dw)
+{
+    ::KDDockWidgets::Core::MainWindow::overlayOnSideBar(dw);
+}
+KDDockWidgets::Core::DockWidget *MainWindow_wrapper::overlayedDockWidget() const
+{
+    return ::KDDockWidgets::Core::MainWindow::overlayedDockWidget();
+}
+void MainWindow_wrapper::restoreFromSideBar(KDDockWidgets::Core::DockWidget *dw)
+{
+    ::KDDockWidgets::Core::MainWindow::restoreFromSideBar(dw);
+}
+void MainWindow_wrapper::setContentsMargins(int l, int t, int r, int b)
+{
+    ::KDDockWidgets::Core::MainWindow::setContentsMargins(l, t, r, b);
+}
+void MainWindow_wrapper::setOverlayMargin(int margin)
+{
+    ::KDDockWidgets::Core::MainWindow::setOverlayMargin(margin);
+}
+void MainWindow_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
+{
+    if (m_setParentView_implCallback) {
+        const void *thisPtr = this;
+        m_setParentView_implCallback(const_cast<void *>(thisPtr), parent);
+    } else {
+        ::KDDockWidgets::Core::MainWindow::setParentView_impl(parent);
+    }
+}
+void MainWindow_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
+{
+    ::KDDockWidgets::Core::MainWindow::setParentView_impl(parent);
+}
+void MainWindow_wrapper::setUniqueName(const QString &uniqueName)
+{
+    ::KDDockWidgets::Core::MainWindow::setUniqueName(uniqueName);
+}
+KDDockWidgets::Core::SideBar *MainWindow_wrapper::sideBarForDockWidget(const KDDockWidgets::Core::DockWidget *dw) const
+{
+    return ::KDDockWidgets::Core::MainWindow::sideBarForDockWidget(dw);
+}
+void MainWindow_wrapper::toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget *dw)
+{
+    ::KDDockWidgets::Core::MainWindow::toggleOverlayOnSideBar(dw);
+}
+QString MainWindow_wrapper::tr(const char *s, const char *c, int n)
+{
+    return ::KDDockWidgets::Core::MainWindow::tr(s, c, n);
+}
+QString MainWindow_wrapper::uniqueName() const
+{
+    return ::KDDockWidgets::Core::MainWindow::uniqueName();
+}
+void MainWindow_wrapper::uniqueNameChanged()
+{
+    ::KDDockWidgets::Core::MainWindow::uniqueNameChanged();
+}
+MainWindow_wrapper::~MainWindow_wrapper()
+{
+}
+
+}
+static KDDockWidgets::Core::MainWindow *fromPtr(void *ptr)
+{
+    return reinterpret_cast<KDDockWidgets::Core::MainWindow *>(ptr);
+}
+static KDDockWidgetsBindings_wrappersNS::MainWindow_wrapper *fromWrapperPtr(void *ptr)
+{
+    return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::MainWindow_wrapper *>(ptr);
+}
+extern "C" {
+void c_KDDockWidgets__Core__MainWindow_Finalizer(void *, void *cppObj, void *)
+{
+    delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::MainWindow_wrapper *>(cppObj);
+}
+void *c_KDDockWidgets__Core__MainWindow__constructor_View_QString_MainWindowOptions(void *view_, const char *uniqueName_, int options_)
+{
+    auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
+    const auto uniqueName = QString::fromUtf8(uniqueName_);
+    auto options = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(options_);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::MainWindow_wrapper(view, uniqueName, options);
+    return reinterpret_cast<void *>(ptr);
+}
+// addDockWidget(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Core__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dockWidget_, int location, void *relativeTo_, void *initialOption_)
+{
+    auto dockWidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockWidget_);
+    auto relativeTo = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(relativeTo_);
+    assert(initialOption_);
+    auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
+    fromPtr(thisObj)->addDockWidget(dockWidget, static_cast<KDDockWidgets::Location>(location), relativeTo, initialOption);
+}
+// addDockWidgetAsTab(KDDockWidgets::Core::DockWidget * dockwidget)
+void c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget(void *thisObj, void *dockwidget_)
+{
+    auto dockwidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockwidget_);
+    fromPtr(thisObj)->addDockWidgetAsTab(dockwidget);
+}
+// anySideBarIsVisible() const
+bool c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible(void *thisObj)
+{
+    return fromPtr(thisObj)->anySideBarIsVisible();
+}
+// centralAreaGeometry() const
+void *c_KDDockWidgets__Core__MainWindow__centralAreaGeometry(void *thisObj)
+{
+    return new Dartagnan::ValueWrapper<QRect> { fromWrapperPtr(thisObj)->centralAreaGeometry() };
+}
+// clearSideBarOverlay(bool deleteFrame)
+void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteFrame)
+{
+    fromPtr(thisObj)->clearSideBarOverlay(deleteFrame);
+}
+// closeDockWidgets(bool force)
+bool c_KDDockWidgets__Core__MainWindow__closeDockWidgets_bool(void *thisObj, bool force)
+{
+    return fromPtr(thisObj)->closeDockWidgets(force);
+}
+// dropArea() const
+void *c_KDDockWidgets__Core__MainWindow__dropArea(void *thisObj)
+{
+    return fromPtr(thisObj)->dropArea();
+}
+// groupCountChanged(int arg__1)
+void c_KDDockWidgets__Core__MainWindow__groupCountChanged_int(void *thisObj, int arg__1)
+{
+    fromPtr(thisObj)->groupCountChanged(arg__1);
+}
+// isMDI() const
+bool c_KDDockWidgets__Core__MainWindow__isMDI(void *thisObj)
+{
+    return fromPtr(thisObj)->isMDI();
+}
+// layout() const
+void *c_KDDockWidgets__Core__MainWindow__layout(void *thisObj)
+{
+    return fromPtr(thisObj)->layout();
+}
+// layoutEqually()
+void c_KDDockWidgets__Core__MainWindow__layoutEqually(void *thisObj)
+{
+    fromPtr(thisObj)->layoutEqually();
+}
+// layoutParentContainerEqually(KDDockWidgets::Core::DockWidget * dockWidget)
+void c_KDDockWidgets__Core__MainWindow__layoutParentContainerEqually_DockWidget(void *thisObj, void *dockWidget_)
+{
+    auto dockWidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockWidget_);
+    fromPtr(thisObj)->layoutParentContainerEqually(dockWidget);
+}
+// moveToSideBar(KDDockWidgets::Core::DockWidget * dw)
+void c_KDDockWidgets__Core__MainWindow__moveToSideBar_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
+    fromPtr(thisObj)->moveToSideBar(dw);
+}
+// multiSplitter() const
+void *c_KDDockWidgets__Core__MainWindow__multiSplitter(void *thisObj)
+{
+    return fromPtr(thisObj)->multiSplitter();
+}
+// options() const
+int c_KDDockWidgets__Core__MainWindow__options(void *thisObj)
+{
+    return fromPtr(thisObj)->options();
+}
+// overlayMargin() const
+int c_KDDockWidgets__Core__MainWindow__overlayMargin(void *thisObj)
+{
+    return fromPtr(thisObj)->overlayMargin();
+}
+// overlayMarginChanged(int margin)
+void c_KDDockWidgets__Core__MainWindow__overlayMarginChanged_int(void *thisObj, int margin)
+{
+    fromPtr(thisObj)->overlayMarginChanged(margin);
+}
+// overlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
+void c_KDDockWidgets__Core__MainWindow__overlayOnSideBar_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
+    fromPtr(thisObj)->overlayOnSideBar(dw);
+}
+// overlayedDockWidget() const
+void *c_KDDockWidgets__Core__MainWindow__overlayedDockWidget(void *thisObj)
+{
+    return fromPtr(thisObj)->overlayedDockWidget();
+}
+// restoreFromSideBar(KDDockWidgets::Core::DockWidget * dw)
+void c_KDDockWidgets__Core__MainWindow__restoreFromSideBar_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
+    fromPtr(thisObj)->restoreFromSideBar(dw);
+}
+// setContentsMargins(int l, int t, int r, int b)
+void c_KDDockWidgets__Core__MainWindow__setContentsMargins_int_int_int_int(void *thisObj, int l, int t, int r, int b)
+{
+    fromPtr(thisObj)->setContentsMargins(l, t, r, b);
+}
+// setOverlayMargin(int margin)
+void c_KDDockWidgets__Core__MainWindow__setOverlayMargin_int(void *thisObj, int margin)
+{
+    fromPtr(thisObj)->setOverlayMargin(margin);
+}
+// setParentView_impl(KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__Core__MainWindow__setParentView_impl_View(void *thisObj, void *parent_)
+{
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
+    fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
+}
+// setUniqueName(const QString & uniqueName)
+void c_KDDockWidgets__Core__MainWindow__setUniqueName_QString(void *thisObj, const char *uniqueName_)
+{
+    const auto uniqueName = QString::fromUtf8(uniqueName_);
+    fromWrapperPtr(thisObj)->setUniqueName(uniqueName);
+}
+// sideBarForDockWidget(const KDDockWidgets::Core::DockWidget * dw) const
+void *c_KDDockWidgets__Core__MainWindow__sideBarForDockWidget_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
+    return fromPtr(thisObj)->sideBarForDockWidget(dw);
+}
+// toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
+void c_KDDockWidgets__Core__MainWindow__toggleOverlayOnSideBar_DockWidget(void *thisObj, void *dw_)
+{
+    auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
+    fromPtr(thisObj)->toggleOverlayOnSideBar(dw);
+}
+// tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Core__MainWindow__tr_char_char_int(const char *s, const char *c, int n)
+{
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::MainWindow_wrapper::tr(s, c, n) };
+}
+// uniqueName() const
+void *c_KDDockWidgets__Core__MainWindow__uniqueName(void *thisObj)
+{
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->uniqueName() };
+}
+// uniqueNameChanged()
+void c_KDDockWidgets__Core__MainWindow__uniqueNameChanged(void *thisObj)
+{
+    fromPtr(thisObj)->uniqueNameChanged();
+}
+void c_KDDockWidgets__Core__MainWindow__destructor(void *thisObj)
+{
+    delete fromPtr(thisObj);
+}
+void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
+{
+    auto wrapper = fromWrapperPtr(ptr);
+    switch (methodId) {
+    case 871:
+        wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::MainWindow_wrapper::Callback_setParentView_impl>(callback);
+        break;
+    }
+}
+}
