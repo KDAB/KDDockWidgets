@@ -143,6 +143,11 @@ else()
 endif()
 
 # BEGIN frontend enabling
+
+set(KDDW_FRONTEND_QTWIDGETS OFF)
+set(KDDW_FRONTEND_QTQUICK OFF)
+set(KDDW_FRONTEND_FLUTTER OFF)
+
 if(KDDockWidgets_FRONTENDS)
     set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;flutter")
 
@@ -219,6 +224,7 @@ option(KDockWidgets_PRETTY_QTWIDGETS_HEADERS
        "Install DockWidget.h and MainWindow.h as synonyms to the *.h counterparts." ${KDDW_FRONTEND_QTWIDGETS}
 )
 
+set(KDDockWidgets_DEPS "")
 if(KDDW_FRONTEND_QTWIDGETS)
     set(KDDockWidgets_DEPS "widgets")
 endif()
