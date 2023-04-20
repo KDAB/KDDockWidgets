@@ -15,15 +15,15 @@ import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/cupertino.dart';
 import 'View_mixin.dart';
 
-class View_flutter extends KDDockWidgetBindings.View_flutter with View_mixin {
-  View_flutter(KDDockWidgetBindings.Controller? controller, int type,
+class View extends KDDockWidgetBindings.View_flutter with View_mixin {
+  View(KDDockWidgetBindings.Controller? controller, int type,
       KDDockWidgetBindings.View? parent,
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
     initMixin(this);
   }
 
-  View_flutter.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
+  View.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
       : super.fromCppPointer(cppPointer, needsAutoDelete) {
     initMixin(this);
   }

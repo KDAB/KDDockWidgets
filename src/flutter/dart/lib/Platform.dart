@@ -9,13 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/View_flutter.dart';
+import 'package:KDDockWidgets/View.dart';
 import 'package:KDDockWidgets/WindowOverlayWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
-import 'ViewFactory_flutter.dart';
+import 'ViewFactory.dart';
 
-class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
+class Platform extends KDDockWidgetBindings.Platform_flutter {
   late final WindowOverlayWidget windowOverlayWidget;
 
   var floatingWindows = <KDDockWidgetBindings.FloatingWindow>[];
@@ -25,30 +25,30 @@ class Platform_flutter extends KDDockWidgetBindings.Platform_flutter {
     return "flutter";
   }
 
-  static Platform_flutter plat() {
+  static Platform plat() {
     var p = KDDockWidgetBindings.Platform_flutter.platformFlutter();
 
     return KDDockWidgetBindings.Platform_flutter.fromCache(p.thisCpp)
-        as Platform_flutter;
+        as Platform;
   }
 
   @override
   KDDockWidgetBindings.ViewFactory createDefaultViewFactory() {
-    return ViewFactory_flutter();
+    return ViewFactory();
   }
 
   @override
   KDDockWidgetBindings.View tests_createView(
       KDDockWidgetBindings.CreateViewOptions opts,
       {required KDDockWidgetBindings.View? parent}) {
-    return View_flutter(null, 0, parent as View_flutter);
+    return View(null, 0, parent as View);
   }
 
   @override
   KDDockWidgetBindings.View createView(
       KDDockWidgetBindings.Controller? controller,
       {required KDDockWidgetBindings.View? parent}) {
-    print("Platform_flutter: createView");
+    print("Platform: createView");
     return KDDockWidgetBindings.View_flutter(controller, 0, parent);
   }
 

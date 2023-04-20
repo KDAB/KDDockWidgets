@@ -9,30 +9,28 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'View.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
-import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
 
-class DockWidget_flutter extends KDDockWidgetBindings.DockWidget_flutter
-    with View_mixin {
-  DockWidget_flutter(String? uniqueName,
-      {int options = 0, int layoutSaverOptions = 0})
-      : super(uniqueName,
-            options: options, layoutSaverOptions: layoutSaverOptions) {
-    initMixin(this, color: Colors.pink, debugName: "DockWidget");
+class DropArea extends View {
+  DropArea(KDDockWidgetBindings.Controller? controller, int type,
+      KDDockWidgetBindings.View? parent,
+      {int windowFlags = 0})
+      : super(controller, type, parent, windowFlags: windowFlags) {
+    print("DropArea CTOR");
     m_fillsParent = true;
-    print("DockWidget_flutter CTOR");
   }
 
   Widget createFlutterWidget() {
-    return DockWidgetWidget(kddwView, this, key: widgetKey);
+    return DropAreaWidget(kddwView, this, key: widgetKey);
   }
 }
 
-class DockWidgetWidget extends PositionedWidget {
-  final DockWidget_flutter DockWidgetView;
-  DockWidgetWidget(var kddwView, this.DockWidgetView, {Key? key})
+class DropAreaWidget extends PositionedWidget {
+  final DropArea DockWidgetView;
+  DropAreaWidget(var kddwView, this.DockWidgetView, {Key? key})
       : super(kddwView, key: key);
 
   @override
@@ -42,13 +40,17 @@ class DockWidgetWidget extends PositionedWidget {
 }
 
 class DockWidgetPositionedWidgetState extends PositionedWidgetState {
-  final DockWidget_flutter DockWidgetView;
+  final DropArea DockWidgetView;
 
   DockWidgetPositionedWidgetState(var kddwView, this.DockWidgetView)
       : super(kddwView);
 
   @override
   Widget buildContents() {
-    return super.buildContents();
+    return Container(
+        color: kddwView.m_color,
+        child: Stack(
+          children: kddwView.childWidgets,
+        ));
   }
 }

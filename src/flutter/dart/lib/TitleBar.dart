@@ -14,14 +14,13 @@ import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
 
-class TitleBar_flutter extends KDDockWidgetBindings.TitleBar_flutter
-    with View_mixin {
-  TitleBar_flutter(KDDockWidgetBindings.TitleBar? titleBar,
+class TitleBar extends KDDockWidgetBindings.TitleBar_flutter with View_mixin {
+  TitleBar(KDDockWidgetBindings.TitleBar? titleBar,
       KDDockWidgetBindings.View? parent)
       : super(titleBar, parent: parent) {
     m_fillsParent = true;
     initMixin(this, debugName: "TitleBar");
-    print("TitleBar_flutter CTOR");
+    print("TitleBar CTOR");
   }
 
   Widget createFlutterWidget() {
@@ -30,7 +29,7 @@ class TitleBar_flutter extends KDDockWidgetBindings.TitleBar_flutter
 }
 
 class TitleBarWidget extends PositionedWidget {
-  final TitleBar_flutter TitleBarView;
+  final TitleBar TitleBarView;
   TitleBarWidget(var kddwView, this.TitleBarView, {Key? key})
       : super(kddwView, key: key);
 
@@ -41,7 +40,7 @@ class TitleBarWidget extends PositionedWidget {
 }
 
 class TitleBarPositionedWidgetState extends PositionedWidgetState {
-  final TitleBar_flutter titleBarView;
+  final TitleBar titleBarView;
 
   TitleBarPositionedWidgetState(var kddwView, this.titleBarView)
       : super(kddwView);

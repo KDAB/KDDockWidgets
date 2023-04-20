@@ -13,18 +13,17 @@ import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material show TabBar;
 
-class TabBar_flutter extends KDDockWidgetBindings.TabBar_flutter
-    with View_mixin {
+class TabBar extends KDDockWidgetBindings.TabBar_flutter with View_mixin {
   late final KDDockWidgetBindings.TabBar m_controller;
 
-  TabBar_flutter(
-      KDDockWidgetBindings.TabBar? tabBar, KDDockWidgetBindings.View? parent)
+  TabBar(KDDockWidgetBindings.TabBar? tabBar, KDDockWidgetBindings.View? parent)
       : super(tabBar, parent: parent) {
     m_fillsParent = true;
     m_controller = tabBar!;
     initMixin(this);
-    print("TabBar_flutter CTOR");
+    print("TabBar CTOR");
   }
 
   Widget createFlutterWidget() {
@@ -33,12 +32,12 @@ class TabBar_flutter extends KDDockWidgetBindings.TabBar_flutter
 
   @override
   onRebuildRequested() {
-    print("TabBar_flutter: onRebuildRequested");
+    print("TabBar: onRebuildRequested");
   }
 }
 
 class TabBarWidget extends PositionedWidget {
-  final TabBar_flutter TabBarView;
+  final TabBar TabBarView;
   TabBarWidget(var kddwView, this.TabBarView, {Key? key})
       : super(kddwView, key: key);
 
@@ -49,7 +48,7 @@ class TabBarWidget extends PositionedWidget {
 }
 
 class TabBarPositionedWidgetState extends PositionedWidgetState {
-  final TabBar_flutter m_tabBarView;
+  final TabBar m_tabBarView;
 
   TabBarPositionedWidgetState(var kddwView, this.m_tabBarView)
       : super(kddwView);
@@ -66,7 +65,7 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
         height: 50,
         child: DefaultTabController(
           length: numTabs,
-          child: TabBar(tabs: tabs),
+          child: material.TabBar(tabs: tabs),
         ));
   }
 }

@@ -9,13 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/DockWidget_flutter.dart';
-import 'package:KDDockWidgets/DropArea_flutter.dart';
+import 'package:KDDockWidgets/DockWidget.dart';
+import 'package:KDDockWidgets/DropArea.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
-import 'package:KDDockWidgets/Platform_flutter.dart' as KDDW;
-import 'package:KDDockWidgets/View_flutter.dart' as KDDW;
+import 'package:KDDockWidgets/Platform.dart' as KDDW;
+import 'package:KDDockWidgets/View.dart' as KDDW;
 import 'package:KDDockWidgets/WindowOverlayWidget.dart' as KDDW;
 import 'package:flutter/scheduler.dart';
 
@@ -53,15 +53,15 @@ class _MyHomePageState extends State<MyHomePage> {
   late Widget dropAreaWidget;
 
   _MyHomePageState() {
-    KDDW.Platform_flutter();
+    KDDW.Platform();
     dropArea = KDDWBindings.DropArea(null,
         KDDWBindings.KDDockWidgets_MainWindowOption.MainWindowOption_None);
 
     final dropAreaView =
         KDDWBindings.View_flutter.fromCache(dropArea.view().thisCpp)
-            as KDDW.View_flutter;
+            as KDDW.View;
 
-    KDDW.View_flutter.fromCppPointer(dropArea.view().thisCpp);
+    KDDW.View.fromCppPointer(dropArea.view().thisCpp);
     dropAreaView.setObjectName("droparea");
 
     dropAreaView.m_fillsParent = true;
@@ -83,9 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
         group3.view(), KDDWBindings.KDDockWidgets_Location.Location_OnBottom,
         relativeTo: null, option: KDDWBindings.InitialOption());
 
-    final dw1 = DockWidget_flutter("dw1");
-    final dw2 = DockWidget_flutter("dw2");
-    final dw3 = DockWidget_flutter("dw3");
+    final dw1 = DockWidget("dw1");
+    final dw2 = DockWidget("dw2");
+    final dw3 = DockWidget("dw3");
     dw3.dockWidget().setFloating(true);
     dw3.dockWidget().open();
 

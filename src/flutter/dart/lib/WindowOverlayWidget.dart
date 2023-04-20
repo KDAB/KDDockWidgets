@@ -12,7 +12,7 @@
 import 'package:KDDockWidgets/WindowWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:KDDockWidgets/Platform_flutter.dart';
+import 'package:KDDockWidgets/Platform.dart';
 
 /// @brief A Widget to host KDDW floating windows
 /// Since Flutter doesn't support real OS level multi-windows we need
@@ -34,7 +34,7 @@ class WindowOverlayWidget extends StatefulWidget {
 class WindowOverlayWidgetState extends State<WindowOverlayWidget> {
   @override
   Widget build(BuildContext context) {
-    final floatingWindows = Platform_flutter.plat().floatingWindows;
+    final floatingWindows = Platform.plat().floatingWindows;
     List<Widget> windowWidgets = [];
     for (var fw in floatingWindows) {
       windowWidgets.add(WindowWidget(fw));

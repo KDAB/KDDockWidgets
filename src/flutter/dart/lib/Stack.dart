@@ -14,11 +14,10 @@ import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
 
-class Stack_flutter extends KDDockWidgetBindings.Stack_flutter with View_mixin {
-  Stack_flutter(
-      KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent)
+class Stack extends KDDockWidgetBindings.Stack_flutter with View_mixin {
+  Stack(KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent)
       : super(stack, parent: parent) {
-    print("Stack_flutter CTOR");
+    print("Stack CTOR");
   }
 
   Widget createFlutterWidget() {
@@ -27,7 +26,7 @@ class Stack_flutter extends KDDockWidgetBindings.Stack_flutter with View_mixin {
 }
 
 class StackWidget extends PositionedWidget {
-  final Stack_flutter StackView;
+  final Stack StackView;
   StackWidget(var kddwView, this.StackView, {Key? key})
       : super(kddwView, key: key);
 
@@ -38,7 +37,7 @@ class StackWidget extends PositionedWidget {
 }
 
 class StackPositionedWidgetState extends PositionedWidgetState {
-  final Stack_flutter StackView;
+  final Stack StackView;
 
   StackPositionedWidgetState(var kddwView, this.StackView) : super(kddwView);
 

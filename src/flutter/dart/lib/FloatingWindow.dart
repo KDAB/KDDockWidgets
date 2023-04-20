@@ -13,14 +13,13 @@ import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
-import 'TitleBar_flutter.dart';
-import 'DropArea_flutter.dart';
+import 'TitleBar.dart';
+import 'DropArea.dart';
 
-class FloatingWindow_flutter extends KDDockWidgetBindings.View_flutter
-    with View_mixin {
+class FloatingWindow extends KDDockWidgetBindings.View_flutter with View_mixin {
   late final KDDockWidgetBindings.FloatingWindow m_controller;
 
-  FloatingWindow_flutter(KDDockWidgetBindings.Controller? controller,
+  FloatingWindow(KDDockWidgetBindings.Controller? controller,
       KDDockWidgetBindings.View? parent, {int windowFlags = 0})
       : super(controller, KDDockWidgetBindings.Core_ViewType.FloatingWindow,
             parent,
@@ -29,17 +28,17 @@ class FloatingWindow_flutter extends KDDockWidgetBindings.View_flutter
     m_fillsParent = true;
 
     initMixin(this, color: Colors.black12, debugName: "FloatingWindow");
-    print("FloatingWindow_flutter CTOR");
+    print("FloatingWindow CTOR");
   }
 
-  TitleBar_flutter titleBarView() {
+  TitleBar titleBarView() {
     return KDDockWidgetBindings.View_flutter.fromCache(
-        m_controller.titleBar().view().thisCpp) as TitleBar_flutter;
+        m_controller.titleBar().view().thisCpp) as TitleBar;
   }
 
-  DropArea_flutter dropAreaView() {
+  DropArea dropAreaView() {
     return KDDockWidgetBindings.View_flutter.fromCache(
-        m_controller.dropArea().view().thisCpp) as DropArea_flutter;
+        m_controller.dropArea().view().thisCpp) as DropArea;
   }
 
   Widget createFlutterWidget() {
@@ -48,7 +47,7 @@ class FloatingWindow_flutter extends KDDockWidgetBindings.View_flutter
 }
 
 class FloatingWindowWidget extends PositionedWidget {
-  final FloatingWindow_flutter view;
+  final FloatingWindow view;
   FloatingWindowWidget(var kddwView, this.view, {Key? key})
       : super(kddwView, key: key);
 
@@ -59,7 +58,7 @@ class FloatingWindowWidget extends PositionedWidget {
 }
 
 class FloatingWindowPositionedWidgetState extends PositionedWidgetState {
-  final FloatingWindow_flutter view;
+  final FloatingWindow view;
 
   FloatingWindowPositionedWidgetState(var kddwView, this.view)
       : super(kddwView);

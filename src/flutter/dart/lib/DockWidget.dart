@@ -9,28 +9,29 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'View_flutter.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
+import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
 
-class DropArea_flutter extends View_flutter {
-  DropArea_flutter(KDDockWidgetBindings.Controller? controller, int type,
-      KDDockWidgetBindings.View? parent,
-      {int windowFlags = 0})
-      : super(controller, type, parent, windowFlags: windowFlags) {
-    print("DropArea_flutter CTOR");
+class DockWidget extends KDDockWidgetBindings.DockWidget_flutter
+    with View_mixin {
+  DockWidget(String? uniqueName, {int options = 0, int layoutSaverOptions = 0})
+      : super(uniqueName,
+            options: options, layoutSaverOptions: layoutSaverOptions) {
+    initMixin(this, color: Colors.pink, debugName: "DockWidget");
     m_fillsParent = true;
+    print("DockWidget CTOR");
   }
 
   Widget createFlutterWidget() {
-    return DropAreaWidget(kddwView, this, key: widgetKey);
+    return DockWidgetWidget(kddwView, this, key: widgetKey);
   }
 }
 
-class DropAreaWidget extends PositionedWidget {
-  final DropArea_flutter DockWidgetView;
-  DropAreaWidget(var kddwView, this.DockWidgetView, {Key? key})
+class DockWidgetWidget extends PositionedWidget {
+  final DockWidget DockWidgetView;
+  DockWidgetWidget(var kddwView, this.DockWidgetView, {Key? key})
       : super(kddwView, key: key);
 
   @override
@@ -40,17 +41,13 @@ class DropAreaWidget extends PositionedWidget {
 }
 
 class DockWidgetPositionedWidgetState extends PositionedWidgetState {
-  final DropArea_flutter DockWidgetView;
+  final DockWidget DockWidgetView;
 
   DockWidgetPositionedWidgetState(var kddwView, this.DockWidgetView)
       : super(kddwView);
 
   @override
   Widget buildContents() {
-    return Container(
-        color: kddwView.m_color,
-        child: Stack(
-          children: kddwView.childWidgets,
-        ));
+    return super.buildContents();
   }
 }

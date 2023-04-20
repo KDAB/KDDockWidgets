@@ -13,20 +13,20 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'PositionedWidget.dart';
-import 'View_flutter.dart';
+import 'View.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 
-class Separator_flutter extends View_flutter {
+class Separator extends View {
   late final KDDockWidgetBindings.Separator m_controller;
   late final KDDockWidgetBindings.View_flutter m_parent;
 
-  Separator_flutter(KDDockWidgetBindings.Separator? separator,
+  Separator(KDDockWidgetBindings.Separator? separator,
       {required KDDockWidgetBindings.View? parent})
       : super(separator, KDDockWidgetBindings.Core_ViewType.Separator, parent) {
     m_controller = separator!;
     m_color = Colors.blueGrey;
     debugName = "Separator";
-    print("Separator_flutter CTOR");
+    print("Separator CTOR");
 
     m_parent = KDDockWidgetBindings.View_flutter.fromCache(parent!.thisCpp);
     m_parent.onChildAdded(this);
@@ -38,7 +38,7 @@ class Separator_flutter extends View_flutter {
 }
 
 class SeparatorWidget extends PositionedWidget {
-  final Separator_flutter separatorView;
+  final Separator separatorView;
   SeparatorWidget(var kddwView, this.separatorView, {Key? key})
       : super(kddwView, key: key);
 
@@ -49,7 +49,7 @@ class SeparatorWidget extends PositionedWidget {
 }
 
 class SeparatorPositionedWidgetState extends PositionedWidgetState {
-  final Separator_flutter separatorView;
+  final Separator separatorView;
 
   SeparatorPositionedWidgetState(var kddwView, this.separatorView)
       : super(kddwView);
@@ -69,7 +69,7 @@ class SeparatorPositionedWidgetState extends PositionedWidgetState {
       onPointerMove: (event) {
         if (event.buttons != kPrimaryButton) return;
 
-        final renderBox = (separatorView.m_parent as View_flutter)
+        final renderBox = (separatorView.m_parent as View)
             .widgetKey
             .currentContext
             ?.findRenderObject() as RenderBox;

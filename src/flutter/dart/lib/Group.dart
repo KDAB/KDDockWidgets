@@ -14,49 +14,48 @@ import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:flutter/material.dart';
 
-import 'DockWidget_flutter.dart';
-import 'TabBar_flutter.dart';
-import 'TitleBar_flutter.dart';
+import 'DockWidget.dart';
+import 'TabBar.dart' as kddw;
+import 'TitleBar.dart';
 
-class Group_flutter extends KDDockWidgetBindings.Group_flutter with View_mixin {
+class Group extends KDDockWidgetBindings.Group_flutter with View_mixin {
   late final KDDockWidgetBindings.Group m_controller;
 
-  Group_flutter(
-      KDDockWidgetBindings.Group? group, KDDockWidgetBindings.View? parent)
+  Group(KDDockWidgetBindings.Group? group, KDDockWidgetBindings.View? parent)
       : super(group, parent: parent) {
     m_controller = group!;
     initMixin(this, color: Colors.greenAccent, debugName: "Group");
 
-    print("Group_flutter CTOR");
+    print("Group CTOR");
   }
 
   Widget createFlutterWidget() {
     return GroupWidget(kddwView, this, key: widgetKey);
   }
 
-  TitleBar_flutter titleBarView() {
+  TitleBar titleBarView() {
     return KDDockWidgetBindings.View_flutter.fromCache(
-        m_controller.titleBar().view().thisCpp) as TitleBar_flutter;
+        m_controller.titleBar().view().thisCpp) as TitleBar;
   }
 
-  TabBar_flutter tabBarView() {
+  kddw.TabBar tabBarView() {
     return KDDockWidgetBindings.View_flutter.fromCache(
-        m_controller.stack().tabBar().view().thisCpp) as TabBar_flutter;
+        m_controller.stack().tabBar().view().thisCpp) as kddw.TabBar;
   }
 
-  DockWidget_flutter? dockWidgetView() {
+  DockWidget? dockWidgetView() {
     final dw = m_controller.currentDockWidget();
     if (dw.thisCpp.address != 0) // Add "isNullptr"
       return KDDockWidgetBindings.View_flutter.fromCache(dw.view().thisCpp)
-          as DockWidget_flutter;
+          as DockWidget;
 
-    print("Group_flutter: No dock widget in the Group!");
+    print("Group: No dock widget in the Group!");
     return null;
   }
 }
 
 class GroupWidget extends PositionedWidget {
-  final Group_flutter groupView;
+  final Group groupView;
   GroupWidget(var kddwView, this.groupView, {Key? key})
       : super(kddwView, key: key);
 
@@ -67,7 +66,7 @@ class GroupWidget extends PositionedWidget {
 }
 
 class GroupPositionedWidgetState extends PositionedWidgetState {
-  final Group_flutter groupView;
+  final Group groupView;
 
   GroupPositionedWidgetState(var kddwView, this.groupView) : super(kddwView);
 

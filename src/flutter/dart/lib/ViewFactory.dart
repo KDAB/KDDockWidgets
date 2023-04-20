@@ -11,19 +11,19 @@
 
 import 'dart:ffi';
 
-import 'package:KDDockWidgets/FloatingWindow_flutter.dart';
+import 'package:KDDockWidgets/FloatingWindow.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
-import 'DockWidget_flutter.dart';
-import 'DropArea_flutter.dart';
-import 'Group_flutter.dart';
-import 'Separator_flutter.dart';
-import 'Stack_flutter.dart';
-import 'TitleBar_flutter.dart';
-import 'TabBar_flutter.dart';
+import 'DockWidget.dart';
+import 'DropArea.dart';
+import 'Group.dart';
+import 'Separator.dart';
+import 'Stack.dart';
+import 'TitleBar.dart';
+import 'TabBar.dart';
 
-class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
-  ViewFactory_flutter() {
+class ViewFactory extends KDDockWidgetBindings.ViewFactory_flutter {
+  ViewFactory() {
     print("Dart: Created ViewFactory_flutter");
   }
 
@@ -31,10 +31,10 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
   KDDockWidgetBindings.View createDropArea(
       KDDockWidgetBindings.DropArea? controller,
       KDDockWidgetBindings.View? parent) {
-    print("ViewFactory_flutter: Creating DropArea");
-    var da = DropArea_flutter(
+    print("ViewFactory: Creating DropArea");
+    var da = DropArea(
         controller, KDDockWidgetBindings.Core_ViewType.DropArea, parent);
-    print("ViewFactory_flutter: Created DropArea");
+    print("ViewFactory: Created DropArea");
     return da;
   }
 
@@ -42,50 +42,50 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
   KDDockWidgetBindings.ClassicIndicatorWindowViewInterface
       createClassicIndicatorWindow(
           KDDockWidgetBindings.ClassicIndicators? indicators) {
-    print("ViewFactory_flutter: createClassicIndicatorWindow");
+    print("ViewFactory: createClassicIndicatorWindow");
     return KDDockWidgetBindings.ClassicIndicatorWindowViewInterface();
   }
 
   @override
   KDDockWidgetBindings.View createGroup(KDDockWidgetBindings.Group? group,
       {required KDDockWidgetBindings.View? parent}) {
-    print("ViewFactory_flutter: createGroup");
-    return Group_flutter(group, parent);
+    print("ViewFactory: createGroup");
+    return Group(group, parent);
   }
 
   @override
   KDDockWidgetBindings.View createTabBar(KDDockWidgetBindings.TabBar? tabBar,
       {required KDDockWidgetBindings.View? parent}) {
-    print("ViewFactory_flutter: createTabBar");
-    return TabBar_flutter(tabBar, parent);
+    print("ViewFactory: createTabBar");
+    return TabBar(tabBar, parent);
   }
 
   @override
   KDDockWidgetBindings.View createTitleBar(
       KDDockWidgetBindings.TitleBar? controller,
       KDDockWidgetBindings.View? parent) {
-    print("ViewFactory_flutter: createTitleBar");
-    return TitleBar_flutter(controller, parent);
+    print("ViewFactory: createTitleBar");
+    return TitleBar(controller, parent);
   }
 
   @override
   KDDockWidgetBindings.View createStack(
       KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent) {
-    print("ViewFactory_flutter: createStack");
-    return Stack_flutter(stack, parent);
+    print("ViewFactory: createStack");
+    return Stack(stack, parent);
   }
 
   @override
   KDDockWidgetBindings.View createSeparator(
       KDDockWidgetBindings.Separator? separator,
       {required KDDockWidgetBindings.View? parent}) {
-    return Separator_flutter(separator, parent: parent);
+    return Separator(separator, parent: parent);
   }
 
   @override
   KDDockWidgetBindings.View createDockWidget(String? uniqueName,
       {int options = 0, int layoutSaverOptions = 0, int windowFlags = 0}) {
-    return DockWidget_flutter(uniqueName,
+    return DockWidget(uniqueName,
         options: options, layoutSaverOptions: layoutSaverOptions);
   }
 
@@ -95,6 +95,6 @@ class ViewFactory_flutter extends KDDockWidgetBindings.ViewFactory_flutter {
       {required KDDockWidgetBindings.MainWindow? parent,
       int windowFlags = 0}) {
     // TODOm4: What to do with main window pointer
-    return FloatingWindow_flutter(controller, null);
+    return FloatingWindow(controller, null);
   }
 }
