@@ -204,17 +204,16 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
-    flutter/ViewFactory_flutter.cpp
-    flutter/Window_flutter.cpp
-    flutter/Platform_flutter.cpp
-    flutter/views/View_flutter.cpp
+    flutter/ViewFactory.cpp
+    flutter/Window.cpp
+    flutter/Platform.cpp
+    flutter/views/View.cpp
     flutter/views/ViewWrapper.cpp
-    flutter/TestHelpers_flutter.cpp
-    flutter/views/Stack_flutter.cpp
-    flutter/views/DockWidget_flutter.cpp
-    flutter/views/Group_flutter.cpp
-    flutter/views/TabBar_flutter.cpp
-    flutter/views/TitleBar_flutter.cpp
+    flutter/views/Stack.cpp
+    flutter/views/DockWidget.cpp
+    flutter/views/Group.cpp
+    flutter/views/TabBar.cpp
+    flutter/views/TitleBar.cpp
 )
 
 if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
@@ -224,7 +223,7 @@ endif()
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers.cpp)
-    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/TestHelpers_flutter.cpp)
+    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/TestHelpers.cpp)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 

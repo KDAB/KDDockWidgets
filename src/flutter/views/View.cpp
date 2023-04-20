@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "View_flutter.h"
+#include "View.h"
 #include "core/View_p.h"
 #include "core/layouting/Item_p.h"
-#include "../Window_flutter.h"
+#include "../Window.h"
 #include "ViewWrapper.h"
 
 

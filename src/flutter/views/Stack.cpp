@@ -9,11 +9,11 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Stack_flutter.h"
+#include "Stack.h"
 #include "Controller.h"
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/TitleBar.h"
-#include "flutter/ViewFactory_flutter.h"
+#include "flutter/ViewFactory.h"
 #include "DockRegistry.h"
 #include "Config.h"
 #include "Window.h"

@@ -16,7 +16,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "Group_flutter.h"
+#include "Group.h"
 
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Stack.h"
@@ -24,11 +24,11 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/DockWidget_p.h"
 
-#include "flutter/ViewFactory_flutter.h"
-#include "flutter/Platform_flutter.h"
-#include "flutter/views/DockWidget_flutter.h"
+#include "flutter/ViewFactory.h"
+#include "flutter/Platform.h"
+#include "flutter/views/DockWidget.h"
 
-#include "Stack_flutter.h"
+#include "Stack.h"
 
 #include "Config.h"
 #include "core/ViewFactory.h"

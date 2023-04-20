@@ -17,7 +17,7 @@
  */
 
 #include "kddockwidgets/core/views/DockWidgetViewInterface.h"
-#include "View_flutter.h"
+#include "View.h"
 
 namespace KDDockWidgets {
 

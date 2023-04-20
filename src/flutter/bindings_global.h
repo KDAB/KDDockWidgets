@@ -35,14 +35,14 @@
 #define QT_NO_KEYWORDS
 #endif
 
-#include "Platform_flutter.h"
-#include "ViewFactory_flutter.h"
-#include "views/View_flutter.h"
-#include "views/Stack_flutter.h"
-#include "views/Group_flutter.h"
-#include "views/TabBar_flutter.h"
-#include "views/TitleBar_flutter.h"
-#include "views/DockWidget_flutter.h"
+#include "Platform.h"
+#include "ViewFactory.h"
+#include "views/View.h"
+#include "views/Stack.h"
+#include "views/Group.h"
+#include "views/TabBar.h"
+#include "views/TitleBar.h"
+#include "views/DockWidget.h"
 
 #include "../core/ViewFactory.h"
 #include "../core/Layout.h"
@@ -66,4 +66,4 @@
 
 
 // TODO: kdbindings is choking shiboken
-// #include "Window_flutter.h"
+// #include "Window.h"

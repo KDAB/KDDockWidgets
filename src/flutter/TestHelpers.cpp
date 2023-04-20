@@ -10,8 +10,8 @@
 */
 
 #include "kddockwidgets/KDDockWidgets.h"
-#include "Platform_flutter.h"
-#include "views/View_flutter.h"
+#include "Platform.h"
+#include "views/View.h"
 #include "kddockwidgets/core/MainWindow.h"
 
 using namespace KDDockWidgets;

@@ -17,7 +17,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "TabBar_flutter.h"
+#include "TabBar.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
 

@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "View_flutter.h"
+#include "View.h"
 #include "core/views/GroupViewInterface.h"
-#include "TitleBar_flutter.h"
+#include "TitleBar.h"
 
 namespace KDDockWidgets {
 

@@ -12,8 +12,8 @@
 #include "ViewWrapper.h"
 #include "core/View_p.h"
 #include "core/layouting/Item_p.h"
-#include "../Window_flutter.h"
-#include "View_flutter.h"
+#include "../Window.h"
+#include "View.h"
 
 
 // TODOm4: Make this class available for other frontends ?

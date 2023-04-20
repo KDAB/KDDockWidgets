@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "View_flutter.h"
+#include "View.h"
 #include "core/views/TabBarViewInterface.h"
 
 #include <QPointer>

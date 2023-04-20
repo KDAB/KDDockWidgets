@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "TitleBar_flutter.h"
+#include "TitleBar.h"
 
 #include "core/DragController_p.h"
 

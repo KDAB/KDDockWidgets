@@ -9,13 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Platform_flutter.h"
+#include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "Window_flutter.h"
-#include "views/View_flutter.h"
+#include "Window.h"
+#include "views/View.h"
 #include "core/Platform_p.h"
-#include "ViewFactory_flutter.h"
+#include "ViewFactory.h"
 
 #include <memory.h>
 

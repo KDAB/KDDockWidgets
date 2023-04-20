@@ -21,7 +21,7 @@
 #endif
 
 #ifdef KDDW_FRONTEND_FLUTTER
-#include "flutter/Platform_flutter.h"
+#include "flutter/Platform.h"
 #endif
 
 #include <QDebug>

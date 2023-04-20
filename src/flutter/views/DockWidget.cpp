@@ -9,17 +9,17 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DockWidget_flutter.h"
+#include "DockWidget.h"
 #include "core/ViewFactory.h"
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/DockWidget_p.h"
 #include "kddockwidgets/core/Group.h"
-#include "flutter/Platform_flutter.h"
-#include "flutter/views/TitleBar_flutter.h"
-#include "flutter/views/Group_flutter.h"
-#include "flutter/ViewFactory_flutter.h"
+#include "flutter/Platform.h"
+#include "flutter/views/TitleBar.h"
+#include "flutter/views/Group.h"
+#include "flutter/ViewFactory.h"
 
 #include <Config.h>
 
