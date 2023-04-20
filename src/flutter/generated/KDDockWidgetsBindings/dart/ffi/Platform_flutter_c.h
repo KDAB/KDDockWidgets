@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <Platform_flutter.h>
+#include <Platform.h>
 #include <ViewFactory.h>
 #include <core/View.h>
 #include <qsize.h>

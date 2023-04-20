@@ -9,13 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <DockWidget_flutter.h>
+#include <DockWidget.h>
 #include <qstring.h>
 #include <qsize.h>
 #include <core/DockWidget.h>
+#include <qrect.h>
 #include <core/View.h>
 #include <qpoint.h>
-#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockWidget_flutter_wrapper : public ::KDDockWidgets::flutter::DockWidget_flutter

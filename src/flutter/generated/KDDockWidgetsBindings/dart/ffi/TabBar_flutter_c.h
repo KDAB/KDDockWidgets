@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <TabBar_flutter.h>
 #include <TabBar.h>
 #include <core/View.h>
 #include <qpoint.h>

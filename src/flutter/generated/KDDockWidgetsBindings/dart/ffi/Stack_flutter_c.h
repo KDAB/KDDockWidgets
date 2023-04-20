@@ -9,13 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <Stack_flutter.h>
 #include <Stack.h>
 #include <core/View.h>
 #include <qpoint.h>
+#include <qrect.h>
 #include <qsize.h>
 #include <qstring.h>
-#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Stack_flutter_wrapper : public ::KDDockWidgets::flutter::Stack_flutter

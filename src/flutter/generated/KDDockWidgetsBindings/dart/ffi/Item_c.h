@@ -16,8 +16,8 @@
 #include <qpoint.h>
 #include <qrect.h>
 #include <core/Group.h>
-#include <qlist.h>
 #include <qobject.h>
+#include <qlist.h>
 #include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

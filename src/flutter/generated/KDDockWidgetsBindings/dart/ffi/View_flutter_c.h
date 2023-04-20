@@ -9,22 +9,22 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <View_flutter.h>
+#include <View.h>
 #include <core/Controller.h>
 #include <core/View.h>
 #include <qsize.h>
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <MainWindow.h>
 #include <Stack.h>
 #include <core/DockWidget.h>
+#include <core/Layout.h>
+#include <TabBar.h>
+#include <MainWindow.h>
 #include <core/Group.h>
 #include <TitleBar.h>
-#include <TabBar.h>
-#include <FloatingWindow.h>
-#include <core/Layout.h>
 #include <DropArea.h>
+#include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class View_flutter_wrapper : public ::KDDockWidgets::flutter::View_flutter
