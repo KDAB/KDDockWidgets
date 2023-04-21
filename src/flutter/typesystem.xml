@@ -53,9 +53,13 @@
             <object-type name="Layout" />
             <object-type name="DropArea" />
             <object-type name="Group" />
-            <object-type name="Stack" />
+            <object-type name="Stack">
+                <include file-name="core/Stack.h" location="local"/>
+            </object-type>
             <object-type name="TabBar" />
-            <object-type name="TitleBar" />
+            <object-type name="TitleBar">
+                <include file-name="core/TitleBar.h" location="local"/>
+            </object-type>
             <object-type name="Separator" />
             <object-type name="SideBar" />
             <object-type name="FloatingWindow" />
