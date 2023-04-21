@@ -24,11 +24,11 @@ class TitleBar;
 
 namespace flutter {
 
-class DOCKS_EXPORT TitleBar_flutter : public View_flutter, public Core::TitleBarViewInterface
+class DOCKS_EXPORT TitleBar : public View_flutter, public Core::TitleBarViewInterface
 {
 public:
-    explicit TitleBar_flutter(Core::TitleBar *controller, View *parent = nullptr);
-    ~TitleBar_flutter() override;
+    explicit TitleBar(Core::TitleBar *controller, View *parent = nullptr);
+    ~TitleBar() override;
 
 protected:
 #ifdef DOCKS_DEVELOPER_MODE

@@ -189,11 +189,9 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_flutter_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Separator_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_flutter_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_flutter_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_flutter_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/TitleBar_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/SideBar_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_c.cpp
@@ -201,6 +199,8 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/View_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TitleBar_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/TitleBar_c.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS

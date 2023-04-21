@@ -4,5 +4,19 @@
     "bindingsLibrary": "kddockwidgets",
     "pureVirtualClassOverrides": [
         "KDDockWidgets::Core::View"
+    ],
+    "namespaces": [
+        {
+            "name": "KDDWBindingsCore",
+            "types": [
+                "KDDockWidgets::Core::TitleBar"
+            ]
+        },
+        {
+            "name": "KDDWBindingsFlutter",
+            "types": [
+                "KDDockWidgets::flutter::TitleBar"
+            ]
+        }
     ]
 }

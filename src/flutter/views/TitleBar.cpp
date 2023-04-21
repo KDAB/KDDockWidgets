@@ -22,34 +22,34 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
 
-TitleBar_flutter::TitleBar_flutter(Core::TitleBar *controller, View *parent)
+TitleBar::TitleBar(Core::TitleBar *controller, View *parent)
     : View_flutter(controller, Core::ViewType::TitleBar, parent)
     , Core::TitleBarViewInterface(controller)
 {
     setFixedHeight(30);
 }
 
-TitleBar_flutter::~TitleBar_flutter()
+TitleBar::~TitleBar()
 {
 }
 
-void TitleBar_flutter::init()
+void TitleBar::init()
 {
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-bool TitleBar_flutter::isCloseButtonEnabled() const
+bool TitleBar::isCloseButtonEnabled() const
 {
     return true;
 }
 
-bool TitleBar_flutter::isCloseButtonVisible() const
+bool TitleBar::isCloseButtonVisible() const
 {
     return true;
 }
 
-bool TitleBar_flutter::isFloatButtonVisible() const
+bool TitleBar::isFloatButtonVisible() const
 {
     return true;
 }

@@ -12,11 +12,16 @@
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
+
 import 'package:flutter/material.dart';
 
-class TitleBar extends KDDockWidgetBindings.TitleBar_flutter with View_mixin {
-  TitleBar(KDDockWidgetBindings.TitleBar? titleBar,
-      KDDockWidgetBindings.View? parent)
+class TitleBar extends KDDWBindingsFlutter.TitleBar with View_mixin {
+  TitleBar(
+      KDDWBindingsCore.TitleBar? titleBar, KDDockWidgetBindings.View? parent)
       : super(titleBar, parent: parent) {
     m_fillsParent = true;
     initMixin(this, debugName: "TitleBar");

@@ -79,7 +79,7 @@
             </object-type>
             <object-type name="View_flutter" />
             <object-type name="Stack_flutter" />
-            <object-type name="TitleBar_flutter" />
+            <object-type name="TitleBar" />
             <object-type name="TabBar_flutter" />
             <object-type name="Group_flutter" />
             <object-type name="DockWidget_flutter" />

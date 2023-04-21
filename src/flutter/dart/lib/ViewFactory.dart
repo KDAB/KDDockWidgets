@@ -14,6 +14,8 @@ import 'dart:ffi';
 import 'package:KDDockWidgets/FloatingWindow.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'DockWidget.dart';
 import 'DropArea.dart';
 import 'Group.dart';
@@ -62,7 +64,7 @@ class ViewFactory extends KDDockWidgetBindings.ViewFactory_flutter {
 
   @override
   KDDockWidgetBindings.View createTitleBar(
-      KDDockWidgetBindings.TitleBar? controller,
+      KDDWBindingsCore.TitleBar? controller,
       KDDockWidgetBindings.View? parent) {
     print("ViewFactory: createTitleBar");
     return TitleBar(controller, parent);
