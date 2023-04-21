@@ -16,6 +16,8 @@ import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
 import 'DockWidget.dart';
 import 'DropArea.dart';
 import 'Group.dart';
@@ -24,7 +26,7 @@ import 'Stack.dart';
 import 'TitleBar.dart';
 import 'TabBar.dart';
 
-class ViewFactory extends KDDockWidgetBindings.ViewFactory_flutter {
+class ViewFactory extends KDDWBindingsFlutter.ViewFactory_flutter {
   ViewFactory() {
     print("Dart: Created ViewFactory_flutter");
   }

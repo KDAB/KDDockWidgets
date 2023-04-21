@@ -29,7 +29,14 @@
         {
             "name": "KDDWBindingsFlutter",
             "types": [
-                "KDDockWidgets::flutter::TitleBar"
+                "KDDockWidgets::flutter::TitleBar",
+                "KDDockWidgets::flutter::Platform_flutter",
+                "KDDockWidgets::flutter::View_flutter",
+                "KDDockWidgets::flutter::TabBar_flutter",
+                "KDDockWidgets::flutter::Stack_flutter",
+                "KDDockWidgets::flutter::Group_flutter",
+                "KDDockWidgets::flutter::DockWidget_flutter",
+                "KDDockWidgets::flutter::ViewFactory_flutter"
             ]
         }
     ]

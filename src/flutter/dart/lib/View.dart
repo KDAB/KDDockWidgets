@@ -9,15 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'dart:ffi' as ffi;
-import 'package:KDDockWidgets/PositionedWidget.dart';
-import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
-import 'package:flutter/cupertino.dart';
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
 import 'View_mixin.dart';
 
-class View extends KDDockWidgetBindings.View_flutter with View_mixin {
+class View extends KDDWBindingsFlutter.View_flutter with View_mixin {
   View(KDDWBindingsCore.Controller? controller, int type,
       KDDWBindingsCore.View? parent,
       {int windowFlags = 0})

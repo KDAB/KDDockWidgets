@@ -15,7 +15,8 @@ import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
-import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
 import 'package:KDDockWidgets/WindowOverlayWidget.dart' as KDDW;
 import 'package:flutter/scheduler.dart';
 import 'package:KDDockWidgets/View.dart' as KDDW;
@@ -60,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         KDDWBindings.KDDockWidgets_MainWindowOption.MainWindowOption_None);
 
     final dropAreaView =
-        KDDWBindings.View_flutter.fromCache(dropArea.view().thisCpp)
+        KDDWBindingsFlutter.View_flutter.fromCache(dropArea.view().thisCpp)
             as KDDW.View;
 
     KDDWBindingsCore.View.fromCppPointer(dropArea.view().thisCpp);

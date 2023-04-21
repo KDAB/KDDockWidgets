@@ -14,11 +14,13 @@ import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
 import 'package:flutter/material.dart';
 import 'TitleBar.dart';
 import 'DropArea.dart';
 
-class FloatingWindow extends KDDockWidgetBindings.View_flutter with View_mixin {
+class FloatingWindow extends KDDWBindingsFlutter.View_flutter with View_mixin {
   late final KDDWBindingsCore.FloatingWindow m_controller;
 
   FloatingWindow(
@@ -35,12 +37,12 @@ class FloatingWindow extends KDDockWidgetBindings.View_flutter with View_mixin {
   }
 
   TitleBar titleBarView() {
-    return KDDockWidgetBindings.View_flutter.fromCache(
+    return KDDWBindingsFlutter.View_flutter.fromCache(
         m_controller.titleBar().view().thisCpp) as TitleBar;
   }
 
   DropArea dropAreaView() {
-    return KDDockWidgetBindings.View_flutter.fromCache(
+    return KDDWBindingsFlutter.View_flutter.fromCache(
         m_controller.dropArea().view().thisCpp) as DropArea;
   }
 

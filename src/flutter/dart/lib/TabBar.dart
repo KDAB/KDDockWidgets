@@ -11,13 +11,14 @@
 
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
-import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material show TabBar;
 
-class TabBar extends KDDockWidgetBindings.TabBar_flutter with View_mixin {
+class TabBar extends KDDWBindingsFlutter.TabBar_flutter with View_mixin {
   late final KDDWBindingsCore.TabBar m_controller;
 
   TabBar(KDDWBindingsCore.TabBar? tabBar, KDDWBindingsCore.View? parent)

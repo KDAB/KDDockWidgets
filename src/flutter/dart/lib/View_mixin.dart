@@ -14,12 +14,15 @@ import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
+
 import 'package:flutter/material.dart';
 
 class View_mixin {
   late final Widget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
-  late final KDDockWidgetBindings.View_flutter kddwView;
+  late final KDDWBindingsFlutter.View_flutter kddwView;
 
   Color m_color = Colors.red;
   int m_x = 100;
@@ -82,7 +85,7 @@ class View_mixin {
     final state = widgetKey.currentState;
 
     final viewFlutter =
-        KDDockWidgetBindings.View_flutter.fromCache(childView!.thisCpp)
+        KDDWBindingsFlutter.View_flutter.fromCache(childView!.thisCpp)
             as View_mixin;
 
     print(
@@ -98,7 +101,7 @@ class View_mixin {
   void onChildRemoved(KDDWBindingsCore.View? childView) {
     final state = widgetKey.currentState;
     final viewFlutter =
-        KDDockWidgetBindings.View_flutter.fromCache(childView!.thisCpp)
+        KDDWBindingsFlutter.View_flutter.fromCache(childView!.thisCpp)
             as View_mixin;
     childWidgets.remove(viewFlutter.flutterWidget);
     if (state != null) {

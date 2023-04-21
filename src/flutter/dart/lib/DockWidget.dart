@@ -12,9 +12,11 @@
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
 import 'package:flutter/material.dart';
 
-class DockWidget extends KDDockWidgetBindings.DockWidget_flutter
+class DockWidget extends KDDWBindingsFlutter.DockWidget_flutter
     with View_mixin {
   DockWidget(String? uniqueName, {int options = 0, int layoutSaverOptions = 0})
       : super(uniqueName,

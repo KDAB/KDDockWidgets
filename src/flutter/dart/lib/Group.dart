@@ -11,16 +11,18 @@
 
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
-import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
+
 import 'package:flutter/material.dart';
 
 import 'DockWidget.dart';
 import 'TabBar.dart' as kddw;
 import 'TitleBar.dart';
 
-class Group extends KDDockWidgetBindings.Group_flutter with View_mixin {
+class Group extends KDDWBindingsFlutter.Group_flutter with View_mixin {
   late final KDDWBindingsCore.Group m_controller;
 
   Group(KDDWBindingsCore.Group? group, KDDWBindingsCore.View? parent)
@@ -36,19 +38,19 @@ class Group extends KDDockWidgetBindings.Group_flutter with View_mixin {
   }
 
   TitleBar titleBarView() {
-    return KDDockWidgetBindings.View_flutter.fromCache(
+    return KDDWBindingsFlutter.View_flutter.fromCache(
         m_controller.titleBar().view().thisCpp) as TitleBar;
   }
 
   kddw.TabBar tabBarView() {
-    return KDDockWidgetBindings.View_flutter.fromCache(
+    return KDDWBindingsFlutter.View_flutter.fromCache(
         m_controller.stack().tabBar().view().thisCpp) as kddw.TabBar;
   }
 
   DockWidget? dockWidgetView() {
     final dw = m_controller.currentDockWidget();
     if (dw.thisCpp.address != 0) // Add "isNullptr"
-      return KDDockWidgetBindings.View_flutter.fromCache(dw.view().thisCpp)
+      return KDDWBindingsFlutter.View_flutter.fromCache(dw.view().thisCpp)
           as DockWidget;
 
     print("Group: No dock widget in the Group!");
