@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'TitleBar.dart';
 import 'DropArea.dart';
 
-class FloatingWindow extends KDDWBindingsFlutter.View_flutter with View_mixin {
+class FloatingWindow extends KDDWBindingsFlutter.View with View_mixin {
   late final KDDWBindingsCore.FloatingWindow m_controller;
 
   FloatingWindow(
@@ -37,12 +37,12 @@ class FloatingWindow extends KDDWBindingsFlutter.View_flutter with View_mixin {
   }
 
   TitleBar titleBarView() {
-    return KDDWBindingsFlutter.View_flutter.fromCache(
+    return KDDWBindingsFlutter.View.fromCache(
         m_controller.titleBar().view().thisCpp) as TitleBar;
   }
 
   DropArea dropAreaView() {
-    return KDDWBindingsFlutter.View_flutter.fromCache(
+    return KDDWBindingsFlutter.View.fromCache(
         m_controller.dropArea().view().thisCpp) as DropArea;
   }
 

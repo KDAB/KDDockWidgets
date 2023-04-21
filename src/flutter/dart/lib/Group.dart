@@ -22,7 +22,7 @@ import 'DockWidget.dart';
 import 'TabBar.dart' as kddw;
 import 'TitleBar.dart';
 
-class Group extends KDDWBindingsFlutter.Group_flutter with View_mixin {
+class Group extends KDDWBindingsFlutter.Group with View_mixin {
   late final KDDWBindingsCore.Group m_controller;
 
   Group(KDDWBindingsCore.Group? group, KDDWBindingsCore.View? parent)
@@ -38,19 +38,19 @@ class Group extends KDDWBindingsFlutter.Group_flutter with View_mixin {
   }
 
   TitleBar titleBarView() {
-    return KDDWBindingsFlutter.View_flutter.fromCache(
+    return KDDWBindingsFlutter.View.fromCache(
         m_controller.titleBar().view().thisCpp) as TitleBar;
   }
 
   kddw.TabBar tabBarView() {
-    return KDDWBindingsFlutter.View_flutter.fromCache(
+    return KDDWBindingsFlutter.View.fromCache(
         m_controller.stack().tabBar().view().thisCpp) as kddw.TabBar;
   }
 
   DockWidget? dockWidgetView() {
     final dw = m_controller.currentDockWidget();
     if (dw.thisCpp.address != 0) // Add "isNullptr"
-      return KDDWBindingsFlutter.View_flutter.fromCache(dw.view().thisCpp)
+      return KDDWBindingsFlutter.View.fromCache(dw.view().thisCpp)
           as DockWidget;
 
     print("Group: No dock widget in the Group!");

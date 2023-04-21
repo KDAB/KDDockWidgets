@@ -23,15 +23,15 @@ namespace flutter {
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
-class DOCKS_EXPORT Platform_flutter : public Core::Platform
+class DOCKS_EXPORT Platform : public Core::Platform
 {
 public:
-    Platform_flutter();
-    ~Platform_flutter() override;
+    Platform();
+    ~Platform() override;
 
-    static Platform_flutter *platformFlutter()
+    static Platform *platformFlutter()
     {
-        return static_cast<Platform_flutter *>(Platform::instance());
+        return static_cast<Platform *>(Platform::instance());
     }
 
     const char *name() const override;
@@ -53,7 +53,7 @@ public:
     void onFloatingWindowDestroyed(Core::FloatingWindow *) override;
 
 #ifdef DOCKS_DEVELOPER_MODE
-    explicit Platform_flutter(int &argc, char **argv);
+    explicit Platform(int &argc, char **argv);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     Core::View *tests_createView(Core::CreateViewOptions, Core::View *parent = nullptr) override;

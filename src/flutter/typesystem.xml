@@ -73,16 +73,16 @@
         </namespace-type>
 
         <namespace-type name="flutter">
-            <object-type name="ViewFactory_flutter" />
-            <object-type name="Platform_flutter">
+            <object-type name="ViewFactory" />
+            <object-type name="Platform">
                 <enum-type identified-by-value="DisplayType" />
             </object-type>
-            <object-type name="View_flutter" />
-            <object-type name="Stack_flutter" />
+            <object-type name="View" />
+            <object-type name="Stack" />
             <object-type name="TitleBar" />
-            <object-type name="TabBar_flutter" />
-            <object-type name="Group_flutter" />
-            <object-type name="DockWidget_flutter" />
+            <object-type name="TabBar" />
+            <object-type name="Group" />
+            <object-type name="DockWidget" />
         </namespace-type>
 
     </namespace-type>

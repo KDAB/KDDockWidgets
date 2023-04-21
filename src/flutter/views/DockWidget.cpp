@@ -31,50 +31,49 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::flutter;
 
 
-DockWidget_flutter::DockWidget_flutter(const QString &uniqueName, DockWidgetOptions options,
-                                       LayoutSaverOptions layoutSaverOptions)
-    : View_flutter(new DockWidget(this, uniqueName, options, layoutSaverOptions), Core::ViewType::DockWidget,
-                   nullptr)
+DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
+                       LayoutSaverOptions layoutSaverOptions)
+    : View(new Core::DockWidget(this, uniqueName, options, layoutSaverOptions), Core::ViewType::DockWidget,
+           nullptr)
     , Core::DockWidgetViewInterface(asDockWidgetController())
 {
     init();
     m_dockWidget->init();
 }
 
-DockWidget_flutter::~DockWidget_flutter()
+DockWidget::~DockWidget()
 {
 }
 
-void DockWidget_flutter::init()
+void DockWidget::init()
 {
 }
 
 
-QSize DockWidget_flutter::minSize() const
+QSize DockWidget::minSize() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests min-size is the same as the widget's, there's no spacing or margins.
         return guestWidget->minSize();
     }
 
-    return View_flutter::minSize();
+    return View::minSize();
 }
 
-QSize DockWidget_flutter::maxSizeHint() const
+QSize DockWidget::maxSizeHint() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests max-size is the same as the widget's, there's no spacing or margins.
         return guestWidget->maxSizeHint();
     }
 
-    return View_flutter::maxSizeHint();
+    return View::maxSizeHint();
 }
 
-Core::DockWidget *DockWidget_flutter::dockWidget() const
+Core::DockWidget *DockWidget::dockWidget() const
 {
     return m_dockWidget;
 }

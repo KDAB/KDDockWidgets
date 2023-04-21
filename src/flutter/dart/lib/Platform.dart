@@ -18,7 +18,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 import 'ViewFactory.dart';
 
-class Platform extends KDDWBindingsFlutter.Platform_flutter {
+class Platform extends KDDWBindingsFlutter.Platform {
   late final WindowOverlayWidget windowOverlayWidget;
 
   var floatingWindows = <KDDWBindingsCore.FloatingWindow>[];
@@ -29,10 +29,9 @@ class Platform extends KDDWBindingsFlutter.Platform_flutter {
   }
 
   static Platform plat() {
-    var p = KDDWBindingsFlutter.Platform_flutter.platformFlutter();
+    var p = KDDWBindingsFlutter.Platform.platformFlutter();
 
-    return KDDWBindingsFlutter.Platform_flutter.fromCache(p.thisCpp)
-        as Platform;
+    return KDDWBindingsFlutter.Platform.fromCache(p.thisCpp) as Platform;
   }
 
   @override
@@ -51,7 +50,7 @@ class Platform extends KDDWBindingsFlutter.Platform_flutter {
   KDDWBindingsCore.View createView(KDDWBindingsCore.Controller? controller,
       {required KDDWBindingsCore.View? parent}) {
     print("Platform: createView");
-    return KDDWBindingsFlutter.View_flutter(controller, 0, parent);
+    return KDDWBindingsFlutter.View(controller, 0, parent);
   }
 
   @override

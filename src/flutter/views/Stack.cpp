@@ -22,21 +22,21 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-Stack_flutter::Stack_flutter(Core::Stack *controller, View *parent)
-    : View_flutter(controller, Core::ViewType::Stack, parent)
+Stack::Stack(Core::Stack *controller, Core::View *parent)
+    : View(controller, Core::ViewType::Stack, parent)
     , StackViewInterface(controller)
 {
 }
 
-void Stack_flutter::init()
+void Stack::init()
 {
 }
 
-void Stack_flutter::setDocumentMode(bool)
+void Stack::setDocumentMode(bool)
 {
 }
 
-bool Stack_flutter::isPositionDraggable(QPoint) const
+bool Stack::isPositionDraggable(QPoint) const
 {
     return true;
 }

@@ -24,13 +24,13 @@ class DockWidget;
 
 namespace flutter {
 
-class Stack_flutter;
+class Stack;
 
-class DOCKS_EXPORT Group_flutter : public View_flutter, public Core::GroupViewInterface
+class DOCKS_EXPORT Group : public View, public Core::GroupViewInterface
 {
 public:
-    explicit Group_flutter(Core::Group *controller, Core::View *parent = nullptr);
-    ~Group_flutter() override;
+    explicit Group(Core::Group *controller, Core::View *parent = nullptr);
+    ~Group() override;
 
     /// @reimp
     QSize minSize() const override;

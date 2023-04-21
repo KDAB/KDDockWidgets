@@ -45,12 +45,12 @@ namespace flutter {
 /**
  * @brief The default ViewFactory for Flutter frontend
  */
-class DOCKS_EXPORT ViewFactory_flutter : public Core::ViewFactory
+class DOCKS_EXPORT ViewFactory : public Core::ViewFactory
 {
     Q_OBJECT
 public:
-    ViewFactory_flutter() = default;
-    ~ViewFactory_flutter() override;
+    ViewFactory() = default;
+    ~ViewFactory() override;
 
     Core::View *createDockWidget(const QString &uniqueName, DockWidgetOptions = {},
                                  LayoutSaverOptions = {}, Qt::WindowFlags = {}) const override;
@@ -77,7 +77,7 @@ public:
                                                         Core::View *parent = nullptr) const override;
 
 private:
-    Q_DISABLE_COPY(ViewFactory_flutter)
+    Q_DISABLE_COPY(ViewFactory)
 };
 
 }

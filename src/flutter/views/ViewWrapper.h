@@ -20,7 +20,7 @@
 
 namespace KDDockWidgets::flutter {
 
-class View_flutter;
+class View;
 
 class DOCKS_EXPORT ViewWrapper : public Core::View
 {
@@ -33,7 +33,7 @@ public:
     using Core::View::resize;
     using View::width;
 
-    static std::shared_ptr<Core::View> create(View_flutter *wrapped);
+    static std::shared_ptr<Core::View> create(flutter::View *wrapped);
     ~ViewWrapper() override;
 
     void free_impl() override;
@@ -117,9 +117,9 @@ public:
     HANDLE handle() const override;
 
 private:
-    explicit ViewWrapper(View_flutter *wrapped);
+    explicit ViewWrapper(flutter::View *wrapped);
     void setWeakPtr(std::weak_ptr<ViewWrapper> thisPtr);
-    View_flutter *const m_wrappedView = nullptr;
+    flutter::View *const m_wrappedView = nullptr;
     std::weak_ptr<ViewWrapper> m_thisWeakPtr;
     Q_DISABLE_COPY(ViewWrapper)
 };

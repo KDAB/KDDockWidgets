@@ -22,8 +22,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
 
-TitleBar::TitleBar(Core::TitleBar *controller, View *parent)
-    : View_flutter(controller, Core::ViewType::TitleBar, parent)
+TitleBar::TitleBar(Core::TitleBar *controller, Core::View *parent)
+    : View(controller, Core::ViewType::TitleBar, parent)
     , Core::TitleBarViewInterface(controller)
 {
     setFixedHeight(30);

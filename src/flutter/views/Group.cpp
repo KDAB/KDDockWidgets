@@ -39,42 +39,42 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-Group_flutter::Group_flutter(Core::Group *controller, View *parent)
-    : View_flutter(controller, Core::ViewType::Frame, parent)
+Group::Group(Core::Group *controller, Core::View *parent)
+    : View(controller, Core::ViewType::Frame, parent)
     , GroupViewInterface(controller)
 {
 }
 
-Group_flutter::~Group_flutter()
+Group::~Group()
 {
 }
 
-void Group_flutter::init()
+void Group::init()
 {
 }
 
-int Group_flutter::currentIndex() const
+int Group::currentIndex() const
 {
     return 0;
 }
 
-QSize Group_flutter::minSize() const
+QSize Group::minSize() const
 {
     const QSize contentsSize = m_group->dockWidgetsMinSize();
     return contentsSize + QSize(0, nonContentsHeight());
 }
 
-QSize Group_flutter::maxSizeHint() const
+QSize Group::maxSizeHint() const
 {
-    return View_flutter::maxSizeHint();
+    return View::maxSizeHint();
 }
 
-int Group_flutter::nonContentsHeight() const
+int Group::nonContentsHeight() const
 {
     return 0;
 }
 
-QRect Group_flutter::dragRect() const
+QRect Group::dragRect() const
 {
     qFatal("Not implemented");
     return {};

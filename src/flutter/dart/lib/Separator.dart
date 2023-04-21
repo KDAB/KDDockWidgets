@@ -22,7 +22,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 
 class Separator extends View {
   late final KDDWBindingsCore.Separator m_controller;
-  late final KDDWBindingsFlutter.View_flutter m_parent;
+  late final KDDWBindingsFlutter.View m_parent;
 
   Separator(KDDWBindingsCore.Separator? separator,
       {required KDDWBindingsCore.View? parent})
@@ -32,7 +32,7 @@ class Separator extends View {
     debugName = "Separator";
     print("Separator CTOR");
 
-    m_parent = KDDWBindingsFlutter.View_flutter.fromCache(parent!.thisCpp);
+    m_parent = KDDWBindingsFlutter.View.fromCache(parent!.thisCpp);
     m_parent.onChildAdded(this);
   }
 

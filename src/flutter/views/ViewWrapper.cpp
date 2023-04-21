@@ -22,7 +22,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
 
-ViewWrapper::ViewWrapper(View_flutter *wrapped)
+ViewWrapper::ViewWrapper(flutter::View *wrapped)
     : View(wrapped->controller(), Core::ViewType::ViewWrapper)
     , m_wrappedView(wrapped)
 {
@@ -377,7 +377,7 @@ bool ViewWrapper::onResize(int w, int h)
     return View::onResize(w, h);
 }
 
-/*static*/ std::shared_ptr<Core::View> ViewWrapper::create(View_flutter *wrapped)
+/*static*/ std::shared_ptr<Core::View> ViewWrapper::create(flutter::View *wrapped)
 {
     auto wrapper = new ViewWrapper(wrapped);
     auto ptr = std::shared_ptr<ViewWrapper>(wrapper);

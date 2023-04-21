@@ -24,7 +24,7 @@ class WindowWidget extends StatefulWidget {
   late final KDDW.FloatingWindow kddwFloatingWindowView;
   WindowWidget(KDDWBindingsCore.FloatingWindow fw) {
     kddwFloatingWindowView =
-        KDDWBindingsFlutter.View_flutter.fromCache(fw.view().thisCpp)
+        KDDWBindingsFlutter.View.fromCache(fw.view().thisCpp)
             as KDDW.FloatingWindow;
   }
 

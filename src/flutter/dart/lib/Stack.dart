@@ -18,7 +18,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 
 import 'package:flutter/material.dart';
 
-class Stack extends KDDWBindingsFlutter.Stack_flutter with View_mixin {
+class Stack extends KDDWBindingsFlutter.Stack with View_mixin {
   Stack(KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent)
       : super(stack, parent: parent) {
     print("Stack CTOR");

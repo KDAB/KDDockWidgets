@@ -20,18 +20,18 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
 
-View_flutter::View_flutter(Core::Controller *controller, Core::ViewType type, Core::View *parent,
-                           Qt::WindowFlags)
-    : View(controller, type)
+View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent,
+           Qt::WindowFlags)
+    : Core::View(controller, type)
 {
-    m_parentView = static_cast<View_flutter *>(parent);
+    m_parentView = static_cast<View *>(parent);
 
     if (parent) {
         // setParent(parent);
     }
 }
 
-View_flutter::~View_flutter()
+View::~View()
 {
     // qDebug() << "~View_flutter" << this << int(type());
     m_inDtor = true;
@@ -40,243 +40,243 @@ View_flutter::~View_flutter()
     }
 }
 
-void View_flutter::setGeometry(QRect)
+void View::setGeometry(QRect)
 {
 }
 
-void View_flutter::move(int, int)
+void View::move(int, int)
 {
 }
 
-bool View_flutter::close()
+bool View::close()
 {
     return true;
 }
 
-bool View_flutter::isVisible() const
+bool View::isVisible() const
 {
     return {};
 }
 
-void View_flutter::setVisible(bool)
+void View::setVisible(bool)
 {
 }
 
-void View_flutter::setSize(int w, int h)
+void View::setSize(int w, int h)
 {
     qDebug() << "View_flutter::setSize()" << w << h << this;
 }
 
-std::shared_ptr<Core::View> View_flutter::rootView() const
+std::shared_ptr<Core::View> View::rootView() const
 {
     if (m_parentView)
         return m_parentView->rootView();
 
-    return const_cast<View_flutter *>(this)->asWrapper();
+    return const_cast<View *>(this)->asWrapper();
 }
 
-void View_flutter::setAttribute(Qt::WidgetAttribute, bool)
+void View::setAttribute(Qt::WidgetAttribute, bool)
 {
 }
 
-bool View_flutter::testAttribute(Qt::WidgetAttribute) const
+bool View::testAttribute(Qt::WidgetAttribute) const
 {
     return false;
 }
 
-void View_flutter::setFlag(Qt::WindowType, bool)
+void View::setFlag(Qt::WindowType, bool)
 {
 }
 
-Qt::WindowFlags View_flutter::flags() const
+Qt::WindowFlags View::flags() const
 {
     return {};
 }
 
-void View_flutter::free_impl()
+void View::free_impl()
 {
     // QObject::deleteLater();
     delete this;
 }
 
-QSize View_flutter::sizeHint() const
+QSize View::sizeHint() const
 {
     return {};
 }
 
-QSize View_flutter::minSize() const
+QSize View::minSize() const
 {
     return {};
 }
 
-QSize View_flutter::maxSizeHint() const
+QSize View::maxSizeHint() const
 {
     return {};
 }
 
-QRect View_flutter::geometry() const
+QRect View::geometry() const
 {
     return {};
 }
 
-QRect View_flutter::normalGeometry() const
+QRect View::normalGeometry() const
 {
     return {};
 }
 
-void View_flutter::setNormalGeometry(QRect)
+void View::setNormalGeometry(QRect)
 {
 }
 
-void View_flutter::setMaximumSize(QSize)
+void View::setMaximumSize(QSize)
 {
 }
 
-void View_flutter::setWidth(int)
+void View::setWidth(int)
 {
 }
 
-void View_flutter::setHeight(int)
+void View::setHeight(int)
 {
 }
 
-void View_flutter::setFixedWidth(int)
+void View::setFixedWidth(int)
 {
 }
 
-void View_flutter::setFixedHeight(int)
+void View::setFixedHeight(int)
 {
 }
 
-void View_flutter::show()
+void View::show()
 {
 }
 
-void View_flutter::hide()
+void View::hide()
 {
 }
 
-void View_flutter::updateGeometry()
+void View::updateGeometry()
 {
 }
 
-void View_flutter::update()
+void View::update()
 {
 }
 
-void View_flutter::setParent(View *parent)
+void View::setParent(Core::View *parent)
 {
     if (parent == m_parentView)
         return;
 
-    m_parentView = static_cast<View_flutter *>(parent);
+    m_parentView = static_cast<View *>(parent);
 
     if (parent) {
-        static_cast<View_flutter *>(parent)->onChildAdded(this);
+        static_cast<View *>(parent)->onChildAdded(this);
     }
 }
 
-void View_flutter::raiseAndActivate()
+void View::raiseAndActivate()
 {
 }
 
-void View_flutter::activateWindow()
+void View::activateWindow()
 {
 }
 
-void View_flutter::raise()
+void View::raise()
 {
 }
 
-QVariant View_flutter::property(const char *) const
+QVariant View::property(const char *) const
 {
     return {};
 }
 
-bool View_flutter::isRootView() const
+bool View::isRootView() const
 {
     return m_parentView == nullptr;
 }
 
-QPoint View_flutter::mapToGlobal(QPoint) const
+QPoint View::mapToGlobal(QPoint) const
 {
     return {};
 }
 
-QPoint View_flutter::mapFromGlobal(QPoint) const
+QPoint View::mapFromGlobal(QPoint) const
 {
     return {};
 }
 
-QPoint View_flutter::mapTo(View *, QPoint) const
+QPoint View::mapTo(Core::View *, QPoint) const
 {
     return {};
 }
 
-void View_flutter::setWindowOpacity(double)
+void View::setWindowOpacity(double)
 {
 }
 
-void View_flutter::setSizePolicy(SizePolicy, SizePolicy)
+void View::setSizePolicy(SizePolicy, SizePolicy)
 {
 }
 
-SizePolicy View_flutter::verticalSizePolicy() const
-{
-    return {};
-}
-
-SizePolicy View_flutter::horizontalSizePolicy() const
+SizePolicy View::verticalSizePolicy() const
 {
     return {};
 }
 
-void View_flutter::setWindowTitle(const QString &)
+SizePolicy View::horizontalSizePolicy() const
+{
+    return {};
+}
+
+void View::setWindowTitle(const QString &)
 {
 }
 
-void View_flutter::setWindowIcon(const Icon &)
+void View::setWindowIcon(const Icon &)
 {
 }
 
-bool View_flutter::isActiveWindow() const
+bool View::isActiveWindow() const
 {
     return false;
 }
 
-void View_flutter::showNormal()
+void View::showNormal()
 {
 }
 
-void View_flutter::showMinimized()
+void View::showMinimized()
 {
 }
 
-void View_flutter::showMaximized()
+void View::showMaximized()
 {
 }
 
-bool View_flutter::isMinimized() const
-{
-    return {};
-}
-
-bool View_flutter::isMaximized() const
+bool View::isMinimized() const
 {
     return {};
 }
 
-std::shared_ptr<Core::Window> View_flutter::window() const
+bool View::isMaximized() const
 {
     return {};
 }
 
-std::shared_ptr<Core::View> View_flutter::childViewAt(QPoint) const
+std::shared_ptr<Core::Window> View::window() const
 {
     return {};
 }
 
-std::shared_ptr<Core::View> View_flutter::parentView() const
+std::shared_ptr<Core::View> View::childViewAt(QPoint) const
+{
+    return {};
+}
+
+std::shared_ptr<Core::View> View::parentView() const
 {
     // qDebug() << Q_FUNC_INFO << "parent is" << ( void * )m_parentView << "this=" << ( void * )this
     //          << int(type());
@@ -287,85 +287,85 @@ std::shared_ptr<Core::View> View_flutter::parentView() const
     return {};
 }
 
-std::shared_ptr<Core::View> View_flutter::asWrapper()
+std::shared_ptr<Core::View> View::asWrapper()
 {
     return ViewWrapper::create(this);
 }
 
-void View_flutter::setObjectName(const QString &name)
+void View::setObjectName(const QString &name)
 {
     m_name = name;
 }
 
-void View_flutter::grabMouse()
+void View::grabMouse()
 {
 }
 
-void View_flutter::releaseMouse()
+void View::releaseMouse()
 {
 }
 
-void View_flutter::releaseKeyboard()
+void View::releaseKeyboard()
 {
     // Not needed for QtQuick
 }
 
-void View_flutter::setFocus(Qt::FocusReason)
+void View::setFocus(Qt::FocusReason)
 {
 }
 
-bool View_flutter::hasFocus() const
+bool View::hasFocus() const
 {
     return false;
 }
 
-Qt::FocusPolicy View_flutter::focusPolicy() const
+Qt::FocusPolicy View::focusPolicy() const
 {
     return {};
 }
 
-void View_flutter::setFocusPolicy(Qt::FocusPolicy)
+void View::setFocusPolicy(Qt::FocusPolicy)
 {
 }
 
-QString View_flutter::objectName() const
+QString View::objectName() const
 {
     return m_name;
 }
 
-void View_flutter::setMinimumSize(QSize)
+void View::setMinimumSize(QSize)
 {
 }
 
-void View_flutter::render(QPainter *)
+void View::render(QPainter *)
 {
 }
 
-void View_flutter::setCursor(Qt::CursorShape)
+void View::setCursor(Qt::CursorShape)
 {
 }
 
-void View_flutter::setMouseTracking(bool)
+void View::setMouseTracking(bool)
 {
 }
 
-QVector<std::shared_ptr<Core::View>> View_flutter::childViews() const
+QVector<std::shared_ptr<Core::View>> View::childViews() const
 {
     return {};
 }
 
-void View_flutter::setZOrder(int)
+void View::setZOrder(int)
 {
 }
 
-HANDLE View_flutter::handle() const
+HANDLE View::handle() const
 {
     // TODOm4
     return this;
 }
 
-bool View_flutter::onResize(int w, int h)
+bool View::onResize(int w, int h)
 {
     // Indirection so Dartagnan generates it, while we don't do bindings for View.cpp
-    return View::onResize(w, h);
+    return Core::View::onResize(w, h);
 }

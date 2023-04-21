@@ -16,11 +16,11 @@
 
 namespace KDDockWidgets::flutter {
 
-class DOCKS_EXPORT Window_flutter : public Core::Window
+class DOCKS_EXPORT Window : public Core::Window
 {
 public:
-    Window_flutter();
-    ~Window_flutter() override;
+    Window();
+    ~Window() override;
     std::shared_ptr<Core::View> rootView() const override;
     Window::Ptr transientParent() const override;
     void setGeometry(QRect) const override;

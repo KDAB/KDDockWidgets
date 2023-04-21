@@ -15,7 +15,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 import 'View_mixin.dart';
 
-class View extends KDDWBindingsFlutter.View_flutter with View_mixin {
+class View extends KDDWBindingsFlutter.View with View_mixin {
   View(KDDWBindingsCore.Controller? controller, int type,
       KDDWBindingsCore.View? parent,
       {int windowFlags = 0})

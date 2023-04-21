@@ -26,60 +26,60 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-TabBar_flutter::TabBar_flutter(Core::TabBar *controller, View *parent)
-    : View_flutter(controller, Core::ViewType::TabBar, parent)
+TabBar::TabBar(Core::TabBar *controller, Core::View *parent)
+    : View(controller, Core::ViewType::TabBar, parent)
     , TabBarViewInterface(controller)
 {
 }
 
-void TabBar_flutter::init()
+void TabBar::init()
 {
 }
 
-int TabBar_flutter::tabAt(QPoint) const
+int TabBar::tabAt(QPoint) const
 {
     return -1;
 }
 
-QString TabBar_flutter::text(int) const
+QString TabBar::text(int) const
 {
     return {};
 }
 
-QRect TabBar_flutter::rectForTab(int) const
+QRect TabBar::rectForTab(int) const
 {
     return {};
 }
 
-void TabBar_flutter::moveTabTo(int from, int to)
+void TabBar::moveTabTo(int from, int to)
 {
     Q_UNUSED(from);
     Q_UNUSED(to);
     // Not implemented yet
 }
 
-void TabBar_flutter::changeTabIcon(int index, const Icon &)
+void TabBar::changeTabIcon(int index, const Icon &)
 {
     qWarning() << Q_FUNC_INFO << "Not implemented" << index;
 }
 
-void TabBar_flutter::removeDockWidget(Core::DockWidget *)
+void TabBar::removeDockWidget(Core::DockWidget *)
 {
     onRebuildRequested();
 }
 
-void TabBar_flutter::insertDockWidget(int, Core::DockWidget *, const Icon &,
-                                      const QString &)
+void TabBar::insertDockWidget(int, Core::DockWidget *, const Icon &,
+                              const QString &)
 {
     onRebuildRequested();
 }
 
-void TabBar_flutter::renameTab(int index, const QString &)
+void TabBar::renameTab(int index, const QString &)
 {
     qWarning() << Q_FUNC_INFO << "Not implemented" << index;
 }
 
-void TabBar_flutter::setCurrentIndex(int)
+void TabBar::setCurrentIndex(int)
 {
     onRebuildRequested();
 }

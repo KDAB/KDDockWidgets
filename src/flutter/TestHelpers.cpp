@@ -21,11 +21,11 @@ using namespace KDDockWidgets::flutter;
 
 namespace KDDockWidgets::flutter {
 
-class TestView_flutter : public flutter::View_flutter
+class TestView_flutter : public flutter::View
 {
 public:
     explicit TestView_flutter(Core::CreateViewOptions opts, QWidget *)
-        : flutter::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
+        : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
     }
@@ -46,11 +46,11 @@ private:
     Core::CreateViewOptions m_opts;
 };
 
-class FocusableTestView_flutter : public flutter::View_flutter
+class FocusableTestView_flutter : public flutter::View
 {
 public:
     explicit FocusableTestView_flutter(Core::CreateViewOptions opts, QWidget *)
-        : flutter::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
+        : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
     }
@@ -71,11 +71,11 @@ private:
     Core::CreateViewOptions m_opts;
 };
 
-class NonClosableTestView_flutter : public flutter::View_flutter
+class NonClosableTestView_flutter : public flutter::View
 {
 public:
     explicit NonClosableTestView_flutter(QWidget *)
-        : flutter::View_flutter(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
+        : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
     {
     }
 
@@ -88,62 +88,62 @@ FocusableTestView_flutter::~FocusableTestView_flutter() = default;
 
 }
 
-Platform_flutter::Platform_flutter(int &, char **)
+Platform::Platform(int &, char **)
     : Platform()
 {
     init();
 }
 
-void Platform_flutter::tests_initPlatform_impl()
+void Platform::tests_initPlatform_impl()
 {
 }
 
-void Platform_flutter::tests_deinitPlatform_impl()
+void Platform::tests_deinitPlatform_impl()
 {
 }
 
-Core::View *Platform_flutter::tests_createView(Core::CreateViewOptions, Core::View *)
-{
-    return {};
-}
-
-Core::View *Platform_flutter::tests_createFocusableView(Core::CreateViewOptions, Core::View *)
+Core::View *Platform::tests_createView(Core::CreateViewOptions, Core::View *)
 {
     return {};
 }
 
-Core::View *Platform_flutter::tests_createNonClosableView(Core::View *)
+Core::View *Platform::tests_createFocusableView(Core::CreateViewOptions, Core::View *)
 {
     return {};
 }
 
-Core::MainWindow *Platform_flutter::createMainWindow(const QString &, Core::CreateViewOptions,
-                                                     MainWindowOptions, Core::View *,
-                                                     Qt::WindowFlags) const
+Core::View *Platform::tests_createNonClosableView(Core::View *)
+{
+    return {};
+}
+
+Core::MainWindow *Platform::createMainWindow(const QString &, Core::CreateViewOptions,
+                                             MainWindowOptions, Core::View *,
+                                             Qt::WindowFlags) const
 {
     return {};
 }
 
 
-bool Platform_flutter::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const
+bool Platform::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const
 {
     ( void )timeout;
     return false;
 }
 
-bool Platform_flutter::tests_waitForResize(Core::View *, int timeout) const
+bool Platform::tests_waitForResize(Core::View *, int timeout) const
 {
     ( void )timeout;
     return false;
 }
 
-bool Platform_flutter::tests_waitForResize(Core::Controller *, int timeout) const
+bool Platform::tests_waitForResize(Core::Controller *, int timeout) const
 {
     ( void )timeout;
     return false;
 }
 
-bool Platform_flutter::tests_waitForEvent(QObject *w, Event::Type type, int timeout) const
+bool Platform::tests_waitForEvent(QObject *w, Event::Type type, int timeout) const
 {
     ( void )w;
     ( void )type;
@@ -151,45 +151,45 @@ bool Platform_flutter::tests_waitForEvent(QObject *w, Event::Type type, int time
     return false;
 }
 
-bool Platform_flutter::tests_waitForEvent(Core::View *, Event::Type type, int timeout) const
+bool Platform::tests_waitForEvent(Core::View *, Event::Type type, int timeout) const
 {
     ( void )type;
     ( void )timeout;
     return false;
 }
 
-bool Platform_flutter::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
-                                          int timeout) const
+bool Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
+                                  int timeout) const
 {
     ( void )type;
     ( void )timeout;
     return false;
 }
 
-bool Platform_flutter::tests_waitForDeleted(Core::View *, int timeout) const
+bool Platform::tests_waitForDeleted(Core::View *, int timeout) const
 {
     ( void )timeout;
     return false;
 }
 
-bool Platform_flutter::tests_waitForDeleted(QObject *, int timeout) const
+bool Platform::tests_waitForDeleted(QObject *, int timeout) const
 {
     ( void )timeout;
     return false;
 }
 
-void Platform_flutter::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const
+void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const
 {
     ( void )window;
     ( void )ev;
 }
 
-void Platform_flutter::tests_wait(int ms)
+void Platform::tests_wait(int ms)
 {
     ( void )ms;
 }
 
-std::shared_ptr<Core::Window> Platform_flutter::tests_createWindow()
+std::shared_ptr<Core::Window> Platform::tests_createWindow()
 {
     return {};
 }

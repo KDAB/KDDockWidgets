@@ -18,17 +18,17 @@
 namespace KDDockWidgets {
 namespace flutter {
 
-class DOCKS_EXPORT Stack_flutter : public View_flutter, public Core::StackViewInterface
+class DOCKS_EXPORT Stack : public View, public Core::StackViewInterface
 {
 public:
-    explicit Stack_flutter(Core::Stack *controller, Core::View *parent = nullptr);
+    explicit Stack(Core::Stack *controller, Core::View *parent = nullptr);
 
     bool isPositionDraggable(QPoint p) const override;
     void init() override;
     void setDocumentMode(bool) override;
 
 private:
-    Q_DISABLE_COPY(Stack_flutter)
+    Q_DISABLE_COPY(Stack)
 };
 
 }

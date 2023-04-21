@@ -20,7 +20,7 @@
 
 namespace KDDockWidgets::flutter {
 
-class DOCKS_EXPORT View_flutter : public Core::View
+class DOCKS_EXPORT View : public Core::View
 {
 public:
     using Core::View::close;
@@ -31,10 +31,10 @@ public:
     using Core::View::resize;
     using Core::View::width;
 
-    explicit View_flutter(Core::Controller *controller, Core::ViewType type, Core::View *,
-                          Qt::WindowFlags windowFlags = {});
+    explicit View(Core::Controller *controller, Core::ViewType type, Core::View *,
+                  Qt::WindowFlags windowFlags = {});
 
-    ~View_flutter() override;
+    ~View() override;
 
     void free_impl() override;
     QSize sizeHint() const override;
@@ -130,24 +130,24 @@ public:
     }
 
 private:
-    View_flutter *m_parentView = nullptr;
+    View *m_parentView = nullptr;
     QString m_name;
-    Q_DISABLE_COPY(View_flutter)
+    Q_DISABLE_COPY(View)
 };
 
-inline View_flutter *asView_flutter(Core::View *view)
+inline View *asView_flutter(Core::View *view)
 {
     if (!view)
         return nullptr;
-    return static_cast<View_flutter *>(view);
+    return static_cast<View *>(view);
 }
 
-inline View_flutter *asView_flutter(Core::Controller *controller)
+inline View *asView_flutter(Core::Controller *controller)
 {
     if (!controller)
         return nullptr;
 
-    return static_cast<View_flutter *>(controller->view());
+    return static_cast<View *>(controller->view());
 }
 
 } // namespace KDDockWidgets::flutter

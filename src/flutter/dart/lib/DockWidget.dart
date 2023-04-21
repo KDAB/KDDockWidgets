@@ -16,8 +16,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 import 'package:flutter/material.dart';
 
-class DockWidget extends KDDWBindingsFlutter.DockWidget_flutter
-    with View_mixin {
+class DockWidget extends KDDWBindingsFlutter.DockWidget with View_mixin {
   DockWidget(String? uniqueName, {int options = 0, int layoutSaverOptions = 0})
       : super(uniqueName,
             options: options, layoutSaverOptions: layoutSaverOptions) {

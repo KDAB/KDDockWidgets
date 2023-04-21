@@ -46,89 +46,89 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-ViewFactory_flutter::~ViewFactory_flutter()
+ViewFactory::~ViewFactory()
 {
 }
 
-Core::View *ViewFactory_flutter::createDockWidget(const QString &, DockWidgetOptions, LayoutSaverOptions,
-                                                  Qt::WindowFlags) const
+Core::View *ViewFactory::createDockWidget(const QString &, DockWidgetOptions, LayoutSaverOptions,
+                                          Qt::WindowFlags) const
 {
     return {};
 }
 
 
-Core::View *ViewFactory_flutter::createGroup(Core::Group *, Core::View *) const
+Core::View *ViewFactory::createGroup(Core::Group *, Core::View *) const
 {
     Q_ASSERT(false);
     return {};
 }
 
-Core::View *ViewFactory_flutter::createTitleBar(Core::TitleBar *, Core::View *) const
+Core::View *ViewFactory::createTitleBar(Core::TitleBar *, Core::View *) const
 {
     return {};
 }
 
-Core::View *ViewFactory_flutter::createTabBar(Core::TabBar *, Core::View *) const
+Core::View *ViewFactory::createTabBar(Core::TabBar *, Core::View *) const
 {
     return {};
 }
 
-Core::View *ViewFactory_flutter::createStack(Core::Stack *, Core::View *) const
+Core::View *ViewFactory::createStack(Core::Stack *, Core::View *) const
 {
     return {};
 }
 
-Core::View *ViewFactory_flutter::createSeparator(Core::Separator *, Core::View *) const
+Core::View *ViewFactory::createSeparator(Core::Separator *, Core::View *) const
 {
     return {};
 }
 
-Core::View *ViewFactory_flutter::createFloatingWindow(Core::FloatingWindow *,
-                                                      Core::MainWindow *, Qt::WindowFlags) const
+Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *,
+                                              Core::MainWindow *, Qt::WindowFlags) const
 {
     return {};
 }
 
-Core::View *ViewFactory_flutter::createRubberBand(Core::View *) const
+Core::View *ViewFactory::createRubberBand(Core::View *) const
 {
     return nullptr;
 }
 
-Core::View *ViewFactory_flutter::createSideBar(Core::SideBar *, Core::View *) const
+Core::View *ViewFactory::createSideBar(Core::SideBar *, Core::View *) const
 {
     return {};
 }
 
-QAbstractButton *ViewFactory_flutter::createTitleBarButton(QWidget *, TitleBarButtonType) const
+QAbstractButton *ViewFactory::createTitleBarButton(QWidget *, TitleBarButtonType) const
 {
     return nullptr;
 }
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets
-Icon ViewFactory_flutter::iconForButtonType(TitleBarButtonType, qreal) const
+Icon ViewFactory::iconForButtonType(TitleBarButtonType, qreal) const
 {
     return {};
 }
 
-Core::View *ViewFactory_flutter::createDropArea(Core::DropArea *, Core::View *) const
+Core::View *ViewFactory::createDropArea(Core::DropArea *, Core::View *) const
 {
     return {};
 }
 
-Core::View *ViewFactory_flutter::createMDILayout(Core::MDILayout *, Core::View *) const
+Core::View *ViewFactory::createMDILayout(Core::MDILayout *, Core::View *) const
 {
     return {};
 }
 
 Core::View *
-ViewFactory_flutter::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *,
-                                                             Core::View *) const
+ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *,
+                                                     Core::View *) const
 {
     return {};
 }
 
 Core::ClassicIndicatorWindowViewInterface *
-ViewFactory_flutter::createClassicIndicatorWindow(Core::ClassicIndicators *) const
+ViewFactory::createClassicIndicatorWindow(Core::ClassicIndicators *) const
 {
     return {};
 }

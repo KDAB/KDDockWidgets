@@ -17,128 +17,128 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-Window_flutter::Window_flutter()
-    : Window()
+Window::Window()
+    : Core::Window()
 {
 }
 
-Window_flutter::~Window_flutter() = default;
+Window::~Window() = default;
 
-std::shared_ptr<Core::View> Window_flutter::rootView() const
-{
-    return nullptr;
-}
-
-Core::Window::Ptr Window_flutter::transientParent() const
+std::shared_ptr<Core::View> Window::rootView() const
 {
     return nullptr;
 }
 
-void Window_flutter::setGeometry(QRect) const
+Core::Window::Ptr Window::transientParent() const
+{
+    return nullptr;
+}
+
+void Window::setGeometry(QRect) const
 {
 }
 
-void Window_flutter::setVisible(bool)
+void Window::setVisible(bool)
 {
 }
 
-bool Window_flutter::supportsHonouringLayoutMinSize() const
+bool Window::supportsHonouringLayoutMinSize() const
 {
     // maybe...
     return false;
 }
 
-void Window_flutter::setWindowState(WindowState)
+void Window::setWindowState(WindowState)
 {
 }
 
-QRect Window_flutter::geometry() const
-{
-    return {};
-}
-
-void Window_flutter::setProperty(const char *, const QVariant &)
-{
-}
-
-QVariant Window_flutter::property(const char *) const
+QRect Window::geometry() const
 {
     return {};
 }
 
-bool Window_flutter::isVisible() const
+void Window::setProperty(const char *, const QVariant &)
+{
+}
+
+QVariant Window::property(const char *) const
 {
     return {};
 }
 
-WId Window_flutter::handle() const
+bool Window::isVisible() const
 {
     return {};
 }
 
-bool Window_flutter::equals(std::shared_ptr<Core::Window>) const
+WId Window::handle() const
 {
     return {};
 }
 
-void Window_flutter::setFramePosition(QPoint)
-{
-}
-
-QRect Window_flutter::frameGeometry() const
+bool Window::equals(std::shared_ptr<Core::Window>) const
 {
     return {};
 }
 
-void Window_flutter::resize(int, int)
+void Window::setFramePosition(QPoint)
 {
 }
 
-bool Window_flutter::isActive() const
-{
-    return {};
-}
-
-WindowState Window_flutter::windowState() const
+QRect Window::frameGeometry() const
 {
     return {};
 }
 
-QPoint Window_flutter::mapFromGlobal(QPoint) const
+void Window::resize(int, int)
+{
+}
+
+bool Window::isActive() const
 {
     return {};
 }
 
-QPoint Window_flutter::mapToGlobal(QPoint) const
+WindowState Window::windowState() const
 {
     return {};
 }
 
-void Window_flutter::destroy()
-{
-}
-
-QSize Window_flutter::minSize() const
+QPoint Window::mapFromGlobal(QPoint) const
 {
     return {};
 }
 
-QSize Window_flutter::maxSize() const
+QPoint Window::mapToGlobal(QPoint) const
 {
     return {};
 }
 
-QPoint Window_flutter::fromNativePixels(QPoint) const
+void Window::destroy()
+{
+}
+
+QSize Window::minSize() const
 {
     return {};
 }
 
-bool Window_flutter::isFullScreen() const
+QSize Window::maxSize() const
 {
     return {};
 }
 
-Core::Screen::Ptr Window_flutter::screen() const
+QPoint Window::fromNativePixels(QPoint) const
+{
+    return {};
+}
+
+bool Window::isFullScreen() const
+{
+    return {};
+}
+
+Core::Screen::Ptr Window::screen() const
 {
     return {};
 }

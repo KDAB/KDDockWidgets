@@ -26,7 +26,7 @@ import 'Stack.dart';
 import 'TitleBar.dart';
 import 'TabBar.dart';
 
-class ViewFactory extends KDDWBindingsFlutter.ViewFactory_flutter {
+class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   ViewFactory() {
     print("Dart: Created ViewFactory_flutter");
   }

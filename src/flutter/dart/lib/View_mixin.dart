@@ -22,7 +22,7 @@ import 'package:flutter/material.dart';
 class View_mixin {
   late final Widget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
-  late final KDDWBindingsFlutter.View_flutter kddwView;
+  late final KDDWBindingsFlutter.View kddwView;
 
   Color m_color = Colors.red;
   int m_x = 100;
@@ -85,8 +85,7 @@ class View_mixin {
     final state = widgetKey.currentState;
 
     final viewFlutter =
-        KDDWBindingsFlutter.View_flutter.fromCache(childView!.thisCpp)
-            as View_mixin;
+        KDDWBindingsFlutter.View.fromCache(childView!.thisCpp) as View_mixin;
 
     print(
         "View_mixin::onChildAdded: this=${debugName}, child=${viewFlutter.debugName}");
@@ -101,8 +100,7 @@ class View_mixin {
   void onChildRemoved(KDDWBindingsCore.View? childView) {
     final state = widgetKey.currentState;
     final viewFlutter =
-        KDDWBindingsFlutter.View_flutter.fromCache(childView!.thisCpp)
-            as View_mixin;
+        KDDWBindingsFlutter.View.fromCache(childView!.thisCpp) as View_mixin;
     childWidgets.remove(viewFlutter.flutterWidget);
     if (state != null) {
       state.childrenChanged();

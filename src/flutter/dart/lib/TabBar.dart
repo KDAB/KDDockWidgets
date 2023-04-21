@@ -18,7 +18,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material show TabBar;
 
-class TabBar extends KDDWBindingsFlutter.TabBar_flutter with View_mixin {
+class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
   late final KDDWBindingsCore.TabBar m_controller;
 
   TabBar(KDDWBindingsCore.TabBar? tabBar, KDDWBindingsCore.View? parent)

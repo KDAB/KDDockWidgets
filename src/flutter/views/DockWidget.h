@@ -32,8 +32,8 @@ namespace flutter {
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_flutter : public flutter::View_flutter,
-                                        public Core::DockWidgetViewInterface
+class DOCKS_EXPORT DockWidget : public flutter::View,
+                                public Core::DockWidgetViewInterface
 {
 public:
     using Core::DockWidgetViewInterface::raise;
@@ -51,11 +51,11 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget_flutter(const QString &uniqueName, DockWidgetOptions options = {},
-                                LayoutSaverOptions layoutSaverOptions = {});
+    explicit DockWidget(const QString &uniqueName, DockWidgetOptions options = {},
+                        LayoutSaverOptions layoutSaverOptions = {});
 
     ///@brief destructor
-    ~DockWidget_flutter() override;
+    ~DockWidget() override;
 
     /// @reimp
     QSize minSize() const override;
