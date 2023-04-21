@@ -12,19 +12,22 @@
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'package:flutter/material.dart';
 import 'TitleBar.dart';
 import 'DropArea.dart';
 
 class FloatingWindow extends KDDockWidgetBindings.View_flutter with View_mixin {
-  late final KDDockWidgetBindings.FloatingWindow m_controller;
+  late final KDDWBindingsCore.FloatingWindow m_controller;
 
-  FloatingWindow(KDDockWidgetBindings.Controller? controller,
-      KDDockWidgetBindings.View? parent, {int windowFlags = 0})
+  FloatingWindow(
+      KDDWBindingsCore.Controller? controller, KDDWBindingsCore.View? parent,
+      {int windowFlags = 0})
       : super(controller, KDDockWidgetBindings.Core_ViewType.FloatingWindow,
             parent,
             windowFlags: windowFlags) {
-    m_controller = controller! as KDDockWidgetBindings.FloatingWindow;
+    m_controller = controller! as KDDWBindingsCore.FloatingWindow;
     m_fillsParent = true;
 
     initMixin(this, color: Colors.black12, debugName: "FloatingWindow");

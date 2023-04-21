@@ -178,28 +178,29 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/View_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DropArea_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Layout_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ViewFactory_flutter_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicatorWindowViewInterface_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicators_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Controller_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Stack_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Separator_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_flutter_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Group_flutter_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/TabBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/SideBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockWidget_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/FloatingWindow_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/View_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TitleBar_c.cpp
+    # flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Platform_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Controller_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/DropArea_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Layout_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Group_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Stack_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Separator_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/TabBar_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/SideBar_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/DockWidget_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/FloatingWindow_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/View_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/TitleBar_c.cpp
 )
 

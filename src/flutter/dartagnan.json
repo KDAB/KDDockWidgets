@@ -9,7 +9,21 @@
         {
             "name": "KDDWBindingsCore",
             "types": [
-                "KDDockWidgets::Core::TitleBar"
+                "KDDockWidgets::Core::Controller",
+                "KDDockWidgets::Core::TitleBar",
+                "KDDockWidgets::Core::TabBar",
+                "KDDockWidgets::Core::Group",
+                "KDDockWidgets::Core::Stack",
+                "KDDockWidgets::Core::DockWidget",
+                "KDDockWidgets::Core::Platform",
+                "KDDockWidgets::Core::View",
+                "KDDockWidgets::Core::ViewFactory",
+                "KDDockWidgets::Core::Layout",
+                "KDDockWidgets::Core::DropArea",
+                "KDDockWidgets::Core::Separator",
+                "KDDockWidgets::Core::SideBar",
+                "KDDockWidgets::Core::FloatingWindow",
+                "KDDockWidgets::Core::MainWindow"
             ]
         },
         {

@@ -12,6 +12,8 @@
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'package:flutter/material.dart';
 
 import 'DockWidget.dart';
@@ -19,9 +21,9 @@ import 'TabBar.dart' as kddw;
 import 'TitleBar.dart';
 
 class Group extends KDDockWidgetBindings.Group_flutter with View_mixin {
-  late final KDDockWidgetBindings.Group m_controller;
+  late final KDDWBindingsCore.Group m_controller;
 
-  Group(KDDockWidgetBindings.Group? group, KDDockWidgetBindings.View? parent)
+  Group(KDDWBindingsCore.Group? group, KDDWBindingsCore.View? parent)
       : super(group, parent: parent) {
     m_controller = group!;
     initMixin(this, color: Colors.greenAccent, debugName: "Group");

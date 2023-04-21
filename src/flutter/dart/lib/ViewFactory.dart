@@ -30,9 +30,8 @@ class ViewFactory extends KDDockWidgetBindings.ViewFactory_flutter {
   }
 
   @override
-  KDDockWidgetBindings.View createDropArea(
-      KDDockWidgetBindings.DropArea? controller,
-      KDDockWidgetBindings.View? parent) {
+  KDDWBindingsCore.View createDropArea(
+      KDDWBindingsCore.DropArea? controller, KDDWBindingsCore.View? parent) {
     print("ViewFactory: Creating DropArea");
     var da = DropArea(
         controller, KDDockWidgetBindings.Core_ViewType.DropArea, parent);
@@ -49,52 +48,50 @@ class ViewFactory extends KDDockWidgetBindings.ViewFactory_flutter {
   }
 
   @override
-  KDDockWidgetBindings.View createGroup(KDDockWidgetBindings.Group? group,
-      {required KDDockWidgetBindings.View? parent}) {
+  KDDWBindingsCore.View createGroup(KDDWBindingsCore.Group? group,
+      {required KDDWBindingsCore.View? parent}) {
     print("ViewFactory: createGroup");
     return Group(group, parent);
   }
 
   @override
-  KDDockWidgetBindings.View createTabBar(KDDockWidgetBindings.TabBar? tabBar,
-      {required KDDockWidgetBindings.View? parent}) {
+  KDDWBindingsCore.View createTabBar(KDDWBindingsCore.TabBar? tabBar,
+      {required KDDWBindingsCore.View? parent}) {
     print("ViewFactory: createTabBar");
     return TabBar(tabBar, parent);
   }
 
   @override
-  KDDockWidgetBindings.View createTitleBar(
-      KDDWBindingsCore.TitleBar? controller,
-      KDDockWidgetBindings.View? parent) {
+  KDDWBindingsCore.View createTitleBar(
+      KDDWBindingsCore.TitleBar? controller, KDDWBindingsCore.View? parent) {
     print("ViewFactory: createTitleBar");
     return TitleBar(controller, parent);
   }
 
   @override
-  KDDockWidgetBindings.View createStack(
-      KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent) {
+  KDDWBindingsCore.View createStack(
+      KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent) {
     print("ViewFactory: createStack");
     return Stack(stack, parent);
   }
 
   @override
-  KDDockWidgetBindings.View createSeparator(
-      KDDockWidgetBindings.Separator? separator,
-      {required KDDockWidgetBindings.View? parent}) {
+  KDDWBindingsCore.View createSeparator(KDDWBindingsCore.Separator? separator,
+      {required KDDWBindingsCore.View? parent}) {
     return Separator(separator, parent: parent);
   }
 
   @override
-  KDDockWidgetBindings.View createDockWidget(String? uniqueName,
+  KDDWBindingsCore.View createDockWidget(String? uniqueName,
       {int options = 0, int layoutSaverOptions = 0, int windowFlags = 0}) {
     return DockWidget(uniqueName,
         options: options, layoutSaverOptions: layoutSaverOptions);
   }
 
   @override
-  KDDockWidgetBindings.View createFloatingWindow(
-      KDDockWidgetBindings.FloatingWindow? controller,
-      {required KDDockWidgetBindings.MainWindow? parent,
+  KDDWBindingsCore.View createFloatingWindow(
+      KDDWBindingsCore.FloatingWindow? controller,
+      {required KDDWBindingsCore.MainWindow? parent,
       int windowFlags = 0}) {
     // TODOm4: What to do with main window pointer
     return FloatingWindow(controller, null);

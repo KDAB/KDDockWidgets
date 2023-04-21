@@ -12,10 +12,12 @@
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'package:flutter/material.dart';
 
 class Stack extends KDDockWidgetBindings.Stack_flutter with View_mixin {
-  Stack(KDDockWidgetBindings.Stack? stack, KDDockWidgetBindings.View? parent)
+  Stack(KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent)
       : super(stack, parent: parent) {
     print("Stack CTOR");
   }

@@ -12,13 +12,15 @@
 import 'package:KDDockWidgets/View.dart';
 import 'package:KDDockWidgets/WindowOverlayWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 
 import 'ViewFactory.dart';
 
 class Platform extends KDDockWidgetBindings.Platform_flutter {
   late final WindowOverlayWidget windowOverlayWidget;
 
-  var floatingWindows = <KDDockWidgetBindings.FloatingWindow>[];
+  var floatingWindows = <KDDWBindingsCore.FloatingWindow>[];
 
   @override
   String name() {
@@ -33,33 +35,32 @@ class Platform extends KDDockWidgetBindings.Platform_flutter {
   }
 
   @override
-  KDDockWidgetBindings.ViewFactory createDefaultViewFactory() {
+  KDDWBindingsCore.ViewFactory createDefaultViewFactory() {
     return ViewFactory();
   }
 
   @override
-  KDDockWidgetBindings.View tests_createView(
+  KDDWBindingsCore.View tests_createView(
       KDDockWidgetBindings.CreateViewOptions opts,
-      {required KDDockWidgetBindings.View? parent}) {
+      {required KDDWBindingsCore.View? parent}) {
     return View(null, 0, parent as View);
   }
 
   @override
-  KDDockWidgetBindings.View createView(
-      KDDockWidgetBindings.Controller? controller,
-      {required KDDockWidgetBindings.View? parent}) {
+  KDDWBindingsCore.View createView(KDDWBindingsCore.Controller? controller,
+      {required KDDWBindingsCore.View? parent}) {
     print("Platform: createView");
     return KDDockWidgetBindings.View_flutter(controller, 0, parent);
   }
 
   @override
-  onFloatingWindowCreated(KDDockWidgetBindings.FloatingWindow? fw) {
+  onFloatingWindowCreated(KDDWBindingsCore.FloatingWindow? fw) {
     floatingWindows.add(fw!);
     rebuildWindowOverlay();
   }
 
   @override
-  onFloatingWindowDestroyed(KDDockWidgetBindings.FloatingWindow? fw) {
+  onFloatingWindowDestroyed(KDDWBindingsCore.FloatingWindow? fw) {
     floatingWindows.remove(fw!);
     rebuildWindowOverlay();
   }

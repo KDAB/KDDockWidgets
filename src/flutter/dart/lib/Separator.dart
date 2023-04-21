@@ -15,13 +15,15 @@ import 'package:flutter/material.dart';
 import 'PositionedWidget.dart';
 import 'View.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 
 class Separator extends View {
-  late final KDDockWidgetBindings.Separator m_controller;
+  late final KDDWBindingsCore.Separator m_controller;
   late final KDDockWidgetBindings.View_flutter m_parent;
 
-  Separator(KDDockWidgetBindings.Separator? separator,
-      {required KDDockWidgetBindings.View? parent})
+  Separator(KDDWBindingsCore.Separator? separator,
+      {required KDDWBindingsCore.View? parent})
       : super(separator, KDDockWidgetBindings.Core_ViewType.Separator, parent) {
     m_controller = separator!;
     m_color = Colors.blueGrey;

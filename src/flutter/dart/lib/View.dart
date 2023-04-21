@@ -12,12 +12,14 @@
 import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'package:flutter/cupertino.dart';
 import 'View_mixin.dart';
 
 class View extends KDDockWidgetBindings.View_flutter with View_mixin {
-  View(KDDockWidgetBindings.Controller? controller, int type,
-      KDDockWidgetBindings.View? parent,
+  View(KDDWBindingsCore.Controller? controller, int type,
+      KDDWBindingsCore.View? parent,
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
     initMixin(this);

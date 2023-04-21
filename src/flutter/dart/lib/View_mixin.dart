@@ -12,6 +12,8 @@
 import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'package:flutter/material.dart';
 
 class View_mixin {
@@ -76,7 +78,7 @@ class View_mixin {
     setSize_2(m_width, height);
   }
 
-  void onChildAdded(KDDockWidgetBindings.View? childView) {
+  void onChildAdded(KDDWBindingsCore.View? childView) {
     final state = widgetKey.currentState;
 
     final viewFlutter =
@@ -93,7 +95,7 @@ class View_mixin {
     }
   }
 
-  void onChildRemoved(KDDockWidgetBindings.View? childView) {
+  void onChildRemoved(KDDWBindingsCore.View? childView) {
     final state = widgetKey.currentState;
     final viewFlutter =
         KDDockWidgetBindings.View_flutter.fromCache(childView!.thisCpp)

@@ -12,11 +12,13 @@
 import 'View.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'package:flutter/material.dart';
 
 class DropArea extends View {
-  DropArea(KDDockWidgetBindings.Controller? controller, int type,
-      KDDockWidgetBindings.View? parent,
+  DropArea(KDDWBindingsCore.Controller? controller, int type,
+      KDDWBindingsCore.View? parent,
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
     print("DropArea CTOR");

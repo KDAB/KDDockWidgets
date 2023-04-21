@@ -13,11 +13,13 @@ import 'package:KDDockWidgets/DockWidget.dart';
 import 'package:KDDockWidgets/DropArea.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
-import 'package:KDDockWidgets/Platform.dart' as KDDW;
-import 'package:KDDockWidgets/View.dart' as KDDW;
 import 'package:KDDockWidgets/WindowOverlayWidget.dart' as KDDW;
 import 'package:flutter/scheduler.dart';
+import 'package:KDDockWidgets/View.dart' as KDDW;
+import 'package:KDDockWidgets/Platform.dart' as KDDW;
 
 void main() {
   runApp(const MyApp());
@@ -49,27 +51,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late KDDWBindings.DropArea dropArea;
+  late KDDWBindingsCore.DropArea dropArea;
   late Widget dropAreaWidget;
 
   _MyHomePageState() {
     KDDW.Platform();
-    dropArea = KDDWBindings.DropArea(null,
+    dropArea = KDDWBindingsCore.DropArea(null,
         KDDWBindings.KDDockWidgets_MainWindowOption.MainWindowOption_None);
 
     final dropAreaView =
         KDDWBindings.View_flutter.fromCache(dropArea.view().thisCpp)
             as KDDW.View;
 
-    KDDW.View.fromCppPointer(dropArea.view().thisCpp);
+    KDDWBindingsCore.View.fromCppPointer(dropArea.view().thisCpp);
     dropAreaView.setObjectName("droparea");
 
     dropAreaView.m_fillsParent = true;
     dropAreaWidget = dropAreaView.flutterWidget;
 
-    final group1 = KDDWBindings.Group(parent: null);
-    final group2 = KDDWBindings.Group(parent: null);
-    final group3 = KDDWBindings.Group(parent: null);
+    final group1 = KDDWBindingsCore.Group(parent: null);
+    final group2 = KDDWBindingsCore.Group(parent: null);
+    final group3 = KDDWBindingsCore.Group(parent: null);
 
     dropArea.addWidget(
         group1.view(), KDDWBindings.KDDockWidgets_Location.Location_OnLeft,
