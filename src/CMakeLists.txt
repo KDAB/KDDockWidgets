@@ -507,27 +507,29 @@ if(WIN32)
     endif()
 endif()
 
-install(
-    TARGETS kddockwidgets kdbindings
-    EXPORT kddockwidgetsTargets
-    RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
-    LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
-    ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
-)
-if(MSVC AND NOT KDDockWidgets_STATIC)
+if(KDDW_FRONTEND_QT)
     install(
-        FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>"
-        DESTINATION ${INSTALL_LIBRARY_DIR}
-        CONFIGURATIONS Debug RelWithDebInfo
+        TARGETS kddockwidgets kdbindings
+        EXPORT kddockwidgetsTargets
+        RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
+        LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
+        ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
     )
-endif()
+    if(MSVC AND NOT KDDockWidgets_STATIC)
+        install(
+            FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>"
+            DESTINATION ${INSTALL_LIBRARY_DIR}
+            CONFIGURATIONS Debug RelWithDebInfo
+        )
+    endif()
 
-# install(FILES ${camelcase_HEADERS} DESTINATION
-# ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-install(FILES ${KDDW_CORE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
-install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/views)
-install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/indicators)
+    # install(FILES ${camelcase_HEADERS} DESTINATION
+    # ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+    install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+    install(FILES ${KDDW_CORE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
+    install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/views)
+    install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/indicators)
+endif()
 
 if(KDDW_FRONTEND_QTWIDGETS)
 
@@ -605,33 +607,35 @@ endif()
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
     set(KDDW_QTCOMMON_HEADERS qtcommon/Platform_qt.h qtcommon/View_qt.h)
     install(FILES ${KDDW_QTCOMMON_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtcommon)
+
+    # Generate library version files
+    include(ECMSetupVersion)
+    ecm_setup_version(
+        ${KDDockWidgets_VERSION}
+        VARIABLE_PREFIX
+        KDDOCKWIDGETS
+        VERSION_HEADER
+        "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h"
+        PACKAGE_VERSION_FILE
+        "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
+        SOVERSION
+        ${KDDockWidgets_SOVERSION}
+        COMPATIBILITY
+        AnyNewerVersion
+    )
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h"
+            DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets
+    )
+
+    install(
+        EXPORT kddockwidgetsTargets
+        FILE KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Targets.cmake
+        NAMESPACE KDAB::
+        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
+    )
+
 endif()
 
-# Generate library version files
-include(ECMSetupVersion)
-ecm_setup_version(
-    ${KDDockWidgets_VERSION}
-    VARIABLE_PREFIX
-    KDDOCKWIDGETS
-    VERSION_HEADER
-    "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h"
-    PACKAGE_VERSION_FILE
-    "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
-    SOVERSION
-    ${KDDockWidgets_SOVERSION}
-    COMPATIBILITY
-    AnyNewerVersion
-)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h"
-        DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets
-)
-
-install(
-    EXPORT kddockwidgetsTargets
-    FILE KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Targets.cmake
-    NAMESPACE KDAB::
-    DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
-)
 configure_file(KDDockWidgetsConfig.cmake.in KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
