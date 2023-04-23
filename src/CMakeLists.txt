@@ -69,7 +69,7 @@ set(KDDW_BACKEND_SRCS
 )
 
 # Sources shared by Qt frontends (QtWidgets and QtQuick)
-set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window.cpp qtcommon/View_qt.cpp qtcommon/Screen_qt.cpp
+set(KDDW_QTCOMMON_SRCS qtcommon/Platform.cpp qtcommon/Window.cpp qtcommon/View.cpp qtcommon/Screen.cpp
                        qtcommon/ViewWrapper.cpp
 )
 
@@ -606,7 +606,7 @@ if(KDDW_FRONTEND_QTQUICK)
 endif()
 
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
-    set(KDDW_QTCOMMON_HEADERS qtcommon/Platform_qt.h qtcommon/View_qt.h)
+    set(KDDW_QTCOMMON_HEADERS qtcommon/Platform.h qtcommon/View.h)
     install(FILES ${KDDW_QTCOMMON_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtcommon)
 
     # Generate library version files

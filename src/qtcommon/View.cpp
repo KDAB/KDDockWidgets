@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "View_qt.h"
+#include "View.h"
 #include "core/Utils_p.h"
 #include "core/View_p.h"
 #include "kddockwidgets/core/Controller.h"

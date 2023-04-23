@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "kddockwidgets/qtcommon/View_qt.h"
+#include "kddockwidgets/qtcommon/View.h"
 #include "kddockwidgets/docks_export.h"
 
 namespace KDDockWidgets {

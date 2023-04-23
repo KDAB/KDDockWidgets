@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "qtcommon/Platform_qt.h"
+#include "qtcommon/Platform.h"
 
 namespace KDDockWidgets {
 

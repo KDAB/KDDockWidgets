@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/core/Window.h"
-#include "Screen_qt.h"
+#include "Screen.h"
 
 #include <QPointer>
 

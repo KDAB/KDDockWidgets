@@ -9,9 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Platform_qt.h"
+#include "Platform.h"
 #include "kddockwidgets/qtcommon/Window.h"
-#include "qtcommon/View_qt.h"
+#include "qtcommon/View.h"
 
 #include <QString>
 #include <QTimer>

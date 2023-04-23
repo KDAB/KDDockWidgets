@@ -8,7 +8,7 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "Screen_qt.h"
+#include "Screen.h"
 
 #include <QScreen>
 

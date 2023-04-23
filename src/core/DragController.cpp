@@ -31,7 +31,7 @@
 #include <QScopedValueRollback>
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
-#include "kddockwidgets/qtcommon/Platform_qt.h"
+#include "kddockwidgets/qtcommon/Platform.h"
 #include <QWidget>
 #include <QApplication>
 #endif

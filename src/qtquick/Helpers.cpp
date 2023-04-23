@@ -12,7 +12,7 @@
 #include "Helpers_p.h"
 #include "core/DockRegistry.h"
 #include "core/Group.h"
-#include "qtcommon/View_qt.h"
+#include "qtcommon/View.h"
 
 #include <QQuickItem>
 

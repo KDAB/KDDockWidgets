@@ -11,7 +11,7 @@
 
 #include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/qtcommon/View_qt.h"
+#include "kddockwidgets/qtcommon/View.h"
 #include "Config.h"
 #include "QmlTypes.h"
 

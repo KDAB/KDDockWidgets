@@ -9,13 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Platform_qt.h"
+#include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/qtcommon/Window.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
 #include "core/Platform_p.h"
 #include "core/Utils_p.h"
-#include "qtcommon/View_qt.h"
+#include "qtcommon/View.h"
 
 #include <QWindow>
 #include <QDebug>

@@ -25,7 +25,7 @@
 #include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)
-#include "kddockwidgets/qtcommon/Platform_qt.h"
+#include "kddockwidgets/qtcommon/Platform.h"
 #include <QWidget>
 #endif
 
