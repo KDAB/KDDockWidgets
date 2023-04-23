@@ -11,7 +11,7 @@
 
 
 #include "kddockwidgets/qtcommon/Screen_qt.h"
-#include "kddockwidgets/qtcommon/Window_qt.h"
+#include "kddockwidgets/qtcommon/Window.h"
 #include "kddockwidgets/qtcommon/Platform_qt.h"
 
 #include <QWindow>

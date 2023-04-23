@@ -10,7 +10,7 @@
 */
 
 #include "Platform_qt.h"
-#include "kddockwidgets/qtcommon/Window_qt.h"
+#include "kddockwidgets/qtcommon/Window.h"
 #include "qtcommon/View_qt.h"
 
 #include <QString>

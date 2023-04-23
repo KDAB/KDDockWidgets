@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../qtcommon/Window_qt.h"
+#include "../../qtcommon/Window.h"

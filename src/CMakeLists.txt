@@ -69,7 +69,7 @@ set(KDDW_BACKEND_SRCS
 )
 
 # Sources shared by Qt frontends (QtWidgets and QtQuick)
-set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window_qt.cpp qtcommon/View_qt.cpp qtcommon/Screen_qt.cpp
+set(KDDW_QTCOMMON_SRCS qtcommon/Platform_qt.cpp qtcommon/Window.cpp qtcommon/View_qt.cpp qtcommon/Screen_qt.cpp
                        qtcommon/ViewWrapper.cpp
 )
 

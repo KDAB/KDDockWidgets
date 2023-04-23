@@ -11,7 +11,7 @@
 
 #include "Platform_qt.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/qtcommon/Window_qt.h"
+#include "kddockwidgets/qtcommon/Window.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
 #include "core/Platform_p.h"
 #include "core/Utils_p.h"
