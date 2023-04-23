@@ -195,13 +195,13 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/View_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/TitleBar_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TitleBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Platform_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/View_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/ViewFactory_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Stack_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TabBar_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Group_flutter_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DockWidget_flutter_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Platform_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/View_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/ViewFactory_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Stack_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TabBar_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Group_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DockWidget_c.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
