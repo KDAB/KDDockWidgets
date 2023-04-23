@@ -22,6 +22,8 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+namespace qtcommon {
+
 class DOCKS_EXPORT Window_qt : public Core::Window
 {
 public:
@@ -62,5 +64,7 @@ public:
 protected:
     QPointer<QWindow> m_window;
 };
+
+}
 
 }

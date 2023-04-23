@@ -21,6 +21,7 @@
 #include <QtGui/private/qhighdpiscaling_p.h>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtcommon;
 
 Window_qt::Window_qt(QWindow *window)
     : m_window(window)

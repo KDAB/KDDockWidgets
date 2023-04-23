@@ -204,7 +204,7 @@ void Platform::ungrabMouse()
 
 inline QCoreApplication *createCoreApplication(int &argc, char **argv)
 {
-    Platform_qt::maybeSetOffscreenQPA(argc, argv);
+    qtcommon::Platform_qt::maybeSetOffscreenQPA(argc, argv);
     return new QApplication(argc, argv);
 }
 

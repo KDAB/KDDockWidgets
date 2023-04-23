@@ -32,7 +32,7 @@ inline QWindow *windowForWidget(QWidget *topLevel)
 }
 
 Window::Window(QWidget *topLevel)
-    : Window_qt(windowForWidget(topLevel))
+    : qtcommon::Window_qt(windowForWidget(topLevel))
 {
     // QWidgetWindow is private API, we have no way for going from QWindow to the top-level QWidget
     // So set it as a property

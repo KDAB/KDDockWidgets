@@ -21,6 +21,7 @@
 #include <QElapsedTimer>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtcommon;
 
 namespace KDDockWidgets::Tests {
 

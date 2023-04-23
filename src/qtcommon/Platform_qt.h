@@ -24,6 +24,8 @@ namespace Core {
 class Window;
 }
 
+namespace qtcommon {
+
 /// @brief Baseclass platform for Qt based platform
 /// Useful since QtWidgets and QtQuick share some similarities
 class DOCKS_EXPORT Platform_qt : public Core::Platform
@@ -100,5 +102,7 @@ private:
     class GlobalEventFilter;
     GlobalEventFilter *const m_globalEventFilter;
 };
+
+}
 
 }

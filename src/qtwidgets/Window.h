@@ -14,8 +14,10 @@
 #include "kddockwidgets/qtcommon/Window_qt.h"
 
 namespace KDDockWidgets {
+
 namespace qtwidgets {
-class DOCKS_EXPORT Window : public Window_qt
+
+class DOCKS_EXPORT Window : public qtcommon::Window_qt
 {
 public:
     using Window_qt::Window_qt;
@@ -29,5 +31,6 @@ public:
     bool supportsHonouringLayoutMinSize() const override;
     void destroy() override;
 };
+
 }
 }

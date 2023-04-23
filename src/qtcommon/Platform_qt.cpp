@@ -25,6 +25,7 @@
 #include <QTimer>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::qtcommon;
 using namespace KDDockWidgets::Core;
 
 class Platform_qt::GlobalEventFilter : public QObject
