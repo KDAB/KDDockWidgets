@@ -131,7 +131,7 @@ EventFilter::~EventFilter() = default;
 bool Platform_qt::tests_waitForWindowActive(Core::Window::Ptr window, int timeout) const
 {
     Q_ASSERT(window);
-    auto windowqt = static_cast<Window_qt *>(window.get());
+    auto windowqt = static_cast<Window *>(window.get());
     QWindow *qwindow = windowqt->qtWindow();
 
     return Tests::waitFor([qwindow] {
@@ -173,7 +173,7 @@ bool Platform_qt::tests_waitForResize(Core::Controller *c, int timeout) const
 bool Platform_qt::tests_waitForEvent(std::shared_ptr<Core::Window> window, QEvent::Type type,
                                      int timeout) const
 {
-    auto windowqt = static_cast<Window_qt *>(window.get());
+    auto windowqt = static_cast<Window *>(window.get());
     return tests_waitForEvent(windowqt->qtWindow(), type, timeout);
 }
 
@@ -235,7 +235,7 @@ void Platform_qt::tests_doubleClickOn(QPoint globalPos, Core::View *receiver)
 
 void Platform_qt::tests_sendEvent(Core::Window::Ptr window, QEvent *ev) const
 {
-    qGuiApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);
+    qGuiApp->sendEvent(static_cast<Window *>(window.get())->qtWindow(), ev);
 }
 
 void Platform_qt::installMessageHandler()

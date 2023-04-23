@@ -214,7 +214,7 @@ int Platform_qt::screenNumberFor(std::shared_ptr<Core::Window> window) const
     if (!window)
         return -1;
 
-    return screenNumberForQWindow(static_cast<Window_qt *>(window.get())->qtWindow());
+    return screenNumberForQWindow(static_cast<Window *>(window.get())->qtWindow());
 }
 
 int Platform_qt::screenNumberForQWindow(QWindow *window) const

@@ -32,7 +32,7 @@ inline QWindow *windowForWidget(QWidget *topLevel)
 }
 
 Window::Window(QWidget *topLevel)
-    : qtcommon::Window_qt(windowForWidget(topLevel))
+    : qtcommon::Window(windowForWidget(topLevel))
 {
     // QWidgetWindow is private API, we have no way for going from QWindow to the top-level QWidget
     // So set it as a property
@@ -54,7 +54,7 @@ std::shared_ptr<Core::View> Window::rootView() const
 Core::Window::Ptr Window::transientParent() const
 {
     if (QWindow *w = m_window->transientParent())
-        return Core::Window::Ptr(new Window(w));
+        return Core::Window::Ptr(new qtwidgets::Window(w));
 
     return nullptr;
 }
@@ -66,7 +66,7 @@ void Window::setGeometry(QRect geo) const
         v->setGeometry(geo);
     } else {
         // Go via QWindow instead
-        Window_qt::setGeometry(geo);
+        Window::setGeometry(geo);
     }
 }
 
@@ -77,7 +77,7 @@ void Window::setVisible(bool is)
         v->controller()->setVisible(is);
     } else {
         // Go via QWindow instead
-        Window_qt::setVisible(is);
+        Window::setVisible(is);
     }
 }
 
@@ -93,6 +93,6 @@ void Window::destroy()
         // deleting the QWidget deletes its QWindow
         delete static_cast<qtwidgets::ViewWrapper *>(v.get())->widget();
     } else {
-        Window_qt::destroy();
+        Window::destroy();
     }
 }

@@ -23,17 +23,17 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtcommon;
 
-Window_qt::Window_qt(QWindow *window)
+Window::Window(QWindow *window)
     : m_window(window)
 {
     Q_ASSERT(window);
 }
 
-Window_qt::~Window_qt()
+Window::~Window()
 {
 }
 
-void Window_qt::onScreenChanged(QObject *context, WindowScreenChangedCallback callback)
+void Window::onScreenChanged(QObject *context, WindowScreenChangedCallback callback)
 {
     // Window_qt can't have a "screenChanged" signal since it's a short-lived object which
     // just wraps QWindow API. Instead, connects need to be done directly to QWindow
@@ -44,126 +44,126 @@ void Window_qt::onScreenChanged(QObject *context, WindowScreenChangedCallback ca
     });
 }
 
-void Window_qt::setWindowState(WindowState state)
+void Window::setWindowState(WindowState state)
 {
     m_window->setWindowState(( Qt::WindowState )state);
 }
 
-WindowState Window_qt::windowState() const
+WindowState Window::windowState() const
 {
     return WindowState(m_window->windowState());
 }
 
-QRect Window_qt::geometry() const
+QRect Window::geometry() const
 {
     return m_window->geometry();
 }
 
-void Window_qt::setProperty(const char *name, const QVariant &value)
+void Window::setProperty(const char *name, const QVariant &value)
 {
     Q_ASSERT(m_window);
     m_window->setProperty(name, value);
 }
 
-bool Window_qt::isVisible() const
+bool Window::isVisible() const
 {
     return m_window->isVisible();
 }
 
-WId Window_qt::handle() const
+WId Window::handle() const
 {
     if (m_window->handle())
         return m_window->winId();
     return 0;
 }
 
-QWindow *Window_qt::qtWindow() const
+QWindow *Window::qtWindow() const
 {
     return m_window;
 }
 
-bool Window_qt::equals(std::shared_ptr<Core::Window> other) const
+bool Window::equals(std::shared_ptr<Core::Window> other) const
 {
-    auto otherQt = static_cast<Window_qt *>(other.get());
+    auto otherQt = static_cast<Window *>(other.get());
     return other && otherQt->m_window == m_window;
 }
 
-void Window_qt::setFramePosition(QPoint targetPos)
+void Window::setFramePosition(QPoint targetPos)
 {
     m_window->setFramePosition(targetPos);
 }
 
-QRect Window_qt::frameGeometry() const
+QRect Window::frameGeometry() const
 {
     return m_window->frameGeometry();
 }
 
-void Window_qt::resize(int width, int height)
+void Window::resize(int width, int height)
 {
     m_window->resize(width, height);
 }
 
-bool Window_qt::isActive() const
+bool Window::isActive() const
 {
     return m_window->isActive();
 }
 
-QPoint Window_qt::mapFromGlobal(QPoint globalPos) const
+QPoint Window::mapFromGlobal(QPoint globalPos) const
 {
     return m_window->mapFromGlobal(globalPos);
 }
 
-QPoint Window_qt::mapToGlobal(QPoint localPos) const
+QPoint Window::mapToGlobal(QPoint localPos) const
 {
     return m_window->mapToGlobal(localPos);
 }
 
-Core::Screen::Ptr Window_qt::screen() const
+Core::Screen::Ptr Window::screen() const
 {
     return std::make_shared<Screen_qt>(m_window->screen());
 }
 
-void Window_qt::destroy()
+void Window::destroy()
 {
     delete m_window;
 }
 
-QVariant Window_qt::property(const char *name) const
+QVariant Window::property(const char *name) const
 {
     return m_window->property(name);
 }
 
-QSize Window_qt::minSize() const
+QSize Window::minSize() const
 {
     return m_window->minimumSize();
 }
 
-QSize Window_qt::maxSize() const
+QSize Window::maxSize() const
 {
     return m_window->maximumSize();
 }
 
-QPoint Window_qt::fromNativePixels(QPoint nativePos) const
+QPoint Window::fromNativePixels(QPoint nativePos) const
 {
     return QHighDpi::fromNativePixels(nativePos, m_window.data());
 }
 
-void Window_qt::startSystemMove()
+void Window::startSystemMove()
 {
     m_window->startSystemMove();
 }
 
-void Window_qt::setGeometry(QRect geo) const
+void Window::setGeometry(QRect geo) const
 {
     m_window->setGeometry(geo);
 }
 
-void Window_qt::setVisible(bool is)
+void Window::setVisible(bool is)
 {
     m_window->setVisible(is);
 }
 
-bool Window_qt::isFullScreen() const
+bool Window::isFullScreen() const
 {
     return m_window->windowStates() & Qt::WindowFullScreen;
 }

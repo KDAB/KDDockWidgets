@@ -15,10 +15,10 @@
 
 namespace KDDockWidgets::qtquick {
 
-class DOCKS_EXPORT Window : public qtcommon::Window_qt
+class DOCKS_EXPORT Window : public qtcommon::Window
 {
 public:
-    using qtcommon::Window_qt::Window_qt;
+    using qtcommon::Window::Window;
     ~Window();
     std::shared_ptr<Core::View> rootView() const override;
     Window::Ptr transientParent() const override;

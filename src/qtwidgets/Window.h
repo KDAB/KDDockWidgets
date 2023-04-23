@@ -17,10 +17,10 @@ namespace KDDockWidgets {
 
 namespace qtwidgets {
 
-class DOCKS_EXPORT Window : public qtcommon::Window_qt
+class DOCKS_EXPORT Window : public qtcommon::Window
 {
 public:
-    using Window_qt::Window_qt;
+    using qtcommon::Window::Window;
 
     explicit Window(QWidget *topLevel);
     ~Window() override;

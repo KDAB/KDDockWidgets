@@ -24,11 +24,11 @@ namespace KDDockWidgets {
 
 namespace qtcommon {
 
-class DOCKS_EXPORT Window_qt : public Core::Window
+class DOCKS_EXPORT Window : public Core::Window
 {
 public:
-    explicit Window_qt(QWindow *);
-    ~Window_qt() override;
+    explicit Window(QWindow *);
+    ~Window() override;
     void setWindowState(WindowState) override;
     QRect geometry() const override;
     void setGeometry(QRect) const override;

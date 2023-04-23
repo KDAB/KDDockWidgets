@@ -73,7 +73,7 @@ Core::Window::Ptr Window::transientParent() const
 
 void Window::setVisible(bool is)
 {
-    Window_qt::setVisible(is);
+    qtcommon::Window::setVisible(is);
     if (auto root = rootView())
         root->controller()->setVisible(is);
 }
