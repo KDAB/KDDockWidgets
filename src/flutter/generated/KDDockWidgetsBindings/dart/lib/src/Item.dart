@@ -12,6 +12,9 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'TypeHelpers.dart';
 import '../Bindings.dart';
+import '../Bindings_KDDWBindingsCore.dart' as KDDWBindingsCore;
+import '../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
+import '../LibraryLoader.dart';
 import '../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
@@ -59,7 +62,7 @@ class Item extends QObject {
     func(s_silenceSanityChecks_ ? 1 : 0);
   } //Item(KDDockWidgets::Core::View * hostWidget)
 
-  Item(View? hostWidget) : super.init() {
+  Item(KDDWBindingsCore.View? hostWidget) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Item__constructor_View')
@@ -68,13 +71,13 @@ class Item extends QObject {
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   } // asGroupController() const
-  Group asGroupController() {
+  KDDWBindingsCore.Group asGroupController() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Item__asGroupController')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return Group.fromCppPointer(result, false);
+    return KDDWBindingsCore.Group.fromCppPointer(result, false);
   } // checkSanity()
 
   bool checkSanity() {
@@ -123,13 +126,13 @@ class Item extends QObject {
     return QRect.fromCppPointer(result, true);
   } // guestView() const
 
-  View guestView() {
+  KDDWBindingsCore.View guestView() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Item__guestView')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return View.fromCppPointer(result, false);
+    return KDDWBindingsCore.View.fromCppPointer(result, false);
   } // height() const
 
   int height() {
@@ -140,13 +143,13 @@ class Item extends QObject {
     return func(thisCpp);
   } // hostView() const
 
-  View hostView() {
+  KDDWBindingsCore.View hostView() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Item__hostView')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return View.fromCppPointer(result, false);
+    return KDDWBindingsCore.View.fromCppPointer(result, false);
   } // isBeingInserted() const
 
   bool isBeingInserted() {
@@ -359,7 +362,7 @@ class Item extends QObject {
     return func(thisCpp);
   } // restore(KDDockWidgets::Core::View * guestView)
 
-  restore(View? guestView) {
+  restore(KDDWBindingsCore.View? guestView) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Item__restore_View')
@@ -402,7 +405,7 @@ class Item extends QObject {
     dartInstance.setGeometry_recursive(QRect.fromCppPointer(rect));
   } // setGuestView(KDDockWidgets::Core::View * arg__1)
 
-  setGuestView(View? arg__1) {
+  setGuestView(KDDWBindingsCore.View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Item__setGuestView_View')
@@ -410,7 +413,7 @@ class Item extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // setHostView(KDDockWidgets::Core::View * arg__1)
 
-  setHostView(View? arg__1) {
+  setHostView(KDDWBindingsCore.View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(812))
@@ -426,7 +429,7 @@ class Item extends QObject {
           "Dart instance not found for Item::setHostView(KDDockWidgets::Core::View * arg__1)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.setHostView(View.fromCppPointer(arg__1));
+    dartInstance.setHostView(KDDWBindingsCore.View.fromCppPointer(arg__1));
   } // setIsVisible(bool arg__1)
 
   setIsVisible(bool arg__1) {

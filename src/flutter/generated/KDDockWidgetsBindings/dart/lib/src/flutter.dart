@@ -12,25 +12,29 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'TypeHelpers.dart';
 import '../Bindings.dart';
+import '../Bindings_KDDWBindingsCore.dart' as KDDWBindingsCore;
+import '../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
+import '../LibraryLoader.dart';
 import '../FinalizerHelpers.dart';
 
 var _dylib = Library.instance()
     .dylib; // asView_flutter(KDDockWidgets::Core::Controller * controller)
-View_flutter asView_flutter(Controller? controller) {
+KDDWBindingsFlutter.View asView_flutter(
+    KDDWBindingsCore.Controller? controller) {
   final voidstar_Func_voidstar func = _dylib
       .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
           'c_static_KDDockWidgets__flutter__asView_flutter_Controller')
       .asFunction();
   ffi.Pointer<void> result =
       func(controller == null ? ffi.nullptr : controller.thisCpp);
-  return View_flutter.fromCppPointer(result, false);
+  return KDDWBindingsFlutter.View.fromCppPointer(result, false);
 } // asView_flutter(KDDockWidgets::Core::View * view)
 
-View_flutter asView_flutter_2(View? view) {
+KDDWBindingsFlutter.View asView_flutter_2(KDDWBindingsCore.View? view) {
   final voidstar_Func_voidstar func = _dylib
       .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
           'c_static_KDDockWidgets__flutter__asView_flutter_View')
       .asFunction();
   ffi.Pointer<void> result = func(view == null ? ffi.nullptr : view.thisCpp);
-  return View_flutter.fromCppPointer(result, false);
+  return KDDWBindingsFlutter.View.fromCppPointer(result, false);
 }

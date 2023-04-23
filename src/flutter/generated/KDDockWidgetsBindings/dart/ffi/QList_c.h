@@ -18,10 +18,10 @@
 #include <core/DockWidget.h>
 #include <KDDockWidgets.h>
 #include <FloatingWindow.h>
-#include <Stack.h>
+#include "core/Stack.h"
 #include <TabBar.h>
 #include <qpoint.h>
-#include <TitleBar.h>
+#include "core/TitleBar.h"
 #include <MainWindow.h>
 #include <Item_p.h>
 #include <qrect.h>

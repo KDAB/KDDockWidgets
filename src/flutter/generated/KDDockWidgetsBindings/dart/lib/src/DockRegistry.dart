@@ -12,6 +12,9 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'TypeHelpers.dart';
 import '../Bindings.dart';
+import '../Bindings_KDDWBindingsCore.dart' as KDDWBindingsCore;
+import '../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
+import '../LibraryLoader.dart';
 import '../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
@@ -59,14 +62,14 @@ class DockRegistry extends QObject {
     return func(thisCpp, uniqueName?.toNativeUtf8() ?? ffi.nullptr) != 0;
   } // dockByName(const QString & arg__1) const
 
-  DockWidget dockByName(String? arg__1) {
+  KDDWBindingsCore.DockWidget dockByName(String? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__dockByName_QString')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
-    return DockWidget.fromCppPointer(result, false);
+    return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
   } // dropIndicatorsInhibitedChanged(bool inhibited)
 
   dropIndicatorsInhibitedChanged(bool inhibited) {
@@ -85,22 +88,22 @@ class DockRegistry extends QObject {
     func(thisCpp);
   } // focusedDockWidget() const
 
-  DockWidget focusedDockWidget() {
+  KDDWBindingsCore.DockWidget focusedDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__focusedDockWidget')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return DockWidget.fromCppPointer(result, false);
+    return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
   } // groupInMDIResize() const
 
-  Group groupInMDIResize() {
+  KDDWBindingsCore.Group groupInMDIResize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__groupInMDIResize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return Group.fromCppPointer(result, false);
+    return KDDWBindingsCore.Group.fromCppPointer(result, false);
   } // groupInMDIResizeChanged()
 
   groupInMDIResizeChanged() {
@@ -117,7 +120,7 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__groups')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QList<Group>.fromCppPointer(result, true);
+    return QList<KDDWBindingsCore.Group>.fromCppPointer(result, true);
   } // hasFloatingWindows() const
 
   bool hasFloatingWindows() {
@@ -152,24 +155,24 @@ class DockRegistry extends QObject {
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   } // layoutForItem(const KDDockWidgets::Core::Item * arg__1) const
 
-  Layout layoutForItem(Item? arg__1) {
+  KDDWBindingsCore.Layout layoutForItem(Item? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__layoutForItem_Item')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-    return Layout.fromCppPointer(result, false);
+    return KDDWBindingsCore.Layout.fromCppPointer(result, false);
   } // mainWindowByName(const QString & arg__1) const
 
-  MainWindow mainWindowByName(String? arg__1) {
+  KDDWBindingsCore.MainWindow mainWindowByName(String? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__mainWindowByName_QString')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
-    return MainWindow.fromCppPointer(result, false);
+    return KDDWBindingsCore.MainWindow.fromCppPointer(result, false);
   } // maybeDelete()
 
   maybeDelete() {
@@ -180,7 +183,7 @@ class DockRegistry extends QObject {
     func(thisCpp);
   } // registerDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 
-  registerDockWidget(DockWidget? arg__1) {
+  registerDockWidget(KDDWBindingsCore.DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__registerDockWidget_DockWidget')
@@ -188,7 +191,7 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // registerFloatingWindow(KDDockWidgets::Core::FloatingWindow * arg__1)
 
-  registerFloatingWindow(FloatingWindow? arg__1) {
+  registerFloatingWindow(KDDWBindingsCore.FloatingWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__registerFloatingWindow_FloatingWindow')
@@ -196,7 +199,7 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // registerGroup(KDDockWidgets::Core::Group * arg__1)
 
-  registerGroup(Group? arg__1) {
+  registerGroup(KDDWBindingsCore.Group? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__registerGroup_Group')
@@ -204,7 +207,7 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // registerLayout(KDDockWidgets::Core::Layout * arg__1)
 
-  registerLayout(Layout? arg__1) {
+  registerLayout(KDDWBindingsCore.Layout? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__registerLayout_Layout')
@@ -212,7 +215,7 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // registerMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 
-  registerMainWindow(MainWindow? arg__1) {
+  registerMainWindow(KDDWBindingsCore.MainWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__registerMainWindow_MainWindow')
@@ -230,7 +233,7 @@ class DockRegistry extends QObject {
     return DockRegistry.fromCppPointer(result, false);
   } // setFocusedDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 
-  setFocusedDockWidget(DockWidget? arg__1) {
+  setFocusedDockWidget(KDDWBindingsCore.DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__setFocusedDockWidget_DockWidget')
@@ -238,14 +241,15 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // sideBarForDockWidget(const KDDockWidgets::Core::DockWidget * arg__1) const
 
-  SideBar sideBarForDockWidget(DockWidget? arg__1) {
+  KDDWBindingsCore.SideBar sideBarForDockWidget(
+      KDDWBindingsCore.DockWidget? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__sideBarForDockWidget_DockWidget')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-    return SideBar.fromCppPointer(result, false);
+    return KDDWBindingsCore.SideBar.fromCppPointer(result, false);
   }
 
   static // tr(const char * s, const char * c, int n)
@@ -259,7 +263,7 @@ class DockRegistry extends QObject {
     return QString.fromCppPointer(result, true);
   } // unregisterDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 
-  unregisterDockWidget(DockWidget? arg__1) {
+  unregisterDockWidget(KDDWBindingsCore.DockWidget? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget')
@@ -267,7 +271,7 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // unregisterFloatingWindow(KDDockWidgets::Core::FloatingWindow * arg__1)
 
-  unregisterFloatingWindow(FloatingWindow? arg__1) {
+  unregisterFloatingWindow(KDDWBindingsCore.FloatingWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__unregisterFloatingWindow_FloatingWindow')
@@ -275,7 +279,7 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // unregisterGroup(KDDockWidgets::Core::Group * arg__1)
 
-  unregisterGroup(Group? arg__1) {
+  unregisterGroup(KDDWBindingsCore.Group? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__unregisterGroup_Group')
@@ -283,7 +287,7 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // unregisterLayout(KDDockWidgets::Core::Layout * arg__1)
 
-  unregisterLayout(Layout? arg__1) {
+  unregisterLayout(KDDWBindingsCore.Layout? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__unregisterLayout_Layout')
@@ -291,7 +295,7 @@ class DockRegistry extends QObject {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // unregisterMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 
-  unregisterMainWindow(MainWindow? arg__1) {
+  unregisterMainWindow(KDDWBindingsCore.MainWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__unregisterMainWindow_MainWindow')

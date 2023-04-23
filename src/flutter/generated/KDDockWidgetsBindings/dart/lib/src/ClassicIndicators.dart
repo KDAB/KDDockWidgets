@@ -12,6 +12,9 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'TypeHelpers.dart';
 import '../Bindings.dart';
+import '../Bindings_KDDWBindingsCore.dart' as KDDWBindingsCore;
+import '../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
+import '../LibraryLoader.dart';
 import '../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
@@ -29,7 +32,7 @@ class ClassicIndicators extends DropIndicatorOverlay {
     }
     return ClassicIndicators.fromCppPointer(cppPointer, needsAutoDelete);
   } //ClassicIndicators(KDDockWidgets::Core::DropArea * dropArea)
-  ClassicIndicators(DropArea? dropArea) : super.init() {
+  ClassicIndicators(KDDWBindingsCore.DropArea? dropArea) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__ClassicIndicators__constructor_DropArea')
@@ -91,7 +94,8 @@ class ClassicIndicators extends DropIndicatorOverlay {
           "Dart instance not found for ClassicIndicators::onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.onHoveredFrameChanged(Group.fromCppPointer(arg__1));
+    dartInstance
+        .onHoveredFrameChanged(KDDWBindingsCore.Group.fromCppPointer(arg__1));
   } // onResize(QSize newSize)
 
   bool onResize(QSize newSize) {
@@ -148,7 +152,8 @@ class ClassicIndicators extends DropIndicatorOverlay {
           "Dart instance not found for ClassicIndicators::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.setParentView_impl(View.fromCppPointer(parent));
+    dartInstance
+        .setParentView_impl(KDDWBindingsCore.View.fromCppPointer(parent));
   }
 
   static // tr(const char * s, const char * c, int n)
@@ -252,7 +257,7 @@ class ClassicIndicators extends DropIndicatorOverlay {
     registerCallback(thisCpp, callback1605, 1605);
     final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            Controller.setParentView_impl_calledFromC);
+            KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback871, 871);
     final callback1618 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         ClassicIndicators.updateVisibility_calledFromC);

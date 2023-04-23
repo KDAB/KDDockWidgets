@@ -12,6 +12,9 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'TypeHelpers.dart';
 import '../Bindings.dart';
+import '../Bindings_KDDWBindingsCore.dart' as KDDWBindingsCore;
+import '../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
+import '../LibraryLoader.dart';
 import '../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
@@ -175,7 +178,7 @@ class Config {
     func(thisCpp, only ? 1 : 0);
   } // setViewFactory(KDDockWidgets::Core::ViewFactory * arg__1)
 
-  setViewFactory(ViewFactory? arg__1) {
+  setViewFactory(KDDWBindingsCore.ViewFactory? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Config__setViewFactory_ViewFactory')
@@ -199,13 +202,13 @@ class Config {
     return func(thisCpp) != 0;
   } // viewFactory() const
 
-  ViewFactory viewFactory() {
+  KDDWBindingsCore.ViewFactory viewFactory() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Config__viewFactory')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return ViewFactory.fromCppPointer(result, false);
+    return KDDWBindingsCore.ViewFactory.fromCppPointer(result, false);
   }
 
   void release() {
