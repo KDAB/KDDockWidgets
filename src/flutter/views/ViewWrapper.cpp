@@ -15,12 +15,8 @@
 #include "../Window.h"
 #include "View.h"
 
-
-// TODOm4: Make this class available for other frontends ?
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
-
 
 ViewWrapper::ViewWrapper(flutter::View *wrapped)
     : View(wrapped->controller(), Core::ViewType::ViewWrapper)
@@ -369,6 +365,14 @@ void ViewWrapper::setZOrder(int z)
 HANDLE ViewWrapper::handle() const
 {
     return m_wrappedView->handle();
+}
+
+bool ViewWrapper::is(Core::ViewType type) const
+{
+    if (m_wrappedView)
+        return m_wrappedView->type() == type;
+
+    return type == Core::ViewType::ViewWrapper;
 }
 
 bool ViewWrapper::onResize(int w, int h)

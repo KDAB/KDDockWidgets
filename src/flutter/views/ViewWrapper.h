@@ -116,6 +116,8 @@ public:
     void setZOrder(int z) override;
     HANDLE handle() const override;
 
+    bool is(Core::ViewType) const override;
+
 private:
     explicit ViewWrapper(flutter::View *wrapped);
     void setWeakPtr(std::weak_ptr<ViewWrapper> thisPtr);
