@@ -112,7 +112,9 @@ TestsEmbedder *TestsEmbedder::self()
     return s_testsEmbedder;
 }
 
-TestsEmbedder::TestsEmbedder(int &, char **)
+TestsEmbedder::TestsEmbedder(int &argc, char **argv)
+    : m_argc(argc)
+    , m_argv(argv)
 {
     Q_ASSERT(!s_testsEmbedder);
     s_testsEmbedder = this;
@@ -234,6 +236,10 @@ bool TestsEmbedder::runFlutter(GLFWwindow *window,
         .assets_path = assets_path.c_str(),
         .icu_data_path =
             icudtl_path.c_str(), // Find this in your bin/cache directory.
+        .command_line_argc = m_argc,
+        .command_line_argv = m_argv,
+        .dart_entrypoint_argc = m_argc,
+        .dart_entrypoint_argv = m_argv
     };
 
     FlutterEngineResult result =

@@ -11,6 +11,8 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
+import 'dart:developer';
 
 import 'package:KDDockWidgets/DockWidget.dart';
 import 'package:KDDockWidgets/DropArea.dart';
@@ -26,7 +28,10 @@ import 'package:KDDockWidgets/View.dart' as KDDW;
 import 'package:KDDockWidgets/Platform.dart' as KDDW;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
 
-void main() {
+void main(List<String> args) {
+  window.setIsolateDebugName("Main dart isolate");
+
+  if (args.contains("--wait")) debugger();
   runApp(const MyApp());
 }
 

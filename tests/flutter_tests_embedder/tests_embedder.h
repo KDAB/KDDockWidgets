@@ -37,6 +37,9 @@ private:
                     const std::string &icudtl_path);
     GLFWwindow *m_glfwWindow = nullptr;
     _FlutterEngine *m_flutterEngine = nullptr;
+
+    const int m_argc;
+    char *const *m_argv;
 };
 
 }
