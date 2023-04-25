@@ -66,6 +66,20 @@ public:
     createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
                      Core::View *parent = nullptr, Qt::WindowFlags = {}) const override;
+
+    bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const override;
+    bool tests_waitForResize(Core::View *, int timeout) const override;
+    bool tests_waitForResize(Core::Controller *, int timeout) const override;
+    bool tests_waitForEvent(QObject *w, Event::Type type, int timeout) const override;
+    bool tests_waitForEvent(Core::View *, Event::Type type, int timeout) const override;
+    bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type, int timeout) const override;
+    bool tests_waitForDeleted(Core::View *, int timeout) const override;
+    bool tests_waitForDeleted(QObject *, int timeout) const override;
+    void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
+    void tests_wait(int ms) override;
+    void installMessageHandler() override;
+    void uninstallMessageHandler() override;
+
     typedef int (*RunTestsFunc)();
     static RunTestsFunc s_runTestsFunc;
     std::optional<int> m_testsResult;
@@ -81,20 +95,6 @@ public:
     QVector<std::shared_ptr<Core::Window>> windows() const override;
     void sendEvent(Core::View *, Event *) const override;
     int screenNumberFor(std::shared_ptr<Core::Window>) const override;
-#ifdef DOCKS_DEVELOPER_MODE
-    bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const override;
-    bool tests_waitForResize(Core::View *, int timeout) const override;
-    bool tests_waitForResize(Core::Controller *, int timeout) const override;
-    bool tests_waitForEvent(QObject *w, Event::Type type, int timeout) const override;
-    bool tests_waitForEvent(Core::View *, Event::Type type, int timeout) const override;
-    bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type, int timeout) const override;
-    bool tests_waitForDeleted(Core::View *, int timeout) const override;
-    bool tests_waitForDeleted(QObject *, int timeout) const override;
-    void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
-    void tests_wait(int ms) override;
-    void installMessageHandler() override;
-    void uninstallMessageHandler() override;
-#endif
     bool isProcessingAppQuitEvent() const override;
     QString applicationName() const override;
     QString organizationName() const override;
