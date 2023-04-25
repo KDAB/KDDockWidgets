@@ -52,6 +52,13 @@
         "program": "${command:cmake.launchTargetPath}",
         "args": [],
         "cwd": "${command:cmake.buildDirectory}"
+      },
+      {
+        "name": "Flutter attach",
+        "request": "attach",
+        "type": "dart",
+        "packages": "tests/flutter_tests_embedder/.dart_tool/package_config.json",
+        "vmServiceUri": "${command:dart.promptForVmService}"
       }
     ]
   }
