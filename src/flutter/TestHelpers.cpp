@@ -14,10 +14,15 @@
 #include "views/View.h"
 #include "kddockwidgets/core/MainWindow.h"
 
+#include <QMutexLocker>
+#include <QMutex>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
 #ifdef DOCKS_DEVELOPER_MODE
+
+Platform::RunTestsFunc Platform::s_runTestsFunc = nullptr;
 
 namespace KDDockWidgets::flutter {
 
@@ -92,6 +97,25 @@ Platform::Platform(int &, char **)
     : Platform()
 {
     init();
+}
+
+static QMutex m_mutex;
+void Platform::runTests()
+{
+    // Called from Flutter, so doctests run in the ui thread
+
+    Q_ASSERT(s_runTestsFunc);
+
+    const int result = s_runTestsFunc();
+    QMutexLocker locker(&m_mutex);
+    Q_ASSERT(!m_testsResult.has_value());
+    m_testsResult = result;
+}
+
+std::optional<int> Platform::testsResult() const
+{
+    QMutexLocker locker(&m_mutex);
+    return m_testsResult;
 }
 
 void Platform::tests_initPlatform_impl()

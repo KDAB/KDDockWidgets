@@ -53,6 +53,32 @@ inline Core::View *createViewAndWindow(Core::CreateViewOptions opts, Core::View 
     return Core::Platform::instance()->tests_createView(opts, parent);
 }
 
+#ifdef KDDW_FRONTEND_FLUTTER
+#include "flutter_tests_embedder/tests_embedder.h"
+#include "../src/flutter/Platform.h"
+int main(int argc, char **argv)
+{
+
+
+
+    KDDockWidgets::flutter::Platform::s_runTestsFunc = [] {
+        doctest::Context ctx;
+        ctx.setOption("abort-after", 4);
+        // ctx.applyCommandLine(argc, argv);
+        ctx.setOption("no-breaks", true);
+        return ctx.run();
+    };
+
+    KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);
+    const int result = embedder.run();
+
+    qDebug() << Q_FUNC_INFO << "tests ended with result=" << result;
+    return result;
+}
+
+
+#else
+
 int main(int argc, char **argv)
 {
     int exitCode = 0;
@@ -83,3 +109,4 @@ int main(int argc, char **argv)
 
     return exitCode;
 }
+#endif

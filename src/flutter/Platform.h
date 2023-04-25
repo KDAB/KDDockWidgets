@@ -13,6 +13,8 @@
 
 #include "kddockwidgets/core/Platform.h"
 
+#include <optional>
+
 namespace KDDockWidgets {
 
 namespace Core {
@@ -64,6 +66,11 @@ public:
     createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
                      Core::View *parent = nullptr, Qt::WindowFlags = {}) const override;
+    typedef int (*RunTestsFunc)();
+    static RunTestsFunc s_runTestsFunc;
+    std::optional<int> m_testsResult;
+    void runTests();
+    std::optional<int> testsResult() const;
 #endif
 protected:
     void init();

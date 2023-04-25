@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    non_native_function_type_argument_to_pointer: false
