@@ -266,6 +266,14 @@ class Platform extends KDDWBindingsCore.Platform {
       throw Error();
     }
     dartInstance.restoreMouseCursor();
+  } // runTests()
+
+  runTests() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__flutter__Platform__runTests')
+        .asFunction();
+    func(thisCpp);
   }
 
   static int screenNumberFor_calledFromC(

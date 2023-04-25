@@ -16,15 +16,15 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <MainWindow.h>
-#include <DropArea.h>
-#include <core/Layout.h>
-#include "core/Stack.h"
 #include <core/DockWidget.h>
+#include "core/Stack.h"
+#include <MainWindow.h>
 #include <TabBar.h>
+#include <core/Layout.h>
+#include <DropArea.h>
 #include <core/Group.h>
-#include <FloatingWindow.h>
 #include "core/TitleBar.h"
+#include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {

@@ -1149,6 +1149,8 @@ void *c_KDDockWidgets__flutter__Platform__organizationName(void *thisObj);
 void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
 void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
+// KDDockWidgets::flutter::Platform::runTests()
+void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
 // KDDockWidgets::flutter::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const

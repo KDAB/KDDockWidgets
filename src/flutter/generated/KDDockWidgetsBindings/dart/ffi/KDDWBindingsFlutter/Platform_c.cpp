@@ -248,6 +248,10 @@ void Platform_wrapper::restoreMouseCursor_nocallback()
 {
     ::KDDockWidgets::flutter::Platform::restoreMouseCursor();
 }
+void Platform_wrapper::runTests()
+{
+    ::KDDockWidgets::flutter::Platform::runTests();
+}
 int Platform_wrapper::screenNumberFor(KDDockWidgets::Core::View *arg__1) const
 {
     if (m_screenNumberForCallback) {
@@ -567,6 +571,11 @@ void *c_static_KDDockWidgets__flutter__Platform__platformFlutter()
 void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->restoreMouseCursor_nocallback();} else {    return targetPtr->restoreMouseCursor();} }();
+}
+// runTests()
+void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj)
+{
+    fromPtr(thisObj)->runTests();
 }
 // screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_)

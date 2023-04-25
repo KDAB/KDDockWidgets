@@ -63,6 +63,7 @@ public:
     static KDDockWidgets::flutter::Platform *platformFlutter();
     virtual void restoreMouseCursor();
     virtual void restoreMouseCursor_nocallback();
+    void runTests();
     virtual int screenNumberFor(KDDockWidgets::Core::View *arg__1) const;
     virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual QSize screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
@@ -197,6 +198,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__organizat
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
+// KDDockWidgets::flutter::Platform::runTests()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
 // KDDockWidgets::flutter::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
