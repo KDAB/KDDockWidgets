@@ -33,8 +33,12 @@ TEST_CASE("DockWidget Ctor")
 TEST_CASE("setGuestView")
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    auto guest = Platform::instance()->tests_createView({ true })->asWrapper();
+    auto childView = Platform::instance()->tests_createView({ true });
+    REQUIRE(childView);
+    auto guest = childView->asWrapper();
     dw->setGuestView(guest);
+    REQUIRE(dw->guestView());
+    REQUIRE(dw->view());
     dw->view()->show();
     Platform::instance()->tests_wait(500); // TODOm3: Replace with wait for visible or so.
 
