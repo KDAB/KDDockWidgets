@@ -224,7 +224,6 @@ endif()
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers.cpp)
-    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/TestHelpers.cpp)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 

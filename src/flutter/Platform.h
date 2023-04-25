@@ -55,7 +55,6 @@ public:
     void onFloatingWindowDestroyed(Core::FloatingWindow *) override;
 
 #ifdef DOCKS_DEVELOPER_MODE
-    explicit Platform(int &argc, char **argv);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     Core::View *tests_createView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
