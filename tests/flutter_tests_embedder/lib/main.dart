@@ -61,34 +61,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late KDDWBindingsCore.DropArea dropArea;
-  late Widget dropAreaWidget;
-
   _MyHomePageState() {
     var plat = KDDW.Platform();
-    dropArea = KDDWBindingsCore.DropArea(null,
-        KDDWBindings.KDDockWidgets_MainWindowOption.MainWindowOption_None);
-
-    final dropAreaView =
-        KDDWBindingsFlutter.View.fromCache(dropArea.view().thisCpp)
-            as KDDW.View;
-
-    KDDWBindingsCore.View.fromCppPointer(dropArea.view().thisCpp);
-    dropAreaView.setObjectName("droparea");
-
-    dropAreaView.m_fillsParent = true;
-    dropAreaWidget = dropAreaView.flutterWidget;
-
     plat.runTests();
   }
 
-  void _incrementCounter() {
-    dropArea.dumpLayout();
-    print("Layout out equally");
-    dropArea.layoutEqually();
-    print("Layout out equally done");
-    dropArea.dumpLayout();
-  }
+  void _incrementCounter() {}
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(child: Stack(children: [dropAreaWidget, windowOverlay])),
+      body: Center(child: Stack(children: [windowOverlay])),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
