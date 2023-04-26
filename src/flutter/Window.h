@@ -20,12 +20,12 @@ class DOCKS_EXPORT Window : public Core::Window
 {
 public:
     /// For flutter, we identify windows with a sequential ID
-    explicit Window(int id);
+    explicit Window(std::shared_ptr<Core::View> rootView, int id);
 
     ~Window() override;
     std::shared_ptr<Core::View> rootView() const override;
     Window::Ptr transientParent() const override;
-    void setGeometry(QRect) const override;
+    void setGeometry(QRect) override;
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
 
@@ -52,6 +52,8 @@ public:
     void onScreenChanged(QObject *context, WindowScreenChangedCallback) override;
 
 private:
+    std::shared_ptr<Core::View> m_rootView;
     const int m_id;
+    QRect m_geometry;
 };
 }

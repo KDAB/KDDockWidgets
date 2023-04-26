@@ -26,7 +26,7 @@ public:
     ~Window() override;
     std::shared_ptr<Core::View> rootView() const override;
     Window::Ptr transientParent() const override;
-    void setGeometry(QRect) const override;
+    void setGeometry(QRect) override;
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
     void destroy() override;

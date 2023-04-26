@@ -42,7 +42,7 @@ public:
     /// @brief Sets the geometry of the client area of the window
     /// This excludes any native window frame and title bar.
     /// The top-left of this rect is in screen coordinates.
-    virtual void setGeometry(QRect) const = 0;
+    virtual void setGeometry(QRect) = 0;
 
     /// @brief Sets the position of the window to pos
     /// Unlike setPosition, this position includes the native frame

@@ -31,7 +31,7 @@ public:
     ~Window() override;
     void setWindowState(WindowState) override;
     QRect geometry() const override;
-    void setGeometry(QRect) const override;
+    void setGeometry(QRect) override;
     bool isVisible() const override;
     void setVisible(bool) override;
     WId handle() const override;

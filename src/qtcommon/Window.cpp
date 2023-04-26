@@ -153,7 +153,7 @@ void Window::startSystemMove()
     m_window->startSystemMove();
 }
 
-void Window::setGeometry(QRect geo) const
+void Window::setGeometry(QRect geo)
 {
     m_window->setGeometry(geo);
 }

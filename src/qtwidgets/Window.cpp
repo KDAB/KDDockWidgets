@@ -59,7 +59,7 @@ Core::Window::Ptr Window::transientParent() const
     return nullptr;
 }
 
-void Window::setGeometry(QRect geo) const
+void Window::setGeometry(QRect geo)
 {
     if (auto v = rootView()) {
         // In QWidget world QWidget interface is preferred over QWindow

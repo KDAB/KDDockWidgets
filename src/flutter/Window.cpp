@@ -17,17 +17,20 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-Window::Window(int id)
+Window::Window(std::shared_ptr<Core::View> rootView, int id)
     : Core::Window()
+    , m_rootView(rootView)
     , m_id(id)
 {
+    if (rootView)
+        setGeometry(rootView->geometry());
 }
 
 Window::~Window() = default;
 
 std::shared_ptr<Core::View> Window::rootView() const
 {
-    return nullptr;
+    return m_rootView;
 }
 
 Core::Window::Ptr Window::transientParent() const
@@ -35,8 +38,9 @@ Core::Window::Ptr Window::transientParent() const
     return nullptr;
 }
 
-void Window::setGeometry(QRect) const
+void Window::setGeometry(QRect r)
 {
+    m_geometry = r;
 }
 
 void Window::setVisible(bool)
@@ -55,7 +59,7 @@ void Window::setWindowState(WindowState)
 
 QRect Window::geometry() const
 {
-    return {};
+    return m_geometry;
 }
 
 void Window::setProperty(const char *, const QVariant &)
