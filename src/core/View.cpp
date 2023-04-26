@@ -350,6 +350,10 @@ bool View::aboutToBeDestroyed() const
     return m_aboutToBeDestroyed;
 }
 
+void View::dumpDebug()
+{
+    qDebug() << "View::dumpDebug:" << m_controller << int(type());
+}
 
 /** static */
 Controller *View::firstParentOfType(View *view, ViewType type)

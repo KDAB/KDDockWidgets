@@ -10,6 +10,7 @@
 */
 
 #include "View.h"
+#include "Platform.h"
 #include "core/View_p.h"
 #include "core/layouting/Item_p.h"
 #include "../Window.h"
@@ -19,6 +20,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
+#define PRINT_UNEXPECTED_CALL_MESSAGE \
+    qWarning() << Q_FUNC_INFO << "Unexpected call" << m_controller << int(m_controller->type());
 
 View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent,
            Qt::WindowFlags)
@@ -55,16 +58,18 @@ bool View::close()
 
 bool View::isVisible() const
 {
-    return {};
+    PRINT_UNEXPECTED_CALL_MESSAGE
+    return false;
 }
 
 void View::setVisible(bool)
 {
+    PRINT_UNEXPECTED_CALL_MESSAGE
 }
 
 void View::setSize(int w, int h)
 {
-    qDebug() << "View_flutter::setSize()" << w << h << this;
+    qDebug() << "flutter::View::setSize()" << w << h << this;
 }
 
 std::shared_ptr<Core::View> View::rootView() const

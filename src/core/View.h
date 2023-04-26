@@ -268,6 +268,8 @@ public:
     void setAboutToBeDestroyed();
     bool aboutToBeDestroyed() const;
 
+    void dumpDebug();
+
     /// optional, for debug purposes
     virtual QDebug toQDebug(QDebug &deb) const
     {
