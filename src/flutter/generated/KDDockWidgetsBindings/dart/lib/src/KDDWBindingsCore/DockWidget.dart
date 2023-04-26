@@ -447,8 +447,9 @@ class DockWidget extends KDDWBindingsCore.Controller {
           "Dart instance not found for DockWidget::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance
-        .setParentView_impl(KDDWBindingsCore.View.fromCppPointer(parent));
+    dartInstance.setParentView_impl((parent == null || parent.address == 0)
+        ? null
+        : KDDWBindingsCore.View.fromCppPointer(parent));
   } // setTitle(const QString & title)
 
   setTitle(String? title) {
@@ -563,7 +564,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 872:
+      case 871:
         return "c_KDDockWidgets__Core__DockWidget__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -571,7 +572,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 872:
+      case 871:
         return "setParentView_impl";
     }
     throw Error();
@@ -583,9 +584,9 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback')
         .asFunction();
-    final callback872 =
+    final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.DockWidget.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback872, 872);
+    registerCallback(thisCpp, callback871, 871);
   }
 }

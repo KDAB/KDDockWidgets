@@ -155,7 +155,9 @@ class Platform {
         QString.fromCppPointer(uniqueName).toDartString(),
         CreateViewOptions.fromCppPointer(arg__2),
         options: options,
-        parent: KDDWBindingsCore.View.fromCppPointer(parent),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent),
         arg__5: arg__5);
     return result.thisCpp;
   } // createView(KDDockWidgets::Core::Controller * arg__1, KDDockWidgets::Core::View * parent) const
@@ -185,8 +187,12 @@ class Platform {
       throw Error();
     }
     final result = dartInstance.createView(
-        KDDWBindingsCore.Controller.fromCppPointer(arg__1),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.Controller.fromCppPointer(arg__1),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // cursorPos() const
 
@@ -404,8 +410,9 @@ class Platform {
           "Dart instance not found for Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.onFloatingWindowCreated(
-        KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
+    dartInstance.onFloatingWindowCreated((arg__1 == null || arg__1.address == 0)
+        ? null
+        : KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
   } // onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
 
   onFloatingWindowDestroyed(KDDWBindingsCore.FloatingWindow? arg__1) {
@@ -426,7 +433,9 @@ class Platform {
       throw Error();
     }
     dartInstance.onFloatingWindowDestroyed(
-        KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
   } // organizationName() const
 
   QString organizationName() {
@@ -487,8 +496,10 @@ class Platform {
           "Dart instance not found for Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance
-        .screenNumberFor(KDDWBindingsCore.View.fromCppPointer(arg__1));
+    final result = dartInstance.screenNumberFor(
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(arg__1));
     return result;
   } // screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 
@@ -511,8 +522,10 @@ class Platform {
           "Dart instance not found for Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance
-        .screenSizeFor(KDDWBindingsCore.View.fromCppPointer(arg__1));
+    final result = dartInstance.screenSizeFor(
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(arg__1));
     return result.thisCpp;
   } // setCursorPos(QPoint arg__1)
 
@@ -612,7 +625,9 @@ class Platform {
     }
     final result = dartInstance.tests_createFocusableView(
         CreateViewOptions.fromCppPointer(arg__1),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // tests_createNonClosableView(KDDockWidgets::Core::View * parent)
 
@@ -637,7 +652,9 @@ class Platform {
       throw Error();
     }
     final result = dartInstance.tests_createNonClosableView(
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // tests_createView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 
@@ -669,7 +686,9 @@ class Platform {
     }
     final result = dartInstance.tests_createView(
         CreateViewOptions.fromCppPointer(arg__1),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   }
 
@@ -719,8 +738,11 @@ class Platform {
           "Dart instance not found for Platform::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.tests_doubleClickOn(QPoint.fromCppPointer(globalPos),
-        KDDWBindingsCore.View.fromCppPointer(receiver));
+    dartInstance.tests_doubleClickOn(
+        QPoint.fromCppPointer(globalPos),
+        (receiver == null || receiver.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(receiver));
   } // tests_initPlatform_impl()
 
   tests_initPlatform_impl() {
@@ -791,7 +813,9 @@ class Platform {
       throw Error();
     }
     final result = dartInstance.tests_waitForDeleted(
-        KDDWBindingsCore.View.fromCppPointer(arg__1),
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(arg__1),
         timeout: timeout);
     return result ? 1 : 0;
   } // tests_waitForDeleted(QObject * arg__1, int timeout) const
@@ -816,7 +840,9 @@ class Platform {
       throw Error();
     }
     final result = dartInstance.tests_waitForDeleted_2(
-        QObject.fromCppPointer(arg__1),
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : QObject.fromCppPointer(arg__1),
         timeout: timeout);
     return result ? 1 : 0;
   } // tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::Type type, int timeout) const
@@ -844,7 +870,10 @@ class Platform {
       throw Error();
     }
     final result = dartInstance.tests_waitForEvent(
-        KDDWBindingsCore.View.fromCppPointer(arg__1), type,
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(arg__1),
+        type,
         timeout: timeout);
     return result ? 1 : 0;
   } // tests_waitForEvent(QObject * w, Event::Type type, int timeout) const
@@ -870,7 +899,7 @@ class Platform {
       throw Error();
     }
     final result = dartInstance.tests_waitForEvent_2(
-        QObject.fromCppPointer(w), type,
+        (w == null || w.address == 0) ? null : QObject.fromCppPointer(w), type,
         timeout: timeout);
     return result ? 1 : 0;
   } // tests_waitForResize(KDDockWidgets::Core::Controller * arg__1, int timeout) const
@@ -896,7 +925,9 @@ class Platform {
       throw Error();
     }
     final result = dartInstance.tests_waitForResize(
-        KDDWBindingsCore.Controller.fromCppPointer(arg__1),
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.Controller.fromCppPointer(arg__1),
         timeout: timeout);
     return result ? 1 : 0;
   } // tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const
@@ -922,7 +953,9 @@ class Platform {
       throw Error();
     }
     final result = dartInstance.tests_waitForResize_2(
-        KDDWBindingsCore.View.fromCppPointer(arg__1),
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(arg__1),
         timeout: timeout);
     return result ? 1 : 0;
   } // ungrabMouse()

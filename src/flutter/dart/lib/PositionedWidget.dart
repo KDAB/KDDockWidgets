@@ -12,6 +12,7 @@
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:flutter/material.dart';
 
+/// A widget that supports being positioned. It's child of a Stack widget.
 class PositionedWidget extends StatefulWidget {
   final View_mixin kddwView;
 

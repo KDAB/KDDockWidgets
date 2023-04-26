@@ -59,8 +59,10 @@ class ViewFactory extends QObject {
           "Dart instance not found for ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance
-        .createClassicIndicatorWindow(ClassicIndicators.fromCppPointer(arg__1));
+    final result = dartInstance.createClassicIndicatorWindow(
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : ClassicIndicators.fromCppPointer(arg__1));
     return result.thisCpp;
   } // createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 
@@ -127,8 +129,12 @@ class ViewFactory extends QObject {
       throw Error();
     }
     final result = dartInstance.createDropArea(
-        KDDWBindingsCore.DropArea.fromCppPointer(arg__1),
-        KDDWBindingsCore.View.fromCppPointer(parent));
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.DropArea.fromCppPointer(arg__1),
+        (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // createFloatingWindow(KDDockWidgets::Core::FloatingWindow * controller, KDDockWidgets::Core::MainWindow * parent, Qt::WindowFlags windowFlags) const
 
@@ -163,8 +169,12 @@ class ViewFactory extends QObject {
       throw Error();
     }
     final result = dartInstance.createFloatingWindow(
-        KDDWBindingsCore.FloatingWindow.fromCppPointer(controller),
-        parent: KDDWBindingsCore.MainWindow.fromCppPointer(parent),
+        (controller == null || controller.address == 0)
+            ? null
+            : KDDWBindingsCore.FloatingWindow.fromCppPointer(controller),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.MainWindow.fromCppPointer(parent),
         windowFlags: windowFlags);
     return result.thisCpp;
   } // createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::Core::View * parent) const
@@ -194,8 +204,12 @@ class ViewFactory extends QObject {
       throw Error();
     }
     final result = dartInstance.createGroup(
-        KDDWBindingsCore.Group.fromCppPointer(arg__1),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.Group.fromCppPointer(arg__1),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // createRubberBand(KDDockWidgets::Core::View * parent) const
 
@@ -218,8 +232,10 @@ class ViewFactory extends QObject {
           "Dart instance not found for ViewFactory::createRubberBand(KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance
-        .createRubberBand(KDDWBindingsCore.View.fromCppPointer(parent));
+    final result = dartInstance.createRubberBand(
+        (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::Core::View * parent) const
 
@@ -250,8 +266,12 @@ class ViewFactory extends QObject {
       throw Error();
     }
     final result = dartInstance.createSeparator(
-        KDDWBindingsCore.Separator.fromCppPointer(arg__1),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.Separator.fromCppPointer(arg__1),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::Core::View * parent) const
 
@@ -280,8 +300,12 @@ class ViewFactory extends QObject {
       throw Error();
     }
     final result = dartInstance.createSideBar(
-        KDDWBindingsCore.SideBar.fromCppPointer(arg__1),
-        KDDWBindingsCore.View.fromCppPointer(parent));
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.SideBar.fromCppPointer(arg__1),
+        (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // createStack(KDDockWidgets::Core::Stack * stack, KDDockWidgets::Core::View * parent) const
 
@@ -310,8 +334,12 @@ class ViewFactory extends QObject {
       throw Error();
     }
     final result = dartInstance.createStack(
-        KDDWBindingsCore.Stack.fromCppPointer(stack),
-        KDDWBindingsCore.View.fromCppPointer(parent));
+        (stack == null || stack.address == 0)
+            ? null
+            : KDDWBindingsCore.Stack.fromCppPointer(stack),
+        (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::Core::View * parent) const
 
@@ -340,8 +368,12 @@ class ViewFactory extends QObject {
       throw Error();
     }
     final result = dartInstance.createTabBar(
-        KDDWBindingsCore.TabBar.fromCppPointer(tabBar),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        (tabBar == null || tabBar.address == 0)
+            ? null
+            : KDDWBindingsCore.TabBar.fromCppPointer(tabBar),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // createTitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent) const
 
@@ -370,8 +402,12 @@ class ViewFactory extends QObject {
       throw Error();
     }
     final result = dartInstance.createTitleBar(
-        KDDWBindingsCore.TitleBar.fromCppPointer(controller),
-        KDDWBindingsCore.View.fromCppPointer(parent));
+        (controller == null || controller.address == 0)
+            ? null
+            : KDDWBindingsCore.TitleBar.fromCppPointer(controller),
+        (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   }
 

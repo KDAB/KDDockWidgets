@@ -258,8 +258,9 @@ class Layout extends KDDWBindingsCore.Controller {
           "Dart instance not found for Layout::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance
-        .setParentView_impl(KDDWBindingsCore.View.fromCppPointer(parent));
+    dartInstance.setParentView_impl((parent == null || parent.address == 0)
+        ? null
+        : KDDWBindingsCore.View.fromCppPointer(parent));
   } // unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded) const
 
   unrefOldPlaceholders(QList? groupsBeingAdded) {
@@ -305,7 +306,7 @@ class Layout extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 872:
+      case 871:
         return "c_KDDockWidgets__Core__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -313,7 +314,7 @@ class Layout extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 872:
+      case 871:
         return "setParentView_impl";
     }
     throw Error();
@@ -325,9 +326,9 @@ class Layout extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback')
         .asFunction();
-    final callback872 =
+    final callback871 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback872, 872);
+    registerCallback(thisCpp, callback871, 871);
   }
 }

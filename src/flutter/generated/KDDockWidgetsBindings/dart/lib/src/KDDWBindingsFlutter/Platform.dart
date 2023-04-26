@@ -84,7 +84,9 @@ class Platform extends KDDWBindingsCore.Platform {
         QString.fromCppPointer(uniqueName).toDartString(),
         CreateViewOptions.fromCppPointer(arg__2),
         options: options,
-        parent: KDDWBindingsCore.View.fromCppPointer(parent),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent),
         arg__5: arg__5);
     return result.thisCpp;
   }
@@ -99,8 +101,12 @@ class Platform extends KDDWBindingsCore.Platform {
       throw Error();
     }
     final result = dartInstance.createView(
-        KDDWBindingsCore.Controller.fromCppPointer(controller),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        (controller == null || controller.address == 0)
+            ? null
+            : KDDWBindingsCore.Controller.fromCppPointer(controller),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   }
 
@@ -217,8 +223,9 @@ class Platform extends KDDWBindingsCore.Platform {
           "Dart instance not found for Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.onFloatingWindowCreated(
-        KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
+    dartInstance.onFloatingWindowCreated((arg__1 == null || arg__1.address == 0)
+        ? null
+        : KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
   }
 
   static void onFloatingWindowDestroyed_calledFromC(
@@ -231,7 +238,9 @@ class Platform extends KDDWBindingsCore.Platform {
       throw Error();
     }
     dartInstance.onFloatingWindowDestroyed(
-        KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
   }
 
   static ffi.Pointer<void> organizationName_calledFromC(
@@ -285,8 +294,10 @@ class Platform extends KDDWBindingsCore.Platform {
           "Dart instance not found for Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance
-        .screenNumberFor(KDDWBindingsCore.View.fromCppPointer(arg__1));
+    final result = dartInstance.screenNumberFor(
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(arg__1));
     return result;
   }
 
@@ -299,8 +310,10 @@ class Platform extends KDDWBindingsCore.Platform {
           "Dart instance not found for Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance
-        .screenSizeFor(KDDWBindingsCore.View.fromCppPointer(arg__1));
+    final result = dartInstance.screenSizeFor(
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(arg__1));
     return result.thisCpp;
   }
 
@@ -353,7 +366,9 @@ class Platform extends KDDWBindingsCore.Platform {
     }
     final result = dartInstance.tests_createFocusableView(
         CreateViewOptions.fromCppPointer(arg__1),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   }
 
@@ -367,7 +382,9 @@ class Platform extends KDDWBindingsCore.Platform {
       throw Error();
     }
     final result = dartInstance.tests_createNonClosableView(
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   }
 
@@ -384,7 +401,9 @@ class Platform extends KDDWBindingsCore.Platform {
     }
     final result = dartInstance.tests_createView(
         CreateViewOptions.fromCppPointer(arg__1),
-        parent: KDDWBindingsCore.View.fromCppPointer(parent));
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   }
 
@@ -408,8 +427,11 @@ class Platform extends KDDWBindingsCore.Platform {
           "Dart instance not found for Platform::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.tests_doubleClickOn(QPoint.fromCppPointer(globalPos),
-        KDDWBindingsCore.View.fromCppPointer(receiver));
+    dartInstance.tests_doubleClickOn(
+        QPoint.fromCppPointer(globalPos),
+        (receiver == null || receiver.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(receiver));
   }
 
   static void tests_initPlatform_impl_calledFromC(ffi.Pointer<void> thisCpp) {
