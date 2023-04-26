@@ -33,15 +33,20 @@ TEST_CASE("DockWidget Ctor")
 TEST_CASE("setGuestView")
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    REQUIRE(Platform::instance());
     auto childView = Platform::instance()->tests_createView({ true });
     REQUIRE(childView);
     auto guest = childView->asWrapper();
+    REQUIRE(guest);
     dw->setGuestView(guest);
     REQUIRE(dw->guestView());
     REQUIRE(dw->view());
     dw->view()->show();
     Platform::instance()->tests_wait(500); // TODOm3: Replace with wait for visible or so.
 
+    qDebug() << int(guest->controller()->type());
+    REQUIRE(guest->controller());
+    CHECK(guest->isVisible());
     CHECK(guest->controller()->isVisible());
     CHECK(dw->guestView()->equals(guest));
     REQUIRE(dw->view()->window());
@@ -79,6 +84,7 @@ TEST_CASE("isOpen")
 
     // Dockwidget in a non-current tab is not visible, but still counts as open
     dw->open();
+    REQUIRE(dw->d->group());
     CHECK(dw->isOpen());
     CHECK(dw->isFloating());
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
@@ -101,7 +107,10 @@ TEST_CASE("setAsCurrentTab")
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
     auto dw3 = Config::self().viewFactory()->createDockWidget("dw3")->asDockWidgetController();
 
+    REQUIRE(dw->view());
     dw->view()->show();
+    REQUIRE(dw->d->group());
+    CHECK(dw->isOpen());
 
     dw->addDockWidgetAsTab(dw2);
     dw->addDockWidgetAsTab(dw3);
