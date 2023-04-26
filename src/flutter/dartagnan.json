@@ -32,6 +32,7 @@
                 "KDDockWidgets::flutter::TitleBar",
                 "KDDockWidgets::flutter::Platform",
                 "KDDockWidgets::flutter::View",
+                "KDDockWidgets::flutter::Window",
                 "KDDockWidgets::flutter::TabBar",
                 "KDDockWidgets::flutter::Stack",
                 "KDDockWidgets::flutter::Group",

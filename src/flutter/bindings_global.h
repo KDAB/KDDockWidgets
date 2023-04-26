@@ -37,6 +37,8 @@
 
 #include "Platform.h"
 #include "ViewFactory.h"
+#include "Window.h"
+
 #include "views/View.h"
 #include "views/Stack.h"
 #include "views/Group.h"
@@ -63,7 +65,3 @@
 
 #include "../KDDockWidgets.h"
 #include "../Config.h"
-
-
-// TODO: kdbindings is choking shiboken
-// #include "Window.h"

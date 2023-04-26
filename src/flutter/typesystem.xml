@@ -83,6 +83,7 @@
             <object-type name="TabBar" />
             <object-type name="Group" />
             <object-type name="DockWidget" />
+            <object-type name="Window" />
         </namespace-type>
 
     </namespace-type>
