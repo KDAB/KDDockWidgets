@@ -36,7 +36,7 @@ View::~View()
     // qDebug() << "~View_flutter" << this << int(type());
     m_inDtor = true;
     if (m_parentView && !m_parentView->inDtor()) {
-        m_parentView->onChildRemoved(this);
+        setParent(nullptr);
     }
 }
 
