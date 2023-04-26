@@ -79,6 +79,9 @@ public:
     void installMessageHandler() override;
     void uninstallMessageHandler() override;
 
+    /// Pauses execution, so we can attach Dart's debugger
+    virtual void pauseForDartDebugger() = 0;
+
     typedef int (*RunTestsFunc)();
     static RunTestsFunc s_runTestsFunc;
     std::optional<int> m_testsResult;

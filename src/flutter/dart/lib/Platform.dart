@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'dart:developer';
+
 import 'package:KDDockWidgets/View.dart';
 import 'package:KDDockWidgets/WindowOverlayWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
@@ -75,5 +77,11 @@ class Platform extends KDDWBindingsFlutter.Platform {
   @override
   void dumpManagedBacktrace() {
     print(StackTrace.current);
+  }
+
+  @override
+  void pauseForDartDebugger() {
+    print("pauseForDartDebugger");
+    debugger();
   }
 }
