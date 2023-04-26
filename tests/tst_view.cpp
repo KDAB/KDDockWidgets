@@ -24,6 +24,7 @@ TEST_CASE("View::setParent()")
     auto childView = createViewAndWindow({}, rootView);
 
     CHECK(!rootView->parentView());
+    REQUIRE(childView);
     REQUIRE(childView->parentView());
     CHECK(childView->parentView()->equals(rootView));
     const auto children = rootView->childViews();

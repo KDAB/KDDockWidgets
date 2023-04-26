@@ -131,7 +131,9 @@ public:
 
 private:
     View *m_parentView = nullptr;
+    QVector<std::shared_ptr<Core::View>> m_childViews;
     QString m_name;
+    bool m_inCtor = true;
     Q_DISABLE_COPY(View)
 };
 

@@ -27,11 +27,8 @@ View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent
            Qt::WindowFlags)
     : Core::View(controller, type)
 {
-    m_parentView = static_cast<View *>(parent);
-
-    if (parent) {
-        // setParent(parent);
-    }
+    setParent(parent);
+    m_inCtor = false;
 }
 
 View::~View()
@@ -179,10 +176,28 @@ void View::setParent(Core::View *parent)
     if (parent == m_parentView)
         return;
 
+    auto oldParent = m_parentView;
     m_parentView = static_cast<View *>(parent);
 
-    if (parent) {
-        static_cast<View *>(parent)->onChildAdded(this);
+    if (oldParent) {
+        oldParent->onChildRemoved(this);
+        oldParent->m_childViews.erase(std::remove_if(oldParent->m_childViews.begin(), oldParent->m_childViews.end(),
+                                                     [this](std::shared_ptr<Core::View> v) {
+                                                         return v->equals(this);
+                                                     }),
+                                      oldParent->m_childViews.end());
+    }
+
+    if (m_parentView) {
+        if (!m_inCtor) {
+            // When in ctor there's no ViewMixin yet. TODO: Check if we need to improve this
+
+            // Tell dart there's a new child
+            m_parentView->onChildAdded(this);
+        }
+
+        // Track it in C++
+        m_parentView->m_childViews.append(asWrapper());
     }
 }
 
@@ -363,7 +378,7 @@ void View::setMouseTracking(bool)
 
 QVector<std::shared_ptr<Core::View>> View::childViews() const
 {
-    return {};
+    return m_childViews;
 }
 
 void View::setZOrder(int)
