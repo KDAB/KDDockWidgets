@@ -17,8 +17,9 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-Window::Window()
+Window::Window(int id)
     : Core::Window()
+    , m_id(id)
 {
 }
 
@@ -73,12 +74,16 @@ bool Window::isVisible() const
 
 WId Window::handle() const
 {
-    return {};
+    return WId(m_id);
 }
 
-bool Window::equals(std::shared_ptr<Core::Window>) const
+bool Window::equals(std::shared_ptr<Core::Window> w) const
 {
-    return {};
+    if (!w)
+        return false;
+
+    auto window = std::static_pointer_cast<flutter::Window>(w);
+    return window->m_id == m_id;
 }
 
 void Window::setFramePosition(QPoint)
@@ -141,4 +146,8 @@ bool Window::isFullScreen() const
 Core::Screen::Ptr Window::screen() const
 {
     return {};
+}
+
+void Window::onScreenChanged(QObject *, WindowScreenChangedCallback)
+{
 }

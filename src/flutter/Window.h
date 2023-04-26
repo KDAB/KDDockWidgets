@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "Screen.h"
+#include "kddockwidgets/core/Screen.h"
 #include "kddockwidgets/core/Window.h"
 
 namespace KDDockWidgets::flutter {
@@ -19,7 +19,9 @@ namespace KDDockWidgets::flutter {
 class DOCKS_EXPORT Window : public Core::Window
 {
 public:
-    Window();
+    /// For flutter, we identify windows with a sequential ID
+    explicit Window(int id);
+
     ~Window() override;
     std::shared_ptr<Core::View> rootView() const override;
     Window::Ptr transientParent() const override;
@@ -47,5 +49,9 @@ public:
     QSize maxSize() const override;
     QPoint fromNativePixels(QPoint) const override;
     bool isFullScreen() const override;
+    void onScreenChanged(QObject *context, WindowScreenChangedCallback) override;
+
+private:
+    const int m_id;
 };
 }

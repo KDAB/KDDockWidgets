@@ -273,7 +273,9 @@ bool View::isMaximized() const
 
 std::shared_ptr<Core::Window> View::window() const
 {
-    return {};
+    auto window = new flutter::Window(0);
+
+    return std::shared_ptr<Core::Window>(window);
 }
 
 std::shared_ptr<Core::View> View::childViewAt(QPoint) const
@@ -365,7 +367,6 @@ void View::setZOrder(int)
 
 HANDLE View::handle() const
 {
-    // TODOm4
     return this;
 }
 
