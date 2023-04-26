@@ -58,6 +58,17 @@ bool View::close()
     return true;
 }
 
+bool View::parentIsVisible() const
+{
+    if (!m_parentView)
+        return true;
+
+    if (!m_parentView->isVisible())
+        return false;
+
+    return m_parentView->parentIsVisible();
+}
+
 bool View::isVisible() const
 {
     PRINT_UNEXPECTED_CALL_MESSAGE
@@ -108,7 +119,12 @@ void View::free_impl()
 
 QSize View::sizeHint() const
 {
-    return {};
+    return m_sizeHint;
+}
+
+void View::setSizeHint(QSize s)
+{
+    m_sizeHint = s;
 }
 
 QSize View::minSize() const
@@ -157,10 +173,12 @@ void View::setFixedHeight(int)
 
 void View::show()
 {
+    setVisible(true);
 }
 
 void View::hide()
 {
+    setVisible(false);
 }
 
 void View::updateGeometry()
@@ -293,7 +311,7 @@ bool View::isMaximized() const
 
 std::shared_ptr<Core::Window> View::window() const
 {
-    auto window = new flutter::Window(0);
+    auto window = new flutter::Window(rootView(), 0);
 
     return std::shared_ptr<Core::Window>(window);
 }

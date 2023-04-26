@@ -47,6 +47,10 @@ public:
     void setMaximumSize(QSize sz) override;
 
     bool isVisible() const override;
+
+    // Like isVisible but goes up the hierarchy
+    bool parentIsVisible() const;
+
     void setVisible(bool visible) override;
 
     void move(int x, int y) override;
@@ -114,7 +118,6 @@ public:
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<Core::View>> childViews() const override;
     void setZOrder(int z) override;
-
     HANDLE handle() const override;
 
     virtual void onChildAdded(Core::View *childView)
@@ -129,10 +132,13 @@ public:
         qFatal("Derived class should be called instead");
     }
 
+    void setSizeHint(QSize);
+
 private:
     View *m_parentView = nullptr;
     QVector<std::shared_ptr<Core::View>> m_childViews;
     QString m_name;
+    QSize m_sizeHint;
     bool m_inCtor = true;
     Q_DISABLE_COPY(View)
 };

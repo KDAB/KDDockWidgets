@@ -31,7 +31,7 @@ class View_mixin {
   int m_height = 400;
   bool m_fillsParent = false;
   String debugName = "";
-  bool m_isVisible = true;
+  bool m_isVisible = false;
 
   int m_maxHeight = 16777215;
   int m_maxWidth = 16777215;
@@ -89,7 +89,7 @@ class View_mixin {
         KDDWBindingsFlutter.View.fromCache(childView!.thisCpp) as View_mixin;
 
     print(
-        "View_mixin::onChildAdded: this=${debugName}, child=${viewFlutter.debugName}");
+        "View_mixin::onChildAdded: this=${debugName}, child=${viewFlutter.debugName}, widget=${viewFlutter.flutterWidget}");
 
     childWidgets.add(viewFlutter.flutterWidget);
 
@@ -143,6 +143,7 @@ class View_mixin {
   }
 
   bool isVisible() {
+    if (!kddwView.parentIsVisible()) return false;
     return m_isVisible;
   }
 

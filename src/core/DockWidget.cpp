@@ -118,6 +118,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
             // Doesn't have a group yet
             d->morphIntoFloatingWindow();
             group = d->group();
+            Q_ASSERT(group);
         } else {
             // Doesn't happen
             qWarning() << Q_FUNC_INFO << "null group";
