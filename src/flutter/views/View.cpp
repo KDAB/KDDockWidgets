@@ -53,6 +53,11 @@ void View::move(int, int)
 
 bool View::close()
 {
+    CloseEvent ev;
+    Core::View::d->closeRequested.emit(&ev);
+
+    // TODO: Ask flutter if we should close
+
     return true;
 }
 

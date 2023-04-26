@@ -72,7 +72,8 @@ public:
         Move,
         FocusIn,
         WindowActivate,
-        LayoutRequest
+        LayoutRequest,
+        Close
     };
 
     explicit Event(Type type)
@@ -114,6 +115,10 @@ public:
 class CloseEvent : public Event
 {
 public:
+    CloseEvent()
+        : Event(Event::Close)
+    {
+    }
 };
 
 class HoverEvent : public Event
