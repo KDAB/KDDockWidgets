@@ -43,7 +43,7 @@ class Platform extends KDDWBindingsFlutter.Platform {
   KDDWBindingsCore.View tests_createView(
       KDDockWidgetBindings.CreateViewOptions opts,
       {required KDDWBindingsCore.View? parent}) {
-    return View(null, 0, parent as View);
+    return View(null, 0, parent == null ? null : parent as View);
   }
 
   @override
