@@ -280,6 +280,7 @@ void Platform::tests_deinitPlatform_impl()
 
 Core::View *Platform::tests_createView(Core::CreateViewOptions, Core::View *)
 {
+    Q_UNREACHABLE(); // Platform.dart gets called instead
     return {};
 }
 
