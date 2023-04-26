@@ -95,7 +95,7 @@ if(KDDW_FRONTEND_FLUTTER)
     add_custom_command(
         TARGET flutter_tests_embedder
         PRE_BUILD
-        COMMAND ${FLUTTER_EXE} build bundle
+        COMMAND ${FLUTTER_EXE} build bundle --suppress-analytics
         WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
         COMMENT "Running flutter build bundle flutter_tests_embedder"
     )
