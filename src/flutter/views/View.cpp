@@ -420,3 +420,17 @@ bool View::onResize(int w, int h)
     // Indirection so Dartagnan generates it, while we don't do bindings for View.cpp
     return Core::View::onResize(w, h);
 }
+
+void KDDockWidgets::flutter::View::onChildAdded(Core::View *childView)
+{
+    Q_UNUSED(childView);
+    dumpDebug();
+    qFatal("Derived class should be called instead");
+}
+
+void KDDockWidgets::flutter::View::onChildRemoved(Core::View *childView)
+{
+    Q_UNUSED(childView);
+    dumpDebug();
+    qFatal("Derived class should be called instead");
+}

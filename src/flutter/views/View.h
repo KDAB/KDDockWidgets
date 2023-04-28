@@ -120,17 +120,8 @@ public:
     void setZOrder(int z) override;
     HANDLE handle() const override;
 
-    virtual void onChildAdded(Core::View *childView)
-    {
-        Q_UNUSED(childView);
-        qFatal("Derived class should be called instead");
-    }
-
-    virtual void onChildRemoved(Core::View *childView)
-    {
-        Q_UNUSED(childView);
-        qFatal("Derived class should be called instead");
-    }
+    virtual void onChildAdded(Core::View *childView);
+    virtual void onChildRemoved(Core::View *childView);
 
     void setSizeHint(QSize);
 
