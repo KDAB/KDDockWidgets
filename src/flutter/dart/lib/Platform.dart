@@ -11,6 +11,7 @@
 
 import 'dart:developer';
 
+import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/View.dart';
 import 'package:KDDockWidgets/WindowOverlayWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
@@ -59,7 +60,7 @@ class Platform extends KDDWBindingsFlutter.Platform {
   KDDWBindingsCore.View createView(KDDWBindingsCore.Controller? controller,
       {required KDDWBindingsCore.View? parent}) {
     print("Platform: createView");
-    return KDDWBindingsFlutter.View(controller, 0, parent);
+    return GenericView(controller, parent);
   }
 
   @override
@@ -90,5 +91,14 @@ class Platform extends KDDWBindingsFlutter.Platform {
   void pauseForDartDebugger() {
     print("pauseForDartDebugger");
     debugger();
+  }
+}
+
+class GenericView extends KDDWBindingsFlutter.View with View_mixin {
+  GenericView(
+      KDDWBindingsCore.Controller? controller, KDDWBindingsCore.View? parent)
+      : super(controller, 0, parent) {
+    m_fillsParent = true;
+    initMixin(this, debugName: "GenericView");
   }
 }
