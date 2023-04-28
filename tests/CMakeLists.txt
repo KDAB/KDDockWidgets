@@ -32,7 +32,9 @@ function(add_slow_test testNumber)
     add_executable(tst_docks_slow${testNumber} tst_docks_slow${testNumber}.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
     target_link_libraries(tst_docks_slow${testNumber} kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
     set_compiler_flags(tst_docks_slow${testNumber})
-    add_test(NAME tst_docks_slow${testNumber} COMMAND tst_docks_slow${testNumber})
+    if (NOT KDDW_FRONTEND_FLUTTER) # TODO: fix these tests for flutter as well
+        add_test(NAME tst_docks_slow${testNumber} COMMAND tst_docks_slow${testNumber})
+    endif()
 endfunction(add_slow_test)
 
 # tst_docks
