@@ -35,6 +35,9 @@ View::~View()
 {
     // qDebug() << "~View_flutter" << this << int(type());
     m_inDtor = true;
+    if (hasFocus())
+        Platform::platformFlutter()->setFocusedView({});
+
     if (m_parentView && !m_parentView->inDtor()) {
         setParent(nullptr);
     }
@@ -129,12 +132,12 @@ void View::setSizeHint(QSize s)
 
 QSize View::minSize() const
 {
-    return {};
+    return m_minSize;
 }
 
 QSize View::maxSizeHint() const
 {
-    return {};
+    return m_maxSize;
 }
 
 QRect View::geometry() const
@@ -151,8 +154,9 @@ void View::setNormalGeometry(QRect)
 {
 }
 
-void View::setMaximumSize(QSize)
+void View::setMaximumSize(QSize s)
 {
+    m_maxSize = s;
 }
 
 void View::setWidth(int)
@@ -357,11 +361,13 @@ void View::releaseKeyboard()
 
 void View::setFocus(Qt::FocusReason)
 {
+    Platform::platformFlutter()->setFocusedView(asWrapper());
 }
 
 bool View::hasFocus() const
 {
-    return false;
+    auto focusedView = Platform::platformFlutter()->focusedView();
+    return focusedView && focusedView->equals(this);
 }
 
 Qt::FocusPolicy View::focusPolicy() const
@@ -378,8 +384,9 @@ QString View::objectName() const
     return m_name;
 }
 
-void View::setMinimumSize(QSize)
+void View::setMinimumSize(QSize s)
 {
+    m_minSize = s;
 }
 
 void View::render(QPainter *)

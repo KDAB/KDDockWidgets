@@ -106,6 +106,9 @@ public:
     bool isLeftMouseButtonPressed() const override;
     QPoint cursorPos() const override;
     void setCursorPos(QPoint) override;
+    void setFocusedView(std::shared_ptr<Core::View>);
+
+    std::shared_ptr<Core::View> m_focusedView;
 };
 
 }

@@ -139,6 +139,8 @@ private:
     QVector<std::shared_ptr<Core::View>> m_childViews;
     QString m_name;
     QSize m_sizeHint;
+    QSize m_minSize;
+    QSize m_maxSize;
     bool m_inCtor = true;
     Q_DISABLE_COPY(View)
 };

@@ -33,9 +33,6 @@ class View_mixin {
   String debugName = "";
   bool m_isVisible = false;
 
-  int m_maxHeight = 16777215;
-  int m_maxWidth = 16777215;
-
   var childWidgets = <Widget>[];
 
   void initMixin(var kddwView, {var color = Colors.red, var debugName = ""}) {
@@ -123,11 +120,6 @@ class View_mixin {
   KDDockWidgetBindings.QRect normalGeometry() {
     // TODO
     return geometry();
-  }
-
-  KDDockWidgetBindings.QSize maxSizeHint() {
-    // print("View_flutter::maximumSize()");
-    return KDDockWidgetBindings.QSize.ctor2(m_maxWidth, m_maxHeight);
   }
 
   move_2(int x, int y) {

@@ -304,6 +304,27 @@ struct CreateViewOptions
     QSize maxSize = QSize(16777215, 16777215);
     QSize size = { 1000, 1000 };
     bool createWindow = false;
+
+    /// Getter needed for flutter. TODO: Auto generate them
+    QSize getSizeHint() const
+    {
+        return sizeHint;
+    }
+
+    QSize getMinSize() const
+    {
+        return minSize;
+    }
+
+    QSize getMaxSize() const
+    {
+        return maxSize;
+    }
+
+    QSize getSize() const
+    {
+        return size;
+    }
 };
 
 #endif

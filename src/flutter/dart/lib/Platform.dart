@@ -45,7 +45,14 @@ class Platform extends KDDWBindingsFlutter.Platform {
   KDDWBindingsCore.View tests_createView(
       KDDockWidgetBindings.CreateViewOptions opts,
       {required KDDWBindingsCore.View? parent}) {
-    return View(null, 0, parent);
+    final view = View(null, 0, parent);
+
+    view.setSizeHint(opts.getSizeHint());
+    view.setMinimumSize(opts.getMinSize());
+    view.setMaximumSize(opts.getMaxSize());
+    view.setVisible(opts.isVisible);
+
+    return view;
   }
 
   @override

@@ -38,7 +38,7 @@ void Platform::init()
 
 std::shared_ptr<Core::View> Platform::focusedView() const
 {
-    return {};
+    return m_focusedView;
 }
 
 QVector<std::shared_ptr<Core::Window>> Platform::windows() const
@@ -372,3 +372,9 @@ std::shared_ptr<Core::Window> Platform::tests_createWindow()
 }
 
 #endif
+
+
+void Platform::setFocusedView(std::shared_ptr<Core::View> view)
+{
+    m_focusedView = view;
+}
