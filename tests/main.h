@@ -58,9 +58,6 @@ inline Core::View *createViewAndWindow(Core::CreateViewOptions opts, Core::View 
 #include "../src/flutter/Platform.h"
 int main(int argc, char **argv)
 {
-
-
-
     KDDockWidgets::flutter::Platform::s_runTestsFunc = [] {
         doctest::Context ctx;
         ctx.setOption("abort-after", 4);
@@ -91,7 +88,9 @@ int main(int argc, char **argv)
     for (FrontendType type : Core::Platform::frontendTypes()) {
 
         Core::Platform::tests_initPlatform(argc, argv, type);
-
+#ifndef KDDW_TESTS_NO_FATAL_WARNINGS
+        Core::Platform::instance()->installMessageHandler();
+#endif
         std::cout << "\nStarting tests for Platform" << Core::Platform::instance()->name() << "\n";
 
         int code = ctx.run();
@@ -104,6 +103,7 @@ int main(int argc, char **argv)
         if (code != 0)
             exitCode = code;
 
+        Core::Platform::instance()->uninstallMessageHandler();
         Core::Platform::tests_deinitPlatform();
     }
 

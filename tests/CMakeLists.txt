@@ -63,10 +63,6 @@ if(KDDW_FRONTEND_QTQUICK)
     set_compiler_flags(tst_qtquick)
 endif()
 
-add_executable(tst_multisplitter tst_multisplitter.cpp)
-target_link_libraries(tst_multisplitter kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
-set_compiler_flags(tst_multisplitter)
-
 #-----------------------------------------------------------------------------
 # Flutter embedder
 if(KDDW_FRONTEND_FLUTTER)
@@ -125,6 +121,7 @@ function(add_doctest test srcs)
     endif()
 endfunction()
 
+add_doctest(tst_multisplitter tst_multisplitter.cpp)
 add_doctest(tst_viewguard tst_viewguard.cpp)
 add_doctest(tst_view tst_view.cpp)
 add_doctest(tst_window tst_window.cpp)

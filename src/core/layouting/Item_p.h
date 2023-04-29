@@ -342,7 +342,7 @@ public:
     KDBindings::Signal<Core::Item *> minSizeChanged;
     KDBindings::Signal<Core::Item *> maxSizeChanged;
 
-protected:
+public:
     friend class ::TestMultiSplitter;
     explicit Item(bool isContainer, KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
@@ -479,13 +479,25 @@ public:
     bool isVertical() const;
     bool isHorizontal() const;
     int length() const;
+    bool hasOrientation() const;
 
     /// @brief Returns the number of visible items layed-out horizontally or vertically
     /// But honours nesting
     int numSideBySide_recursive(Qt::Orientation) const;
 
+    int availableLength() const;
+    LengthOnSide lengthOnSide(const SizingInfo::List &sizes, int fromIndex, Side,
+                              Qt::Orientation) const;
+    int neighboursLengthFor(const Item *item, Side, Qt::Orientation) const;
+    int neighboursLengthFor_recursive(const Item *item, Side, Qt::Orientation) const;
+    int neighboursMinLengthFor(const Item *item, Side, Qt::Orientation) const;
+    int neighboursMaxLengthFor(const Item *item, Side, Qt::Orientation) const;
+    int availableToSqueezeOnSide(const Item *child, Side) const;
+    int availableToGrowOnSide(const Item *child, Side) const;
+    int availableToSqueezeOnSide_recursive(const Item *child, Side, Qt::Orientation) const;
+    int availableToGrowOnSide_recursive(const Item *child, Side, Qt::Orientation) const;
+
 private:
-    bool hasOrientation() const;
     int indexOfVisibleChild(const Item *) const;
     void restore(Item *) override;
     void restoreChild(Item *,
@@ -533,17 +545,7 @@ private:
                           NeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
 
     Item *visibleNeighbourFor(const Item *item, Side side) const;
-    int availableLength() const;
-    LengthOnSide lengthOnSide(const SizingInfo::List &sizes, int fromIndex, Side,
-                              Qt::Orientation) const;
-    int neighboursLengthFor(const Item *item, Side, Qt::Orientation) const;
-    int neighboursLengthFor_recursive(const Item *item, Side, Qt::Orientation) const;
-    int neighboursMinLengthFor(const Item *item, Side, Qt::Orientation) const;
-    int neighboursMaxLengthFor(const Item *item, Side, Qt::Orientation) const;
-    int availableToSqueezeOnSide(const Item *child, Side) const;
-    int availableToGrowOnSide(const Item *child, Side) const;
-    int availableToSqueezeOnSide_recursive(const Item *child, Side, Qt::Orientation) const;
-    int availableToGrowOnSide_recursive(const Item *child, Side, Qt::Orientation) const;
+
     void onChildMinSizeChanged(Item *child) override;
     void onChildVisibleChanged(Item *child, bool visible) override;
     void updateSizeConstraints();
@@ -553,9 +555,6 @@ private:
                                    NeighbourSqueezeStrategy, bool reversed = false) const;
     QRect suggestedDropRectFallback(const Item *item, const Item *relativeTo,
                                     KDDockWidgets::Location) const;
-    void positionItems();
-    void positionItems_recursive();
-    void positionItems(SizingInfo::List &sizes);
     Item *itemAt(QPoint p) const;
     Item *itemAt_recursive(QPoint p) const;
     void setHostView(KDDockWidgets::Core::View *) override;
@@ -577,8 +576,16 @@ public:
     QVector<KDDockWidgets::Core::Separator *> separators_recursive() const;
     QVector<KDDockWidgets::Core::Separator *> separators() const;
 
+#ifdef DOCKS_DEVELOPER_MODE
+public:
+#else
 private:
+#endif
     void simplify();
+    void positionItems();
+    void positionItems_recursive();
+    void positionItems(SizingInfo::List &sizes);
+
     static bool s_inhibitSimplify;
     friend class Core::Item;
     friend class ::TestMultiSplitter;
