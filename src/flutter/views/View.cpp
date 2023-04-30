@@ -27,6 +27,9 @@ View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent
            Qt::WindowFlags)
     : Core::View(controller, type)
 {
+    m_minSize = Core::Item::hardcodedMinimumSize;
+    m_maxSize = Core::Item::hardcodedMaximumSize;
+
     setParent(parent);
     m_inCtor = false;
 }
@@ -156,6 +159,7 @@ void View::setNormalGeometry(QRect)
 
 void View::setMaximumSize(QSize s)
 {
+    s = s.boundedTo(Core::Item::hardcodedMaximumSize);
     if (s != m_maxSize) {
         m_maxSize = s;
         d->layoutInvalidated.emit();
@@ -389,6 +393,7 @@ QString View::objectName() const
 
 void View::setMinimumSize(QSize s)
 {
+    s = s.expandedTo(Core::Item::hardcodedMinimumSize);
     if (s != m_minSize) {
         m_minSize = s;
         d->layoutInvalidated.emit();
