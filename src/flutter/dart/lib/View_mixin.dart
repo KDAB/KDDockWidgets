@@ -85,8 +85,8 @@ class View_mixin {
     final viewFlutter =
         KDDWBindingsFlutter.View.fromCache(childView!.thisCpp) as View_mixin;
 
-    print(
-        "View_mixin::onChildAdded: this=${debugName}, child=${viewFlutter.debugName}, widget=${viewFlutter.flutterWidget}");
+    // print(
+    //     "View_mixin::onChildAdded: this=${debugName}, child=${viewFlutter.debugName}, widget=${viewFlutter.flutterWidget}");
 
     childWidgets.add(viewFlutter.flutterWidget);
 

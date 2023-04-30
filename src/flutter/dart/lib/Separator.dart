@@ -30,7 +30,6 @@ class Separator extends View {
     m_controller = separator!;
     m_color = Colors.blueGrey;
     debugName = "Separator";
-    print("Separator CTOR");
 
     m_parent = KDDWBindingsFlutter.View.fromCache(parent!.thisCpp);
     m_parent.onChildAdded(this);
