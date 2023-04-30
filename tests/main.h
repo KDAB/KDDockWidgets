@@ -56,12 +56,17 @@ inline Core::View *createViewAndWindow(Core::CreateViewOptions opts, Core::View 
 #ifdef KDDW_FRONTEND_FLUTTER
 #include "flutter_tests_embedder/tests_embedder.h"
 #include "../src/flutter/Platform.h"
+static int s_argc;
+static char **s_argv;
 int main(int argc, char **argv)
 {
+    s_argc = argc;
+    s_argv = argv;
+
     KDDockWidgets::flutter::Platform::s_runTestsFunc = [] {
         doctest::Context ctx;
         ctx.setOption("abort-after", 4);
-        // ctx.applyCommandLine(argc, argv);
+        ctx.applyCommandLine(s_argc, s_argv);
         ctx.setOption("no-breaks", true);
         return ctx.run();
     };
