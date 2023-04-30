@@ -944,6 +944,7 @@ TEST_CASE("tst_containerGetsHidden")
     CHECK(serializeDeserializeTest(root));
 }
 
+#ifndef KDDW_FRONTEND_FLUTTER
 TEST_CASE("tst_minSizeChanges")
 {
     auto root = createRoot();
@@ -969,6 +970,7 @@ TEST_CASE("tst_minSizeChanges")
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
 }
+#endif
 
 TEST_CASE("tst_numSeparators")
 {
@@ -1444,6 +1446,7 @@ TEST_CASE("tst_separatorMoveCrash")
     c->requestSeparatorMove(separator, available5 + 10);
 }
 
+#ifndef KDDW_FRONTEND_FLUTTER
 TEST_CASE("tst_separatorMoveHonoursMax")
 {
     const int maxWidth = 250;
@@ -1482,6 +1485,7 @@ TEST_CASE("tst_separatorMoveHonoursMax")
     CHECK(root->checkSanity());
     CHECK(item2->width() <= maxWidth);
 }
+#endif
 
 TEST_CASE("tst_maxSizeHonoured1")
 {
@@ -1584,6 +1588,7 @@ TEST_CASE("tst_maxSizeHonoured3")
     }
 }
 
+#ifndef KDDW_FRONTEND_FLUTTER
 TEST_CASE("tst_requestEqualSize")
 {
     // Tests that double-clicking a separator will make both sides equal
@@ -1648,6 +1653,7 @@ TEST_CASE("tst_requestEqualSize")
         CHECK_EQ(item1->width(), maxWidth1);
     }
 }
+#endif
 
 TEST_CASE("tst_maxSizeHonouredWhenAnotherRemoved")
 {

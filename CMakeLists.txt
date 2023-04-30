@@ -441,6 +441,7 @@ if(KDDockWidgets_TESTS)
         add_test(NAME tst_stack COMMAND tst_titlebar)
         add_test(NAME tst_platform COMMAND tst_platform)
         add_test(NAME tst_separator COMMAND tst_separator)
+        add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
 
         if (KDDW_FRONTEND_FLUTTER)
             set_tests_properties(
@@ -451,6 +452,7 @@ if(KDDockWidgets_TESTS)
                     tst_stack
                     tst_platform
                     tst_separator
+                    tst_multisplitter
                 PROPERTIES
                 ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0")
         else()
@@ -460,7 +462,6 @@ if(KDDockWidgets_TESTS)
             add_test(NAME tst_tabbar COMMAND tst_tabbar)
             add_test(NAME tst_floatingwindow COMMAND tst_floatingwindow)
             add_test(NAME tst_dockwidget COMMAND tst_dockwidget)
-            add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
         endif()
 
         if(KDDW_FRONTEND_QTWIDGETS)

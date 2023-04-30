@@ -156,7 +156,10 @@ void View::setNormalGeometry(QRect)
 
 void View::setMaximumSize(QSize s)
 {
-    m_maxSize = s;
+    if (s != m_maxSize) {
+        m_maxSize = s;
+        d->layoutInvalidated.emit();
+    }
 }
 
 void View::setWidth(int)
@@ -386,7 +389,10 @@ QString View::objectName() const
 
 void View::setMinimumSize(QSize s)
 {
-    m_minSize = s;
+    if (s != m_minSize) {
+        m_minSize = s;
+        d->layoutInvalidated.emit();
+    }
 }
 
 void View::render(QPainter *)
