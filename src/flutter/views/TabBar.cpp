@@ -68,9 +68,11 @@ void TabBar::removeDockWidget(Core::DockWidget *)
     onRebuildRequested();
 }
 
-void TabBar::insertDockWidget(int, Core::DockWidget *, const Icon &,
+void TabBar::insertDockWidget(int, Core::DockWidget *dw, const Icon &,
                               const QString &)
 {
+    dw->view()->setParent(this);
+
     onRebuildRequested();
 }
 

@@ -22,7 +22,13 @@ TEST_CASE("FloatingWindow Ctor")
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     CHECK(dw->view()->rootView()->is(ViewType::DockWidget));
+    CHECK(!dw->view()->parentView());
+
     dw->view()->show();
+    CHECK(dw->view()->parentView());
+    CHECK(dw->view()->rootView()->is(ViewType::FloatingWindow));
+
+    REQUIRE(dw->floatingWindow());
 
     /// Wait for FloatingWindow to be created
     Platform::instance()->tests_wait(100);
