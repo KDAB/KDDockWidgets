@@ -443,26 +443,28 @@ if(KDDockWidgets_TESTS)
         add_test(NAME tst_separator COMMAND tst_separator)
         add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
         add_test(NAME tst_floatingwindow COMMAND tst_floatingwindow)
+        add_test(NAME tst_droparea COMMAND tst_droparea)
+        add_test(NAME tst_dockwidget COMMAND tst_dockwidget)
 
-        if (KDDW_FRONTEND_FLUTTER)
+        if(KDDW_FRONTEND_FLUTTER)
             set_tests_properties(
-                    tst_view
-                    tst_viewguard
-                    tst_titlebar
-                    tst_group
-                    tst_stack
-                    tst_platform
-                    tst_separator
-                    tst_multisplitter
-                    tst_floatingwindow
-                PROPERTIES
-                ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0")
+                tst_view
+                tst_viewguard
+                tst_titlebar
+                tst_group
+                tst_stack
+                tst_platform
+                tst_separator
+                tst_multisplitter
+                tst_floatingwindow
+                tst_droparea
+                tst_dockwidget
+                PROPERTIES ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0"
+            )
         else()
             add_test(NAME tst_docks COMMAND tst_docks)
             add_test(NAME tst_window COMMAND tst_window)
-            add_test(NAME tst_droparea COMMAND tst_droparea)
             add_test(NAME tst_tabbar COMMAND tst_tabbar)
-            add_test(NAME tst_dockwidget COMMAND tst_dockwidget)
         endif()
 
         if(KDDW_FRONTEND_QTWIDGETS)
