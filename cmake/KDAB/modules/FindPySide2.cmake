@@ -106,6 +106,8 @@ else()
         PYSIDE_INCLUDE_DIR pyside.h
         PATHS ${PYSIDE2_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include/PySide2
         NO_DEFAULT_PATH
+        NO_CACHE
+        NO_SYSTEM_ENVIRONMENT_PATH
     )
 
     # Platform specific library names
