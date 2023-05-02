@@ -28,16 +28,16 @@ import 'TabBar.dart';
 
 class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   ViewFactory() {
-    print("Dart: Created ViewFactory_flutter");
+    // print("Dart: Created ViewFactory_flutter");
   }
 
   @override
   KDDWBindingsCore.View createDropArea(
       KDDWBindingsCore.DropArea? controller, KDDWBindingsCore.View? parent) {
-    print("ViewFactory: Creating DropArea");
+    // print("ViewFactory: Creating DropArea");
     var da = DropArea(
         controller, KDDockWidgetBindings.Core_ViewType.DropArea, parent);
-    print("ViewFactory: Created DropArea");
+    // print("ViewFactory: Created DropArea");
     return da;
   }
 
@@ -45,35 +45,35 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   KDDockWidgetBindings.ClassicIndicatorWindowViewInterface
       createClassicIndicatorWindow(
           KDDockWidgetBindings.ClassicIndicators? indicators) {
-    print("ViewFactory: createClassicIndicatorWindow");
+    // print("ViewFactory: createClassicIndicatorWindow");
     return KDDockWidgetBindings.ClassicIndicatorWindowViewInterface();
   }
 
   @override
   KDDWBindingsCore.View createGroup(KDDWBindingsCore.Group? group,
       {required KDDWBindingsCore.View? parent}) {
-    print("ViewFactory: createGroup");
+    // print("ViewFactory: createGroup");
     return Group(group, parent);
   }
 
   @override
   KDDWBindingsCore.View createTabBar(KDDWBindingsCore.TabBar? tabBar,
       {required KDDWBindingsCore.View? parent}) {
-    print("ViewFactory: createTabBar");
+    // print("ViewFactory: createTabBar");
     return TabBar(tabBar, parent);
   }
 
   @override
   KDDWBindingsCore.View createTitleBar(
       KDDWBindingsCore.TitleBar? controller, KDDWBindingsCore.View? parent) {
-    print("ViewFactory: createTitleBar");
+    // print("ViewFactory: createTitleBar");
     return TitleBar(controller, parent);
   }
 
   @override
   KDDWBindingsCore.View createStack(
       KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent) {
-    print("ViewFactory: createStack");
+    // print("ViewFactory: createStack");
     return Stack(stack, parent);
   }
 

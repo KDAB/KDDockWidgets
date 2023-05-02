@@ -30,7 +30,7 @@ class Group extends KDDWBindingsFlutter.Group with View_mixin {
     m_controller = group!;
     initMixin(this, color: Colors.greenAccent, debugName: "Group");
 
-    print("Group CTOR");
+    // print("Group CTOR");
   }
 
   Widget createFlutterWidget() {

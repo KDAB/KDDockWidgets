@@ -22,7 +22,7 @@ class DockWidget extends KDDWBindingsFlutter.DockWidget with View_mixin {
             options: options, layoutSaverOptions: layoutSaverOptions) {
     initMixin(this, color: Colors.pink, debugName: "DockWidget");
     m_fillsParent = true;
-    print("DockWidget CTOR");
+    // print("DockWidget CTOR");
   }
 
   Widget createFlutterWidget() {

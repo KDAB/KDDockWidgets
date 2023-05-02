@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 class Stack extends KDDWBindingsFlutter.Stack with View_mixin {
   Stack(KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent)
       : super(stack, parent: parent) {
-    print("Stack CTOR");
+    // print("Stack CTOR");
   }
 
   Widget createFlutterWidget() {
