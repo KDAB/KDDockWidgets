@@ -94,6 +94,8 @@ else()
             SHIBOKEN_INCLUDE_DIR shiboken.h
             PATHS ${SHIBOKEN_CUSTOM_PREFIX} ${SHIBOKEN_GENERATOR_BASEDIR}/include
             NO_DEFAULT_PATH
+            NO_CACHE
+            NO_SYSTEM_ENVIRONMENT_PATH
         )
         if(MSVC)
             set(SHIBOKEN_LIBRARY_BASENAMES "shiboken2.abi3.lib")
