@@ -23,18 +23,9 @@ set(PYSIDE2_FOUND FALSE)
 if(PYSIDE2_PRIV_FOUND)
     set(PYSIDE2_FOUND TRUE)
     message(STATUS "Using PySide2 found in the system!")
-    pkg_get_variable(SHIBOKEN_BINARY
-        pyside2
-        generator_location
-    )
-    pkg_get_variable(PYSIDE2_BASEDIR
-        pyside2
-        typesystemdir
-    )
-    pkg_get_variable(PYSIDE_INCLUDE_DIR
-        pyside2
-        includedir
-    )
+    pkg_get_variable(SHIBOKEN_BINARY pyside2 generator_location)
+    pkg_get_variable(PYSIDE2_BASEDIR pyside2 typesystemdir)
+    pkg_get_variable(PYSIDE_INCLUDE_DIR pyside2 includedir)
     set(PYSIDE_TYPESYSTEMS ${PYSIDE2_BASEDIR})
     set(PYSIDE2_SO_VERSION ${PYSIDE2_PRIV_VERSION})
     set(PYSIDE_LIBRARY ${PYSIDE2_PRIV_LINK_LIBRARIES})
@@ -45,7 +36,8 @@ else()
     get_filename_component(PYTHON_LIBRARY_FILENAME ${PYTHON_LIBRARY_FILENAME} NAME)
 
     execute_process(
-        COMMAND ${Python3_EXECUTABLE} -c "if True:
+        COMMAND
+            ${Python3_EXECUTABLE} -c "if True:
             import os, sys
             try:
               import PySide2.QtCore as QtCore
@@ -58,16 +50,18 @@ else()
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     if(NOT PYSIDE2_BASEDIR)
-        message(
-            FATAL_ERROR
-                "The PySide2 module could not be imported. Make sure you have it installed "
-                "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+        message(FATAL_ERROR "The PySide2 module could not be imported. Make sure you have it installed "
+                            "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
         )
     endif()
 
-    set(PYSIDE_BASEDIR ${PYSIDE2_BASEDIR} CACHE PATH "Top level install of PySide2" FORCE)
+    set(PYSIDE_BASEDIR
+        ${PYSIDE2_BASEDIR}
+        CACHE PATH "Top level install of PySide2" FORCE
+    )
     execute_process(
-        COMMAND ${Python3_EXECUTABLE} -c "if True:
+        COMMAND
+            ${Python3_EXECUTABLE} -c "if True:
             import os
             import PySide2.QtCore as QtCore
             print(os.path.basename(QtCore.__file__).split('.', 1)[1])
@@ -77,7 +71,8 @@ else()
     )
 
     execute_process(
-        COMMAND ${Python3_EXECUTABLE} -c "if True:
+        COMMAND
+            ${Python3_EXECUTABLE} -c "if True:
             import os
             import PySide2.QtCore as QtCore
             print(';'.join(map(str, QtCore.__version_info__)))
@@ -103,10 +98,11 @@ else()
 
     #PySide
     #===============================================================================
-    find_path(PYSIDE_INCLUDE_DIR
-        pyside.h
+    find_path(
+        PYSIDE_INCLUDE_DIR pyside.h
         PATHS ${PYSIDE2_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include/PySide2
-        NO_DEFAULT_PATH)
+        NO_DEFAULT_PATH
+    )
 
     # Platform specific library names
     if(MSVC)
@@ -119,15 +115,17 @@ else()
         set(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
     endif()
 
-    find_file(PYSIDE_LIBRARY
-        ${PYSIDE_LIBRARY_BASENAMES}
+    find_file(
+        PYSIDE_LIBRARY ${PYSIDE_LIBRARY_BASENAMES}
         PATHS ${PYSIDE2_BASEDIR} ${PYSIDE_CUSTOM_PREFIX}/lib
-        NO_DEFAULT_PATH)
+        NO_DEFAULT_PATH
+    )
 
-    find_path(PYSIDE_TYPESYSTEMS
-        typesystem_core.xml
+    find_path(
+        PYSIDE_TYPESYSTEMS typesystem_core.xml
         PATHS ${PYSIDE2_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide2/typesystems
-        NO_DEFAULT_PATH)
+        NO_DEFAULT_PATH
+    )
 endif()
 
 if(PYSIDE2_FOUND)
@@ -142,17 +140,20 @@ if(PYSIDE2_FOUND)
         set_property(TARGET PySide2::pyside2 PROPERTY IMPORTED_IMPLIB ${PYSIDE_LIBRARY})
     endif()
     set_property(TARGET PySide2::pyside2 PROPERTY IMPORTED_LOCATION ${PYSIDE_LIBRARY})
-    set_property(TARGET PySide2::pyside2 APPEND PROPERTY
-        INTERFACE_INCLUDE_DIRECTORIES
-        ${PYSIDE_INCLUDE_DIR}
-        ${PYSIDE_INCLUDE_DIR}/QtCore/
-        ${PYSIDE_INCLUDE_DIR}/QtGui/
-        ${PYSIDE_INCLUDE_DIR}/QtWidgets/
-        ${Python3_INCLUDE_DIRS}
+    set_property(
+        TARGET PySide2::pyside2
+        APPEND
+        PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+                 ${PYSIDE_INCLUDE_DIR}
+                 ${PYSIDE_INCLUDE_DIR}/QtCore/
+                 ${PYSIDE_INCLUDE_DIR}/QtGui/
+                 ${PYSIDE_INCLUDE_DIR}/QtWidgets/
+                 ${Python3_INCLUDE_DIRS}
     )
 endif()
 
-find_package_handle_standard_args(PySide2
+find_package_handle_standard_args(
+    PySide2
     REQUIRED_VARS PYSIDE2_BASEDIR PYSIDE_INCLUDE_DIR PYSIDE_LIBRARY PYSIDE_TYPESYSTEMS
     VERSION_VAR PYSIDE2_SO_VERSION
 )

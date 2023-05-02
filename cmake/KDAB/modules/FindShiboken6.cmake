@@ -17,7 +17,8 @@
 set(SHIBOKEN_FOUND FALSE)
 
 execute_process(
-    COMMAND ${Python3_EXECUTABLE} -c "if True:
+    COMMAND
+        ${Python3_EXECUTABLE} -c "if True:
         import os
         try:
             import shiboken6_generator
@@ -29,14 +30,13 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 if(NOT SHIBOKEN_GENERATOR_BASEDIR)
-    message(
-        FATAL_ERROR
-            "The shiboken6_generator module could not be imported. Make sure you have it installed "
-            "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+    message(FATAL_ERROR "The shiboken6_generator module could not be imported. Make sure you have it installed "
+                        "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
     )
 endif()
 execute_process(
-    COMMAND ${Python3_EXECUTABLE} -c "if True:
+    COMMAND
+        ${Python3_EXECUTABLE} -c "if True:
         import os
         try:
             import shiboken6
@@ -48,14 +48,13 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 if(NOT SHIBOKEN_BASEDIR)
-    message(
-        FATAL_ERROR
-            "The shiboken6 module could not be imported. Make sure you have it installed "
-            "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+    message(FATAL_ERROR "The shiboken6 module could not be imported. Make sure you have it installed "
+                        "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
     )
 endif()
 execute_process(
-    COMMAND ${Python3_EXECUTABLE} -c "if True:
+    COMMAND
+        ${Python3_EXECUTABLE} -c "if True:
         import os
         import shiboken6
         print(';'.join(filter(None, map(str, shiboken6.__version_info__))))
@@ -73,8 +72,8 @@ message(STATUS "Shiboken base dir:          ${SHIBOKEN_BASEDIR}")
 message(STATUS "Shiboken custom path:       ${SHIBOKEN_CUSTOM_PREFIX}")
 
 if(SHIBOKEN_BASEDIR)
-    find_path(SHIBOKEN_INCLUDE_DIR
-        shiboken.h
+    find_path(
+        SHIBOKEN_INCLUDE_DIR shiboken.h
         PATHS ${SHIBOKEN_CUSTOM_PREFIX} ${SHIBOKEN_GENERATOR_BASEDIR}/include
         NO_DEFAULT_PATH
     )
@@ -86,15 +85,13 @@ if(SHIBOKEN_BASEDIR)
         set(SHIBOKEN_LIBRARY_BASENAMES "libshiboken6.${PYSIDE2_SUFFIX}")
     elseif(APPLE)
         set(SHIBOKEN_LIBRARY_BASENAMES
-            libshiboken6.abi3.dylib
-            libshiboken6.abi3.${SHIBOKEN_MACRO_VERSION}.dylib
+            libshiboken6.abi3.dylib libshiboken6.abi3.${SHIBOKEN_MACRO_VERSION}.dylib
             libshiboken6.abi3.${SHIBOKEN_MACRO_VERSION}.${SHIBOKEN_MICRO_VERSION}.dylib
             libshiboken6.abi3.${SHIBOKEN_VERSION}.dylib
         )
     else()
         set(SHIBOKEN_LIBRARY_BASENAMES
-            libshiboken6.abi3.so
-            libshiboken6.abi3.so.${SHIBOKEN_MACRO_VERSION}
+            libshiboken6.abi3.so libshiboken6.abi3.so.${SHIBOKEN_MACRO_VERSION}
             libshiboken6.abi3.so.${SHIBOKEN_MACRO_VERSION}.${SHIBOKEN_MICRO_VERSION}
             libshiboken6.abi3.so.${SHIBOKEN_VERSION}
         )
@@ -106,29 +103,35 @@ if(SHIBOKEN_BASEDIR)
     set(SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_CUSTOM_PREFIX})
     list(APPEND SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_BASEDIR})
     list(APPEND SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_GENERATOR_BASEDIR})
-    find_file(SHIBOKEN_LIBRARY
-        ${SHIBOKEN_LIBRARY_BASENAMES}
+    find_file(
+        SHIBOKEN_LIBRARY ${SHIBOKEN_LIBRARY_BASENAMES}
         PATHS ${SHIBOKEN_SEARCH_PATHS}
-        NO_DEFAULT_PATH)
+        NO_DEFAULT_PATH
+    )
 
-    find_program(SHIBOKEN_BINARY
-        shiboken6
+    find_program(
+        SHIBOKEN_BINARY shiboken6
         PATHS ${SHIBOKEN_SEARCH_PATHS}
         NO_DEFAULT_PATH
     )
 endif()
-if(SHIBOKEN_INCLUDE_DIR AND SHIBOKEN_LIBRARY AND SHIBOKEN_BINARY)
+if(SHIBOKEN_INCLUDE_DIR
+   AND SHIBOKEN_LIBRARY
+   AND SHIBOKEN_BINARY
+)
     set(SHIBOKEN_FOUND TRUE)
 endif()
 
 if(SHIBOKEN_FOUND)
+
 endif()
 
 if(MSVC)
     # On Windows we must link to python3.dll that is a small library that links against python3x.dll
     # that allow us to choose any python3x.dll at runtime
     execute_process(
-        COMMAND ${Python3_EXECUTABLE} -c "if True:
+        COMMAND
+            ${Python3_EXECUTABLE} -c "if True:
             for lib in '${Python3_LIBRARIES}'.split(';'):
                 if '/' in lib:
                     prefix, py = lib.rsplit('/', 1)
@@ -154,15 +157,18 @@ if(SHIBOKEN_FOUND)
     # Create shiboken2 target
     add_library(Shiboken6::libshiboken SHARED IMPORTED GLOBAL)
     if(MSVC)
-        set_property(TARGET Shiboken6::libshiboken PROPERTY
-            IMPORTED_IMPLIB ${SHIBOKEN_LIBRARY})
+        set_property(TARGET Shiboken6::libshiboken PROPERTY IMPORTED_IMPLIB ${SHIBOKEN_LIBRARY})
     endif()
     set_property(TARGET Shiboken6::libshiboken PROPERTY IMPORTED_LOCATION ${SHIBOKEN_LIBRARY})
-    set_property(TARGET Shiboken6::libshiboken APPEND PROPERTY
-        INTERFACE_INCLUDE_DIRECTORIES ${SHIBOKEN_INCLUDE_DIR} ${Python3_INCLUDE_DIRS}
+    set_property(
+        TARGET Shiboken6::libshiboken
+        APPEND
+        PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${SHIBOKEN_INCLUDE_DIR} ${Python3_INCLUDE_DIRS}
     )
-    set_property(TARGET Shiboken6::libshiboken APPEND PROPERTY
-        INTERFACE_LINK_LIBRARIES ${PYTHON_LIMITED_LIBRARIES}
+    set_property(
+        TARGET Shiboken6::libshiboken
+        APPEND
+        PROPERTY INTERFACE_LINK_LIBRARIES ${PYTHON_LIMITED_LIBRARIES}
     )
 
     # Generator target
@@ -175,4 +181,3 @@ find_package_handle_standard_args(
     REQUIRED_VARS SHIBOKEN_BASEDIR SHIBOKEN_INCLUDE_DIR SHIBOKEN_LIBRARY SHIBOKEN_BINARY
     VERSION_VAR SHIBOKEN_VERSION
 )
-
