@@ -19,8 +19,8 @@
 #include <core/Group.h>
 #include <qlist.h>
 #include <DropArea.h>
-#include <qrect.h>
 #include <qstring.h>
+#include <qrect.h>
 #include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

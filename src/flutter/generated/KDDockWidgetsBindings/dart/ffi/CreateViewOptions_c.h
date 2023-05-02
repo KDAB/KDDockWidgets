@@ -10,6 +10,7 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <core/Platform.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class CreateViewOptions_wrapper : public ::KDDockWidgets::Core::CreateViewOptions
@@ -17,11 +18,23 @@ class CreateViewOptions_wrapper : public ::KDDockWidgets::Core::CreateViewOption
 public:
     ~CreateViewOptions_wrapper();
     CreateViewOptions_wrapper();
+    QSize getMaxSize() const;
+    QSize getMinSize() const;
+    QSize getSize() const;
+    QSize getSizeHint() const;
 };
 }
 extern "C" {
 // KDDockWidgets::Core::CreateViewOptions::CreateViewOptions()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__constructor();
+// KDDockWidgets::Core::CreateViewOptions::getMaxSize() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getMaxSize(void *thisObj);
+// KDDockWidgets::Core::CreateViewOptions::getMinSize() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getMinSize(void *thisObj);
+// KDDockWidgets::Core::CreateViewOptions::getSize() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getSize(void *thisObj);
+// KDDockWidgets::Core::CreateViewOptions::getSizeHint() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getSizeHint(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_isVisible(void *thisObj);
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_createWindow(void *thisObj);

@@ -363,7 +363,7 @@ void *c_KDDockWidgets__Core__Item__hostView(void *thisObj)
 // isBeingInserted() const
 bool c_KDDockWidgets__Core__Item__isBeingInserted(void *thisObj)
 {
-    return fromWrapperPtr(thisObj)->isBeingInserted();
+    return fromPtr(thisObj)->isBeingInserted();
 }
 // isContainer() const
 bool c_KDDockWidgets__Core__Item__isContainer(void *thisObj)
@@ -438,7 +438,7 @@ void *c_KDDockWidgets__Core__Item__minSize(void *thisObj)
 // missingSize() const
 void *c_KDDockWidgets__Core__Item__missingSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromWrapperPtr(thisObj)->missingSize() };
+    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->missingSize() };
 }
 // pos() const
 void *c_KDDockWidgets__Core__Item__pos(void *thisObj)
@@ -469,7 +469,7 @@ void c_KDDockWidgets__Core__Item__restore_View(void *thisObj, void *guestView_)
 // setBeingInserted(bool arg__1)
 void c_KDDockWidgets__Core__Item__setBeingInserted_bool(void *thisObj, bool arg__1)
 {
-    fromWrapperPtr(thisObj)->setBeingInserted(arg__1);
+    fromPtr(thisObj)->setBeingInserted(arg__1);
 }
 // setGeometry(QRect rect)
 void c_KDDockWidgets__Core__Item__setGeometry_QRect(void *thisObj, void *rect_)
@@ -500,7 +500,7 @@ void c_KDDockWidgets__Core__Item__setHostView_View(void *thisObj, void *arg__1_)
 // setIsVisible(bool arg__1)
 void c_KDDockWidgets__Core__Item__setIsVisible_bool(void *thisObj, bool arg__1)
 {
-    fromWrapperPtr(thisObj)->setIsVisible_nocallback(arg__1);
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setIsVisible_nocallback(arg__1);} else {    return targetPtr->setIsVisible(arg__1);} }();
 }
 // setMaxSizeHint(QSize arg__1)
 void c_KDDockWidgets__Core__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_)
@@ -521,7 +521,7 @@ void c_KDDockWidgets__Core__Item__setPos_QPoint(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
-    fromWrapperPtr(thisObj)->setPos(arg__1);
+    fromPtr(thisObj)->setPos(arg__1);
 }
 // setSize(QSize arg__1)
 void c_KDDockWidgets__Core__Item__setSize_QSize(void *thisObj, void *arg__1_)
@@ -553,7 +553,7 @@ void c_KDDockWidgets__Core__Item__unref(void *thisObj)
 // updateWidgetGeometries()
 void c_KDDockWidgets__Core__Item__updateWidgetGeometries(void *thisObj)
 {
-    fromWrapperPtr(thisObj)->updateWidgetGeometries_nocallback();
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->updateWidgetGeometries_nocallback();} else {    return targetPtr->updateWidgetGeometries();} }();
 }
 // visibleCount_recursive() const
 int c_KDDockWidgets__Core__Item__visibleCount_recursive(void *thisObj)
@@ -587,6 +587,14 @@ bool c_static_KDDockWidgets__Core__Item___get_s_silenceSanityChecks()
 {
     return KDDockWidgetsBindings_wrappersNS::Item_wrapper::s_silenceSanityChecks;
 }
+bool c_KDDockWidgets__Core__Item___get_m_isContainer(void *thisObj)
+{
+    return fromPtr(thisObj)->m_isContainer;
+}
+bool c_KDDockWidgets__Core__Item___get_m_isSettingGuest(void *thisObj)
+{
+    return fromPtr(thisObj)->m_isSettingGuest;
+}
 void c_static_KDDockWidgets__Core__Item___set_separatorThickness_int(int separatorThickness_)
 {
     KDDockWidgetsBindings_wrappersNS::Item_wrapper::separatorThickness = separatorThickness_;
@@ -595,38 +603,42 @@ void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_
 {
     KDDockWidgetsBindings_wrappersNS::Item_wrapper::s_silenceSanityChecks = s_silenceSanityChecks_;
 }
+void c_KDDockWidgets__Core__Item___set_m_isSettingGuest_bool(void *thisObj, bool m_isSettingGuest_)
+{
+    fromPtr(thisObj)->m_isSettingGuest = m_isSettingGuest_;
+}
 void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 759:
+    case 777:
         wrapper->m_checkSanityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_checkSanity>(callback);
         break;
-    case 766:
+    case 784:
         wrapper->m_dumpLayoutCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_dumpLayout>(callback);
         break;
-    case 783:
+    case 801:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_isVisible>(callback);
         break;
-    case 792:
+    case 810:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 793:
+    case 811:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_minSize>(callback);
         break;
-    case 810:
+    case 828:
         wrapper->m_setGeometry_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setGeometry_recursive>(callback);
         break;
-    case 812:
+    case 830:
         wrapper->m_setHostViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setHostView>(callback);
         break;
-    case 813:
+    case 831:
         wrapper->m_setIsVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setIsVisible>(callback);
         break;
-    case 827:
+    case 845:
         wrapper->m_updateWidgetGeometriesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_updateWidgetGeometries>(callback);
         break;
-    case 828:
+    case 846:
         wrapper->m_visibleCount_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_visibleCount_recursive>(callback);
         break;
     }

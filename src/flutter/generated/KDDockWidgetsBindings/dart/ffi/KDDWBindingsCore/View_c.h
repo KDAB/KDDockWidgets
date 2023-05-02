@@ -50,6 +50,7 @@ public:
     KDDockWidgets::Core::Controller *controller() const;
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
+    void dumpDebug();
     static bool equals(const KDDockWidgets::Core::View *one, const KDDockWidgets::Core::View *two);
     bool equals(const KDDockWidgets::Core::View *other) const;
     static KDDockWidgets::Core::Controller *firstParentOfType(KDDockWidgets::Core::View *view, KDDockWidgets::Core::ViewType arg__2);
@@ -318,6 +319,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__closeRootView(voi
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__controller(void *thisObj);
 // KDDockWidgets::Core::View::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Core::View::dumpDebug()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__dumpDebug(void *thisObj);
 // KDDockWidgets::Core::View::equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
 KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Core__View__equals_View_View(void *one_, void *two_);
 // KDDockWidgets::Core::View::equals(const KDDockWidgets::Core::View * other) const

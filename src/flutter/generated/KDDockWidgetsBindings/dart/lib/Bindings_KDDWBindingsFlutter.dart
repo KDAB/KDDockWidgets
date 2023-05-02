@@ -16,3 +16,4 @@ export 'src/KDDWBindingsFlutter/TitleBar.dart' show TitleBar;
 export 'src/KDDWBindingsFlutter/View.dart' show View;
 export 'src/KDDWBindingsFlutter/Platform.dart' show Platform;
 export 'src/KDDWBindingsFlutter/ViewFactory.dart' show ViewFactory;
+export 'src/KDDWBindingsFlutter/Window.dart' show Window;

@@ -17,14 +17,14 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include <FloatingWindow.h>
-#include "core/Stack.h"
-#include <core/Group.h>
-#include <MainWindow.h>
 #include <DropArea.h>
-#include <TabBar.h>
-#include <core/Layout.h>
-#include "core/TitleBar.h"
 #include <core/DockWidget.h>
+#include <MainWindow.h>
+#include <core/Group.h>
+#include "core/Stack.h"
+#include <core/Layout.h>
+#include <TabBar.h>
+#include "core/TitleBar.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -91,6 +91,7 @@ public:
     virtual void onChildRemoved_nocallback(KDDockWidgets::Core::View *childView);
     virtual bool onResize(int w, int h);
     virtual bool onResize_nocallback(int w, int h);
+    bool parentIsVisible() const;
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -122,6 +123,7 @@ public:
     virtual void setParent_nocallback(KDDockWidgets::Core::View *parent);
     virtual void setSize(int w, int h);
     virtual void setSize_nocallback(int w, int h);
+    void setSizeHint(QSize arg__1);
     virtual void setVisible(bool visible);
     virtual void setVisible_nocallback(bool visible);
     virtual void setWidth(int w);
@@ -319,6 +321,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildAdded_V
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onResize(int w, int h)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::View::parentIsVisible() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__parentIsVisible(void *thisObj);
 // KDDockWidgets::flutter::View::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__raise(void *thisObj);
 // KDDockWidgets::flutter::View::raiseAndActivate()
@@ -351,6 +355,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__setObjectName_
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::View::setSize(int w, int h)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::View::setSizeHint(QSize arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__setSizeHint_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::View::setVisible(bool visible)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::View::setWidth(int w)

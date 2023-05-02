@@ -60,6 +60,8 @@ public:
     virtual void onFloatingWindowDestroyed_nocallback(KDDockWidgets::Core::FloatingWindow *arg__1);
     virtual QString organizationName() const;
     virtual QString organizationName_nocallback() const;
+    virtual void pauseForDartDebugger();
+    virtual void pauseForDartDebugger_nocallback();
     static KDDockWidgets::flutter::Platform *platformFlutter();
     virtual void restoreMouseCursor();
     virtual void restoreMouseCursor_nocallback();
@@ -124,6 +126,8 @@ public:
     Callback_onFloatingWindowDestroyed m_onFloatingWindowDestroyedCallback = nullptr;
     typedef QString *(*Callback_organizationName)(void *);
     Callback_organizationName m_organizationNameCallback = nullptr;
+    typedef void (*Callback_pauseForDartDebugger)(void *);
+    Callback_pauseForDartDebugger m_pauseForDartDebuggerCallback = nullptr;
     typedef void (*Callback_restoreMouseCursor)(void *);
     Callback_restoreMouseCursor m_restoreMouseCursorCallback = nullptr;
     typedef int (*Callback_screenNumberFor)(void *, KDDockWidgets::Core::View *arg__1);
@@ -194,6 +198,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onFloating
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::organizationName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__organizationName(void *thisObj);
+// KDDockWidgets::flutter::Platform::pauseForDartDebugger()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDartDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::platformFlutter()
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()

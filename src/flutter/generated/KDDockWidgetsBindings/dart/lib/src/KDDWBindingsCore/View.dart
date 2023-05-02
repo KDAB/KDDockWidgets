@@ -67,7 +67,7 @@ class View {
   activateWindow() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(886))
+            cFunctionSymbolName(908))
         .asFunction();
     func(thisCpp);
   }
@@ -178,7 +178,7 @@ class View {
   bool close() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(897))
+            cFunctionSymbolName(919))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -214,7 +214,7 @@ class View {
   createPlatformWindow() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(900))
+            cFunctionSymbolName(922))
         .asFunction();
     func(thisCpp);
   }
@@ -228,6 +228,14 @@ class View {
       throw Error();
     }
     dartInstance.createPlatformWindow();
+  } // dumpDebug()
+
+  dumpDebug() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__View__dumpDebug')
+        .asFunction();
+    func(thisCpp);
   }
 
   static // equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
@@ -273,7 +281,7 @@ class View {
   int flags() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(905))
+            cFunctionSymbolName(928))
         .asFunction();
     return func(thisCpp);
   }
@@ -301,7 +309,7 @@ class View {
   free_impl() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(907))
+            cFunctionSymbolName(930))
         .asFunction();
     func(thisCpp);
   }
@@ -328,7 +336,7 @@ class View {
   QRect geometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(909))
+            cFunctionSymbolName(932))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -358,7 +366,7 @@ class View {
   grabMouse() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(911))
+            cFunctionSymbolName(934))
         .asFunction();
     func(thisCpp);
   }
@@ -387,7 +395,7 @@ class View {
   bool hasFocus() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(914))
+            cFunctionSymbolName(937))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -415,7 +423,7 @@ class View {
   hide() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(916))
+            cFunctionSymbolName(939))
         .asFunction();
     func(thisCpp);
   }
@@ -450,7 +458,7 @@ class View {
   init() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(919))
+            cFunctionSymbolName(942))
         .asFunction();
     func(thisCpp);
   }
@@ -468,7 +476,7 @@ class View {
   bool isActiveWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(921))
+            cFunctionSymbolName(944))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -488,7 +496,7 @@ class View {
   bool isMaximized() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(922))
+            cFunctionSymbolName(945))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -508,7 +516,7 @@ class View {
   bool isMinimized() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(923))
+            cFunctionSymbolName(946))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -528,7 +536,7 @@ class View {
   bool isNull() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(924))
+            cFunctionSymbolName(947))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -548,7 +556,7 @@ class View {
   bool isRootView() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(925))
+            cFunctionSymbolName(948))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -568,7 +576,7 @@ class View {
   bool isVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(926))
+            cFunctionSymbolName(949))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -588,7 +596,7 @@ class View {
   QPoint mapFromGlobal(QPoint arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(927))
+            cFunctionSymbolName(950))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
@@ -613,7 +621,7 @@ class View {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(928))
+            cFunctionSymbolName(951))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -642,7 +650,7 @@ class View {
   QPoint mapToGlobal(QPoint arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(929))
+            cFunctionSymbolName(952))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
@@ -665,7 +673,7 @@ class View {
   QSize maxSizeHint() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(930))
+            cFunctionSymbolName(953))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -686,7 +694,7 @@ class View {
   QSize minSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(931))
+            cFunctionSymbolName(954))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -707,7 +715,7 @@ class View {
   int minimumHeight() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(932))
+            cFunctionSymbolName(955))
         .asFunction();
     return func(thisCpp);
   }
@@ -727,7 +735,7 @@ class View {
   int minimumWidth() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(933))
+            cFunctionSymbolName(956))
         .asFunction();
     return func(thisCpp);
   }
@@ -755,7 +763,7 @@ class View {
   move_2(int x, int y) {
     final void_Func_voidstar_int_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(935))
+            cFunctionSymbolName(958))
         .asFunction();
     func(thisCpp, x, y);
   }
@@ -774,7 +782,7 @@ class View {
   QRect normalGeometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(936))
+            cFunctionSymbolName(959))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -796,7 +804,7 @@ class View {
   QString objectName() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(937))
+            cFunctionSymbolName(960))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QString.fromCppPointer(result, true);
@@ -825,7 +833,7 @@ class View {
   bool onResize_2(int h, int w) {
     final bool_Func_voidstar_int_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(939))
+            cFunctionSymbolName(962))
         .asFunction();
     return func(thisCpp, h, w) != 0;
   }
@@ -863,7 +871,7 @@ class View {
   raise() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(942))
+            cFunctionSymbolName(965))
         .asFunction();
     func(thisCpp);
   }
@@ -881,7 +889,7 @@ class View {
   raiseAndActivate() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(943))
+            cFunctionSymbolName(966))
         .asFunction();
     func(thisCpp);
   }
@@ -909,7 +917,7 @@ class View {
   releaseKeyboard() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(945))
+            cFunctionSymbolName(968))
         .asFunction();
     func(thisCpp);
   }
@@ -928,7 +936,7 @@ class View {
   releaseMouse() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(946))
+            cFunctionSymbolName(969))
         .asFunction();
     func(thisCpp);
   }
@@ -971,7 +979,7 @@ class View {
   setCursor(int arg__1) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(950))
+            cFunctionSymbolName(973))
         .asFunction();
     func(thisCpp, arg__1);
   }
@@ -990,7 +998,7 @@ class View {
   setFixedHeight(int arg__1) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(951))
+            cFunctionSymbolName(974))
         .asFunction();
     func(thisCpp, arg__1);
   }
@@ -1010,7 +1018,7 @@ class View {
   setFixedWidth(int arg__1) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(952))
+            cFunctionSymbolName(975))
         .asFunction();
     func(thisCpp, arg__1);
   }
@@ -1029,7 +1037,7 @@ class View {
   setGeometry(QRect arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(953))
+            cFunctionSymbolName(976))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -1049,7 +1057,7 @@ class View {
   setHeight(int height) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(954))
+            cFunctionSymbolName(977))
         .asFunction();
     func(thisCpp, height);
   }
@@ -1068,7 +1076,7 @@ class View {
   setMaximumSize(QSize sz) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(955))
+            cFunctionSymbolName(978))
         .asFunction();
     func(thisCpp, sz == null ? ffi.nullptr : sz.thisCpp);
   }
@@ -1088,7 +1096,7 @@ class View {
   setMinimumSize(QSize arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(956))
+            cFunctionSymbolName(979))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -1108,7 +1116,7 @@ class View {
   setMouseTracking(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(957))
+            cFunctionSymbolName(980))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -1128,7 +1136,7 @@ class View {
   setObjectName(String? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(958))
+            cFunctionSymbolName(981))
         .asFunction();
     func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   }
@@ -1148,7 +1156,7 @@ class View {
   setParent(KDDWBindingsCore.View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(959))
+            cFunctionSymbolName(982))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -1178,7 +1186,7 @@ class View {
   setSize_2(int width, int height) {
     final void_Func_voidstar_int_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(961))
+            cFunctionSymbolName(984))
         .asFunction();
     func(thisCpp, width, height);
   }
@@ -1198,7 +1206,7 @@ class View {
   setVisible(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(962))
+            cFunctionSymbolName(985))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -1217,7 +1225,7 @@ class View {
   setWidth(int width) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(963))
+            cFunctionSymbolName(986))
         .asFunction();
     func(thisCpp, width);
   }
@@ -1236,7 +1244,7 @@ class View {
   setWindowOpacity(double arg__1) {
     final void_Func_voidstar_double func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Double_FFI>>(
-            cFunctionSymbolName(964))
+            cFunctionSymbolName(987))
         .asFunction();
     func(thisCpp, arg__1);
   }
@@ -1256,7 +1264,7 @@ class View {
   setWindowTitle(String? title) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(965))
+            cFunctionSymbolName(988))
         .asFunction();
     func(thisCpp, title?.toNativeUtf8() ?? ffi.nullptr);
   }
@@ -1276,7 +1284,7 @@ class View {
   setZOrder(int arg__1) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(966))
+            cFunctionSymbolName(989))
         .asFunction();
     func(thisCpp, arg__1);
   }
@@ -1295,7 +1303,7 @@ class View {
   show() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(967))
+            cFunctionSymbolName(990))
         .asFunction();
     func(thisCpp);
   }
@@ -1313,7 +1321,7 @@ class View {
   showMaximized() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(968))
+            cFunctionSymbolName(991))
         .asFunction();
     func(thisCpp);
   }
@@ -1332,7 +1340,7 @@ class View {
   showMinimized() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(969))
+            cFunctionSymbolName(992))
         .asFunction();
     func(thisCpp);
   }
@@ -1351,7 +1359,7 @@ class View {
   showNormal() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(970))
+            cFunctionSymbolName(993))
         .asFunction();
     func(thisCpp);
   }
@@ -1379,7 +1387,7 @@ class View {
   QSize sizeHint() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(972))
+            cFunctionSymbolName(995))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -1408,7 +1416,7 @@ class View {
   update() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(974))
+            cFunctionSymbolName(997))
         .asFunction();
     func(thisCpp);
   }
@@ -1466,111 +1474,111 @@ class View {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 886:
+      case 908:
         return "c_KDDockWidgets__Core__View__activateWindow";
-      case 897:
-        return "c_KDDockWidgets__Core__View__close";
-      case 900:
-        return "c_KDDockWidgets__Core__View__createPlatformWindow";
-      case 905:
-        return "c_KDDockWidgets__Core__View__flags";
-      case 907:
-        return "c_KDDockWidgets__Core__View__free_impl";
-      case 909:
-        return "c_KDDockWidgets__Core__View__geometry";
-      case 911:
-        return "c_KDDockWidgets__Core__View__grabMouse";
-      case 914:
-        return "c_KDDockWidgets__Core__View__hasFocus";
-      case 916:
-        return "c_KDDockWidgets__Core__View__hide";
       case 919:
-        return "c_KDDockWidgets__Core__View__init";
-      case 921:
-        return "c_KDDockWidgets__Core__View__isActiveWindow";
+        return "c_KDDockWidgets__Core__View__close";
       case 922:
-        return "c_KDDockWidgets__Core__View__isMaximized";
-      case 923:
-        return "c_KDDockWidgets__Core__View__isMinimized";
-      case 924:
-        return "c_KDDockWidgets__Core__View__isNull";
-      case 925:
-        return "c_KDDockWidgets__Core__View__isRootView";
-      case 926:
-        return "c_KDDockWidgets__Core__View__isVisible";
-      case 927:
-        return "c_KDDockWidgets__Core__View__mapFromGlobal_QPoint";
+        return "c_KDDockWidgets__Core__View__createPlatformWindow";
       case 928:
-        return "c_KDDockWidgets__Core__View__mapTo_View_QPoint";
-      case 929:
-        return "c_KDDockWidgets__Core__View__mapToGlobal_QPoint";
+        return "c_KDDockWidgets__Core__View__flags";
       case 930:
-        return "c_KDDockWidgets__Core__View__maxSizeHint";
-      case 931:
-        return "c_KDDockWidgets__Core__View__minSize";
+        return "c_KDDockWidgets__Core__View__free_impl";
       case 932:
-        return "c_KDDockWidgets__Core__View__minimumHeight";
-      case 933:
-        return "c_KDDockWidgets__Core__View__minimumWidth";
-      case 935:
-        return "c_KDDockWidgets__Core__View__move_int_int";
-      case 936:
-        return "c_KDDockWidgets__Core__View__normalGeometry";
+        return "c_KDDockWidgets__Core__View__geometry";
+      case 934:
+        return "c_KDDockWidgets__Core__View__grabMouse";
       case 937:
-        return "c_KDDockWidgets__Core__View__objectName";
+        return "c_KDDockWidgets__Core__View__hasFocus";
       case 939:
-        return "c_KDDockWidgets__Core__View__onResize_int_int";
+        return "c_KDDockWidgets__Core__View__hide";
       case 942:
-        return "c_KDDockWidgets__Core__View__raise";
-      case 943:
-        return "c_KDDockWidgets__Core__View__raiseAndActivate";
+        return "c_KDDockWidgets__Core__View__init";
+      case 944:
+        return "c_KDDockWidgets__Core__View__isActiveWindow";
       case 945:
-        return "c_KDDockWidgets__Core__View__releaseKeyboard";
+        return "c_KDDockWidgets__Core__View__isMaximized";
       case 946:
-        return "c_KDDockWidgets__Core__View__releaseMouse";
+        return "c_KDDockWidgets__Core__View__isMinimized";
+      case 947:
+        return "c_KDDockWidgets__Core__View__isNull";
+      case 948:
+        return "c_KDDockWidgets__Core__View__isRootView";
+      case 949:
+        return "c_KDDockWidgets__Core__View__isVisible";
       case 950:
-        return "c_KDDockWidgets__Core__View__setCursor_CursorShape";
+        return "c_KDDockWidgets__Core__View__mapFromGlobal_QPoint";
       case 951:
-        return "c_KDDockWidgets__Core__View__setFixedHeight_int";
+        return "c_KDDockWidgets__Core__View__mapTo_View_QPoint";
       case 952:
-        return "c_KDDockWidgets__Core__View__setFixedWidth_int";
+        return "c_KDDockWidgets__Core__View__mapToGlobal_QPoint";
       case 953:
-        return "c_KDDockWidgets__Core__View__setGeometry_QRect";
+        return "c_KDDockWidgets__Core__View__maxSizeHint";
       case 954:
-        return "c_KDDockWidgets__Core__View__setHeight_int";
+        return "c_KDDockWidgets__Core__View__minSize";
       case 955:
-        return "c_KDDockWidgets__Core__View__setMaximumSize_QSize";
+        return "c_KDDockWidgets__Core__View__minimumHeight";
       case 956:
-        return "c_KDDockWidgets__Core__View__setMinimumSize_QSize";
-      case 957:
-        return "c_KDDockWidgets__Core__View__setMouseTracking_bool";
+        return "c_KDDockWidgets__Core__View__minimumWidth";
       case 958:
-        return "c_KDDockWidgets__Core__View__setObjectName_QString";
+        return "c_KDDockWidgets__Core__View__move_int_int";
       case 959:
-        return "c_KDDockWidgets__Core__View__setParent_View";
-      case 961:
-        return "c_KDDockWidgets__Core__View__setSize_int_int";
+        return "c_KDDockWidgets__Core__View__normalGeometry";
+      case 960:
+        return "c_KDDockWidgets__Core__View__objectName";
       case 962:
-        return "c_KDDockWidgets__Core__View__setVisible_bool";
-      case 963:
-        return "c_KDDockWidgets__Core__View__setWidth_int";
-      case 964:
-        return "c_KDDockWidgets__Core__View__setWindowOpacity_double";
+        return "c_KDDockWidgets__Core__View__onResize_int_int";
       case 965:
-        return "c_KDDockWidgets__Core__View__setWindowTitle_QString";
+        return "c_KDDockWidgets__Core__View__raise";
       case 966:
-        return "c_KDDockWidgets__Core__View__setZOrder_int";
-      case 967:
-        return "c_KDDockWidgets__Core__View__show";
+        return "c_KDDockWidgets__Core__View__raiseAndActivate";
       case 968:
-        return "c_KDDockWidgets__Core__View__showMaximized";
+        return "c_KDDockWidgets__Core__View__releaseKeyboard";
       case 969:
-        return "c_KDDockWidgets__Core__View__showMinimized";
-      case 970:
-        return "c_KDDockWidgets__Core__View__showNormal";
-      case 972:
-        return "c_KDDockWidgets__Core__View__sizeHint";
+        return "c_KDDockWidgets__Core__View__releaseMouse";
+      case 973:
+        return "c_KDDockWidgets__Core__View__setCursor_CursorShape";
       case 974:
+        return "c_KDDockWidgets__Core__View__setFixedHeight_int";
+      case 975:
+        return "c_KDDockWidgets__Core__View__setFixedWidth_int";
+      case 976:
+        return "c_KDDockWidgets__Core__View__setGeometry_QRect";
+      case 977:
+        return "c_KDDockWidgets__Core__View__setHeight_int";
+      case 978:
+        return "c_KDDockWidgets__Core__View__setMaximumSize_QSize";
+      case 979:
+        return "c_KDDockWidgets__Core__View__setMinimumSize_QSize";
+      case 980:
+        return "c_KDDockWidgets__Core__View__setMouseTracking_bool";
+      case 981:
+        return "c_KDDockWidgets__Core__View__setObjectName_QString";
+      case 982:
+        return "c_KDDockWidgets__Core__View__setParent_View";
+      case 984:
+        return "c_KDDockWidgets__Core__View__setSize_int_int";
+      case 985:
+        return "c_KDDockWidgets__Core__View__setVisible_bool";
+      case 986:
+        return "c_KDDockWidgets__Core__View__setWidth_int";
+      case 987:
+        return "c_KDDockWidgets__Core__View__setWindowOpacity_double";
+      case 988:
+        return "c_KDDockWidgets__Core__View__setWindowTitle_QString";
+      case 989:
+        return "c_KDDockWidgets__Core__View__setZOrder_int";
+      case 990:
+        return "c_KDDockWidgets__Core__View__show";
+      case 991:
+        return "c_KDDockWidgets__Core__View__showMaximized";
+      case 992:
+        return "c_KDDockWidgets__Core__View__showMinimized";
+      case 993:
+        return "c_KDDockWidgets__Core__View__showNormal";
+      case 995:
+        return "c_KDDockWidgets__Core__View__sizeHint";
+      case 997:
         return "c_KDDockWidgets__Core__View__update";
     }
     return "";
@@ -1578,111 +1586,111 @@ class View {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 886:
+      case 908:
         return "activateWindow";
-      case 897:
-        return "close";
-      case 900:
-        return "createPlatformWindow";
-      case 905:
-        return "flags";
-      case 907:
-        return "free_impl";
-      case 909:
-        return "geometry";
-      case 911:
-        return "grabMouse";
-      case 914:
-        return "hasFocus";
-      case 916:
-        return "hide";
       case 919:
-        return "init";
-      case 921:
-        return "isActiveWindow";
+        return "close";
       case 922:
-        return "isMaximized";
-      case 923:
-        return "isMinimized";
-      case 924:
-        return "isNull";
-      case 925:
-        return "isRootView";
-      case 926:
-        return "isVisible";
-      case 927:
-        return "mapFromGlobal";
+        return "createPlatformWindow";
       case 928:
-        return "mapTo";
-      case 929:
-        return "mapToGlobal";
+        return "flags";
       case 930:
-        return "maxSizeHint";
-      case 931:
-        return "minSize";
+        return "free_impl";
       case 932:
-        return "minimumHeight";
-      case 933:
-        return "minimumWidth";
-      case 935:
-        return "move_2";
-      case 936:
-        return "normalGeometry";
+        return "geometry";
+      case 934:
+        return "grabMouse";
       case 937:
-        return "objectName";
+        return "hasFocus";
       case 939:
-        return "onResize_2";
+        return "hide";
       case 942:
-        return "raise";
-      case 943:
-        return "raiseAndActivate";
+        return "init";
+      case 944:
+        return "isActiveWindow";
       case 945:
-        return "releaseKeyboard";
+        return "isMaximized";
       case 946:
-        return "releaseMouse";
+        return "isMinimized";
+      case 947:
+        return "isNull";
+      case 948:
+        return "isRootView";
+      case 949:
+        return "isVisible";
       case 950:
-        return "setCursor";
+        return "mapFromGlobal";
       case 951:
-        return "setFixedHeight";
+        return "mapTo";
       case 952:
-        return "setFixedWidth";
+        return "mapToGlobal";
       case 953:
-        return "setGeometry";
+        return "maxSizeHint";
       case 954:
-        return "setHeight";
+        return "minSize";
       case 955:
-        return "setMaximumSize";
+        return "minimumHeight";
       case 956:
-        return "setMinimumSize";
-      case 957:
-        return "setMouseTracking";
+        return "minimumWidth";
       case 958:
-        return "setObjectName";
+        return "move_2";
       case 959:
-        return "setParent";
-      case 961:
-        return "setSize_2";
+        return "normalGeometry";
+      case 960:
+        return "objectName";
       case 962:
-        return "setVisible";
-      case 963:
-        return "setWidth";
-      case 964:
-        return "setWindowOpacity";
+        return "onResize_2";
       case 965:
-        return "setWindowTitle";
+        return "raise";
       case 966:
-        return "setZOrder";
-      case 967:
-        return "show";
+        return "raiseAndActivate";
       case 968:
-        return "showMaximized";
+        return "releaseKeyboard";
       case 969:
-        return "showMinimized";
-      case 970:
-        return "showNormal";
-      case 972:
-        return "sizeHint";
+        return "releaseMouse";
+      case 973:
+        return "setCursor";
       case 974:
+        return "setFixedHeight";
+      case 975:
+        return "setFixedWidth";
+      case 976:
+        return "setGeometry";
+      case 977:
+        return "setHeight";
+      case 978:
+        return "setMaximumSize";
+      case 979:
+        return "setMinimumSize";
+      case 980:
+        return "setMouseTracking";
+      case 981:
+        return "setObjectName";
+      case 982:
+        return "setParent";
+      case 984:
+        return "setSize_2";
+      case 985:
+        return "setVisible";
+      case 986:
+        return "setWidth";
+      case 987:
+        return "setWindowOpacity";
+      case 988:
+        return "setWindowTitle";
+      case 989:
+        return "setZOrder";
+      case 990:
+        return "show";
+      case 991:
+        return "showMaximized";
+      case 992:
+        return "showMinimized";
+      case 993:
+        return "showNormal";
+      case 995:
+        return "sizeHint";
+      case 997:
         return "update";
     }
     throw Error();
@@ -1694,197 +1702,197 @@ class View {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__View__registerVirtualMethodCallback')
         .asFunction();
-    final callback886 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback908 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.activateWindow_calledFromC);
-    registerCallback(thisCpp, callback886, 886);
-    const callbackExcept897 = 0;
-    final callback897 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.close_calledFromC, callbackExcept897);
-    registerCallback(thisCpp, callback897, 897);
-    final callback900 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.createPlatformWindow_calledFromC);
-    registerCallback(thisCpp, callback900, 900);
-    const callbackExcept905 = 0;
-    final callback905 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.flags_calledFromC, callbackExcept905);
-    registerCallback(thisCpp, callback905, 905);
-    final callback907 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.free_impl_calledFromC);
-    registerCallback(thisCpp, callback907, 907);
-    final callback909 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.geometry_calledFromC);
-    registerCallback(thisCpp, callback909, 909);
-    final callback911 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.grabMouse_calledFromC);
-    registerCallback(thisCpp, callback911, 911);
-    const callbackExcept914 = 0;
-    final callback914 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.hasFocus_calledFromC, callbackExcept914);
-    registerCallback(thisCpp, callback914, 914);
-    final callback916 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.hide_calledFromC);
-    registerCallback(thisCpp, callback916, 916);
-    final callback919 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.init_calledFromC);
+    registerCallback(thisCpp, callback908, 908);
+    const callbackExcept919 = 0;
+    final callback919 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.close_calledFromC, callbackExcept919);
     registerCallback(thisCpp, callback919, 919);
-    const callbackExcept921 = 0;
-    final callback921 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.isActiveWindow_calledFromC, callbackExcept921);
-    registerCallback(thisCpp, callback921, 921);
-    const callbackExcept922 = 0;
-    final callback922 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.isMaximized_calledFromC, callbackExcept922);
+    final callback922 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.createPlatformWindow_calledFromC);
     registerCallback(thisCpp, callback922, 922);
-    const callbackExcept923 = 0;
-    final callback923 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.isMinimized_calledFromC, callbackExcept923);
-    registerCallback(thisCpp, callback923, 923);
-    const callbackExcept924 = 0;
-    final callback924 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.isNull_calledFromC, callbackExcept924);
-    registerCallback(thisCpp, callback924, 924);
-    const callbackExcept925 = 0;
-    final callback925 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.isRootView_calledFromC, callbackExcept925);
-    registerCallback(thisCpp, callback925, 925);
-    const callbackExcept926 = 0;
-    final callback926 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.isVisible_calledFromC, callbackExcept926);
-    registerCallback(thisCpp, callback926, 926);
-    final callback927 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.mapFromGlobal_calledFromC);
-    registerCallback(thisCpp, callback927, 927);
-    final callback928 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.mapTo_calledFromC);
+    const callbackExcept928 = 0;
+    final callback928 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.flags_calledFromC, callbackExcept928);
     registerCallback(thisCpp, callback928, 928);
-    final callback929 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.mapToGlobal_calledFromC);
-    registerCallback(thisCpp, callback929, 929);
-    final callback930 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.maxSizeHint_calledFromC);
+    final callback930 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.free_impl_calledFromC);
     registerCallback(thisCpp, callback930, 930);
-    final callback931 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.minSize_calledFromC);
-    registerCallback(thisCpp, callback931, 931);
-    const callbackExcept932 = 0;
-    final callback932 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.minimumHeight_calledFromC, callbackExcept932);
+    final callback932 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.geometry_calledFromC);
     registerCallback(thisCpp, callback932, 932);
-    const callbackExcept933 = 0;
-    final callback933 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.minimumWidth_calledFromC, callbackExcept933);
-    registerCallback(thisCpp, callback933, 933);
-    final callback935 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.move_2_calledFromC);
-    registerCallback(thisCpp, callback935, 935);
-    final callback936 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.normalGeometry_calledFromC);
-    registerCallback(thisCpp, callback936, 936);
-    final callback937 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.objectName_calledFromC);
+    final callback934 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.grabMouse_calledFromC);
+    registerCallback(thisCpp, callback934, 934);
+    const callbackExcept937 = 0;
+    final callback937 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.hasFocus_calledFromC, callbackExcept937);
     registerCallback(thisCpp, callback937, 937);
-    const callbackExcept939 = 0;
-    final callback939 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept939);
+    final callback939 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.hide_calledFromC);
     registerCallback(thisCpp, callback939, 939);
     final callback942 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.raise_calledFromC);
+        KDDWBindingsCore.View.init_calledFromC);
     registerCallback(thisCpp, callback942, 942);
-    final callback943 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.raiseAndActivate_calledFromC);
-    registerCallback(thisCpp, callback943, 943);
-    final callback945 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.releaseKeyboard_calledFromC);
+    const callbackExcept944 = 0;
+    final callback944 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.isActiveWindow_calledFromC, callbackExcept944);
+    registerCallback(thisCpp, callback944, 944);
+    const callbackExcept945 = 0;
+    final callback945 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.isMaximized_calledFromC, callbackExcept945);
     registerCallback(thisCpp, callback945, 945);
-    final callback946 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.releaseMouse_calledFromC);
+    const callbackExcept946 = 0;
+    final callback946 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.isMinimized_calledFromC, callbackExcept946);
     registerCallback(thisCpp, callback946, 946);
+    const callbackExcept947 = 0;
+    final callback947 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.isNull_calledFromC, callbackExcept947);
+    registerCallback(thisCpp, callback947, 947);
+    const callbackExcept948 = 0;
+    final callback948 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.isRootView_calledFromC, callbackExcept948);
+    registerCallback(thisCpp, callback948, 948);
+    const callbackExcept949 = 0;
+    final callback949 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.isVisible_calledFromC, callbackExcept949);
+    registerCallback(thisCpp, callback949, 949);
     final callback950 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.setCursor_calledFromC);
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.mapFromGlobal_calledFromC);
     registerCallback(thisCpp, callback950, 950);
     final callback951 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.setFixedHeight_calledFromC);
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.mapTo_calledFromC);
     registerCallback(thisCpp, callback951, 951);
     final callback952 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.setFixedWidth_calledFromC);
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.mapToGlobal_calledFromC);
     registerCallback(thisCpp, callback952, 952);
-    final callback953 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.setGeometry_calledFromC);
+    final callback953 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.maxSizeHint_calledFromC);
     registerCallback(thisCpp, callback953, 953);
-    final callback954 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.setHeight_calledFromC);
+    final callback954 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.minSize_calledFromC);
     registerCallback(thisCpp, callback954, 954);
-    final callback955 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.setMaximumSize_calledFromC);
+    const callbackExcept955 = 0;
+    final callback955 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.minimumHeight_calledFromC, callbackExcept955);
     registerCallback(thisCpp, callback955, 955);
-    final callback956 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.setMinimumSize_calledFromC);
+    const callbackExcept956 = 0;
+    final callback956 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.minimumWidth_calledFromC, callbackExcept956);
     registerCallback(thisCpp, callback956, 956);
-    final callback957 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
-            KDDWBindingsCore.View.setMouseTracking_calledFromC);
-    registerCallback(thisCpp, callback957, 957);
     final callback958 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.setObjectName_calledFromC);
-    registerCallback(thisCpp, callback958, 958);
-    final callback959 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.setParent_calledFromC);
-    registerCallback(thisCpp, callback959, 959);
-    final callback961 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.setSize_2_calledFromC);
-    registerCallback(thisCpp, callback961, 961);
+            KDDWBindingsCore.View.move_2_calledFromC);
+    registerCallback(thisCpp, callback958, 958);
+    final callback959 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.normalGeometry_calledFromC);
+    registerCallback(thisCpp, callback959, 959);
+    final callback960 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.objectName_calledFromC);
+    registerCallback(thisCpp, callback960, 960);
+    const callbackExcept962 = 0;
     final callback962 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
-            KDDWBindingsCore.View.setVisible_calledFromC);
+        ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
+            KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept962);
     registerCallback(thisCpp, callback962, 962);
-    final callback963 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.setWidth_calledFromC);
-    registerCallback(thisCpp, callback963, 963);
-    final callback964 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Double_FFI>(
-            KDDWBindingsCore.View.setWindowOpacity_calledFromC);
-    registerCallback(thisCpp, callback964, 964);
-    final callback965 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.View.setWindowTitle_calledFromC);
+    final callback965 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.raise_calledFromC);
     registerCallback(thisCpp, callback965, 965);
-    final callback966 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.setZOrder_calledFromC);
+    final callback966 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.raiseAndActivate_calledFromC);
     registerCallback(thisCpp, callback966, 966);
-    final callback967 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.show_calledFromC);
-    registerCallback(thisCpp, callback967, 967);
     final callback968 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.showMaximized_calledFromC);
+        KDDWBindingsCore.View.releaseKeyboard_calledFromC);
     registerCallback(thisCpp, callback968, 968);
     final callback969 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.showMinimized_calledFromC);
+        KDDWBindingsCore.View.releaseMouse_calledFromC);
     registerCallback(thisCpp, callback969, 969);
-    final callback970 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.showNormal_calledFromC);
-    registerCallback(thisCpp, callback970, 970);
-    final callback972 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.sizeHint_calledFromC);
-    registerCallback(thisCpp, callback972, 972);
-    final callback974 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.update_calledFromC);
+    final callback973 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.View.setCursor_calledFromC);
+    registerCallback(thisCpp, callback973, 973);
+    final callback974 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.View.setFixedHeight_calledFromC);
     registerCallback(thisCpp, callback974, 974);
+    final callback975 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.View.setFixedWidth_calledFromC);
+    registerCallback(thisCpp, callback975, 975);
+    final callback976 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.setGeometry_calledFromC);
+    registerCallback(thisCpp, callback976, 976);
+    final callback977 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.View.setHeight_calledFromC);
+    registerCallback(thisCpp, callback977, 977);
+    final callback978 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.setMaximumSize_calledFromC);
+    registerCallback(thisCpp, callback978, 978);
+    final callback979 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.setMinimumSize_calledFromC);
+    registerCallback(thisCpp, callback979, 979);
+    final callback980 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
+            KDDWBindingsCore.View.setMouseTracking_calledFromC);
+    registerCallback(thisCpp, callback980, 980);
+    final callback981 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.setObjectName_calledFromC);
+    registerCallback(thisCpp, callback981, 981);
+    final callback982 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.setParent_calledFromC);
+    registerCallback(thisCpp, callback982, 982);
+    final callback984 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
+            KDDWBindingsCore.View.setSize_2_calledFromC);
+    registerCallback(thisCpp, callback984, 984);
+    final callback985 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
+            KDDWBindingsCore.View.setVisible_calledFromC);
+    registerCallback(thisCpp, callback985, 985);
+    final callback986 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.View.setWidth_calledFromC);
+    registerCallback(thisCpp, callback986, 986);
+    final callback987 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Double_FFI>(
+            KDDWBindingsCore.View.setWindowOpacity_calledFromC);
+    registerCallback(thisCpp, callback987, 987);
+    final callback988 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.View.setWindowTitle_calledFromC);
+    registerCallback(thisCpp, callback988, 988);
+    final callback989 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.View.setZOrder_calledFromC);
+    registerCallback(thisCpp, callback989, 989);
+    final callback990 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.show_calledFromC);
+    registerCallback(thisCpp, callback990, 990);
+    final callback991 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.showMaximized_calledFromC);
+    registerCallback(thisCpp, callback991, 991);
+    final callback992 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.showMinimized_calledFromC);
+    registerCallback(thisCpp, callback992, 992);
+    final callback993 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.showNormal_calledFromC);
+    registerCallback(thisCpp, callback993, 993);
+    final callback995 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.sizeHint_calledFromC);
+    registerCallback(thisCpp, callback995, 995);
+    final callback997 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.update_calledFromC);
+    registerCallback(thisCpp, callback997, 997);
   }
 }

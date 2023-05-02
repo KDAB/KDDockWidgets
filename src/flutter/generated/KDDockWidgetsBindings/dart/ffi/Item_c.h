@@ -199,8 +199,11 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Item__y(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT int c_static_KDDockWidgets__Core__Item___get_separatorThickness();
 KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Core__Item___get_s_silenceSanityChecks();
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item___get_m_isContainer(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item___get_m_isSettingGuest(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__Item___set_separatorThickness_int(int separatorThickness_);
 KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item___set_m_isSettingGuest_bool(void *thisObj, bool m_isSettingGuest_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item_Finalizer(void *, void *cppObj, void *);
 }

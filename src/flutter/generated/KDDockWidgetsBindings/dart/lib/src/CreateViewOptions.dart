@@ -88,7 +88,43 @@ class CreateViewOptions {
         .asFunction();
     thisCpp = func();
     CreateViewOptions.s_dartInstanceByCppPtr[thisCpp.address] = this;
+  } // getMaxSize() const
+  QSize getMaxSize() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__CreateViewOptions__getMaxSize')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return QSize.fromCppPointer(result, true);
+  } // getMinSize() const
+
+  QSize getMinSize() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__CreateViewOptions__getMinSize')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return QSize.fromCppPointer(result, true);
+  } // getSize() const
+
+  QSize getSize() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__CreateViewOptions__getSize')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return QSize.fromCppPointer(result, true);
+  } // getSizeHint() const
+
+  QSize getSizeHint() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__CreateViewOptions__getSizeHint')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return QSize.fromCppPointer(result, true);
   }
+
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
