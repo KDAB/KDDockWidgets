@@ -7,7 +7,8 @@
 
 if(NOT ${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX)
     # cmake-lint: disable=C0103
-    set(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}
+    set(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX
+        ${CMAKE_INSTALL_PREFIX}
         CACHE FILEPATH "Custom path to install python bindings."
     )
 endif()
@@ -91,7 +92,8 @@ endmacro()
 #   dependsArg - This var will be passed to add_custom_command(DEPENDS) so a new generation will be
 #             trigger if one of these files changes
 #   moduleOutputDir - Where the library file should be stored
-macro(create_python_bindings
+macro(
+    create_python_bindings
     libraryName
     typesystemPaths
     includePaths
@@ -101,12 +103,17 @@ macro(create_python_bindings
     globalInclude
     typesystemXML
     dependsArg
-    moduleOutputDir)
+    moduleOutputDir
+)
 
     # Transform the path separators into something shiboken understands.
     make_path(shiboken_include_dirs ${includePaths})
     make_path(shiboken_typesystem_dirs ${typesystemPaths})
-    get_property(raw_python_dir_include_dirs DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
+    get_property(
+        raw_python_dir_include_dirs
+        DIRECTORY
+        PROPERTY INCLUDE_DIRECTORIES
+    )
     make_path(python_dir_include_dirs ${raw_python_dir_include_dirs})
     set(shiboken_include_dirs "${shiboken_include_dirs}${PATH_SEP}${python_dir_include_dirs}")
 
@@ -119,13 +126,10 @@ macro(create_python_bindings
     set_property(SOURCE ${outputSource} PROPERTY SKIP_AUTOGEN ON)
     add_custom_command(
         OUTPUT ${outputSource}
-        COMMAND $<TARGET_PROPERTY:Shiboken2::shiboken,LOCATION> ${GENERATOR_EXTRA_FLAGS}
-                ${globalInclude}
-                --include-paths=${shiboken_include_dirs}
-                --typesystem-paths=${shiboken_typesystem_dirs}
-                ${shiboken_framework_include_dirs_option}
-                --output-directory=${CMAKE_CURRENT_BINARY_DIR}
-                ${typesystemXML}
+        COMMAND
+            $<TARGET_PROPERTY:Shiboken2::shiboken,LOCATION> ${GENERATOR_EXTRA_FLAGS} ${globalInclude}
+            --include-paths=${shiboken_include_dirs} --typesystem-paths=${shiboken_typesystem_dirs}
+            ${shiboken_framework_include_dirs_option} --output-directory=${CMAKE_CURRENT_BINARY_DIR} ${typesystemXML}
         DEPENDS ${typesystemXML} ${dependsArg}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Running generator for ${libraryName} binding..."
@@ -136,10 +140,10 @@ macro(create_python_bindings
     add_library(${TARGET_NAME} MODULE ${outputSource})
 
     set_target_properties(
-        ${TARGET_NAME} PROPERTIES
-        PREFIX ""
-        OUTPUT_NAME ${MODULE_NAME}
-        LIBRARY_OUTPUT_DIRECTORY ${moduleOutputDir}
+        ${TARGET_NAME}
+        PROPERTIES PREFIX ""
+                   OUTPUT_NAME ${MODULE_NAME}
+                   LIBRARY_OUTPUT_DIRECTORY ${moduleOutputDir}
     )
     if(APPLE)
         set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_RPATH "@loader_path")
@@ -153,18 +157,14 @@ macro(create_python_bindings
 
     target_include_directories(${TARGET_NAME} PUBLIC ${targetIncludeDirs})
 
-    target_link_libraries(
-        ${TARGET_NAME}
-        ${targetLinkLibraries}
-        PySide2::pyside2
-        Shiboken2::libshiboken
-    )
+    target_link_libraries(${TARGET_NAME} ${targetLinkLibraries} PySide2::pyside2 Shiboken2::libshiboken)
     target_compile_definitions(${TARGET_NAME} PRIVATE Py_LIMITED_API=0x03050000)
     if(APPLE)
-        set_property(TARGET ${TARGET_NAME} APPEND PROPERTY LINK_FLAGS "-undefined dynamic_lookup")
+        set_property(
+            TARGET ${TARGET_NAME}
+            APPEND
+            PROPERTY LINK_FLAGS "-undefined dynamic_lookup"
+        )
     endif()
-    install(
-        TARGETS ${TARGET_NAME}
-        LIBRARY DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}
-    )
+    install(TARGETS ${TARGET_NAME} LIBRARY DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX})
 endmacro()

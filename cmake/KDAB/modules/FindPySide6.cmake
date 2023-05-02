@@ -20,7 +20,8 @@ list(GET Python3_LIBRARIES 0 PYTHON_LIBRARY_FILENAME)
 get_filename_component(PYTHON_LIBRARY_FILENAME ${PYTHON_LIBRARY_FILENAME} NAME)
 
 execute_process(
-    COMMAND ${Python3_EXECUTABLE} -c "if True:
+    COMMAND
+        ${Python3_EXECUTABLE} -c "if True:
         import os, sys
         try:
             import PySide6.QtCore as QtCore
@@ -33,17 +34,19 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 if(NOT PYSIDE6_BASEDIR)
-    message(
-        FATAL_ERROR
-            "The PySide6 module could not be imported. Make sure you have it installed "
-            "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
+    message(FATAL_ERROR "The PySide6 module could not be imported. Make sure you have it installed "
+                        "by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\""
     )
 endif()
 
 if(PYSIDE6_BASEDIR)
-    set(PYSIDE_BASEDIR ${PYSIDE6_BASEDIR} CACHE PATH "Top level install of PySide6" FORCE)
+    set(PYSIDE_BASEDIR
+        ${PYSIDE6_BASEDIR}
+        CACHE PATH "Top level install of PySide6" FORCE
+    )
     execute_process(
-        COMMAND ${Python3_EXECUTABLE} -c "if True:
+        COMMAND
+            ${Python3_EXECUTABLE} -c "if True:
             import os
             import PySide6.QtCore as QtCore
             print(os.path.basename(QtCore.__file__).split('.', 1)[1])
@@ -53,7 +56,8 @@ if(PYSIDE6_BASEDIR)
     )
 
     execute_process(
-        COMMAND ${Python3_EXECUTABLE} -c "if True:
+        COMMAND
+            ${Python3_EXECUTABLE} -c "if True:
             import os
             import PySide6.QtCore as QtCore
             print(';'.join(map(str, QtCore.__version_info__)))
@@ -81,10 +85,11 @@ endif()
 if(PYSIDE6_FOUND)
     #PySide
     #===============================================================================
-    find_path(PYSIDE_INCLUDE_DIR
-        pyside.h
+    find_path(
+        PYSIDE_INCLUDE_DIR pyside.h
         PATHS ${PYSIDE6_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include/PySide6
-        NO_DEFAULT_PATH)
+        NO_DEFAULT_PATH
+    )
 
     # Platform specific library names
     if(MSVC)
@@ -97,15 +102,17 @@ if(PYSIDE6_FOUND)
         set(PYSIDE_LIBRARY_BASENAMES "libpyside6.${PYSIDE6_SUFFIX}")
     endif()
 
-    find_file(PYSIDE_LIBRARY
-        ${PYSIDE_LIBRARY_BASENAMES}
+    find_file(
+        PYSIDE_LIBRARY ${PYSIDE_LIBRARY_BASENAMES}
         PATHS ${PYSIDE6_BASEDIR} ${PYSIDE_CUSTOM_PREFIX}/lib
-        NO_DEFAULT_PATH)
+        NO_DEFAULT_PATH
+    )
 
-    find_path(PYSIDE_TYPESYSTEMS
-        typesystem_core.xml
+    find_path(
+        PYSIDE_TYPESYSTEMS typesystem_core.xml
         PATHS ${PYSIDE6_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide6/typesystems
-        NO_DEFAULT_PATH)
+        NO_DEFAULT_PATH
+    )
 endif()
 
 if(PYSIDE6_FOUND)
@@ -120,17 +127,20 @@ if(PYSIDE6_FOUND)
         set_property(TARGET PySide6::pyside6 PROPERTY IMPORTED_IMPLIB ${PYSIDE_LIBRARY})
     endif()
     set_property(TARGET PySide6::pyside6 PROPERTY IMPORTED_LOCATION ${PYSIDE_LIBRARY})
-    set_property(TARGET PySide6::pyside6 APPEND PROPERTY
-        INTERFACE_INCLUDE_DIRECTORIES
-        ${PYSIDE_INCLUDE_DIR}
-        ${PYSIDE_INCLUDE_DIR}/QtCore/
-        ${PYSIDE_INCLUDE_DIR}/QtGui/
-        ${PYSIDE_INCLUDE_DIR}/QtWidgets/
-        ${Python3_INCLUDE_DIRS}
+    set_property(
+        TARGET PySide6::pyside6
+        APPEND
+        PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+                 ${PYSIDE_INCLUDE_DIR}
+                 ${PYSIDE_INCLUDE_DIR}/QtCore/
+                 ${PYSIDE_INCLUDE_DIR}/QtGui/
+                 ${PYSIDE_INCLUDE_DIR}/QtWidgets/
+                 ${Python3_INCLUDE_DIRS}
     )
 endif()
 
-find_package_handle_standard_args(PySide6
+find_package_handle_standard_args(
+    PySide6
     REQUIRED_VARS PYSIDE6_BASEDIR PYSIDE_INCLUDE_DIR PYSIDE_LIBRARY PYSIDE_TYPESYSTEMS
     VERSION_VAR PYSIDE6_SO_VERSION
 )
