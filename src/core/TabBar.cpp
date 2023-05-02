@@ -137,6 +137,8 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
     connect(dw, &DockWidget::aboutToDelete, this, &TabBar::removeDockWidget);
 
     dynamic_cast<Core::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
+    if (!m_currentDockWidget)
+        setCurrentDockWidget(dw);
 
     group()->onDockWidgetCountChanged();
 }

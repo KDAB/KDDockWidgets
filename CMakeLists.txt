@@ -445,6 +445,7 @@ if(KDDockWidgets_TESTS)
         add_test(NAME tst_floatingwindow COMMAND tst_floatingwindow)
         add_test(NAME tst_droparea COMMAND tst_droparea)
         add_test(NAME tst_dockwidget COMMAND tst_dockwidget)
+        add_test(NAME tst_tabbar COMMAND tst_tabbar)
 
         if(KDDW_FRONTEND_FLUTTER)
             set_tests_properties(
@@ -459,12 +460,12 @@ if(KDDockWidgets_TESTS)
                 tst_floatingwindow
                 tst_droparea
                 tst_dockwidget
+                tst_tabbar
                 PROPERTIES ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0"
             )
         else()
             add_test(NAME tst_docks COMMAND tst_docks)
             add_test(NAME tst_window COMMAND tst_window)
-            add_test(NAME tst_tabbar COMMAND tst_tabbar)
         endif()
 
         if(KDDW_FRONTEND_QTWIDGETS)
