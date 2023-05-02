@@ -13,9 +13,9 @@
 #include <qstring.h>
 #include <qsize.h>
 #include <core/DockWidget.h>
+#include <qpoint.h>
 #include <core/View.h>
 #include <qrect.h>
-#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {

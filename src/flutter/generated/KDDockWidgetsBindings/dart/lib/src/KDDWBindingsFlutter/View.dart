@@ -672,8 +672,6 @@ class View extends KDDWBindingsCore.View {
       print("Dart instance not found for View::show()! (${thisCpp.address})");
       throw Error();
     }
-    print("About to");
-    dartInstance.dumpDebug();
     dartInstance.show();
   }
 

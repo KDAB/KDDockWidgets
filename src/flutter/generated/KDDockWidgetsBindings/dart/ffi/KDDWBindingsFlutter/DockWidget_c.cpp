@@ -676,14 +676,10 @@ void DockWidget_wrapper::setZOrder_nocallback(int z)
 void DockWidget_wrapper::show()
 {
     if (m_showCallback) {
-        qDebug() << "Calling dart!";
         const void *thisPtr = this;
         m_showCallback(const_cast<void *>(thisPtr));
-        qDebug() << "Called dart!";
     } else {
-        qDebug() << "Not calling dart!!";
         ::KDDockWidgets::flutter::DockWidget::show();
-        qDebug() << "Not called dart!!";
     }
 }
 void DockWidget_wrapper::show_nocallback()

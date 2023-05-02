@@ -15,9 +15,9 @@
 #include <TabBar.h>
 #include <core/Group.h>
 #include <qpoint.h>
-#include <core/View.h>
 #include <qrect.h>
 #include <qsize.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
