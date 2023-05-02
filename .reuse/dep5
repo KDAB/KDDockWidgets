@@ -36,3 +36,11 @@ License: MIT
 Files: src/3rdparty/doctest/doctest.h
 Copyright: 2016-2021 Viktor Kirilov <vik.kirilov@gmail.com>
 License: MIT
+
+Files: tests/flutter_tests_embedder/tests_embedder.cpp tests/flutter_tests_embedder/tests_embedder.h
+Copyright: Copyright 2013 The Flutter Authors
+License: LicenseRef-FlutterBSD
+
+Files: src/flutter/generated/KDDockWidgetsBindings/dart/lib/FinalizerHelpers.dart
+Copyright: Copyright 2020, the Dart project authors
+License: LicenseRef-DartBSD
