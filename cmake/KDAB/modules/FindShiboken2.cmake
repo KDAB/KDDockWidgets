@@ -81,9 +81,13 @@ else()
     list(GET SHIBOKEN_VERSION 2 SHIBOKEN_MINOR_VERSION)
     string(REPLACE ";" "." SHIBOKEN_VERSION "${SHIBOKEN_VERSION}")
 
+    if(SHIBOKEN_CUSTOM_PREFIX STREQUAL "")
+        set(SHIBOKEN_CUSTOM_PREFIX ${SHIBOKEN_GENERATOR_BASEDIR})
+    endif()
+
     message(STATUS "ShibokenGenerator base dir: ${SHIBOKEN_GENERATOR_BASEDIR}")
     message(STATUS "Shiboken base dir:          ${SHIBOKEN_BASEDIR}")
-    message(STATUS "Shiboken custom path:       ${SHIBOKEN_CUSTOM_PREFIX}")
+    message(STATUS "Shiboken custom path:       [${SHIBOKEN_CUSTOM_PREFIX}]")
 
     if(SHIBOKEN_BASEDIR)
         find_path(

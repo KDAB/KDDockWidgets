@@ -98,6 +98,10 @@ else()
 
     #PySide
     #===============================================================================
+    if(PYSIDE_CUSTOM_PREFIX STREQUAL "")
+        set(PYSIDE_CUSTOM_PREFIX ${PYSIDE2_BASEDIR})
+    endif()
+
     find_path(
         PYSIDE_INCLUDE_DIR pyside.h
         PATHS ${PYSIDE2_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include/PySide2
