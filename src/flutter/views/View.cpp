@@ -322,7 +322,7 @@ bool View::isMaximized() const
 
 std::shared_ptr<Core::Window> View::window() const
 {
-    auto window = new flutter::Window(rootView(), 0);
+    auto window = new flutter::Window(rootView());
 
     return std::shared_ptr<Core::Window>(window);
 }

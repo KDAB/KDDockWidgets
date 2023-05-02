@@ -53,6 +53,10 @@ TEST_CASE("View::windowHandle,rootView,Window::rootView")
 
     auto window = rootView->window();
     REQUIRE(window);
+    CHECK(childView->rootView()->equals(rootView));
+    CHECK_EQ(window->handle(), window->handle());
+
+    CHECK_EQ(rootView->window()->handle(), childView->window()->handle());
     CHECK_EQ(window->handle(), childView->window()->handle());
     CHECK(rootView->rootView()->equals(rootView));
     CHECK(childView->rootView()->equals(rootView));

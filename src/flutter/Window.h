@@ -20,7 +20,7 @@ class DOCKS_EXPORT Window : public Core::Window
 {
 public:
     /// For flutter, we identify windows with a sequential ID
-    explicit Window(std::shared_ptr<Core::View> rootView, int id);
+    explicit Window(std::shared_ptr<Core::View> rootView);
 
     ~Window() override;
     std::shared_ptr<Core::View> rootView() const override;
@@ -53,7 +53,7 @@ public:
 
 private:
     std::shared_ptr<Core::View> m_rootView;
-    const int m_id;
+    bool m_isVisible = true;
     QRect m_geometry;
 };
 }

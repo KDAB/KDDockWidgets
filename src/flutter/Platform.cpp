@@ -368,7 +368,8 @@ void Platform::tests_wait(int ms)
 
 std::shared_ptr<Core::Window> Platform::tests_createWindow()
 {
-    return {};
+    auto window = new flutter::Window(tests_createView({}, nullptr)->asWrapper());
+    return std::shared_ptr<Core::Window>(window);
 }
 
 #endif

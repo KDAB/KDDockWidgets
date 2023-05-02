@@ -51,6 +51,10 @@ TEST_CASE("setGuestView")
     CHECK(dw->guestView()->equals(guest));
     REQUIRE(dw->view()->window());
     REQUIRE(guest->window());
+
+    CHECK(guest->parentView());
+    CHECK(guest->parentView()->equals(dw->view()));
+    CHECK(dw->view()->rootView()->equals(guest->rootView()));
     CHECK(dw->view()->window()->equals(guest->window()));
 
     delete dw;

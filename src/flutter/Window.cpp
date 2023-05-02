@@ -17,10 +17,9 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-Window::Window(std::shared_ptr<Core::View> rootView, int id)
+Window::Window(std::shared_ptr<Core::View> rootView)
     : Core::Window()
     , m_rootView(rootView)
-    , m_id(id)
 {
     if (rootView)
         setGeometry(rootView->geometry());
@@ -43,8 +42,14 @@ void Window::setGeometry(QRect r)
     m_geometry = r;
 }
 
-void Window::setVisible(bool)
+void Window::setVisible(bool is)
 {
+    if (is == m_isVisible)
+        return;
+
+    // TODO:  Actually hide the flutter window
+
+    m_isVisible = is;
 }
 
 bool Window::supportsHonouringLayoutMinSize() const
@@ -73,12 +78,12 @@ QVariant Window::property(const char *) const
 
 bool Window::isVisible() const
 {
-    return {};
+    return m_isVisible;
 }
 
 WId Window::handle() const
 {
-    return WId(m_id);
+    return WId(m_rootView ? m_rootView->handle() : HANDLE());
 }
 
 bool Window::equals(std::shared_ptr<Core::Window> w) const
@@ -87,7 +92,7 @@ bool Window::equals(std::shared_ptr<Core::Window> w) const
         return false;
 
     auto window = std::static_pointer_cast<flutter::Window>(w);
-    return window->m_id == m_id;
+    return window->handle() == handle();
 }
 
 void Window::setFramePosition(QPoint)
@@ -96,11 +101,15 @@ void Window::setFramePosition(QPoint)
 
 QRect Window::frameGeometry() const
 {
-    return {};
+    // TODO: How to get this from flutter
+    return m_geometry;
 }
 
-void Window::resize(int, int)
+void Window::resize(int w, int h)
 {
+    QRect geo = geometry();
+    geo.setSize({ w, h });
+    setGeometry(geo);
 }
 
 bool Window::isActive() const
