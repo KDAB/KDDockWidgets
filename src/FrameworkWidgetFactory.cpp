@@ -240,8 +240,8 @@ QUrl DefaultWidgetFactory::floatingWindowFilename() const
 QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
 {
     auto key = std::make_pair(type, dpr);
-    auto it = m_cachedIcons.find(key);
-    if (it != m_cachedIcons.end())
+    auto it = m_cachedIcons.constFind(key);
+    if (it != m_cachedIcons.cend())
         return *it;
 
     QString iconName;
