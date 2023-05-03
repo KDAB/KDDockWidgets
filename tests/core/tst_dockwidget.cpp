@@ -11,6 +11,7 @@
 
 #include "../main.h"
 #include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/DockWidget_p.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Platform.h"
@@ -44,8 +45,10 @@ TEST_CASE("setGuestView")
     dw->view()->show();
     Platform::instance()->tests_wait(500); // TODOm3: Replace with wait for visible or so.
 
-    qDebug() << int(guest->controller()->type());
     REQUIRE(guest->controller());
+    CHECK(dw->floatingWindow());
+    REQUIRE(dw->floatingWindow()->isVisible());
+    CHECK(dw->isVisible());
     CHECK(guest->isVisible());
     CHECK(guest->controller()->isVisible());
     CHECK(dw->guestView()->equals(guest));

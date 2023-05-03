@@ -42,6 +42,11 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
 {
     init();
     m_dockWidget->init();
+    QObject::connect(m_dockWidget, &Core::DockWidget::guestViewChanged, m_dockWidget, [this] {
+        if (auto guest = m_dockWidget->guestView()) {
+            guest->setVisible(true);
+        }
+    });
 }
 
 DockWidget::~DockWidget()

@@ -90,10 +90,7 @@ void DockWidget::init()
 
     connect(dw, &Core::DockWidget::guestViewChanged, this, [this, dw] {
         if (auto guest = dw->guestView()) {
-            // TODOm3: Move this logic to the controller
-            guest->setParent(this);
             guest->controller()->setVisible(true);
-
             Q_EMIT guestItemChanged();
         }
     });
