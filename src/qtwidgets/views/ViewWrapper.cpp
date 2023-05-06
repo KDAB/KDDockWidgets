@@ -182,6 +182,11 @@ bool ViewWrapper::isVisible() const
     return m_widget->isVisible();
 }
 
+bool ViewWrapper::isExpicitlyHidden() const
+{
+    return m_widget->isHidden();
+}
+
 void ViewWrapper::move(int x, int y)
 {
     m_widget->move(x, y);

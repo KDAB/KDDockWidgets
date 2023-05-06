@@ -78,6 +78,11 @@ void View::setVisible(bool is)
     }
 }
 
+bool View::isExpicitlyHidden() const
+{
+    return m_visible.has_value() && !m_visible;
+}
+
 void View::setSize(int w, int h)
 {
     qDebug() << "flutter::View::setSize()" << w << h << this;

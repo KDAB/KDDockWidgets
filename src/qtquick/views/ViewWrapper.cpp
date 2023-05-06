@@ -33,6 +33,7 @@
 #include "kddockwidgets/core/MDILayout.h"
 // #include "views/MDIArea.h"
 
+#include <QtQuick/private/qquickitem_p.h>
 #include <QDebug>
 
 using namespace KDDockWidgets;
@@ -190,6 +191,12 @@ bool ViewWrapper::isVisible() const
     }
 
     return m_item->isVisible();
+}
+
+bool ViewWrapper::isExpicitlyHidden() const
+{
+    auto priv = QQuickItemPrivate::get(m_item);
+    return !priv->explicitVisible;
 }
 
 void ViewWrapper::move(int x, int y)

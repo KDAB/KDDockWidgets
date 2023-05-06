@@ -48,6 +48,7 @@ public:
 
     bool isVisible() const override;
     void setVisible(bool visible) override;
+    bool isExpicitlyHidden() const override;
 
     void move(int x, int y) override;
     void setSize(int w, int h) override;
@@ -128,7 +129,7 @@ private:
     QSize m_sizeHint;
     QSize m_minSize;
     QSize m_maxSize;
-    bool m_visible = false;
+    std::optional<bool> m_visible;
     bool m_inCtor = true;
     Q_DISABLE_COPY(View)
 };

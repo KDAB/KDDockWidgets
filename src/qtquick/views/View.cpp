@@ -349,6 +349,12 @@ void View::setVisible(bool is)
     QQuickItem::setVisible(is);
 }
 
+bool View::isExpicitlyHidden() const
+{
+    auto priv = QQuickItemPrivate::get(this);
+    return !priv->explicitVisible;
+}
+
 void View::setSize(int w, int h)
 {
     // TODOm3: Test that setting a size less than min doesn't set it

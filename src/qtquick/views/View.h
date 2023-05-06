@@ -74,6 +74,7 @@ public:
     void setMaximumSize(QSize sz) override;
 
     bool isVisible() const override;
+    bool isExpicitlyHidden() const override;
     void setVisible(bool is) override;
 
     void move(int x, int y) override;

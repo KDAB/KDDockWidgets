@@ -92,6 +92,7 @@ public:
     virtual QRect normalGeometry() const = 0;
     virtual void setGeometry(QRect) = 0;
     virtual bool isVisible() const = 0;
+    virtual bool isExpicitlyHidden() const = 0;
     virtual void setVisible(bool) = 0;
     virtual void move(int x, int y) = 0;
     virtual void setSize(int width, int height) = 0;

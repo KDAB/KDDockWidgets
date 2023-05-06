@@ -115,6 +115,11 @@ public:
         return Base::isVisible();
     }
 
+    bool isExpicitlyHidden() const override
+    {
+        return Base::isHidden();
+    }
+
     void setVisible(bool is) override
     {
         Base::setVisible(is);

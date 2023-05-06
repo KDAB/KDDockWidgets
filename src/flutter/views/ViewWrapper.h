@@ -48,6 +48,7 @@ public:
 
     bool isVisible() const override;
     void setVisible(bool visible) override;
+    bool isExpicitlyHidden() const override;
 
     void move(int x, int y) override;
     void setSize(int w, int h) override;

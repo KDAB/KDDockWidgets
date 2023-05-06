@@ -32,6 +32,7 @@ public:
     bool isRootView() const override;
     bool isVisible() const override;
     void setVisible(bool) override;
+    bool isExpicitlyHidden() const override;
     void activateWindow() override;
     bool isMaximized() const override;
     bool isMinimized() const override;
