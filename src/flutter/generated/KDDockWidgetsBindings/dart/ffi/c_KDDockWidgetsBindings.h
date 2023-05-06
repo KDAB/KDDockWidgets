@@ -1371,8 +1371,6 @@ void *c_static_KDDockWidgets__Core__Controller__tr_char_char_int(const char *s, 
 int c_KDDockWidgets__Core__Controller__type(void *thisObj);
 // KDDockWidgets::Core::Controller::view() const
 void *c_KDDockWidgets__Core__Controller__view(void *thisObj);
-// KDDockWidgets::Core::Controller::visibleChanged(bool arg__1)
-void c_KDDockWidgets__Core__Controller__visibleChanged_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::Controller::width() const
 int c_KDDockWidgets__Core__Controller__width(void *thisObj);
 // KDDockWidgets::Core::Controller::x() const
