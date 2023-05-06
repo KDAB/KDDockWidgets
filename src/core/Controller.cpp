@@ -57,13 +57,10 @@ bool Controller::isVisible() const
 
 void Controller::setVisible(bool is)
 {
-    if (m_view)
+    if (m_view) {
         m_view->setVisible(is);
-
-    if (m_isVisible == is)
-        return;
-
-    Q_EMIT visibleChanged(is);
+        Q_EMIT visibleChanged(is);
+    }
 }
 
 QRect Controller::rect() const

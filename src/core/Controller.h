@@ -63,9 +63,11 @@ public:
     bool is(ViewType) const;
 
     /// Returns whether the view is visible
+    /// Convenience for calling View::isVisible()
     bool isVisible() const;
 
     /// Hides or shows the view associated with this controller
+    /// Convenience for calling View::setVisible()
     void setVisible(bool);
 
     QRect rect() const;
@@ -100,7 +102,6 @@ private:
     void setParent(QObject *) = delete;
     View *m_view = nullptr;
     bool m_inDtor = false;
-    bool m_isVisible = true;
     const ViewType m_type;
 };
 
