@@ -66,14 +66,28 @@ bool View::close()
 
 bool View::isVisible() const
 {
+    // No value means false
+    if (!m_visible.value_or(false))
+        return false;
+
     // Parents need to be visible as well
-    return m_visible && (!m_parentView || m_parentView->isVisible());
+    return !m_parentView || m_parentView->isVisible();
 }
 
 void View::setVisible(bool is)
 {
     if (is != m_visible) {
         m_visible = is;
+
+        if (m_visible) {
+            // Mimic QWidgets: Set children visible, unless they were explicitly hidden
+            for (auto child : qAsConst(m_childViews)) {
+                if (!child->isExpicitlyHidden()) {
+                    child->setVisible(true);
+                }
+            }
+        }
+
         // TODO: Tell flutter ?
     }
 }

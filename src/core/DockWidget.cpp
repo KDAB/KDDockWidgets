@@ -425,7 +425,6 @@ void DockWidget::open()
         d->morphIntoFloatingWindow();
     } else {
         d->setIsOpen(true);
-        view()->show();
     }
 }
 

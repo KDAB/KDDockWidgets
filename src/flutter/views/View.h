@@ -17,6 +17,7 @@
 #include <QDebug>
 
 #include <memory>
+#include <optional>
 
 namespace KDDockWidgets::flutter {
 
