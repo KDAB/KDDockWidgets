@@ -64,26 +64,18 @@ bool View::close()
     return true;
 }
 
-bool View::parentIsVisible() const
-{
-    if (!m_parentView)
-        return true;
-
-    if (!m_parentView->isVisible())
-        return false;
-
-    return m_parentView->parentIsVisible();
-}
-
 bool View::isVisible() const
 {
-    PRINT_UNEXPECTED_CALL_MESSAGE
-    return false;
+    // Parents need to be visible as well
+    return m_visible && (!m_parentView || m_parentView->isVisible());
 }
 
-void View::setVisible(bool)
+void View::setVisible(bool is)
 {
-    PRINT_UNEXPECTED_CALL_MESSAGE
+    if (is != m_visible) {
+        m_visible = is;
+        // TODO: Tell flutter ?
+    }
 }
 
 void View::setSize(int w, int h)

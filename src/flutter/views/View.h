@@ -47,10 +47,6 @@ public:
     void setMaximumSize(QSize sz) override;
 
     bool isVisible() const override;
-
-    // Like isVisible but goes up the hierarchy
-    bool parentIsVisible() const;
-
     void setVisible(bool visible) override;
 
     void move(int x, int y) override;
@@ -132,6 +128,7 @@ private:
     QSize m_sizeHint;
     QSize m_minSize;
     QSize m_maxSize;
+    bool m_visible = false;
     bool m_inCtor = true;
     Q_DISABLE_COPY(View)
 };

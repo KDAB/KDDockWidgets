@@ -31,7 +31,6 @@ class View_mixin {
   int m_height = 400;
   bool m_fillsParent = false;
   String debugName = "";
-  bool m_isVisible = false;
 
   var childWidgets = <Widget>[];
 
@@ -132,17 +131,6 @@ class View_mixin {
         state.updatePosition(m_x, m_y);
       }
     }
-  }
-
-  bool isVisible() {
-    if (!kddwView.parentIsVisible()) return false;
-    return m_isVisible;
-  }
-
-  void setVisible(bool visible) {
-    if (visible == m_isVisible) return;
-    m_isVisible = visible;
-    // TODO: rebuild even honour
   }
 
   Widget createFlutterWidget() {
