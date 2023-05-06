@@ -276,7 +276,7 @@ switch (methodId) {
 case 907:
 wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_activateWindow>(callback);break;case 918:
 wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_close>(callback);break;case 921:
-wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_createPlatformWindow>(callback);break;case 1075:
+wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_createPlatformWindow>(callback);break;case 1071:
 wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_dragRect>(callback);break;case 927:
 wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_flags>(callback);break;case 929:
 wrapper->m_free_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_free_impl>(callback);break;case 931:
@@ -297,7 +297,7 @@ wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappers
 wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_minSize>(callback);break;case 954:
 wrapper->m_minimumHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_minimumHeight>(callback);break;case 955:
 wrapper->m_minimumWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_minimumWidth>(callback);break;case 957:
-wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_move_2>(callback);break;case 1076:
+wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_move_2>(callback);break;case 1072:
 wrapper->m_nonContentsHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_nonContentsHeight>(callback);break;case 958:
 wrapper->m_normalGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_normalGeometry>(callback);break;case 959:
 wrapper->m_objectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_objectName>(callback);break;case 1027:

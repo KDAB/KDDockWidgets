@@ -410,14 +410,6 @@ class View extends KDDWBindingsCore.View {
     }
     final result = dartInstance.onResize_2(w, h);
     return result ? 1 : 0;
-  } // parentIsVisible() const
-
-  bool parentIsVisible() {
-    final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__flutter__View__parentIsVisible')
-        .asFunction();
-    return func(thisCpp) != 0;
   }
 
   static void raise_calledFromC(ffi.Pointer<void> thisCpp) {

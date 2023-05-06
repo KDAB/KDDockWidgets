@@ -85,7 +85,6 @@ void View_wrapper::onChildRemoved(KDDockWidgets::Core::View * childView){if (m_o
 m_onChildRemovedCallback(const_cast<void *>(thisPtr),childView);} else {::KDDockWidgets::flutter::View::onChildRemoved(childView);}}void View_wrapper::onChildRemoved_nocallback(KDDockWidgets::Core::View * childView){::KDDockWidgets::flutter::View::onChildRemoved(childView);}
 bool View_wrapper::onResize(int w,int h){if (m_onResize_2Callback) {const void* thisPtr = this;
 return m_onResize_2Callback(const_cast<void *>(thisPtr),w,h);} else {return ::KDDockWidgets::flutter::View::onResize(w,h);}}bool View_wrapper::onResize_nocallback(int w,int h){return ::KDDockWidgets::flutter::View::onResize(w,h);}
-bool View_wrapper::parentIsVisible()const{return ::KDDockWidgets::flutter::View::parentIsVisible();}
 void View_wrapper::raise(){if (m_raiseCallback) {const void* thisPtr = this;
 m_raiseCallback(const_cast<void *>(thisPtr));} else {::KDDockWidgets::flutter::View::raise();}}void View_wrapper::raise_nocallback(){::KDDockWidgets::flutter::View::raise();}
 void View_wrapper::raiseAndActivate(){if (m_raiseAndActivateCallback) {const void* thisPtr = this;
@@ -210,8 +209,6 @@ void c_KDDockWidgets__flutter__View__onChildAdded_View(void *thisObj,void* child
 void c_KDDockWidgets__flutter__View__onChildRemoved_View(void *thisObj,void* childView_){auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);[&]{auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildRemoved_nocallback(childView);} else {    return targetPtr->onChildRemoved(childView);}}();}
 //onResize(int w, int h)
 bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj,int w,int h){return [&]{auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(w,h);} else {    return targetPtr->onResize(w,h);}}();}
-//parentIsVisible() const
-bool c_KDDockWidgets__flutter__View__parentIsVisible(void *thisObj){return fromPtr(thisObj)->parentIsVisible();}
 //raise()
 void c_KDDockWidgets__flutter__View__raise(void *thisObj){[&]{auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raise_nocallback();} else {    return targetPtr->raise();}}();}
 //raiseAndActivate()

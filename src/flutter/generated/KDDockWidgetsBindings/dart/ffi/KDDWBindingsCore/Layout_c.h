@@ -19,9 +19,9 @@
 #include <core/Group.h>
 #include <qlist.h>
 #include <DropArea.h>
+#include <qpoint.h>
 #include <qstring.h>
 #include <qrect.h>
-#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {namespace KDDWBindingsCore {class Layout_wrapper : public ::KDDockWidgets::Core::Layout {public:
 ~Layout_wrapper(); Layout_wrapper(KDDockWidgets::Core::ViewType arg__1,KDDockWidgets::Core::View * arg__2);KDDockWidgets::Core::DropArea * asDropArea()const;bool checkSanity()const;void clearLayout();bool containsFrame(const KDDockWidgets::Core::Group * arg__1)const;bool containsItem(const KDDockWidgets::Core::Item * arg__1)const;int count()const;void dumpLayout()const;KDDockWidgets::Core::FloatingWindow * floatingWindow()const;QList<KDDockWidgets::Core::Group* > groups()const;QList<KDDockWidgets::Core::Group* > groupsFrom(KDDockWidgets::Core::View * groupOrMultiSplitter)const;bool isInMainWindow(bool honourNesting = false)const;KDDockWidgets::Core::Item * itemForFrame(const KDDockWidgets::Core::Group * group)const;int layoutHeight()const;QSize layoutMaximumSizeHint()const;QSize layoutMinimumSize()const;QSize layoutSize()const;int layoutWidth()const;KDDockWidgets::Core::MainWindow * mainWindow(bool honourNesting = false)const;int placeholderCount()const;void removeItem(KDDockWidgets::Core::Item * item);void restorePlaceholder(KDDockWidgets::Core::DockWidget * dw,KDDockWidgets::Core::Item * arg__2,int tabIndex);void setLayoutMinimumSize(QSize arg__1);void setLayoutSize(QSize arg__1);virtual void setParentView_impl(KDDockWidgets::Core::View * parent);virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View * parent);void unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded)const;void updateSizeConstraints();void viewAboutToBeDeleted();int visibleCount()const;typedef void (*Callback_setParentView_impl)(void *,KDDockWidgets::Core::View * parent);Callback_setParentView_impl m_setParentView_implCallback = nullptr;

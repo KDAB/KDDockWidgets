@@ -1627,8 +1627,6 @@ void c_KDDockWidgets__flutter__View__onChildAdded_View(void *thisObj, void *chil
 void c_KDDockWidgets__flutter__View__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onResize(int w, int h)
 bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int w, int h);
-// KDDockWidgets::flutter::View::parentIsVisible() const
-bool c_KDDockWidgets__flutter__View__parentIsVisible(void *thisObj);
 // KDDockWidgets::flutter::View::raise()
 void c_KDDockWidgets__flutter__View__raise(void *thisObj);
 // KDDockWidgets::flutter::View::raiseAndActivate()

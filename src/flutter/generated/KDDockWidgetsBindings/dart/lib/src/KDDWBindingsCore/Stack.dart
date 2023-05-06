@@ -68,7 +68,7 @@ class Stack extends KDDWBindingsCore.Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1213))
+            cFunctionSymbolName(1207))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -87,7 +87,7 @@ class Stack extends KDDWBindingsCore.Controller {
   bool isPositionDraggable(QPoint p) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1214))
+            cFunctionSymbolName(1208))
         .asFunction();
     return func(thisCpp, p == null ? ffi.nullptr : p.thisCpp) != 0;
   }
@@ -107,7 +107,7 @@ class Stack extends KDDWBindingsCore.Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1216))
+            cFunctionSymbolName(1210))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -172,7 +172,7 @@ class Stack extends KDDWBindingsCore.Controller {
   KDDWBindingsCore.DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1228))
+            cFunctionSymbolName(1222))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
@@ -228,15 +228,15 @@ class Stack extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1213:
+      case 1207:
         return "c_KDDockWidgets__Core__Stack__isMDI";
-      case 1214:
+      case 1208:
         return "c_KDDockWidgets__Core__Stack__isPositionDraggable_QPoint";
-      case 1216:
+      case 1210:
         return "c_KDDockWidgets__Core__Stack__isWindow";
       case 893:
         return "c_KDDockWidgets__Core__Stack__setParentView_impl_View";
-      case 1228:
+      case 1222:
         return "c_KDDockWidgets__Core__Stack__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -244,15 +244,15 @@ class Stack extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1213:
+      case 1207:
         return "isMDI";
-      case 1214:
+      case 1208:
         return "isPositionDraggable";
-      case 1216:
+      case 1210:
         return "isWindow";
       case 893:
         return "setParentView_impl";
-      case 1228:
+      case 1222:
         return "singleDockWidget";
     }
     throw Error();
@@ -264,26 +264,26 @@ class Stack extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Stack__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1213 = 0;
-    final callback1213 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.Stack.isMDI_calledFromC, callbackExcept1213);
-    registerCallback(thisCpp, callback1213, 1213);
-    const callbackExcept1214 = 0;
-    final callback1214 =
+    const callbackExcept1207 = 0;
+    final callback1207 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.Stack.isMDI_calledFromC, callbackExcept1207);
+    registerCallback(thisCpp, callback1207, 1207);
+    const callbackExcept1208 = 0;
+    final callback1208 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Stack.isPositionDraggable_calledFromC,
-            callbackExcept1214);
-    registerCallback(thisCpp, callback1214, 1214);
-    const callbackExcept1216 = 0;
-    final callback1216 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.Stack.isWindow_calledFromC, callbackExcept1216);
-    registerCallback(thisCpp, callback1216, 1216);
+            callbackExcept1208);
+    registerCallback(thisCpp, callback1208, 1208);
+    const callbackExcept1210 = 0;
+    final callback1210 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.Stack.isWindow_calledFromC, callbackExcept1210);
+    registerCallback(thisCpp, callback1210, 1210);
     final callback893 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback893, 893);
-    final callback1228 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1222 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.Stack.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1228, 1228);
+    registerCallback(thisCpp, callback1222, 1222);
   }
 }

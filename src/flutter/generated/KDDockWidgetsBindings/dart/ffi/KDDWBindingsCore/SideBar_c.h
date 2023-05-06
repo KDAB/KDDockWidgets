@@ -14,9 +14,9 @@
 #include <core/DockWidget.h>
 #include <MainWindow.h>
 #include <core/View.h>
+#include <qpoint.h>
 #include <qrect.h>
 #include <qsize.h>
-#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {namespace KDDWBindingsCore {class SideBar_wrapper : public ::KDDockWidgets::Core::SideBar {public:
 ~SideBar_wrapper();void addDockWidget(KDDockWidgets::Core::DockWidget * dw);void clear();bool containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1)const;bool isEmpty()const;bool isVertical()const;KDDockWidgets::Core::MainWindow * mainWindow()const;void onButtonClicked(KDDockWidgets::Core::DockWidget * dw);void removeDockWidget(KDDockWidgets::Core::DockWidget * dw);virtual void setParentView_impl(KDDockWidgets::Core::View * parent);virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View * parent);void toggleOverlay(KDDockWidgets::Core::DockWidget * arg__1);static QString tr(const char * s,const char * c,int n);typedef void (*Callback_setParentView_impl)(void *,KDDockWidgets::Core::View * parent);Callback_setParentView_impl m_setParentView_implCallback = nullptr;
