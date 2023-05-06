@@ -59,7 +59,6 @@ class Platform extends KDDWBindingsFlutter.Platform {
   @override
   KDDWBindingsCore.View createView(KDDWBindingsCore.Controller? controller,
       {required KDDWBindingsCore.View? parent}) {
-    print("Platform: createView");
     return GenericView(controller, parent);
   }
 

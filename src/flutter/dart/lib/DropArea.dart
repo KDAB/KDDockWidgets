@@ -21,7 +21,7 @@ class DropArea extends View {
       KDDWBindingsCore.View? parent,
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
-    print("DropArea CTOR");
+    // print("DropArea CTOR");
     m_fillsParent = true;
   }
 

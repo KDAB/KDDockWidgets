@@ -33,7 +33,7 @@ class FloatingWindow extends KDDWBindingsFlutter.View with View_mixin {
     m_fillsParent = true;
 
     initMixin(this, color: Colors.black12, debugName: "FloatingWindow");
-    print("FloatingWindow CTOR");
+    // print("FloatingWindow CTOR");
   }
 
   TitleBar titleBarView() {
