@@ -90,7 +90,7 @@ void DockWidget::init()
 
     connect(dw, &Core::DockWidget::guestViewChanged, this, [this, dw] {
         if (auto guest = dw->guestView()) {
-            guest->controller()->setVisible(true);
+            guest->setVisible(true);
             Q_EMIT guestItemChanged();
         }
     });

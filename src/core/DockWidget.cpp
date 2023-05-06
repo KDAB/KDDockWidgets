@@ -888,7 +888,7 @@ Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &sa
         dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
     if (dw) {
         if (auto guest = dw->guestView())
-            guest->controller()->setVisible(true);
+            guest->setVisible(true);
         dw->setProperty("kddockwidget_was_restored", true);
 
         if (dw->affinities() != saved->affinities) {

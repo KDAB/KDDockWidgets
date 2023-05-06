@@ -353,7 +353,7 @@ void Item::setHostView(View *host)
         m_hostWidget = host;
         if (m_guest) {
             m_guest->controller()->setParentView(host);
-            m_guest->controller()->setVisible(true);
+            m_guest->setVisible(true);
             updateWidgetGeometries();
         }
     }
@@ -617,7 +617,7 @@ void Item::setIsVisible(bool is)
 
     if (is && m_guest) {
         m_guest->setGeometry(mapToRoot(rect()));
-        m_guest->controller()->setVisible(true); // Only set visible when apply*() ?
+        m_guest->setVisible(true); // Only set visible when apply*() ?
     }
 
     updateObjectName();
@@ -3557,7 +3557,7 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
             if (item->isVisible()) {
                 if (View *widget = item->guestView()) {
                     widget->setGeometry(q->mapToRoot(item->geometry()));
-                    widget->controller()->setVisible(true);
+                    widget->setVisible(true);
                 } else {
                     qWarning() << Q_FUNC_INFO << "visible item doesn't have a guest" << item;
                 }

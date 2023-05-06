@@ -74,7 +74,7 @@ void ClassicIndicators::updateVisibility()
         updateWindowPosition();
         raiseIndicators();
     } else {
-        m_rubberBand->controller()->setVisible(false);
+        m_rubberBand->setVisible(false);
         m_indicatorWindow->setVisible(false);
     }
 
@@ -115,14 +115,14 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     setCurrentDropLocation(location);
 
     if (location == DropLocation_None) {
-        m_rubberBand->controller()->setVisible(false);
+        m_rubberBand->setVisible(false);
         return;
     }
 
     if (location == DropLocation_Center) {
         m_rubberBand->setGeometry(
             geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->view()->geometry() : rect()));
-        m_rubberBand->controller()->setVisible(true);
+        m_rubberBand->setVisible(true);
         if (rubberBandIsTopLevel()) {
             m_rubberBand->raise();
             raiseIndicators();
@@ -163,7 +163,7 @@ void ClassicIndicators::setDropLocation(DropLocation location)
                                          m_dropArea->itemForFrame(relativeToFrame));
 
     m_rubberBand->setGeometry(geometryForRubberband(rect));
-    m_rubberBand->controller()->setVisible(true);
+    m_rubberBand->setVisible(true);
     if (rubberBandIsTopLevel()) {
         m_rubberBand->raise();
         raiseIndicators();

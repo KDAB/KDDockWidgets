@@ -74,7 +74,7 @@ void Window::setVisible(bool is)
 {
     if (auto v = rootView()) {
         // In QWidget world QWidget interface is preferred over QWindow
-        v->controller()->setVisible(is);
+        v->setVisible(is);
     } else {
         // Go via QWindow instead
         Window::setVisible(is);

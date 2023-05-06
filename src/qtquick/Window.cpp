@@ -75,7 +75,7 @@ void Window::setVisible(bool is)
 {
     qtcommon::Window::setVisible(is);
     if (auto root = rootView())
-        root->controller()->setVisible(is);
+        root->setVisible(is);
 }
 
 bool Window::supportsHonouringLayoutMinSize() const
