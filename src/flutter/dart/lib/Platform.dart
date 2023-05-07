@@ -11,10 +11,12 @@
 
 import 'dart:developer';
 
+import 'package:KDDockWidgets/MainWindow.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/View.dart';
 import 'package:KDDockWidgets/WindowOverlayWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
@@ -60,6 +62,18 @@ class Platform extends KDDWBindingsFlutter.Platform {
   KDDWBindingsCore.View createView(KDDWBindingsCore.Controller? controller,
       {required KDDWBindingsCore.View? parent}) {
     return GenericView(controller, parent);
+  }
+
+  KDDWBindingsCore.MainWindow createMainWindow(
+      String? uniqueName, CreateViewOptions viewOpts,
+      {int options =
+          KDDockWidgets_MainWindowOption.MainWindowOption_HasCentralFrame,
+      required KDDWBindingsCore.View? parent,
+      int arg__5 = 0}) {
+    final parentView =
+        parent == null ? null : (parent as KDDWBindingsFlutter.MainWindow);
+    var mw = MainWindow(uniqueName, parent: parentView);
+    return mw.m_controller;
   }
 
   @override

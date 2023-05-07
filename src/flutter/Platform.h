@@ -62,9 +62,9 @@ public:
     Core::View *tests_createFocusableView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
     Core::View *tests_createNonClosableView(Core::View *parent = nullptr) override;
     Core::MainWindow *
-    createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
+    createMainWindow(const QString &uniqueName, Core::CreateViewOptions viewOpts,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                     Core::View *parent = nullptr, Qt::WindowFlags = {}) const override;
+                     Core::View *parent = nullptr, Qt::WindowFlags flags = {}) const override;
 
     bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const override;
     bool tests_waitForResize(Core::View *, int timeout) const override;

@@ -298,6 +298,7 @@ Core::MainWindow *Platform::createMainWindow(const QString &, Core::CreateViewOp
                                              MainWindowOptions, Core::View *,
                                              Qt::WindowFlags) const
 {
+    Q_UNREACHABLE(); // Platform.dart gets called instead
     return {};
 }
 
