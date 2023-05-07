@@ -69,25 +69,25 @@ class Platform extends KDDWBindingsCore.Platform {
   static ffi.Pointer<void> createMainWindow_calledFromC(
       ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? uniqueName,
-      ffi.Pointer<void> arg__2,
+      ffi.Pointer<void> viewOpts,
       int options,
       ffi.Pointer<void>? parent,
-      int arg__5) {
+      int flags) {
     var dartInstance = KDDWBindingsCore
         .Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::createMainWindow(const QString & uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::createMainWindow(const QString & uniqueName, KDDockWidgets::Core::CreateViewOptions viewOpts, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags flags) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.createMainWindow(
         QString.fromCppPointer(uniqueName).toDartString(),
-        CreateViewOptions.fromCppPointer(arg__2),
+        CreateViewOptions.fromCppPointer(viewOpts),
         options: options,
         parent: (parent == null || parent.address == 0)
             ? null
             : KDDWBindingsCore.View.fromCppPointer(parent),
-        arg__5: arg__5);
+        arg__5: flags);
     return result.thisCpp;
   }
 

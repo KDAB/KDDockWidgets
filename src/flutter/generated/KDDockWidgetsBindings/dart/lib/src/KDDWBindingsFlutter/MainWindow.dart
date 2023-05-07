@@ -19,46 +19,73 @@ import '../../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
 
-class Group extends KDDWBindingsFlutter.View {
-  Group.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
+class MainWindow extends KDDWBindingsFlutter.View {
+  MainWindow.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
       : super.fromCppPointer(cppPointer, needsAutoDelete) {}
-  Group.init() : super.init() {}
-  factory Group.fromCache(var cppPointer, [needsAutoDelete = false]) {
+  MainWindow.init() : super.init() {}
+  factory MainWindow.fromCache(var cppPointer, [needsAutoDelete = false]) {
     if (KDDWBindingsCore.View.isCached(cppPointer)) {
       var instance =
           KDDWBindingsCore.View.s_dartInstanceByCppPtr[cppPointer.address];
-      if (instance != null) return instance as Group;
+      if (instance != null) return instance as MainWindow;
     }
-    return Group.fromCppPointer(cppPointer, needsAutoDelete);
-  } //Group(KDDockWidgets::Core::Group * controller, KDDockWidgets::Core::View * parent)
-  Group(KDDWBindingsCore.Group? controller,
-      {required KDDWBindingsCore.View? parent})
+    return MainWindow.fromCppPointer(cppPointer, needsAutoDelete);
+  } //MainWindow(const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::flutter::View * parent, Qt::WindowFlags flags)
+  MainWindow(String? uniqueName,
+      {int options = 0,
+      required KDDWBindingsFlutter.View? parent,
+      int flags = 0})
       : super.init() {
-    final voidstar_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__flutter__Group__constructor_Group_View')
+    final voidstar_Func_voidstar_int_voidstar_int func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    voidstar_Func_voidstar_ffi_Int32_voidstar_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__flutter__MainWindow__constructor_QString_MainWindowOptions_View_WindowFlags')
         .asFunction();
-    thisCpp = func(controller == null ? ffi.nullptr : controller.thisCpp,
-        parent == null ? ffi.nullptr : parent.thisCpp);
+    thisCpp = func(uniqueName?.toNativeUtf8() ?? ffi.nullptr, options,
+        parent == null ? ffi.nullptr : parent.thisCpp, flags);
     KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   }
   static void activateWindow_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::activateWindow()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::activateWindow()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.activateWindow();
+  } // centralAreaGeometry() const
+
+  QRect centralAreaGeometry() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            cFunctionSymbolName(1071))
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return QRect.fromCppPointer(result, true);
+  }
+
+  static ffi.Pointer<void> centralAreaGeometry_calledFromC(
+      ffi.Pointer<void> thisCpp) {
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for MainWindow::centralAreaGeometry() const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.centralAreaGeometry();
+    return result.thisCpp;
   }
 
   static int close_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
-      print("Dart instance not found for Group::close()! (${thisCpp.address})");
+      print(
+          "Dart instance not found for MainWindow::close()! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.close();
@@ -66,51 +93,22 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static void createPlatformWindow_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::createPlatformWindow()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::createPlatformWindow()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.createPlatformWindow();
-  } // currentIndex() const
-
-  int currentIndex() {
-    final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__flutter__Group__currentIndex')
-        .asFunction();
-    return func(thisCpp);
-  } // dragRect() const
-
-  QRect dragRect() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1078))
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QRect.fromCppPointer(result, true);
-  }
-
-  static ffi.Pointer<void> dragRect_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Group::dragRect() const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.dragRect();
-    return result.thisCpp;
   }
 
   static int flags_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::flags() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::flags() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.flags();
@@ -118,22 +116,22 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static void free_impl_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::free_impl()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::free_impl()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.free_impl();
   }
 
   static ffi.Pointer<void> geometry_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::geometry() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::geometry() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.geometry();
@@ -141,22 +139,22 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static void grabMouse_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::grabMouse()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::grabMouse()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.grabMouse();
   }
 
   static int hasFocus_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::hasFocus() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::hasFocus() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.hasFocus();
@@ -164,31 +162,33 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static void hide_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
-      print("Dart instance not found for Group::hide()! (${thisCpp.address})");
+      print(
+          "Dart instance not found for MainWindow::hide()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.hide();
   }
 
   static void init_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
-      print("Dart instance not found for Group::init()! (${thisCpp.address})");
+      print(
+          "Dart instance not found for MainWindow::init()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.init();
   }
 
   static int isActiveWindow_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::isActiveWindow() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::isActiveWindow() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.isActiveWindow();
@@ -196,11 +196,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int isExpicitlyHidden_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::isExpicitlyHidden() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::isExpicitlyHidden() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.isExpicitlyHidden();
@@ -208,11 +208,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int isMaximized_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::isMaximized() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::isMaximized() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.isMaximized();
@@ -220,11 +220,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int isMinimized_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::isMinimized() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::isMinimized() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.isMinimized();
@@ -232,11 +232,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int isNull_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::isNull() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::isNull() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.isNull();
@@ -244,11 +244,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int isRootView_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::isRootView() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::isRootView() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.isRootView();
@@ -256,11 +256,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int isVisible_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::isVisible() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::isVisible() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.isVisible();
@@ -269,11 +269,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static ffi.Pointer<void> mapFromGlobal_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> globalPt) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::mapFromGlobal(QPoint globalPt) const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::mapFromGlobal(QPoint globalPt) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.mapFromGlobal(QPoint.fromCppPointer(globalPt));
@@ -282,11 +282,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static ffi.Pointer<void> mapTo_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? parent, ffi.Pointer<void> pos) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.mapTo(
@@ -299,11 +299,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static ffi.Pointer<void> mapToGlobal_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> localPt) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::mapToGlobal(QPoint localPt) const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::mapToGlobal(QPoint localPt) const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.mapToGlobal(QPoint.fromCppPointer(localPt));
@@ -311,11 +311,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static ffi.Pointer<void> maxSizeHint_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::maxSizeHint() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::maxSizeHint() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.maxSizeHint();
@@ -323,11 +323,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static ffi.Pointer<void> minSize_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::minSize() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::minSize() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.minSize();
@@ -335,11 +335,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int minimumHeight_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::minimumHeight() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::minimumHeight() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.minimumHeight();
@@ -347,11 +347,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int minimumWidth_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::minimumWidth() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::minimumWidth() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.minimumWidth();
@@ -359,43 +359,23 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static void move_2_calledFromC(ffi.Pointer<void> thisCpp, int x, int y) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::move(int x, int y)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::move(int x, int y)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.move_2(x, y);
-  } // nonContentsHeight() const
-
-  int nonContentsHeight() {
-    final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1079))
-        .asFunction();
-    return func(thisCpp);
-  }
-
-  static int nonContentsHeight_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Group::nonContentsHeight() const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.nonContentsHeight();
-    return result;
   }
 
   static ffi.Pointer<void> normalGeometry_calledFromC(
       ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::normalGeometry() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::normalGeometry() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.normalGeometry();
@@ -403,11 +383,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static ffi.Pointer<void> objectName_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::objectName() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::objectName() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.objectName();
@@ -416,11 +396,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void onChildAdded_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? childView) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::onChildAdded(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::onChildAdded(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.onChildAdded((childView == null || childView.address == 0)
@@ -430,11 +410,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void onChildRemoved_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? childView) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::onChildRemoved(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::onChildRemoved(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.onChildRemoved((childView == null || childView.address == 0)
@@ -443,11 +423,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int w, int h) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::onResize(int w, int h)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::onResize(int w, int h)! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.onResize_2(w, h);
@@ -455,76 +435,99 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static void raise_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
-      print("Dart instance not found for Group::raise()! (${thisCpp.address})");
+      print(
+          "Dart instance not found for MainWindow::raise()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.raise();
   }
 
   static void raiseAndActivate_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::raiseAndActivate()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::raiseAndActivate()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.raiseAndActivate();
   }
 
   static void releaseKeyboard_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::releaseKeyboard()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::releaseKeyboard()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.releaseKeyboard();
   }
 
   static void releaseMouse_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::releaseMouse()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::releaseMouse()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.releaseMouse();
+  } // setContentsMargins(int left, int top, int right, int bottom)
+
+  setContentsMargins(int left, int top, int right, int bottom) {
+    final void_Func_voidstar_int_int_int_int func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
+            cFunctionSymbolName(1072))
+        .asFunction();
+    func(thisCpp, left, top, right, bottom);
+  }
+
+  static void setContentsMargins_calledFromC(
+      ffi.Pointer<void> thisCpp, int left, int top, int right, int bottom) {
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for MainWindow::setContentsMargins(int left, int top, int right, int bottom)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.setContentsMargins(left, top, right, bottom);
   }
 
   static void setCursor_calledFromC(ffi.Pointer<void> thisCpp, int shape) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setCursor(Qt::CursorShape shape)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setCursor(Qt::CursorShape shape)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setCursor(shape);
   }
 
   static void setFixedHeight_calledFromC(ffi.Pointer<void> thisCpp, int h) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setFixedHeight(int h)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setFixedHeight(int h)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setFixedHeight(h);
   }
 
   static void setFixedWidth_calledFromC(ffi.Pointer<void> thisCpp, int w) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setFixedWidth(int w)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setFixedWidth(int w)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setFixedWidth(w);
@@ -532,22 +535,22 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void setGeometry_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> geometry) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setGeometry(QRect geometry)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setGeometry(QRect geometry)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setGeometry(QRect.fromCppPointer(geometry));
   }
 
   static void setHeight_calledFromC(ffi.Pointer<void> thisCpp, int h) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setHeight(int h)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setHeight(int h)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setHeight(h);
@@ -555,11 +558,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void setMaximumSize_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> sz) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setMaximumSize(QSize sz)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setMaximumSize(QSize sz)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setMaximumSize(QSize.fromCppPointer(sz));
@@ -567,11 +570,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void setMinimumSize_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> sz) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setMinimumSize(QSize sz)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setMinimumSize(QSize sz)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setMinimumSize(QSize.fromCppPointer(sz));
@@ -579,11 +582,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void setMouseTracking_calledFromC(
       ffi.Pointer<void> thisCpp, int enable) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setMouseTracking(bool enable)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setMouseTracking(bool enable)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setMouseTracking(enable != 0);
@@ -591,11 +594,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void setObjectName_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? name) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setObjectName(const QString & name)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setObjectName(const QString & name)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setObjectName(QString.fromCppPointer(name).toDartString());
@@ -603,11 +606,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void setParent_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setParent(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setParent(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setParent((parent == null || parent.address == 0)
@@ -616,33 +619,33 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static void setSize_2_calledFromC(ffi.Pointer<void> thisCpp, int w, int h) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setSize(int w, int h)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setSize(int w, int h)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setSize_2(w, h);
   }
 
   static void setVisible_calledFromC(ffi.Pointer<void> thisCpp, int visible) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setVisible(bool visible)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setVisible(bool visible)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setVisible(visible != 0);
   }
 
   static void setWidth_calledFromC(ffi.Pointer<void> thisCpp, int w) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setWidth(int w)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setWidth(int w)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setWidth(w);
@@ -650,11 +653,11 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void setWindowOpacity_calledFromC(
       ffi.Pointer<void> thisCpp, double v) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setWindowOpacity(double v)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setWindowOpacity(double v)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setWindowOpacity(v);
@@ -662,76 +665,77 @@ class Group extends KDDWBindingsFlutter.View {
 
   static void setWindowTitle_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? title) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setWindowTitle(const QString & title)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setWindowTitle(const QString & title)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setWindowTitle(QString.fromCppPointer(title).toDartString());
   }
 
   static void setZOrder_calledFromC(ffi.Pointer<void> thisCpp, int z) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::setZOrder(int z)! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::setZOrder(int z)! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.setZOrder(z);
   }
 
   static void show_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
-      print("Dart instance not found for Group::show()! (${thisCpp.address})");
+      print(
+          "Dart instance not found for MainWindow::show()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.show();
   }
 
   static void showMaximized_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::showMaximized()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::showMaximized()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.showMaximized();
   }
 
   static void showMinimized_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::showMinimized()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::showMinimized()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.showMinimized();
   }
 
   static void showNormal_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::showNormal()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::showNormal()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.showNormal();
   }
 
   static ffi.Pointer<void> sizeHint_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::sizeHint() const! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::sizeHint() const! (${thisCpp.address})");
       throw Error();
     }
     final result = dartInstance.sizeHint();
@@ -739,11 +743,11 @@ class Group extends KDDWBindingsFlutter.View {
   }
 
   static void update_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::update()! (${thisCpp.address})");
+          "Dart instance not found for MainWindow::update()! (${thisCpp.address})");
       throw Error();
     }
     dartInstance.update();
@@ -752,7 +756,7 @@ class Group extends KDDWBindingsFlutter.View {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__flutter__Group__destructor')
+            'c_KDDockWidgets__flutter__MainWindow__destructor')
         .asFunction();
     func(thisCpp);
   }
@@ -760,121 +764,121 @@ class Group extends KDDWBindingsFlutter.View {
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
       case 907:
-        return "c_KDDockWidgets__flutter__Group__activateWindow";
+        return "c_KDDockWidgets__flutter__MainWindow__activateWindow";
+      case 1071:
+        return "c_KDDockWidgets__flutter__MainWindow__centralAreaGeometry";
       case 918:
-        return "c_KDDockWidgets__flutter__Group__close";
+        return "c_KDDockWidgets__flutter__MainWindow__close";
       case 921:
-        return "c_KDDockWidgets__flutter__Group__createPlatformWindow";
-      case 1078:
-        return "c_KDDockWidgets__flutter__Group__dragRect";
+        return "c_KDDockWidgets__flutter__MainWindow__createPlatformWindow";
       case 927:
-        return "c_KDDockWidgets__flutter__Group__flags";
+        return "c_KDDockWidgets__flutter__MainWindow__flags";
       case 929:
-        return "c_KDDockWidgets__flutter__Group__free_impl";
+        return "c_KDDockWidgets__flutter__MainWindow__free_impl";
       case 931:
-        return "c_KDDockWidgets__flutter__Group__geometry";
+        return "c_KDDockWidgets__flutter__MainWindow__geometry";
       case 933:
-        return "c_KDDockWidgets__flutter__Group__grabMouse";
+        return "c_KDDockWidgets__flutter__MainWindow__grabMouse";
       case 936:
-        return "c_KDDockWidgets__flutter__Group__hasFocus";
+        return "c_KDDockWidgets__flutter__MainWindow__hasFocus";
       case 938:
-        return "c_KDDockWidgets__flutter__Group__hide";
+        return "c_KDDockWidgets__flutter__MainWindow__hide";
       case 941:
-        return "c_KDDockWidgets__flutter__Group__init";
+        return "c_KDDockWidgets__flutter__MainWindow__init";
       case 943:
-        return "c_KDDockWidgets__flutter__Group__isActiveWindow";
+        return "c_KDDockWidgets__flutter__MainWindow__isActiveWindow";
       case 944:
-        return "c_KDDockWidgets__flutter__Group__isExpicitlyHidden";
+        return "c_KDDockWidgets__flutter__MainWindow__isExpicitlyHidden";
       case 945:
-        return "c_KDDockWidgets__flutter__Group__isMaximized";
+        return "c_KDDockWidgets__flutter__MainWindow__isMaximized";
       case 946:
-        return "c_KDDockWidgets__flutter__Group__isMinimized";
+        return "c_KDDockWidgets__flutter__MainWindow__isMinimized";
       case 947:
-        return "c_KDDockWidgets__flutter__Group__isNull";
+        return "c_KDDockWidgets__flutter__MainWindow__isNull";
       case 948:
-        return "c_KDDockWidgets__flutter__Group__isRootView";
+        return "c_KDDockWidgets__flutter__MainWindow__isRootView";
       case 949:
-        return "c_KDDockWidgets__flutter__Group__isVisible";
+        return "c_KDDockWidgets__flutter__MainWindow__isVisible";
       case 950:
-        return "c_KDDockWidgets__flutter__Group__mapFromGlobal_QPoint";
+        return "c_KDDockWidgets__flutter__MainWindow__mapFromGlobal_QPoint";
       case 951:
-        return "c_KDDockWidgets__flutter__Group__mapTo_View_QPoint";
+        return "c_KDDockWidgets__flutter__MainWindow__mapTo_View_QPoint";
       case 952:
-        return "c_KDDockWidgets__flutter__Group__mapToGlobal_QPoint";
+        return "c_KDDockWidgets__flutter__MainWindow__mapToGlobal_QPoint";
       case 953:
-        return "c_KDDockWidgets__flutter__Group__maxSizeHint";
+        return "c_KDDockWidgets__flutter__MainWindow__maxSizeHint";
       case 954:
-        return "c_KDDockWidgets__flutter__Group__minSize";
+        return "c_KDDockWidgets__flutter__MainWindow__minSize";
       case 955:
-        return "c_KDDockWidgets__flutter__Group__minimumHeight";
+        return "c_KDDockWidgets__flutter__MainWindow__minimumHeight";
       case 956:
-        return "c_KDDockWidgets__flutter__Group__minimumWidth";
+        return "c_KDDockWidgets__flutter__MainWindow__minimumWidth";
       case 958:
-        return "c_KDDockWidgets__flutter__Group__move_int_int";
-      case 1079:
-        return "c_KDDockWidgets__flutter__Group__nonContentsHeight";
+        return "c_KDDockWidgets__flutter__MainWindow__move_int_int";
       case 959:
-        return "c_KDDockWidgets__flutter__Group__normalGeometry";
+        return "c_KDDockWidgets__flutter__MainWindow__normalGeometry";
       case 960:
-        return "c_KDDockWidgets__flutter__Group__objectName";
+        return "c_KDDockWidgets__flutter__MainWindow__objectName";
       case 1028:
-        return "c_KDDockWidgets__flutter__Group__onChildAdded_View";
+        return "c_KDDockWidgets__flutter__MainWindow__onChildAdded_View";
       case 1029:
-        return "c_KDDockWidgets__flutter__Group__onChildRemoved_View";
+        return "c_KDDockWidgets__flutter__MainWindow__onChildRemoved_View";
       case 962:
-        return "c_KDDockWidgets__flutter__Group__onResize_int_int";
+        return "c_KDDockWidgets__flutter__MainWindow__onResize_int_int";
       case 965:
-        return "c_KDDockWidgets__flutter__Group__raise";
+        return "c_KDDockWidgets__flutter__MainWindow__raise";
       case 966:
-        return "c_KDDockWidgets__flutter__Group__raiseAndActivate";
+        return "c_KDDockWidgets__flutter__MainWindow__raiseAndActivate";
       case 968:
-        return "c_KDDockWidgets__flutter__Group__releaseKeyboard";
+        return "c_KDDockWidgets__flutter__MainWindow__releaseKeyboard";
       case 969:
-        return "c_KDDockWidgets__flutter__Group__releaseMouse";
+        return "c_KDDockWidgets__flutter__MainWindow__releaseMouse";
+      case 1072:
+        return "c_KDDockWidgets__flutter__MainWindow__setContentsMargins_int_int_int_int";
       case 973:
-        return "c_KDDockWidgets__flutter__Group__setCursor_CursorShape";
+        return "c_KDDockWidgets__flutter__MainWindow__setCursor_CursorShape";
       case 974:
-        return "c_KDDockWidgets__flutter__Group__setFixedHeight_int";
+        return "c_KDDockWidgets__flutter__MainWindow__setFixedHeight_int";
       case 975:
-        return "c_KDDockWidgets__flutter__Group__setFixedWidth_int";
+        return "c_KDDockWidgets__flutter__MainWindow__setFixedWidth_int";
       case 976:
-        return "c_KDDockWidgets__flutter__Group__setGeometry_QRect";
+        return "c_KDDockWidgets__flutter__MainWindow__setGeometry_QRect";
       case 977:
-        return "c_KDDockWidgets__flutter__Group__setHeight_int";
+        return "c_KDDockWidgets__flutter__MainWindow__setHeight_int";
       case 978:
-        return "c_KDDockWidgets__flutter__Group__setMaximumSize_QSize";
+        return "c_KDDockWidgets__flutter__MainWindow__setMaximumSize_QSize";
       case 979:
-        return "c_KDDockWidgets__flutter__Group__setMinimumSize_QSize";
+        return "c_KDDockWidgets__flutter__MainWindow__setMinimumSize_QSize";
       case 980:
-        return "c_KDDockWidgets__flutter__Group__setMouseTracking_bool";
+        return "c_KDDockWidgets__flutter__MainWindow__setMouseTracking_bool";
       case 981:
-        return "c_KDDockWidgets__flutter__Group__setObjectName_QString";
+        return "c_KDDockWidgets__flutter__MainWindow__setObjectName_QString";
       case 982:
-        return "c_KDDockWidgets__flutter__Group__setParent_View";
+        return "c_KDDockWidgets__flutter__MainWindow__setParent_View";
       case 984:
-        return "c_KDDockWidgets__flutter__Group__setSize_int_int";
+        return "c_KDDockWidgets__flutter__MainWindow__setSize_int_int";
       case 985:
-        return "c_KDDockWidgets__flutter__Group__setVisible_bool";
+        return "c_KDDockWidgets__flutter__MainWindow__setVisible_bool";
       case 986:
-        return "c_KDDockWidgets__flutter__Group__setWidth_int";
+        return "c_KDDockWidgets__flutter__MainWindow__setWidth_int";
       case 987:
-        return "c_KDDockWidgets__flutter__Group__setWindowOpacity_double";
+        return "c_KDDockWidgets__flutter__MainWindow__setWindowOpacity_double";
       case 988:
-        return "c_KDDockWidgets__flutter__Group__setWindowTitle_QString";
+        return "c_KDDockWidgets__flutter__MainWindow__setWindowTitle_QString";
       case 989:
-        return "c_KDDockWidgets__flutter__Group__setZOrder_int";
+        return "c_KDDockWidgets__flutter__MainWindow__setZOrder_int";
       case 990:
-        return "c_KDDockWidgets__flutter__Group__show";
+        return "c_KDDockWidgets__flutter__MainWindow__show";
       case 991:
-        return "c_KDDockWidgets__flutter__Group__showMaximized";
+        return "c_KDDockWidgets__flutter__MainWindow__showMaximized";
       case 992:
-        return "c_KDDockWidgets__flutter__Group__showMinimized";
+        return "c_KDDockWidgets__flutter__MainWindow__showMinimized";
       case 993:
-        return "c_KDDockWidgets__flutter__Group__showNormal";
+        return "c_KDDockWidgets__flutter__MainWindow__showNormal";
       case 995:
-        return "c_KDDockWidgets__flutter__Group__sizeHint";
+        return "c_KDDockWidgets__flutter__MainWindow__sizeHint";
       case 997:
-        return "c_KDDockWidgets__flutter__Group__update";
+        return "c_KDDockWidgets__flutter__MainWindow__update";
     }
     return super.cFunctionSymbolName(methodId);
   }
@@ -883,12 +887,12 @@ class Group extends KDDWBindingsFlutter.View {
     switch (methodId) {
       case 907:
         return "activateWindow";
+      case 1071:
+        return "centralAreaGeometry";
       case 918:
         return "close";
       case 921:
         return "createPlatformWindow";
-      case 1078:
-        return "dragRect";
       case 927:
         return "flags";
       case 929:
@@ -933,8 +937,6 @@ class Group extends KDDWBindingsFlutter.View {
         return "minimumWidth";
       case 958:
         return "move_2";
-      case 1079:
-        return "nonContentsHeight";
       case 959:
         return "normalGeometry";
       case 960:
@@ -953,6 +955,8 @@ class Group extends KDDWBindingsFlutter.View {
         return "releaseKeyboard";
       case 969:
         return "releaseMouse";
+      case 1072:
+        return "setContentsMargins";
       case 973:
         return "setCursor";
       case 974:
@@ -1005,11 +1009,14 @@ class Group extends KDDWBindingsFlutter.View {
     assert(thisCpp != null);
     final RegisterMethodIsReimplementedCallback registerCallback = _dylib
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
-            'c_KDDockWidgets__flutter__Group__registerVirtualMethodCallback')
+            'c_KDDockWidgets__flutter__MainWindow__registerVirtualMethodCallback')
         .asFunction();
     final callback907 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.activateWindow_calledFromC);
     registerCallback(thisCpp, callback907, 907);
+    final callback1071 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.MainWindow.centralAreaGeometry_calledFromC);
+    registerCallback(thisCpp, callback1071, 1071);
     const callbackExcept918 = 0;
     final callback918 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.close_calledFromC, callbackExcept918);
@@ -1017,9 +1024,6 @@ class Group extends KDDWBindingsFlutter.View {
     final callback921 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.createPlatformWindow_calledFromC);
     registerCallback(thisCpp, callback921, 921);
-    final callback1078 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Group.dragRect_calledFromC);
-    registerCallback(thisCpp, callback1078, 1078);
     const callbackExcept927 = 0;
     final callback927 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.flags_calledFromC, callbackExcept927);
@@ -1041,7 +1045,7 @@ class Group extends KDDWBindingsFlutter.View {
         KDDWBindingsFlutter.View.hide_calledFromC);
     registerCallback(thisCpp, callback938, 938);
     final callback941 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Group.init_calledFromC);
+        KDDWBindingsCore.View.init_calledFromC);
     registerCallback(thisCpp, callback941, 941);
     const callbackExcept943 = 0;
     final callback943 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
@@ -1085,10 +1089,10 @@ class Group extends KDDWBindingsFlutter.View {
             KDDWBindingsFlutter.View.mapToGlobal_calledFromC);
     registerCallback(thisCpp, callback952, 952);
     final callback953 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Group.maxSizeHint_calledFromC);
+        KDDWBindingsFlutter.View.maxSizeHint_calledFromC);
     registerCallback(thisCpp, callback953, 953);
     final callback954 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Group.minSize_calledFromC);
+        KDDWBindingsFlutter.View.minSize_calledFromC);
     registerCallback(thisCpp, callback954, 954);
     const callbackExcept955 = 0;
     final callback955 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
@@ -1102,11 +1106,6 @@ class Group extends KDDWBindingsFlutter.View {
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.move_2_calledFromC);
     registerCallback(thisCpp, callback958, 958);
-    const callbackExcept1079 = 0;
-    final callback1079 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Group.nonContentsHeight_calledFromC,
-        callbackExcept1079);
-    registerCallback(thisCpp, callback1079, 1079);
     final callback959 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.normalGeometry_calledFromC);
     registerCallback(thisCpp, callback959, 959);
@@ -1138,6 +1137,10 @@ class Group extends KDDWBindingsFlutter.View {
     final callback969 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseMouse_calledFromC);
     registerCallback(thisCpp, callback969, 969);
+    final callback1072 = ffi.Pointer.fromFunction<
+            void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
+        KDDWBindingsFlutter.MainWindow.setContentsMargins_calledFromC);
+    registerCallback(thisCpp, callback1072, 1072);
     final callback973 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.setCursor_calledFromC);

@@ -12,7 +12,7 @@
 #include <DockRegistry.h>
 #include <qstring.h>
 #include <core/DockWidget.h>
-#include <MainWindow.h>
+#include "core/MainWindow.h"
 #include <FloatingWindow.h>
 #include <core/Layout.h>
 #include <core/Group.h>

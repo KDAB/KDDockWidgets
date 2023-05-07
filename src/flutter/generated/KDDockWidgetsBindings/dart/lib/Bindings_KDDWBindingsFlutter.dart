@@ -10,6 +10,7 @@
 */
 export 'src/KDDWBindingsFlutter/DockWidget.dart' show DockWidget;
 export 'src/KDDWBindingsFlutter/Group.dart' show Group;
+export 'src/KDDWBindingsFlutter/MainWindow.dart' show MainWindow;
 export 'src/KDDWBindingsFlutter/Stack.dart' show Stack;
 export 'src/KDDWBindingsFlutter/TabBar.dart' show TabBar;
 export 'src/KDDWBindingsFlutter/TitleBar.dart' show TitleBar;

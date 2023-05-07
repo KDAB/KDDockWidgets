@@ -22,7 +22,7 @@
 #include <TabBar.h>
 #include <qpoint.h>
 #include "core/TitleBar.h"
-#include <MainWindow.h>
+#include "core/MainWindow.h"
 #include <Item_p.h>
 #include <qrect.h>
 #include <DropArea.h>
