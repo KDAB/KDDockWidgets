@@ -45,6 +45,7 @@
 #include "views/TabBar.h"
 #include "views/TitleBar.h"
 #include "views/DockWidget.h"
+#include "views/MainWindow.h"
 
 #include "../core/ViewFactory.h"
 #include "../core/Layout.h"

@@ -66,7 +66,9 @@
             <object-type name="DropIndicatorOverlay" />
             <object-type name="DockWidget" />
             <object-type name="ClassicIndicators" />
-            <object-type name="MainWindow" />
+            <object-type name="MainWindow">
+                <include file-name="core/MainWindow.h" location="local"/>
+            </object-type>
             <object-type name="ClassicIndicatorWindowViewInterface" />
             <object-type name="Item" />
             <enum-type name="ViewType" />
@@ -84,6 +86,7 @@
             <object-type name="Group" />
             <object-type name="DockWidget" />
             <object-type name="Window" />
+            <object-type name="MainWindow" />
         </namespace-type>
 
     </namespace-type>

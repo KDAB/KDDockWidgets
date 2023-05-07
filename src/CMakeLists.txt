@@ -194,6 +194,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/FloatingWindow_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/View_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/TitleBar_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/MainWindow_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TitleBar_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Platform_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/View_c.cpp
@@ -202,6 +203,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TabBar_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Group_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DockWidget_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/MainWindow_c.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
@@ -215,6 +217,7 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/views/Group.cpp
     flutter/views/TabBar.cpp
     flutter/views/TitleBar.cpp
+    flutter/views/MainWindow.cpp
 )
 
 if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)

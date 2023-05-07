@@ -37,7 +37,8 @@
                 "KDDockWidgets::flutter::Stack",
                 "KDDockWidgets::flutter::Group",
                 "KDDockWidgets::flutter::DockWidget",
-                "KDDockWidgets::flutter::ViewFactory"
+                "KDDockWidgets::flutter::ViewFactory",
+                "KDDockWidgets::flutter::MainWindow"
             ]
         }
     ]
