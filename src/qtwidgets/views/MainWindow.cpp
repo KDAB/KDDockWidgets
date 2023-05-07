@@ -93,7 +93,7 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(controller()))
     , d(new Private(this))
 {
-    MainWindowViewInterface::init(uniqueName);
+    m_mainWindow->init(uniqueName);
 
     d->m_layout->setSpacing(0);
     d->updateMargins();

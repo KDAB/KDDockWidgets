@@ -29,11 +29,6 @@ Core::MainWindow *MainWindowViewInterface::mainWindow() const
     return m_mainWindow;
 }
 
-void MainWindowViewInterface::init(const QString &name)
-{
-    m_mainWindow->init(name);
-}
-
 QString MainWindowViewInterface::uniqueName() const
 {
     return m_mainWindow->uniqueName();

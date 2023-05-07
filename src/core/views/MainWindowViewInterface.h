@@ -76,7 +76,6 @@ public:
                        const QString &relativeToDockId = {}, KDDockWidgets::InitialOption = {});
 
 protected:
-    void init(const QString &name);
     MainWindow *const m_mainWindow;
 };
 

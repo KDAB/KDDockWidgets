@@ -32,6 +32,18 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
+namespace qtwidgets {
+class MainWindow;
+}
+
+namespace qtquick {
+class MainWindow;
+}
+
+namespace flutter {
+class MainWindow;
+}
+
 namespace Core {
 
 class MainWindowViewInterface;
@@ -241,9 +253,12 @@ Q_SIGNALS:
 
 private:
     void init(const QString &name);
-
     class Private;
     Private *const d;
+
+    friend class KDDockWidgets::qtwidgets::MainWindow;
+    friend class KDDockWidgets::qtquick::MainWindow;
+    friend class KDDockWidgets::flutter::MainWindow;
 
     friend class KDDockWidgets::Core::MainWindowViewInterface;
     friend class ::TestDocks;

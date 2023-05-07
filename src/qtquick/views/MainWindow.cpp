@@ -56,7 +56,7 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(View::controller()))
     , d(new Private(this))
 {
-    MainWindowViewInterface::init(uniqueName);
+    m_mainWindow->init(uniqueName);
     makeItemFillParent(this);
 
     Core::Layout *lw = m_mainWindow->layout();
