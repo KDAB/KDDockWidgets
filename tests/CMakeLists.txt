@@ -32,7 +32,7 @@ function(add_slow_test testNumber)
     add_executable(tst_docks_slow${testNumber} tst_docks_slow${testNumber}.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
     target_link_libraries(tst_docks_slow${testNumber} kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
     set_compiler_flags(tst_docks_slow${testNumber})
-    if (NOT KDDW_FRONTEND_FLUTTER) # TODO: fix these tests for flutter as well
+    if(NOT KDDW_FRONTEND_FLUTTER) # TODO: fix these tests for flutter as well
         add_test(NAME tst_docks_slow${testNumber} COMMAND tst_docks_slow${testNumber})
     endif()
 endfunction(add_slow_test)
@@ -42,7 +42,6 @@ add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
 target_link_libraries(tst_docks kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_docks)
 
-add_slow_test(1)
 add_slow_test(2)
 add_slow_test(3)
 add_slow_test(4)
@@ -114,7 +113,7 @@ endif()
 
 # Function to add a doctest
 function(add_doctest test srcs)
-    add_executable(${test} ${srcs} ${TESTING_RESOURCES})
+    add_executable(${test} ${srcs} ${TESTING_RESOURCES} utils.cpp)
     target_link_libraries(${test} kddockwidgets kdbindings)
     set_compiler_flags(${test})
     if(KDDW_FRONTEND_FLUTTER)
@@ -122,6 +121,7 @@ function(add_doctest test srcs)
     endif()
 endfunction()
 
+add_doctest(tst_docks_slow1 tst_docks_slow1.cpp)
 add_doctest(tst_multisplitter tst_multisplitter.cpp)
 add_doctest(tst_viewguard tst_viewguard.cpp)
 add_doctest(tst_view tst_view.cpp)

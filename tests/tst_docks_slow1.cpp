@@ -15,6 +15,8 @@
 // A test that was extracted out from tst_docks.cpp as it was too slow
 // By using a separate executable it can be paralellized by ctest.
 
+#include "main.h"
+
 #include "utils.h"
 #include "Config.h"
 #include "core/Position_p.h"
@@ -34,109 +36,80 @@
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Platform.h"
 
-#include <QtTest/QTest>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-class TestDocks : public QObject
+
+TEST_CASE("tst_invalidPlaceholderPosition")
 {
-    Q_OBJECT
+    auto func = [](bool restore1First) {
+        // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
+        // result: the bottom most one didn't have it's top separator at y=0
 
-public Q_SLOTS:
-    void initTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->installMessageHandler();
-    }
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
-    void cleanupTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
-    }
+        Core::DropArea *layout = m->multiSplitter();
 
-private Q_SLOTS:
-    void tst_invalidPlaceholderPosition_data();
-    void tst_invalidPlaceholderPosition();
-    void tst_startHidden();
-    void tst_startHidden2();
-    void tst_invalidJSON_data();
-    void tst_invalidJSON();
-};
+        // Stack: 1, 2, 3 vertically
+        m->addDockWidget(dock3, Location_OnTop);
+        m->addDockWidget(dock2, Location_OnTop);
+        m->addDockWidget(dock1, Location_OnTop);
 
-void TestDocks::tst_invalidPlaceholderPosition_data()
-{
-    QTest::addColumn<bool>("restore1First");
-    QTest::newRow("restore1First") << true;
-    QTest::newRow("restore2First") << false;
+        auto group1 = dock1->dptr()->group();
+        auto group2 = dock2->dptr()->group();
+        auto group3 = dock3->dptr()->group();
+        CHECK_EQ(group1->view()->y(), 0);
+
+        // Close 1
+        dock1->close();
+        Platform::instance()->tests_waitForResize(group2->view());
+
+        // Check that group2 moved up to y=1
+        CHECK_EQ(group2->view()->y(), 0);
+
+        // Close 2
+        dock2->close();
+        Platform::instance()->tests_waitForResize(dock3->view());
+
+        CHECK(layout->checkSanity());
+        CHECK_EQ(layout->count(), 3);
+        CHECK_EQ(layout->placeholderCount(), 2);
+
+        // Check that group3 moved up to y=1
+        CHECK_EQ(group3->view()->y(), 0);
+
+        // Now restore:
+        auto toRestore1 = restore1First ? dock1 : dock2;
+        auto toRestore2 = restore1First ? dock2 : dock1;
+
+        toRestore1->open();
+        CHECK_EQ(layout->placeholderCount(), 1);
+        CHECK(dock3->isVisible());
+        CHECK(!dock3->size().isNull());
+
+        toRestore2->open();
+
+        Platform::instance()->tests_waitForResize(group3->view());
+        CHECK(layout->checkSanity());
+        CHECK_EQ(layout->count(), 3);
+        CHECK_EQ(layout->placeholderCount(), 0);
+        layout->checkSanity();
+
+        dock1->deleteLater();
+        dock2->deleteLater();
+        CHECK(Platform::instance()->tests_waitForDeleted(dock2));
+    };
+
+    func(true);
+    func(false);
 }
 
-void TestDocks::tst_invalidPlaceholderPosition()
-{
-    QFETCH(bool, restore1First);
-
-    // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
-    // result: the bottom most one didn't have it's top separator at y=0
-
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
-    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
-    auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
-
-    Core::DropArea *layout = m->multiSplitter();
-
-    // Stack: 1, 2, 3 vertically
-    m->addDockWidget(dock3, Location_OnTop);
-    m->addDockWidget(dock2, Location_OnTop);
-    m->addDockWidget(dock1, Location_OnTop);
-
-    auto group1 = dock1->dptr()->group();
-    auto group2 = dock2->dptr()->group();
-    auto group3 = dock3->dptr()->group();
-    QCOMPARE(group1->view()->y(), 0);
-
-    // Close 1
-    dock1->close();
-    Platform::instance()->tests_waitForResize(group2->view());
-
-    // Check that group2 moved up to y=1
-    QCOMPARE(group2->view()->y(), 0);
-
-    // Close 2
-    dock2->close();
-    Platform::instance()->tests_waitForResize(dock3->view());
-
-    QVERIFY(layout->checkSanity());
-    QCOMPARE(layout->count(), 3);
-    QCOMPARE(layout->placeholderCount(), 2);
-
-    // Check that group3 moved up to y=1
-    QCOMPARE(group3->view()->y(), 0);
-
-    // Now restore:
-    auto toRestore1 = restore1First ? dock1 : dock2;
-    auto toRestore2 = restore1First ? dock2 : dock1;
-
-    toRestore1->open();
-    QCOMPARE(layout->placeholderCount(), 1);
-    QVERIFY(dock3->isVisible());
-    QVERIFY(!dock3->size().isNull());
-
-    toRestore2->open();
-
-    Platform::instance()->tests_waitForResize(group3->view());
-    QVERIFY(layout->checkSanity());
-    QCOMPARE(layout->count(), 3);
-    QCOMPARE(layout->placeholderCount(), 0);
-    layout->checkSanity();
-
-    dock1->deleteLater();
-    dock2->deleteLater();
-    QVERIFY(Platform::instance()->tests_waitForDeleted(dock2));
-}
-
-void TestDocks::tst_startHidden()
+TEST_CASE("tst_startHidden")
 {
     // A really simple test for InitialVisibilityOption::StartHidden
 
@@ -148,7 +121,7 @@ void TestDocks::tst_startHidden()
     delete dock1;
 }
 
-void TestDocks::tst_startHidden2()
+TEST_CASE("tst_startHidden2")
 {
     EnsureTopLevelsDeleted e;
     {
@@ -162,22 +135,21 @@ void TestDocks::tst_startHidden2()
         Core::DropArea *layout = dropArea;
 
         m->addDockWidget(dock1, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
-        QVERIFY(layout->checkSanity());
+        CHECK(layout->checkSanity());
 
-        QCOMPARE(layout->count(), 1);
-        QCOMPARE(layout->placeholderCount(), 1);
+        CHECK_EQ(layout->count(), 1);
+        CHECK_EQ(layout->placeholderCount(), 1);
 
         m->addDockWidget(dock2, Location_OnTop);
-        QVERIFY(layout->checkSanity());
+        CHECK(layout->checkSanity());
 
-        QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 1);
+        CHECK_EQ(layout->count(), 2);
+        CHECK_EQ(layout->placeholderCount(), 1);
 
-        qDebug() << dock1->isVisible();
         dock1->open();
 
-        QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 0);
+        CHECK_EQ(layout->count(), 2);
+        CHECK_EQ(layout->placeholderCount(), 0);
 
         Platform::instance()->tests_waitForResize(dock2->view());
     }
@@ -200,8 +172,8 @@ void TestDocks::tst_startHidden2()
 
         dock1->open();
 
-        QCOMPARE(layout->count(), 3);
-        QCOMPARE(layout->placeholderCount(), 2);
+        CHECK_EQ(layout->count(), 3);
+        CHECK_EQ(layout->placeholderCount(), 2);
 
         dock2->open();
         dock3->open();
@@ -210,43 +182,25 @@ void TestDocks::tst_startHidden2()
     }
 }
 
-void TestDocks::tst_invalidJSON_data()
+TEST_CASE("tst_invalidJSON")
 {
-    // Be sure that the main windows in the json are called "MyMainWindow1" and the dock widgets
-    // dock-x where x starts at 0
-    QTest::addColumn<QString>("layoutFileName");
-    QTest::addColumn<int>("numDockWidgets");
-    QTest::addColumn<QString>("expectedWarning");
-    QTest::addColumn<bool>("expectedResult");
-    QTest::newRow("unsupported-serialization-version")
-        << "unsupported-serialization-version.json" << 10 << "Serialization format is too old"
-        << false;
-    QTest::newRow("invalid") << "invalid.json" << 29 << "" << false;
-    QTest::newRow("overlapping-item") << "overlapping-item.json" << 2 << "Unexpected pos" << true;
+    auto func = [](QString layoutFileName, int numDockWidgets, QString expectedWarning, bool expectedResult) {
+        const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
+
+        EnsureTopLevelsDeleted e;
+        auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None, "MyMainWindow1");
+        for (int i = 0; i < numDockWidgets; ++i) {
+            createDockWidget(QStringLiteral("dock-%1").arg(i),
+                             Platform::instance()->tests_createView({ true }));
+        }
+
+        SetExpectedWarning sew(expectedWarning);
+
+        LayoutSaver restorer;
+        CHECK_EQ(restorer.restoreFromFile(absoluteLayoutFileName), expectedResult);
+    };
+
+    func("unsupported-serialization-version.json", 10, "Serialization format is too old", false);
+    func("invalid.json", 29, "", false);
+    func("overlapping-item.json", 2, "Unexpected pos", true);
 }
-
-void TestDocks::tst_invalidJSON()
-{
-    QFETCH(QString, layoutFileName);
-    QFETCH(int, numDockWidgets);
-    QFETCH(QString, expectedWarning);
-    QFETCH(bool, expectedResult);
-
-    const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
-
-    EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None, "MyMainWindow1");
-    for (int i = 0; i < numDockWidgets; ++i) {
-        createDockWidget(QStringLiteral("dock-%1").arg(i),
-                         Platform::instance()->tests_createView({ true }));
-    }
-
-    SetExpectedWarning sew(expectedWarning);
-
-    LayoutSaver restorer;
-    QCOMPARE(restorer.restoreFromFile(absoluteLayoutFileName), expectedResult);
-}
-
-#include "tst_docks_main.h"
-
-#include <tst_docks_slow1.moc>

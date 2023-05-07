@@ -223,5 +223,5 @@ void KDDockWidgets::Tests::nestDockWidget(Core::DockWidget *dock, DropArea *drop
     dock->d->group()->setObjectName(dock->objectName());
 
     dropArea->addWidget(group->view(), location, relativeTo);
-    QVERIFY(dropArea->checkSanity());
+    Q_ASSERT(dropArea->checkSanity());
 }
