@@ -81,7 +81,7 @@ bool View::isVisible() const
 
 void View::setVisible(bool is)
 {
-    if (is != m_visible) {
+    if (!m_visible.has_value() || is != m_visible.value()) {
         m_visible = is;
 
         if (m_visible) {
@@ -93,14 +93,15 @@ void View::setVisible(bool is)
             }
         }
 
-        if (m_parentView)
+        if (m_parentView) {
             m_parentView->onChildVisibilityChanged(this);
+        }
     }
 }
 
 bool View::isExpicitlyHidden() const
 {
-    return m_visible.has_value() && !m_visible;
+    return m_visible.has_value() && !m_visible.value();
 }
 
 void View::setSize(int w, int h)

@@ -110,8 +110,8 @@ class PositionedWidgetState extends State<PositionedWidget>
       resizeKDDWLayout();
     });
 
-    if (_fillsParent)
-      print("Build started width=${width} but ${kddwView.m_width}");
+    // if (_fillsParent)
+    //   print("Build started width=${width} but ${kddwView.m_width}");
 
     final container = buildContents();
 

@@ -74,7 +74,7 @@ TEST_CASE("tst_invalidPlaceholderPosition")
 
         Platform::instance()->tests_waitForResize(group2->view());
 
-        // Check that group2 moved up to y=1
+        // Check that group2 moved up to y=0
         CHECK_EQ(group2->view()->y(), 0);
 
         // Close 2
