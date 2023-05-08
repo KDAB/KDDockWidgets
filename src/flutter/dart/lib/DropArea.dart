@@ -52,7 +52,7 @@ class DockWidgetPositionedWidgetState extends PositionedWidgetState {
     return Container(
         color: kddwView.m_color,
         child: Stack(
-          children: kddwView.childWidgets,
+          children: kddwView.visibleChildWidgets(),
         ));
   }
 }

@@ -104,6 +104,19 @@ class View_mixin {
     }
   }
 
+  void onChildVisibilityChanged(KDDWBindingsCore.View? childView) {
+    final state = widgetKey.currentState;
+    if (state != null) {
+      state.childrenChanged();
+    }
+  }
+
+  List<Widget> visibleChildWidgets() {
+    return childWidgets.where((w) {
+      return !(w as PositionedWidget).kddwView.kddwView.isExpicitlyHidden();
+    }).toList();
+  }
+
   setGeometry(KDDockWidgetBindings.QRect geo) {
     // print("View_mixin: setGeometry .name=${debugName}");
     final sz = geo.size();
