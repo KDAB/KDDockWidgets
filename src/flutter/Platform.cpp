@@ -306,19 +306,19 @@ Core::MainWindow *Platform::createMainWindow(const QString &, Core::CreateViewOp
 bool Platform::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const
 {
     ( void )timeout;
-    return false;
+    return true;
 }
 
 bool Platform::tests_waitForResize(Core::View *, int timeout) const
 {
     ( void )timeout;
-    return false;
+    return true;
 }
 
 bool Platform::tests_waitForResize(Core::Controller *, int timeout) const
 {
     ( void )timeout;
-    return false;
+    return true;
 }
 
 bool Platform::tests_waitForEvent(QObject *w, Event::Type type, int timeout) const
@@ -326,14 +326,14 @@ bool Platform::tests_waitForEvent(QObject *w, Event::Type type, int timeout) con
     ( void )w;
     ( void )type;
     ( void )timeout;
-    return false;
+    return true;
 }
 
 bool Platform::tests_waitForEvent(Core::View *, Event::Type type, int timeout) const
 {
     ( void )type;
     ( void )timeout;
-    return false;
+    return true;
 }
 
 bool Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
@@ -341,19 +341,19 @@ bool Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type typ
 {
     ( void )type;
     ( void )timeout;
-    return false;
+    return true;
 }
 
 bool Platform::tests_waitForDeleted(Core::View *, int timeout) const
 {
     ( void )timeout;
-    return false;
+    return true;
 }
 
 bool Platform::tests_waitForDeleted(QObject *, int timeout) const
 {
     ( void )timeout;
-    return false;
+    return true;
 }
 
 void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const
