@@ -1089,6 +1089,10 @@ const char *c_KDDockWidgets__Core__Platform__name(void *thisObj);
 void c_KDDockWidgets__Core__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
 void c_KDDockWidgets__Core__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::onMainWindowCreated(KDDockWidgets::Core::MainWindow * arg__1)
+void c_KDDockWidgets__Core__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
+void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::organizationName() const
 void *c_KDDockWidgets__Core__Platform__organizationName(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()
@@ -1177,6 +1181,10 @@ const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj);
 void c_KDDockWidgets__flutter__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
 void c_KDDockWidgets__flutter__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::onMainWindowCreated(KDDockWidgets::Core::MainWindow * arg__1)
+void c_KDDockWidgets__flutter__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
+void c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::organizationName() const
 void *c_KDDockWidgets__flutter__Platform__organizationName(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDartDebugger()

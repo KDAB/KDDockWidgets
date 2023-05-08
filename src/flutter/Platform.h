@@ -54,6 +54,9 @@ public:
     void onFloatingWindowCreated(Core::FloatingWindow *) override;
     void onFloatingWindowDestroyed(Core::FloatingWindow *) override;
 
+    void onMainWindowCreated(Core::MainWindow *) override;
+    void onMainWindowDestroyed(Core::MainWindow *) override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;

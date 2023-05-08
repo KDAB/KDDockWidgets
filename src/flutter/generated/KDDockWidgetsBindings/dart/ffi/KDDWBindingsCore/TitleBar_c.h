@@ -16,8 +16,8 @@
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
 #include <TabBar.h>
-#include <core/View.h>
 #include <qpoint.h>
+#include <core/View.h>
 #include <qsize.h>
 #include <qrect.h>
 

@@ -160,6 +160,14 @@ void Platform::onFloatingWindowDestroyed(Core::FloatingWindow *)
 {
 }
 
+void Platform::onMainWindowCreated(Core::MainWindow *)
+{
+}
+
+void Platform::onMainWindowDestroyed(Core::MainWindow *)
+{
+}
+
 QPoint Platform::cursorPos() const
 {
     return {};

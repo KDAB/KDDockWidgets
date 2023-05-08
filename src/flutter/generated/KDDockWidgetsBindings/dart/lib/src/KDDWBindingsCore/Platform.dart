@@ -436,12 +436,56 @@ class Platform {
         (arg__1 == null || arg__1.address == 0)
             ? null
             : KDDWBindingsCore.FloatingWindow.fromCppPointer(arg__1));
+  } // onMainWindowCreated(KDDockWidgets::Core::MainWindow * arg__1)
+
+  onMainWindowCreated(KDDWBindingsCore.MainWindow? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(733))
+        .asFunction();
+    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+  }
+
+  static void onMainWindowCreated_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
+    var dartInstance =
+        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for Platform::onMainWindowCreated(KDDockWidgets::Core::MainWindow * arg__1)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.onMainWindowCreated((arg__1 == null || arg__1.address == 0)
+        ? null
+        : KDDWBindingsCore.MainWindow.fromCppPointer(arg__1));
+  } // onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
+
+  onMainWindowDestroyed(KDDWBindingsCore.MainWindow? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(734))
+        .asFunction();
+    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+  }
+
+  static void onMainWindowDestroyed_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
+    var dartInstance =
+        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.onMainWindowDestroyed((arg__1 == null || arg__1.address == 0)
+        ? null
+        : KDDWBindingsCore.MainWindow.fromCppPointer(arg__1));
   } // organizationName() const
 
   QString organizationName() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(733))
+            cFunctionSymbolName(735))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QString.fromCppPointer(result, true);
@@ -463,7 +507,7 @@ class Platform {
   restoreMouseCursor() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(734))
+            cFunctionSymbolName(736))
         .asFunction();
     func(thisCpp);
   }
@@ -482,7 +526,7 @@ class Platform {
   int screenNumberFor(KDDWBindingsCore.View? arg__1) {
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(735))
+            cFunctionSymbolName(737))
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -506,7 +550,7 @@ class Platform {
   QSize screenSizeFor(KDDWBindingsCore.View? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(736))
+            cFunctionSymbolName(738))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
@@ -532,7 +576,7 @@ class Platform {
   setCursorPos(QPoint arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(737))
+            cFunctionSymbolName(739))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -552,7 +596,7 @@ class Platform {
   setMouseCursor(int arg__1) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(738))
+            cFunctionSymbolName(740))
         .asFunction();
     func(thisCpp, arg__1);
   }
@@ -580,7 +624,7 @@ class Platform {
   int startDragDistance_impl() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(740))
+            cFunctionSymbolName(742))
         .asFunction();
     return func(thisCpp);
   }
@@ -603,7 +647,7 @@ class Platform {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(741))
+            cFunctionSymbolName(743))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -635,7 +679,7 @@ class Platform {
       {required KDDWBindingsCore.View? parent}) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(742))
+            cFunctionSymbolName(744))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
@@ -664,7 +708,7 @@ class Platform {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(743))
+            cFunctionSymbolName(745))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -704,7 +748,7 @@ class Platform {
   tests_deinitPlatform_impl() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(745))
+            cFunctionSymbolName(747))
         .asFunction();
     func(thisCpp);
   }
@@ -723,7 +767,7 @@ class Platform {
   tests_doubleClickOn(QPoint globalPos, KDDWBindingsCore.View? receiver) {
     final void_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(746))
+            cFunctionSymbolName(748))
         .asFunction();
     func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp,
         receiver == null ? ffi.nullptr : receiver.thisCpp);
@@ -748,7 +792,7 @@ class Platform {
   tests_initPlatform_impl() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(748))
+            cFunctionSymbolName(750))
         .asFunction();
     func(thisCpp);
   }
@@ -776,7 +820,7 @@ class Platform {
   tests_wait(int ms) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(750))
+            cFunctionSymbolName(752))
         .asFunction();
     func(thisCpp, ms);
   }
@@ -796,7 +840,7 @@ class Platform {
       {int timeout = 2000}) {
     final bool_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(751))
+            cFunctionSymbolName(753))
         .asFunction();
     return func(
             thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, timeout) !=
@@ -823,7 +867,7 @@ class Platform {
   bool tests_waitForDeleted_2(QObject? arg__1, {int timeout = 2000}) {
     final bool_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(752))
+            cFunctionSymbolName(754))
         .asFunction();
     return func(
             thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, timeout) !=
@@ -853,7 +897,7 @@ class Platform {
         .lookup<
                 ffi.NativeFunction<
                     bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(753))
+            cFunctionSymbolName(755))
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, type,
             timeout) !=
@@ -883,7 +927,7 @@ class Platform {
         .lookup<
                 ffi.NativeFunction<
                     bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(754))
+            cFunctionSymbolName(756))
         .asFunction();
     return func(thisCpp, w == null ? ffi.nullptr : w.thisCpp, type, timeout) !=
         0;
@@ -908,7 +952,7 @@ class Platform {
       {int timeout = 2000}) {
     final bool_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(755))
+            cFunctionSymbolName(757))
         .asFunction();
     return func(
             thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, timeout) !=
@@ -936,7 +980,7 @@ class Platform {
       {int timeout = 2000}) {
     final bool_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(756))
+            cFunctionSymbolName(758))
         .asFunction();
     return func(
             thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, timeout) !=
@@ -963,7 +1007,7 @@ class Platform {
   ungrabMouse() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(757))
+            cFunctionSymbolName(759))
         .asFunction();
     func(thisCpp);
   }
@@ -982,7 +1026,7 @@ class Platform {
   uninstallMessageHandler() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(758))
+            cFunctionSymbolName(760))
         .asFunction();
     func(thisCpp);
   }
@@ -1001,7 +1045,7 @@ class Platform {
   bool usesFallbackMouseGrabber() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(759))
+            cFunctionSymbolName(761))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -1057,50 +1101,54 @@ class Platform {
       case 732:
         return "c_KDDockWidgets__Core__Platform__onFloatingWindowDestroyed_FloatingWindow";
       case 733:
-        return "c_KDDockWidgets__Core__Platform__organizationName";
+        return "c_KDDockWidgets__Core__Platform__onMainWindowCreated_MainWindow";
       case 734:
-        return "c_KDDockWidgets__Core__Platform__restoreMouseCursor";
+        return "c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow";
       case 735:
-        return "c_KDDockWidgets__Core__Platform__screenNumberFor_View";
+        return "c_KDDockWidgets__Core__Platform__organizationName";
       case 736:
-        return "c_KDDockWidgets__Core__Platform__screenSizeFor_View";
+        return "c_KDDockWidgets__Core__Platform__restoreMouseCursor";
       case 737:
-        return "c_KDDockWidgets__Core__Platform__setCursorPos_QPoint";
+        return "c_KDDockWidgets__Core__Platform__screenNumberFor_View";
       case 738:
-        return "c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape";
+        return "c_KDDockWidgets__Core__Platform__screenSizeFor_View";
+      case 739:
+        return "c_KDDockWidgets__Core__Platform__setCursorPos_QPoint";
       case 740:
-        return "c_KDDockWidgets__Core__Platform__startDragDistance_impl";
-      case 741:
-        return "c_KDDockWidgets__Core__Platform__tests_createFocusableView_CreateViewOptions_View";
+        return "c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape";
       case 742:
-        return "c_KDDockWidgets__Core__Platform__tests_createNonClosableView_View";
+        return "c_KDDockWidgets__Core__Platform__startDragDistance_impl";
       case 743:
-        return "c_KDDockWidgets__Core__Platform__tests_createView_CreateViewOptions_View";
+        return "c_KDDockWidgets__Core__Platform__tests_createFocusableView_CreateViewOptions_View";
+      case 744:
+        return "c_KDDockWidgets__Core__Platform__tests_createNonClosableView_View";
       case 745:
+        return "c_KDDockWidgets__Core__Platform__tests_createView_CreateViewOptions_View";
+      case 747:
         return "c_KDDockWidgets__Core__Platform__tests_deinitPlatform_impl";
-      case 746:
-        return "c_KDDockWidgets__Core__Platform__tests_doubleClickOn_QPoint_View";
       case 748:
-        return "c_KDDockWidgets__Core__Platform__tests_initPlatform_impl";
+        return "c_KDDockWidgets__Core__Platform__tests_doubleClickOn_QPoint_View";
       case 750:
-        return "c_KDDockWidgets__Core__Platform__tests_wait_int";
-      case 751:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int";
+        return "c_KDDockWidgets__Core__Platform__tests_initPlatform_impl";
       case 752:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForDeleted_QObject_int";
+        return "c_KDDockWidgets__Core__Platform__tests_wait_int";
       case 753:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForEvent_View_Type_int";
+        return "c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int";
       case 754:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForEvent_QObject_Type_int";
+        return "c_KDDockWidgets__Core__Platform__tests_waitForDeleted_QObject_int";
       case 755:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForResize_Controller_int";
+        return "c_KDDockWidgets__Core__Platform__tests_waitForEvent_View_Type_int";
       case 756:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForResize_View_int";
+        return "c_KDDockWidgets__Core__Platform__tests_waitForEvent_QObject_Type_int";
       case 757:
-        return "c_KDDockWidgets__Core__Platform__ungrabMouse";
+        return "c_KDDockWidgets__Core__Platform__tests_waitForResize_Controller_int";
       case 758:
-        return "c_KDDockWidgets__Core__Platform__uninstallMessageHandler";
+        return "c_KDDockWidgets__Core__Platform__tests_waitForResize_View_int";
       case 759:
+        return "c_KDDockWidgets__Core__Platform__ungrabMouse";
+      case 760:
+        return "c_KDDockWidgets__Core__Platform__uninstallMessageHandler";
+      case 761:
         return "c_KDDockWidgets__Core__Platform__usesFallbackMouseGrabber";
     }
     return "";
@@ -1137,50 +1185,54 @@ class Platform {
       case 732:
         return "onFloatingWindowDestroyed";
       case 733:
-        return "organizationName";
+        return "onMainWindowCreated";
       case 734:
-        return "restoreMouseCursor";
+        return "onMainWindowDestroyed";
       case 735:
-        return "screenNumberFor";
+        return "organizationName";
       case 736:
-        return "screenSizeFor";
+        return "restoreMouseCursor";
       case 737:
-        return "setCursorPos";
+        return "screenNumberFor";
       case 738:
-        return "setMouseCursor";
+        return "screenSizeFor";
+      case 739:
+        return "setCursorPos";
       case 740:
-        return "startDragDistance_impl";
-      case 741:
-        return "tests_createFocusableView";
+        return "setMouseCursor";
       case 742:
-        return "tests_createNonClosableView";
+        return "startDragDistance_impl";
       case 743:
-        return "tests_createView";
+        return "tests_createFocusableView";
+      case 744:
+        return "tests_createNonClosableView";
       case 745:
+        return "tests_createView";
+      case 747:
         return "tests_deinitPlatform_impl";
-      case 746:
-        return "tests_doubleClickOn";
       case 748:
-        return "tests_initPlatform_impl";
+        return "tests_doubleClickOn";
       case 750:
-        return "tests_wait";
-      case 751:
-        return "tests_waitForDeleted";
+        return "tests_initPlatform_impl";
       case 752:
-        return "tests_waitForDeleted_2";
+        return "tests_wait";
       case 753:
-        return "tests_waitForEvent";
+        return "tests_waitForDeleted";
       case 754:
-        return "tests_waitForEvent_2";
+        return "tests_waitForDeleted_2";
       case 755:
-        return "tests_waitForResize";
+        return "tests_waitForEvent";
       case 756:
-        return "tests_waitForResize_2";
+        return "tests_waitForEvent_2";
       case 757:
-        return "ungrabMouse";
+        return "tests_waitForResize";
       case 758:
-        return "uninstallMessageHandler";
+        return "tests_waitForResize_2";
       case 759:
+        return "ungrabMouse";
+      case 760:
+        return "uninstallMessageHandler";
+      case 761:
         return "usesFallbackMouseGrabber";
     }
     throw Error();
@@ -1247,107 +1299,115 @@ class Platform {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Platform.onFloatingWindowDestroyed_calledFromC);
     registerCallback(thisCpp, callback732, 732);
-    final callback733 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.organizationName_calledFromC);
+    final callback733 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.Platform.onMainWindowCreated_calledFromC);
     registerCallback(thisCpp, callback733, 733);
-    final callback734 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.restoreMouseCursor_calledFromC);
+    final callback734 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.Platform.onMainWindowDestroyed_calledFromC);
     registerCallback(thisCpp, callback734, 734);
-    const callbackExcept735 = 0;
-    final callback735 =
+    final callback735 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.organizationName_calledFromC);
+    registerCallback(thisCpp, callback735, 735);
+    final callback736 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.restoreMouseCursor_calledFromC);
+    registerCallback(thisCpp, callback736, 736);
+    const callbackExcept737 = 0;
+    final callback737 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Platform.screenNumberFor_calledFromC,
-            callbackExcept735);
-    registerCallback(thisCpp, callback735, 735);
-    final callback736 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.Platform.screenSizeFor_calledFromC);
-    registerCallback(thisCpp, callback736, 736);
-    final callback737 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.Platform.setCursorPos_calledFromC);
+            callbackExcept737);
     registerCallback(thisCpp, callback737, 737);
     final callback738 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.Platform.screenSizeFor_calledFromC);
+    registerCallback(thisCpp, callback738, 738);
+    final callback739 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.Platform.setCursorPos_calledFromC);
+    registerCallback(thisCpp, callback739, 739);
+    final callback740 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsCore.Platform.setMouseCursor_calledFromC);
-    registerCallback(thisCpp, callback738, 738);
-    const callbackExcept740 = 0;
-    final callback740 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.startDragDistance_impl_calledFromC,
-        callbackExcept740);
     registerCallback(thisCpp, callback740, 740);
-    final callback741 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.Platform.tests_createFocusableView_calledFromC);
-    registerCallback(thisCpp, callback741, 741);
-    final callback742 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.Platform.tests_createNonClosableView_calledFromC);
+    const callbackExcept742 = 0;
+    final callback742 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.startDragDistance_impl_calledFromC,
+        callbackExcept742);
     registerCallback(thisCpp, callback742, 742);
     final callback743 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.Platform.tests_createView_calledFromC);
+            KDDWBindingsCore.Platform.tests_createFocusableView_calledFromC);
     registerCallback(thisCpp, callback743, 743);
-    final callback745 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.tests_deinitPlatform_impl_calledFromC);
+    final callback744 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.Platform.tests_createNonClosableView_calledFromC);
+    registerCallback(thisCpp, callback744, 744);
+    final callback745 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.Platform.tests_createView_calledFromC);
     registerCallback(thisCpp, callback745, 745);
-    final callback746 =
+    final callback747 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.tests_deinitPlatform_impl_calledFromC);
+    registerCallback(thisCpp, callback747, 747);
+    final callback748 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Platform.tests_doubleClickOn_calledFromC);
-    registerCallback(thisCpp, callback746, 746);
-    final callback748 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.tests_initPlatform_impl_calledFromC);
     registerCallback(thisCpp, callback748, 748);
-    final callback750 =
+    final callback750 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.tests_initPlatform_impl_calledFromC);
+    registerCallback(thisCpp, callback750, 750);
+    final callback752 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsCore.Platform.tests_wait_calledFromC);
-    registerCallback(thisCpp, callback750, 750);
-    const callbackExcept751 = 0;
-    final callback751 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.Platform.tests_waitForDeleted_calledFromC,
-            callbackExcept751);
-    registerCallback(thisCpp, callback751, 751);
-    const callbackExcept752 = 0;
-    final callback752 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.Platform.tests_waitForDeleted_2_calledFromC,
-            callbackExcept752);
     registerCallback(thisCpp, callback752, 752);
     const callbackExcept753 = 0;
-    final callback753 = ffi.Pointer.fromFunction<
-            bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>(
-        KDDWBindingsCore.Platform.tests_waitForEvent_calledFromC,
-        callbackExcept753);
+    final callback753 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.Platform.tests_waitForDeleted_calledFromC,
+            callbackExcept753);
     registerCallback(thisCpp, callback753, 753);
     const callbackExcept754 = 0;
-    final callback754 = ffi.Pointer.fromFunction<
-            bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>(
-        KDDWBindingsCore.Platform.tests_waitForEvent_2_calledFromC,
-        callbackExcept754);
+    final callback754 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.Platform.tests_waitForDeleted_2_calledFromC,
+            callbackExcept754);
     registerCallback(thisCpp, callback754, 754);
     const callbackExcept755 = 0;
-    final callback755 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.Platform.tests_waitForResize_calledFromC,
-            callbackExcept755);
+    final callback755 = ffi.Pointer.fromFunction<
+            bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>(
+        KDDWBindingsCore.Platform.tests_waitForEvent_calledFromC,
+        callbackExcept755);
     registerCallback(thisCpp, callback755, 755);
     const callbackExcept756 = 0;
-    final callback756 =
+    final callback756 = ffi.Pointer.fromFunction<
+            bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>(
+        KDDWBindingsCore.Platform.tests_waitForEvent_2_calledFromC,
+        callbackExcept756);
+    registerCallback(thisCpp, callback756, 756);
+    const callbackExcept757 = 0;
+    final callback757 =
+        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsCore.Platform.tests_waitForResize_calledFromC,
+            callbackExcept757);
+    registerCallback(thisCpp, callback757, 757);
+    const callbackExcept758 = 0;
+    final callback758 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
             KDDWBindingsCore.Platform.tests_waitForResize_2_calledFromC,
-            callbackExcept756);
-    registerCallback(thisCpp, callback756, 756);
-    final callback757 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.ungrabMouse_calledFromC);
-    registerCallback(thisCpp, callback757, 757);
-    final callback758 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.uninstallMessageHandler_calledFromC);
+            callbackExcept758);
     registerCallback(thisCpp, callback758, 758);
-    const callbackExcept759 = 0;
-    final callback759 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.usesFallbackMouseGrabber_calledFromC,
-        callbackExcept759);
+    final callback759 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.ungrabMouse_calledFromC);
     registerCallback(thisCpp, callback759, 759);
+    final callback760 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.uninstallMessageHandler_calledFromC);
+    registerCallback(thisCpp, callback760, 760);
+    const callbackExcept761 = 0;
+    final callback761 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.usesFallbackMouseGrabber_calledFromC,
+        callbackExcept761);
+    registerCallback(thisCpp, callback761, 761);
   }
 }

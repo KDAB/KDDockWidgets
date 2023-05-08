@@ -60,6 +60,10 @@ public:
     virtual void onFloatingWindowCreated_nocallback(KDDockWidgets::Core::FloatingWindow *arg__1);
     virtual void onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow *arg__1);
     virtual void onFloatingWindowDestroyed_nocallback(KDDockWidgets::Core::FloatingWindow *arg__1);
+    virtual void onMainWindowCreated(KDDockWidgets::Core::MainWindow *arg__1);
+    virtual void onMainWindowCreated_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
+    virtual void onMainWindowDestroyed(KDDockWidgets::Core::MainWindow *arg__1);
+    virtual void onMainWindowDestroyed_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
     virtual QString organizationName() const;
     virtual QString organizationName_nocallback() const;
     virtual void restoreMouseCursor();
@@ -137,6 +141,10 @@ public:
     Callback_onFloatingWindowCreated m_onFloatingWindowCreatedCallback = nullptr;
     typedef void (*Callback_onFloatingWindowDestroyed)(void *, KDDockWidgets::Core::FloatingWindow *arg__1);
     Callback_onFloatingWindowDestroyed m_onFloatingWindowDestroyedCallback = nullptr;
+    typedef void (*Callback_onMainWindowCreated)(void *, KDDockWidgets::Core::MainWindow *arg__1);
+    Callback_onMainWindowCreated m_onMainWindowCreatedCallback = nullptr;
+    typedef void (*Callback_onMainWindowDestroyed)(void *, KDDockWidgets::Core::MainWindow *arg__1);
+    Callback_onMainWindowDestroyed m_onMainWindowDestroyedCallback = nullptr;
     typedef QString *(*Callback_organizationName)(void *);
     Callback_organizationName m_organizationNameCallback = nullptr;
     typedef void (*Callback_restoreMouseCursor)(void *);
@@ -225,6 +233,10 @@ KDDockWidgetsBindings_EXPORT const char *c_KDDockWidgets__Core__Platform__name(v
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::onMainWindowCreated(KDDockWidgets::Core::MainWindow * arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::organizationName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__organizationName(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()
