@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final windowOverlay = KDDW.WindowOverlayWidget();
+    final windowOverlay = KDDW.WindowOverlayWidget(supportsMainWindow: true);
 
     return Scaffold(
       appBar: AppBar(

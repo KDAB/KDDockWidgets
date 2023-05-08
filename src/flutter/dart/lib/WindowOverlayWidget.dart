@@ -23,28 +23,45 @@ class WindowOverlayWidget extends StatefulWidget {
     return GlobalObjectKey<WindowOverlayWidgetState>("windowOverlayState");
   }
 
-  WindowOverlayWidget() : super(key: globalKey());
+  late final bool supportsMainWindow;
+  WindowOverlayWidget({bool supportsMainWindow = false})
+      : super(key: globalKey()) {
+    this.supportsMainWindow = supportsMainWindow;
+  }
 
   @override
   State<StatefulWidget> createState() {
-    return WindowOverlayWidgetState();
+    return WindowOverlayWidgetState(supportsMainWindow: supportsMainWindow);
   }
 }
 
 class WindowOverlayWidgetState extends State<WindowOverlayWidget> {
+  late final bool supportsMainWindow;
+  WindowOverlayWidgetState({required bool supportsMainWindow}) {
+    this.supportsMainWindow = supportsMainWindow;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final floatingWindows = Platform.plat().floatingWindows;
     List<Widget> windowWidgets = [];
+
+    if (supportsMainWindow) {
+      final mainWindows = Platform.plat().mainWindows;
+      for (var mw in mainWindows) {
+        windowWidgets.add(WindowWidget(mw.view()));
+      }
+    }
+
+    final floatingWindows = Platform.plat().floatingWindows;
     for (var fw in floatingWindows) {
-      windowWidgets.add(WindowWidget(fw));
+      windowWidgets.add(WindowWidget(fw.view()));
     }
 
     return Stack(children: windowWidgets);
   }
 
-  onFloatingWindowCountChanged() {
-    print("onFloatingWindowCountChanged!");
+  onWindowCountChanged() {
+    print("onWindowCountChanged!");
     setState(() {});
   }
 }

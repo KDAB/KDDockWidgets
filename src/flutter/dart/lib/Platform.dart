@@ -27,6 +27,7 @@ class Platform extends KDDWBindingsFlutter.Platform {
   late final WindowOverlayWidget windowOverlayWidget;
 
   var floatingWindows = <KDDWBindingsCore.FloatingWindow>[];
+  var mainWindows = <KDDWBindingsCore.MainWindow>[];
 
   @override
   String name() {
@@ -89,10 +90,22 @@ class Platform extends KDDWBindingsFlutter.Platform {
     rebuildWindowOverlay();
   }
 
+  @override
+  onMainWindowCreated(KDDWBindingsCore.MainWindow? mw) {
+    mainWindows.add(mw!);
+    rebuildWindowOverlay();
+  }
+
+  @override
+  onMainWindowDestroyed(KDDWBindingsCore.MainWindow? mw) {
+    mainWindows.removeWhere((it) => it.thisCpp == mw!.thisCpp);
+    rebuildWindowOverlay();
+  }
+
   void rebuildWindowOverlay() {
     final state = WindowOverlayWidget.globalKey().currentState;
     if (state != null) {
-      state.onFloatingWindowCountChanged();
+      state.onWindowCountChanged();
     }
   }
 
