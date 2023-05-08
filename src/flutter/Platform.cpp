@@ -188,6 +188,11 @@ void Platform::uninstallMessageHandler()
 {
 }
 
+void Platform::pauseForDebugger()
+{
+    pauseForDartDebugger();
+}
+
 Platform::RunTestsFunc Platform::s_runTestsFunc = nullptr;
 
 namespace KDDockWidgets::flutter {

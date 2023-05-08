@@ -82,6 +82,8 @@ public:
     void installMessageHandler() override;
     void uninstallMessageHandler() override;
 
+    void pauseForDebugger() override;
+
     /// Pauses execution, so we can attach Dart's debugger
     virtual void pauseForDartDebugger() = 0;
 

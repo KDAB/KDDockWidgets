@@ -108,6 +108,10 @@ void Platform::onMainWindowDestroyed(Core::MainWindow *)
 {
 }
 
+void Platform::pauseForDebugger()
+{
+}
+
 Platform::WarningObserver::~WarningObserver() = default;
 
 /*static*/

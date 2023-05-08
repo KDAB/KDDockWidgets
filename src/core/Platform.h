@@ -259,6 +259,8 @@ public:
     /// Overridden by flutter, so it can destroy the window
     virtual void onMainWindowDestroyed(Core::MainWindow *);
 
+    virtual void pauseForDebugger();
+
     static QString s_expectedWarning;
     static WarningObserver *s_warningObserver;
     int m_numWarningsEmitted = 0;
