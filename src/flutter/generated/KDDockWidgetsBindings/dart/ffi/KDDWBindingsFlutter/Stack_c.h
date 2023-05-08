@@ -14,8 +14,8 @@
 #include <core/View.h>
 #include <qpoint.h>
 #include <qsize.h>
-#include <qrect.h>
 #include <qstring.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -84,6 +84,8 @@ public:
     virtual void onChildAdded_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved_nocallback(KDDockWidgets::Core::View *childView);
+    virtual void onChildVisibilityChanged(KDDockWidgets::Core::View *childView);
+    virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
     virtual bool onResize(int w, int h);
     virtual bool onResize_nocallback(int w, int h);
     virtual void raise();
@@ -200,6 +202,8 @@ public:
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
     typedef void (*Callback_onChildRemoved)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
+    typedef void (*Callback_onChildVisibilityChanged)(void *, KDDockWidgets::Core::View *childView);
+    Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int w, int h);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
@@ -322,6 +326,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Stack__objectName(v
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Stack__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Stack::onChildRemoved(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Stack__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::Stack::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Stack__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Stack::onResize(int w, int h)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Stack__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::Stack::raise()

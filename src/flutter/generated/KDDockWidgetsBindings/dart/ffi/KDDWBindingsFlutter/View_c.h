@@ -16,14 +16,14 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include "core/TitleBar.h"
-#include <core/Layout.h>
 #include "core/Stack.h"
+#include "core/TitleBar.h"
 #include <core/DockWidget.h>
-#include "core/MainWindow.h"
 #include <FloatingWindow.h>
-#include <core/Group.h>
+#include "core/MainWindow.h"
 #include <TabBar.h>
+#include <core/Group.h>
+#include <core/Layout.h>
 #include <DropArea.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -91,6 +91,8 @@ public:
     virtual void onChildAdded_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved_nocallback(KDDockWidgets::Core::View *childView);
+    virtual void onChildVisibilityChanged(KDDockWidgets::Core::View *childView);
+    virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
     virtual bool onResize(int w, int h);
     virtual bool onResize_nocallback(int w, int h);
     virtual void raise();
@@ -206,6 +208,8 @@ public:
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
     typedef void (*Callback_onChildRemoved)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
+    typedef void (*Callback_onChildVisibilityChanged)(void *, KDDockWidgets::Core::View *childView);
+    Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int w, int h);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
@@ -324,6 +328,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__View__objectName(vo
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onChildRemoved(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::View::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onResize(int w, int h)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::View::raise()

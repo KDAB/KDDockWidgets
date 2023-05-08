@@ -1095,6 +1095,8 @@ void c_KDDockWidgets__Core__Platform__onMainWindowCreated_MainWindow(void *thisO
 void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::organizationName() const
 void *c_KDDockWidgets__Core__Platform__organizationName(void *thisObj);
+// KDDockWidgets::Core::Platform::pauseForDebugger()
+void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()
 void c_KDDockWidgets__Core__Platform__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::Core::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
@@ -1189,6 +1191,8 @@ void c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow(void *
 void *c_KDDockWidgets__flutter__Platform__organizationName(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDartDebugger()
 void c_KDDockWidgets__flutter__Platform__pauseForDartDebugger(void *thisObj);
+// KDDockWidgets::flutter::Platform::pauseForDebugger()
+void c_KDDockWidgets__flutter__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::platformFlutter()
 void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
@@ -1637,6 +1641,8 @@ void *c_KDDockWidgets__flutter__View__objectName(void *thisObj);
 void c_KDDockWidgets__flutter__View__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onChildRemoved(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__View__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::View::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__View__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onResize(int w, int h)
 bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::View::raise()
@@ -1765,6 +1771,8 @@ void *c_KDDockWidgets__flutter__TitleBar__objectName(void *thisObj);
 void c_KDDockWidgets__flutter__TitleBar__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TitleBar::onChildRemoved(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__TitleBar__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::TitleBar::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__TitleBar__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TitleBar::onResize(int w, int h)
 bool c_KDDockWidgets__flutter__TitleBar__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::TitleBar::raise()
@@ -1883,6 +1891,8 @@ void *c_KDDockWidgets__flutter__TabBar__objectName(void *thisObj);
 void c_KDDockWidgets__flutter__TabBar__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TabBar::onChildRemoved(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__TabBar__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::TabBar::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__TabBar__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TabBar::onRebuildRequested()
 void c_KDDockWidgets__flutter__TabBar__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::TabBar::onResize(int w, int h)
@@ -2015,6 +2025,8 @@ void *c_KDDockWidgets__flutter__Stack__objectName(void *thisObj);
 void c_KDDockWidgets__flutter__Stack__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Stack::onChildRemoved(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__Stack__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::Stack::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__Stack__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Stack::onResize(int w, int h)
 bool c_KDDockWidgets__flutter__Stack__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::Stack::raise()
@@ -2135,6 +2147,8 @@ void *c_KDDockWidgets__flutter__MainWindow__objectName(void *thisObj);
 void c_KDDockWidgets__flutter__MainWindow__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::MainWindow::onChildRemoved(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__MainWindow__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::MainWindow::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__MainWindow__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::MainWindow::onResize(int w, int h)
 bool c_KDDockWidgets__flutter__MainWindow__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::MainWindow::raise()
@@ -2257,6 +2271,8 @@ void *c_KDDockWidgets__flutter__Group__objectName(void *thisObj);
 void c_KDDockWidgets__flutter__Group__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Group::onChildRemoved(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__Group__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::Group::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__Group__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Group::onResize(int w, int h)
 bool c_KDDockWidgets__flutter__Group__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::Group::raise()
@@ -2375,6 +2391,8 @@ void *c_KDDockWidgets__flutter__DockWidget__objectName(void *thisObj);
 void c_KDDockWidgets__flutter__DockWidget__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DockWidget::onChildRemoved(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__DockWidget__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::DockWidget::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__DockWidget__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DockWidget::onResize(int w, int h)
 bool c_KDDockWidgets__flutter__DockWidget__onResize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::DockWidget::raise()

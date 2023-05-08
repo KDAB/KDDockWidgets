@@ -84,6 +84,8 @@ public:
     virtual void onChildAdded_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved_nocallback(KDDockWidgets::Core::View *childView);
+    virtual void onChildVisibilityChanged(KDDockWidgets::Core::View *childView);
+    virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onRebuildRequested();
     virtual void onRebuildRequested_nocallback();
     virtual bool onResize(int w, int h);
@@ -212,6 +214,8 @@ public:
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
     typedef void (*Callback_onChildRemoved)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
+    typedef void (*Callback_onChildVisibilityChanged)(void *, KDDockWidgets::Core::View *childView);
+    Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
     typedef void (*Callback_onRebuildRequested)(void *);
     Callback_onRebuildRequested m_onRebuildRequestedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int w, int h);
@@ -346,6 +350,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__TabBar__objectName(
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TabBar::onChildRemoved(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::TabBar::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TabBar::onRebuildRequested()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::TabBar::onResize(int w, int h)

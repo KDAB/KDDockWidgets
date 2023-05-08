@@ -66,6 +66,8 @@ public:
     virtual void onMainWindowDestroyed_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
     virtual QString organizationName() const;
     virtual QString organizationName_nocallback() const;
+    virtual void pauseForDebugger();
+    virtual void pauseForDebugger_nocallback();
     virtual void restoreMouseCursor();
     virtual void restoreMouseCursor_nocallback();
     virtual int screenNumberFor(KDDockWidgets::Core::View *arg__1) const;
@@ -147,6 +149,8 @@ public:
     Callback_onMainWindowDestroyed m_onMainWindowDestroyedCallback = nullptr;
     typedef QString *(*Callback_organizationName)(void *);
     Callback_organizationName m_organizationNameCallback = nullptr;
+    typedef void (*Callback_pauseForDebugger)(void *);
+    Callback_pauseForDebugger m_pauseForDebuggerCallback = nullptr;
     typedef void (*Callback_restoreMouseCursor)(void *);
     Callback_restoreMouseCursor m_restoreMouseCursorCallback = nullptr;
     typedef int (*Callback_screenNumberFor)(void *, KDDockWidgets::Core::View *arg__1);
@@ -239,6 +243,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowC
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::organizationName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__organizationName(void *thisObj);
+// KDDockWidgets::Core::Platform::pauseForDebugger()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::Core::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
