@@ -64,6 +64,7 @@ class Platform extends KDDWBindingsFlutter.Platform {
     return GenericView(controller, parent);
   }
 
+  @override
   KDDWBindingsCore.MainWindow createMainWindow(
       String? uniqueName, CreateViewOptions viewOpts,
       {int options =

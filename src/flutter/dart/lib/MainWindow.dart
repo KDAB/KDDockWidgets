@@ -26,6 +26,7 @@ class MainWindow extends KDDWBindingsFlutter.MainWindow with View_mixin {
       : super(uniqueName, options: options, parent: parent, flags: flags) {
     initMixin(this, color: Colors.black12, debugName: "MainWindow");
 
-    m_controller = controller() as KDDWBindingsCore.MainWindow;
+    m_controller =
+        KDDWBindingsCore.MainWindow.fromCppPointer(controller().thisCpp);
   }
 }
