@@ -56,12 +56,17 @@ void View::move(int, int)
 
 bool View::close()
 {
+    // TODO: Ask flutter if we should close
+
     CloseEvent ev;
     Core::View::d->closeRequested.emit(&ev);
 
-    // TODO: Ask flutter if we should close
+    if (ev.isAccepted()) {
+        setVisible(false);
+        return true;
+    }
 
-    return true;
+    return false;
 }
 
 bool View::isVisible() const

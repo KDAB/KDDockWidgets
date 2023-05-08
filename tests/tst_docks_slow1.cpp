@@ -66,7 +66,12 @@ TEST_CASE("tst_invalidPlaceholderPosition")
         CHECK_EQ(group1->view()->y(), 0);
 
         // Close 1
+        CHECK(dock1->isOpen());
+        CHECK(dock1->view()->isVisible());
         dock1->close();
+        CHECK(!dock1->isOpen());
+        CHECK(!dock1->view()->isVisible());
+
         Platform::instance()->tests_waitForResize(group2->view());
 
         // Check that group2 moved up to y=1
