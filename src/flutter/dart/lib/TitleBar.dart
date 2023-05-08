@@ -68,7 +68,9 @@ class TitleBarPositionedWidgetState extends PositionedWidgetState {
                     style: TextButton.styleFrom(
                       primary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      titleBarView.asTitleBarController().onCloseClicked();
+                    },
                     child: Icon(Icons.close))
               ],
             )));
