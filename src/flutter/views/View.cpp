@@ -93,7 +93,8 @@ void View::setVisible(bool is)
             }
         }
 
-        // TODO: Tell flutter ?
+        if (m_parentView)
+            m_parentView->onChildVisibilityChanged(this);
     }
 }
 
@@ -448,14 +449,21 @@ bool View::onResize(int w, int h)
     return Core::View::onResize(w, h);
 }
 
-void KDDockWidgets::flutter::View::onChildAdded(Core::View *childView)
+void View::onChildAdded(Core::View *childView)
 {
     Q_UNUSED(childView);
     dumpDebug();
     qFatal("Derived class should be called instead");
 }
 
-void KDDockWidgets::flutter::View::onChildRemoved(Core::View *childView)
+void View::onChildRemoved(Core::View *childView)
+{
+    Q_UNUSED(childView);
+    dumpDebug();
+    qFatal("Derived class should be called instead");
+}
+
+void View::onChildVisibilityChanged(Core::View *childView)
 {
     Q_UNUSED(childView);
     dumpDebug();

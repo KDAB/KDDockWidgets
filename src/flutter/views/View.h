@@ -120,6 +120,7 @@ public:
 
     virtual void onChildAdded(Core::View *childView);
     virtual void onChildRemoved(Core::View *childView);
+    virtual void onChildVisibilityChanged(Core::View *childView);
 
     void setSizeHint(QSize);
 
