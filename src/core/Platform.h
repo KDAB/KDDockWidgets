@@ -157,11 +157,11 @@ public:
     }
 
     /// @brief Called when a floating window is created.
-    /// Override only if your platform isinterested in knowing this.
+    /// Overridden by flutter, so it can create a window
     virtual void onFloatingWindowCreated(Core::FloatingWindow *);
 
     /// @brief Called when a floating window is created.
-    /// Override only if your platform isinterested in knowing this.
+    /// Overridden by flutter, so it can destroy the window
     virtual void onFloatingWindowDestroyed(Core::FloatingWindow *);
 
     /// Returns the mouse cursor position in screen coordinates
@@ -249,6 +249,15 @@ public:
     createMainWindow(const QString &uniqueName, CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
                      View *parent = nullptr, Qt::WindowFlags = {}) const = 0;
+
+    /// @brief Called when a main window is created.
+    /// Overridden by flutter, so it can create a window
+    /// Used by tests only. In real life users will instantiate a MainWindow in dart directly.
+    virtual void onMainWindowCreated(Core::MainWindow *);
+
+    /// @brief Called when a main window is created.
+    /// Overridden by flutter, so it can destroy the window
+    virtual void onMainWindowDestroyed(Core::MainWindow *);
 
     static QString s_expectedWarning;
     static WarningObserver *s_warningObserver;

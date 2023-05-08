@@ -336,11 +336,13 @@ void DockRegistry::registerMainWindow(Core::MainWindow *mainWindow)
     }
 
     m_mainWindows << mainWindow;
+    Platform::instance()->onMainWindowCreated(mainWindow);
 }
 
 void DockRegistry::unregisterMainWindow(Core::MainWindow *mainWindow)
 {
     m_mainWindows.removeOne(mainWindow);
+    Platform::instance()->onMainWindowDestroyed(mainWindow);
     maybeDelete();
 }
 

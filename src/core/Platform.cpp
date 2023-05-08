@@ -100,6 +100,14 @@ int Platform::startDragDistance_impl() const
 
 #ifdef DOCKS_DEVELOPER_MODE
 
+void Platform::onMainWindowCreated(Core::MainWindow *)
+{
+}
+
+void Platform::onMainWindowDestroyed(Core::MainWindow *)
+{
+}
+
 Platform::WarningObserver::~WarningObserver() = default;
 
 /*static*/
