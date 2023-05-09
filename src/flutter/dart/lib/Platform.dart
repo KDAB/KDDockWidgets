@@ -119,6 +119,14 @@ class Platform extends KDDWBindingsFlutter.Platform {
     print("pauseForDartDebugger");
     debugger();
   }
+
+  @override
+  void runDelayed(int ms, KDDWBindingsCore.DelayedCall? c) {
+    if (c != null)
+      Future.delayed(Duration(milliseconds: ms), () {
+        c.call();
+      });
+  }
 }
 
 class GenericView extends KDDWBindingsFlutter.View with View_mixin {
