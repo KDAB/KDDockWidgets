@@ -33,6 +33,9 @@ void main(List<String> args) {
 
   if (args.contains("--wait")) debugger();
   runApp(const MyApp());
+
+  var plat = KDDW.Platform();
+  plat.runTests();
 }
 
 class MyApp extends StatelessWidget {
@@ -61,10 +64,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  _MyHomePageState() {
-    var plat = KDDW.Platform();
-    plat.runTests();
-  }
+  _MyHomePageState();
 
   void _incrementCounter() {}
 
