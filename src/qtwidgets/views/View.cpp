@@ -104,7 +104,7 @@ bool View<T>::event(QEvent *e)
 template<class T>
 void View<T>::closeEvent(QCloseEvent *ev)
 {
-    d->closeRequested.emit(ev);
+    requestClose(ev);
 }
 
 template<class T>

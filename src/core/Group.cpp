@@ -125,7 +125,7 @@ void Group::onCloseEvent(CloseEvent *e)
     e->accept(); // Accepted by default (will close unless ignored)
     const DockWidget::List docks = dockWidgets();
     for (DockWidget *dock : docks) {
-        Platform::instance()->sendEvent(dock->view(), e);
+        dock->view()->requestClose(e);
         if (!e->isAccepted())
             break; // Stop when the first dockwidget prevents closing
     }

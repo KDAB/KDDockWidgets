@@ -244,7 +244,7 @@ void View::move(int x, int y)
 bool View::event(QEvent *ev)
 {
     if (ev->type() == QEvent::Close)
-        Core::View::d->closeRequested.emit(static_cast<QCloseEvent *>(ev));
+        requestClose(static_cast<QCloseEvent *>(ev));
 
     return QQuickItem::event(ev);
 }

@@ -378,6 +378,11 @@ Controller *View::firstParentOfType(ViewType type) const
     return View::firstParentOfType(const_cast<View *>(this), type);
 }
 
+void View::requestClose(CloseEvent *e)
+{
+    d->closeRequested.emit(e);
+}
+
 QRect View::globalGeometry() const
 {
     QRect geo = geometry();

@@ -284,6 +284,8 @@ public:
     /// @overload
     Controller *firstParentOfType(ViewType) const;
 
+    void requestClose(CloseEvent *);
+
 public:
     class Private;
     Private *const d;
