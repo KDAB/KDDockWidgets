@@ -15,6 +15,7 @@
 #include "kddockwidgets/core/EventFilterInterface.h"
 #include "core/Platform_p.h"
 #include "core/Utils_p.h"
+#include "core/DelayedCall.h"
 #include "qtcommon/View.h"
 
 #include <QWindow>
@@ -308,4 +309,9 @@ Screen::List Platform_qt::screens() const
 Screen::Ptr Platform_qt::primaryScreen() const
 {
     return std::make_shared<Screen_qt>(qGuiApp->primaryScreen());
+}
+
+void Platform_qt::runDelayed(int ms, Core::DelayedCall *c)
+{
+    QTimer::singleShot(ms, [c] { c->call(); });
 }

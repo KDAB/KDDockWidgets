@@ -57,6 +57,8 @@ public:
     void onMainWindowCreated(Core::MainWindow *) override;
     void onMainWindowDestroyed(Core::MainWindow *) override;
 
+    void runDelayed(int ms, Core::DelayedCall *c) override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;

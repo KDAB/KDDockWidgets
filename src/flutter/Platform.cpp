@@ -168,6 +168,11 @@ void Platform::onMainWindowDestroyed(Core::MainWindow *)
 {
 }
 
+void Platform::runDelayed(int, Core::DelayedCall *)
+{
+    Q_UNREACHABLE(); // Platform.dart gets called instead
+}
+
 QPoint Platform::cursorPos() const
 {
     return {};

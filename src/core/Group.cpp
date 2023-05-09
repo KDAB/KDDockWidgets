@@ -36,11 +36,11 @@
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
 #include "core/WidgetResizeHandler_p.h"
+#include "core/DelayedCall.h"
 #include "core/layouting/Item_p.h"
 
 #include "kdbindings/signal.h"
 
-#include <QTimer>
 
 #define MARGIN_THRESHOLD 100
 
@@ -758,11 +758,10 @@ void Group::scheduleDeleteLater()
 {
     qCDebug(creation) << Q_FUNC_INFO << this;
     m_beingDeleted = true;
-    QTimer::singleShot(0, this, [this] {
-        // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
-        // triggered by a sendEvent() before event loop starts)
-        delete this;
-    });
+
+    // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
+    // triggered by a sendEvent() before event loop starts)
+    Platform::instance()->runDelayed(0, new DelayedDelete(this));
 }
 
 QSize Group::dockWidgetsMinSize() const

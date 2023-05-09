@@ -24,6 +24,7 @@ set(KDDW_BACKEND_SRCS
     LayoutSaver.cpp
     core/Position.cpp
     core/Logging.cpp
+    core/DelayedCall.cpp
     core/Draggable.cpp
     core/WindowBeingDragged.cpp
     core/DragController.cpp

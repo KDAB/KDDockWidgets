@@ -67,6 +67,8 @@ public:
 
     std::shared_ptr<Core::Screen> primaryScreen() const override;
 
+    void runDelayed(int ms, Core::DelayedCall *) override;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     /// Theses methods are implemented in TestHelpers_qt.cpp

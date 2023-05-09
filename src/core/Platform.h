@@ -22,6 +22,7 @@
 namespace KDDockWidgets {
 
 namespace Core {
+class DelayedCall;
 class EventFilterInterface;
 struct CreateViewOptions;
 class ClassicIndicators;
@@ -108,6 +109,10 @@ public:
 
     /// @brief Releases the mouse grab, if any
     virtual void ungrabMouse() = 0;
+
+    /// runs the specified all after ms
+    /// Equivalent to QTimer::singleShot in Qt
+    virtual void runDelayed(int ms, Core::DelayedCall *c) = 0;
 
     /**
      * @brief Returns whether we're processing a Event::Quit

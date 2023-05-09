@@ -23,7 +23,8 @@
                 "KDDockWidgets::Core::Separator",
                 "KDDockWidgets::Core::SideBar",
                 "KDDockWidgets::Core::FloatingWindow",
-                "KDDockWidgets::Core::MainWindow"
+                "KDDockWidgets::Core::MainWindow",
+                "KDDockWidgets::Core::DelayedCall"
             ]
         },
         {

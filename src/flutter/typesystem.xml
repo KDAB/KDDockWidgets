@@ -46,6 +46,7 @@
 
         <namespace-type name="Core">
             <value-type name="CreateViewOptions" />
+            <object-type name="DelayedCall" />
             <object-type name="Platform" />
             <object-type name="View" />
             <object-type name="ViewFactory" />

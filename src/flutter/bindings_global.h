@@ -47,6 +47,7 @@
 #include "views/DockWidget.h"
 #include "views/MainWindow.h"
 
+#include "../core/DelayedCall.h"
 #include "../core/ViewFactory.h"
 #include "../core/Layout.h"
 #include "../core/DropArea.h"
