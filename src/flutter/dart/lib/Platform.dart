@@ -125,6 +125,7 @@ class Platform extends KDDWBindingsFlutter.Platform {
     if (c != null)
       Future.delayed(Duration(milliseconds: ms), () {
         c.call();
+        c.release();
       });
   }
 }
