@@ -17,6 +17,7 @@
 #include <qpoint.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
+#include <DelayedCall.h>
 #include <core/Platform.h>
 #include <qstring.h>
 #include <qobject.h>
@@ -71,6 +72,8 @@ public:
     static KDDockWidgets::flutter::Platform *platformFlutter();
     virtual void restoreMouseCursor();
     virtual void restoreMouseCursor_nocallback();
+    virtual void runDelayed(int ms, KDDockWidgets::Core::DelayedCall *c);
+    virtual void runDelayed_nocallback(int ms, KDDockWidgets::Core::DelayedCall *c);
     void runTests();
     virtual int screenNumberFor(KDDockWidgets::Core::View *arg__1) const;
     virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
@@ -142,6 +145,8 @@ public:
     Callback_pauseForDebugger m_pauseForDebuggerCallback = nullptr;
     typedef void (*Callback_restoreMouseCursor)(void *);
     Callback_restoreMouseCursor m_restoreMouseCursorCallback = nullptr;
+    typedef void (*Callback_runDelayed)(void *, int ms, KDDockWidgets::Core::DelayedCall *c);
+    Callback_runDelayed m_runDelayedCallback = nullptr;
     typedef int (*Callback_screenNumberFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenNumberFor m_screenNumberForCallback = nullptr;
     typedef QSize *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
@@ -222,6 +227,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDe
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
+// KDDockWidgets::flutter::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
 // KDDockWidgets::flutter::Platform::runTests()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
 // KDDockWidgets::flutter::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const

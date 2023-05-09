@@ -564,7 +564,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 896:
+      case 899:
         return "c_KDDockWidgets__Core__DockWidget__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -572,7 +572,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 896:
+      case 899:
         return "setParentView_impl";
     }
     throw Error();
@@ -584,9 +584,9 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback')
         .asFunction();
-    final callback896 =
+    final callback899 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.DockWidget.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback896, 896);
+    registerCallback(thisCpp, callback899, 899);
   }
 }

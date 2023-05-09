@@ -15,6 +15,7 @@
 #include <qsize.h>
 #include <core/Controller.h>
 #include <qpoint.h>
+#include <DelayedCall.h>
 #include <qstring.h>
 #include <FloatingWindow.h>
 #include <vector>
@@ -70,6 +71,8 @@ public:
     virtual void pauseForDebugger_nocallback();
     virtual void restoreMouseCursor();
     virtual void restoreMouseCursor_nocallback();
+    virtual void runDelayed(int ms, KDDockWidgets::Core::DelayedCall *c);
+    virtual void runDelayed_nocallback(int ms, KDDockWidgets::Core::DelayedCall *c);
     virtual int screenNumberFor(KDDockWidgets::Core::View *arg__1) const;
     virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual QSize screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
@@ -153,6 +156,8 @@ public:
     Callback_pauseForDebugger m_pauseForDebuggerCallback = nullptr;
     typedef void (*Callback_restoreMouseCursor)(void *);
     Callback_restoreMouseCursor m_restoreMouseCursorCallback = nullptr;
+    typedef void (*Callback_runDelayed)(void *, int ms, KDDockWidgets::Core::DelayedCall *c);
+    Callback_runDelayed m_runDelayedCallback = nullptr;
     typedef int (*Callback_screenNumberFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenNumberFor m_screenNumberForCallback = nullptr;
     typedef QSize *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
@@ -247,6 +252,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__organization
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__restoreMouseCursor(void *thisObj);
+// KDDockWidgets::Core::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
 // KDDockWidgets::Core::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const

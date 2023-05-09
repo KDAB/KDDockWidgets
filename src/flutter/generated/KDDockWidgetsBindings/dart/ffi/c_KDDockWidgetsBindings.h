@@ -1099,6 +1099,8 @@ void *c_KDDockWidgets__Core__Platform__organizationName(void *thisObj);
 void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()
 void c_KDDockWidgets__Core__Platform__restoreMouseCursor(void *thisObj);
+// KDDockWidgets::Core::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
+void c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
 // KDDockWidgets::Core::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
@@ -1197,6 +1199,8 @@ void c_KDDockWidgets__flutter__Platform__pauseForDebugger(void *thisObj);
 void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
 void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
+// KDDockWidgets::flutter::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
+void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
 // KDDockWidgets::flutter::Platform::runTests()
 void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
 // KDDockWidgets::flutter::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
@@ -1332,7 +1336,13 @@ void c_static_KDDockWidgets__Core__Item___set_separatorThickness_int(int separat
 void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
 void c_KDDockWidgets__Core__Item___set_m_isSettingGuest_bool(void *thisObj, bool m_isSettingGuest_);
 void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Item_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::CreateViewOptions::CreateViewOptions()
+void c_KDDockWidgets__Core__Item_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::DelayedCall::DelayedCall()
+void *c_KDDockWidgets__Core__DelayedCall__constructor();
+// KDDockWidgets::Core::DelayedCall::call()
+void c_KDDockWidgets__Core__DelayedCall__call(void *thisObj);
+void c_KDDockWidgets__Core__DelayedCall__destructor(void *thisObj);
+void c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::CreateViewOptions::CreateViewOptions()
 void *c_KDDockWidgets__Core__CreateViewOptions__constructor();
 // KDDockWidgets::Core::CreateViewOptions::getMaxSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getMaxSize(void *thisObj);

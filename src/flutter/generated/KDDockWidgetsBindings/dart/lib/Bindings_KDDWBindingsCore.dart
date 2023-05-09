@@ -21,5 +21,6 @@ export 'src/KDDWBindingsCore/TabBar.dart' show TabBar;
 export 'src/KDDWBindingsCore/TitleBar.dart' show TitleBar;
 export 'src/KDDWBindingsCore/View.dart' show View;
 export 'src/KDDWBindingsCore/Controller.dart' show Controller;
+export 'src/KDDWBindingsCore/DelayedCall.dart' show DelayedCall;
 export 'src/KDDWBindingsCore/Platform.dart' show Platform;
 export 'src/KDDWBindingsCore/ViewFactory.dart' show ViewFactory;

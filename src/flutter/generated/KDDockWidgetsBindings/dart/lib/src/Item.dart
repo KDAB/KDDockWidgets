@@ -107,7 +107,7 @@ class Item extends QObject {
   bool checkSanity() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(780))
+            cFunctionSymbolName(781))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -126,7 +126,7 @@ class Item extends QObject {
   dumpLayout({int level = 0}) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(787))
+            cFunctionSymbolName(788))
         .asFunction();
     func(thisCpp, level);
   }
@@ -219,7 +219,7 @@ class Item extends QObject {
   bool isVisible({bool excludeBeingInserted = false}) {
     final bool_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(804))
+            cFunctionSymbolName(805))
         .asFunction();
     return func(thisCpp, excludeBeingInserted ? 1 : 0) != 0;
   }
@@ -290,7 +290,7 @@ class Item extends QObject {
   QSize maxSizeHint() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(813))
+            cFunctionSymbolName(814))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -310,7 +310,7 @@ class Item extends QObject {
   QSize minSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(814))
+            cFunctionSymbolName(815))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -413,7 +413,7 @@ class Item extends QObject {
   setGeometry_recursive(QRect rect) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(831))
+            cFunctionSymbolName(832))
         .asFunction();
     func(thisCpp, rect == null ? ffi.nullptr : rect.thisCpp);
   }
@@ -440,7 +440,7 @@ class Item extends QObject {
   setHostView(KDDWBindingsCore.View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(833))
+            cFunctionSymbolName(834))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -461,7 +461,7 @@ class Item extends QObject {
   setIsVisible(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(834))
+            cFunctionSymbolName(835))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -555,7 +555,7 @@ class Item extends QObject {
   updateWidgetGeometries() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(848))
+            cFunctionSymbolName(849))
         .asFunction();
     func(thisCpp);
   }
@@ -573,7 +573,7 @@ class Item extends QObject {
   int visibleCount_recursive() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(849))
+            cFunctionSymbolName(850))
         .asFunction();
     return func(thisCpp);
   }
@@ -623,25 +623,25 @@ class Item extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 780:
+      case 781:
         return "c_KDDockWidgets__Core__Item__checkSanity";
-      case 787:
+      case 788:
         return "c_KDDockWidgets__Core__Item__dumpLayout_int";
-      case 804:
+      case 805:
         return "c_KDDockWidgets__Core__Item__isVisible_bool";
-      case 813:
-        return "c_KDDockWidgets__Core__Item__maxSizeHint";
       case 814:
+        return "c_KDDockWidgets__Core__Item__maxSizeHint";
+      case 815:
         return "c_KDDockWidgets__Core__Item__minSize";
-      case 831:
+      case 832:
         return "c_KDDockWidgets__Core__Item__setGeometry_recursive_QRect";
-      case 833:
-        return "c_KDDockWidgets__Core__Item__setHostView_View";
       case 834:
+        return "c_KDDockWidgets__Core__Item__setHostView_View";
+      case 835:
         return "c_KDDockWidgets__Core__Item__setIsVisible_bool";
-      case 848:
-        return "c_KDDockWidgets__Core__Item__updateWidgetGeometries";
       case 849:
+        return "c_KDDockWidgets__Core__Item__updateWidgetGeometries";
+      case 850:
         return "c_KDDockWidgets__Core__Item__visibleCount_recursive";
     }
     return super.cFunctionSymbolName(methodId);
@@ -649,25 +649,25 @@ class Item extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 780:
+      case 781:
         return "checkSanity";
-      case 787:
+      case 788:
         return "dumpLayout";
-      case 804:
+      case 805:
         return "isVisible";
-      case 813:
-        return "maxSizeHint";
       case 814:
+        return "maxSizeHint";
+      case 815:
         return "minSize";
-      case 831:
+      case 832:
         return "setGeometry_recursive";
-      case 833:
-        return "setHostView";
       case 834:
+        return "setHostView";
+      case 835:
         return "setIsVisible";
-      case 848:
-        return "updateWidgetGeometries";
       case 849:
+        return "updateWidgetGeometries";
+      case 850:
         return "visibleCount_recursive";
     }
     throw Error();
@@ -679,43 +679,43 @@ class Item extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Item__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept780 = 0;
-    final callback780 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        Item.checkSanity_calledFromC, callbackExcept780);
-    registerCallback(thisCpp, callback780, 780);
-    final callback787 =
+    const callbackExcept781 = 0;
+    final callback781 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        Item.checkSanity_calledFromC, callbackExcept781);
+    registerCallback(thisCpp, callback781, 781);
+    final callback788 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             Item.dumpLayout_calledFromC);
-    registerCallback(thisCpp, callback787, 787);
-    const callbackExcept804 = 0;
-    final callback804 =
+    registerCallback(thisCpp, callback788, 788);
+    const callbackExcept805 = 0;
+    final callback805 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int8_FFI>(
-            Item.isVisible_calledFromC, callbackExcept804);
-    registerCallback(thisCpp, callback804, 804);
-    final callback813 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        Item.maxSizeHint_calledFromC);
-    registerCallback(thisCpp, callback813, 813);
+            Item.isVisible_calledFromC, callbackExcept805);
+    registerCallback(thisCpp, callback805, 805);
     final callback814 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        Item.minSize_calledFromC);
+        Item.maxSizeHint_calledFromC);
     registerCallback(thisCpp, callback814, 814);
-    final callback831 =
+    final callback815 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        Item.minSize_calledFromC);
+    registerCallback(thisCpp, callback815, 815);
+    final callback832 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Item.setGeometry_recursive_calledFromC);
-    registerCallback(thisCpp, callback831, 831);
-    final callback833 =
+    registerCallback(thisCpp, callback832, 832);
+    final callback834 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Item.setHostView_calledFromC);
-    registerCallback(thisCpp, callback833, 833);
-    final callback834 =
+    registerCallback(thisCpp, callback834, 834);
+    final callback835 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             Item.setIsVisible_calledFromC);
-    registerCallback(thisCpp, callback834, 834);
-    final callback848 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback835, 835);
+    final callback849 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Item.updateWidgetGeometries_calledFromC);
-    registerCallback(thisCpp, callback848, 848);
-    const callbackExcept849 = 0;
-    final callback849 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        Item.visibleCount_recursive_calledFromC, callbackExcept849);
     registerCallback(thisCpp, callback849, 849);
+    const callbackExcept850 = 0;
+    final callback850 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        Item.visibleCount_recursive_calledFromC, callbackExcept850);
+    registerCallback(thisCpp, callback850, 850);
   }
 }
