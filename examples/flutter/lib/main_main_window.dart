@@ -11,7 +11,7 @@
 
 import 'package:KDDockWidgets/DockWidget.dart';
 import 'package:KDDockWidgets/MainWindow.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide View;
 import 'package:KDDockWidgets/WindowOverlayWidget.dart' as KDDW;
 import 'package:KDDockWidgets/Platform.dart' as KDDW;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;

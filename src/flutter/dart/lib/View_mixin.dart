@@ -17,7 +17,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide View;
 
 class View_mixin {
   late final Widget flutterWidget;

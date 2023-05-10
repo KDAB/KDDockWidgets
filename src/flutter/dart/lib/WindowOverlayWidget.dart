@@ -10,7 +10,7 @@
 */
 
 import 'package:KDDockWidgets/WindowWidget.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide View;
 import 'package:flutter/widgets.dart';
 import 'package:KDDockWidgets/Platform.dart';
 

@@ -16,7 +16,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide View;
 import 'TitleBar.dart';
 import 'DropArea.dart';
 

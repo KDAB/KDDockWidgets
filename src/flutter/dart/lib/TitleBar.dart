@@ -17,7 +17,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide View;
 
 class TitleBar extends KDDWBindingsFlutter.TitleBar with View_mixin {
   TitleBar(KDDWBindingsCore.TitleBar? titleBar, KDDWBindingsCore.View? parent)

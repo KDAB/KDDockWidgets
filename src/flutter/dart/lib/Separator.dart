@@ -10,7 +10,7 @@
 */
 
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide View;
 
 import 'PositionedWidget.dart';
 import 'View.dart';

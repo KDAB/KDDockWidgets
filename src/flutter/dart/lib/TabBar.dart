@@ -15,7 +15,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide View;
 import 'package:flutter/material.dart' as material show TabBar;
 
 class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
