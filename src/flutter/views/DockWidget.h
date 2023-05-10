@@ -36,8 +36,8 @@ class DOCKS_EXPORT DockWidget : public flutter::View,
                                 public Core::DockWidgetViewInterface
 {
 public:
-    using Core::DockWidgetViewInterface::raise;
     using Core::DockWidgetViewInterface::show;
+    using flutter::View::raise;
 
     /**
      * @brief constructs a new DockWidget
