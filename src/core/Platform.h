@@ -169,6 +169,15 @@ public:
     /// Overridden by flutter, so it can destroy the window
     virtual void onFloatingWindowDestroyed(Core::FloatingWindow *);
 
+    /// @brief Called when a main window is created.
+    /// Overridden by flutter, so it can create a window
+    /// Used by tests only. In real life users will instantiate a MainWindow in dart directly.
+    virtual void onMainWindowCreated(Core::MainWindow *);
+
+    /// @brief Called when a main window is created.
+    /// Overridden by flutter, so it can destroy the window
+    virtual void onMainWindowDestroyed(Core::MainWindow *);
+
     /// Returns the mouse cursor position in screen coordinates
     virtual QPoint cursorPos() const = 0;
 
@@ -254,15 +263,6 @@ public:
     createMainWindow(const QString &uniqueName, CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
                      View *parent = nullptr, Qt::WindowFlags = {}) const = 0;
-
-    /// @brief Called when a main window is created.
-    /// Overridden by flutter, so it can create a window
-    /// Used by tests only. In real life users will instantiate a MainWindow in dart directly.
-    virtual void onMainWindowCreated(Core::MainWindow *);
-
-    /// @brief Called when a main window is created.
-    /// Overridden by flutter, so it can destroy the window
-    virtual void onMainWindowDestroyed(Core::MainWindow *);
 
     virtual void pauseForDebugger();
 

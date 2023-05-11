@@ -100,14 +100,6 @@ int Platform::startDragDistance_impl() const
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-void Platform::onMainWindowCreated(Core::MainWindow *)
-{
-}
-
-void Platform::onMainWindowDestroyed(Core::MainWindow *)
-{
-}
-
 void Platform::pauseForDebugger()
 {
 }
@@ -237,5 +229,13 @@ void Platform::onFloatingWindowCreated(Core::FloatingWindow *)
 }
 
 void Platform::onFloatingWindowDestroyed(Core::FloatingWindow *)
+{
+}
+
+void Platform::onMainWindowCreated(Core::MainWindow *)
+{
+}
+
+void Platform::onMainWindowDestroyed(Core::MainWindow *)
 {
 }
