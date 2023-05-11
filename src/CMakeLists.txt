@@ -479,6 +479,11 @@ if(KDDW_FRONTEND_QT)
         find_package(Qt${Qt_VERSION_MAJOR}X11Extras CONFIG)
         target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::X11Extras)
     endif()
+
+    if(KDDockWidgets_DEVELOPER_MODE)
+        find_package(Qt${Qt_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
+        target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test)
+    endif()
 endif()
 
 if(KDDockWidgets_XLib)
