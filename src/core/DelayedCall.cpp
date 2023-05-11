@@ -11,6 +11,8 @@
 
 #include "DelayedCall.h"
 
+#include <QObject>
+
 using namespace KDDockWidgets::Core;
 
 DelayedCall::~DelayedCall() = default;
