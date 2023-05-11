@@ -19,7 +19,7 @@
 #if defined(QT_WIDGETS_LIB)
 #include <QAction>
 #else
-#include "NonQtCompat_p.h"
+#include "../NonQtCompat_p.h"
 // A QAction for QtQuick. So it compiles without widgets
 class DOCKS_EXPORT QAction : public QObject
 {

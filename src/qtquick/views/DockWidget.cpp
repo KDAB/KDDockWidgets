@@ -10,7 +10,6 @@
 */
 
 #include "DockWidget.h"
-#include "kddockwidgets/ViewFactory.h"
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
