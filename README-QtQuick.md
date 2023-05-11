@@ -7,6 +7,15 @@ KDDockWidgets for QtQuick requires a C++17 capable compiler and Qt >= 6.2.1.
 Qt 5.15.2 will probably also work, but it's not built and tested by KDAB CI, we
 advise users to move to Qt6 as soon as possible.
 
+## Build instructions
+
+Doing a default build will build a KDDW library that's suitable for both QtWidgets and QtQuick development.<br>
+This is in contrast with 1.x version, where a separate build for QtQuick was required.
+
+You can however be explicit and exclude the QtWidgets support:
+
+`cd build && cmake -DKDDockWidgets_FRONTENDS=qtquick ..`
+
 ## Troubleshooting
 
 - QtGraphicalEffects is not supported, as it's buggy when moving between different QWindows.
