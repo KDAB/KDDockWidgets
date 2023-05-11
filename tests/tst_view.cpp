@@ -120,7 +120,7 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
     CHECK_EQ(rootView->rect(), QRect(QPoint(0, 0), initialGeo.size()));
 
     // Now test with child view
-    auto childView = createViewAndWindow({ .isVisible = true }, rootView);
+    auto childView = createViewAndWindow({ true }, rootView);
     CHECK(rootView->isVisible());
     CHECK(childView->isVisible());
     CHECK(childView->controller()->isVisible());
