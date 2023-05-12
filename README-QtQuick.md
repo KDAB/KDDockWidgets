@@ -30,3 +30,11 @@ You can however be explicit and exclude the QtWidgets support:
 - `"EGLFS: OpenGL windows cannot be mixed with others"` QtQuick on EGLFS does not support having more
   than 1 window. This is a known QtQuick limitation. The QtWidgets stack worksaround this by compositing
   all windows into a single native window.
+
+- `module "QtQuick.Controls" is not installed`
+Set the `QML_IMPORT_PATH` env var pointing to your Qt qml plugin dir or check the Qt documentation on how to deploy QtQuick applications.
+
+```bash
+# Replace with your actual path
+export QML_IMPORT_PATH=/home/user/Qt/5.15.2/gcc_64/qml
+```
