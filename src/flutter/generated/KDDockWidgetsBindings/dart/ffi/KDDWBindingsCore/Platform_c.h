@@ -18,9 +18,9 @@
 #include <DelayedCall.h>
 #include <qstring.h>
 #include <FloatingWindow.h>
+#include "core/MainWindow.h"
 #include <vector>
 #include <qobject.h>
-#include "core/MainWindow.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -98,8 +98,6 @@ public:
     virtual void tests_initPlatform_impl();
     virtual void tests_initPlatform_impl_nocallback();
     void tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View *receiver);
-    virtual void tests_wait(int ms);
-    virtual void tests_wait_nocallback(int ms);
     virtual bool tests_waitForDeleted(KDDockWidgets::Core::View *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForDeleted_nocallback(KDDockWidgets::Core::View *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForDeleted(QObject *arg__1, int timeout = 2000) const;
@@ -180,8 +178,6 @@ public:
     Callback_tests_doubleClickOn m_tests_doubleClickOnCallback = nullptr;
     typedef void (*Callback_tests_initPlatform_impl)(void *);
     Callback_tests_initPlatform_impl m_tests_initPlatform_implCallback = nullptr;
-    typedef void (*Callback_tests_wait)(void *, int ms);
-    Callback_tests_wait m_tests_waitCallback = nullptr;
     typedef bool (*Callback_tests_waitForDeleted)(void *, KDDockWidgets::Core::View *arg__1, int timeout);
     Callback_tests_waitForDeleted m_tests_waitForDeletedCallback = nullptr;
     typedef bool (*Callback_tests_waitForDeleted_2)(void *, QObject *arg__1, int timeout);
@@ -282,8 +278,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_doubleC
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::Core::Platform::tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
-// KDDockWidgets::Core::Platform::tests_wait(int ms)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_wait_int(void *thisObj, int ms);
 // KDDockWidgets::Core::Platform::tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Core::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const

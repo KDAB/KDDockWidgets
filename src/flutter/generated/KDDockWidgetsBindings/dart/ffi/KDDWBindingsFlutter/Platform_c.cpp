@@ -179,6 +179,10 @@ bool Platform_wrapper::isProcessingAppQuitEvent_nocallback() const
 {
     return ::KDDockWidgets::flutter::Platform::isProcessingAppQuitEvent();
 }
+void Platform_wrapper::maybeResumeCoRoutines()
+{
+    ::KDDockWidgets::flutter::Platform::maybeResumeCoRoutines();
+}
 const char *Platform_wrapper::name() const
 {
     if (m_nameCallback) {
@@ -462,19 +466,6 @@ void Platform_wrapper::tests_initPlatform_impl_nocallback()
 {
     ::KDDockWidgets::flutter::Platform::tests_initPlatform_impl();
 }
-void Platform_wrapper::tests_wait(int ms)
-{
-    if (m_tests_waitCallback) {
-        const void *thisPtr = this;
-        m_tests_waitCallback(const_cast<void *>(thisPtr), ms);
-    } else {
-        ::KDDockWidgets::flutter::Platform::tests_wait(ms);
-    }
-}
-void Platform_wrapper::tests_wait_nocallback(int ms)
-{
-    ::KDDockWidgets::flutter::Platform::tests_wait(ms);
-}
 void Platform_wrapper::ungrabMouse()
 {
     if (m_ungrabMouseCallback) {
@@ -606,6 +597,11 @@ bool c_KDDockWidgets__flutter__Platform__isLeftMouseButtonPressed(void *thisObj)
 bool c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isProcessingAppQuitEvent_nocallback();} else {    return targetPtr->isProcessingAppQuitEvent();} }();
+}
+// maybeResumeCoRoutines()
+void c_KDDockWidgets__flutter__Platform__maybeResumeCoRoutines(void *thisObj)
+{
+    fromPtr(thisObj)->maybeResumeCoRoutines();
 }
 // name() const
 const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj)
@@ -741,11 +737,6 @@ void c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_initPlatform_impl_nocallback();} else {    return targetPtr->tests_initPlatform_impl();} }();
 }
-// tests_wait(int ms)
-void c_KDDockWidgets__flutter__Platform__tests_wait_int(void *thisObj, int ms)
-{
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_wait_nocallback(ms);} else {    return targetPtr->tests_wait(ms);} }();
-}
 // ungrabMouse()
 void c_KDDockWidgets__flutter__Platform__ungrabMouse(void *thisObj)
 {
@@ -865,16 +856,13 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
     case 752:
         wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_tests_initPlatform_impl>(callback);
         break;
-    case 754:
-        wrapper->m_tests_waitCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_tests_wait>(callback);
-        break;
-    case 761:
+    case 760:
         wrapper->m_ungrabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_ungrabMouse>(callback);
         break;
-    case 762:
+    case 761:
         wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_uninstallMessageHandler>(callback);
         break;
-    case 763:
+    case 762:
         wrapper->m_usesFallbackMouseGrabberCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_usesFallbackMouseGrabber>(callback);
         break;
     }

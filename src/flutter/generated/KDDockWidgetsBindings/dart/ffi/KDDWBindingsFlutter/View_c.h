@@ -16,13 +16,13 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include "core/Stack.h"
-#include <core/Layout.h>
-#include <FloatingWindow.h>
-#include <core/DockWidget.h>
 #include "core/MainWindow.h"
+#include "core/Stack.h"
+#include <core/DockWidget.h>
 #include <DropArea.h>
 #include "core/TitleBar.h"
+#include <core/Layout.h>
+#include <FloatingWindow.h>
 #include <TabBar.h>
 #include <core/Group.h>
 

@@ -503,21 +503,6 @@ void Platform_wrapper::tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View
 {
     ::KDDockWidgets::Core::Platform::tests_pressOn(globalPos, receiver);
 }
-void Platform_wrapper::tests_wait(int ms)
-{
-    if (m_tests_waitCallback) {
-        const void *thisPtr = this;
-        m_tests_waitCallback(const_cast<void *>(thisPtr), ms);
-    } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
-        return;
-    }
-}
-void Platform_wrapper::tests_wait_nocallback(int ms)
-{
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
-    return;
-}
 bool Platform_wrapper::tests_waitForDeleted(KDDockWidgets::Core::View *arg__1, int timeout) const
 {
     if (m_tests_waitForDeletedCallback) {
@@ -898,11 +883,6 @@ void c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View(void *thisObj, v
     auto receiver = reinterpret_cast<KDDockWidgets::Core::View *>(receiver_);
     fromPtr(thisObj)->tests_pressOn(globalPos, receiver);
 }
-// tests_wait(int ms)
-void c_KDDockWidgets__Core__Platform__tests_wait_int(void *thisObj, int ms)
-{
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_wait_nocallback(ms);} else {    return targetPtr->tests_wait(ms);} }();
-}
 // tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const
 bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout)
 {
@@ -1064,33 +1044,30 @@ void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, v
         wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_initPlatform_impl>(callback);
         break;
     case 754:
-        wrapper->m_tests_waitCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_wait>(callback);
-        break;
-    case 755:
         wrapper->m_tests_waitForDeletedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_waitForDeleted>(callback);
         break;
-    case 756:
+    case 755:
         wrapper->m_tests_waitForDeleted_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_waitForDeleted_2>(callback);
         break;
-    case 757:
+    case 756:
         wrapper->m_tests_waitForEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_waitForEvent>(callback);
         break;
-    case 758:
+    case 757:
         wrapper->m_tests_waitForEvent_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_waitForEvent_2>(callback);
         break;
-    case 759:
+    case 758:
         wrapper->m_tests_waitForResizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_waitForResize>(callback);
         break;
-    case 760:
+    case 759:
         wrapper->m_tests_waitForResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_waitForResize_2>(callback);
         break;
-    case 761:
+    case 760:
         wrapper->m_ungrabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_ungrabMouse>(callback);
         break;
-    case 762:
+    case 761:
         wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_uninstallMessageHandler>(callback);
         break;
-    case 763:
+    case 762:
         wrapper->m_usesFallbackMouseGrabberCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_usesFallbackMouseGrabber>(callback);
         break;
     }

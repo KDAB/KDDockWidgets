@@ -53,6 +53,7 @@ public:
     virtual bool isLeftMouseButtonPressed_nocallback() const;
     virtual bool isProcessingAppQuitEvent() const;
     virtual bool isProcessingAppQuitEvent_nocallback() const;
+    void maybeResumeCoRoutines();
     virtual const char *name() const;
     virtual const char *name_nocallback() const;
     virtual void onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow *arg__1);
@@ -97,8 +98,6 @@ public:
     virtual void tests_doubleClickOn_nocallback(QPoint globalPos, KDDockWidgets::Core::View *receiver);
     virtual void tests_initPlatform_impl();
     virtual void tests_initPlatform_impl_nocallback();
-    virtual void tests_wait(int ms);
-    virtual void tests_wait_nocallback(int ms);
     virtual void ungrabMouse();
     virtual void ungrabMouse_nocallback();
     virtual void uninstallMessageHandler();
@@ -169,8 +168,6 @@ public:
     Callback_tests_doubleClickOn m_tests_doubleClickOnCallback = nullptr;
     typedef void (*Callback_tests_initPlatform_impl)(void *);
     Callback_tests_initPlatform_impl m_tests_initPlatform_implCallback = nullptr;
-    typedef void (*Callback_tests_wait)(void *, int ms);
-    Callback_tests_wait m_tests_waitCallback = nullptr;
     typedef void (*Callback_ungrabMouse)(void *);
     Callback_ungrabMouse m_ungrabMouseCallback = nullptr;
     typedef void (*Callback_uninstallMessageHandler)(void *);
@@ -207,6 +204,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__installMes
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__isLeftMouseButtonPressed(void *thisObj);
 // KDDockWidgets::flutter::Platform::isProcessingAppQuitEvent() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent(void *thisObj);
+// KDDockWidgets::flutter::Platform::maybeResumeCoRoutines()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__maybeResumeCoRoutines(void *thisObj);
 // KDDockWidgets::flutter::Platform::name() const
 KDDockWidgetsBindings_EXPORT const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj);
 // KDDockWidgets::flutter::Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)
@@ -253,8 +252,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_dein
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_doubleClickOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
 // KDDockWidgets::flutter::Platform::tests_initPlatform_impl()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl(void *thisObj);
-// KDDockWidgets::flutter::Platform::tests_wait(int ms)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_wait_int(void *thisObj, int ms);
 // KDDockWidgets::flutter::Platform::ungrabMouse()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__ungrabMouse(void *thisObj);
 // KDDockWidgets::flutter::Platform::uninstallMessageHandler()

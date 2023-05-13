@@ -1129,8 +1129,6 @@ void c_KDDockWidgets__Core__Platform__tests_doubleClickOn_QPoint_View(void *this
 void c_KDDockWidgets__Core__Platform__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::Core::Platform::tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
 void c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
-// KDDockWidgets::Core::Platform::tests_wait(int ms)
-void c_KDDockWidgets__Core__Platform__tests_wait_int(void *thisObj, int ms);
 // KDDockWidgets::Core::Platform::tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const
 bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Core::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const
@@ -1179,6 +1177,8 @@ void c_KDDockWidgets__flutter__Platform__installMessageHandler(void *thisObj);
 bool c_KDDockWidgets__flutter__Platform__isLeftMouseButtonPressed(void *thisObj);
 // KDDockWidgets::flutter::Platform::isProcessingAppQuitEvent() const
 bool c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent(void *thisObj);
+// KDDockWidgets::flutter::Platform::maybeResumeCoRoutines()
+void c_KDDockWidgets__flutter__Platform__maybeResumeCoRoutines(void *thisObj);
 // KDDockWidgets::flutter::Platform::name() const
 const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj);
 // KDDockWidgets::flutter::Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)
@@ -1225,8 +1225,6 @@ void c_KDDockWidgets__flutter__Platform__tests_deinitPlatform_impl(void *thisObj
 void c_KDDockWidgets__flutter__Platform__tests_doubleClickOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
 // KDDockWidgets::flutter::Platform::tests_initPlatform_impl()
 void c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl(void *thisObj);
-// KDDockWidgets::flutter::Platform::tests_wait(int ms)
-void c_KDDockWidgets__flutter__Platform__tests_wait_int(void *thisObj, int ms);
 // KDDockWidgets::flutter::Platform::ungrabMouse()
 void c_KDDockWidgets__flutter__Platform__ungrabMouse(void *thisObj);
 // KDDockWidgets::flutter::Platform::uninstallMessageHandler()
