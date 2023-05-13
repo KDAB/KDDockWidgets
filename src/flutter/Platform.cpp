@@ -280,7 +280,7 @@ void Platform::runTests()
     s_runTestsFunc().then([this](auto result) {
         QMutexLocker locker(&m_mutex);
         Q_ASSERT(!m_testsResult.has_value());
-        m_testsResult = result == 0;
+        m_testsResult = result ? 0 : 1;
     });
 }
 
@@ -390,6 +390,7 @@ void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) 
 KDDW_QCORO_TASK Platform::tests_wait(int ms)
 {
     co_await m_coRoutines.wait(ms);
+    co_return true;
 }
 
 std::shared_ptr<Core::Window> Platform::tests_createWindow()
