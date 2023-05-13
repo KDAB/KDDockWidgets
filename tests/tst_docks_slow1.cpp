@@ -237,13 +237,13 @@ KDDW_QCORO_TASK tst_invalidJSON()
     KDDW_TEST_RETURN(true);
 }
 
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_invalidPlaceholderPosition, tst_startHidden, tst_startHidden2, tst_invalidJSON };
+
 int main(int argc, char **argv)
 {
-
 #ifdef KDDW_FRONTEND_FLUTTER
     KDDockWidgets::flutter::Platform::s_runTestsFunc = []() -> KDDW_QCORO_TASK {
-        auto tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_invalidPlaceholderPosition, tst_startHidden, tst_startHidden2, tst_invalidJSON };
-        for (auto test : tests) {
+        for (auto test : s_tests) {
             auto result = co_await test();
             if (!result) {
                 KDDW_TEST_RETURN(result);
@@ -259,7 +259,6 @@ int main(int argc, char **argv)
     return result;
 
 #else
-
     for (FrontendType type : Core::Platform::frontendTypes()) {
         Core::Platform::tests_initPlatform(argc, argv, type);
 #ifndef KDDW_TESTS_NO_FATAL_WARNINGS
@@ -268,8 +267,7 @@ int main(int argc, char **argv)
 
         std::cout << "Running tests for Platform " << Core::Platform::instance()->name() << "\n";
 
-        auto tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_invalidPlaceholderPosition, tst_startHidden, tst_startHidden2, tst_invalidJSON };
-        for (auto test : tests) {
+        for (auto test : s_tests) {
             auto result = test();
             if (!result)
                 return result;
