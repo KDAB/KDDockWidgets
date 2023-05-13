@@ -63,12 +63,13 @@ int main(int argc, char **argv)
     s_argc = argc;
     s_argv = argv;
 
-    KDDockWidgets::flutter::Platform::s_runTestsFunc = [] {
+    KDDockWidgets::flutter::Platform::s_runTestsFunc = []() -> QCoro::Task<bool> {
         doctest::Context ctx;
         ctx.setOption("abort-after", 4);
         ctx.applyCommandLine(s_argc, s_argv);
         ctx.setOption("no-breaks", true);
-        return ctx.run();
+        auto res = ctx.run();
+        co_return res == 0;
     };
 
     KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);

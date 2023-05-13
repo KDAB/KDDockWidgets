@@ -381,4 +381,15 @@ QT_END_NAMESPACE
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
 Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)
 
+
+#ifdef KDDW_FRONTEND_FLUTTER
+#define KDDW_QCORO_TASK QCoro::Task<bool>
+#define KDDW_CO_AWAIT co_await
+#define KDDW_CO_RETURN co_return
+#else
+#define KDDW_QCORO_TASK bool
+#define KDDW_CO_AWAIT
+#define KDDW_CO_RETURN return
+#endif
+
 #endif

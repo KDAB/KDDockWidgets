@@ -272,9 +272,10 @@ bool Platform_qt::isGammaray()
     return is;
 }
 
-void Platform_qt::tests_wait(int ms)
+bool Platform_qt::tests_wait(int ms)
 {
     Tests::sleepWithEventLoop(ms);
+    return true;
 }
 
 void Platform_qt::maybeSetOffscreenQPA(int argc, char **argv)

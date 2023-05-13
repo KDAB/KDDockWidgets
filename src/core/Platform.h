@@ -19,6 +19,10 @@
 #include <vector>
 #include <memory.h>
 
+#if defined(DOCKS_DEVELOPER_MODE) && defined(KDDW_FRONTEND_FLUTTER) && !defined(DARTAGNAN_BINDINGS_RUN)
+#include <qcoro5/qcoro/qcorocore.h>
+#endif
+
 namespace KDDockWidgets {
 
 namespace Core {
@@ -245,10 +249,12 @@ public:
     /// @brief Returns a view that rejects close events
     virtual View *tests_createNonClosableView(View *parent = nullptr) = 0;
 
+#if !defined(DARTAGNAN_BINDINGS_RUN)
     /// @brief halts the test during the specified number of milliseconds
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your
     /// test and see what's going on
-    virtual void tests_wait(int ms) = 0;
+    virtual KDDW_QCORO_TASK tests_wait(int ms) = 0;
+#endif
 
     /// Sends a double-click event to the specified receiver
     virtual void tests_doubleClickOn(QPoint globalPos, View *receiver);

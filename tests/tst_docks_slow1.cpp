@@ -15,8 +15,7 @@
 // A test that was extracted out from tst_docks.cpp as it was too slow
 // By using a separate executable it can be paralellized by ctest.
 
-#include "main.h"
-
+#include "tests.h"
 #include "utils.h"
 #include "Config.h"
 #include "core/Position_p.h"
@@ -36,14 +35,21 @@
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Platform.h"
 
+#include <iostream>
+
+#ifdef KDDW_FRONTEND_FLUTTER
+// TODOm3: remove include
+#include "../flutter/Platform.h"
+#endif
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
 
-TEST_CASE("tst_invalidPlaceholderPosition")
+KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
 {
-    auto func = [](bool restore1First) {
+    auto func = [](bool restore1First) -> KDDW_QCORO_TASK {
         // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
         // result: the bottom most one didn't have it's top separator at y=0
 
@@ -74,12 +80,18 @@ TEST_CASE("tst_invalidPlaceholderPosition")
 
         Platform::instance()->tests_waitForResize(group2->view());
 
+        // TODOm3: Implement tests_waitForResize() for flutter so we don't need this second wait
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+
         // Check that group2 moved up to y=0
         CHECK_EQ(group2->view()->y(), 0);
 
         // Close 2
         dock2->close();
         Platform::instance()->tests_waitForResize(dock3->view());
+
+        // TODOm3: Implement tests_waitForResize() for flutter so we don't need this second wait
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
         CHECK(layout->checkSanity());
         CHECK_EQ(layout->count(), 3);
@@ -108,13 +120,22 @@ TEST_CASE("tst_invalidPlaceholderPosition")
         dock1->deleteLater();
         dock2->deleteLater();
         CHECK(Platform::instance()->tests_waitForDeleted(dock2));
+
+        KDDW_TEST_RETURN(true);
     };
 
-    func(true);
-    func(false);
+    if (!KDDW_CO_AWAIT func(true)) {
+        KDDW_TEST_RETURN(false);
+    }
+
+    if (!KDDW_CO_AWAIT func(false)) {
+        KDDW_TEST_RETURN(false);
+    }
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_startHidden")
+KDDW_QCORO_TASK tst_startHidden()
 {
     // A really simple test for InitialVisibilityOption::StartHidden
 
@@ -124,9 +145,11 @@ TEST_CASE("tst_startHidden")
                                   /*show=*/false);
     m->addDockWidget(dock1, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     delete dock1;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_startHidden2")
+KDDW_QCORO_TASK tst_startHidden2()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -185,9 +208,11 @@ TEST_CASE("tst_startHidden2")
         Platform::instance()->tests_waitForResize(dock2->view());
         layout->checkSanity();
     }
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_invalidJSON")
+KDDW_QCORO_TASK tst_invalidJSON()
 {
     auto func = [](QString layoutFileName, int numDockWidgets, QString expectedWarning, bool expectedResult) {
         const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
@@ -208,4 +233,57 @@ TEST_CASE("tst_invalidJSON")
     func("unsupported-serialization-version.json", 10, "Serialization format is too old", false);
     func("invalid.json", 29, "", false);
     func("overlapping-item.json", 2, "Unexpected pos", true);
+
+    KDDW_TEST_RETURN(true);
+}
+
+int main(int argc, char **argv)
+{
+
+#ifdef KDDW_FRONTEND_FLUTTER
+    KDDockWidgets::flutter::Platform::s_runTestsFunc = []() -> KDDW_QCORO_TASK {
+        auto tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_invalidPlaceholderPosition, tst_startHidden, tst_startHidden2, tst_invalidJSON };
+        for (auto test : tests) {
+            auto result = co_await test();
+            if (!result) {
+                KDDW_TEST_RETURN(result);
+            }
+        }
+        KDDW_TEST_RETURN(true);
+    };
+
+    KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);
+    const int result = embedder.run();
+
+    qDebug() << Q_FUNC_INFO << "tests ended with result=" << result;
+    return result;
+
+#else
+
+    for (FrontendType type : Core::Platform::frontendTypes()) {
+        Core::Platform::tests_initPlatform(argc, argv, type);
+#ifndef KDDW_TESTS_NO_FATAL_WARNINGS
+        Core::Platform::instance()->installMessageHandler();
+#endif
+
+        std::cout << "Running tests for Platform " << Core::Platform::instance()->name() << "\n";
+
+        auto tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_invalidPlaceholderPosition, tst_startHidden, tst_startHidden2, tst_invalidJSON };
+        for (auto test : tests) {
+            auto result = test();
+            if (!result)
+                return result;
+        }
+
+        if (Core::Platform::instance()->m_numWarningsEmitted > 0) {
+            std::cout << "ABORTING! Test caused a warning.\n";
+            return 1;
+        }
+
+        std::cout << "SUCCESS\n\n";
+        Core::Platform::instance()->uninstallMessageHandler();
+        Core::Platform::tests_deinitPlatform();
+    }
+    return 0;
+#endif
 }

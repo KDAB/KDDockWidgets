@@ -15,6 +15,10 @@
 
 #include <optional>
 
+#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+#include "CoRoutines.h"
+#endif
+
 namespace KDDockWidgets {
 
 namespace Core {
@@ -80,7 +84,13 @@ public:
     bool tests_waitForDeleted(Core::View *, int timeout) const override;
     bool tests_waitForDeleted(QObject *, int timeout) const override;
     void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
-    void tests_wait(int ms) override;
+#if !defined(DARTAGNAN_BINDINGS_RUN)
+    KDDW_QCORO_TASK tests_wait(int ms) override;
+    CoRoutines m_coRoutines;
+    typedef KDDW_QCORO_TASK (*RunTestsFunc)();
+    static RunTestsFunc s_runTestsFunc;
+    std::optional<int> m_testsResult;
+#endif
     void installMessageHandler() override;
     void uninstallMessageHandler() override;
 
@@ -89,10 +99,13 @@ public:
     /// Pauses execution, so we can attach Dart's debugger
     virtual void pauseForDartDebugger() = 0;
 
-    typedef int (*RunTestsFunc)();
-    static RunTestsFunc s_runTestsFunc;
-    std::optional<int> m_testsResult;
+    // Called by unit-test's main.dart. Runs the tests.
+    // The tests are in C++, as they are the same ones for QtWidgets and QtQuick
     void runTests();
+
+    // Called by Dart's event loop, to wake up paused C++ unit-tests
+    void maybeResumeCoRoutines();
+
     std::optional<int> testsResult() const;
 #endif
 protected:

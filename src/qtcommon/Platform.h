@@ -87,7 +87,7 @@ public:
     void tests_sendEvent(std::shared_ptr<Core::Window>, QEvent *) const override;
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
-    void tests_wait(int ms) override;
+    bool tests_wait(int ms) override;
     void tests_doubleClickOn(QPoint globalPos, Core::View *receiver) override;
 
     void installMessageHandler() override;

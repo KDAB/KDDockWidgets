@@ -212,6 +212,7 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/ViewFactory.cpp
     flutter/Window.cpp
     flutter/Platform.cpp
+    flutter/CoRoutines.cpp
     flutter/views/View.cpp
     flutter/views/ViewWrapper.cpp
     flutter/views/Stack.cpp
@@ -458,6 +459,18 @@ endif()
 if(KDDW_FRONTEND_FLUTTER)
     # TODOm3: Remove Qt::Core
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Core)
+
+    if(KDDockWidgets_DEVELOPER_MODE)
+        # Coroutines are needed for running the C++ tests for flutter
+        # We can move to Qt6 soon and not support Qt5, doesn't matter.
+        find_package(
+            QCoro5
+            COMPONENTS Core
+            REQUIRED
+        )
+        target_link_libraries(kddockwidgets PUBLIC QCoro5Core)
+    endif()
+
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)
 endif()
 

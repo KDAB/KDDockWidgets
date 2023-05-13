@@ -272,14 +272,21 @@ FocusableTestView_flutter::~FocusableTestView_flutter() = default;
 static QMutex m_mutex;
 void Platform::runTests()
 {
-    // Called from Flutter, so doctests run in the ui thread
-
+    // Called from Flutter, so C++ tests run in the ui thread
     Q_ASSERT(s_runTestsFunc);
 
-    const int result = s_runTestsFunc();
-    QMutexLocker locker(&m_mutex);
-    Q_ASSERT(!m_testsResult.has_value());
-    m_testsResult = result;
+    // The tests run in a co-routine, meaning they can be interrupted (due to a C++ wait or deleteLater)
+    // and the Flutter event loop keeps running. When they are actually finished, the "then()" block is run.
+    s_runTestsFunc().then([this](auto result) {
+        QMutexLocker locker(&m_mutex);
+        Q_ASSERT(!m_testsResult.has_value());
+        m_testsResult = result == 0;
+    });
+}
+
+void Platform::maybeResumeCoRoutines()
+{
+    m_coRoutines.maybeResume();
 }
 
 std::optional<int> Platform::testsResult() const
@@ -380,9 +387,9 @@ void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) 
     ( void )ev;
 }
 
-void Platform::tests_wait(int ms)
+KDDW_QCORO_TASK Platform::tests_wait(int ms)
 {
-    ( void )ms;
+    co_await m_coRoutines.wait(ms);
 }
 
 std::shared_ptr<Core::Window> Platform::tests_createWindow()

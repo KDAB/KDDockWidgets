@@ -289,6 +289,10 @@ macro(set_compiler_flags targetName)
         if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
             target_compile_options(${targetName} PRIVATE -Wweak-vtables -Wextra-semi)
         endif()
+
+        if(KDDW_FRONTEND_FLUTTER)
+            target_compile_options(${targetName} PRIVATE -fcoroutines)
+        endif()
     endif()
 
     # Enable -Werror
