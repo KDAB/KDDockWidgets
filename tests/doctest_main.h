@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+/// Has the main() function for our doctest based tests.
+/// We might port away from doctest as it doesn't support coroutines, which is required for flutter event loop interop
 
 #define DOCTEST_CONFIG_IMPLEMENT
 
