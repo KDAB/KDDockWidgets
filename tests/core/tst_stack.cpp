@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../main.h"
+#include "../doctest_main.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Stack.h"
 

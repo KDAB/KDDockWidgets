@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../main.h"
+#include "../doctest_main.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/DockWidget_p.h"

@@ -14,7 +14,7 @@
 // TODO: Try to fix the warning
 #define KDDW_TESTS_NO_FATAL_WARNINGS
 
-#include "main.h"
+#include "doctest_main.h"
 #include "core/View_p.h"
 #include "kddockwidgets/core/Platform.h"
 

@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "main.h"
+#include "doctest_main.h"
 #include "core/View_p.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
