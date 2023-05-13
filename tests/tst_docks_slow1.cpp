@@ -15,7 +15,6 @@
 // A test that was extracted out from tst_docks.cpp as it was too slow
 // By using a separate executable it can be paralellized by ctest.
 
-#include "tests.h"
 #include "utils.h"
 #include "Config.h"
 #include "core/Position_p.h"
@@ -37,10 +36,14 @@
 
 #include <iostream>
 
-#ifdef KDDW_FRONTEND_FLUTTER
-// TODOm3: remove include
-#include "../flutter/Platform.h"
-#endif
+#define KDDW_TEST_RETURN(res)                                             \
+    if (!res)                                                             \
+        qDebug() << "FAILED: at" << Q_FUNC_INFO << "; line=" << __LINE__; \
+    KDDW_CO_RETURN res;
+
+// TODOm4: Investigate something more fancy
+#define CHECK Q_ASSERT
+#define CHECK_EQ(a, b) Q_ASSERT(a == b)
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -244,49 +247,4 @@ KDDW_QCORO_TASK tst_invalidJSON()
 
 static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_invalidPlaceholderPosition, tst_startHidden, tst_startHidden2, tst_invalidJSON };
 
-int main(int argc, char **argv)
-{
-#ifdef KDDW_FRONTEND_FLUTTER
-    KDDockWidgets::flutter::Platform::s_runTestsFunc = []() -> KDDW_QCORO_TASK {
-        for (auto test : s_tests) {
-            auto result = co_await test();
-            if (!result) {
-                KDDW_TEST_RETURN(result);
-            }
-        }
-        KDDW_TEST_RETURN(true);
-    };
-
-    KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);
-    const int result = embedder.run();
-
-    qDebug() << Q_FUNC_INFO << "tests ended with result=" << result;
-    return result;
-
-#else
-    for (FrontendType type : Core::Platform::frontendTypes()) {
-        Core::Platform::tests_initPlatform(argc, argv, type);
-#ifndef KDDW_TESTS_NO_FATAL_WARNINGS
-        Core::Platform::instance()->installMessageHandler();
-#endif
-
-        std::cout << "Running tests for Platform " << Core::Platform::instance()->name() << "\n";
-
-        for (auto test : s_tests) {
-            auto result = test();
-            if (!result)
-                return result;
-        }
-
-        if (Core::Platform::instance()->m_numWarningsEmitted > 0) {
-            std::cout << "ABORTING! Test caused a warning.\n";
-            return 1;
-        }
-
-        std::cout << "SUCCESS\n\n";
-        Core::Platform::instance()->uninstallMessageHandler();
-        Core::Platform::tests_deinitPlatform();
-    }
-    return 0;
-#endif
-}
+#include "tests_main.h"
