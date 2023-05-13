@@ -456,6 +456,7 @@ if(KDDockWidgets_TESTS)
         add_test(NAME tst_dockwidget COMMAND tst_dockwidget)
         add_test(NAME tst_tabbar COMMAND tst_tabbar)
         add_test(NAME tst_window COMMAND tst_window)
+        add_test(NAME tst_docks_slow1 COMMAND tst_docks_slow1)
 
         if(KDDW_FRONTEND_FLUTTER)
             set_tests_properties(
@@ -472,6 +473,7 @@ if(KDDockWidgets_TESTS)
                 tst_dockwidget
                 tst_tabbar
                 tst_window
+                tst_docks_slow1
                 PROPERTIES ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0"
             )
         else()
