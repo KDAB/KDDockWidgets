@@ -60,7 +60,8 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     dock3->close();
     dock2->close();
     dock1->close();
-    CHECK(Platform::instance()->tests_waitForDeleted(f1));
+
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(f1));
 
     dock3->open();
     dock2->open();
@@ -88,7 +89,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     // Drop left of dock3
     layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->group());
 
-    CHECK(Platform::instance()->tests_waitForDeleted(fw2));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(fw2));
     CHECK_EQ(layout->layoutWidth(), oldContentsWidth);
     layout->checkSanity();
 
@@ -138,9 +139,9 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
         CHECK(item2);
         dock2->close();
         dock3->close();
-        Platform::instance()->tests_waitForDeleted(f2);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(f2);
         dock2->open();
-        Platform::instance()->tests_waitForResize(dock2->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(dock2->view());
 
         CHECK_EQ(item2->geometry(), dock2->dptr()->group()->view()->geometry());
         layout->checkSanity();
