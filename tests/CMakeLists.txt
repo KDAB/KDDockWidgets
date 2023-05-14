@@ -42,11 +42,6 @@ add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
 target_link_libraries(tst_docks kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_docks)
 
-add_slow_test(4)
-add_slow_test(5)
-add_slow_test(6)
-add_slow_test(7)
-
 # tst_qtwidgets
 if(KDDW_FRONTEND_QTWIDGETS)
     add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
@@ -122,6 +117,11 @@ endfunction()
 add_doctest(tst_docks_slow1 tst_docks_slow1.cpp)
 add_doctest(tst_docks_slow2 tst_docks_slow2.cpp)
 add_doctest(tst_docks_slow3 tst_docks_slow3.cpp)
+add_doctest(tst_docks_slow4 tst_docks_slow4.cpp)
+add_doctest(tst_docks_slow5 tst_docks_slow5.cpp)
+add_doctest(tst_docks_slow6 tst_docks_slow6.cpp)
+add_doctest(tst_docks_slow7 tst_docks_slow7.cpp)
+
 add_doctest(tst_multisplitter tst_multisplitter.cpp)
 add_doctest(tst_viewguard tst_viewguard.cpp)
 add_doctest(tst_view tst_view.cpp)

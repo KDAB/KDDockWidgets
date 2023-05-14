@@ -208,7 +208,7 @@ KDDW_QCORO_TASK tst_startHidden2()
 KDDW_QCORO_TASK tst_invalidJSON()
 {
     qDebug() << Q_FUNC_INFO;
-    auto func = [](QString layoutFileName, int numDockWidgets, QString expectedWarning, bool expectedResult) {
+    auto func = [](QString layoutFileName, int numDockWidgets, QString expectedWarning, bool expectedResult) -> KDDW_QCORO_TASK {
         const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
 
         EnsureTopLevelsDeleted e;
@@ -222,11 +222,18 @@ KDDW_QCORO_TASK tst_invalidJSON()
 
         LayoutSaver restorer;
         CHECK_EQ(restorer.restoreFromFile(absoluteLayoutFileName), expectedResult);
+
+        KDDW_TEST_RETURN(true);
     };
 
-    func("unsupported-serialization-version.json", 10, "Serialization format is too old", false);
-    func("invalid.json", 29, "", false);
-    func("overlapping-item.json", 2, "Unexpected pos", true);
+    if (!KDDW_CO_AWAIT func("unsupported-serialization-version.json", 10, "Serialization format is too old", false))
+        KDDW_TEST_RETURN(false);
+
+    if (!KDDW_CO_AWAIT func("invalid.json", 29, "", false))
+        KDDW_TEST_RETURN(false);
+
+    if (!KDDW_CO_AWAIT func("overlapping-item.json", 2, "Unexpected pos", true))
+        KDDW_TEST_RETURN(false);
 
     KDDW_TEST_RETURN(true);
 }

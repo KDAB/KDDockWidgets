@@ -16,6 +16,7 @@
 // By using a separate executable it can be paralellized by ctest.
 
 #include "utils.h"
+#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
@@ -34,36 +35,78 @@
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Platform.h"
 
-#include <QtTest/QTest>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-class TestDocks : public QObject
+KDDW_QCORO_TASK tst_28NestedWidgets()
 {
-    Q_OBJECT
+    auto func = [](QVector<DockDescriptor> docksToCreate, QVector<int> docksToHide) -> KDDW_QCORO_TASK {
+        // Tests a case that used to cause negative anchor position when turning into placeholder
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dropArea = m->dropArea();
+        Core::DropArea *layout = dropArea;
 
-public Q_SLOTS:
-    void initTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->installMessageHandler();
-    }
+        int i = 0;
+        for (DockDescriptor &desc : docksToCreate) {
+            desc.createdDock = createDockWidget(
+                QString("%1").arg(i), Platform::instance()->tests_createView({ true }), {}, {}, false);
 
-    void cleanupTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
-    }
+            Core::DockWidget *relativeTo = nullptr;
+            if (desc.relativeToIndex != -1)
+                relativeTo = docksToCreate.at(desc.relativeToIndex).createdDock;
+            m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);
+            CHECK(layout->checkSanity());
+            ++i;
+        }
 
-private Q_SLOTS:
-    void tst_28NestedWidgets();
-    void tst_28NestedWidgets_data();
-};
+        layout->checkSanity();
 
-void TestDocks::tst_28NestedWidgets_data()
-{
-    QTest::addColumn<QVector<DockDescriptor>>("docksToCreate");
-    QTest::addColumn<QVector<int>>("docksToHide");
+        // Run the saver in these complex scenarios:
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+        CHECK(!saved.isEmpty());
+        CHECK(saver.restoreLayout(saved));
+
+        layout->checkSanity();
+
+        for (int i : docksToHide) {
+            docksToCreate.at(i).createdDock->close();
+            layout->checkSanity();
+            Platform::instance()->tests_wait(200);
+        }
+
+        layout->checkSanity();
+
+        for (int i : docksToHide) {
+            docksToCreate.at(i).createdDock->deleteLater();
+            CHECK(Platform::instance()->tests_waitForDeleted(docksToCreate.at(i).createdDock));
+        }
+
+        layout->checkSanity();
+
+        // And hide the remaining ones
+        i = 0;
+        for (auto dock : docksToCreate) {
+            if (dock.createdDock && dock.createdDock->isVisible()) {
+                dock.createdDock->close();
+                Platform::instance()->tests_wait(200); // Wait for the docks to be closed. TODO Replace with a global event
+                                                       // filter and wait for any resize ?
+            }
+            ++i;
+        }
+
+        layout->checkSanity();
+
+        // Cleanup
+        for (auto dock : DockRegistry::self()->dockwidgets()) {
+            dock->deleteLater();
+            CHECK(Platform::instance()->tests_waitForDeleted(dock));
+        }
+
+        KDDW_TEST_RETURN(true);
+    };
 
     QVector<DockDescriptor> docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -95,8 +138,10 @@ void TestDocks::tst_28NestedWidgets_data()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
-    if (Platform::instance()->isQtWidgets())
-        QTest::newRow("28") << docks << QVector<int> { 11, 0 };
+    if (Platform::instance()->isQtWidgets()) {
+        if (!KDDW_CO_AWAIT func(docks, QVector<int> { 11, 0 }))
+            KDDW_TEST_RETURN(false);
+    }
 
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -112,7 +157,8 @@ void TestDocks::tst_28NestedWidgets_data()
         docksToHide << i;
     }
 
-    QTest::newRow("anchor_intersection") << docks << docksToHide;
+    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        KDDW_TEST_RETURN(false);
 
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -126,16 +172,21 @@ void TestDocks::tst_28NestedWidgets_data()
     };
     if (Platform::instance()->isQtWidgets()) {
         // 2. Produced valgrind invalid reads while adding
-        QTest::newRow("valgrind") << docks << QVector<int> {};
+        if (!KDDW_CO_AWAIT func(docks, {}))
+            KDDW_TEST_RETURN(false);
     }
+
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
-    if (Platform::instance()->isQtWidgets())
-        QTest::newRow("bug_when_closing") << docks << QVector<int> {}; // Q_ASSERT(!isSquashed())
+
+    if (Platform::instance()->isQtWidgets()) {
+        if (!KDDW_CO_AWAIT func(docks, {}))
+            KDDW_TEST_RETURN(false);
+    }
 
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -144,11 +195,12 @@ void TestDocks::tst_28NestedWidgets_data()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
-    if (Platform::instance()->isQtWidgets())
-        QTest::newRow("bug_when_closing2")
-            << docks
-            << QVector<int> {}; // Tests for void KDDockWidgets::Anchor::setPosition(int,
-                                // KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
+    if (Platform::instance()->isQtWidgets()) {
+        // Tests for void KDDockWidgets::Anchor::setPosition(int,
+        // KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
+        if (!KDDW_CO_AWAIT func(docks, {}))
+            KDDW_TEST_RETURN(false);
+    }
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
@@ -184,8 +236,11 @@ void TestDocks::tst_28NestedWidgets_data()
         if (i != 16 && i != 17 && i != 18 && i != 27)
             docksToHide << i;
     }
-    if (Platform::instance()->isQtWidgets())
-        QTest::newRow("bug_with_holes") << docks << docksToHide;
+    if (Platform::instance()->isQtWidgets()) {
+        // bug_with_holes
+        if (!KDDW_CO_AWAIT func(docks, docksToHide))
+            KDDW_TEST_RETURN(false);
+    }
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -218,35 +273,47 @@ void TestDocks::tst_28NestedWidgets_data()
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
-    QTest::newRow("add_as_placeholder") << docks << docksToHide;
+
+    // add_as_placeholder
+    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        KDDW_TEST_RETURN(false);
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
-    QTest::newRow("add_as_placeholder_simple") << docks << docksToHide;
-
+    // add_as_placeholder_simple
+    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        KDDW_TEST_RETURN(false);
 
     docks = { { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
     docksToHide.clear();
-    QTest::newRow("isSquashed_assert") << docks << docksToHide;
+
+    // isSquashed_assert
+    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        KDDW_TEST_RETURN(false);
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
     docksToHide.clear();
-    QTest::newRow("negative_pos_warning") << docks << docksToHide;
+
+    // negative_pos_warning
+    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        KDDW_TEST_RETURN(false);
 
     docks = { { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
-    QTest::newRow("bug") << docks << docksToHide;
+    // bug
+    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        KDDW_TEST_RETURN(false);
 
     docks = { { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -254,7 +321,9 @@ void TestDocks::tst_28NestedWidgets_data()
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
-    QTest::newRow("bug2") << docks << docksToHide;
+    // bug2
+    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        KDDW_TEST_RETURN(false);
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -265,78 +334,14 @@ void TestDocks::tst_28NestedWidgets_data()
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
-    QTest::newRow("bug3") << docks << docksToHide;
+    // bug3
+    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        KDDW_TEST_RETURN(false);
+
+
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_28NestedWidgets()
-{
-    QFETCH(QVector<DockDescriptor>, docksToCreate);
-    QFETCH(QVector<int>, docksToHide);
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_28NestedWidgets };
 
-    // Tests a case that used to cause negative anchor position when turning into placeholder
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dropArea = m->dropArea();
-    Core::DropArea *layout = dropArea;
-
-    int i = 0;
-    for (DockDescriptor &desc : docksToCreate) {
-        desc.createdDock = createDockWidget(
-            QString("%1").arg(i), Platform::instance()->tests_createView({ true }), {}, {}, false);
-
-        Core::DockWidget *relativeTo = nullptr;
-        if (desc.relativeToIndex != -1)
-            relativeTo = docksToCreate.at(desc.relativeToIndex).createdDock;
-        m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);
-        QVERIFY(layout->checkSanity());
-        ++i;
-    }
-
-    layout->checkSanity();
-
-    // Run the saver in these complex scenarios:
-    LayoutSaver saver;
-    const QByteArray saved = saver.serializeLayout();
-    QVERIFY(!saved.isEmpty());
-    QVERIFY(saver.restoreLayout(saved));
-
-    layout->checkSanity();
-
-    for (int i : docksToHide) {
-        docksToCreate.at(i).createdDock->close();
-        layout->checkSanity();
-        QTest::qWait(200);
-    }
-
-    layout->checkSanity();
-
-    for (int i : docksToHide) {
-        docksToCreate.at(i).createdDock->deleteLater();
-        QVERIFY(Platform::instance()->tests_waitForDeleted(docksToCreate.at(i).createdDock));
-    }
-
-    layout->checkSanity();
-
-    // And hide the remaining ones
-    i = 0;
-    for (auto dock : docksToCreate) {
-        if (dock.createdDock && dock.createdDock->isVisible()) {
-            dock.createdDock->close();
-            QTest::qWait(200); // Wait for the docks to be closed. TODO Replace with a global event
-                               // filter and wait for any resize ?
-        }
-        ++i;
-    }
-
-    layout->checkSanity();
-
-    // Cleanup
-    for (auto dock : DockRegistry::self()->dockwidgets()) {
-        dock->deleteLater();
-        QVERIFY(Platform::instance()->tests_waitForDeleted(dock));
-    }
-}
-
-#include "tst_docks_main.h"
-
-#include <tst_docks_slow5.moc>
+#include "tests_main.h"

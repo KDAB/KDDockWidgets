@@ -16,8 +16,8 @@
 // By using a separate executable it can be paralellized by ctest.
 
 #include "utils.h"
+#include "simple_test_framework.h"
 #include "Config.h"
-
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/Position_p.h"
@@ -35,32 +35,11 @@
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Platform.h"
 
-#include <QtTest/QTest>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-class TestDocks : public QObject
-{
-    Q_OBJECT
-
-public Q_SLOTS:
-    void initTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->installMessageHandler();
-    }
-
-    void cleanupTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
-    }
-
-private Q_SLOTS:
-    void tst_isFocused();
-};
-
-void TestDocks::tst_isFocused()
+KDDW_QCORO_TASK tst_isFocused()
 {
     EnsureTopLevelsDeleted e;
 
@@ -70,8 +49,8 @@ void TestDocks::tst_isFocused()
     auto dock2 = createDockWidget(QStringLiteral("dock2"),
                                   Platform::instance()->tests_createFocusableView({ true }));
 
-    QTest::qWait(200); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
-                       // otherwise dock1 looses again
+    Platform::instance()->tests_wait(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
+                                           // otherwise dock1 looses again
 
     dock1->window()->move(400, 200);
 
@@ -80,8 +59,8 @@ void TestDocks::tst_isFocused()
     dock1->guestView()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
 
-    QVERIFY(dock1->isFocused());
-    QVERIFY(!dock2->isFocused());
+    CHECK(dock1->isFocused());
+    CHECK(!dock2->isFocused());
 
     // 3. Raise dock2 and focus its line edit
     dock2->view()->raiseAndActivate();
@@ -91,20 +70,20 @@ void TestDocks::tst_isFocused()
     dock2->guestView()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
 
-    QVERIFY(!dock1->isFocused());
-    QVERIFY(dock2->guestView()->hasFocus());
-    QVERIFY(dock2->isFocused());
+    CHECK(!dock1->isFocused());
+    CHECK(dock2->guestView()->hasFocus());
+    CHECK(dock2->isFocused());
 
     // 4. Tab dock1, it's current tab now
     auto oldFw1 = dock1->window();
     dock2->addDockWidgetAsTab(dock1);
-    QVERIFY(dock1->isFocused());
-    QVERIFY(!dock2->isFocused());
+    CHECK(dock1->isFocused());
+    CHECK(!dock2->isFocused());
 
     // 5. Set dock2 as current tab again
     dock2->raise();
-    QVERIFY(!dock1->isFocused());
-    QVERIFY(dock2->isFocused());
+    CHECK(!dock1->isFocused());
+    CHECK(dock2->isFocused());
 
     // 6. Create dock3, focus it
     auto dock3 = createDockWidget(QStringLiteral("dock3"),
@@ -113,20 +92,22 @@ void TestDocks::tst_isFocused()
     dock3->raise();
     dock3->guestView()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
-    QVERIFY(!dock1->isFocused());
-    QVERIFY(!dock2->isFocused());
-    QVERIFY(dock3->isFocused());
+    CHECK(!dock1->isFocused());
+    CHECK(!dock2->isFocused());
+    CHECK(dock3->isFocused());
 
     // 4. Add dock3 to the 1st window, nested, focus 2 again
     dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
     dock2->raise();
     dock2->guestView()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock2->guestView().get(), Event::FocusIn);
-    QVERIFY(!dock1->isFocused());
-    QVERIFY(dock2->isFocused());
-    QVERIFY(!dock3->isFocused());
+    CHECK(!dock1->isFocused());
+    CHECK(dock2->isFocused());
+    CHECK(!dock3->isFocused());
+
+    KDDW_CO_RETURN(true);
 }
 
-#include "tst_docks_main.h"
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_isFocused };
 
-#include <tst_docks_slow6.moc>
+#include "tests_main.h"

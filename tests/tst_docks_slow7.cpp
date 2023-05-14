@@ -16,6 +16,7 @@
 // By using a separate executable it can be paralellized by ctest.
 
 #include "utils.h"
+#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
@@ -35,91 +36,64 @@
 #include "kddockwidgets/core/Platform.h"
 #include "utils_qt.h"
 
-#include <QtTest/QTest>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-class TestDocks : public QObject
+KDDW_QCORO_TASK tst_dragByTabBar()
 {
-    Q_OBJECT
+    auto func = [](bool documentMode, bool tabsAlwaysVisible) -> KDDW_QCORO_TASK {
+        EnsureTopLevelsDeleted e;
+        auto flags = KDDockWidgets::Config::self().flags()
+            | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
+        if (tabsAlwaysVisible)
+            flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
 
-public Q_SLOTS:
-    void initTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->installMessageHandler();
-    }
+        KDDockWidgets::Config::self().setFlags(flags);
 
-    void cleanupTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
-    }
+        auto m = createMainWindow();
 
-private Q_SLOTS:
-    void tst_dragByTabBar();
-    void tst_dragByTabBar_data();
-    void tst_negativeAnchorPosition();
-    void tst_negativeAnchorPosition2();
-    void tst_negativeAnchorPosition3();
-    void tst_negativeAnchorPosition4();
-    void tst_negativeAnchorPosition5();
-    void tst_negativeAnchorPosition6();
-    void tst_negativeAnchorPosition7();
-    void tst_crash2_data();
-    void tst_crash2();
-};
+        auto dropArea = m->dropArea();
+        auto dock1 = createDockWidget(
+            "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
 
-void TestDocks::tst_dragByTabBar_data()
-{
-    QTest::addColumn<bool>("documentMode");
-    QTest::addColumn<bool>("tabsAlwaysVisible");
+        auto dock2 = createDockWidget(
+            "dock2", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        auto dock3 = createDockWidget(
+            "dock3", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        m->addDockWidgetAsTab(dock1);
+        m->view()->resize(QSize(osWindowMinWidth(), 200));
 
-    QTest::newRow("false-false") << false << false;
-    QTest::newRow("true-false") << true << false;
-    QTest::newRow("false-true") << false << true;
-    QTest::newRow("true-true") << true << true;
+        dock2->addDockWidgetAsTab(dock3);
+        if (documentMode)
+            dock2->dptr()->group()->stack()->setDocumentMode(true);
+
+        auto fw = dock2->floatingWindow();
+        fw->view()->move(m->pos() + QPoint(500, 500));
+        CHECK(fw->isVisible());
+        CHECK(!fw->titleBar()->isVisible());
+
+        dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
+
+        KDDW_TEST_RETURN(true);
+    };
+
+    if (!KDDW_CO_AWAIT func(false, false))
+        KDDW_TEST_RETURN(false);
+
+    if (!KDDW_CO_AWAIT func(true, false))
+        KDDW_TEST_RETURN(false);
+
+    if (!KDDW_CO_AWAIT func(false, true))
+        KDDW_TEST_RETURN(false);
+
+    if (!KDDW_CO_AWAIT func(true, true))
+        KDDW_TEST_RETURN(false);
+
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_dragByTabBar()
-{
-    QFETCH(bool, documentMode);
-    QFETCH(bool, tabsAlwaysVisible);
-
-    EnsureTopLevelsDeleted e;
-    auto flags = KDDockWidgets::Config::self().flags()
-        | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
-    if (tabsAlwaysVisible)
-        flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
-
-    KDDockWidgets::Config::self().setFlags(flags);
-
-    auto m = createMainWindow();
-
-    auto dropArea = m->dropArea();
-    auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
-
-    auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
-    auto dock3 = createDockWidget(
-        "dock3", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
-    m->addDockWidgetAsTab(dock1);
-    m->view()->resize(QSize(osWindowMinWidth(), 200));
-
-    dock2->addDockWidgetAsTab(dock3);
-    if (documentMode)
-        dock2->dptr()->group()->stack()->setDocumentMode(true);
-
-    auto fw = dock2->floatingWindow();
-    fw->view()->move(m->pos() + QPoint(500, 500));
-    QVERIFY(fw->isVisible());
-    QVERIFY(!fw->titleBar()->isVisible());
-
-    dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
-}
-
-void TestDocks::tst_negativeAnchorPosition()
+KDDW_QCORO_TASK tst_negativeAnchorPosition()
 {
     // Tests that we don't hit:
     // void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions)
@@ -164,7 +138,7 @@ void TestDocks::tst_negativeAnchorPosition()
     if (layout->layoutMinimumSize().expandedTo(newSize) != newSize) {
         qDebug() << "Size to set is too small=" << newSize
                  << "; min=" << layout->layoutMinimumSize();
-        QFAIL("");
+        Q_ASSERT(false);
     }
 
     layout->setLayoutSize(newSize);
@@ -172,9 +146,11 @@ void TestDocks::tst_negativeAnchorPosition()
     d2->deleteLater();
     Platform::instance()->tests_waitForDeleted(d2);
     layout->checkSanity();
+
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_negativeAnchorPosition2()
+KDDW_QCORO_TASK tst_negativeAnchorPosition2()
 {
     // Tests that the "Out of bounds position" warning doesn't appear. Test will abort if yes.
     EnsureTopLevelsDeleted e;
@@ -192,17 +168,18 @@ void TestDocks::tst_negativeAnchorPosition2()
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     m->addDockWidget(dock3, Location_OnRight);
-    QCOMPARE(layout->placeholderCount(), 1);
-    QCOMPARE(layout->count(), 3);
+    CHECK_EQ(layout->placeholderCount(), 1);
+    CHECK_EQ(layout->count(), 3);
 
     dock1->setFloating(true);
     dock1->setFloating(false);
     dock2->deleteLater();
     layout->checkSanity();
-    QVERIFY(Platform::instance()->tests_waitForDeleted(dock2));
+    CHECK(Platform::instance()->tests_waitForDeleted(dock2));
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_negativeAnchorPosition3()
+KDDW_QCORO_TASK tst_negativeAnchorPosition3()
 {
     // 1. Another case, when floating a dock:
     EnsureTopLevelsDeleted e;
@@ -223,9 +200,10 @@ void TestDocks::tst_negativeAnchorPosition3()
 
     dock1->setFloating(true);
     layout->checkSanity();
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_negativeAnchorPosition4()
+KDDW_QCORO_TASK tst_negativeAnchorPosition4()
 {
     // 1. Tests that we don't get a warning
     // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name =
@@ -258,9 +236,11 @@ void TestDocks::tst_negativeAnchorPosition4()
     docks.at(0).createdDock->deleteLater();
     docks.at(4).createdDock->deleteLater();
     Platform::instance()->tests_waitForDeleted(docks.at(4).createdDock);
+
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_negativeAnchorPosition5()
+KDDW_QCORO_TASK tst_negativeAnchorPosition5()
 {
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
@@ -278,18 +258,19 @@ void TestDocks::tst_negativeAnchorPosition5()
     auto dock1 = docks.at(1).createdDock;
 
     dock1->open();
-    QVERIFY(layout->checkSanity());
+    CHECK(layout->checkSanity());
     dock0->open();
-    QVERIFY(layout->checkSanity());
+    CHECK(layout->checkSanity());
 
     // Cleanup
     for (auto dock : DockRegistry::self()->dockwidgets())
         dock->deleteLater();
 
-    QVERIFY(Platform::instance()->tests_waitForDeleted(dock0));
+    CHECK(Platform::instance()->tests_waitForDeleted(dock0));
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_negativeAnchorPosition6()
+KDDW_QCORO_TASK tst_negativeAnchorPosition6()
 {
     // Tests a case when we add a widget to left/right but the layout doesn't have enough height (or
     // vice-versa)
@@ -315,8 +296,8 @@ void TestDocks::tst_negativeAnchorPosition6()
     m->addDockWidget(d2, Location_OnBottom);
     m->addDockWidget(d3, Location_OnBottom);
 
-    QCOMPARE(layout->count(), 3);
-    QCOMPARE(layout->placeholderCount(), 0);
+    CHECK_EQ(layout->count(), 3);
+    CHECK_EQ(layout->placeholderCount(), 0);
 
     m->addDockWidget(d4, Location_OnRight, d3);
 
@@ -325,9 +306,10 @@ void TestDocks::tst_negativeAnchorPosition6()
     Item *centralItem = m->dropArea()->centralFrame();
     layout->rectForDrop(nullptr, Location_OnTop, centralItem);
     layout->checkSanity();
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_negativeAnchorPosition7()
+KDDW_QCORO_TASK tst_negativeAnchorPosition7()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
@@ -353,89 +335,103 @@ void TestDocks::tst_negativeAnchorPosition7()
     // Stack: 1, 3, 2
     m->addDockWidget(d3, Location_OnTop, d2);
     m->layout()->checkSanity();
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_crash2_data()
+KDDW_QCORO_TASK tst_crash2()
 {
-    QTest::addColumn<bool>("show");
-    QTest::newRow("true") << true;
-    QTest::newRow("false") << false;
-}
+    auto func = [](bool show) -> KDDW_QCORO_TASK {
+        {
+            EnsureTopLevelsDeleted e;
+            auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+            auto layout = m->multiSplitter();
+            m->setVisible(show);
 
-void TestDocks::tst_crash2()
-{
-    QFETCH(bool, show);
+            Core::DockWidget::List docks;
+            const int num = 4;
+            for (int i = 0; i < num; ++i)
+                docks << newDockWidget(QString::number(i));
 
-    {
-        EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-        auto layout = m->multiSplitter();
-        m->setVisible(show);
+            QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnRight,
+                                                           Location_OnRight, Location_OnRight };
 
-        Core::DockWidget::List docks;
-        const int num = 4;
-        for (int i = 0; i < num; ++i)
-            docks << newDockWidget(QString::number(i));
+            QVector<KDDockWidgets::InitialVisibilityOption> options = {
+                InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+                InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartHidden
+            };
 
-        QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnRight,
-                                                       Location_OnRight, Location_OnRight };
+            QVector<bool> floatings = { true, false, false, false };
 
-        QVector<KDDockWidgets::InitialVisibilityOption> options = {
-            InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
-            InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartHidden
-        };
+            for (int i = 0; i < num; ++i) {
 
-        QVector<bool> floatings = { true, false, false, false };
-
-        for (int i = 0; i < num; ++i) {
-
-            m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
-            layout->checkSanity();
-            docks[i]->setFloating(floatings[i]);
-        }
-
-        qDeleteAll(docks);
-        qDeleteAll(DockRegistry::self()->groups());
-    }
-
-    {
-        EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-        auto layout = m->multiSplitter();
-        m->show();
-
-        const int num = 3;
-        Core::DockWidget::List docks;
-        for (int i = 0; i < num; ++i)
-            docks << newDockWidget(QString::number(i));
-
-        QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnLeft,
-                                                       Location_OnRight };
-
-        QVector<KDDockWidgets::InitialVisibilityOption> options = {
-            InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
-            InitialVisibilityOption::StartHidden
-        };
-
-        QVector<bool> floatings = { true, false, false };
-
-        for (int i = 0; i < num; ++i) {
-            m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
-            layout->checkSanity();
-            if (i == 2) {
-                // Wait for the resizes. This used to make the app crash.
-                QTest::qWait(1000);
+                m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+                layout->checkSanity();
+                docks[i]->setFloating(floatings[i]);
             }
 
-            docks[i]->setFloating(floatings[i]);
+            qDeleteAll(docks);
+            qDeleteAll(DockRegistry::self()->groups());
         }
-        layout->checkSanity();
 
-        qDeleteAll(docks);
-        qDeleteAll(DockRegistry::self()->groups());
-    }
+        {
+            EnsureTopLevelsDeleted e;
+            auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+            auto layout = m->multiSplitter();
+            m->show();
+
+            const int num = 3;
+            Core::DockWidget::List docks;
+            for (int i = 0; i < num; ++i)
+                docks << newDockWidget(QString::number(i));
+
+            QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnLeft,
+                                                           Location_OnRight };
+
+            QVector<KDDockWidgets::InitialVisibilityOption> options = {
+                InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
+                InitialVisibilityOption::StartHidden
+            };
+
+            QVector<bool> floatings = { true, false, false };
+
+            for (int i = 0; i < num; ++i) {
+                m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+                layout->checkSanity();
+                if (i == 2) {
+                    // Wait for the resizes. This used to make the app crash.
+                    QTest::qWait(1000);
+                }
+
+                docks[i]->setFloating(floatings[i]);
+            }
+            layout->checkSanity();
+
+            qDeleteAll(docks);
+            qDeleteAll(DockRegistry::self()->groups());
+        }
+
+        KDDW_TEST_RETURN(true);
+    };
+
+    if (!KDDW_CO_AWAIT func(true))
+        KDDW_TEST_RETURN(false);
+
+    if (!KDDW_CO_AWAIT func(false))
+        KDDW_TEST_RETURN(false);
+
+    KDDW_TEST_RETURN(true);
 }
 
-#include "tst_docks_main.h"
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+    tst_dragByTabBar,
+    tst_negativeAnchorPosition,
+    tst_negativeAnchorPosition2,
+    tst_negativeAnchorPosition3,
+    tst_negativeAnchorPosition4,
+    tst_negativeAnchorPosition5,
+    tst_negativeAnchorPosition6,
+    tst_negativeAnchorPosition7,
+    tst_crash2
+};
 
-#include <tst_docks_slow7.moc>
+#include "tests_main.h"
