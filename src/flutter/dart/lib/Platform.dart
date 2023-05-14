@@ -86,7 +86,7 @@ class Platform extends KDDWBindingsFlutter.Platform {
 
   @override
   onFloatingWindowDestroyed(KDDWBindingsCore.FloatingWindow? fw) {
-    floatingWindows.remove(fw!);
+    floatingWindows.removeWhere((it) => it.thisCpp == fw!.thisCpp);
     rebuildWindowOverlay();
   }
 
