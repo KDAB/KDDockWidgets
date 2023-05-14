@@ -78,17 +78,21 @@ KDDW_QCORO_TASK tst_dragByTabBar()
         KDDW_TEST_RETURN(true);
     };
 
-    if (!KDDW_CO_AWAIT func(false, false))
+    if (!KDDW_CO_AWAIT func(false, false)) {
         KDDW_TEST_RETURN(false);
+    }
 
-    if (!KDDW_CO_AWAIT func(true, false))
+    if (!KDDW_CO_AWAIT func(true, false)) {
         KDDW_TEST_RETURN(false);
+    }
 
-    if (!KDDW_CO_AWAIT func(false, true))
+    if (!KDDW_CO_AWAIT func(false, true)) {
         KDDW_TEST_RETURN(false);
+    }
 
-    if (!KDDW_CO_AWAIT func(true, true))
+    if (!KDDW_CO_AWAIT func(true, true)) {
         KDDW_TEST_RETURN(false);
+    }
 
     KDDW_TEST_RETURN(true);
 }
@@ -413,11 +417,13 @@ KDDW_QCORO_TASK tst_crash2()
         KDDW_TEST_RETURN(true);
     };
 
-    if (!KDDW_CO_AWAIT func(true))
+    if (!KDDW_CO_AWAIT func(true)) {
         KDDW_TEST_RETURN(false);
+    }
 
-    if (!KDDW_CO_AWAIT func(false))
+    if (!KDDW_CO_AWAIT func(false)) {
         KDDW_TEST_RETURN(false);
+    }
 
     KDDW_TEST_RETURN(true);
 }

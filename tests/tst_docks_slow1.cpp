@@ -226,14 +226,17 @@ KDDW_QCORO_TASK tst_invalidJSON()
         KDDW_TEST_RETURN(true);
     };
 
-    if (!KDDW_CO_AWAIT func("unsupported-serialization-version.json", 10, "Serialization format is too old", false))
+    if (!KDDW_CO_AWAIT func("unsupported-serialization-version.json", 10, "Serialization format is too old", false)) {
         KDDW_TEST_RETURN(false);
+    }
 
-    if (!KDDW_CO_AWAIT func("invalid.json", 29, "", false))
+    if (!KDDW_CO_AWAIT func("invalid.json", 29, "", false)) {
         KDDW_TEST_RETURN(false);
+    }
 
-    if (!KDDW_CO_AWAIT func("overlapping-item.json", 2, "Unexpected pos", true))
+    if (!KDDW_CO_AWAIT func("overlapping-item.json", 2, "Unexpected pos", true)) {
         KDDW_TEST_RETURN(false);
+    }
 
     KDDW_TEST_RETURN(true);
 }

@@ -139,8 +139,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
     if (Platform::instance()->isQtWidgets()) {
-        if (!KDDW_CO_AWAIT func(docks, QVector<int> { 11, 0 }))
+        if (!KDDW_CO_AWAIT func(docks, QVector<int> { 11, 0 })) {
             KDDW_TEST_RETURN(false);
+        }
     }
 
     docks = {
@@ -157,8 +158,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         docksToHide << i;
     }
 
-    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
+    }
 
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -172,8 +174,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     };
     if (Platform::instance()->isQtWidgets()) {
         // 2. Produced valgrind invalid reads while adding
-        if (!KDDW_CO_AWAIT func(docks, {}))
+        if (!KDDW_CO_AWAIT func(docks, {})) {
             KDDW_TEST_RETURN(false);
+        }
     }
 
     docks = {
@@ -184,8 +187,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     };
 
     if (Platform::instance()->isQtWidgets()) {
-        if (!KDDW_CO_AWAIT func(docks, {}))
+        if (!KDDW_CO_AWAIT func(docks, {})) {
             KDDW_TEST_RETURN(false);
+        }
     }
 
     docks = {
@@ -198,8 +202,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     if (Platform::instance()->isQtWidgets()) {
         // Tests for void KDDockWidgets::Anchor::setPosition(int,
         // KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
-        if (!KDDW_CO_AWAIT func(docks, {}))
+        if (!KDDW_CO_AWAIT func(docks, {})) {
             KDDW_TEST_RETURN(false);
+        }
     }
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -238,8 +243,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     }
     if (Platform::instance()->isQtWidgets()) {
         // bug_with_holes
-        if (!KDDW_CO_AWAIT func(docks, docksToHide))
+        if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
             KDDW_TEST_RETURN(false);
+        }
     }
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -275,16 +281,18 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     docksToHide.clear();
 
     // add_as_placeholder
-    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
+    }
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
     // add_as_placeholder_simple
-    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
+    }
 
     docks = { { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -293,8 +301,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     docksToHide.clear();
 
     // isSquashed_assert
-    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
+    }
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -303,8 +312,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     docksToHide.clear();
 
     // negative_pos_warning
-    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
+    }
 
     docks = { { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -312,8 +322,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
 
     docksToHide.clear();
     // bug
-    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
+    }
 
     docks = { { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -322,8 +333,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
 
     docksToHide.clear();
     // bug2
-    if (!KDDW_CO_AWAIT func(docks, docksToHide))
+    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
+    }
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -334,10 +346,11 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
-    // bug3
-    if (!KDDW_CO_AWAIT func(docks, docksToHide))
-        KDDW_TEST_RETURN(false);
 
+    // bug3
+    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+        KDDW_TEST_RETURN(false);
+    }
 
     KDDW_TEST_RETURN(true);
 }
