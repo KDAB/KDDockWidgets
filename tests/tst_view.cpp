@@ -9,27 +9,36 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "doctest_main.h"
+#include "simple_test_framework.h"
+#include "kddockwidgets/core/Platform.h"
+#include "kddockwidgets/core/Window.h"
 #include "core/View_p.h"
 
 using namespace KDDockWidgets::Core;
+using namespace KDDockWidgets;
 
-TEST_CASE("View::setParent()")
+inline Core::View *createViewAndWindow(Core::CreateViewOptions opts, Core::View *parent = nullptr)
+{
+    opts.createWindow = true;
+    return Core::Platform::instance()->tests_createView(opts, parent);
+}
+
+KDDW_QCORO_TASK tst_viewSetParent()
 {
     auto rootView = createViewAndWindow({});
-    REQUIRE(rootView);
-    REQUIRE(!rootView->isNull());
+    CHECK(rootView);
+    CHECK(!rootView->isNull());
     CHECK(rootView->childViews().isEmpty());
 
     auto childView = createViewAndWindow({}, rootView);
 
     CHECK(!rootView->parentView());
-    REQUIRE(childView);
-    REQUIRE(childView->parentView());
+    CHECK(childView);
+    CHECK(childView->parentView());
     CHECK(childView->parentView()->equals(rootView));
     const auto children = rootView->childViews();
 
-    REQUIRE_EQ(children.size(), 1);
+    CHECK_EQ(children.size(), 1);
     CHECK(children[0]->equals(childView));
 
     auto rootView2 = createViewAndWindow({});
@@ -44,15 +53,17 @@ TEST_CASE("View::setParent()")
 
     delete rootView;
     delete rootView2;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::windowHandle,rootView,Window::rootView")
+KDDW_QCORO_TASK tst_viewRoot()
 {
     auto rootView = createViewAndWindow({});
     auto childView = createViewAndWindow({ true }, rootView);
 
     auto window = rootView->window();
-    REQUIRE(window);
+    CHECK(window);
     CHECK(childView->rootView()->equals(rootView));
     CHECK_EQ(window->handle(), window->handle());
 
@@ -61,14 +72,16 @@ TEST_CASE("View::windowHandle,rootView,Window::rootView")
     CHECK(rootView->rootView()->equals(rootView));
     CHECK(childView->rootView()->equals(rootView));
 
-    REQUIRE(window->rootView());
+    CHECK(window->rootView());
     CHECK(window->rootView()->equals(rootView));
 
     childView->setParent(nullptr);
     CHECK(childView->rootView()->equals(childView));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::isVisible(),show(),hide()")
+KDDW_QCORO_TASK tst_viewIsVisible()
 {
     auto rootView = createViewAndWindow({});
     CHECK(!rootView->controller()->isVisible());
@@ -97,9 +110,11 @@ TEST_CASE("View::isVisible(),show(),hide()")
     CHECK(!view2->controller()->isVisible());
 
     delete rootView;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::geometry,pos,x,y,width,height,rect")
+KDDW_QCORO_TASK tst_viewGeometry()
 {
     // Test with a top-level view first
     auto rootView = createViewAndWindow({});
@@ -133,16 +148,20 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
     CHECK_EQ(childView->size(), newChildGeo.size());
     CHECK_EQ(childView->x(), newChildGeo.x());
     CHECK_EQ(childView->geometry(), newChildGeo);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::sizeHint")
+KDDW_QCORO_TASK tst_viewSizeHint()
 {
     const QSize sizeHint = QSize(200, 200);
     auto rootView = createViewAndWindow({ true, sizeHint });
     CHECK_EQ(rootView->sizeHint(), sizeHint);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::minSize")
+KDDW_QCORO_TASK tst_viewMinSize()
 {
     const QSize sizeHint = {};
     const QSize minSize = { 201, 202 };
@@ -152,9 +171,11 @@ TEST_CASE("View::minSize")
     const QSize newMinSize = { 301, 302 };
     rootView->setMinimumSize(newMinSize);
     CHECK_EQ(rootView->minSize(), newMinSize);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::maxSize")
+KDDW_QCORO_TASK tst_viewMaxSize()
 {
     const QSize sizeHint = {};
     const QSize minSize = { 201, 202 };
@@ -165,9 +186,11 @@ TEST_CASE("View::maxSize")
     const QSize newMaxSize = { 301, 302 };
     rootView->setMaximumSize(newMaxSize);
     CHECK_EQ(rootView->maxSizeHint(), newMaxSize);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::objectName")
+KDDW_QCORO_TASK tst_viewObjectName()
 {
     auto rootView = createViewAndWindow({});
 
@@ -175,9 +198,11 @@ TEST_CASE("View::objectName")
     const QString newName = QStringLiteral("name1");
     rootView->setObjectName(newName);
     CHECK_EQ(rootView->objectName(), newName);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::closeRequested")
+KDDW_QCORO_TASK tst_viewCloseRequested()
 {
     // Tests that the closeRequested signal is emitted
 
@@ -191,15 +216,19 @@ TEST_CASE("View::closeRequested")
 
     rootView->close();
     CHECK(signalArrived);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::focusPolicy, Platform::focusedView")
+KDDW_QCORO_TASK tst_viewFocusPolicy()
 {
     auto rootView = createViewAndWindow({});
     CHECK_EQ(rootView->focusPolicy(), Qt::NoFocus);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::hasFocus")
+KDDW_QCORO_TASK tst_hasFocus()
 {
     auto rootView = createViewAndWindow({});
     rootView->show();
@@ -222,13 +251,34 @@ TEST_CASE("View::hasFocus")
     Platform::instance()->tests_wait(200); // QWidget::setFocus() requires 1 event loop iteration
     CHECK(child1->hasFocus());
     CHECK(child1->equals(Platform::instance()->focusedView()));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("View::operator qDebug")
+KDDW_QCORO_TASK tst_operatorqDebug()
 {
     View *view = nullptr;
     qDebug() << "Null view=" << view;
 
     view = createViewAndWindow({});
     qDebug() << "rootView=" << view;
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+    tst_viewSetParent,
+    tst_viewRoot,
+    tst_viewIsVisible,
+    tst_viewGeometry,
+    tst_viewSizeHint,
+    tst_viewMinSize,
+    tst_viewMaxSize,
+    tst_viewObjectName,
+    tst_viewCloseRequested,
+    tst_viewFocusPolicy,
+    tst_hasFocus,
+    tst_operatorqDebug
+};
+
+#include "tests_main.h"

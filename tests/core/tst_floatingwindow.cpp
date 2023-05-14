@@ -9,16 +9,18 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../doctest_main.h"
+#include "../simple_test_framework.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/ViewFactory.h"
+#include "kddockwidgets/core/Platform.h"
 #include "Config.h"
 
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-TEST_CASE("FloatingWindow Ctor")
+KDDW_QCORO_TASK tst_floatingWindowCtor()
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     CHECK(dw->view()->rootView()->is(ViewType::DockWidget));
@@ -28,22 +30,29 @@ TEST_CASE("FloatingWindow Ctor")
     CHECK(dw->view()->parentView());
     CHECK(dw->view()->rootView()->is(ViewType::FloatingWindow));
 
-    REQUIRE(dw->floatingWindow());
+    CHECK(dw->floatingWindow());
 
     /// Wait for FloatingWindow to be created
     Platform::instance()->tests_wait(100);
 
     auto rootView = dw->view()->rootView();
-    REQUIRE(rootView);
+    CHECK(rootView);
 
     CHECK(rootView->is(ViewType::FloatingWindow));
-    REQUIRE(rootView->controller());
+    CHECK(rootView->controller());
     CHECK(rootView->controller()->is(ViewType::FloatingWindow));
     CHECK(rootView->controller()->isVisible());
 
     Core::FloatingWindow *fw = dw->floatingWindow();
-    REQUIRE(fw);
+    CHECK(fw);
     CHECK(fw->view()->equals(rootView));
 
     delete dw;
+
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_floatingWindowCtor };
+
+#include "../tests_main.h"

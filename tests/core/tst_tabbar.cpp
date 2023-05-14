@@ -9,26 +9,29 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../doctest_main.h"
+#include "../simple_test_framework.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/TabBar.h"
+#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/Config.h"
 #include "kddockwidgets/core/ViewFactory.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-TEST_CASE("TabBar ctor")
+KDDW_QCORO_TASK tst_tabBarCtor()
 {
     Core::Group group(nullptr, {});
     Core::Stack stack(&group, {});
     Core::TabBar tabBar(&stack);
     CHECK(tabBar.view()->is(ViewType::TabBar));
     CHECK(tabBar.view()->asWrapper()->is(ViewType::TabBar));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("TabBar indexes")
+KDDW_QCORO_TASK tst_tabBarIndexes()
 {
     Core::Group group(nullptr, {});
     Core::TabBar *tabBar = group.tabBar();
@@ -113,9 +116,11 @@ TEST_CASE("TabBar indexes")
     delete dw2;
     delete dw3;
     delete dw4;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("TabBar dockwidget destroyed")
+KDDW_QCORO_TASK tst_tabBarDWDestroyed()
 {
     /// Tests if indexes are correct if dock widget destroyed itself
     Core::Group group(nullptr, {});
@@ -150,9 +155,11 @@ TEST_CASE("TabBar dockwidget destroyed")
     CHECK_EQ(tabBar->numDockWidgets(), 0);
     CHECK_EQ(tabBar->currentIndex(), -1);
     CHECK_EQ(tabBar->currentDockWidget(), nullptr);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("TabBar dockwidget closed")
+KDDW_QCORO_TASK tst_tabBarDWClosed()
 {
     /// Tests if indexes are correct if dock widget are closed (but not destroyed)
     /// Tests if indexes are correct if dock widget destroyed itself
@@ -194,4 +201,15 @@ TEST_CASE("TabBar dockwidget closed")
     delete dw0;
     delete dw1;
     delete dw2;
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+    tst_tabBarCtor,
+    tst_tabBarIndexes,
+    tst_tabBarDWDestroyed,
+    tst_tabBarDWClosed
+};
+
+#include "../tests_main.h"

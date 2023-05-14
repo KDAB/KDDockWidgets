@@ -9,14 +9,24 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../doctest_main.h"
+#include "../simple_test_framework.h"
+#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Stack.h"
 
-TEST_CASE("Stack ctor")
+
+using namespace KDDockWidgets;
+
+KDDW_QCORO_TASK tst_stackCtor()
 {
     Core::Group group(nullptr, {});
     Core::Stack stack(&group, {});
     CHECK(stack.view()->is(Core::ViewType::Stack));
     CHECK(stack.view()->asWrapper()->is(Core::ViewType::Stack));
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_stackCtor };
+
+#include "../tests_main.h"

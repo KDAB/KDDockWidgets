@@ -9,13 +9,22 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../doctest_main.h"
+#include "../simple_test_framework.h"
 #include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/Platform.h"
 
-TEST_CASE("Group ctor")
+using namespace KDDockWidgets;
+
+KDDW_QCORO_TASK tst_groupCtor()
 {
     auto group = new Core::Group(nullptr, {});
     CHECK(group->view()->is(Core::ViewType::Frame));
     CHECK(group->view()->asWrapper()->is(Core::ViewType::Frame));
     delete group;
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_groupCtor };
+
+#include "../tests_main.h"

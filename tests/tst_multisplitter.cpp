@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "doctest_main.h"
+#include "simple_test_framework.h"
 
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/core/Separator.h"
@@ -94,7 +94,7 @@ static ItemBoxContainer *createRootWithSingleItem()
     return root;
 }
 
-TEST_CASE("tst_createRoot()")
+KDDW_QCORO_TASK tst_createRoot()
 {
     auto root = createRoot();
     CHECK(root->isRoot());
@@ -103,9 +103,11 @@ TEST_CASE("tst_createRoot()")
     CHECK_EQ(root->size(), QSize(1000, 1000));
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertOne")
+KDDW_QCORO_TASK tst_insertOne()
 {
     auto root = createRoot();
     auto item = createItem();
@@ -119,9 +121,11 @@ TEST_CASE("tst_insertOne")
     CHECK_EQ(item->pos(), root->pos());
     CHECK(root->hasChildren());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertThreeSideBySide")
+KDDW_QCORO_TASK tst_insertThreeSideBySide()
 {
     // Result is [1, 2, 3]
     auto root = createRoot();
@@ -136,9 +140,11 @@ TEST_CASE("tst_insertThreeSideBySide")
     CHECK(root->checkSanity());
     CHECK_EQ(root->numChildren(), 3);
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertTwoHorizontal")
+KDDW_QCORO_TASK tst_insertTwoHorizontal()
 {
     auto root = createRoot();
     auto item1 = createItem();
@@ -147,9 +153,11 @@ TEST_CASE("tst_insertTwoHorizontal")
     ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnRight);
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertTwoVertical")
+KDDW_QCORO_TASK tst_insertTwoVertical()
 {
     auto root = createRoot();
     auto item1 = createItem();
@@ -158,9 +166,11 @@ TEST_CASE("tst_insertTwoVertical")
     ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnBottom);
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertOnWidgetItem1")
+KDDW_QCORO_TASK tst_insertOnWidgetItem1()
 {
     // We insert into a widget item instead of in a container. It will insert in the container still
     // Result is still [1, 2, 3]
@@ -179,9 +189,11 @@ TEST_CASE("tst_insertOnWidgetItem1")
     CHECK(root->checkSanity());
     CHECK_EQ(root->numChildren(), 3);
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertOnWidgetItem2")
+KDDW_QCORO_TASK tst_insertOnWidgetItem2()
 {
     // Same, but result [1, 3, 2]
 
@@ -200,9 +212,11 @@ TEST_CASE("tst_insertOnWidgetItem2")
     CHECK(root->checkSanity());
     CHECK_EQ(root->numChildren(), 3);
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertOnWidgetItem1DifferentOrientation")
+KDDW_QCORO_TASK tst_insertOnWidgetItem1DifferentOrientation()
 {
     // Result [1, 2, |3  |]
     //               |3.1|
@@ -249,9 +263,11 @@ TEST_CASE("tst_insertOnWidgetItem1DifferentOrientation")
 
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertOnWidgetItem2DifferentOrientation")
+KDDW_QCORO_TASK tst_insertOnWidgetItem2DifferentOrientation()
 {
     // Result [1, 2, |3 3.2|]
     //               |3.1  |
@@ -301,9 +317,11 @@ TEST_CASE("tst_insertOnWidgetItem2DifferentOrientation")
 
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertOnRootDifferentOrientation")
+KDDW_QCORO_TASK tst_insertOnRootDifferentOrientation()
 {
     //        [       4     ]
     // Result [1, 2, |3 3.2|]
@@ -329,9 +347,11 @@ TEST_CASE("tst_insertOnRootDifferentOrientation")
 
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_removeItem1")
+KDDW_QCORO_TASK tst_removeItem1()
 {
     //        [       4     ]
     // Result [1, 2, |3 3.2|]
@@ -378,9 +398,11 @@ TEST_CASE("tst_removeItem1")
     root->removeItem(c3);
     CHECK(c3.isNull());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_removeItem2")
+KDDW_QCORO_TASK tst_removeItem2()
 {
     auto root = createRoot();
     auto item1 = createItem();
@@ -393,9 +415,11 @@ TEST_CASE("tst_removeItem2")
     ItemBoxContainer::insertItemRelativeTo(item31, item3, Location_OnBottom);
     item31->parentBoxContainer()->removeItem(item31);
     item3->parentBoxContainer()->removeItem(item3);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_minSize")
+KDDW_QCORO_TASK tst_minSize()
 {
     auto root = createRoot();
     auto item1 = createItem();
@@ -418,9 +442,11 @@ TEST_CASE("tst_minSize")
     CHECK(root->checkSanity());
 
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_resize")
+KDDW_QCORO_TASK tst_resize()
 {
     auto root = createRoot();
     auto item1 = createItem();
@@ -455,9 +481,11 @@ TEST_CASE("tst_resize")
     root->setSize_recursive({ 2500, 505 });
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_resizeWithConstraints")
+KDDW_QCORO_TASK tst_resizeWithConstraints()
 {
     Platform::s_expectedWarning = QStringLiteral("New size doesn't respect size constraints");
 
@@ -493,9 +521,11 @@ TEST_CASE("tst_resizeWithConstraints")
         CHECK(root->checkSanity());
     }
     Platform::s_expectedWarning.clear();
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_availableSize")
+KDDW_QCORO_TASK tst_availableSize()
 {
     auto root = createRoot();
     CHECK_EQ(root->availableSize(), QSize(1000, 1000));
@@ -574,9 +604,11 @@ TEST_CASE("tst_availableSize")
     CHECK_EQ(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Horizontal), 0);
 
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_missingSize")
+KDDW_QCORO_TASK tst_missingSize()
 {
     auto root = createRoot();
     CHECK_EQ(root->size(), QSize(1000, 1000));
@@ -597,9 +629,11 @@ TEST_CASE("tst_missingSize")
 
     delete item2;
     delete item3;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_ensureEnoughSize")
+KDDW_QCORO_TASK tst_ensureEnoughSize()
 {
     // Tests that the layout's size grows when the item being inserted wouldn't have enough space
 
@@ -624,9 +658,11 @@ TEST_CASE("tst_ensureEnoughSize")
         root->size(),
         QSize(item1->minSize().width() + item2->minSize().width() + st, item2->minSize().height()));
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_turnIntoPlaceholder")
+KDDW_QCORO_TASK tst_turnIntoPlaceholder()
 {
     auto root = createRoot();
 
@@ -660,9 +696,11 @@ TEST_CASE("tst_turnIntoPlaceholder")
     CHECK(root->checkSanity());
     CHECK_EQ(item3->width(), root->width());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_suggestedRect")
+KDDW_QCORO_TASK tst_suggestedRect()
 {
     auto root = createRoot();
     root->setSize(QSize(2000, 1000));
@@ -729,9 +767,11 @@ TEST_CASE("tst_suggestedRect")
     CHECK_EQ(bottomRect.bottomLeft(), item2->geometry().bottomLeft());
     CHECK_EQ(bottomRect.bottomRight(), item2->geometry().bottomRight());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_suggestedRect2")
+KDDW_QCORO_TASK tst_suggestedRect2()
 {
     // Tests a bug where the inner drop locations didn't work when there was a nested container
     // Like container >> container >> Item
@@ -750,9 +790,11 @@ TEST_CASE("tst_suggestedRect2")
     CHECK(item->parentBoxContainer()
               ->suggestedDropRect(&itemBeingDropped, item, Location_OnRight)
               .isValid());
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_suggestedRect3")
+KDDW_QCORO_TASK tst_suggestedRect3()
 {
     auto root1 = createRoot();
     Item *item1 = createItem();
@@ -768,9 +810,11 @@ TEST_CASE("tst_suggestedRect3")
                ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
                .isEmpty());
     delete itemToDrop;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_suggestedRect4")
+KDDW_QCORO_TASK tst_suggestedRect4()
 {
     auto root = createRoot();
 
@@ -799,9 +843,13 @@ TEST_CASE("tst_suggestedRect4")
                .isEmpty());
 
     delete itemToDrop;
+
+    KDDW_TEST_RETURN(true);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertAnotherRoot")
+KDDW_QCORO_TASK tst_insertAnotherRoot()
 {
     {
         auto root1 = createRoot();
@@ -849,9 +897,11 @@ TEST_CASE("tst_insertAnotherRoot")
         CHECK(root1->checkSanity());
         CHECK(serializeDeserializeTest(root1));
     }
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_misc1")
+KDDW_QCORO_TASK tst_misc1()
 {
     // Random test1
 
@@ -870,9 +920,11 @@ TEST_CASE("tst_misc1")
 
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_misc2")
+KDDW_QCORO_TASK tst_misc2()
 {
     // Random test1
     // |5|1|2|
@@ -902,9 +954,11 @@ TEST_CASE("tst_misc2")
     item5->parentBoxContainer()->removeItem(item5);
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_misc3")
+KDDW_QCORO_TASK tst_misc3()
 {
     // Random test1
     // |1|2|3|
@@ -919,9 +973,11 @@ TEST_CASE("tst_misc3")
     root->insertItem(item2, Location_OnRight);
     root->insertItem(root2, Location_OnRight);
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_containerGetsHidden")
+KDDW_QCORO_TASK tst_containerGetsHidden()
 {
     auto root = createRoot();
     Item *item1 = createItem();
@@ -942,9 +998,11 @@ TEST_CASE("tst_containerGetsHidden")
     item3->turnIntoPlaceholder();
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_minSizeChanges")
+KDDW_QCORO_TASK tst_minSizeChanges()
 {
     auto root = createRoot();
     Item *item1 = createItem();
@@ -968,9 +1026,11 @@ TEST_CASE("tst_minSizeChanges")
     w1->setMinSize(QSize(700, 700));
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_numSeparators")
+KDDW_QCORO_TASK tst_numSeparators()
 {
     auto root = createRoot();
     Item *item1 = createItem();
@@ -1005,9 +1065,11 @@ TEST_CASE("tst_numSeparators")
     root->insertItem(item6, Location_OnLeft, KDDockWidgets::InitialVisibilityOption::StartHidden);
     CHECK_EQ(root->separators_recursive().size(), 0);
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_separatorMinMax")
+KDDW_QCORO_TASK tst_separatorMinMax()
 {
     auto root = createRoot();
     Item *item1 = createItem();
@@ -1024,9 +1086,11 @@ TEST_CASE("tst_separatorMinMax")
     CHECK_EQ(root->maxPosForSeparator(separator), root->width() - st - 200);
     CHECK_EQ(root->maxPosForSeparator(separator), root->width() - st - 200);
     CHECK(serializeDeserializeTest(root));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_separatorRecreatedOnParentChange")
+KDDW_QCORO_TASK tst_separatorRecreatedOnParentChange()
 {
     auto root1 = createRoot();
     Item *item1 = createItem();
@@ -1042,9 +1106,11 @@ TEST_CASE("tst_separatorRecreatedOnParentChange")
 
     root1->insertItem(root2.get(), Location_OnTop);
     CHECK(root1->checkSanity());
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_containerReducesSize")
+KDDW_QCORO_TASK tst_containerReducesSize()
 {
     // Tests that the container reduces size when its children get hidden
 
@@ -1067,9 +1133,11 @@ TEST_CASE("tst_containerReducesSize")
 
     item22->turnIntoPlaceholder();
     CHECK(root->checkSanity());
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_insertHiddenContainer")
+KDDW_QCORO_TASK tst_insertHiddenContainer()
 {
     auto root1 = createRoot();
     auto root2 = createRoot();
@@ -1085,9 +1153,11 @@ TEST_CASE("tst_insertHiddenContainer")
     auto anotherRoot = createRoot();
     anotherRoot->insertItem(root1.release(), Location_OnTop);
     CHECK(anotherRoot->checkSanity());
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_availableOnSide")
+KDDW_QCORO_TASK tst_availableOnSide()
 {
     // Tests that items are available to squeeze a certain amount (without violating their min-size)
 
@@ -1157,9 +1227,11 @@ TEST_CASE("tst_availableOnSide")
                  + 2 * Item::separatorThickness);
     CHECK_EQ(container31->maxPosForSeparator_global(separator31),
              root->width() - item31->minSize().width() - Item::separatorThickness);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_availableToGrowOnSide")
+KDDW_QCORO_TASK tst_availableToGrowOnSide()
 {
     // Tests that items are available to grow a certain amount (without violating their max-size)
     auto root = createRoot();
@@ -1197,9 +1269,11 @@ TEST_CASE("tst_availableToGrowOnSide")
              item1->maxSizeHint().width() - item1->width());
     CHECK_EQ(root->availableToGrowOnSide(item2, Side2),
              item3->maxSizeHint().width() - item3->width());
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_resizeViaSeparator")
+KDDW_QCORO_TASK tst_resizeViaSeparator()
 {
     auto root = createRoot();
     Item *item1 = createItem(/*min=*/QSize(100, 100));
@@ -1229,9 +1303,11 @@ TEST_CASE("tst_resizeViaSeparator")
     item1->turnIntoPlaceholder();
     separator = root->separators_recursive().at(0);
     root->requestSeparatorMove(separator, delta);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_resizeViaSeparator2")
+KDDW_QCORO_TASK tst_resizeViaSeparator2()
 {
     // Here we resize one of the separators and make sure only the items next to the separator move
     // propagation should only start when constraints have been met
@@ -1283,9 +1359,11 @@ TEST_CASE("tst_resizeViaSeparator2")
     CHECK_EQ(item2->width(), originalChildWidth);
     CHECK_EQ(item3->width(), originalChildWidth);
     CHECK_EQ(item4->width(), originalChildWidth);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_resizeViaSeparator3")
+KDDW_QCORO_TASK tst_resizeViaSeparator3()
 {
     // Like tst_resizeViaSeparator2 but we have nesting, when a container is shrunk, it too
     // should only shrink its children that are near the separator, instead of all of them equally
@@ -1338,9 +1416,11 @@ TEST_CASE("tst_resizeViaSeparator3")
     CHECK_EQ(item3->height(), oldH3);
     CHECK_EQ(item4->height(), oldH4);
     CHECK_EQ(item1->height(), oldH1);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_mapToRoot")
+KDDW_QCORO_TASK tst_mapToRoot()
 {
     //   1
     // -----
@@ -1361,9 +1441,11 @@ TEST_CASE("tst_mapToRoot")
     QPoint rootPt = c->mapToRoot(QPoint(0, 0));
     CHECK_EQ(rootPt, QPoint(0, item1->height() + st));
     CHECK_EQ(c->mapFromRoot(rootPt), QPoint(0, 0));
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_closeAndRestorePreservesPosition")
+KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
 {
     // Result is [1, 2, 3]
 
@@ -1397,9 +1479,11 @@ TEST_CASE("tst_closeAndRestorePreservesPosition")
     CHECK_EQ(item2->width(), oldW2);
     CHECK_EQ(item3->width(), oldW3);
     CHECK_EQ(item4->width(), oldW4);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_minSizeChangedBeforeRestore")
+KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
 {
     auto root = createRoot();
     auto item1 = createItem();
@@ -1415,9 +1499,11 @@ TEST_CASE("tst_minSizeChangedBeforeRestore")
     item2->turnIntoPlaceholder();
     guest2->setMinimumSize(newMinSize);
     item2->restore(guest2);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_separatorMoveCrash")
+KDDW_QCORO_TASK tst_separatorMoveCrash()
 {
     // Tests a crash I got when moving separator to the right
 
@@ -1442,9 +1528,11 @@ TEST_CASE("tst_separatorMoveCrash")
 
     // Separator squeezes item5 and starts squeezing item6 by 10px
     c->requestSeparatorMove(separator, available5 + 10);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_separatorMoveHonoursMax")
+KDDW_QCORO_TASK tst_separatorMoveHonoursMax()
 {
     const int maxWidth = 250;
     auto root = createRoot();
@@ -1481,9 +1569,11 @@ TEST_CASE("tst_separatorMoveHonoursMax")
     root->requestSeparatorMove(separator1, -(separator1->position() - min1));
     CHECK(root->checkSanity());
     CHECK(item2->width() <= maxWidth);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_maxSizeHonoured1")
+KDDW_QCORO_TASK tst_maxSizeHonoured1()
 {
     // Tests that the suggested rect honors max size when adding an item to a layout.
 
@@ -1502,9 +1592,11 @@ TEST_CASE("tst_maxSizeHonoured1")
 
     root->insertItem(item2, Location_OnBottom);
     CHECK_EQ(item2->height(), maxHeight);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_maxSizeHonoured2")
+KDDW_QCORO_TASK tst_maxSizeHonoured2()
 {
     // Tests that a container gets the max size of its children
 
@@ -1528,9 +1620,11 @@ TEST_CASE("tst_maxSizeHonoured2")
 
     root1->insertItem(root2.release(), Location_OnBottom);
     CHECK_EQ(item2->parentBoxContainer()->maxSizeHint(), item2->maxSizeHint());
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_maxSizeHonoured3")
+KDDW_QCORO_TASK tst_maxSizeHonoured3()
 {
     {
         // Tests that resizing a window will now make the item with max-size grow past its max
@@ -1582,9 +1676,11 @@ TEST_CASE("tst_maxSizeHonoured3")
         CHECK(item1->height() <= maxHeight);
         CHECK(item1->height() >= minHeight);
     }
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_requestEqualSize")
+KDDW_QCORO_TASK tst_requestEqualSize()
 {
     // Tests that double-clicking a separator will make both sides equal
 
@@ -1647,9 +1743,11 @@ TEST_CASE("tst_requestEqualSize")
         root->requestEqualSize(separator);
         CHECK_EQ(item1->width(), maxWidth1);
     }
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_maxSizeHonouredWhenAnotherRemoved")
+KDDW_QCORO_TASK tst_maxSizeHonouredWhenAnotherRemoved()
 {
     // Test that when removing item 3 that all the new available space goes to item1, so that
     // we don't violate the space of item 1
@@ -1670,9 +1768,11 @@ TEST_CASE("tst_maxSizeHonouredWhenAnotherRemoved")
     CHECK(item2->height() <= maxHeight);
 
     root->dumpLayout();
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_simplify")
+KDDW_QCORO_TASK tst_simplify()
 {
     QScopedValueRollback<bool> inhibitSimplify(ItemBoxContainer::s_inhibitSimplify, true);
 
@@ -1696,9 +1796,11 @@ TEST_CASE("tst_simplify")
     for (Item *item : root->childItems()) {
         CHECK(!item->isContainer());
     }
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_adjacentLayoutBorders")
+KDDW_QCORO_TASK tst_adjacentLayoutBorders()
 {
     auto root = createRoot();
     auto item1 = createItem();
@@ -1738,9 +1840,11 @@ TEST_CASE("tst_adjacentLayoutBorders")
     root->insertItem(item5, Location_OnRight);
     borders4 = item4->adjacentLayoutBorders();
     CHECK_EQ(borders4, LayoutBorderLocation_South);
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("tst_numSideBySide_recursive")
+KDDW_QCORO_TASK tst_numSideBySide_recursive()
 {
     auto root = createRoot();
     CHECK(root->isVertical());
@@ -1776,4 +1880,10 @@ TEST_CASE("tst_numSideBySide_recursive")
     item2->turnIntoPlaceholder();
     CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 3);
     CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 2);
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {};
+
+#include "tests_main.h"

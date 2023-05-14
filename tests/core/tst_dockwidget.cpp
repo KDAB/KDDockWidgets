@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../doctest_main.h"
+#include "../simple_test_framework.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/DockWidget_p.h"
@@ -17,11 +17,14 @@
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/Action.h"
 #include "kddockwidgets/core/ViewFactory.h"
+#include "kddockwidgets/core/Platform.h"
+#include "kddockwidgets/core/Window.h"
 #include "Config.h"
 
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-TEST_CASE("DockWidget Ctor")
+KDDW_QCORO_TASK tst_dockWidgetCtor()
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     CHECK(dw->view()->is(ViewType::DockWidget));
@@ -29,41 +32,45 @@ TEST_CASE("DockWidget Ctor")
     dw->view()->show();
 
     delete dw;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("setGuestView")
+KDDW_QCORO_TASK tst_setGuestView()
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    REQUIRE(Platform::instance());
+    CHECK(Platform::instance());
     auto childView = Platform::instance()->tests_createView({ true });
-    REQUIRE(childView);
+    CHECK(childView);
     auto guest = childView->asWrapper();
-    REQUIRE(guest);
+    CHECK(guest);
     dw->setGuestView(guest);
-    REQUIRE(dw->guestView());
-    REQUIRE(dw->view());
+    CHECK(dw->guestView());
+    CHECK(dw->view());
     dw->view()->show();
     Platform::instance()->tests_wait(500); // TODOm3: Replace with wait for visible or so.
 
-    REQUIRE(guest->controller());
+    CHECK(guest->controller());
     CHECK(dw->floatingWindow());
-    REQUIRE(dw->floatingWindow()->isVisible());
+    CHECK(dw->floatingWindow()->isVisible());
     CHECK(dw->isVisible());
     CHECK(guest->isVisible());
     CHECK(guest->controller()->isVisible());
     CHECK(dw->guestView()->equals(guest));
-    REQUIRE(dw->view()->window());
-    REQUIRE(guest->window());
+    CHECK(dw->view()->window());
+    CHECK(guest->window());
 
-    REQUIRE(guest->parentView());
+    CHECK(guest->parentView());
     CHECK(guest->parentView()->equals(dw->view()));
     CHECK(dw->view()->rootView()->equals(guest->rootView()));
     CHECK(dw->view()->window()->equals(guest->window()));
 
     delete dw;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("toggleAction")
+KDDW_QCORO_TASK tst_toggleAction()
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
 
@@ -72,9 +79,11 @@ TEST_CASE("toggleAction")
     CHECK(dw->toggleAction()->isCheckable());
 
     delete dw;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("isOpen")
+KDDW_QCORO_TASK tst_isOpen()
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
 
@@ -91,7 +100,7 @@ TEST_CASE("isOpen")
 
     // Dockwidget in a non-current tab is not visible, but still counts as open
     dw->open();
-    REQUIRE(dw->d->group());
+    CHECK(dw->d->group());
     CHECK(dw->isOpen());
     CHECK(dw->isFloating());
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
@@ -106,17 +115,19 @@ TEST_CASE("isOpen")
 
     delete dw;
     delete dw2;
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("setAsCurrentTab")
+KDDW_QCORO_TASK tst_setAsCurrentTab()
 {
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
     auto dw3 = Config::self().viewFactory()->createDockWidget("dw3")->asDockWidgetController();
 
-    REQUIRE(dw->view());
+    CHECK(dw->view());
     dw->view()->show();
-    REQUIRE(dw->d->group());
+    CHECK(dw->d->group());
     CHECK(dw->isOpen());
 
     dw->addDockWidgetAsTab(dw2);
@@ -134,4 +145,18 @@ TEST_CASE("setAsCurrentTab")
     delete dw;
     delete dw2;
     delete dw3;
+
+
+    KDDW_TEST_RETURN(true);
 }
+
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+    tst_dockWidgetCtor,
+    tst_toggleAction,
+    tst_setGuestView,
+    tst_isOpen,
+    tst_setAsCurrentTab
+};
+
+#include "../tests_main.h"

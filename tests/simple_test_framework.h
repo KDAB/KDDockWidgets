@@ -25,4 +25,4 @@
 
 // TODOm4: Investigate something more fancy
 #define CHECK Q_ASSERT
-#define CHECK_EQ(a, b) Q_ASSERT(a == b)
+#define CHECK_EQ(a, b) Q_ASSERT((a) == (b))

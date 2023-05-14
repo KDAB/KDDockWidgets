@@ -9,10 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../doctest_main.h"
+#include "../simple_test_framework.h"
 #include "kddockwidgets/core/Separator.h"
+#include "kddockwidgets/core/Platform.h"
 
-TEST_CASE("Separator Ctor")
+using namespace KDDockWidgets;
+
+KDDW_QCORO_TASK tst_separatorCtor()
 {
     auto hostView = Core::Platform::instance()->createView(nullptr);
 
@@ -23,4 +26,11 @@ TEST_CASE("Separator Ctor")
     }
 
     delete hostView;
+
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_separatorCtor };
+
+#include "../tests_main.h"

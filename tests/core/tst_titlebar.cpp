@@ -9,11 +9,14 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../doctest_main.h"
+#include "../simple_test_framework.h"
+#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/Group.h"
 
-TEST_CASE("TitleBar Ctor")
+using namespace KDDockWidgets;
+
+KDDW_QCORO_TASK tst_titleBarCtor()
 {
     auto group = new Core::Group(nullptr, {});
     auto tb = new Core::TitleBar(group);
@@ -21,4 +24,10 @@ TEST_CASE("TitleBar Ctor")
     CHECK(tb->view()->asWrapper()->is(Core::ViewType::TitleBar));
     delete tb;
     delete group;
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_titleBarCtor };
+
+#include "../tests_main.h"

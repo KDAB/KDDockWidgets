@@ -15,6 +15,7 @@
 #pragma once
 
 #include "KDDockWidgets.h"
+#include "kddockwidgets/core/Platform.h"
 
 #ifdef KDDW_FRONTEND_FLUTTER
 
@@ -26,6 +27,9 @@
 #endif
 
 #include <iostream>
+
+using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
 int main(int argc, char **argv)
 {

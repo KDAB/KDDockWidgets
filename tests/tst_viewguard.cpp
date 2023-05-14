@@ -9,16 +9,15 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "doctest_main.h"
+#include "simple_test_framework.h"
+#include "simple_test_framework.h"
 #include "core/ViewGuard.h"
 #include "core/Platform.h"
-
-#include <doctest/doctest.h>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-TEST_CASE("ViewGuard test")
+KDDW_QCORO_TASK tst_viewGuard()
 {
     ViewGuard g(nullptr);
     CHECK(g.isNull());
@@ -40,4 +39,9 @@ TEST_CASE("ViewGuard test")
         CHECK(!gg.isNull());
     }
     delete view;
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_viewGuard };
+
+#include "tests_main.h"

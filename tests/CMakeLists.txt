@@ -27,32 +27,19 @@ add_definitions(-DQT_NO_KEYWORDS)
 
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 
-#function to add slow tests along with a corresponding test number
-function(add_slow_test testNumber)
-    add_executable(tst_docks_slow${testNumber} tst_docks_slow${testNumber}.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-    target_link_libraries(tst_docks_slow${testNumber} kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
-    set_compiler_flags(tst_docks_slow${testNumber})
-    if(NOT KDDW_FRONTEND_FLUTTER) # TODO: fix these tests for flutter as well
-        add_test(NAME tst_docks_slow${testNumber} COMMAND tst_docks_slow${testNumber})
-    endif()
-endfunction(add_slow_test)
-
-# tst_docks
-add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-target_link_libraries(tst_docks kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
-set_compiler_flags(tst_docks)
-
 # tst_qtwidgets
 if(KDDW_FRONTEND_QTWIDGETS)
     add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
     target_link_libraries(tst_qtwidgets kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
     set_compiler_flags(tst_qtwidgets)
+    add_test(NAME tst_qtwidgets COMMAND tst_qtwidgets)
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     add_executable(tst_qtquick qtquick/tst_qtquick.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
     target_link_libraries(tst_qtquick kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
     set_compiler_flags(tst_qtquick)
+    add_test(NAME tst_qtquick COMMAND tst_qtquick)
 endif()
 
 #-----------------------------------------------------------------------------
@@ -102,37 +89,53 @@ if(KDDW_FRONTEND_FLUTTER)
     )
 endif()
 #-----------------------------------------------------------------------------
-# Add our doctests:
+# Add our tests:
 
-# Function to add a doctest
-function(add_doctest test srcs)
+# Function to add a test
+function(add_kddw_test test srcs supportedByFlutter)
     add_executable(${test} ${srcs} ${TESTING_RESOURCES} utils.cpp)
     target_link_libraries(${test} kddockwidgets kdbindings)
     set_compiler_flags(${test})
+
     if(KDDW_FRONTEND_FLUTTER)
         target_link_libraries(${test} flutter_tests_embedder)
+        if(supportedByFlutter)
+            add_test(NAME ${test} COMMAND ${test})
+            set_tests_properties(${test} PROPERTIES ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0")
+        endif()
+    else()
+        add_test(NAME ${test} COMMAND ${test})
     endif()
 endfunction()
 
-add_doctest(tst_docks_slow1 tst_docks_slow1.cpp)
-add_doctest(tst_docks_slow2 tst_docks_slow2.cpp)
-add_doctest(tst_docks_slow3 tst_docks_slow3.cpp)
-add_doctest(tst_docks_slow4 tst_docks_slow4.cpp)
-add_doctest(tst_docks_slow5 tst_docks_slow5.cpp)
-add_doctest(tst_docks_slow6 tst_docks_slow6.cpp)
-add_doctest(tst_docks_slow7 tst_docks_slow7.cpp)
+add_kddw_test(tst_docks_slow1 tst_docks_slow1.cpp ON)
 
-add_doctest(tst_multisplitter tst_multisplitter.cpp)
-add_doctest(tst_viewguard tst_viewguard.cpp)
-add_doctest(tst_view tst_view.cpp)
-add_doctest(tst_window tst_window.cpp)
-add_doctest(tst_droparea core/tst_droparea.cpp)
-add_doctest(tst_platform tst_platform.cpp)
-add_doctest(tst_group core/tst_group.cpp)
-add_doctest(tst_titlebar core/tst_titlebar.cpp)
-add_doctest(tst_stack core/tst_stack.cpp)
-add_doctest(tst_tabbar core/tst_tabbar.cpp)
-add_doctest(tst_separator core/tst_separator.cpp)
-add_doctest(tst_floatingwindow core/tst_floatingwindow.cpp)
-add_doctest(tst_dockwidget core/tst_dockwidget.cpp)
+add_kddw_test(tst_multisplitter tst_multisplitter.cpp ON)
+add_kddw_test(tst_viewguard tst_viewguard.cpp ON)
+add_kddw_test(tst_view tst_view.cpp ON)
+add_kddw_test(tst_window tst_window.cpp ON)
+add_kddw_test(tst_droparea core/tst_droparea.cpp ON)
+add_kddw_test(tst_platform tst_platform.cpp ON)
+add_kddw_test(tst_group core/tst_group.cpp ON)
+add_kddw_test(tst_titlebar core/tst_titlebar.cpp ON)
+add_kddw_test(tst_stack core/tst_stack.cpp ON)
+add_kddw_test(tst_tabbar core/tst_tabbar.cpp ON)
+add_kddw_test(tst_separator core/tst_separator.cpp ON)
+add_kddw_test(tst_floatingwindow core/tst_floatingwindow.cpp ON)
+add_kddw_test(tst_dockwidget core/tst_dockwidget.cpp ON)
+
+# These build with flutter but don't pass. So just build them but don't add
+# them to the ctest set yet:
+add_kddw_test(tst_docks_slow2 tst_docks_slow2.cpp OFF)
+add_kddw_test(tst_docks_slow3 tst_docks_slow3.cpp OFF)
+add_kddw_test(tst_docks_slow4 tst_docks_slow4.cpp OFF)
+add_kddw_test(tst_docks_slow5 tst_docks_slow5.cpp OFF)
+add_kddw_test(tst_docks_slow6 tst_docks_slow6.cpp OFF)
+add_kddw_test(tst_docks_slow7 tst_docks_slow7.cpp OFF)
+
+# This one doesn't even build yet
+if(NOT KDDW_FRONTEND_FLUTTER)
+    add_kddw_test(tst_docks tst_docks.cpp OFF)
+endif()
+
 #-----------------------------------------------------------------------------

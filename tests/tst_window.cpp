@@ -14,25 +14,28 @@
 // TODO: Try to fix the warning
 #define KDDW_TESTS_NO_FATAL_WARNINGS
 
-#include "doctest_main.h"
+#include "simple_test_framework.h"
 #include "core/View_p.h"
 #include "kddockwidgets/core/Platform.h"
+#include "kddockwidgets/core/Window.h"
 
 using namespace KDDockWidgets::Core;
 
-TEST_CASE("Window CTOR")
+KDDW_QCORO_TASK tst_windowCtor()
 {
     auto window = Platform::instance()->tests_createWindow();
-    REQUIRE(window);
+    CHECK(window);
     CHECK(window->isVisible());
 
     window->destroy();
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("Window::setVisible")
+KDDW_QCORO_TASK tst_setVisible()
 {
     auto window = Platform::instance()->tests_createWindow();
-    REQUIRE(window);
+    CHECK(window);
     CHECK(window->isVisible());
 
     window->setVisible(false);
@@ -42,16 +45,20 @@ TEST_CASE("Window::setVisible")
     CHECK(window->isVisible());
 
     window->destroy();
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("Window::handle")
+KDDW_QCORO_TASK tst_handle()
 {
     auto window = Platform::instance()->tests_createWindow();
     CHECK(window->handle());
     window->destroy();
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("Window::resize, size")
+KDDW_QCORO_TASK tst_resize()
 {
     auto window = Platform::instance()->tests_createWindow();
     const QSize newSize(501, 502);
@@ -62,9 +69,11 @@ TEST_CASE("Window::resize, size")
     CHECK_EQ(window->size(), newSize);
 
     window->destroy();
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("Window::activate")
+KDDW_QCORO_TASK tst_activate()
 {
     auto window = Platform::instance()->tests_createWindow();
     // CHECK(window->isActive());
@@ -72,9 +81,11 @@ TEST_CASE("Window::activate")
     // TODO
 
     window->destroy();
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("Window::equals")
+KDDW_QCORO_TASK tst_equals()
 {
     auto window1 = Platform::instance()->tests_createWindow();
     auto window2 = Platform::instance()->tests_createWindow();
@@ -85,9 +96,11 @@ TEST_CASE("Window::equals")
 
     window1->destroy();
     window2->destroy();
+
+    KDDW_TEST_RETURN(true);
 }
 
-TEST_CASE("Window::geometry")
+KDDW_QCORO_TASK tst_geometry()
 {
     auto window = Platform::instance()->tests_createWindow();
 
@@ -98,4 +111,18 @@ TEST_CASE("Window::geometry")
     CHECK_EQ(window->geometry(), geo);
 
     window->destroy();
+
+    KDDW_TEST_RETURN(true);
 }
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+    tst_windowCtor,
+    tst_setVisible,
+    tst_handle,
+    tst_resize,
+    tst_activate,
+    tst_equals,
+    tst_geometry
+};
+
+#include "tests_main.h"
