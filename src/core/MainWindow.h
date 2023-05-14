@@ -236,9 +236,12 @@ public:
     /// @internal
     QString uniqueName() const;
 
+
+    /// @internal
+    QMargins centerWidgetMargins() const;
+
 protected:
     void setUniqueName(const QString &uniqueName);
-    QMargins centerWidgetMargins() const;
     QRect centralAreaGeometry() const;
 
 Q_SIGNALS:

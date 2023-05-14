@@ -35,36 +35,20 @@
 #include "kddockwidgets/core/Platform.h"
 #include "utils_qt.h"
 
-#include <QtTest/QTest>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
+#define KDDW_TEST_RETURN(res)                                             \
+    if (!res)                                                             \
+        qDebug() << "FAILED: at" << Q_FUNC_INFO << "; line=" << __LINE__; \
+    KDDW_CO_RETURN res;
 
-class TestDocks : public QObject
-{
-    Q_OBJECT
+// TODOm4: Investigate something more fancy
+#define CHECK Q_ASSERT
+#define CHECK_EQ(a, b) Q_ASSERT(a == b)
 
-public Q_SLOTS:
-    void initTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->installMessageHandler();
-    }
-
-    void cleanupTestCase()
-    {
-        KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
-    }
-
-private Q_SLOTS:
-    void tst_dockWidgetGetsFocusWhenDocked();
-    void tst_closeShowWhenNoCentralFrame();
-    void tst_close();
-    void tst_positionWhenShown();
-};
-
-void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
+KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
@@ -91,34 +75,36 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     QPointer<Core::FloatingWindow> fw2 = dw2->floatingWindow();
 
     // Focus dock widget 1 first
-    QVERIFY(!dw1->isFocused());
+    CHECK(!dw1->isFocused());
     dw1->window()->activateWindow();
 
-    connect(
+    QObject::connect(
         dw1, &Core::DockWidget::isFocusedChanged, dw1, [dw1](bool focused) {
             Q_ASSERT(focused == dw1->isFocused());
         });
 
     le1->setFocus(Qt::MouseFocusReason);
     QTest::qWait(200);
-    QVERIFY(dw1->isFocused());
+    CHECK(dw1->isFocused());
 
-    QVERIFY(fw1->view()->isActiveWindow());
+    CHECK(fw1->view()->isActiveWindow());
     dragFloatingWindowTo(fw2, fw1->dropArea(), DropLocation_Left);
     Platform::instance()->tests_waitForEvent(fw1, Event::WindowActivate);
 
     /// We dropped into floating window 1, it should still be active
-    QVERIFY(fw1->view()->isActiveWindow());
+    CHECK(fw1->view()->isActiveWindow());
 
     // DockWidget 2 was dropped, it should now be focused
-    QVERIFY(!dw1->isFocused());
-    QVERIFY(dw2->isFocused());
+    CHECK(!dw1->isFocused());
+    CHECK(dw2->isFocused());
 
     delete fw1;
     delete fw2;
+
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_closeShowWhenNoCentralFrame()
+KDDW_QCORO_TASK tst_closeShowWhenNoCentralFrame()
 {
     EnsureTopLevelsDeleted e;
     // Tests a crash I got when hiding and showing and no central group
@@ -130,86 +116,88 @@ void TestDocks::tst_closeShowWhenNoCentralFrame()
     dock1->close();
     m->layout()->checkSanity();
 
-    QVERIFY(!dock1->dptr()->group());
-    QVERIFY(!Platform::instance()->tests_waitForDeleted(dock1)); // It was being deleted due to a
-                                                                 // bug
-    QVERIFY(dock1);
+    CHECK(!dock1->dptr()->group());
+    CHECK(!Platform::instance()->tests_waitForDeleted(dock1)); // It was being deleted due to a
+                                                               // bug
+    CHECK(dock1);
     dock1->open();
     m->layout()->checkSanity();
+
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_close()
+KDDW_QCORO_TASK tst_close()
 {
     EnsureTopLevelsDeleted e;
 
     // 1.0 Call QWidget::close() on QDockWidget
     auto dock1 = createDockWidget("doc1");
     QAction *toggleAction = dock1->toggleAction();
-    QVERIFY(toggleAction->isChecked());
+    CHECK(toggleAction->isChecked());
 
-    QVERIFY(dock1->close());
+    CHECK(dock1->close());
 
-    QVERIFY(!dock1->isVisible());
-    QVERIFY(!dock1->window()->controller()->isVisible());
-    QVERIFY(dock1->window()->equals(dock1->view()));
-    QVERIFY(!toggleAction->isChecked());
+    CHECK(!dock1->isVisible());
+    CHECK(!dock1->window()->controller()->isVisible());
+    CHECK(dock1->window()->equals(dock1->view()));
+    CHECK(!toggleAction->isChecked());
 
     // 1.1 Reshow with show()
     dock1->open();
     auto fw = dock1->floatingWindow();
-    QVERIFY(fw);
-    QVERIFY(toggleAction->isChecked());
-    QVERIFY(dock1->isVisible());
-    QVERIFY(dock1->window()->equals(fw->view()));
-    QVERIFY(toggleAction->isChecked());
+    CHECK(fw);
+    CHECK(toggleAction->isChecked());
+    CHECK(dock1->isVisible());
+    CHECK(dock1->window()->equals(fw->view()));
+    CHECK(toggleAction->isChecked());
 
     // 1.2 Reshow with toggleAction instead
-    QVERIFY(dock1->close());
-    QVERIFY(!toggleAction->isChecked());
-    QVERIFY(!dock1->isVisible());
+    CHECK(dock1->close());
+    CHECK(!toggleAction->isChecked());
+    CHECK(!dock1->isVisible());
     toggleAction->setChecked(true);
-    QVERIFY(dock1->isVisible());
+    CHECK(dock1->isVisible());
 
     // 1.3 Use hide() instead
     auto fw1 = dock1->floatingWindow();
-    QVERIFY(fw1);
+    CHECK(fw1);
 
     dock1->close();
 
-    QVERIFY(Platform::instance()->tests_waitForDeleted(fw1));
-    QVERIFY(!dock1->isVisible());
-    QVERIFY(!dock1->window()->controller()->isVisible());
-    QVERIFY(dock1->window()->equals(dock1->view()));
-    QVERIFY(!toggleAction->isChecked());
+    CHECK(Platform::instance()->tests_waitForDeleted(fw1));
+    CHECK(!dock1->isVisible());
+    CHECK(!dock1->window()->controller()->isVisible());
+    CHECK(dock1->window()->equals(dock1->view()));
+    CHECK(!toggleAction->isChecked());
 
     // 1.4 close a FloatingWindow, via DockWidget::close
     QPointer<Core::FloatingWindow> window = dock1->dptr()->morphIntoFloatingWindow();
     QPointer<Core::Group> group1 = dock1->dptr()->group();
-    QVERIFY(dock1->isVisible());
-    QVERIFY(dock1->window()->controller()->isVisible());
-    QVERIFY(group1->isVisible());
-    QVERIFY(dock1->window()->equals(window->view()));
+    CHECK(dock1->isVisible());
+    CHECK(dock1->window()->controller()->isVisible());
+    CHECK(group1->isVisible());
+    CHECK(dock1->window()->equals(window->view()));
 
-    QVERIFY(dock1->close());
-    QVERIFY(!dock1->dptr()->group());
-    QVERIFY(Platform::instance()->tests_waitForDeleted(group1));
-    QVERIFY(Platform::instance()->tests_waitForDeleted(window));
+    CHECK(dock1->close());
+    CHECK(!dock1->dptr()->group());
+    CHECK(Platform::instance()->tests_waitForDeleted(group1));
+    CHECK(Platform::instance()->tests_waitForDeleted(window));
 
     // 1.5 close a FloatingWindow, via FloatingWindow::close
     dock1->open();
 
     window = dock1->dptr()->morphIntoFloatingWindow();
     group1 = dock1->dptr()->group();
-    QVERIFY(dock1->isVisible());
-    QVERIFY(dock1->window()->controller()->isVisible());
-    QVERIFY(group1->isVisible());
-    QVERIFY(dock1->window()->equals(window->view()));
+    CHECK(dock1->isVisible());
+    CHECK(dock1->window()->controller()->isVisible());
+    CHECK(group1->isVisible());
+    CHECK(dock1->window()->equals(window->view()));
 
-    QVERIFY(window->view()->close());
+    CHECK(window->view()->close());
 
-    QVERIFY(!dock1->dptr()->group());
-    QVERIFY(Platform::instance()->tests_waitForDeleted(group1));
-    QVERIFY(Platform::instance()->tests_waitForDeleted(window));
+    CHECK(!dock1->dptr()->group());
+    CHECK(Platform::instance()->tests_waitForDeleted(group1));
+    CHECK(Platform::instance()->tests_waitForDeleted(window));
 
     // 1.6 Check if space is reclaimed after closing left dock
     Core::DockWidget *centralDock;
@@ -219,25 +207,25 @@ void TestDocks::tst_close()
     auto mainwindow = createSimpleNestedMainWindow(&centralDock, &leftDock, &rightDock);
     auto da = mainwindow->dropArea();
 
-    QVERIFY(da->checkSanity());
-    QCOMPARE(leftDock->dptr()->group()->view()->x(), 0);
+    CHECK(da->checkSanity());
+    CHECK_EQ(leftDock->dptr()->group()->view()->x(), 0);
 
-    QCOMPARE(centralDock->dptr()->group()->view()->x(),
+    CHECK_EQ(centralDock->dptr()->group()->view()->x(),
              leftDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness + 1);
-    QCOMPARE(rightDock->dptr()->group()->view()->x(),
+    CHECK_EQ(rightDock->dptr()->group()->view()->x(),
              centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
                  + 1);
     leftDock->close();
     QTest::qWait(250);
-    QCOMPARE(centralDock->dptr()->group()->view()->x(), 0);
-    QCOMPARE(rightDock->dptr()->group()->view()->x(),
+    CHECK_EQ(centralDock->dptr()->group()->view()->x(), 0);
+    CHECK_EQ(rightDock->dptr()->group()->view()->x(),
              centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
                  + 1);
 
     rightDock->close();
     QTest::qWait(250);
     QMargins margins = mainwindow->centerWidgetMargins();
-    QCOMPARE(centralDock->dptr()->group()->view()->width(),
+    CHECK_EQ(centralDock->dptr()->group()->view()->width(),
              mainwindow->width() - 0 * 2 - margins.left() - margins.right());
     delete leftDock;
     delete rightDock;
@@ -250,8 +238,8 @@ void TestDocks::tst_close()
 
     centralDock->close();
 
-    QCOMPARE(leftDock->dptr()->group()->view()->x(), leftX);
-    QCOMPARE(rightDock->dptr()->group()->view()->x(), rightX);
+    CHECK_EQ(leftDock->dptr()->group()->view()->x(), leftX);
+    CHECK_EQ(rightDock->dptr()->group()->view()->x(), rightX);
     delete leftDock;
     delete rightDock;
     delete centralDock;
@@ -267,7 +255,7 @@ void TestDocks::tst_close()
 
         // 2.2 Closing should not close the main window
         dock1->close();
-        QVERIFY(mainWindowPtr.data());
+        CHECK(mainWindowPtr.data());
         delete dock1;
     }
 
@@ -280,8 +268,8 @@ void TestDocks::tst_close()
 
         // 2.2 Closing should not close the main window
         dock1->dptr()->group()->titleBar()->onCloseClicked();
-        QVERIFY(mainWindowPtr.data());
-        QVERIFY(mainWindowPtr->isVisible());
+        CHECK(mainWindowPtr.data());
+        CHECK(mainWindowPtr->isVisible());
         delete dock1;
     }
 
@@ -294,13 +282,15 @@ void TestDocks::tst_close()
 
         // 2.2 Closing should not close the main window
         dock1->dptr()->group()->titleBar()->onCloseClicked();
-        QVERIFY(mainWindowPtr.data());
-        QVERIFY(mainWindowPtr->isVisible());
+        CHECK(mainWindowPtr.data());
+        CHECK(mainWindowPtr->isVisible());
         delete dock1;
     }
+
+    KDDW_TEST_RETURN(true);
 }
 
-void TestDocks::tst_positionWhenShown()
+KDDW_QCORO_TASK tst_positionWhenShown()
 {
     // Tests that when showing a dockwidget it shows in the same position as before
     EnsureTopLevelsDeleted e;
@@ -311,18 +301,25 @@ void TestDocks::tst_positionWhenShown()
     const QPoint desiredPos = QPoint(100, 100);
     dock1->view()->window()->setFramePosition(desiredPos);
     QTest::qWait(1000); // Wait for group to settle
-    QCOMPARE(dock1->view()->window()->framePosition(), desiredPos);
+    CHECK_EQ(dock1->view()->window()->framePosition(), desiredPos);
 
     dock1->close();
     dock1->open();
-    QCOMPARE(dock1->view()->window()->framePosition(), desiredPos);
+    CHECK_EQ(dock1->view()->window()->framePosition(), desiredPos);
 
     // Cleanup
     window->layout()->checkSanity();
     dock1->deleteLater();
-    QVERIFY(Platform::instance()->tests_waitForDeleted(dock1));
+    CHECK(Platform::instance()->tests_waitForDeleted(dock1));
+
+    KDDW_TEST_RETURN(true);
 }
 
-#include "tst_docks_main.h"
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+    tst_dockWidgetGetsFocusWhenDocked,
+    tst_closeShowWhenNoCentralFrame,
+    tst_close,
+    tst_positionWhenShown
+};
 
-#include <tst_docks_slow3.moc>
+#include "tests_main.h"
