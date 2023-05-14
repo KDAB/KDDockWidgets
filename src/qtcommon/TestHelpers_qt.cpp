@@ -272,7 +272,7 @@ bool Platform_qt::isGammaray()
     return is;
 }
 
-bool Platform_qt::tests_wait(int ms)
+bool Platform_qt::tests_wait(int ms) const
 {
     Tests::sleepWithEventLoop(ms);
     return true;

@@ -387,7 +387,7 @@ void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) 
     ( void )ev;
 }
 
-KDDW_QCORO_TASK Platform::tests_wait(int ms)
+KDDW_QCORO_TASK Platform::tests_wait(int ms) const
 {
     co_await m_coRoutines.wait(ms);
     co_return true;

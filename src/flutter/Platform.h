@@ -85,8 +85,8 @@ public:
     bool tests_waitForDeleted(QObject *, int timeout) const override;
     void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
 #if !defined(DARTAGNAN_BINDINGS_RUN)
-    KDDW_QCORO_TASK tests_wait(int ms) override;
-    CoRoutines m_coRoutines;
+    KDDW_QCORO_TASK tests_wait(int ms) const override;
+    mutable CoRoutines m_coRoutines;
     typedef KDDW_QCORO_TASK (*RunTestsFunc)();
     static RunTestsFunc s_runTestsFunc;
     std::optional<int> m_testsResult;

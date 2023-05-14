@@ -253,7 +253,7 @@ public:
     /// @brief halts the test during the specified number of milliseconds
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your
     /// test and see what's going on
-    virtual KDDW_QCORO_TASK tests_wait(int ms) = 0;
+    virtual KDDW_QCORO_TASK tests_wait(int ms) const = 0;
 #endif
 
     /// Sends a double-click event to the specified receiver
