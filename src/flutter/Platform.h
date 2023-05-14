@@ -88,6 +88,8 @@ public:
     KDDW_QCORO_TASK tests_wait(int ms) const override;
     KDDW_QCORO_TASK tests_waitForResize2(Core::View *, int timeout) const override;
     KDDW_QCORO_TASK tests_waitForResize2(Core::Controller *, int timeout) const override;
+    KDDW_QCORO_TASK tests_waitForDeleted2(QObject *, int timeout) const override;
+    KDDW_QCORO_TASK tests_waitForDeleted2(Core::View *, int timeout) const override;
 
     mutable CoRoutines m_coRoutines;
     typedef KDDW_QCORO_TASK (*RunTestsFunc)();

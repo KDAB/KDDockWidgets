@@ -12,10 +12,13 @@
 #include "../simple_test_framework.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
 #include "Config.h"
+
+#include <QPointer>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -53,6 +56,27 @@ KDDW_QCORO_TASK tst_floatingWindowCtor()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_floatingWindowCtor };
+KDDW_QCORO_TASK tst_floatingWindowClose()
+{
+    // Tests that a floating window is deleted after being closed
+
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    dw->view()->show();
+    QPointer<Core::FloatingWindow> fw = dw->floatingWindow();
+    CHECK(fw);
+
+    auto titleBar = fw->titleBar();
+    CHECK(titleBar);
+    CHECK(titleBar->isVisible());
+    titleBar->onCloseClicked();
+    CHECK(!dw->isOpen());
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(fw));
+    CHECK(!fw);
+
+    delete dw;
+    KDDW_TEST_RETURN(true);
+}
+
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_floatingWindowClose, tst_floatingWindowCtor };
 
 #include "../tests_main.h"

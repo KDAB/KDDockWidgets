@@ -260,6 +260,8 @@ public:
     /// TODOm3: Remove the other overloads and remove the "2" suffix once all tests are using coroutines
     virtual KDDW_QCORO_TASK tests_waitForResize2(View *, int timeout = 2000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForResize2(Controller *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted2(View *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted2(QObject *, int timeout = 2000) const = 0;
 #endif
 
     /// Sends a double-click event to the specified receiver

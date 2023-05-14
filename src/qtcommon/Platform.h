@@ -99,6 +99,8 @@ public:
     /// TODOm3: Remove the other overloads and remove the "2" suffix once all tests are using coroutines
     bool tests_waitForResize2(Core::View *, int timeout = 2000) const override;
     bool tests_waitForResize2(Core::Controller *, int timeout = 2000) const override;
+    bool tests_waitForDeleted2(Core::View *, int timeout = 2000) const override;
+    bool tests_waitForDeleted2(QObject *, int timeout = 2000) const override;
 
 #endif
 

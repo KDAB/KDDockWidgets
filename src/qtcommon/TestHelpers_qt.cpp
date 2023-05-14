@@ -304,3 +304,13 @@ bool Platform_qt::tests_waitForResize2(Core::Controller *c, int timeout) const
 {
     return tests_waitForResize(c, timeout);
 }
+
+bool Platform_qt::tests_waitForDeleted2(Core::View *v, int timeout) const
+{
+    return tests_waitForDeleted(v, timeout);
+}
+
+bool Platform_qt::tests_waitForDeleted2(QObject *c, int timeout) const
+{
+    return tests_waitForDeleted(c, timeout);
+}

@@ -22,6 +22,7 @@
 #include "DockRegistry.h"
 #include "Config.h"
 #include "core/ViewFactory.h"
+#include "core/DelayedCall.h"
 #include "core/DragController_p.h"
 #include "core/LayoutSaver_p.h"
 #include "DockWidget_p.h"
@@ -436,7 +437,7 @@ void FloatingWindow::scheduleDeleteLater()
     m_deleteScheduled = true;
     view()->setAboutToBeDestroyed();
     DockRegistry::self()->unregisterFloatingWindow(this);
-    deleteLater();
+    Platform::instance()->runDelayed(0, new DelayedDelete(this));
 }
 
 Core::DropArea *FloatingWindow::multiSplitter() const

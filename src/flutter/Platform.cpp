@@ -405,6 +405,18 @@ KDDW_QCORO_TASK Platform::tests_waitForResize2(Core::Controller *, int) const
     co_return true;
 }
 
+KDDW_QCORO_TASK Platform::tests_waitForDeleted2(QObject *, int) const
+{
+    co_await m_coRoutines.wait(1000);
+    co_return true;
+}
+
+KDDW_QCORO_TASK Platform::tests_waitForDeleted2(Core::View *, int) const
+{
+    co_await m_coRoutines.wait(1000);
+    co_return true;
+}
+
 std::shared_ptr<Core::Window> Platform::tests_createWindow()
 {
     auto window = new flutter::Window(tests_createView({}, nullptr)->asWrapper());
