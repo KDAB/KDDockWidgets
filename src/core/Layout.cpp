@@ -353,7 +353,7 @@ void Layout::onCloseEvent(CloseEvent *e)
 
     const Core::Group::List groups = this->groups();
     for (Core::Group *group : groups) {
-        Platform::instance()->sendEvent(group->view(), e);
+        group->view()->requestClose(e);
         if (!e->isAccepted())
             break; // Stop when the first group prevents closing
     }
