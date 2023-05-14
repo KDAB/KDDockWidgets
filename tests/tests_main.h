@@ -25,6 +25,8 @@
 
 #endif
 
+#include <iostream>
+
 int main(int argc, char **argv)
 {
 #ifdef KDDW_FRONTEND_FLUTTER
