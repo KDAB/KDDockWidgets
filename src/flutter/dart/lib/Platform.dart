@@ -74,7 +74,8 @@ class Platform extends KDDWBindingsFlutter.Platform {
       int arg__5 = 0}) {
     final parentView =
         parent == null ? null : (parent as KDDWBindingsFlutter.MainWindow);
-    var mw = MainWindow(uniqueName, parent: parentView);
+    var mw = MainWindow(uniqueName,
+        parent: parentView, flags: arg__5, options: options);
     return mw.m_controller;
   }
 

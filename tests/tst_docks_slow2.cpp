@@ -73,6 +73,9 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     Item *item3 = layout->itemForFrame(dock3->dptr()->group());
     Item *item4 = dropArea->centralFrame();
 
+    CHECK(item1);
+    CHECK(item3);
+    CHECK(item4);
     CHECK_EQ(layout->count(), 4);
     CHECK_EQ(layout->placeholderCount(), 0);
 
