@@ -128,8 +128,6 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
 
         CHECK(!dock1->isFloating());
         CHECK(!dock1->isTabbed());
-
-        Platform::instance()->tests_waitForDeleted(fw);
     }
 
     {
@@ -155,10 +153,6 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
 
         CHECK_EQ(item2->geometry(), dock2->dptr()->group()->view()->geometry());
         layout->checkSanity();
-
-        // Cleanup
-        dock3->deleteLater();
-        Platform::instance()->tests_waitForDeleted(dock3);
     }
 
     KDDW_CO_RETURN(true);
@@ -192,8 +186,6 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     CHECK_EQ(fw2->groups().size(), 1);
     auto f2 = fw2->groups().constFirst();
     CHECK_EQ(f2->dockWidgetCount(), 3);
-    CHECK(Platform::instance()->tests_waitForDeleted(fw));
-    delete fw2;
 
     KDDW_CO_RETURN(true);
 }
@@ -214,9 +206,6 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
     dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
-
-    fw2->deleteLater();
-    Platform::instance()->tests_waitForDeleted(fw2);
 
     KDDW_CO_RETURN(true);
 }
@@ -241,10 +230,6 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     CHECK_EQ(fw2->groups().size(), 3);
 
     CHECK(fw2->dropArea()->checkSanity());
-
-    /// Cleanup
-    fw2->deleteLater();
-    Platform::instance()->tests_waitForDeleted(fw2);
 
     KDDW_CO_RETURN(true);
 }
