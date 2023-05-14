@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+/// Contains our main() for running tests which require C++ co-routine support
+/// Allows for better C++ interop with flutter's event loop
+
 #pragma once
 
 #include "KDDockWidgets.h"

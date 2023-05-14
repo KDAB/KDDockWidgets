@@ -294,3 +294,13 @@ void Platform_qt::maybeSetOffscreenQPA(int argc, char **argv)
         qputenv("QT_QPA_PLATFORM", "offscreen");
     }
 }
+
+bool Platform_qt::tests_waitForResize2(Core::View *v, int timeout) const
+{
+    return tests_waitForResize(v, timeout);
+}
+
+bool Platform_qt::tests_waitForResize2(Core::Controller *c, int timeout) const
+{
+    return tests_waitForResize(c, timeout);
+}

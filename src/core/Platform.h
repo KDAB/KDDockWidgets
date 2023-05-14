@@ -254,6 +254,12 @@ public:
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your
     /// test and see what's going on
     virtual KDDW_QCORO_TASK tests_wait(int ms) const = 0;
+
+    /// @brief Waits for the specified view to receive a resize event
+    /// Returns true if the view was resized until timeout was reached
+    /// TODOm3: Remove the other overloads and remove the "2" suffix once all tests are using coroutines
+    virtual KDDW_QCORO_TASK tests_waitForResize2(View *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForResize2(Controller *, int timeout = 2000) const = 0;
 #endif
 
     /// Sends a double-click event to the specified receiver

@@ -95,6 +95,11 @@ public:
 
     /// @brief if "-platform" wasn't passed it picks the offscreen QPA to run the tests
     static void maybeSetOffscreenQPA(int argc, char **argv);
+
+    /// TODOm3: Remove the other overloads and remove the "2" suffix once all tests are using coroutines
+    bool tests_waitForResize2(Core::View *, int timeout = 2000) const override;
+    bool tests_waitForResize2(Core::Controller *, int timeout = 2000) const override;
+
 #endif
 
 protected:

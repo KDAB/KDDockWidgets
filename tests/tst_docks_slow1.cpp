@@ -82,20 +82,14 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         CHECK(!dock1->isOpen());
         CHECK(!dock1->view()->isVisible());
 
-        Platform::instance()->tests_waitForResize(group2->view());
-
-        // TODOm3: Implement tests_waitForResize() for flutter so we don't need this second wait
-        KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(group2->view());
 
         // Check that group2 moved up to y=0
         CHECK_EQ(group2->view()->y(), 0);
 
         // Close 2
         dock2->close();
-        Platform::instance()->tests_waitForResize(dock3->view());
-
-        // TODOm3: Implement tests_waitForResize() for flutter so we don't need this second wait
-        KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(dock3->view());
 
         CHECK(layout->checkSanity());
         CHECK_EQ(layout->count(), 3);
@@ -115,7 +109,7 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
 
         toRestore2->open();
 
-        Platform::instance()->tests_waitForResize(group3->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(group3->view());
         CHECK(layout->checkSanity());
         CHECK_EQ(layout->count(), 3);
         CHECK_EQ(layout->placeholderCount(), 0);
@@ -186,7 +180,7 @@ KDDW_QCORO_TASK tst_startHidden2()
         CHECK_EQ(layout->count(), 2);
         CHECK_EQ(layout->placeholderCount(), 0);
 
-        Platform::instance()->tests_waitForResize(dock2->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(dock2->view());
     }
 
     {
@@ -212,7 +206,7 @@ KDDW_QCORO_TASK tst_startHidden2()
 
         dock2->open();
         dock3->open();
-        Platform::instance()->tests_waitForResize(dock2->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(dock2->view());
         layout->checkSanity();
     }
 
