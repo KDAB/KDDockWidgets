@@ -211,7 +211,7 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
         }
 
         Platform::instance()->sendEvent(receiver, &ev);
-        QTest::qWait(2);
+        Platform::instance()->tests_wait(2);
     }
 }
 

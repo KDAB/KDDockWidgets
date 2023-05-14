@@ -241,7 +241,7 @@ void TestDocks::tst_detachPos()
 
     const int previousWidth = dock1->width();
     dock1->setFloating(true);
-    QTest::qWait(400); // Needed for QtQuick
+    Platform::instance()->tests_wait(400); // Needed for QtQuick
 
     QVERIFY(qAbs(previousWidth - dock1->width()) < 15); // 15px of difference when floating is fine,
                                                         // due to margins and what not.
@@ -254,7 +254,7 @@ void TestDocks::tst_floatingWindowSize()
     auto dock1 = createDockWidget("1");
     auto fw1 = dock1->window();
 
-    QTest::qWait(100);
+    Platform::instance()->tests_wait(100);
 
     QVERIFY(!fw1->geometry().isNull());
     QCOMPARE(fw1->size(), fw1->window()->size());
@@ -312,7 +312,7 @@ void TestDocks::tst_sizeAfterRedock()
     const int height2 = dw2->dptr()->group()->height();
 
     dw2->setFloating(true);
-    QTest::qWait(100);
+    Platform::instance()->tests_wait(100);
 
     QCOMPARE(height2, dw2->window()->height());
     auto oldFw2 = dw2->floatingWindow();
@@ -1352,7 +1352,7 @@ void TestDocks::tst_floatMaintainsSize()
     dw1->open();
 
     dw2->setFloating(true);
-    QTest::qWait(100);
+    Platform::instance()->tests_wait(100);
 
     QVERIFY(qAbs(dw2->width() - oldWidth2) < 16); // 15px for margins
 }
@@ -1926,7 +1926,7 @@ void TestDocks::tst_addToSmallMainWindow1()
     const int mainWindowLength = 400;
 
     m->view()->window()->resize(mainWindowLength, mainWindowLength);
-    QTest::qWait(100);
+    Platform::instance()->tests_wait(100);
 
     dock1->view()->resize(QSize(800, 800));
     dock2->view()->resize(QSize(800, 800));
@@ -1937,7 +1937,7 @@ void TestDocks::tst_addToSmallMainWindow1()
 
     QCOMPARE(m->height(), mainWindowLength);
 
-    QTest::qWait(300);
+    Platform::instance()->tests_wait(300);
     if (dock1->height() > mainWindowLength) {
         qDebug() << "dock1->height=" << dock1->height()
                  << "; mainWindowLength=" << mainWindowLength;
@@ -1980,7 +1980,7 @@ void TestDocks::tst_addToSmallMainWindow2()
     if (Platform::instance()->isQtWidgets())
         QVERIFY(Platform::instance()->tests_waitForResize(m.get()));
     else
-        QTest::qWait(100);
+        Platform::instance()->tests_wait(100);
 
 
     QVERIFY(dropArea->layoutWidth() > osWindowMinWidth());
@@ -2000,7 +2000,7 @@ void TestDocks::tst_addToSmallMainWindow3()
         createDockWidget("dock2", Platform::instance()->tests_createView({ true, {}, { 0, 0 } }));
     m->addDockWidgetAsTab(dock1);
     m->view()->window()->resize(osWindowMinWidth(), 200);
-    QTest::qWait(200);
+    Platform::instance()->tests_wait(200);
     QVERIFY(qAbs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway,
                                                          // using 15 to account for margins and what
                                                          // not.
@@ -2018,7 +2018,7 @@ void TestDocks::tst_addToSmallMainWindow4()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(100, 100), MainWindowOption_None);
 
-    QTest::qWait(100);
+    Platform::instance()->tests_wait(100);
     QCOMPARE(m->height(), 100);
 
     auto dropArea = m->dropArea();
@@ -2350,7 +2350,7 @@ void TestDocks::tst_restoreAfterResize()
         // Hard to reproduce but sometimes happens. Added a wait to see if it's timing related
         qDebug() << Q_FUNC_INFO << "Unexpected layout size" << layout->layoutSize()
                  << "expected=" << oldContentsSize;
-        QTest::qWait(1000);
+        Platform::instance()->tests_wait(1000);
         QCOMPARE(oldContentsSize, layout->layoutSize());
     }
 
@@ -3880,7 +3880,7 @@ void TestDocks::tst_raise()
         dock3->window()->setObjectName("3");
         dock1->window()->setObjectName("1");
         dock3->raise();
-        QTest::qWait(200);
+        Platform::instance()->tests_wait(200);
 
         if (!Platform::instance()
                  ->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))
@@ -3891,7 +3891,7 @@ void TestDocks::tst_raise()
         }
 
         dock1->raise();
-        QTest::qWait(200);
+        Platform::instance()->tests_wait(200);
         QVERIFY(dock1->isCurrentTab());
 
         if (Platform::instance()
@@ -4018,20 +4018,20 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore4()
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnBottom);
 
-    QTest::qWait(100);
+    Platform::instance()->tests_wait(100);
     dock1->close();
     dock2->close();
 
     LayoutSaver saver;
     const QByteArray saved = saver.serializeLayout();
 
-    QTest::qWait(100);
+    Platform::instance()->tests_wait(100);
     dock2->open();
 
     QVERIFY(saver.restoreLayout(saved));
     QVERIFY(dock2->isOpen());
 
-    QTest::qWait(100);
+    Platform::instance()->tests_wait(100);
     Core::FloatingWindow *fw = dock2->floatingWindow();
     DropArea *da = fw->dropArea();
     QVERIFY(da->checkSanity());
@@ -4235,7 +4235,7 @@ void TestDocks::tst_maxSizedHonouredAfterRemoved()
     auto root = m1->multiSplitter()->rootItem();
 
     // Wait 1 event loop so we get layout invalidated and get max-size constraints
-    QTest::qWait(10);
+    Platform::instance()->tests_wait(10);
 
     auto sep = root->separators().constFirst();
     root->requestEqualSize(sep); // Since we're not calling honourMaxSizes() after a widget changes
@@ -4256,7 +4256,7 @@ void TestDocks::tst_maxSizedHonouredAfterRemoved()
 
     // Close dock2 and check if dock1's max-size is still honoured
     dock2->close();
-    QTest::qWait(100); // wait for the resize, so dock1 gets taller"
+    Platform::instance()->tests_wait(100); // wait for the resize, so dock1 gets taller"
 
     QVERIFY(dock1->dptr()->group()->view()->height()
             <= dock1->dptr()->group()->view()->maxSizeHint().height());

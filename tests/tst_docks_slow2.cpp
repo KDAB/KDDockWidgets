@@ -83,7 +83,8 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     QPointer<Core::Group> f2 = dock2->dptr()->group();
     f2->detachTab(dock2);
     CHECK(!f2.data());
-    QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
+
+    Platform::instance()->tests_wait(200);
     auto fw2 = dock2->floatingWindow();
     CHECK_EQ(layout->view()->minSize().width(),
              2 * Item::separatorThickness + item1->minSize().width() + item3->minSize().width()

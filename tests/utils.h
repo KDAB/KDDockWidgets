@@ -22,6 +22,7 @@
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/Stack.h"
+#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/DockWidget_p.h"
@@ -172,7 +173,7 @@ inline void drag(Core::View *sourceWidget, QPoint pressGlobalPos, QPoint globalD
 {
     if (buttonActions & ButtonAction_Press) {
         if (s_pauseBeforePress)
-            QTest::qWait(DEBUGGING_PAUSE_DURATION);
+            Core::Platform::instance()->tests_wait(DEBUGGING_PAUSE_DURATION);
 
         pressOn(pressGlobalPos, sourceWidget);
     }
@@ -180,7 +181,7 @@ inline void drag(Core::View *sourceWidget, QPoint pressGlobalPos, QPoint globalD
     sourceWidget->activateWindow();
 
     if (s_pauseBeforeMove)
-        QTest::qWait(DEBUGGING_PAUSE_DURATION);
+        Core::Platform::instance()->tests_wait(DEBUGGING_PAUSE_DURATION);
 
     moveMouseTo(globalDest, sourceWidget);
     pressGlobalPos = sourceWidget->mapToGlobal(QPoint(10, 10));
