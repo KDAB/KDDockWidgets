@@ -16,6 +16,7 @@
 // By using a separate executable it can be paralellized by ctest.
 
 #include "utils.h"
+#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
@@ -35,15 +36,6 @@
 #include "kddockwidgets/core/Platform.h"
 
 #include <iostream>
-
-#define KDDW_TEST_RETURN(res)                                             \
-    if (!res)                                                             \
-        qDebug() << "FAILED: at" << Q_FUNC_INFO << "; line=" << __LINE__; \
-    KDDW_CO_RETURN res;
-
-// TODOm4: Investigate something more fancy
-#define CHECK Q_ASSERT
-#define CHECK_EQ(a, b) Q_ASSERT(a == b)
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

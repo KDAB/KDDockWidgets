@@ -16,6 +16,7 @@
 // By using a separate executable it can be paralellized by ctest.
 
 #include "utils.h"
+#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
@@ -38,15 +39,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
-
-#define KDDW_TEST_RETURN(res)                                             \
-    if (!res)                                                             \
-        qDebug() << "FAILED: at" << Q_FUNC_INFO << "; line=" << __LINE__; \
-    KDDW_CO_RETURN res;
-
-// TODOm4: Investigate something more fancy
-#define CHECK Q_ASSERT
-#define CHECK_EQ(a, b) Q_ASSERT(a == b)
 
 KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
 {
