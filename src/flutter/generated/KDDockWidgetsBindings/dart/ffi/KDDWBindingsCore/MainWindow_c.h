@@ -15,7 +15,7 @@
 #include <core/DockWidget.h>
 #include <KDDockWidgets.h>
 #include <SideBar.h>
-#include <DropArea.h>
+#include "core/DropArea.h"
 #include <core/Layout.h>
 #include <qrect.h>
 #include <qpoint.h>

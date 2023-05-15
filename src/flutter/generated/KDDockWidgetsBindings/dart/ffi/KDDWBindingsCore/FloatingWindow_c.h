@@ -15,7 +15,7 @@
 #include "core/MainWindow.h"
 #include <core/Group.h>
 #include <core/DockWidget.h>
-#include <DropArea.h>
+#include "core/DropArea.h"
 #include "core/TitleBar.h"
 #include <core/Layout.h>
 #include <qpoint.h>

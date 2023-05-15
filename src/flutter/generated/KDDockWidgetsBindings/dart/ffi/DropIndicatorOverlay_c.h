@@ -11,7 +11,7 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <core/DropIndicatorOverlay.h>
 #include <qstring.h>
-#include <DropArea.h>
+#include "core/DropArea.h"
 #include <core/Group.h>
 #include <qrect.h>
 #include <qpoint.h>

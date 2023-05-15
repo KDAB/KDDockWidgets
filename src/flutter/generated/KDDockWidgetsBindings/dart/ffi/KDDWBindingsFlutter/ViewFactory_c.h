@@ -20,7 +20,7 @@
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
 #include <SideBar.h>
-#include <DropArea.h>
+#include "core/DropArea.h"
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
 

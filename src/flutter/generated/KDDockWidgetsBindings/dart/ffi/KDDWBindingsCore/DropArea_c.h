@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <DropArea.h>
+#include "core/DropArea.h"
 #include <qstring.h>
 #include <core/View.h>
 #include <qlist.h>
@@ -20,8 +20,8 @@
 #include <KDDockWidgets.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include "core/MainWindow.h"
 #include <FloatingWindow.h>
+#include "core/MainWindow.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

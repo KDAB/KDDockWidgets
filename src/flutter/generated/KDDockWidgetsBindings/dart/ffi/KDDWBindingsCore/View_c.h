@@ -22,7 +22,7 @@
 #include "core/Stack.h"
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
-#include <DropArea.h>
+#include "core/DropArea.h"
 #include <core/Layout.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

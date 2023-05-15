@@ -21,7 +21,7 @@
 #include "core/MainWindow.h"
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <ClassicIndicators.h>
-#include <DropArea.h>
+#include "core/DropArea.h"
 #include <SideBar.h>
 #include <qobject.h>
 #include <qlist.h>

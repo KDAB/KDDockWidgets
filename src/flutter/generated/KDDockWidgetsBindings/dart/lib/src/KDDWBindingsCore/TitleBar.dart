@@ -190,7 +190,7 @@ class TitleBar extends KDDWBindingsCore.Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1120))
+            cFunctionSymbolName(1124))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -218,7 +218,7 @@ class TitleBar extends KDDWBindingsCore.Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1123))
+            cFunctionSymbolName(1127))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -365,7 +365,7 @@ class TitleBar extends KDDWBindingsCore.Controller {
   KDDWBindingsCore.DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1145))
+            cFunctionSymbolName(1149))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
@@ -519,13 +519,13 @@ class TitleBar extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1120:
+      case 1124:
         return "c_KDDockWidgets__Core__TitleBar__isMDI";
-      case 1123:
+      case 1127:
         return "c_KDDockWidgets__Core__TitleBar__isWindow";
       case 900:
         return "c_KDDockWidgets__Core__TitleBar__setParentView_impl_View";
-      case 1145:
+      case 1149:
         return "c_KDDockWidgets__Core__TitleBar__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -533,13 +533,13 @@ class TitleBar extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1120:
+      case 1124:
         return "isMDI";
-      case 1123:
+      case 1127:
         return "isWindow";
       case 900:
         return "setParentView_impl";
-      case 1145:
+      case 1149:
         return "singleDockWidget";
     }
     throw Error();
@@ -551,20 +551,20 @@ class TitleBar extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1120 = 0;
-    final callback1120 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.TitleBar.isMDI_calledFromC, callbackExcept1120);
-    registerCallback(thisCpp, callback1120, 1120);
-    const callbackExcept1123 = 0;
-    final callback1123 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.TitleBar.isWindow_calledFromC, callbackExcept1123);
-    registerCallback(thisCpp, callback1123, 1123);
+    const callbackExcept1124 = 0;
+    final callback1124 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.TitleBar.isMDI_calledFromC, callbackExcept1124);
+    registerCallback(thisCpp, callback1124, 1124);
+    const callbackExcept1127 = 0;
+    final callback1127 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.TitleBar.isWindow_calledFromC, callbackExcept1127);
+    registerCallback(thisCpp, callback1127, 1127);
     final callback900 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback900, 900);
-    final callback1145 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1149 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.TitleBar.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1145, 1145);
+    registerCallback(thisCpp, callback1149, 1149);
   }
 }

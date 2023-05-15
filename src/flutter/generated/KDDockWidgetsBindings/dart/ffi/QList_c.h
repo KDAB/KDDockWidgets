@@ -25,7 +25,7 @@
 #include "core/MainWindow.h"
 #include <Item_p.h>
 #include <qrect.h>
-#include <DropArea.h>
+#include "core/DropArea.h"
 #include <core/Layout.h>
 #include <qsize.h>
 
