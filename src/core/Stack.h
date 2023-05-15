@@ -18,6 +18,8 @@
 
 #include "kdbindings/signal.h"
 
+#include <QPointer>
+
 namespace KDDockWidgets::Core {
 
 class Group;
@@ -84,7 +86,7 @@ public: // TODOm3
     bool onMouseDoubleClick(QPoint localPos);
 
 private:
-    TabBar *const m_tabBar;
+    QPointer<TabBar> m_tabBar;
     Group *const m_group;
     bool m_tabBarAutoHide = true;
     const StackOptions m_options;
