@@ -204,6 +204,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Stack_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TabBar_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Group_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DropArea_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DockWidget_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/MainWindow_c.cpp
 )

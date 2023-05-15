@@ -10,17 +10,20 @@
 */
 
 import 'View.dart';
+import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
+    as KDDWBindingsFlutter;
 import 'package:flutter/material.dart' hide View;
 
-class DropArea extends View {
-  DropArea(KDDWBindingsCore.Controller? controller, int type,
+class DropArea extends KDDWBindingsFlutter.DropArea with View_mixin {
+  DropArea(KDDWBindingsCore.DropArea? controller, int type,
       KDDWBindingsCore.View? parent,
       {int windowFlags = 0})
-      : super(controller, type, parent, windowFlags: windowFlags) {
+      : super(controller, parent) {
     // print("DropArea CTOR");
     m_fillsParent = true;
   }
