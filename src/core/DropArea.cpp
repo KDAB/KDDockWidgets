@@ -157,6 +157,11 @@ Core::Item *DropArea::centralFrame() const
     return nullptr;
 }
 
+DropIndicatorOverlay *DropArea::dropIndicatorOverlay() const
+{
+    return m_dropIndicatorOverlay;
+}
+
 void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
                              Core::DockWidget *relativeTo, InitialOption option)
 {

@@ -25,6 +25,8 @@
 
 #include "core/Layout.h"
 
+#include <QPointer>
+
 class TestQtWidgets;
 class TestDocks;
 
@@ -65,10 +67,7 @@ public:
     QList<Core::Group *> groups() const;
 
     Core::Item *centralFrame() const;
-    DropIndicatorOverlay *dropIndicatorOverlay() const
-    {
-        return m_dropIndicatorOverlay;
-    }
+    DropIndicatorOverlay *dropIndicatorOverlay() const;
     void addDockWidget(DockWidget *dw, KDDockWidgets::Location location, DockWidget *relativeTo,
                        InitialOption initialOption = {});
 
@@ -183,7 +182,7 @@ private:
     bool m_inDestructor = false;
     const bool m_isMDIWrapper;
     QString m_affinityName;
-    DropIndicatorOverlay *m_dropIndicatorOverlay = nullptr;
+    QPointer<DropIndicatorOverlay> m_dropIndicatorOverlay;
     Core::Group *const m_centralFrame = nullptr;
     Core::ItemBoxContainer *m_rootItem = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;

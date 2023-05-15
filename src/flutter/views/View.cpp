@@ -47,7 +47,7 @@ View::~View()
 
     const auto children = m_childViews;
     for (auto child : children) {
-        child->free();
+        delete child;
     }
 
     m_childViews.clear();
