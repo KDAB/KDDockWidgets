@@ -142,12 +142,6 @@ Qt::WindowFlags View::flags() const
     return {};
 }
 
-void View::free_impl()
-{
-    // QObject::deleteLater();
-    delete this;
-}
-
 QSize View::sizeHint() const
 {
     return m_sizeHint;

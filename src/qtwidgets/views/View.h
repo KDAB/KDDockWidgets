@@ -42,12 +42,6 @@ public:
 
     ~View() override = default;
 
-    void free_impl() override
-    {
-        // QObject::deleteLater();
-        delete this;
-    }
-
     QSize sizeHint() const override
     {
         return Base::sizeHint();

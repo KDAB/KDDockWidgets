@@ -89,10 +89,6 @@ Qt::WindowFlags ViewWrapper::flags() const
     return m_wrappedView->flags();
 }
 
-void ViewWrapper::free_impl()
-{
-}
-
 QSize ViewWrapper::sizeHint() const
 {
     return m_wrappedView->sizeHint();

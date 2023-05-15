@@ -31,7 +31,6 @@ public:
     QRect dragRect() const override;
 
 protected:
-    void free_impl() override;
     void paintEvent(QPaintEvent *) override;
     QSize maxSizeHint() const override;
 };

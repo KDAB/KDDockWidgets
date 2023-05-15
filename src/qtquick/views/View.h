@@ -63,7 +63,6 @@ public:
 
     ~View() override = default;
 
-    void free_impl() override;
     QSize sizeHint() const override;
     QSize minSize() const override;
     QSize maxSizeHint() const override;

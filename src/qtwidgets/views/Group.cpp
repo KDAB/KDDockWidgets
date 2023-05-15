@@ -72,13 +72,6 @@ void Group::init()
         setAutoFillBackground(true);
 }
 
-void Group::free_impl()
-{
-    // TODOm3: just use the base class impl, which uses deleteLater()
-    // do it once there's no state here
-    delete this;
-}
-
 int Group::nonContentsHeight() const
 {
     Core::TitleBar *tb = m_group->titleBar();

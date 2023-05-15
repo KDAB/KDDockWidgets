@@ -87,7 +87,7 @@ void View::free()
     }
 
     m_freed = true;
-    free_impl();
+    delete this;
 }
 
 bool View::freed() const
@@ -98,11 +98,6 @@ bool View::freed() const
 bool View::inDtor() const
 {
     return m_inDtor;
-}
-
-void View::free_impl()
-{
-    delete this;
 }
 
 QSize View::sizeHint() const

@@ -36,7 +36,6 @@ public:
     static std::shared_ptr<Core::View> create(flutter::View *wrapped);
     ~ViewWrapper() override;
 
-    void free_impl() override;
     QSize sizeHint() const override;
     QSize minSize() const override;
     QSize maxSizeHint() const override;

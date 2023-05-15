@@ -201,10 +201,7 @@ public:
     ///@brief Returns the type of this view
     ViewType type() const;
 
-    /// @brief Deletes this view.
-    /// The default impl will just do a normal C++ "delete", but derived classes are free
-    /// to implement other ways, for example QObject::deleteLater(), which is recommended for Qt.
-    /// @sa free_impl()
+    /// @brief Deletes this view and marks it as being deleted to avoid controller deleting it
     void free();
 
     /// @brief Returns whether free() has already been called
@@ -291,8 +288,6 @@ public:
     Private *const d;
 
 protected:
-    virtual void free_impl();
-
     Controller *const m_controller;
     bool m_inDtor = false;
 
