@@ -58,8 +58,6 @@ public:
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
     void free();
-    virtual void free_impl();
-    virtual void free_impl_nocallback();
     bool freed() const;
     virtual QRect geometry() const;
     virtual QRect geometry_nocallback() const;
@@ -187,8 +185,6 @@ public:
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
-    typedef void (*Callback_free_impl)(void *);
-    Callback_free_impl m_free_implCallback = nullptr;
     typedef QRect *(*Callback_geometry)(void *);
     Callback_geometry m_geometryCallback = nullptr;
     typedef void (*Callback_grabMouse)(void *);
@@ -337,8 +333,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__firstParentOfTyp
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__View__flags(void *thisObj);
 // KDDockWidgets::Core::View::free()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__free(void *thisObj);
-// KDDockWidgets::Core::View::free_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__free_impl(void *thisObj);
 // KDDockWidgets::Core::View::freed() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__freed(void *thisObj);
 // KDDockWidgets::Core::View::geometry() const

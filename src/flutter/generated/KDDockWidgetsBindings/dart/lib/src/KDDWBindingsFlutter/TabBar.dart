@@ -89,17 +89,6 @@ class TabBar extends KDDWBindingsFlutter.View {
     return result;
   }
 
-  static void free_impl_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as TabBar;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for TabBar::free_impl()! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.free_impl();
-  }
-
   static ffi.Pointer<void> geometry_calledFromC(ffi.Pointer<void> thisCpp) {
     var dartInstance =
         KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as TabBar;
@@ -893,16 +882,14 @@ class TabBar extends KDDWBindingsFlutter.View {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 913:
+      case 914:
         return "c_KDDockWidgets__flutter__TabBar__activateWindow";
-      case 924:
+      case 925:
         return "c_KDDockWidgets__flutter__TabBar__close";
-      case 927:
+      case 928:
         return "c_KDDockWidgets__flutter__TabBar__createPlatformWindow";
-      case 933:
+      case 934:
         return "c_KDDockWidgets__flutter__TabBar__flags";
-      case 935:
-        return "c_KDDockWidgets__flutter__TabBar__free_impl";
       case 937:
         return "c_KDDockWidgets__flutter__TabBar__geometry";
       case 939:
@@ -1029,16 +1016,14 @@ class TabBar extends KDDWBindingsFlutter.View {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 913:
+      case 914:
         return "activateWindow";
-      case 924:
+      case 925:
         return "close";
-      case 927:
+      case 928:
         return "createPlatformWindow";
-      case 933:
+      case 934:
         return "flags";
-      case 935:
-        return "free_impl";
       case 937:
         return "geometry";
       case 939:
@@ -1169,23 +1154,20 @@ class TabBar extends KDDWBindingsFlutter.View {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback')
         .asFunction();
-    final callback913 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback914 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.activateWindow_calledFromC);
-    registerCallback(thisCpp, callback913, 913);
-    const callbackExcept924 = 0;
-    final callback924 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.close_calledFromC, callbackExcept924);
-    registerCallback(thisCpp, callback924, 924);
-    final callback927 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback914, 914);
+    const callbackExcept925 = 0;
+    final callback925 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.close_calledFromC, callbackExcept925);
+    registerCallback(thisCpp, callback925, 925);
+    final callback928 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.createPlatformWindow_calledFromC);
-    registerCallback(thisCpp, callback927, 927);
-    const callbackExcept933 = 0;
-    final callback933 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.flags_calledFromC, callbackExcept933);
-    registerCallback(thisCpp, callback933, 933);
-    final callback935 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.free_impl_calledFromC);
-    registerCallback(thisCpp, callback935, 935);
+    registerCallback(thisCpp, callback928, 928);
+    const callbackExcept934 = 0;
+    final callback934 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.flags_calledFromC, callbackExcept934);
+    registerCallback(thisCpp, callback934, 934);
     final callback937 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.geometry_calledFromC);
     registerCallback(thisCpp, callback937, 937);

@@ -15,8 +15,8 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>
-#include <qlist.h>
 #include <qobject.h>
+#include <qlist.h>
 #include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -27,6 +27,7 @@ public:
     ~Controller_wrapper();
     Controller_wrapper(KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View *arg__2);
     bool close();
+    void destroyLater();
     QRect geometry() const;
     int height() const;
     bool inDtor() const;
@@ -57,6 +58,8 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__constructor_ViewType_View(int type, void *arg__2_);
 // KDDockWidgets::Core::Controller::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Controller__close(void *thisObj);
+// KDDockWidgets::Core::Controller::destroyLater()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__destroyLater(void *thisObj);
 // KDDockWidgets::Core::Controller::geometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__geometry(void *thisObj);
 // KDDockWidgets::Core::Controller::height() const

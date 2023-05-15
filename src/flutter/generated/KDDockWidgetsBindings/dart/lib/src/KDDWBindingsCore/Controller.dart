@@ -45,6 +45,14 @@ class Controller extends QObject {
             'c_KDDockWidgets__Core__Controller__close')
         .asFunction();
     return func(thisCpp) != 0;
+  } // destroyLater()
+
+  destroyLater() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__Controller__destroyLater')
+        .asFunction();
+    func(thisCpp);
   } // geometry() const
 
   QRect geometry() {
@@ -127,7 +135,7 @@ class Controller extends QObject {
   setParentView_impl(KDDWBindingsCore.View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(899))
+            cFunctionSymbolName(900))
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
@@ -233,7 +241,7 @@ class Controller extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 899:
+      case 900:
         return "c_KDDockWidgets__Core__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -241,7 +249,7 @@ class Controller extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 899:
+      case 900:
         return "setParentView_impl";
     }
     throw Error();
@@ -253,9 +261,9 @@ class Controller extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback')
         .asFunction();
-    final callback899 =
+    final callback900 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback899, 899);
+    registerCallback(thisCpp, callback900, 900);
   }
 }

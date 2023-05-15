@@ -168,7 +168,7 @@ void c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback(void *ptr, vo
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 899:
+    case 900:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::SideBar_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

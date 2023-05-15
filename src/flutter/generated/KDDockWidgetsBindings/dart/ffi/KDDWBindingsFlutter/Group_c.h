@@ -14,8 +14,8 @@
 #include <core/View.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <qstring.h>
 #include <qpoint.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -35,8 +35,6 @@ public:
     virtual QRect dragRect_nocallback() const;
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
-    virtual void free_impl();
-    virtual void free_impl_nocallback();
     virtual QRect geometry() const;
     virtual QRect geometry_nocallback() const;
     virtual void grabMouse();
@@ -151,8 +149,6 @@ public:
     Callback_dragRect m_dragRectCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
-    typedef void (*Callback_free_impl)(void *);
-    Callback_free_impl m_free_implCallback = nullptr;
     typedef QRect *(*Callback_geometry)(void *);
     Callback_geometry m_geometryCallback = nullptr;
     typedef void (*Callback_grabMouse)(void *);
@@ -275,8 +271,6 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__Group__currentIndex(v
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__dragRect(void *thisObj);
 // KDDockWidgets::flutter::Group::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__Group__flags(void *thisObj);
-// KDDockWidgets::flutter::Group::free_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__free_impl(void *thisObj);
 // KDDockWidgets::flutter::Group::geometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__geometry(void *thisObj);
 // KDDockWidgets::flutter::Group::grabMouse()

@@ -94,7 +94,7 @@ class TabBar extends KDDWBindingsCore.Controller {
   bool dragCanStart(QPoint pressPos, QPoint pos) {
     final bool_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1174))
+            cFunctionSymbolName(1176))
         .asFunction();
     return func(thisCpp, pressPos == null ? ffi.nullptr : pressPos.thisCpp,
             pos == null ? ffi.nullptr : pos.thisCpp) !=
@@ -143,7 +143,7 @@ class TabBar extends KDDWBindingsCore.Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1182))
+            cFunctionSymbolName(1184))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -163,7 +163,7 @@ class TabBar extends KDDWBindingsCore.Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1184))
+            cFunctionSymbolName(1186))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -270,7 +270,7 @@ class TabBar extends KDDWBindingsCore.Controller {
   KDDWBindingsCore.DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1201))
+            cFunctionSymbolName(1203))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
@@ -336,15 +336,15 @@ class TabBar extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1174:
+      case 1176:
         return "c_KDDockWidgets__Core__TabBar__dragCanStart_QPoint_QPoint";
-      case 1182:
-        return "c_KDDockWidgets__Core__TabBar__isMDI";
       case 1184:
+        return "c_KDDockWidgets__Core__TabBar__isMDI";
+      case 1186:
         return "c_KDDockWidgets__Core__TabBar__isWindow";
-      case 899:
+      case 900:
         return "c_KDDockWidgets__Core__TabBar__setParentView_impl_View";
-      case 1201:
+      case 1203:
         return "c_KDDockWidgets__Core__TabBar__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -352,15 +352,15 @@ class TabBar extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1174:
+      case 1176:
         return "dragCanStart";
-      case 1182:
-        return "isMDI";
       case 1184:
+        return "isMDI";
+      case 1186:
         return "isWindow";
-      case 899:
+      case 900:
         return "setParentView_impl";
-      case 1201:
+      case 1203:
         return "singleDockWidget";
     }
     throw Error();
@@ -372,26 +372,26 @@ class TabBar extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__TabBar__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1174 = 0;
-    final callback1174 =
+    const callbackExcept1176 = 0;
+    final callback1176 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.TabBar.dragCanStart_calledFromC,
-            callbackExcept1174);
-    registerCallback(thisCpp, callback1174, 1174);
-    const callbackExcept1182 = 0;
-    final callback1182 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.TabBar.isMDI_calledFromC, callbackExcept1182);
-    registerCallback(thisCpp, callback1182, 1182);
+            callbackExcept1176);
+    registerCallback(thisCpp, callback1176, 1176);
     const callbackExcept1184 = 0;
     final callback1184 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.TabBar.isWindow_calledFromC, callbackExcept1184);
+        KDDWBindingsCore.TabBar.isMDI_calledFromC, callbackExcept1184);
     registerCallback(thisCpp, callback1184, 1184);
-    final callback899 =
+    const callbackExcept1186 = 0;
+    final callback1186 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.TabBar.isWindow_calledFromC, callbackExcept1186);
+    registerCallback(thisCpp, callback1186, 1186);
+    final callback900 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback899, 899);
-    final callback1201 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback900, 900);
+    final callback1203 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.TabBar.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1201, 1201);
+    registerCallback(thisCpp, callback1203, 1203);
   }
 }

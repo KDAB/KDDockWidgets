@@ -84,19 +84,6 @@ Qt::WindowFlags Stack_wrapper::flags_nocallback() const
 {
     return ::KDDockWidgets::flutter::Stack::flags();
 }
-void Stack_wrapper::free_impl()
-{
-    if (m_free_implCallback) {
-        const void *thisPtr = this;
-        m_free_implCallback(const_cast<void *>(thisPtr));
-    } else {
-        ::KDDockWidgets::flutter::Stack::free_impl();
-    }
-}
-void Stack_wrapper::free_impl_nocallback()
-{
-    ::KDDockWidgets::flutter::Stack::free_impl();
-}
 QRect Stack_wrapper::geometry() const
 {
     if (m_geometryCallback) {
@@ -845,11 +832,6 @@ int c_KDDockWidgets__flutter__Stack__flags(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->flags_nocallback();} else {    return targetPtr->flags();} }();
 }
-// free_impl()
-void c_KDDockWidgets__flutter__Stack__free_impl(void *thisObj)
-{
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->free_impl_nocallback();} else {    return targetPtr->free_impl();} }();
-}
 // geometry() const
 void *c_KDDockWidgets__flutter__Stack__geometry(void *thisObj)
 {
@@ -1149,20 +1131,17 @@ void c_KDDockWidgets__flutter__Stack__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 913:
+    case 914:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_activateWindow>(callback);
         break;
-    case 924:
+    case 925:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_close>(callback);
         break;
-    case 927:
+    case 928:
         wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_createPlatformWindow>(callback);
         break;
-    case 933:
+    case 934:
         wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_flags>(callback);
-        break;
-    case 935:
-        wrapper->m_free_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_free_impl>(callback);
         break;
     case 937:
         wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_geometry>(callback);

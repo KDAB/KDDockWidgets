@@ -36,6 +36,10 @@ bool Controller_wrapper::close()
 {
     return ::KDDockWidgets::Core::Controller::close();
 }
+void Controller_wrapper::destroyLater()
+{
+    ::KDDockWidgets::Core::Controller::destroyLater();
+}
 QRect Controller_wrapper::geometry() const
 {
     return ::KDDockWidgets::Core::Controller::geometry();
@@ -151,6 +155,11 @@ bool c_KDDockWidgets__Core__Controller__close(void *thisObj)
 {
     return fromPtr(thisObj)->close();
 }
+// destroyLater()
+void c_KDDockWidgets__Core__Controller__destroyLater(void *thisObj)
+{
+    fromPtr(thisObj)->destroyLater();
+}
 // geometry() const
 void *c_KDDockWidgets__Core__Controller__geometry(void *thisObj)
 {
@@ -259,7 +268,7 @@ void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 899:
+    case 900:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -67,7 +67,7 @@ class View {
   activateWindow() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(913))
+            cFunctionSymbolName(914))
         .asFunction();
     func(thisCpp);
   }
@@ -178,7 +178,7 @@ class View {
   bool close() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(924))
+            cFunctionSymbolName(925))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -214,7 +214,7 @@ class View {
   createPlatformWindow() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(927))
+            cFunctionSymbolName(928))
         .asFunction();
     func(thisCpp);
   }
@@ -281,7 +281,7 @@ class View {
   int flags() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(933))
+            cFunctionSymbolName(934))
         .asFunction();
     return func(thisCpp);
   }
@@ -304,25 +304,6 @@ class View {
             'c_KDDockWidgets__Core__View__free')
         .asFunction();
     func(thisCpp);
-  } // free_impl()
-
-  free_impl() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(935))
-        .asFunction();
-    func(thisCpp);
-  }
-
-  static void free_impl_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance =
-        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for View::free_impl()! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.free_impl();
   } // freed() const
 
   bool freed() {
@@ -1494,16 +1475,14 @@ class View {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 913:
+      case 914:
         return "c_KDDockWidgets__Core__View__activateWindow";
-      case 924:
+      case 925:
         return "c_KDDockWidgets__Core__View__close";
-      case 927:
+      case 928:
         return "c_KDDockWidgets__Core__View__createPlatformWindow";
-      case 933:
+      case 934:
         return "c_KDDockWidgets__Core__View__flags";
-      case 935:
-        return "c_KDDockWidgets__Core__View__free_impl";
       case 937:
         return "c_KDDockWidgets__Core__View__geometry";
       case 939:
@@ -1608,16 +1587,14 @@ class View {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 913:
+      case 914:
         return "activateWindow";
-      case 924:
+      case 925:
         return "close";
-      case 927:
+      case 928:
         return "createPlatformWindow";
-      case 933:
+      case 934:
         return "flags";
-      case 935:
-        return "free_impl";
       case 937:
         return "geometry";
       case 939:
@@ -1726,23 +1703,20 @@ class View {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__View__registerVirtualMethodCallback')
         .asFunction();
-    final callback913 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback914 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.activateWindow_calledFromC);
-    registerCallback(thisCpp, callback913, 913);
-    const callbackExcept924 = 0;
-    final callback924 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.close_calledFromC, callbackExcept924);
-    registerCallback(thisCpp, callback924, 924);
-    final callback927 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback914, 914);
+    const callbackExcept925 = 0;
+    final callback925 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.close_calledFromC, callbackExcept925);
+    registerCallback(thisCpp, callback925, 925);
+    final callback928 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.createPlatformWindow_calledFromC);
-    registerCallback(thisCpp, callback927, 927);
-    const callbackExcept933 = 0;
-    final callback933 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.flags_calledFromC, callbackExcept933);
-    registerCallback(thisCpp, callback933, 933);
-    final callback935 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.free_impl_calledFromC);
-    registerCallback(thisCpp, callback935, 935);
+    registerCallback(thisCpp, callback928, 928);
+    const callbackExcept934 = 0;
+    final callback934 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        KDDWBindingsCore.View.flags_calledFromC, callbackExcept934);
+    registerCallback(thisCpp, callback934, 934);
     final callback937 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.View.geometry_calledFromC);
     registerCallback(thisCpp, callback937, 937);

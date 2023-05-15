@@ -13,9 +13,9 @@
 #include <qstring.h>
 #include <qsize.h>
 #include <core/DockWidget.h>
-#include <core/View.h>
 #include <qpoint.h>
 #include <qrect.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -33,8 +33,6 @@ public:
     KDDockWidgets::Core::DockWidget *dockWidget() const;
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
-    virtual void free_impl();
-    virtual void free_impl_nocallback();
     virtual QRect geometry() const;
     virtual QRect geometry_nocallback() const;
     virtual void grabMouse();
@@ -147,8 +145,6 @@ public:
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
-    typedef void (*Callback_free_impl)(void *);
-    Callback_free_impl m_free_implCallback = nullptr;
     typedef QRect *(*Callback_geometry)(void *);
     Callback_geometry m_geometryCallback = nullptr;
     typedef void (*Callback_grabMouse)(void *);
@@ -269,8 +265,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__createPl
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__dockWidget(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__DockWidget__flags(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::free_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__free_impl(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::geometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__geometry(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::grabMouse()

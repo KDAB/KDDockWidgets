@@ -162,19 +162,6 @@ void View_wrapper::free()
 {
     ::KDDockWidgets::Core::View::free();
 }
-void View_wrapper::free_impl()
-{
-    if (m_free_implCallback) {
-        const void *thisPtr = this;
-        m_free_implCallback(const_cast<void *>(thisPtr));
-    } else {
-        ::KDDockWidgets::Core::View::free_impl();
-    }
-}
-void View_wrapper::free_impl_nocallback()
-{
-    ::KDDockWidgets::Core::View::free_impl();
-}
 bool View_wrapper::freed() const
 {
     return ::KDDockWidgets::Core::View::freed();
@@ -1121,11 +1108,6 @@ void c_KDDockWidgets__Core__View__free(void *thisObj)
 {
     fromPtr(thisObj)->free();
 }
-// free_impl()
-void c_KDDockWidgets__Core__View__free_impl(void *thisObj)
-{
-    fromWrapperPtr(thisObj)->free_impl_nocallback();
-}
 // freed() const
 bool c_KDDockWidgets__Core__View__freed(void *thisObj)
 {
@@ -1508,20 +1490,17 @@ void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 913:
+    case 914:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_activateWindow>(callback);
         break;
-    case 924:
+    case 925:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_close>(callback);
         break;
-    case 927:
+    case 928:
         wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_createPlatformWindow>(callback);
         break;
-    case 933:
+    case 934:
         wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_flags>(callback);
-        break;
-    case 935:
-        wrapper->m_free_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_free_impl>(callback);
         break;
     case 937:
         wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_geometry>(callback);

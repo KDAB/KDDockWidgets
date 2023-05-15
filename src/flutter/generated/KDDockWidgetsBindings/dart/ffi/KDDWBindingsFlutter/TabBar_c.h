@@ -32,8 +32,6 @@ public:
     virtual void createPlatformWindow_nocallback();
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
-    virtual void free_impl();
-    virtual void free_impl_nocallback();
     virtual QRect geometry() const;
     virtual QRect geometry_nocallback() const;
     virtual void grabMouse();
@@ -162,8 +160,6 @@ public:
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
-    typedef void (*Callback_free_impl)(void *);
-    Callback_free_impl m_free_implCallback = nullptr;
     typedef QRect *(*Callback_geometry)(void *);
     Callback_geometry m_geometryCallback = nullptr;
     typedef void (*Callback_grabMouse)(void *);
@@ -298,8 +294,6 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__close(void *
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__createPlatformWindow(void *thisObj);
 // KDDockWidgets::flutter::TabBar::flags() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__TabBar__flags(void *thisObj);
-// KDDockWidgets::flutter::TabBar::free_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__free_impl(void *thisObj);
 // KDDockWidgets::flutter::TabBar::geometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__TabBar__geometry(void *thisObj);
 // KDDockWidgets::flutter::TabBar::grabMouse()

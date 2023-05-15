@@ -1359,6 +1359,8 @@ void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *, void *cppObj, vo
 void *c_KDDockWidgets__Core__Controller__constructor_ViewType_View(int type, void *arg__2_);
 // KDDockWidgets::Core::Controller::close()
 bool c_KDDockWidgets__Core__Controller__close(void *thisObj);
+// KDDockWidgets::Core::Controller::destroyLater()
+void c_KDDockWidgets__Core__Controller__destroyLater(void *thisObj);
 // KDDockWidgets::Core::Controller::geometry() const
 void *c_KDDockWidgets__Core__Controller__geometry(void *thisObj);
 // KDDockWidgets::Core::Controller::height() const
@@ -1445,8 +1447,6 @@ void *c_KDDockWidgets__Core__View__firstParentOfType_ViewType(void *thisObj, int
 int c_KDDockWidgets__Core__View__flags(void *thisObj);
 // KDDockWidgets::Core::View::free()
 void c_KDDockWidgets__Core__View__free(void *thisObj);
-// KDDockWidgets::Core::View::free_impl()
-void c_KDDockWidgets__Core__View__free_impl(void *thisObj);
 // KDDockWidgets::Core::View::freed() const
 bool c_KDDockWidgets__Core__View__freed(void *thisObj);
 // KDDockWidgets::Core::View::geometry() const
@@ -1599,8 +1599,6 @@ bool c_KDDockWidgets__flutter__View__close(void *thisObj);
 void c_KDDockWidgets__flutter__View__createPlatformWindow(void *thisObj);
 // KDDockWidgets::flutter::View::flags() const
 int c_KDDockWidgets__flutter__View__flags(void *thisObj);
-// KDDockWidgets::flutter::View::free_impl()
-void c_KDDockWidgets__flutter__View__free_impl(void *thisObj);
 // KDDockWidgets::flutter::View::geometry() const
 void *c_KDDockWidgets__flutter__View__geometry(void *thisObj);
 // KDDockWidgets::flutter::View::grabMouse()
@@ -1723,8 +1721,6 @@ bool c_KDDockWidgets__flutter__TitleBar__close(void *thisObj);
 void c_KDDockWidgets__flutter__TitleBar__createPlatformWindow(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::flags() const
 int c_KDDockWidgets__flutter__TitleBar__flags(void *thisObj);
-// KDDockWidgets::flutter::TitleBar::free_impl()
-void c_KDDockWidgets__flutter__TitleBar__free_impl(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::geometry() const
 void *c_KDDockWidgets__flutter__TitleBar__geometry(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::grabMouse()
@@ -1847,8 +1843,6 @@ bool c_KDDockWidgets__flutter__TabBar__close(void *thisObj);
 void c_KDDockWidgets__flutter__TabBar__createPlatformWindow(void *thisObj);
 // KDDockWidgets::flutter::TabBar::flags() const
 int c_KDDockWidgets__flutter__TabBar__flags(void *thisObj);
-// KDDockWidgets::flutter::TabBar::free_impl()
-void c_KDDockWidgets__flutter__TabBar__free_impl(void *thisObj);
 // KDDockWidgets::flutter::TabBar::geometry() const
 void *c_KDDockWidgets__flutter__TabBar__geometry(void *thisObj);
 // KDDockWidgets::flutter::TabBar::grabMouse()
@@ -1981,8 +1975,6 @@ bool c_KDDockWidgets__flutter__Stack__close(void *thisObj);
 void c_KDDockWidgets__flutter__Stack__createPlatformWindow(void *thisObj);
 // KDDockWidgets::flutter::Stack::flags() const
 int c_KDDockWidgets__flutter__Stack__flags(void *thisObj);
-// KDDockWidgets::flutter::Stack::free_impl()
-void c_KDDockWidgets__flutter__Stack__free_impl(void *thisObj);
 // KDDockWidgets::flutter::Stack::geometry() const
 void *c_KDDockWidgets__flutter__Stack__geometry(void *thisObj);
 // KDDockWidgets::flutter::Stack::grabMouse()
@@ -2105,8 +2097,6 @@ bool c_KDDockWidgets__flutter__MainWindow__close(void *thisObj);
 void c_KDDockWidgets__flutter__MainWindow__createPlatformWindow(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::flags() const
 int c_KDDockWidgets__flutter__MainWindow__flags(void *thisObj);
-// KDDockWidgets::flutter::MainWindow::free_impl()
-void c_KDDockWidgets__flutter__MainWindow__free_impl(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::geometry() const
 void *c_KDDockWidgets__flutter__MainWindow__geometry(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::grabMouse()
@@ -2229,8 +2219,6 @@ int c_KDDockWidgets__flutter__Group__currentIndex(void *thisObj);
 void *c_KDDockWidgets__flutter__Group__dragRect(void *thisObj);
 // KDDockWidgets::flutter::Group::flags() const
 int c_KDDockWidgets__flutter__Group__flags(void *thisObj);
-// KDDockWidgets::flutter::Group::free_impl()
-void c_KDDockWidgets__flutter__Group__free_impl(void *thisObj);
 // KDDockWidgets::flutter::Group::geometry() const
 void *c_KDDockWidgets__flutter__Group__geometry(void *thisObj);
 // KDDockWidgets::flutter::Group::grabMouse()
@@ -2349,8 +2337,6 @@ void c_KDDockWidgets__flutter__DockWidget__createPlatformWindow(void *thisObj);
 void *c_KDDockWidgets__flutter__DockWidget__dockWidget(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::flags() const
 int c_KDDockWidgets__flutter__DockWidget__flags(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::free_impl()
-void c_KDDockWidgets__flutter__DockWidget__free_impl(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::geometry() const
 void *c_KDDockWidgets__flutter__DockWidget__geometry(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::grabMouse()
