@@ -13,6 +13,7 @@
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/Window.h"
 #include "core/View_p.h"
+#include "core/ViewGuard.h"
 
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets;
@@ -266,6 +267,30 @@ KDDW_QCORO_TASK tst_operatorqDebug()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_parentDeletesChildViews()
+{
+    // Tests that deleting a parent view also deletes its children
+
+    auto rootView = createViewAndWindow({});
+    rootView->show();
+    rootView->activateWindow();
+    CHECK(rootView->controller()->isVisible());
+    Platform::instance()->tests_wait(0);
+    auto child = createViewAndWindow({}, rootView);
+    child->show();
+    CHECK(child->isVisible());
+    CHECK(child->controller());
+
+    ViewGuard guard1(rootView);
+    ViewGuard guard2(child);
+
+    delete rootView;
+    CHECK(!guard1);
+    CHECK(!guard2);
+
+    KDDW_TEST_RETURN(true);
+}
+
 static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
     tst_viewSetParent,
     tst_viewRoot,
@@ -278,7 +303,8 @@ static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
     tst_viewCloseRequested,
     tst_viewFocusPolicy,
     tst_hasFocus,
-    tst_operatorqDebug
+    tst_operatorqDebug,
+    tst_parentDeletesChildViews,
 };
 
 #include "tests_main.h"

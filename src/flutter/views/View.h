@@ -126,7 +126,8 @@ public:
 
 private:
     View *m_parentView = nullptr;
-    QVector<std::shared_ptr<Core::View>> m_childViews;
+    /// not shared pointers, as lifetime is managed by parent-children relationship (as in QObject)
+    QVector<Core::View *> m_childViews;
     QString m_name;
     QSize m_sizeHint;
     QSize m_minSize;

@@ -44,6 +44,13 @@ View::~View()
     if (m_parentView && !m_parentView->inDtor()) {
         setParent(nullptr);
     }
+
+    const auto children = m_childViews;
+    for (auto child : children) {
+        child->free();
+    }
+
+    m_childViews.clear();
 }
 
 void View::setGeometry(QRect)
@@ -229,7 +236,7 @@ void View::setParent(Core::View *parent)
     if (oldParent) {
         oldParent->onChildRemoved(this);
         oldParent->m_childViews.erase(std::remove_if(oldParent->m_childViews.begin(), oldParent->m_childViews.end(),
-                                                     [this](std::shared_ptr<Core::View> v) {
+                                                     [this](Core::View *v) {
                                                          return v->equals(this);
                                                      }),
                                       oldParent->m_childViews.end());
@@ -244,7 +251,7 @@ void View::setParent(Core::View *parent)
         }
 
         // Track it in C++
-        m_parentView->m_childViews.append(asWrapper());
+        m_parentView->m_childViews.append(this);
     }
 }
 
@@ -432,7 +439,12 @@ void View::setMouseTracking(bool)
 
 QVector<std::shared_ptr<Core::View>> View::childViews() const
 {
-    return m_childViews;
+    QVector<std::shared_ptr<Core::View>> children;
+    children.reserve(m_childViews.size());
+    for (auto child : m_childViews)
+        children.append(ViewWrapper::create(static_cast<flutter::View *>(child)));
+
+    return children;
 }
 
 void View::setZOrder(int)
