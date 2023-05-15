@@ -23,6 +23,8 @@ Controller::Controller(ViewType type, View *view)
     : m_view(view)
     , m_type(type)
 {
+
+    Q_ASSERT(view);
 }
 
 Controller::~Controller()
