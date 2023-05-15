@@ -215,6 +215,7 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/CoRoutines.cpp
     flutter/views/View.cpp
     flutter/views/ViewWrapper.cpp
+    flutter/views/DropArea.cpp
     flutter/views/Stack.cpp
     flutter/views/DockWidget.cpp
     flutter/views/Group.cpp

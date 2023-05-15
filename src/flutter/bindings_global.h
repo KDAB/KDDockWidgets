@@ -46,6 +46,7 @@
 #include "views/TitleBar.h"
 #include "views/DockWidget.h"
 #include "views/MainWindow.h"
+#include "views/DropArea.h"
 
 #include "../core/DelayedCall.h"
 #include "../core/ViewFactory.h"

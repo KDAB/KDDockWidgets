@@ -52,7 +52,9 @@
             <object-type name="ViewFactory" />
             <object-type name="Controller" />
             <object-type name="Layout" />
-            <object-type name="DropArea" />
+            <object-type name="DropArea">
+                <include file-name="core/DropArea.h" location="local"/>
+            </object-type>
             <object-type name="Group" />
             <object-type name="Stack">
                 <include file-name="core/Stack.h" location="local"/>
@@ -80,6 +82,7 @@
             <object-type name="Platform">
                 <enum-type identified-by-value="DisplayType" />
             </object-type>
+            <object-type name="DropArea" />
             <object-type name="View" />
             <object-type name="Stack" />
             <object-type name="TitleBar" />
