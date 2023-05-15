@@ -299,7 +299,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
                                      delete dwMDIWrapper;
                              });
         } else {
-            dwMDIWrapper->deleteLater();
+            dwMDIWrapper->destroyLater();
         }
 
     } else {
@@ -437,7 +437,7 @@ void FloatingWindow::scheduleDeleteLater()
     m_deleteScheduled = true;
     view()->setAboutToBeDestroyed();
     DockRegistry::self()->unregisterFloatingWindow(this);
-    Platform::instance()->runDelayed(0, new DelayedDelete(this));
+    destroyLater();
 }
 
 Core::DropArea *FloatingWindow::multiSplitter() const

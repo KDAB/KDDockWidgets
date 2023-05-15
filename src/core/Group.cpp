@@ -761,7 +761,7 @@ void Group::scheduleDeleteLater()
 
     // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
     // triggered by a sendEvent() before event loop starts)
-    Platform::instance()->runDelayed(0, new DelayedDelete(this));
+    destroyLater();
 }
 
 QSize Group::dockWidgetsMinSize() const

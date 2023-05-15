@@ -147,7 +147,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
 
     layout->setLayoutSize(newSize);
 
-    d2->deleteLater();
+    d2->destroyLater();
     Platform::instance()->tests_waitForDeleted(d2);
     layout->checkSanity();
 
@@ -177,7 +177,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition2()
 
     dock1->setFloating(true);
     dock1->setFloating(false);
-    dock2->deleteLater();
+    dock2->destroyLater();
     layout->checkSanity();
     CHECK(Platform::instance()->tests_waitForDeleted(dock2));
     KDDW_TEST_RETURN(true);
@@ -237,8 +237,8 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition4()
     dropArea->addWidget(fw2->dropArea()->view(), Location_OnRight, dock1->dptr()->group());
 
     layout->checkSanity();
-    docks.at(0).createdDock->deleteLater();
-    docks.at(4).createdDock->deleteLater();
+    docks.at(0).createdDock->destroyLater();
+    docks.at(4).createdDock->destroyLater();
     Platform::instance()->tests_waitForDeleted(docks.at(4).createdDock);
 
     KDDW_TEST_RETURN(true);
@@ -268,7 +268,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition5()
 
     // Cleanup
     for (auto dock : DockRegistry::self()->dockwidgets())
-        dock->deleteLater();
+        dock->destroyLater();
 
     CHECK(Platform::instance()->tests_waitForDeleted(dock0));
     KDDW_TEST_RETURN(true);

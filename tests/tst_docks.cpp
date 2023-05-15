@@ -803,8 +803,8 @@ void TestDocks::tst_invalidAnchorGroup()
         layout->checkSanity();
 
         dock2->close();
-        dock1->deleteLater();
-        dock2->deleteLater();
+        dock1->destroyLater();
+        dock2->destroyLater();
         Platform::instance()->tests_waitForDeleted(dock1);
     }
 
@@ -823,8 +823,8 @@ void TestDocks::tst_invalidAnchorGroup()
         dock2->close();
         dock1->close();
 
-        dock1->deleteLater();
-        dock2->deleteLater();
+        dock1->destroyLater();
+        dock2->destroyLater();
         Platform::instance()->tests_waitForDeleted(dock1);
     }
 }
@@ -858,7 +858,7 @@ void TestDocks::tst_addAsPlaceholder()
     layout->checkSanity();
 
     // Cleanup
-    dock2->deleteLater();
+    dock2->destroyLater();
     Platform::instance()->tests_waitForDeleted(dock2);
 }
 
@@ -957,9 +957,9 @@ void TestDocks::tst_removeItem()
     QCOMPARE(layout->placeholderCount(), 1);
     layout->checkSanity();
 
-    dock1->deleteLater();
-    dock2->deleteLater();
-    dock3->deleteLater();
+    dock1->destroyLater();
+    dock2->destroyLater();
+    dock3->destroyLater();
     Platform::instance()->tests_waitForDeleted(dock3);
 }
 
@@ -991,7 +991,7 @@ void TestDocks::tst_clear()
     layout->checkSanity();
 
     // Cleanup
-    dock3->deleteLater();
+    dock3->destroyLater();
     QVERIFY(Platform::instance()->tests_waitForDeleted(dock3));
 }
 
@@ -1669,7 +1669,7 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     // Cleanup
     m->addDockWidgetAsTab(dock2);
     m->addDockWidgetAsTab(dock3);
-    m->deleteLater();
+    m->destroyLater();
     auto window = m.release();
     Platform::instance()->tests_waitForDeleted(window);
 }
@@ -1792,7 +1792,7 @@ void TestDocks::tst_posAfterLeftDetach()
                                // that the bug doesn't happen
 
         delete dock2;
-        fw->deleteLater();
+        fw->destroyLater();
         Platform::instance()->tests_waitForDeleted(fw);
     }
 
@@ -1810,7 +1810,7 @@ void TestDocks::tst_posAfterLeftDetach()
         QVERIFY(finalX - originalX < 10); // 10 or some other small number that is less than say 200
 
         delete dock2;
-        fw->deleteLater();
+        fw->destroyLater();
         Platform::instance()->tests_waitForDeleted(fw);
     }
 }
@@ -1875,7 +1875,7 @@ void TestDocks::tst_createFloatingWindow()
     QPointer<Core::FloatingWindow> window = dock->floatingWindow();
     QVERIFY(window); // 1.1 DockWidget creates a FloatingWindow and is reparented
     QVERIFY(window->dropArea()->checkSanity());
-    dock->deleteLater();
+    dock->destroyLater();
     QVERIFY(Platform::instance()->tests_waitForDeleted(dock));
     QVERIFY(Platform::instance()->tests_waitForDeleted(window)); // 1.2 Floating Window is destroyed
                                                                  // when DockWidget is destroyed
@@ -2253,7 +2253,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         layout->checkSanity();
 
         // Cleanup:
-        dock2->deleteLater();
+        dock2->destroyLater();
         Platform::instance()->tests_waitForDeleted(dock2);
     }
 
@@ -2299,7 +2299,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
             - item2->minLength(Qt::Horizontal) - item4->minLength(Qt::Horizontal);
 
         QCOMPARE(boundToTheRight, expectedBoundToTheRight);
-        dock3->deleteLater();
+        dock3->destroyLater();
         Platform::instance()->tests_waitForDeleted(dock3);
     }
 }
@@ -3142,12 +3142,12 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     layout3->checkSanity();
 
     // Cleanup
-    docks1.at(0).createdDock->deleteLater();
-    docks1.at(1).createdDock->deleteLater();
-    docks1.at(2).createdDock->deleteLater();
-    docks2.at(0).createdDock->deleteLater();
-    docks2.at(1).createdDock->deleteLater();
-    docks2.at(2).createdDock->deleteLater();
+    docks1.at(0).createdDock->destroyLater();
+    docks1.at(1).createdDock->destroyLater();
+    docks1.at(2).createdDock->destroyLater();
+    docks2.at(0).createdDock->destroyLater();
+    docks2.at(1).createdDock->destroyLater();
+    docks2.at(2).createdDock->destroyLater();
     QVERIFY(Platform::instance()->tests_waitForDeleted(docks2.at(2).createdDock));
 }
 
@@ -3179,8 +3179,8 @@ void TestDocks::tst_anchorFollowingItselfAssert()
     fw2 = dock2->floatingWindow();
     dropArea->addWidget(fw2->dropArea()->view(), Location_OnRight, dock1->dptr()->group());
 
-    docks.at(0).createdDock->deleteLater();
-    docks.at(4).createdDock->deleteLater();
+    docks.at(0).createdDock->destroyLater();
+    docks.at(4).createdDock->destroyLater();
     Platform::instance()->tests_waitForDeleted(docks.at(4).createdDock);
 }
 
@@ -3432,7 +3432,7 @@ void TestDocks::tst_sizeConstraintWarning()
     auto docks = DockRegistry::self()->dockwidgets();
     auto lastDock = docks.last();
     for (auto dock : docks)
-        dock->deleteLater();
+        dock->destroyLater();
 
     Platform::instance()->tests_waitForDeleted(lastDock);
 }
@@ -4278,8 +4278,8 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QCOMPARE(window1->window(), window2->window());
         QCOMPARE(dock1->dptr()->group(), dock2->dptr()->group());
         QCOMPARE(dock1->dptr()->group()->dockWidgetCount(), 2);
-        dock1->deleteLater();
-        dock2->deleteLater();
+        dock1->destroyLater();
+        dock2->destroyLater();
         Platform::instance()->tests_waitForDeleted(dock2);
     }
     {
@@ -4295,8 +4295,8 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QCOMPARE(window1->window(), window2->window());
         QCOMPARE(dock1->dptr()->group(), dock2->dptr()->group());
         QCOMPARE(dock1->dptr()->group()->dockWidgetCount(), 2);
-        dock1->deleteLater();
-        dock2->deleteLater();
+        dock1->destroyLater();
+        dock2->destroyLater();
         Platform::instance()->tests_waitForDeleted(dock2);
     }
     {
@@ -4316,8 +4316,8 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QCOMPARE(dock1->dptr()->group()->dockWidgetCount(), 2);
         Platform::instance()->tests_waitForDeleted(originalWindow2.get());
 
-        dock1->deleteLater();
-        dock2->deleteLater();
+        dock1->destroyLater();
+        dock2->destroyLater();
         Platform::instance()->tests_waitForDeleted(dock2);
     }
     {
@@ -4524,7 +4524,7 @@ void TestDocks::tst_constraintsAfterPlaceholder()
 
     QCOMPARE(m->view()->minSize().height(), expectedMinHeight);
 
-    dock1->deleteLater();
+    dock1->destroyLater();
     Platform::instance()->tests_waitForDeleted(dock1);
 }
 

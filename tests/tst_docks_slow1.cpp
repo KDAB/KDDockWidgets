@@ -107,8 +107,9 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         CHECK_EQ(layout->placeholderCount(), 0);
         layout->checkSanity();
 
-        dock1->deleteLater();
-        dock2->deleteLater();
+        dock1->destroyLater();
+        dock2->destroyLater();
+
         CHECK(Platform::instance()->tests_waitForDeleted(dock2));
 
         KDDW_TEST_RETURN(true);

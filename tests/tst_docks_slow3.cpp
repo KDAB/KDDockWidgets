@@ -301,7 +301,7 @@ KDDW_QCORO_TASK tst_positionWhenShown()
 
     // Cleanup
     window->layout()->checkSanity();
-    dock1->deleteLater();
+    dock1->destroyLater();
     CHECK(Platform::instance()->tests_waitForDeleted(dock1));
 
     KDDW_TEST_RETURN(true);

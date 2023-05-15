@@ -88,6 +88,10 @@ public:
     /// In Qt this would be equivalent to calling view()->setParent(parent);
     void setParentView(View *parent);
 
+    /// Equivalent to QObject::deleteLater() when Qt used
+    /// but works with Flutter as well
+    void destroyLater();
+
 Q_SIGNALS:
     ///@brief signal counterpart for setParentView()
     void parentViewChanged(View *parent);

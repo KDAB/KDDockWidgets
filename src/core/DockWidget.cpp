@@ -26,6 +26,7 @@
 #include "core/WindowBeingDragged_p.h"
 #include "core/Position_p.h"
 #include "core/Platform_p.h"
+#include "core/DelayedCall.h"
 #include "Platform.h"
 #include "core/layouting/Item_p.h"
 
@@ -798,7 +799,7 @@ void DockWidget::Private::close()
 
     if (!m_isMovingToSideBar && (options & DockWidgetOption_DeleteOnClose)) {
         Q_EMIT q->aboutToDeleteOnClose();
-        q->deleteLater();
+        q->destroyLater();
     }
 }
 

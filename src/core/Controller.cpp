@@ -10,6 +10,8 @@
 */
 
 #include "Controller.h"
+#include "Platform.h"
+#include "DelayedCall.h"
 #include "View.h"
 
 #include <QDebug>
@@ -137,4 +139,9 @@ void Controller::setParentView_impl(View *parent)
     } else {
         qWarning() << Q_FUNC_INFO << "No view()";
     }
+}
+
+void Controller::destroyLater()
+{
+    Platform::instance()->runDelayed(0, new DelayedDelete(this));
 }
