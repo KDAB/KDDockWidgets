@@ -29,7 +29,7 @@ As this time, you cannot get shiboken2-generator because the wheels are not on P
 To use the wheels do this:
 
 ```bash
-% pip3 install \
+% python3 -m pip install \
     --index-url=http://download.qt.io/official_releases/QtForPython/ \
     --trusted-host download.qt.io \
     shiboken2 pyside2 shiboken2_generator
@@ -40,7 +40,7 @@ For more info visit <https://doc.qt.io/qtforpython/shiboken2/gettingstarted.html
 afterwards run:
 
 ```bash
-pip3 list | grep PySide
+python3 -m pip list | grep PySide
 ```
 
 Note the version *must* match the same Qt you intend to use when building KDDockWidgets.
@@ -48,7 +48,7 @@ Note the version *must* match the same Qt you intend to use when building KDDock
 ## Install PySide6 for Qt6
 
 Follow the same instructions as [the previous section](#Install PySide2 for Qt5),
-except installing `shiboken6 pyside6 shiboken6_generator` with pip3.
+except installing `shiboken6 pyside6 shiboken6_generator` with pip.
 
 ## Building KDDockWidgets Python Bindings
 
@@ -78,6 +78,14 @@ To run the KDDW python example
 ```
 
 ### Build Issues
+
+- You can override the default Python3 version found by CMake (usually the
+  newest version available) by passing the Python3_EXECUTABLE value to CMake,
+  i.e.
+
+```bash
+    cmake -DPython3_EXECUTABLE=/usr/bin/python3.10 ....
+```
 
 - If you see errors like "Unable to locate Clang's built-in include directory"
   then first mROUBLESHOOTINGake sure you have llvm installed.  If you still have problems try
