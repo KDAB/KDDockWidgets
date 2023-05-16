@@ -64,6 +64,10 @@ void MainWindow_wrapper::groupCountChanged(int arg__1)
 {
     ::KDDockWidgets::Core::MainWindow::groupCountChanged(arg__1);
 }
+void MainWindow_wrapper::init(const QString &name)
+{
+    ::KDDockWidgets::Core::MainWindow::init(name);
+}
 bool MainWindow_wrapper::isMDI() const
 {
     return ::KDDockWidgets::Core::MainWindow::isMDI();
@@ -228,6 +232,12 @@ void *c_KDDockWidgets__Core__MainWindow__dropArea(void *thisObj)
 void c_KDDockWidgets__Core__MainWindow__groupCountChanged_int(void *thisObj, int arg__1)
 {
     fromPtr(thisObj)->groupCountChanged(arg__1);
+}
+// init(const QString & name)
+void c_KDDockWidgets__Core__MainWindow__init_QString(void *thisObj, const char *name_)
+{
+    const auto name = QString::fromUtf8(name_);
+    fromPtr(thisObj)->init(name);
 }
 // isMDI() const
 bool c_KDDockWidgets__Core__MainWindow__isMDI(void *thisObj)

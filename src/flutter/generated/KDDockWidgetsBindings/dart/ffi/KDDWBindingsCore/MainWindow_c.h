@@ -36,6 +36,7 @@ public:
     bool closeDockWidgets(bool force = false);
     KDDockWidgets::Core::DropArea *dropArea() const;
     void groupCountChanged(int arg__1);
+    void init(const QString &name);
     bool isMDI() const;
     KDDockWidgets::Core::Layout *layout() const;
     void layoutEqually();
@@ -82,6 +83,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__MainWindow__closeDockWi
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__MainWindow__dropArea(void *thisObj);
 // KDDockWidgets::Core::MainWindow::groupCountChanged(int arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__groupCountChanged_int(void *thisObj, int arg__1);
+// KDDockWidgets::Core::MainWindow::init(const QString & name)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__init_QString(void *thisObj, const char *name_);
 // KDDockWidgets::Core::MainWindow::isMDI() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__MainWindow__isMDI(void *thisObj);
 // KDDockWidgets::Core::MainWindow::layout() const

@@ -2817,6 +2817,8 @@ bool c_KDDockWidgets__Core__MainWindow__closeDockWidgets_bool(void *thisObj, boo
 void *c_KDDockWidgets__Core__MainWindow__dropArea(void *thisObj);
 // KDDockWidgets::Core::MainWindow::groupCountChanged(int arg__1)
 void c_KDDockWidgets__Core__MainWindow__groupCountChanged_int(void *thisObj, int arg__1);
+// KDDockWidgets::Core::MainWindow::init(const QString & name)
+void c_KDDockWidgets__Core__MainWindow__init_QString(void *thisObj, const char *name_);
 // KDDockWidgets::Core::MainWindow::isMDI() const
 bool c_KDDockWidgets__Core__MainWindow__isMDI(void *thisObj);
 // KDDockWidgets::Core::MainWindow::layout() const
