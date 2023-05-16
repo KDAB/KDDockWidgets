@@ -33,7 +33,7 @@ TitleBar::TitleBar(Frame *parent)
     , m_frame(parent)
     , m_floatingWindow(nullptr)
     , m_genericWidget(nullptr)
-    , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
+    , m_supportsAutoHide((Config::self().flags() & Config::Flag_AutoHideSupport) == Config::Flag_AutoHideSupport)
 {
     connect(m_frame, &Frame::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
     connect(m_frame, &Frame::isFocusedChanged, this, &TitleBar::isFocusedChanged);
