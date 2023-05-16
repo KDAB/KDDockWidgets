@@ -240,6 +240,9 @@ public:
     /// @internal
     QMargins centerWidgetMargins() const;
 
+    /// @internal
+    void init(const QString &name);
+
 protected:
     void setUniqueName(const QString &uniqueName);
     QRect centralAreaGeometry() const;
@@ -255,7 +258,6 @@ Q_SIGNALS:
     void overlayMarginChanged(int margin);
 
 private:
-    void init(const QString &name);
     class Private;
     Private *const d;
 

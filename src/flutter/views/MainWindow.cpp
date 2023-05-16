@@ -20,7 +20,6 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
            flags)
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(View::controller()))
 {
-    m_mainWindow->init(uniqueName);
 }
 
 MainWindow::~MainWindow()

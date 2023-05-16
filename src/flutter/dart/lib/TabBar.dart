@@ -26,7 +26,6 @@ class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
     m_fillsParent = true;
     m_controller = tabBar!;
     initMixin(this);
-    // print("TabBar CTOR");
   }
 
   Widget createFlutterWidget() {
