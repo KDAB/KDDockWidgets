@@ -348,9 +348,9 @@ private:
 protected:
     bool m_inDtor = false;
 
-    QPointer<Core::Stack> m_stack;
-    QPointer<Core::TabBar> m_tabBar;
-    QPointer<Core::TitleBar> m_titleBar;
+    Core::Stack *const m_stack;
+    Core::TabBar *const m_tabBar;
+    Core::TitleBar *const m_titleBar;
 
 private:
     Q_DISABLE_COPY(Group)

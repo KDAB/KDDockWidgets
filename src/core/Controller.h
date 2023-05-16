@@ -98,11 +98,12 @@ Q_SIGNALS:
 
 protected:
     virtual void setParentView_impl(View *parent);
+    bool m_inDtor = false;
 
 private:
     void setParent(QObject *) = delete;
     View *m_view = nullptr;
-    bool m_inDtor = false;
+
     const ViewType m_type;
 };
 

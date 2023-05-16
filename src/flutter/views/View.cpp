@@ -41,16 +41,9 @@ View::~View()
     if (hasFocus())
         Platform::platformFlutter()->setFocusedView({});
 
-    if (m_parentView && !m_parentView->inDtor()) {
+    if (m_parentView) {
         setParent(nullptr);
     }
-
-    const auto children = m_childViews;
-    for (auto child : children) {
-        delete child;
-    }
-
-    m_childViews.clear();
 }
 
 void View::setGeometry(QRect)
@@ -228,7 +221,8 @@ void View::setParent(Core::View *parent)
     m_parentView = static_cast<View *>(parent);
 
     if (oldParent) {
-        oldParent->onChildRemoved(this);
+        if (!oldParent->inDtor())
+            oldParent->onChildRemoved(this);
         oldParent->m_childViews.erase(std::remove_if(oldParent->m_childViews.begin(), oldParent->m_childViews.end(),
                                                      [this](Core::View *v) {
                                                          return v->equals(this);

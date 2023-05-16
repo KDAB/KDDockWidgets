@@ -101,6 +101,9 @@ int TabBar::indexOfDockWidget(const Core::DockWidget *dw) const
 
 void TabBar::removeDockWidget(Core::DockWidget *dw)
 {
+    if (m_inDtor)
+        return;
+
     const bool wasCurrent = dw == m_currentDockWidget;
     const int index = m_dockWidgets.indexOf(dw);
 

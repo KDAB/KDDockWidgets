@@ -24,6 +24,7 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
 
 DropArea::~DropArea()
 {
+    m_inDtor = true;
     if (!freed())
         m_dropArea->viewAboutToBeDeleted();
 }
