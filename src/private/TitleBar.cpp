@@ -51,7 +51,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     , m_frame(nullptr)
     , m_floatingWindow(parent)
     , m_genericWidget(nullptr)
-    , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
+    , m_supportsAutoHide((Config::self().flags() & Config::Flag_AutoHideSupport) == Config::Flag_AutoHideSupport)
 {
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
