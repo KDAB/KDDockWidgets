@@ -76,8 +76,6 @@ class PositionedWidgetState extends State<PositionedWidget>
         kddwView.widgetKey.currentContext?.findRenderObject() as RenderBox;
 
     final Size size = renderBox.size;
-    print("NEW SIZE ${size} ${kddwView.m_width} ${kddwView.m_height}");
-
     if (size.width != kddwView.m_width || size.height != kddwView.m_height) {
       kddwView.kddwView
           .onFlutterWidgetResized(size.width.toInt(), size.height.toInt());
