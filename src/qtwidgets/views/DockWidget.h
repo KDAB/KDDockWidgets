@@ -34,8 +34,13 @@ namespace qtwidgets {
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
+#ifdef PYTHON_BINDINGS
+class DOCKS_EXPORT DockWidget : public QWidget,
+                                public Core::DockWidgetViewInterface
+#else
 class DOCKS_EXPORT DockWidget : public qtwidgets::View<QWidget>,
                                 public Core::DockWidgetViewInterface
+#endif
 {
     Q_OBJECT
 public:
@@ -75,7 +80,9 @@ public:
     QWidget *widget() const;
 
 protected:
+#ifndef PYTHON_BINDINGS
     void init() override;
+#endif
     bool event(QEvent *) override;
     void resizeEvent(QResizeEvent *) override;
 

@@ -12,18 +12,22 @@
 # Auto-Genereate files every class will have his cpp/h files
 set(PyKDDockWidgets_SRC
     # individual classes
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_dockwidgetbase_wrapper.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_dockwidgetbase_wrapper.h
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_dockwidget_wrapper.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_dockwidget_wrapper.h
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_config_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_config_wrapper.h
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_core_dockwidgetviewinterface_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_core_dockwidgetviewinterface_wrapper.h
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_core_mainwindowviewinterface_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_core_mainwindowviewinterface_wrapper.h
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_initialoption_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_initialoption_wrapper.h
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindowbase_wrapper.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindowbase_wrapper.h
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindow_wrapper.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindow_wrapper.h
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.h
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.h
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_qtwidgets_dockwidget_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_qtwidgets_dockwidget_wrapper.h
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_qtwidgets_mainwindow_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_qtwidgets_mainwindow_wrapper.h
     # global module wrapper
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_module_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_python.h
@@ -50,8 +54,10 @@ set(PyKDDockWidgets_target_link_libraries KDAB::kddockwidgets Qt${Qt_VERSION_MAJ
 
 # changes on these files should trigger a new generation
 set(PyKDDockWidgets_DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h ${CMAKE_SOURCE_DIR}/src/DockWidget.h
-    ${CMAKE_SOURCE_DIR}/src/DockWidget.h ${CMAKE_SOURCE_DIR}/src/MainWindow.h ${CMAKE_SOURCE_DIR}/src/MainWindow.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
+    ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/MainWindow.h
+    ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/DockWidget.h
+    ${CMAKE_SOURCE_DIR}/src/Config.h
     ${CMAKE_SOURCE_DIR}/src/LayoutSaver.h
 )
 
