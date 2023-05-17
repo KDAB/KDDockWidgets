@@ -8,6 +8,8 @@ import re
 
 # Remove namespace from default flag value
 # this is a shiboken2 bug fixed on shiboken6
+
+
 def removeExtraNamespaceForDefaultEnumValue(filename):
     regex = re.compile(r"\s=\s[^\s]+::{}")
     newContent = ""

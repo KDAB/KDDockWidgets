@@ -313,14 +313,14 @@ class DockRegistry extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      
+
     }
     return super.cFunctionSymbolName(methodId);
   }
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      
+
     }
     throw Error();
   }

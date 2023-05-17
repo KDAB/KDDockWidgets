@@ -54,10 +54,8 @@ set(PyKDDockWidgets_target_link_libraries KDAB::kddockwidgets Qt${Qt_VERSION_MAJ
 
 # changes on these files should trigger a new generation
 set(PyKDDockWidgets_DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
-    ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/MainWindow.h
-    ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/DockWidget.h
-    ${CMAKE_SOURCE_DIR}/src/Config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/MainWindow.h
+    ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/DockWidget.h ${CMAKE_SOURCE_DIR}/src/Config.h
     ${CMAKE_SOURCE_DIR}/src/LayoutSaver.h
 )
 
