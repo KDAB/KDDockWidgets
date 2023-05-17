@@ -109,8 +109,8 @@ KDDW_QCORO_TASK tst_closeShowWhenNoCentralFrame()
     m->layout()->checkSanity();
 
     CHECK(!dock1->dptr()->group());
-    CHECK(!Platform::instance()->tests_waitForDeleted(dock1)); // It was being deleted due to a
-                                                               // bug
+    CHECK(!KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(dock1)); // It was being deleted due to a
+                                                                              // bug
     CHECK(dock1);
     dock1->open();
     m->layout()->checkSanity();
@@ -156,7 +156,7 @@ KDDW_QCORO_TASK tst_close()
 
     dock1->close();
 
-    CHECK(Platform::instance()->tests_waitForDeleted(fw1));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(fw1));
     CHECK(!dock1->isVisible());
     CHECK(!dock1->window()->controller()->isVisible());
     CHECK(dock1->window()->equals(dock1->view()));
@@ -172,8 +172,8 @@ KDDW_QCORO_TASK tst_close()
 
     CHECK(dock1->close());
     CHECK(!dock1->dptr()->group());
-    CHECK(Platform::instance()->tests_waitForDeleted(group1));
-    CHECK(Platform::instance()->tests_waitForDeleted(window));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(group1));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(window));
 
     // 1.5 close a FloatingWindow, via FloatingWindow::close
     dock1->open();
@@ -188,8 +188,8 @@ KDDW_QCORO_TASK tst_close()
     CHECK(window->view()->close());
 
     CHECK(!dock1->dptr()->group());
-    CHECK(Platform::instance()->tests_waitForDeleted(group1));
-    CHECK(Platform::instance()->tests_waitForDeleted(window));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(group1));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(window));
 
     // 1.6 Check if space is reclaimed after closing left dock
     Core::DockWidget *centralDock;
@@ -302,7 +302,7 @@ KDDW_QCORO_TASK tst_positionWhenShown()
     // Cleanup
     window->layout()->checkSanity();
     dock1->destroyLater();
-    CHECK(Platform::instance()->tests_waitForDeleted(dock1));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(dock1));
 
     KDDW_TEST_RETURN(true);
 }

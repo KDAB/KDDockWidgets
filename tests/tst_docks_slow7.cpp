@@ -148,7 +148,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
     layout->setLayoutSize(newSize);
 
     d2->destroyLater();
-    Platform::instance()->tests_waitForDeleted(d2);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(d2);
     layout->checkSanity();
 
     KDDW_TEST_RETURN(true);
@@ -179,7 +179,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition2()
     dock1->setFloating(false);
     dock2->destroyLater();
     layout->checkSanity();
-    CHECK(Platform::instance()->tests_waitForDeleted(dock2));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(dock2));
     KDDW_TEST_RETURN(true);
 }
 
@@ -239,7 +239,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition4()
     layout->checkSanity();
     docks.at(0).createdDock->destroyLater();
     docks.at(4).createdDock->destroyLater();
-    Platform::instance()->tests_waitForDeleted(docks.at(4).createdDock);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(docks.at(4).createdDock);
 
     KDDW_TEST_RETURN(true);
 }
@@ -270,7 +270,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition5()
     for (auto dock : DockRegistry::self()->dockwidgets())
         dock->destroyLater();
 
-    CHECK(Platform::instance()->tests_waitForDeleted(dock0));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(dock0));
     KDDW_TEST_RETURN(true);
 }
 

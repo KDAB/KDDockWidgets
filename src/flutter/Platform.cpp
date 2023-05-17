@@ -15,6 +15,7 @@
 #include "Window.h"
 #include "views/View.h"
 #include "core/Platform_p.h"
+#include "core/ViewGuard.h"
 #include "ViewFactory.h"
 #include "Platform.h"
 #include "kddockwidgets/core/MainWindow.h"
@@ -407,16 +408,24 @@ KDDW_QCORO_TASK Platform::tests_waitForResize2(Core::Controller *, int) const
     co_return true;
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForDeleted2(QObject *, int) const
+KDDW_QCORO_TASK Platform::tests_waitForDeleted2(QObject *obj, int) const
 {
+    if (!obj)
+        co_return true;
+
+    QPointer<QObject> guard = obj;
     co_await m_coRoutines.wait(1000);
-    co_return true;
+    co_return guard.isNull();
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForDeleted2(Core::View *, int) const
+KDDW_QCORO_TASK Platform::tests_waitForDeleted2(Core::View *view, int) const
 {
+    if (!view)
+        co_return true;
+
+    Core::ViewGuard guard(view);
     co_await m_coRoutines.wait(1000);
-    co_return true;
+    co_return guard.isNull();
 }
 
 std::shared_ptr<Core::Window> Platform::tests_createWindow()

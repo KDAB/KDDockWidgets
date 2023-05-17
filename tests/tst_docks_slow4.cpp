@@ -72,7 +72,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
 
     releaseOn(finalPoint, titlebar1->view());
     CHECK_EQ(group2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
-    CHECK(Platform::instance()->tests_waitForDeleted(group1));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(group1));
 
     // 2.3 Detach tab1 to empty space
     QPoint globalPressPos = dragPointForWidget(group2.data(), 0);
@@ -110,8 +110,8 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     finalPoint = dock3->window()->geometry().center() + QPoint(7, 7);
     drag(fw2->titleBar()->view(), group2->mapToGlobal(QPoint(10, 10)), finalPoint);
 
-    CHECK(Platform::instance()->tests_waitForDeleted(group1));
-    CHECK(Platform::instance()->tests_waitForDeleted(group2));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(group1));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(group2));
     CHECK(dock3->dptr()->group());
     CHECK_EQ(dock3->dptr()->group()->dockWidgetCount(), 3);
 
@@ -136,8 +136,8 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
         delete dock1;
         delete dock2;
         delete dock3;
-        CHECK(Platform::instance()->tests_waitForDeleted(group2));
-        CHECK(Platform::instance()->tests_waitForDeleted(fw3));
+        CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(group2));
+        CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(fw3));
     }
 
     KDDW_CO_RETURN(true);
@@ -176,7 +176,7 @@ KDDW_QCORO_TASK tst_restoreSimple()
     dock2->close();
     CHECK(!dock2->isVisible());
     CHECK_EQ(layout->count(), 1);
-    CHECK(Platform::instance()->tests_waitForDeleted(f1));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(f1));
     CHECK_EQ(layout->placeholderCount(), 1);
 
     CHECK_EQ(DockRegistry::self()->floatingWindows().size(), 0);

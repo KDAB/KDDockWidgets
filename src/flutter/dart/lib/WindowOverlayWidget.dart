@@ -61,7 +61,6 @@ class WindowOverlayWidgetState extends State<WindowOverlayWidget> {
   }
 
   onWindowCountChanged() {
-    print("onWindowCountChanged!");
     setState(() {});
   }
 }

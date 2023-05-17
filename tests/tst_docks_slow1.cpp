@@ -110,7 +110,7 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         dock1->destroyLater();
         dock2->destroyLater();
 
-        CHECK(Platform::instance()->tests_waitForDeleted(dock2));
+        CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(dock2));
 
         KDDW_TEST_RETURN(true);
     };
