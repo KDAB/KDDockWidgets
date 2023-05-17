@@ -21,6 +21,10 @@
 #define QT_WIDGETS_LIB
 #endif
 
-#include <kddockwidgets/MainWindow.h>
-#include <kddockwidgets/DockWidget.h>
+#include <kddockwidgets/KDDockWidgets.h>
 #include <kddockwidgets/LayoutSaver.h>
+#include <kddockwidgets/Config.h>
+#include <kddockwidgets/core/views/MainWindowViewInterface.h>
+#include <kddockwidgets/core/views/DockWidgetViewInterface.h>
+#include <kddockwidgets/views/MainWindow.h>
+#include <kddockwidgets/views/DockWidget.h>

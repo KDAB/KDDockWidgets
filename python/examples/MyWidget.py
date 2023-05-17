@@ -19,11 +19,12 @@ from PySide2 import QtWidgets, QtGui, QtCore
 class MyWidget(QtWidgets.QWidget):
     s_images = {}
 
-    def __init__(self, backgroundFile, logoFile, parent=None):
+    def __init__(self, backgroundFile = "", logoFile = "", parent = None):
         super().__init__(parent)
 
         self.background = self._lookupImage(backgroundFile)
         self.logo = self._lookupImage(logoFile)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
     # pylint: disable=no-self-use
     def _lookupImage(self, imageName):
