@@ -10,6 +10,7 @@
 */
 
 #include "../simple_test_framework.h"
+#include "../utils.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/DockWidget_p.h"
@@ -27,6 +28,9 @@ using namespace KDDockWidgets::Core;
 
 KDDW_QCORO_TASK tst_dockWidgetCtor()
 {
+    qDebug() << Q_FUNC_INFO;
+    Tests::EnsureTopLevelsDeleted e;
+
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     CHECK(dw->view()->is(ViewType::DockWidget));
     CHECK(dw->view()->asWrapper()->is(ViewType::DockWidget));
@@ -39,6 +43,9 @@ KDDW_QCORO_TASK tst_dockWidgetCtor()
 
 KDDW_QCORO_TASK tst_setGuestView()
 {
+    qDebug() << Q_FUNC_INFO;
+    Tests::EnsureTopLevelsDeleted e;
+
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     CHECK(Platform::instance());
     auto childView = Platform::instance()->tests_createView({ true });
@@ -49,7 +56,7 @@ KDDW_QCORO_TASK tst_setGuestView()
     CHECK(dw->guestView());
     CHECK(dw->view());
     dw->view()->show();
-    Platform::instance()->tests_wait(500); // TODOm3: Replace with wait for visible or so.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(500); // TODOm3: Replace with wait for visible or so.
 
     CHECK(guest->controller());
     CHECK(dw->floatingWindow());
@@ -73,6 +80,9 @@ KDDW_QCORO_TASK tst_setGuestView()
 
 KDDW_QCORO_TASK tst_toggleAction()
 {
+    qDebug() << Q_FUNC_INFO;
+    Tests::EnsureTopLevelsDeleted e;
+
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
 
     CHECK(!dw->toggleAction()->isChecked());
@@ -86,6 +96,9 @@ KDDW_QCORO_TASK tst_toggleAction()
 
 KDDW_QCORO_TASK tst_isOpen()
 {
+    qDebug() << Q_FUNC_INFO;
+    Tests::EnsureTopLevelsDeleted e;
+
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
 
     // Starts closed
@@ -122,6 +135,9 @@ KDDW_QCORO_TASK tst_isOpen()
 
 KDDW_QCORO_TASK tst_setAsCurrentTab()
 {
+    qDebug() << Q_FUNC_INFO;
+    Tests::EnsureTopLevelsDeleted e;
+
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
     auto dw3 = Config::self().viewFactory()->createDockWidget("dw3")->asDockWidgetController();
@@ -151,9 +167,11 @@ KDDW_QCORO_TASK tst_setAsCurrentTab()
     KDDW_TEST_RETURN(true);
 }
 
-
 KDDW_QCORO_TASK tst_dwCloseAndReopen()
 {
+    qDebug() << Q_FUNC_INFO;
+    Tests::EnsureTopLevelsDeleted e;
+
     // Tests that a floating window is deleted after being closed
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
@@ -164,7 +182,6 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
     auto titleBar = fw->titleBar();
     CHECK(titleBar);
     CHECK(titleBar->isVisible());
-    qDebug() << "CLOSING";
     titleBar->onCloseClicked();
     CHECK(!dw->isOpen());
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(fw));
@@ -172,10 +189,7 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
 
     CHECK(!dw->floatingWindow());
     CHECK(!dw->view()->parentView());
-    qDebug() << "OPENING";
     dw->open();
-
-    // KDDW_CO_AWAIT Platform::instance()->tests_wait(100000);
 
     delete dw;
     KDDW_TEST_RETURN(true);
