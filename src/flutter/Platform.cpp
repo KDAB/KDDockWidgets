@@ -309,14 +309,16 @@ Core::View *Platform::tests_createView(Core::CreateViewOptions, Core::View *)
     return {};
 }
 
-Core::View *Platform::tests_createFocusableView(Core::CreateViewOptions, Core::View *)
+Core::View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, Core::View *parent)
 {
-    return {};
+    // TODOm3: It's not focusable. To fix when we get to those tests
+    return tests_createView(opts, parent);
 }
 
-Core::View *Platform::tests_createNonClosableView(Core::View *)
+Core::View *Platform::tests_createNonClosableView(Core::View *parent)
 {
-    return {};
+    // TODOm3: It's not non-closable. To fix when we get to those tests
+    return tests_createView({ .isVisible = true }, parent);
 }
 
 Core::MainWindow *Platform::createMainWindow(const QString &, Core::CreateViewOptions,

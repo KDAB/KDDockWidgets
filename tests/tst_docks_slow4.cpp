@@ -238,8 +238,12 @@ KDDW_QCORO_TASK tst_restoreSimplest()
     KDDW_CO_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_dock2FloatingWidgetsTabbed,
-                                                                            tst_restoreSimple,
-                                                                            tst_restoreSimplest };
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+#ifndef KDDW_FRONTEND_FLUTTER
+    tst_dock2FloatingWidgetsTabbed,
+    tst_restoreSimple,
+#endif
+    tst_restoreSimplest
+};
 
 #include "tests_main.h"
