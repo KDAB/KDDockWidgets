@@ -75,7 +75,11 @@ public:
     SizePolicy verticalSizePolicy() const override;
     SizePolicy horizontalSizePolicy() const override;
 
-    bool onResize(int w, int h) override;
+    /// Called when the flutter widget was resized by its own initiative (and not kddw)
+    /// Usually it's kddw driving geometry, but there's 2 cases where flutter might trigger it
+    ///     - Window is resized by user with mouse
+    ///     - Widget has m_fillsParent=true and its parent was resized
+    bool onFlutterWidgetResized(int w, int h);
 
     bool close() override;
     void setFlag(Qt::WindowType f, bool on = true) override;

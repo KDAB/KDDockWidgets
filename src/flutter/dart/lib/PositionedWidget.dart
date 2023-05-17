@@ -79,7 +79,8 @@ class PositionedWidgetState extends State<PositionedWidget>
     print("NEW SIZE ${size} ${kddwView.m_width} ${kddwView.m_height}");
 
     if (size.width != kddwView.m_width || size.height != kddwView.m_height) {
-      kddwView.kddwView.onResize_2(size.width.toInt(), size.height.toInt());
+      kddwView.kddwView
+          .onFlutterWidgetResized(size.width.toInt(), size.height.toInt());
     }
   }
 

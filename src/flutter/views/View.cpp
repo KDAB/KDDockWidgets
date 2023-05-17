@@ -444,7 +444,7 @@ HANDLE View::handle() const
     return this;
 }
 
-bool View::onResize(int w, int h)
+bool View::onFlutterWidgetResized(int w, int h)
 {
     // Indirection so Dartagnan generates it, while we don't do bindings for View.cpp
     return Core::View::onResize(w, h);
