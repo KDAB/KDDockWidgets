@@ -28,7 +28,7 @@
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+
 #include "kddockwidgets/core/Separator.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
@@ -54,8 +54,8 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     m->addDockWidget(dock2, Location_OnRight);
     m->addDockWidget(dock3, Location_OnRight);
 
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(layout);
     const int oldContentsWidth = layout->layoutWidth();
-
     auto f1 = dock1->dptr()->group();
     dock3->close();
     dock2->close();
@@ -64,6 +64,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(f1));
 
     dock3->open();
+    CHECK(dock3->titleBar()->isVisible());
     dock2->open();
     dock1->open();
     Platform::instance()->tests_waitForEvent(m.get(), Event::LayoutRequest); // So MainWindow min
@@ -232,10 +233,12 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
 static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
     tst_invalidLayoutAfterRestore,
+#ifndef KDDW_FRONTEND_FLUTTER
     tst_setFloatingWhenSideBySide,
     tst_dockWindowWithTwoSideBySideFramesIntoCenter,
     tst_dockWindowWithTwoSideBySideFramesIntoRight,
     tst_dockWindowWithTwoSideBySideFramesIntoLeft
+#endif
 };
 
 #include "tests_main.h"
