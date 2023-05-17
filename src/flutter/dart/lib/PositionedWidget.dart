@@ -27,26 +27,14 @@ class PositionedWidget extends StatefulWidget {
 class PositionedWidgetState extends State<PositionedWidget>
     with WidgetsBindingObserver {
   final View_mixin kddwView;
-  int x = 0;
-  int y = 0;
-  int width = 400;
-  int height = 400;
   final bool _fillsParent;
 
-  PositionedWidgetState(this.kddwView) : _fillsParent = kddwView.m_fillsParent {
-    x = kddwView.m_x;
-    y = kddwView.m_y;
-    width = kddwView.m_width;
-    height = kddwView.m_height;
-
-    // print("Creating PositionedWidgetState  width=${width}");
-  }
+  PositionedWidgetState(this.kddwView) : _fillsParent = kddwView.m_fillsParent;
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
-    // print("PositionedWidgetState::initState: width=${width}");
   }
 
   @override
@@ -64,24 +52,19 @@ class PositionedWidgetState extends State<PositionedWidget>
     }
   }
 
+  /// Called when children were added or removed (or hidden).
   void childrenChanged() {
     setState(() {});
   }
 
-  void updatePosition(int kddwX, int kddwY) {
-    // print("PositionedWidgetState::updatePosition()");
-    setState(() {
-      x = kddwX;
-      y = kddwY;
-    });
+  /// Called when the KDDW View changes size. Rebuilds the flutter Widget.
+  void updatePosition() {
+    setState(() {});
   }
 
-  void updateSize(int kddwWidth, int kddwHeight) {
-    // print("PositionedWidgetState::updateSize()");
-    setState(() {
-      height = kddwHeight;
-      width = kddwWidth;
-    });
+  /// Called when the KDDW View changes size. Rebuilds the flutter Widget.
+  void updateSize() {
+    setState(() {});
   }
 
   void resizeKDDWLayout() {
@@ -93,8 +76,9 @@ class PositionedWidgetState extends State<PositionedWidget>
         kddwView.widgetKey.currentContext?.findRenderObject() as RenderBox;
 
     final Size size = renderBox.size;
+    print("NEW SIZE ${size} ${kddwView.m_width} ${kddwView.m_height}");
 
-    if (size.width != width || size.height != height) {
+    if (size.width != kddwView.m_width || size.height != kddwView.m_height) {
       kddwView.kddwView.onResize_2(size.width.toInt(), size.height.toInt());
     }
   }
@@ -110,18 +94,14 @@ class PositionedWidgetState extends State<PositionedWidget>
       resizeKDDWLayout();
     });
 
-    // if (_fillsParent)
-    //   print("Build started width=${width} but ${kddwView.m_width}");
-
     final container = buildContents();
-
     if (_fillsParent) return container;
 
     return Positioned(
-        width: width * 1.0,
-        height: height * 1.0,
-        top: y * 1.0,
-        left: x * 1.0,
+        width: kddwView.m_width * 1.0,
+        height: kddwView.m_height * 1.0,
+        top: kddwView.m_y * 1.0,
+        left: kddwView.m_x * 1.0,
         child: container);
   }
 }

@@ -55,7 +55,7 @@ class View_mixin {
 
       final state = widgetKey.currentState;
       if (state != null) {
-        state.updateSize(m_width, m_height);
+        state.updateSize();
       }
     }
   }
@@ -141,7 +141,7 @@ class View_mixin {
       m_y = y;
       final state = widgetKey.currentState;
       if (state != null) {
-        state.updatePosition(m_x, m_y);
+        state.updatePosition();
       }
     }
   }
