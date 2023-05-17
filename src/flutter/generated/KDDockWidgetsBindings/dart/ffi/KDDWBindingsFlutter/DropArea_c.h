@@ -13,8 +13,8 @@
 #include "core/DropArea.h"
 #include <core/View.h>
 #include <qrect.h>
-#include <qsize.h>
 #include <qpoint.h>
+#include <qsize.h>
 #include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -82,8 +82,8 @@ public:
     virtual void onChildRemoved_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildVisibilityChanged(KDDockWidgets::Core::View *childView);
     virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
-    virtual bool onResize(int w, int h);
-    virtual bool onResize_nocallback(int w, int h);
+    virtual bool onResize(int h, int w);
+    virtual bool onResize_nocallback(int h, int w);
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -194,7 +194,7 @@ public:
     Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
     typedef void (*Callback_onChildVisibilityChanged)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
-    typedef bool (*Callback_onResize_2)(void *, int w, int h);
+    typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
@@ -312,8 +312,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildAdd
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DropArea::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildVisibilityChanged_View(void *thisObj, void *childView_);
-// KDDockWidgets::flutter::DropArea::onResize(int w, int h)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__onResize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::DropArea::onResize(int h, int w)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::DropArea::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__raise(void *thisObj);
 // KDDockWidgets::flutter::DropArea::raiseAndActivate()

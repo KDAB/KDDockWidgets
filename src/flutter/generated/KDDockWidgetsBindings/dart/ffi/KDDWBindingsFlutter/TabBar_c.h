@@ -86,8 +86,8 @@ public:
     virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onRebuildRequested();
     virtual void onRebuildRequested_nocallback();
-    virtual bool onResize(int w, int h);
-    virtual bool onResize_nocallback(int w, int h);
+    virtual bool onResize(int h, int w);
+    virtual bool onResize_nocallback(int h, int w);
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -214,7 +214,7 @@ public:
     Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
     typedef void (*Callback_onRebuildRequested)(void *);
     Callback_onRebuildRequested m_onRebuildRequestedCallback = nullptr;
-    typedef bool (*Callback_onResize_2)(void *, int w, int h);
+    typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
@@ -348,8 +348,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__onChildRemov
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TabBar::onRebuildRequested()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__onRebuildRequested(void *thisObj);
-// KDDockWidgets::flutter::TabBar::onResize(int w, int h)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__onResize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::TabBar::onResize(int h, int w)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::TabBar::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__raise(void *thisObj);
 // KDDockWidgets::flutter::TabBar::raiseAndActivate()

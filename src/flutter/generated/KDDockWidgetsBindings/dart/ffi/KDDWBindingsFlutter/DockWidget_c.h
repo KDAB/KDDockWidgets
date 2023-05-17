@@ -14,8 +14,8 @@
 #include <qsize.h>
 #include <core/DockWidget.h>
 #include <qrect.h>
-#include <core/View.h>
 #include <qpoint.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -83,8 +83,8 @@ public:
     virtual void onChildRemoved_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildVisibilityChanged(KDDockWidgets::Core::View *childView);
     virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
-    virtual bool onResize(int w, int h);
-    virtual bool onResize_nocallback(int w, int h);
+    virtual bool onResize(int h, int w);
+    virtual bool onResize_nocallback(int h, int w);
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -195,7 +195,7 @@ public:
     Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
     typedef void (*Callback_onChildVisibilityChanged)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
-    typedef bool (*Callback_onResize_2)(void *, int w, int h);
+    typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
@@ -315,8 +315,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__onChildA
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DockWidget::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__onChildVisibilityChanged_View(void *thisObj, void *childView_);
-// KDDockWidgets::flutter::DockWidget::onResize(int w, int h)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget__onResize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::DockWidget::onResize(int h, int w)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::DockWidget::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__raise(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::raiseAndActivate()

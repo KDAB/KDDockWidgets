@@ -409,18 +409,22 @@ void View_wrapper::onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View
 {
     ::KDDockWidgets::flutter::View::onChildVisibilityChanged(childView);
 }
-bool View_wrapper::onResize(int w, int h)
+bool View_wrapper::onFlutterWidgetResized(int w, int h)
+{
+    return ::KDDockWidgets::flutter::View::onFlutterWidgetResized(w, h);
+}
+bool View_wrapper::onResize(int h, int w)
 {
     if (m_onResize_2Callback) {
         const void *thisPtr = this;
-        return m_onResize_2Callback(const_cast<void *>(thisPtr), w, h);
+        return m_onResize_2Callback(const_cast<void *>(thisPtr), h, w);
     } else {
-        return ::KDDockWidgets::flutter::View::onResize(w, h);
+        return ::KDDockWidgets::flutter::View::onResize(h, w);
     }
 }
-bool View_wrapper::onResize_nocallback(int w, int h)
+bool View_wrapper::onResize_nocallback(int h, int w)
 {
-    return ::KDDockWidgets::flutter::View::onResize(w, h);
+    return ::KDDockWidgets::flutter::View::onResize(h, w);
 }
 void View_wrapper::raise()
 {
@@ -953,10 +957,15 @@ void c_KDDockWidgets__flutter__View__onChildVisibilityChanged_View(void *thisObj
     auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildVisibilityChanged_nocallback(childView);} else {    return targetPtr->onChildVisibilityChanged(childView);} }();
 }
-// onResize(int w, int h)
-bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int w, int h)
+// onFlutterWidgetResized(int w, int h)
+bool c_KDDockWidgets__flutter__View__onFlutterWidgetResized_int_int(void *thisObj, int w, int h)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(w,h);} else {    return targetPtr->onResize(w,h);} }();
+    return fromPtr(thisObj)->onFlutterWidgetResized(w, h);
+}
+// onResize(int h, int w)
+bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int h, int w)
+{
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
 }
 // raise()
 void c_KDDockWidgets__flutter__View__raise(void *thisObj)

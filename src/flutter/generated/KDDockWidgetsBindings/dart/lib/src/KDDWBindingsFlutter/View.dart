@@ -422,17 +422,25 @@ class View extends KDDWBindingsCore.View {
         (childView == null || childView.address == 0)
             ? null
             : KDDWBindingsCore.View.fromCppPointer(childView));
+  } // onFlutterWidgetResized(int w, int h)
+
+  bool onFlutterWidgetResized(int w, int h) {
+    final bool_Func_voidstar_int_int func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__flutter__View__onFlutterWidgetResized_int_int')
+        .asFunction();
+    return func(thisCpp, w, h) != 0;
   }
 
-  static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int w, int h) {
+  static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int h, int w) {
     var dartInstance =
         KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as View;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for View::onResize(int w, int h)! (${thisCpp.address})");
+          "Dart instance not found for View::onResize(int h, int w)! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance.onResize_2(w, h);
+    final result = dartInstance.onResize_2(h, w);
     return result ? 1 : 0;
   }
 
@@ -1114,7 +1122,7 @@ class View extends KDDWBindingsCore.View {
     const callbackExcept968 = 0;
     final callback968 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.onResize_2_calledFromC, callbackExcept968);
+            KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept968);
     registerCallback(thisCpp, callback968, 968);
     final callback971 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raise_calledFromC);

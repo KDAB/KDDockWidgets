@@ -409,18 +409,18 @@ void DropArea_wrapper::onChildVisibilityChanged_nocallback(KDDockWidgets::Core::
 {
     ::KDDockWidgets::flutter::DropArea::onChildVisibilityChanged(childView);
 }
-bool DropArea_wrapper::onResize(int w, int h)
+bool DropArea_wrapper::onResize(int h, int w)
 {
     if (m_onResize_2Callback) {
         const void *thisPtr = this;
-        return m_onResize_2Callback(const_cast<void *>(thisPtr), w, h);
+        return m_onResize_2Callback(const_cast<void *>(thisPtr), h, w);
     } else {
-        return ::KDDockWidgets::flutter::DropArea::onResize(w, h);
+        return ::KDDockWidgets::flutter::DropArea::onResize(h, w);
     }
 }
-bool DropArea_wrapper::onResize_nocallback(int w, int h)
+bool DropArea_wrapper::onResize_nocallback(int h, int w)
 {
-    return ::KDDockWidgets::flutter::DropArea::onResize(w, h);
+    return ::KDDockWidgets::flutter::DropArea::onResize(h, w);
 }
 void DropArea_wrapper::raise()
 {
@@ -941,10 +941,10 @@ void c_KDDockWidgets__flutter__DropArea__onChildVisibilityChanged_View(void *thi
     auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildVisibilityChanged_nocallback(childView);} else {    return targetPtr->onChildVisibilityChanged(childView);} }();
 }
-// onResize(int w, int h)
-bool c_KDDockWidgets__flutter__DropArea__onResize_int_int(void *thisObj, int w, int h)
+// onResize(int h, int w)
+bool c_KDDockWidgets__flutter__DropArea__onResize_int_int(void *thisObj, int h, int w)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(w,h);} else {    return targetPtr->onResize(w,h);} }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
 }
 // raise()
 void c_KDDockWidgets__flutter__DropArea__raise(void *thisObj)

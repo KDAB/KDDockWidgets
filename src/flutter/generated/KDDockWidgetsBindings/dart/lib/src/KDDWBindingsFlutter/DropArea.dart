@@ -399,15 +399,15 @@ class DropArea extends KDDWBindingsFlutter.View {
             : KDDWBindingsCore.View.fromCppPointer(childView));
   }
 
-  static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int w, int h) {
+  static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int h, int w) {
     var dartInstance = KDDWBindingsCore
         .View.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for DropArea::onResize(int w, int h)! (${thisCpp.address})");
+          "Dart instance not found for DropArea::onResize(int h, int w)! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance.onResize_2(w, h);
+    final result = dartInstance.onResize_2(h, w);
     return result ? 1 : 0;
   }
 
@@ -1068,7 +1068,7 @@ class DropArea extends KDDWBindingsFlutter.View {
     const callbackExcept968 = 0;
     final callback968 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.onResize_2_calledFromC, callbackExcept968);
+            KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept968);
     registerCallback(thisCpp, callback968, 968);
     final callback971 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raise_calledFromC);

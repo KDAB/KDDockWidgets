@@ -448,18 +448,18 @@ void TitleBar_wrapper::onChildVisibilityChanged_nocallback(KDDockWidgets::Core::
 {
     ::KDDockWidgets::flutter::TitleBar::onChildVisibilityChanged(childView);
 }
-bool TitleBar_wrapper::onResize(int w, int h)
+bool TitleBar_wrapper::onResize(int h, int w)
 {
     if (m_onResize_2Callback) {
         const void *thisPtr = this;
-        return m_onResize_2Callback(const_cast<void *>(thisPtr), w, h);
+        return m_onResize_2Callback(const_cast<void *>(thisPtr), h, w);
     } else {
-        return ::KDDockWidgets::flutter::TitleBar::onResize(w, h);
+        return ::KDDockWidgets::flutter::TitleBar::onResize(h, w);
     }
 }
-bool TitleBar_wrapper::onResize_nocallback(int w, int h)
+bool TitleBar_wrapper::onResize_nocallback(int h, int w)
 {
-    return ::KDDockWidgets::flutter::TitleBar::onResize(w, h);
+    return ::KDDockWidgets::flutter::TitleBar::onResize(h, w);
 }
 void TitleBar_wrapper::raise()
 {
@@ -995,10 +995,10 @@ void c_KDDockWidgets__flutter__TitleBar__onChildVisibilityChanged_View(void *thi
     auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildVisibilityChanged_nocallback(childView);} else {    return targetPtr->onChildVisibilityChanged(childView);} }();
 }
-// onResize(int w, int h)
-bool c_KDDockWidgets__flutter__TitleBar__onResize_int_int(void *thisObj, int w, int h)
+// onResize(int h, int w)
+bool c_KDDockWidgets__flutter__TitleBar__onResize_int_int(void *thisObj, int h, int w)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(w,h);} else {    return targetPtr->onResize(w,h);} }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
 }
 // raise()
 void c_KDDockWidgets__flutter__TitleBar__raise(void *thisObj)
@@ -1177,16 +1177,16 @@ void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr
     case 949:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isActiveWindow>(callback);
         break;
-    case 1053:
+    case 1055:
         wrapper->m_isCloseButtonEnabledCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isCloseButtonEnabled>(callback);
         break;
-    case 1054:
+    case 1056:
         wrapper->m_isCloseButtonVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isCloseButtonVisible>(callback);
         break;
     case 950:
         wrapper->m_isExpicitlyHiddenCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isExpicitlyHidden>(callback);
         break;
-    case 1055:
+    case 1057:
         wrapper->m_isFloatButtonVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isFloatButtonVisible>(callback);
         break;
     case 951:

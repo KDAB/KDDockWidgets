@@ -422,18 +422,18 @@ void MainWindow_wrapper::onChildVisibilityChanged_nocallback(KDDockWidgets::Core
 {
     ::KDDockWidgets::flutter::MainWindow::onChildVisibilityChanged(childView);
 }
-bool MainWindow_wrapper::onResize(int w, int h)
+bool MainWindow_wrapper::onResize(int h, int w)
 {
     if (m_onResize_2Callback) {
         const void *thisPtr = this;
-        return m_onResize_2Callback(const_cast<void *>(thisPtr), w, h);
+        return m_onResize_2Callback(const_cast<void *>(thisPtr), h, w);
     } else {
-        return ::KDDockWidgets::flutter::MainWindow::onResize(w, h);
+        return ::KDDockWidgets::flutter::MainWindow::onResize(h, w);
     }
 }
-bool MainWindow_wrapper::onResize_nocallback(int w, int h)
+bool MainWindow_wrapper::onResize_nocallback(int h, int w)
 {
-    return ::KDDockWidgets::flutter::MainWindow::onResize(w, h);
+    return ::KDDockWidgets::flutter::MainWindow::onResize(h, w);
 }
 void MainWindow_wrapper::raise()
 {
@@ -973,10 +973,10 @@ void c_KDDockWidgets__flutter__MainWindow__onChildVisibilityChanged_View(void *t
     auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::MainWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildVisibilityChanged_nocallback(childView);} else {    return targetPtr->onChildVisibilityChanged(childView);} }();
 }
-// onResize(int w, int h)
-bool c_KDDockWidgets__flutter__MainWindow__onResize_int_int(void *thisObj, int w, int h)
+// onResize(int h, int w)
+bool c_KDDockWidgets__flutter__MainWindow__onResize_int_int(void *thisObj, int h, int w)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::MainWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(w,h);} else {    return targetPtr->onResize(w,h);} }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::MainWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
 }
 // raise()
 void c_KDDockWidgets__flutter__MainWindow__raise(void *thisObj)
@@ -1133,7 +1133,7 @@ void c_KDDockWidgets__flutter__MainWindow__registerVirtualMethodCallback(void *p
     case 914:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::MainWindow_wrapper::Callback_activateWindow>(callback);
         break;
-    case 1078:
+    case 1083:
         wrapper->m_centralAreaGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::MainWindow_wrapper::Callback_centralAreaGeometry>(callback);
         break;
     case 925:
@@ -1235,7 +1235,7 @@ void c_KDDockWidgets__flutter__MainWindow__registerVirtualMethodCallback(void *p
     case 975:
         wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::MainWindow_wrapper::Callback_releaseMouse>(callback);
         break;
-    case 1079:
+    case 1085:
         wrapper->m_setContentsMarginsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::MainWindow_wrapper::Callback_setContentsMargins>(callback);
         break;
     case 979:

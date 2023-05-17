@@ -426,18 +426,18 @@ void Group_wrapper::onChildVisibilityChanged_nocallback(KDDockWidgets::Core::Vie
 {
     ::KDDockWidgets::flutter::Group::onChildVisibilityChanged(childView);
 }
-bool Group_wrapper::onResize(int w, int h)
+bool Group_wrapper::onResize(int h, int w)
 {
     if (m_onResize_2Callback) {
         const void *thisPtr = this;
-        return m_onResize_2Callback(const_cast<void *>(thisPtr), w, h);
+        return m_onResize_2Callback(const_cast<void *>(thisPtr), h, w);
     } else {
-        return ::KDDockWidgets::flutter::Group::onResize(w, h);
+        return ::KDDockWidgets::flutter::Group::onResize(h, w);
     }
 }
-bool Group_wrapper::onResize_nocallback(int w, int h)
+bool Group_wrapper::onResize_nocallback(int h, int w)
 {
-    return ::KDDockWidgets::flutter::Group::onResize(w, h);
+    return ::KDDockWidgets::flutter::Group::onResize(h, w);
 }
 void Group_wrapper::raise()
 {
@@ -968,10 +968,10 @@ void c_KDDockWidgets__flutter__Group__onChildVisibilityChanged_View(void *thisOb
     auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildVisibilityChanged_nocallback(childView);} else {    return targetPtr->onChildVisibilityChanged(childView);} }();
 }
-// onResize(int w, int h)
-bool c_KDDockWidgets__flutter__Group__onResize_int_int(void *thisObj, int w, int h)
+// onResize(int h, int w)
+bool c_KDDockWidgets__flutter__Group__onResize_int_int(void *thisObj, int h, int w)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(w,h);} else {    return targetPtr->onResize(w,h);} }();
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
 }
 // raise()
 void c_KDDockWidgets__flutter__Group__raise(void *thisObj)
@@ -1129,7 +1129,7 @@ void c_KDDockWidgets__flutter__Group__registerVirtualMethodCallback(void *ptr, v
     case 928:
         wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_createPlatformWindow>(callback);
         break;
-    case 1085:
+    case 1091:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_dragRect>(callback);
         break;
     case 934:
@@ -1192,7 +1192,7 @@ void c_KDDockWidgets__flutter__Group__registerVirtualMethodCallback(void *ptr, v
     case 964:
         wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_move_2>(callback);
         break;
-    case 1086:
+    case 1092:
         wrapper->m_nonContentsHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Group_wrapper::Callback_nonContentsHeight>(callback);
         break;
     case 965:

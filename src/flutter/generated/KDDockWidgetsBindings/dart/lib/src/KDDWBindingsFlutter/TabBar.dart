@@ -333,7 +333,7 @@ class TabBar extends KDDWBindingsFlutter.View {
   moveTabTo(int from, int to) {
     final void_Func_voidstar_int_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1060))
+            cFunctionSymbolName(1063))
         .asFunction();
     func(thisCpp, from, to);
   }
@@ -421,7 +421,7 @@ class TabBar extends KDDWBindingsFlutter.View {
   onRebuildRequested() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1061))
+            cFunctionSymbolName(1065))
         .asFunction();
     func(thisCpp);
   }
@@ -437,15 +437,15 @@ class TabBar extends KDDWBindingsFlutter.View {
     dartInstance.onRebuildRequested();
   }
 
-  static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int w, int h) {
+  static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int h, int w) {
     var dartInstance =
         KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as TabBar;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for TabBar::onResize(int w, int h)! (${thisCpp.address})");
+          "Dart instance not found for TabBar::onResize(int h, int w)! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance.onResize_2(w, h);
+    final result = dartInstance.onResize_2(h, w);
     return result ? 1 : 0;
   }
 
@@ -474,7 +474,7 @@ class TabBar extends KDDWBindingsFlutter.View {
   QRect rectForTab(int index) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1062))
+            cFunctionSymbolName(1066))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, index);
     return QRect.fromCppPointer(result, true);
@@ -518,7 +518,7 @@ class TabBar extends KDDWBindingsFlutter.View {
   removeDockWidget(KDDWBindingsCore.DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1063))
+            cFunctionSymbolName(1067))
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
   }
@@ -540,7 +540,7 @@ class TabBar extends KDDWBindingsFlutter.View {
   renameTab(int index, String? name) {
     final void_Func_voidstar_int_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_voidstar_FFI>>(
-            cFunctionSymbolName(1064))
+            cFunctionSymbolName(1068))
         .asFunction();
     func(thisCpp, index, name?.toNativeUtf8() ?? ffi.nullptr);
   }
@@ -560,7 +560,7 @@ class TabBar extends KDDWBindingsFlutter.View {
   setCurrentIndex(int index) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1065))
+            cFunctionSymbolName(1069))
         .asFunction();
     func(thisCpp, index);
   }
@@ -821,7 +821,7 @@ class TabBar extends KDDWBindingsFlutter.View {
   int tabAt(QPoint localPos) {
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1068))
+            cFunctionSymbolName(1072))
         .asFunction();
     return func(thisCpp, localPos == null ? ffi.nullptr : localPos.thisCpp);
   }
@@ -842,7 +842,7 @@ class TabBar extends KDDWBindingsFlutter.View {
   QString text(int index) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1069))
+            cFunctionSymbolName(1073))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, index);
     return QString.fromCppPointer(result, true);
@@ -930,7 +930,7 @@ class TabBar extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__TabBar__minimumWidth";
       case 964:
         return "c_KDDockWidgets__flutter__TabBar__move_int_int";
-      case 1060:
+      case 1063:
         return "c_KDDockWidgets__flutter__TabBar__moveTabTo_int_int";
       case 965:
         return "c_KDDockWidgets__flutter__TabBar__normalGeometry";
@@ -942,7 +942,7 @@ class TabBar extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__TabBar__onChildRemoved_View";
       case 1036:
         return "c_KDDockWidgets__flutter__TabBar__onChildVisibilityChanged_View";
-      case 1061:
+      case 1065:
         return "c_KDDockWidgets__flutter__TabBar__onRebuildRequested";
       case 968:
         return "c_KDDockWidgets__flutter__TabBar__onResize_int_int";
@@ -950,17 +950,17 @@ class TabBar extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__TabBar__raise";
       case 972:
         return "c_KDDockWidgets__flutter__TabBar__raiseAndActivate";
-      case 1062:
+      case 1066:
         return "c_KDDockWidgets__flutter__TabBar__rectForTab_int";
       case 974:
         return "c_KDDockWidgets__flutter__TabBar__releaseKeyboard";
       case 975:
         return "c_KDDockWidgets__flutter__TabBar__releaseMouse";
-      case 1063:
+      case 1067:
         return "c_KDDockWidgets__flutter__TabBar__removeDockWidget_DockWidget";
-      case 1064:
+      case 1068:
         return "c_KDDockWidgets__flutter__TabBar__renameTab_int_QString";
-      case 1065:
+      case 1069:
         return "c_KDDockWidgets__flutter__TabBar__setCurrentIndex_int";
       case 979:
         return "c_KDDockWidgets__flutter__TabBar__setCursor_CursorShape";
@@ -1004,9 +1004,9 @@ class TabBar extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__TabBar__showNormal";
       case 1001:
         return "c_KDDockWidgets__flutter__TabBar__sizeHint";
-      case 1068:
+      case 1072:
         return "c_KDDockWidgets__flutter__TabBar__tabAt_QPoint";
-      case 1069:
+      case 1073:
         return "c_KDDockWidgets__flutter__TabBar__text_int";
       case 1003:
         return "c_KDDockWidgets__flutter__TabBar__update";
@@ -1064,7 +1064,7 @@ class TabBar extends KDDWBindingsFlutter.View {
         return "minimumWidth";
       case 964:
         return "move_2";
-      case 1060:
+      case 1063:
         return "moveTabTo";
       case 965:
         return "normalGeometry";
@@ -1076,7 +1076,7 @@ class TabBar extends KDDWBindingsFlutter.View {
         return "onChildRemoved";
       case 1036:
         return "onChildVisibilityChanged";
-      case 1061:
+      case 1065:
         return "onRebuildRequested";
       case 968:
         return "onResize_2";
@@ -1084,17 +1084,17 @@ class TabBar extends KDDWBindingsFlutter.View {
         return "raise";
       case 972:
         return "raiseAndActivate";
-      case 1062:
+      case 1066:
         return "rectForTab";
       case 974:
         return "releaseKeyboard";
       case 975:
         return "releaseMouse";
-      case 1063:
+      case 1067:
         return "removeDockWidget";
-      case 1064:
+      case 1068:
         return "renameTab";
-      case 1065:
+      case 1069:
         return "setCurrentIndex";
       case 979:
         return "setCursor";
@@ -1138,9 +1138,9 @@ class TabBar extends KDDWBindingsFlutter.View {
         return "showNormal";
       case 1001:
         return "sizeHint";
-      case 1068:
+      case 1072:
         return "tabAt";
-      case 1069:
+      case 1073:
         return "text";
       case 1003:
         return "update";
@@ -1243,10 +1243,10 @@ class TabBar extends KDDWBindingsFlutter.View {
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.move_2_calledFromC);
     registerCallback(thisCpp, callback964, 964);
-    final callback1060 =
+    final callback1063 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
             KDDWBindingsFlutter.TabBar.moveTabTo_calledFromC);
-    registerCallback(thisCpp, callback1060, 1060);
+    registerCallback(thisCpp, callback1063, 1063);
     final callback965 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.normalGeometry_calledFromC);
     registerCallback(thisCpp, callback965, 965);
@@ -1265,13 +1265,13 @@ class TabBar extends KDDWBindingsFlutter.View {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildVisibilityChanged_calledFromC);
     registerCallback(thisCpp, callback1036, 1036);
-    final callback1061 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback1065 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.TabBar.onRebuildRequested_calledFromC);
-    registerCallback(thisCpp, callback1061, 1061);
+    registerCallback(thisCpp, callback1065, 1065);
     const callbackExcept968 = 0;
     final callback968 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.onResize_2_calledFromC, callbackExcept968);
+            KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept968);
     registerCallback(thisCpp, callback968, 968);
     final callback971 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raise_calledFromC);
@@ -1279,28 +1279,28 @@ class TabBar extends KDDWBindingsFlutter.View {
     final callback972 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raiseAndActivate_calledFromC);
     registerCallback(thisCpp, callback972, 972);
-    final callback1062 =
+    final callback1066 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.TabBar.rectForTab_calledFromC);
-    registerCallback(thisCpp, callback1062, 1062);
+    registerCallback(thisCpp, callback1066, 1066);
     final callback974 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseKeyboard_calledFromC);
     registerCallback(thisCpp, callback974, 974);
     final callback975 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseMouse_calledFromC);
     registerCallback(thisCpp, callback975, 975);
-    final callback1063 =
+    final callback1067 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.TabBar.removeDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1063, 1063);
-    final callback1064 =
+    registerCallback(thisCpp, callback1067, 1067);
+    final callback1068 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_voidstar_FFI>(
             KDDWBindingsFlutter.TabBar.renameTab_calledFromC);
-    registerCallback(thisCpp, callback1064, 1064);
-    final callback1065 =
+    registerCallback(thisCpp, callback1068, 1068);
+    final callback1069 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.TabBar.setCurrentIndex_calledFromC);
-    registerCallback(thisCpp, callback1065, 1065);
+    registerCallback(thisCpp, callback1069, 1069);
     final callback979 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.setCursor_calledFromC);
@@ -1380,15 +1380,15 @@ class TabBar extends KDDWBindingsFlutter.View {
     final callback1001 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.sizeHint_calledFromC);
     registerCallback(thisCpp, callback1001, 1001);
-    const callbackExcept1068 = 0;
-    final callback1068 =
+    const callbackExcept1072 = 0;
+    final callback1072 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.TabBar.tabAt_calledFromC, callbackExcept1068);
-    registerCallback(thisCpp, callback1068, 1068);
-    final callback1069 =
+            KDDWBindingsFlutter.TabBar.tabAt_calledFromC, callbackExcept1072);
+    registerCallback(thisCpp, callback1072, 1072);
+    final callback1073 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.TabBar.text_calledFromC);
-    registerCallback(thisCpp, callback1069, 1069);
+    registerCallback(thisCpp, callback1073, 1073);
     final callback1003 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.update_calledFromC);
     registerCallback(thisCpp, callback1003, 1003);

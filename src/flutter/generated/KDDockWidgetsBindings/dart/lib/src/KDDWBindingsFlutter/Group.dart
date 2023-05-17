@@ -87,7 +87,7 @@ class Group extends KDDWBindingsFlutter.View {
   QRect dragRect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1085))
+            cFunctionSymbolName(1091))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -361,7 +361,7 @@ class Group extends KDDWBindingsFlutter.View {
   int nonContentsHeight() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1086))
+            cFunctionSymbolName(1092))
         .asFunction();
     return func(thisCpp);
   }
@@ -446,15 +446,15 @@ class Group extends KDDWBindingsFlutter.View {
             : KDDWBindingsCore.View.fromCppPointer(childView));
   }
 
-  static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int w, int h) {
+  static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int h, int w) {
     var dartInstance =
         KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Group;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Group::onResize(int w, int h)! (${thisCpp.address})");
+          "Dart instance not found for Group::onResize(int h, int w)! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance.onResize_2(w, h);
+    final result = dartInstance.onResize_2(h, w);
     return result ? 1 : 0;
   }
 
@@ -769,7 +769,7 @@ class Group extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__Group__close";
       case 928:
         return "c_KDDockWidgets__flutter__Group__createPlatformWindow";
-      case 1085:
+      case 1091:
         return "c_KDDockWidgets__flutter__Group__dragRect";
       case 934:
         return "c_KDDockWidgets__flutter__Group__flags";
@@ -813,7 +813,7 @@ class Group extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__Group__minimumWidth";
       case 964:
         return "c_KDDockWidgets__flutter__Group__move_int_int";
-      case 1086:
+      case 1092:
         return "c_KDDockWidgets__flutter__Group__nonContentsHeight";
       case 965:
         return "c_KDDockWidgets__flutter__Group__normalGeometry";
@@ -891,7 +891,7 @@ class Group extends KDDWBindingsFlutter.View {
         return "close";
       case 928:
         return "createPlatformWindow";
-      case 1085:
+      case 1091:
         return "dragRect";
       case 934:
         return "flags";
@@ -935,7 +935,7 @@ class Group extends KDDWBindingsFlutter.View {
         return "minimumWidth";
       case 964:
         return "move_2";
-      case 1086:
+      case 1092:
         return "nonContentsHeight";
       case 965:
         return "normalGeometry";
@@ -1021,9 +1021,9 @@ class Group extends KDDWBindingsFlutter.View {
     final callback928 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.createPlatformWindow_calledFromC);
     registerCallback(thisCpp, callback928, 928);
-    final callback1085 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1091 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Group.dragRect_calledFromC);
-    registerCallback(thisCpp, callback1085, 1085);
+    registerCallback(thisCpp, callback1091, 1091);
     const callbackExcept934 = 0;
     final callback934 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.flags_calledFromC, callbackExcept934);
@@ -1103,11 +1103,11 @@ class Group extends KDDWBindingsFlutter.View {
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.move_2_calledFromC);
     registerCallback(thisCpp, callback964, 964);
-    const callbackExcept1086 = 0;
-    final callback1086 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+    const callbackExcept1092 = 0;
+    final callback1092 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Group.nonContentsHeight_calledFromC,
-        callbackExcept1086);
-    registerCallback(thisCpp, callback1086, 1086);
+        callbackExcept1092);
+    registerCallback(thisCpp, callback1092, 1092);
     final callback965 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.normalGeometry_calledFromC);
     registerCallback(thisCpp, callback965, 965);
@@ -1129,7 +1129,7 @@ class Group extends KDDWBindingsFlutter.View {
     const callbackExcept968 = 0;
     final callback968 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.onResize_2_calledFromC, callbackExcept968);
+            KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept968);
     registerCallback(thisCpp, callback968, 968);
     final callback971 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raise_calledFromC);
