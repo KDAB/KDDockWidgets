@@ -240,6 +240,11 @@ void View::setParent(Core::View *parent)
 
         // Track it in C++
         m_parentView->m_childViews.append(this);
+
+        if (!m_parentView->isVisible() && isExpicitlyHidden()) {
+            // Mimic QtWidget. Parenting removes the explicit hidden attribute if the parent is not visible
+            m_visible = std::nullopt;
+        }
     } else {
         if (!m_inDtor) {
             // Mimic Qt and hide when unparenting
