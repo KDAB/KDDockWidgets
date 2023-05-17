@@ -240,6 +240,11 @@ void View::setParent(Core::View *parent)
 
         // Track it in C++
         m_parentView->m_childViews.append(this);
+    } else {
+        if (!m_inDtor) {
+            // Mimic Qt and hide when unparenting
+            setVisible(false);
+        }
     }
 }
 
