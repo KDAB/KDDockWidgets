@@ -36,7 +36,7 @@ KDDW_QCORO_TASK tst_floatingWindowCtor()
     CHECK(dw->floatingWindow());
 
     /// Wait for FloatingWindow to be created
-    Platform::instance()->tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     auto rootView = dw->view()->rootView();
     CHECK(rootView);

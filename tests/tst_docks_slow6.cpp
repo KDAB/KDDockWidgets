@@ -49,8 +49,8 @@ KDDW_QCORO_TASK tst_isFocused()
     auto dock2 = createDockWidget(QStringLiteral("dock2"),
                                   Platform::instance()->tests_createFocusableView({ true }));
 
-    Platform::instance()->tests_wait(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
-                                           // otherwise dock1 looses again
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
+                                                         // otherwise dock1 looses again
 
     dock1->window()->move(400, 200);
 

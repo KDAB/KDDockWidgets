@@ -110,6 +110,7 @@ endfunction()
 
 add_kddw_test(tst_docks_slow1 tst_docks_slow1.cpp ON)
 add_kddw_test(tst_docks_slow2 tst_docks_slow2.cpp ON)
+add_kddw_test(tst_docks_slow3 tst_docks_slow3.cpp ON)
 add_kddw_test(tst_docks_slow4 tst_docks_slow4.cpp ON)
 add_kddw_test(tst_docks_slow7 tst_docks_slow7.cpp ON)
 
@@ -129,7 +130,6 @@ add_kddw_test(tst_dockwidget core/tst_dockwidget.cpp ON)
 
 # These build with flutter but don't pass. So just build them but don't add
 # them to the ctest set yet:
-add_kddw_test(tst_docks_slow3 tst_docks_slow3.cpp OFF)
 add_kddw_test(tst_docks_slow5 tst_docks_slow5.cpp OFF)
 add_kddw_test(tst_docks_slow6 tst_docks_slow6.cpp OFF)
 

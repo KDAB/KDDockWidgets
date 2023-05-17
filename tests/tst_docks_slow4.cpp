@@ -104,7 +104,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
 
     // 2.6 Drag the tabbed group over a 3rd floating window
     auto dock3 = createDockWidget("doc3");
-    Platform::instance()->tests_wait(1000); // Test is flaky otherwise
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Test is flaky otherwise
 
     auto fw2 = dock2->floatingWindow();
     finalPoint = dock3->window()->geometry().center() + QPoint(7, 7);
@@ -161,7 +161,7 @@ KDDW_QCORO_TASK tst_restoreSimple()
     const QPoint dock2FloatingPoint = QPoint(150, 150);
     dock2->view()->window()->setFramePosition(dock2FloatingPoint);
     CHECK(dock2->isVisible());
-    Platform::instance()->tests_wait(1000); // Wait for group to settle
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Wait for group to settle
 
     const QPoint dock3FloatingPoint = QPoint(200, 200);
     dock3->view()->window()->setFramePosition(dock3FloatingPoint);
@@ -211,7 +211,7 @@ KDDW_QCORO_TASK tst_restoreSimple()
     dock3->dptr()->morphIntoFloatingWindow(); // as it would take 1 event loop. Do it now so we can
                                               // compare already.
 
-    Platform::instance()->tests_wait(300);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(300);
     CHECK_EQ(dock3->view()->window()->framePosition(), dock3FloatingPoint);
 
     KDDW_CO_RETURN(true);
@@ -229,7 +229,7 @@ KDDW_QCORO_TASK tst_restoreSimplest()
     LayoutSaver saver;
     CHECK(saver.saveToFile(QStringLiteral("layout_tst_restoreSimplest.json")));
 
-    Platform::instance()->tests_wait(300);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(300);
 
     CHECK(layout->checkSanity());
     CHECK(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));

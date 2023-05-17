@@ -64,7 +64,7 @@ KDDW_QCORO_TASK tst_resize()
     const QSize newSize(501, 502);
     window->resize(newSize.width(), newSize.height());
 
-    Platform::instance()->tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     CHECK_EQ(window->size(), newSize);
 
@@ -107,7 +107,7 @@ KDDW_QCORO_TASK tst_geometry()
     const QRect geo = QRect(10, 10, 1000, 1000);
     window->setGeometry(geo);
 
-    Platform::instance()->tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
     CHECK_EQ(window->geometry(), geo);
 
     window->destroy();

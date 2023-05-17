@@ -143,7 +143,7 @@ KDDW_QCORO_TASK tst_viewGeometry()
     const QRect newChildGeo(1, 2, 300, 301);
     childView->setGeometry(newChildGeo);
 
-    Platform::instance()->tests_wait(500);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(500);
 
     CHECK(!childView->isRootView());
     CHECK_EQ(childView->size(), newChildGeo.size());
@@ -236,11 +236,11 @@ KDDW_QCORO_TASK tst_hasFocus()
     rootView->activateWindow();
 
     CHECK(rootView->controller()->isVisible());
-    Platform::instance()->tests_wait(0);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(0);
     CHECK(!rootView->hasFocus());
 
     rootView->setFocus(Qt::MouseFocusReason);
-    Platform::instance()->tests_wait(200); // QWidget::setFocus() requires 1 event loop iteration
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(200); // QWidget::setFocus() requires 1 event loop iteration
     CHECK(rootView->hasFocus());
     CHECK(rootView->equals(Platform::instance()->focusedView()));
 
@@ -249,7 +249,7 @@ KDDW_QCORO_TASK tst_hasFocus()
     CHECK(rootView->equals(Platform::instance()->focusedView()));
     child1->controller()->setVisible(true);
     child1->setFocus(Qt::MouseFocusReason);
-    Platform::instance()->tests_wait(200); // QWidget::setFocus() requires 1 event loop iteration
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(200); // QWidget::setFocus() requires 1 event loop iteration
     CHECK(child1->hasFocus());
     CHECK(child1->equals(Platform::instance()->focusedView()));
 
@@ -275,7 +275,7 @@ KDDW_QCORO_TASK tst_parentDeletesChildViews()
     rootView->show();
     rootView->activateWindow();
     CHECK(rootView->controller()->isVisible());
-    Platform::instance()->tests_wait(0);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(0);
     auto child = createViewAndWindow({}, rootView);
     child->show();
     CHECK(child->isVisible());

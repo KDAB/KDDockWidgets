@@ -61,7 +61,7 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
     dw2->setGuestView(le2->asWrapper());
     dw2->open();
     dw1->open();
-    Platform::instance()->tests_wait(200);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
 
     auto fw1 = dw1->floatingWindow();
     QPointer<Core::FloatingWindow> fw2 = dw2->floatingWindow();
@@ -76,7 +76,7 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
         });
 
     le1->setFocus(Qt::MouseFocusReason);
-    Platform::instance()->tests_wait(200);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
     CHECK(dw1->isFocused());
 
     CHECK(fw1->view()->isActiveWindow());
@@ -126,6 +126,9 @@ KDDW_QCORO_TASK tst_close()
     auto dock1 = createDockWidget("doc1");
     QAction *toggleAction = dock1->toggleAction();
     CHECK(toggleAction->isChecked());
+    CHECK(dock1->isFloating());
+    CHECK(dock1->isVisible());
+    CHECK(dock1->floatingWindow());
 
     CHECK(dock1->close());
 
@@ -138,7 +141,10 @@ KDDW_QCORO_TASK tst_close()
     dock1->open();
     auto fw = dock1->floatingWindow();
     CHECK(fw);
+    CHECK(fw->isVisible());
     CHECK(toggleAction->isChecked());
+    CHECK(!dock1->view()->isExpicitlyHidden());
+    CHECK(!dock1->view()->isExpicitlyHidden());
     CHECK(dock1->isVisible());
     CHECK(dock1->window()->equals(fw->view()));
     CHECK(toggleAction->isChecked());
@@ -208,14 +214,14 @@ KDDW_QCORO_TASK tst_close()
              centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
                  + 1);
     leftDock->close();
-    Platform::instance()->tests_wait(250);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(250);
     CHECK_EQ(centralDock->dptr()->group()->view()->x(), 0);
     CHECK_EQ(rightDock->dptr()->group()->view()->x(),
              centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
                  + 1);
 
     rightDock->close();
-    Platform::instance()->tests_wait(250);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(250);
     QMargins margins = mainwindow->centerWidgetMargins();
     CHECK_EQ(centralDock->dptr()->group()->view()->width(),
              mainwindow->width() - 0 * 2 - margins.left() - margins.right());
@@ -289,10 +295,10 @@ KDDW_QCORO_TASK tst_positionWhenShown()
     auto window = createMainWindow();
     auto dock1 = newDockWidget("1");
     dock1->open();
-    Platform::instance()->tests_wait(1000); // Wait for group to settle
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Wait for group to settle
     const QPoint desiredPos = QPoint(100, 100);
     dock1->view()->window()->setFramePosition(desiredPos);
-    Platform::instance()->tests_wait(1000); // Wait for group to settle
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Wait for group to settle
     CHECK_EQ(dock1->view()->window()->framePosition(), desiredPos);
 
     dock1->close();
@@ -308,10 +314,12 @@ KDDW_QCORO_TASK tst_positionWhenShown()
 }
 
 static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+#ifndef KDDW_FRONTEND_FLUTTER
     tst_dockWidgetGetsFocusWhenDocked,
     tst_closeShowWhenNoCentralFrame,
-    tst_close,
-    tst_positionWhenShown
+    tst_positionWhenShown,
+#endif
+    tst_close
 };
 
 #include "tests_main.h"

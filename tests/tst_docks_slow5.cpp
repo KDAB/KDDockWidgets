@@ -74,7 +74,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         for (int i : docksToHide) {
             docksToCreate.at(i).createdDock->close();
             layout->checkSanity();
-            Platform::instance()->tests_wait(200);
+            KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
         }
 
         layout->checkSanity();
@@ -91,8 +91,8 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         for (auto dock : docksToCreate) {
             if (dock.createdDock && dock.createdDock->isVisible()) {
                 dock.createdDock->close();
-                Platform::instance()->tests_wait(200); // Wait for the docks to be closed. TODO Replace with a global event
-                                                       // filter and wait for any resize ?
+                KDDW_CO_AWAIT Platform::instance()->tests_wait(200); // Wait for the docks to be closed. TODO Replace with a global event
+                                                                     // filter and wait for any resize ?
             }
             ++i;
         }
