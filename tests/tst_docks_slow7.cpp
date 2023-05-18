@@ -403,7 +403,7 @@ KDDW_QCORO_TASK tst_crash2()
                 layout->checkSanity();
                 if (i == 2) {
                     // Wait for the resizes. This used to make the app crash.
-                    Platform::instance()->tests_wait(1000);
+                    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
                 }
 
                 docks[i]->setFloating(floatings[i]);

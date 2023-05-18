@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'package:KDDockWidgets/Platform.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
@@ -68,6 +69,16 @@ class FloatingWindowPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents() {
+    // There's a crash where flutter would build the widget when kddw's C++ FloatingWindow
+    // was already deleted, check if it still exists.
+    try {
+      final allFloatingWindows = Platform.plat().floatingWindows;
+      allFloatingWindows
+          .firstWhere((fw) => fw.thisCpp == view.m_controller.thisCpp);
+    } catch (IterableElementError) {
+      return Container();
+    }
+
     final titleBarWidget = view.titleBarView().flutterWidget;
     final dropAreaWidget = view.dropAreaView().flutterWidget;
 
