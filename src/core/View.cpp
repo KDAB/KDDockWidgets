@@ -11,8 +11,9 @@
 
 #include "View.h"
 #include "core/View_p.h"
+#include "core/Utils_p.h"
 #include "core/layouting/Item_p.h"
-
+#include "core/EventFilterInterface.h"
 #include "core/FloatingWindow.h"
 #include "core/Group.h"
 #include "core/Stack.h"
@@ -441,4 +442,40 @@ void View::removeViewEventFilter(EventFilterInterface *filter)
     d->m_viewEventFilters.erase(
         std::remove(d->m_viewEventFilters.begin(), d->m_viewEventFilters.end(), filter),
         d->m_viewEventFilters.end());
+}
+
+bool View::deliverViewEventToFilters(Event *ev)
+{
+    for (Core::EventFilterInterface *filter : qAsConst(d->m_viewEventFilters)) {
+        if (ev->type() == Event::Move) {
+            if (filter->onMoveEvent(this))
+                return true;
+        } else if (auto me = mouseEvent(ev)) {
+            if (filter->onMouseEvent(this, me))
+                return true;
+
+            switch (ev->type()) {
+            case Event::MouseButtonPress:
+                if (filter->onMouseButtonPress(this, me))
+                    return true;
+                break;
+            case Event::MouseButtonRelease:
+                if (filter->onMouseButtonRelease(this, me))
+                    return true;
+                break;
+            case Event::MouseMove:
+                if (filter->onMouseButtonMove(this, me))
+                    return true;
+                break;
+            case Event::MouseButtonDblClick:
+                if (filter->onMouseDoubleClick(this, me))
+                    return true;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    return false;
 }

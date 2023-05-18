@@ -127,6 +127,9 @@ public:
     /// @brief Removes the event filter
     void removeViewEventFilter(EventFilterInterface *);
 
+    /// @brief Delivers mouse events and such to event filters
+    bool deliverViewEventToFilters(Event *e);
+
     // TODOm3: Move these to Window instead
     virtual void showNormal() = 0;
     virtual void showMinimized() = 0;

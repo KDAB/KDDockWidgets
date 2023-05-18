@@ -36,56 +36,9 @@ public:
 
     ~EventFilter() override;
 
-    bool eventFilter(QObject *, QEvent *e) override
+    bool eventFilter(QObject *, QEvent *ev) override
     {
-        if (auto me = mouseEvent(e))
-            return handleMouseEvent(me);
-        else if (e->type() == QEvent::Move)
-            return handleMoveEvent();
-
-        return false;
-    }
-
-    bool handleMoveEvent()
-    {
-        for (Core::EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
-            if (filter->onMoveEvent(q))
-                return true;
-        }
-
-        return false;
-    }
-
-    bool handleMouseEvent(QMouseEvent *ev)
-    {
-        for (Core::EventFilterInterface *filter : qAsConst(q->d->m_viewEventFilters)) {
-
-            if (filter->onMouseEvent(q, ev))
-                return true;
-
-            switch (ev->type()) {
-            case QEvent::MouseButtonPress:
-                if (filter->onMouseButtonPress(q, ev))
-                    return true;
-                break;
-            case QEvent::MouseButtonRelease:
-                if (filter->onMouseButtonRelease(q, ev))
-                    return true;
-                break;
-            case QEvent::MouseMove:
-                if (filter->onMouseButtonMove(q, ev))
-                    return true;
-                break;
-            case QEvent::MouseButtonDblClick:
-                if (filter->onMouseDoubleClick(q, ev))
-                    return true;
-                break;
-            default:
-                break;
-            }
-        }
-
-        return false;
+        return q->deliverViewEventToFilters(ev);
     }
 
     View_qt *const q;
