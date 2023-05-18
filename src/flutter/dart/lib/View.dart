@@ -9,10 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
+import 'package:flutter/gestures.dart';
+import 'package:flutter/widgets.dart';
 import 'View_mixin.dart';
 
 class View extends KDDWBindingsFlutter.View with View_mixin {

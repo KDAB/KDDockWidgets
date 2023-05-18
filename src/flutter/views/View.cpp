@@ -480,3 +480,17 @@ void View::onChildVisibilityChanged(Core::View *childView)
     dumpDebug();
     qFatal("Derived class should be called instead");
 }
+
+void View::onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
+{
+    // qDebug() << eventType << localPos << globalPos << leftIsPressed;
+    Qt::MouseButtons buttons = Qt::NoButton;
+    buttons.setFlag(Qt::LeftButton, leftIsPressed);
+    Qt::KeyboardModifiers modifiers = Qt::NoModifier;
+
+    auto me = new MouseEvent(eventType, localPos, globalPos, globalPos, buttons, buttons, modifiers);
+
+    deliverViewEventToFilters(me);
+
+    // TODOm3: Who deletes the event ?
+}

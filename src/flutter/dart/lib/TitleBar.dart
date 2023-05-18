@@ -12,10 +12,12 @@
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart' hide View;
 
@@ -24,7 +26,6 @@ class TitleBar extends KDDWBindingsFlutter.TitleBar with View_mixin {
       : super(titleBar, parent: parent) {
     m_fillsParent = true;
     initMixin(this, debugName: "TitleBar");
-    // print("TitleBar CTOR");
   }
 
   Widget createFlutterWidget() {
@@ -51,7 +52,7 @@ class TitleBarPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents() {
-    return SizedBox(
+    final contents = SizedBox(
         height: 30,
         child: Container(
             padding: EdgeInsets.fromLTRB(8, 3, 5, 0),
@@ -74,5 +75,18 @@ class TitleBarPositionedWidgetState extends PositionedWidgetState {
                     child: Icon(Icons.close))
               ],
             )));
+
+    return Listener(
+        onPointerDown: (event) {
+          kddwView.onFlutterMouseEvent(event);
+        },
+        onPointerUp: (event) {
+          kddwView.onFlutterMouseEvent(event);
+        },
+        onPointerMove: (event) {
+          if (event.buttons != kPrimaryButton) return;
+          kddwView.onFlutterMouseEvent(event);
+        },
+        child: contents);
   }
 }

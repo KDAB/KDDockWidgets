@@ -12,10 +12,6 @@
     <object-type name="QSize" />
     <object-type name="QRect" />
     <object-type name="QPoint" />
-    <object-type name="Event">
-        <enum-type identified-by-value="Type" />
-    </object-type>
-
     <object-type name="QObject" />
 
     <object-type name="QString">
@@ -30,6 +26,9 @@
     </namespace-type>
 
     <namespace-type name="KDDockWidgets">
+        <object-type name="Event">
+            <enum-type identified-by-value="Type" />
+        </object-type>
         <object-type name="Config" />
         <object-type name="DockRegistry" />
         <value-type name="InitialOption" />

@@ -12,10 +12,12 @@
 import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
+import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart' hide View;
 
@@ -44,6 +46,31 @@ class View_mixin {
     widgetKey = GlobalObjectKey(ptr.address);
 
     flutterWidget = createFlutterWidget();
+  }
+
+  /// Casts to our flutter::View class
+  KDDWBindingsFlutter.View asFlutterView() {
+    return KDDWBindingsFlutter.View.fromCache(kddwView.thisCpp);
+  }
+
+  void onFlutterMouseEvent(PointerEvent event) {
+    int eventType = -1;
+    if (event is PointerDownEvent) eventType = Event_Type.MouseButtonPress;
+    if (event is PointerUpEvent) eventType = Event_Type.MouseButtonRelease;
+    if (event is PointerMoveEvent) eventType = Event_Type.MouseMove;
+
+    if (eventType == -1) {
+      print("Unhandled mouse event!");
+      return;
+    }
+
+    final bool leftIsPressed = event.buttons == kPrimaryButton;
+    final localPos = QPoint.ctor2(
+        event.localPosition.dx.toInt(), event.localPosition.dy.toInt());
+    final globalPos =
+        QPoint.ctor2(event.position.dx.toInt(), event.position.dy.toInt());
+
+    asFlutterView().onMouseEvent(eventType, localPos, globalPos, leftIsPressed);
   }
 
   setSize_2(int width, int height) {

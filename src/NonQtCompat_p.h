@@ -135,29 +135,42 @@ public:
 class MouseEvent : public Event
 {
 public:
-    explicit MouseEvent(Type type, QPoint, QPoint, QPoint, Qt::MouseButtons, Qt::MouseButtons, Qt::KeyboardModifiers)
+    explicit MouseEvent(Type type, QPoint localPos, QPoint /*windowPos*/,
+                        QPoint globalPos, Qt::MouseButtons buttons, Qt::MouseButtons, Qt::KeyboardModifiers)
         : Event(type)
+        , m_localPos(localPos)
+        , m_globalPos(globalPos)
+        , m_buttons(buttons)
     {
     }
 
     QPoint pos() const
     {
-        return {};
+        return m_localPos;
     }
+
     QPoint globalPos() const
     {
-        return {};
+        return m_globalPos;
     }
 
     Qt::MouseButton button() const
     {
-        return {};
+        if (m_buttons & Qt::LeftButton)
+            return Qt::LeftButton;
+
+        // Nothing else matters
+        return Qt::NoButton;
     }
 
     Qt::MouseButtons buttons() const
     {
-        return {};
+        return m_buttons;
     }
+
+    QPoint m_localPos;
+    QPoint m_globalPos;
+    Qt::MouseButtons m_buttons;
 };
 
 class DropEvent : public Event
