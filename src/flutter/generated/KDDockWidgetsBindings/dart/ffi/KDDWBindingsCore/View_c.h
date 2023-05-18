@@ -15,6 +15,7 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
+#include <NonQtCompat_p.h>
 #include <FloatingWindow.h>
 #include <core/Group.h>
 #include "core/TitleBar.h"
@@ -50,6 +51,7 @@ public:
     KDDockWidgets::Core::Controller *controller() const;
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
+    bool deliverViewEventToFilters(KDDockWidgets::Event *e);
     void dumpDebug();
     static bool equals(const KDDockWidgets::Core::View *one, const KDDockWidgets::Core::View *two);
     bool equals(const KDDockWidgets::Core::View *other) const;
@@ -319,6 +321,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__closeRootView(voi
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__controller(void *thisObj);
 // KDDockWidgets::Core::View::createPlatformWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Core::View::deliverViewEventToFilters(KDDockWidgets::Event * e)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__deliverViewEventToFilters_Event(void *thisObj, void *e_);
 // KDDockWidgets::Core::View::dumpDebug()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__dumpDebug(void *thisObj);
 // KDDockWidgets::Core::View::equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)

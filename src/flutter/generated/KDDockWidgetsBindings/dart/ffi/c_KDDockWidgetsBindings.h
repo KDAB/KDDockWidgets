@@ -932,7 +932,24 @@ bool c_KDDockWidgets__InitialOption__preservesCurrentTab(void *thisObj);
 // KDDockWidgets::InitialOption::startsHidden() const
 bool c_KDDockWidgets__InitialOption__startsHidden(void *thisObj);
 void c_KDDockWidgets__InitialOption__destructor(void *thisObj);
-void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::DockRegistry::checkSanityAll(bool dumpDebug)
+void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Event::Event(KDDockWidgets::Event::Type type)
+void *c_KDDockWidgets__Event__constructor_Type(int type);
+// KDDockWidgets::Event::accept()
+void c_KDDockWidgets__Event__accept(void *thisObj);
+// KDDockWidgets::Event::ignore()
+void c_KDDockWidgets__Event__ignore(void *thisObj);
+// KDDockWidgets::Event::isAccepted() const
+bool c_KDDockWidgets__Event__isAccepted(void *thisObj);
+// KDDockWidgets::Event::spontaneous() const
+bool c_KDDockWidgets__Event__spontaneous(void *thisObj);
+// KDDockWidgets::Event::type() const
+int c_KDDockWidgets__Event__type(void *thisObj);
+void c_KDDockWidgets__Event__destructor(void *thisObj);
+bool c_KDDockWidgets__Event___get_m_accepted(void *thisObj);
+bool c_KDDockWidgets__Event___get_m_spontaneous(void *thisObj);
+void c_KDDockWidgets__Event___set_m_accepted_bool(void *thisObj, bool m_accepted_);
+void c_KDDockWidgets__Event___set_m_spontaneous_bool(void *thisObj, bool m_spontaneous_);
+void c_KDDockWidgets__Event_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::DockRegistry::checkSanityAll(bool dumpDebug)
 void c_KDDockWidgets__DockRegistry__checkSanityAll_bool(void *thisObj, bool dumpDebug);
 // KDDockWidgets::DockRegistry::clear()
 void c_KDDockWidgets__DockRegistry__clear(void *thisObj);
@@ -1105,6 +1122,8 @@ void c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall(void *thisObj, 
 int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
+void c_KDDockWidgets__Core__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::Platform::setCursorPos(QPoint arg__1)
 void c_KDDockWidgets__Core__Platform__setCursorPos_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::setMouseCursor(Qt::CursorShape arg__1)
@@ -1133,9 +1152,9 @@ void c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View(void *thisObj, v
 bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Core::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const
 bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::Type type, int timeout) const
+// KDDockWidgets::Core::Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event::Type type, int timeout) const
 bool c_KDDockWidgets__Core__Platform__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForEvent(QObject * w, Event::Type type, int timeout) const
+// KDDockWidgets::Core::Platform::tests_waitForEvent(QObject * w, KDDockWidgets::Event::Type type, int timeout) const
 bool c_KDDockWidgets__Core__Platform__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
 // KDDockWidgets::Core::Platform::tests_waitForResize(KDDockWidgets::Core::Controller * arg__1, int timeout) const
 bool c_KDDockWidgets__Core__Platform__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
@@ -1207,6 +1226,8 @@ void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
 int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 void *c_KDDockWidgets__flutter__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
+void c_KDDockWidgets__flutter__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::flutter::Platform::setCursorPos(QPoint arg__1)
 void c_KDDockWidgets__flutter__Platform__setCursorPos_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::setMouseCursor(Qt::CursorShape arg__1)
@@ -1433,6 +1454,8 @@ void c_KDDockWidgets__Core__View__closeRootView(void *thisObj);
 void *c_KDDockWidgets__Core__View__controller(void *thisObj);
 // KDDockWidgets::Core::View::createPlatformWindow()
 void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Core::View::deliverViewEventToFilters(KDDockWidgets::Event * e)
+bool c_KDDockWidgets__Core__View__deliverViewEventToFilters_Event(void *thisObj, void *e_);
 // KDDockWidgets::Core::View::dumpDebug()
 void c_KDDockWidgets__Core__View__dumpDebug(void *thisObj);
 // KDDockWidgets::Core::View::equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
@@ -1651,6 +1674,8 @@ void c_KDDockWidgets__flutter__View__onChildRemoved_View(void *thisObj, void *ch
 void c_KDDockWidgets__flutter__View__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onFlutterWidgetResized(int w, int h)
 bool c_KDDockWidgets__flutter__View__onFlutterWidgetResized_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::View::onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
+void c_KDDockWidgets__flutter__View__onMouseEvent_Type_QPoint_QPoint_bool(void *thisObj, int eventType, void *localPos_, void *globalPos_, bool leftIsPressed);
 // KDDockWidgets::flutter::View::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::View::raise()

@@ -12,6 +12,7 @@
 #include <core/Platform.h>
 #include <ViewFactory.h>
 #include <core/View.h>
+#include <NonQtCompat_p.h>
 #include <qsize.h>
 #include <core/Controller.h>
 #include <qpoint.h>
@@ -77,6 +78,8 @@ public:
     virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual QSize screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
     virtual QSize screenSizeFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
+    virtual void sendEvent(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
+    virtual void sendEvent_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
     virtual void setCursorPos(QPoint arg__1);
     virtual void setCursorPos_nocallback(QPoint arg__1);
     virtual void setMouseCursor(Qt::CursorShape arg__1);
@@ -102,10 +105,10 @@ public:
     virtual bool tests_waitForDeleted_nocallback(KDDockWidgets::Core::View *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForDeleted(QObject *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForDeleted_nocallback(QObject *arg__1, int timeout = 2000) const;
-    virtual bool tests_waitForEvent(KDDockWidgets::Core::View *arg__1, Event::Type type, int timeout = 5000) const;
-    virtual bool tests_waitForEvent_nocallback(KDDockWidgets::Core::View *arg__1, Event::Type type, int timeout = 5000) const;
-    virtual bool tests_waitForEvent(QObject *w, Event::Type type, int timeout = 5000) const;
-    virtual bool tests_waitForEvent_nocallback(QObject *w, Event::Type type, int timeout = 5000) const;
+    virtual bool tests_waitForEvent(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event::Type type, int timeout = 5000) const;
+    virtual bool tests_waitForEvent_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event::Type type, int timeout = 5000) const;
+    virtual bool tests_waitForEvent(QObject *w, KDDockWidgets::Event::Type type, int timeout = 5000) const;
+    virtual bool tests_waitForEvent_nocallback(QObject *w, KDDockWidgets::Event::Type type, int timeout = 5000) const;
     virtual bool tests_waitForResize(KDDockWidgets::Core::Controller *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForResize_nocallback(KDDockWidgets::Core::Controller *arg__1, int timeout = 2000) const;
     virtual bool tests_waitForResize(KDDockWidgets::Core::View *arg__1, int timeout = 2000) const;
@@ -160,6 +163,8 @@ public:
     Callback_screenNumberFor m_screenNumberForCallback = nullptr;
     typedef QSize *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenSizeFor m_screenSizeForCallback = nullptr;
+    typedef void (*Callback_sendEvent)(void *, KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2);
+    Callback_sendEvent m_sendEventCallback = nullptr;
     typedef void (*Callback_setCursorPos)(void *, QPoint *arg__1);
     Callback_setCursorPos m_setCursorPosCallback = nullptr;
     typedef void (*Callback_setMouseCursor)(void *, Qt::CursorShape arg__1);
@@ -182,9 +187,9 @@ public:
     Callback_tests_waitForDeleted m_tests_waitForDeletedCallback = nullptr;
     typedef bool (*Callback_tests_waitForDeleted_2)(void *, QObject *arg__1, int timeout);
     Callback_tests_waitForDeleted_2 m_tests_waitForDeleted_2Callback = nullptr;
-    typedef bool (*Callback_tests_waitForEvent)(void *, KDDockWidgets::Core::View *arg__1, Event::Type type, int timeout);
+    typedef bool (*Callback_tests_waitForEvent)(void *, KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event::Type type, int timeout);
     Callback_tests_waitForEvent m_tests_waitForEventCallback = nullptr;
-    typedef bool (*Callback_tests_waitForEvent_2)(void *, QObject *w, Event::Type type, int timeout);
+    typedef bool (*Callback_tests_waitForEvent_2)(void *, QObject *w, KDDockWidgets::Event::Type type, int timeout);
     Callback_tests_waitForEvent_2 m_tests_waitForEvent_2Callback = nullptr;
     typedef bool (*Callback_tests_waitForResize)(void *, KDDockWidgets::Core::Controller *arg__1, int timeout);
     Callback_tests_waitForResize m_tests_waitForResizeCallback = nullptr;
@@ -254,6 +259,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__runDelayed_in
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::Platform::setCursorPos(QPoint arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__setCursorPos_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::setMouseCursor(Qt::CursorShape arg__1)
@@ -282,9 +289,9 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_pressOn
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Core::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, Event::Type type, int timeout) const
+// KDDockWidgets::Core::Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event::Type type, int timeout) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForEvent(QObject * w, Event::Type type, int timeout) const
+// KDDockWidgets::Core::Platform::tests_waitForEvent(QObject * w, KDDockWidgets::Event::Type type, int timeout) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
 // KDDockWidgets::Core::Platform::tests_waitForResize(KDDockWidgets::Core::Controller * arg__1, int timeout) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);

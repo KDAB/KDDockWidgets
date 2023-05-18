@@ -17,14 +17,15 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include "core/Stack.h"
-#include <TabBar.h>
-#include <core/Layout.h>
-#include "core/TitleBar.h"
-#include <FloatingWindow.h>
 #include <core/Group.h>
-#include "core/DropArea.h"
+#include <FloatingWindow.h>
 #include "core/MainWindow.h"
+#include <NonQtCompat_p.h>
+#include "core/TitleBar.h"
 #include <core/DockWidget.h>
+#include <TabBar.h>
+#include "core/DropArea.h"
+#include <core/Layout.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -92,6 +93,7 @@ public:
     virtual void onChildVisibilityChanged(KDDockWidgets::Core::View *childView);
     virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
     bool onFlutterWidgetResized(int w, int h);
+    void onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed);
     virtual bool onResize(int h, int w);
     virtual bool onResize_nocallback(int h, int w);
     virtual void raise();
@@ -327,6 +329,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildRemoved
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onFlutterWidgetResized(int w, int h)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__onFlutterWidgetResized_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::View::onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onMouseEvent_Type_QPoint_QPoint_bool(void *thisObj, int eventType, void *localPos_, void *globalPos_, bool leftIsPressed);
 // KDDockWidgets::flutter::View::onResize(int h, int w)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::View::raise()

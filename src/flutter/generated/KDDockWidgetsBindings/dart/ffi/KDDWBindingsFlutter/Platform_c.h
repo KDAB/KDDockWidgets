@@ -21,6 +21,7 @@
 #include <core/Platform.h>
 #include <qstring.h>
 #include <qobject.h>
+#include <NonQtCompat_p.h>
 #include <vector>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -80,6 +81,8 @@ public:
     virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual QSize screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
     virtual QSize screenSizeFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
+    virtual void sendEvent(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
+    virtual void sendEvent_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
     virtual void setCursorPos(QPoint arg__1);
     virtual void setCursorPos_nocallback(QPoint arg__1);
     virtual void setMouseCursor(Qt::CursorShape arg__1);
@@ -150,6 +153,8 @@ public:
     Callback_screenNumberFor m_screenNumberForCallback = nullptr;
     typedef QSize *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenSizeFor m_screenSizeForCallback = nullptr;
+    typedef void (*Callback_sendEvent)(void *, KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2);
+    Callback_sendEvent m_sendEventCallback = nullptr;
     typedef void (*Callback_setCursorPos)(void *, QPoint *arg__1);
     Callback_setCursorPos m_setCursorPosCallback = nullptr;
     typedef void (*Callback_setMouseCursor)(void *, Qt::CursorShape arg__1);
@@ -234,6 +239,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__runTests(v
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::flutter::Platform::setCursorPos(QPoint arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__setCursorPos_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::setMouseCursor(Qt::CursorShape arg__1)
