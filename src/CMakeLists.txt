@@ -177,12 +177,12 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicatorWindowViewInterface_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/ClassicIndicators_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_c.cpp
     # flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Platform_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/ClassicIndicatorWindowViewInterface_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/ClassicIndicators_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Controller_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/DropArea_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Layout_c.cpp
@@ -207,6 +207,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DropArea_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DockWidget_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/MainWindow_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/IndicatorWindow_c.cpp
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
@@ -223,6 +224,7 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/views/TabBar.cpp
     flutter/views/TitleBar.cpp
     flutter/views/MainWindow.cpp
+    flutter/views/ClassicIndicatorsWindow.cpp
 )
 
 if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)

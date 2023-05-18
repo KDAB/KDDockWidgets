@@ -24,7 +24,9 @@
                 "KDDockWidgets::Core::SideBar",
                 "KDDockWidgets::Core::FloatingWindow",
                 "KDDockWidgets::Core::MainWindow",
-                "KDDockWidgets::Core::DelayedCall"
+                "KDDockWidgets::Core::DelayedCall",
+                "KDDockWidgets::Core::ClassicIndicators",
+                "KDDockWidgets::Core::ClassicIndicatorWindowViewInterface"
             ]
         },
         {
@@ -40,7 +42,8 @@
                 "KDDockWidgets::flutter::DockWidget",
                 "KDDockWidgets::flutter::ViewFactory",
                 "KDDockWidgets::flutter::DropArea",
-                "KDDockWidgets::flutter::MainWindow"
+                "KDDockWidgets::flutter::MainWindow",
+                "KDDockWidgets::flutter::IndicatorWindow"
             ]
         }
     ]

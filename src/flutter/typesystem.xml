@@ -91,6 +91,7 @@
             <object-type name="DockWidget" />
             <object-type name="Window" />
             <object-type name="MainWindow" />
+            <object-type name="IndicatorWindow" />
         </namespace-type>
 
     </namespace-type>

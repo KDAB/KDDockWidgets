@@ -42,11 +42,10 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   }
 
   @override
-  KDDockWidgetBindings.ClassicIndicatorWindowViewInterface
+  KDDWBindingsCore.ClassicIndicatorWindowViewInterface
       createClassicIndicatorWindow(
-          KDDockWidgetBindings.ClassicIndicators? indicators) {
-    // print("ViewFactory: createClassicIndicatorWindow");
-    return KDDockWidgetBindings.ClassicIndicatorWindowViewInterface();
+          KDDWBindingsCore.ClassicIndicators? indicators) {
+    return KDDWBindingsFlutter.IndicatorWindow(indicators);
   }
 
   @override
