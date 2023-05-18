@@ -47,26 +47,24 @@ class FloatingWindow extends KDDWBindingsFlutter.View with View_mixin {
   }
 
   Widget createFlutterWidget() {
-    return FloatingWindowWidget(kddwView, this, key: widgetKey);
+    return FloatingWindowWidget(this, key: widgetKey);
   }
 }
 
 class FloatingWindowWidget extends PositionedWidget {
   final FloatingWindow view;
-  FloatingWindowWidget(var kddwView, this.view, {Key? key})
-      : super(kddwView, key: key);
+  FloatingWindowWidget(this.view, {Key? key}) : super(view, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return FloatingWindowPositionedWidgetState(kddwView, view);
+    return FloatingWindowPositionedWidgetState(view);
   }
 }
 
 class FloatingWindowPositionedWidgetState extends PositionedWidgetState {
   final FloatingWindow view;
 
-  FloatingWindowPositionedWidgetState(var kddwView, this.view)
-      : super(kddwView);
+  FloatingWindowPositionedWidgetState(this.view) : super(view);
 
   @override
   Widget buildContents() {
