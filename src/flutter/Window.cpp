@@ -60,6 +60,7 @@ bool Window::supportsHonouringLayoutMinSize() const
 
 void Window::setWindowState(WindowState)
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
 }
 
 QRect Window::geometry() const
@@ -69,10 +70,12 @@ QRect Window::geometry() const
 
 void Window::setProperty(const char *, const QVariant &)
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
 }
 
 QVariant Window::property(const char *) const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
@@ -95,8 +98,9 @@ bool Window::equals(std::shared_ptr<Core::Window> w) const
     return window->handle() == handle();
 }
 
-void Window::setFramePosition(QPoint)
+void Window::setFramePosition(QPoint pt)
 {
+    m_geometry.moveTopLeft(pt);
 }
 
 QRect Window::frameGeometry() const
@@ -114,53 +118,64 @@ void Window::resize(int w, int h)
 
 bool Window::isActive() const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 WindowState Window::windowState() const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 QPoint Window::mapFromGlobal(QPoint) const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 QPoint Window::mapToGlobal(QPoint) const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 void Window::destroy()
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
 }
 
 QSize Window::minSize() const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 QSize Window::maxSize() const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 QPoint Window::fromNativePixels(QPoint) const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 bool Window::isFullScreen() const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 Core::Screen::Ptr Window::screen() const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
     return {};
 }
 
 void Window::onScreenChanged(QObject *, WindowScreenChangedCallback)
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented yet";
 }
