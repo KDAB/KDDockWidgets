@@ -19,6 +19,7 @@
 #include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
+namespace KDDWBindingsCore {
 class ClassicIndicators_wrapper : public ::KDDockWidgets::Core::ClassicIndicators
 {
 public:
@@ -53,6 +54,7 @@ public:
     typedef void (*Callback_updateVisibility)(void *);
     Callback_updateVisibility m_updateVisibilityCallback = nullptr;
 };
+}
 }
 extern "C" {
 // KDDockWidgets::Core::ClassicIndicators::ClassicIndicators(KDDockWidgets::Core::DropArea * dropArea)

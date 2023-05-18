@@ -3415,7 +3415,29 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Config::absoluteWidgetMaxSize() const
+void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::IndicatorWindow::IndicatorWindow(KDDockWidgets::Core::ClassicIndicators * classicIndicators)
+void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicIndicators(void *classicIndicators_);
+// KDDockWidgets::flutter::IndicatorWindow::hover(QPoint globalPos)
+int c_KDDockWidgets__flutter__IndicatorWindow__hover_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::flutter::IndicatorWindow::isWindow() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isWindow(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation arg__1) const
+void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation(void *thisObj, int arg__1);
+// KDDockWidgets::flutter::IndicatorWindow::raise()
+void c_KDDockWidgets__flutter__IndicatorWindow__raise(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::resize(QSize arg__1)
+void c_KDDockWidgets__flutter__IndicatorWindow__resize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::setGeometry(QRect arg__1)
+void c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::setObjectName(const QString & arg__1)
+void c_KDDockWidgets__flutter__IndicatorWindow__setObjectName_QString(void *thisObj, const char *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::setVisible(bool arg__1)
+void c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::flutter::IndicatorWindow::updatePositions()
+void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
+void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
+void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Config::absoluteWidgetMaxSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj);
 // KDDockWidgets::Config::absoluteWidgetMinSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj);

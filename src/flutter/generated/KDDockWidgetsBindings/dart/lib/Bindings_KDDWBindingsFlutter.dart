@@ -8,6 +8,7 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
+export 'src/KDDWBindingsFlutter/IndicatorWindow.dart' show IndicatorWindow;
 export 'src/KDDWBindingsFlutter/DockWidget.dart' show DockWidget;
 export 'src/KDDWBindingsFlutter/DropArea.dart' show DropArea;
 export 'src/KDDWBindingsFlutter/Group.dart' show Group;

@@ -12,9 +12,9 @@
 #include <TitleBar.h>
 #include "core/TitleBar.h"
 #include <core/View.h>
-#include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>
+#include <qrect.h>
 #include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

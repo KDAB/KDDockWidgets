@@ -39,15 +39,16 @@ class ViewFactory extends QObject {
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   } // createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const
-  ClassicIndicatorWindowViewInterface createClassicIndicatorWindow(
-      ClassicIndicators? arg__1) {
+  KDDWBindingsCore.ClassicIndicatorWindowViewInterface
+      createClassicIndicatorWindow(KDDWBindingsCore.ClassicIndicators? arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(674))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-    return ClassicIndicatorWindowViewInterface.fromCppPointer(result, false);
+    return KDDWBindingsCore.ClassicIndicatorWindowViewInterface.fromCppPointer(
+        result, false);
   }
 
   static ffi.Pointer<void> createClassicIndicatorWindow_calledFromC(
@@ -62,7 +63,7 @@ class ViewFactory extends QObject {
     final result = dartInstance.createClassicIndicatorWindow(
         (arg__1 == null || arg__1.address == 0)
             ? null
-            : ClassicIndicators.fromCppPointer(arg__1));
+            : KDDWBindingsCore.ClassicIndicators.fromCppPointer(arg__1));
     return result.thisCpp;
   } // createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 

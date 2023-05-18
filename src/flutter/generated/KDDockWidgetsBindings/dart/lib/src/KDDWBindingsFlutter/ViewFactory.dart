@@ -51,7 +51,7 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
     final result = dartInstance.createClassicIndicatorWindow(
         (arg__1 == null || arg__1.address == 0)
             ? null
-            : ClassicIndicators.fromCppPointer(arg__1));
+            : KDDWBindingsCore.ClassicIndicators.fromCppPointer(arg__1));
     return result.thisCpp;
   }
 
