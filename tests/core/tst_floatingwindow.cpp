@@ -68,6 +68,8 @@ KDDW_QCORO_TASK tst_floatingWindowClose()
     auto titleBar = fw->titleBar();
     CHECK(titleBar);
     CHECK(titleBar->isVisible());
+    CHECK_EQ(fw->groups().length(), 1);
+    CHECK(!fw->groups().first()->titleBar()->isVisible());
     titleBar->onCloseClicked();
     CHECK(!dw->isOpen());
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(fw));

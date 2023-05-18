@@ -74,14 +74,14 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents() {
-    final titleBarWidget = groupView.titleBarView().flutterWidget;
-    final tabBarWidget = groupView.tabBarView().flutterWidget;
+    final titleBarView = groupView.titleBarView();
+    final tabBarView = groupView.tabBarView();
     final dockWidgetWidget = groupView.dockWidgetView()?.flutterWidget;
 
     return Column(
       children: [
-        titleBarWidget,
-        tabBarWidget,
+        if (titleBarView.isVisible()) titleBarView.flutterWidget,
+        if (tabBarView.isVisible()) tabBarView.flutterWidget,
         if (dockWidgetWidget != null)
           dockWidgetWidget
         else
