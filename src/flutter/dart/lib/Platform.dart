@@ -90,8 +90,13 @@ class Platform extends KDDWBindingsFlutter.Platform {
 
   @override
   onFloatingWindowDestroyed(KDDWBindingsCore.FloatingWindow? fw) {
+    final oldSize = floatingWindows.length;
     floatingWindows.removeWhere((it) => it.thisCpp == fw!.thisCpp);
-    rebuildWindowOverlay();
+    // kddw emits windowDestroyed twice, one when it's scheduled and one in dtor
+    // so only rebuild if list length actually changed
+    if (oldSize != floatingWindows.length) {
+      rebuildWindowOverlay();
+    }
   }
 
   @override
