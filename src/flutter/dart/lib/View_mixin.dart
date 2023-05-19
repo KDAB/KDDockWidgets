@@ -11,6 +11,7 @@
 
 import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/PositionedWidget.dart';
+import 'package:KDDockWidgets/WindowWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
@@ -25,6 +26,8 @@ class View_mixin {
   late final Widget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
   late final KDDWBindingsFlutter.View kddwView;
+  WindowWidget?
+      windowWidget; // For now, while we don't have multi-window support
 
   Color m_color = Colors.red;
   bool m_fillsParent = false;
@@ -77,6 +80,14 @@ class View_mixin {
     final state = widgetKey.currentState;
     if (state != null) {
       state.updateSize();
+    }
+
+    if (windowWidget != null) {
+      final windowState = (windowWidget!.key as GlobalObjectKey).currentState;
+
+      if (windowState != null) {
+        (windowState as WindowWidgetState).onGeometryChanged();
+      }
     }
   }
 

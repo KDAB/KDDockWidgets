@@ -9,7 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/WindowWidget.dart';
+import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
+    as KDDWBindingsCore;
 import 'package:flutter/material.dart' hide View;
 import 'package:flutter/widgets.dart';
 import 'package:KDDockWidgets/Platform.dart';
@@ -54,7 +57,10 @@ class WindowOverlayWidgetState extends State<WindowOverlayWidget> {
 
     final floatingWindows = Platform.plat().floatingWindows;
     for (var fw in floatingWindows) {
-      windowWidgets.add(WindowWidget(fw.view()));
+      final windowWidget =
+          (KDDWBindingsCore.View.fromCache(fw.view().thisCpp) as View_mixin)
+              .windowWidget;
+      windowWidgets.add(windowWidget!);
     }
 
     return Stack(children: windowWidgets);

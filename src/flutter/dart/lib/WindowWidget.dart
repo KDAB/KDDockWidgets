@@ -37,6 +37,10 @@ class WindowWidgetState extends State<WindowWidget> {
   late final View_mixin kddwView;
   WindowWidgetState(this.kddwView);
 
+  void onGeometryChanged() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final geo = kddwView.viewGeometry();

@@ -12,6 +12,7 @@
 import 'package:KDDockWidgets/Platform.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
+import 'package:KDDockWidgets/WindowWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
@@ -34,7 +35,7 @@ class FloatingWindow extends KDDWBindingsFlutter.View with View_mixin {
     m_fillsParent = true;
 
     initMixin(this, color: Colors.black12, debugName: "FloatingWindow");
-    // print("FloatingWindow CTOR");
+    windowWidget = WindowWidget(this);
   }
 
   TitleBar titleBarView() {

@@ -101,6 +101,7 @@ bool Window::equals(std::shared_ptr<Core::Window> w) const
 void Window::setFramePosition(QPoint pt)
 {
     m_geometry.moveTopLeft(pt);
+    m_rootView->setGeometry(m_geometry);
 }
 
 QRect Window::frameGeometry() const
