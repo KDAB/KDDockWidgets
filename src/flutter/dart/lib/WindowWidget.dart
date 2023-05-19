@@ -22,7 +22,8 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 /// to draw the windows ourselves
 class WindowWidget extends StatefulWidget {
   late final View_mixin kddwView;
-  WindowWidget(KDDWBindingsCore.View view) {
+  WindowWidget(KDDWBindingsCore.View view)
+      : super(key: GlobalObjectKey("WindowWidget-${view.thisCpp.address}")) {
     kddwView = KDDWBindingsFlutter.View.fromCache(view.thisCpp) as View_mixin;
   }
 
