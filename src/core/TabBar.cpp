@@ -137,7 +137,7 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
     }
 
     m_dockWidgets.insert(index, dw);
-    connect(dw, &DockWidget::aboutToDelete, this, &TabBar::removeDockWidget);
+    connect(dw, &DockWidget::aboutToDelete, &m_connectionGuard, [this, dw] { removeDockWidget(dw); });
 
     dynamic_cast<Core::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
     if (!m_currentDockWidget)
