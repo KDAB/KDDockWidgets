@@ -17,15 +17,15 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include "core/Stack.h"
-#include <core/Group.h>
+#include <TabBar.h>
+#include <core/Layout.h>
+#include "core/TitleBar.h"
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
-#include <NonQtCompat_p.h>
-#include "core/TitleBar.h"
-#include <core/DockWidget.h>
-#include <TabBar.h>
 #include "core/DropArea.h"
-#include <core/Layout.h>
+#include <core/DockWidget.h>
+#include <core/Group.h>
+#include <NonQtCompat_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -93,6 +93,8 @@ public:
     virtual void onChildVisibilityChanged(KDDockWidgets::Core::View *childView);
     virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
     bool onFlutterWidgetResized(int w, int h);
+    virtual void onGeometryChanged();
+    virtual void onGeometryChanged_nocallback();
     void onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed);
     virtual bool onResize(int h, int w);
     virtual bool onResize_nocallback(int h, int w);
@@ -209,6 +211,8 @@ public:
     Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
     typedef void (*Callback_onChildVisibilityChanged)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
+    typedef void (*Callback_onGeometryChanged)(void *);
+    Callback_onGeometryChanged m_onGeometryChangedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
@@ -329,6 +333,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildRemoved
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onFlutterWidgetResized(int w, int h)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__onFlutterWidgetResized_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::View::onGeometryChanged()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onGeometryChanged(void *thisObj);
 // KDDockWidgets::flutter::View::onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__onMouseEvent_Type_QPoint_QPoint_bool(void *thisObj, int eventType, void *localPos_, void *globalPos_, bool leftIsPressed);
 // KDDockWidgets::flutter::View::onResize(int h, int w)

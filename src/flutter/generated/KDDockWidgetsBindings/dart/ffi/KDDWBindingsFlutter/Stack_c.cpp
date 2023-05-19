@@ -422,6 +422,19 @@ void Stack_wrapper::onChildVisibilityChanged_nocallback(KDDockWidgets::Core::Vie
 {
     ::KDDockWidgets::flutter::Stack::onChildVisibilityChanged(childView);
 }
+void Stack_wrapper::onGeometryChanged()
+{
+    if (m_onGeometryChangedCallback) {
+        const void *thisPtr = this;
+        m_onGeometryChangedCallback(const_cast<void *>(thisPtr));
+    } else {
+        ::KDDockWidgets::flutter::Stack::onGeometryChanged();
+    }
+}
+void Stack_wrapper::onGeometryChanged_nocallback()
+{
+    ::KDDockWidgets::flutter::Stack::onGeometryChanged();
+}
 bool Stack_wrapper::onResize(int h, int w)
 {
     if (m_onResize_2Callback) {
@@ -974,6 +987,11 @@ void c_KDDockWidgets__flutter__Stack__onChildVisibilityChanged_View(void *thisOb
     auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onChildVisibilityChanged_nocallback(childView);} else {    return targetPtr->onChildVisibilityChanged(childView);} }();
 }
+// onGeometryChanged()
+void c_KDDockWidgets__flutter__Stack__onGeometryChanged(void *thisObj)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onGeometryChanged_nocallback();} else {    return targetPtr->onGeometryChanged();} }();
+}
 // onResize(int h, int w)
 bool c_KDDockWidgets__flutter__Stack__onResize_int_int(void *thisObj, int h, int w)
 {
@@ -1173,7 +1191,7 @@ void c_KDDockWidgets__flutter__Stack__registerVirtualMethodCallback(void *ptr, v
     case 961:
         wrapper->m_isNullCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_isNull>(callback);
         break;
-    case 1088:
+    case 1089:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_isPositionDraggable>(callback);
         break;
     case 962:
@@ -1221,6 +1239,9 @@ void c_KDDockWidgets__flutter__Stack__registerVirtualMethodCallback(void *ptr, v
     case 1045:
         wrapper->m_onChildVisibilityChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_onChildVisibilityChanged>(callback);
         break;
+    case 1047:
+        wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_onGeometryChanged>(callback);
+        break;
     case 976:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_onResize_2>(callback);
         break;
@@ -1239,7 +1260,7 @@ void c_KDDockWidgets__flutter__Stack__registerVirtualMethodCallback(void *ptr, v
     case 987:
         wrapper->m_setCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_setCursor>(callback);
         break;
-    case 1091:
+    case 1092:
         wrapper->m_setDocumentModeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Stack_wrapper::Callback_setDocumentMode>(callback);
         break;
     case 988:

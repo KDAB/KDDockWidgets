@@ -399,6 +399,17 @@ class DropArea extends KDDWBindingsFlutter.View {
             : KDDWBindingsCore.View.fromCppPointer(childView));
   }
 
+  static void onGeometryChanged_calledFromC(ffi.Pointer<void> thisCpp) {
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for DropArea::onGeometryChanged()! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.onGeometryChanged();
+  }
+
   static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int h, int w) {
     var dartInstance = KDDWBindingsCore
         .View.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
@@ -776,6 +787,8 @@ class DropArea extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__DropArea__onChildRemoved_View";
       case 1045:
         return "c_KDDockWidgets__flutter__DropArea__onChildVisibilityChanged_View";
+      case 1047:
+        return "c_KDDockWidgets__flutter__DropArea__onGeometryChanged";
       case 976:
         return "c_KDDockWidgets__flutter__DropArea__onResize_int_int";
       case 979:
@@ -894,6 +907,8 @@ class DropArea extends KDDWBindingsFlutter.View {
         return "onChildRemoved";
       case 1045:
         return "onChildVisibilityChanged";
+      case 1047:
+        return "onGeometryChanged";
       case 976:
         return "onResize_2";
       case 979:
@@ -1065,6 +1080,9 @@ class DropArea extends KDDWBindingsFlutter.View {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildVisibilityChanged_calledFromC);
     registerCallback(thisCpp, callback1045, 1045);
+    final callback1047 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.onGeometryChanged_calledFromC);
+    registerCallback(thisCpp, callback1047, 1047);
     const callbackExcept976 = 0;
     final callback976 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(

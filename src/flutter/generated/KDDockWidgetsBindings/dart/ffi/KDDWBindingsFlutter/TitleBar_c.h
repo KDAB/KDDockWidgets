@@ -12,10 +12,10 @@
 #include <TitleBar.h>
 #include "core/TitleBar.h"
 #include <core/View.h>
-#include <qsize.h>
 #include <qrect.h>
-#include <qpoint.h>
 #include <qstring.h>
+#include <qsize.h>
+#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -88,6 +88,8 @@ public:
     virtual void onChildRemoved_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildVisibilityChanged(KDDockWidgets::Core::View *childView);
     virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
+    virtual void onGeometryChanged();
+    virtual void onGeometryChanged_nocallback();
     virtual bool onResize(int h, int w);
     virtual bool onResize_nocallback(int h, int w);
     virtual void raise();
@@ -206,6 +208,8 @@ public:
     Callback_onChildRemoved m_onChildRemovedCallback = nullptr;
     typedef void (*Callback_onChildVisibilityChanged)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
+    typedef void (*Callback_onGeometryChanged)(void *);
+    Callback_onGeometryChanged m_onGeometryChangedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
@@ -330,6 +334,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__onChildAdd
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TitleBar::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__onChildVisibilityChanged_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::TitleBar::onGeometryChanged()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__onGeometryChanged(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::onResize(int h, int w)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::TitleBar::raise()

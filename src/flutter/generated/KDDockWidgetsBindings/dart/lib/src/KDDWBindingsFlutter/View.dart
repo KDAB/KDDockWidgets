@@ -430,6 +430,25 @@ class View extends KDDWBindingsCore.View {
             'c_KDDockWidgets__flutter__View__onFlutterWidgetResized_int_int')
         .asFunction();
     return func(thisCpp, w, h) != 0;
+  } // onGeometryChanged()
+
+  onGeometryChanged() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            cFunctionSymbolName(1047))
+        .asFunction();
+    func(thisCpp);
+  }
+
+  static void onGeometryChanged_calledFromC(ffi.Pointer<void> thisCpp) {
+    var dartInstance =
+        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as View;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for View::onGeometryChanged()! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.onGeometryChanged();
   } // onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
 
   onMouseEvent(
@@ -846,6 +865,8 @@ class View extends KDDWBindingsCore.View {
         return "c_KDDockWidgets__flutter__View__onChildRemoved_View";
       case 1045:
         return "c_KDDockWidgets__flutter__View__onChildVisibilityChanged_View";
+      case 1047:
+        return "c_KDDockWidgets__flutter__View__onGeometryChanged";
       case 976:
         return "c_KDDockWidgets__flutter__View__onResize_int_int";
       case 979:
@@ -964,6 +985,8 @@ class View extends KDDWBindingsCore.View {
         return "onChildRemoved";
       case 1045:
         return "onChildVisibilityChanged";
+      case 1047:
+        return "onGeometryChanged";
       case 976:
         return "onResize_2";
       case 979:
@@ -1135,6 +1158,9 @@ class View extends KDDWBindingsCore.View {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildVisibilityChanged_calledFromC);
     registerCallback(thisCpp, callback1045, 1045);
+    final callback1047 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.onGeometryChanged_calledFromC);
+    registerCallback(thisCpp, callback1047, 1047);
     const callbackExcept976 = 0;
     final callback976 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(

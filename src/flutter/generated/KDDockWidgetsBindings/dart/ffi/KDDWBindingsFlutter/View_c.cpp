@@ -413,6 +413,19 @@ bool View_wrapper::onFlutterWidgetResized(int w, int h)
 {
     return ::KDDockWidgets::flutter::View::onFlutterWidgetResized(w, h);
 }
+void View_wrapper::onGeometryChanged()
+{
+    if (m_onGeometryChangedCallback) {
+        const void *thisPtr = this;
+        m_onGeometryChangedCallback(const_cast<void *>(thisPtr));
+    } else {
+        ::KDDockWidgets::flutter::View::onGeometryChanged();
+    }
+}
+void View_wrapper::onGeometryChanged_nocallback()
+{
+    ::KDDockWidgets::flutter::View::onGeometryChanged();
+}
 void View_wrapper::onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
 {
     ::KDDockWidgets::flutter::View::onMouseEvent(eventType, localPos, globalPos, leftIsPressed);
@@ -966,6 +979,11 @@ bool c_KDDockWidgets__flutter__View__onFlutterWidgetResized_int_int(void *thisOb
 {
     return fromPtr(thisObj)->onFlutterWidgetResized(w, h);
 }
+// onGeometryChanged()
+void c_KDDockWidgets__flutter__View__onGeometryChanged(void *thisObj)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onGeometryChanged_nocallback();} else {    return targetPtr->onGeometryChanged();} }();
+}
 // onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
 void c_KDDockWidgets__flutter__View__onMouseEvent_Type_QPoint_QPoint_bool(void *thisObj, int eventType, void *localPos_, void *globalPos_, bool leftIsPressed)
 {
@@ -1232,6 +1250,9 @@ void c_KDDockWidgets__flutter__View__registerVirtualMethodCallback(void *ptr, vo
         break;
     case 1045:
         wrapper->m_onChildVisibilityChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_onChildVisibilityChanged>(callback);
+        break;
+    case 1047:
+        wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_onGeometryChanged>(callback);
         break;
     case 976:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_onResize_2>(callback);

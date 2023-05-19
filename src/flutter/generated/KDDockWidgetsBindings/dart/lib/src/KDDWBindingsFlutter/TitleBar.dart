@@ -161,7 +161,7 @@ class TitleBar extends KDDWBindingsFlutter.View {
   bool isCloseButtonEnabled() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1065))
+            cFunctionSymbolName(1066))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -181,7 +181,7 @@ class TitleBar extends KDDWBindingsFlutter.View {
   bool isCloseButtonVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1066))
+            cFunctionSymbolName(1067))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -213,7 +213,7 @@ class TitleBar extends KDDWBindingsFlutter.View {
   bool isFloatButtonVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1067))
+            cFunctionSymbolName(1068))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -458,6 +458,17 @@ class TitleBar extends KDDWBindingsFlutter.View {
         (childView == null || childView.address == 0)
             ? null
             : KDDWBindingsCore.View.fromCppPointer(childView));
+  }
+
+  static void onGeometryChanged_calledFromC(ffi.Pointer<void> thisCpp) {
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as TitleBar;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for TitleBar::onGeometryChanged()! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.onGeometryChanged();
   }
 
   static int onResize_2_calledFromC(ffi.Pointer<void> thisCpp, int h, int w) {
@@ -799,13 +810,13 @@ class TitleBar extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__TitleBar__init";
       case 957:
         return "c_KDDockWidgets__flutter__TitleBar__isActiveWindow";
-      case 1065:
-        return "c_KDDockWidgets__flutter__TitleBar__isCloseButtonEnabled";
       case 1066:
+        return "c_KDDockWidgets__flutter__TitleBar__isCloseButtonEnabled";
+      case 1067:
         return "c_KDDockWidgets__flutter__TitleBar__isCloseButtonVisible";
       case 958:
         return "c_KDDockWidgets__flutter__TitleBar__isExpicitlyHidden";
-      case 1067:
+      case 1068:
         return "c_KDDockWidgets__flutter__TitleBar__isFloatButtonVisible";
       case 959:
         return "c_KDDockWidgets__flutter__TitleBar__isMaximized";
@@ -843,6 +854,8 @@ class TitleBar extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__TitleBar__onChildRemoved_View";
       case 1045:
         return "c_KDDockWidgets__flutter__TitleBar__onChildVisibilityChanged_View";
+      case 1047:
+        return "c_KDDockWidgets__flutter__TitleBar__onGeometryChanged";
       case 976:
         return "c_KDDockWidgets__flutter__TitleBar__onResize_int_int";
       case 979:
@@ -923,13 +936,13 @@ class TitleBar extends KDDWBindingsFlutter.View {
         return "init";
       case 957:
         return "isActiveWindow";
-      case 1065:
-        return "isCloseButtonEnabled";
       case 1066:
+        return "isCloseButtonEnabled";
+      case 1067:
         return "isCloseButtonVisible";
       case 958:
         return "isExpicitlyHidden";
-      case 1067:
+      case 1068:
         return "isFloatButtonVisible";
       case 959:
         return "isMaximized";
@@ -967,6 +980,8 @@ class TitleBar extends KDDWBindingsFlutter.View {
         return "onChildRemoved";
       case 1045:
         return "onChildVisibilityChanged";
+      case 1047:
+        return "onGeometryChanged";
       case 976:
         return "onResize_2";
       case 979:
@@ -1065,26 +1080,26 @@ class TitleBar extends KDDWBindingsFlutter.View {
     final callback957 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.isActiveWindow_calledFromC, callbackExcept957);
     registerCallback(thisCpp, callback957, 957);
-    const callbackExcept1065 = 0;
-    final callback1065 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.TitleBar.isCloseButtonEnabled_calledFromC,
-        callbackExcept1065);
-    registerCallback(thisCpp, callback1065, 1065);
     const callbackExcept1066 = 0;
     final callback1066 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.TitleBar.isCloseButtonVisible_calledFromC,
+        KDDWBindingsFlutter.TitleBar.isCloseButtonEnabled_calledFromC,
         callbackExcept1066);
     registerCallback(thisCpp, callback1066, 1066);
+    const callbackExcept1067 = 0;
+    final callback1067 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.TitleBar.isCloseButtonVisible_calledFromC,
+        callbackExcept1067);
+    registerCallback(thisCpp, callback1067, 1067);
     const callbackExcept958 = 0;
     final callback958 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.isExpicitlyHidden_calledFromC,
         callbackExcept958);
     registerCallback(thisCpp, callback958, 958);
-    const callbackExcept1067 = 0;
-    final callback1067 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    const callbackExcept1068 = 0;
+    final callback1068 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.TitleBar.isFloatButtonVisible_calledFromC,
-        callbackExcept1067);
-    registerCallback(thisCpp, callback1067, 1067);
+        callbackExcept1068);
+    registerCallback(thisCpp, callback1068, 1068);
     const callbackExcept959 = 0;
     final callback959 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.isMaximized_calledFromC, callbackExcept959);
@@ -1153,6 +1168,9 @@ class TitleBar extends KDDWBindingsFlutter.View {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildVisibilityChanged_calledFromC);
     registerCallback(thisCpp, callback1045, 1045);
+    final callback1047 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.onGeometryChanged_calledFromC);
+    registerCallback(thisCpp, callback1047, 1047);
     const callbackExcept976 = 0;
     final callback976 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
