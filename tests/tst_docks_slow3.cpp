@@ -143,8 +143,8 @@ KDDW_QCORO_TASK tst_close()
     CHECK(fw);
     CHECK(fw->isVisible());
     CHECK(toggleAction->isChecked());
-    CHECK(!dock1->view()->isExpicitlyHidden());
-    CHECK(!dock1->view()->isExpicitlyHidden());
+    CHECK(!dock1->view()->isExplicitlyHidden());
+    CHECK(!dock1->view()->isExplicitlyHidden());
     CHECK(dock1->isVisible());
     CHECK(dock1->window()->equals(fw->view()));
     CHECK(toggleAction->isChecked());

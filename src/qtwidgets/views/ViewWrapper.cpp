@@ -182,7 +182,7 @@ bool ViewWrapper::isVisible() const
     return m_widget->isVisible();
 }
 
-bool ViewWrapper::isExpicitlyHidden() const
+bool ViewWrapper::isExplicitlyHidden() const
 {
     return m_widget->isHidden();
 }

@@ -87,7 +87,7 @@ void View::setVisible(bool is)
         if (m_visible) {
             // Mimic QWidgets: Set children visible, unless they were explicitly hidden
             for (auto child : qAsConst(m_childViews)) {
-                if (!child->isExpicitlyHidden()) {
+                if (!child->isExplicitlyHidden()) {
                     child->setVisible(true);
                 }
             }
@@ -99,7 +99,7 @@ void View::setVisible(bool is)
     }
 }
 
-bool View::isExpicitlyHidden() const
+bool View::isExplicitlyHidden() const
 {
     return m_visible.has_value() && !m_visible.value();
 }
@@ -241,7 +241,7 @@ void View::setParent(Core::View *parent)
         // Track it in C++
         m_parentView->m_childViews.append(this);
 
-        if (!m_parentView->isVisible() && isExpicitlyHidden()) {
+        if (!m_parentView->isVisible() && isExplicitlyHidden()) {
             // Mimic QtWidget. Parenting removes the explicit hidden attribute if the parent is not visible
             m_visible = std::nullopt;
         }

@@ -349,7 +349,7 @@ void View::setVisible(bool is)
     QQuickItem::setVisible(is);
 }
 
-bool View::isExpicitlyHidden() const
+bool View::isExplicitlyHidden() const
 {
     auto priv = QQuickItemPrivate::get(this);
     return !priv->explicitVisible;
