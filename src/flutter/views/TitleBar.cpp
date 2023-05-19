@@ -26,7 +26,6 @@ TitleBar::TitleBar(Core::TitleBar *controller, Core::View *parent)
     : View(controller, Core::ViewType::TitleBar, parent)
     , Core::TitleBarViewInterface(controller)
 {
-    setFixedHeight(30);
 }
 
 TitleBar::~TitleBar()
@@ -35,6 +34,7 @@ TitleBar::~TitleBar()
 
 void TitleBar::init()
 {
+    setFixedHeight(30);
 }
 
 #ifdef DOCKS_DEVELOPER_MODE

@@ -76,7 +76,8 @@ class PositionedWidgetState extends State<PositionedWidget>
         kddwView.widgetKey.currentContext?.findRenderObject() as RenderBox;
 
     final Size size = renderBox.size;
-    if (size.width != kddwView.m_width || size.height != kddwView.m_height) {
+    final geo = kddwView.viewGeometry();
+    if (size.width != geo.width() || size.height != geo.height()) {
       kddwView.kddwView
           .onFlutterWidgetResized(size.width.toInt(), size.height.toInt());
     }
@@ -96,11 +97,14 @@ class PositionedWidgetState extends State<PositionedWidget>
     final container = buildContents();
     if (_fillsParent) return container;
 
+    // TODOm5: Pass whole struct in one go, minimize ffi calls
+    final geo = kddwView.viewGeometry();
+
     return Positioned(
-        width: kddwView.m_width * 1.0,
-        height: kddwView.m_height * 1.0,
-        top: kddwView.m_y * 1.0,
-        left: kddwView.m_x * 1.0,
+        width: geo.width() * 1.0,
+        height: geo.height() * 1.0,
+        top: geo.y() * 1.0,
+        left: geo.x() * 1.0,
         child: container);
   }
 }

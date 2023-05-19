@@ -124,10 +124,10 @@ public:
     virtual void onChildAdded(Core::View *childView);
     virtual void onChildRemoved(Core::View *childView);
     virtual void onChildVisibilityChanged(Core::View *childView);
+    virtual void onGeometryChanged();
 
     /// Called by flutter when a mouse event is received
     void onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed);
-
     void setSizeHint(QSize);
 
 private:
@@ -136,6 +136,7 @@ private:
     QSize m_sizeHint;
     QSize m_minSize;
     QSize m_maxSize;
+    QRect m_geometry;
     std::optional<bool> m_visible;
     bool m_inCtor = true;
     Q_DISABLE_COPY(View)

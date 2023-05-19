@@ -38,10 +38,11 @@ class WindowWidgetState extends State<WindowWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final x = kddwView.m_x;
-    final y = kddwView.m_y;
-    final width = kddwView.m_width;
-    final height = kddwView.m_height;
+    final geo = kddwView.viewGeometry();
+    final x = geo.x();
+    final y = geo.y();
+    final width = geo.width();
+    final height = geo.height();
 
     return Positioned(
         left: x.toDouble(),

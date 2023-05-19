@@ -27,10 +27,6 @@ class View_mixin {
   late final KDDWBindingsFlutter.View kddwView;
 
   Color m_color = Colors.red;
-  int m_x = 100;
-  int m_y = 100;
-  int m_width = 400;
-  int m_height = 400;
   bool m_fillsParent = false;
   String debugName = "";
 
@@ -46,6 +42,10 @@ class View_mixin {
     widgetKey = GlobalObjectKey(ptr.address);
 
     flutterWidget = createFlutterWidget();
+  }
+
+  QRect viewGeometry() {
+    return kddwView.geometry();
   }
 
   /// Casts to our flutter::View class
@@ -73,36 +73,11 @@ class View_mixin {
     asFlutterView().onMouseEvent(eventType, localPos, globalPos, leftIsPressed);
   }
 
-  setSize_2(int width, int height) {
-    // print(
-    //     "View_mixin::setSize called ${width}x${height} ; old=${m_width}x${height}");
-    if (m_width != width || height != m_height) {
-      m_width = width;
-      m_height = height;
-
-      final state = widgetKey.currentState;
-      if (state != null) {
-        state.updateSize();
-      }
+  void onGeometryChanged() {
+    final state = widgetKey.currentState;
+    if (state != null) {
+      state.updateSize();
     }
-  }
-
-  void setWidth(int width) {
-    setSize_2(width, m_height);
-  }
-
-  setHeight(int height) {
-    setSize_2(m_width, height);
-  }
-
-  void setFixedWidth(int width) {
-    // TODO
-    setSize_2(width, m_height);
-  }
-
-  setFixedHeight(int height) {
-    // TODO
-    setSize_2(m_width, height);
   }
 
   void onChildAdded(KDDWBindingsCore.View? childView) {
@@ -142,35 +117,6 @@ class View_mixin {
     return childWidgets.where((w) {
       return !(w as PositionedWidget).kddwView.kddwView.isExpicitlyHidden();
     }).toList();
-  }
-
-  setGeometry(KDDockWidgetBindings.QRect geo) {
-    // print("View_mixin: setGeometry .name=${debugName}");
-    final sz = geo.size();
-    final topLeft = geo.topLeft();
-    setSize_2(sz.width(), sz.height());
-    move_2(topLeft.x(), topLeft.y());
-  }
-
-  KDDockWidgetBindings.QRect geometry() {
-    return KDDockWidgetBindings.QRect.ctor4(m_x, m_y, m_width, m_height);
-  }
-
-  KDDockWidgetBindings.QRect normalGeometry() {
-    // TODO
-    return geometry();
-  }
-
-  move_2(int x, int y) {
-    // print("View_flutter::move called ${x},${y}");
-    if (m_x != x || m_y != y) {
-      m_x = x;
-      m_y = y;
-      final state = widgetKey.currentState;
-      if (state != null) {
-        state.updatePosition();
-      }
-    }
   }
 
   Widget createFlutterWidget() {

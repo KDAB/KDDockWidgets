@@ -29,6 +29,7 @@ View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent
 {
     m_minSize = Core::Item::hardcodedMinimumSize;
     m_maxSize = Core::Item::hardcodedMaximumSize;
+    m_geometry = QRect(100, 100, 400, 400);
 
     setParent(parent);
     m_inCtor = false;
@@ -46,12 +47,20 @@ View::~View()
     }
 }
 
-void View::setGeometry(QRect)
+void View::setGeometry(QRect geo)
 {
+    if (geo != m_geometry) {
+        m_geometry = geo;
+        onGeometryChanged();
+    }
 }
 
-void View::move(int, int)
+void View::move(int x, int y)
 {
+    if (m_geometry.topLeft() != QPoint(x, y)) {
+        m_geometry.moveTopLeft(QPoint(x, y));
+        onGeometryChanged();
+    }
 }
 
 bool View::close()
@@ -106,7 +115,8 @@ bool View::isExpicitlyHidden() const
 
 void View::setSize(int w, int h)
 {
-    qDebug() << "flutter::View::setSize()" << w << h << this;
+    m_geometry.setSize(QSize(w, h));
+    onGeometryChanged();
 }
 
 std::shared_ptr<Core::View> View::rootView() const
@@ -157,12 +167,12 @@ QSize View::maxSizeHint() const
 
 QRect View::geometry() const
 {
-    return {};
+    return m_geometry;
 }
 
 QRect View::normalGeometry() const
 {
-    return {};
+    return m_geometry;
 }
 
 void View::setNormalGeometry(QRect)
@@ -178,20 +188,32 @@ void View::setMaximumSize(QSize s)
     }
 }
 
-void View::setWidth(int)
+void View::setWidth(int w)
 {
+    if (m_geometry.width() != w) {
+        m_geometry.setWidth(w);
+        onGeometryChanged();
+    }
 }
 
-void View::setHeight(int)
+void View::setHeight(int h)
 {
+    if (m_geometry.height() != h) {
+        m_geometry.setHeight(h);
+        onGeometryChanged();
+    }
 }
 
-void View::setFixedWidth(int)
+void View::setFixedWidth(int w)
 {
+    // TODOm5 Support fixed width
+    setWidth(w);
 }
 
-void View::setFixedHeight(int)
+void View::setFixedHeight(int h)
 {
+    // TODOm5 Support fixed height
+    setHeight(h);
 }
 
 void View::show()
@@ -477,6 +499,12 @@ void View::onChildRemoved(Core::View *childView)
 void View::onChildVisibilityChanged(Core::View *childView)
 {
     Q_UNUSED(childView);
+    dumpDebug();
+    qFatal("Derived class should be called instead");
+}
+
+void View::onGeometryChanged()
+{
     dumpDebug();
     qFatal("Derived class should be called instead");
 }
