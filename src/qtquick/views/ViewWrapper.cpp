@@ -193,7 +193,7 @@ bool ViewWrapper::isVisible() const
     return m_item->isVisible();
 }
 
-bool ViewWrapper::isExpicitlyHidden() const
+bool ViewWrapper::isExplicitlyHidden() const
 {
     auto priv = QQuickItemPrivate::get(m_item);
     return !priv->explicitVisible;

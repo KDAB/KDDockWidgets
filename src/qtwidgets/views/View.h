@@ -109,7 +109,7 @@ public:
         return Base::isVisible();
     }
 
-    bool isExpicitlyHidden() const override
+    bool isExplicitlyHidden() const override
     {
         return Base::isHidden();
     }

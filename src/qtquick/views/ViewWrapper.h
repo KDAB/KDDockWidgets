@@ -31,7 +31,7 @@ public:
     QPoint mapFromGlobal(QPoint) const override;
     bool isRootView() const override;
     bool isVisible() const override;
-    bool isExpicitlyHidden() const override;
+    bool isExplicitlyHidden() const override;
     void setVisible(bool) override;
     void activateWindow() override;
     bool isMaximized() const override;

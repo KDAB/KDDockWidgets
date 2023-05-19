@@ -127,7 +127,7 @@ class View_mixin {
 
   List<Widget> visibleChildWidgets() {
     return childWidgets.where((w) {
-      return !(w as PositionedWidget).kddwView.kddwView.isExpicitlyHidden();
+      return !(w as PositionedWidget).kddwView.kddwView.isExplicitlyHidden();
     }).toList();
   }
 

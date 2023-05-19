@@ -54,9 +54,9 @@ void ViewWrapper::setVisible(bool is)
     m_wrappedView->setVisible(is);
 }
 
-bool ViewWrapper::isExpicitlyHidden() const
+bool ViewWrapper::isExplicitlyHidden() const
 {
-    return m_wrappedView->isExpicitlyHidden();
+    return m_wrappedView->isExplicitlyHidden();
 }
 
 void ViewWrapper::setSize(int w, int h)
