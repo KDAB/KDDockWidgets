@@ -14,6 +14,8 @@
 
 #include "tst_docks.h"
 #include "Config.h"
+#include "simple_test_framework.h"
+#include "utils.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
@@ -34,8 +36,6 @@
 #include "utils_qt.h"
 
 #include "tst_docks_main.h"
-
-#include <QSignalSpy>
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -3763,18 +3763,32 @@ void TestDocks::tst_floatingAction()
         QVERIFY(dock2->floatAction()->isChecked());
         auto oldFw2 = dock2->window();
 
-        QSignalSpy spy1(dock1->floatAction(), &QAction::toggled);
-        QSignalSpy spy2(dock2->floatAction(), &QAction::toggled);
+        int floatActionCount1 = 0;
+        int floatActionCount2 = 0;
+        int floatingChangedCount1 = 0;
+        int floatingChangedCount2 = 0;
+        connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
+            floatActionCount1++;
+        });
 
-        QSignalSpy spy11(dock1, &Core::DockWidget::isFloatingChanged);
-        QSignalSpy spy21(dock2, &Core::DockWidget::isFloatingChanged);
+        connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
+            floatActionCount2++;
+        });
+
+        connect(dock1, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount1] {
+            floatingChangedCount1++;
+        });
+
+        connect(dock2, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount2] {
+            floatingChangedCount2++;
+        });
 
         dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
 
-        QCOMPARE(spy1.count(), 1);
-        QCOMPARE(spy2.count(), 1);
-        QCOMPARE(spy11.count(), 1);
-        QCOMPARE(spy21.count(), 1);
+        QCOMPARE(floatActionCount1, 1);
+        QCOMPARE(floatActionCount2, 1);
+        QCOMPARE(floatingChangedCount1, 1);
+        QCOMPARE(floatingChangedCount2, 1);
 
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock2->isFloating());
@@ -3796,19 +3810,33 @@ void TestDocks::tst_floatingAction()
         QVERIFY(dock2->floatAction()->isChecked());
         auto oldFw2 = dock2->floatingWindow();
 
-        QSignalSpy spy1(dock1->floatAction(), &QAction::toggled);
-        QSignalSpy spy2(dock2->floatAction(), &QAction::toggled);
+        int floatActionCount1 = 0;
+        int floatActionCount2 = 0;
+        int floatingChangedCount1 = 0;
+        int floatingChangedCount2 = 0;
+        connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
+            floatActionCount1++;
+        });
 
-        QSignalSpy spy11(dock1, &Core::DockWidget::isFloatingChanged);
-        QSignalSpy spy21(dock2, &Core::DockWidget::isFloatingChanged);
+        connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
+            floatActionCount2++;
+        });
+
+        connect(dock1, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount1] {
+            floatingChangedCount1++;
+        });
+
+        connect(dock2, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount2] {
+            floatingChangedCount2++;
+        });
 
         auto dropArea1 = dock1->floatingWindow()->dropArea();
         dropArea1->drop(oldFw2->view(), Location_OnRight, nullptr);
 
-        QCOMPARE(spy1.count(), 1);
-        QCOMPARE(spy2.count(), 1);
-        QCOMPARE(spy11.count(), 1);
-        QCOMPARE(spy21.count(), 1);
+        QCOMPARE(floatActionCount1, 1);
+        QCOMPARE(floatActionCount2, 1);
+        QCOMPARE(floatingChangedCount1, 1);
+        QCOMPARE(floatingChangedCount2, 1);
 
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock2->isFloating());
@@ -3835,19 +3863,34 @@ void TestDocks::tst_floatingAction()
         QVERIFY(dock2->floatAction()->isChecked());
         auto oldFw2 = dock2->window();
 
-        QSignalSpy spy1(dock1->floatAction(), &QAction::toggled);
-        QSignalSpy spy2(dock2->floatAction(), &QAction::toggled);
-        QSignalSpy spy11(dock1, &Core::DockWidget::isFloatingChanged);
-        QSignalSpy spy21(dock2, &Core::DockWidget::isFloatingChanged);
+        int floatActionCount1 = 0;
+        int floatActionCount2 = 0;
+        int floatingChangedCount1 = 0;
+        int floatingChangedCount2 = 0;
+        connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
+            floatActionCount1++;
+        });
+
+        connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
+            floatActionCount2++;
+        });
+
+        connect(dock1, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount1] {
+            floatingChangedCount1++;
+        });
+
+        connect(dock2, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount2] {
+            floatingChangedCount2++;
+        });
         dock1->addDockWidgetAsTab(dock2);
 
-        QCOMPARE(spy1.count(), 1);
+        QCOMPARE(floatActionCount1, 1);
 
         // On earlier Qt versions this is flaky, but technically correct.
         // Windows can get hidden while being reparented and floating changes momentarily.
-        QVERIFY(spy2.count() == 1 || spy2.count() == 3);
-        QVERIFY(spy21.count() == 1 || spy21.count() == 3);
-        QCOMPARE(spy11.count(), 1);
+        QVERIFY(floatActionCount2 == 1 || floatActionCount2 == 3);
+        QVERIFY(floatingChangedCount2 == 1 || floatingChangedCount2 == 3);
+        QCOMPARE(floatingChangedCount1, 1);
 
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock2->isFloating());
