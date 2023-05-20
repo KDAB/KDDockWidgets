@@ -4093,7 +4093,7 @@ KDDW_QCORO_TASK tst_doubleClickTabToDetach()
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     // Platform::instance()->tests_doubleClickOn(QWindow) doesn't work anymore on Qt6
     // which refactored mouse delivery.
-    return;
+    KDDW_TEST_RETURN(true);
 #endif
 
     EnsureTopLevelsDeleted e;
