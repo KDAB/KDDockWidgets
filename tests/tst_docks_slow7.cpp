@@ -126,13 +126,13 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
 
     d2->close();
 
-    Platform::instance()->tests_waitForResize(d3->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(d3->view());
     d2->open(); // Should not result in negative anchor positions (Test will fail due to a qWarning)
-    Platform::instance()->tests_waitForResize(d3->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(d3->view());
     layout->checkSanity();
 
     d2->close();
-    Platform::instance()->tests_waitForResize(d3->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(d3->view());
     layout->checkSanity();
 
     // Now resize the Window, after removing middle one

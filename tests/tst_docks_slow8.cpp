@@ -108,7 +108,7 @@ void TestDocks::tst_resizeWindow()
     }
 
     m->view()->showMaximized();
-    Platform::instance()->tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(m->view());
 
     const int maximizedWidth1 = dock1->width();
     const int maximizedWidth2 = dock2->width();
@@ -119,7 +119,7 @@ void TestDocks::tst_resizeWindow()
     QVERIFY(relativeDifference <= 0.01);
 
     m->view()->showNormal();
-    Platform::instance()->tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(m->view());
 
     const int newWidth1 = dock1->width();
     const int newWidth2 = dock2->width();
