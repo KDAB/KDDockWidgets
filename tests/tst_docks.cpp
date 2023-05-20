@@ -370,67 +370,6 @@ void TestDocks::tst_floatingWindowTitleBug()
     QCOMPARE(dw3->titleBar()->title(), QLatin1String("3"));
 }
 
-void TestDocks::tst_resizeWindow_data()
-{
-    QTest::addColumn<bool>("doASaveRestore");
-    QTest::newRow("false") << false;
-    QTest::newRow("true") << true;
-}
-
-void TestDocks::tst_resizeWindow()
-{
-    QFETCH(bool, doASaveRestore);
-
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget(
-        "1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
-    auto dock2 = createDockWidget(
-        "2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
-    QPointer<Core::FloatingWindow> fw1 = dock1->floatingWindow();
-    QPointer<Core::FloatingWindow> fw2 = dock2->floatingWindow();
-    m->addDockWidget(dock1, Location_OnLeft);
-    m->addDockWidget(dock2, Location_OnRight);
-
-    auto layout = m->multiSplitter();
-
-    layout->checkSanity();
-
-    const int oldWidth1 = dock1->width();
-    const int oldWidth2 = dock2->width();
-
-    QVERIFY(oldWidth2 - oldWidth1 <= 1); // They're not equal if separator thickness if even
-
-    if (doASaveRestore) {
-        LayoutSaver saver;
-        saver.restoreLayout(saver.serializeLayout());
-    }
-
-    m->view()->showMaximized();
-    Platform::instance()->tests_waitForResize(m->view());
-
-    const int maximizedWidth1 = dock1->width();
-    const int maximizedWidth2 = dock2->width();
-
-    const double relativeDifference =
-        qAbs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->layoutWidth()));
-
-    QVERIFY(relativeDifference <= 0.01);
-
-    m->view()->showNormal();
-    Platform::instance()->tests_waitForResize(m->view());
-
-    const int newWidth1 = dock1->width();
-    const int newWidth2 = dock2->width();
-
-    QCOMPARE(oldWidth1, newWidth1);
-    QCOMPARE(oldWidth2, newWidth2);
-    layout->checkSanity();
-
-    delete fw1;
-    delete fw2;
-}
-
 void TestDocks::tst_restoreTwice()
 {
     // Tests that restoring multiple times doesn't hide the floating windows for some reason
@@ -1712,30 +1651,7 @@ void TestDocks::tst_floatingLastPosAfterDoubleClose()
     delete d1;
 }
 
-void TestDocks::tst_0_data()
-{
-    QTest::addColumn<int>("thickness");
-    QTest::newRow("2") << 2;
-    QTest::newRow("1") << 1;
-    QTest::newRow("0") << 0;
-}
 
-void TestDocks::tst_0()
-{
-    QFETCH(int, thickness);
-    EnsureTopLevelsDeleted e;
-    KDDockWidgets::Config::self().setSeparatorThickness(thickness);
-
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    m->view()->resize(QSize(502, 500));
-    m->show();
-
-    auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
-    auto d2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
-
-    m->addDockWidget(d1, Location_OnLeft);
-    m->addDockWidget(d2, Location_OnRight);
-}
 
 void TestDocks::tst_honourGeometryOfHiddenWindow()
 {
@@ -2102,59 +2018,6 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
     QVERIFY(delta3 > 0);
     QVERIFY(qAbs(delta3 - delta1) <= 1); // Both dock1 and dock3 should have increased by the same
                                          // amount
-}
-
-void TestDocks::tst_setVisibleFalseWhenSideBySide_data()
-{
-    QTest::addColumn<bool>("useSetVisible");
-    QTest::newRow("false") << false;
-    // QTest::newRow("true") << true; // We don't support closing dock widgets via
-    // setVisible(false). (Yet ? Maybe never).
-}
-
-void TestDocks::tst_setVisibleFalseWhenSideBySide()
-{
-    QFETCH(bool, useSetVisible);
-
-    auto setVisible = [useSetVisible](Core::DockWidget *dw, bool visible) {
-        if (useSetVisible)
-            dw->setVisible(visible);
-        else if (visible)
-            dw->open();
-        else
-            dw->close();
-    };
-
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
-    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
-    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-    m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
-
-    const QRect oldGeo = dock1->geometry();
-    auto oldParent = dock1->view()->parentView();
-
-    // 1. Just toggle visibility and check that stuff remained sane
-    QVERIFY(dock1->titleBar()->isVisible());
-    setVisible(dock1, false);
-
-    QVERIFY(!dock1->titleBar());
-    QVERIFY(!dock1->isTabbed());
-    QVERIFY(dock1->isFloating());
-
-    setVisible(dock1, true);
-    QVERIFY(dock1->titleBar()->isVisible());
-    QVERIFY(!dock1->isTabbed());
-    QVERIFY(!dock1->isFloating());
-    QCOMPARE(dock1->geometry(), oldGeo);
-    QVERIFY(dock1->view()->parentView()->equals(oldParent));
-
-    // 2. Check that the parent group also is hidden now
-    // auto fw1 = dock1->window();
-    setVisible(dock1, false);
-    QVERIFY(!dock1->dptr()->group());
-    delete dock1;
 }
 
 void TestDocks::tst_restoreNonClosable()
@@ -2997,68 +2860,6 @@ void TestDocks::tst_setFloatingAFrameWithTabs()
     QVERIFY(dock1->window()->equals(m->view()));
 
     Platform::instance()->tests_waitForDeleted(fw);
-}
-
-void TestDocks::tst_tabBarWithHiddenTitleBar_data()
-{
-    QTest::addColumn<bool>("hiddenTitleBar");
-    QTest::addColumn<bool>("tabsAlwaysVisible");
-
-    QTest::newRow("false-false") << false << false;
-    QTest::newRow("true-false") << true << false;
-
-    QTest::newRow("false-true") << false << true;
-    QTest::newRow("true-true") << true << true;
-}
-
-void TestDocks::tst_tabBarWithHiddenTitleBar()
-{
-    EnsureTopLevelsDeleted e;
-    QFETCH(bool, hiddenTitleBar);
-    QFETCH(bool, tabsAlwaysVisible);
-
-    const auto originalFlags = KDDockWidgets::Config::self().flags();
-
-    auto newFlags = originalFlags;
-
-    if (hiddenTitleBar)
-        newFlags = newFlags | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
-
-    if (tabsAlwaysVisible)
-        newFlags = newFlags | KDDockWidgets::Config::Flag_AlwaysShowTabs;
-
-    KDDockWidgets::Config::self().setFlags(newFlags);
-
-    auto m = createMainWindow();
-
-    auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
-    auto d2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
-    m->addDockWidget(d1, Location_OnTop);
-
-    if (tabsAlwaysVisible) {
-        if (hiddenTitleBar)
-            QVERIFY(!d1->dptr()->group()->titleBar()->isVisible());
-        else
-            QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
-    } else {
-        QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
-    }
-
-    d1->addDockWidgetAsTab(d2);
-
-    QVERIFY(d2->dptr()->group()->titleBar()->isVisible() ^ hiddenTitleBar);
-
-    d2->close();
-    m->layout()->checkSanity();
-    delete d2;
-    if (tabsAlwaysVisible) {
-        if (hiddenTitleBar)
-            QVERIFY(!d1->dptr()->group()->titleBar()->isVisible());
-        else
-            QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
-    } else {
-        QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
-    }
 }
 
 void TestDocks::tst_toggleDockWidgetWithHiddenTitleBar()

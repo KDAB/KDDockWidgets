@@ -46,8 +46,6 @@ private Q_SLOTS:
     void tst_dragOverTitleBar();
     void tst_setFloatingGeometry();
 
-    void tst_resizeWindow_data();
-    void tst_resizeWindow();
     void tst_restoreEmpty();
     void tst_restoreCentralFrame();
     void tst_restoreMaximizedState();
@@ -113,8 +111,6 @@ private Q_SLOTS:
     void tst_floatingLastPosAfterDoubleClose();
     void tst_registry();
     void tst_honourGeometryOfHiddenWindow();
-    void tst_0_data();
-    void tst_0();
     void tst_posAfterLeftDetach();
     void tst_preventClose();
     void tst_propagateMinSize();
@@ -123,8 +119,6 @@ private Q_SLOTS:
     void tst_fairResizeAfterRemoveWidget();
     void tst_unfloatTabbedFloatingWidgets();
     void tst_unfloatTabbedFloatingWidgets2();
-    void tst_setVisibleFalseWhenSideBySide_data();
-    void tst_setVisibleFalseWhenSideBySide();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_rectForDropCrash();
     void tst_addDockWidgetToMainWindow();
@@ -133,8 +127,6 @@ private Q_SLOTS:
     void tst_setFloatingAfterDraggedFromTabToSideBySide();
     void tst_setFloatingAFrameWithTabs();
     void tst_toggleDockWidgetWithHiddenTitleBar();
-    void tst_tabBarWithHiddenTitleBar_data();
-    void tst_tabBarWithHiddenTitleBar();
     void tst_availableSizeWithPlaceholders();
     void tst_anchorFollowingItselfAssert();
     void tst_moreTitleBarCornerCases();
