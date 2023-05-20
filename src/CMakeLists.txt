@@ -180,6 +180,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDockWidgets_c.cpp
     # flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Platform_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/ClassicIndicatorWindowViewInterface_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/ClassicIndicators_c.cpp

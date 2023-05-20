@@ -26,6 +26,7 @@
     </namespace-type>
 
     <namespace-type name="KDDockWidgets">
+        <include file-name="KDDockWidgets_p.h" location="local"/>
         <object-type name="Event">
             <enum-type identified-by-value="Type" />
         </object-type>
