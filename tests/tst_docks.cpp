@@ -751,7 +751,7 @@ KDDW_QCORO_TASK tst_shutdown()
 
     auto m = createMainWindow();
     m->show();
-    CHECK(Platform::instance()->tests_waitForWindowActive(m->view()->window()));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForWindowActive(m->view()->window()));
 
     KDDW_TEST_RETURN(true);
 }
@@ -3504,7 +3504,7 @@ KDDW_QCORO_TASK tst_titleBarFocusedWhenTabsChange()
     dock1->guestView()->setFocus(Qt::MouseFocusReason);
 
     CHECK(dock1->isFocused()
-          || Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn));
+          || (KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn)));
     CHECK(titleBar1->isFocused());
 
     auto group2 = dock2->dptr()->group();

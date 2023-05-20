@@ -331,33 +331,29 @@ Core::MainWindow *Platform::createMainWindow(const QString &, Core::CreateViewOp
 }
 
 
-bool Platform::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const
+KDDW_QCORO_TASK Platform::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int) const
 {
-    ( void )timeout;
-    return true;
+    co_await m_coRoutines.wait(1000);
+    co_return true;
 }
 
-bool Platform::tests_waitForEvent(QObject *w, Event::Type type, int timeout) const
+KDDW_QCORO_TASK Platform::tests_waitForEvent(QObject *, Event::Type, int) const
 {
-    ( void )w;
-    ( void )type;
-    ( void )timeout;
-    return true;
+    co_await m_coRoutines.wait(1000);
+    co_return true;
 }
 
-bool Platform::tests_waitForEvent(Core::View *, Event::Type type, int timeout) const
+KDDW_QCORO_TASK Platform::tests_waitForEvent(Core::View *, Event::Type, int) const
 {
-    ( void )type;
-    ( void )timeout;
-    return true;
+    co_await m_coRoutines.wait(1000);
+    co_return true;
 }
 
-bool Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
-                                  int timeout) const
+KDDW_QCORO_TASK Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type,
+                                             int) const
 {
-    ( void )type;
-    ( void )timeout;
-    return true;
+    co_await m_coRoutines.wait(1000);
+    co_return true;
 }
 
 void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const

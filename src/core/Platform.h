@@ -202,18 +202,6 @@ public:
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
-    /// @brief Waits for the specified window to be active (have the keyboard focus)
-    /// Window::isActive() should return true
-    /// @sa Window::isActive()
-    virtual bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const = 0;
-
-    /// @brief Waits for the specified view to receive the specified event
-    /// Returns true if the view received said event until timeout was reached
-    virtual bool tests_waitForEvent(QObject *w, Event::Type type, int timeout = 5000) const = 0;
-    virtual bool tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
-    virtual bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
-                                    int timeout = 5000) const = 0;
-
     virtual void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const = 0;
 
     /// @brief Creates the platform. Called by the tests at startup.
@@ -253,6 +241,18 @@ public:
     virtual KDDW_QCORO_TASK tests_waitForResize(Controller *, int timeout = 2000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForDeleted(View *, int timeout = 2000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForDeleted(QObject *, int timeout = 2000) const = 0;
+
+    /// @brief Waits for the specified window to be active (have the keyboard focus)
+    /// Window::isActive() should return true
+    /// @sa Window::isActive()
+    virtual KDDW_QCORO_TASK tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const = 0;
+
+    /// @brief Waits for the specified view to receive the specified event
+    /// Returns true if the view received said event until timeout was reached
+    virtual KDDW_QCORO_TASK tests_waitForEvent(QObject *w, Event::Type type, int timeout = 5000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
+                                               int timeout = 5000) const = 0;
 #endif
 
     /// Sends a double-click event to the specified receiver
