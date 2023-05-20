@@ -20,7 +20,6 @@
 #include <DelayedCall.h>
 #include <core/Platform.h>
 #include <qstring.h>
-#include <qobject.h>
 #include <NonQtCompat_p.h>
 #include <vector>
 

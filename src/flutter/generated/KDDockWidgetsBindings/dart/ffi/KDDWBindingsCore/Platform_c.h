@@ -21,7 +21,6 @@
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
 #include <vector>
-#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -101,18 +100,6 @@ public:
     virtual void tests_initPlatform_impl();
     virtual void tests_initPlatform_impl_nocallback();
     void tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View *receiver);
-    virtual bool tests_waitForDeleted(KDDockWidgets::Core::View *arg__1, int timeout = 2000) const;
-    virtual bool tests_waitForDeleted_nocallback(KDDockWidgets::Core::View *arg__1, int timeout = 2000) const;
-    virtual bool tests_waitForDeleted(QObject *arg__1, int timeout = 2000) const;
-    virtual bool tests_waitForDeleted_nocallback(QObject *arg__1, int timeout = 2000) const;
-    virtual bool tests_waitForEvent(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event::Type type, int timeout = 5000) const;
-    virtual bool tests_waitForEvent_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event::Type type, int timeout = 5000) const;
-    virtual bool tests_waitForEvent(QObject *w, KDDockWidgets::Event::Type type, int timeout = 5000) const;
-    virtual bool tests_waitForEvent_nocallback(QObject *w, KDDockWidgets::Event::Type type, int timeout = 5000) const;
-    virtual bool tests_waitForResize(KDDockWidgets::Core::Controller *arg__1, int timeout = 2000) const;
-    virtual bool tests_waitForResize_nocallback(KDDockWidgets::Core::Controller *arg__1, int timeout = 2000) const;
-    virtual bool tests_waitForResize(KDDockWidgets::Core::View *arg__1, int timeout = 2000) const;
-    virtual bool tests_waitForResize_nocallback(KDDockWidgets::Core::View *arg__1, int timeout = 2000) const;
     virtual void ungrabMouse();
     virtual void ungrabMouse_nocallback();
     virtual void uninstallMessageHandler();
@@ -183,18 +170,6 @@ public:
     Callback_tests_doubleClickOn m_tests_doubleClickOnCallback = nullptr;
     typedef void (*Callback_tests_initPlatform_impl)(void *);
     Callback_tests_initPlatform_impl m_tests_initPlatform_implCallback = nullptr;
-    typedef bool (*Callback_tests_waitForDeleted)(void *, KDDockWidgets::Core::View *arg__1, int timeout);
-    Callback_tests_waitForDeleted m_tests_waitForDeletedCallback = nullptr;
-    typedef bool (*Callback_tests_waitForDeleted_2)(void *, QObject *arg__1, int timeout);
-    Callback_tests_waitForDeleted_2 m_tests_waitForDeleted_2Callback = nullptr;
-    typedef bool (*Callback_tests_waitForEvent)(void *, KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event::Type type, int timeout);
-    Callback_tests_waitForEvent m_tests_waitForEventCallback = nullptr;
-    typedef bool (*Callback_tests_waitForEvent_2)(void *, QObject *w, KDDockWidgets::Event::Type type, int timeout);
-    Callback_tests_waitForEvent_2 m_tests_waitForEvent_2Callback = nullptr;
-    typedef bool (*Callback_tests_waitForResize)(void *, KDDockWidgets::Core::Controller *arg__1, int timeout);
-    Callback_tests_waitForResize m_tests_waitForResizeCallback = nullptr;
-    typedef bool (*Callback_tests_waitForResize_2)(void *, KDDockWidgets::Core::View *arg__1, int timeout);
-    Callback_tests_waitForResize_2 m_tests_waitForResize_2Callback = nullptr;
     typedef void (*Callback_ungrabMouse)(void *);
     Callback_ungrabMouse m_ungrabMouseCallback = nullptr;
     typedef void (*Callback_uninstallMessageHandler)(void *);
@@ -285,18 +260,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_doubleC
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::Core::Platform::tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
-// KDDockWidgets::Core::Platform::tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event::Type type, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForEvent(QObject * w, KDDockWidgets::Event::Type type, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForResize(KDDockWidgets::Core::Controller * arg__1, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Core::Platform::ungrabMouse()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__ungrabMouse(void *thisObj);
 // KDDockWidgets::Core::Platform::uninstallMessageHandler()

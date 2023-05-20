@@ -295,7 +295,7 @@ class Platform extends KDDWBindingsCore.Platform {
   pauseForDartDebugger() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(778))
+            cFunctionSymbolName(772))
         .asFunction();
     func(thisCpp);
   }
@@ -623,7 +623,7 @@ class Platform extends KDDWBindingsCore.Platform {
         return "c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow";
       case 741:
         return "c_KDDockWidgets__flutter__Platform__organizationName";
-      case 778:
+      case 772:
         return "c_KDDockWidgets__flutter__Platform__pauseForDartDebugger";
       case 742:
         return "c_KDDockWidgets__flutter__Platform__pauseForDebugger";
@@ -655,11 +655,11 @@ class Platform extends KDDWBindingsCore.Platform {
         return "c_KDDockWidgets__flutter__Platform__tests_doubleClickOn_QPoint_View";
       case 759:
         return "c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl";
-      case 767:
+      case 761:
         return "c_KDDockWidgets__flutter__Platform__ungrabMouse";
-      case 768:
+      case 762:
         return "c_KDDockWidgets__flutter__Platform__uninstallMessageHandler";
-      case 769:
+      case 763:
         return "c_KDDockWidgets__flutter__Platform__usesFallbackMouseGrabber";
     }
     return super.cFunctionSymbolName(methodId);
@@ -701,7 +701,7 @@ class Platform extends KDDWBindingsCore.Platform {
         return "onMainWindowDestroyed";
       case 741:
         return "organizationName";
-      case 778:
+      case 772:
         return "pauseForDartDebugger";
       case 742:
         return "pauseForDebugger";
@@ -733,11 +733,11 @@ class Platform extends KDDWBindingsCore.Platform {
         return "tests_doubleClickOn";
       case 759:
         return "tests_initPlatform_impl";
-      case 767:
+      case 761:
         return "ungrabMouse";
-      case 768:
+      case 762:
         return "uninstallMessageHandler";
-      case 769:
+      case 763:
         return "usesFallbackMouseGrabber";
     }
     throw Error();
@@ -815,9 +815,9 @@ class Platform extends KDDWBindingsCore.Platform {
     final callback741 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.organizationName_calledFromC);
     registerCallback(thisCpp, callback741, 741);
-    final callback778 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback772 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.pauseForDartDebugger_calledFromC);
-    registerCallback(thisCpp, callback778, 778);
+    registerCallback(thisCpp, callback772, 772);
     final callback742 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.pauseForDebugger_calledFromC);
     registerCallback(thisCpp, callback742, 742);
@@ -877,16 +877,16 @@ class Platform extends KDDWBindingsCore.Platform {
     final callback759 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.tests_initPlatform_impl_calledFromC);
     registerCallback(thisCpp, callback759, 759);
-    final callback767 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback761 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.ungrabMouse_calledFromC);
-    registerCallback(thisCpp, callback767, 767);
-    final callback768 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback761, 761);
+    final callback762 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.uninstallMessageHandler_calledFromC);
-    registerCallback(thisCpp, callback768, 768);
-    const callbackExcept769 = 0;
-    final callback769 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback762, 762);
+    const callbackExcept763 = 0;
+    final callback763 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.usesFallbackMouseGrabber_calledFromC,
-        callbackExcept769);
-    registerCallback(thisCpp, callback769, 769);
+        callbackExcept763);
+    registerCallback(thisCpp, callback763, 763);
   }
 }

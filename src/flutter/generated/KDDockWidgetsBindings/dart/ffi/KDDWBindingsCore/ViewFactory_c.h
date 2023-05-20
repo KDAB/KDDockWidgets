@@ -23,9 +23,9 @@
 #include <ClassicIndicators.h>
 #include "core/DropArea.h"
 #include <SideBar.h>
+#include <qobject.h>
 #include <qlist.h>
 #include <qbytearray.h>
-#include <qobject.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

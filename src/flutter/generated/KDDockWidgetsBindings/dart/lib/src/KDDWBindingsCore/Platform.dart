@@ -885,180 +885,12 @@ class Platform {
         .asFunction();
     func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp,
         receiver == null ? ffi.nullptr : receiver.thisCpp);
-  } // tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const
-
-  bool tests_waitForDeleted(KDDWBindingsCore.View? arg__1,
-      {int timeout = 2000}) {
-    final bool_Func_voidstar_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(761))
-        .asFunction();
-    return func(
-            thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, timeout) !=
-        0;
-  }
-
-  static int tests_waitForDeleted_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1, int timeout) {
-    var dartInstance =
-        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Platform::tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.tests_waitForDeleted(
-        (arg__1 == null || arg__1.address == 0)
-            ? null
-            : KDDWBindingsCore.View.fromCppPointer(arg__1),
-        timeout: timeout);
-    return result ? 1 : 0;
-  } // tests_waitForDeleted(QObject * arg__1, int timeout) const
-
-  bool tests_waitForDeleted_2(QObject? arg__1, {int timeout = 2000}) {
-    final bool_Func_voidstar_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(762))
-        .asFunction();
-    return func(
-            thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, timeout) !=
-        0;
-  }
-
-  static int tests_waitForDeleted_2_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1, int timeout) {
-    var dartInstance =
-        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.tests_waitForDeleted_2(
-        (arg__1 == null || arg__1.address == 0)
-            ? null
-            : QObject.fromCppPointer(arg__1),
-        timeout: timeout);
-    return result ? 1 : 0;
-  } // tests_waitForEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event::Type type, int timeout) const
-
-  bool tests_waitForEvent(KDDWBindingsCore.View? arg__1, int type,
-      {int timeout = 5000}) {
-    final bool_Func_voidstar_voidstar_int_int func = _dylib
-        .lookup<
-                ffi.NativeFunction<
-                    bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(763))
-        .asFunction();
-    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, type,
-            timeout) !=
-        0;
-  }
-
-  static int tests_waitForEvent_calledFromC(ffi.Pointer<void> thisCpp,
-      ffi.Pointer<void>? arg__1, int type, int timeout) {
-    var dartInstance =
-        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event::Type type, int timeout) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.tests_waitForEvent(
-        (arg__1 == null || arg__1.address == 0)
-            ? null
-            : KDDWBindingsCore.View.fromCppPointer(arg__1),
-        type,
-        timeout: timeout);
-    return result ? 1 : 0;
-  } // tests_waitForEvent(QObject * w, KDDockWidgets::Event::Type type, int timeout) const
-
-  bool tests_waitForEvent_2(QObject? w, int type, {int timeout = 5000}) {
-    final bool_Func_voidstar_voidstar_int_int func = _dylib
-        .lookup<
-                ffi.NativeFunction<
-                    bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(764))
-        .asFunction();
-    return func(thisCpp, w == null ? ffi.nullptr : w.thisCpp, type, timeout) !=
-        0;
-  }
-
-  static int tests_waitForEvent_2_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? w, int type, int timeout) {
-    var dartInstance =
-        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Platform::tests_waitForEvent(QObject * w, KDDockWidgets::Event::Type type, int timeout) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.tests_waitForEvent_2(
-        (w == null || w.address == 0) ? null : QObject.fromCppPointer(w), type,
-        timeout: timeout);
-    return result ? 1 : 0;
-  } // tests_waitForResize(KDDockWidgets::Core::Controller * arg__1, int timeout) const
-
-  bool tests_waitForResize(KDDWBindingsCore.Controller? arg__1,
-      {int timeout = 2000}) {
-    final bool_Func_voidstar_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(765))
-        .asFunction();
-    return func(
-            thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, timeout) !=
-        0;
-  }
-
-  static int tests_waitForResize_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1, int timeout) {
-    var dartInstance =
-        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Platform::tests_waitForResize(KDDockWidgets::Core::Controller * arg__1, int timeout) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.tests_waitForResize(
-        (arg__1 == null || arg__1.address == 0)
-            ? null
-            : KDDWBindingsCore.Controller.fromCppPointer(arg__1),
-        timeout: timeout);
-    return result ? 1 : 0;
-  } // tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const
-
-  bool tests_waitForResize_2(KDDWBindingsCore.View? arg__1,
-      {int timeout = 2000}) {
-    final bool_Func_voidstar_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(766))
-        .asFunction();
-    return func(
-            thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, timeout) !=
-        0;
-  }
-
-  static int tests_waitForResize_2_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1, int timeout) {
-    var dartInstance =
-        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Platform::tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result = dartInstance.tests_waitForResize_2(
-        (arg__1 == null || arg__1.address == 0)
-            ? null
-            : KDDWBindingsCore.View.fromCppPointer(arg__1),
-        timeout: timeout);
-    return result ? 1 : 0;
   } // ungrabMouse()
 
   ungrabMouse() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(767))
+            cFunctionSymbolName(761))
         .asFunction();
     func(thisCpp);
   }
@@ -1077,7 +909,7 @@ class Platform {
   uninstallMessageHandler() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(768))
+            cFunctionSymbolName(762))
         .asFunction();
     func(thisCpp);
   }
@@ -1096,7 +928,7 @@ class Platform {
   bool usesFallbackMouseGrabber() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(769))
+            cFunctionSymbolName(763))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -1188,22 +1020,10 @@ class Platform {
       case 759:
         return "c_KDDockWidgets__Core__Platform__tests_initPlatform_impl";
       case 761:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int";
-      case 762:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForDeleted_QObject_int";
-      case 763:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForEvent_View_Type_int";
-      case 764:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForEvent_QObject_Type_int";
-      case 765:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForResize_Controller_int";
-      case 766:
-        return "c_KDDockWidgets__Core__Platform__tests_waitForResize_View_int";
-      case 767:
         return "c_KDDockWidgets__Core__Platform__ungrabMouse";
-      case 768:
+      case 762:
         return "c_KDDockWidgets__Core__Platform__uninstallMessageHandler";
-      case 769:
+      case 763:
         return "c_KDDockWidgets__Core__Platform__usesFallbackMouseGrabber";
     }
     return "";
@@ -1276,22 +1096,10 @@ class Platform {
       case 759:
         return "tests_initPlatform_impl";
       case 761:
-        return "tests_waitForDeleted";
-      case 762:
-        return "tests_waitForDeleted_2";
-      case 763:
-        return "tests_waitForEvent";
-      case 764:
-        return "tests_waitForEvent_2";
-      case 765:
-        return "tests_waitForResize";
-      case 766:
-        return "tests_waitForResize_2";
-      case 767:
         return "ungrabMouse";
-      case 768:
+      case 762:
         return "uninstallMessageHandler";
-      case 769:
+      case 763:
         return "usesFallbackMouseGrabber";
     }
     throw Error();
@@ -1428,52 +1236,16 @@ class Platform {
     final callback759 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.Platform.tests_initPlatform_impl_calledFromC);
     registerCallback(thisCpp, callback759, 759);
-    const callbackExcept761 = 0;
-    final callback761 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.Platform.tests_waitForDeleted_calledFromC,
-            callbackExcept761);
+    final callback761 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.ungrabMouse_calledFromC);
     registerCallback(thisCpp, callback761, 761);
-    const callbackExcept762 = 0;
-    final callback762 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.Platform.tests_waitForDeleted_2_calledFromC,
-            callbackExcept762);
+    final callback762 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.uninstallMessageHandler_calledFromC);
     registerCallback(thisCpp, callback762, 762);
     const callbackExcept763 = 0;
-    final callback763 = ffi.Pointer.fromFunction<
-            bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>(
-        KDDWBindingsCore.Platform.tests_waitForEvent_calledFromC,
+    final callback763 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.Platform.usesFallbackMouseGrabber_calledFromC,
         callbackExcept763);
     registerCallback(thisCpp, callback763, 763);
-    const callbackExcept764 = 0;
-    final callback764 = ffi.Pointer.fromFunction<
-            bool_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>(
-        KDDWBindingsCore.Platform.tests_waitForEvent_2_calledFromC,
-        callbackExcept764);
-    registerCallback(thisCpp, callback764, 764);
-    const callbackExcept765 = 0;
-    final callback765 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.Platform.tests_waitForResize_calledFromC,
-            callbackExcept765);
-    registerCallback(thisCpp, callback765, 765);
-    const callbackExcept766 = 0;
-    final callback766 =
-        ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsCore.Platform.tests_waitForResize_2_calledFromC,
-            callbackExcept766);
-    registerCallback(thisCpp, callback766, 766);
-    final callback767 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.ungrabMouse_calledFromC);
-    registerCallback(thisCpp, callback767, 767);
-    final callback768 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.uninstallMessageHandler_calledFromC);
-    registerCallback(thisCpp, callback768, 768);
-    const callbackExcept769 = 0;
-    final callback769 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.Platform.usesFallbackMouseGrabber_calledFromC,
-        callbackExcept769);
-    registerCallback(thisCpp, callback769, 769);
   }
 }

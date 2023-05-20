@@ -12,9 +12,9 @@
 #include <DropArea.h>
 #include "core/DropArea.h"
 #include <core/View.h>
-#include <qstring.h>
 #include <qsize.h>
 #include <qrect.h>
+#include <qstring.h>
 #include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

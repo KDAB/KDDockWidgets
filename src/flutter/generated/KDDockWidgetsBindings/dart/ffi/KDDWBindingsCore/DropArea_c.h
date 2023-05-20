@@ -33,11 +33,14 @@ public:
     void addDockWidget(KDDockWidgets::Core::DockWidget *dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption = {});
     void addMultiSplitter(KDDockWidgets::Core::DropArea *splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
     void addWidget(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
+    QSize availableSize() const;
     KDDockWidgets::Core::Item *centralFrame() const;
     bool containsDockWidget(KDDockWidgets::Core::DockWidget *arg__1) const;
     static KDDockWidgets::Core::Group *createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options);
     KDDockWidgets::DropLocation currentDropLocation() const;
+    bool drop(KDDockWidgets::Core::View *droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo);
     KDDockWidgets::Core::DropIndicatorOverlay *dropIndicatorOverlay() const;
+    KDDockWidgets::Core::Group *groupContainingPos(QPoint globalPos) const;
     QList<KDDockWidgets::Core::Group *> groups() const;
     bool hasSingleFloatingFrame() const;
     bool hasSingleFrame() const;
@@ -49,6 +52,8 @@ public:
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     static QString tr(const char *s, const char *c, int n);
+    void updateFloatingActions();
+    bool validateInputs(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group *relativeToFrame, KDDockWidgets::InitialOption option) const;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
@@ -63,6 +68,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__addDockWidget
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_);
 // KDDockWidgets::Core::DropArea::addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeTo_, void *option_);
+// KDDockWidgets::Core::DropArea::availableSize() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__availableSize(void *thisObj);
 // KDDockWidgets::Core::DropArea::centralFrame() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj);
 // KDDockWidgets::Core::DropArea::containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
@@ -71,8 +78,12 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea__containsDockW
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions(int options_);
 // KDDockWidgets::Core::DropArea::currentDropLocation() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DropArea__currentDropLocation(void *thisObj);
+// KDDockWidgets::Core::DropArea::drop(KDDockWidgets::Core::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea__drop_View_Location_Group(void *thisObj, void *droppedwindow_, int location, void *relativeTo_);
 // KDDockWidgets::Core::DropArea::dropIndicatorOverlay() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj);
+// KDDockWidgets::Core::DropArea::groupContainingPos(QPoint globalPos) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__groupContainingPos_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::DropArea::groups() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__groups(void *thisObj);
 // KDDockWidgets::Core::DropArea::hasSingleFloatingFrame() const
@@ -93,7 +104,14 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__removeHover(v
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::DropArea::tr(const char * s, const char * c, int n)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__DropArea__tr_char_char_int(const char *s, const char *c, int n);
+// KDDockWidgets::Core::DropArea::updateFloatingActions()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__updateFloatingActions(void *thisObj);
+// KDDockWidgets::Core::DropArea::validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea__validateInputs_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeToFrame_, void *option_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea___get_m_inDestructor(void *thisObj);
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea___get_m_isMDIWrapper(void *thisObj);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea___set_m_inDestructor_bool(void *thisObj, bool m_inDestructor_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea_Finalizer(void *, void *cppObj, void *);
 }

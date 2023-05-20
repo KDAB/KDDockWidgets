@@ -1148,18 +1148,6 @@ void c_KDDockWidgets__Core__Platform__tests_doubleClickOn_QPoint_View(void *this
 void c_KDDockWidgets__Core__Platform__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::Core::Platform::tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
 void c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
-// KDDockWidgets::Core::Platform::tests_waitForDeleted(KDDockWidgets::Core::View * arg__1, int timeout) const
-bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_View_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForDeleted(QObject * arg__1, int timeout) const
-bool c_KDDockWidgets__Core__Platform__tests_waitForDeleted_QObject_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event::Type type, int timeout) const
-bool c_KDDockWidgets__Core__Platform__tests_waitForEvent_View_Type_int(void *thisObj, void *arg__1_, int type, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForEvent(QObject * w, KDDockWidgets::Event::Type type, int timeout) const
-bool c_KDDockWidgets__Core__Platform__tests_waitForEvent_QObject_Type_int(void *thisObj, void *w_, int type, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForResize(KDDockWidgets::Core::Controller * arg__1, int timeout) const
-bool c_KDDockWidgets__Core__Platform__tests_waitForResize_Controller_int(void *thisObj, void *arg__1_, int timeout);
-// KDDockWidgets::Core::Platform::tests_waitForResize(KDDockWidgets::Core::View * arg__1, int timeout) const
-bool c_KDDockWidgets__Core__Platform__tests_waitForResize_View_int(void *thisObj, void *arg__1_, int timeout);
 // KDDockWidgets::Core::Platform::ungrabMouse()
 void c_KDDockWidgets__Core__Platform__ungrabMouse(void *thisObj);
 // KDDockWidgets::Core::Platform::uninstallMessageHandler()
@@ -2966,47 +2954,7 @@ void c_KDDockWidgets__Core__Layout__viewAboutToBeDeleted(void *thisObj);
 int c_KDDockWidgets__Core__Layout__visibleCount(void *thisObj);
 void c_KDDockWidgets__Core__Layout__destructor(void *thisObj);
 void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Layout_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::DropArea::DropArea(KDDockWidgets::Core::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
-void *c_KDDockWidgets__Core__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
-// KDDockWidgets::Core::DropArea::addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
-void c_KDDockWidgets__Core__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_);
-// KDDockWidgets::Core::DropArea::addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
-void c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_);
-// KDDockWidgets::Core::DropArea::addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
-void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeTo_, void *option_);
-// KDDockWidgets::Core::DropArea::centralFrame() const
-void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj);
-// KDDockWidgets::Core::DropArea::containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
-bool c_KDDockWidgets__Core__DropArea__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
-void *c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions(int options_);
-// KDDockWidgets::Core::DropArea::currentDropLocation() const
-int c_KDDockWidgets__Core__DropArea__currentDropLocation(void *thisObj);
-// KDDockWidgets::Core::DropArea::dropIndicatorOverlay() const
-void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj);
-// KDDockWidgets::Core::DropArea::groups() const
-void *c_KDDockWidgets__Core__DropArea__groups(void *thisObj);
-// KDDockWidgets::Core::DropArea::hasSingleFloatingFrame() const
-bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj);
-// KDDockWidgets::Core::DropArea::hasSingleFrame() const
-bool c_KDDockWidgets__Core__DropArea__hasSingleFrame(void *thisObj);
-// KDDockWidgets::Core::DropArea::isMDIWrapper() const
-bool c_KDDockWidgets__Core__DropArea__isMDIWrapper(void *thisObj);
-// KDDockWidgets::Core::DropArea::layoutEqually()
-void c_KDDockWidgets__Core__DropArea__layoutEqually(void *thisObj);
-// KDDockWidgets::Core::DropArea::layoutParentContainerEqually(KDDockWidgets::Core::DockWidget * arg__1)
-void c_KDDockWidgets__Core__DropArea__layoutParentContainerEqually_DockWidget(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::DropArea::mdiDockWidgetWrapper() const
-void *c_KDDockWidgets__Core__DropArea__mdiDockWidgetWrapper(void *thisObj);
-// KDDockWidgets::Core::DropArea::removeHover()
-void c_KDDockWidgets__Core__DropArea__removeHover(void *thisObj);
-// KDDockWidgets::Core::DropArea::setParentView_impl(KDDockWidgets::Core::View * parent)
-void c_KDDockWidgets__Core__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
-// KDDockWidgets::Core::DropArea::tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__DropArea__tr_char_char_int(const char *s, const char *c, int n);
-void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj);
-void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__DropArea_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Group::Group(KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__Core__Layout_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Group::Group(KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__Core__Group__constructor_View(void *parent_);
 // KDDockWidgets::Core::Group::actualTitleBar() const
 void *c_KDDockWidgets__Core__Group__actualTitleBar(void *thisObj);
@@ -3162,7 +3110,60 @@ void c_KDDockWidgets__Core__Group__updateTitleBarVisibility(void *thisObj);
 int c_KDDockWidgets__Core__Group__userType(void *thisObj);
 void c_KDDockWidgets__Core__Group__destructor(void *thisObj);
 void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Group_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Core::Group * group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
+void c_KDDockWidgets__Core__Group_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::DropArea::DropArea(KDDockWidgets::Core::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+void *c_KDDockWidgets__Core__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
+// KDDockWidgets::Core::DropArea::addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Core__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_);
+// KDDockWidgets::Core::DropArea::addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
+void c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_);
+// KDDockWidgets::Core::DropArea::addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
+void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeTo_, void *option_);
+// KDDockWidgets::Core::DropArea::availableSize() const
+void *c_KDDockWidgets__Core__DropArea__availableSize(void *thisObj);
+// KDDockWidgets::Core::DropArea::centralFrame() const
+void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj);
+// KDDockWidgets::Core::DropArea::containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
+bool c_KDDockWidgets__Core__DropArea__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
+void *c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions(int options_);
+// KDDockWidgets::Core::DropArea::currentDropLocation() const
+int c_KDDockWidgets__Core__DropArea__currentDropLocation(void *thisObj);
+// KDDockWidgets::Core::DropArea::drop(KDDockWidgets::Core::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
+bool c_KDDockWidgets__Core__DropArea__drop_View_Location_Group(void *thisObj, void *droppedwindow_, int location, void *relativeTo_);
+// KDDockWidgets::Core::DropArea::dropIndicatorOverlay() const
+void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj);
+// KDDockWidgets::Core::DropArea::groupContainingPos(QPoint globalPos) const
+void *c_KDDockWidgets__Core__DropArea__groupContainingPos_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Core::DropArea::groups() const
+void *c_KDDockWidgets__Core__DropArea__groups(void *thisObj);
+// KDDockWidgets::Core::DropArea::hasSingleFloatingFrame() const
+bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj);
+// KDDockWidgets::Core::DropArea::hasSingleFrame() const
+bool c_KDDockWidgets__Core__DropArea__hasSingleFrame(void *thisObj);
+// KDDockWidgets::Core::DropArea::isMDIWrapper() const
+bool c_KDDockWidgets__Core__DropArea__isMDIWrapper(void *thisObj);
+// KDDockWidgets::Core::DropArea::layoutEqually()
+void c_KDDockWidgets__Core__DropArea__layoutEqually(void *thisObj);
+// KDDockWidgets::Core::DropArea::layoutParentContainerEqually(KDDockWidgets::Core::DockWidget * arg__1)
+void c_KDDockWidgets__Core__DropArea__layoutParentContainerEqually_DockWidget(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::DropArea::mdiDockWidgetWrapper() const
+void *c_KDDockWidgets__Core__DropArea__mdiDockWidgetWrapper(void *thisObj);
+// KDDockWidgets::Core::DropArea::removeHover()
+void c_KDDockWidgets__Core__DropArea__removeHover(void *thisObj);
+// KDDockWidgets::Core::DropArea::setParentView_impl(KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__Core__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
+// KDDockWidgets::Core::DropArea::tr(const char * s, const char * c, int n)
+void *c_static_KDDockWidgets__Core__DropArea__tr_char_char_int(const char *s, const char *c, int n);
+// KDDockWidgets::Core::DropArea::updateFloatingActions()
+void c_KDDockWidgets__Core__DropArea__updateFloatingActions(void *thisObj);
+// KDDockWidgets::Core::DropArea::validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
+bool c_KDDockWidgets__Core__DropArea__validateInputs_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeToFrame_, void *option_);
+void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj);
+bool c_KDDockWidgets__Core__DropArea___get_m_inDestructor(void *thisObj);
+bool c_KDDockWidgets__Core__DropArea___get_m_isMDIWrapper(void *thisObj);
+void c_KDDockWidgets__Core__DropArea___set_m_inDestructor_bool(void *thisObj, bool m_inDestructor_);
+void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+void c_KDDockWidgets__Core__DropArea_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Core::Group * group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
 void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_QRect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::FloatingWindow(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
 void *c_KDDockWidgets__Core__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_, void *parent_);

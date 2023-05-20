@@ -44,6 +44,10 @@ void DropArea_wrapper::addWidget(KDDockWidgets::Core::View *widget, KDDockWidget
 {
     ::KDDockWidgets::Core::DropArea::addWidget(widget, location, relativeTo, option);
 }
+QSize DropArea_wrapper::availableSize() const
+{
+    return ::KDDockWidgets::Core::DropArea::availableSize();
+}
 KDDockWidgets::Core::Item *DropArea_wrapper::centralFrame() const
 {
     return ::KDDockWidgets::Core::DropArea::centralFrame();
@@ -60,9 +64,17 @@ KDDockWidgets::DropLocation DropArea_wrapper::currentDropLocation() const
 {
     return ::KDDockWidgets::Core::DropArea::currentDropLocation();
 }
+bool DropArea_wrapper::drop(KDDockWidgets::Core::View *droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo)
+{
+    return ::KDDockWidgets::Core::DropArea::drop(droppedwindow, location, relativeTo);
+}
 KDDockWidgets::Core::DropIndicatorOverlay *DropArea_wrapper::dropIndicatorOverlay() const
 {
     return ::KDDockWidgets::Core::DropArea::dropIndicatorOverlay();
+}
+KDDockWidgets::Core::Group *DropArea_wrapper::groupContainingPos(QPoint globalPos) const
+{
+    return ::KDDockWidgets::Core::DropArea::groupContainingPos(globalPos);
 }
 QList<KDDockWidgets::Core::Group *> DropArea_wrapper::groups() const
 {
@@ -112,6 +124,14 @@ void DropArea_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *
 QString DropArea_wrapper::tr(const char *s, const char *c, int n)
 {
     return ::KDDockWidgets::Core::DropArea::tr(s, c, n);
+}
+void DropArea_wrapper::updateFloatingActions()
+{
+    ::KDDockWidgets::Core::DropArea::updateFloatingActions();
+}
+bool DropArea_wrapper::validateInputs(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group *relativeToFrame, KDDockWidgets::InitialOption option) const
+{
+    return ::KDDockWidgets::Core::DropArea::validateInputs(widget, location, relativeToFrame, option);
 }
 DropArea_wrapper::~DropArea_wrapper()
 {
@@ -166,6 +186,11 @@ void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOptio
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
     fromPtr(thisObj)->addWidget(widget, static_cast<KDDockWidgets::Location>(location), relativeTo, option);
 }
+// availableSize() const
+void *c_KDDockWidgets__Core__DropArea__availableSize(void *thisObj)
+{
+    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->availableSize() };
+}
 // centralFrame() const
 void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj)
 {
@@ -188,10 +213,24 @@ int c_KDDockWidgets__Core__DropArea__currentDropLocation(void *thisObj)
 {
     return int(fromPtr(thisObj)->currentDropLocation());
 }
+// drop(KDDockWidgets::Core::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
+bool c_KDDockWidgets__Core__DropArea__drop_View_Location_Group(void *thisObj, void *droppedwindow_, int location, void *relativeTo_)
+{
+    auto droppedwindow = reinterpret_cast<KDDockWidgets::Core::View *>(droppedwindow_);
+    auto relativeTo = reinterpret_cast<KDDockWidgets::Core::Group *>(relativeTo_);
+    return fromPtr(thisObj)->drop(droppedwindow, static_cast<KDDockWidgets::Location>(location), relativeTo);
+}
 // dropIndicatorOverlay() const
 void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj)
 {
     return fromPtr(thisObj)->dropIndicatorOverlay();
+}
+// groupContainingPos(QPoint globalPos) const
+void *c_KDDockWidgets__Core__DropArea__groupContainingPos_QPoint(void *thisObj, void *globalPos_)
+{
+    assert(globalPos_);
+    auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
+    return fromPtr(thisObj)->groupContainingPos(globalPos);
 }
 // groups() const
 void *c_KDDockWidgets__Core__DropArea__groups(void *thisObj)
@@ -245,15 +284,41 @@ void *c_static_KDDockWidgets__Core__DropArea__tr_char_char_int(const char *s, co
 {
     return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::tr(s, c, n) };
 }
+// updateFloatingActions()
+void c_KDDockWidgets__Core__DropArea__updateFloatingActions(void *thisObj)
+{
+    fromPtr(thisObj)->updateFloatingActions();
+}
+// validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
+bool c_KDDockWidgets__Core__DropArea__validateInputs_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeToFrame_, void *option_)
+{
+    auto widget = reinterpret_cast<KDDockWidgets::Core::View *>(widget_);
+    auto relativeToFrame = reinterpret_cast<KDDockWidgets::Core::Group *>(relativeToFrame_);
+    assert(option_);
+    auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
+    return fromPtr(thisObj)->validateInputs(widget, static_cast<KDDockWidgets::Location>(location), relativeToFrame, option);
+}
 void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
+}
+bool c_KDDockWidgets__Core__DropArea___get_m_inDestructor(void *thisObj)
+{
+    return fromPtr(thisObj)->m_inDestructor;
+}
+bool c_KDDockWidgets__Core__DropArea___get_m_isMDIWrapper(void *thisObj)
+{
+    return fromPtr(thisObj)->m_isMDIWrapper;
+}
+void c_KDDockWidgets__Core__DropArea___set_m_inDestructor_bool(void *thisObj, bool m_inDestructor_)
+{
+    fromPtr(thisObj)->m_inDestructor = m_inDestructor_;
 }
 void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 907:
+    case 901:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::Callback_setParentView_impl>(callback);
         break;
     }
