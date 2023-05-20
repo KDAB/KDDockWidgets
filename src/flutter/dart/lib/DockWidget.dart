@@ -17,12 +17,20 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 import 'package:flutter/material.dart' hide View;
 
 class DockWidget extends KDDWBindingsFlutter.DockWidget with View_mixin {
+  Widget? guestwidget;
   DockWidget(String? uniqueName, {int options = 0, int layoutSaverOptions = 0})
       : super(uniqueName,
             options: options, layoutSaverOptions: layoutSaverOptions) {
-    initMixin(this, color: Colors.pink, debugName: "DockWidget");
     m_fillsParent = true;
-    // print("DockWidget CTOR");
+    initMixin(this, color: Colors.pink, debugName: "DockWidget");
+  }
+
+  void setGuestWidget(Widget w) {
+    guestwidget = w;
+    if (widgetKey.currentState != null) {
+      (widgetKey.currentState as DockWidgetPositionedWidgetState)
+          .setGuestWidget(w);
+    }
   }
 
   Widget createFlutterWidget() {
@@ -43,12 +51,25 @@ class DockWidgetWidget extends PositionedWidget {
 
 class DockWidgetPositionedWidgetState extends PositionedWidgetState {
   final DockWidget DockWidgetView;
+  Widget? guestWidget;
 
   DockWidgetPositionedWidgetState(var kddwView, this.DockWidgetView)
-      : super(kddwView);
+      : super(kddwView) {
+    guestWidget = DockWidgetView.guestwidget;
+  }
+
+  void setGuestWidget(Widget w) {
+    setState(() {
+      guestWidget = w;
+    });
+  }
 
   @override
   Widget buildContents() {
-    return super.buildContents();
+    if (guestWidget == null) {
+      return Container(color: Colors.black);
+    } else {
+      return guestWidget!;
+    }
   }
 }
