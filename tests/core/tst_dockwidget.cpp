@@ -184,7 +184,7 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
     CHECK(titleBar->isVisible());
     titleBar->onCloseClicked();
     CHECK(!dw->isOpen());
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(fw));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw));
     CHECK(!fw);
 
     CHECK(!dw->floatingWindow());

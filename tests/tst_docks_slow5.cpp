@@ -81,7 +81,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
 
         for (int i : docksToHide) {
             docksToCreate.at(i).createdDock->destroyLater();
-            CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(docksToCreate.at(i).createdDock));
+            CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(docksToCreate.at(i).createdDock));
         }
 
         layout->checkSanity();
@@ -102,7 +102,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         // Cleanup
         for (auto dock : DockRegistry::self()->dockwidgets()) {
             dock->destroyLater();
-            CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(dock));
+            CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock));
         }
 
         KDDW_TEST_RETURN(true);

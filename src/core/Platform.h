@@ -207,21 +207,12 @@ public:
     /// @sa Window::isActive()
     virtual bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const = 0;
 
-    /// @brief Waits for the specified view to receive a resize event
-    /// Returns true if the view was resized until timeout was reached
-    virtual bool tests_waitForResize(View *, int timeout = 2000) const = 0;
-    virtual bool tests_waitForResize(Controller *, int timeout = 2000) const = 0;
-
     /// @brief Waits for the specified view to receive the specified event
     /// Returns true if the view received said event until timeout was reached
     virtual bool tests_waitForEvent(QObject *w, Event::Type type, int timeout = 5000) const = 0;
     virtual bool tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
     virtual bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
                                     int timeout = 5000) const = 0;
-
-    /// @brief Waits for the specified view to be deleted
-    virtual bool tests_waitForDeleted(View *, int timeout = 2000) const = 0;
-    virtual bool tests_waitForDeleted(QObject *, int timeout = 2000) const = 0;
 
     virtual void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const = 0;
 
@@ -258,10 +249,10 @@ public:
     /// @brief Waits for the specified view to receive a resize event
     /// Returns true if the view was resized until timeout was reached
     /// TODOm3: Remove the other overloads and remove the "2" suffix once all tests are using coroutines
-    virtual KDDW_QCORO_TASK tests_waitForResize2(View *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForResize2(Controller *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForDeleted2(View *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForDeleted2(QObject *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForResize(View *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForResize(Controller *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted(View *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted(QObject *, int timeout = 2000) const = 0;
 #endif
 
     /// Sends a double-click event to the specified receiver

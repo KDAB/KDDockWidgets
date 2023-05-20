@@ -80,10 +80,6 @@ public:
     bool tests_waitForEvent(Core::View *, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(std::shared_ptr<Core::Window>, QEvent::Type type,
                             int timeout = 5000) const override;
-    bool tests_waitForResize(Core::View *, int timeout = 2000) const override;
-    bool tests_waitForResize(Core::Controller *, int timeout = 2000) const override;
-    bool tests_waitForDeleted(Core::View *, int timeout = 2000) const override;
-    bool tests_waitForDeleted(QObject *, int timeout = 2000) const override;
     void tests_sendEvent(std::shared_ptr<Core::Window>, QEvent *) const override;
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
@@ -97,10 +93,10 @@ public:
     static void maybeSetOffscreenQPA(int argc, char **argv);
 
     /// TODOm3: Remove the other overloads and remove the "2" suffix once all tests are using coroutines
-    bool tests_waitForResize2(Core::View *, int timeout = 2000) const override;
-    bool tests_waitForResize2(Core::Controller *, int timeout = 2000) const override;
-    bool tests_waitForDeleted2(Core::View *, int timeout = 2000) const override;
-    bool tests_waitForDeleted2(QObject *, int timeout = 2000) const override;
+    bool tests_waitForResize(Core::View *, int timeout = 2000) const override;
+    bool tests_waitForResize(Core::Controller *, int timeout = 2000) const override;
+    bool tests_waitForDeleted(Core::View *, int timeout = 2000) const override;
+    bool tests_waitForDeleted(QObject *, int timeout = 2000) const override;
 
 #endif
 

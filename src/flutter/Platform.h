@@ -76,20 +76,16 @@ public:
                      Core::View *parent = nullptr, Qt::WindowFlags flags = {}) const override;
 
     bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const override;
-    bool tests_waitForResize(Core::View *, int timeout) const override;
-    bool tests_waitForResize(Core::Controller *, int timeout) const override;
     bool tests_waitForEvent(QObject *w, Event::Type type, int timeout) const override;
     bool tests_waitForEvent(Core::View *, Event::Type type, int timeout) const override;
     bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type, int timeout) const override;
-    bool tests_waitForDeleted(Core::View *, int timeout) const override;
-    bool tests_waitForDeleted(QObject *, int timeout) const override;
     void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
 #if !defined(DARTAGNAN_BINDINGS_RUN)
     KDDW_QCORO_TASK tests_wait(int ms) const override;
-    KDDW_QCORO_TASK tests_waitForResize2(Core::View *, int timeout) const override;
-    KDDW_QCORO_TASK tests_waitForResize2(Core::Controller *, int timeout) const override;
-    KDDW_QCORO_TASK tests_waitForDeleted2(QObject *, int timeout) const override;
-    KDDW_QCORO_TASK tests_waitForDeleted2(Core::View *, int timeout) const override;
+    KDDW_QCORO_TASK tests_waitForResize(Core::View *, int timeout) const override;
+    KDDW_QCORO_TASK tests_waitForResize(Core::Controller *, int timeout) const override;
+    KDDW_QCORO_TASK tests_waitForDeleted(QObject *, int timeout) const override;
+    KDDW_QCORO_TASK tests_waitForDeleted(Core::View *, int timeout) const override;
 
     mutable CoRoutines m_coRoutines;
     typedef KDDW_QCORO_TASK (*RunTestsFunc)();

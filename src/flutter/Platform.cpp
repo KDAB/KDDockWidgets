@@ -337,18 +337,6 @@ bool Platform::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int time
     return true;
 }
 
-bool Platform::tests_waitForResize(Core::View *, int timeout) const
-{
-    ( void )timeout;
-    return true;
-}
-
-bool Platform::tests_waitForResize(Core::Controller *, int timeout) const
-{
-    ( void )timeout;
-    return true;
-}
-
 bool Platform::tests_waitForEvent(QObject *w, Event::Type type, int timeout) const
 {
     ( void )w;
@@ -372,18 +360,6 @@ bool Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type typ
     return true;
 }
 
-bool Platform::tests_waitForDeleted(Core::View *, int timeout) const
-{
-    ( void )timeout;
-    return true;
-}
-
-bool Platform::tests_waitForDeleted(QObject *, int timeout) const
-{
-    ( void )timeout;
-    return true;
-}
-
 void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const
 {
     ( void )window;
@@ -396,19 +372,19 @@ KDDW_QCORO_TASK Platform::tests_wait(int ms) const
     co_return true;
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForResize2(Core::View *, int) const
+KDDW_QCORO_TASK Platform::tests_waitForResize(Core::View *, int) const
 {
     co_await m_coRoutines.wait(1000);
     co_return true;
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForResize2(Core::Controller *, int) const
+KDDW_QCORO_TASK Platform::tests_waitForResize(Core::Controller *, int) const
 {
     co_await m_coRoutines.wait(1000);
     co_return true;
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForDeleted2(QObject *obj, int) const
+KDDW_QCORO_TASK Platform::tests_waitForDeleted(QObject *obj, int) const
 {
     if (!obj)
         co_return true;
@@ -418,7 +394,7 @@ KDDW_QCORO_TASK Platform::tests_waitForDeleted2(QObject *obj, int) const
     co_return guard.isNull();
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForDeleted2(Core::View *view, int) const
+KDDW_QCORO_TASK Platform::tests_waitForDeleted(Core::View *view, int) const
 {
     if (!view)
         co_return true;

@@ -54,14 +54,14 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     m->addDockWidget(dock2, Location_OnRight);
     m->addDockWidget(dock3, Location_OnRight);
 
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(layout);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(layout);
     const int oldContentsWidth = layout->layoutWidth();
     auto f1 = dock1->dptr()->group();
     dock3->close();
     dock2->close();
     dock1->close();
 
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(f1));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f1));
 
     dock3->open();
     CHECK(dock3->titleBar()->isVisible());
@@ -94,7 +94,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     // Drop left of dock3
     layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->group());
 
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(fw2));
+    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw2));
     CHECK_EQ(layout->layoutWidth(), oldContentsWidth);
     layout->checkSanity();
 
@@ -144,9 +144,9 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
         CHECK(item2);
         dock2->close();
         dock3->close();
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted2(f2);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f2);
         dock2->open();
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize2(dock2->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock2->view());
 
         CHECK_EQ(item2->geometry(), dock2->dptr()->group()->view()->geometry());
         layout->checkSanity();

@@ -31,6 +31,7 @@ import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
 void maybeResumeCoRoutines() {
   KDDW.Platform.plat().maybeResumeCoRoutines();
 
+  /// TODOm3: Check if this consumes a lot of CPU
   Future.delayed(const Duration(seconds: 1), () {
     // print("maybeResumeCoRoutines()");
     maybeResumeCoRoutines();
