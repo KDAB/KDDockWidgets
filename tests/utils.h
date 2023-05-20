@@ -30,7 +30,6 @@
 
 #include <QPointer>
 #include <QVector>
-#include <QtTest/QTest>
 
 #include <memory>
 

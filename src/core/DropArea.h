@@ -140,14 +140,15 @@ public:
     /// Returns the current drop location
     /// The user needs to be dragging a window and be over a drop indicator, otherwise DropLocation_None is returned
     DropLocation currentDropLocation() const;
-
+#ifdef DOCKS_DEVELOPER_MODE
+public:
+#else
 private:
+#endif
     Q_DISABLE_COPY(DropArea)
     friend class Core::MainWindow;
     friend class Core::Group;
     friend class Core::FloatingWindow;
-    friend class ::TestDocks;
-    friend class ::TestQtWidgets;
     friend class DropIndicatorOverlay;
     friend class AnimatedIndicators;
 
