@@ -108,6 +108,11 @@ KDDW_QCORO_TASK tst_isFocused()
     KDDW_CO_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_isFocused };
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>>
+{
+#if !defined(KDDW_FRONTEND_FLUTTER)
+    tst_isFocused
+#endif
+};
 
 #include "tests_main.h"

@@ -355,6 +355,12 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_28NestedWidgets };
+static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>>
+{
+#if !defined(KDDW_FRONTEND_FLUTTER)
+    tst_28NestedWidgets
+#endif
+};
+
 
 #include "tests_main.h"
