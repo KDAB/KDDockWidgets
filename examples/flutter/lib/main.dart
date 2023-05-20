@@ -23,6 +23,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:KDDockWidgets/View.dart' as KDDW;
 import 'package:KDDockWidgets/Platform.dart' as KDDW;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
+import 'package:kddockwidgets_flutter_example/MyWidget.dart';
 
 void main() {
   KDDWBindings.initFrontend(KDDWBindings.KDDockWidgets_FrontendType.Flutter);
@@ -67,6 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final dw1 = DockWidget("dw1");
     final dw2 = DockWidget("dw2");
     final dw3 = DockWidget("dw3");
+    final dw4 = DockWidget("dw4");
+
+    dw1.setGuestWidget(const MyWidget());
 
     mainWindow.asMainWindowController().addDockWidget(
         dw1.asDockWidgetController(),
@@ -85,13 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
         KDDWBindings.KDDockWidgets_Location.Location_OnBottom,
         relativeTo: null,
         initialOption: KDDWBindings.InitialOption());
+
+    dw4.setGuestWidget(const MyWidget());
+    dw4.show();
   }
 
   void _incrementCounter() {}
 
   @override
   Widget build(BuildContext context) {
-    print("built");
     final windowOverlay = KDDW.WindowOverlayWidget();
 
     return Scaffold(
