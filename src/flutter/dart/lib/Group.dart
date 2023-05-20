@@ -81,8 +81,8 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
 
     return Column(
       children: [
-        if (titleBarView.isVisible()) titleBarView.flutterWidget,
-        if (tabBarView.isVisible()) tabBarView.flutterWidget,
+        if (!titleBarView.isExpicitlyHidden()) titleBarView.flutterWidget,
+        if (!tabBarView.isExpicitlyHidden()) tabBarView.flutterWidget,
         Expanded(child: dockWidgetWidget)
       ],
     );
