@@ -112,6 +112,8 @@ add_kddw_test(tst_docks_slow1 tst_docks_slow1.cpp)
 add_kddw_test(tst_docks_slow2 tst_docks_slow2.cpp)
 add_kddw_test(tst_docks_slow3 tst_docks_slow3.cpp)
 add_kddw_test(tst_docks_slow4 tst_docks_slow4.cpp)
+add_kddw_test(tst_docks_slow5 tst_docks_slow5.cpp)
+add_kddw_test(tst_docks_slow6 tst_docks_slow6.cpp)
 add_kddw_test(tst_docks_slow7 tst_docks_slow7.cpp)
 
 add_kddw_test(tst_multisplitter tst_multisplitter.cpp)
@@ -127,11 +129,6 @@ add_kddw_test(tst_tabbar core/tst_tabbar.cpp)
 add_kddw_test(tst_separator core/tst_separator.cpp)
 add_kddw_test(tst_floatingwindow core/tst_floatingwindow.cpp)
 add_kddw_test(tst_dockwidget core/tst_dockwidget.cpp)
-
-# These build with flutter but don't pass. So just build them but don't add
-# them to the ctest set yet:
-add_kddw_test(tst_docks_slow5 tst_docks_slow5.cpp)
-add_kddw_test(tst_docks_slow6 tst_docks_slow6.cpp)
 
 # This one doesn't even build yet
 if(NOT KDDW_FRONTEND_FLUTTER)
