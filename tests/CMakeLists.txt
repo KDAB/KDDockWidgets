@@ -108,7 +108,7 @@ function(add_kddw_test test srcs supportedByFlutter)
     endif()
 endfunction()
 
-add_kddw_test(tst_docks tst_docks.cpp OFF)
+add_kddw_test(tst_docks tst_docks.cpp ON)
 
 add_kddw_test(tst_docks_slow1 tst_docks_slow1.cpp ON)
 add_kddw_test(tst_docks_slow2 tst_docks_slow2.cpp ON)
