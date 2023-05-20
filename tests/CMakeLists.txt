@@ -108,6 +108,8 @@ function(add_kddw_test test srcs supportedByFlutter)
     endif()
 endfunction()
 
+add_kddw_test(tst_docks tst_docks.cpp OFF)
+
 add_kddw_test(tst_docks_slow1 tst_docks_slow1.cpp ON)
 add_kddw_test(tst_docks_slow2 tst_docks_slow2.cpp ON)
 add_kddw_test(tst_docks_slow3 tst_docks_slow3.cpp ON)
@@ -135,7 +137,6 @@ add_kddw_test(tst_docks_slow6 tst_docks_slow6.cpp OFF)
 
 # This one doesn't even build yet
 if(NOT KDDW_FRONTEND_FLUTTER)
-    add_kddw_test(tst_docks tst_docks.cpp OFF)
     add_kddw_test(tst_docks_slow8 tst_docks_slow8.cpp OFF)
 endif()
 
