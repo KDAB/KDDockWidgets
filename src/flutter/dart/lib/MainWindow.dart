@@ -27,7 +27,7 @@ class MainWindow extends KDDWBindingsFlutter.MainWindow with View_mixin {
       : super(uniqueName, options: options, parent: parent, flags: flags) {
     m_controller =
         KDDWBindingsCore.MainWindow.fromCppPointer(controller().thisCpp);
-    initMixin(this, color: Colors.black12, debugName: "MainWindow");
+    initMixin(this, debugName: "MainWindow");
     m_controller.init(uniqueName);
   }
 
@@ -61,7 +61,6 @@ class MainWindowWidgetState extends State<MainWindowWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
       child: dropAreaWidget(),
     );
   }

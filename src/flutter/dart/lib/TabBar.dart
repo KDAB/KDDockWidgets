@@ -67,7 +67,10 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
         height: 50,
         child: DefaultTabController(
           length: numTabs,
-          child: material.TabBar(tabs: tabs),
+          child: material.TabBar(
+            tabs: tabs,
+            labelColor: Colors.black,
+          ),
         ));
   }
 }

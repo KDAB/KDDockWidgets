@@ -67,7 +67,7 @@ class DockWidgetPositionedWidgetState extends PositionedWidgetState {
   @override
   Widget buildContents() {
     if (guestWidget == null) {
-      return Container(color: Colors.black);
+      return Container();
     } else {
       return guestWidget!;
     }

@@ -34,7 +34,7 @@ class FloatingWindow extends KDDWBindingsFlutter.View with View_mixin {
     m_controller = controller! as KDDWBindingsCore.FloatingWindow;
     m_fillsParent = true;
 
-    initMixin(this, color: Colors.black12, debugName: "FloatingWindow");
+    initMixin(this, debugName: "FloatingWindow");
     windowWidget = WindowWidget(this);
   }
 
@@ -73,6 +73,14 @@ class FloatingWindowPositionedWidgetState extends PositionedWidgetState {
     final titleBarWidget = view.titleBarView().flutterWidget;
     final dropAreaWidget = view.dropAreaView().flutterWidget;
 
-    return Column(children: [titleBarWidget, Expanded(child: dropAreaWidget)]);
+    return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            width: 4,
+          ),
+        ),
+        child: Column(
+            children: [titleBarWidget, Expanded(child: dropAreaWidget)]));
   }
 }

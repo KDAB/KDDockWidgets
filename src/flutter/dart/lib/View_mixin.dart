@@ -35,7 +35,8 @@ class View_mixin {
 
   var childWidgets = <Widget>[];
 
-  void initMixin(var kddwView, {var color = Colors.red, var debugName = ""}) {
+  void initMixin(var kddwView,
+      {var color = Colors.transparent, var debugName = ""}) {
     this.kddwView = kddwView;
     m_color = color;
     this.debugName = debugName;
