@@ -21,8 +21,13 @@ cmake_policy(SET CMP0063 NEW)
 # Load bundled libraries from the lib/ directory relative to the binary.
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
-add_compile_options(-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer)
-add_link_options(-fsanitize=address -fsanitize=undefined)
+if(DEFINED ENV{KDDW_EXAMPLE_USES_ASAN})
+    # For development purposes, support ASAN and UBSAN.
+    # gcc only, as it needs to match the ASAN used to build KDDW
+    set(CMAKE_CXX_COMPILER g++)
+    add_compile_options(-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer)
+    add_link_options(-fsanitize=address -fsanitize=undefined)
+endif()
 
 # Root filesystem for cross-building.
 if(FLUTTER_TARGET_PLATFORM_SYSROOT)
