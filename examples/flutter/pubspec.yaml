@@ -24,3 +24,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/KDAB_bubble_fulcolor.png
+    - assets/KDAB_bubble_blue.png

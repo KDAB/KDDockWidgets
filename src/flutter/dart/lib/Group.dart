@@ -80,6 +80,7 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
         Container(color: Colors.black);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (!titleBarView.isExpicitlyHidden()) titleBarView.flutterWidget,
         if (!tabBarView.isExpicitlyHidden()) tabBarView.flutterWidget,

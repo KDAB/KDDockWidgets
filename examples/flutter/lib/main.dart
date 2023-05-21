@@ -70,7 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final dw3 = DockWidget("dw3");
     final dw4 = DockWidget("dw4");
 
-    dw1.setGuestWidget(const MyWidget());
+    dw1.setGuestWidget(MyWidget());
+    dw2.setGuestWidget(MyWidget());
+    dw3.setGuestWidget(MyWidget());
 
     mainWindow.asMainWindowController().addDockWidget(
         dw1.asDockWidgetController(),
@@ -90,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         relativeTo: null,
         initialOption: KDDWBindings.InitialOption());
 
-    dw4.setGuestWidget(const MyWidget());
+    dw4.setGuestWidget(MyWidget());
     dw4.show();
   }
 
