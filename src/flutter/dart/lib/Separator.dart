@@ -20,6 +20,8 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 
+import 'View_mixin.dart';
+
 class Separator extends View {
   late final KDDWBindingsCore.Separator m_controller;
   late final KDDWBindingsFlutter.View m_parent;
@@ -72,7 +74,7 @@ class SeparatorPositionedWidgetState extends PositionedWidgetState {
       onPointerMove: (event) {
         if (event.buttons != kPrimaryButton) return;
 
-        final renderBox = (separatorView.m_parent as View)
+        final renderBox = (separatorView.m_parent as View_mixin)
             .widgetKey
             .currentContext
             ?.findRenderObject() as RenderBox;
