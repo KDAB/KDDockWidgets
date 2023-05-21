@@ -26,7 +26,7 @@ class MyWidget extends StatelessWidget {
       padding: const EdgeInsets.all(40.0),
       child: Image.asset(
         imageName(),
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
       ),
     );
   }
