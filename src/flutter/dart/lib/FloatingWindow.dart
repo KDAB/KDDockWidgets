@@ -70,16 +70,6 @@ class FloatingWindowPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents() {
-    // There's a crash where flutter would build the widget when kddw's C++ FloatingWindow
-    // was already deleted, check if it still exists.
-    try {
-      final allFloatingWindows = Platform.plat().floatingWindows;
-      allFloatingWindows
-          .firstWhere((fw) => fw.thisCpp == view.m_controller.thisCpp);
-    } catch (IterableElementError) {
-      return Container();
-    }
-
     final titleBarWidget = view.titleBarView().flutterWidget;
     final dropAreaWidget = view.dropAreaView().flutterWidget;
 
