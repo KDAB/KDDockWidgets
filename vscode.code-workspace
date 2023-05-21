@@ -59,6 +59,13 @@
         "type": "dart",
         "packages": "tests/flutter_tests_embedder/.dart_tool/package_config.json",
         "vmServiceUri": "${command:dart.promptForVmService}"
+      },
+      {
+        "name": "Flutter-example",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "debug",
+        "cwd": "${workspaceFolder:kddockwidgets}/examples/flutter"
       }
     ]
   }
