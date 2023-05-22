@@ -23,6 +23,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:KDDockWidgets/View.dart' as KDDW;
 import 'package:KDDockWidgets/Platform.dart' as KDDW;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
+import 'package:kddockwidgets_flutter_example/MyMenuBar.dart';
 import 'package:kddockwidgets_flutter_example/MyWidget.dart';
 
 void main() {
@@ -120,8 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-          child: Stack(children: [mainWindow.flutterWidget, windowOverlay])),
+      body: Column(children: [
+        const MyMenuBar(),
+        Expanded(
+            child: Stack(children: [mainWindow.flutterWidget, windowOverlay]))
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
