@@ -60,7 +60,8 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
     final int numTabs = m_tabBarView.m_controller.numDockWidgets();
     var tabs = <Tab>[];
     for (var i = 0; i < numTabs; ++i) {
-      tabs.add(Tab(text: "test"));
+      final dw = m_tabBarView.m_controller.dockWidgetAt_2(i);
+      tabs.add(Tab(text: "${dw.title().toDartString()}"));
     }
 
     return SizedBox(
