@@ -29,6 +29,10 @@
 #include <QObject>
 #endif
 
+QT_BEGIN_NAMESPACE
+class QMimeData;
+QT_END_NAMESPACE
+
 namespace KDDockWidgets {
 
 #ifdef QT_GUI_LIB
@@ -171,7 +175,6 @@ public:
     Qt::MouseButtons m_buttons;
 };
 
-class QMimeData;
 class DropEvent : public Event
 {
 public:
