@@ -51,12 +51,12 @@ if __name__ == "__main__":
 
     # 2. Create a dock widget, it needs a unique name
     dock1 = KDDockWidgets.DockWidget("MyDock1")
-    widget1 = MyWidget()
+    widget1 = MyWidget("", "")
     dock1.setWidget(widget1)
 
     dock2 = KDDockWidgets.DockWidget("MyDock2")
     widget2 = MyWidget(":/assets/base.png", ":/assets/KDAB_bubble_fulcolor.png")
-    dock2.setWidget(widget2);
+    dock2.setWidget(widget2)
 
     dock3 = KDDockWidgets.DockWidget("MyDock3")
     widget3 = MyWidget(":/assets/base.png", ":/assets/KDAB_bubble_fulcolor.png")
@@ -81,9 +81,7 @@ if __name__ == "__main__":
     preferredSize = QtCore.QSize(0, 200)
     mainWindow.addKDockWidget(dock4, KDDockWidgets.Location_OnBottom, None, preferredSize)
 
-
     # 5. dock5 will be its own top level (floating window)
-    dock5.open();
-
+    dock5.open()
 
     app.exec_()
