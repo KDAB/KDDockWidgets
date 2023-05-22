@@ -67,13 +67,27 @@ class TitleBarPositionedWidgetState extends PositionedWidgetState {
                   ),
                 ),
                 TextButton(
-                    style: TextButton.styleFrom(
-                      primary: Colors.black,
-                    ),
-                    onPressed: () {
-                      titleBarView.asTitleBarController().onCloseClicked();
-                    },
-                    child: Icon(Icons.close))
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                    foregroundColor: Colors.black,
+                  ),
+                  onPressed: () {
+                    titleBarView.asTitleBarController().onFloatClicked();
+                  },
+                  child: Icon(Icons.square_outlined),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                    foregroundColor: Colors.black,
+                  ),
+                  onPressed: () {
+                    titleBarView.asTitleBarController().onCloseClicked();
+                  },
+                  child: Icon(Icons.close),
+                ),
               ],
             )));
 
