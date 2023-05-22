@@ -13,7 +13,7 @@
 
 #include "Controller.h"
 
-#include "KDDockWidgets_p.h"
+#include "KDDockWidgets.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "Group.h"
