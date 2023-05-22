@@ -13,11 +13,11 @@
 
 #include "Controller.h"
 
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "Group.h"
-#include "NonQtCompat_p.h"
+#include "kddockwidgets/NonQtCompat_p.h"
 #include "core/Draggable_p.h"
 
 QT_BEGIN_NAMESPACE
