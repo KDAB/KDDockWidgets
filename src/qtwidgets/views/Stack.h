@@ -17,13 +17,6 @@
 
 #include <QTabWidget>
 
-#include "kdbindings/signal.h"
-
-QT_BEGIN_NAMESPACE
-class QAbstractButton;
-class QHBoxLayout;
-QT_END_NAMESPACE
-
 namespace KDDockWidgets {
 namespace qtwidgets {
 
@@ -56,10 +49,8 @@ private:
     void updateMargins();
     void setupTabBarButtons();
 
-    QHBoxLayout *m_cornerWidgetLayout = nullptr;
-    QAbstractButton *m_floatButton = nullptr;
-    QAbstractButton *m_closeButton = nullptr;
-    KDBindings::ScopedConnection m_tabBarAutoHideChanged;
+    class Private;
+    Private *const d;
 
     Q_DISABLE_COPY(Stack)
 };

@@ -26,17 +26,33 @@
 #include <QAbstractButton>
 #include <QMenu>
 
+#include "kdbindings/signal.h"
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::qtwidgets;
+
+namespace KDDockWidgets::qtwidgets {
+class Stack::Private
+{
+public:
+    KDBindings::ScopedConnection tabBarAutoHideChanged;
+    QHBoxLayout *cornerWidgetLayout = nullptr;
+    QAbstractButton *floatButton = nullptr;
+    QAbstractButton *closeButton = nullptr;
+};
+}
+
 
 Stack::Stack(Core::Stack *controller, QWidget *parent)
     : View<QTabWidget>(controller, Core::ViewType::Stack, parent)
     , StackViewInterface(controller)
+    , d(new Private())
 {
 }
 
 Stack::~Stack()
 {
+    delete d;
 }
 
 void Stack::init()
@@ -66,7 +82,7 @@ void Stack::init()
 
     QTabWidget::setTabBarAutoHide(m_stack->tabBarAutoHide());
 
-    m_tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect(
+    d->tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect(
         [this](bool is) { QTabWidget::setTabBarAutoHide(is); });
 
     if (!QTabWidget::tabBar()->isVisible())
@@ -104,25 +120,25 @@ void Stack::setupTabBarButtons()
 
     // TODOm3: Make sure people can only inherit from the Default*variants
     auto factory = static_cast<ViewFactory *>(Config::self().viewFactory());
-    m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
-    m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
+    d->closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
+    d->floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
 
     auto cornerWidget = new QWidget(this);
     cornerWidget->setObjectName(QStringLiteral("Corner Widget"));
 
     setCornerWidget(cornerWidget, Qt::TopRightCorner);
 
-    m_cornerWidgetLayout = new QHBoxLayout(cornerWidget);
+    d->cornerWidgetLayout = new QHBoxLayout(cornerWidget);
 
-    m_cornerWidgetLayout->addWidget(m_floatButton);
-    m_cornerWidgetLayout->addWidget(m_closeButton);
+    d->cornerWidgetLayout->addWidget(d->floatButton);
+    d->cornerWidgetLayout->addWidget(d->closeButton);
 
-    connect(m_floatButton, &QAbstractButton::clicked, this, [this] {
+    connect(d->floatButton, &QAbstractButton::clicked, this, [this] {
         Core::TitleBar *tb = m_stack->group()->titleBar();
         tb->onFloatClicked();
     });
 
-    connect(m_closeButton, &QAbstractButton::clicked, this, [this] {
+    connect(d->closeButton, &QAbstractButton::clicked, this, [this] {
         Core::TitleBar *tb = m_stack->group()->titleBar();
         tb->onCloseClicked();
     });
@@ -137,8 +153,8 @@ void Stack::setupTabBarButtons()
 void Stack::updateMargins()
 {
     const qreal factor = logicalDpiFactor(this);
-    m_cornerWidgetLayout->setContentsMargins(QMargins(0, 0, 2, 0) * factor);
-    m_cornerWidgetLayout->setSpacing(int(2 * factor));
+    d->cornerWidgetLayout->setContentsMargins(QMargins(0, 0, 2, 0) * factor);
+    d->cornerWidgetLayout->setSpacing(int(2 * factor));
 }
 
 void Stack::showContextMenu(QPoint pos)
