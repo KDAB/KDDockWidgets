@@ -13,8 +13,6 @@
 
 // The goal of this file is to provide fallback types when QtGui isn't present
 
-class QMimeData;
-
 #ifdef QT_GUI_LIB
 #include <QCloseEvent>
 #include <QMouseEvent>
@@ -173,6 +171,7 @@ public:
     Qt::MouseButtons m_buttons;
 };
 
+class QMimeData;
 class DropEvent : public Event
 {
 public:
