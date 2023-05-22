@@ -36,15 +36,6 @@ inline QString locationStr(Location loc)
     return QString();
 }
 
-enum class WindowState {
-    None = 0,
-    Minimized = 1,
-    Maximized = 2,
-    FullScreen = 4
-};
-Q_DECLARE_FLAGS(WindowStates, WindowState)
-
-
 }
 
 #endif

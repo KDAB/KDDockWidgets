@@ -364,6 +364,16 @@ enum class FloatingWindowFlag {
 };
 Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag)
 
+/// @internal
+enum class WindowState {
+    None = 0,
+    Minimized = 1,
+    Maximized = 2,
+    FullScreen = 4
+};
+Q_DECLARE_FLAGS(WindowStates, WindowState)
+
+
 /// @brief Initializes the desired frontend
 void DOCKS_EXPORT initFrontend(FrontendType);
 
