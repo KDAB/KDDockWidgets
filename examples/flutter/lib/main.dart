@@ -106,6 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
         initialOption: KDDWBindings.InitialOption());
 
     dw4.show();
+
+    mainWindow.show();
   }
 
   void _incrementCounter() {}
