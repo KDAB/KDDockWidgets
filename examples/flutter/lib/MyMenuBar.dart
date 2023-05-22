@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:flutter/material.dart';
 
 class MyMenuBar extends StatelessWidget {
@@ -20,7 +21,12 @@ class MyMenuBar extends StatelessWidget {
       final String name = "dw$i";
       widgets.add(MenuItemButton(
         onPressed: () {
-          print("Pressed $name");
+          final dw = DockRegistry.self().dockByName(name);
+          if (dw.isOpen()) {
+            dw.close();
+          } else {
+            dw.open();
+          }
         },
         child: Text(name),
       ));
