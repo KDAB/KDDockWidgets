@@ -22,8 +22,6 @@ set(PyKDDockWidgets_SRC
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_initialoption_wrapper.h
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.h
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.h
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_qtwidgets_dockwidget_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_qtwidgets_dockwidget_wrapper.h
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_qtwidgets_mainwindow_wrapper.cpp
@@ -54,10 +52,8 @@ set(PyKDDockWidgets_target_link_libraries KDAB::kddockwidgets Qt${Qt_VERSION_MAJ
 
 # changes on these files should trigger a new generation
 set(PyKDDockWidgets_DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
-    ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/MainWindow.h
-    ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/DockWidget.h
-    ${CMAKE_SOURCE_DIR}/src/Config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/MainWindow.h
+    ${CMAKE_SOURCE_DIR}/src/qtwidgets/views/DockWidget.h ${CMAKE_SOURCE_DIR}/src/Config.h
     ${CMAKE_SOURCE_DIR}/src/LayoutSaver.h
 )
 
