@@ -12,8 +12,8 @@
 #ifndef KD_SEGMENTED_INDICATORS_P_H
 #define KD_SEGMENTED_INDICATORS_P_H
 
-#include "core/DropIndicatorOverlay.h"
-#include "NonQtCompat_p.h"
+#include <kddockwidgets/NonQtCompat_p.h>
+#include <kddockwidgets/core/DropIndicatorOverlay.h>
 
 #include <QHash>
 
