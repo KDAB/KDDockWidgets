@@ -46,13 +46,6 @@ namespace KDDockWidgets {
 DOCKS_EXPORT
 Q_NAMESPACE
 
-/// Add namespace alias for retrocompatibility
-/// Don't want to break source-compat again
-/// TODOv2.2: Remove these
-namespace qtquick = QtQuick;
-namespace qtwidgets = QtWidgets;
-namespace qtcommon = QtCommon;
-
 namespace QtWidgets {
 class DockWidget;
 }
