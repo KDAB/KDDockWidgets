@@ -22,8 +22,7 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
-
-#include "core/Layout.h"
+#include "kddockwidgets/core/Layout.h"
 
 #include <QPointer>
 
