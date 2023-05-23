@@ -16,8 +16,8 @@
 #include "core/ViewFactory.h"
 #include "core/Utils_p.h"
 #include "core/View_p.h"
-
 #include "core/Layout.h"
+#include "core/Layout_p.h"
 #include "core/DropArea.h"
 #include "core/DockWidget_p.h"
 #include "core/Group.h"
@@ -28,17 +28,6 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-
-namespace KDDockWidgets::Core {
-class Layout::Private
-{
-public:
-    bool m_inResizeEvent = false;
-    Core::ItemContainer *m_rootItem = nullptr;
-    KDBindings::ConnectionHandle m_minSizeChangedHandler;
-    bool m_viewDeleted = false;
-};
-}
 
 
 Layout::Layout(ViewType type, View *view)
