@@ -336,6 +336,8 @@ typedef void_Func_int = void Function(int);
 typedef void_Func_ffi_Int32_FFI = ffi.Void Function(ffi.Int32);
 typedef voidstar_Func_int = ffi.Pointer<void> Function(int);
 typedef voidstar_Func_ffi_Int32_FFI = ffi.Pointer<void> Function(ffi.Int32);
+typedef bool_Func_void = int Function();
+typedef bool_Func_void_FFI = ffi.Int8 Function();
 typedef voidstar_Func_int_voidstar = ffi.Pointer<void> Function(
     int, ffi.Pointer<void>);
 typedef voidstar_Func_ffi_Int32_voidstar_FFI = ffi.Pointer<void> Function(
@@ -364,8 +366,6 @@ typedef void_Func_void = void Function();
 typedef void_Func_void_FFI = ffi.Void Function();
 typedef int_Func_void = int Function();
 typedef int_Func_void_FFI = ffi.Int32 Function();
-typedef bool_Func_void = int Function();
-typedef bool_Func_void_FFI = ffi.Int8 Function();
 typedef void_Func_bool = void Function(int);
 typedef void_Func_ffi_Int8_FFI = ffi.Void Function(ffi.Int8);
 typedef void_Func_voidstar_double = void Function(ffi.Pointer<void>, double);

@@ -55,13 +55,15 @@ class MyMenuBar extends StatelessWidget {
                       ),
                       MenuItemButton(
                         onPressed: () {
-                          print("Save Layout pressed");
+                          final saver = LayoutSaver();
+                          saver.saveToFile("savedLayout.json");
                         },
                         child: const MenuAcceleratorLabel('&Save Layout'),
                       ),
                       MenuItemButton(
                         onPressed: () {
-                          print("Restore Layout");
+                          final saver = LayoutSaver();
+                          saver.restoreFromFile("savedLayout.json");
                         },
                         child: const MenuAcceleratorLabel('&Restore Layout'),
                       ),

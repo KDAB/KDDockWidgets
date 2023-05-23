@@ -31,6 +31,7 @@
             <enum-type identified-by-value="Type" />
         </object-type>
         <object-type name="Config" />
+        <object-type name="LayoutSaver" />
         <object-type name="DockRegistry" />
         <value-type name="InitialOption" />
         <enum-type name="MainWindowOption" flags="MainWindowOptions" />

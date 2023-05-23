@@ -86,3 +86,4 @@ mjb_rejected_classes.log
 /examples/minimal/qtwidgets_minimal
 /.vs
 /tests/flutter_tests_embedder/build/
+examples/flutter/savedLayout.json

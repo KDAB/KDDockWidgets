@@ -16,6 +16,7 @@ export 'src/Core.dart' show Core_ViewType;
 export 'src/DockRegistry.dart' show DockRegistry;
 export 'src/Event.dart' show Event, Event_Type;
 export 'src/InitialOption.dart' show InitialOption;
+export 'src/LayoutSaver.dart' show LayoutSaver;
 export 'src/flutter.dart' show asView_flutter, asView_flutter;
 export 'src/KDDockWidgets.dart'
     show
