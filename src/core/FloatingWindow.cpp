@@ -21,6 +21,7 @@
 #include "core/WidgetResizeHandler_p.h"
 #include "DockRegistry.h"
 #include "Config.h"
+#include "Layout_p.h"
 #include "core/ViewFactory.h"
 #include "core/DelayedCall.h"
 #include "core/DragController_p.h"
@@ -238,7 +239,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     updateTitleBarVisibility();
 
     d->m_visibleWidgetCountConnection =
-        m_dropArea->visibleWidgetCountChanged.connect([this](int count) {
+        m_dropArea->d_ptr()->visibleWidgetCountChanged.connect([this](int count) {
             onFrameCountChanged(count);
             numFramesChanged();
             onVisibleFrameCountChanged(count);

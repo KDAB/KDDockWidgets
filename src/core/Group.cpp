@@ -16,6 +16,7 @@
 
 #include "Controller.h"
 #include "View.h"
+#include "Layout_p.h"
 #include "Platform.h"
 #include "views/GroupViewInterface.h"
 
@@ -151,7 +152,7 @@ void Group::setLayout(Layout *dt)
         d->m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass.
                                                                 // It's a KDBindings bug.
         d->m_visibleWidgetCountChangedConnection =
-            m_layout->visibleWidgetCountChanged.connect(&Group::updateTitleBarVisibility, this);
+            m_layout->d_ptr()->visibleWidgetCountChanged.connect(&Group::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();

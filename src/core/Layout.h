@@ -30,8 +30,6 @@
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/NonQtCompat_p.h"
 
-#include "kdbindings/signal.h"
-
 #include <QList>
 
 namespace KDDockWidgets {
@@ -191,14 +189,14 @@ public:
     Core::DropArea *asDropArea() const;
     Core::MDILayout *asMDILayout() const;
 
-    /// @brief Emitted when the count of visible widgets changes
-    KDBindings::Signal<int> visibleWidgetCountChanged;
-
     void viewAboutToBeDeleted();
 
     Core::ItemContainer *rootItem() const;
 
     void onCloseEvent(CloseEvent *);
+
+    class Private;
+    Layout::Private *d_ptr();
 
 protected:
     void setRootItem(Core::ItemContainer *root);
@@ -227,7 +225,6 @@ protected:
     QList<Core::Group *> groupsFrom(View *groupOrMultiSplitter) const;
 
 private:
-    class Private;
     Private *const d;
     bool onResize(QSize newSize);
 };

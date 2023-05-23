@@ -13,6 +13,8 @@
 
 #include "Layout.h"
 
+#include "kdbindings/signal.h"
+
 namespace KDDockWidgets::Core {
 class Layout::Private
 {
@@ -20,6 +22,10 @@ public:
     bool m_inResizeEvent = false;
     Core::ItemContainer *m_rootItem = nullptr;
     KDBindings::ConnectionHandle m_minSizeChangedHandler;
+
+    /// @brief Emitted when the count of visible widgets changes
+    KDBindings::Signal<int> visibleWidgetCountChanged;
+
     bool m_viewDeleted = false;
 };
 }

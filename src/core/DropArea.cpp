@@ -10,6 +10,7 @@
 */
 
 #include "DropArea.h"
+#include "Layout_p.h"
 #include "Config.h"
 #include "core/ViewFactory.h"
 #include "DockRegistry.h"
@@ -98,7 +99,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     qCDebug(creation) << "DropArea";
 
     if (d->m_isMDIWrapper) {
-        d->m_visibleWidgetCountConnection = visibleWidgetCountChanged.connect([this] {
+        d->m_visibleWidgetCountConnection = Layout::d_ptr()->visibleWidgetCountChanged.connect([this] {
             auto dw = mdiDockWidgetWrapper();
             if (!dw) {
                 qWarning() << Q_FUNC_INFO << "Unexpected null wrapper dock widget";

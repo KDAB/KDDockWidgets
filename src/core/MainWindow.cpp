@@ -20,6 +20,7 @@
 #include "MainWindow.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "DockRegistry.h"
+#include "Layout_p.h"
 #include "core/MDILayout.h"
 #include "core/DropArea.h"
 #include "core/Utils_p.h"
@@ -148,7 +149,7 @@ void MainWindow::init(const QString &name)
     setUniqueName(name);
 
     d->m_visibleWidgetCountConnection =
-        d->m_layout->visibleWidgetCountChanged.connect(&MainWindow::groupCountChanged, this);
+        d->m_layout->d_ptr()->visibleWidgetCountChanged.connect(&MainWindow::groupCountChanged, this);
     view()->d->closeRequested.connect([this](CloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
 }
 

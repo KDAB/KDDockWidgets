@@ -103,7 +103,7 @@ void Layout::setRootItem(Core::ItemContainer *root)
     delete d->m_rootItem;
     d->m_rootItem = root;
     d->m_rootItem->numVisibleItemsChanged.connect(
-        [this](int count) { visibleWidgetCountChanged.emit(count); });
+        [this](int count) { d->visibleWidgetCountChanged.emit(count); });
 
     d->m_minSizeChangedHandler =
         d->m_rootItem->minSizeChanged.connect([this] { view()->setMinimumSize(layoutMinimumSize()); });
@@ -358,4 +358,9 @@ void Layout::onCloseEvent(CloseEvent *e)
         if (!e->isAccepted())
             break; // Stop when the first group prevents closing
     }
+}
+
+Layout::Private *Layout::d_ptr()
+{
+    return d;
 }
