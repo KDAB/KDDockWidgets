@@ -90,7 +90,7 @@ public:
             QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
         auto dw = dockView->asDockWidgetController();
         dw->dptr()->m_isPersistentCentralDockWidget = true;
-        Core::Group *group = dropArea()->m_centralFrame;
+        Core::Group *group = dropArea()->centralGroup();
         if (!group) {
             qWarning() << Q_FUNC_INFO << "Expected central group";
             return nullptr;
@@ -185,7 +185,7 @@ void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
                    << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports "
                       "tabbing";
     } else if (d->supportsCentralFrame()) {
-        dropArea()->m_centralFrame->addTab(widget);
+        dropArea()->centralGroup()->addTab(widget);
     } else {
         qWarning() << Q_FUNC_INFO << "Not supported without MainWindowOption_HasCentralFrame";
     }

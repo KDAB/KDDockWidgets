@@ -31,6 +31,7 @@
 #include "core/indicators/SegmentedIndicators.h"
 
 #include "Window.h"
+#include "kdbindings/signal.h"
 
 #include <algorithm>
 
@@ -57,13 +58,33 @@ createDropIndicatorOverlay(Core::DropArea *dropArea)
 
     return new Core::ClassicIndicators(dropArea);
 }
+
+namespace Core {
+class DropArea::Private
+{
+public:
+    explicit Private(DropArea *q, MainWindowOptions options, bool isMDIWrapper)
+        : m_isMDIWrapper(isMDIWrapper)
+        , m_dropIndicatorOverlay(createDropIndicatorOverlay(q))
+        , m_centralFrame(createCentralFrame(options))
+    {
+    }
+
+    bool m_inDestructor = false;
+    const bool m_isMDIWrapper;
+    QString m_affinityName;
+    QPointer<DropIndicatorOverlay> m_dropIndicatorOverlay;
+    Core::Group *const m_centralFrame = nullptr;
+    Core::ItemBoxContainer *m_rootItem = nullptr;
+    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
+};
+}
+
 }
 
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     : Layout(ViewType::DropArea, Config::self().viewFactory()->createDropArea(this, parent))
-    , m_isMDIWrapper(isMDIWrapper)
-    , m_dropIndicatorOverlay(createDropIndicatorOverlay(this))
-    , m_centralFrame(createCentralFrame(options))
+    , d(new Private(this, options, isMDIWrapper))
 {
     setRootItem(new Core::ItemBoxContainer(view()));
     DockRegistry::self()->registerLayout(this);
@@ -76,8 +97,8 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
 
     qCDebug(creation) << "DropArea";
 
-    if (m_isMDIWrapper) {
-        m_visibleWidgetCountConnection = visibleWidgetCountChanged.connect([this] {
+    if (d->m_isMDIWrapper) {
+        d->m_visibleWidgetCountConnection = visibleWidgetCountChanged.connect([this] {
             auto dw = mdiDockWidgetWrapper();
             if (!dw) {
                 qWarning() << Q_FUNC_INFO << "Unexpected null wrapper dock widget";
@@ -95,20 +116,21 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
         });
     }
 
-    if (m_centralFrame)
-        addWidget(m_centralFrame->view(), KDDockWidgets::Location_OnTop, {});
+    if (d->m_centralFrame)
+        addWidget(d->m_centralFrame->view(), KDDockWidgets::Location_OnTop, {});
 }
 
 DropArea::~DropArea()
 {
-    m_inDestructor = true;
-    delete m_dropIndicatorOverlay;
+    d->m_inDestructor = true;
+    delete d->m_dropIndicatorOverlay;
+    delete d;
     qCDebug(creation) << "~DropArea";
 }
 
 Core::Group::List DropArea::groups() const
 {
-    const Core::Item::List children = m_rootItem->items_recursive();
+    const Core::Item::List children = d->m_rootItem->items_recursive();
     Core::Group::List groups;
 
     for (const Core::Item *child : children) {
@@ -159,7 +181,7 @@ Core::Item *DropArea::centralFrame() const
 
 DropIndicatorOverlay *DropArea::dropIndicatorOverlay() const
 {
-    return m_dropIndicatorOverlay;
+    return d->m_dropIndicatorOverlay;
 }
 
 void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
@@ -261,18 +283,18 @@ DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos
     if (Config::self().dropIndicatorsInhibited() || !validateAffinity(draggedWindow))
         return DropLocation_None;
 
-    if (!m_dropIndicatorOverlay) {
+    if (!d->m_dropIndicatorOverlay) {
         qWarning() << Q_FUNC_INFO << "The frontend is missing a drop indicator overlay";
         return DropLocation_None;
     }
 
     Core::Group *group = groupContainingPos(
         globalPos); // Group is nullptr if MainWindowOption_HasCentralFrame isn't set
-    m_dropIndicatorOverlay->setWindowBeingDragged(true);
-    m_dropIndicatorOverlay->setHoveredFrame(group);
+    d->m_dropIndicatorOverlay->setWindowBeingDragged(true);
+    d->m_dropIndicatorOverlay->setHoveredFrame(group);
     draggedWindow->updateTransparency(true);
 
-    return m_dropIndicatorOverlay->hover(globalPos);
+    return d->m_dropIndicatorOverlay->hover(globalPos);
 }
 
 static bool isOutterLocation(DropLocation location)
@@ -307,7 +329,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
         return false;
     }
 
-    if (m_dropIndicatorOverlay->currentDropLocation() == DropLocation_None) {
+    if (d->m_dropIndicatorOverlay->currentDropLocation() == DropLocation_None) {
         qCDebug(hovering) << "DropArea::drop: bailing out, drop location = none";
         return false;
     }
@@ -315,8 +337,8 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
     qCDebug(dropping) << "DropArea::drop:" << droppedWindow;
 
     hover(droppedWindow, globalPos);
-    auto droploc = m_dropIndicatorOverlay->currentDropLocation();
-    Core::Group *acceptingGroup = m_dropIndicatorOverlay->hoveredFrame();
+    auto droploc = d->m_dropIndicatorOverlay->currentDropLocation();
+    Core::Group *acceptingGroup = d->m_dropIndicatorOverlay->hoveredFrame();
     if (!(acceptingGroup || isOutterLocation(droploc))) {
         qWarning() << "DropArea::drop: asserted with group=" << acceptingGroup
                    << "; Location=" << droploc;
@@ -380,7 +402,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
 
     default:
         qWarning() << "DropArea::drop: Unexpected drop location"
-                   << m_dropIndicatorOverlay->currentDropLocation();
+                   << d->m_dropIndicatorOverlay->currentDropLocation();
         result = false;
         break;
     }
@@ -443,7 +465,7 @@ bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location,
 
 void DropArea::removeHover()
 {
-    m_dropIndicatorOverlay->removeHover();
+    d->m_dropIndicatorOverlay->removeHover();
 }
 
 template<typename T>
@@ -467,12 +489,12 @@ bool DropArea::validateAffinity(T *window, Core::Group *acceptingGroup) const
 
 bool DropArea::isMDIWrapper() const
 {
-    return m_isMDIWrapper;
+    return d->m_isMDIWrapper;
 }
 
 Core::DockWidget *DropArea::mdiDockWidgetWrapper() const
 {
-    if (m_isMDIWrapper) {
+    if (d->m_isMDIWrapper) {
         return view()->parentView()->asDockWidgetController();
     }
 
@@ -573,7 +595,7 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
 
     Core::Item *relativeTo = itemForFrame(relativeToWidget);
     if (!relativeTo)
-        relativeTo = m_rootItem;
+        relativeTo = d->m_rootItem;
 
     Core::Item *newItem = nullptr;
 
@@ -591,7 +613,7 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
         newItem->setGuestView(group->view());
         group->addTab(dw, option);
     } else if (auto ms = w->asDropAreaController()) {
-        newItem = ms->m_rootItem;
+        newItem = ms->d->m_rootItem;
         newItem->setHostView(thisView);
 
         if (auto fw = ms->floatingWindow()) {
@@ -625,7 +647,7 @@ void DropArea::addMultiSplitter(Core::DropArea *sourceMultiSplitter, Location lo
 
 QVector<Core::Separator *> DropArea::separators() const
 {
-    return m_rootItem->separators_recursive();
+    return d->m_rootItem->separators_recursive();
 }
 
 int DropArea::availableLengthForOrientation(Qt::Orientation orientation) const
@@ -638,7 +660,7 @@ int DropArea::availableLengthForOrientation(Qt::Orientation orientation) const
 
 QSize DropArea::availableSize() const
 {
-    return m_rootItem->availableSize();
+    return d->m_rootItem->availableSize();
 }
 
 void DropArea::layoutEqually()
@@ -646,7 +668,7 @@ void DropArea::layoutEqually()
     if (!checkSanity())
         return;
 
-    layoutEqually(m_rootItem);
+    layoutEqually(d->m_rootItem);
 }
 
 void DropArea::layoutEqually(Core::ItemBoxContainer *container)
@@ -661,12 +683,12 @@ void DropArea::layoutEqually(Core::ItemBoxContainer *container)
 void DropArea::setRootItem(Core::ItemBoxContainer *root)
 {
     Layout::setRootItem(root);
-    m_rootItem = root;
+    d->m_rootItem = root;
 }
 
 Core::ItemBoxContainer *DropArea::rootItem() const
 {
-    return m_rootItem;
+    return d->m_rootItem;
 }
 
 QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
@@ -681,7 +703,7 @@ QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
     item.setMaxSizeHint(wbd->maxSize());
 
     Core::ItemBoxContainer *container =
-        relativeTo ? relativeTo->parentBoxContainer() : m_rootItem;
+        relativeTo ? relativeTo->parentBoxContainer() : d->m_rootItem;
 
     return container->suggestedDropRect(&item, relativeTo, location);
 }
@@ -694,10 +716,15 @@ bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
 
 int DropArea::numSideBySide_recursive(Qt::Orientation o) const
 {
-    return m_rootItem->numSideBySide_recursive(o);
+    return d->m_rootItem->numSideBySide_recursive(o);
 }
 
 DropLocation DropArea::currentDropLocation() const
 {
-    return m_dropIndicatorOverlay ? m_dropIndicatorOverlay->currentDropLocation() : DropLocation_None;
+    return d->m_dropIndicatorOverlay ? d->m_dropIndicatorOverlay->currentDropLocation() : DropLocation_None;
+}
+
+Core::Group *DropArea::centralGroup() const
+{
+    return d->m_centralFrame;
 }

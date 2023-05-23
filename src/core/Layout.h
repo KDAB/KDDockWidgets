@@ -227,11 +227,9 @@ protected:
     QList<Core::Group *> groupsFrom(View *groupOrMultiSplitter) const;
 
 private:
+    class Private;
+    Private *const d;
     bool onResize(QSize newSize);
-    bool m_inResizeEvent = false;
-    Core::ItemContainer *m_rootItem = nullptr;
-    KDBindings::ConnectionHandle m_minSizeChangedHandler;
-    bool m_viewDeleted = false;
 };
 
 }

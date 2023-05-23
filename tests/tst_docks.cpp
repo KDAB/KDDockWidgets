@@ -4850,7 +4850,7 @@ KDDW_QCORO_TASK tst_centralGroupAffinity()
     const QStringList affinities = { "a" };
     m->setAffinities(affinities);
 
-    Group *centralGroup = m->dropArea()->m_centralFrame;
+    Group *centralGroup = m->dropArea()->centralGroup();
     CHECK_EQ(centralGroup->affinities(), affinities);
     KDDW_TEST_RETURN(true);
 }

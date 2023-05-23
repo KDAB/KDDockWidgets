@@ -701,7 +701,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
                        << "an associated window name";
         } else {
             if (MainWindow *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
-                group = mw->dropArea()->m_centralFrame;
+                group = mw->dropArea()->centralGroup();
                 if (!group) {
                     // Doesn't happen...
                     qWarning() << "Main window" << f.mainWindowUniqueName

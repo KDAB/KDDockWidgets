@@ -177,15 +177,11 @@ private:
     bool drop(View *droppedwindow, KDDockWidgets::Location location,
               Core::Group *relativeTo);
     Core::Group *groupContainingPos(QPoint globalPos) const;
+    Core::Group *centralGroup() const;
     void updateFloatingActions();
 
-    bool m_inDestructor = false;
-    const bool m_isMDIWrapper;
-    QString m_affinityName;
-    QPointer<DropIndicatorOverlay> m_dropIndicatorOverlay;
-    Core::Group *const m_centralFrame = nullptr;
-    Core::ItemBoxContainer *m_rootItem = nullptr;
-    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
+    class Private;
+    Private *const d;
 };
 }
 }

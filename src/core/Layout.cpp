@@ -29,9 +29,21 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
+namespace KDDockWidgets::Core {
+class Layout::Private
+{
+public:
+    bool m_inResizeEvent = false;
+    Core::ItemContainer *m_rootItem = nullptr;
+    KDBindings::ConnectionHandle m_minSizeChangedHandler;
+    bool m_viewDeleted = false;
+};
+}
+
 
 Layout::Layout(ViewType type, View *view)
     : Controller(type, view)
+    , d(new Private())
 {
     Q_ASSERT(view);
     view->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
@@ -41,22 +53,23 @@ Layout::Layout(ViewType type, View *view)
 
 Layout::~Layout()
 {
-    m_minSizeChangedHandler.disconnect();
+    d->m_minSizeChangedHandler.disconnect();
 
-    if (m_rootItem && !m_viewDeleted)
+    if (d->m_rootItem && !d->m_viewDeleted)
         viewAboutToBeDeleted();
     DockRegistry::self()->unregisterLayout(this);
+    delete d;
 }
 
 void Layout::viewAboutToBeDeleted()
 {
     if (view()) {
-        if (view()->equals(m_rootItem->hostView())) {
-            delete m_rootItem;
-            m_rootItem = nullptr;
+        if (view()->equals(d->m_rootItem->hostView())) {
+            delete d->m_rootItem;
+            d->m_rootItem = nullptr;
         }
 
-        m_viewDeleted = true;
+        d->m_viewDeleted = true;
     }
 }
 
@@ -98,52 +111,52 @@ Core::FloatingWindow *Layout::floatingWindow() const
 
 void Layout::setRootItem(Core::ItemContainer *root)
 {
-    delete m_rootItem;
-    m_rootItem = root;
-    m_rootItem->numVisibleItemsChanged.connect(
+    delete d->m_rootItem;
+    d->m_rootItem = root;
+    d->m_rootItem->numVisibleItemsChanged.connect(
         [this](int count) { visibleWidgetCountChanged.emit(count); });
 
-    m_minSizeChangedHandler =
-        m_rootItem->minSizeChanged.connect([this] { view()->setMinimumSize(layoutMinimumSize()); });
+    d->m_minSizeChangedHandler =
+        d->m_rootItem->minSizeChanged.connect([this] { view()->setMinimumSize(layoutMinimumSize()); });
 }
 
 QSize Layout::layoutMinimumSize() const
 {
-    return m_rootItem->minSize();
+    return d->m_rootItem->minSize();
 }
 
 QSize Layout::layoutMaximumSizeHint() const
 {
-    return m_rootItem->maxSizeHint();
+    return d->m_rootItem->maxSizeHint();
 }
 
 void Layout::setLayoutMinimumSize(QSize sz)
 {
-    if (sz != m_rootItem->minSize()) {
-        setLayoutSize(layoutSize().expandedTo(m_rootItem->minSize())); // Increase size in case we
-                                                                       // need to
-        m_rootItem->setMinSize(sz);
+    if (sz != d->m_rootItem->minSize()) {
+        setLayoutSize(layoutSize().expandedTo(d->m_rootItem->minSize())); // Increase size in case we
+                                                                          // need to
+        d->m_rootItem->setMinSize(sz);
     }
 }
 
 QSize Layout::layoutSize() const
 {
-    return m_rootItem->size();
+    return d->m_rootItem->size();
 }
 
 void Layout::clearLayout()
 {
-    m_rootItem->clear();
+    d->m_rootItem->clear();
 }
 
 bool Layout::checkSanity() const
 {
-    return m_rootItem->checkSanity();
+    return d->m_rootItem->checkSanity();
 }
 
 void Layout::dumpLayout() const
 {
-    m_rootItem->dumpLayout();
+    d->m_rootItem->dumpLayout();
 }
 
 void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabIndex)
@@ -177,20 +190,20 @@ void Layout::unrefOldPlaceholders(const Core::Group::List &groupsBeingAdded) con
 void Layout::setLayoutSize(QSize size)
 {
     if (size != layoutSize()) {
-        m_rootItem->setSize_recursive(size);
-        if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
+        d->m_rootItem->setSize_recursive(size);
+        if (!d->m_inResizeEvent && !LayoutSaver::restoreInProgress())
             view()->resize(size);
     }
 }
 
 const Core::Item::List Layout::items() const
 {
-    return m_rootItem->items_recursive();
+    return d->m_rootItem->items_recursive();
 }
 
 bool Layout::containsItem(const Core::Item *item) const
 {
-    return m_rootItem->contains_recursive(item);
+    return d->m_rootItem->contains_recursive(item);
 }
 
 bool Layout::containsFrame(const Core::Group *group) const
@@ -200,12 +213,12 @@ bool Layout::containsFrame(const Core::Group *group) const
 
 int Layout::count() const
 {
-    return m_rootItem->count_recursive();
+    return d->m_rootItem->count_recursive();
 }
 
 int Layout::visibleCount() const
 {
-    return m_rootItem->visibleCount_recursive();
+    return d->m_rootItem->visibleCount_recursive();
 }
 
 int Layout::placeholderCount() const
@@ -218,7 +231,7 @@ Core::Item *Layout::itemForFrame(const Core::Group *group) const
     if (!group)
         return nullptr;
 
-    return m_rootItem->itemForView(group->view());
+    return d->m_rootItem->itemForView(group->view());
 }
 
 Core::DockWidget::List Layout::dockWidgets() const
@@ -244,7 +257,7 @@ Core::Group::List Layout::groupsFrom(View *groupOrMultiSplitter) const
 
 Core::Group::List Layout::groups() const
 {
-    const Core::Item::List items = m_rootItem->items_recursive();
+    const Core::Item::List items = d->m_rootItem->items_recursive();
 
     Core::Group::List result;
     result.reserve(items.size());
@@ -270,7 +283,7 @@ void Layout::removeItem(Core::Item *item)
 
 void Layout::updateSizeConstraints()
 {
-    const QSize newMinSize = m_rootItem->minSize();
+    const QSize newMinSize = d->m_rootItem->minSize();
     qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << view()->minSize() << "to"
                     << newMinSize;
 
@@ -286,22 +299,22 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
         groups.insert(group.id, f->view());
     }
 
-    m_rootItem->fillFromVariantMap(l.layout, groups);
+    d->m_rootItem->fillFromVariantMap(l.layout, groups);
 
     updateSizeConstraints();
 
     // This qMin() isn't needed for QtWidgets (but harmless), but it's required for QtQuick
     // as some sizing is async
-    const QSize newLayoutSize = view()->size().expandedTo(m_rootItem->minSize());
+    const QSize newLayoutSize = view()->size().expandedTo(d->m_rootItem->minSize());
 
-    m_rootItem->setSize_recursive(newLayoutSize);
+    d->m_rootItem->setSize_recursive(newLayoutSize);
 
     return true;
 }
 
 bool Layout::onResize(QSize newSize)
 {
-    QScopedValueRollback<bool> resizeGuard(m_inResizeEvent, true); // to avoid re-entrancy
+    QScopedValueRollback<bool> resizeGuard(d->m_inResizeEvent, true); // to avoid re-entrancy
 
     if (!LayoutSaver::restoreInProgress()) {
         // don't resize anything while we're restoring the layout
@@ -314,8 +327,8 @@ bool Layout::onResize(QSize newSize)
 LayoutSaver::MultiSplitter Layout::serialize() const
 {
     LayoutSaver::MultiSplitter l;
-    l.layout = m_rootItem->toVariantMap();
-    const Core::Item::List items = m_rootItem->items_recursive();
+    l.layout = d->m_rootItem->toVariantMap();
+    const Core::Item::List items = d->m_rootItem->items_recursive();
     l.groups.reserve(items.size());
     for (Core::Item *item : items) {
         if (!item->isContainer()) {
@@ -343,9 +356,8 @@ MDILayout *Layout::asMDILayout() const
 
 Core::ItemContainer *Layout::rootItem() const
 {
-    return m_rootItem;
+    return d->m_rootItem;
 }
-
 
 void Layout::onCloseEvent(CloseEvent *e)
 {
