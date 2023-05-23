@@ -24,9 +24,9 @@ namespace Core {
 class TitleBar;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
-class DOCKS_EXPORT TitleBar : public qtquick::View, public Core::TitleBarViewInterface
+class DOCKS_EXPORT TitleBar : public QtQuick::View, public Core::TitleBarViewInterface
 {
     Q_OBJECT
     // These properties is just for the unit-tests

@@ -13,10 +13,10 @@
 #include "kddockwidgets/core/MDILayout.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 MDILayout::MDILayout(Core::MDILayout *controller, Core::View *parent)
-    : qtwidgets::View<QWidget>(controller, Core::ViewType::MDILayout, qtcommon::View_qt::asQWidget(parent))
+    : QtWidgets::View<QWidget>(controller, Core::ViewType::MDILayout, QtCommon::View_qt::asQWidget(parent))
     , m_controller(controller)
 {
     Q_ASSERT(controller);

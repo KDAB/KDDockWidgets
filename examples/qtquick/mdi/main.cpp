@@ -34,25 +34,25 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
 
     QQmlApplicationEngine appEngine;
-    KDDockWidgets::qtquick::Platform::instance()->setQmlEngine(&appEngine);
+    KDDockWidgets::QtQuick::Platform::instance()->setQmlEngine(&appEngine);
     appEngine.load((QUrl("qrc:/main.qml")));
 
-    auto dw1 = new KDDockWidgets::qtquick::DockWidget("Dock #1");
+    auto dw1 = new KDDockWidgets::QtQuick::DockWidget("Dock #1");
     dw1->setGuestItem(QStringLiteral("qrc:/Guest1.qml"));
     dw1->resize(QSize(400, 400));
 
-    auto dw2 = new KDDockWidgets::qtquick::DockWidget("Dock #2");
+    auto dw2 = new KDDockWidgets::QtQuick::DockWidget("Dock #2");
     dw2->setGuestItem(QStringLiteral("qrc:/Guest2.qml"));
     dw2->resize(QSize(400, 400));
 
-    auto dw3 = new KDDockWidgets::qtquick::DockWidget("Dock #3");
+    auto dw3 = new KDDockWidgets::QtQuick::DockWidget("Dock #3");
     dw3->setGuestItem(QStringLiteral("qrc:/Guest3.qml"));
 
 
     // See main.qml for how to add dock widgets from QML.
     // Here's a low level C++ example just for educational purposes:
     auto mainAreaView = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst();
-    auto mainAreaMDI = static_cast<KDDockWidgets::qtquick::MainWindowMDI *>(mainAreaView);
+    auto mainAreaMDI = static_cast<KDDockWidgets::QtQuick::MainWindowMDI *>(mainAreaView);
 
     mainAreaMDI->addDockWidget(dw1, QPoint(10, 10));
     mainAreaMDI->addDockWidget(dw2, QPoint(50, 50));

@@ -34,12 +34,12 @@ void KDDockWidgets::initFrontend(FrontendType type)
     switch (type) {
     case FrontendType::QtWidgets:
 #ifdef KDDW_FRONTEND_QTWIDGETS
-        new qtwidgets::Platform();
+        new QtWidgets::Platform();
 #endif
         break;
     case FrontendType::QtQuick:
 #ifdef KDDW_FRONTEND_QTQUICK
-        new qtquick::Platform();
+        new QtQuick::Platform();
 #endif
         break;
     case FrontendType::Flutter:

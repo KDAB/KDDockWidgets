@@ -45,7 +45,7 @@
 // clazy:excludeall=ctor-missing-parent-argument
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 
 ViewFactory::~ViewFactory()
@@ -56,34 +56,34 @@ Core::View *ViewFactory::createDockWidget(const QString &uniqueName, DockWidgetO
                                           LayoutSaverOptions layoutSaverOptions,
                                           Qt::WindowFlags windowFlags) const
 {
-    return new qtwidgets::DockWidget(uniqueName, options, layoutSaverOptions, windowFlags);
+    return new QtWidgets::DockWidget(uniqueName, options, layoutSaverOptions, windowFlags);
 }
 
 
 Core::View *ViewFactory::createGroup(Core::Group *controller,
                                      Core::View *parent = nullptr) const
 {
-    return new qtwidgets::Group(controller, qtcommon::View_qt::asQWidget(parent));
+    return new QtWidgets::Group(controller, QtCommon::View_qt::asQWidget(parent));
 }
 
 Core::View *ViewFactory::createTitleBar(Core::TitleBar *titleBar, Core::View *parent) const
 {
-    return new qtwidgets::TitleBar(titleBar, parent);
+    return new QtWidgets::TitleBar(titleBar, parent);
 }
 
 Core::View *ViewFactory::createTabBar(Core::TabBar *tabBar, Core::View *parent) const
 {
-    return new qtwidgets::TabBar(tabBar, qtcommon::View_qt::asQWidget(parent));
+    return new QtWidgets::TabBar(tabBar, QtCommon::View_qt::asQWidget(parent));
 }
 
 Core::View *ViewFactory::createStack(Core::Stack *controller, Core::View *parent) const
 {
-    return new qtwidgets::Stack(controller, qtcommon::View_qt::asQWidget(parent));
+    return new QtWidgets::Stack(controller, QtCommon::View_qt::asQWidget(parent));
 }
 
 Core::View *ViewFactory::createSeparator(Core::Separator *controller, Core::View *parent) const
 {
-    return new qtwidgets::Separator(controller, parent);
+    return new QtWidgets::Separator(controller, parent);
 }
 
 Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
@@ -91,18 +91,18 @@ Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
                                               Qt::WindowFlags windowFlags) const
 {
     auto mainwindow =
-        qobject_cast<QMainWindow *>(qtcommon::View_qt::asQWidget(parent ? parent->view() : nullptr));
-    return new qtwidgets::FloatingWindow(controller, mainwindow, windowFlags);
+        qobject_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(parent ? parent->view() : nullptr));
+    return new QtWidgets::FloatingWindow(controller, mainwindow, windowFlags);
 }
 
 Core::View *ViewFactory::createRubberBand(Core::View *parent) const
 {
-    return new qtwidgets::RubberBand(qtcommon::View_qt::asQWidget(parent));
+    return new QtWidgets::RubberBand(QtCommon::View_qt::asQWidget(parent));
 }
 
 Core::View *ViewFactory::createSideBar(Core::SideBar *controller, Core::View *parent) const
 {
-    return new qtwidgets::SideBar(controller, qtcommon::View_qt::asQWidget(parent));
+    return new QtWidgets::SideBar(controller, QtCommon::View_qt::asQWidget(parent));
 }
 
 QAbstractButton *ViewFactory::createTitleBarButton(QWidget *parent,
@@ -113,7 +113,7 @@ QAbstractButton *ViewFactory::createTitleBarButton(QWidget *parent,
         return nullptr;
     }
 
-    auto button = new qtwidgets::Button(parent);
+    auto button = new QtWidgets::Button(parent);
     button->setIcon(iconForButtonType(type, parent->devicePixelRatioF()));
 
     return button;
@@ -176,25 +176,25 @@ QIcon ViewFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
 
 Core::View *ViewFactory::createDropArea(Core::DropArea *controller, Core::View *parent) const
 {
-    return new qtwidgets::DropArea(controller, parent);
+    return new QtWidgets::DropArea(controller, parent);
 }
 
 Core::View *ViewFactory::createMDILayout(Core::MDILayout *controller, Core::View *parent) const
 {
-    return new qtwidgets::MDILayout(controller, parent);
+    return new QtWidgets::MDILayout(controller, parent);
 }
 
 Core::View *ViewFactory::createSegmentedDropIndicatorOverlayView(
     Core::SegmentedIndicators *controller, Core::View *parent) const
 {
-    return new qtwidgets::SegmentedIndicatorsOverlay(controller,
-                                                     qtcommon::View_qt::asQWidget(parent));
+    return new QtWidgets::SegmentedIndicatorsOverlay(controller,
+                                                     QtCommon::View_qt::asQWidget(parent));
 }
 
 Core::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
     Core::ClassicIndicators *classicIndicators) const
 {
-    return new qtwidgets::IndicatorWindow(classicIndicators);
+    return new QtWidgets::IndicatorWindow(classicIndicators);
 }
 
 void ViewFactory::clearIconCache()

@@ -23,7 +23,7 @@ namespace Core {
 class ClassicIndicators;
 }
 
-namespace qtquick {
+namespace QtQuick {
 class IndicatorWindow : public QQuickView, public Core::ClassicIndicatorWindowViewInterface
 {
     Q_OBJECT

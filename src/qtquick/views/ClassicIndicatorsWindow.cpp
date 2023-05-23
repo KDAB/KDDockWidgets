@@ -18,7 +18,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 namespace KDDockWidgets {
 

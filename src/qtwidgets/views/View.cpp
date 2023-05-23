@@ -21,7 +21,7 @@
 #include <QLineEdit>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 template<>
 View<QWidget>::View(Core::Controller *controller, Core::ViewType type,
@@ -168,7 +168,7 @@ QVector<std::shared_ptr<Core::View>> View<T>::childViewsFor(const QWidget *paren
     return result;
 }
 
-namespace KDDockWidgets::qtwidgets {
+namespace KDDockWidgets::QtWidgets {
 template class View<QWidget>;
 template class View<QMainWindow>;
 template class View<QLineEdit>;

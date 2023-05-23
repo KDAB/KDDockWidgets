@@ -35,7 +35,7 @@ static void initResources()
 #endif
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 static_assert(SizePolicy::Fixed == SizePolicy(QSizePolicy::Fixed), "Enums dont match");
 static_assert(SizePolicy::Minimum == SizePolicy(QSizePolicy::Minimum), "Enums dont match");
@@ -62,12 +62,12 @@ public:
             if (w->isWindow()) {
                 if (ev->type() == QEvent::WindowActivate) {
                     Platform::instance()->d->windowActivated.emit(
-                        qtwidgets::ViewWrapper::create(w));
+                        QtWidgets::ViewWrapper::create(w));
                 }
 
                 if (ev->type() == QEvent::WindowDeactivate) {
                     Platform::instance()->d->windowDeactivated.emit(
-                        qtwidgets::ViewWrapper::create(w));
+                        QtWidgets::ViewWrapper::create(w));
                 }
             }
         }
@@ -100,7 +100,7 @@ void Platform::init()
 #endif
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
-        d->focusedViewChanged.emit(qtwidgets::ViewWrapper::create(obj));
+        d->focusedViewChanged.emit(QtWidgets::ViewWrapper::create(obj));
     });
 }
 
@@ -121,7 +121,7 @@ bool Platform::hasActivePopup() const
 
 std::shared_ptr<Core::View> Platform::qobjectAsView(QObject *obj) const
 {
-    return qtwidgets::ViewWrapper::create(obj);
+    return QtWidgets::ViewWrapper::create(obj);
 }
 
 std::shared_ptr<Core::Window> Platform::windowFromQWindow(QWindow *qwindow) const
@@ -147,7 +147,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
 
 int Platform::screenNumberFor(Core::View *view) const
 {
-    if (auto widget = qtcommon::View_qt::asQWidget(view)) {
+    if (auto widget = QtCommon::View_qt::asQWidget(view)) {
         if (QWindow *qtwindow = widget->window()->windowHandle())
             return screenNumberForQWindow(qtwindow);
     }
@@ -157,7 +157,7 @@ int Platform::screenNumberFor(Core::View *view) const
 
 QSize Platform::screenSizeFor(Core::View *view) const
 {
-    if (auto widget = qtcommon::View_qt::asQWidget(view)) {
+    if (auto widget = QtCommon::View_qt::asQWidget(view)) {
         if (QScreen *screen = widget->screen()) {
             return screen->size();
         }
@@ -173,8 +173,8 @@ int Platform::startDragDistance_impl() const
 
 Core::View *Platform::createView(Core::Controller *controller, Core::View *parent) const
 {
-    return new qtwidgets::View<QWidget>(controller, Core::ViewType::None,
-                                        qtcommon::View_qt::asQWidget(parent));
+    return new QtWidgets::View<QWidget>(controller, Core::ViewType::None,
+                                        QtCommon::View_qt::asQWidget(parent));
 }
 
 bool Platform::usesFallbackMouseGrabber() const
@@ -204,7 +204,7 @@ void Platform::ungrabMouse()
 
 inline QCoreApplication *createCoreApplication(int &argc, char **argv)
 {
-    qtcommon::Platform_qt::maybeSetOffscreenQPA(argc, argv);
+    QtCommon::Platform_qt::maybeSetOffscreenQPA(argc, argv);
     return new QApplication(argc, argv);
 }
 

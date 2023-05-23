@@ -29,7 +29,7 @@
 #include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 TabBar::TabBar(Core::TabBar *controller, QQuickItem *parent)
     : View(controller, Core::ViewType::TabBar, parent)

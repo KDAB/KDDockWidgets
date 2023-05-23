@@ -35,7 +35,7 @@ class MainWindow;
 class SideBar;
 }
 
-namespace qtwidgets {
+namespace QtWidgets {
 
 /**
  * @brief The QMainwindow sub-class that the application should use to be able

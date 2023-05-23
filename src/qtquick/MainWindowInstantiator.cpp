@@ -19,7 +19,7 @@
 #include "Platform.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 MainWindowInstantiator::MainWindowInstantiator()
     : QQuickItem()
@@ -189,9 +189,9 @@ void MainWindowInstantiator::componentComplete()
 
     Core::View *view = nullptr;
     if (mainWindowOptions & MainWindowOption_MDI)
-        view = new qtquick::MainWindowMDI(m_uniqueName, this);
+        view = new QtQuick::MainWindowMDI(m_uniqueName, this);
     else
-        view = new qtquick::MainWindow(m_uniqueName, mainWindowOptions, this);
+        view = new QtQuick::MainWindow(m_uniqueName, mainWindowOptions, this);
 
     m_mainWindow = view->asMainWindowController();
 }

@@ -23,7 +23,7 @@ namespace Core {
 class SideBar;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
 ///@brief A docking area for dock widgets
 /// Named MainWindow as it's the QtWidgets/QMainWindow counterpart.
@@ -33,7 +33,7 @@ namespace qtquick {
 /// to do. From QML just use DockingArea {}, which will create a this class behind the scenes. It's
 /// mostly an implementation detail unless you want to use C++.
 
-class DOCKS_EXPORT MainWindow : public qtquick::View, public Core::MainWindowViewInterface
+class DOCKS_EXPORT MainWindow : public QtQuick::View, public Core::MainWindowViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QStringList affinities READ affinities CONSTANT)

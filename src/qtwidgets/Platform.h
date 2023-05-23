@@ -19,11 +19,11 @@ namespace Core {
 class MainWindow;
 }
 
-namespace qtwidgets {
+namespace QtWidgets {
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
-class DOCKS_EXPORT Platform : public qtcommon::Platform_qt
+class DOCKS_EXPORT Platform : public QtCommon::Platform_qt
 {
 public:
     Platform();

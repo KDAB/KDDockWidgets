@@ -34,7 +34,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 static Core::Controller *controllerForWidget(QWidget *widget)
 {
@@ -134,7 +134,7 @@ ViewWrapper::ViewWrapper(QObject *widget)
 }
 
 ViewWrapper::ViewWrapper(QWidget *widget)
-    : qtcommon::ViewWrapper(controllerForWidget(widget), widget)
+    : QtCommon::ViewWrapper(controllerForWidget(widget), widget)
     , m_widget(widget)
 {
 }
@@ -220,25 +220,25 @@ bool ViewWrapper::is(Core::ViewType t) const
     switch (t) {
 
     case Core::ViewType::Frame:
-        return qobject_cast<qtwidgets::Group *>(m_widget);
+        return qobject_cast<QtWidgets::Group *>(m_widget);
     case Core::ViewType::TitleBar:
-        return qobject_cast<qtwidgets::TitleBar *>(m_widget);
+        return qobject_cast<QtWidgets::TitleBar *>(m_widget);
     case Core::ViewType::TabBar:
-        return qobject_cast<qtwidgets::TabBar *>(m_widget);
+        return qobject_cast<QtWidgets::TabBar *>(m_widget);
     case Core::ViewType::Stack:
-        return qobject_cast<qtwidgets::Stack *>(m_widget);
+        return qobject_cast<QtWidgets::Stack *>(m_widget);
     case Core::ViewType::FloatingWindow:
-        return qobject_cast<qtwidgets::FloatingWindow *>(m_widget);
+        return qobject_cast<QtWidgets::FloatingWindow *>(m_widget);
     case Core::ViewType::Separator:
-        return qobject_cast<qtwidgets::Separator *>(m_widget);
+        return qobject_cast<QtWidgets::Separator *>(m_widget);
     case Core::ViewType::DockWidget:
-        return qobject_cast<qtwidgets::DockWidget *>(m_widget);
+        return qobject_cast<QtWidgets::DockWidget *>(m_widget);
     case Core::ViewType::SideBar:
-        return qobject_cast<qtwidgets::SideBar *>(m_widget);
+        return qobject_cast<QtWidgets::SideBar *>(m_widget);
     case Core::ViewType::MainWindow:
-        return qobject_cast<qtwidgets::MainWindow *>(m_widget);
+        return qobject_cast<QtWidgets::MainWindow *>(m_widget);
     case Core::ViewType::DropArea:
-        return qobject_cast<qtwidgets::DropArea *>(m_widget);
+        return qobject_cast<QtWidgets::DropArea *>(m_widget);
     case Core::ViewType::MDILayout:
         return qobject_cast<MDILayout *>(m_widget);
     case Core::ViewType::RubberBand:
@@ -350,12 +350,12 @@ QSize ViewWrapper::minSize() const
 
 QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
 {
-    return qtwidgets::View<QWidget>::childViewsFor(m_widget);
+    return QtWidgets::View<QWidget>::childViewsFor(m_widget);
 }
 
 void ViewWrapper::setParent(Core::View *parent)
 {
-    qtwidgets::View<QWidget>::setParentFor(m_widget, parent);
+    QtWidgets::View<QWidget>::setParentFor(m_widget, parent);
 }
 
 bool ViewWrapper::close()

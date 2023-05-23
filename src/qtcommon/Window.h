@@ -22,7 +22,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-namespace qtcommon {
+namespace QtCommon {
 
 class DOCKS_EXPORT Window : public Core::Window
 {

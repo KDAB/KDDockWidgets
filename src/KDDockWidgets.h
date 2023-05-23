@@ -32,11 +32,28 @@
 #define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
 #endif
 
+
+namespace KDDockWidgets::QtQuick {
+}
+namespace KDDockWidgets::QtWidgets {
+}
+namespace KDDockWidgets::QtCommon {
+}
+namespace KDDockWidgets::Flutter {
+}
+
 namespace KDDockWidgets {
 DOCKS_EXPORT
 Q_NAMESPACE
 
-namespace qtwidgets {
+/// Add namespace alias for retrocompatibility
+/// Don't want to break source-compat again
+/// TODOv2.2: Remove these
+namespace qtquick = QtQuick;
+namespace qtwidgets = QtWidgets;
+namespace qtcommon = QtCommon;
+
+namespace QtWidgets {
 class DockWidget;
 }
 

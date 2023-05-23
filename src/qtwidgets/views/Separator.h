@@ -19,7 +19,7 @@ namespace KDDockWidgets::Core {
 class Separator;
 }
 
-namespace KDDockWidgets::qtwidgets {
+namespace KDDockWidgets::QtWidgets {
 
 class DOCKS_EXPORT Separator : public View<QWidget>
 {

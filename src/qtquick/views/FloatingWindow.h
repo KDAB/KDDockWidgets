@@ -24,20 +24,20 @@ namespace Core {
 class FloatingWindow;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
 class MainWindow;
 class TitleBar;
 class DropArea;
 
-class DOCKS_EXPORT FloatingWindow : public qtquick::View
+class DOCKS_EXPORT FloatingWindow : public QtQuick::View
 {
     Q_OBJECT
     Q_PROPERTY(QObject *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(QObject *dropArea READ dropArea CONSTANT)
 public:
     explicit FloatingWindow(Core::FloatingWindow *controller,
-                            qtquick::MainWindow *parent = nullptr,
+                            QtQuick::MainWindow *parent = nullptr,
                             Qt::WindowFlags flags = {});
     ~FloatingWindow();
 

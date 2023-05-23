@@ -20,13 +20,13 @@ namespace Core {
 class DropArea;
 }
 
-namespace qtcommon {
+namespace QtCommon {
 
 /// @brief The base class for view wrappers
 /// A view wrapper is a view that doesn't own the native GUI element(QWidget, QQuickItem etc.)
 /// It just adds View API to an existing GUI element. Useful for GUI elements that are not created
 /// by KDDW. this is optional
-class DOCKS_EXPORT ViewWrapper : public qtcommon::View_qt
+class DOCKS_EXPORT ViewWrapper : public QtCommon::View_qt
 {
 public:
     using Ptr = std::shared_ptr<View>;

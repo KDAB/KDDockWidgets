@@ -25,17 +25,17 @@
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-namespace KDDockWidgets::qtquick {
+namespace KDDockWidgets::QtQuick {
 
-class TestView : public qtquick::View
+class TestView : public QtQuick::View
 {
 public:
     explicit TestView(Core::CreateViewOptions opts, QQuickItem *parent)
-        : qtquick::View(nullptr, Core::ViewType::None, parent)
+        : QtQuick::View(nullptr, Core::ViewType::None, parent)
         , m_opts(opts)
     {
         setMinimumSize(opts.minSize);
@@ -57,7 +57,7 @@ TestView::~TestView() = default;
 
 inline QCoreApplication *createCoreApplication(int &argc, char **argv)
 {
-    qtcommon::Platform_qt::maybeSetOffscreenQPA(argc, argv);
+    QtCommon::Platform_qt::maybeSetOffscreenQPA(argc, argv);
     return new QGuiApplication(argc, argv);
 }
 
@@ -92,7 +92,7 @@ void Platform::tests_deinitPlatform_impl()
 
 Core::View *Platform::tests_createView(Core::CreateViewOptions opts, Core::View *parent)
 {
-    auto parentItem = parent ? qtquick::asQQuickItem(parent) : nullptr;
+    auto parentItem = parent ? QtQuick::asQQuickItem(parent) : nullptr;
     auto newItem = new TestView(opts, parentItem);
 
     if (!parentItem && opts.createWindow) {
@@ -102,7 +102,7 @@ Core::View *Platform::tests_createView(Core::CreateViewOptions opts, Core::View 
         newItem->QQuickItem::setParentItem(view->contentItem());
         newItem->QQuickItem::setParent(view->contentItem());
         if (opts.isVisible)
-            newItem->qtquick::View::setVisible(true);
+            newItem->QtQuick::View::setVisible(true);
 
         QTest::qWait(100); // the root object gets sized delayed
     }
@@ -133,7 +133,7 @@ Core::MainWindow *Platform::createMainWindow(const QString &uniqueName,
                                              MainWindowOptions options, Core::View *parent,
                                              Qt::WindowFlags flags) const
 {
-    QQuickItem *parentItem = qtquick::asQQuickItem(parent);
+    QQuickItem *parentItem = QtQuick::asQQuickItem(parent);
 
     if (!parentItem) {
         auto view = new QQuickView(m_qmlEngine, nullptr);
@@ -149,7 +149,7 @@ Core::MainWindow *Platform::createMainWindow(const QString &uniqueName,
         Platform::instance()->tests_wait(100); // the root object gets sized delayed
     }
 
-    auto view = new qtquick::MainWindow(uniqueName, options, parentItem, flags);
+    auto view = new QtQuick::MainWindow(uniqueName, options, parentItem, flags);
 
     return view->mainWindow();
 }

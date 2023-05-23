@@ -33,13 +33,13 @@ class Group;
 class TitleBar;
 }
 
-namespace qtquick {
+namespace QtQuick {
 /**
  * @brief Represents a dock widget.
  *
  * Most of the interface lives in Core::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget : public qtquick::View,
+class DOCKS_EXPORT DockWidget : public QtQuick::View,
                                 public Core::DockWidgetViewInterface
 {
     Q_OBJECT

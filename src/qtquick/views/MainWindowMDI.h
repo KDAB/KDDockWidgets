@@ -18,10 +18,10 @@
 
 namespace KDDockWidgets {
 
-namespace qtquick {
+namespace QtQuick {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI : public qtquick::MainWindow,
+class DOCKS_EXPORT MainWindowMDI : public QtQuick::MainWindow,
                                    public Core::MainWindowMDIViewInterface
 {
     Q_OBJECT

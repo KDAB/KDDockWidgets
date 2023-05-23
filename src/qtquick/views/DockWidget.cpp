@@ -31,9 +31,9 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
-class qtquick::DockWidget::Private
+class QtQuick::DockWidget::Private
 {
 public:
     Private(DockWidget *view, QQmlEngine *qmlengine)
@@ -155,7 +155,7 @@ QSize DockWidget::maxSizeHint() const
 QObject *DockWidget::actualTitleBarView() const
 {
     if (auto tb = actualTitleBar()) {
-        return static_cast<qtquick::TitleBar *>(tb->view());
+        return static_cast<QtQuick::TitleBar *>(tb->view());
     }
 
     return nullptr;
@@ -164,7 +164,7 @@ QObject *DockWidget::actualTitleBarView() const
 QQuickItem *DockWidget::groupVisualItem() const
 {
     if (Core::Group *group = this->group()) {
-        if (auto view = qtquick::asView_qtquick(group->view()))
+        if (auto view = QtQuick::asView_qtquick(group->view()))
             return view->visualItem();
     }
 
@@ -175,7 +175,7 @@ void DockWidget::onGeometryUpdated()
 {
     if (auto group = this->group()) {
         if (auto view = group->view()) {
-            auto groupView = static_cast<Group *>(qtquick::asView_qtquick(view));
+            auto groupView = static_cast<Group *>(QtQuick::asView_qtquick(view));
             groupView->updateConstriants();
             groupView->updateGeometry();
         }

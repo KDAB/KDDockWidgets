@@ -29,9 +29,9 @@
 #include "kdbindings/signal.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
-namespace KDDockWidgets::qtwidgets {
+namespace KDDockWidgets::QtWidgets {
 class Stack::Private
 {
 public:

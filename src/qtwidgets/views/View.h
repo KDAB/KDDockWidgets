@@ -23,10 +23,10 @@
 
 #include <memory>
 
-namespace KDDockWidgets::qtwidgets {
+namespace KDDockWidgets::QtWidgets {
 
 template<typename Base>
-class DOCKS_EXPORT View : public Base, public qtcommon::View_qt
+class DOCKS_EXPORT View : public Base, public QtCommon::View_qt
 {
 public:
     using Core::View::close;

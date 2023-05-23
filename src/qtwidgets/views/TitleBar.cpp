@@ -28,7 +28,7 @@
 #include <QLabel>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 Button::~Button()
 {

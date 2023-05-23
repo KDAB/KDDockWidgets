@@ -17,7 +17,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 namespace KDDockWidgets {
 
@@ -130,7 +130,7 @@ static QWidget *parentForIndicatorWindow(ClassicIndicators *classicIndicators_)
 {
     // On Wayland it can't be a top-level, as we have no way of positioning it
 
-    return isWayland() ? qtcommon::View_qt::asQWidget(classicIndicators_->view()) : nullptr;
+    return isWayland() ? QtCommon::View_qt::asQWidget(classicIndicators_->view()) : nullptr;
 }
 
 static Qt::WindowFlags flagsForIndicatorWindow()

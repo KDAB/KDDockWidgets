@@ -42,7 +42,7 @@
 // clazy:excludeall=ctor-missing-parent-argument
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 
 ViewFactory::~ViewFactory()
@@ -62,34 +62,34 @@ Core::View *ViewFactory::createDockWidget(const QString &uniqueName, QQmlEngine 
                                           LayoutSaverOptions layoutSaverOptions,
                                           Qt::WindowFlags windowFlags) const
 {
-    return new qtquick::DockWidget(uniqueName, options, layoutSaverOptions, windowFlags,
+    return new QtQuick::DockWidget(uniqueName, options, layoutSaverOptions, windowFlags,
                                    qmlEngine);
 }
 
 Core::View *ViewFactory::createGroup(Core::Group *controller, Core::View *parent) const
 {
-    return new Group(controller, qtquick::asQQuickItem(parent));
+    return new Group(controller, QtQuick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createTitleBar(Core::TitleBar *titleBar, Core::View *parent) const
 {
-    return new TitleBar(titleBar, qtquick::asQQuickItem(parent));
+    return new TitleBar(titleBar, QtQuick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createTabBar(Core::TabBar *controller, Core::View *parent) const
 {
-    return new TabBar(controller, qtquick::asQQuickItem(parent));
+    return new TabBar(controller, QtQuick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createStack(Core::Stack *controller, Core::View *parent) const
 {
-    return new Stack(controller, qtquick::asQQuickItem(parent));
+    return new Stack(controller, QtQuick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createSeparator(Core::Separator *controller, Core::View *parent) const
 {
     return new Separator(
-        controller, parent ? static_cast<qtquick::View *>(parent) : nullptr);
+        controller, parent ? static_cast<QtQuick::View *>(parent) : nullptr);
 }
 
 Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
@@ -98,14 +98,14 @@ Core::View *ViewFactory::createFloatingWindow(Core::FloatingWindow *controller,
 {
 
     auto mainwindow = parent
-        ? qobject_cast<qtquick::MainWindow *>(qtquick::asQQuickItem(parent->view()))
+        ? qobject_cast<QtQuick::MainWindow *>(QtQuick::asQQuickItem(parent->view()))
         : nullptr;
     return new FloatingWindow(controller, mainwindow, flags);
 }
 
 Core::View *ViewFactory::createRubberBand(Core::View *parent) const
 {
-    return new RubberBand(qtquick::asQQuickItem(parent));
+    return new RubberBand(QtQuick::asQQuickItem(parent));
 }
 
 Core::View *ViewFactory::createSideBar(Core::SideBar *, Core::View *) const

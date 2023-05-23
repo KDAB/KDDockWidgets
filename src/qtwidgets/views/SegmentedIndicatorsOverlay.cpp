@@ -15,7 +15,7 @@
 #include <QPainter>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 using namespace KDDockWidgets::Core;
 
 QColor SegmentedIndicatorsOverlay::s_segmentPenColor = Qt::black;

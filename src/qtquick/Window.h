@@ -13,12 +13,12 @@
 
 #include "kddockwidgets/qtcommon/Window.h"
 
-namespace KDDockWidgets::qtquick {
+namespace KDDockWidgets::QtQuick {
 
-class DOCKS_EXPORT Window : public qtcommon::Window
+class DOCKS_EXPORT Window : public QtCommon::Window
 {
 public:
-    using qtcommon::Window::Window;
+    using QtCommon::Window::Window;
     ~Window();
     std::shared_ptr<Core::View> rootView() const override;
     Window::Ptr transientParent() const override;

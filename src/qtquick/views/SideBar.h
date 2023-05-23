@@ -31,7 +31,7 @@ namespace Core {
 class SideBar;
 }
 
-namespace qtquick {
+namespace QtQuick {
 class SideBar;
 }
 
@@ -39,19 +39,19 @@ class SideBarButton : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit SideBarButton(Core::DockWidget *dw, qtquick::SideBar *parent);
+    explicit SideBarButton(Core::DockWidget *dw, QtQuick::SideBar *parent);
     bool isVertical() const;
     void paintEvent(QPaintEvent *) override;
     QSize sizeHint() const override;
 
 private:
-    qtquick::SideBar *const m_sideBar;
+    QtQuick::SideBar *const m_sideBar;
     const QPointer<Core::DockWidget> m_dockWidget;
 };
 
-namespace qtquick {
+namespace QtQuick {
 
-class DOCKS_EXPORT SideBar : public qtquick::View<QQuickItem>, public Core::SideBarViewInterface
+class DOCKS_EXPORT SideBar : public QtQuick::View<QQuickItem>, public Core::SideBarViewInterface
 {
     Q_OBJECT
 public:

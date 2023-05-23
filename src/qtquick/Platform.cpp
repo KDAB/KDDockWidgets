@@ -46,7 +46,7 @@ static void initResources()
 #endif
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
 {
@@ -128,7 +128,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
 
 int Platform::screenNumberFor(Core::View *view) const
 {
-    if (auto item = qobject_cast<QQuickItem *>(qtcommon::View_qt::asQObject(view))) {
+    if (auto item = qobject_cast<QQuickItem *>(QtCommon::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
             return screenNumberForQWindow(qtwindow);
     }
@@ -138,7 +138,7 @@ int Platform::screenNumberFor(Core::View *view) const
 
 QSize Platform::screenSizeFor(Core::View *view) const
 {
-    if (auto item = qobject_cast<QQuickItem *>(qtcommon::View_qt::asQObject(view))) {
+    if (auto item = qobject_cast<QQuickItem *>(QtCommon::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())
             if (QScreen *screen = qtwindow->screen())
                 return screen->size();
@@ -150,7 +150,7 @@ QSize Platform::screenSizeFor(Core::View *view) const
 QQmlEngine *Platform::qmlEngine() const
 {
     if (!m_qmlEngine)
-        qWarning() << "Please call KDDockWidgets::qtquick::Platform::self()->setQmlEngine(engine)";
+        qWarning() << "Please call KDDockWidgets::QtQuick::Platform::self()->setQmlEngine(engine)";
 
     return m_qmlEngine;
 }
@@ -185,7 +185,7 @@ ViewFactory *Platform::viewFactory() const
 
 Core::View *Platform::createView(Core::Controller *controller, Core::View *parent) const
 {
-    return new qtquick::View(controller, Core::ViewType::None, qtquick::asQQuickItem(parent));
+    return new QtQuick::View(controller, Core::ViewType::None, QtQuick::asQQuickItem(parent));
 }
 
 /** static */
@@ -233,7 +233,7 @@ Core::DockWidget *Platform::dockWidgetForItem(QQuickItem *item)
     if (!item)
         return nullptr;
 
-    if (auto dwView = qobject_cast<qtquick::DockWidget *>(item))
+    if (auto dwView = qobject_cast<QtQuick::DockWidget *>(item))
         return dwView->dockWidget();
 
     if (auto dwi = qobject_cast<DockWidgetInstantiator *>(item))

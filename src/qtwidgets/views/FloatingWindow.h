@@ -23,7 +23,7 @@ class FloatingWindow;
 class Group;
 }
 
-namespace KDDockWidgets::qtwidgets {
+namespace KDDockWidgets::QtWidgets {
 
 
 class DOCKS_EXPORT FloatingWindow : public View<QWidget>

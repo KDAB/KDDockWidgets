@@ -14,10 +14,10 @@
 #include "kddockwidgets/core/DropArea.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
-    : qtquick::View(dropArea, Core::ViewType::DropArea, asQQuickItem(parent))
+    : QtQuick::View(dropArea, Core::ViewType::DropArea, asQQuickItem(parent))
     , m_dropArea(dropArea)
 {
     Q_ASSERT(dropArea);

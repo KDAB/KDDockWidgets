@@ -37,7 +37,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 namespace KDDockWidgets {
 static Core::Controller *controllerForItem(QQuickItem *item)
@@ -75,7 +75,7 @@ static Core::Controller *controllerForItem(QQuickItem *item)
                 return view->controller();
             break;
         case Core::ViewType::DockWidget:
-            if (auto view = qobject_cast<qtquick::DockWidget *>(item))
+            if (auto view = qobject_cast<QtQuick::DockWidget *>(item))
                 return view->controller();
             break;
         case Core::ViewType::DropArea:
@@ -115,7 +115,7 @@ ViewWrapper::ViewWrapper(QObject *item)
 }
 
 ViewWrapper::ViewWrapper(QQuickItem *item)
-    : qtcommon::ViewWrapper(controllerForItem(item), item)
+    : QtCommon::ViewWrapper(controllerForItem(item), item)
     , m_item(item)
 {
 }
@@ -150,7 +150,7 @@ void ViewWrapper::setGeometry(QRect rect)
 std::shared_ptr<Core::View> ViewWrapper::childViewAt(QPoint p) const
 {
     auto child = m_item->childAt(p.x(), p.y());
-    return child ? qtquick::View::asQQuickWrapper(child) : nullptr;
+    return child ? QtQuick::View::asQQuickWrapper(child) : nullptr;
 }
 
 std::shared_ptr<Core::Window> ViewWrapper::window() const
@@ -165,7 +165,7 @@ std::shared_ptr<Core::Window> ViewWrapper::window() const
 
 bool ViewWrapper::isRootView() const
 {
-    return qtquick::View::isRootView(m_item);
+    return QtQuick::View::isRootView(m_item);
 }
 
 void ViewWrapper::setVisible(bool is)
@@ -279,12 +279,12 @@ bool ViewWrapper::is(Core::ViewType t) const
     case Core::ViewType::Separator:
         return qobject_cast<Separator *>(m_item);
     case Core::ViewType::DockWidget:
-        return qobject_cast<qtquick::DockWidget *>(m_item);
+        return qobject_cast<QtQuick::DockWidget *>(m_item);
     case Core::ViewType::SideBar:
         return false; // QtQuick doesn't support sidebar yet
         // return qobject_cast<SideBar *>(m_item);
     case Core::ViewType::MainWindow:
-        return qobject_cast<qtquick::MainWindow *>(m_item);
+        return qobject_cast<QtQuick::MainWindow *>(m_item);
     case Core::ViewType::DropArea:
         return qobject_cast<DropArea *>(m_item);
     case Core::ViewType::MDILayout:
@@ -317,7 +317,7 @@ std::shared_ptr<Core::View> ViewWrapper::rootView() const
 
 std::shared_ptr<Core::View> ViewWrapper::parentView() const
 {
-    return qtquick::View::parentViewFor(m_item);
+    return QtQuick::View::parentViewFor(m_item);
 }
 
 void ViewWrapper::grabMouse()
@@ -422,7 +422,7 @@ QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
     QVector<std::shared_ptr<View>> result;
     const auto childItems = m_item->childItems();
     for (QQuickItem *child : childItems) {
-        result << qtquick::View::asQQuickWrapper(child);
+        result << QtQuick::View::asQQuickWrapper(child);
     }
 
     return result;
@@ -433,7 +433,7 @@ void ViewWrapper::setParent(View *parent)
     if (auto view = unwrap()) {
         view->setParent(parent);
     } else {
-        auto parentItem = qtquick::asQQuickItem(parent);
+        auto parentItem = QtQuick::asQQuickItem(parent);
         m_item->QQuickItem::setParent(parentItem);
         m_item->QQuickItem::setParentItem(parentItem);
     }
@@ -443,17 +443,17 @@ void ViewWrapper::setParent(View *parent)
 
 bool ViewWrapper::close()
 {
-    return qtquick::View::close(m_item);
+    return QtQuick::View::close(m_item);
 }
 
 Core::View *ViewWrapper::unwrap()
 {
-    return qobject_cast<qtquick::View *>(m_item);
+    return qobject_cast<QtQuick::View *>(m_item);
 }
 
 const Core::View *ViewWrapper::unwrap() const
 {
-    return qobject_cast<const qtquick::View *>(m_item);
+    return qobject_cast<const QtQuick::View *>(m_item);
 }
 
 SizePolicy ViewWrapper::verticalSizePolicy() const

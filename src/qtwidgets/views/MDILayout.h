@@ -20,9 +20,9 @@ namespace Core {
 class MDILayout;
 }
 
-namespace qtwidgets {
+namespace QtWidgets {
 
-class DOCKS_EXPORT MDILayout : public qtwidgets::View<QWidget>
+class DOCKS_EXPORT MDILayout : public QtWidgets::View<QWidget>
 {
     Q_OBJECT
 public:

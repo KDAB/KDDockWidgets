@@ -29,9 +29,9 @@ namespace Core {
 class DropArea;
 }
 
-namespace qtwidgets {
+namespace QtWidgets {
 
-class DOCKS_EXPORT DropArea : public qtwidgets::View<QWidget>
+class DOCKS_EXPORT DropArea : public QtWidgets::View<QWidget>
 {
     Q_OBJECT
 public:

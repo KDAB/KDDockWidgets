@@ -19,7 +19,7 @@ namespace Core {
 class SegmentedIndicators;
 }
 
-namespace qtwidgets {
+namespace QtWidgets {
 
 class DOCKS_EXPORT SegmentedIndicatorsOverlay : public View<QWidget>
 {

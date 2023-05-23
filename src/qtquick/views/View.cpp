@@ -24,9 +24,9 @@
 #include <QFile>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
-namespace KDDockWidgets::qtquick {
+namespace KDDockWidgets::QtQuick {
 
 /**
  * @brief Event filter which redirects mouse events from one QObject to another.
@@ -537,7 +537,7 @@ void View::setParent(QQuickItem *parentItem)
 
 void View::setParent(Core::View *parent)
 {
-    setParent(qtquick::asQQuickItem(parent));
+    setParent(QtQuick::asQQuickItem(parent));
 }
 
 void View::raiseAndActivate()
@@ -700,7 +700,7 @@ bool View::isMaximized() const
 std::shared_ptr<Core::Window> View::window() const
 {
     if (QWindow *w = QQuickItem::window()) {
-        auto windowqtquick = new qtquick::Window(w);
+        auto windowqtquick = new QtQuick::Window(w);
         return std::shared_ptr<Core::Window>(windowqtquick);
     }
 
@@ -836,7 +836,7 @@ QQuickItem *View::createQQuickItem(const QString &filename, QQuickItem *parent) 
     }
 
     if (!engine)
-        engine = qtquick::Platform::instance()->qmlEngine();
+        engine = QtQuick::Platform::instance()->qmlEngine();
 
     if (!engine) {
         qWarning() << Q_FUNC_INFO << "No engine found";

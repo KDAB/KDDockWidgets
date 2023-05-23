@@ -20,7 +20,7 @@
 #include <QTimer>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 namespace KDDockWidgets {
 class MainWindow::Private

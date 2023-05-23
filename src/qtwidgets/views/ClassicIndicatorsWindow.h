@@ -27,7 +27,7 @@ namespace Core {
 class ClassicIndicators;
 }
 
-namespace qtwidgets {
+namespace QtWidgets {
 
 class IndicatorWindow : public QWidget, public Core::ClassicIndicatorWindowViewInterface
 {

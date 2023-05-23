@@ -27,7 +27,7 @@
 #include <QVBoxLayout>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 ///@brief a QVBoxLayout that emits layoutInvalidated so that Item can detect minSize changes
 class VBoxLayout : public QVBoxLayout // clazy:exclude=missing-qobject-macro

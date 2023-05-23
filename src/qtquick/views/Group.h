@@ -29,18 +29,18 @@ class Group;
 class DockWidget;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
 class TabBar;
 class Stack;
 
-class DOCKS_EXPORT Group : public qtquick::View, public Core::GroupViewInterface
+class DOCKS_EXPORT Group : public QtQuick::View, public Core::GroupViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabBar READ tabBarObj CONSTANT)
-    Q_PROPERTY(KDDockWidgets::qtquick::TitleBar *titleBar READ titleBar CONSTANT)
+    Q_PROPERTY(KDDockWidgets::QtQuick::TitleBar *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(int userType READ userType CONSTANT)
-    Q_PROPERTY(KDDockWidgets::qtquick::TitleBar *actualTitleBar READ actualTitleBar NOTIFY
+    Q_PROPERTY(KDDockWidgets::QtQuick::TitleBar *actualTitleBar READ actualTitleBar NOTIFY
                    actualTitleBarChanged)
     Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentDockWidgetChanged)
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
@@ -58,8 +58,8 @@ public:
     int currentIndex() const;
 
     // QML interface:
-    KDDockWidgets::qtquick::TitleBar *titleBar() const;
-    KDDockWidgets::qtquick::TitleBar *actualTitleBar() const;
+    KDDockWidgets::QtQuick::TitleBar *titleBar() const;
+    KDDockWidgets::QtQuick::TitleBar *actualTitleBar() const;
     int userType() const;
     QObject *tabBarObj() const;
 

@@ -38,10 +38,10 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 Group::Group(Core::Group *controller, QQuickItem *parent)
-    : qtquick::View(controller, Core::ViewType::Frame, parent)
+    : QtQuick::View(controller, Core::ViewType::Frame, parent)
     , Core::GroupViewInterface(controller)
 {
 }
@@ -82,7 +82,7 @@ void Group::init()
 
     connect(this, &View::itemGeometryChanged, this, [this] {
         for (auto dw : m_group->dockWidgets()) {
-            auto dwView = static_cast<DockWidget *>(qtquick::asView_qtquick(dw->view()));
+            auto dwView = static_cast<DockWidget *>(QtQuick::asView_qtquick(dw->view()));
             Q_EMIT dwView->groupGeometryChanged(geometry());
         }
     });
@@ -194,19 +194,19 @@ TabBar *Group::tabBarView() const
     return nullptr;
 }
 
-KDDockWidgets::qtquick::TitleBar *Group::titleBar() const
+KDDockWidgets::QtQuick::TitleBar *Group::titleBar() const
 {
     if (auto tb = m_group->titleBar()) {
-        return dynamic_cast<KDDockWidgets::qtquick::TitleBar *>(tb->view());
+        return dynamic_cast<KDDockWidgets::QtQuick::TitleBar *>(tb->view());
     }
 
     return nullptr;
 }
 
-KDDockWidgets::qtquick::TitleBar *Group::actualTitleBar() const
+KDDockWidgets::QtQuick::TitleBar *Group::actualTitleBar() const
 {
     if (auto tb = m_group->actualTitleBar()) {
-        return dynamic_cast<KDDockWidgets::qtquick::TitleBar *>(tb->view());
+        return dynamic_cast<KDDockWidgets::QtQuick::TitleBar *>(tb->view());
     }
 
     return nullptr;

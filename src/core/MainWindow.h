@@ -32,11 +32,11 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-namespace qtwidgets {
+namespace QtWidgets {
 class MainWindow;
 }
 
-namespace qtquick {
+namespace QtQuick {
 class MainWindow;
 }
 
@@ -261,8 +261,8 @@ private:
     class Private;
     Private *const d;
 
-    friend class KDDockWidgets::qtwidgets::MainWindow;
-    friend class KDDockWidgets::qtquick::MainWindow;
+    friend class KDDockWidgets::QtWidgets::MainWindow;
+    friend class KDDockWidgets::QtQuick::MainWindow;
     friend class KDDockWidgets::flutter::MainWindow;
 
     friend class KDDockWidgets::Core::MainWindowViewInterface;

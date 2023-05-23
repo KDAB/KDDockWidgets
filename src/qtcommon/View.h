@@ -26,7 +26,7 @@ class Controller;
 }
 }
 
-namespace KDDockWidgets::qtcommon {
+namespace KDDockWidgets::QtCommon {
 
 class DOCKS_EXPORT View_qt : public Core::View
 {

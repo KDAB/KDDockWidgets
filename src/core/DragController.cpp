@@ -892,7 +892,7 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
                         continue;
                     }
                     if (hwnd == ( HWND )widget->winId()) {
-                        return qtcommon::Platform_qt::instance()->qobjectAsView(widget);
+                        return QtCommon::Platform_qt::instance()->qobjectAsView(widget);
                     }
                 }
             }
@@ -974,7 +974,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                                         != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
                                     qCDebug(toplevels)
                                         << Q_FUNC_INFO << "Found top-level" << topLevel;
-                                    return qtcommon::Platform_qt::instance()->qobjectAsView(topLevel);
+                                    return QtCommon::Platform_qt::instance()->qobjectAsView(topLevel);
                                 }
                             }
                         }

@@ -18,10 +18,10 @@
 #include <QTimer>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 Separator::Separator(Core::Separator *controller, QQuickItem *parent)
-    : qtquick::View(controller, Core::ViewType::Separator, parent)
+    : QtQuick::View(controller, Core::ViewType::Separator, parent)
     , m_controller(controller)
 {
 }

@@ -17,7 +17,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 Window::~Window()
 {
@@ -28,7 +28,7 @@ inline Core::View *topMostKDDWView(QQuickItem *parent)
     if (!parent)
         return {};
 
-    if (auto v = qobject_cast<qtquick::View *>(parent))
+    if (auto v = qobject_cast<QtQuick::View *>(parent))
         return v;
 
     const auto children = parent->childItems();
@@ -53,7 +53,7 @@ std::shared_ptr<Core::View> Window::rootView() const
             const auto children = contentItem->childItems();
             Q_ASSERT(!children.isEmpty());
 
-            return qtquick::View::asQQuickWrapper(contentItem->childItems().first());
+            return QtQuick::View::asQQuickWrapper(contentItem->childItems().first());
         }
     } else {
         qWarning() << Q_FUNC_INFO << "Expected QQuickView";
@@ -73,7 +73,7 @@ Core::Window::Ptr Window::transientParent() const
 
 void Window::setVisible(bool is)
 {
-    qtcommon::Window::setVisible(is);
+    QtCommon::Window::setVisible(is);
     if (auto root = rootView())
         root->setVisible(is);
 }

@@ -133,10 +133,10 @@ void TestQtQuick::tst_titlebarNumDockWidgetsChanged()
     m->addDockWidget(dock0, Location_OnLeft);
 
     auto tb = dock0->titleBar();
-    auto tbView = static_cast<qtquick::TitleBar *>(tb->view());
+    auto tbView = static_cast<QtQuick::TitleBar *>(tb->view());
 
     int numSignalEmittions = 0;
-    connect(tbView, &qtquick::TitleBar::numDockWidgetsChanged,
+    connect(tbView, &QtQuick::TitleBar::numDockWidgetsChanged,
             [&numSignalEmittions] { numSignalEmittions++; });
 
     auto dock1 = createDockWidget(

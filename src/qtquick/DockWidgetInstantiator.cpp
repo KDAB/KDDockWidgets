@@ -18,7 +18,7 @@
 #include "core/DockWidget.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 QString DockWidgetInstantiator::uniqueName() const
 {
@@ -42,10 +42,10 @@ void DockWidgetInstantiator::setSource(const QString &source)
     Q_EMIT sourceChanged();
 }
 
-qtquick::DockWidget *DockWidgetInstantiator::dockWidget() const
+QtQuick::DockWidget *DockWidgetInstantiator::dockWidget() const
 {
     if (m_dockWidget) {
-        return static_cast<qtquick::DockWidget *>(m_dockWidget->view());
+        return static_cast<QtQuick::DockWidget *>(m_dockWidget->view());
     }
 
     return nullptr;
@@ -211,7 +211,7 @@ void DockWidgetInstantiator::componentComplete()
     connect(m_dockWidget, &Core::DockWidget::closed, this,
             &DockWidgetInstantiator::closed);
     connect(m_dockWidget, &Core::DockWidget::guestViewChanged, this, [this] {
-        Q_EMIT guestViewChanged(qtquick::asQQuickItem(m_dockWidget->guestView().get()));
+        Q_EMIT guestViewChanged(QtQuick::asQQuickItem(m_dockWidget->guestView().get()));
     });
     connect(m_dockWidget, &Core::DockWidget::isFocusedChanged, this,
             &DockWidgetInstantiator::isFocusedChanged);
@@ -227,7 +227,7 @@ void DockWidgetInstantiator::componentComplete()
             &DockWidgetInstantiator::windowActiveAboutToChange);
 
     if (m_sourceFilename.isEmpty()) {
-        m_dockWidget->setGuestView(qtquick::View::asQQuickWrapper(childItems.constFirst()));
+        m_dockWidget->setGuestView(QtQuick::View::asQQuickWrapper(childItems.constFirst()));
     } else {
         auto view = this->dockWidget();
         view->setGuestItem(m_sourceFilename);

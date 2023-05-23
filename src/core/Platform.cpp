@@ -117,12 +117,12 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     switch (type) {
     case FrontendType::QtWidgets:
 #ifdef KDDW_FRONTEND_QTWIDGETS
-        platform = new qtwidgets::Platform(argc, argv);
+        platform = new QtWidgets::Platform(argc, argv);
 #endif
         break;
     case FrontendType::QtQuick:
 #ifdef KDDW_FRONTEND_QTQUICK
-        platform = new qtquick::Platform(argc, argv);
+        platform = new QtQuick::Platform(argc, argv);
 #endif
         break;
     case FrontendType::Flutter:

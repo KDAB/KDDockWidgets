@@ -16,12 +16,12 @@
 #include <QQuickItem>
 #include <QPointer>
 
-namespace KDDockWidgets::qtquick {
+namespace KDDockWidgets::QtQuick {
 
 /// @brief A View that doesn't own its QQuickItem
 /// Implements a View API around an existing QQuickItem
 /// Useful for items that are not created by KDDW.
-class DOCKS_EXPORT ViewWrapper : public qtcommon::ViewWrapper
+class DOCKS_EXPORT ViewWrapper : public QtCommon::ViewWrapper
 {
 public:
     QRect geometry() const override;

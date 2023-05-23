@@ -25,10 +25,10 @@
 
 namespace KDDockWidgets {
 
-namespace qtwidgets {
+namespace QtWidgets {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI : public qtwidgets::MainWindow,
+class DOCKS_EXPORT MainWindowMDI : public QtWidgets::MainWindow,
                                    public Core::MainWindowMDIViewInterface
 {
     Q_OBJECT

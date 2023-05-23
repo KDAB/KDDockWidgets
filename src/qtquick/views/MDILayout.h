@@ -19,9 +19,9 @@ namespace Core {
 class MDILayout;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
-class DOCKS_EXPORT MDILayout : public qtquick::View
+class DOCKS_EXPORT MDILayout : public QtQuick::View
 {
     Q_OBJECT
 public:

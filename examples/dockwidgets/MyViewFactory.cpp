@@ -20,11 +20,11 @@
 
 // clazy:excludeall=missing-qobject-macro,ctor-missing-parent-argument
 
-class MyTitleBar : public KDDockWidgets::qtwidgets::TitleBar
+class MyTitleBar : public KDDockWidgets::QtWidgets::TitleBar
 {
 public:
     explicit MyTitleBar(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent = nullptr)
-        : KDDockWidgets::qtwidgets::TitleBar(controller, parent)
+        : KDDockWidgets::QtWidgets::TitleBar(controller, parent)
         , m_controller(controller)
     {
         setFixedHeight(60);
@@ -58,11 +58,11 @@ MyTitleBar::~MyTitleBar() = default;
 
 // Inheriting from SeparatorWidget instead of Separator as it handles moving and mouse cursor
 // changing
-class MySeparator : public KDDockWidgets::qtwidgets::Separator
+class MySeparator : public KDDockWidgets::QtWidgets::Separator
 {
 public:
     explicit MySeparator(KDDockWidgets::Core::Separator *controller, KDDockWidgets::Core::View *parent)
-        : KDDockWidgets::qtwidgets::Separator(controller, parent)
+        : KDDockWidgets::QtWidgets::Separator(controller, parent)
     {
     }
 

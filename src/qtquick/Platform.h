@@ -29,13 +29,13 @@ namespace Core {
 class DockWidget;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
 class ViewFactory;
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
-class DOCKS_EXPORT Platform : public qtcommon::Platform_qt
+class DOCKS_EXPORT Platform : public QtCommon::Platform_qt
 {
 public:
     Platform();
@@ -44,7 +44,7 @@ public:
     std::shared_ptr<Core::View> qobjectAsView(QObject *) const override;
     std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const override;
     Core::ViewFactory *createDefaultViewFactory() override;
-    qtquick::ViewFactory *viewFactory() const;
+    QtQuick::ViewFactory *viewFactory() const;
     std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
     using Platform_qt::screenNumberFor;
     int screenNumberFor(Core::View *) const override;
@@ -80,9 +80,9 @@ private:
 
 }
 
-inline qtquick::Platform *plat()
+inline QtQuick::Platform *plat()
 {
-    return static_cast<qtquick::Platform *>(Core::Platform::instance());
+    return static_cast<QtQuick::Platform *>(Core::Platform::instance());
 }
 
 }

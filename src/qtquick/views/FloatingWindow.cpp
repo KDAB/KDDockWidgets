@@ -35,7 +35,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 namespace KDDockWidgets {
 
@@ -131,9 +131,9 @@ QuickView::~QuickView() = default;
 
 
 FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
-                               qtquick::MainWindow *parent,
+                               QtQuick::MainWindow *parent,
                                Qt::WindowFlags flags)
-    : qtquick::View(controller, Core::ViewType::FloatingWindow, parent, flags)
+    : QtQuick::View(controller, Core::ViewType::FloatingWindow, parent, flags)
     , m_quickWindow(new QuickView(plat()->qmlEngine(), this))
     , m_controller(controller)
 {
@@ -205,7 +205,7 @@ void FloatingWindow::init()
     }
 
     setParent(m_quickWindow->contentItem());
-    WidgetResizeHandler::setupWindow(Core::Window::Ptr(new qtquick::Window(m_quickWindow)));
+    WidgetResizeHandler::setupWindow(Core::Window::Ptr(new QtQuick::Window(m_quickWindow)));
     m_quickWindow->installEventFilter(this); // for window resizing
     m_controller->maybeCreateResizeHandler();
 

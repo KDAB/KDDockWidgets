@@ -16,11 +16,11 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 MainWindowMDI::MainWindowMDI(const QString &uniqueName, QQuickItem *parent,
                              Qt::WindowFlags flags)
-    : qtquick::MainWindow(uniqueName, MainWindowOption_MDI, parent, flags)
+    : QtQuick::MainWindow(uniqueName, MainWindowOption_MDI, parent, flags)
     , Core::MainWindowMDIViewInterface(mainWindow()->mdiLayout())
 {
 }

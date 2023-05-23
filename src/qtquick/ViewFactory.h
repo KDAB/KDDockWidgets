@@ -41,7 +41,7 @@ class FloatingWindow;
 class MainWindow;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
 /**
  * @brief The default ViewFactory for QtQuick frontend.

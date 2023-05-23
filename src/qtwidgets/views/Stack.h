@@ -18,7 +18,7 @@
 #include <QTabWidget>
 
 namespace KDDockWidgets {
-namespace qtwidgets {
+namespace QtWidgets {
 
 class DOCKS_EXPORT Stack : public View<QTabWidget>, public Core::StackViewInterface
 {

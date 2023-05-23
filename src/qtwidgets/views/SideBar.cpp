@@ -23,7 +23,7 @@
 #include <QStyleOptionToolButton>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 SideBar::SideBar(Core::SideBar *controller, QWidget *parent)
     : View(controller, Core::ViewType::SideBar, parent)

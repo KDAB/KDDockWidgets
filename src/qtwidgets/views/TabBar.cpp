@@ -26,7 +26,7 @@
 #include <QProxyStyle>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 namespace KDDockWidgets {
 namespace { // anonymous namespace to silence -Wweak-vtables

@@ -16,12 +16,12 @@
 #include <QWidget>
 #include <QPointer>
 
-namespace KDDockWidgets::qtwidgets {
+namespace KDDockWidgets::QtWidgets {
 
 /// @brief A View that doesn't own its QWidget
 /// Implements a View API around an existing QWidget
 /// Useful for widgets that are not created by KDDW.
-class DOCKS_EXPORT ViewWrapper : public qtcommon::ViewWrapper
+class DOCKS_EXPORT ViewWrapper : public QtCommon::ViewWrapper
 {
 public:
     QRect geometry() const override;

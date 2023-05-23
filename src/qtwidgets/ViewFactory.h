@@ -45,7 +45,7 @@ class FloatingWindow;
 class MainWindow;
 }
 
-namespace qtwidgets {
+namespace QtWidgets {
 
 /**
  * @brief The default ViewFactory for QtWidgets frontend.

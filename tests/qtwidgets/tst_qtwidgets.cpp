@@ -68,7 +68,7 @@ inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
     w->setFocusPolicy(Qt::StrongFocus);
     auto dock = newDockWidget(name, options, layoutSaverOptions);
     dock->setAffinityName(affinityName);
-    dock->setGuestView(qtwidgets::ViewWrapper::create(w));
+    dock->setGuestView(QtWidgets::ViewWrapper::create(w));
     dock->setObjectName(name);
     dock->view()->setGeometry(QRect(0, 0, 400, 400));
     if (show) {
@@ -209,7 +209,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
 
     auto m = createMainWindow();
 
-    QWidget *central = dynamic_cast<qtwidgets::MainWindow *>(m->view())->centralWidget();
+    QWidget *central = dynamic_cast<QtWidgets::MainWindow *>(m->view())->centralWidget();
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
@@ -250,7 +250,7 @@ void TestQtWidgets::tst_dockableMainWindows()
     auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
     m1->addDockWidget(dock1, Location_OnTop);
 
-    auto m2 = new KDDockWidgets::qtwidgets::MainWindow("mainwindow-dockable");
+    auto m2 = new KDDockWidgets::QtWidgets::MainWindow("mainwindow-dockable");
     auto m2Container = createDockWidget("mainwindow-dw", ( View * )m2);
     auto menubar = m2->menuBar();
     menubar->addMenu("File");
@@ -320,8 +320,8 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
 
     m->addDockWidget(dock1, Location_OnBottom);
 
-    auto mdiArea = new qtwidgets::MDIArea();
-    m->setPersistentCentralView(qtwidgets::ViewWrapper::create(mdiArea));
+    auto mdiArea = new QtWidgets::MDIArea();
+    m->setPersistentCentralView(QtWidgets::ViewWrapper::create(mdiArea));
 
     auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
     auto mdiWidget2 = createDockWidget("mdi2", new QPushButton("mdi12"));
@@ -372,16 +372,16 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     m->addDockWidget(dock1, Location_OnBottom);
 
-    auto mdiArea = new qtwidgets::MDIArea();
+    auto mdiArea = new QtWidgets::MDIArea();
 
-    m->setPersistentCentralView(qtwidgets::ViewWrapper::create(mdiArea));
+    m->setPersistentCentralView(QtWidgets::ViewWrapper::create(mdiArea));
 
 
     auto createSheet = [](int id) -> Core::DockWidget * {
         auto dock =
             newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetOption_MDINestable);
         auto btn = new QPushButton(QStringLiteral("Sheet %1").arg(id));
-        dock->setGuestView(qtwidgets::ViewWrapper::create(btn));
+        dock->setGuestView(QtWidgets::ViewWrapper::create(btn));
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
 
         return dock;
@@ -544,13 +544,13 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
 
     m->addDockWidget(dock1, Location_OnBottom);
 
-    auto mdiArea = new qtwidgets::MDIArea();
-    m->setPersistentCentralView(qtwidgets::ViewWrapper::create(mdiArea));
+    auto mdiArea = new QtWidgets::MDIArea();
+    m->setPersistentCentralView(QtWidgets::ViewWrapper::create(mdiArea));
 
     auto createSheet = [](int id) -> Core::DockWidget * {
         auto dock =
             newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetOption_MDINestable);
-        dock->setGuestView(qtwidgets::ViewWrapper::create(
+        dock->setGuestView(QtWidgets::ViewWrapper::create(
             new QPushButton(QStringLiteral("Sheet %1").arg(id))));
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
 
@@ -580,22 +580,22 @@ void TestQtWidgets::tst_floatingWindowDeleted()
     // Tests a case where the empty floating dock widget wouldn't be deleted
     // Doesn't repro QTBUG-83030 unfortunately, as we already have an event loop running
     // but let's leave this here nonetheless
-    class MyMainWindow : public KDDockWidgets::qtwidgets::MainWindow
+    class MyMainWindow : public KDDockWidgets::QtWidgets::MainWindow
     {
     public:
         MyMainWindow()
-            : KDDockWidgets::qtwidgets::MainWindow("tst_floatingWindowDeleted",
+            : KDDockWidgets::QtWidgets::MainWindow("tst_floatingWindowDeleted",
                                                    MainWindowOption_None)
         {
             auto dock1 = newDockWidget(QStringLiteral("DockWidget #1"));
             auto myWidget = new QWidget();
-            dock1->setGuestView(qtwidgets::ViewWrapper::create((myWidget)));
+            dock1->setGuestView(QtWidgets::ViewWrapper::create((myWidget)));
             dock1->view()->resize(QSize(600, 600));
             dock1->open();
 
             auto dock2 = newDockWidget(QStringLiteral("DockWidget #2"));
             myWidget = new QWidget();
-            dock2->setGuestView(qtwidgets::ViewWrapper::create(myWidget));
+            dock2->setGuestView(QtWidgets::ViewWrapper::create(myWidget));
             dock2->view()->resize(QSize(600, 600));
             dock2->open();
 
@@ -615,7 +615,7 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     auto lay = new QVBoxLayout(&container);
     auto m = Platform::instance()->createMainWindow("MyMainWindow_tst_addToSmallMainWindow8", {},
                                                     MainWindowOption_None);
-    auto qmainwindow = dynamic_cast<qtwidgets::MainWindow *>(m->view());
+    auto qmainwindow = dynamic_cast<QtWidgets::MainWindow *>(m->view());
     lay->addWidget(qmainwindow);
     container.resize(100, 100);
     Platform::instance()->tests_waitForEvent(&container, QEvent::Resize);
@@ -1027,7 +1027,7 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
 
     layout->checkSanity();
 
-    delete static_cast<qtwidgets::ViewWrapper *>(m->window().get())->widget();
+    delete static_cast<QtWidgets::ViewWrapper *>(m->window().get())->widget();
 }
 
 void TestQtWidgets::tst_restoreResizesLayout()
@@ -1526,10 +1526,10 @@ void TestQtWidgets::tstCloseNestedMdi()
     auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
     QPointer<Core::MainWindow> p = m.get();
 
-    auto mdi = new qtwidgets::MDIArea();
+    auto mdi = new QtWidgets::MDIArea();
     m->setPersistentCentralView(mdi->asWrapper());
 
-    auto dock1 = new qtwidgets::DockWidget(QStringLiteral("MyDock1"));
+    auto dock1 = new QtWidgets::DockWidget(QStringLiteral("MyDock1"));
     dock1->setWidget(new QPushButton("1"));
 
     mdi->addDockWidget(dock1, {});
@@ -1544,15 +1544,15 @@ void TestQtWidgets::tstCloseNestedMDIPropagates()
     auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
     QPointer<Core::MainWindow> p = m.get();
 
-    auto mdi = new qtwidgets::MDIArea();
+    auto mdi = new QtWidgets::MDIArea();
     m->setPersistentCentralView(mdi->asWrapper());
 
-    auto dock1 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock1"));
+    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
     auto nonClosableWidget = Platform::instance()->tests_createNonClosableView();
     dock1->dockWidget()->setGuestView(nonClosableWidget->asWrapper());
     mdi->addDockWidget(dock1, {});
 
-    auto dock2 = new KDDockWidgets::qtwidgets::DockWidget(QStringLiteral("MyDock2"));
+    auto dock2 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock2"));
     auto nonClosableWidget2 = Platform::instance()->tests_createNonClosableView();
     dock2->dockWidget()->setGuestView(nonClosableWidget2->asWrapper());
     dock2->open();
@@ -1583,7 +1583,7 @@ void TestQtWidgets::tst_setAsCurrentTab()
 
     Core::Group *group = dw->d->group();
     auto tabBar = group->tabBar();
-    QTabBar *tabBarWidget = qobject_cast<QTabBar *>(qtcommon::View_qt::asQWidget(tabBar->view()));
+    QTabBar *tabBarWidget = qobject_cast<QTabBar *>(QtCommon::View_qt::asQWidget(tabBar->view()));
 
     QVERIFY(!dw->isCurrentTab());
     QVERIFY(!dw2->isCurrentTab());
@@ -1640,7 +1640,7 @@ void TestQtWidgets::tst_restoreWithIncompleteFactory()
         if (name.contains(QStringLiteral("centralDockWidget")))
             return nullptr;
 
-        auto w = new KDDockWidgets::qtwidgets::DockWidget(name);
+        auto w = new KDDockWidgets::QtWidgets::DockWidget(name);
         w->setWidget(new QWidget());
         return w->asDockWidgetController();
     });

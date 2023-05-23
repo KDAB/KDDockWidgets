@@ -19,9 +19,9 @@ namespace Core {
 class DropArea;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
-class DOCKS_EXPORT DropArea : public qtquick::View
+class DOCKS_EXPORT DropArea : public QtQuick::View
 {
     Q_OBJECT
 public:

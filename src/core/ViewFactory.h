@@ -42,7 +42,7 @@ class TitleBar;
  * This is optional, and if not provided, a default one will be used.
  *
  * You should however not derive directly from ViewFactory, and instead, derive from
- * qtwidgets::ViewFactory or qtquick::ViewFactory.
+ * QtWidgets::ViewFactory or QtQuick::ViewFactory.
  *
  * Sub-classing ViewFactory allows for fine-grained customization and
  * styling of some non-public widgets, such as titlebars, dock widget group and

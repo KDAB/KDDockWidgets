@@ -17,10 +17,10 @@
 #include "kddockwidgets/core/TabBar.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 Stack::Stack(Core::Stack *controller, QQuickItem *parent)
-    : qtquick::View(controller, Core::ViewType::Stack, parent)
+    : QtQuick::View(controller, Core::ViewType::Stack, parent)
     , Core::StackViewInterface(controller)
 {
 }

@@ -21,7 +21,7 @@ class QHBoxLayout;
 class QLabel;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets::qtwidgets {
+namespace KDDockWidgets::QtWidgets {
 
 class DOCKS_EXPORT TitleBar : public View<QWidget>,
                               public Core::TitleBarViewInterface

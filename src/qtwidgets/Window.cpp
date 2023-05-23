@@ -19,7 +19,7 @@
 #include <QDebug>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 Window::~Window() = default;
 
@@ -32,7 +32,7 @@ inline QWindow *windowForWidget(QWidget *topLevel)
 }
 
 Window::Window(QWidget *topLevel)
-    : qtcommon::Window(windowForWidget(topLevel))
+    : QtCommon::Window(windowForWidget(topLevel))
 {
     // QWidgetWindow is private API, we have no way for going from QWindow to the top-level QWidget
     // So set it as a property
@@ -45,7 +45,7 @@ std::shared_ptr<Core::View> Window::rootView() const
         return {};
 
     if (QWidget *widget = m_window->property("kddockwidgets_qwidget").value<QWidget *>())
-        return qtwidgets::ViewWrapper::create(widget);
+        return QtWidgets::ViewWrapper::create(widget);
 
     qWarning() << Q_FUNC_INFO << "Window does not have a root";
     return nullptr;
@@ -54,7 +54,7 @@ std::shared_ptr<Core::View> Window::rootView() const
 Core::Window::Ptr Window::transientParent() const
 {
     if (QWindow *w = m_window->transientParent())
-        return Core::Window::Ptr(new qtwidgets::Window(w));
+        return Core::Window::Ptr(new QtWidgets::Window(w));
 
     return nullptr;
 }
@@ -91,7 +91,7 @@ void Window::destroy()
 {
     if (auto v = rootView()) {
         // deleting the QWidget deletes its QWindow
-        delete static_cast<qtwidgets::ViewWrapper *>(v.get())->widget();
+        delete static_cast<QtWidgets::ViewWrapper *>(v.get())->widget();
     } else {
         Window::destroy();
     }

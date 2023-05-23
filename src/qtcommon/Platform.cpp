@@ -26,7 +26,7 @@
 #include <QTimer>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtcommon;
+using namespace KDDockWidgets::QtCommon;
 using namespace KDDockWidgets::Core;
 
 class Platform_qt::GlobalEventFilter : public QObject
@@ -229,7 +229,7 @@ int Platform_qt::screenNumberForQWindow(QWindow *window) const
 
 void Platform_qt::sendEvent(View *view, QEvent *ev) const
 {
-    qGuiApp->sendEvent(qtcommon::View_qt::asQObject(view), ev);
+    qGuiApp->sendEvent(QtCommon::View_qt::asQObject(view), ev);
 }
 
 bool Platform_qt::isProcessingAppQuitEvent() const

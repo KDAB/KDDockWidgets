@@ -24,7 +24,7 @@ namespace Core {
 class Window;
 }
 
-namespace qtcommon {
+namespace QtCommon {
 
 /// @brief Baseclass platform for Qt based platform
 /// Useful since QtWidgets and QtQuick share some similarities

@@ -31,9 +31,9 @@ namespace Core {
 class Stack;
 }
 
-namespace qtquick {
+namespace QtQuick {
 
-class DOCKS_EXPORT Stack : public qtquick::View, public Core::StackViewInterface
+class DOCKS_EXPORT Stack : public QtQuick::View, public Core::StackViewInterface
 {
     Q_OBJECT
 public:

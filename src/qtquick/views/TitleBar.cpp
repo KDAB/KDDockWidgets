@@ -23,7 +23,7 @@
 
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtquick;
+using namespace KDDockWidgets::QtQuick;
 
 
 TitleBar::TitleBar(Core::TitleBar *controller, QQuickItem *parent)

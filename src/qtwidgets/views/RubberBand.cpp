@@ -12,7 +12,7 @@
 #include "RubberBand.h"
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::qtwidgets;
+using namespace KDDockWidgets::QtWidgets;
 
 RubberBand::RubberBand(QWidget *parent)
     : View<QRubberBand>(nullptr, Core::ViewType::RubberBand, parent)

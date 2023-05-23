@@ -52,7 +52,7 @@ void MDIDockingAreaInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint lo
     if (!dockWidget || !m_mainWindow)
         return;
 
-    Core::DockWidget *dw = qtquick::Platform::dockWidgetForItem(dockWidget);
+    Core::DockWidget *dw = QtQuick::Platform::dockWidgetForItem(dockWidget);
 
     m_mainWindow->mdiLayout()->addDockWidget(dw, localPos, addingOption);
 }
@@ -90,6 +90,6 @@ void MDIDockingAreaInstantiator::componentComplete()
         return;
     }
 
-    Core::View *view = new qtquick::MainWindowMDI(m_uniqueName, this);
+    Core::View *view = new QtQuick::MainWindowMDI(m_uniqueName, this);
     m_mainWindow = view->asMainWindowController();
 }

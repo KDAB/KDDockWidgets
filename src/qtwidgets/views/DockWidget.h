@@ -27,7 +27,7 @@
 
 namespace KDDockWidgets {
 
-namespace qtwidgets {
+namespace QtWidgets {
 
 /**
  * @brief Represents a dock widget.
@@ -38,7 +38,7 @@ namespace qtwidgets {
 class DOCKS_EXPORT DockWidget : public QWidget,
                                 public Core::DockWidgetViewInterface
 #else
-class DOCKS_EXPORT DockWidget : public qtwidgets::View<QWidget>,
+class DOCKS_EXPORT DockWidget : public QtWidgets::View<QWidget>,
                                 public Core::DockWidgetViewInterface
 #endif
 {
