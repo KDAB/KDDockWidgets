@@ -12,7 +12,6 @@
 #ifndef KD_LAYOUTSAVER_P_H
 #define KD_LAYOUTSAVER_P_H
 
-#include "KDDockWidgets_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/core/Platform.h"

@@ -12,7 +12,6 @@
 #ifndef KD_UTILS_P_H
 #define KD_UTILS_P_H
 
-#include "KDDockWidgets_p.h"
 #include "kddockwidgets/Config.h"
 #include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/Platform.h"

@@ -13,7 +13,6 @@
 
 #include "View.h"
 #include "Screen.h"
-#include "KDDockWidgets_p.h"
 
 #include <QVector>
 
