@@ -314,37 +314,37 @@ void c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback(void *ptr
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 680:
+    case 686:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createClassicIndicatorWindow>(callback);
         break;
-    case 681:
+    case 687:
         wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createDockWidget>(callback);
         break;
-    case 682:
+    case 688:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createDropArea>(callback);
         break;
-    case 683:
+    case 689:
         wrapper->m_createFloatingWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createFloatingWindow>(callback);
         break;
-    case 684:
+    case 690:
         wrapper->m_createGroupCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createGroup>(callback);
         break;
-    case 685:
+    case 691:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createRubberBand>(callback);
         break;
-    case 686:
+    case 692:
         wrapper->m_createSeparatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createSeparator>(callback);
         break;
-    case 687:
+    case 693:
         wrapper->m_createSideBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createSideBar>(callback);
         break;
-    case 688:
+    case 694:
         wrapper->m_createStackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createStack>(callback);
         break;
-    case 689:
+    case 695:
         wrapper->m_createTabBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createTabBar>(callback);
         break;
-    case 690:
+    case 696:
         wrapper->m_createTitleBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createTitleBar>(callback);
         break;
     }

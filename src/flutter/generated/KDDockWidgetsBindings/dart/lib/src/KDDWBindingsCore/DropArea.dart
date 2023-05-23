@@ -29,31 +29,7 @@ class DropArea extends KDDWBindingsCore.Layout {
       if (instance != null) return instance as DropArea;
     }
     return DropArea.fromCppPointer(cppPointer, needsAutoDelete);
-  }
-  bool get m_inDestructor {
-    final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropArea___get_m_inDestructor')
-        .asFunction();
-    return func(thisCpp) != 0;
-  }
-
-  set m_inDestructor(bool m_inDestructor_) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__DropArea___set_m_inDestructor_bool')
-        .asFunction();
-    func(thisCpp, m_inDestructor_ ? 1 : 0);
-  }
-
-  bool get m_isMDIWrapper {
-    final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropArea___get_m_isMDIWrapper')
-        .asFunction();
-    return func(thisCpp) != 0;
   } //DropArea(KDDockWidgets::Core::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
-
   DropArea(KDDWBindingsCore.View? parent, int options,
       {bool isMDIWrapper = false})
       : super.init() {
@@ -135,6 +111,15 @@ class DropArea extends KDDWBindingsCore.Layout {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Item.fromCppPointer(result, false);
+  } // centralGroup() const
+
+  KDDWBindingsCore.Group centralGroup() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__DropArea__centralGroup')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return KDDWBindingsCore.Group.fromCppPointer(result, false);
   } // containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
 
   bool containsDockWidget(KDDWBindingsCore.DockWidget? arg__1) {
@@ -324,7 +309,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 901:
+      case 907:
         return "c_KDDockWidgets__Core__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -332,7 +317,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 901:
+      case 907:
         return "setParentView_impl";
     }
     throw Error();
@@ -344,9 +329,9 @@ class DropArea extends KDDWBindingsCore.Layout {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback')
         .asFunction();
-    final callback901 =
+    final callback907 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback901, 901);
+    registerCallback(thisCpp, callback907, 907);
   }
 }

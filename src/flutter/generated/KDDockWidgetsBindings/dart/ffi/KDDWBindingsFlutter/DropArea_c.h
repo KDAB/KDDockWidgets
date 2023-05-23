@@ -13,9 +13,9 @@
 #include "core/DropArea.h"
 #include <core/View.h>
 #include <qsize.h>
-#include <qrect.h>
 #include <qstring.h>
 #include <qpoint.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -44,8 +44,8 @@ public:
     virtual void init_nocallback();
     virtual bool isActiveWindow() const;
     virtual bool isActiveWindow_nocallback() const;
-    virtual bool isExpicitlyHidden() const;
-    virtual bool isExpicitlyHidden_nocallback() const;
+    virtual bool isExplicitlyHidden() const;
+    virtual bool isExplicitlyHidden_nocallback() const;
     virtual bool isMaximized() const;
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
@@ -158,8 +158,8 @@ public:
     Callback_init m_initCallback = nullptr;
     typedef bool (*Callback_isActiveWindow)(void *);
     Callback_isActiveWindow m_isActiveWindowCallback = nullptr;
-    typedef bool (*Callback_isExpicitlyHidden)(void *);
-    Callback_isExpicitlyHidden m_isExpicitlyHiddenCallback = nullptr;
+    typedef bool (*Callback_isExplicitlyHidden)(void *);
+    Callback_isExplicitlyHidden m_isExplicitlyHiddenCallback = nullptr;
     typedef bool (*Callback_isMaximized)(void *);
     Callback_isMaximized m_isMaximizedCallback = nullptr;
     typedef bool (*Callback_isMinimized)(void *);
@@ -278,8 +278,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__hide(void 
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__init(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isActiveWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isActiveWindow(void *thisObj);
-// KDDockWidgets::flutter::DropArea::isExpicitlyHidden() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isExpicitlyHidden(void *thisObj);
+// KDDockWidgets::flutter::DropArea::isExplicitlyHidden() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isExplicitlyHidden(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isMaximized() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isMinimized() const

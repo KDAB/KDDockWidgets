@@ -809,16 +809,16 @@ void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1468:
+    case 1525:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_dragRect>(callback);
         break;
-    case 1471:
+    case 1528:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_focusedWidgetChangedCallback>(callback);
         break;
-    case 1488:
+    case 1545:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_isFocusedChangedCallback>(callback);
         break;
-    case 901:
+    case 907:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

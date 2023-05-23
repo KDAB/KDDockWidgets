@@ -251,19 +251,19 @@ void c_KDDockWidgets__Core__Stack__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1249:
+    case 1255:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isMDI>(callback);
         break;
-    case 1250:
+    case 1256:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isPositionDraggable>(callback);
         break;
-    case 1252:
+    case 1258:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isWindow>(callback);
         break;
-    case 901:
+    case 907:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1264:
+    case 1270:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

@@ -52,6 +52,10 @@ KDDockWidgets::Core::Item *DropArea_wrapper::centralFrame() const
 {
     return ::KDDockWidgets::Core::DropArea::centralFrame();
 }
+KDDockWidgets::Core::Group *DropArea_wrapper::centralGroup() const
+{
+    return ::KDDockWidgets::Core::DropArea::centralGroup();
+}
 bool DropArea_wrapper::containsDockWidget(KDDockWidgets::Core::DockWidget *arg__1) const
 {
     return ::KDDockWidgets::Core::DropArea::containsDockWidget(arg__1);
@@ -196,6 +200,11 @@ void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj)
 {
     return fromPtr(thisObj)->centralFrame();
 }
+// centralGroup() const
+void *c_KDDockWidgets__Core__DropArea__centralGroup(void *thisObj)
+{
+    return fromPtr(thisObj)->centralGroup();
+}
 // containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
 bool c_KDDockWidgets__Core__DropArea__containsDockWidget_DockWidget(void *thisObj, void *arg__1_)
 {
@@ -302,23 +311,11 @@ void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
-bool c_KDDockWidgets__Core__DropArea___get_m_inDestructor(void *thisObj)
-{
-    return fromPtr(thisObj)->m_inDestructor;
-}
-bool c_KDDockWidgets__Core__DropArea___get_m_isMDIWrapper(void *thisObj)
-{
-    return fromPtr(thisObj)->m_isMDIWrapper;
-}
-void c_KDDockWidgets__Core__DropArea___set_m_inDestructor_bool(void *thisObj, bool m_inDestructor_)
-{
-    fromPtr(thisObj)->m_inDestructor = m_inDestructor_;
-}
 void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 901:
+    case 907:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

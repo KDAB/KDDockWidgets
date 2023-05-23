@@ -519,16 +519,16 @@ void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1145:
+    case 1151:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 1148:
+    case 1154:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
-    case 901:
+    case 907:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1170:
+    case 1176:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

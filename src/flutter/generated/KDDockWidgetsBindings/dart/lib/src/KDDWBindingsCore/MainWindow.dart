@@ -322,7 +322,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 901:
+      case 907:
         return "c_KDDockWidgets__Core__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -330,7 +330,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 901:
+      case 907:
         return "setParentView_impl";
     }
     throw Error();
@@ -342,9 +342,9 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback')
         .asFunction();
-    final callback901 =
+    final callback907 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback901, 901);
+    registerCallback(thisCpp, callback907, 907);
   }
 }

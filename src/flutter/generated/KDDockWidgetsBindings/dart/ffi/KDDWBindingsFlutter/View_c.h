@@ -17,15 +17,15 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include <TabBar.h>
+#include <NonQtCompat_p.h>
+#include "core/DropArea.h"
+#include <core/Group.h>
+#include "core/MainWindow.h"
+#include "core/TitleBar.h"
+#include <FloatingWindow.h>
 #include <core/DockWidget.h>
 #include <core/Layout.h>
 #include "core/Stack.h"
-#include <core/Group.h>
-#include <FloatingWindow.h>
-#include "core/MainWindow.h"
-#include "core/DropArea.h"
-#include <NonQtCompat_p.h>
-#include "core/TitleBar.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -54,8 +54,8 @@ public:
     virtual void init_nocallback();
     virtual bool isActiveWindow() const;
     virtual bool isActiveWindow_nocallback() const;
-    virtual bool isExpicitlyHidden() const;
-    virtual bool isExpicitlyHidden_nocallback() const;
+    virtual bool isExplicitlyHidden() const;
+    virtual bool isExplicitlyHidden_nocallback() const;
     virtual bool isMaximized() const;
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
@@ -173,8 +173,8 @@ public:
     Callback_init m_initCallback = nullptr;
     typedef bool (*Callback_isActiveWindow)(void *);
     Callback_isActiveWindow m_isActiveWindowCallback = nullptr;
-    typedef bool (*Callback_isExpicitlyHidden)(void *);
-    Callback_isExpicitlyHidden m_isExpicitlyHiddenCallback = nullptr;
+    typedef bool (*Callback_isExplicitlyHidden)(void *);
+    Callback_isExplicitlyHidden m_isExplicitlyHiddenCallback = nullptr;
     typedef bool (*Callback_isMaximized)(void *);
     Callback_isMaximized m_isMaximizedCallback = nullptr;
     typedef bool (*Callback_isMinimized)(void *);
@@ -293,8 +293,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__hide(void *thi
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__init(void *thisObj);
 // KDDockWidgets::flutter::View::isActiveWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isActiveWindow(void *thisObj);
-// KDDockWidgets::flutter::View::isExpicitlyHidden() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isExpicitlyHidden(void *thisObj);
+// KDDockWidgets::flutter::View::isExplicitlyHidden() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isExplicitlyHidden(void *thisObj);
 // KDDockWidgets::flutter::View::isMaximized() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::View::isMinimized() const

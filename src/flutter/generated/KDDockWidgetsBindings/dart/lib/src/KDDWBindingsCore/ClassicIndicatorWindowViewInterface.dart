@@ -64,7 +64,7 @@ class ClassicIndicatorWindowViewInterface {
   int hover(QPoint arg__1) {
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1796))
+            cFunctionSymbolName(1803))
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -85,7 +85,7 @@ class ClassicIndicatorWindowViewInterface {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1797))
+            cFunctionSymbolName(1804))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -105,7 +105,7 @@ class ClassicIndicatorWindowViewInterface {
   QPoint posForIndicator(int arg__1) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1798))
+            cFunctionSymbolName(1805))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, arg__1);
     return QPoint.fromCppPointer(result, true);
@@ -127,7 +127,7 @@ class ClassicIndicatorWindowViewInterface {
   raise() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1799))
+            cFunctionSymbolName(1806))
         .asFunction();
     func(thisCpp);
   }
@@ -146,7 +146,7 @@ class ClassicIndicatorWindowViewInterface {
   resize(QSize arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1800))
+            cFunctionSymbolName(1807))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -166,7 +166,7 @@ class ClassicIndicatorWindowViewInterface {
   setGeometry(QRect arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1801))
+            cFunctionSymbolName(1808))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -186,7 +186,7 @@ class ClassicIndicatorWindowViewInterface {
   setObjectName(String? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1802))
+            cFunctionSymbolName(1809))
         .asFunction();
     func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   }
@@ -206,7 +206,7 @@ class ClassicIndicatorWindowViewInterface {
   setVisible(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(1803))
+            cFunctionSymbolName(1810))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -225,7 +225,7 @@ class ClassicIndicatorWindowViewInterface {
   updatePositions() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1804))
+            cFunctionSymbolName(1811))
         .asFunction();
     func(thisCpp);
   }
@@ -251,23 +251,23 @@ class ClassicIndicatorWindowViewInterface {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1796:
-        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_QPoint";
-      case 1797:
-        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__isWindow";
-      case 1798:
-        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__posForIndicator_DropLocation";
-      case 1799:
-        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__raise";
-      case 1800:
-        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__resize_QSize";
-      case 1801:
-        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_QRect";
-      case 1802:
-        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setObjectName_QString";
       case 1803:
-        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool";
+        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_QPoint";
       case 1804:
+        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__isWindow";
+      case 1805:
+        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__posForIndicator_DropLocation";
+      case 1806:
+        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__raise";
+      case 1807:
+        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__resize_QSize";
+      case 1808:
+        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_QRect";
+      case 1809:
+        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setObjectName_QString";
+      case 1810:
+        return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool";
+      case 1811:
         return "c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions";
     }
     return "";
@@ -275,23 +275,23 @@ class ClassicIndicatorWindowViewInterface {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1796:
-        return "hover";
-      case 1797:
-        return "isWindow";
-      case 1798:
-        return "posForIndicator";
-      case 1799:
-        return "raise";
-      case 1800:
-        return "resize";
-      case 1801:
-        return "setGeometry";
-      case 1802:
-        return "setObjectName";
       case 1803:
-        return "setVisible";
+        return "hover";
       case 1804:
+        return "isWindow";
+      case 1805:
+        return "posForIndicator";
+      case 1806:
+        return "raise";
+      case 1807:
+        return "resize";
+      case 1808:
+        return "setGeometry";
+      case 1809:
+        return "setObjectName";
+      case 1810:
+        return "setVisible";
+      case 1811:
         return "updatePositions";
     }
     throw Error();
@@ -303,50 +303,50 @@ class ClassicIndicatorWindowViewInterface {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1796 = 0;
-    final callback1796 =
+    const callbackExcept1803 = 0;
+    final callback1803 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore
                 .ClassicIndicatorWindowViewInterface.hover_calledFromC,
-            callbackExcept1796);
-    registerCallback(thisCpp, callback1796, 1796);
-    const callbackExcept1797 = 0;
-    final callback1797 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+            callbackExcept1803);
+    registerCallback(thisCpp, callback1803, 1803);
+    const callbackExcept1804 = 0;
+    final callback1804 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsCore
             .ClassicIndicatorWindowViewInterface.isWindow_calledFromC,
-        callbackExcept1797);
-    registerCallback(thisCpp, callback1797, 1797);
-    final callback1798 =
+        callbackExcept1804);
+    registerCallback(thisCpp, callback1804, 1804);
+    final callback1805 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsCore.ClassicIndicatorWindowViewInterface
                 .posForIndicator_calledFromC);
-    registerCallback(thisCpp, callback1798, 1798);
-    final callback1799 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback1805, 1805);
+    final callback1806 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.ClassicIndicatorWindowViewInterface.raise_calledFromC);
-    registerCallback(thisCpp, callback1799, 1799);
-    final callback1800 =
+    registerCallback(thisCpp, callback1806, 1806);
+    final callback1807 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore
                 .ClassicIndicatorWindowViewInterface.resize_calledFromC);
-    registerCallback(thisCpp, callback1800, 1800);
-    final callback1801 =
+    registerCallback(thisCpp, callback1807, 1807);
+    final callback1808 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore
                 .ClassicIndicatorWindowViewInterface.setGeometry_calledFromC);
-    registerCallback(thisCpp, callback1801, 1801);
-    final callback1802 =
+    registerCallback(thisCpp, callback1808, 1808);
+    final callback1809 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore
                 .ClassicIndicatorWindowViewInterface.setObjectName_calledFromC);
-    registerCallback(thisCpp, callback1802, 1802);
-    final callback1803 =
+    registerCallback(thisCpp, callback1809, 1809);
+    final callback1810 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             KDDWBindingsCore
                 .ClassicIndicatorWindowViewInterface.setVisible_calledFromC);
-    registerCallback(thisCpp, callback1803, 1803);
-    final callback1804 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback1810, 1810);
+    final callback1811 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore
             .ClassicIndicatorWindowViewInterface.updatePositions_calledFromC);
-    registerCallback(thisCpp, callback1804, 1804);
+    registerCallback(thisCpp, callback1811, 1811);
   }
 }

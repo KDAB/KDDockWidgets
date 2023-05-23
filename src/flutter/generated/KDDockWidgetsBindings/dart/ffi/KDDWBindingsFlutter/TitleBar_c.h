@@ -13,9 +13,9 @@
 #include "core/TitleBar.h"
 #include <core/View.h>
 #include <qsize.h>
-#include <qrect.h>
 #include <qstring.h>
 #include <qpoint.h>
+#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -48,8 +48,8 @@ public:
     virtual bool isCloseButtonEnabled_nocallback() const;
     virtual bool isCloseButtonVisible() const;
     virtual bool isCloseButtonVisible_nocallback() const;
-    virtual bool isExpicitlyHidden() const;
-    virtual bool isExpicitlyHidden_nocallback() const;
+    virtual bool isExplicitlyHidden() const;
+    virtual bool isExplicitlyHidden_nocallback() const;
     virtual bool isFloatButtonVisible() const;
     virtual bool isFloatButtonVisible_nocallback() const;
     virtual bool isMaximized() const;
@@ -168,8 +168,8 @@ public:
     Callback_isCloseButtonEnabled m_isCloseButtonEnabledCallback = nullptr;
     typedef bool (*Callback_isCloseButtonVisible)(void *);
     Callback_isCloseButtonVisible m_isCloseButtonVisibleCallback = nullptr;
-    typedef bool (*Callback_isExpicitlyHidden)(void *);
-    Callback_isExpicitlyHidden m_isExpicitlyHiddenCallback = nullptr;
+    typedef bool (*Callback_isExplicitlyHidden)(void *);
+    Callback_isExplicitlyHidden m_isExplicitlyHiddenCallback = nullptr;
     typedef bool (*Callback_isFloatButtonVisible)(void *);
     Callback_isFloatButtonVisible m_isFloatButtonVisibleCallback = nullptr;
     typedef bool (*Callback_isMaximized)(void *);
@@ -294,8 +294,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__isActiveWi
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__isCloseButtonEnabled(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::isCloseButtonVisible() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__isCloseButtonVisible(void *thisObj);
-// KDDockWidgets::flutter::TitleBar::isExpicitlyHidden() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__isExpicitlyHidden(void *thisObj);
+// KDDockWidgets::flutter::TitleBar::isExplicitlyHidden() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__isExplicitlyHidden(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::isFloatButtonVisible() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__isFloatButtonVisible(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::isMaximized() const

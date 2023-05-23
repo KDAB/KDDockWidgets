@@ -58,7 +58,7 @@ class DelayedCall {
   call() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(856))
+            cFunctionSymbolName(862))
         .asFunction();
     func(thisCpp);
   }
@@ -84,7 +84,7 @@ class DelayedCall {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 856:
+      case 862:
         return "c_KDDockWidgets__Core__DelayedCall__call";
     }
     return "";
@@ -92,7 +92,7 @@ class DelayedCall {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 856:
+      case 862:
         return "call";
     }
     throw Error();
@@ -104,8 +104,8 @@ class DelayedCall {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback')
         .asFunction();
-    final callback856 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback862 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.DelayedCall.call_calledFromC);
-    registerCallback(thisCpp, callback856, 856);
+    registerCallback(thisCpp, callback862, 862);
   }
 }

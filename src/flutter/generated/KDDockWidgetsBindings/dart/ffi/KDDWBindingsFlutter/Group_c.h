@@ -45,8 +45,8 @@ public:
     virtual void hide_nocallback();
     virtual bool isActiveWindow() const;
     virtual bool isActiveWindow_nocallback() const;
-    virtual bool isExpicitlyHidden() const;
-    virtual bool isExpicitlyHidden_nocallback() const;
+    virtual bool isExplicitlyHidden() const;
+    virtual bool isExplicitlyHidden_nocallback() const;
     virtual bool isMaximized() const;
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
@@ -161,8 +161,8 @@ public:
     Callback_hide m_hideCallback = nullptr;
     typedef bool (*Callback_isActiveWindow)(void *);
     Callback_isActiveWindow m_isActiveWindowCallback = nullptr;
-    typedef bool (*Callback_isExpicitlyHidden)(void *);
-    Callback_isExpicitlyHidden m_isExpicitlyHiddenCallback = nullptr;
+    typedef bool (*Callback_isExplicitlyHidden)(void *);
+    Callback_isExplicitlyHidden m_isExplicitlyHiddenCallback = nullptr;
     typedef bool (*Callback_isMaximized)(void *);
     Callback_isMaximized m_isMaximizedCallback = nullptr;
     typedef bool (*Callback_isMinimized)(void *);
@@ -285,8 +285,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__hasFocus(void
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__hide(void *thisObj);
 // KDDockWidgets::flutter::Group::isActiveWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isActiveWindow(void *thisObj);
-// KDDockWidgets::flutter::Group::isExpicitlyHidden() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isExpicitlyHidden(void *thisObj);
+// KDDockWidgets::flutter::Group::isExplicitlyHidden() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isExplicitlyHidden(void *thisObj);
 // KDDockWidgets::flutter::Group::isMaximized() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::Group::isMinimized() const

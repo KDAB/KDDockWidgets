@@ -13,8 +13,8 @@ export 'src/KDDWBindingsCore/ClassicIndicatorWindowViewInterface.dart'
 export 'src/KDDWBindingsCore/ClassicIndicators.dart' show ClassicIndicators;
 export 'src/KDDWBindingsCore/DockWidget.dart' show DockWidget;
 export 'src/KDDWBindingsCore/FloatingWindow.dart' show FloatingWindow;
-export 'src/KDDWBindingsCore/DropArea.dart' show DropArea;
 export 'src/KDDWBindingsCore/Group.dart' show Group;
+export 'src/KDDWBindingsCore/DropArea.dart' show DropArea;
 export 'src/KDDWBindingsCore/Layout.dart' show Layout;
 export 'src/KDDWBindingsCore/MainWindow.dart' show MainWindow;
 export 'src/KDDWBindingsCore/Separator.dart' show Separator;
