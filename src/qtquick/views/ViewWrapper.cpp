@@ -335,8 +335,9 @@ Qt::FocusPolicy ViewWrapper::focusPolicy() const
     if (auto view = unwrap()) {
         return view->focusPolicy();
     } else {
-        qFatal("not implemented");
-        return {};
+        // The DockWidget's user guest widget is not a View, it's a QQuickItem
+        // QQuickItem don't have focus policy and are focusable
+        return Qt::StrongFocus;
     }
 }
 
@@ -351,7 +352,7 @@ void ViewWrapper::setFocusPolicy(Qt::FocusPolicy policy)
     if (auto view = unwrap()) {
         view->setFocusPolicy(policy);
     } else {
-        qFatal("not implemented");
+        qWarning() << Q_FUNC_INFO << "Not implemented for QtQuick";
     }
 }
 
