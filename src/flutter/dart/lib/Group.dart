@@ -81,13 +81,13 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
     final group = groupView.m_controller;
 
     /// TODOm4: Move this logic to C++
-    final bool showTabBar = !tabBarView.isExpicitlyHidden() &&
+    final bool showTabBar = !tabBarView.isExplicitlyHidden() &&
         (group.alwaysShowsTabs() || group.dockWidgetCount() > 1);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (!titleBarView.isExpicitlyHidden()) titleBarView.flutterWidget,
+        if (!titleBarView.isExplicitlyHidden()) titleBarView.flutterWidget,
         if (showTabBar) tabBarView.flutterWidget,
         Expanded(child: dockWidgetWidget)
       ],
