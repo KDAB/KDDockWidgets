@@ -61,11 +61,29 @@
         "vmServiceUri": "${command:dart.promptForVmService}"
       },
       {
-        "name": "Flutter-example",
+        "name": "Flutter example (dart)",
         "request": "launch",
         "type": "dart",
         "flutterMode": "debug",
         "cwd": "${workspaceFolder:kddockwidgets}/examples/flutter"
+      },
+      {
+        "name": "Flutter example (native)",
+        "request": "launch",
+        "type": "lldb",
+        "program": "${workspaceFolder:kddockwidgets}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example",
+        "cwd": "${workspaceFolder:kddockwidgets}"
+      },
+      {
+        // Launches C++ but waits for Dart debugger. User has to launch the "Flutter attach"
+        "name": "Flutter example (native,wait)",
+        "request": "launch",
+        "type": "lldb",
+        "program": "${workspaceFolder:kddockwidgets}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example",
+        "cwd": "${workspaceFolder:kddockwidgets}",
+        "args": [
+          "--wait"
+        ],
       }
     ]
   }
