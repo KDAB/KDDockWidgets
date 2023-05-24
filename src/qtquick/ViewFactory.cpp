@@ -196,14 +196,14 @@ QUrl ViewFactory::tabbarFilename() const
 }
 
 Core::View *
-ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *,
+ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *,
                                                      Core::View *) const
 {
     return nullptr;
 }
 
 Core::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
-    Core::ClassicIndicators *classicIndicators) const
+    Core::ClassicDropIndicatorOverlay *classicIndicators) const
 {
     return new IndicatorWindow(classicIndicators);
 }

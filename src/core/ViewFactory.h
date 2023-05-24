@@ -33,8 +33,8 @@ class TabBar;
 class SideBar;
 class FloatingWindow;
 class MainWindow;
-class ClassicIndicators;
-class SegmentedIndicators;
+class ClassicDropIndicatorOverlay;
+class SegmentedDropIndicatorOverlay;
 class TitleBar;
 
 /**
@@ -108,11 +108,11 @@ public:
     /// @brief Creates the window that will show the actual drop indicators. They need a higher
     /// z-order, so this is actually a separate window, not parented to the main window
     virtual Core::ClassicIndicatorWindowViewInterface *
-    createClassicIndicatorWindow(Core::ClassicIndicators *) const = 0;
+    createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *) const = 0;
 
     /// @brief Creates the view that will parent the segmented drop indicators
     virtual View *
-    createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
+    createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *controller,
                                             View *parent) const = 0;
 
     /// @brief Called by the framework to create a DropArea view

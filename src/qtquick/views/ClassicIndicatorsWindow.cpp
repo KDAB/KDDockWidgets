@@ -68,7 +68,7 @@ static QString iconName(DropLocation loc, bool active)
 }
 
 
-IndicatorWindow::IndicatorWindow(Core::ClassicIndicators *classicIndicators)
+IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndicators)
     : QQuickView()
     , m_classicIndicators(classicIndicators)
 {
@@ -80,13 +80,13 @@ IndicatorWindow::IndicatorWindow(Core::ClassicIndicators *classicIndicators)
     setSource(
         QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
 
-    connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged, this,
+    connect(classicIndicators, &ClassicDropIndicatorOverlay::indicatorsVisibleChanged, this,
             &IndicatorWindow::indicatorsVisibleChanged);
 
-    connect(classicIndicators, &ClassicIndicators::hoveredGroupRectChanged, this,
+    connect(classicIndicators, &ClassicDropIndicatorOverlay::hoveredGroupRectChanged, this,
             &IndicatorWindow::hoveredGroupRectChanged);
 
-    connect(classicIndicators, &ClassicIndicators::currentDropLocationChanged, this,
+    connect(classicIndicators, &ClassicDropIndicatorOverlay::currentDropLocationChanged, this,
             &IndicatorWindow::currentDropLocationChanged);
 
     // Two workarounds for two unrelated bugs:
@@ -151,7 +151,7 @@ QString IndicatorWindow::iconName(int loc, bool active) const
     return KDDockWidgets::iconName(DropLocation(loc), active);
 }
 
-ClassicIndicators *IndicatorWindow::classicIndicators() const
+ClassicDropIndicatorOverlay *IndicatorWindow::classicIndicators() const
 {
     return m_classicIndicators;
 }

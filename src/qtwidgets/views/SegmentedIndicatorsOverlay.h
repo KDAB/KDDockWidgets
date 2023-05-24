@@ -16,18 +16,18 @@
 namespace KDDockWidgets {
 
 namespace Core {
-class SegmentedIndicators;
+class SegmentedDropIndicatorOverlay;
 }
 
 namespace QtWidgets {
 
-class DOCKS_EXPORT SegmentedIndicatorsOverlay : public View<QWidget>
+class DOCKS_EXPORT SegmentedDropIndicatorOverlay : public View<QWidget>
 {
     Q_OBJECT
 public:
-    explicit SegmentedIndicatorsOverlay(Core::SegmentedIndicators *controller,
-                                        QWidget *parent = nullptr);
-    ~SegmentedIndicatorsOverlay() override;
+    explicit SegmentedDropIndicatorOverlay(Core::SegmentedDropIndicatorOverlay *controller,
+                                           QWidget *parent = nullptr);
+    ~SegmentedDropIndicatorOverlay() override;
 
     static QColor s_segmentPenColor;
     static QColor s_segmentBrushColor;
@@ -39,7 +39,7 @@ protected:
 private:
     void drawSegments(QPainter *p);
     void drawSegment(QPainter *p, const QPolygon &segment);
-    Core::SegmentedIndicators *const m_controller;
+    Core::SegmentedDropIndicatorOverlay *const m_controller;
 };
 
 }

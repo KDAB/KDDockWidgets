@@ -121,14 +121,14 @@ Core::View *ViewFactory::createMDILayout(Core::MDILayout *, Core::View *) const
 }
 
 Core::View *
-ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *,
+ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *,
                                                      Core::View *) const
 {
     return {};
 }
 
 Core::ClassicIndicatorWindowViewInterface *
-ViewFactory::createClassicIndicatorWindow(Core::ClassicIndicators *) const
+ViewFactory::createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *) const
 {
     return {};
 }

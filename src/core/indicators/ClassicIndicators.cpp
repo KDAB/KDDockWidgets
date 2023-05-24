@@ -27,7 +27,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 static Core::ClassicIndicatorWindowViewInterface *
-createIndicatorWindow(ClassicIndicators *classicIndicators)
+createIndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators)
 {
     auto window = Config::self().viewFactory()->createClassicIndicatorWindow(classicIndicators);
     window->setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));
@@ -35,7 +35,7 @@ createIndicatorWindow(ClassicIndicators *classicIndicators)
     return window;
 }
 
-ClassicIndicators::ClassicIndicators(Core::DropArea *dropArea)
+ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(Core::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea) // Is parented on the drop-area, not a toplevel.
     , m_rubberBand(Config::self().viewFactory()->createRubberBand(
           rubberBandIsTopLevel() ? nullptr : dropArea->view())) // rubber band is parented on the drop area
@@ -45,28 +45,28 @@ ClassicIndicators::ClassicIndicators(Core::DropArea *dropArea)
         m_rubberBand->setWindowOpacity(0.5);
 }
 
-ClassicIndicators::~ClassicIndicators()
+ClassicDropIndicatorOverlay::~ClassicDropIndicatorOverlay()
 {
     delete m_indicatorWindow;
 }
 
-DropLocation ClassicIndicators::hover_impl(QPoint globalPos)
+DropLocation ClassicDropIndicatorOverlay::hover_impl(QPoint globalPos)
 {
     return m_indicatorWindow->hover(globalPos);
 }
 
-QPoint ClassicIndicators::posForIndicator(DropLocation loc) const
+QPoint ClassicDropIndicatorOverlay::posForIndicator(DropLocation loc) const
 {
     return m_indicatorWindow->posForIndicator(loc);
 }
 
-bool ClassicIndicators::onResize(QSize)
+bool ClassicDropIndicatorOverlay::onResize(QSize)
 {
     m_indicatorWindow->resize(window()->size());
     return false;
 }
 
-void ClassicIndicators::updateVisibility()
+void ClassicDropIndicatorOverlay::updateVisibility()
 {
     if (isHovered()) {
         m_indicatorWindow->updatePositions();
@@ -81,7 +81,7 @@ void ClassicIndicators::updateVisibility()
     Q_EMIT indicatorsVisibleChanged();
 }
 
-void ClassicIndicators::raiseIndicators()
+void ClassicDropIndicatorOverlay::raiseIndicators()
 {
     m_indicatorWindow->raise();
 }
@@ -110,7 +110,7 @@ KDDockWidgets::Location locationToMultisplitterLocation(DropLocation location)
     }
 }
 
-void ClassicIndicators::setDropLocation(DropLocation location)
+void ClassicDropIndicatorOverlay::setDropLocation(DropLocation location)
 {
     setCurrentDropLocation(location);
 
@@ -170,7 +170,7 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     }
 }
 
-void ClassicIndicators::updateWindowPosition()
+void ClassicDropIndicatorOverlay::updateWindowPosition()
 {
     QRect rect = this->rect();
     if (m_indicatorWindow->isWindow()) {
@@ -181,12 +181,12 @@ void ClassicIndicators::updateWindowPosition()
     m_indicatorWindow->setGeometry(rect);
 }
 
-bool ClassicIndicators::rubberBandIsTopLevel() const
+bool ClassicDropIndicatorOverlay::rubberBandIsTopLevel() const
 {
     return Config::self().internalFlags() & Config::InternalFlag_TopLevelIndicatorRubberBand;
 }
 
-QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
+QRect ClassicDropIndicatorOverlay::geometryForRubberband(QRect localRect) const
 {
     if (!rubberBandIsTopLevel())
         return localRect;

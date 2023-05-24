@@ -185,14 +185,14 @@ Core::View *ViewFactory::createMDILayout(Core::MDILayout *controller, Core::View
 }
 
 Core::View *ViewFactory::createSegmentedDropIndicatorOverlayView(
-    Core::SegmentedIndicators *controller, Core::View *parent) const
+    Core::SegmentedDropIndicatorOverlay *controller, Core::View *parent) const
 {
-    return new QtWidgets::SegmentedIndicatorsOverlay(controller,
-                                                     QtCommon::View_qt::asQWidget(parent));
+    return new QtWidgets::SegmentedDropIndicatorOverlay(controller,
+                                                        QtCommon::View_qt::asQWidget(parent));
 }
 
 Core::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
-    Core::ClassicIndicators *classicIndicators) const
+    Core::ClassicDropIndicatorOverlay *classicIndicators) const
 {
     return new QtWidgets::IndicatorWindow(classicIndicators);
 }

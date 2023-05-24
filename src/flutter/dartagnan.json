@@ -25,7 +25,7 @@
                 "KDDockWidgets::Core::FloatingWindow",
                 "KDDockWidgets::Core::MainWindow",
                 "KDDockWidgets::Core::DelayedCall",
-                "KDDockWidgets::Core::ClassicIndicators",
+                "KDDockWidgets::Core::ClassicDropIndicatorOverlay",
                 "KDDockWidgets::Core::ClassicIndicatorWindowViewInterface"
             ]
         },

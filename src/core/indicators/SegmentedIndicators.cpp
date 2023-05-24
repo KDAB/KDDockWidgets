@@ -17,13 +17,13 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-int SegmentedIndicators::s_segmentGirth = 50;
-int SegmentedIndicators::s_segmentPenWidth = 4;
-qreal SegmentedIndicators::s_draggedWindowOpacity = 0.7;
-int SegmentedIndicators::s_centralIndicatorMaxWidth = 300;
-int SegmentedIndicators::s_centralIndicatorMaxHeight = 160;
+int SegmentedDropIndicatorOverlay::s_segmentGirth = 50;
+int SegmentedDropIndicatorOverlay::s_segmentPenWidth = 4;
+qreal SegmentedDropIndicatorOverlay::s_draggedWindowOpacity = 0.7;
+int SegmentedDropIndicatorOverlay::s_centralIndicatorMaxWidth = 300;
+int SegmentedDropIndicatorOverlay::s_centralIndicatorMaxHeight = 160;
 
-SegmentedIndicators::SegmentedIndicators(Core::DropArea *dropArea)
+SegmentedDropIndicatorOverlay::SegmentedDropIndicatorOverlay(Core::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea, Config::self().viewFactory()->createSegmentedDropIndicatorOverlayView(this, dropArea->view()))
 {
     // If the app didn't choose opacity then we choose a suitable default value.
@@ -35,11 +35,11 @@ SegmentedIndicators::SegmentedIndicators(Core::DropArea *dropArea)
         Config::self().setDraggedWindowOpacity(s_draggedWindowOpacity);
 }
 
-SegmentedIndicators::~SegmentedIndicators()
+SegmentedDropIndicatorOverlay::~SegmentedDropIndicatorOverlay()
 {
 }
 
-DropLocation SegmentedIndicators::hover_impl(QPoint pt)
+DropLocation SegmentedDropIndicatorOverlay::hover_impl(QPoint pt)
 {
     m_hoveredPt = view()->mapFromGlobal(pt);
     updateSegments();
@@ -48,7 +48,7 @@ DropLocation SegmentedIndicators::hover_impl(QPoint pt)
     return currentDropLocation();
 }
 
-DropLocation SegmentedIndicators::dropLocationForPos(QPoint pos) const
+DropLocation SegmentedDropIndicatorOverlay::dropLocationForPos(QPoint pos) const
 {
     for (auto it = m_segments.cbegin(), end = m_segments.cend(); it != end; ++it) {
         if (it.value().containsPoint(pos, Qt::OddEvenFill)) {
@@ -59,8 +59,8 @@ DropLocation SegmentedIndicators::dropLocationForPos(QPoint pos) const
     return DropLocation_None;
 }
 
-QHash<DropLocation, Polygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner,
-                                                                  bool useOffset) const
+QHash<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segmentsForRect(QRect r, bool inner,
+                                                                            bool useOffset) const
 {
     const int halfPenWidth = s_segmentPenWidth / 2;
 
@@ -126,7 +126,7 @@ QHash<DropLocation, Polygon> SegmentedIndicators::segmentsForRect(QRect r, bool 
     }
 }
 
-void SegmentedIndicators::updateSegments()
+void SegmentedDropIndicatorOverlay::updateSegments()
 {
     m_segments.clear();
 
@@ -153,18 +153,18 @@ void SegmentedIndicators::updateSegments()
     view()->update();
 }
 
-QPoint SegmentedIndicators::posForIndicator(DropLocation) const
+QPoint SegmentedDropIndicatorOverlay::posForIndicator(DropLocation) const
 {
     /// Doesn't apply to segmented indicators, completely different concept
     return {};
 }
 
-QPoint SegmentedIndicators::hoveredPt() const
+QPoint SegmentedDropIndicatorOverlay::hoveredPt() const
 {
     return m_hoveredPt;
 }
 
-QHash<DropLocation, Polygon> SegmentedIndicators::segments() const
+QHash<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segments() const
 {
     return m_segments;
 }

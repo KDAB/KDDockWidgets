@@ -80,8 +80,8 @@ public:
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     Core::ClassicIndicatorWindowViewInterface *
-    createClassicIndicatorWindow(Core::ClassicIndicators *) const override;
-    Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
+    createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *) const override;
+    Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *controller,
                                                         Core::View *parent) const override;
 
     static ViewFactory *self();

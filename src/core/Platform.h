@@ -29,8 +29,8 @@ namespace Core {
 class DelayedCall;
 class EventFilterInterface;
 struct CreateViewOptions;
-class ClassicIndicators;
-class SegmentedIndicators;
+class ClassicDropIndicatorOverlay;
+class SegmentedDropIndicatorOverlay;
 class ViewFactory;
 class Window;
 

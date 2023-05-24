@@ -50,14 +50,14 @@ createDropIndicatorOverlay(Core::DropArea *dropArea)
 
     switch (ViewFactory::s_dropIndicatorType) {
     case DropIndicatorType::Classic:
-        return new Core::ClassicIndicators(dropArea);
+        return new Core::ClassicDropIndicatorOverlay(dropArea);
     case DropIndicatorType::Segmented:
-        return new Core::SegmentedIndicators(dropArea);
+        return new Core::SegmentedDropIndicatorOverlay(dropArea);
     case DropIndicatorType::None:
         return new Core::NullIndicators(dropArea);
     }
 
-    return new Core::ClassicIndicators(dropArea);
+    return new Core::ClassicDropIndicatorOverlay(dropArea);
 }
 
 namespace Core {

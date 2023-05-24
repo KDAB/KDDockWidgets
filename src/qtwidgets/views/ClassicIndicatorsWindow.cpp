@@ -26,7 +26,7 @@ class Indicator : public QWidget
     Q_OBJECT
 public:
     typedef QList<Indicator *> List;
-    explicit Indicator(Core::ClassicIndicators *classicIndicators,
+    explicit Indicator(Core::ClassicDropIndicatorOverlay *classicIndicators,
                        IndicatorWindow *parent, DropLocation location);
     void paintEvent(QPaintEvent *) override;
 
@@ -36,7 +36,7 @@ public:
 
     QImage m_image;
     QImage m_imageActive;
-    Core::ClassicIndicators *const q;
+    Core::ClassicDropIndicatorOverlay *const q;
     bool m_hovered = false;
     const DropLocation m_dropLocation;
 };
@@ -126,7 +126,7 @@ QString Indicator::iconFileName(bool active) const
         : QStringLiteral(":/img/classic_indicators/opaque/%1.png").arg(name);
 }
 
-static QWidget *parentForIndicatorWindow(ClassicIndicators *classicIndicators_)
+static QWidget *parentForIndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators_)
 {
     // On Wayland it can't be a top-level, as we have no way of positioning it
 
@@ -138,7 +138,7 @@ static Qt::WindowFlags flagsForIndicatorWindow()
     return isWayland() ? Qt::Widget : (Qt::Tool | Qt::BypassWindowManagerHint);
 }
 
-IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
+IndicatorWindow::IndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators_)
     : QWidget(parentForIndicatorWindow(classicIndicators_), flagsForIndicatorWindow())
     , classicIndicators(classicIndicators_)
     , m_center(new Indicator(classicIndicators, this,
@@ -162,9 +162,9 @@ IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
 
     setAttribute(Qt::WA_TranslucentBackground);
 
-    connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged, this,
+    connect(classicIndicators, &ClassicDropIndicatorOverlay::indicatorsVisibleChanged, this,
             &IndicatorWindow::updateIndicatorVisibility);
-    connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged, this,
+    connect(classicIndicators, &ClassicDropIndicatorOverlay::indicatorsVisibleChanged, this,
             &IndicatorWindow::updateIndicatorVisibility);
 
     m_indicators << m_center << m_left << m_right << m_top << m_bottom << m_outterBottom
@@ -308,7 +308,7 @@ bool IndicatorWindow::isWindow() const
     return QWidget::isWindow();
 }
 
-Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *parent,
+Indicator::Indicator(ClassicDropIndicatorOverlay *classicIndicators, IndicatorWindow *parent,
                      DropLocation location)
     : QWidget(parent)
     , q(classicIndicators)
