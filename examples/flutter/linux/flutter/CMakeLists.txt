@@ -89,6 +89,11 @@ add_dependencies(flutter flutter_assemble)
 # _phony_ is a non-existent file to force this command to run every time,
 # since currently there's no way to get a full input/output list from the
 # flutter tool.
+
+if(NOT FLUTTER_TARGET_PLATFORM)
+    set(FLUTTER_TARGET_PLATFORM linux-x64)
+endif()
+
 add_custom_command(
     OUTPUT ${FLUTTER_LIBRARY} ${FLUTTER_LIBRARY_HEADERS} ${CMAKE_CURRENT_BINARY_DIR}/_phony_
     COMMAND ${CMAKE_COMMAND} -E env ${FLUTTER_TOOL_ENVIRONMENT}

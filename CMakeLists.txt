@@ -436,6 +436,10 @@ if(KDDockWidgets_EXAMPLES)
             qtwidgets_minimal PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
         )
     endif()
+
+    if(KDDW_FRONTEND_FLUTTER)
+        add_subdirectory(examples/flutter/linux)
+    endif()
 endif()
 
 if(KDDockWidgets_TESTS)
