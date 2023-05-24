@@ -62,7 +62,7 @@
 #include "../core/MainWindow.h"
 #include "../core/FloatingWindow.h"
 #include "../core/DropIndicatorOverlay.h"
-#include "../core/indicators/ClassicIndicators.h"
+#include "../core/indicators/ClassicDropIndicatorOverlay.h"
 #include "../core/layouting/Item_p.h"
 #include "../core/views/ClassicIndicatorWindowViewInterface.h"
 #include "../core/DockRegistry.h"

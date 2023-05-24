@@ -17,9 +17,9 @@
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/FloatingWindow.h"
-#include "kddockwidgets/core/indicators/ClassicIndicators.h"
-#include "kddockwidgets/core/indicators/NullIndicators.h"
-#include "kddockwidgets/core/indicators/SegmentedIndicators.h"
+#include "kddockwidgets/core/indicators/ClassicDropIndicatorOverlay.h"
+#include "kddockwidgets/core/indicators/NullDropIndicatorOverlay.h"
+#include "kddockwidgets/core/indicators/SegmentedDropIndicatorOverlay.h"
 #include "kddockwidgets/core/MainWindow.h"
 
 // #include "qtwidgets/views/ClassicIndicatorsWindow.h"

@@ -18,7 +18,7 @@ namespace KDDockWidgets {
 class Indicator;
 
 namespace Core {
-class ClassicIndicators;
+class ClassicDropIndicatorOverlay;
 }
 
 namespace flutter {
@@ -26,7 +26,7 @@ namespace flutter {
 class IndicatorWindow : public Core::ClassicIndicatorWindowViewInterface
 {
 public:
-    explicit IndicatorWindow(Core::ClassicIndicators *classicIndicators);
+    explicit IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndicators);
 
     DropLocation hover(QPoint globalPos) override;
     void updatePositions() override;
@@ -39,7 +39,7 @@ public:
     void setObjectName(const QString &) override;
 
 private:
-    Core::ClassicIndicators *const classicIndicators;
+    Core::ClassicDropIndicatorOverlay *const classicIndicators;
 };
 
 }

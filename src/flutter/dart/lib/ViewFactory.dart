@@ -44,7 +44,7 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   @override
   KDDWBindingsCore.ClassicIndicatorWindowViewInterface
       createClassicIndicatorWindow(
-          KDDWBindingsCore.ClassicIndicators? indicators) {
+          KDDWBindingsCore.ClassicDropIndicatorOverlay? indicators) {
     return KDDWBindingsFlutter.IndicatorWindow(indicators);
   }
 

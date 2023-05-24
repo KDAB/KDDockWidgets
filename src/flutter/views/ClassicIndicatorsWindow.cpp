@@ -10,7 +10,7 @@
 */
 
 #include "ClassicIndicatorsWindow.h"
-#include "kddockwidgets/core/indicators/ClassicIndicators.h"
+#include "kddockwidgets/core/indicators/ClassicDropIndicatorOverlay.h"
 #include "kddockwidgets/core/Group.h"
 #include "View.h"
 #include "core/Utils_p.h"
@@ -19,7 +19,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::flutter;
 
-IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
+IndicatorWindow::IndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators_)
     : classicIndicators(classicIndicators_)
 {
 }
