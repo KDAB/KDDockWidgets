@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'dart:developer';
 import 'package:KDDockWidgets/DockWidget.dart';
 import 'package:KDDockWidgets/DropArea.dart';
 import 'package:KDDockWidgets/MainWindow.dart';
@@ -26,7 +27,10 @@ import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
 import 'package:kddockwidgets_flutter_example/MyMenuBar.dart';
 import 'package:kddockwidgets_flutter_example/MyWidget.dart';
 
-void main() {
+void main(List<String> args) {
+  // Just for debug
+  if (args.contains("--wait")) debugger();
+
   KDDWBindings.initFrontend(KDDWBindings.KDDockWidgets_FrontendType.Flutter);
 
   runApp(const MyApp());
