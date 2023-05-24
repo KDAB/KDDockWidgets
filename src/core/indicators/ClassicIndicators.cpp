@@ -38,8 +38,8 @@ createIndicatorWindow(ClassicIndicators *classicIndicators)
 ClassicIndicators::ClassicIndicators(Core::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea) // Is parented on the drop-area, not a toplevel.
     , m_rubberBand(Config::self().viewFactory()->createRubberBand(
-          rubberBandIsTopLevel() ? nullptr : dropArea->view()))
-    , m_indicatorWindow(createIndicatorWindow(this))
+          rubberBandIsTopLevel() ? nullptr : dropArea->view())) // rubber band is parented on the drop area
+    , m_indicatorWindow(createIndicatorWindow(this)) // a real top-level, transparent window, to hold our indicators
 {
     if (rubberBandIsTopLevel())
         m_rubberBand->setWindowOpacity(0.5);

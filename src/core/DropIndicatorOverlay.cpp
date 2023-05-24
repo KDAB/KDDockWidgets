@@ -12,6 +12,7 @@
 #include "DropIndicatorOverlay.h"
 #include "Config.h"
 #include "Platform.h"
+#include "ViewFactory.h"
 
 #include "core/DropArea.h"
 #include "core/Group.h"
@@ -22,17 +23,16 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-DropIndicatorOverlay::DropIndicatorOverlay(Core::DropArea *dropArea)
-    : Controller(ViewType::DropAreaIndicatorOverlay,
-                 Platform::instance()->createView(this, dropArea->view()))
+DropIndicatorOverlay::DropIndicatorOverlay(DropArea *dropArea, View *view)
+    : Controller(ViewType::DropAreaIndicatorOverlay, view)
     , m_dropArea(dropArea)
 {
     setVisible(false);
-    view()->setObjectName(QStringLiteral("DropIndicatorOverlay"));
+    view->setObjectName(QStringLiteral("DropIndicatorOverlay"));
 
     // Set transparent for mouse events so that topLevel->childAt() never returns the drop indicator
     // overlay
-    view()->setAttribute(Qt::WA_TransparentForMouseEvents);
+    view->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     connect(DockRegistry::self(), &DockRegistry::dropIndicatorsInhibitedChanged, this,
             [this](bool inhibited) {
@@ -46,6 +46,14 @@ DropIndicatorOverlay::DropIndicatorOverlay(Core::DropArea *dropArea)
                 }
             });
 }
+
+
+DropIndicatorOverlay::DropIndicatorOverlay(Core::DropArea *dropArea)
+    : DropIndicatorOverlay(dropArea, Platform::instance()->createView(this, dropArea->view()))
+{
+}
+
+DropIndicatorOverlay::~DropIndicatorOverlay() = default;
 
 void DropIndicatorOverlay::setWindowBeingDragged(bool is)
 {
@@ -219,4 +227,13 @@ void DropIndicatorOverlay::removeHover()
 {
     setWindowBeingDragged(false);
     setCurrentDropLocation(DropLocation_None);
+}
+
+Group *DropIndicatorOverlay::hoveredFrame() const
+{
+    return m_hoveredFrame;
+}
+
+void DropIndicatorOverlay::updateVisibility()
+{
 }

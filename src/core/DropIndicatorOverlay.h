@@ -25,20 +25,39 @@ namespace Core {
 class DropArea;
 class Group;
 
+/// The DropIndicatorOverlay controller has drop indicator state
+///
+/// Such as:
+///   - Current hovered tab group
+///   - Current window being dragged
+///   - Current visible drop location
+/// Each DropArea has an associated DropIndicatorOverlay. Hence, each main window, each floating window
+/// has one DropIndicatorOverlay.
+
 class DOCKS_EXPORT DropIndicatorOverlay : public Controller
 {
     Q_OBJECT
 public:
+    /// Constructor
+    /// This overload takes the associated view (i.e QWidget where indicators are drawn).
+    /// This overload is used by the Segmented Indicators type
+    explicit DropIndicatorOverlay(DropArea *dropArea, View *view);
+
+    /// Constructor
+    /// Used by the Classic Indicators, creates a dummy/unused view internally.
+    /// Classic Indicators is a special case, as it paints the indicators on a separate top-level window
+    /// not on the main window itself
     explicit DropIndicatorOverlay(DropArea *dropArea);
+
+    ~DropIndicatorOverlay() override;
+
     void setHoveredFrame(Group *);
     void setWindowBeingDragged(bool);
     QRect hoveredFrameRect() const;
     bool isHovered() const;
     DropLocation currentDropLocation() const;
-    Group *hoveredFrame() const
-    {
-        return m_hoveredFrame;
-    }
+    Group *hoveredFrame() const;
+
     void setCurrentDropLocation(DropLocation location);
 
     KDDockWidgets::DropLocation hover(QPoint globalPos);
@@ -69,9 +88,7 @@ private:
 protected:
     virtual DropLocation hover_impl(QPoint globalPos) = 0;
     virtual void onHoveredFrameChanged(Group *);
-    virtual void updateVisibility()
-    {
-    }
+    virtual void updateVisibility();
 
     Group *m_hoveredFrame = nullptr;
     DropArea *const m_dropArea;
