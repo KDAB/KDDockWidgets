@@ -438,7 +438,21 @@ if(KDDockWidgets_EXAMPLES)
     endif()
 
     if(KDDW_FRONTEND_FLUTTER)
-        add_subdirectory(examples/flutter/linux)
+        add_custom_target(
+            kddw-flutter-example ALL
+            DEPENDS ${CMAKE_SOURCE_DIR}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example
+            COMMENT "Building flutter example"
+        )
+
+        add_custom_command(
+            OUTPUT ${CMAKE_SOURCE_DIR}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example
+            COMMAND flutter build linux --debug
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/examples/flutter
+            DEPENDS ${CMAKE_SOURCE_DIR}/examples/flutter/lib/main.dart
+                    ${CMAKE_SOURCE_DIR}/examples/flutter/lib/MyWidget.dart
+                    ${CMAKE_SOURCE_DIR}/examples/flutter/lib/MyMenuBar.dart
+            COMMENT "Building flutter example"
+        )
     endif()
 endif()
 
