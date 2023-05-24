@@ -204,7 +204,7 @@ public:
 
     void raise() override
     {
-        Base::window()->raise();
+        Base::raise();
     }
 
     bool isRootView() const override
