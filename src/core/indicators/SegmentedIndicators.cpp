@@ -12,6 +12,7 @@
 #include "SegmentedIndicators.h"
 #include "core/DropArea.h"
 #include "Config.h"
+#include "core/ViewFactory.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -23,7 +24,7 @@ int SegmentedIndicators::s_centralIndicatorMaxWidth = 300;
 int SegmentedIndicators::s_centralIndicatorMaxHeight = 160;
 
 SegmentedIndicators::SegmentedIndicators(Core::DropArea *dropArea)
-    : DropIndicatorOverlay(dropArea)
+    : DropIndicatorOverlay(dropArea, Config::self().viewFactory()->createSegmentedDropIndicatorOverlayView(this, dropArea->view()))
 {
     // If the app didn't choose opacity then we choose a suitable default value.
     // ClassicIndicators works fine with an opaque dragged window because the indicators have higher

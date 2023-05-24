@@ -29,9 +29,7 @@ SegmentedIndicatorsOverlay::SegmentedIndicatorsOverlay(
 {
 }
 
-SegmentedIndicatorsOverlay::~SegmentedIndicatorsOverlay()
-{
-}
+SegmentedIndicatorsOverlay::~SegmentedIndicatorsOverlay() = default;
 
 void SegmentedIndicatorsOverlay::paintEvent(QPaintEvent *)
 {
