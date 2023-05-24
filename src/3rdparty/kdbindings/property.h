@@ -104,6 +104,14 @@ struct equal_to {
     }
 };
 
+// This forwrad declaration is required so that
+// Property can declare PropertyNode as a friend
+// class.
+namespace Private {
+    template<typename PropertyType>
+    class PropertyNode;
+}
+
 /**
  * @brief A property represents a value that can be part of or the result of data binding.
  *
@@ -163,10 +171,11 @@ public:
     /**
      * @brief Properties are movable.
      *
-     * This will emit the moved() Signal of the property that is moving as well as
-     * the property being moved into.
-     * All data bindings that depend on this Property will update their references
-     * to the newly move-constructed Property using this Signal.
+     * All connections that were made to the signals of the original Property
+     * are moved over to the newly-constructed Property.
+     *
+     * All data bindings that depend on the moved-from Property will update their references
+     * to the newly move-constructed Property.
      */
     Property(Property<T> &&other) noexcept(std::is_nothrow_move_constructible<T>::value)
         : m_value(std::move(other.m_value))
@@ -175,7 +184,7 @@ public:
         , m_destroyed(std::move(other.m_destroyed))
         , m_updater(std::move(other.m_updater))
     {
-        // We do not move the m_moved signal so that objects interested in the moved-into
+        // We do not move the m_moved signal yet so that objects interested in the moved-into
         // property can recreate any connections they need.
 
         // If we have an updater, let it know how to update our internal value
@@ -196,7 +205,7 @@ public:
      */
     Property &operator=(Property<T> &&other) noexcept(std::is_nothrow_move_assignable<T>::value)
     {
-        // We do not move the m_moved signal so that objects interested in the moved-into
+        // We do not move the m_moved signal yet so that objects interested in the moved-into
         // property can recreate any connections they need.
         m_value = std::move(other.m_value);
         m_valueAboutToChange = std::move(other.m_valueAboutToChange);
@@ -287,18 +296,6 @@ public:
     Signal<const T &> &valueChanged() const { return m_valueChanged; }
 
     /**
-     * Returns a Signal that will be emitted when the Property is moved.
-     *
-     * The emitted value is a reference to the newly constructed Property that
-     * this Property was moved into.
-     *
-     * The Signal will also be emitted if another Property is moved into
-     * this property.
-     */
-    Signal<Property<T> &> &moved() { return m_moved; }
-    Signal<Property<T> &> const &moved() const { return m_moved; }
-
-    /**
      * Returns a Signal that will be emitted when this Property is destructed.
      */
     Signal<> &destroyed() const { return m_destroyed; }
@@ -373,7 +370,19 @@ private:
     // not change, not that nobody can listen to it anymore.
     mutable Signal<const T &, const T &> m_valueAboutToChange;
     mutable Signal<const T &> m_valueChanged; // By const ref so we can emit the signal for move-only types of T e.g. std::unique_ptr<int>
+
+    // The PropertyNode needs to be a friend class of the Property, as it needs
+    // access to the m_moved Signal.
+    // The decision to make this Signal private was made after the suggestion by
+    // @jm4R who reported issues with the move constructors noexcept guarantee.
+    // (https://github.com/KDAB/KDBindings/issues/24)
+    // Ideally we would like to figure out a way to remove the moved signal entirely
+    // at some point. However currently it is still needed for Property bindings to
+    // keep track of moved Properties.
+    template<typename PropertyType>
+    friend class Private::PropertyNode;
     Signal<Property<T> &> m_moved;
+
     mutable Signal<> m_destroyed;
     std::unique_ptr<PropertyUpdater<T>> m_updater;
 };

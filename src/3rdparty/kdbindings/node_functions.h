@@ -53,9 +53,9 @@ struct any_bindables<HEAD, Ts...> : std::integral_constant<
  */
 #define KDBINDINGS_DECLARE_FUNCTION(NAME, FUNC)                                                                                                                                                       \
     template<typename... Ts>                                                                                                                                                                          \
-    inline auto NAME(Ts &&...args)->std::enable_if_t<KDBindings::Private::any_bindables<Ts...>::value, KDBindings::Private::Node<KDBindings::Private::operator_node_result_t<decltype(FUNC), Ts...>>> \
+    inline auto NAME(Ts &&...args)->std::enable_if_t<::KDBindings::Private::any_bindables<Ts...>::value, ::KDBindings::Private::Node<::KDBindings::Private::operator_node_result_t<decltype(FUNC), Ts...>>> \
     {                                                                                                                                                                                                 \
-        return Private::makeNode(FUNC, std::forward<Ts>(args)...);                                                                                                                                    \
+        return ::KDBindings::Private::makeNode(FUNC, std::forward<Ts>(args)...); \
     }
 
 /**

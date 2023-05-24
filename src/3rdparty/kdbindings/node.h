@@ -100,8 +100,8 @@ template<typename ResultType>
 class Node
 {
 public:
-    Node(std::unique_ptr<NodeInterface<ResultType>> &&interface)
-        : m_interface(std::move(interface))
+    Node(std::unique_ptr<NodeInterface<ResultType>> &&nodeInterface)
+        : m_interface(std::move(nodeInterface))
     {
     }
 
@@ -210,7 +210,7 @@ private:
     {
         m_property = &property;
         m_valueChangedHandle = m_property->valueChanged().connect(&PropertyNode<PropertyType>::markDirty, this);
-        m_movedHandle = m_property->moved().connect(&PropertyNode<PropertyType>::propertyMoved, this);
+        m_movedHandle = m_property->m_moved.connect(&PropertyNode<PropertyType>::propertyMoved, this);
         m_destroyedHandle = m_property->destroyed().connect(&PropertyNode<PropertyType>::propertyDestroyed, this);
     }
 

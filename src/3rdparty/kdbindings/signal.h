@@ -542,13 +542,19 @@ public:
 
     /** A ScopedConnection can be move constructed */
     ScopedConnection(ScopedConnection &&) = default;
-    /** A ScopedConnection can be move assigned */
-    ScopedConnection &operator=(ScopedConnection &&) = default;
 
     /** A ScopedConnection cannot be copied */
     ScopedConnection(const ScopedConnection &) = delete;
     /** A ScopedConnection cannot be copied */
     ScopedConnection &operator=(const ScopedConnection &) = delete;
+
+    /** A ScopedConnection can be move assigned */
+    ScopedConnection &operator=(ScopedConnection &&other)
+    {
+        m_connection.disconnect();
+        m_connection = std::move(other.m_connection);
+        return *this;
+    }
 
     /**
      * A ScopedConnection can be constructed from a ConnectionHandle
@@ -563,9 +569,7 @@ public:
      */
     ScopedConnection &operator=(ConnectionHandle &&h)
     {
-        m_connection.disconnect();
-        m_connection = std::move(h);
-        return *this;
+        return *this = ScopedConnection(std::move(h));
     }
 
     /**
