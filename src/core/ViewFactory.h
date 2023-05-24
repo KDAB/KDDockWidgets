@@ -113,7 +113,7 @@ public:
     /// @brief Creates the view that will parent the segmented drop indicators
     virtual View *
     createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
-                                            View *parent = nullptr) const = 0;
+                                            View *parent) const = 0;
 
     /// @brief Called by the framework to create a DropArea view
     virtual View *createDropArea(Core::DropArea *, View *parent) const = 0;

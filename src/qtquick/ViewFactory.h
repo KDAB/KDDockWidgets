@@ -82,7 +82,7 @@ public:
     Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicIndicators *) const override;
     Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedIndicators *controller,
-                                                        Core::View *parent = nullptr) const override;
+                                                        Core::View *parent) const override;
 
     static ViewFactory *self();
 
