@@ -23,7 +23,7 @@
 #include "kddockwidgets/core/MainWindow.h"
 
 // #include "qtwidgets/views/ClassicIndicatorsWindow.h"
-// #include "qtwidgets/views/SegmentedIndicatorsOverlay.h"
+// #include "qtwidgets/views/SegmentedDropIndicatorOverlay.h"
 // #include "qtwidgets/views/FloatingWindow.h"
 // #include "qtwidgets/views/DockWidget.h"
 // #include "qtwidgets/views/DropArea.h"
