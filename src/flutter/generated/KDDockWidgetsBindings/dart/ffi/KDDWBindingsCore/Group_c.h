@@ -84,7 +84,7 @@ public:
     void isMDIChanged();
     bool isMDIWrapper() const;
     bool isOverlayed() const;
-    bool isTheOnlyFrame() const;
+    bool isTheOnlyGroup() const;
     KDDockWidgets::Core::Item *layoutItem() const;
     KDDockWidgets::Core::MainWindow *mainWindow() const;
     KDDockWidgets::Core::DockWidget *mdiDockWidgetWrapper() const;
@@ -223,8 +223,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__isMDIChanged(voi
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Core::Group::isOverlayed() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isOverlayed(void *thisObj);
-// KDDockWidgets::Core::Group::isTheOnlyFrame() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isTheOnlyFrame(void *thisObj);
+// KDDockWidgets::Core::Group::isTheOnlyGroup() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__isTheOnlyGroup(void *thisObj);
 // KDDockWidgets::Core::Group::layoutItem() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__layoutItem(void *thisObj);
 // KDDockWidgets::Core::Group::mainWindow() const

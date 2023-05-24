@@ -355,7 +355,7 @@ void TitleBar::onCloseClicked()
                 qWarning() << Q_FUNC_INFO << "Frame with no dock widgets";
             }
         } else {
-            if (m_group->isTheOnlyFrame() && m_group->isInFloatingWindow()) {
+            if (m_group->isTheOnlyGroup() && m_group->isInFloatingWindow()) {
                 m_group->view()->closeRootView();
             } else {
                 m_group->view()->close();
@@ -507,7 +507,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     }
 
     if (FloatingWindow *fw = floatingWindow()) { // Already floating
-        if (m_group->isTheOnlyFrame()) { // We don't detach. This one drags the entire window
+        if (m_group->isTheOnlyGroup()) { // We don't detach. This one drags the entire window
                                          // instead.
             qCDebug(hovering) << "TitleBar::makeWindow no detach needed";
             return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));

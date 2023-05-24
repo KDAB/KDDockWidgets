@@ -64,8 +64,8 @@ Item {
         id: innerIndicators
         objectName: "innerIndicators"
 
-        x: _window.hoveredFrameRect.x + (_window.hoveredFrameRect.width / 2)
-        y: _window.hoveredFrameRect.y + (_window.hoveredFrameRect.height / 2)
+        x: _window.hoveredGroupRect.x + (_window.hoveredGroupRect.width / 2)
+        y: _window.hoveredGroupRect.y + (_window.hoveredGroupRect.height / 2)
 
         width: (centerIndicator * 3) + (2 * innerMargin)
         height: width

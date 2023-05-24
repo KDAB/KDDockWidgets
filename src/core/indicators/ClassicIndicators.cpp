@@ -121,7 +121,7 @@ void ClassicIndicators::setDropLocation(DropLocation location)
 
     if (location == DropLocation_Center) {
         m_rubberBand->setGeometry(
-            geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->view()->geometry() : rect()));
+            geometryForRubberband(m_hoveredGroup ? m_hoveredGroup->view()->geometry() : rect()));
         m_rubberBand->setVisible(true);
         if (rubberBandIsTopLevel()) {
             m_rubberBand->raise();
@@ -139,14 +139,14 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     case DropLocation_Top:
     case DropLocation_Right:
     case DropLocation_Bottom:
-        if (!m_hoveredFrame) {
+        if (!m_hoveredGroup) {
             qWarning() << "ClassicIndicators::setCurrentDropLocation: group is null. location="
                        << location << "; isHovered=" << isHovered()
                        << "; dropArea->widgets=" << m_dropArea->items();
             Q_ASSERT(false);
             return;
         }
-        relativeToFrame = m_hoveredFrame;
+        relativeToFrame = m_hoveredGroup;
         break;
     case DropLocation_OutterLeft:
     case DropLocation_OutterTop:

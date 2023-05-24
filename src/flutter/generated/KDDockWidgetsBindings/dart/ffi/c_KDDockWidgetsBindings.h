@@ -3117,8 +3117,8 @@ void c_KDDockWidgets__Core__Group__isMDIChanged(void *thisObj);
 bool c_KDDockWidgets__Core__Group__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Core::Group::isOverlayed() const
 bool c_KDDockWidgets__Core__Group__isOverlayed(void *thisObj);
-// KDDockWidgets::Core::Group::isTheOnlyFrame() const
-bool c_KDDockWidgets__Core__Group__isTheOnlyFrame(void *thisObj);
+// KDDockWidgets::Core::Group::isTheOnlyGroup() const
+bool c_KDDockWidgets__Core__Group__isTheOnlyGroup(void *thisObj);
 // KDDockWidgets::Core::Group::layoutItem() const
 void *c_KDDockWidgets__Core__Group__layoutItem(void *thisObj);
 // KDDockWidgets::Core::Group::mainWindow() const
@@ -3267,28 +3267,28 @@ bool c_KDDockWidgets__Core__DropIndicatorOverlay__dropIndicatorVisible_DropLocat
 int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::DropIndicatorOverlay::hover_impl(QPoint globalPos)
 int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_impl_QPoint(void *thisObj, void *globalPos_);
-// KDDockWidgets::Core::DropIndicatorOverlay::hoveredFrame() const
-void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrame(void *thisObj);
-// KDDockWidgets::Core::DropIndicatorOverlay::hoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameChanged_Group(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::DropIndicatorOverlay::hoveredFrameRect() const
-void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameRect(void *thisObj);
-// KDDockWidgets::Core::DropIndicatorOverlay::hoveredFrameRectChanged()
-void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameRectChanged(void *thisObj);
+// KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroup() const
+void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroup(void *thisObj);
+// KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
+void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupChanged_Group(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupRect() const
+void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRect(void *thisObj);
+// KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupRectChanged()
+void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRectChanged(void *thisObj);
 // KDDockWidgets::Core::DropIndicatorOverlay::isHovered() const
 bool c_KDDockWidgets__Core__DropIndicatorOverlay__isHovered(void *thisObj);
 // KDDockWidgets::Core::DropIndicatorOverlay::multisplitterLocationFor(KDDockWidgets::DropLocation arg__1)
 int c_static_KDDockWidgets__Core__DropIndicatorOverlay__multisplitterLocationFor_DropLocation(int arg__1);
-// KDDockWidgets::Core::DropIndicatorOverlay::onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredFrameChanged_Group(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::DropIndicatorOverlay::onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
+void c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredGroupChanged_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::DropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::DropIndicatorOverlay::removeHover()
 void c_KDDockWidgets__Core__DropIndicatorOverlay__removeHover(void *thisObj);
 // KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation location)
 void c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int location);
-// KDDockWidgets::Core::DropIndicatorOverlay::setHoveredFrame(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredFrame_Group(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::DropIndicatorOverlay::setHoveredGroup(KDDockWidgets::Core::Group * arg__1)
+void c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredGroup_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::DropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__DropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::DropIndicatorOverlay::setWindowBeingDragged(bool arg__1)
@@ -3431,8 +3431,8 @@ bool c_KDDockWidgets__Core__ClassicIndicators__dropIndicatorVisible_DropLocation
 int c_KDDockWidgets__Core__ClassicIndicators__hover_impl_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::ClassicIndicators::indicatorsVisibleChanged()
 void c_KDDockWidgets__Core__ClassicIndicators__indicatorsVisibleChanged(void *thisObj);
-// KDDockWidgets::Core::ClassicIndicators::onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__ClassicIndicators__onHoveredFrameChanged_Group(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::ClassicIndicators::onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
+void c_KDDockWidgets__Core__ClassicIndicators__onHoveredGroupChanged_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ClassicIndicators::onResize(QSize newSize)
 bool c_KDDockWidgets__Core__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_);
 // KDDockWidgets::Core::ClassicIndicators::posForIndicator(KDDockWidgets::DropLocation arg__1) const

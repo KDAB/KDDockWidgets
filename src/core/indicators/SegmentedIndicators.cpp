@@ -140,7 +140,7 @@ void SegmentedIndicators::updateSegments()
 
     const bool hasOutter = !m_segments.isEmpty();
     const bool useOffset = hasOutter;
-    const auto innerSegments = segmentsForRect(hoveredFrameRect(), /*inner=*/true, useOffset);
+    const auto innerSegments = segmentsForRect(hoveredGroupRect(), /*inner=*/true, useOffset);
 
     for (auto indicator : { DropLocation_Left, DropLocation_Top, DropLocation_Right,
                             DropLocation_Bottom, DropLocation_Center }) {

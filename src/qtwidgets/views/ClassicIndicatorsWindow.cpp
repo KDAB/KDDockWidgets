@@ -266,9 +266,9 @@ void IndicatorWindow::updatePositions()
     m_outterTop->move(r.center().x() - halfIndicatorWidth, r.y() + OUTTER_INDICATOR_MARGIN);
     m_outterRight->move(r.x() + width() - indicatorWidth - OUTTER_INDICATOR_MARGIN,
                         r.center().y() - halfIndicatorWidth);
-    Core::Group *hoveredFrame = classicIndicators->hoveredFrame();
-    if (hoveredFrame) {
-        QRect hoveredRect = hoveredFrame->view()->geometry();
+    Core::Group *hoveredGroup = classicIndicators->hoveredGroup();
+    if (hoveredGroup) {
+        QRect hoveredRect = hoveredGroup->view()->geometry();
         m_center->move(r.topLeft() + hoveredRect.center()
                        - QPoint(halfIndicatorWidth, halfIndicatorWidth));
         m_top->move(m_center->pos() - QPoint(0, indicatorWidth + OUTTER_INDICATOR_MARGIN));

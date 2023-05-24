@@ -473,12 +473,12 @@ class Group extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Group__isOverlayed')
         .asFunction();
     return func(thisCpp) != 0;
-  } // isTheOnlyFrame() const
+  } // isTheOnlyGroup() const
 
-  bool isTheOnlyFrame() {
+  bool isTheOnlyGroup() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Group__isTheOnlyFrame')
+            'c_KDDockWidgets__Core__Group__isTheOnlyGroup')
         .asFunction();
     return func(thisCpp) != 0;
   } // layoutItem() const

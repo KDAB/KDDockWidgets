@@ -62,18 +62,18 @@ void ClassicIndicators_wrapper::indicatorsVisibleChanged()
 {
     ::KDDockWidgets::Core::ClassicIndicators::indicatorsVisibleChanged();
 }
-void ClassicIndicators_wrapper::onHoveredFrameChanged(KDDockWidgets::Core::Group *arg__1)
+void ClassicIndicators_wrapper::onHoveredGroupChanged(KDDockWidgets::Core::Group *arg__1)
 {
-    if (m_onHoveredFrameChangedCallback) {
+    if (m_onHoveredGroupChangedCallback) {
         const void *thisPtr = this;
-        m_onHoveredFrameChangedCallback(const_cast<void *>(thisPtr), arg__1);
+        m_onHoveredGroupChangedCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        ::KDDockWidgets::Core::ClassicIndicators::onHoveredFrameChanged(arg__1);
+        ::KDDockWidgets::Core::ClassicIndicators::onHoveredGroupChanged(arg__1);
     }
 }
-void ClassicIndicators_wrapper::onHoveredFrameChanged_nocallback(KDDockWidgets::Core::Group *arg__1)
+void ClassicIndicators_wrapper::onHoveredGroupChanged_nocallback(KDDockWidgets::Core::Group *arg__1)
 {
-    ::KDDockWidgets::Core::ClassicIndicators::onHoveredFrameChanged(arg__1);
+    ::KDDockWidgets::Core::ClassicIndicators::onHoveredGroupChanged(arg__1);
 }
 bool ClassicIndicators_wrapper::onResize(QSize newSize)
 {
@@ -168,11 +168,11 @@ void c_KDDockWidgets__Core__ClassicIndicators__indicatorsVisibleChanged(void *th
 {
     fromPtr(thisObj)->indicatorsVisibleChanged();
 }
-// onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__ClassicIndicators__onHoveredFrameChanged_Group(void *thisObj, void *arg__1_)
+// onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
+void c_KDDockWidgets__Core__ClassicIndicators__onHoveredGroupChanged_Group(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
-    fromWrapperPtr(thisObj)->onHoveredFrameChanged_nocallback(arg__1);
+    fromWrapperPtr(thisObj)->onHoveredGroupChanged_nocallback(arg__1);
 }
 // onResize(QSize newSize)
 bool c_KDDockWidgets__Core__ClassicIndicators__onResize_QSize(void *thisObj, void *newSize_)
@@ -222,7 +222,7 @@ void c_KDDockWidgets__Core__ClassicIndicators__registerVirtualMethodCallback(voi
         wrapper->m_hover_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicators_wrapper::Callback_hover_impl>(callback);
         break;
     case 1678:
-        wrapper->m_onHoveredFrameChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicators_wrapper::Callback_onHoveredFrameChanged>(callback);
+        wrapper->m_onHoveredGroupChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicators_wrapper::Callback_onHoveredGroupChanged>(callback);
         break;
     case 1681:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicators_wrapper::Callback_posForIndicator>(callback);

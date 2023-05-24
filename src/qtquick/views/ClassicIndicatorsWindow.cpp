@@ -83,8 +83,8 @@ IndicatorWindow::IndicatorWindow(Core::ClassicIndicators *classicIndicators)
     connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged, this,
             &IndicatorWindow::indicatorsVisibleChanged);
 
-    connect(classicIndicators, &ClassicIndicators::hoveredFrameRectChanged, this,
-            &IndicatorWindow::hoveredFrameRectChanged);
+    connect(classicIndicators, &ClassicIndicators::hoveredGroupRectChanged, this,
+            &IndicatorWindow::hoveredGroupRectChanged);
 
     connect(classicIndicators, &ClassicIndicators::currentDropLocationChanged, this,
             &IndicatorWindow::currentDropLocationChanged);
@@ -275,9 +275,9 @@ bool IndicatorWindow::tabIndicatorVisible() const
     return m_classicIndicators->dropIndicatorVisible(DropLocation_Center);
 }
 
-QRect IndicatorWindow::hoveredFrameRect() const
+QRect IndicatorWindow::hoveredGroupRect() const
 {
-    return m_classicIndicators->hoveredFrameRect();
+    return m_classicIndicators->hoveredGroupRect();
 }
 
 DropLocation IndicatorWindow::currentDropLocation() const

@@ -106,7 +106,7 @@ public:
     Icon icon() const;
     const QVector<DockWidget *> dockWidgets() const;
 
-    bool isTheOnlyFrame() const;
+    bool isTheOnlyGroup() const;
 
     ///@brief Returns whether this group is overlayed on top of the MainWindow (auto-hide feature);
     bool isOverlayed() const;

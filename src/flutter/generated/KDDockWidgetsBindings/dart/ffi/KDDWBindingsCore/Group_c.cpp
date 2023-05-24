@@ -251,9 +251,9 @@ bool Group_wrapper::isOverlayed() const
 {
     return ::KDDockWidgets::Core::Group::isOverlayed();
 }
-bool Group_wrapper::isTheOnlyFrame() const
+bool Group_wrapper::isTheOnlyGroup() const
 {
-    return ::KDDockWidgets::Core::Group::isTheOnlyFrame();
+    return ::KDDockWidgets::Core::Group::isTheOnlyGroup();
 }
 KDDockWidgets::Core::Item *Group_wrapper::layoutItem() const
 {
@@ -655,10 +655,10 @@ bool c_KDDockWidgets__Core__Group__isOverlayed(void *thisObj)
 {
     return fromPtr(thisObj)->isOverlayed();
 }
-// isTheOnlyFrame() const
-bool c_KDDockWidgets__Core__Group__isTheOnlyFrame(void *thisObj)
+// isTheOnlyGroup() const
+bool c_KDDockWidgets__Core__Group__isTheOnlyGroup(void *thisObj)
 {
-    return fromPtr(thisObj)->isTheOnlyFrame();
+    return fromPtr(thisObj)->isTheOnlyGroup();
 }
 // layoutItem() const
 void *c_KDDockWidgets__Core__Group__layoutItem(void *thisObj)

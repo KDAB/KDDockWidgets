@@ -85,16 +85,16 @@ class ClassicIndicators extends DropIndicatorOverlay {
     func(thisCpp);
   }
 
-  static void onHoveredFrameChanged_calledFromC(
+  static void onHoveredGroupChanged_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
     var dartInstance =
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ClassicIndicators;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ClassicIndicators::onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)! (${thisCpp.address})");
+          "Dart instance not found for ClassicIndicators::onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.onHoveredFrameChanged((arg__1 == null || arg__1.address == 0)
+    dartInstance.onHoveredGroupChanged((arg__1 == null || arg__1.address == 0)
         ? null
         : KDDWBindingsCore.Group.fromCppPointer(arg__1));
   } // onResize(QSize newSize)
@@ -203,7 +203,7 @@ class ClassicIndicators extends DropIndicatorOverlay {
       case 1647:
         return "c_KDDockWidgets__Core__ClassicIndicators__hover_impl_QPoint";
       case 1659:
-        return "c_KDDockWidgets__Core__ClassicIndicators__onHoveredFrameChanged_Group";
+        return "c_KDDockWidgets__Core__ClassicIndicators__onHoveredGroupChanged_Group";
       case 1662:
         return "c_KDDockWidgets__Core__ClassicIndicators__posForIndicator_DropLocation";
       case 900:
@@ -221,7 +221,7 @@ class ClassicIndicators extends DropIndicatorOverlay {
       case 1647:
         return "hover_impl";
       case 1659:
-        return "onHoveredFrameChanged";
+        return "onHoveredGroupChanged";
       case 1662:
         return "posForIndicator";
       case 900:
@@ -251,7 +251,7 @@ class ClassicIndicators extends DropIndicatorOverlay {
     registerCallback(thisCpp, callback1647, 1647);
     final callback1659 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            DropIndicatorOverlay.onHoveredFrameChanged_calledFromC);
+            DropIndicatorOverlay.onHoveredGroupChanged_calledFromC);
     registerCallback(thisCpp, callback1659, 1659);
     final callback1662 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(

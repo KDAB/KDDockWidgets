@@ -71,21 +71,21 @@ KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::hover_impl_nocallback(
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
 }
-KDDockWidgets::Core::Group *DropIndicatorOverlay_wrapper::hoveredFrame() const
+KDDockWidgets::Core::Group *DropIndicatorOverlay_wrapper::hoveredGroup() const
 {
-    return ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredFrame();
+    return ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroup();
 }
-void DropIndicatorOverlay_wrapper::hoveredFrameChanged(KDDockWidgets::Core::Group *arg__1)
+void DropIndicatorOverlay_wrapper::hoveredGroupChanged(KDDockWidgets::Core::Group *arg__1)
 {
-    ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredFrameChanged(arg__1);
+    ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupChanged(arg__1);
 }
-QRect DropIndicatorOverlay_wrapper::hoveredFrameRect() const
+QRect DropIndicatorOverlay_wrapper::hoveredGroupRect() const
 {
-    return ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredFrameRect();
+    return ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupRect();
 }
-void DropIndicatorOverlay_wrapper::hoveredFrameRectChanged()
+void DropIndicatorOverlay_wrapper::hoveredGroupRectChanged()
 {
-    ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredFrameRectChanged();
+    ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupRectChanged();
 }
 bool DropIndicatorOverlay_wrapper::isHovered() const
 {
@@ -95,18 +95,18 @@ KDDockWidgets::Location DropIndicatorOverlay_wrapper::multisplitterLocationFor(K
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::multisplitterLocationFor(arg__1);
 }
-void DropIndicatorOverlay_wrapper::onHoveredFrameChanged(KDDockWidgets::Core::Group *arg__1)
+void DropIndicatorOverlay_wrapper::onHoveredGroupChanged(KDDockWidgets::Core::Group *arg__1)
 {
-    if (m_onHoveredFrameChangedCallback) {
+    if (m_onHoveredGroupChangedCallback) {
         const void *thisPtr = this;
-        m_onHoveredFrameChangedCallback(const_cast<void *>(thisPtr), arg__1);
+        m_onHoveredGroupChangedCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        ::KDDockWidgets::Core::DropIndicatorOverlay::onHoveredFrameChanged(arg__1);
+        ::KDDockWidgets::Core::DropIndicatorOverlay::onHoveredGroupChanged(arg__1);
     }
 }
-void DropIndicatorOverlay_wrapper::onHoveredFrameChanged_nocallback(KDDockWidgets::Core::Group *arg__1)
+void DropIndicatorOverlay_wrapper::onHoveredGroupChanged_nocallback(KDDockWidgets::Core::Group *arg__1)
 {
-    ::KDDockWidgets::Core::DropIndicatorOverlay::onHoveredFrameChanged(arg__1);
+    ::KDDockWidgets::Core::DropIndicatorOverlay::onHoveredGroupChanged(arg__1);
 }
 QPoint DropIndicatorOverlay_wrapper::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 {
@@ -131,9 +131,9 @@ void DropIndicatorOverlay_wrapper::setCurrentDropLocation(KDDockWidgets::DropLoc
 {
     ::KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(location);
 }
-void DropIndicatorOverlay_wrapper::setHoveredFrame(KDDockWidgets::Core::Group *arg__1)
+void DropIndicatorOverlay_wrapper::setHoveredGroup(KDDockWidgets::Core::Group *arg__1)
 {
-    ::KDDockWidgets::Core::DropIndicatorOverlay::setHoveredFrame(arg__1);
+    ::KDDockWidgets::Core::DropIndicatorOverlay::setHoveredGroup(arg__1);
 }
 void DropIndicatorOverlay_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
@@ -222,26 +222,26 @@ int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_impl_QPoint(void *thisObj
     auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
     return fromWrapperPtr(thisObj)->hover_impl_nocallback(globalPos);
 }
-// hoveredFrame() const
-void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrame(void *thisObj)
+// hoveredGroup() const
+void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroup(void *thisObj)
 {
-    return fromPtr(thisObj)->hoveredFrame();
+    return fromPtr(thisObj)->hoveredGroup();
 }
-// hoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameChanged_Group(void *thisObj, void *arg__1_)
+// hoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
+void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupChanged_Group(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
-    fromPtr(thisObj)->hoveredFrameChanged(arg__1);
+    fromPtr(thisObj)->hoveredGroupChanged(arg__1);
 }
-// hoveredFrameRect() const
-void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameRect(void *thisObj)
+// hoveredGroupRect() const
+void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->hoveredFrameRect() };
+    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->hoveredGroupRect() };
 }
-// hoveredFrameRectChanged()
-void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameRectChanged(void *thisObj)
+// hoveredGroupRectChanged()
+void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRectChanged(void *thisObj)
 {
-    fromPtr(thisObj)->hoveredFrameRectChanged();
+    fromPtr(thisObj)->hoveredGroupRectChanged();
 }
 // isHovered() const
 bool c_KDDockWidgets__Core__DropIndicatorOverlay__isHovered(void *thisObj)
@@ -253,11 +253,11 @@ int c_static_KDDockWidgets__Core__DropIndicatorOverlay__multisplitterLocationFor
 {
     return KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::multisplitterLocationFor(static_cast<KDDockWidgets::DropLocation>(arg__1));
 }
-// onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredFrameChanged_Group(void *thisObj, void *arg__1_)
+// onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
+void c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredGroupChanged_Group(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
-    fromWrapperPtr(thisObj)->onHoveredFrameChanged_nocallback(arg__1);
+    fromWrapperPtr(thisObj)->onHoveredGroupChanged_nocallback(arg__1);
 }
 // posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1)
@@ -274,11 +274,11 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLoc
 {
     fromPtr(thisObj)->setCurrentDropLocation(static_cast<KDDockWidgets::DropLocation>(location));
 }
-// setHoveredFrame(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredFrame_Group(void *thisObj, void *arg__1_)
+// setHoveredGroup(KDDockWidgets::Core::Group * arg__1)
+void c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredGroup_Group(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
-    fromPtr(thisObj)->setHoveredFrame(arg__1);
+    fromPtr(thisObj)->setHoveredGroup(arg__1);
 }
 // setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__DropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_)
@@ -316,7 +316,7 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__registerVirtualMethodCallback(
         wrapper->m_hover_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_hover_impl>(callback);
         break;
     case 1678:
-        wrapper->m_onHoveredFrameChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_onHoveredFrameChanged>(callback);
+        wrapper->m_onHoveredGroupChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_onHoveredGroupChanged>(callback);
         break;
     case 1681:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_posForIndicator>(callback);

@@ -105,38 +105,38 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
     }
     final result = dartInstance.hover_impl(QPoint.fromCppPointer(globalPos));
     return result;
-  } // hoveredFrame() const
+  } // hoveredGroup() const
 
-  KDDWBindingsCore.Group hoveredFrame() {
+  KDDWBindingsCore.Group hoveredGroup() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrame')
+            'c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroup')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.Group.fromCppPointer(result, false);
-  } // hoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
+  } // hoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
 
-  hoveredFrameChanged(KDDWBindingsCore.Group? arg__1) {
+  hoveredGroupChanged(KDDWBindingsCore.Group? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameChanged_Group')
+            'c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupChanged_Group')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // hoveredFrameRect() const
+  } // hoveredGroupRect() const
 
-  QRect hoveredFrameRect() {
+  QRect hoveredGroupRect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameRect')
+            'c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRect')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
-  } // hoveredFrameRectChanged()
+  } // hoveredGroupRectChanged()
 
-  hoveredFrameRectChanged() {
+  hoveredGroupRectChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredFrameRectChanged')
+            'c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRectChanged')
         .asFunction();
     func(thisCpp);
   } // isHovered() const
@@ -156,17 +156,17 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
             'c_static_KDDockWidgets__Core__DropIndicatorOverlay__multisplitterLocationFor_DropLocation')
         .asFunction();
     return func(arg__1);
-  } // onFrameDestroyed()
+  } // onGroupDestroyed()
 
-  onFrameDestroyed() {
+  onGroupDestroyed() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropIndicatorOverlay__onFrameDestroyed')
+            'c_KDDockWidgets__Core__DropIndicatorOverlay__onGroupDestroyed')
         .asFunction();
     func(thisCpp);
-  } // onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)
+  } // onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
 
-  onHoveredFrameChanged(KDDWBindingsCore.Group? arg__1) {
+  onHoveredGroupChanged(KDDWBindingsCore.Group? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(1678))
@@ -174,16 +174,16 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
 
-  static void onHoveredFrameChanged_calledFromC(
+  static void onHoveredGroupChanged_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
     var dartInstance =
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as DropIndicatorOverlay;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for DropIndicatorOverlay::onHoveredFrameChanged(KDDockWidgets::Core::Group * arg__1)! (${thisCpp.address})");
+          "Dart instance not found for DropIndicatorOverlay::onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.onHoveredFrameChanged((arg__1 == null || arg__1.address == 0)
+    dartInstance.onHoveredGroupChanged((arg__1 == null || arg__1.address == 0)
         ? null
         : KDDWBindingsCore.Group.fromCppPointer(arg__1));
   } // posForIndicator(KDDockWidgets::DropLocation arg__1) const
@@ -224,20 +224,20 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLocation')
         .asFunction();
     func(thisCpp, location);
-  } // setHoveredFrame(KDDockWidgets::Core::Group * arg__1)
+  } // setHoveredGroup(KDDockWidgets::Core::Group * arg__1)
 
-  setHoveredFrame(KDDWBindingsCore.Group? arg__1) {
+  setHoveredGroup(KDDWBindingsCore.Group? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredFrame_Group')
+            'c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredGroup_Group')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // setHoveredFrameRect(QRect arg__1)
+  } // setHoveredGroupRect(QRect arg__1)
 
-  setHoveredFrameRect(QRect arg__1) {
+  setHoveredGroupRect(QRect arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredFrameRect_QRect')
+            'c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredGroupRect_QRect')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -309,7 +309,7 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
       case 1666:
         return "c_KDDockWidgets__Core__DropIndicatorOverlay__hover_impl_QPoint";
       case 1678:
-        return "c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredFrameChanged_Group";
+        return "c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredGroupChanged_Group";
       case 1681:
         return "c_KDDockWidgets__Core__DropIndicatorOverlay__posForIndicator_DropLocation";
       case 907:
@@ -327,7 +327,7 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
       case 1666:
         return "hover_impl";
       case 1678:
-        return "onHoveredFrameChanged";
+        return "onHoveredGroupChanged";
       case 1681:
         return "posForIndicator";
       case 907:
@@ -357,7 +357,7 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
     registerCallback(thisCpp, callback1666, 1666);
     final callback1678 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            DropIndicatorOverlay.onHoveredFrameChanged_calledFromC);
+            DropIndicatorOverlay.onHoveredGroupChanged_calledFromC);
     registerCallback(thisCpp, callback1678, 1678);
     final callback1681 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(

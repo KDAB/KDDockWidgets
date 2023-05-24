@@ -44,7 +44,7 @@ class IndicatorWindow : public QQuickView, public Core::ClassicIndicatorWindowVi
     Q_PROPERTY(bool outterBottomIndicatorVisible READ outterBottomIndicatorVisible NOTIFY
                    indicatorsVisibleChanged)
     Q_PROPERTY(bool tabIndicatorVisible READ tabIndicatorVisible NOTIFY indicatorsVisibleChanged)
-    Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
+    Q_PROPERTY(QRect hoveredGroupRect READ hoveredGroupRect NOTIFY hoveredGroupRectChanged)
     Q_PROPERTY(KDDockWidgets::DropLocation currentDropLocation READ currentDropLocation NOTIFY
                    currentDropLocationChanged)
 public:
@@ -74,12 +74,12 @@ public:
     bool outterTopIndicatorVisible() const;
     bool outterBottomIndicatorVisible() const;
     bool tabIndicatorVisible() const;
-    QRect hoveredFrameRect() const;
+    QRect hoveredGroupRect() const;
     DropLocation currentDropLocation() const;
 
 Q_SIGNALS:
     void indicatorsVisibleChanged();
-    void hoveredFrameRectChanged();
+    void hoveredGroupRectChanged();
     void currentDropLocationChanged();
 
 private:

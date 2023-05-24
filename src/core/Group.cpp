@@ -650,7 +650,7 @@ QStringList Group::affinities() const
     }
 }
 
-bool Group::isTheOnlyFrame() const
+bool Group::isTheOnlyGroup() const
 {
     return m_layout && m_layout->visibleCount() == 1;
 }
@@ -670,7 +670,7 @@ bool Group::isFloating() const
     if (isInMainWindow() || isMDI())
         return false;
 
-    return isTheOnlyFrame();
+    return isTheOnlyGroup();
 }
 
 bool Group::isInFloatingWindow() const

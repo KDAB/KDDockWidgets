@@ -51,12 +51,12 @@ public:
 
     ~DropIndicatorOverlay() override;
 
-    void setHoveredFrame(Group *);
+    void setHoveredGroup(Group *);
     void setWindowBeingDragged(bool);
-    QRect hoveredFrameRect() const;
+    QRect hoveredGroupRect() const;
     bool isHovered() const;
     DropLocation currentDropLocation() const;
-    Group *hoveredFrame() const;
+    Group *hoveredGroup() const;
 
     void setCurrentDropLocation(DropLocation location);
 
@@ -75,22 +75,22 @@ public:
     static KDDockWidgets::Location multisplitterLocationFor(DropLocation);
 
 Q_SIGNALS:
-    void hoveredFrameChanged(Group *);
-    void hoveredFrameRectChanged();
+    void hoveredGroupChanged(KDDockWidgets::Core::Group *);
+    void hoveredGroupRectChanged();
     void currentDropLocationChanged();
 
 private:
-    void onFrameDestroyed();
-    void setHoveredFrameRect(QRect);
-    QRect m_hoveredFrameRect;
+    void onGroupDestroyed();
+    void setHoveredGroupRect(QRect);
+    QRect m_hoveredGroupRect;
     DropLocation m_currentDropLocation = DropLocation_None;
 
 protected:
     virtual DropLocation hover_impl(QPoint globalPos) = 0;
-    virtual void onHoveredFrameChanged(Group *);
+    virtual void onHoveredGroupChanged(Group *);
     virtual void updateVisibility();
 
-    Group *m_hoveredFrame = nullptr;
+    Group *m_hoveredGroup = nullptr;
     DropArea *const m_dropArea;
     bool m_draggedWindowIsHovering = false;
 };

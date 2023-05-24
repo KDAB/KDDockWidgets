@@ -292,7 +292,7 @@ DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos
     Core::Group *group = groupContainingPos(
         globalPos); // Group is nullptr if MainWindowOption_HasCentralFrame isn't set
     d->m_dropIndicatorOverlay->setWindowBeingDragged(true);
-    d->m_dropIndicatorOverlay->setHoveredFrame(group);
+    d->m_dropIndicatorOverlay->setHoveredGroup(group);
     draggedWindow->updateTransparency(true);
 
     return d->m_dropIndicatorOverlay->hover(globalPos);
@@ -339,7 +339,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 
     hover(droppedWindow, globalPos);
     auto droploc = d->m_dropIndicatorOverlay->currentDropLocation();
-    Core::Group *acceptingGroup = d->m_dropIndicatorOverlay->hoveredFrame();
+    Core::Group *acceptingGroup = d->m_dropIndicatorOverlay->hoveredGroup();
     if (!(acceptingGroup || isOutterLocation(droploc))) {
         qWarning() << "DropArea::drop: asserted with group=" << acceptingGroup
                    << "; Location=" << droploc;

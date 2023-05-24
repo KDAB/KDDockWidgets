@@ -65,38 +65,38 @@ void DropIndicatorOverlay::setWindowBeingDragged(bool is)
         view()->setGeometry(m_dropArea->rect());
         view()->raise();
     } else {
-        setHoveredFrame(nullptr);
+        setHoveredGroup(nullptr);
     }
 
     setVisible(is);
     updateVisibility();
 }
 
-QRect DropIndicatorOverlay::hoveredFrameRect() const
+QRect DropIndicatorOverlay::hoveredGroupRect() const
 {
-    return m_hoveredFrameRect;
+    return m_hoveredGroupRect;
 }
 
-void DropIndicatorOverlay::setHoveredFrame(Core::Group *group)
+void DropIndicatorOverlay::setHoveredGroup(Core::Group *group)
 {
-    if (group == m_hoveredFrame)
+    if (group == m_hoveredGroup)
         return;
 
-    if (m_hoveredFrame)
-        disconnect(m_hoveredFrame, &QObject::destroyed, this,
-                   &DropIndicatorOverlay::onFrameDestroyed);
+    if (m_hoveredGroup)
+        disconnect(m_hoveredGroup, &QObject::destroyed, this,
+                   &DropIndicatorOverlay::onGroupDestroyed);
 
-    m_hoveredFrame = group;
-    if (m_hoveredFrame) {
-        connect(group, &QObject::destroyed, this, &DropIndicatorOverlay::onFrameDestroyed);
-        setHoveredFrameRect(m_hoveredFrame->view()->geometry());
+    m_hoveredGroup = group;
+    if (m_hoveredGroup) {
+        connect(group, &QObject::destroyed, this, &DropIndicatorOverlay::onGroupDestroyed);
+        setHoveredGroupRect(m_hoveredGroup->view()->geometry());
     } else {
-        setHoveredFrameRect(QRect());
+        setHoveredGroupRect(QRect());
     }
 
     updateVisibility();
-    Q_EMIT hoveredFrameChanged(m_hoveredFrame);
-    onHoveredFrameChanged(m_hoveredFrame);
+    Q_EMIT hoveredGroupChanged(m_hoveredGroup);
+    onHoveredGroupChanged(m_hoveredGroup);
 }
 
 bool DropIndicatorOverlay::isHovered() const
@@ -150,24 +150,24 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
 
     const Core::DockWidget::List source = windowBeingDragged->dockWidgets();
     const Core::DockWidget::List target =
-        m_hoveredFrame ? m_hoveredFrame->dockWidgets() : Core::DockWidget::List();
+        m_hoveredGroup ? m_hoveredGroup->dockWidgets() : Core::DockWidget::List();
 
     const bool isInner = dropLoc & DropLocation_Inner;
     const bool isOutter = dropLoc & DropLocation_Outter;
     if (isInner) {
-        if (!m_hoveredFrame)
+        if (!m_hoveredGroup)
             return false;
     } else if (isOutter) {
         // If there's only 1 group in the layout, the outer indicators are redundant, as they do the
         // same thing as the internal ones. But there might be another window obscuring our target,
         // so it's useful to show the outer indicators in this case
-        const bool isTheOnlyFrame = m_hoveredFrame && m_hoveredFrame->isTheOnlyFrame();
-        if (isTheOnlyFrame
-            && !DockRegistry::self()->isProbablyObscured(m_hoveredFrame->view()->window(),
+        const bool isTheOnlyGroup = m_hoveredGroup && m_hoveredGroup->isTheOnlyGroup();
+        if (isTheOnlyGroup
+            && !DockRegistry::self()->isProbablyObscured(m_hoveredGroup->view()->window(),
                                                          windowBeingDragged))
             return false;
     } else if (dropLoc == DropLocation_Center) {
-        if (!m_hoveredFrame || !m_hoveredFrame->isDockable())
+        if (!m_hoveredGroup || !m_hoveredGroup->isDockable())
             return false;
 
         if (auto tabbingAllowedFunc = Config::self().tabbingAllowedFunc()) {
@@ -176,7 +176,7 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
         }
 
         // Only allow to dock to center if the affinities match
-        if (!DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(),
+        if (!DockRegistry::self()->affinitiesMatch(m_hoveredGroup->affinities(),
                                                    windowBeingDragged->affinities()))
             return false;
     } else {
@@ -193,12 +193,12 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
     return true;
 }
 
-void DropIndicatorOverlay::onFrameDestroyed()
+void DropIndicatorOverlay::onGroupDestroyed()
 {
-    setHoveredFrame(nullptr);
+    setHoveredGroup(nullptr);
 }
 
-void DropIndicatorOverlay::onHoveredFrameChanged(Core::Group *)
+void DropIndicatorOverlay::onHoveredGroupChanged(Core::Group *)
 {
 }
 
@@ -215,11 +215,11 @@ DropLocation DropIndicatorOverlay::hover(QPoint globalPos)
     return hover_impl(globalPos);
 }
 
-void DropIndicatorOverlay::setHoveredFrameRect(QRect rect)
+void DropIndicatorOverlay::setHoveredGroupRect(QRect rect)
 {
-    if (m_hoveredFrameRect != rect) {
-        m_hoveredFrameRect = rect;
-        Q_EMIT hoveredFrameRectChanged();
+    if (m_hoveredGroupRect != rect) {
+        m_hoveredGroupRect = rect;
+        Q_EMIT hoveredGroupRectChanged();
     }
 }
 
@@ -229,9 +229,9 @@ void DropIndicatorOverlay::removeHover()
     setCurrentDropLocation(DropLocation_None);
 }
 
-Group *DropIndicatorOverlay::hoveredFrame() const
+Group *DropIndicatorOverlay::hoveredGroup() const
 {
-    return m_hoveredFrame;
+    return m_hoveredGroup;
 }
 
 void DropIndicatorOverlay::updateVisibility()
