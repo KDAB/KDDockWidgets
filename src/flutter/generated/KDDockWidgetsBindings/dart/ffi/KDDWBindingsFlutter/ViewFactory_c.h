@@ -22,7 +22,7 @@
 #include <SideBar.h>
 #include "core/DropArea.h"
 #include <ClassicIndicatorWindowViewInterface.h>
-#include <ClassicIndicators.h>
+#include <ClassicDropIndicatorOverlay.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -31,8 +31,8 @@ class ViewFactory_wrapper : public ::KDDockWidgets::flutter::ViewFactory
 public:
     ~ViewFactory_wrapper();
     ViewFactory_wrapper();
-    virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators *arg__1) const;
-    virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicIndicators *arg__1) const;
+    virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1) const;
+    virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1) const;
     virtual KDDockWidgets::Core::View *createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2 = {}, QFlags<KDDockWidgets::LayoutSaverOption> arg__3 = {}, Qt::WindowFlags arg__4 = {}) const;
     virtual KDDockWidgets::Core::View *createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2 = {}, QFlags<KDDockWidgets::LayoutSaverOption> arg__3 = {}, Qt::WindowFlags arg__4 = {}) const;
     virtual KDDockWidgets::Core::View *createDropArea(KDDockWidgets::Core::DropArea *arg__1, KDDockWidgets::Core::View *parent) const;
@@ -54,7 +54,7 @@ public:
     virtual KDDockWidgets::Core::View *createTitleBar(KDDockWidgets::Core::TitleBar *arg__1, KDDockWidgets::Core::View *parent) const;
     virtual KDDockWidgets::Core::View *createTitleBar_nocallback(KDDockWidgets::Core::TitleBar *arg__1, KDDockWidgets::Core::View *parent) const;
     static QString tr(const char *s, const char *c, int n);
-    typedef KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Core::ClassicIndicators *arg__1);
+    typedef KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1);
     Callback_createClassicIndicatorWindow m_createClassicIndicatorWindowCallback = nullptr;
     typedef KDDockWidgets::Core::View *(*Callback_createDockWidget)(void *, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4);
     Callback_createDockWidget m_createDockWidgetCallback = nullptr;
@@ -82,8 +82,8 @@ public:
 extern "C" {
 // KDDockWidgets::flutter::ViewFactory::ViewFactory()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__constructor();
-// KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int arg__2_, int arg__3_, int arg__4);
 // KDDockWidgets::flutter::ViewFactory::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const

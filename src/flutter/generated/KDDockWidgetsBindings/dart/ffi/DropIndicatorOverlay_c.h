@@ -12,10 +12,10 @@
 #include <core/DropIndicatorOverlay.h>
 #include <qstring.h>
 #include "core/DropArea.h"
+#include <core/View.h>
 #include <core/Group.h>
 #include <qrect.h>
 #include <qpoint.h>
-#include <core/View.h>
 #include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -24,6 +24,7 @@ class DropIndicatorOverlay_wrapper : public ::KDDockWidgets::Core::DropIndicator
 public:
     ~DropIndicatorOverlay_wrapper();
     DropIndicatorOverlay_wrapper(KDDockWidgets::Core::DropArea *dropArea);
+    DropIndicatorOverlay_wrapper(KDDockWidgets::Core::DropArea *dropArea, KDDockWidgets::Core::View *view);
     KDDockWidgets::DropLocation currentDropLocation() const;
     void currentDropLocationChanged();
     virtual bool dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const;
@@ -67,6 +68,8 @@ public:
 extern "C" {
 // KDDockWidgets::Core::DropIndicatorOverlay::DropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropIndicatorOverlay__constructor_DropArea(void *dropArea_);
+// KDDockWidgets::Core::DropIndicatorOverlay::DropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea, KDDockWidgets::Core::View * view)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropIndicatorOverlay__constructor_DropArea_View(void *dropArea_, void *view_);
 // KDDockWidgets::Core::DropIndicatorOverlay::currentDropLocation() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DropIndicatorOverlay__currentDropLocation(void *thisObj);
 // KDDockWidgets::Core::DropIndicatorOverlay::currentDropLocationChanged()

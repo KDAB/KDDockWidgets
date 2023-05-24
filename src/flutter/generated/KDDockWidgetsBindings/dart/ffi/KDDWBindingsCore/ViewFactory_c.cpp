@@ -32,7 +32,7 @@ ViewFactory_wrapper::ViewFactory_wrapper()
     : ::KDDockWidgets::Core::ViewFactory()
 {
 }
-KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators *arg__1) const
+KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1) const
 {
     if (m_createClassicIndicatorWindowCallback) {
         const void *thisPtr = this;
@@ -42,7 +42,7 @@ KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::c
         return {};
     }
 }
-KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicIndicators *arg__1) const
+KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1) const
 {
     qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
     return {};
@@ -225,10 +225,10 @@ void *c_KDDockWidgets__Core__ViewFactory__constructor()
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper();
     return reinterpret_cast<void *>(ptr);
 }
-// createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const
-void *c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_)
+// createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const
+void *c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay(void *thisObj, void *arg__1_)
 {
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::ClassicIndicators *>(arg__1_);
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::ClassicDropIndicatorOverlay *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createClassicIndicatorWindow_nocallback(arg__1);} else {    return targetPtr->createClassicIndicatorWindow(arg__1);} }();
 }
 // createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
@@ -314,37 +314,37 @@ void c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback(void *ptr
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 686:
+    case 685:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createClassicIndicatorWindow>(callback);
         break;
-    case 687:
+    case 686:
         wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createDockWidget>(callback);
         break;
-    case 688:
+    case 687:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createDropArea>(callback);
         break;
-    case 689:
+    case 688:
         wrapper->m_createFloatingWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createFloatingWindow>(callback);
         break;
-    case 690:
+    case 689:
         wrapper->m_createGroupCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createGroup>(callback);
         break;
-    case 691:
+    case 690:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createRubberBand>(callback);
         break;
-    case 692:
+    case 691:
         wrapper->m_createSeparatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createSeparator>(callback);
         break;
-    case 693:
+    case 692:
         wrapper->m_createSideBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createSideBar>(callback);
         break;
-    case 694:
+    case 693:
         wrapper->m_createStackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createStack>(callback);
         break;
-    case 695:
+    case 694:
         wrapper->m_createTabBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createTabBar>(callback);
         break;
-    case 696:
+    case 695:
         wrapper->m_createTitleBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createTitleBar>(callback);
         break;
     }

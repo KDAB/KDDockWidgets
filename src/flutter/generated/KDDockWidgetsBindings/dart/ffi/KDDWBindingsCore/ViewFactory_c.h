@@ -20,7 +20,7 @@
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
 #include <ClassicIndicatorWindowViewInterface.h>
-#include <ClassicIndicators.h>
+#include <ClassicDropIndicatorOverlay.h>
 #include "core/DropArea.h"
 #include <SideBar.h>
 #include <qobject.h>
@@ -34,8 +34,8 @@ class ViewFactory_wrapper : public ::KDDockWidgets::Core::ViewFactory
 public:
     ~ViewFactory_wrapper();
     ViewFactory_wrapper();
-    virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators *arg__1) const;
-    virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicIndicators *arg__1) const;
+    virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1) const;
+    virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1) const;
     virtual KDDockWidgets::Core::View *createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options = {}, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions = {}, Qt::WindowFlags windowFlags = {}) const;
     virtual KDDockWidgets::Core::View *createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options = {}, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions = {}, Qt::WindowFlags windowFlags = {}) const;
     virtual KDDockWidgets::Core::View *createDropArea(KDDockWidgets::Core::DropArea *arg__1, KDDockWidgets::Core::View *parent) const;
@@ -57,7 +57,7 @@ public:
     virtual KDDockWidgets::Core::View *createTitleBar(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent) const;
     virtual KDDockWidgets::Core::View *createTitleBar_nocallback(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent) const;
     static QString tr(const char *s, const char *c, int n);
-    typedef KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Core::ClassicIndicators *arg__1);
+    typedef KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1);
     Callback_createClassicIndicatorWindow m_createClassicIndicatorWindowCallback = nullptr;
     typedef KDDockWidgets::Core::View *(*Callback_createDockWidget)(void *, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags);
     Callback_createDockWidget m_createDockWidgetCallback = nullptr;
@@ -85,8 +85,8 @@ public:
 extern "C" {
 // KDDockWidgets::Core::ViewFactory::ViewFactory()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__constructor();
-// KDDockWidgets::Core::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicIndicators * arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicIndicators(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int options_, int layoutSaverOptions_, int windowFlags);
 // KDDockWidgets::Core::ViewFactory::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const

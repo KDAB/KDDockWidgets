@@ -10,7 +10,7 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <ClassicIndicatorsWindow.h>
-#include <ClassicIndicators.h>
+#include <ClassicDropIndicatorOverlay.h>
 #include <qpoint.h>
 #include <qrect.h>
 #include <qsize.h>
@@ -22,7 +22,7 @@ class IndicatorWindow_wrapper : public ::KDDockWidgets::flutter::IndicatorWindow
 {
 public:
     ~IndicatorWindow_wrapper();
-    IndicatorWindow_wrapper(KDDockWidgets::Core::ClassicIndicators *classicIndicators);
+    IndicatorWindow_wrapper(KDDockWidgets::Core::ClassicDropIndicatorOverlay *classicIndicators);
     virtual KDDockWidgets::DropLocation hover(QPoint globalPos);
     virtual KDDockWidgets::DropLocation hover_nocallback(QPoint globalPos);
     virtual bool isWindow() const;
@@ -63,8 +63,8 @@ public:
 }
 }
 extern "C" {
-// KDDockWidgets::flutter::IndicatorWindow::IndicatorWindow(KDDockWidgets::Core::ClassicIndicators * classicIndicators)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicIndicators(void *classicIndicators_);
+// KDDockWidgets::flutter::IndicatorWindow::IndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * classicIndicators)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicDropIndicatorOverlay(void *classicIndicators_);
 // KDDockWidgets::flutter::IndicatorWindow::hover(QPoint globalPos)
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::flutter::IndicatorWindow::isWindow() const

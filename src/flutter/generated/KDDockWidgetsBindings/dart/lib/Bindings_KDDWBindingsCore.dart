@@ -8,9 +8,10 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
+export 'src/KDDWBindingsCore/ClassicDropIndicatorOverlay.dart'
+    show ClassicDropIndicatorOverlay;
 export 'src/KDDWBindingsCore/ClassicIndicatorWindowViewInterface.dart'
     show ClassicIndicatorWindowViewInterface;
-export 'src/KDDWBindingsCore/ClassicIndicators.dart' show ClassicIndicators;
 export 'src/KDDWBindingsCore/DockWidget.dart' show DockWidget;
 export 'src/KDDWBindingsCore/FloatingWindow.dart' show FloatingWindow;
 export 'src/KDDWBindingsCore/Group.dart' show Group;

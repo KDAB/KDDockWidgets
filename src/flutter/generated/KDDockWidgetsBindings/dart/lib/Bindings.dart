@@ -21,7 +21,6 @@ export 'src/flutter.dart' show asView_flutter, asView_flutter;
 export 'src/KDDockWidgets.dart'
     show
         initFrontend,
-        locationStr,
         qt_getEnumName,
         qt_getEnumName,
         qt_getEnumName,

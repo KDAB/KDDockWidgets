@@ -32,9 +32,4 @@ void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1)
 {
     KDDockWidgets::initFrontend(static_cast<KDDockWidgets::FrontendType>(arg__1));
 }
-// locationStr(KDDockWidgets::Location loc)
-void *c_static_KDDockWidgets__locationStr_Location(int loc)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgets::locationStr(static_cast<KDDockWidgets::Location>(loc)) };
-}
 }

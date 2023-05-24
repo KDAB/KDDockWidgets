@@ -101,13 +101,4 @@ initFrontend(int arg__1) {
           'c_static_KDDockWidgets__initFrontend_FrontendType')
       .asFunction();
   func(arg__1);
-} // locationStr(KDDockWidgets::Location loc)
-
-QString locationStr(int loc) {
-  final voidstar_Func_int func = _dylib
-      .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_FFI>>(
-          'c_static_KDDockWidgets__locationStr_Location')
-      .asFunction();
-  ffi.Pointer<void> result = func(loc);
-  return QString.fromCppPointer(result, true);
 }

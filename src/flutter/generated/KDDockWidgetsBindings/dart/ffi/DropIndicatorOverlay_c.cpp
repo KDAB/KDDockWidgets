@@ -31,6 +31,10 @@ DropIndicatorOverlay_wrapper::DropIndicatorOverlay_wrapper(KDDockWidgets::Core::
     : ::KDDockWidgets::Core::DropIndicatorOverlay(dropArea)
 {
 }
+DropIndicatorOverlay_wrapper::DropIndicatorOverlay_wrapper(KDDockWidgets::Core::DropArea *dropArea, KDDockWidgets::Core::View *view)
+    : ::KDDockWidgets::Core::DropIndicatorOverlay(dropArea, view)
+{
+}
 KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::currentDropLocation() const
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::currentDropLocation();
@@ -193,6 +197,13 @@ void *c_KDDockWidgets__Core__DropIndicatorOverlay__constructor_DropArea(void *dr
     auto ptr = new KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper(dropArea);
     return reinterpret_cast<void *>(ptr);
 }
+void *c_KDDockWidgets__Core__DropIndicatorOverlay__constructor_DropArea_View(void *dropArea_, void *view_)
+{
+    auto dropArea = reinterpret_cast<KDDockWidgets::Core::DropArea *>(dropArea_);
+    auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper(dropArea, view);
+    return reinterpret_cast<void *>(ptr);
+}
 // currentDropLocation() const
 int c_KDDockWidgets__Core__DropIndicatorOverlay__currentDropLocation(void *thisObj)
 {
@@ -321,7 +332,7 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__registerVirtualMethodCallback(
     case 1681:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 907:
+    case 906:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_setParentView_impl>(callback);
         break;
     case 1694:
