@@ -12,9 +12,9 @@
 #include "ViewFactory.h"
 #include "Config.h"
 
-#include "kddockwidgets/core/indicators/ClassicIndicators.h"
-#include "kddockwidgets/core/indicators/NullIndicators.h"
-#include "kddockwidgets/core/indicators/SegmentedIndicators.h"
+#include "kddockwidgets/core/indicators/ClassicDropIndicatorOverlay.h"
+#include "kddockwidgets/core/indicators/NullDropIndicatorOverlay.h"
+#include "kddockwidgets/core/indicators/SegmentedDropIndicatorOverlay.h"
 #include "core/Utils_p.h"
 
 #include "kddockwidgets/core/MainWindow.h"

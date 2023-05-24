@@ -8,4 +8,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../../core/indicators/ClassicIndicators.h"
+#include "../../../../core/indicators/SegmentedDropIndicatorOverlay.h"

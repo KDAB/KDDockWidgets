@@ -8,4 +8,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../../core/indicators/NullIndicators.h"
+#include "../../../../core/indicators/ClassicDropIndicatorOverlay.h"

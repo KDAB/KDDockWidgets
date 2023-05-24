@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "ClassicIndicators.h"
+#include "ClassicDropIndicatorOverlay.h"
 #include "Config.h"
 #include "core/ViewFactory.h"
 #include "core/views/ClassicIndicatorWindowViewInterface.h"

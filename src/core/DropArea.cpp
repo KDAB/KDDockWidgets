@@ -27,9 +27,9 @@
 #include "core/DockWidget_p.h"
 #include "core/MainWindow.h"
 #include "core/DropIndicatorOverlay.h"
-#include "core/indicators/ClassicIndicators.h"
-#include "core/indicators/NullIndicators.h"
-#include "core/indicators/SegmentedIndicators.h"
+#include "core/indicators/ClassicDropIndicatorOverlay.h"
+#include "core/indicators/NullDropIndicatorOverlay.h"
+#include "core/indicators/SegmentedDropIndicatorOverlay.h"
 
 #include "Window.h"
 #include "kdbindings/signal.h"
@@ -54,7 +54,7 @@ createDropIndicatorOverlay(Core::DropArea *dropArea)
     case DropIndicatorType::Segmented:
         return new Core::SegmentedDropIndicatorOverlay(dropArea);
     case DropIndicatorType::None:
-        return new Core::NullIndicators(dropArea);
+        return new Core::NullDropIndicatorOverlay(dropArea);
     }
 
     return new Core::ClassicDropIndicatorOverlay(dropArea);

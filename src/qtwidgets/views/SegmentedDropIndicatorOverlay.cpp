@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "SegmentedIndicatorsOverlay.h"
-#include "kddockwidgets/core/indicators/SegmentedIndicators.h"
+#include "SegmentedDropIndicatorOverlay.h"
+#include "kddockwidgets/core/indicators/SegmentedDropIndicatorOverlay.h"
 
 #include <QPainter>
 

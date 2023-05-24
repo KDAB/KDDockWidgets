@@ -9,15 +9,15 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "NullIndicators.h"
+#include "NullDropIndicatorOverlay.h"
 
 namespace KDDockWidgets::Core {
 
-NullIndicators::NullIndicators(Core::DropArea *dropArea)
+NullDropIndicatorOverlay::NullDropIndicatorOverlay(Core::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea)
 {
 }
 
-NullIndicators::~NullIndicators() = default;
+NullDropIndicatorOverlay::~NullDropIndicatorOverlay() = default;
 
 }

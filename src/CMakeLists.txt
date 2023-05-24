@@ -52,9 +52,9 @@ set(KDDW_BACKEND_SRCS
     core/Controller.cpp
     core/Platform.cpp
     core/View.cpp
-    core/indicators/NullIndicators.cpp
-    core/indicators/ClassicIndicators.cpp
-    core/indicators/SegmentedIndicators.cpp
+    core/indicators/NullDropIndicatorOverlay.cpp
+    core/indicators/ClassicDropIndicatorOverlay.cpp
+    core/indicators/SegmentedDropIndicatorOverlay.cpp
     core/layouting/Item.cpp
     core/layouting/ItemFreeContainer.cpp
     core/views/ClassicIndicatorWindowViewInterface.cpp
@@ -94,7 +94,7 @@ set(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/views/Stack.cpp
     qtwidgets/views/SideBar.cpp
     qtwidgets/views/ClassicIndicatorsWindow.cpp
-    qtwidgets/views/SegmentedIndicatorsOverlay.cpp
+    qtwidgets/views/SegmentedDropIndicatorOverlay.cpp
     qtwidgets/ViewFactory.cpp
     qtwidgets/DebugWindow.cpp
     qtwidgets/ObjectViewer.cpp
@@ -118,7 +118,7 @@ set(KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS
     qtwidgets/views/Stack.h
     qtwidgets/views/SideBar.h
     qtwidgets/views/ClassicIndicatorsWindow.h
-    qtwidgets/views/SegmentedIndicatorsOverlay.h
+    qtwidgets/views/SegmentedDropIndicatorOverlay.h
 )
 
 set(KDDW_FRONTEND_QTQUICK_SRCS
@@ -297,8 +297,8 @@ set(KDDW_VIEWINTERFACE_HEADERS
     core/views/GroupViewInterface.h
 )
 
-set(KDDW_INDICATOR_HEADERS core/indicators/NullIndicators.h core/indicators/ClassicIndicators.h
-                           core/indicators/SegmentedIndicators.h
+set(KDDW_INDICATOR_HEADERS core/indicators/NullDropIndicatorOverlay.h core/indicators/ClassicDropIndicatorOverlay.h
+                           core/indicators/SegmentedDropIndicatorOverlay.h
 )
 
 set(DOCKSLIBS_SRCS ${KDDW_BACKEND_SRCS})
@@ -580,7 +580,7 @@ if(KDDW_FRONTEND_QTWIDGETS)
         qtwidgets/views/Group.h
         qtwidgets/views/TabBar.h
         qtwidgets/views/ClassicIndicatorsWindow.h
-        qtwidgets/views/SegmentedIndicatorsOverlay.h
+        qtwidgets/views/SegmentedDropIndicatorOverlay.h
         qtwidgets/views/MainWindow.h
         qtwidgets/views/TitleBar.h
     )

@@ -23,12 +23,12 @@ namespace Core {
  *
  * Used for debugging purposes or if someone doesn't want the drop indicators.
  */
-class DOCKS_EXPORT NullIndicators : public DropIndicatorOverlay
+class DOCKS_EXPORT NullDropIndicatorOverlay : public DropIndicatorOverlay
 {
     Q_OBJECT
 public:
-    explicit NullIndicators(Core::DropArea *);
-    ~NullIndicators() override;
+    explicit NullDropIndicatorOverlay(Core::DropArea *);
+    ~NullDropIndicatorOverlay() override;
     DropLocation hover_impl(QPoint) override
     {
         return {};
