@@ -17,6 +17,8 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 
+import 'WindowOverlayWidget.dart';
+
 /// @brief A Widget that hosts a single KDDW FloatingWindow or MainWindow
 /// Since Flutter doesn't support real OS level multi-windows yet we need
 /// to draw the windows ourselves
@@ -44,14 +46,20 @@ class WindowWidgetState extends State<WindowWidget> {
   @override
   Widget build(BuildContext context) {
     final geo = kddwView.viewGeometry();
-    final x = geo.x();
-    final y = geo.y();
+    final x = geo.x().toDouble();
+    final y = geo.y().toDouble();
     final width = geo.width();
     final height = geo.height();
 
+    RenderBox parentRB = WindowOverlayWidget.globalKey()
+        .currentContext!
+        .findRenderObject() as RenderBox;
+
+    final localPos = parentRB.globalToLocal(Offset(x, y));
+
     return Positioned(
-        left: x.toDouble(),
-        top: y.toDouble(),
+        left: localPos.dx,
+        top: localPos.dy,
         width: width.toDouble(),
         height: height.toDouble(),
         child: kddwView.flutterWidget);
