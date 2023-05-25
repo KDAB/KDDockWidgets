@@ -26,6 +26,7 @@ class WidgetResizeHandler;
 namespace Core {
 
 struct WindowBeingDragged;
+class Controller;
 class FloatingWindow;
 class DockWidget;
 class View;
@@ -45,6 +46,7 @@ public:
     explicit Draggable(View *thisView, bool enabled = true);
     virtual ~Draggable();
     View *asView() const;
+    Controller *asController() const;
 
     /**
      * If this draggable is already a window, do nothing.

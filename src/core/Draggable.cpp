@@ -56,6 +56,14 @@ View *Draggable::asView() const
     return d->thisView;
 }
 
+Controller *Draggable::asController() const
+{
+    if (auto v = d->thisView)
+        return v->controller();
+
+    return nullptr;
+}
+
 bool Draggable::dragCanStart(QPoint pressPos, QPoint globalPos) const
 {
     return (globalPos - pressPos).manhattanLength() > Core::Platform::instance()->startDragDistance();

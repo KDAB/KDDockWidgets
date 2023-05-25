@@ -360,7 +360,7 @@ void StateDragging::onEntry()
         }
     } else {
         // Shouldn't happen
-        qWarning() << Q_FUNC_INFO << "No window being dragged for " << q->m_draggable;
+        qWarning() << Q_FUNC_INFO << "No window being dragged for " << q->m_draggable << q->m_draggable->asController();
         Q_EMIT q->dragCanceled();
     }
 
