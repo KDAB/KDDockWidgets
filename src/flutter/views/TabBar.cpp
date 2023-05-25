@@ -29,6 +29,7 @@ using namespace KDDockWidgets::flutter;
 TabBar::TabBar(Core::TabBar *controller, Core::View *parent)
     : View(controller, Core::ViewType::TabBar, parent)
     , TabBarViewInterface(controller)
+    , m_controller(controller)
 {
 }
 
@@ -38,16 +39,19 @@ void TabBar::init()
 
 int TabBar::tabAt(QPoint) const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented";
     return -1;
 }
 
 QString TabBar::text(int) const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 QRect TabBar::rectForTab(int) const
 {
+    qDebug() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
@@ -55,7 +59,7 @@ void TabBar::moveTabTo(int from, int to)
 {
     Q_UNUSED(from);
     Q_UNUSED(to);
-    // Not implemented yet
+    qDebug() << Q_FUNC_INFO << "Not implemented";
 }
 
 void TabBar::changeTabIcon(int index, const Icon &)
@@ -84,4 +88,9 @@ void TabBar::renameTab(int index, const QString &)
 void TabBar::setCurrentIndex(int)
 {
     onRebuildRequested();
+}
+
+void TabBar::onMousePress(MouseEvent *me)
+{
+    m_controller->onMousePress(me->pos());
 }

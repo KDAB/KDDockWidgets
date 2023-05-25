@@ -15,6 +15,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide View;
 import 'package:flutter/material.dart' as material show TabBar;
 
@@ -58,20 +59,31 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
   @override
   Widget buildContents() {
     final int numTabs = m_tabBarView.m_controller.numDockWidgets();
-    var tabs = <Tab>[];
+    final tabs = <Widget>[];
     for (var i = 0; i < numTabs; ++i) {
       final dw = m_tabBarView.m_controller.dockWidgetAt_2(i);
       tabs.add(Tab(text: "${dw.title().toDartString()}"));
     }
 
-    return SizedBox(
-        height: 50,
-        child: DefaultTabController(
-          length: numTabs,
-          child: material.TabBar(
-            tabs: tabs,
-            labelColor: Colors.black,
-          ),
-        ));
+    return Listener(
+        onPointerDown: (event) {
+          kddwView.onFlutterMouseEvent(event);
+        },
+        onPointerUp: (event) {
+          kddwView.onFlutterMouseEvent(event);
+        },
+        onPointerMove: (event) {
+          if (event.buttons != kPrimaryButton) return;
+          kddwView.onFlutterMouseEvent(event);
+        },
+        child: SizedBox(
+            height: 50,
+            child: DefaultTabController(
+              length: numTabs,
+              child: material.TabBar(
+                tabs: tabs,
+                labelColor: Colors.black,
+              ),
+            )));
   }
 }

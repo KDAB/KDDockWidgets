@@ -128,6 +128,12 @@ public:
 
     /// Called by flutter when a mouse event is received
     void onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed);
+
+    /// View can override if it's interested in events which the event filter rejected
+    virtual void onMousePress(MouseEvent *)
+    {
+    }
+
     void setSizeHint(QSize);
 
 private:
