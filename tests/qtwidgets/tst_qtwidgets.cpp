@@ -172,6 +172,7 @@ private Q_SLOTS:
     void tst_maximumSizePolicy();
     void tst_complex();
     void tst_restoreFloatingMaximizedState();
+    void tst_findAncestor();
 };
 
 void TestQtWidgets::tst_tabsNotClickable()
@@ -1681,6 +1682,22 @@ void TestQtWidgets::tst_deleteDockWidget()
 
     // Dock3 now occupies everything, separator was deleted
     QVERIFY(m1->multiSplitter()->separators().isEmpty());
+}
+
+void TestQtWidgets::tst_findAncestor()
+{
+    EnsureTopLevelsDeleted e;
+    QVERIFY(KDDockWidgets::findAncestor<QWidget>(nullptr) == nullptr);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    auto mainWindow = QtCommon::View_qt::asQWidget(m1->view());
+    auto dockWidget = QtCommon::View_qt::asQWidget(dw1->view());
+
+    QCOMPARE(mainWindow, KDDockWidgets::findAncestor<QMainWindow>(mainWindow));
+    QCOMPARE(mainWindow, KDDockWidgets::findAncestor<QMainWindow>(dockWidget));
 }
 
 int main(int argc, char *argv[])

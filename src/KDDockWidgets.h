@@ -32,6 +32,9 @@
 #define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
 #endif
 
+#ifdef KDDW_FRONTEND_QTWIDGETS
+#include <QWidget>
+#endif
 
 namespace KDDockWidgets::QtQuick {
 }
@@ -386,6 +389,33 @@ Q_DECLARE_FLAGS(WindowStates, WindowState)
 
 /// @brief Initializes the desired frontend
 void DOCKS_EXPORT initFrontend(FrontendType);
+
+
+#ifdef KDDW_FRONTEND_QTWIDGETS
+
+/// @brief Returns the first ancestor widget of the specified type T for the specified
+/// Does not go across QWindow boundaries
+/// If the specified widget is itself T, then it's returned
+template<typename T>
+inline T *findAncestor(QWidget *widget)
+{
+    QWidget *p = widget;
+    while (p) {
+        if (auto w = qobject_cast<T *>(p))
+            return w;
+
+        if (p->isWindow()) {
+            // No need to check across window boundaries.
+            // Main window is parent of floating windows.
+            return nullptr;
+        }
+
+        p = p->parentWidget();
+    }
+
+    return nullptr;
+}
+#endif
 
 } // end namespace
 
