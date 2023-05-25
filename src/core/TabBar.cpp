@@ -149,8 +149,7 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
 std::unique_ptr<WindowBeingDragged> Core::TabBar::makeWindow()
 {
     auto dock = m_lastPressedDockWidget;
-    m_lastPressedDockWidget =
-        nullptr; // TODO check if we still have this dock, it might have been deleted
+    m_lastPressedDockWidget = nullptr;
 
     const bool hideTitleBarWhenTabsVisible =
         Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible;
