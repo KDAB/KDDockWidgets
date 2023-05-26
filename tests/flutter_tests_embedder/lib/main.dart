@@ -10,13 +10,9 @@
 */
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 import 'dart:developer';
 
-import 'package:KDDockWidgets/DockWidget.dart';
-import 'package:KDDockWidgets/DropArea.dart';
-import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:flutter/material.dart' hide View;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;

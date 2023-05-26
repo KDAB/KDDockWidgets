@@ -6,4 +6,8 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
-    non_native_function_type_argument_to_pointer: false
+    library_prefixes: false
+analyzer:
+  errors:
+    unused_import: false
+    file_names: false

@@ -48,9 +48,7 @@ class MyMenuBar extends StatelessWidget {
                   SubmenuButton(
                     menuChildren: <Widget>[
                       MenuItemButton(
-                        onPressed: () {
-                          print("New DockWidget");
-                        },
+                        onPressed: () {},
                         child: const MenuAcceleratorLabel('&New DockWidget'),
                       ),
                       MenuItemButton(
@@ -68,21 +66,15 @@ class MyMenuBar extends StatelessWidget {
                         child: const MenuAcceleratorLabel('&Restore Layout'),
                       ),
                       MenuItemButton(
-                        onPressed: () {
-                          print("Close All pressed");
-                        },
+                        onPressed: () {},
                         child: const MenuAcceleratorLabel('&Close All'),
                       ),
                       MenuItemButton(
-                        onPressed: () {
-                          print("Layout Equally pressed");
-                        },
+                        onPressed: () {},
                         child: const MenuAcceleratorLabel('&Layout Equally'),
                       ),
                       MenuItemButton(
-                        onPressed: () {
-                          print("Quit pressed");
-                        },
+                        onPressed: () {},
                         child: const MenuAcceleratorLabel('&Quit'),
                       ),
                     ],

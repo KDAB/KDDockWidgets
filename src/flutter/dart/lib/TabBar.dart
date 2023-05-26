@@ -19,7 +19,6 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide View;
 import 'package:flutter/material.dart' as material show TabBar;
-import 'package:flutter/rendering.dart';
 
 class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
   late final KDDWBindingsCore.TabBar m_controller;

@@ -9,14 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'View.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
-import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
+// ignore: undefined_hidden_name
 import 'package:flutter/material.dart' hide View;
 
 class DropArea extends KDDWBindingsFlutter.DropArea with View_mixin {

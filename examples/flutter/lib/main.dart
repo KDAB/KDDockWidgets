@@ -11,17 +11,12 @@
 
 import 'dart:developer';
 import 'package:KDDockWidgets/DockWidget.dart';
-import 'package:KDDockWidgets/DropArea.dart';
 import 'package:KDDockWidgets/MainWindow.dart';
-import 'package:KDDockWidgets/PositionedWidget.dart';
+// ignore: undefined_hidden_name
 import 'package:flutter/material.dart' hide View;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
-import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
-    as KDDWBindingsFlutter;
 import 'package:KDDockWidgets/WindowOverlayWidget.dart' as KDDW;
-import 'package:flutter/scheduler.dart';
-import 'package:KDDockWidgets/View.dart' as KDDW;
 import 'package:KDDockWidgets/Platform.dart' as KDDW;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
 import 'package:kddockwidgets_flutter_example/MyMenuBar.dart';

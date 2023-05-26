@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'dart:io' show Platform;
 import 'dart:io';
 import 'dart:convert';
 
