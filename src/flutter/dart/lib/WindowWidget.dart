@@ -51,11 +51,12 @@ class WindowWidgetState extends State<WindowWidget> {
     final width = geo.width();
     final height = geo.height();
 
-    RenderBox parentRB = WindowOverlayWidget.globalKey()
+    final parentRB = WindowOverlayWidget.globalKey()
         .currentContext!
-        .findRenderObject() as RenderBox;
+        .findRenderObject() as RenderBox?;
 
-    final localPos = parentRB.globalToLocal(Offset(x, y));
+    final localPos =
+        parentRB == null ? Offset(x, y) : parentRB.globalToLocal(Offset(x, y));
 
     return Positioned(
         left: localPos.dx,
