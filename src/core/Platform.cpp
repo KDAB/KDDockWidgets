@@ -59,6 +59,14 @@ Platform::~Platform()
 
 Platform *Platform::instance()
 {
+    if (!s_platform) {
+        // For convenience, if there's only 1 frontend supported then don't
+        // require the user to call initFrontend(), just do it here.
+        const auto types = Platform::frontendTypes();
+        if (types.size() == 1)
+            KDDockWidgets::initFrontend(types[0]);
+    }
+
     return s_platform;
 }
 
@@ -205,6 +213,10 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
     types.push_back(FrontendType::QtWidgets);
+#endif
+
+#ifdef KDDW_FRONTEND_FLUTTER
+    types.push_back(FrontendType::Flutter);
 #endif
 
     return types;

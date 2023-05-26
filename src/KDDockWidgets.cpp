@@ -43,9 +43,7 @@ void KDDockWidgets::initFrontend(FrontendType type)
 #endif
         break;
     case FrontendType::Flutter:
-#ifdef KDDW_FRONTEND_FLUTTER
-        // TODOm4: This needs to be called from Dart
-#endif
+        // Nothing to do, called from Dart
         break;
     }
 }
