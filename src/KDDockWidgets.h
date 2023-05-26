@@ -389,7 +389,7 @@ Q_DECLARE_FLAGS(WindowStates, WindowState)
 
 /// @brief Initializes the desired frontend
 /// This function should be called before using any docking.
-/// Note that if you only built one frontend (by specifying for example -DKDDockWidgets_FRONTENDS=widgets)
+/// Note that if you only built one frontend (by specifying for example -DKDDockWidgets_FRONTENDS=qtwidgets)
 /// then KDDW will call this automatically.
 void DOCKS_EXPORT initFrontend(FrontendType);
 

@@ -188,6 +188,9 @@ public:
     /// Sets the mouse cursor position in screen coordinates
     virtual void setCursorPos(QPoint) = 0;
 
+    /// @brief list the list of frontend types supported by this build
+    static std::vector<KDDockWidgets::FrontendType> frontendTypes();
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     class WarningObserver
@@ -198,9 +201,6 @@ public:
         virtual ~WarningObserver();
         virtual void onFatal() = 0;
     };
-
-    /// @brief list the list of frontend types supported by this build
-    static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
     virtual void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const = 0;
 
