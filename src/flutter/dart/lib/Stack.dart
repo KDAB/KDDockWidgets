@@ -46,7 +46,7 @@ class StackPositionedWidgetState extends PositionedWidgetState {
   StackPositionedWidgetState(var kddwView, this.StackView) : super(kddwView);
 
   @override
-  Widget buildContents() {
-    return super.buildContents();
+  Widget buildContents(BuildContext ctx) {
+    return super.buildContents(ctx);
   }
 }

@@ -40,18 +40,18 @@ class DropAreaWidget extends PositionedWidget {
 
   @override
   State<PositionedWidget> createState() {
-    return DockWidgetPositionedWidgetState(kddwView, DockWidgetView);
+    return DropAreaPositionedWidgetState(kddwView, DockWidgetView);
   }
 }
 
-class DockWidgetPositionedWidgetState extends PositionedWidgetState {
+class DropAreaPositionedWidgetState extends PositionedWidgetState {
   final DropArea DockWidgetView;
 
-  DockWidgetPositionedWidgetState(var kddwView, this.DockWidgetView)
+  DropAreaPositionedWidgetState(var kddwView, this.DockWidgetView)
       : super(kddwView);
 
   @override
-  Widget buildContents() {
+  Widget buildContents(BuildContext ctx) {
     return Container(
         color: kddwView.m_color,
         child: Stack(

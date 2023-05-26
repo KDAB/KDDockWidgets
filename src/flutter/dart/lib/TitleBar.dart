@@ -52,7 +52,7 @@ class TitleBarPositionedWidgetState extends PositionedWidgetState {
       : super(kddwView);
 
   @override
-  Widget buildContents() {
+  Widget buildContents(BuildContext ctx) {
     final contents = SizedBox(
         height: 30,
         child: Container(

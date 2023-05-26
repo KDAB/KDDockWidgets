@@ -84,17 +84,17 @@ class PositionedWidgetState extends State<PositionedWidget>
   }
 
   /// This is factored-out from build() so derived classes can return something else
-  Widget buildContents() {
+  Widget buildContents(BuildContext ctx) {
     return Container(color: kddwView.m_color);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       resizeKDDWLayout();
     });
 
-    final container = buildContents();
+    final container = buildContents(ctx);
     if (_fillsParent) return container;
 
     // TODOm5: Pass whole struct in one go, minimize ffi calls

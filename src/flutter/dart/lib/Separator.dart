@@ -60,10 +60,10 @@ class SeparatorPositionedWidgetState extends PositionedWidgetState {
       : super(kddwView);
 
   @override
-  Widget buildContents() {
+  Widget buildContents(BuildContext ctx) {
     // This simply wraps the default widget into a MouseRegion, so we can
     // react to mouse events
-    final defaultContainer = super.buildContents();
+    final defaultContainer = super.buildContents(ctx);
     return Listener(
       onPointerDown: (event) {
         separatorView.m_controller.onMousePress();

@@ -73,7 +73,7 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
   GroupPositionedWidgetState(var kddwView, this.groupView) : super(kddwView);
 
   @override
-  Widget buildContents() {
+  Widget buildContents(BuildContext ctx) {
     final titleBarView = groupView.titleBarView();
     final tabBarView = groupView.tabBarView();
     final dockWidgetWidget = groupView.dockWidgetView()?.flutterWidget ??

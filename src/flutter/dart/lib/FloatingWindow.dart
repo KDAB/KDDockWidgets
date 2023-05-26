@@ -69,7 +69,7 @@ class FloatingWindowPositionedWidgetState extends PositionedWidgetState {
   FloatingWindowPositionedWidgetState(this.view) : super(view);
 
   @override
-  Widget buildContents() {
+  Widget buildContents(BuildContext ctx) {
     final titleBarWidget = view.titleBarView().flutterWidget;
     final dropAreaWidget = view.dropAreaView().flutterWidget;
 

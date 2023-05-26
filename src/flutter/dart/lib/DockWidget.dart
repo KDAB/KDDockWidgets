@@ -65,7 +65,7 @@ class DockWidgetPositionedWidgetState extends PositionedWidgetState {
   }
 
   @override
-  Widget buildContents() {
+  Widget buildContents(BuildContext ctx) {
     if (guestWidget == null) {
       return Container();
     } else {

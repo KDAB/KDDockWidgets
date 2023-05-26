@@ -111,7 +111,7 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
       : super(kddwView);
 
   @override
-  Widget buildContents() {
+  Widget buildContents(BuildContext ctx) {
     final int numTabs = m_tabBarView.m_controller.numDockWidgets();
     final tabs = <Widget>[];
     for (var i = 0; i < numTabs; ++i) {
