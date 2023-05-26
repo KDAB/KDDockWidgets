@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/Platform.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/WindowWidget.dart';
@@ -35,7 +34,7 @@ class FloatingWindow extends KDDWBindingsFlutter.View with View_mixin {
     m_fillsParent = true;
 
     initMixin(this, debugName: "FloatingWindow");
-    windowWidget = WindowWidget(this);
+    windowWidget = WindowWidget.fromView(this);
   }
 
   TitleBar titleBarView() {

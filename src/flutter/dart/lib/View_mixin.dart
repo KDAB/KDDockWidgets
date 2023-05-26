@@ -45,7 +45,11 @@ class View_mixin {
     final ffi.Pointer<ffi.Void> ptr = kddwView.thisCpp.cast<ffi.Void>();
     widgetKey = GlobalObjectKey(ptr.address);
 
-    flutterWidget = createFlutterWidget();
+    if (widgetKey.currentWidget == null) {
+      flutterWidget = createFlutterWidget();
+    } else {
+      flutterWidget = widgetKey.currentWidget!;
+    }
   }
 
   QRect viewGeometry() {

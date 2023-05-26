@@ -51,7 +51,7 @@ class WindowOverlayWidgetState extends State<WindowOverlayWidget> {
     if (supportsMainWindow) {
       final mainWindows = Platform.plat().mainWindows;
       for (var mw in mainWindows) {
-        windowWidgets.add(WindowWidget(mw.view()));
+        windowWidgets.add(WindowWidget.fromView(mw.view()));
       }
     }
 

@@ -24,9 +24,19 @@ import 'WindowOverlayWidget.dart';
 /// to draw the windows ourselves
 class WindowWidget extends StatefulWidget {
   late final View_mixin kddwView;
-  WindowWidget(KDDWBindingsCore.View view)
-      : super(key: GlobalObjectKey("WindowWidget-${view.thisCpp.address}")) {
+
+  /// Private CTOR. Use WindowWidget.fromView() instead
+  WindowWidget._(KDDWBindingsCore.View view, Key key) : super(key: key) {
     kddwView = KDDWBindingsFlutter.View.fromCache(view.thisCpp) as View_mixin;
+  }
+
+  static WindowWidget fromView(KDDWBindingsCore.View view) {
+    final key = GlobalObjectKey("WindowWidget-${view.thisCpp.address}");
+    if (key.currentWidget == null) {
+      return WindowWidget._(view, key);
+    } else {
+      return key.currentWidget! as WindowWidget;
+    }
   }
 
   @override
