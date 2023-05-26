@@ -60,11 +60,17 @@ Platform::~Platform()
 Platform *Platform::instance()
 {
     if (!s_platform) {
+        static bool guard = false;
+        if (guard)
+            return nullptr;
+        guard = true;
+
         // For convenience, if there's only 1 frontend supported then don't
         // require the user to call initFrontend(), just do it here.
         const auto types = Platform::frontendTypes();
         if (types.size() == 1)
             KDDockWidgets::initFrontend(types[0]);
+        guard = false;
     }
 
     return s_platform;
