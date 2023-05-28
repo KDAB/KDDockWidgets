@@ -212,6 +212,9 @@ public:
     /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
     static void tests_deinitPlatform();
 
+    /// @brief Returns whether the Platform was already initialized
+    static bool isInitialized();
+
     /// @brief Creates a Window. For the sole purpose of unit-testing Window.
     /// The created window should be visible.
     virtual std::shared_ptr<Core::Window> tests_createWindow() = 0;

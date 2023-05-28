@@ -155,7 +155,7 @@ Platform::WarningObserver::~WarningObserver() = default;
 /*static*/
 void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::FrontendType type)
 {
-    if (Platform::instance())
+    if (Platform::isInitialized())
         return;
 
     Platform *platform = nullptr;
@@ -226,6 +226,12 @@ void Platform::tests_deinitPlatform()
 
     plat->tests_deinitPlatform_impl();
     delete plat;
+}
+
+/*static */
+bool Platform::isInitialized()
+{
+    return s_platform != nullptr;
 }
 
 #endif
