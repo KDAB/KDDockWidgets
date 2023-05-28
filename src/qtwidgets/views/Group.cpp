@@ -12,7 +12,6 @@
 #include "Group.h"
 
 #include "qtwidgets/views/View.h"
-#include "qtwidgets/views/DockWidget.h"
 
 #include "kddockwidgets/core/Layout.h"
 #include "kddockwidgets/core/Group.h"

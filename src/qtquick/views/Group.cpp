@@ -16,7 +16,11 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "Group.h"
+#include "qtquick/views/DockWidget.h"
+#include "qtquick/ViewFactory.h"
+#include "qtquick/Platform.h"
+#include "qtquick/views/TabBar.h"
+#include "qtquick/views/ViewWrapper.h"
 
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Stack.h"
@@ -24,14 +28,8 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/DockWidget_p.h"
 
-#include "qtquick/ViewFactory.h"
-#include "qtquick/Platform.h"
-#include "qtquick/views/TabBar.h"
-#include "qtquick/views/DockWidget.h"
-#include "qtquick/views/ViewWrapper.h"
-
+#include "Group.h"
 #include "Stack.h"
-
 #include "Config.h"
 #include "core/WidgetResizeHandler_p.h"
 
