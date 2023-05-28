@@ -181,29 +181,28 @@ void View::redirectMouseEvents(QQuickItem *source)
     new MouseEventRedirector(source, this);
 }
 
+void View::sendVisibleChangeEvent()
+{
+    if (freed())
+        return;
+
+    if (m_inSetParent) {
+        // Setting parent to nullptr will emit visible true in QtQuick
+        // which we don't want, as we're going to hide it (as we do with QtWidgets)
+        return;
+    }
+
+    QEvent ev(isVisible() ? QEvent::Show : QEvent::Hide);
+    event(&ev);
+}
+
 void View::itemChange(QQuickItem::ItemChange change, const QQuickItem::ItemChangeData &data)
 {
     QQuickItem::itemChange(change, data);
 
-    if (freed())
-        return;
-
     // Emulate the QWidget behaviour as QQuickItem doesn't receive some QEvents.
-    switch (change) {
-    case QQuickItem::ItemVisibleHasChanged: {
-        if (m_inSetParent) {
-            // Setting parent to nullptr will emit visible true in QtQuick
-            // which we don't want, as we're going to hide it (as we do with QtWidgets)
-            break;
-        }
-
-        QEvent ev(isVisible() ? QEvent::Show : QEvent::Hide);
-        event(&ev);
-        break;
-    }
-    default:
-        break;
-    }
+    if (change == QQuickItem::ItemVisibleHasChanged)
+        sendVisibleChangeEvent();
 }
 
 void View::updateNormalGeometry()

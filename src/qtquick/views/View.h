@@ -176,6 +176,7 @@ private:
     Q_DISABLE_COPY(View)
     friend class MouseEventRedirector;
     void updateNormalGeometry();
+    void sendVisibleChangeEvent();
     bool m_inSetParent = false;
     QSize m_sizeHint;
     SizePolicy m_verticalSizePolicy = SizePolicy::Preferred;
