@@ -346,6 +346,13 @@ void View::setVisible(bool is)
     }
 
     QQuickItem::setVisible(is);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    // Workaround QTBUG-112838, QQuickItem::itemChanged() isn't called anymore if there's no parent
+    if (is && !parentItem() && !QQuickItem::isVisible()) {
+        sendVisibleChangeEvent();
+    }
+#endif
 }
 
 bool View::isExplicitlyHidden() const
