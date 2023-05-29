@@ -135,6 +135,8 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
       tabs.add(Tab(text: "${dw.title().toDartString()}"));
     }
 
+    final curIndex = m_tabBarView.m_controller.currentIndex();
+
     return Listener(
         onPointerDown: (event) {
           kddwView.onFlutterMouseEvent(event);
@@ -149,6 +151,7 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
         child: SizedBox(
             height: 50,
             child: DefaultTabController(
+                initialIndex: curIndex,
                 length: numTabs,
                 child: Builder(
                   builder: (context) {
@@ -159,9 +162,9 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
                         _calledFromFlutter = true;
                         currentIndex = controller.index;
                         _calledFromFlutter = false;
-                        // add code to be executed on TabBar change
                       }
                     });
+
                     return material.TabBar(
                       tabs: tabs,
                       labelColor: Colors.black,
