@@ -30,6 +30,10 @@ public:
     explicit TitleBar(Core::TitleBar *controller, Core::View *parent = nullptr);
     ~TitleBar() override;
 
+    /// implemented by flutter
+    virtual void onTitleBarChanged(const QString &);
+
+
 protected:
 #ifdef DOCKS_DEVELOPER_MODE
     // These 3 just for unit-tests

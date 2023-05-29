@@ -26,7 +26,14 @@ class TitleBar extends KDDWBindingsFlutter.TitleBar with View_mixin {
       : super(titleBar, parent: parent) {
     m_fillsParent = true;
     initMixin(this, debugName: "TitleBar");
-    init();
+  }
+
+  @override
+  void onTitleBarChanged(String? newTitle) {
+    final state = widgetKey.currentState as TitleBarPositionedWidgetState?;
+    if (state != null) {
+      state.title = newTitle!;
+    }
   }
 
   Widget createFlutterWidget() {
@@ -47,6 +54,14 @@ class TitleBarWidget extends PositionedWidget {
 
 class TitleBarPositionedWidgetState extends PositionedWidgetState {
   final TitleBar titleBarView;
+  String? _title;
+  set title(String newTitle) {
+    if (_title != newTitle) {
+      setState(() {
+        _title = newTitle;
+      });
+    }
+  }
 
   TitleBarPositionedWidgetState(var kddwView, this.titleBarView)
       : super(kddwView);

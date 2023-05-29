@@ -35,6 +35,12 @@ TitleBar::~TitleBar()
 void TitleBar::init()
 {
     setFixedHeight(30);
+    QObject::connect(m_titleBar, &Core::TitleBar::titleChanged, [this] { onTitleBarChanged(m_titleBar->title()); });
+}
+
+void TitleBar::onTitleBarChanged(const QString &)
+{
+    qWarning() << Q_FUNC_INFO << "Should be called in dart instead";
 }
 
 #ifdef DOCKS_DEVELOPER_MODE

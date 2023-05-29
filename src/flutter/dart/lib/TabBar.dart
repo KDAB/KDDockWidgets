@@ -105,6 +105,23 @@ class TabBarWidget extends PositionedWidget {
 
 class TabBarPositionedWidgetState extends PositionedWidgetState {
   final TabBar m_tabBarView;
+  int _currentIndex = -1;
+  bool _calledFromFlutter = false;
+
+  set currentIndex(int index) {
+    if (index != _currentIndex) {
+      _currentIndex = index;
+
+      if (_calledFromFlutter) {
+        // User clicked a tab, tell C++
+        m_tabBarView.m_controller.setCurrentIndex(index);
+      } else {
+        // C++ requested it, rebuild
+        // TODOm3: ask controller ?
+        setState(() {});
+      }
+    }
+  }
 
   TabBarPositionedWidgetState(var kddwView, this.m_tabBarView)
       : super(kddwView);
@@ -132,11 +149,24 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
         child: SizedBox(
             height: 50,
             child: DefaultTabController(
-              length: numTabs,
-              child: material.TabBar(
-                tabs: tabs,
-                labelColor: Colors.black,
-              ),
-            )));
+                length: numTabs,
+                child: Builder(
+                  builder: (context) {
+                    final TabController controller =
+                        DefaultTabController.of(context);
+                    controller.addListener(() {
+                      if (!controller.indexIsChanging) {
+                        _calledFromFlutter = true;
+                        currentIndex = controller.index;
+                        _calledFromFlutter = false;
+                        // add code to be executed on TabBar change
+                      }
+                    });
+                    return material.TabBar(
+                      tabs: tabs,
+                      labelColor: Colors.black,
+                    );
+                  },
+                ))));
   }
 }
