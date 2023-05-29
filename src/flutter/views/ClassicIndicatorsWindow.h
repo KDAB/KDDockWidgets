@@ -11,11 +11,10 @@
 
 #pragma once
 
+#include "View.h"
 #include "core/views/ClassicIndicatorWindowViewInterface.h"
 
 namespace KDDockWidgets {
-
-class Indicator;
 
 namespace Core {
 class ClassicDropIndicatorOverlay;
@@ -23,10 +22,11 @@ class ClassicDropIndicatorOverlay;
 
 namespace flutter {
 
-class IndicatorWindow : public Core::ClassicIndicatorWindowViewInterface
+class IndicatorWindow : public flutter::View, public Core::ClassicIndicatorWindowViewInterface
 {
 public:
-    explicit IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndicators);
+    /// When we have proper multi-window support in flutter, we can remove the parent
+    explicit IndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *parent);
 
     DropLocation hover(QPoint globalPos) override;
     void updatePositions() override;

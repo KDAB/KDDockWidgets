@@ -27,9 +27,9 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 static Core::ClassicIndicatorWindowViewInterface *
-createIndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators)
+createIndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators, Core::View *parent)
 {
-    auto window = Config::self().viewFactory()->createClassicIndicatorWindow(classicIndicators);
+    auto window = Config::self().viewFactory()->createClassicIndicatorWindow(classicIndicators, parent);
     window->setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));
 
     return window;
@@ -39,7 +39,7 @@ ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(Core::DropArea *dropAre
     : DropIndicatorOverlay(dropArea) // Is parented on the drop-area, not a toplevel.
     , m_rubberBand(Config::self().viewFactory()->createRubberBand(
           rubberBandIsTopLevel() ? nullptr : dropArea->view())) // rubber band is parented on the drop area
-    , m_indicatorWindow(createIndicatorWindow(this)) // a real top-level, transparent window, to hold our indicators
+    , m_indicatorWindow(createIndicatorWindow(this, dropArea->view())) // a real top-level, transparent window, to hold our indicators
 {
     if (rubberBandIsTopLevel())
         m_rubberBand->setWindowOpacity(0.5);

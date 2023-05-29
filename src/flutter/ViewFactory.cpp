@@ -12,6 +12,7 @@
 #include "ViewFactory.h"
 #include "Config.h"
 
+#include "ClassicIndicatorsWindow.h"
 #include "core/Utils_p.h"
 
 #include "kddockwidgets/core/TabBar.h"
@@ -128,7 +129,16 @@ ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicato
 }
 
 Core::ClassicIndicatorWindowViewInterface *
-ViewFactory::createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *) const
+ViewFactory::createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *controller, Core::View *parent) const
+{
+    // We need a little indirection here, since our bindings don't support multiple inheritance
+    // In dart View factory can't return something of type ClassicIndicatorWindowViewInterface when only having IndicatorWindow
+    // But in C++ we can, so get it from flutter and cast it here
+    return createClassicIndicatorWindow_flutter(controller, parent);
+}
+
+flutter::IndicatorWindow *
+ViewFactory::createClassicIndicatorWindow_flutter(Core::ClassicDropIndicatorOverlay *, Core::View *) const
 {
     qWarning() << Q_FUNC_INFO << "Called in Dart instead";
     return nullptr;

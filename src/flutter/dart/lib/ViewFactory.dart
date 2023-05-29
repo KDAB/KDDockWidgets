@@ -21,6 +21,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 import 'DockWidget.dart';
 import 'DropArea.dart';
 import 'Group.dart';
+import 'IndicatorWindow.dart';
 import 'Separator.dart';
 import 'Stack.dart';
 import 'TitleBar.dart';
@@ -35,10 +36,10 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   }
 
   @override
-  KDDWBindingsCore.ClassicIndicatorWindowViewInterface
-      createClassicIndicatorWindow(
-          KDDWBindingsCore.ClassicDropIndicatorOverlay? indicators) {
-    return KDDWBindingsFlutter.IndicatorWindow(indicators);
+  KDDWBindingsFlutter.IndicatorWindow createClassicIndicatorWindow_flutter(
+      KDDWBindingsCore.ClassicDropIndicatorOverlay? indicators,
+      {required KDDWBindingsCore.View? parent}) {
+    return IndicatorWindow(indicators, parent);
   }
 
   @override

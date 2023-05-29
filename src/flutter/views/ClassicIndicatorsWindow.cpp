@@ -19,8 +19,9 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::flutter;
 
-IndicatorWindow::IndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators_)
-    : classicIndicators(classicIndicators_)
+IndicatorWindow::IndicatorWindow(ClassicDropIndicatorOverlay *controller, Core::View *parent)
+    : flutter::View(controller, ViewType::DropAreaIndicatorOverlay, parent)
+    , classicIndicators(controller)
 {
 }
 

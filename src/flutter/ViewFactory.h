@@ -42,6 +42,8 @@ class MainWindow;
 
 namespace flutter {
 
+class IndicatorWindow;
+
 /**
  * @brief The default ViewFactory for Flutter frontend
  */
@@ -72,6 +74,9 @@ public:
 
     Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *parent = 0) const override;
+
+    virtual flutter::IndicatorWindow *
+    createClassicIndicatorWindow_flutter(Core::ClassicDropIndicatorOverlay *, Core::View *parent = 0) const;
 
     Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *controller,
                                                         Core::View *parent) const override;

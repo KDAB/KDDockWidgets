@@ -58,7 +58,7 @@ View::~View()
     m_inDtor = true;
     d->beingDestroyed.emit();
 
-    if (!freed() && !is(ViewType::ViewWrapper)) {
+    if (!freed() && !is(ViewType::ViewWrapper) && !is(ViewType::DropAreaIndicatorOverlay)) {
         // TODOm3
         // Views should be deleted via View::free()!
         // However some of our deletes are coming from widgets parent destroying their children
