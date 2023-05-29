@@ -15,6 +15,11 @@
 #include "View.h"
 #include "core/Utils_p.h"
 
+#include <QPainter>
+
+#define INDICATOR_WIDTH 40
+#define OUTTER_INDICATOR_MARGIN 10
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::QtWidgets;
@@ -85,11 +90,6 @@ static QString iconName(DropLocation loc, bool active)
     return name + suffix;
 }
 }
-
-#include <QPainter>
-
-#define INDICATOR_WIDTH 40
-#define OUTTER_INDICATOR_MARGIN 10
 
 void Indicator::paintEvent(QPaintEvent *)
 {
