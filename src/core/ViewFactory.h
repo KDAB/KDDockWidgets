@@ -108,7 +108,7 @@ public:
     /// @brief Creates the window that will show the actual drop indicators. They need a higher
     /// z-order, so this is actually a separate window, not parented to the main window
     virtual Core::ClassicIndicatorWindowViewInterface *
-    createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *) const = 0;
+    createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *parent = nullptr) const = 0;
 
     /// @brief Creates the view that will parent the segmented drop indicators
     virtual View *

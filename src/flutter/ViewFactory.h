@@ -71,7 +71,7 @@ public:
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
     Core::ClassicIndicatorWindowViewInterface *
-    createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *) const override;
+    createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *parent = 0) const override;
 
     Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *controller,
                                                         Core::View *parent) const override;

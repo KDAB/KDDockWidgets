@@ -128,7 +128,8 @@ ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicato
 }
 
 Core::ClassicIndicatorWindowViewInterface *
-ViewFactory::createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *) const
+ViewFactory::createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *) const
 {
-    return {};
+    qWarning() << Q_FUNC_INFO << "Called in Dart instead";
+    return nullptr;
 }
