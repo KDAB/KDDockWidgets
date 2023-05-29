@@ -1229,7 +1229,7 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 954:
         wrapper->m_hideCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_hide>(callback);
         break;
-    case 1783:
+    case 1784:
         wrapper->m_hoverCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_hover>(callback);
         break;
     case 957:
@@ -1256,7 +1256,7 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 965:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isVisible>(callback);
         break;
-    case 1784:
+    case 1785:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isWindow>(callback);
         break;
     case 966:
@@ -1304,10 +1304,10 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 978:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onResize_2>(callback);
         break;
-    case 1785:
+    case 1786:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 1786:
+    case 1787:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raise>(callback);
         break;
     case 982:
@@ -1319,7 +1319,7 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 985:
         wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_releaseMouse>(callback);
         break;
-    case 1787:
+    case 1788:
         wrapper->m_resizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_resize>(callback);
         break;
     case 989:
@@ -1331,7 +1331,7 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 991:
         wrapper->m_setFixedWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setFixedWidth>(callback);
         break;
-    case 1788:
+    case 1789:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setGeometry>(callback);
         break;
     case 993:
@@ -1346,7 +1346,7 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 996:
         wrapper->m_setMouseTrackingCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setMouseTracking>(callback);
         break;
-    case 1789:
+    case 1790:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setObjectName>(callback);
         break;
     case 998:
@@ -1355,7 +1355,7 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 1000:
         wrapper->m_setSize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setSize_2>(callback);
         break;
-    case 1790:
+    case 1791:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setVisible>(callback);
         break;
     case 1002:
@@ -1388,7 +1388,7 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 1013:
         wrapper->m_updateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_update>(callback);
         break;
-    case 1791:
+    case 1792:
         wrapper->m_updatePositionsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_updatePositions>(callback);
         break;
     }

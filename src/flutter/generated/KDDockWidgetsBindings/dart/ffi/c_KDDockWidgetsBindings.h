@@ -2387,6 +2387,8 @@ void c_KDDockWidgets__flutter__DropArea__grabMouse(void *thisObj);
 bool c_KDDockWidgets__flutter__DropArea__hasFocus(void *thisObj);
 // KDDockWidgets::flutter::DropArea::hide()
 void c_KDDockWidgets__flutter__DropArea__hide(void *thisObj);
+// KDDockWidgets::flutter::DropArea::indicatorWindow() const
+void *c_KDDockWidgets__flutter__DropArea__indicatorWindow(void *thisObj);
 // KDDockWidgets::flutter::DropArea::init()
 void c_KDDockWidgets__flutter__DropArea__init(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isActiveWindow() const
@@ -3585,6 +3587,8 @@ void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__constructor_DropArea(v
 bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__dropIndicatorVisible_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::hover_impl(QPoint globalPos)
 int c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__hover_impl_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Core::ClassicDropIndicatorOverlay::indicatorWindow() const
+void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__indicatorWindow(void *thisObj);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::indicatorsVisibleChanged()
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__indicatorsVisibleChanged(void *thisObj);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)

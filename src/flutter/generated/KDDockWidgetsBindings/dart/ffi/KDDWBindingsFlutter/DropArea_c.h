@@ -12,9 +12,10 @@
 #include <DropArea.h>
 #include "core/DropArea.h"
 #include <core/View.h>
+#include <View.h>
 #include <qsize.h>
-#include <qrect.h>
 #include <qpoint.h>
+#include <qrect.h>
 #include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -40,6 +41,7 @@ public:
     virtual bool hasFocus_nocallback() const;
     virtual void hide();
     virtual void hide_nocallback();
+    KDDockWidgets::flutter::View *indicatorWindow() const;
     virtual void init();
     virtual void init_nocallback();
     virtual bool isActiveWindow() const;
@@ -274,6 +276,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__grabMouse(
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__hasFocus(void *thisObj);
 // KDDockWidgets::flutter::DropArea::hide()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__hide(void *thisObj);
+// KDDockWidgets::flutter::DropArea::indicatorWindow() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__indicatorWindow(void *thisObj);
 // KDDockWidgets::flutter::DropArea::init()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__init(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isActiveWindow() const

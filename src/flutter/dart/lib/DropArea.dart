@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'package:KDDockWidgets/IndicatorWindow.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
@@ -28,33 +29,38 @@ class DropArea extends KDDWBindingsFlutter.DropArea with View_mixin {
   }
 
   Widget createFlutterWidget() {
-    return DropAreaWidget(kddwView, this, key: widgetKey);
+    return DropAreaWidget(kddwView, key: widgetKey);
   }
 }
 
 class DropAreaWidget extends PositionedWidget {
-  final DropArea DockWidgetView;
-  DropAreaWidget(var kddwView, this.DockWidgetView, {Key? key})
-      : super(kddwView, key: key);
+  DropAreaWidget(var kddwView, {Key? key}) : super(kddwView, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return DropAreaPositionedWidgetState(kddwView, DockWidgetView);
+    return DropAreaPositionedWidgetState(kddwView);
   }
 }
 
 class DropAreaPositionedWidgetState extends PositionedWidgetState {
-  final DropArea DockWidgetView;
+  late final IndicatorWindow indicatorWindow;
 
-  DropAreaPositionedWidgetState(var kddwView, this.DockWidgetView)
-      : super(kddwView);
+  DropAreaPositionedWidgetState(View_mixin kddwView) : super(kddwView) {
+    final DropArea da = kddwView.asFlutterView() as DropArea;
+
+    indicatorWindow = KDDWBindingsFlutter.IndicatorWindow.fromCache(
+        da.indicatorWindow().thisCpp) as IndicatorWindow;
+  }
 
   @override
   Widget buildContents(BuildContext ctx) {
     return Container(
         color: kddwView.m_color,
         child: Stack(
-          children: kddwView.visibleChildWidgets(),
+          children: [
+            ...kddwView.visibleChildWidgets(),
+            if (indicatorWindow.isVisible()) indicatorWindow.flutterWidget,
+          ],
         ));
   }
 }

@@ -14,6 +14,7 @@
 #include "core/DropArea.h"
 #include <qpoint.h>
 #include <qsize.h>
+#include <ClassicIndicatorWindowViewInterface.h>
 #include <qrect.h>
 #include <core/Group.h>
 #include <core/View.h>
@@ -29,6 +30,7 @@ public:
     virtual bool dropIndicatorVisible_nocallback(KDDockWidgets::DropLocation arg__1) const;
     virtual KDDockWidgets::DropLocation hover_impl(QPoint globalPos);
     virtual KDDockWidgets::DropLocation hover_impl_nocallback(QPoint globalPos);
+    KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *indicatorWindow() const;
     void indicatorsVisibleChanged();
     virtual void onHoveredGroupChanged(KDDockWidgets::Core::Group *arg__1);
     virtual void onHoveredGroupChanged_nocallback(KDDockWidgets::Core::Group *arg__1);
@@ -63,6 +65,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicDropIndicatorOv
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__dropIndicatorVisible_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::hover_impl(QPoint globalPos)
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__hover_impl_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Core::ClassicDropIndicatorOverlay::indicatorWindow() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__indicatorWindow(void *thisObj);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::indicatorsVisibleChanged()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__indicatorsVisibleChanged(void *thisObj);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)

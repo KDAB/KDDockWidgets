@@ -136,6 +136,10 @@ void DropArea_wrapper::hide_nocallback()
 {
     ::KDDockWidgets::flutter::DropArea::hide();
 }
+KDDockWidgets::flutter::View *DropArea_wrapper::indicatorWindow() const
+{
+    return ::KDDockWidgets::flutter::DropArea::indicatorWindow();
+}
 void DropArea_wrapper::init()
 {
     if (m_initCallback) {
@@ -838,6 +842,11 @@ bool c_KDDockWidgets__flutter__DropArea__hasFocus(void *thisObj)
 void c_KDDockWidgets__flutter__DropArea__hide(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hide_nocallback();} else {    return targetPtr->hide();} }();
+}
+// indicatorWindow() const
+void *c_KDDockWidgets__flutter__DropArea__indicatorWindow(void *thisObj)
+{
+    return fromPtr(thisObj)->indicatorWindow();
 }
 // init()
 void c_KDDockWidgets__flutter__DropArea__init(void *thisObj)

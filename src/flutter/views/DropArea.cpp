@@ -10,6 +10,8 @@
 */
 
 #include "DropArea.h"
+#include "ClassicDropIndicatorOverlay.h"
+#include "ClassicIndicatorWindowViewInterface.h"
 #include "kddockwidgets/core/DropArea.h"
 
 using namespace KDDockWidgets;
@@ -27,4 +29,10 @@ DropArea::~DropArea()
     m_inDtor = true;
     if (!freed())
         m_dropArea->viewAboutToBeDeleted();
+}
+
+flutter::View *DropArea::indicatorWindow() const
+{
+    auto overlay = static_cast<Core::ClassicDropIndicatorOverlay *>(m_dropArea->dropIndicatorOverlay());
+    return dynamic_cast<flutter::View *>(overlay->indicatorWindow());
 }

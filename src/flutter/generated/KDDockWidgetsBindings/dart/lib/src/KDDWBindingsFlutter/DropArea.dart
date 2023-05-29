@@ -132,6 +132,15 @@ class DropArea extends KDDWBindingsFlutter.View {
       throw Error();
     }
     dartInstance.hide();
+  } // indicatorWindow() const
+
+  KDDWBindingsFlutter.View indicatorWindow() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__flutter__DropArea__indicatorWindow')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return KDDWBindingsFlutter.View.fromCppPointer(result, false);
   }
 
   static void init_calledFromC(ffi.Pointer<void> thisCpp) {

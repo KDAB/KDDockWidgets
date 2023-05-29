@@ -22,11 +22,15 @@ class DropArea;
 
 namespace flutter {
 
+class View;
+
 class DOCKS_EXPORT DropArea : public flutter::View
 {
 public:
     explicit DropArea(Core::DropArea *, Core::View *parent);
     ~DropArea();
+
+    flutter::View *indicatorWindow() const;
 
 private:
     Core::DropArea *const m_dropArea;
