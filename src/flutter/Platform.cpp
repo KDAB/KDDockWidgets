@@ -46,11 +46,13 @@ std::shared_ptr<Core::View> Platform::focusedView() const
 
 QVector<std::shared_ptr<Core::Window>> Platform::windows() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 void Platform::sendEvent(Core::View *, Event *) const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
 }
 
 Platform::~Platform()
@@ -59,6 +61,7 @@ Platform::~Platform()
 
 const char *Platform::name() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return nullptr;
 }
 
@@ -74,59 +77,71 @@ Core::ViewFactory *Platform::createDefaultViewFactory()
 
 Core::Window::Ptr Platform::windowAt(QPoint) const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 int Platform::screenNumberFor(Core::View *) const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return -1;
 }
 
 int Platform::screenNumberFor(std::shared_ptr<Core::Window>) const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 bool Platform::isProcessingAppQuitEvent() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 QString Platform::applicationName() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 QString Platform::organizationName() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 void Platform::setMouseCursor(Qt::CursorShape)
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
 }
 
 void Platform::restoreMouseCursor()
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
 }
 
 Core::Platform::DisplayType Platform::displayType() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 bool Platform::isLeftMouseButtonPressed() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 QSize Platform::screenSizeFor(Core::View *) const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 Core::View *Platform::createView(Core::Controller *, Core::View *) const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return nullptr;
 }
 
@@ -142,15 +157,18 @@ bool Platform::inDisallowedDragView(QPoint) const
 
 void Platform::ungrabMouse()
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
 }
 
 Core::Screen::List Platform::screens() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
 Core::Screen::Ptr Platform::primaryScreen() const
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
@@ -183,6 +201,7 @@ QPoint Platform::cursorPos() const
 
 void Platform::setCursorPos(QPoint)
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented";
 }
 
 
