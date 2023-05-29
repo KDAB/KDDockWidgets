@@ -27,18 +27,11 @@ import 'TitleBar.dart';
 import 'TabBar.dart';
 
 class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
-  ViewFactory() {
-    // print("Dart: Created ViewFactory_flutter");
-  }
-
   @override
   KDDWBindingsCore.View createDropArea(
       KDDWBindingsCore.DropArea? controller, KDDWBindingsCore.View? parent) {
-    // print("ViewFactory: Creating DropArea");
-    var da = DropArea(
+    return DropArea(
         controller, KDDockWidgetBindings.Core_ViewType.DropArea, parent);
-    // print("ViewFactory: Created DropArea");
-    return da;
   }
 
   @override
@@ -51,28 +44,24 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   @override
   KDDWBindingsCore.View createGroup(KDDWBindingsCore.Group? group,
       {required KDDWBindingsCore.View? parent}) {
-    // print("ViewFactory: createGroup");
     return Group(group, parent);
   }
 
   @override
   KDDWBindingsCore.View createTabBar(KDDWBindingsCore.TabBar? tabBar,
       {required KDDWBindingsCore.View? parent}) {
-    // print("ViewFactory: createTabBar");
     return TabBar(tabBar, parent);
   }
 
   @override
   KDDWBindingsCore.View createTitleBar(
       KDDWBindingsCore.TitleBar? controller, KDDWBindingsCore.View? parent) {
-    // print("ViewFactory: createTitleBar");
     return TitleBar(controller, parent);
   }
 
   @override
   KDDWBindingsCore.View createStack(
       KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent) {
-    // print("ViewFactory: createStack");
     return Stack(stack, parent);
   }
 
