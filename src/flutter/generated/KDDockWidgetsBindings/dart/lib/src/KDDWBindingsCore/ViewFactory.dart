@@ -38,33 +38,44 @@ class ViewFactory extends QObject {
     thisCpp = func();
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  } // createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const
+  } // createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
   KDDWBindingsCore.ClassicIndicatorWindowViewInterface
       createClassicIndicatorWindow(
-          KDDWBindingsCore.ClassicDropIndicatorOverlay? arg__1) {
-    final voidstar_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
+          KDDWBindingsCore.ClassicDropIndicatorOverlay? arg__1,
+          {required KDDWBindingsCore.View? parent}) {
+    final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(685))
         .asFunction();
-    ffi.Pointer<void> result =
-        func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+    ffi.Pointer<void> result = func(
+        thisCpp,
+        arg__1 == null ? ffi.nullptr : arg__1.thisCpp,
+        parent == null ? ffi.nullptr : parent.thisCpp);
     return KDDWBindingsCore.ClassicIndicatorWindowViewInterface.fromCppPointer(
         result, false);
   }
 
   static ffi.Pointer<void> createClassicIndicatorWindow_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
+      ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1,
+      ffi.Pointer<void>? parent) {
     var dartInstance =
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance.createClassicIndicatorWindow((arg__1 == null ||
-            arg__1.address == 0)
-        ? null
-        : KDDWBindingsCore.ClassicDropIndicatorOverlay.fromCppPointer(arg__1));
+    final result = dartInstance.createClassicIndicatorWindow(
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.ClassicDropIndicatorOverlay.fromCppPointer(
+                arg__1),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   } // createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 
@@ -435,7 +446,7 @@ class ViewFactory extends QObject {
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
       case 685:
-        return "c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay";
+        return "c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View";
       case 686:
         return "c_KDDockWidgets__Core__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
       case 687:
@@ -495,7 +506,7 @@ class ViewFactory extends QObject {
             'c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback')
         .asFunction();
     final callback685 = ffi.Pointer.fromFunction<
-            voidstar_Func_voidstar_voidstar_FFI>(
+            voidstar_Func_voidstar_voidstar_voidstar_FFI>(
         KDDWBindingsCore.ViewFactory.createClassicIndicatorWindow_calledFromC);
     registerCallback(thisCpp, callback685, 685);
     final callback686 = ffi.Pointer.fromFunction<

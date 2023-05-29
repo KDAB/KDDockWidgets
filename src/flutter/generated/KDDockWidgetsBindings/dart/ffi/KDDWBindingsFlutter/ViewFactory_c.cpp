@@ -32,18 +32,31 @@ ViewFactory_wrapper::ViewFactory_wrapper()
     : ::KDDockWidgets::flutter::ViewFactory()
 {
 }
-KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1) const
+KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent) const
 {
     if (m_createClassicIndicatorWindowCallback) {
         const void *thisPtr = this;
-        return m_createClassicIndicatorWindowCallback(const_cast<void *>(thisPtr), arg__1);
+        return m_createClassicIndicatorWindowCallback(const_cast<void *>(thisPtr), arg__1, parent);
     } else {
-        return ::KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(arg__1);
+        return ::KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(arg__1, parent);
     }
 }
-KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1) const
+KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent) const
 {
-    return ::KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(arg__1);
+    return ::KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(arg__1, parent);
+}
+KDDockWidgets::flutter::IndicatorWindow *ViewFactory_wrapper::createClassicIndicatorWindow_flutter(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent) const
+{
+    if (m_createClassicIndicatorWindow_flutterCallback) {
+        const void *thisPtr = this;
+        return m_createClassicIndicatorWindow_flutterCallback(const_cast<void *>(thisPtr), arg__1, parent);
+    } else {
+        return ::KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow_flutter(arg__1, parent);
+    }
+}
+KDDockWidgets::flutter::IndicatorWindow *ViewFactory_wrapper::createClassicIndicatorWindow_flutter_nocallback(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent) const
+{
+    return ::KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow_flutter(arg__1, parent);
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
 {
@@ -203,11 +216,19 @@ void *c_KDDockWidgets__flutter__ViewFactory__constructor()
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper();
     return reinterpret_cast<void *>(ptr);
 }
-// createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const
-void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay(void *thisObj, void *arg__1_)
+// createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
+void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View(void *thisObj, void *arg__1_, void *parent_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::ClassicDropIndicatorOverlay *>(arg__1_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createClassicIndicatorWindow_nocallback(arg__1);} else {    return targetPtr->createClassicIndicatorWindow(arg__1);} }();
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createClassicIndicatorWindow_nocallback(arg__1,parent);} else {    return targetPtr->createClassicIndicatorWindow(arg__1,parent);} }();
+}
+// createClassicIndicatorWindow_flutter(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
+void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_flutter_ClassicDropIndicatorOverlay_View(void *thisObj, void *arg__1_, void *parent_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::ClassicDropIndicatorOverlay *>(arg__1_);
+    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createClassicIndicatorWindow_flutter_nocallback(arg__1,parent);} else {    return targetPtr->createClassicIndicatorWindow_flutter(arg__1,parent);} }();
 }
 // createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
 void *c_KDDockWidgets__flutter__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int arg__2_, int arg__3_, int arg__4)
@@ -294,6 +315,9 @@ void c_KDDockWidgets__flutter__ViewFactory__registerVirtualMethodCallback(void *
     switch (methodId) {
     case 685:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createClassicIndicatorWindow>(callback);
+        break;
+    case 723:
+        wrapper->m_createClassicIndicatorWindow_flutterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createClassicIndicatorWindow_flutter>(callback);
         break;
     case 686:
         wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createDockWidget>(callback);

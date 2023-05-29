@@ -40,18 +40,62 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
     registerCallbacks();
   }
   static ffi.Pointer<void> createClassicIndicatorWindow_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
+      ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1,
+      ffi.Pointer<void>? parent) {
     var dartInstance =
         QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const! (${thisCpp.address})");
+          "Dart instance not found for ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance.createClassicIndicatorWindow((arg__1 == null ||
-            arg__1.address == 0)
-        ? null
-        : KDDWBindingsCore.ClassicDropIndicatorOverlay.fromCppPointer(arg__1));
+    final result = dartInstance.createClassicIndicatorWindow(
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.ClassicDropIndicatorOverlay.fromCppPointer(
+                arg__1),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
+    return result.thisCpp;
+  } // createClassicIndicatorWindow_flutter(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
+
+  KDDWBindingsFlutter.IndicatorWindow createClassicIndicatorWindow_flutter(
+      KDDWBindingsCore.ClassicDropIndicatorOverlay? arg__1,
+      {required KDDWBindingsCore.View? parent}) {
+    final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(723))
+        .asFunction();
+    ffi.Pointer<void> result = func(
+        thisCpp,
+        arg__1 == null ? ffi.nullptr : arg__1.thisCpp,
+        parent == null ? ffi.nullptr : parent.thisCpp);
+    return KDDWBindingsFlutter.IndicatorWindow.fromCppPointer(result, false);
+  }
+
+  static ffi.Pointer<void> createClassicIndicatorWindow_flutter_calledFromC(
+      ffi.Pointer<void> thisCpp,
+      ffi.Pointer<void>? arg__1,
+      ffi.Pointer<void>? parent) {
+    var dartInstance =
+        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for ViewFactory::createClassicIndicatorWindow_flutter(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
+      throw Error();
+    }
+    final result = dartInstance.createClassicIndicatorWindow_flutter(
+        (arg__1 == null || arg__1.address == 0)
+            ? null
+            : KDDWBindingsCore.ClassicDropIndicatorOverlay.fromCppPointer(
+                arg__1),
+        parent: (parent == null || parent.address == 0)
+            ? null
+            : KDDWBindingsCore.View.fromCppPointer(parent));
     return result.thisCpp;
   }
 
@@ -272,7 +316,9 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
       case 685:
-        return "c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay";
+        return "c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View";
+      case 723:
+        return "c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_flutter_ClassicDropIndicatorOverlay_View";
       case 686:
         return "c_KDDockWidgets__flutter__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
       case 687:
@@ -301,6 +347,8 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
     switch (methodId) {
       case 685:
         return "createClassicIndicatorWindow";
+      case 723:
+        return "createClassicIndicatorWindow_flutter";
       case 686:
         return "createDockWidget";
       case 687:
@@ -332,10 +380,15 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
             'c_KDDockWidgets__flutter__ViewFactory__registerVirtualMethodCallback')
         .asFunction();
     final callback685 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter
                 .ViewFactory.createClassicIndicatorWindow_calledFromC);
     registerCallback(thisCpp, callback685, 685);
+    final callback723 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter
+                .ViewFactory.createClassicIndicatorWindow_flutter_calledFromC);
+    registerCallback(thisCpp, callback723, 723);
     final callback686 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
         KDDWBindingsFlutter.ViewFactory.createDockWidget_calledFromC);

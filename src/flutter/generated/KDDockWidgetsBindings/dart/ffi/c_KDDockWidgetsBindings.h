@@ -1025,8 +1025,8 @@ void c_KDDockWidgets__DockRegistry__registerVirtualMethodCallback(void *ptr, voi
 void c_KDDockWidgets__DockRegistry_Finalizer(void *, void *cppObj, void *);
 void c_KDDockWidgets__Core_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::ViewFactory::ViewFactory()
 void *c_KDDockWidgets__Core__ViewFactory__constructor();
-// KDDockWidgets::Core::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const
-void *c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
+void *c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Core::ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 void *c_KDDockWidgets__Core__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int options_, int layoutSaverOptions_, int windowFlags);
 // KDDockWidgets::Core::ViewFactory::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const
@@ -1053,8 +1053,10 @@ void c_KDDockWidgets__Core__ViewFactory__destructor(void *thisObj);
 void c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__Core__ViewFactory_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::ViewFactory::ViewFactory()
 void *c_KDDockWidgets__flutter__ViewFactory__constructor();
-// KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1) const
-void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
+void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View(void *thisObj, void *arg__1_, void *parent_);
+// KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow_flutter(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
+void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_flutter_ClassicDropIndicatorOverlay_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> arg__2, QFlags<KDDockWidgets::LayoutSaverOption> arg__3, Qt::WindowFlags arg__4) const
 void *c_KDDockWidgets__flutter__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags(void *thisObj, const char *uniqueName_, int arg__2_, int arg__3_, int arg__4);
 // KDDockWidgets::flutter::ViewFactory::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const
@@ -3449,24 +3451,130 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::IndicatorWindow::IndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * classicIndicators)
-void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicDropIndicatorOverlay(void *classicIndicators_);
+void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::IndicatorWindow::IndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent)
+void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicDropIndicatorOverlay_View(void *arg__1_, void *parent_);
+// KDDockWidgets::flutter::IndicatorWindow::activateWindow()
+void c_KDDockWidgets__flutter__IndicatorWindow__activateWindow(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::close()
+bool c_KDDockWidgets__flutter__IndicatorWindow__close(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::createPlatformWindow()
+void c_KDDockWidgets__flutter__IndicatorWindow__createPlatformWindow(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::flags() const
+int c_KDDockWidgets__flutter__IndicatorWindow__flags(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::geometry() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__geometry(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::grabMouse()
+void c_KDDockWidgets__flutter__IndicatorWindow__grabMouse(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::hasFocus() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__hasFocus(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::hide()
+void c_KDDockWidgets__flutter__IndicatorWindow__hide(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::hover(QPoint globalPos)
 int c_KDDockWidgets__flutter__IndicatorWindow__hover_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::flutter::IndicatorWindow::init()
+void c_KDDockWidgets__flutter__IndicatorWindow__init(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isActiveWindow() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isActiveWindow(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isExplicitlyHidden() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isExplicitlyHidden(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isMaximized() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isMaximized(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isMinimized() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isNull() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isNull(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isRootView() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isRootView(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isVisible() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isVisible(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isWindow() const
 bool c_KDDockWidgets__flutter__IndicatorWindow__isWindow(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::mapFromGlobal(QPoint globalPt) const
+void *c_KDDockWidgets__flutter__IndicatorWindow__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
+// KDDockWidgets::flutter::IndicatorWindow::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const
+void *c_KDDockWidgets__flutter__IndicatorWindow__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
+// KDDockWidgets::flutter::IndicatorWindow::mapToGlobal(QPoint localPt) const
+void *c_KDDockWidgets__flutter__IndicatorWindow__mapToGlobal_QPoint(void *thisObj, void *localPt_);
+// KDDockWidgets::flutter::IndicatorWindow::maxSizeHint() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__maxSizeHint(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::minSize() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__minSize(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::minimumHeight() const
+int c_KDDockWidgets__flutter__IndicatorWindow__minimumHeight(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::minimumWidth() const
+int c_KDDockWidgets__flutter__IndicatorWindow__minimumWidth(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::move(int x, int y)
+void c_KDDockWidgets__flutter__IndicatorWindow__move_int_int(void *thisObj, int x, int y);
+// KDDockWidgets::flutter::IndicatorWindow::normalGeometry() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__normalGeometry(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::objectName() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__objectName(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::onChildAdded(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__IndicatorWindow__onChildAdded_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::IndicatorWindow::onChildRemoved(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__IndicatorWindow__onChildRemoved_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::IndicatorWindow::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__IndicatorWindow__onChildVisibilityChanged_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::IndicatorWindow::onGeometryChanged()
+void c_KDDockWidgets__flutter__IndicatorWindow__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::onResize(int h, int w)
+bool c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::flutter::IndicatorWindow::raise()
 void c_KDDockWidgets__flutter__IndicatorWindow__raise(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::raiseAndActivate()
+void c_KDDockWidgets__flutter__IndicatorWindow__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::releaseKeyboard()
+void c_KDDockWidgets__flutter__IndicatorWindow__releaseKeyboard(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::releaseMouse()
+void c_KDDockWidgets__flutter__IndicatorWindow__releaseMouse(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::resize(QSize arg__1)
 void c_KDDockWidgets__flutter__IndicatorWindow__resize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::setCursor(Qt::CursorShape shape)
+void c_KDDockWidgets__flutter__IndicatorWindow__setCursor_CursorShape(void *thisObj, int shape);
+// KDDockWidgets::flutter::IndicatorWindow::setFixedHeight(int h)
+void c_KDDockWidgets__flutter__IndicatorWindow__setFixedHeight_int(void *thisObj, int h);
+// KDDockWidgets::flutter::IndicatorWindow::setFixedWidth(int w)
+void c_KDDockWidgets__flutter__IndicatorWindow__setFixedWidth_int(void *thisObj, int w);
 // KDDockWidgets::flutter::IndicatorWindow::setGeometry(QRect arg__1)
 void c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::setHeight(int h)
+void c_KDDockWidgets__flutter__IndicatorWindow__setHeight_int(void *thisObj, int h);
+// KDDockWidgets::flutter::IndicatorWindow::setMaximumSize(QSize sz)
+void c_KDDockWidgets__flutter__IndicatorWindow__setMaximumSize_QSize(void *thisObj, void *sz_);
+// KDDockWidgets::flutter::IndicatorWindow::setMinimumSize(QSize sz)
+void c_KDDockWidgets__flutter__IndicatorWindow__setMinimumSize_QSize(void *thisObj, void *sz_);
+// KDDockWidgets::flutter::IndicatorWindow::setMouseTracking(bool enable)
+void c_KDDockWidgets__flutter__IndicatorWindow__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::flutter::IndicatorWindow::setObjectName(const QString & arg__1)
 void c_KDDockWidgets__flutter__IndicatorWindow__setObjectName_QString(void *thisObj, const char *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::setParent(KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__flutter__IndicatorWindow__setParent_View(void *thisObj, void *parent_);
+// KDDockWidgets::flutter::IndicatorWindow::setSize(int w, int h)
+void c_KDDockWidgets__flutter__IndicatorWindow__setSize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::IndicatorWindow::setVisible(bool arg__1)
 void c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::flutter::IndicatorWindow::setWidth(int w)
+void c_KDDockWidgets__flutter__IndicatorWindow__setWidth_int(void *thisObj, int w);
+// KDDockWidgets::flutter::IndicatorWindow::setWindowOpacity(double v)
+void c_KDDockWidgets__flutter__IndicatorWindow__setWindowOpacity_double(void *thisObj, double v);
+// KDDockWidgets::flutter::IndicatorWindow::setWindowTitle(const QString & title)
+void c_KDDockWidgets__flutter__IndicatorWindow__setWindowTitle_QString(void *thisObj, const char *title_);
+// KDDockWidgets::flutter::IndicatorWindow::setZOrder(int z)
+void c_KDDockWidgets__flutter__IndicatorWindow__setZOrder_int(void *thisObj, int z);
+// KDDockWidgets::flutter::IndicatorWindow::show()
+void c_KDDockWidgets__flutter__IndicatorWindow__show(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::showMaximized()
+void c_KDDockWidgets__flutter__IndicatorWindow__showMaximized(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::showMinimized()
+void c_KDDockWidgets__flutter__IndicatorWindow__showMinimized(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::showNormal()
+void c_KDDockWidgets__flutter__IndicatorWindow__showNormal(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::sizeHint() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__sizeHint(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::update()
+void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
