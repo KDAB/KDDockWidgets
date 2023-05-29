@@ -35,6 +35,8 @@ public:
     void setDropLocation(DropLocation);
     void updateVisibility() override;
 
+    Core::ClassicIndicatorWindowViewInterface *indicatorWindow() const;
+
 Q_SIGNALS:
     void indicatorsVisibleChanged();
 
