@@ -25,10 +25,9 @@ IndicatorWindow::IndicatorWindow(ClassicDropIndicatorOverlay *controller, Core::
 {
 }
 
-
 QPoint IndicatorWindow::posForIndicator(DropLocation loc) const
 {
-    Q_UNUSED(loc);
+    qWarning() << Q_FUNC_INFO << "Implement me" << loc;
     return {};
 }
 
@@ -36,35 +35,42 @@ DropLocation IndicatorWindow::hover(QPoint globalPos)
 {
     DropLocation loc = DropLocation_None;
 
-    Q_UNUSED(globalPos);
+    qWarning() << Q_FUNC_INFO << "Implement me" << globalPos;
     return loc;
 }
 
 void IndicatorWindow::updatePositions()
 {
+    qWarning() << Q_FUNC_INFO << "Implement me";
 }
 
 void IndicatorWindow::raise()
 {
+    // Nothing to do for flutter, it's raised
 }
 
 void IndicatorWindow::setGeometry(QRect)
 {
+    // TODOm3: Only needed once real multi-window
 }
 
 void IndicatorWindow::setObjectName(const QString &)
 {
+    // Not needed for flutter
 }
 
-void IndicatorWindow::setVisible(bool)
+void IndicatorWindow::setVisible(bool is)
 {
+    flutter::View::setVisible(is);
 }
 
 void IndicatorWindow::resize(QSize)
 {
+    // TODOm3: Only needed once real multi-window
 }
 
 bool IndicatorWindow::isWindow() const
 {
-    return true;
+    // TODOm3: Change to true once real multi-window
+    return false;
 }
