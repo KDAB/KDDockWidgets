@@ -28,6 +28,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
+QPoint Platform::s_lastCursorPosition = { -1, -1 };
+
 Platform::Platform()
 {
     init();
@@ -176,7 +178,7 @@ void Platform::runDelayed(int, Core::DelayedCall *)
 
 QPoint Platform::cursorPos() const
 {
-    return {};
+    return flutter::Platform::s_lastCursorPosition;
 }
 
 void Platform::setCursorPos(QPoint)

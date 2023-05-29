@@ -40,6 +40,10 @@ public:
         return static_cast<Platform *>(Platform::instance());
     }
 
+    /// Flutter doesn't have a better way of retrieving the cursor position
+    /// so save it whenever we get a move event
+    static QPoint s_lastCursorPosition;
+
     const char *name() const override;
     bool hasActivePopup() const override;
     Core::ViewFactory *createDefaultViewFactory() override;

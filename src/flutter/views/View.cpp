@@ -516,6 +516,11 @@ void View::onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos
     buttons.setFlag(Qt::LeftButton, leftIsPressed);
     Qt::KeyboardModifiers modifiers = Qt::NoModifier;
 
+    if (eventType == Event::MouseMove) {
+        // Poor man's QCursor::pos()
+        flutter::Platform::s_lastCursorPosition = globalPos;
+    }
+
     auto me = new MouseEvent(eventType, localPos, globalPos, globalPos, buttons, buttons, modifiers);
 
     if (!deliverViewEventToFilters(me)) {
@@ -524,7 +529,6 @@ void View::onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos
         if (eventType == Event::Type::MouseButtonPress)
             onMousePress(me);
     }
-
 
     // TODOm3: Who deletes the event ?
 }
