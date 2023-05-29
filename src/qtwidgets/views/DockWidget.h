@@ -46,6 +46,7 @@ class DOCKS_EXPORT DockWidget : public QtWidgets::View<QWidget>,
 public:
     using Core::DockWidgetViewInterface::raise;
     using Core::DockWidgetViewInterface::show;
+    using QWidget::size;
 
     /**
      * @brief constructs a new DockWidget

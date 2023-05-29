@@ -52,6 +52,7 @@ class DOCKS_EXPORT MainWindow : public View<QMainWindow>,
     Q_OBJECT
 public:
     using MainWindowViewInterface::addDockWidget; // don't consider QMainWindow's one
+    using QWidget::size;
 
     ///@brief Constructor. Use it as you would use QMainWindow.
     ///@param uniqueName Mandatory name that should be unique between all MainWindow instances.
