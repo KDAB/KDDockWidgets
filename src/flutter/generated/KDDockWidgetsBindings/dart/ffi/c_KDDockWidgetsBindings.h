@@ -1101,6 +1101,8 @@ bool c_KDDockWidgets__Core__Platform__inDisallowedDragView_QPoint(void *thisObj,
 void c_KDDockWidgets__Core__Platform__installMessageHandler(void *thisObj);
 // KDDockWidgets::Core::Platform::instance()
 void *c_static_KDDockWidgets__Core__Platform__instance();
+// KDDockWidgets::Core::Platform::isInitialized()
+bool c_static_KDDockWidgets__Core__Platform__isInitialized();
 // KDDockWidgets::Core::Platform::isLeftMouseButtonPressed() const
 bool c_KDDockWidgets__Core__Platform__isLeftMouseButtonPressed(void *thisObj);
 // KDDockWidgets::Core::Platform::isProcessingAppQuitEvent() const
@@ -1809,6 +1811,8 @@ void c_KDDockWidgets__flutter__TitleBar__onChildVisibilityChanged_View(void *thi
 void c_KDDockWidgets__flutter__TitleBar__onGeometryChanged(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__TitleBar__onResize_int_int(void *thisObj, int h, int w);
+// KDDockWidgets::flutter::TitleBar::onTitleBarChanged(const QString & arg__1)
+void c_KDDockWidgets__flutter__TitleBar__onTitleBarChanged_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::flutter::TitleBar::raise()
 void c_KDDockWidgets__flutter__TitleBar__raise(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::raiseAndActivate()

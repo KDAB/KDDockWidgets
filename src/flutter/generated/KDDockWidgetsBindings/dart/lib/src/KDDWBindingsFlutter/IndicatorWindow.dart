@@ -163,23 +163,23 @@ class IndicatorWindow
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1779:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__hover_QPoint";
-      case 1780:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__isWindow";
-      case 1781:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation";
       case 1782:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__raise";
+        return "c_KDDockWidgets__flutter__IndicatorWindow__hover_QPoint";
       case 1783:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__resize_QSize";
+        return "c_KDDockWidgets__flutter__IndicatorWindow__isWindow";
       case 1784:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_QRect";
+        return "c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation";
       case 1785:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__setObjectName_QString";
+        return "c_KDDockWidgets__flutter__IndicatorWindow__raise";
       case 1786:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool";
+        return "c_KDDockWidgets__flutter__IndicatorWindow__resize_QSize";
       case 1787:
+        return "c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_QRect";
+      case 1788:
+        return "c_KDDockWidgets__flutter__IndicatorWindow__setObjectName_QString";
+      case 1789:
+        return "c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool";
+      case 1790:
         return "c_KDDockWidgets__flutter__IndicatorWindow__updatePositions";
     }
     return super.cFunctionSymbolName(methodId);
@@ -187,23 +187,23 @@ class IndicatorWindow
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1779:
-        return "hover";
-      case 1780:
-        return "isWindow";
-      case 1781:
-        return "posForIndicator";
       case 1782:
-        return "raise";
+        return "hover";
       case 1783:
-        return "resize";
+        return "isWindow";
       case 1784:
-        return "setGeometry";
+        return "posForIndicator";
       case 1785:
-        return "setObjectName";
+        return "raise";
       case 1786:
-        return "setVisible";
+        return "resize";
       case 1787:
+        return "setGeometry";
+      case 1788:
+        return "setObjectName";
+      case 1789:
+        return "setVisible";
+      case 1790:
         return "updatePositions";
     }
     throw Error();
@@ -215,42 +215,42 @@ class IndicatorWindow
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1779 = 0;
-    final callback1779 =
+    const callbackExcept1782 = 0;
+    final callback1782 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.IndicatorWindow.hover_calledFromC,
-            callbackExcept1779);
-    registerCallback(thisCpp, callback1779, 1779);
-    const callbackExcept1780 = 0;
-    final callback1780 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.IndicatorWindow.isWindow_calledFromC,
-        callbackExcept1780);
-    registerCallback(thisCpp, callback1780, 1780);
-    final callback1781 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.IndicatorWindow.posForIndicator_calledFromC);
-    registerCallback(thisCpp, callback1781, 1781);
-    final callback1782 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.IndicatorWindow.raise_calledFromC);
+            callbackExcept1782);
     registerCallback(thisCpp, callback1782, 1782);
-    final callback1783 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.IndicatorWindow.resize_calledFromC);
+    const callbackExcept1783 = 0;
+    final callback1783 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.IndicatorWindow.isWindow_calledFromC,
+        callbackExcept1783);
     registerCallback(thisCpp, callback1783, 1783);
     final callback1784 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.IndicatorWindow.setGeometry_calledFromC);
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsFlutter.IndicatorWindow.posForIndicator_calledFromC);
     registerCallback(thisCpp, callback1784, 1784);
-    final callback1785 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.IndicatorWindow.setObjectName_calledFromC);
+    final callback1785 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.IndicatorWindow.raise_calledFromC);
     registerCallback(thisCpp, callback1785, 1785);
     final callback1786 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.IndicatorWindow.resize_calledFromC);
+    registerCallback(thisCpp, callback1786, 1786);
+    final callback1787 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.IndicatorWindow.setGeometry_calledFromC);
+    registerCallback(thisCpp, callback1787, 1787);
+    final callback1788 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.IndicatorWindow.setObjectName_calledFromC);
+    registerCallback(thisCpp, callback1788, 1788);
+    final callback1789 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             KDDWBindingsFlutter.IndicatorWindow.setVisible_calledFromC);
-    registerCallback(thisCpp, callback1786, 1786);
-    final callback1787 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback1789, 1789);
+    final callback1790 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.IndicatorWindow.updatePositions_calledFromC);
-    registerCallback(thisCpp, callback1787, 1787);
+    registerCallback(thisCpp, callback1790, 1790);
   }
 }

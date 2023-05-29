@@ -234,31 +234,31 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1779:
+    case 1782:
         wrapper->m_hoverCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_hover>(callback);
         break;
-    case 1780:
+    case 1783:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isWindow>(callback);
         break;
-    case 1781:
+    case 1784:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 1782:
+    case 1785:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raise>(callback);
         break;
-    case 1783:
+    case 1786:
         wrapper->m_resizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_resize>(callback);
         break;
-    case 1784:
+    case 1787:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setGeometry>(callback);
         break;
-    case 1785:
+    case 1788:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setObjectName>(callback);
         break;
-    case 1786:
+    case 1789:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setVisible>(callback);
         break;
-    case 1787:
+    case 1790:
         wrapper->m_updatePositionsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_updatePositions>(callback);
         break;
     }

@@ -12,10 +12,10 @@
 #include <TitleBar.h>
 #include "core/TitleBar.h"
 #include <core/View.h>
-#include <qsize.h>
-#include <qpoint.h>
 #include <qstring.h>
 #include <qrect.h>
+#include <qpoint.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -92,6 +92,8 @@ public:
     virtual void onGeometryChanged_nocallback();
     virtual bool onResize(int h, int w);
     virtual bool onResize_nocallback(int h, int w);
+    virtual void onTitleBarChanged(const QString &arg__1);
+    virtual void onTitleBarChanged_nocallback(const QString &arg__1);
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -212,6 +214,8 @@ public:
     Callback_onGeometryChanged m_onGeometryChangedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
+    typedef void (*Callback_onTitleBarChanged)(void *, const QString &arg__1);
+    Callback_onTitleBarChanged m_onTitleBarChangedCallback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
     typedef void (*Callback_raiseAndActivate)(void *);
@@ -338,6 +342,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__onChildVis
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__onGeometryChanged(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::onResize(int h, int w)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__onResize_int_int(void *thisObj, int h, int w);
+// KDDockWidgets::flutter::TitleBar::onTitleBarChanged(const QString & arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__onTitleBarChanged_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::flutter::TitleBar::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__raise(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::raiseAndActivate()

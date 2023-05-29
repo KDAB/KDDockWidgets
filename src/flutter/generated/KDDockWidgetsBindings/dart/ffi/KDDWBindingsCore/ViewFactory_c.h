@@ -23,8 +23,8 @@
 #include <ClassicDropIndicatorOverlay.h>
 #include "core/DropArea.h"
 #include <SideBar.h>
-#include <qobject.h>
 #include <qlist.h>
+#include <qobject.h>
 #include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

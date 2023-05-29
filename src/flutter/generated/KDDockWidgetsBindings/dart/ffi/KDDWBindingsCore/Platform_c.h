@@ -48,6 +48,7 @@ public:
     virtual void installMessageHandler();
     virtual void installMessageHandler_nocallback();
     static KDDockWidgets::Core::Platform *instance();
+    static bool isInitialized();
     virtual bool isLeftMouseButtonPressed() const;
     virtual bool isLeftMouseButtonPressed_nocallback() const;
     virtual bool isProcessingAppQuitEvent() const;
@@ -202,6 +203,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__inDisallowedD
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__installMessageHandler(void *thisObj);
 // KDDockWidgets::Core::Platform::instance()
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__Platform__instance();
+// KDDockWidgets::Core::Platform::isInitialized()
+KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Core__Platform__isInitialized();
 // KDDockWidgets::Core::Platform::isLeftMouseButtonPressed() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__isLeftMouseButtonPressed(void *thisObj);
 // KDDockWidgets::Core::Platform::isProcessingAppQuitEvent() const
