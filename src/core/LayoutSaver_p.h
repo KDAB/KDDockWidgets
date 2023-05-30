@@ -19,7 +19,6 @@
 
 #include <QDebug>
 #include <QRect>
-#include <QSettings>
 
 #include <memory>
 
@@ -334,7 +333,6 @@ public:
     void deleteEmptyGroups();
     void clearRestoredProperty();
 
-    std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
     InternalRestoreOptions m_restoreOptions = {};
     QStringList m_affinityNames;
