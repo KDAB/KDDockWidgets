@@ -124,7 +124,6 @@ public:
     int screenNumberFor(std::shared_ptr<Core::Window>) const override;
     bool isProcessingAppQuitEvent() const override;
     QString applicationName() const override;
-    QString organizationName() const override;
     void setMouseCursor(Qt::CursorShape) override;
     void restoreMouseCursor() override;
     DisplayType displayType() const override;

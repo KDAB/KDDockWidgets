@@ -105,12 +105,6 @@ QString Platform::applicationName() const
     return {};
 }
 
-QString Platform::organizationName() const
-{
-    qWarning() << Q_FUNC_INFO << "Not implemented";
-    return {};
-}
-
 void Platform::setMouseCursor(Qt::CursorShape)
 {
     qWarning() << Q_FUNC_INFO << "Not implemented";
