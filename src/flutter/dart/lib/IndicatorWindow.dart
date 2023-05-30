@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'package:KDDockWidgets/IndicatorWidget.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
@@ -47,11 +48,31 @@ class IndicatorWindowWidget extends PositionedWidget {
 
 class IndicatorWindowWidgetState extends PositionedWidgetState {
   final IndicatorWindow indicatorWindow;
+  final List<IndicatorWidget> indicatorWidgets = [];
 
-  IndicatorWindowWidgetState(this.indicatorWindow) : super(indicatorWindow);
+  IndicatorWindowWidgetState(this.indicatorWindow) : super(indicatorWindow) {
+    for (var loc in [
+      KDDockWidgets_DropLocation.DropLocation_Left,
+      KDDockWidgets_DropLocation.DropLocation_Top,
+      KDDockWidgets_DropLocation.DropLocation_Right,
+      KDDockWidgets_DropLocation.DropLocation_Bottom,
+      KDDockWidgets_DropLocation.DropLocation_Center,
+      KDDockWidgets_DropLocation.DropLocation_OutterLeft,
+      KDDockWidgets_DropLocation.DropLocation_OutterTop,
+      KDDockWidgets_DropLocation.DropLocation_OutterRight,
+      KDDockWidgets_DropLocation.DropLocation_OutterBottom
+    ]) {
+      indicatorWidgets.add(IndicatorWidget(loc));
+    }
+  }
 
   @override
   Widget buildContents(BuildContext ctx) {
-    return Container(color: Color(0xffF6E8EA));
+    return Container(
+      color: Color.fromARGB(120, 246, 232, 234),
+      child: Stack(
+        children: indicatorWidgets,
+      ),
+    );
   }
 }
