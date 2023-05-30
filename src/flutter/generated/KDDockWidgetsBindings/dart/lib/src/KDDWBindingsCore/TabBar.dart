@@ -342,7 +342,7 @@ class TabBar extends KDDWBindingsCore.Controller {
         return "c_KDDockWidgets__Core__TabBar__isMDI";
       case 1221:
         return "c_KDDockWidgets__Core__TabBar__isWindow";
-      case 909:
+      case 908:
         return "c_KDDockWidgets__Core__TabBar__setParentView_impl_View";
       case 1238:
         return "c_KDDockWidgets__Core__TabBar__singleDockWidget";
@@ -358,7 +358,7 @@ class TabBar extends KDDWBindingsCore.Controller {
         return "isMDI";
       case 1221:
         return "isWindow";
-      case 909:
+      case 908:
         return "setParentView_impl";
       case 1238:
         return "singleDockWidget";
@@ -386,10 +386,10 @@ class TabBar extends KDDWBindingsCore.Controller {
     final callback1221 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsCore.TabBar.isWindow_calledFromC, callbackExcept1221);
     registerCallback(thisCpp, callback1221, 1221);
-    final callback909 =
+    final callback908 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback909, 909);
+    registerCallback(thisCpp, callback908, 908);
     final callback1238 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.TabBar.singleDockWidget_calledFromC);
     registerCallback(thisCpp, callback1238, 1238);

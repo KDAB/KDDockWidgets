@@ -324,7 +324,7 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
         return "c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredGroupChanged_Group";
       case 1686:
         return "c_KDDockWidgets__Core__DropIndicatorOverlay__posForIndicator_DropLocation";
-      case 909:
+      case 908:
         return "c_KDDockWidgets__Core__DropIndicatorOverlay__setParentView_impl_View";
       case 1699:
         return "c_KDDockWidgets__Core__DropIndicatorOverlay__updateVisibility";
@@ -342,7 +342,7 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
         return "onHoveredGroupChanged";
       case 1686:
         return "posForIndicator";
-      case 909:
+      case 908:
         return "setParentView_impl";
       case 1699:
         return "updateVisibility";
@@ -375,10 +375,10 @@ class DropIndicatorOverlay extends KDDWBindingsCore.Controller {
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             DropIndicatorOverlay.posForIndicator_calledFromC);
     registerCallback(thisCpp, callback1686, 1686);
-    final callback909 =
+    final callback908 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback909, 909);
+    registerCallback(thisCpp, callback908, 908);
     final callback1699 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         DropIndicatorOverlay.updateVisibility_calledFromC);
     registerCallback(thisCpp, callback1699, 1699);

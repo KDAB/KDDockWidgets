@@ -740,7 +740,7 @@ class Group extends KDDWBindingsCore.Controller {
         return "c_KDDockWidgets__Core__Group__focusedWidgetChangedCallback";
       case 1549:
         return "c_KDDockWidgets__Core__Group__isFocusedChangedCallback";
-      case 909:
+      case 908:
         return "c_KDDockWidgets__Core__Group__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -754,7 +754,7 @@ class Group extends KDDWBindingsCore.Controller {
         return "focusedWidgetChangedCallback";
       case 1549:
         return "isFocusedChangedCallback";
-      case 909:
+      case 908:
         return "setParentView_impl";
     }
     throw Error();
@@ -775,9 +775,9 @@ class Group extends KDDWBindingsCore.Controller {
     final callback1549 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.Group.isFocusedChangedCallback_calledFromC);
     registerCallback(thisCpp, callback1549, 1549);
-    final callback909 =
+    final callback908 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Group.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback909, 909);
+    registerCallback(thisCpp, callback908, 908);
   }
 }

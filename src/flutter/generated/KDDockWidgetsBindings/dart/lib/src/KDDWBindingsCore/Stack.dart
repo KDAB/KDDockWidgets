@@ -234,7 +234,7 @@ class Stack extends KDDWBindingsCore.Controller {
         return "c_KDDockWidgets__Core__Stack__isPositionDraggable_QPoint";
       case 1262:
         return "c_KDDockWidgets__Core__Stack__isWindow";
-      case 909:
+      case 908:
         return "c_KDDockWidgets__Core__Stack__setParentView_impl_View";
       case 1274:
         return "c_KDDockWidgets__Core__Stack__singleDockWidget";
@@ -250,7 +250,7 @@ class Stack extends KDDWBindingsCore.Controller {
         return "isPositionDraggable";
       case 1262:
         return "isWindow";
-      case 909:
+      case 908:
         return "setParentView_impl";
       case 1274:
         return "singleDockWidget";
@@ -278,10 +278,10 @@ class Stack extends KDDWBindingsCore.Controller {
     final callback1262 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsCore.Stack.isWindow_calledFromC, callbackExcept1262);
     registerCallback(thisCpp, callback1262, 1262);
-    final callback909 =
+    final callback908 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback909, 909);
+    registerCallback(thisCpp, callback908, 908);
     final callback1274 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.Stack.singleDockWidget_calledFromC);
     registerCallback(thisCpp, callback1274, 1274);

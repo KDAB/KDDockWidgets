@@ -13,9 +13,9 @@
 #include <qstring.h>
 #include <qsize.h>
 #include <core/DockWidget.h>
+#include <qrect.h>
 #include <core/View.h>
 #include <qpoint.h>
-#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -26,6 +26,8 @@ public:
     DockWidget_wrapper(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options = {}, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions = {});
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
+    virtual KDDockWidgets::Core::View *childViewAt_flutter(QPoint localPos) const;
+    virtual KDDockWidgets::Core::View *childViewAt_flutter_nocallback(QPoint localPos) const;
     virtual bool close();
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
@@ -141,6 +143,8 @@ public:
     virtual void update_nocallback();
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
+    typedef KDDockWidgets::Core::View *(*Callback_childViewAt_flutter)(void *, QPoint *localPos);
+    Callback_childViewAt_flutter m_childViewAt_flutterCallback = nullptr;
     typedef bool (*Callback_close)(void *);
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
@@ -261,6 +265,8 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__constructor_QString_DockWidgetOptions_LayoutSaverOptions(const char *uniqueName_, int options_, int layoutSaverOptions_);
 // KDDockWidgets::flutter::DockWidget::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__activateWindow(void *thisObj);
+// KDDockWidgets::flutter::DockWidget::childViewAt_flutter(QPoint localPos) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::DockWidget::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DockWidget__close(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::createPlatformWindow()

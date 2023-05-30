@@ -64,8 +64,6 @@ public:
     virtual void onMainWindowCreated_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
     virtual void onMainWindowDestroyed(KDDockWidgets::Core::MainWindow *arg__1);
     virtual void onMainWindowDestroyed_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
-    virtual QString organizationName() const;
-    virtual QString organizationName_nocallback() const;
     virtual void pauseForDartDebugger();
     virtual void pauseForDartDebugger_nocallback();
     virtual void pauseForDebugger();
@@ -138,8 +136,6 @@ public:
     Callback_onMainWindowCreated m_onMainWindowCreatedCallback = nullptr;
     typedef void (*Callback_onMainWindowDestroyed)(void *, KDDockWidgets::Core::MainWindow *arg__1);
     Callback_onMainWindowDestroyed m_onMainWindowDestroyedCallback = nullptr;
-    typedef QString *(*Callback_organizationName)(void *);
-    Callback_organizationName m_organizationNameCallback = nullptr;
     typedef void (*Callback_pauseForDartDebugger)(void *);
     Callback_pauseForDartDebugger m_pauseForDartDebuggerCallback = nullptr;
     typedef void (*Callback_pauseForDebugger)(void *);
@@ -220,8 +216,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onFloating
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
-// KDDockWidgets::flutter::Platform::organizationName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__organizationName(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDartDebugger()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDartDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDebugger()

@@ -468,7 +468,7 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
         return "c_KDDockWidgets__Core__FloatingWindow__isMDI";
       case 1625:
         return "c_KDDockWidgets__Core__FloatingWindow__isWindow";
-      case 909:
+      case 908:
         return "c_KDDockWidgets__Core__FloatingWindow__setParentView_impl_View";
       case 1644:
         return "c_KDDockWidgets__Core__FloatingWindow__singleDockWidget";
@@ -482,7 +482,7 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
         return "isMDI";
       case 1625:
         return "isWindow";
-      case 909:
+      case 908:
         return "setParentView_impl";
       case 1644:
         return "singleDockWidget";
@@ -505,10 +505,10 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
         KDDWBindingsCore.FloatingWindow.isWindow_calledFromC,
         callbackExcept1625);
     registerCallback(thisCpp, callback1625, 1625);
-    final callback909 =
+    final callback908 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback909, 909);
+    registerCallback(thisCpp, callback908, 908);
     final callback1644 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.FloatingWindow.singleDockWidget_calledFromC);
     registerCallback(thisCpp, callback1644, 1644);

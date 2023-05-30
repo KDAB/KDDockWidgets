@@ -13,9 +13,9 @@
 #include "core/TitleBar.h"
 #include <core/View.h>
 #include <qstring.h>
+#include <qrect.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <qrect.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -26,6 +26,8 @@ public:
     TitleBar_wrapper(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent = nullptr);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
+    virtual KDDockWidgets::Core::View *childViewAt_flutter(QPoint localPos) const;
+    virtual KDDockWidgets::Core::View *childViewAt_flutter_nocallback(QPoint localPos) const;
     virtual bool close();
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
@@ -148,6 +150,8 @@ public:
     virtual void update_nocallback();
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
+    typedef KDDockWidgets::Core::View *(*Callback_childViewAt_flutter)(void *, QPoint *localPos);
+    Callback_childViewAt_flutter m_childViewAt_flutterCallback = nullptr;
     typedef bool (*Callback_close)(void *);
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
@@ -276,6 +280,8 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__TitleBar__constructor_TitleBar_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::TitleBar::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TitleBar__activateWindow(void *thisObj);
+// KDDockWidgets::flutter::TitleBar::childViewAt_flutter(QPoint localPos) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__TitleBar__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::TitleBar::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TitleBar__close(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::createPlatformWindow()
