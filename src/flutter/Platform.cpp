@@ -117,8 +117,8 @@ void Platform::restoreMouseCursor()
 
 Core::Platform::DisplayType Platform::displayType() const
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented";
-    return {};
+    /// TODOm4: Improve this
+    return DisplayType::Other;
 }
 
 bool Platform::isLeftMouseButtonPressed() const
