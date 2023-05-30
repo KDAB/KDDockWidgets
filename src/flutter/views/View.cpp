@@ -299,17 +299,26 @@ bool View::isRootView() const
 
 QPoint View::mapToGlobal(QPoint) const
 {
+    qWarning() << Q_FUNC_INFO << "Implemented in Dart";
     return {};
 }
 
 QPoint View::mapFromGlobal(QPoint) const
 {
+    qWarning() << Q_FUNC_INFO << "Implemented in Dart";
     return {};
 }
 
-QPoint View::mapTo(Core::View *, QPoint) const
+QPoint View::mapTo(Core::View *other, QPoint pt) const
 {
-    return {};
+    if (!other)
+        return {};
+
+    if (other->equals(this))
+        return pt;
+
+    const QPoint global = mapToGlobal(pt);
+    return other->mapFromGlobal(global);
 }
 
 void View::setWindowOpacity(double)
@@ -372,16 +381,21 @@ std::shared_ptr<Core::Window> View::window() const
     return std::shared_ptr<Core::Window>(window);
 }
 
-std::shared_ptr<Core::View> View::childViewAt(QPoint) const
+std::shared_ptr<Core::View> View::childViewAt(QPoint localPos) const
 {
+    if (auto v = childViewAt_flutter(localPos))
+        return v->asWrapper();
+    return nullptr;
+}
+
+Core::View *View::childViewAt_flutter(QPoint) const
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in Dart";
     return {};
 }
 
 std::shared_ptr<Core::View> View::parentView() const
 {
-    // qDebug() << Q_FUNC_INFO << "parent is" << ( void * )m_parentView << "this=" << ( void * )this
-    //          << int(type());
-
     if (m_parentView)
         return m_parentView->asWrapper();
 
@@ -408,7 +422,6 @@ void View::releaseMouse()
 
 void View::releaseKeyboard()
 {
-    // Not needed for QtQuick
 }
 
 void View::setFocus(Qt::FocusReason)
