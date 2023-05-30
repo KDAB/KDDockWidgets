@@ -129,6 +129,29 @@ class View_mixin {
     }
   }
 
+  QPoint mapToGlobal(QPoint localPt) {
+    final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null) {
+      print("mapToGlobal: Could not find render box for $flutterWidget");
+      return QPoint();
+    }
+
+    final Offset global = box
+        .localToGlobal(Offset(localPt.x().toDouble(), localPt.y().toDouble()));
+    return QPoint.ctor2(global.dx.toInt(), global.dy.toInt());
+  }
+
+  QPoint mapFromGlobal(QPoint globalPt) {
+    final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null) {
+      print("mapToGlobal: Could not find render box for $flutterWidget");
+      return QPoint();
+    }
+    final Offset local = box.globalToLocal(
+        Offset(globalPt.x().toDouble(), globalPt.y().toDouble()));
+    return QPoint.ctor2(local.dx.toInt(), local.dy.toInt());
+  }
+
   List<Widget> visibleChildWidgets() {
     return childWidgets.where((w) {
       return !(w as PositionedWidget).kddwView.kddwView.isExplicitlyHidden();

@@ -5073,6 +5073,27 @@ KDDW_QCORO_TASK tst_restoreFlagsFromVersion16()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_map()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dockA = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    auto dockB = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+
+    m->addDockWidget(dockA, KDDockWidgets::Location_OnTop);
+    m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
+
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+    const QPoint localPt = { 10, 10 };
+    QPoint global = dockA->view()->mapToGlobal(localPt);
+    CHECK_EQ(dockA->view()->mapFromGlobal(global), localPt);
+
+    global = dockB->view()->mapToGlobal(localPt);
+    CHECK_EQ(dockB->view()->mapFromGlobal(global), localPt);
+
+    KDDW_TEST_RETURN(true);
+}
+
 static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>>
 {
     tst_simple1,
@@ -5173,6 +5194,7 @@ static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>>
         tst_titlebarNumDockWidgetsChanged,
         tst_closed,
         tst_restoreFlagsFromVersion16,
+        tst_map,
 #if !defined(KDDW_FRONTEND_FLUTTER)
         tst_doesntHaveNativeTitleBar,
         tst_detachPos,
