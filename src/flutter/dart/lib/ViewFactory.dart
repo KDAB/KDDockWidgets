@@ -22,6 +22,7 @@ import 'DockWidget.dart';
 import 'DropArea.dart';
 import 'Group.dart';
 import 'IndicatorWindow.dart';
+import 'RubberBand.dart';
 import 'Separator.dart';
 import 'Stack.dart';
 import 'TitleBar.dart';
@@ -70,6 +71,11 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   KDDWBindingsCore.View createSeparator(KDDWBindingsCore.Separator? separator,
       {required KDDWBindingsCore.View? parent}) {
     return Separator(separator, parent: parent);
+  }
+
+  @override
+  KDDWBindingsCore.View createRubberBand(KDDWBindingsCore.View? parent) {
+    return RubberBand(parent);
   }
 
   @override
