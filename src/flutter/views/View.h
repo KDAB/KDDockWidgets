@@ -126,9 +126,6 @@ public:
     virtual void onChildVisibilityChanged(Core::View *childView);
     virtual void onGeometryChanged();
 
-    /// Implemented in dart, can't overload the original one since shared_ptr isn't known by Dart
-    virtual Core::View *childViewAt_flutter(QPoint localPos) const;
-
     /// Called by flutter when a mouse event is received
     void onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed);
 

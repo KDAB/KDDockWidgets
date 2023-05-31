@@ -153,28 +153,6 @@ class View_mixin {
     return QPoint.ctor2(local.dx.toInt(), local.dy.toInt());
   }
 
-  KDDWBindingsCore.View childViewAt_flutter(QPoint localPos) {
-    final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box == null) {
-      print("childViewAt_flutter: Could not find render box for"
-          "widget=$flutterWidget key=$widgetKey context=${widgetKey.currentContext}; "
-          "state=${widgetKey.currentState}; widget=${widgetKey.currentWidget}");
-      return asFlutterView();
-    }
-
-    var result = BoxHitTestResult();
-    box.hitTest(result,
-        position: Offset(localPos.x().toDouble(), localPos.y().toDouble()));
-
-    for (var entry in result.path) {
-      RenderBox box2 = entry.target as RenderBox;
-      print("Found ${box2}");
-    }
-
-    print("childViewAt_flutter!!");
-    return asFlutterView();
-  }
-
   List<Widget> visibleChildWidgets() {
     return childWidgets.where((w) {
       return !(w as PositionedWidget).kddwView.kddwView.isExplicitlyHidden();

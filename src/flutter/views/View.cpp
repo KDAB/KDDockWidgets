@@ -383,15 +383,21 @@ std::shared_ptr<Core::Window> View::window() const
 
 std::shared_ptr<Core::View> View::childViewAt(QPoint localPos) const
 {
-    if (auto v = childViewAt_flutter(localPos))
-        return v->asWrapper();
-    return nullptr;
-}
+    const QPoint globalPt = mapToGlobal(localPos);
+    for (auto child : m_childViews) {
+        if (!child->isVisible())
+            continue;
 
-Core::View *View::childViewAt_flutter(QPoint) const
-{
-    qWarning() << Q_FUNC_INFO << "Implemented in Dart";
-    return {};
+        if (auto result = child->childViewAt(child->mapFromGlobal(globalPt))) {
+            return result;
+        }
+
+        // We favored depth first, but now it's our turn
+        if (rect().contains(localPos))
+            return const_cast<flutter::View *>(this)->asWrapper();
+    }
+
+    return nullptr;
 }
 
 std::shared_ptr<Core::View> View::parentView() const

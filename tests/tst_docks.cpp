@@ -5094,6 +5094,26 @@ KDDW_QCORO_TASK tst_map()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_childViewAt()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dockA = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    auto dockB = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+
+    m->addDockWidget(dockA, KDDockWidgets::Location_OnTop);
+    m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
+    m->show();
+
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+    const QPoint localPt = { 100, 200 };
+    auto child = m->view()->childViewAt(localPt);
+    CHECK(child);
+    CHECK(!child->equals(m->view()));
+
+    KDDW_TEST_RETURN(true);
+}
+
 static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>>
 {
     tst_simple1,
@@ -5195,6 +5215,7 @@ static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>>
         tst_closed,
         tst_restoreFlagsFromVersion16,
         tst_map,
+        tst_childViewAt,
 #if !defined(KDDW_FRONTEND_FLUTTER)
         tst_doesntHaveNativeTitleBar,
         tst_detachPos,

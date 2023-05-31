@@ -29,7 +29,6 @@ void maybeResumeCoRoutines() {
 
   /// TODOm3: Check if this consumes a lot of CPU
   Future.delayed(const Duration(seconds: 1), () {
-    // print("maybeResumeCoRoutines()");
     maybeResumeCoRoutines();
   });
 }
