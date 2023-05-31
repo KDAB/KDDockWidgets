@@ -130,10 +130,16 @@ class View_mixin {
     }
   }
 
+  bool isMounted() {
+    return widgetKey.currentContext != null;
+  }
+
   QPoint mapToGlobal(QPoint localPt) {
     final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
     if (box == null) {
-      print("mapToGlobal: Could not find render box for $flutterWidget");
+      print("mapToGlobal: Could not find render box for widget=$flutterWidget"
+          "; context=${widgetKey.currentContext}; visible=${kddwView.isVisible()}");
+      kddwView.dumpDebug();
       return QPoint();
     }
 
@@ -145,7 +151,8 @@ class View_mixin {
   QPoint mapFromGlobal(QPoint globalPt) {
     final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
     if (box == null) {
-      print("mapToGlobal: Could not find render box for $flutterWidget");
+      print("mapFromGlobal: Could not find render box for widget=$flutterWidget"
+          "; context=${widgetKey.currentContext}; visible=${kddwView.isVisible()}");
       return QPoint();
     }
     final Offset local = box.globalToLocal(

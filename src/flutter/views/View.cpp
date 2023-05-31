@@ -383,9 +383,14 @@ std::shared_ptr<Core::Window> View::window() const
 
 std::shared_ptr<Core::View> View::childViewAt(QPoint localPos) const
 {
+    if (!isMounted())
+        return nullptr;
+
     const QPoint globalPt = mapToGlobal(localPos);
+
     for (auto child : m_childViews) {
-        if (!child->isVisible())
+        // Needs to be mounted (i.e. being shown by flutter's render tree, otherwise there's no geometry)
+        if (!child->isVisible() || !static_cast<flutter::View *>(child)->isMounted())
             continue;
 
         if (auto result = child->childViewAt(child->mapFromGlobal(globalPt))) {
@@ -550,4 +555,10 @@ void View::onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos
     }
 
     // TODOm3: Who deletes the event ?
+}
+
+bool View::isMounted() const
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
+    return false;
 }

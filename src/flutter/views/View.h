@@ -126,6 +126,10 @@ public:
     virtual void onChildVisibilityChanged(Core::View *childView);
     virtual void onGeometryChanged();
 
+    /// Returns whether the flutter Widget associated with this view is mounted
+    /// ie, it has a render object
+    virtual bool isMounted() const;
+
     /// Called by flutter when a mouse event is received
     void onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed);
 
