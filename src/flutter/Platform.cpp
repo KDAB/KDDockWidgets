@@ -101,7 +101,8 @@ bool Platform::isProcessingAppQuitEvent() const
 
 QString Platform::applicationName() const
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented";
+    // TODOm3
+    // qWarning() << Q_FUNC_INFO << "Not implemented";
     return {};
 }
 
