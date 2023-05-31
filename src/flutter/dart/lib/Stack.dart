@@ -25,13 +25,13 @@ class Stack extends KDDWBindingsFlutter.Stack with View_mixin {
   }
 
   Widget createFlutterWidget() {
-    return StackWidget(kddwView, this, key: widgetKey);
+    return StackWidget(kddwView, this, widgetKey);
   }
 }
 
 class StackWidget extends PositionedWidget {
   final Stack StackView;
-  StackWidget(var kddwView, this.StackView, {Key? key})
+  StackWidget(var kddwView, this.StackView, Key key)
       : super(kddwView, key: key);
 
   @override

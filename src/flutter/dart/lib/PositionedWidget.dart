@@ -54,16 +54,21 @@ class PositionedWidgetState extends State<PositionedWidget>
 
   /// Called when children were added or removed (or hidden).
   void childrenChanged() {
-    setState(() {});
+    _updateState();
   }
 
   /// Called when the KDDW View changes size. Rebuilds the flutter Widget.
   void updatePosition() {
-    setState(() {});
+    _updateState();
   }
 
   /// Called when the KDDW View changes size. Rebuilds the flutter Widget.
   void updateSize() {
+    _updateState();
+  }
+
+  void _updateState() {
+    // print("_updateState $this");
     setState(() {});
   }
 

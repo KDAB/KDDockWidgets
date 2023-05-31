@@ -31,7 +31,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   }
 
   Widget createFlutterWidget() {
-    return IndicatorWindowWidget(this, key: widgetKey);
+    return IndicatorWindowWidget(this, widgetKey);
   }
 
   @override
@@ -50,7 +50,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
 
 class IndicatorWindowWidget extends PositionedWidget {
   final IndicatorWindow indicatorWindow;
-  IndicatorWindowWidget(this.indicatorWindow, {Key? key})
+  IndicatorWindowWidget(this.indicatorWindow, Key key)
       : super(indicatorWindow, key: key);
 
   @override
