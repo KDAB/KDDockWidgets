@@ -1639,6 +1639,8 @@ bool c_KDDockWidgets__flutter__View__isExplicitlyHidden(void *thisObj);
 bool c_KDDockWidgets__flutter__View__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::View::isMinimized() const
 bool c_KDDockWidgets__flutter__View__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::View::isMounted() const
+bool c_KDDockWidgets__flutter__View__isMounted(void *thisObj);
 // KDDockWidgets::flutter::View::isNull() const
 bool c_KDDockWidgets__flutter__View__isNull(void *thisObj);
 // KDDockWidgets::flutter::View::isRootView() const
@@ -1773,6 +1775,8 @@ bool c_KDDockWidgets__flutter__TitleBar__isFloatButtonVisible(void *thisObj);
 bool c_KDDockWidgets__flutter__TitleBar__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::isMinimized() const
 bool c_KDDockWidgets__flutter__TitleBar__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::TitleBar::isMounted() const
+bool c_KDDockWidgets__flutter__TitleBar__isMounted(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::isNull() const
 bool c_KDDockWidgets__flutter__TitleBar__isNull(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::isRootView() const
@@ -1893,6 +1897,8 @@ bool c_KDDockWidgets__flutter__TabBar__isExplicitlyHidden(void *thisObj);
 bool c_KDDockWidgets__flutter__TabBar__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::TabBar::isMinimized() const
 bool c_KDDockWidgets__flutter__TabBar__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::TabBar::isMounted() const
+bool c_KDDockWidgets__flutter__TabBar__isMounted(void *thisObj);
 // KDDockWidgets::flutter::TabBar::isNull() const
 bool c_KDDockWidgets__flutter__TabBar__isNull(void *thisObj);
 // KDDockWidgets::flutter::TabBar::isRootView() const
@@ -2027,6 +2033,8 @@ bool c_KDDockWidgets__flutter__Stack__isExplicitlyHidden(void *thisObj);
 bool c_KDDockWidgets__flutter__Stack__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::Stack::isMinimized() const
 bool c_KDDockWidgets__flutter__Stack__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::Stack::isMounted() const
+bool c_KDDockWidgets__flutter__Stack__isMounted(void *thisObj);
 // KDDockWidgets::flutter::Stack::isNull() const
 bool c_KDDockWidgets__flutter__Stack__isNull(void *thisObj);
 // KDDockWidgets::flutter::Stack::isPositionDraggable(QPoint p) const
@@ -2151,6 +2159,8 @@ bool c_KDDockWidgets__flutter__MainWindow__isExplicitlyHidden(void *thisObj);
 bool c_KDDockWidgets__flutter__MainWindow__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::isMinimized() const
 bool c_KDDockWidgets__flutter__MainWindow__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::MainWindow::isMounted() const
+bool c_KDDockWidgets__flutter__MainWindow__isMounted(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::isNull() const
 bool c_KDDockWidgets__flutter__MainWindow__isNull(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::isRootView() const
@@ -2273,6 +2283,8 @@ bool c_KDDockWidgets__flutter__Group__isExplicitlyHidden(void *thisObj);
 bool c_KDDockWidgets__flutter__Group__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::Group::isMinimized() const
 bool c_KDDockWidgets__flutter__Group__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::Group::isMounted() const
+bool c_KDDockWidgets__flutter__Group__isMounted(void *thisObj);
 // KDDockWidgets::flutter::Group::isNull() const
 bool c_KDDockWidgets__flutter__Group__isNull(void *thisObj);
 // KDDockWidgets::flutter::Group::isRootView() const
@@ -2395,6 +2407,8 @@ bool c_KDDockWidgets__flutter__DropArea__isExplicitlyHidden(void *thisObj);
 bool c_KDDockWidgets__flutter__DropArea__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isMinimized() const
 bool c_KDDockWidgets__flutter__DropArea__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::DropArea::isMounted() const
+bool c_KDDockWidgets__flutter__DropArea__isMounted(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isNull() const
 bool c_KDDockWidgets__flutter__DropArea__isNull(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isRootView() const
@@ -2515,6 +2529,8 @@ bool c_KDDockWidgets__flutter__DockWidget__isExplicitlyHidden(void *thisObj);
 bool c_KDDockWidgets__flutter__DockWidget__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::isMinimized() const
 bool c_KDDockWidgets__flutter__DockWidget__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::DockWidget::isMounted() const
+bool c_KDDockWidgets__flutter__DockWidget__isMounted(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::isNull() const
 bool c_KDDockWidgets__flutter__DockWidget__isNull(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::isRootView() const
@@ -3469,6 +3485,8 @@ bool c_KDDockWidgets__flutter__IndicatorWindow__hasFocus(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__hide(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::hover(QPoint globalPos)
 int c_KDDockWidgets__flutter__IndicatorWindow__hover_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::flutter::IndicatorWindow::hover_flutter(QPoint globalPos)
+int c_KDDockWidgets__flutter__IndicatorWindow__hover_flutter_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::flutter::IndicatorWindow::init()
 void c_KDDockWidgets__flutter__IndicatorWindow__init(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isActiveWindow() const
@@ -3479,6 +3497,8 @@ bool c_KDDockWidgets__flutter__IndicatorWindow__isExplicitlyHidden(void *thisObj
 bool c_KDDockWidgets__flutter__IndicatorWindow__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isMinimized() const
 bool c_KDDockWidgets__flutter__IndicatorWindow__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isMounted() const
+bool c_KDDockWidgets__flutter__IndicatorWindow__isMounted(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isNull() const
 bool c_KDDockWidgets__flutter__IndicatorWindow__isNull(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isRootView() const
@@ -3575,6 +3595,8 @@ void *c_KDDockWidgets__flutter__IndicatorWindow__sizeHint(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup)
+void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_);
 void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea)

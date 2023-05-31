@@ -50,6 +50,8 @@ public:
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
     virtual bool isMinimized_nocallback() const;
+    virtual bool isMounted() const;
+    virtual bool isMounted_nocallback() const;
     virtual bool isNull() const;
     virtual bool isNull_nocallback() const;
     virtual bool isRootView() const;
@@ -180,6 +182,8 @@ public:
     Callback_isMaximized m_isMaximizedCallback = nullptr;
     typedef bool (*Callback_isMinimized)(void *);
     Callback_isMinimized m_isMinimizedCallback = nullptr;
+    typedef bool (*Callback_isMounted)(void *);
+    Callback_isMounted m_isMountedCallback = nullptr;
     typedef bool (*Callback_isNull)(void *);
     Callback_isNull m_isNullCallback = nullptr;
     typedef bool (*Callback_isRootView)(void *);
@@ -316,6 +320,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__isExplicitly
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::TabBar::isMinimized() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::TabBar::isMounted() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__isMounted(void *thisObj);
 // KDDockWidgets::flutter::TabBar::isNull() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__isNull(void *thisObj);
 // KDDockWidgets::flutter::TabBar::isRootView() const

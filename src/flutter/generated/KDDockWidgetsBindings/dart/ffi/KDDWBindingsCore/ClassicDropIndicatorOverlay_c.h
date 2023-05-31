@@ -16,8 +16,8 @@
 #include <qsize.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <qrect.h>
-#include <core/View.h>
 #include <core/Group.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

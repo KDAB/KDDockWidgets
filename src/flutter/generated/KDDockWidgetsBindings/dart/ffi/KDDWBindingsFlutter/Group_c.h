@@ -14,8 +14,8 @@
 #include <core/View.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <qpoint.h>
 #include <qstring.h>
+#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -51,6 +51,8 @@ public:
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
     virtual bool isMinimized_nocallback() const;
+    virtual bool isMounted() const;
+    virtual bool isMounted_nocallback() const;
     virtual bool isNull() const;
     virtual bool isNull_nocallback() const;
     virtual bool isRootView() const;
@@ -167,6 +169,8 @@ public:
     Callback_isMaximized m_isMaximizedCallback = nullptr;
     typedef bool (*Callback_isMinimized)(void *);
     Callback_isMinimized m_isMinimizedCallback = nullptr;
+    typedef bool (*Callback_isMounted)(void *);
+    Callback_isMounted m_isMountedCallback = nullptr;
     typedef bool (*Callback_isNull)(void *);
     Callback_isNull m_isNullCallback = nullptr;
     typedef bool (*Callback_isRootView)(void *);
@@ -291,6 +295,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isExplicitlyH
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::Group::isMinimized() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::Group::isMounted() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isMounted(void *thisObj);
 // KDDockWidgets::flutter::Group::isNull() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isNull(void *thisObj);
 // KDDockWidgets::flutter::Group::isRootView() const

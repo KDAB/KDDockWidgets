@@ -205,6 +205,19 @@ bool DropArea_wrapper::isMinimized_nocallback() const
 {
     return ::KDDockWidgets::flutter::DropArea::isMinimized();
 }
+bool DropArea_wrapper::isMounted() const
+{
+    if (m_isMountedCallback) {
+        const void *thisPtr = this;
+        return m_isMountedCallback(const_cast<void *>(thisPtr));
+    } else {
+        return ::KDDockWidgets::flutter::DropArea::isMounted();
+    }
+}
+bool DropArea_wrapper::isMounted_nocallback() const
+{
+    return ::KDDockWidgets::flutter::DropArea::isMounted();
+}
 bool DropArea_wrapper::isNull() const
 {
     if (m_isNullCallback) {
@@ -873,6 +886,11 @@ bool c_KDDockWidgets__flutter__DropArea__isMinimized(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMinimized_nocallback();} else {    return targetPtr->isMinimized();} }();
 }
+// isMounted() const
+bool c_KDDockWidgets__flutter__DropArea__isMounted(void *thisObj)
+{
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMounted_nocallback();} else {    return targetPtr->isMounted();} }();
+}
 // isNull() const
 bool c_KDDockWidgets__flutter__DropArea__isNull(void *thisObj)
 {
@@ -1159,6 +1177,9 @@ void c_KDDockWidgets__flutter__DropArea__registerVirtualMethodCallback(void *ptr
     case 961:
         wrapper->m_isMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper::Callback_isMinimized>(callback);
         break;
+    case 1044:
+        wrapper->m_isMountedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper::Callback_isMounted>(callback);
+        break;
     case 962:
         wrapper->m_isNullCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper::Callback_isNull>(callback);
         break;
@@ -1198,16 +1219,16 @@ void c_KDDockWidgets__flutter__DropArea__registerVirtualMethodCallback(void *ptr
     case 975:
         wrapper->m_objectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper::Callback_objectName>(callback);
         break;
-    case 1044:
+    case 1045:
         wrapper->m_onChildAddedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper::Callback_onChildAdded>(callback);
         break;
-    case 1045:
+    case 1046:
         wrapper->m_onChildRemovedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper::Callback_onChildRemoved>(callback);
         break;
-    case 1046:
+    case 1047:
         wrapper->m_onChildVisibilityChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper::Callback_onChildVisibilityChanged>(callback);
         break;
-    case 1048:
+    case 1049:
         wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DropArea_wrapper::Callback_onGeometryChanged>(callback);
         break;
     case 977:

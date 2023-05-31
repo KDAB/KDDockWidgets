@@ -16,16 +16,16 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
+#include <FloatingWindow.h>
+#include <core/Layout.h>
 #include <TabBar.h>
 #include "core/TitleBar.h"
-#include "core/MainWindow.h"
+#include "core/DropArea.h"
 #include <core/DockWidget.h>
-#include <core/Group.h>
-#include <core/Layout.h>
 #include "core/Stack.h"
 #include <NonQtCompat_p.h>
-#include "core/DropArea.h"
-#include <FloatingWindow.h>
+#include <core/Group.h>
+#include "core/MainWindow.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -60,6 +60,8 @@ public:
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
     virtual bool isMinimized_nocallback() const;
+    virtual bool isMounted() const;
+    virtual bool isMounted_nocallback() const;
     virtual bool isNull() const;
     virtual bool isNull_nocallback() const;
     virtual bool isRootView() const;
@@ -179,6 +181,8 @@ public:
     Callback_isMaximized m_isMaximizedCallback = nullptr;
     typedef bool (*Callback_isMinimized)(void *);
     Callback_isMinimized m_isMinimizedCallback = nullptr;
+    typedef bool (*Callback_isMounted)(void *);
+    Callback_isMounted m_isMountedCallback = nullptr;
     typedef bool (*Callback_isNull)(void *);
     Callback_isNull m_isNullCallback = nullptr;
     typedef bool (*Callback_isRootView)(void *);
@@ -299,6 +303,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isExplicitlyHi
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::View::isMinimized() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::View::isMounted() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isMounted(void *thisObj);
 // KDDockWidgets::flutter::View::isNull() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__isNull(void *thisObj);
 // KDDockWidgets::flutter::View::isRootView() const

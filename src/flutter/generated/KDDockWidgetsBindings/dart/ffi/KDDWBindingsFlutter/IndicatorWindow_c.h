@@ -16,6 +16,7 @@
 #include <qrect.h>
 #include <qsize.h>
 #include <qstring.h>
+#include <core/Group.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -42,6 +43,8 @@ public:
     virtual void hide_nocallback();
     virtual KDDockWidgets::DropLocation hover(QPoint globalPos);
     virtual KDDockWidgets::DropLocation hover_nocallback(QPoint globalPos);
+    virtual KDDockWidgets::DropLocation hover_flutter(QPoint globalPos);
+    virtual KDDockWidgets::DropLocation hover_flutter_nocallback(QPoint globalPos);
     virtual void init();
     virtual void init_nocallback();
     virtual bool isActiveWindow() const;
@@ -52,6 +55,8 @@ public:
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
     virtual bool isMinimized_nocallback() const;
+    virtual bool isMounted() const;
+    virtual bool isMounted_nocallback() const;
     virtual bool isNull() const;
     virtual bool isNull_nocallback() const;
     virtual bool isRootView() const;
@@ -148,6 +153,8 @@ public:
     virtual void update_nocallback();
     virtual void updatePositions();
     virtual void updatePositions_nocallback();
+    virtual void updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup);
+    virtual void updatePositions_flutter_nocallback(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup);
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -166,6 +173,8 @@ public:
     Callback_hide m_hideCallback = nullptr;
     typedef KDDockWidgets::DropLocation (*Callback_hover)(void *, QPoint *globalPos);
     Callback_hover m_hoverCallback = nullptr;
+    typedef KDDockWidgets::DropLocation (*Callback_hover_flutter)(void *, QPoint *globalPos);
+    Callback_hover_flutter m_hover_flutterCallback = nullptr;
     typedef void (*Callback_init)(void *);
     Callback_init m_initCallback = nullptr;
     typedef bool (*Callback_isActiveWindow)(void *);
@@ -176,6 +185,8 @@ public:
     Callback_isMaximized m_isMaximizedCallback = nullptr;
     typedef bool (*Callback_isMinimized)(void *);
     Callback_isMinimized m_isMinimizedCallback = nullptr;
+    typedef bool (*Callback_isMounted)(void *);
+    Callback_isMounted m_isMountedCallback = nullptr;
     typedef bool (*Callback_isNull)(void *);
     Callback_isNull m_isNullCallback = nullptr;
     typedef bool (*Callback_isRootView)(void *);
@@ -272,6 +283,8 @@ public:
     Callback_update m_updateCallback = nullptr;
     typedef void (*Callback_updatePositions)(void *);
     Callback_updatePositions m_updatePositionsCallback = nullptr;
+    typedef void (*Callback_updatePositions_flutter)(void *, int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup);
+    Callback_updatePositions_flutter m_updatePositions_flutterCallback = nullptr;
 };
 }
 }
@@ -296,6 +309,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__has
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__hide(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::hover(QPoint globalPos)
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::flutter::IndicatorWindow::hover_flutter(QPoint globalPos)
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_flutter_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::flutter::IndicatorWindow::init()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__init(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isActiveWindow() const
@@ -306,6 +321,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isE
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isMinimized() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMinimized(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::isMounted() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMounted(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isNull() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isNull(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isRootView() const
@@ -402,6 +419,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__si
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *, void *cppObj, void *);
