@@ -18,6 +18,7 @@ namespace KDDockWidgets {
 
 namespace Core {
 class ClassicDropIndicatorOverlay;
+class Group;
 }
 
 namespace flutter {
@@ -38,9 +39,9 @@ public:
     void resize(QSize) override;
     void setObjectName(const QString &) override;
 
-    /// implemented in dart. workaround for multiinheritance binding limitations
+    /// implemented in dart. workaround for multi-inheritance binding limitations
     virtual DropLocation hover_flutter(QPoint globalPos);
-    virtual void updatePositions_flutter();
+    virtual void updatePositions_flutter(int overlayWidth, int overlayHeight, Core::Group *hoveredGroup);
 
 private:
     Core::ClassicDropIndicatorOverlay *const classicIndicators;

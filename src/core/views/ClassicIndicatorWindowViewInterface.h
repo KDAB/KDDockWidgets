@@ -42,7 +42,8 @@ public:
     /// The position is the center of the indicator and is in global coordinates
     virtual QPoint posForIndicator(DropLocation) const = 0;
 
-    /// Called by the framework to pdates the position of the individual drop indicators
+    /// Called by the framework to updates the position of the individual drop indicators
+    /// This function is called when the drag first starts and also if the window resizes itself (unlikely during drag though)
     /// The implementor should:
     /// - call rect() to know where to put the outer indicators
     /// - call classicIndicators->hoveredGroup(), if not null, will give you the rect for the inner indicators

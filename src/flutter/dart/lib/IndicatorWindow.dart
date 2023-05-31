@@ -35,7 +35,12 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   }
 
   @override
-  void updatePositions_flutter() {}
+  void updatePositions_flutter(int overlayWidth, int overlayHeight,
+      KDDWBindingsCore.Group? hoveredGroup) {
+    final state = widgetKey.currentState as IndicatorWindowWidgetState?;
+    if (state != null)
+      state.updatePositions(overlayWidth, overlayHeight, hoveredGroup);
+  }
 
   @override
   int hover_flutter(QPoint pt) {
@@ -57,20 +62,21 @@ class IndicatorWindowWidget extends PositionedWidget {
 class IndicatorWindowWidgetState extends PositionedWidgetState {
   final IndicatorWindow indicatorWindow;
   final List<IndicatorWidget> indicatorWidgets = [];
+  final List<int> locations = [
+    KDDockWidgets_DropLocation.DropLocation_Left,
+    KDDockWidgets_DropLocation.DropLocation_Top,
+    KDDockWidgets_DropLocation.DropLocation_Right,
+    KDDockWidgets_DropLocation.DropLocation_Bottom,
+    KDDockWidgets_DropLocation.DropLocation_Center,
+    KDDockWidgets_DropLocation.DropLocation_OutterLeft,
+    KDDockWidgets_DropLocation.DropLocation_OutterTop,
+    KDDockWidgets_DropLocation.DropLocation_OutterRight,
+    KDDockWidgets_DropLocation.DropLocation_OutterBottom
+  ];
 
   IndicatorWindowWidgetState(this.indicatorWindow) : super(indicatorWindow) {
-    for (var loc in [
-      KDDockWidgets_DropLocation.DropLocation_Left,
-      KDDockWidgets_DropLocation.DropLocation_Top,
-      KDDockWidgets_DropLocation.DropLocation_Right,
-      KDDockWidgets_DropLocation.DropLocation_Bottom,
-      KDDockWidgets_DropLocation.DropLocation_Center,
-      KDDockWidgets_DropLocation.DropLocation_OutterLeft,
-      KDDockWidgets_DropLocation.DropLocation_OutterTop,
-      KDDockWidgets_DropLocation.DropLocation_OutterRight,
-      KDDockWidgets_DropLocation.DropLocation_OutterBottom
-    ]) {
-      indicatorWidgets.add(IndicatorWidget(loc));
+    for (var loc in locations) {
+      indicatorWidgets.add(IndicatorWidget(indicatorWindow, loc));
     }
   }
 
@@ -82,5 +88,11 @@ class IndicatorWindowWidgetState extends PositionedWidgetState {
         children: indicatorWidgets,
       ),
     );
+  }
+
+  void updatePositions(int overlayWidth, int overlayHeight,
+      KDDWBindingsCore.Group? hoveredGroup) {
+    for (var widget in indicatorWidgets)
+      widget.updatePosition(overlayWidth, overlayHeight, hoveredGroup);
   }
 }

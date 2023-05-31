@@ -38,7 +38,8 @@ DropLocation IndicatorWindow::hover(QPoint globalPos)
 
 void IndicatorWindow::updatePositions()
 {
-    updatePositions_flutter();
+    auto sz = size();
+    updatePositions_flutter(sz.width(), sz.height(), classicIndicators->hoveredGroup());
 }
 
 void IndicatorWindow::raise()
@@ -78,7 +79,7 @@ DropLocation IndicatorWindow::hover_flutter(QPoint)
     return {};
 }
 
-void IndicatorWindow::updatePositions_flutter()
+void IndicatorWindow::updatePositions_flutter(int, int, Core::Group *)
 {
     qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
 }
