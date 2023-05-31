@@ -38,6 +38,10 @@ public:
     void resize(QSize) override;
     void setObjectName(const QString &) override;
 
+    /// implemented in dart. workaround for multiinheritance binding limitations
+    virtual DropLocation hover_flutter(QPoint globalPos);
+    virtual void updatePositions_flutter();
+
 private:
     Core::ClassicDropIndicatorOverlay *const classicIndicators;
 };

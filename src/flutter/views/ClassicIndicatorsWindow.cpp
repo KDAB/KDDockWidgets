@@ -33,15 +33,12 @@ QPoint IndicatorWindow::posForIndicator(DropLocation loc) const
 
 DropLocation IndicatorWindow::hover(QPoint globalPos)
 {
-    DropLocation loc = DropLocation_None;
-
-    qWarning() << Q_FUNC_INFO << "Implement me" << globalPos;
-    return loc;
+    return hover_flutter(globalPos);
 }
 
 void IndicatorWindow::updatePositions()
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    updatePositions_flutter();
 }
 
 void IndicatorWindow::raise()
@@ -73,4 +70,15 @@ bool IndicatorWindow::isWindow() const
 {
     // TODOm3: Change to true once real multi-window
     return false;
+}
+
+DropLocation IndicatorWindow::hover_flutter(QPoint)
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
+    return {};
+}
+
+void IndicatorWindow::updatePositions_flutter()
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
 }

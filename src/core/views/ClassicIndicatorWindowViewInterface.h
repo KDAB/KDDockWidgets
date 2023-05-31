@@ -30,9 +30,24 @@ public:
     virtual ~ClassicIndicatorWindowViewInterface();
 
     virtual void setObjectName(const QString &) = 0;
+
+    /// Called when the mouse is dragging a window over a drop area
+    /// The implementor should:
+    /// - Iterate over all visible indicators, if any is under the mouse then it should show
+    ///   the "active" icon variant.
     virtual DropLocation hover(QPoint) = 0;
+
+    /// Returns the position for the specified drop indicator
+    /// This is used by tests only, so we know where to drop a window
+    /// The position is the center of the indicator and is in global coordinates
     virtual QPoint posForIndicator(DropLocation) const = 0;
+
+    /// Called by the framework to pdates the position of the individual drop indicators
+    /// The implementor should:
+    /// - call rect() to know where to put the outer indicators
+    /// - call classicIndicators->hoveredGroup(), if not null, will give you the rect for the inner indicators
     virtual void updatePositions() = 0;
+
     virtual void raise() = 0;
     virtual void setVisible(bool) = 0;
     virtual void resize(QSize) = 0;

@@ -33,6 +33,14 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   Widget createFlutterWidget() {
     return IndicatorWindowWidget(this, key: widgetKey);
   }
+
+  @override
+  void updatePositions_flutter() {}
+
+  @override
+  int hover_flutter(QPoint pt) {
+    return 0;
+  }
 }
 
 class IndicatorWindowWidget extends PositionedWidget {
