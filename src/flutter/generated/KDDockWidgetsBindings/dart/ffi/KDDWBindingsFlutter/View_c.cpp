@@ -45,19 +45,6 @@ void View_wrapper::activateWindow_nocallback()
 {
     ::KDDockWidgets::flutter::View::activateWindow();
 }
-KDDockWidgets::Core::View *View_wrapper::childViewAt_flutter(QPoint localPos) const
-{
-    if (m_childViewAt_flutterCallback) {
-        const void *thisPtr = this;
-        return m_childViewAt_flutterCallback(const_cast<void *>(thisPtr), &localPos);
-    } else {
-        return ::KDDockWidgets::flutter::View::childViewAt_flutter(localPos);
-    }
-}
-KDDockWidgets::Core::View *View_wrapper::childViewAt_flutter_nocallback(QPoint localPos) const
-{
-    return ::KDDockWidgets::flutter::View::childViewAt_flutter(localPos);
-}
 bool View_wrapper::close()
 {
     if (m_closeCallback) {
@@ -837,13 +824,6 @@ void c_KDDockWidgets__flutter__View__activateWindow(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->activateWindow_nocallback();} else {    return targetPtr->activateWindow();} }();
 }
-// childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__View__childViewAt_flutter_QPoint(void *thisObj, void *localPos_)
-{
-    assert(localPos_);
-    auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->childViewAt_flutter_nocallback(localPos);} else {    return targetPtr->childViewAt_flutter(localPos);} }();
-}
 // close()
 bool c_KDDockWidgets__flutter__View__close(void *thisObj)
 {
@@ -1187,9 +1167,6 @@ void c_KDDockWidgets__flutter__View__registerVirtualMethodCallback(void *ptr, vo
     case 922:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_activateWindow>(callback);
         break;
-    case 1029:
-        wrapper->m_childViewAt_flutterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_childViewAt_flutter>(callback);
-        break;
     case 933:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_close>(callback);
         break;
@@ -1265,16 +1242,16 @@ void c_KDDockWidgets__flutter__View__registerVirtualMethodCallback(void *ptr, vo
     case 975:
         wrapper->m_objectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_objectName>(callback);
         break;
-    case 1045:
+    case 1044:
         wrapper->m_onChildAddedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_onChildAdded>(callback);
         break;
-    case 1046:
+    case 1045:
         wrapper->m_onChildRemovedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_onChildRemoved>(callback);
         break;
-    case 1047:
+    case 1046:
         wrapper->m_onChildVisibilityChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_onChildVisibilityChanged>(callback);
         break;
-    case 1049:
+    case 1048:
         wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::View_wrapper::Callback_onGeometryChanged>(callback);
         break;
     case 977:

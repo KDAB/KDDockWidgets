@@ -1615,8 +1615,6 @@ void c_KDDockWidgets__Core__View_Finalizer(void *, void *cppObj, void *); // KDD
 void *c_KDDockWidgets__flutter__View__constructor_Controller_ViewType_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
 // KDDockWidgets::flutter::View::activateWindow()
 void c_KDDockWidgets__flutter__View__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::View::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__View__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::View::close()
 bool c_KDDockWidgets__flutter__View__close(void *thisObj);
 // KDDockWidgets::flutter::View::createPlatformWindow()
@@ -1745,8 +1743,6 @@ void c_KDDockWidgets__flutter__View_Finalizer(void *, void *cppObj, void *); // 
 void *c_KDDockWidgets__flutter__TitleBar__constructor_TitleBar_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::TitleBar::activateWindow()
 void c_KDDockWidgets__flutter__TitleBar__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::TitleBar::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__TitleBar__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::TitleBar::close()
 bool c_KDDockWidgets__flutter__TitleBar__close(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::createPlatformWindow()
@@ -1873,8 +1869,6 @@ void c_KDDockWidgets__flutter__TitleBar_Finalizer(void *, void *cppObj, void *);
 void *c_KDDockWidgets__flutter__TabBar__constructor_TabBar_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::TabBar::activateWindow()
 void c_KDDockWidgets__flutter__TabBar__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::TabBar::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__TabBar__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::TabBar::close()
 bool c_KDDockWidgets__flutter__TabBar__close(void *thisObj);
 // KDDockWidgets::flutter::TabBar::createPlatformWindow()
@@ -2009,8 +2003,6 @@ void c_KDDockWidgets__flutter__TabBar_Finalizer(void *, void *cppObj, void *); /
 void *c_KDDockWidgets__flutter__Stack__constructor_Stack_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::Stack::activateWindow()
 void c_KDDockWidgets__flutter__Stack__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::Stack::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__Stack__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::Stack::close()
 bool c_KDDockWidgets__flutter__Stack__close(void *thisObj);
 // KDDockWidgets::flutter::Stack::createPlatformWindow()
@@ -2135,8 +2127,6 @@ void *c_KDDockWidgets__flutter__MainWindow__constructor_QString_MainWindowOption
 void c_KDDockWidgets__flutter__MainWindow__activateWindow(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::centralAreaGeometry() const
 void *c_KDDockWidgets__flutter__MainWindow__centralAreaGeometry(void *thisObj);
-// KDDockWidgets::flutter::MainWindow::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__MainWindow__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::MainWindow::close()
 bool c_KDDockWidgets__flutter__MainWindow__close(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::createPlatformWindow()
@@ -2257,8 +2247,6 @@ void c_KDDockWidgets__flutter__MainWindow_Finalizer(void *, void *cppObj, void *
 void *c_KDDockWidgets__flutter__Group__constructor_Group_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::Group::activateWindow()
 void c_KDDockWidgets__flutter__Group__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::Group::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__Group__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::Group::close()
 bool c_KDDockWidgets__flutter__Group__close(void *thisObj);
 // KDDockWidgets::flutter::Group::createPlatformWindow()
@@ -2381,8 +2369,6 @@ void c_KDDockWidgets__flutter__Group_Finalizer(void *, void *cppObj, void *); //
 void *c_KDDockWidgets__flutter__DropArea__constructor_DropArea_View(void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::DropArea::activateWindow()
 void c_KDDockWidgets__flutter__DropArea__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::DropArea::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__DropArea__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::DropArea::close()
 bool c_KDDockWidgets__flutter__DropArea__close(void *thisObj);
 // KDDockWidgets::flutter::DropArea::createPlatformWindow()
@@ -2503,8 +2489,6 @@ void c_KDDockWidgets__flutter__DropArea_Finalizer(void *, void *cppObj, void *);
 void *c_KDDockWidgets__flutter__DockWidget__constructor_QString_DockWidgetOptions_LayoutSaverOptions(const char *uniqueName_, int options_, int layoutSaverOptions_);
 // KDDockWidgets::flutter::DockWidget::activateWindow()
 void c_KDDockWidgets__flutter__DockWidget__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__DockWidget__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::DockWidget::close()
 bool c_KDDockWidgets__flutter__DockWidget__close(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::createPlatformWindow()
@@ -3469,8 +3453,6 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *
 void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicDropIndicatorOverlay_View(void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::IndicatorWindow::activateWindow()
 void c_KDDockWidgets__flutter__IndicatorWindow__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__IndicatorWindow__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::IndicatorWindow::close()
 bool c_KDDockWidgets__flutter__IndicatorWindow__close(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::createPlatformWindow()

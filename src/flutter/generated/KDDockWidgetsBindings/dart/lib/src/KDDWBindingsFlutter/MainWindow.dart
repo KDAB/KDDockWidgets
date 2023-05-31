@@ -61,7 +61,7 @@ class MainWindow extends KDDWBindingsFlutter.View {
   QRect centralAreaGeometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1100))
+            cFunctionSymbolName(1099))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -77,20 +77,6 @@ class MainWindow extends KDDWBindingsFlutter.View {
       throw Error();
     }
     final result = dartInstance.centralAreaGeometry();
-    return result.thisCpp;
-  }
-
-  static ffi.Pointer<void> childViewAt_flutter_calledFromC(
-      ffi.Pointer<void> thisCpp, ffi.Pointer<void> localPos) {
-    var dartInstance = KDDWBindingsCore
-        .View.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for MainWindow::childViewAt_flutter(QPoint localPos) const! (${thisCpp.address})");
-      throw Error();
-    }
-    final result =
-        dartInstance.childViewAt_flutter(QPoint.fromCppPointer(localPos));
     return result.thisCpp;
   }
 
@@ -512,7 +498,7 @@ class MainWindow extends KDDWBindingsFlutter.View {
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1103))
+            cFunctionSymbolName(1102))
         .asFunction();
     func(thisCpp, left, top, right, bottom);
   }
@@ -794,10 +780,8 @@ class MainWindow extends KDDWBindingsFlutter.View {
     switch (methodId) {
       case 922:
         return "c_KDDockWidgets__flutter__MainWindow__activateWindow";
-      case 1100:
+      case 1099:
         return "c_KDDockWidgets__flutter__MainWindow__centralAreaGeometry";
-      case 1029:
-        return "c_KDDockWidgets__flutter__MainWindow__childViewAt_flutter_QPoint";
       case 933:
         return "c_KDDockWidgets__flutter__MainWindow__close";
       case 936:
@@ -848,13 +832,13 @@ class MainWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__MainWindow__normalGeometry";
       case 975:
         return "c_KDDockWidgets__flutter__MainWindow__objectName";
-      case 1045:
+      case 1044:
         return "c_KDDockWidgets__flutter__MainWindow__onChildAdded_View";
-      case 1046:
+      case 1045:
         return "c_KDDockWidgets__flutter__MainWindow__onChildRemoved_View";
-      case 1047:
+      case 1046:
         return "c_KDDockWidgets__flutter__MainWindow__onChildVisibilityChanged_View";
-      case 1049:
+      case 1048:
         return "c_KDDockWidgets__flutter__MainWindow__onGeometryChanged";
       case 977:
         return "c_KDDockWidgets__flutter__MainWindow__onResize_int_int";
@@ -866,7 +850,7 @@ class MainWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__MainWindow__releaseKeyboard";
       case 984:
         return "c_KDDockWidgets__flutter__MainWindow__releaseMouse";
-      case 1103:
+      case 1102:
         return "c_KDDockWidgets__flutter__MainWindow__setContentsMargins_int_int_int_int";
       case 988:
         return "c_KDDockWidgets__flutter__MainWindow__setCursor_CursorShape";
@@ -920,10 +904,8 @@ class MainWindow extends KDDWBindingsFlutter.View {
     switch (methodId) {
       case 922:
         return "activateWindow";
-      case 1100:
+      case 1099:
         return "centralAreaGeometry";
-      case 1029:
-        return "childViewAt_flutter";
       case 933:
         return "close";
       case 936:
@@ -974,13 +956,13 @@ class MainWindow extends KDDWBindingsFlutter.View {
         return "normalGeometry";
       case 975:
         return "objectName";
-      case 1045:
+      case 1044:
         return "onChildAdded";
-      case 1046:
+      case 1045:
         return "onChildRemoved";
-      case 1047:
+      case 1046:
         return "onChildVisibilityChanged";
-      case 1049:
+      case 1048:
         return "onGeometryChanged";
       case 977:
         return "onResize_2";
@@ -992,7 +974,7 @@ class MainWindow extends KDDWBindingsFlutter.View {
         return "releaseKeyboard";
       case 984:
         return "releaseMouse";
-      case 1103:
+      case 1102:
         return "setContentsMargins";
       case 988:
         return "setCursor";
@@ -1051,13 +1033,9 @@ class MainWindow extends KDDWBindingsFlutter.View {
     final callback922 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.activateWindow_calledFromC);
     registerCallback(thisCpp, callback922, 922);
-    final callback1100 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback1099 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.MainWindow.centralAreaGeometry_calledFromC);
-    registerCallback(thisCpp, callback1100, 1100);
-    final callback1029 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.View.childViewAt_flutter_calledFromC);
-    registerCallback(thisCpp, callback1029, 1029);
+    registerCallback(thisCpp, callback1099, 1099);
     const callbackExcept933 = 0;
     final callback933 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.close_calledFromC, callbackExcept933);
@@ -1150,21 +1128,21 @@ class MainWindow extends KDDWBindingsFlutter.View {
     final callback975 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.objectName_calledFromC);
     registerCallback(thisCpp, callback975, 975);
-    final callback1045 =
+    final callback1044 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildAdded_calledFromC);
+    registerCallback(thisCpp, callback1044, 1044);
+    final callback1045 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.onChildRemoved_calledFromC);
     registerCallback(thisCpp, callback1045, 1045);
     final callback1046 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.View.onChildRemoved_calledFromC);
-    registerCallback(thisCpp, callback1046, 1046);
-    final callback1047 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildVisibilityChanged_calledFromC);
-    registerCallback(thisCpp, callback1047, 1047);
-    final callback1049 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback1046, 1046);
+    final callback1048 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.onGeometryChanged_calledFromC);
-    registerCallback(thisCpp, callback1049, 1049);
+    registerCallback(thisCpp, callback1048, 1048);
     const callbackExcept977 = 0;
     final callback977 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
@@ -1182,10 +1160,10 @@ class MainWindow extends KDDWBindingsFlutter.View {
     final callback984 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseMouse_calledFromC);
     registerCallback(thisCpp, callback984, 984);
-    final callback1103 = ffi.Pointer.fromFunction<
+    final callback1102 = ffi.Pointer.fromFunction<
             void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
         KDDWBindingsFlutter.MainWindow.setContentsMargins_calledFromC);
-    registerCallback(thisCpp, callback1103, 1103);
+    registerCallback(thisCpp, callback1102, 1102);
     final callback988 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.setCursor_calledFromC);

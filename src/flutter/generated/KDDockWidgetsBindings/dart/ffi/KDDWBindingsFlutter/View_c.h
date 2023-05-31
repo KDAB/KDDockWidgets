@@ -17,15 +17,15 @@
 #include <qpoint.h>
 #include <qstring.h>
 #include <TabBar.h>
-#include "core/Stack.h"
-#include <core/Layout.h>
-#include <core/Group.h>
-#include "core/DropArea.h"
+#include "core/TitleBar.h"
 #include "core/MainWindow.h"
 #include <core/DockWidget.h>
+#include <core/Group.h>
+#include <core/Layout.h>
+#include "core/Stack.h"
 #include <NonQtCompat_p.h>
+#include "core/DropArea.h"
 #include <FloatingWindow.h>
-#include "core/TitleBar.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -36,8 +36,6 @@ public:
     View_wrapper(KDDockWidgets::Core::Controller *controller, KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View *arg__3, Qt::WindowFlags windowFlags = {});
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
-    virtual KDDockWidgets::Core::View *childViewAt_flutter(QPoint localPos) const;
-    virtual KDDockWidgets::Core::View *childViewAt_flutter_nocallback(QPoint localPos) const;
     virtual bool close();
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
@@ -157,8 +155,6 @@ public:
     void updateGeometry();
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
-    typedef KDDockWidgets::Core::View *(*Callback_childViewAt_flutter)(void *, QPoint *localPos);
-    Callback_childViewAt_flutter m_childViewAt_flutterCallback = nullptr;
     typedef bool (*Callback_close)(void *);
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
@@ -279,8 +275,6 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__View__constructor_Controller_ViewType_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
 // KDDockWidgets::flutter::View::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__View__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::View::childViewAt_flutter(QPoint localPos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__View__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::View::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__View__close(void *thisObj);
 // KDDockWidgets::flutter::View::createPlatformWindow()

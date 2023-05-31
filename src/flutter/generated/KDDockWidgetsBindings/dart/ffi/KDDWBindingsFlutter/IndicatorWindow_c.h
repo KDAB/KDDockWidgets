@@ -26,8 +26,6 @@ public:
     IndicatorWindow_wrapper(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent);
     virtual void activateWindow();
     virtual void activateWindow_nocallback();
-    virtual KDDockWidgets::Core::View *childViewAt_flutter(QPoint localPos) const;
-    virtual KDDockWidgets::Core::View *childViewAt_flutter_nocallback(QPoint localPos) const;
     virtual bool close();
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
@@ -152,8 +150,6 @@ public:
     virtual void updatePositions_nocallback();
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
-    typedef KDDockWidgets::Core::View *(*Callback_childViewAt_flutter)(void *, QPoint *localPos);
-    Callback_childViewAt_flutter m_childViewAt_flutterCallback = nullptr;
     typedef bool (*Callback_close)(void *);
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
@@ -284,8 +280,6 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicDropIndicatorOverlay_View(void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::IndicatorWindow::activateWindow()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__activateWindow(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::childViewAt_flutter(QPoint localPos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::IndicatorWindow::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__close(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::createPlatformWindow()

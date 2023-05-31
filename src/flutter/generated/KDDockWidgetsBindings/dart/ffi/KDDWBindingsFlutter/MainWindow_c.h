@@ -14,8 +14,8 @@
 #include <View.h>
 #include <qrect.h>
 #include <qsize.h>
-#include <core/View.h>
 #include <qpoint.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -28,8 +28,6 @@ public:
     virtual void activateWindow_nocallback();
     virtual QRect centralAreaGeometry() const;
     virtual QRect centralAreaGeometry_nocallback() const;
-    virtual KDDockWidgets::Core::View *childViewAt_flutter(QPoint localPos) const;
-    virtual KDDockWidgets::Core::View *childViewAt_flutter_nocallback(QPoint localPos) const;
     virtual bool close();
     virtual bool close_nocallback();
     virtual void createPlatformWindow();
@@ -148,8 +146,6 @@ public:
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef QRect *(*Callback_centralAreaGeometry)(void *);
     Callback_centralAreaGeometry m_centralAreaGeometryCallback = nullptr;
-    typedef KDDockWidgets::Core::View *(*Callback_childViewAt_flutter)(void *, QPoint *localPos);
-    Callback_childViewAt_flutter m_childViewAt_flutterCallback = nullptr;
     typedef bool (*Callback_close)(void *);
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
@@ -274,8 +270,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__MainWindow__constru
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__activateWindow(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::centralAreaGeometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__MainWindow__centralAreaGeometry(void *thisObj);
-// KDDockWidgets::flutter::MainWindow::childViewAt_flutter(QPoint localPos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__MainWindow__childViewAt_flutter_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::MainWindow::close()
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__MainWindow__close(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::createPlatformWindow()

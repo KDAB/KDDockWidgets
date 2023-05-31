@@ -45,19 +45,6 @@ void TabBar_wrapper::activateWindow_nocallback()
 {
     ::KDDockWidgets::flutter::TabBar::activateWindow();
 }
-KDDockWidgets::Core::View *TabBar_wrapper::childViewAt_flutter(QPoint localPos) const
-{
-    if (m_childViewAt_flutterCallback) {
-        const void *thisPtr = this;
-        return m_childViewAt_flutterCallback(const_cast<void *>(thisPtr), &localPos);
-    } else {
-        return ::KDDockWidgets::flutter::TabBar::childViewAt_flutter(localPos);
-    }
-}
-KDDockWidgets::Core::View *TabBar_wrapper::childViewAt_flutter_nocallback(QPoint localPos) const
-{
-    return ::KDDockWidgets::flutter::TabBar::childViewAt_flutter(localPos);
-}
 bool TabBar_wrapper::close()
 {
     if (m_closeCallback) {
@@ -923,13 +910,6 @@ void c_KDDockWidgets__flutter__TabBar__activateWindow(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->activateWindow_nocallback();} else {    return targetPtr->activateWindow();} }();
 }
-// childViewAt_flutter(QPoint localPos) const
-void *c_KDDockWidgets__flutter__TabBar__childViewAt_flutter_QPoint(void *thisObj, void *localPos_)
-{
-    assert(localPos_);
-    auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->childViewAt_flutter_nocallback(localPos);} else {    return targetPtr->childViewAt_flutter(localPos);} }();
-}
 // close()
 bool c_KDDockWidgets__flutter__TabBar__close(void *thisObj)
 {
@@ -1284,9 +1264,6 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 922:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_activateWindow>(callback);
         break;
-    case 1029:
-        wrapper->m_childViewAt_flutterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_childViewAt_flutter>(callback);
-        break;
     case 933:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_close>(callback);
         break;
@@ -1356,7 +1333,7 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 973:
         wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_move_2>(callback);
         break;
-    case 1078:
+    case 1077:
         wrapper->m_moveTabToCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_moveTabTo>(callback);
         break;
     case 974:
@@ -1365,19 +1342,19 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 975:
         wrapper->m_objectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_objectName>(callback);
         break;
-    case 1045:
+    case 1044:
         wrapper->m_onChildAddedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_onChildAdded>(callback);
         break;
-    case 1046:
+    case 1045:
         wrapper->m_onChildRemovedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_onChildRemoved>(callback);
         break;
-    case 1047:
+    case 1046:
         wrapper->m_onChildVisibilityChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_onChildVisibilityChanged>(callback);
         break;
-    case 1049:
+    case 1048:
         wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_onGeometryChanged>(callback);
         break;
-    case 1081:
+    case 1080:
         wrapper->m_onRebuildRequestedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_onRebuildRequested>(callback);
         break;
     case 977:
@@ -1389,7 +1366,7 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 981:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 1082:
+    case 1081:
         wrapper->m_rectForTabCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_rectForTab>(callback);
         break;
     case 983:
@@ -1398,13 +1375,13 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 984:
         wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_releaseMouse>(callback);
         break;
-    case 1083:
+    case 1082:
         wrapper->m_removeDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_removeDockWidget>(callback);
         break;
-    case 1084:
+    case 1083:
         wrapper->m_renameTabCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_renameTab>(callback);
         break;
-    case 1085:
+    case 1084:
         wrapper->m_setCurrentIndexCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_setCurrentIndex>(callback);
         break;
     case 988:
@@ -1470,10 +1447,10 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 1010:
         wrapper->m_sizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_sizeHint>(callback);
         break;
-    case 1088:
+    case 1087:
         wrapper->m_tabAtCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_tabAt>(callback);
         break;
-    case 1089:
+    case 1088:
         wrapper->m_textCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_text>(callback);
         break;
     case 1012:
