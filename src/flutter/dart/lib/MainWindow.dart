@@ -39,7 +39,7 @@ class MainWindow extends KDDWBindingsFlutter.MainWindow with View_mixin {
 class MainWindowWidget extends StatefulWidget {
   late final KDDWBindingsCore.MainWindow kddwController;
 
-  MainWindowWidget(this.kddwController, {Key? key});
+  MainWindowWidget(this.kddwController, {Key? key}) : super(key: key);
 
   @override
   State<MainWindowWidget> createState() {
