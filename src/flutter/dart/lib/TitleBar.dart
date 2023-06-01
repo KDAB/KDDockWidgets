@@ -30,10 +30,7 @@ class TitleBar extends KDDWBindingsFlutter.TitleBar with View_mixin {
 
   @override
   void onTitleBarChanged(String? newTitle) {
-    final state = widgetKey.currentState as TitleBarPositionedWidgetState?;
-    if (state != null) {
-      state.title = newTitle!;
-    }
+    widgetState<TitleBarPositionedWidgetState>()?.title = newTitle!;
   }
 
   Widget createFlutterWidget() {

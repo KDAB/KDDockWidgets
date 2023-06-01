@@ -96,10 +96,7 @@ QPoint ClassicDropIndicatorOverlay_wrapper::posForIndicator_nocallback(KDDockWid
 {
     return ::KDDockWidgets::Core::ClassicDropIndicatorOverlay::posForIndicator(arg__1);
 }
-void ClassicDropIndicatorOverlay_wrapper::setDropLocation(KDDockWidgets::DropLocation arg__1)
-{
-    ::KDDockWidgets::Core::ClassicDropIndicatorOverlay::setDropLocation(arg__1);
-}
+
 void ClassicDropIndicatorOverlay_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
@@ -195,11 +192,7 @@ void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__posForIndicator_DropLo
 {
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
 }
-// setDropLocation(KDDockWidgets::DropLocation arg__1)
-void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setDropLocation_DropLocation(void *thisObj, int arg__1)
-{
-    fromPtr(thisObj)->setDropLocation(static_cast<KDDockWidgets::DropLocation>(arg__1));
-}
+
 // setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_)
 {

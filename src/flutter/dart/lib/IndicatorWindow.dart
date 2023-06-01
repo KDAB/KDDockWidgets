@@ -37,9 +37,8 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   @override
   void updatePositions_flutter(int overlayWidth, int overlayHeight,
       KDDWBindingsCore.Group? hoveredGroup) {
-    final state = widgetKey.currentState as IndicatorWindowWidgetState?;
-    if (state != null)
-      state.updatePositions(overlayWidth, overlayHeight, hoveredGroup);
+    final state = widgetState<IndicatorWindowWidgetState>();
+    state?.updatePositions(overlayWidth, overlayHeight, hoveredGroup);
   }
 
   @override

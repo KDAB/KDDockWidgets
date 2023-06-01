@@ -169,4 +169,9 @@ class View_mixin {
   Widget createFlutterWidget() {
     return PositionedWidget(this, key: widgetKey);
   }
+
+  /// Returns the widget state associated with this view
+  T? widgetState<T>() {
+    return widgetKey.currentState as T?;
+  }
 }
