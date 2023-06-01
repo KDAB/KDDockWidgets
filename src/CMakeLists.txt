@@ -215,6 +215,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
 set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/ViewFactory.cpp
     flutter/Window.cpp
+    flutter/Screen.cpp
     flutter/Platform.cpp
     flutter/CoRoutines.cpp
     flutter/views/View.cpp

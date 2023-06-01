@@ -13,6 +13,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include "Window.h"
+#include "Screen.h"
 #include "views/View.h"
 #include "core/Platform_p.h"
 #include "core/ViewGuard.h"
@@ -157,16 +158,14 @@ void Platform::ungrabMouse()
 
 Core::Screen::List Platform::screens() const
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented";
-    return {};
+    /// TODOm4, find the actual screens
+    return { primaryScreen() };
 }
 
 Core::Screen::Ptr Platform::primaryScreen() const
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented";
-    return {};
+    return std::make_shared<flutter::Screen>();
 }
-
 
 void Platform::onFloatingWindowCreated(Core::FloatingWindow *)
 {
