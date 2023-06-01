@@ -107,6 +107,7 @@ public:
     virtual void releaseMouse_nocallback();
     virtual void resize(QSize arg__1);
     virtual void resize_nocallback(QSize arg__1);
+    KDDockWidgets::Core::View *rubberBand() const;
     virtual void setCursor(Qt::CursorShape shape);
     virtual void setCursor_nocallback(Qt::CursorShape shape);
     virtual void setFixedHeight(int h);
@@ -373,6 +374,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__rel
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__releaseMouse(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::resize(QSize arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__resize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::rubberBand() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__rubberBand(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::setCursor(Qt::CursorShape shape)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setCursor_CursorShape(void *thisObj, int shape);
 // KDDockWidgets::flutter::IndicatorWindow::setFixedHeight(int h)

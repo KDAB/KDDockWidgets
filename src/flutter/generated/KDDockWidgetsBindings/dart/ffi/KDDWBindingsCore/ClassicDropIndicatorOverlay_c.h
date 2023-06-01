@@ -15,9 +15,9 @@
 #include <qpoint.h>
 #include <qsize.h>
 #include <ClassicIndicatorWindowViewInterface.h>
+#include <core/View.h>
 #include <qrect.h>
 #include <core/Group.h>
-#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -37,6 +37,7 @@ public:
     bool onResize(QSize newSize);
     virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
     virtual QPoint posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
+    KDDockWidgets::Core::View *rubberBand() const;
     virtual void setCurrentDropLocation(KDDockWidgets::DropLocation arg__1);
     virtual void setCurrentDropLocation_nocallback(KDDockWidgets::DropLocation arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
@@ -78,6 +79,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicDropIndicatorOve
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onResize_QSize(void *thisObj, void *newSize_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1);
+// KDDockWidgets::Core::ClassicDropIndicatorOverlay::rubberBand() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__rubberBand(void *thisObj);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)

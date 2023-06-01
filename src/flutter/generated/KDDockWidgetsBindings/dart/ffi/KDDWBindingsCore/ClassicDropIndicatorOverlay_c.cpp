@@ -96,6 +96,10 @@ QPoint ClassicDropIndicatorOverlay_wrapper::posForIndicator_nocallback(KDDockWid
 {
     return ::KDDockWidgets::Core::ClassicDropIndicatorOverlay::posForIndicator(arg__1);
 }
+KDDockWidgets::Core::View *ClassicDropIndicatorOverlay_wrapper::rubberBand() const
+{
+    return ::KDDockWidgets::Core::ClassicDropIndicatorOverlay::rubberBand();
+}
 void ClassicDropIndicatorOverlay_wrapper::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
 {
     if (m_setCurrentDropLocationCallback) {
@@ -203,6 +207,11 @@ bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onResize_QSize(void *th
 void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1)
 {
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
+}
+// rubberBand() const
+void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__rubberBand(void *thisObj)
+{
+    return fromPtr(thisObj)->rubberBand();
 }
 // setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1)

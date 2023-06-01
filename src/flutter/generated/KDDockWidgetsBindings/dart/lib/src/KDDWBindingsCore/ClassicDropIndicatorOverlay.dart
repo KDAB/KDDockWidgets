@@ -138,6 +138,15 @@ class ClassicDropIndicatorOverlay extends DropIndicatorOverlay {
             'c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__raiseIndicators')
         .asFunction();
     func(thisCpp);
+  } // rubberBand() const
+
+  KDDWBindingsCore.View rubberBand() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__rubberBand')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return KDDWBindingsCore.View.fromCppPointer(result, false);
   } // rubberBandIsTopLevel() const
 
   bool rubberBandIsTopLevel() {

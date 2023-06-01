@@ -3555,6 +3555,8 @@ void c_KDDockWidgets__flutter__IndicatorWindow__releaseKeyboard(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__releaseMouse(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::resize(QSize arg__1)
 void c_KDDockWidgets__flutter__IndicatorWindow__resize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::rubberBand() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__rubberBand(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::setCursor(Qt::CursorShape shape)
 void c_KDDockWidgets__flutter__IndicatorWindow__setCursor_CursorShape(void *thisObj, int shape);
 // KDDockWidgets::flutter::IndicatorWindow::setFixedHeight(int h)
@@ -3621,6 +3623,8 @@ void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onHoveredGroupChanged_G
 bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onResize_QSize(void *thisObj, void *newSize_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1);
+// KDDockWidgets::Core::ClassicDropIndicatorOverlay::rubberBand() const
+void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__rubberBand(void *thisObj);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)

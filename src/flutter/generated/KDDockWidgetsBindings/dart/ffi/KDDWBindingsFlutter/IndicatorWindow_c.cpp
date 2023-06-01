@@ -565,6 +565,10 @@ void IndicatorWindow_wrapper::resize_nocallback(QSize arg__1)
 {
     ::KDDockWidgets::flutter::IndicatorWindow::resize(arg__1);
 }
+KDDockWidgets::Core::View *IndicatorWindow_wrapper::rubberBand() const
+{
+    return ::KDDockWidgets::flutter::IndicatorWindow::rubberBand();
+}
 void IndicatorWindow_wrapper::setCursor(Qt::CursorShape shape)
 {
     if (m_setCursorCallback) {
@@ -1124,6 +1128,11 @@ void c_KDDockWidgets__flutter__IndicatorWindow__resize_QSize(void *thisObj, void
     auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->resize_nocallback(arg__1);} else {    return targetPtr->resize(arg__1);} }();
 }
+// rubberBand() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__rubberBand(void *thisObj)
+{
+    return fromPtr(thisObj)->rubberBand();
+}
 // setCursor(Qt::CursorShape shape)
 void c_KDDockWidgets__flutter__IndicatorWindow__setCursor_CursorShape(void *thisObj, int shape)
 {
@@ -1454,7 +1463,7 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 1795:
         wrapper->m_updatePositionsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_updatePositions>(callback);
         break;
-    case 1803:
+    case 1804:
         wrapper->m_updatePositions_flutterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_updatePositions_flutter>(callback);
         break;
     }
