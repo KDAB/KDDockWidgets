@@ -240,6 +240,15 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
     }
     final result = dartInstance.hover_flutter(QPoint.fromCppPointer(globalPos));
     return result;
+  } // hoveredGroup() const
+
+  KDDWBindingsCore.Group hoveredGroup() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__flutter__IndicatorWindow__hoveredGroup')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return KDDWBindingsCore.Group.fromCppPointer(result, false);
   } // init()
 
   init() {
@@ -1344,23 +1353,24 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
     dartInstance.updatePositions();
   } // updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)
 
-  updatePositions_flutter(int overlayWidth, int overlayHeight,
+  bool updatePositions_flutter(int overlayWidth, int overlayHeight,
       KDDWBindingsCore.Group? hoveredGroup, int visibleLocations) {
-    final void_Func_voidstar_int_int_voidstar_int func = _dylib
+    final bool_Func_voidstar_int_int_voidstar_int func = _dylib
         .lookup<
                 ffi.NativeFunction<
-                    void_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1804))
+                    bool_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_ffi_Int32_FFI>>(
+            cFunctionSymbolName(1805))
         .asFunction();
-    func(
-        thisCpp,
-        overlayWidth,
-        overlayHeight,
-        hoveredGroup == null ? ffi.nullptr : hoveredGroup.thisCpp,
-        visibleLocations);
+    return func(
+            thisCpp,
+            overlayWidth,
+            overlayHeight,
+            hoveredGroup == null ? ffi.nullptr : hoveredGroup.thisCpp,
+            visibleLocations) !=
+        0;
   }
 
-  static void updatePositions_flutter_calledFromC(
+  static int updatePositions_flutter_calledFromC(
       ffi.Pointer<void> thisCpp,
       int overlayWidth,
       int overlayHeight,
@@ -1373,13 +1383,14 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
           "Dart instance not found for IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)! (${thisCpp.address})");
       throw Error();
     }
-    dartInstance.updatePositions_flutter(
+    final result = dartInstance.updatePositions_flutter(
         overlayWidth,
         overlayHeight,
         (hoveredGroup == null || hoveredGroup.address == 0)
             ? null
             : KDDWBindingsCore.Group.fromCppPointer(hoveredGroup),
         visibleLocations);
+    return result ? 1 : 0;
   } // visibleDropIndicatorLocations() const
 
   int visibleDropIndicatorLocations() {
@@ -1528,7 +1539,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__update";
       case 1795:
         return "c_KDDockWidgets__flutter__IndicatorWindow__updatePositions";
-      case 1804:
+      case 1805:
         return "c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int";
     }
     return super.cFunctionSymbolName(methodId);
@@ -1664,7 +1675,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "update";
       case 1795:
         return "updatePositions";
-      case 1804:
+      case 1805:
         return "updatePositions_flutter";
     }
     throw Error();
@@ -1880,10 +1891,11 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
     final callback1015 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.update_calledFromC);
     registerCallback(thisCpp, callback1015, 1015);
-    final callback1804 = ffi.Pointer.fromFunction<
-            void_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_ffi_Int32_FFI>(
-        KDDWBindingsFlutter
-            .IndicatorWindow.updatePositions_flutter_calledFromC);
-    registerCallback(thisCpp, callback1804, 1804);
+    const callbackExcept1805 = 0;
+    final callback1805 = ffi.Pointer.fromFunction<
+            bool_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_ffi_Int32_FFI>(
+        KDDWBindingsFlutter.IndicatorWindow.updatePositions_flutter_calledFromC,
+        callbackExcept1805);
+    registerCallback(thisCpp, callback1805, 1805);
   }
 }
