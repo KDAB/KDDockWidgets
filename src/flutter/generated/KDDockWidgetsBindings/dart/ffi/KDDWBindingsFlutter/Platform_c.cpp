@@ -196,6 +196,32 @@ const char *Platform_wrapper::name_nocallback() const
 {
     return ::KDDockWidgets::flutter::Platform::name();
 }
+void Platform_wrapper::onDropIndicatorOverlayCreated(KDDockWidgets::flutter::IndicatorWindow *arg__1)
+{
+    if (m_onDropIndicatorOverlayCreatedCallback) {
+        const void *thisPtr = this;
+        m_onDropIndicatorOverlayCreatedCallback(const_cast<void *>(thisPtr), arg__1);
+    } else {
+        ::KDDockWidgets::flutter::Platform::onDropIndicatorOverlayCreated(arg__1);
+    }
+}
+void Platform_wrapper::onDropIndicatorOverlayCreated_nocallback(KDDockWidgets::flutter::IndicatorWindow *arg__1)
+{
+    ::KDDockWidgets::flutter::Platform::onDropIndicatorOverlayCreated(arg__1);
+}
+void Platform_wrapper::onDropIndicatorOverlayDestroyed(KDDockWidgets::flutter::IndicatorWindow *arg__1)
+{
+    if (m_onDropIndicatorOverlayDestroyedCallback) {
+        const void *thisPtr = this;
+        m_onDropIndicatorOverlayDestroyedCallback(const_cast<void *>(thisPtr), arg__1);
+    } else {
+        ::KDDockWidgets::flutter::Platform::onDropIndicatorOverlayDestroyed(arg__1);
+    }
+}
+void Platform_wrapper::onDropIndicatorOverlayDestroyed_nocallback(KDDockWidgets::flutter::IndicatorWindow *arg__1)
+{
+    ::KDDockWidgets::flutter::Platform::onDropIndicatorOverlayDestroyed(arg__1);
+}
 void Platform_wrapper::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow *arg__1)
 {
     if (m_onFloatingWindowCreatedCallback) {
@@ -279,6 +305,19 @@ void Platform_wrapper::pauseForDebugger_nocallback()
 KDDockWidgets::flutter::Platform *Platform_wrapper::platformFlutter()
 {
     return ::KDDockWidgets::flutter::Platform::platformFlutter();
+}
+void Platform_wrapper::rebuildWindowOverlay()
+{
+    if (m_rebuildWindowOverlayCallback) {
+        const void *thisPtr = this;
+        m_rebuildWindowOverlayCallback(const_cast<void *>(thisPtr));
+    } else {
+        ::KDDockWidgets::flutter::Platform::rebuildWindowOverlay();
+    }
+}
+void Platform_wrapper::rebuildWindowOverlay_nocallback()
+{
+    ::KDDockWidgets::flutter::Platform::rebuildWindowOverlay();
 }
 void Platform_wrapper::restoreMouseCursor()
 {
@@ -608,6 +647,18 @@ const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->name_nocallback();} else {    return targetPtr->name();} }();
 }
+// onDropIndicatorOverlayCreated(KDDockWidgets::flutter::IndicatorWindow * arg__1)
+void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayCreated_IndicatorWindow(void *thisObj, void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::flutter::IndicatorWindow *>(arg__1_);
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onDropIndicatorOverlayCreated_nocallback(arg__1);} else {    return targetPtr->onDropIndicatorOverlayCreated(arg__1);} }();
+}
+// onDropIndicatorOverlayDestroyed(KDDockWidgets::flutter::IndicatorWindow * arg__1)
+void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayDestroyed_IndicatorWindow(void *thisObj, void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::flutter::IndicatorWindow *>(arg__1_);
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onDropIndicatorOverlayDestroyed_nocallback(arg__1);} else {    return targetPtr->onDropIndicatorOverlayDestroyed(arg__1);} }();
+}
 // onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)
 void c_KDDockWidgets__flutter__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_)
 {
@@ -646,6 +697,11 @@ void c_KDDockWidgets__flutter__Platform__pauseForDebugger(void *thisObj)
 void *c_static_KDDockWidgets__flutter__Platform__platformFlutter()
 {
     return KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::platformFlutter();
+}
+// rebuildWindowOverlay()
+void c_KDDockWidgets__flutter__Platform__rebuildWindowOverlay(void *thisObj)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->rebuildWindowOverlay_nocallback();} else {    return targetPtr->rebuildWindowOverlay();} }();
 }
 // restoreMouseCursor()
 void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj)
@@ -798,6 +854,12 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
     case 743:
         wrapper->m_nameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_name>(callback);
         break;
+    case 779:
+        wrapper->m_onDropIndicatorOverlayCreatedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onDropIndicatorOverlayCreated>(callback);
+        break;
+    case 780:
+        wrapper->m_onDropIndicatorOverlayDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onDropIndicatorOverlayDestroyed>(callback);
+        break;
     case 744:
         wrapper->m_onFloatingWindowCreatedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onFloatingWindowCreated>(callback);
         break;
@@ -810,11 +872,14 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
     case 747:
         wrapper->m_onMainWindowDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onMainWindowDestroyed>(callback);
         break;
-    case 779:
+    case 781:
         wrapper->m_pauseForDartDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_pauseForDartDebugger>(callback);
         break;
     case 748:
         wrapper->m_pauseForDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_pauseForDebugger>(callback);
+        break;
+    case 783:
+        wrapper->m_rebuildWindowOverlayCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_rebuildWindowOverlay>(callback);
         break;
     case 749:
         wrapper->m_restoreMouseCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_restoreMouseCursor>(callback);

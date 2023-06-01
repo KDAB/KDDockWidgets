@@ -17,6 +17,7 @@
 #include <qpoint.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
+#include <ClassicIndicatorsWindow.h>
 #include <DelayedCall.h>
 #include <core/Platform.h>
 #include <qstring.h>
@@ -56,6 +57,10 @@ public:
     void maybeResumeCoRoutines();
     virtual const char *name() const;
     virtual const char *name_nocallback() const;
+    virtual void onDropIndicatorOverlayCreated(KDDockWidgets::flutter::IndicatorWindow *arg__1);
+    virtual void onDropIndicatorOverlayCreated_nocallback(KDDockWidgets::flutter::IndicatorWindow *arg__1);
+    virtual void onDropIndicatorOverlayDestroyed(KDDockWidgets::flutter::IndicatorWindow *arg__1);
+    virtual void onDropIndicatorOverlayDestroyed_nocallback(KDDockWidgets::flutter::IndicatorWindow *arg__1);
     virtual void onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow *arg__1);
     virtual void onFloatingWindowCreated_nocallback(KDDockWidgets::Core::FloatingWindow *arg__1);
     virtual void onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow *arg__1);
@@ -69,6 +74,8 @@ public:
     virtual void pauseForDebugger();
     virtual void pauseForDebugger_nocallback();
     static KDDockWidgets::flutter::Platform *platformFlutter();
+    virtual void rebuildWindowOverlay();
+    virtual void rebuildWindowOverlay_nocallback();
     virtual void restoreMouseCursor();
     virtual void restoreMouseCursor_nocallback();
     virtual void runDelayed(int ms, KDDockWidgets::Core::DelayedCall *c);
@@ -128,6 +135,10 @@ public:
     Callback_isProcessingAppQuitEvent m_isProcessingAppQuitEventCallback = nullptr;
     typedef const char *(*Callback_name)(void *);
     Callback_name m_nameCallback = nullptr;
+    typedef void (*Callback_onDropIndicatorOverlayCreated)(void *, KDDockWidgets::flutter::IndicatorWindow *arg__1);
+    Callback_onDropIndicatorOverlayCreated m_onDropIndicatorOverlayCreatedCallback = nullptr;
+    typedef void (*Callback_onDropIndicatorOverlayDestroyed)(void *, KDDockWidgets::flutter::IndicatorWindow *arg__1);
+    Callback_onDropIndicatorOverlayDestroyed m_onDropIndicatorOverlayDestroyedCallback = nullptr;
     typedef void (*Callback_onFloatingWindowCreated)(void *, KDDockWidgets::Core::FloatingWindow *arg__1);
     Callback_onFloatingWindowCreated m_onFloatingWindowCreatedCallback = nullptr;
     typedef void (*Callback_onFloatingWindowDestroyed)(void *, KDDockWidgets::Core::FloatingWindow *arg__1);
@@ -140,6 +151,8 @@ public:
     Callback_pauseForDartDebugger m_pauseForDartDebuggerCallback = nullptr;
     typedef void (*Callback_pauseForDebugger)(void *);
     Callback_pauseForDebugger m_pauseForDebuggerCallback = nullptr;
+    typedef void (*Callback_rebuildWindowOverlay)(void *);
+    Callback_rebuildWindowOverlay m_rebuildWindowOverlayCallback = nullptr;
     typedef void (*Callback_restoreMouseCursor)(void *);
     Callback_restoreMouseCursor m_restoreMouseCursorCallback = nullptr;
     typedef void (*Callback_runDelayed)(void *, int ms, KDDockWidgets::Core::DelayedCall *c);
@@ -208,6 +221,10 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__isProcessi
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__maybeResumeCoRoutines(void *thisObj);
 // KDDockWidgets::flutter::Platform::name() const
 KDDockWidgetsBindings_EXPORT const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj);
+// KDDockWidgets::flutter::Platform::onDropIndicatorOverlayCreated(KDDockWidgets::flutter::IndicatorWindow * arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayCreated_IndicatorWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::onDropIndicatorOverlayDestroyed(KDDockWidgets::flutter::IndicatorWindow * arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayDestroyed_IndicatorWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
@@ -222,6 +239,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDa
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::platformFlutter()
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
+// KDDockWidgets::flutter::Platform::rebuildWindowOverlay()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__rebuildWindowOverlay(void *thisObj);
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::flutter::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)

@@ -96,7 +96,19 @@ QPoint ClassicDropIndicatorOverlay_wrapper::posForIndicator_nocallback(KDDockWid
 {
     return ::KDDockWidgets::Core::ClassicDropIndicatorOverlay::posForIndicator(arg__1);
 }
-
+void ClassicDropIndicatorOverlay_wrapper::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
+{
+    if (m_setCurrentDropLocationCallback) {
+        const void *thisPtr = this;
+        m_setCurrentDropLocationCallback(const_cast<void *>(thisPtr), arg__1);
+    } else {
+        ::KDDockWidgets::Core::ClassicDropIndicatorOverlay::setCurrentDropLocation(arg__1);
+    }
+}
+void ClassicDropIndicatorOverlay_wrapper::setCurrentDropLocation_nocallback(KDDockWidgets::DropLocation arg__1)
+{
+    ::KDDockWidgets::Core::ClassicDropIndicatorOverlay::setCurrentDropLocation(arg__1);
+}
 void ClassicDropIndicatorOverlay_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
     if (m_setParentView_implCallback) {
@@ -192,7 +204,11 @@ void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__posForIndicator_DropLo
 {
     return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
 }
-
+// setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
+void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setCurrentDropLocation_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->setCurrentDropLocation(static_cast<KDDockWidgets::DropLocation>(arg__1));} }();
+}
 // setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_)
 {
@@ -217,22 +233,25 @@ void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__registerVirtualMethodCa
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1667:
+    case 1670:
         wrapper->m_dropIndicatorVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper::Callback_dropIndicatorVisible>(callback);
         break;
-    case 1671:
+    case 1674:
         wrapper->m_hover_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper::Callback_hover_impl>(callback);
         break;
-    case 1683:
+    case 1686:
         wrapper->m_onHoveredGroupChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper::Callback_onHoveredGroupChanged>(callback);
         break;
-    case 1686:
+    case 1689:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 908:
+    case 1692:
+        wrapper->m_setCurrentDropLocationCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper::Callback_setCurrentDropLocation>(callback);
+        break;
+    case 911:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1699:
+    case 1702:
         wrapper->m_updateVisibilityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicDropIndicatorOverlay_wrapper::Callback_updateVisibility>(callback);
         break;
     }

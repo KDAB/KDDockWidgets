@@ -1201,6 +1201,10 @@ bool c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent(void *thisObj)
 void c_KDDockWidgets__flutter__Platform__maybeResumeCoRoutines(void *thisObj);
 // KDDockWidgets::flutter::Platform::name() const
 const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj);
+// KDDockWidgets::flutter::Platform::onDropIndicatorOverlayCreated(KDDockWidgets::flutter::IndicatorWindow * arg__1)
+void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayCreated_IndicatorWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::onDropIndicatorOverlayDestroyed(KDDockWidgets::flutter::IndicatorWindow * arg__1)
+void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayDestroyed_IndicatorWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)
 void c_KDDockWidgets__flutter__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
@@ -1215,6 +1219,8 @@ void c_KDDockWidgets__flutter__Platform__pauseForDartDebugger(void *thisObj);
 void c_KDDockWidgets__flutter__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::platformFlutter()
 void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
+// KDDockWidgets::flutter::Platform::rebuildWindowOverlay()
+void c_KDDockWidgets__flutter__Platform__rebuildWindowOverlay(void *thisObj);
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
 void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::flutter::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
@@ -3305,8 +3311,8 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredGroupChanged_Group(vo
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::DropIndicatorOverlay::removeHover()
 void c_KDDockWidgets__Core__DropIndicatorOverlay__removeHover(void *thisObj);
-// KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation location)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int location);
+// KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
+void c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::DropIndicatorOverlay::setHoveredGroup(KDDockWidgets::Core::Group * arg__1)
 void c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredGroup_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::DropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)
@@ -3615,8 +3621,8 @@ void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onHoveredGroupChanged_G
 bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onResize_QSize(void *thisObj, void *newSize_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1);
-// KDDockWidgets::Core::ClassicDropIndicatorOverlay::setDropLocation(KDDockWidgets::DropLocation arg__1)
-void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setDropLocation_DropLocation(void *thisObj, int arg__1);
+// KDDockWidgets::Core::ClassicDropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
+void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::tr(const char * s, const char * c, int n)

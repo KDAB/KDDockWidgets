@@ -37,6 +37,8 @@ public:
     bool onResize(QSize newSize);
     virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
     virtual QPoint posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
+    virtual void setCurrentDropLocation(KDDockWidgets::DropLocation arg__1);
+    virtual void setCurrentDropLocation_nocallback(KDDockWidgets::DropLocation arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     static QString tr(const char *s, const char *c, int n);
@@ -50,6 +52,8 @@ public:
     Callback_onHoveredGroupChanged m_onHoveredGroupChangedCallback = nullptr;
     typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
+    typedef void (*Callback_setCurrentDropLocation)(void *, KDDockWidgets::DropLocation arg__1);
+    Callback_setCurrentDropLocation m_setCurrentDropLocationCallback = nullptr;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
     typedef void (*Callback_updateVisibility)(void *);
@@ -74,6 +78,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicDropIndicatorOve
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onResize_QSize(void *thisObj, void *newSize_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1);
+// KDDockWidgets::Core::ClassicDropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::tr(const char * s, const char * c, int n)

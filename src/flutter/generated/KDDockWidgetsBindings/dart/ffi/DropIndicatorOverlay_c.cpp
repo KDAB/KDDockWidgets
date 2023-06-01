@@ -131,9 +131,18 @@ void DropIndicatorOverlay_wrapper::removeHover()
 {
     ::KDDockWidgets::Core::DropIndicatorOverlay::removeHover();
 }
-void DropIndicatorOverlay_wrapper::setCurrentDropLocation(KDDockWidgets::DropLocation location)
+void DropIndicatorOverlay_wrapper::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
 {
-    ::KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(location);
+    if (m_setCurrentDropLocationCallback) {
+        const void *thisPtr = this;
+        m_setCurrentDropLocationCallback(const_cast<void *>(thisPtr), arg__1);
+    } else {
+        ::KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(arg__1);
+    }
+}
+void DropIndicatorOverlay_wrapper::setCurrentDropLocation_nocallback(KDDockWidgets::DropLocation arg__1)
+{
+    ::KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(arg__1);
 }
 void DropIndicatorOverlay_wrapper::setHoveredGroup(KDDockWidgets::Core::Group *arg__1)
 {
@@ -280,10 +289,10 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__removeHover(void *thisObj)
 {
     fromPtr(thisObj)->removeHover();
 }
-// setCurrentDropLocation(KDDockWidgets::DropLocation location)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int location)
+// setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
+void c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1)
 {
-    fromPtr(thisObj)->setCurrentDropLocation(static_cast<KDDockWidgets::DropLocation>(location));
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setCurrentDropLocation_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->setCurrentDropLocation(static_cast<KDDockWidgets::DropLocation>(arg__1));} }();
 }
 // setHoveredGroup(KDDockWidgets::Core::Group * arg__1)
 void c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredGroup_Group(void *thisObj, void *arg__1_)
@@ -320,22 +329,25 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__registerVirtualMethodCallback(
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1667:
+    case 1670:
         wrapper->m_dropIndicatorVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_dropIndicatorVisible>(callback);
         break;
-    case 1671:
+    case 1674:
         wrapper->m_hover_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_hover_impl>(callback);
         break;
-    case 1683:
+    case 1686:
         wrapper->m_onHoveredGroupChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_onHoveredGroupChanged>(callback);
         break;
-    case 1686:
+    case 1689:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 908:
+    case 1692:
+        wrapper->m_setCurrentDropLocationCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_setCurrentDropLocation>(callback);
+        break;
+    case 911:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1699:
+    case 1702:
         wrapper->m_updateVisibilityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_updateVisibility>(callback);
         break;
     }

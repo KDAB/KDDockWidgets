@@ -43,7 +43,8 @@ public:
     virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
     virtual QPoint posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
     void removeHover();
-    void setCurrentDropLocation(KDDockWidgets::DropLocation location);
+    virtual void setCurrentDropLocation(KDDockWidgets::DropLocation arg__1);
+    virtual void setCurrentDropLocation_nocallback(KDDockWidgets::DropLocation arg__1);
     void setHoveredGroup(KDDockWidgets::Core::Group *arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
@@ -59,6 +60,8 @@ public:
     Callback_onHoveredGroupChanged m_onHoveredGroupChangedCallback = nullptr;
     typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
+    typedef void (*Callback_setCurrentDropLocation)(void *, KDDockWidgets::DropLocation arg__1);
+    Callback_setCurrentDropLocation m_setCurrentDropLocationCallback = nullptr;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
     typedef void (*Callback_updateVisibility)(void *);
@@ -98,8 +101,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__o
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::DropIndicatorOverlay::removeHover()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__removeHover(void *thisObj);
-// KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation location)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int location);
+// KDDockWidgets::Core::DropIndicatorOverlay::setCurrentDropLocation(KDDockWidgets::DropLocation arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__setCurrentDropLocation_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::DropIndicatorOverlay::setHoveredGroup(KDDockWidgets::Core::Group * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__setHoveredGroup_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::DropIndicatorOverlay::setParentView_impl(KDDockWidgets::Core::View * parent)
