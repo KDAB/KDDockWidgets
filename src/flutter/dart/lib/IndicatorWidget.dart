@@ -96,6 +96,14 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
     return "packages/KDDockWidgets/assets/classic_indicators/${name}.png";
   }
 
+  void setActive(bool a) {
+    if (active != a) {
+      setState(() {
+        active = a;
+      });
+    }
+  }
+
   _IndicatorWidgetState(this.loc);
 
   @override
@@ -167,8 +175,13 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
   }
 
   int hover(Offset pt) {
-    if (geometry().contains(pt)) return loc;
-    return KDDockWidgets_DropLocation.DropLocation_None;
+    if (geometry().contains(pt)) {
+      setActive(true);
+      return loc;
+    } else {
+      setActive(false);
+      return KDDockWidgets_DropLocation.DropLocation_None;
+    }
   }
 
   void updatePosition(int overlayWidth, int overlayHeight,
