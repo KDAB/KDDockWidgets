@@ -212,7 +212,9 @@ void DropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
 
 DropLocation DropIndicatorOverlay::hover(QPoint globalPos)
 {
-    return hover_impl(globalPos);
+    const DropLocation loc = hover_impl(globalPos);
+    setCurrentDropLocation(loc);
+    return loc;
 }
 
 void DropIndicatorOverlay::setHoveredGroupRect(QRect rect)

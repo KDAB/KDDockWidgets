@@ -112,9 +112,7 @@ IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndic
 DropLocation IndicatorWindow::hover(QPoint pt)
 {
     QQuickItem *item = indicatorForPos(pt);
-    const DropLocation loc = item ? locationForIndicator(item) : DropLocation_None;
-    classicIndicators()->setCurrentDropLocation(loc);
-    return loc;
+    return item ? locationForIndicator(item) : DropLocation_None;
 }
 
 QQuickItem *IndicatorWindow::indicatorForPos(QPoint pt) const
@@ -149,11 +147,6 @@ QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation loc) const
 QString IndicatorWindow::iconName(int loc, bool active) const
 {
     return KDDockWidgets::iconName(DropLocation(loc), active);
-}
-
-ClassicDropIndicatorOverlay *IndicatorWindow::classicIndicators() const
-{
-    return m_classicIndicators;
 }
 
 QQuickItem *IndicatorWindow::indicatorForLocation(DropLocation loc) const

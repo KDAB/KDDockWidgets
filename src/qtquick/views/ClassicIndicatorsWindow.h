@@ -51,7 +51,6 @@ public:
     explicit IndicatorWindow(Core::ClassicDropIndicatorOverlay *);
 
     Q_INVOKABLE QString iconName(int loc, bool active) const;
-    Core::ClassicDropIndicatorOverlay *classicIndicators() const;
     QQuickItem *indicatorForLocation(DropLocation loc) const;
 
     DropLocation hover(QPoint globalPos) override;

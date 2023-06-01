@@ -31,8 +31,7 @@ class Indicator : public QWidget
     Q_OBJECT
 public:
     typedef QList<Indicator *> List;
-    explicit Indicator(Core::ClassicDropIndicatorOverlay *classicIndicators,
-                       IndicatorWindow *parent, DropLocation location);
+    explicit Indicator(IndicatorWindow *parent, DropLocation location);
     void paintEvent(QPaintEvent *) override;
 
     void setHovered(bool hovered);
@@ -41,7 +40,6 @@ public:
 
     QImage m_image;
     QImage m_imageActive;
-    Core::ClassicDropIndicatorOverlay *const q;
     bool m_hovered = false;
     const DropLocation m_dropLocation;
 };
@@ -105,11 +103,6 @@ void Indicator::setHovered(bool hovered)
     if (hovered != m_hovered) {
         m_hovered = hovered;
         update();
-        if (hovered) {
-            q->setCurrentDropLocation(m_dropLocation);
-        } else if (q->currentDropLocation() == m_dropLocation) {
-            q->setCurrentDropLocation(DropLocation_None);
-        }
     }
 }
 
@@ -141,17 +134,16 @@ static Qt::WindowFlags flagsForIndicatorWindow()
 IndicatorWindow::IndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators_)
     : QWidget(parentForIndicatorWindow(classicIndicators_), flagsForIndicatorWindow())
     , classicIndicators(classicIndicators_)
-    , m_center(new Indicator(classicIndicators, this,
-                             DropLocation_Center)) // Each indicator is not a top-level. Otherwise
-                                                   // there's noticeable delay.
-    , m_left(new Indicator(classicIndicators, this, DropLocation_Left))
-    , m_right(new Indicator(classicIndicators, this, DropLocation_Right))
-    , m_bottom(new Indicator(classicIndicators, this, DropLocation_Bottom))
-    , m_top(new Indicator(classicIndicators, this, DropLocation_Top))
-    , m_outterLeft(new Indicator(classicIndicators, this, DropLocation_OutterLeft))
-    , m_outterRight(new Indicator(classicIndicators, this, DropLocation_OutterRight))
-    , m_outterBottom(new Indicator(classicIndicators, this, DropLocation_OutterBottom))
-    , m_outterTop(new Indicator(classicIndicators, this, DropLocation_OutterTop))
+    , m_center(new Indicator(this, DropLocation_Center)) // Each indicator is not a top-level. Otherwise
+                                                         // there's noticeable delay.
+    , m_left(new Indicator(this, DropLocation_Left))
+    , m_right(new Indicator(this, DropLocation_Right))
+    , m_bottom(new Indicator(this, DropLocation_Bottom))
+    , m_top(new Indicator(this, DropLocation_Top))
+    , m_outterLeft(new Indicator(this, DropLocation_OutterLeft))
+    , m_outterRight(new Indicator(this, DropLocation_OutterRight))
+    , m_outterBottom(new Indicator(this, DropLocation_OutterBottom))
+    , m_outterTop(new Indicator(this, DropLocation_OutterTop))
 {
     setWindowFlag(Qt::FramelessWindowHint, true);
 
@@ -308,10 +300,9 @@ bool IndicatorWindow::isWindow() const
     return QWidget::isWindow();
 }
 
-Indicator::Indicator(ClassicDropIndicatorOverlay *classicIndicators, IndicatorWindow *parent,
+Indicator::Indicator(IndicatorWindow *parent,
                      DropLocation location)
     : QWidget(parent)
-    , q(classicIndicators)
     , m_dropLocation(location)
 {
     m_image = QImage(iconFileName(/*active=*/false)).scaled(INDICATOR_WIDTH, INDICATOR_WIDTH);
