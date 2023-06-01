@@ -178,6 +178,8 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
   }
 
   int hover(Offset pt) {
+    if (!visible) return KDDockWidgets_DropLocation.DropLocation_None;
+
     if (geometry().contains(pt)) {
       setActive(true);
       return loc;
