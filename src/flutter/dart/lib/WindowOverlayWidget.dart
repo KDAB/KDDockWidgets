@@ -63,6 +63,11 @@ class WindowOverlayWidgetState extends State<WindowOverlayWidget> {
       windowWidgets.add(windowWidget!);
     }
 
+    final dropIndicatorWindows = Platform.plat().indicatorWindows;
+    for (var w in dropIndicatorWindows) {
+      if (w.isVisible()) windowWidgets.add(WindowWidget.fromView(w));
+    }
+
     return Stack(children: windowWidgets);
   }
 

@@ -28,6 +28,7 @@ class IndicatorWindow : public flutter::View, public Core::ClassicIndicatorWindo
 public:
     /// When we have proper multi-window support in flutter, we can remove the parent
     explicit IndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *parent);
+    ~IndicatorWindow() override;
 
     DropLocation hover(QPoint globalPos) override;
     void updatePositions() override;

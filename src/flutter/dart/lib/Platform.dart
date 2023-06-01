@@ -28,6 +28,7 @@ class Platform extends KDDWBindingsFlutter.Platform {
 
   var floatingWindows = <KDDWBindingsCore.FloatingWindow>[];
   var mainWindows = <KDDWBindingsCore.MainWindow>[];
+  var indicatorWindows = <KDDWBindingsFlutter.IndicatorWindow>[];
 
   @override
   String name() {
@@ -111,11 +112,21 @@ class Platform extends KDDWBindingsFlutter.Platform {
     rebuildWindowOverlay();
   }
 
+  @override
+  onDropIndicatorOverlayCreated(KDDWBindingsFlutter.IndicatorWindow? w) {
+    indicatorWindows.add(w!);
+    rebuildWindowOverlay();
+  }
+
+  @override
+  onDropIndicatorOverlayDestroyed(KDDWBindingsFlutter.IndicatorWindow? w) {
+    indicatorWindows.removeWhere((it) => it.thisCpp == w!.thisCpp);
+    rebuildWindowOverlay();
+  }
+
+  @override
   void rebuildWindowOverlay() {
-    final state = WindowOverlayWidget.globalKey().currentState;
-    if (state != null) {
-      state.onWindowCountChanged();
-    }
+    WindowOverlayWidget.globalKey().currentState?.onWindowCountChanged();
   }
 
   @override

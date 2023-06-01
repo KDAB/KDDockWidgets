@@ -57,10 +57,8 @@ class DropAreaPositionedWidgetState extends PositionedWidgetState {
     return Container(
         color: kddwView.m_color,
         child: Stack(
-          children: [
-            ...kddwView.visibleChildWidgets(),
-            if (indicatorWindow.isVisible()) indicatorWindow.flutterWidget,
-          ],
+          fit: StackFit.expand,
+          children: kddwView.visibleChildWidgets(),
         ));
   }
 }

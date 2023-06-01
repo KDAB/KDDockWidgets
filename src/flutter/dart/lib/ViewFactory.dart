@@ -40,7 +40,9 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   KDDWBindingsFlutter.IndicatorWindow createClassicIndicatorWindow_flutter(
       KDDWBindingsCore.ClassicDropIndicatorOverlay? indicators,
       {required KDDWBindingsCore.View? parent}) {
-    return IndicatorWindow(indicators, parent);
+    // Not using parent. It won't be parented on DropArea, but will be
+    // a transparent top-level window
+    return IndicatorWindow(indicators, null);
   }
 
   @override

@@ -14,6 +14,7 @@
 #include "kddockwidgets/core/Group.h"
 #include "View.h"
 #include "core/Utils_p.h"
+#include "flutter/Platform.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -23,6 +24,12 @@ IndicatorWindow::IndicatorWindow(ClassicDropIndicatorOverlay *controller, Core::
     : flutter::View(controller, ViewType::DropAreaIndicatorOverlay, parent)
     , classicIndicators(controller)
 {
+    Platform::platformFlutter()->onDropIndicatorOverlayCreated(this);
+}
+
+IndicatorWindow::~IndicatorWindow()
+{
+    Platform::platformFlutter()->onDropIndicatorOverlayDestroyed(this);
 }
 
 QPoint IndicatorWindow::posForIndicator(DropLocation loc) const
@@ -51,9 +58,9 @@ void IndicatorWindow::raise()
     // Nothing to do for flutter, it's raised
 }
 
-void IndicatorWindow::setGeometry(QRect)
+void IndicatorWindow::setGeometry(QRect geo)
 {
-    // TODOm3: Only needed once real multi-window
+    flutter::View::setGeometry(geo);
 }
 
 void IndicatorWindow::setObjectName(const QString &)
@@ -63,18 +70,21 @@ void IndicatorWindow::setObjectName(const QString &)
 
 void IndicatorWindow::setVisible(bool is)
 {
+    if (is == isVisible())
+        return;
+
     flutter::View::setVisible(is);
+    Platform::platformFlutter()->rebuildWindowOverlay();
 }
 
-void IndicatorWindow::resize(QSize)
+void IndicatorWindow::resize(QSize size)
 {
-    // TODOm3: Only needed once real multi-window
+    flutter::View::resize(size);
 }
 
 bool IndicatorWindow::isWindow() const
 {
-    // TODOm3: Change to true once real multi-window
-    return false;
+    return true;
 }
 
 DropLocation IndicatorWindow::hover_flutter(QPoint)

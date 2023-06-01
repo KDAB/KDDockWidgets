@@ -169,18 +169,37 @@ Core::Screen::Ptr Platform::primaryScreen() const
 
 void Platform::onFloatingWindowCreated(Core::FloatingWindow *)
 {
+    qWarning() << Q_FUNC_INFO << "Implemented in dart";
 }
 
 void Platform::onFloatingWindowDestroyed(Core::FloatingWindow *)
 {
+    qWarning() << Q_FUNC_INFO << "Implemented in dart";
 }
 
 void Platform::onMainWindowCreated(Core::MainWindow *)
 {
+    qWarning() << Q_FUNC_INFO << "Implemented in dart";
 }
 
 void Platform::onMainWindowDestroyed(Core::MainWindow *)
 {
+    qWarning() << Q_FUNC_INFO << "Implemented in dart";
+}
+
+void Platform::onDropIndicatorOverlayCreated(flutter::IndicatorWindow *)
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in dart";
+}
+
+void Platform::onDropIndicatorOverlayDestroyed(flutter::IndicatorWindow *)
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in dart";
+}
+
+void Platform::rebuildWindowOverlay()
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in dart";
 }
 
 void Platform::runDelayed(int, Core::DelayedCall *)

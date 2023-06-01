@@ -180,7 +180,8 @@ void ClassicDropIndicatorOverlay::updateWindowPosition()
     QRect rect = this->rect();
     if (m_indicatorWindow->isWindow()) {
         // On all non-wayland platforms it's a top-level.
-        QPoint pos = mapToGlobal(QPoint(0, 0));
+
+        const QPoint pos = m_dropArea->mapToGlobal(QPoint(0, 0));
         rect.moveTo(pos);
     }
     m_indicatorWindow->setGeometry(rect);

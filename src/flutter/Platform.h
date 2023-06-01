@@ -27,6 +27,8 @@ class MainWindow;
 
 namespace flutter {
 
+class IndicatorWindow;
+
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
 class DOCKS_EXPORT Platform : public Core::Platform
@@ -61,9 +63,11 @@ public:
 
     void onFloatingWindowCreated(Core::FloatingWindow *) override;
     void onFloatingWindowDestroyed(Core::FloatingWindow *) override;
-
     void onMainWindowCreated(Core::MainWindow *) override;
     void onMainWindowDestroyed(Core::MainWindow *) override;
+    virtual void onDropIndicatorOverlayCreated(flutter::IndicatorWindow *);
+    virtual void onDropIndicatorOverlayDestroyed(flutter::IndicatorWindow *);
+    virtual void rebuildWindowOverlay();
 
     void runDelayed(int ms, Core::DelayedCall *c) override;
 
