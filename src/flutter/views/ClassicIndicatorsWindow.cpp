@@ -50,7 +50,8 @@ DropLocation IndicatorWindow::hover(QPoint globalPos)
 void IndicatorWindow::updatePositions()
 {
     auto sz = size();
-    updatePositions_flutter(sz.width(), sz.height(), classicIndicators->hoveredGroup());
+    updatePositions_flutter(sz.width(), sz.height(),
+                            classicIndicators->hoveredGroup(), visibleDropIndicatorLocations());
 }
 
 void IndicatorWindow::raise()
@@ -93,7 +94,7 @@ DropLocation IndicatorWindow::hover_flutter(QPoint)
     return {};
 }
 
-void IndicatorWindow::updatePositions_flutter(int, int, Core::Group *)
+void IndicatorWindow::updatePositions_flutter(int, int, Core::Group *, int)
 {
     qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
 }
@@ -101,4 +102,24 @@ void IndicatorWindow::updatePositions_flutter(int, int, Core::Group *)
 Core::View *IndicatorWindow::rubberBand() const
 {
     return classicIndicators->rubberBand();
+}
+
+int IndicatorWindow::visibleDropIndicatorLocations() const
+{
+    int result = 0;
+
+    for (auto loc : { DropLocation_Left,
+                      DropLocation_Top,
+                      DropLocation_Right,
+                      DropLocation_Bottom,
+                      DropLocation_Center,
+                      DropLocation_OutterLeft,
+                      DropLocation_OutterTop,
+                      DropLocation_OutterRight,
+                      DropLocation_OutterBottom }) {
+        if (classicIndicators->dropIndicatorVisible(loc))
+            result |= loc;
+    }
+
+    return result;
 }

@@ -42,11 +42,13 @@ public:
 
     /// implemented in dart. workaround for multi-inheritance binding limitations
     virtual DropLocation hover_flutter(QPoint globalPos);
-    virtual void updatePositions_flutter(int overlayWidth, int overlayHeight, Core::Group *hoveredGroup);
+    virtual void updatePositions_flutter(int overlayWidth, int overlayHeight,
+                                         Core::Group *hoveredGroup, int visibleLocations);
 
     Core::View *rubberBand() const;
 
 private:
+    int visibleDropIndicatorLocations() const;
     Core::ClassicDropIndicatorOverlay *const classicIndicators;
 };
 

@@ -36,9 +36,10 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
 
   @override
   void updatePositions_flutter(int overlayWidth, int overlayHeight,
-      KDDWBindingsCore.Group? hoveredGroup) {
+      KDDWBindingsCore.Group? hoveredGroup, int visibleLocations) {
     final state = widgetState<IndicatorWindowWidgetState>();
-    state?.updatePositions(overlayWidth, overlayHeight, hoveredGroup);
+    state?.updatePositions(
+        overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
   }
 
   @override
@@ -89,9 +90,10 @@ class IndicatorWindowWidgetState extends PositionedWidgetState {
   }
 
   void updatePositions(int overlayWidth, int overlayHeight,
-      KDDWBindingsCore.Group? hoveredGroup) {
+      KDDWBindingsCore.Group? hoveredGroup, int visibleLocations) {
     for (var widget in indicatorWidgets)
-      widget.updatePosition(overlayWidth, overlayHeight, hoveredGroup);
+      widget.updatePosition(
+          overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
   }
 
   int hover(Offset localPt) {

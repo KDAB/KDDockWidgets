@@ -46,14 +46,15 @@ class IndicatorWidget extends StatefulWidget {
   }
 
   void updatePosition(int overlayWidth, int overlayHeight,
-      KDDWBindingsCore.Group? hoveredGroup) {
+      KDDWBindingsCore.Group? hoveredGroup, int visibleLocations) {
     final globalKey = key as GlobalObjectKey;
     final state = widgetState();
 
     if (state == null) {
       print("Null state for key $globalKey");
     } else {
-      state.updatePosition(overlayWidth, overlayHeight, hoveredGroup);
+      state.updatePosition(
+          overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
     }
   }
 }
@@ -89,6 +90,7 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
   double y = 0;
   final length = 50.0;
   get halfLength => length / 2;
+  bool visible = false;
 
   String filename() {
     var name = filenameForLocationType(loc);
@@ -108,6 +110,7 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (!visible) return Container(color: Colors.transparent);
     return Positioned(
         left: x,
         top: y,
@@ -185,13 +188,15 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
   }
 
   void updatePosition(int overlayWidth, int overlayHeight,
-      KDDWBindingsCore.Group? hoveredGroup) {
+      KDDWBindingsCore.Group? hoveredGroup, int visibleLocations) {
     final newPos = _positionForLocation(
         overlayWidth.toDouble(), overlayHeight.toDouble(), hoveredGroup);
-    if (newPos != Offset(x, y)) {
+    final newVisibility = (visibleLocations & loc) != 0;
+    if (newPos != Offset(x, y) || visible != newVisibility) {
       setState(() {
         x = newPos.dx;
         y = newPos.dy;
+        visible = newVisibility;
       });
     }
   }
