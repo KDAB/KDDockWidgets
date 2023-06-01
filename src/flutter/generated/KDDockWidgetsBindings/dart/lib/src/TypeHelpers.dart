@@ -444,9 +444,10 @@ typedef void_Func_voidstar_voidstar_ffi_Int32_voidstar_FFI = ffi.Void Function(
     ffi.Pointer<void>, ffi.Pointer<void>, ffi.Int32, ffi.Pointer<void>);
 typedef int_Func_int = int Function(int);
 typedef int_Func_ffi_Int32_FFI = ffi.Int32 Function(ffi.Int32);
-typedef void_Func_voidstar_int_int_voidstar = void Function(
-    ffi.Pointer<void>, int, int, ffi.Pointer<void>);
-typedef void_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_FFI = ffi.Void Function(
-    ffi.Pointer<void>, ffi.Int32, ffi.Int32, ffi.Pointer<void>);
+typedef void_Func_voidstar_int_int_voidstar_int = void Function(
+    ffi.Pointer<void>, int, int, ffi.Pointer<void>, int);
+typedef void_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_ffi_Int32_FFI
+    = ffi.Void Function(
+        ffi.Pointer<void>, ffi.Int32, ffi.Int32, ffi.Pointer<void>, ffi.Int32);
 typedef double_Func_voidstar = double Function(ffi.Pointer<void>);
 typedef double_Func_voidstar_FFI = ffi.Double Function(ffi.Pointer<void>);

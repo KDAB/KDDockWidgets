@@ -154,8 +154,8 @@ public:
     virtual void update_nocallback();
     virtual void updatePositions();
     virtual void updatePositions_nocallback();
-    virtual void updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup);
-    virtual void updatePositions_flutter_nocallback(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup);
+    virtual void updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
+    virtual void updatePositions_flutter_nocallback(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -284,7 +284,7 @@ public:
     Callback_update m_updateCallback = nullptr;
     typedef void (*Callback_updatePositions)(void *);
     Callback_updatePositions m_updatePositionsCallback = nullptr;
-    typedef void (*Callback_updatePositions_flutter)(void *, int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup);
+    typedef void (*Callback_updatePositions_flutter)(void *, int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
     Callback_updatePositions_flutter m_updatePositions_flutterCallback = nullptr;
 };
 }
@@ -422,8 +422,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__si
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_);
+// KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_, int visibleLocations);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *, void *cppObj, void *);

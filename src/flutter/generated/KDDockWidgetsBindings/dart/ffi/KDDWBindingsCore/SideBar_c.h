@@ -14,9 +14,9 @@
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
 #include <qpoint.h>
-#include <core/View.h>
-#include <qrect.h>
 #include <qsize.h>
+#include <qrect.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

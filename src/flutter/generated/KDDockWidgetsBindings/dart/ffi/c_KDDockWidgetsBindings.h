@@ -3603,8 +3603,8 @@ void *c_KDDockWidgets__flutter__IndicatorWindow__sizeHint(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup)
-void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_);
+// KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)
+void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_, int visibleLocations);
 void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea)

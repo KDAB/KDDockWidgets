@@ -868,18 +868,18 @@ void IndicatorWindow_wrapper::updatePositions_nocallback()
 {
     ::KDDockWidgets::flutter::IndicatorWindow::updatePositions();
 }
-void IndicatorWindow_wrapper::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup)
+void IndicatorWindow_wrapper::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations)
 {
     if (m_updatePositions_flutterCallback) {
         const void *thisPtr = this;
-        m_updatePositions_flutterCallback(const_cast<void *>(thisPtr), overlayWidth, overlayHeight, hoveredGroup);
+        m_updatePositions_flutterCallback(const_cast<void *>(thisPtr), overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
     } else {
-        ::KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(overlayWidth, overlayHeight, hoveredGroup);
+        ::KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
     }
 }
-void IndicatorWindow_wrapper::updatePositions_flutter_nocallback(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup)
+void IndicatorWindow_wrapper::updatePositions_flutter_nocallback(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations)
 {
-    ::KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(overlayWidth, overlayHeight, hoveredGroup);
+    ::KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
 }
 IndicatorWindow_wrapper::~IndicatorWindow_wrapper()
 {
@@ -1257,11 +1257,11 @@ void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->updatePositions_nocallback();} else {    return targetPtr->updatePositions();} }();
 }
-// updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup)
-void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_)
+// updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)
+void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_, int visibleLocations)
 {
     auto hoveredGroup = reinterpret_cast<KDDockWidgets::Core::Group *>(hoveredGroup_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->updatePositions_flutter_nocallback(overlayWidth,overlayHeight,hoveredGroup);} else {    return targetPtr->updatePositions_flutter(overlayWidth,overlayHeight,hoveredGroup);} }();
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->updatePositions_flutter_nocallback(overlayWidth,overlayHeight,hoveredGroup,visibleLocations);} else {    return targetPtr->updatePositions_flutter(overlayWidth,overlayHeight,hoveredGroup,visibleLocations);} }();
 }
 void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj)
 {
