@@ -83,11 +83,8 @@ class IndicatorWindowWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents(BuildContext ctx) {
-    return Container(
-      color: Color.fromARGB(120, 246, 232, 234),
-      child: Stack(
-        children: indicatorWidgets,
-      ),
+    return Stack(
+      children: indicatorWidgets,
     );
   }
 

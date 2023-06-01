@@ -54,7 +54,7 @@ class RubberBandPositionedWidgetState extends PositionedWidgetState {
           borderRadius: new BorderRadius.circular(1.0),
           color: Color(0x555ca1c5),
           border: Border.all(
-            color: Color(0xFF5ca1c5),
+            color: Color.fromARGB(255, 39, 77, 97),
             width: 2,
           )),
     );
