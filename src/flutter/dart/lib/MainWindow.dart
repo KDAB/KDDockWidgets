@@ -17,6 +17,8 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 
+import 'PositionedWidget.dart';
+
 class MainWindow extends KDDWBindingsFlutter.MainWindow with View_mixin {
   late final KDDWBindingsCore.MainWindow m_controller;
 
@@ -27,29 +29,33 @@ class MainWindow extends KDDWBindingsFlutter.MainWindow with View_mixin {
       : super(uniqueName, options: options, parent: parent, flags: flags) {
     m_controller =
         KDDWBindingsCore.MainWindow.fromCppPointer(controller().thisCpp);
+    m_fillsParent = true;
     initMixin(this, debugName: "MainWindow");
     m_controller.init(uniqueName);
   }
 
   Widget createFlutterWidget() {
-    return MainWindowWidget(m_controller, key: widgetKey);
+    return MainWindowWidget(m_controller, this, key: widgetKey);
   }
 }
 
-class MainWindowWidget extends StatefulWidget {
+class MainWindowWidget extends PositionedWidget {
+  final MainWindow view;
   late final KDDWBindingsCore.MainWindow kddwController;
 
-  MainWindowWidget(this.kddwController, {Key? key}) : super(key: key);
+  MainWindowWidget(this.kddwController, this.view, {Key? key})
+      : super(view, key: key);
 
   @override
-  State<MainWindowWidget> createState() {
-    return MainWindowWidgetState(kddwController);
+  State<PositionedWidget> createState() {
+    return MainWindowWidgetState(kddwController, view);
   }
 }
 
-class MainWindowWidgetState extends State<MainWindowWidget> {
+class MainWindowWidgetState extends PositionedWidgetState {
+  final MainWindow view;
   late final KDDWBindingsCore.MainWindow kddwController;
-  MainWindowWidgetState(this.kddwController);
+  MainWindowWidgetState(this.kddwController, this.view) : super(view);
 
   Widget dropAreaWidget() {
     final dropAreaView = KDDWBindingsFlutter.View.fromCache(
