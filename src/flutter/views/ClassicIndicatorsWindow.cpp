@@ -33,7 +33,11 @@ QPoint IndicatorWindow::posForIndicator(DropLocation loc) const
 
 DropLocation IndicatorWindow::hover(QPoint globalPos)
 {
-    return hover_flutter(globalPos);
+    if (!isMounted())
+        return DropLocation_None;
+
+    const QPoint localPos = mapFromGlobal(globalPos);
+    return hover_flutter(localPos);
 }
 
 void IndicatorWindow::updatePositions()

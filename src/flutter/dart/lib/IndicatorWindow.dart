@@ -43,7 +43,9 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
 
   @override
   int hover_flutter(QPoint pt) {
-    return 0;
+    // TODOm3: Receive 2 doubles, less allocations and ffi
+    final localPt = Offset(pt.x().toDouble(), pt.y().toDouble());
+    return widgetState<IndicatorWindowWidgetState>()?.hover(localPt) ?? 0;
   }
 }
 
@@ -93,5 +95,16 @@ class IndicatorWindowWidgetState extends PositionedWidgetState {
       KDDWBindingsCore.Group? hoveredGroup) {
     for (var widget in indicatorWidgets)
       widget.updatePosition(overlayWidth, overlayHeight, hoveredGroup);
+  }
+
+  int hover(Offset localPt) {
+    int result = KDDockWidgets_DropLocation.DropLocation_None;
+    for (var indicator in indicatorWidgets) {
+      final loc = indicator.hover(localPt);
+      // don't break once found, so others can update icon
+      if (loc != KDDockWidgets_DropLocation.DropLocation_None) result = loc;
+    }
+
+    return result;
   }
 }

@@ -35,10 +35,20 @@ class IndicatorWidget extends StatefulWidget {
   @override
   State<IndicatorWidget> createState() => _IndicatorWidgetState(loc);
 
+  _IndicatorWidgetState? widgetState() {
+    final globalKey = key as GlobalObjectKey;
+    return globalKey.currentState as _IndicatorWidgetState?;
+  }
+
+  int hover(Offset pt) {
+    return widgetState()?.hover(pt) ??
+        KDDockWidgets_DropLocation.DropLocation_None;
+  }
+
   void updatePosition(int overlayWidth, int overlayHeight,
       KDDWBindingsCore.Group? hoveredGroup) {
     final globalKey = key as GlobalObjectKey;
-    final state = globalKey.currentState as _IndicatorWidgetState?;
+    final state = widgetState();
 
     if (state == null) {
       print("Null state for key $globalKey");
@@ -149,6 +159,16 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
             overlayWidth / 2 - halfLength, overlayHeight - 3 * halfLength);
     }
     return Offset(0, 0);
+  }
+
+  /// Returns this indicator's rect, in coordinates of parent (i.e. drop indicator overlay coordinates)
+  Rect geometry() {
+    return Rect.fromLTWH(x, y, length, length);
+  }
+
+  int hover(Offset pt) {
+    if (geometry().contains(pt)) return loc;
+    return KDDockWidgets_DropLocation.DropLocation_None;
   }
 
   void updatePosition(int overlayWidth, int overlayHeight,
