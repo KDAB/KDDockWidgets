@@ -32,7 +32,7 @@ public:
     QPoint posForIndicator(DropLocation) const override;
 
     bool onResize(QSize newSize);
-    void setDropLocation(DropLocation);
+    void setCurrentDropLocation(DropLocation) override;
     void updateVisibility() override;
 
     Core::ClassicIndicatorWindowViewInterface *indicatorWindow() const;

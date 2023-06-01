@@ -113,7 +113,7 @@ DropLocation IndicatorWindow::hover(QPoint pt)
 {
     QQuickItem *item = indicatorForPos(pt);
     const DropLocation loc = item ? locationForIndicator(item) : DropLocation_None;
-    classicIndicators()->setDropLocation(loc);
+    classicIndicators()->setCurrentDropLocation(loc);
     return loc;
 }
 

@@ -58,7 +58,7 @@ public:
     DropLocation currentDropLocation() const;
     Group *hoveredGroup() const;
 
-    void setCurrentDropLocation(DropLocation location);
+    virtual void setCurrentDropLocation(DropLocation);
 
     KDDockWidgets::DropLocation hover(QPoint globalPos);
 

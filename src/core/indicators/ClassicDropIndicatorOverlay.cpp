@@ -115,9 +115,9 @@ KDDockWidgets::Location locationToMultisplitterLocation(DropLocation location)
     }
 }
 
-void ClassicDropIndicatorOverlay::setDropLocation(DropLocation location)
+void ClassicDropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
 {
-    setCurrentDropLocation(location);
+    DropIndicatorOverlay::setCurrentDropLocation(location);
 
     if (location == DropLocation_None) {
         m_rubberBand->setVisible(false);

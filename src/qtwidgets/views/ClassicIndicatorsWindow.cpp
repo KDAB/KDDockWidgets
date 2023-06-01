@@ -106,9 +106,9 @@ void Indicator::setHovered(bool hovered)
         m_hovered = hovered;
         update();
         if (hovered) {
-            q->setDropLocation(m_dropLocation);
+            q->setCurrentDropLocation(m_dropLocation);
         } else if (q->currentDropLocation() == m_dropLocation) {
-            q->setDropLocation(DropLocation_None);
+            q->setCurrentDropLocation(DropLocation_None);
         }
     }
 }
