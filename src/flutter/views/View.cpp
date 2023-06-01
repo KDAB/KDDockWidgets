@@ -29,7 +29,7 @@ View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent
 {
     m_minSize = Core::Item::hardcodedMinimumSize;
     m_maxSize = Core::Item::hardcodedMaximumSize;
-    m_geometry = QRect(100, 100, 400, 400);
+    m_geometry = QRect(0, 0, 400, 400);
 
     setParent(parent);
     m_inCtor = false;
