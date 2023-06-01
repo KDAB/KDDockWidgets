@@ -36,6 +36,7 @@ public:
     void updateVisibility() override;
 
     Core::ClassicIndicatorWindowViewInterface *indicatorWindow() const;
+    View *rubberBand() const;
 
 Q_SIGNALS:
     void indicatorsVisibleChanged();

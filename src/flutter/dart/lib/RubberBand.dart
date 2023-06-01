@@ -49,6 +49,14 @@ class RubberBandPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents(BuildContext ctx) {
-    return Container(color: Color(0xffF6E8EA));
+    return Container(
+      decoration: new BoxDecoration(
+          borderRadius: new BorderRadius.circular(1.0),
+          color: Color(0x555ca1c5),
+          border: Border.all(
+            color: Color(0xFF5ca1c5),
+            width: 2,
+          )),
+    );
   }
 }

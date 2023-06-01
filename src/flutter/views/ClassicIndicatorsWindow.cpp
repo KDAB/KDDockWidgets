@@ -97,3 +97,8 @@ void IndicatorWindow::updatePositions_flutter(int, int, Core::Group *)
 {
     qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
 }
+
+Core::View *IndicatorWindow::rubberBand() const
+{
+    return classicIndicators->rubberBand();
+}

@@ -204,3 +204,8 @@ QRect ClassicDropIndicatorOverlay::geometryForRubberband(QRect localRect) const
 
     return localRect;
 }
+
+View *ClassicDropIndicatorOverlay::rubberBand() const
+{
+    return m_rubberBand;
+}

@@ -44,6 +44,8 @@ public:
     virtual DropLocation hover_flutter(QPoint globalPos);
     virtual void updatePositions_flutter(int overlayWidth, int overlayHeight, Core::Group *hoveredGroup);
 
+    Core::View *rubberBand() const;
+
 private:
     Core::ClassicDropIndicatorOverlay *const classicIndicators;
 };

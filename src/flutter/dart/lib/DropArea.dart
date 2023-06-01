@@ -10,6 +10,7 @@
 */
 
 import 'package:KDDockWidgets/IndicatorWindow.dart';
+import 'package:KDDockWidgets/RubberBand.dart';
 import 'package:KDDockWidgets/View_mixin.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
@@ -44,12 +45,17 @@ class DropAreaWidget extends PositionedWidget {
 
 class DropAreaPositionedWidgetState extends PositionedWidgetState {
   late final IndicatorWindow indicatorWindow;
+  late final RubberBand rubberBand;
 
   DropAreaPositionedWidgetState(View_mixin kddwView) : super(kddwView) {
     final DropArea da = kddwView.asFlutterView() as DropArea;
 
     indicatorWindow = KDDWBindingsFlutter.IndicatorWindow.fromCache(
         da.indicatorWindow().thisCpp) as IndicatorWindow;
+
+    rubberBand =
+        KDDWBindingsFlutter.View.fromCache(indicatorWindow.rubberBand().thisCpp)
+            as RubberBand;
   }
 
   @override
@@ -58,7 +64,10 @@ class DropAreaPositionedWidgetState extends PositionedWidgetState {
         color: kddwView.m_color,
         child: Stack(
           fit: StackFit.expand,
-          children: kddwView.visibleChildWidgets(),
+          children: [
+            ...kddwView.visibleChildWidgets(),
+            if (rubberBand.isVisible()) rubberBand.flutterWidget
+          ],
         ));
   }
 }
