@@ -43,6 +43,7 @@ ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(Core::DropArea *dropAre
 {
     if (rubberBandIsTopLevel())
         m_rubberBand->setWindowOpacity(0.5);
+    m_rubberBand->setVisible(false);
 }
 
 ClassicDropIndicatorOverlay::~ClassicDropIndicatorOverlay()
