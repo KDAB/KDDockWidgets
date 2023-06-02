@@ -37,7 +37,9 @@ class View_mixin {
   var childWidgets = <Widget>[];
 
   void initMixin(var kddwView,
-      {var color = Colors.transparent, var debugName = ""}) {
+      {required KDDWBindingsCore.View? parent,
+      var color = Colors.transparent,
+      var debugName = ""}) {
     this.kddwView = kddwView;
     m_color = color;
     this.debugName = debugName;
@@ -50,6 +52,12 @@ class View_mixin {
       flutterWidget = createFlutterWidget();
     } else {
       flutterWidget = widgetKey.currentWidget!;
+    }
+
+    if (parent != null) {
+      // onChildAdded is not called automatically from C++ when in the View ctor
+      // because there's no View_mixin yet. So do it here
+      fromCpp(parent).onChildAdded(kddwView);
     }
   }
 
@@ -102,11 +110,12 @@ class View_mixin {
   }
 
   void onChildAdded(KDDWBindingsCore.View? childViewCpp) {
-    final state = widgetKey.currentState;
     final View_mixin childView = fromCpp(childViewCpp);
+    if (childWidgets.contains(childView.flutterWidget)) return;
 
     childWidgets.add(childView.flutterWidget);
 
+    final state = widgetKey.currentState;
     if (state != null) {
       state.childrenChanged();
     }
@@ -116,15 +125,24 @@ class View_mixin {
     final state = widgetKey.currentState;
     final View_mixin childView = fromCpp(childViewCpp);
 
-    childWidgets.remove(childView.flutterWidget);
+    final bool removed = childWidgets.remove(childView.flutterWidget);
 
-    if (state != null) {
+    if (state != null && removed) {
       state.childrenChanged();
     }
   }
 
-  void onChildVisibilityChanged(KDDWBindingsCore.View? childView) {
+  void onChildVisibilityChanged(KDDWBindingsCore.View? childViewCpp) {
     final state = widgetKey.currentState;
+    final View_mixin childView = fromCpp(childViewCpp);
+
+    if (!childWidgets.contains(childView.flutterWidget)) {
+      print(
+          "ASSERT! $flutterWidget does not contain ${childView.flutterWidget}! state=$state ; children={$childWidgets} ; childVisible=${childViewCpp!.isVisible()}");
+      // assert(false); // Should we assert here ? TODOm3
+      return;
+    }
+
     if (state != null) {
       state.childrenChanged();
     }

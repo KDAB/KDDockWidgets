@@ -33,7 +33,7 @@ class FloatingWindow extends KDDWBindingsFlutter.View with View_mixin {
     m_controller = controller! as KDDWBindingsCore.FloatingWindow;
     m_fillsParent = true;
 
-    initMixin(this, debugName: "FloatingWindow");
+    initMixin(this, debugName: "FloatingWindow", parent: parent);
     windowWidget = WindowWidget.fromView(this);
   }
 

@@ -23,11 +23,11 @@ class View extends KDDWBindingsFlutter.View with View_mixin {
       KDDWBindingsCore.View? parent,
       {int windowFlags = 0})
       : super(controller, type, parent, windowFlags: windowFlags) {
-    initMixin(this);
+    initMixin(this, parent: parent);
   }
 
   View.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
       : super.fromCppPointer(cppPointer, needsAutoDelete) {
-    initMixin(this);
+    initMixin(this, parent: null);
   }
 }

@@ -24,7 +24,7 @@ import 'package:flutter/material.dart' hide View;
 class RubberBand extends KDDWBindingsFlutter.View with View_mixin {
   RubberBand(KDDWBindingsCore.View? parent)
       : super(null, KDDockWidgetBindings.Core_ViewType.RubberBand, parent) {
-    initMixin(this, debugName: "RubberBand");
+    initMixin(this, debugName: "RubberBand", parent: parent);
   }
 
   Widget createFlutterWidget() {

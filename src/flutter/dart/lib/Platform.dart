@@ -155,6 +155,6 @@ class GenericView extends KDDWBindingsFlutter.View with View_mixin {
       KDDWBindingsCore.Controller? controller, KDDWBindingsCore.View? parent)
       : super(controller, 0, parent) {
     m_fillsParent = true;
-    initMixin(this, debugName: "GenericView");
+    initMixin(this, debugName: "GenericView", parent: parent);
   }
 }

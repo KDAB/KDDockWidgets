@@ -27,7 +27,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
       KDDWBindingsCore.View? parent)
       : super(classicIndicators, parent) {
     m_fillsParent = true;
-    initMixin(this, debugName: "IndicatorWindow");
+    initMixin(this, debugName: "IndicatorWindow", parent: parent);
   }
 
   Widget createFlutterWidget() {

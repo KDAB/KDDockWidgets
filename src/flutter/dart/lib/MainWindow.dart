@@ -30,7 +30,7 @@ class MainWindow extends KDDWBindingsFlutter.MainWindow with View_mixin {
     m_controller =
         KDDWBindingsCore.MainWindow.fromCppPointer(controller().thisCpp);
     m_fillsParent = true;
-    initMixin(this, debugName: "MainWindow");
+    initMixin(this, debugName: "MainWindow", parent: parent);
     m_controller.init(uniqueName);
   }
 

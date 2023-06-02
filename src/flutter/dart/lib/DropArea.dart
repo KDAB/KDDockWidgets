@@ -26,7 +26,7 @@ class DropArea extends KDDWBindingsFlutter.DropArea with View_mixin {
       {int windowFlags = 0})
       : super(controller, parent) {
     m_fillsParent = true;
-    initMixin(this, debugName: "DropArea");
+    initMixin(this, debugName: "DropArea", parent: parent);
   }
 
   Widget createFlutterWidget() {

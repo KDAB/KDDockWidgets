@@ -21,7 +21,7 @@ class DockWidget extends KDDWBindingsFlutter.DockWidget with View_mixin {
       : super(uniqueName,
             options: options, layoutSaverOptions: layoutSaverOptions) {
     m_fillsParent = true;
-    initMixin(this, color: Colors.pink, debugName: "DockWidget");
+    initMixin(this, color: Colors.pink, debugName: "DockWidget", parent: null);
   }
 
   void setGuestWidget(Widget w) {

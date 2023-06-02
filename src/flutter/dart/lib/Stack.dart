@@ -21,7 +21,7 @@ import 'package:flutter/material.dart' hide View;
 class Stack extends KDDWBindingsFlutter.Stack with View_mixin {
   Stack(KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent)
       : super(stack, parent: parent) {
-    initMixin(this, debugName: "Stack");
+    initMixin(this, debugName: "Stack", parent: parent);
   }
 
   Widget createFlutterWidget() {

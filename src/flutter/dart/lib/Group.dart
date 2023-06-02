@@ -28,7 +28,8 @@ class Group extends KDDWBindingsFlutter.Group with View_mixin {
   Group(KDDWBindingsCore.Group? group, KDDWBindingsCore.View? parent)
       : super(group, parent: parent) {
     m_controller = group!;
-    initMixin(this, color: Colors.greenAccent, debugName: "Group");
+    initMixin(this,
+        color: Colors.greenAccent, debugName: "Group", parent: parent);
   }
 
   Widget createFlutterWidget() {

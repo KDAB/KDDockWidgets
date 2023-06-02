@@ -25,7 +25,7 @@ class TitleBar extends KDDWBindingsFlutter.TitleBar with View_mixin {
   TitleBar(KDDWBindingsCore.TitleBar? titleBar, KDDWBindingsCore.View? parent)
       : super(titleBar, parent: parent) {
     m_fillsParent = true;
-    initMixin(this, debugName: "TitleBar");
+    initMixin(this, debugName: "TitleBar", parent: parent);
   }
 
   @override
