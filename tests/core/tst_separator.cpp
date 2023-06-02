@@ -31,6 +31,6 @@ KDDW_QCORO_TASK tst_separatorCtor()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_separatorCtor };
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> { TEST(tst_separatorCtor) };
 
 #include "../tests_main.h"

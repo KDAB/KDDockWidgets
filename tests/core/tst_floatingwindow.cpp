@@ -79,6 +79,9 @@ KDDW_QCORO_TASK tst_floatingWindowClose()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_floatingWindowClose, tst_floatingWindowCtor };
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+    TEST(tst_floatingWindowClose),
+    TEST(tst_floatingWindowCtor)
+};
 
 #include "../tests_main.h"

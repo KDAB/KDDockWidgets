@@ -231,13 +231,13 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     KDDW_CO_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
-    tst_invalidLayoutAfterRestore,
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+    TEST(tst_invalidLayoutAfterRestore),
 #ifndef KDDW_FRONTEND_FLUTTER
-    tst_setFloatingWhenSideBySide,
-    tst_dockWindowWithTwoSideBySideFramesIntoCenter,
-    tst_dockWindowWithTwoSideBySideFramesIntoRight,
-    tst_dockWindowWithTwoSideBySideFramesIntoLeft
+    TEST(tst_setFloatingWhenSideBySide),
+    TEST(tst_dockWindowWithTwoSideBySideFramesIntoCenter),
+    TEST(tst_dockWindowWithTwoSideBySideFramesIntoRight),
+    TEST(tst_dockWindowWithTwoSideBySideFramesIntoLeft)
 #endif
 };
 

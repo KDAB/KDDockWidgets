@@ -195,13 +195,13 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
-    tst_dockWidgetCtor,
-    tst_toggleAction,
-    tst_setGuestView,
-    tst_isOpen,
-    tst_setAsCurrentTab,
-    tst_dwCloseAndReopen,
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+    TEST(tst_dockWidgetCtor),
+    TEST(tst_toggleAction),
+    TEST(tst_setGuestView),
+    TEST(tst_isOpen),
+    TEST(tst_setAsCurrentTab),
+    TEST(tst_dwCloseAndReopen),
 };
 
 #include "../tests_main.h"

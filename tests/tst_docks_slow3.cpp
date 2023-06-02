@@ -313,13 +313,13 @@ KDDW_QCORO_TASK tst_positionWhenShown()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
 #ifndef KDDW_FRONTEND_FLUTTER
-    tst_dockWidgetGetsFocusWhenDocked,
-    tst_closeShowWhenNoCentralFrame,
-    tst_positionWhenShown,
+    TEST(tst_dockWidgetGetsFocusWhenDocked),
+    TEST(tst_closeShowWhenNoCentralFrame),
+    TEST(tst_positionWhenShown),
 #endif
-    tst_close
+    TEST(tst_close)
 };
 
 #include "tests_main.h"

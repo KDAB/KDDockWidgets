@@ -1884,6 +1884,6 @@ KDDW_QCORO_TASK tst_numSideBySide_recursive()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {};
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {};
 
 #include "tests_main.h"

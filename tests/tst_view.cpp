@@ -291,20 +291,20 @@ KDDW_QCORO_TASK tst_parentDeletesChildViews()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
-    tst_viewSetParent,
-    tst_viewRoot,
-    tst_viewIsVisible,
-    tst_viewGeometry,
-    tst_viewSizeHint,
-    tst_viewMinSize,
-    tst_viewMaxSize,
-    tst_viewObjectName,
-    tst_viewCloseRequested,
-    tst_viewFocusPolicy,
-    tst_hasFocus,
-    tst_operatorqDebug,
-    tst_parentDeletesChildViews,
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+    TEST(tst_viewSetParent),
+    TEST(tst_viewRoot),
+    TEST(tst_viewIsVisible),
+    TEST(tst_viewGeometry),
+    TEST(tst_viewSizeHint),
+    TEST(tst_viewMinSize),
+    TEST(tst_viewMaxSize),
+    TEST(tst_viewObjectName),
+    TEST(tst_viewCloseRequested),
+    TEST(tst_viewFocusPolicy),
+    TEST(tst_hasFocus),
+    TEST(tst_operatorqDebug),
+    TEST(tst_parentDeletesChildViews),
 };
 
 #include "tests_main.h"

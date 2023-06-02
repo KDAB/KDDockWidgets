@@ -35,9 +35,13 @@ int main(int argc, char **argv)
 {
 #ifdef KDDW_FRONTEND_FLUTTER
     KDDockWidgets::flutter::Platform::s_runTestsFunc = []() -> KDDW_QCORO_TASK {
-        for (auto test : s_tests) {
+        for (auto &pair : s_testMap) {
+            auto name = pair.first;
+            auto test = pair.second;
+            std::cout << "Running " << name << std::endl;
             auto result = co_await test();
             if (!result) {
+                std::cerr << "FAILED! " << name << std::endl;
                 KDDW_TEST_RETURN(result);
             }
         }
@@ -59,14 +63,19 @@ int main(int argc, char **argv)
 
         std::cout << "Running tests for Platform " << Core::Platform::instance()->name() << "\n";
 
-        for (auto test : s_tests) {
+        for (auto &pair : s_testMap) {
+            auto name = pair.first;
+            auto test = pair.second;
+            std::cout << "Running " << name << std::endl;
             auto result = test();
-            if (!result)
+            if (!result) {
+                std::cerr << "FAILED! " << name << std::endl;
                 return result;
+            }
         }
 
         if (Core::Platform::instance()->m_numWarningsEmitted > 0) {
-            std::cout << "ABORTING! Test caused a warning.\n";
+            std::cerr << "ABORTING! Test caused a warning.\n";
             return 1;
         }
 

@@ -428,16 +428,16 @@ KDDW_QCORO_TASK tst_crash2()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
-    tst_dragByTabBar,
-    tst_negativeAnchorPosition,
-    tst_negativeAnchorPosition2,
-    tst_negativeAnchorPosition3,
-    tst_negativeAnchorPosition4,
-    tst_negativeAnchorPosition5,
-    tst_negativeAnchorPosition6,
-    tst_negativeAnchorPosition7,
-    tst_crash2
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+    TEST(tst_dragByTabBar),
+    TEST(tst_negativeAnchorPosition),
+    TEST(tst_negativeAnchorPosition2),
+    TEST(tst_negativeAnchorPosition3),
+    TEST(tst_negativeAnchorPosition4),
+    TEST(tst_negativeAnchorPosition5),
+    TEST(tst_negativeAnchorPosition6),
+    TEST(tst_negativeAnchorPosition7),
+    TEST(tst_crash2)
 };
 
 #include "tests_main.h"

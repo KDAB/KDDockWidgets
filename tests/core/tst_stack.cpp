@@ -27,6 +27,6 @@ KDDW_QCORO_TASK tst_stackCtor()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_stackCtor };
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> { TEST(tst_stackCtor) };
 
 #include "../tests_main.h"

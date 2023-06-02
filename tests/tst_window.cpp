@@ -115,14 +115,14 @@ KDDW_QCORO_TASK tst_geometry()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
-    tst_windowCtor,
-    tst_setVisible,
-    tst_handle,
-    tst_resize,
-    tst_activate,
-    tst_equals,
-    tst_geometry
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+    TEST(tst_windowCtor),
+    TEST(tst_setVisible),
+    TEST(tst_handle),
+    TEST(tst_resize),
+    TEST(tst_activate),
+    TEST(tst_equals),
+    TEST(tst_geometry)
 };
 
 #include "tests_main.h"

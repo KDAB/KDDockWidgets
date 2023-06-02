@@ -57,6 +57,10 @@ KDDW_QCORO_TASK tst_addWidgetHidden()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> { tst_dropAreaCtor, tst_addWidget, tst_addWidgetHidden };
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+    TEST(tst_dropAreaCtor),
+    TEST(tst_addWidget),
+    TEST(tst_addWidgetHidden)
+};
 
 #include "../tests_main.h"

@@ -205,11 +205,11 @@ KDDW_QCORO_TASK tst_tabBarDWClosed()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<std::function<KDDW_QCORO_TASK()>> {
-    tst_tabBarCtor,
-    tst_tabBarIndexes,
-    tst_tabBarDWDestroyed,
-    tst_tabBarDWClosed
+static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+    TEST(tst_tabBarCtor),
+    TEST(tst_tabBarIndexes),
+    TEST(tst_tabBarDWDestroyed),
+    TEST(tst_tabBarDWClosed)
 };
 
 #include "../tests_main.h"
