@@ -428,7 +428,7 @@ KDDW_QCORO_TASK tst_crash2()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_dragByTabBar),
     TEST(tst_negativeAnchorPosition),
     TEST(tst_negativeAnchorPosition2),

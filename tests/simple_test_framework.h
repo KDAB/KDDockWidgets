@@ -18,6 +18,17 @@
 
 #pragma once
 
+#include "KDDockWidgets.h"
+#include "core/Platform.h"
+
+#include <string>
+#include <functional>
+#include <iostream>
+
+#ifdef KDDW_FRONTEND_FLUTTER
+#include <qcoro5/qcoro/qcorocore.h>
+#endif
+
 #define KDDW_TEST_RETURN(res)                                             \
     if (!res)                                                             \
         qDebug() << "FAILED: at" << Q_FUNC_INFO << "; line=" << __LINE__; \
@@ -27,7 +38,36 @@
 #define CHECK Q_ASSERT
 #define CHECK_EQ(a, b) Q_ASSERT((a) == (b))
 
-#define TEST(name)  \
-    {               \
+struct KDDWTest
+{
+    std::string name;
+    std::function<KDDW_QCORO_TASK()> func;
+
+    KDDW_QCORO_TASK run()
+    {
+        std::cout << "Running " << name << std::endl;
+        auto result = KDDW_CO_AWAIT func();
+        if (!result)
+            std::cerr << "FAILED! " << name << std::endl;
+        KDDW_TEST_RETURN(result);
+    }
+
+    static KDDW_QCORO_TASK run(const std::vector<KDDWTest> &tests)
+    {
+        std::cout << "Running tests for Platform " << KDDockWidgets::Core::Platform::instance()->name() << "\n";
+        for (KDDWTest test : tests) {
+            auto result = KDDW_CO_AWAIT test.run();
+            if (!result)
+                KDDW_TEST_RETURN(result);
+        }
+        KDDW_TEST_RETURN(true);
+    }
+};
+
+#define TEST(name)      \
+    {                   \
+        KDDWTest        \
+        {               \
 #name, name \
+        }               \
     }

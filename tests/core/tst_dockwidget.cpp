@@ -195,7 +195,7 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_dockWidgetCtor),
     TEST(tst_toggleAction),
     TEST(tst_setGuestView),

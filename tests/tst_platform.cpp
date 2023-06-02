@@ -59,7 +59,7 @@ KDDW_QCORO_TASK tst_startDragDistance()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_platform),
     TEST(tst_name),
     TEST(tst_createDefaultViewFactory),

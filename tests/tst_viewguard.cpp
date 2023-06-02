@@ -42,6 +42,6 @@ KDDW_QCORO_TASK tst_viewGuard()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> { TEST(tst_viewGuard) };
+static const auto s_tests = std::vector<KDDWTest> { TEST(tst_viewGuard) };
 
 #include "tests_main.h"

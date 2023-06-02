@@ -355,7 +355,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>>
+static const auto s_tests = std::vector<KDDWTest>
 {
 #if !defined(KDDW_FRONTEND_FLUTTER)
     TEST(tst_28NestedWidgets)

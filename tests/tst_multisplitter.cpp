@@ -1884,7 +1884,7 @@ KDDW_QCORO_TASK tst_numSideBySide_recursive()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_testMap = std::map<const char *, std::function<KDDW_QCORO_TASK()>> {
+static const std::vector<KDDWTest> s_tests = {
     TEST(tst_createRoot),
     TEST(tst_insertOne),
     TEST(tst_insertThreeSideBySide),

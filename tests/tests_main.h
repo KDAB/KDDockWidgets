@@ -31,21 +31,14 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
+// std::vector<std::function<KDDW_QCORO_TASK()>> s_testsToRun;
+
 int main(int argc, char **argv)
 {
 #ifdef KDDW_FRONTEND_FLUTTER
     KDDockWidgets::flutter::Platform::s_runTestsFunc = []() -> KDDW_QCORO_TASK {
-        for (auto &pair : s_testMap) {
-            auto name = pair.first;
-            auto test = pair.second;
-            std::cout << "Running " << name << std::endl;
-            auto result = co_await test();
-            if (!result) {
-                std::cerr << "FAILED! " << name << std::endl;
-                KDDW_TEST_RETURN(result);
-            }
-        }
-        KDDW_TEST_RETURN(true);
+        auto result = co_await KDDWTest::run(s_tests);
+        KDDW_TEST_RETURN(result);
     };
 
     KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);
@@ -61,18 +54,9 @@ int main(int argc, char **argv)
         Core::Platform::instance()->installMessageHandler();
 #endif
 
-        std::cout << "Running tests for Platform " << Core::Platform::instance()->name() << "\n";
-
-        for (auto &pair : s_testMap) {
-            auto name = pair.first;
-            auto test = pair.second;
-            std::cout << "Running " << name << std::endl;
-            auto result = test();
-            if (!result) {
-                std::cerr << "FAILED! " << name << std::endl;
-                return result;
-            }
-        }
+        auto result = KDDWTest::run(s_tests);
+        if (!result)
+            return result;
 
         if (Core::Platform::instance()->m_numWarningsEmitted > 0) {
             std::cerr << "ABORTING! Test caused a warning.\n";
