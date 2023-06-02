@@ -356,7 +356,7 @@ bool View::aboutToBeDestroyed() const
 
 void View::dumpDebug()
 {
-    qDebug() << "View::dumpDebug:" << m_controller << int(type());
+    qDebug() << "View::dumpDebug:" << m_controller << int(type()) << "root=" << rootView()->controller();
 }
 
 /** static */

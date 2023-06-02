@@ -10,6 +10,7 @@
 */
 
 import 'dart:ffi' as ffi;
+import 'package:KDDockWidgets/DropArea.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/WindowWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
@@ -96,27 +97,27 @@ class View_mixin {
     }
   }
 
-  void onChildAdded(KDDWBindingsCore.View? childView) {
+  static View_mixin fromCpp(KDDWBindingsCore.View? viewCpp) {
+    return KDDWBindingsFlutter.View.fromCache(viewCpp!.thisCpp) as View_mixin;
+  }
+
+  void onChildAdded(KDDWBindingsCore.View? childViewCpp) {
     final state = widgetKey.currentState;
+    final View_mixin childView = fromCpp(childViewCpp);
 
-    final viewFlutter =
-        KDDWBindingsFlutter.View.fromCache(childView!.thisCpp) as View_mixin;
-
-    // print(
-    //     "View_mixin::onChildAdded: this=${debugName}, child=${viewFlutter.debugName}, widget=${viewFlutter.flutterWidget}");
-
-    childWidgets.add(viewFlutter.flutterWidget);
+    childWidgets.add(childView.flutterWidget);
 
     if (state != null) {
       state.childrenChanged();
     }
   }
 
-  void onChildRemoved(KDDWBindingsCore.View? childView) {
+  void onChildRemoved(KDDWBindingsCore.View? childViewCpp) {
     final state = widgetKey.currentState;
-    final viewFlutter =
-        KDDWBindingsFlutter.View.fromCache(childView!.thisCpp) as View_mixin;
-    childWidgets.remove(viewFlutter.flutterWidget);
+    final View_mixin childView = fromCpp(childViewCpp);
+
+    childWidgets.remove(childView.flutterWidget);
+
     if (state != null) {
       state.childrenChanged();
     }
@@ -131,6 +132,10 @@ class View_mixin {
 
   bool isMounted() {
     return widgetKey.currentContext != null;
+  }
+
+  bool isDropArea() {
+    return flutterWidget is DropAreaWidget;
   }
 
   QPoint mapToGlobal(QPoint localPt) {
