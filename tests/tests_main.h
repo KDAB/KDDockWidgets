@@ -15,6 +15,7 @@
 #pragma once
 
 #include "KDDockWidgets.h"
+#include "simple_test_framework.h"
 #include "kddockwidgets/core/Platform.h"
 
 #ifdef KDDW_FRONTEND_FLUTTER
@@ -31,13 +32,29 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-// std::vector<std::function<KDDW_QCORO_TASK()>> s_testsToRun;
+static std::vector<KDDWTest> s_testsToRun;
 
 int main(int argc, char **argv)
 {
+
+    if (argc == 2) {
+        auto it = std::find_if(s_tests.cbegin(), s_tests.cend(), [argv](const KDDWTest &test) {
+            return test.name == argv[1];
+        });
+
+        if (it == s_tests.cend()) {
+            std::cerr << "Unknown test " << argv[1] << "\n";
+            return 1;
+        } else {
+            s_testsToRun = { *it };
+        }
+    } else {
+        s_testsToRun = s_tests;
+    }
+
 #ifdef KDDW_FRONTEND_FLUTTER
     KDDockWidgets::flutter::Platform::s_runTestsFunc = []() -> KDDW_QCORO_TASK {
-        auto result = co_await KDDWTest::run(s_tests);
+        auto result = co_await KDDWTest::run(s_testsToRun);
         KDDW_TEST_RETURN(result);
     };
 
@@ -54,7 +71,7 @@ int main(int argc, char **argv)
         Core::Platform::instance()->installMessageHandler();
 #endif
 
-        auto result = KDDWTest::run(s_tests);
+        auto result = KDDWTest::run(s_testsToRun);
         if (!result)
             return result;
 
