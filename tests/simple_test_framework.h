@@ -57,8 +57,9 @@ struct KDDWTest
         std::cout << "Running tests for Platform " << KDDockWidgets::Core::Platform::instance()->name() << "\n";
         for (KDDWTest test : tests) {
             auto result = KDDW_CO_AWAIT test.run();
-            if (!result)
+            if (!result) {
                 KDDW_TEST_RETURN(result);
+            }
         }
         KDDW_TEST_RETURN(true);
     }

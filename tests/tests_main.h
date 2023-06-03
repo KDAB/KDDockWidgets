@@ -36,7 +36,6 @@ static std::vector<KDDWTest> s_testsToRun;
 
 int main(int argc, char **argv)
 {
-
     if (argc == 2) {
         auto it = std::find_if(s_tests.cbegin(), s_tests.cend(), [argv](const KDDWTest &test) {
             return test.name == argv[1];
