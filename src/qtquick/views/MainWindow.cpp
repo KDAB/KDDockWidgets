@@ -45,6 +45,7 @@ public:
     }
 
     MainWindow *const q;
+    QMetaObject::Connection layoutGeometryChangedConnection;
 };
 }
 
@@ -64,10 +65,10 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
     makeItemFillParent(layoutView);
 
     // MainWindowQuick has the same constraints as Layout, so just forward the signal
-    connect(layoutView, &View::geometryUpdated, this, &MainWindow::geometryUpdated);
-
-    connect(layoutView, &View::geometryUpdated, this,
-            [this] { d->onLayoutGeometryUpdated(); });
+    d->layoutGeometryChangedConnection = connect(layoutView, &View::geometryUpdated, this,
+                                                 [this] {
+                geometryUpdated();
+                d->onLayoutGeometryUpdated(); });
 
     {
         // This block silences a benign layouting constraints warning.
@@ -85,6 +86,9 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
 
 MainWindow::~MainWindow()
 {
+    // early disconnect to avoid rentrancy
+    disconnect(d->layoutGeometryChangedConnection);
+
     if (isRootView()) {
         if (auto window = this->window()) {
             QObject::setParent(nullptr);
