@@ -77,9 +77,15 @@ if(KDDW_FRONTEND_FLUTTER)
         COMMENT "Running flutter build bundle flutter_tests_embedder"
     )
 
+    if(MSVC)
+        set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll)
+    else()
+        set(FLUTTER_ENGINE_LIBRARY libflutter_engine.so)
+    endif()
+
     target_link_libraries(
         flutter_tests_embedder PRIVATE kddockwidgets Qt${Qt_VERSION_MAJOR}::Core glfw
-                                       $ENV{FLUTTER_ENGINE_FOLDER}/libflutter_engine.so
+                                       $ENV{FLUTTER_ENGINE_FOLDER}/${FLUTTER_ENGINE_LIBRARY}
     )
     include_directories($ENV{FLUTTER_ENGINE_FOLDER})
 
