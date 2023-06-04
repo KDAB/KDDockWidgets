@@ -288,7 +288,7 @@ macro(set_compiler_flags targetName)
             target_compile_options(${targetName} PRIVATE -Wweak-vtables -Wextra-semi)
         endif()
 
-        if(KDDW_FRONTEND_FLUTTER)
+        if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
             target_compile_options(${targetName} PRIVATE -fcoroutines)
         endif()
     endif()
