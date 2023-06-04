@@ -23,11 +23,6 @@
 #include <QDebug>
 #include <QAbstractNativeEventFilter>
 
-
-#ifdef Q_OS_WIN
-struct MSG;
-#endif
-
 namespace KDDockWidgets {
 
 namespace Core {
