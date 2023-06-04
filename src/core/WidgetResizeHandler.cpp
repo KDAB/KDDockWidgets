@@ -33,7 +33,6 @@
 #include <QGuiApplication>
 #include <QtGui/private/qhighdpiscaling_p.h>
 #include <windowsx.h>
-#include <windows.h>
 #include <dwmapi.h>
 #if defined(Q_CC_MSVC)
 #pragma comment(lib, "Dwmapi.lib")

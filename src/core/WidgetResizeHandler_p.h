@@ -23,6 +23,13 @@
 #include <QDebug>
 #include <QAbstractNativeEventFilter>
 
+#if defined(Q_OS_WIN)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
+
 namespace KDDockWidgets {
 
 namespace Core {
