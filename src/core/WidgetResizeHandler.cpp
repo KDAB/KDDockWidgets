@@ -24,14 +24,21 @@
 #include <QDebug>
 #include <QScopedValueRollback>
 
-#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)
+#if defined(Q_OS_WIN)
+#if defined(KDDW_FRONTEND_QTWIDGETS)
 #include "kddockwidgets/qtcommon/Platform.h"
 #include <QWidget>
 #endif
 
-#if defined(Q_OS_WIN)
+#if defined(KDDW_FRONTEND_QT)
 #include <QGuiApplication>
 #include <QtGui/private/qhighdpiscaling_p.h>
+#endif
+
+#endif
+
+#if defined(Q_OS_WIN)
+
 #include <windowsx.h>
 #include <dwmapi.h>
 #if defined(Q_CC_MSVC)
@@ -683,7 +690,7 @@ CustomFrameHelper::CustomFrameHelper(ShouldUseCustomFrame func, QObject *parent)
     , QAbstractNativeEventFilter()
     , m_shouldUseCustomFrameFunc(func)
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QT)
     qGuiApp->installNativeEventFilter(this);
 #endif
 }

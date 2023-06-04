@@ -38,7 +38,7 @@
 #include <QScopedValueRollback>
 #include <QTimer>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QT)
 #include <QGuiApplication>
 #ifndef NOMINMAX
 #define NOMINMAX
