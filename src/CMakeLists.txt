@@ -476,6 +476,10 @@ if(KDDW_FRONTEND_FLUTTER)
             REQUIRED
         )
         target_link_libraries(kddockwidgets PUBLIC QCoro5Core)
+        if(MSVC)
+            # Workaround: QCoro seems broken on Windows, doesn't add its include path
+            include_directories(${QCoro5Coro_DIR}/../../../include)
+        endif()
     endif()
 
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)
