@@ -291,6 +291,13 @@ macro(set_compiler_flags targetName)
         if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
             target_compile_options(${targetName} PRIVATE -fcoroutines)
         endif()
+    else()
+        if(KDDW_FRONTEND_FLUTTER)
+            # Our Dart bindings are auto-generated and they include methods guarded with DOCKS_DEVELOPER_MODE
+            # Since we won't generate 2 sets of bindings, we need to enable the macro in release as well
+            # It won't have much side-effects besides making the bindings compile. Werror will still be off.
+            target_compile_definitions(${targetName} PRIVATE DOCKS_DEVELOPER_MODE)
+        endif()
     endif()
 
     # Enable -Werror

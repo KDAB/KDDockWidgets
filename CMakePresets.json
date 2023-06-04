@@ -50,6 +50,20 @@
             }
         },
         {
+            "name": "release-flutter",
+            "displayName": "release-flutter",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-release-flutter",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "KDDockWidgets_FRONTENDS": "flutter"
+            },
+            "warnings": {
+                "uninitialized": true
+            }
+        },
+        {
             "name": "dev-flutter-no-bindings",
             "displayName": "dev-flutter-no-bindings",
             "generator": "Ninja",
