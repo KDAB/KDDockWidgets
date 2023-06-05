@@ -87,3 +87,5 @@ mjb_rejected_classes.log
 /.vs
 /tests/flutter_tests_embedder/build/
 examples/flutter/savedLayout.json
+.idea
+kddockwidgets_example.iml

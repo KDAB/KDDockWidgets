@@ -39,9 +39,9 @@ repos:
   rev: v0.6.13
   hooks:
   - id: cmake-lint
-    exclude: (.py.cmake|Doxyfile.cmake)
+    exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
   - id: cmake-format
-    exclude: (.py.cmake|Doxyfile.cmake)
+    exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
 - repo: https://github.com/markdownlint/markdownlint
   rev: v0.12.0
   hooks:
