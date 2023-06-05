@@ -30,6 +30,10 @@
 // Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested
 // on macOS.
 #define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
+
+#ifdef KDDW_FRONTEND_QT
+#define KDDW_FRONTEND_QT_WINDOWS
+#endif
 #endif
 
 #ifdef KDDW_FRONTEND_QTWIDGETS

@@ -148,7 +148,7 @@ public:
     static int widgetResizeHandlerMargin();
 
     static void setupWindow(Core::Window::Ptr);
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     static bool isInterestingNativeEvent(unsigned int);
     static bool handleWindowsNativeEvent(Core::Window::Ptr, MSG *msg, Qt5Qt6Compat::qintptr *result,
                                          const NativeFeatures &);

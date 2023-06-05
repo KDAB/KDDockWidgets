@@ -50,7 +50,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
 namespace KDDockWidgets {
 Window::Ptr windowForHandle(WId id)
 {
@@ -349,7 +349,7 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
     return true;
 }
 
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
 
 /// Handler to enable Aero-snap
 bool WidgetResizeHandler::handleWindowsNativeEvent(Core::FloatingWindow *fw,
@@ -641,7 +641,7 @@ void WidgetResizeHandler::setupWindow(Core::Window::Ptr window)
 #endif // Q_OS_WIN
 }
 
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
 bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 {
     switch (nativeEvent) {
@@ -690,7 +690,7 @@ CustomFrameHelper::CustomFrameHelper(ShouldUseCustomFrame func, QObject *parent)
     , QAbstractNativeEventFilter()
     , m_shouldUseCustomFrameFunc(func)
 {
-#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QT)
+#if defined(KDDW_FRONTEND_QT_WINDOWS)
     qGuiApp->installNativeEventFilter(this);
 #endif
 }
@@ -702,7 +702,7 @@ CustomFrameHelper::~CustomFrameHelper()
 
 void CustomFrameHelper::applyCustomFrame(Core::Window::Ptr window)
 {
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     WidgetResizeHandler::setupWindow(window);
 #else
     Q_UNUSED(window);
@@ -718,7 +718,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
 
     QScopedValueRollback<bool> guard(m_recursionGuard, true);
 
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     if (m_inDtor || !KDDockWidgets::usesAeroSnapWithCustomDecos())
         return false;
 

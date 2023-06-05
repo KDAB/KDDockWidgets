@@ -63,7 +63,7 @@ public:
 
     static void ensureRectIsOnScreen(QRect &geometry);
 
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     void setLastHitTest(int hitTest)
     {
         m_lastHitTest = hitTest;
@@ -230,7 +230,7 @@ private:
     QMetaObject::Connection m_layoutDestroyedConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
     WindowState windowStateOverride() const;
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     int m_lastHitTest = 0;
 #endif
 };

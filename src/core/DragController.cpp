@@ -252,7 +252,7 @@ bool StatePreDrag::handleMouseDoubleClick()
 StateDragging::StateDragging(DragController *parent)
     : StateBase(parent)
 {
-#if defined(Q_OS_WIN) && !defined(DOCKS_DEVELOPER_MODE)
+#if defined(KDDW_FRONTEND_QT_WINDOWS) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.setInterval(100);
     QObject::connect(&m_maybeCancelDrag, &QTimer::timeout, this, [this] {
         // Workaround bug #166 , where Qt doesn't agree with Window's mouse button state.
@@ -273,7 +273,7 @@ StateDragging::~StateDragging() = default;
 
 void StateDragging::onEntry()
 {
-#if defined(Q_OS_WIN) && !defined(DOCKS_DEVELOPER_MODE)
+#if defined(KDDW_FRONTEND_QT_WINDOWS) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.start();
 #endif
 
@@ -287,7 +287,7 @@ void StateDragging::onEntry()
     const bool needsUndocking = !q->m_draggable->isWindow();
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (q->m_windowBeingDragged) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(KDDW_FRONTEND_QT_WINDOWS)
         if (!q->m_nonClientDrag && KDDockWidgets::usesNativeDraggingAndResizing()) {
             // Started as a client move, as the dock widget was docked,
             // but now that we're dragging it as a floating window, switch to native drag, so we can
@@ -369,7 +369,7 @@ void StateDragging::onEntry()
 
 void StateDragging::onExit()
 {
-#if defined(Q_OS_WIN) && !defined(DOCKS_DEVELOPER_MODE)
+#if defined(KDDW_FRONTEND_QT_WINDOWS) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.stop();
 #endif
 }
@@ -866,7 +866,7 @@ DropLocation DragController::currentDropLocation() const
     return DropLocation_None;
 }
 
-#if defined(Q_OS_WIN)
+#if defined(KDDW_FRONTEND_QT_WINDOWS)
 static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 {
     const Window::List windows = Platform::instance()->windows();
@@ -934,7 +934,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
     QPoint globalPos = Platform::instance()->cursorPos();
 
     if (KDDockWidgets::isWindows()) { // So -platform offscreen on Windows doesn't use this
-#if defined(Q_OS_WIN)
+#if defined(KDDW_FRONTEND_QT_WINDOWS)
         POINT globalNativePos;
         if (!GetCursorPos(&globalNativePos))
             return nullptr;
@@ -986,7 +986,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                 return nullptr;
             }
         }
-#endif // Q_OS_WIN
+#endif // KDDW_FRONTEND_QT_WINDOWS
     } else if (linksToXLib() && isXCB()) {
         bool ok = false;
         const Window::List orderedWindows = KDDockWidgets::orderedWindows(ok);

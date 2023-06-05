@@ -108,7 +108,7 @@ public:
         m_view->Core::View::setSize(size());
     }
 
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     bool nativeEvent(const QByteArray &eventType, void *message,
                      Qt5Qt6Compat::qintptr *result) override
     {

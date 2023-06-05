@@ -38,7 +38,7 @@
 #include <QScopedValueRollback>
 #include <QTimer>
 
-#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QT)
+#if defined(KDDW_FRONTEND_QT_WINDOWS)
 #include <QGuiApplication>
 #ifndef NOMINMAX
 #define NOMINMAX
@@ -214,16 +214,14 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     if (!suggestedGeometry.isNull())
         view()->setGeometry(suggestedGeometry);
 
-#ifdef Q_OS_WIN
-        // For QtQuick we do it a bit later, once we have the QQuickWindow
-#ifdef KDDW_FRONTEND_QTWIDGETS
+#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)
+    // For QtQuick we do it a bit later, once we have the QQuickWindow
     if (Platform::instance()->isQtWidgets()) {
         view()->createPlatformWindow(); // QWidget::create
         m_nchittestFilter = new NCHITTESTEventFilter(view());
         qGuiApp->installNativeEventFilter(m_nchittestFilter);
         WidgetResizeHandler::setupWindow(view()->window());
     }
-#endif
 #endif
 
     DockRegistry::self()->registerFloatingWindow(this);
@@ -453,7 +451,7 @@ Layout *FloatingWindow::layout() const
 
 bool FloatingWindow::isInDragArea(QPoint globalPoint) const
 {
-#ifdef Q_OS_WIN
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     // A click near the border will still send a Qt::NonClientMousePressEvent. We shouldn't
     // interpret that as a drag, as it's for a native resize.
     // Keep track of how we handled the WM_NCHITTEST
