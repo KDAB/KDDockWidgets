@@ -20,7 +20,7 @@
 #include <memory.h>
 
 #if defined(DOCKS_DEVELOPER_MODE) && defined(KDDW_FRONTEND_FLUTTER) && !defined(DARTAGNAN_BINDINGS_RUN)
-#include <qcoro5/qcoro/qcorocore.h>
+#include "qcoro/core/qcorocore.h"
 #endif
 
 namespace KDDockWidgets {

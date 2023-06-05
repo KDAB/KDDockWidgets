@@ -470,16 +470,7 @@ if(KDDW_FRONTEND_FLUTTER)
     if(KDDockWidgets_DEVELOPER_MODE)
         # Coroutines are needed for running the C++ tests for flutter
         # We can move to Qt6 soon and not support Qt5, doesn't matter.
-        find_package(
-            QCoro5
-            COMPONENTS Core
-            REQUIRED
-        )
         target_link_libraries(kddockwidgets PUBLIC QCoro5Core)
-        if(MSVC)
-            # Workaround: QCoro seems broken on Windows, doesn't add its include path
-            include_directories(${QCoro5Coro_DIR}/../../../include)
-        endif()
     endif()
 
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)

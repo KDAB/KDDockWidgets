@@ -12,7 +12,7 @@
 #pragma once
 
 #include "docks_export.h"
-#include <qcoro5/qcoro/qcorocore.h>
+#include "qcoro/core/qcorocore.h"
 
 namespace KDDockWidgets {
 namespace flutter {

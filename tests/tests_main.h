@@ -23,7 +23,7 @@
 #include "../flutter/Platform.h"
 #include "flutter_tests_embedder/tests_embedder.h"
 
-#include <qcoro5/qcoro/qcorocore.h>
+#include "qcoro/core/qcorocore.h"
 
 #endif
 

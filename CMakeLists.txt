@@ -247,6 +247,21 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDockWidgets_TESTS ON)
     set(KDDockWidgets_WERROR ON)
     include(ECMEnableSanitizers)
+
+    if(KDDW_FRONTEND_FLUTTER)
+        include(FetchContent)
+        set(USE_QT_VERSION 5)
+        set(QCORO_BUILD_EXAMPLES OFF)
+        set(QCORO_BUILD_TESTING OFF)
+        set(QCORO_WITH_QTQUICK OFF)
+        set(QCORO_WITH_QML OFF)
+        fetchcontent_declare(
+            qcoro
+            GIT_REPOSITORY https://github.com/iamsergio/qcoro
+            GIT_TAG d98cc226477da98999464def4f069b4575e8c881
+        )
+        fetchcontent_makeavailable(qcoro)
+    endif()
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

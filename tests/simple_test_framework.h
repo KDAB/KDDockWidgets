@@ -26,7 +26,7 @@
 #include <iostream>
 
 #ifdef KDDW_FRONTEND_FLUTTER
-#include <qcoro5/qcoro/qcorocore.h>
+#include "qcoro/core/qcorocore.h"
 #endif
 
 #define KDDW_TEST_RETURN(res)                                             \
