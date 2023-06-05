@@ -481,9 +481,15 @@ if(KDDockWidgets_EXAMPLES)
             COMMENT "Building flutter example"
         )
 
+        if (MSVC)
+            set(FLUTTER_PLATFORM "windows")
+        else()
+            set(FLUTTER_PLATFORM "linux")
+        endif()
+
         add_custom_command(
             OUTPUT ${CMAKE_SOURCE_DIR}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example
-            COMMAND flutter build linux --debug
+            COMMAND flutter build ${FLUTTER_PLATFORM} --debug
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/examples/flutter
             DEPENDS ${CMAKE_SOURCE_DIR}/examples/flutter/lib/main.dart
                     ${CMAKE_SOURCE_DIR}/examples/flutter/lib/MyWidget.dart
