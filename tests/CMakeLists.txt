@@ -51,7 +51,7 @@ if(KDDW_FRONTEND_FLUTTER)
     endif()
 
     add_library(flutter_tests_embedder STATIC flutter_tests_embedder/tests_embedder.cpp)
-    find_package(glfw3 REQUIRED)
+
     find_program(FLUTTER_EXE flutter REQUIRED)
     message(STATUS "Flutter SDK: ${FLUTTER_EXE}")
     get_filename_component(FLUTTER_SDK_PATH ${FLUTTER_EXE} PATH)

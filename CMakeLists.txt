@@ -261,6 +261,21 @@ if(KDDockWidgets_DEVELOPER_MODE)
             GIT_TAG d98cc226477da98999464def4f069b4575e8c881
         )
         fetchcontent_makeavailable(qcoro)
+
+
+        set(GLFW_BUILD_EXAMPLE OFF)
+        set(GLFW_BUILD_DOCS OFF)
+        set(GLFW_BUILD_WIN32 ON)
+        set(GLFW_BUILD_TESTS OFF)
+        set(GLFW_USE_WAYLAND OFF)
+
+        fetchcontent_declare(
+            glfw3
+            GIT_REPOSITORY https://github.com/glfw/glfw.git
+            GIT_TAG 3fa2360720eeba1964df3c0ecf4b5df8648a8e52
+        )
+        fetchcontent_makeavailable(glfw3)
+
     endif()
 endif()
 
