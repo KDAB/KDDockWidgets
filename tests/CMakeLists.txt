@@ -78,7 +78,7 @@ if(KDDW_FRONTEND_FLUTTER)
     )
 
     if(MSVC)
-        set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll)
+        set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll.lib)
     else()
         set(FLUTTER_ENGINE_LIBRARY libflutter_engine.so)
     endif()
