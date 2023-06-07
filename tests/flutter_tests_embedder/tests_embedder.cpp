@@ -220,7 +220,7 @@ int TestsEmbedder::run()
             }
         }
 
-        glfwPollEvents();
+        glfwWaitEventsTimeout(1);
     }
 
     return 0;
