@@ -34,6 +34,7 @@
 #include <cassert>
 #include <chrono>
 #include <iostream>
+#include <stdlib.h>
 
 #include "GLFW/glfw3.h"
 #include "embedder.h"
@@ -137,6 +138,9 @@ TestsEmbedder::TestsEmbedder(int &argc, char **argv)
     : m_argc(argc)
     , m_argv(argv)
 {
+    // Just so it works through ssh
+    setenv("DISPLAY", ":0", 0);
+
     Q_ASSERT(!s_testsEmbedder);
     s_testsEmbedder = this;
 
