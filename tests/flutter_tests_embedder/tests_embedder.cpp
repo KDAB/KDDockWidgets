@@ -37,15 +37,15 @@
 #include <stdlib.h>
 
 #include "GLFW/glfw3.h"
-#include "embedder.h"
+#include "flutter_embedder.h"
 
 #include <QDebug>
 #include <QFileInfo>
 
 // This value is calculated after the window is created.
 static double g_pixelRatio = 1.0;
-static const size_t kInitialWindowWidth = 800;
-static const size_t kInitialWindowHeight = 600;
+static const size_t kInitialWindowWidth = 1600;
+static const size_t kInitialWindowHeight = 1400;
 
 static_assert(FLUTTER_ENGINE_VERSION == 1,
               "This Flutter Embedder was authored against the stable Flutter "
