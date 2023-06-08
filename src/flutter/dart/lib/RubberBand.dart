@@ -28,24 +28,21 @@ class RubberBand extends KDDWBindingsFlutter.View with View_mixin {
   }
 
   PositionedWidget createFlutterWidget() {
-    return RubberBandWidget(this, key: widgetKey);
+    return RubberBandWidget(this, widgetKey);
   }
 }
 
 class RubberBandWidget extends PositionedWidget {
-  final RubberBand view;
-  RubberBandWidget(this.view, {Key? key}) : super(view, key: key);
+  RubberBandWidget(view, Key key) : super(view, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return RubberBandPositionedWidgetState(view);
+    return RubberBandPositionedWidgetState(kddwView);
   }
 }
 
 class RubberBandPositionedWidgetState extends PositionedWidgetState {
-  final RubberBand view;
-
-  RubberBandPositionedWidgetState(this.view) : super(view);
+  RubberBandPositionedWidgetState(view) : super(view);
 
   @override
   Widget buildContents(BuildContext ctx) {

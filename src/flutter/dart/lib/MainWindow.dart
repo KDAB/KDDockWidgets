@@ -35,31 +35,30 @@ class MainWindow extends KDDWBindingsFlutter.MainWindow with View_mixin {
   }
 
   PositionedWidget createFlutterWidget() {
-    return MainWindowWidget(m_controller, this, key: widgetKey);
+    return MainWindowWidget(this, widgetKey);
   }
 }
 
 class MainWindowWidget extends PositionedWidget {
-  final MainWindow view;
-  late final KDDWBindingsCore.MainWindow kddwController;
-
-  MainWindowWidget(this.kddwController, this.view, {Key? key})
-      : super(view, key: key);
+  MainWindowWidget(View_mixin view, Key key) : super(view, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return MainWindowWidgetState(kddwController, view);
+    return MainWindowWidgetState(kddwView);
   }
 }
 
 class MainWindowWidgetState extends PositionedWidgetState {
-  final MainWindow view;
-  late final KDDWBindingsCore.MainWindow kddwController;
-  MainWindowWidgetState(this.kddwController, this.view) : super(view);
+  MainWindowWidgetState(view) : super(view);
+
+  KDDWBindingsCore.MainWindow controller() {
+    return KDDWBindingsCore.MainWindow.fromCppPointer(
+        kddwView.asFlutterView().controller().thisCpp);
+  }
 
   Widget dropAreaWidget() {
     final dropAreaView = KDDWBindingsFlutter.View.fromCache(
-        kddwController.dropArea().view().thisCpp) as DropArea;
+        controller().dropArea().view().thisCpp) as DropArea;
 
     return dropAreaView.flutterWidget;
   }

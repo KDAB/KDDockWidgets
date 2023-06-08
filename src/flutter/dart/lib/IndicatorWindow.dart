@@ -54,18 +54,15 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
 }
 
 class IndicatorWindowWidget extends PositionedWidget {
-  final IndicatorWindow indicatorWindow;
-  IndicatorWindowWidget(this.indicatorWindow, Key key)
-      : super(indicatorWindow, key: key);
+  IndicatorWindowWidget(View_mixin view, Key key) : super(view, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return IndicatorWindowWidgetState(indicatorWindow);
+    return IndicatorWindowWidgetState(kddwView);
   }
 }
 
 class IndicatorWindowWidgetState extends PositionedWidgetState {
-  final IndicatorWindow indicatorWindow;
   final List<IndicatorWidget> indicatorWidgets = [];
   final List<int> locations = [
     KDDockWidgets_DropLocation.DropLocation_Left,
@@ -79,9 +76,15 @@ class IndicatorWindowWidgetState extends PositionedWidgetState {
     KDDockWidgets_DropLocation.DropLocation_OutterBottom
   ];
 
-  IndicatorWindowWidgetState(this.indicatorWindow) : super(indicatorWindow) {
+  IndicatorWindow indicatorWindow() {
+    return kddwView as IndicatorWindow;
+  }
+
+  IndicatorWindowWidgetState(View_mixin indicatorWindow)
+      : super(indicatorWindow) {
+    IndicatorWindow w = this.indicatorWindow();
     for (var loc in locations) {
-      indicatorWidgets.add(IndicatorWidget(indicatorWindow, loc));
+      indicatorWidgets.add(IndicatorWidget(w, loc));
     }
   }
 

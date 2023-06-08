@@ -33,7 +33,7 @@ class Group extends KDDWBindingsFlutter.Group with View_mixin {
   }
 
   PositionedWidget createFlutterWidget() {
-    return GroupWidget(kddwView, this, key: widgetKey);
+    return GroupWidget(this, widgetKey);
   }
 
   TitleBar titleBarView() {
@@ -58,23 +58,20 @@ class Group extends KDDWBindingsFlutter.Group with View_mixin {
 }
 
 class GroupWidget extends PositionedWidget {
-  final Group groupView;
-  GroupWidget(var kddwView, this.groupView, {Key? key})
-      : super(kddwView, key: key);
+  GroupWidget(var kddwView, Key key) : super(kddwView, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return GroupPositionedWidgetState(kddwView, groupView);
+    return GroupPositionedWidgetState(kddwView);
   }
 }
 
 class GroupPositionedWidgetState extends PositionedWidgetState {
-  final Group groupView;
-
-  GroupPositionedWidgetState(var kddwView, this.groupView) : super(kddwView);
+  GroupPositionedWidgetState(var kddwView) : super(kddwView);
 
   @override
   Widget buildContents(BuildContext ctx) {
+    final Group groupView = kddwView as Group;
     final titleBarView = groupView.titleBarView();
     final tabBarView = groupView.tabBarView();
     final dockWidgetWidget = groupView.dockWidgetView()?.flutterWidget ??

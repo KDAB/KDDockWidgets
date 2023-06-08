@@ -38,29 +38,26 @@ class Separator extends View {
   }
 
   PositionedWidget createFlutterWidget() {
-    return SeparatorWidget(kddwView, this, key: widgetKey);
+    return SeparatorWidget(this, widgetKey);
   }
 }
 
 class SeparatorWidget extends PositionedWidget {
-  final Separator separatorView;
-  SeparatorWidget(var kddwView, this.separatorView, {Key? key})
-      : super(kddwView, key: key);
+  SeparatorWidget(kddwView, Key key) : super(kddwView, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return SeparatorPositionedWidgetState(kddwView, separatorView);
+    return SeparatorPositionedWidgetState(kddwView);
   }
 }
 
 class SeparatorPositionedWidgetState extends PositionedWidgetState {
-  final Separator separatorView;
-
-  SeparatorPositionedWidgetState(var kddwView, this.separatorView)
-      : super(kddwView);
+  SeparatorPositionedWidgetState(var kddwView) : super(kddwView);
 
   @override
   Widget buildContents(BuildContext ctx) {
+    final Separator separatorView = kddwView as Separator;
+
     // This simply wraps the default widget into a MouseRegion, so we can
     // react to mouse events
     final defaultContainer = super.buildContents(ctx);

@@ -30,42 +30,34 @@ class DockWidget extends KDDWBindingsFlutter.DockWidget with View_mixin {
   }
 
   PositionedWidget createFlutterWidget() {
-    return DockWidgetWidget(kddwView, this, key: widgetKey);
+    return DockWidgetWidget(this, widgetKey);
   }
 }
 
 class DockWidgetWidget extends PositionedWidget {
-  final DockWidget DockWidgetView;
-  DockWidgetWidget(var kddwView, this.DockWidgetView, {Key? key})
-      : super(kddwView, key: key);
+  DockWidgetWidget(View_mixin kddwView, Key key) : super(kddwView, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return DockWidgetPositionedWidgetState(kddwView, DockWidgetView);
+    return DockWidgetPositionedWidgetState(kddwView);
   }
 }
 
 class DockWidgetPositionedWidgetState extends PositionedWidgetState {
-  final DockWidget DockWidgetView;
-  Widget? guestWidget;
-
-  DockWidgetPositionedWidgetState(var kddwView, this.DockWidgetView)
-      : super(kddwView) {
-    guestWidget = DockWidgetView.guestwidget;
-  }
+  DockWidgetPositionedWidgetState(var kddwView) : super(kddwView) {}
 
   void setGuestWidget(Widget w) {
-    setState(() {
-      guestWidget = w;
-    });
+    setState(() {});
   }
 
   @override
   Widget buildContents(BuildContext ctx) {
-    if (guestWidget == null) {
+    final DockWidget dockWidgetView = kddwView as DockWidget;
+
+    if (dockWidgetView.guestwidget == null) {
       return Container();
     } else {
-      return guestWidget!;
+      return dockWidgetView.guestwidget!;
     }
   }
 }

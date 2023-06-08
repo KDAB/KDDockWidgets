@@ -30,12 +30,12 @@ class DropArea extends KDDWBindingsFlutter.DropArea with View_mixin {
   }
 
   PositionedWidget createFlutterWidget() {
-    return DropAreaWidget(kddwView, key: widgetKey);
+    return DropAreaWidget(kddwView, widgetKey);
   }
 }
 
 class DropAreaWidget extends PositionedWidget {
-  DropAreaWidget(var kddwView, {Key? key}) : super(kddwView, key: key);
+  DropAreaWidget(var kddwView, Key key) : super(kddwView, key: key);
 
   @override
   State<PositionedWidget> createState() {
@@ -44,29 +44,29 @@ class DropAreaWidget extends PositionedWidget {
 }
 
 class DropAreaPositionedWidgetState extends PositionedWidgetState {
-  late final IndicatorWindow indicatorWindow;
-  late final RubberBand rubberBand;
+  DropAreaPositionedWidgetState(View_mixin kddwView) : super(kddwView);
 
-  DropAreaPositionedWidgetState(View_mixin kddwView) : super(kddwView) {
+  IndicatorWindow indicatorWindow() {
     final DropArea da = kddwView.asFlutterView() as DropArea;
-
-    indicatorWindow = KDDWBindingsFlutter.IndicatorWindow.fromCache(
+    return KDDWBindingsFlutter.IndicatorWindow.fromCache(
         da.indicatorWindow().thisCpp) as IndicatorWindow;
+  }
 
-    rubberBand =
-        KDDWBindingsFlutter.View.fromCache(indicatorWindow.rubberBand().thisCpp)
-            as RubberBand;
+  RubberBand rubberBand() {
+    return KDDWBindingsFlutter.View.fromCache(
+        indicatorWindow().rubberBand().thisCpp) as RubberBand;
   }
 
   @override
   Widget buildContents(BuildContext ctx) {
+    final rb = rubberBand();
     return Container(
         color: kddwView.m_color,
         child: Stack(
           fit: StackFit.expand,
           children: [
             ...kddwView.visibleChildWidgets(),
-            if (rubberBand.isVisible()) rubberBand.flutterWidget
+            if (rb.isVisible()) rb.flutterWidget
           ],
         ));
   }

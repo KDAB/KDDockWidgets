@@ -31,7 +31,7 @@ class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
   }
 
   PositionedWidget createFlutterWidget() {
-    return TabBarWidget(kddwView, this, key: widgetKey);
+    return TabBarWidget(this, widgetKey);
   }
 
   @override
@@ -93,20 +93,21 @@ class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
 }
 
 class TabBarWidget extends PositionedWidget {
-  final TabBar TabBarView;
-  TabBarWidget(var kddwView, this.TabBarView, {Key? key})
-      : super(kddwView, key: key);
+  TabBarWidget(View_mixin kddwView, Key key) : super(kddwView, key: key);
 
   @override
   State<PositionedWidget> createState() {
-    return TabBarPositionedWidgetState(kddwView, TabBarView);
+    return TabBarPositionedWidgetState(kddwView);
   }
 }
 
 class TabBarPositionedWidgetState extends PositionedWidgetState {
-  final TabBar m_tabBarView;
   int _currentIndex = -1;
   bool _calledFromFlutter = false;
+
+  TabBar tabBarView() {
+    return kddwView as TabBar;
+  }
 
   set currentIndex(int index) {
     if (index != _currentIndex) {
@@ -114,7 +115,7 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
 
       if (_calledFromFlutter) {
         // User clicked a tab, tell C++
-        m_tabBarView.m_controller.setCurrentIndex(index);
+        tabBarView().m_controller.setCurrentIndex(index);
       } else {
         // C++ requested it, rebuild
         // TODOm3: ask controller ?
@@ -123,19 +124,19 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
     }
   }
 
-  TabBarPositionedWidgetState(var kddwView, this.m_tabBarView)
-      : super(kddwView);
+  TabBarPositionedWidgetState(var kddwView) : super(kddwView);
 
   @override
   Widget buildContents(BuildContext ctx) {
-    final int numTabs = m_tabBarView.m_controller.numDockWidgets();
+    final tabBarView = this.tabBarView();
+    final int numTabs = tabBarView.m_controller.numDockWidgets();
     final tabs = <Widget>[];
     for (var i = 0; i < numTabs; ++i) {
-      final dw = m_tabBarView.m_controller.dockWidgetAt_2(i);
+      final dw = tabBarView.m_controller.dockWidgetAt_2(i);
       tabs.add(Tab(text: "${dw.title().toDartString()}"));
     }
 
-    final curIndex = m_tabBarView.m_controller.currentIndex();
+    final curIndex = tabBarView.m_controller.currentIndex();
 
     return Listener(
         onPointerDown: (event) {
