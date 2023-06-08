@@ -108,8 +108,9 @@ class Platform extends KDDWBindingsFlutter.Platform {
 
   @override
   onMainWindowDestroyed(KDDWBindingsCore.MainWindow? mw) {
+    final oldSize = mainWindows.length;
     mainWindows.removeWhere((it) => it.thisCpp == mw!.thisCpp);
-    rebuildWindowOverlay();
+    if (oldSize != mainWindows.length) rebuildWindowOverlay();
   }
 
   @override
@@ -120,8 +121,9 @@ class Platform extends KDDWBindingsFlutter.Platform {
 
   @override
   onDropIndicatorOverlayDestroyed(KDDWBindingsFlutter.IndicatorWindow? w) {
+    final oldSize = indicatorWindows.length;
     indicatorWindows.removeWhere((it) => it.thisCpp == w!.thisCpp);
-    rebuildWindowOverlay();
+    if (oldSize != indicatorWindows.length) rebuildWindowOverlay();
   }
 
   @override
