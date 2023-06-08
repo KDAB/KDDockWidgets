@@ -30,7 +30,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
     initMixin(this, debugName: "IndicatorWindow", parent: parent);
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return IndicatorWindowWidget(this, widgetKey);
   }
 

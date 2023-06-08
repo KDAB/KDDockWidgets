@@ -27,7 +27,7 @@ class RubberBand extends KDDWBindingsFlutter.View with View_mixin {
     initMixin(this, debugName: "RubberBand", parent: parent);
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return RubberBandWidget(this, key: widgetKey);
   }
 }

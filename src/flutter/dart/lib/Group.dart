@@ -32,7 +32,7 @@ class Group extends KDDWBindingsFlutter.Group with View_mixin {
         color: Colors.greenAccent, debugName: "Group", parent: parent);
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return GroupWidget(kddwView, this, key: widgetKey);
   }
 

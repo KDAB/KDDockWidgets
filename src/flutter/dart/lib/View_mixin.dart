@@ -24,7 +24,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide View;
 
 class View_mixin {
-  late final Widget flutterWidget;
+  late final PositionedWidget flutterWidget;
   late final GlobalObjectKey<PositionedWidgetState> widgetKey;
   late final KDDWBindingsFlutter.View kddwView;
   WindowWidget?
@@ -51,7 +51,7 @@ class View_mixin {
     if (widgetKey.currentWidget == null) {
       flutterWidget = createFlutterWidget();
     } else {
-      flutterWidget = widgetKey.currentWidget!;
+      flutterWidget = widgetKey.currentWidget! as PositionedWidget;
     }
 
     if (parent != null) {
@@ -188,7 +188,7 @@ class View_mixin {
     }).toList();
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return PositionedWidget(this, key: widgetKey);
   }
 

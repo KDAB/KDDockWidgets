@@ -47,7 +47,7 @@ class FloatingWindow extends KDDWBindingsFlutter.View with View_mixin {
         m_controller.dropArea().view().thisCpp) as DropArea;
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return FloatingWindowWidget(this, key: widgetKey);
   }
 }

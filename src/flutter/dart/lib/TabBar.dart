@@ -30,7 +30,7 @@ class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
     initMixin(this, parent: parent);
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return TabBarWidget(kddwView, this, key: widgetKey);
   }
 

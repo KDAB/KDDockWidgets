@@ -24,7 +24,7 @@ class Stack extends KDDWBindingsFlutter.Stack with View_mixin {
     initMixin(this, debugName: "Stack", parent: parent);
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return StackWidget(kddwView, this, widgetKey);
   }
 }

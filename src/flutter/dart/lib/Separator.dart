@@ -37,7 +37,7 @@ class Separator extends View {
     m_parent.onChildAdded(this);
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return SeparatorWidget(kddwView, this, key: widgetKey);
   }
 }

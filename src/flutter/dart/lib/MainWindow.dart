@@ -34,7 +34,7 @@ class MainWindow extends KDDWBindingsFlutter.MainWindow with View_mixin {
     m_controller.init(uniqueName);
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return MainWindowWidget(m_controller, this, key: widgetKey);
   }
 }

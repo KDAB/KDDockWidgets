@@ -29,7 +29,7 @@ class DockWidget extends KDDWBindingsFlutter.DockWidget with View_mixin {
     widgetState<DockWidgetPositionedWidgetState>()?.setGuestWidget(w);
   }
 
-  Widget createFlutterWidget() {
+  PositionedWidget createFlutterWidget() {
     return DockWidgetWidget(kddwView, this, key: widgetKey);
   }
 }
