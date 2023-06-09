@@ -67,7 +67,7 @@ class View_mixin {
   GlobalStringKey<PositionedWidgetState> globalKeyForView() {
     // The key is the C++ View pointer, which is stable and unique
     final ffi.Pointer<ffi.Void> ptr = kddwView.thisCpp.cast<ffi.Void>();
-    return GlobalStringKey("${ptr.address}");
+    return GlobalStringKey("${this.runtimeType} - ${ptr.address}");
   }
 
   QRect viewGeometry() {
