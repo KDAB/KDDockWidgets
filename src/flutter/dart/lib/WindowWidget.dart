@@ -17,6 +17,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
 
+import 'GlobalStringKey.dart';
 import 'WindowOverlayWidget.dart';
 
 /// @brief A Widget that hosts a single KDDW FloatingWindow or MainWindow
@@ -31,7 +32,7 @@ class WindowWidget extends StatefulWidget {
   }
 
   static WindowWidget fromView(KDDWBindingsCore.View view) {
-    final key = GlobalObjectKey("WindowWidget-${view.thisCpp.address}");
+    final key = GlobalStringKey("WindowWidget-${view.thisCpp.address}");
     if (key.currentWidget == null) {
       return WindowWidget._(view, key);
     } else {

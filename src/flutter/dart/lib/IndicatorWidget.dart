@@ -15,6 +15,7 @@ import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:flutter/material.dart';
 import 'dart:ffi' as ffi;
 import 'IndicatorWindow.dart';
+import 'GlobalStringKey.dart';
 
 /// Represents a single drop indicator
 
@@ -24,19 +25,19 @@ class IndicatorWidget extends StatefulWidget {
   IndicatorWidget(this.indicatorWindow, this.loc)
       : super(key: indicatorKey(indicatorWindow, loc)) {}
 
-  static GlobalObjectKey indicatorKey(
+  static GlobalStringKey indicatorKey(
       IndicatorWindow indicatorWindow, int loc) {
     final ffi.Pointer<ffi.Void> ptr =
         indicatorWindow.kddwView.thisCpp.cast<ffi.Void>();
 
-    return GlobalObjectKey("IndicatorWidget-${ptr.address}-${loc}");
+    return GlobalStringKey("IndicatorWidget-${ptr.address}-${loc}");
   }
 
   @override
   State<IndicatorWidget> createState() => _IndicatorWidgetState(loc);
 
   _IndicatorWidgetState? widgetState() {
-    final globalKey = key as GlobalObjectKey;
+    final globalKey = key as GlobalStringKey;
     return globalKey.currentState as _IndicatorWidgetState?;
   }
 
@@ -47,7 +48,7 @@ class IndicatorWidget extends StatefulWidget {
 
   void updatePosition(int overlayWidth, int overlayHeight,
       KDDWBindingsCore.Group? hoveredGroup, int visibleLocations) {
-    final globalKey = key as GlobalObjectKey;
+    final globalKey = key as GlobalStringKey;
     final state = widgetState();
 
     if (state == null) {

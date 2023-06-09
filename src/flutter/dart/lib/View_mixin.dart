@@ -12,6 +12,7 @@
 import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/DropArea.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
+import 'package:KDDockWidgets/GlobalStringKey.dart';
 import 'package:KDDockWidgets/WindowWidget.dart';
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDockWidgetBindings;
 import 'package:KDDockWidgetsBindings/Bindings.dart';
@@ -25,7 +26,7 @@ import 'package:flutter/material.dart' hide View;
 
 class View_mixin {
   late final PositionedWidget flutterWidget;
-  late final GlobalObjectKey<PositionedWidgetState> widgetKey;
+  late final GlobalStringKey<PositionedWidgetState> widgetKey;
   late final KDDWBindingsFlutter.View kddwView;
   WindowWidget?
       windowWidget; // For now, while we don't have multi-window support
@@ -63,10 +64,10 @@ class View_mixin {
     }
   }
 
-  GlobalObjectKey<PositionedWidgetState> globalKeyForView() {
+  GlobalStringKey<PositionedWidgetState> globalKeyForView() {
     // The key is the C++ View pointer, which is stable and unique
     final ffi.Pointer<ffi.Void> ptr = kddwView.thisCpp.cast<ffi.Void>();
-    return GlobalObjectKey(ptr.address);
+    return GlobalStringKey("${ptr.address}");
   }
 
   QRect viewGeometry() {
@@ -105,7 +106,7 @@ class View_mixin {
     }
 
     if (windowWidget != null) {
-      final windowState = (windowWidget!.key as GlobalObjectKey).currentState;
+      final windowState = (windowWidget!.key as GlobalStringKey).currentState;
 
       if (windowState != null) {
         (windowState as WindowWidgetState).onGeometryChanged();

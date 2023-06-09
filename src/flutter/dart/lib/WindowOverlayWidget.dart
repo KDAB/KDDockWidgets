@@ -17,13 +17,15 @@ import 'package:flutter/material.dart' hide View;
 import 'package:flutter/widgets.dart';
 import 'package:KDDockWidgets/Platform.dart';
 
+import 'GlobalStringKey.dart';
+
 /// @brief A Widget to host KDDW floating windows
 /// Since Flutter doesn't support real OS level multi-windows we need
 /// to draw the floating windows into an overlay
 class WindowOverlayWidget extends StatefulWidget {
   // We only have one overlay per application
-  static GlobalObjectKey<WindowOverlayWidgetState> globalKey() {
-    return GlobalObjectKey<WindowOverlayWidgetState>("windowOverlayState");
+  static GlobalStringKey<WindowOverlayWidgetState> globalKey() {
+    return GlobalStringKey<WindowOverlayWidgetState>("windowOverlayState");
   }
 
   late final bool supportsMainWindow;
