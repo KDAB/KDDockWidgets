@@ -31,10 +31,11 @@ class WindowWidget extends StatefulWidget {
     kddwView = KDDWBindingsFlutter.View.fromCache(view.thisCpp) as View_mixin;
   }
 
-  static WindowWidget fromView(KDDWBindingsCore.View view) {
-    final key = GlobalStringKey("WindowWidget-${view.thisCpp.address}");
+  static WindowWidget fromView(KDDWBindingsCore.View viewCpp) {
+    View_mixin view = View_mixin.fromCpp(viewCpp);
+    final key = GlobalStringKey("KDDockWidgets_WindowWidget-${view.m_id}");
     if (key.currentWidget == null) {
-      return WindowWidget._(view, key);
+      return WindowWidget._(viewCpp, key);
     } else {
       return key.currentWidget! as WindowWidget;
     }

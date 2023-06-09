@@ -28,6 +28,8 @@ class View_mixin {
   late final PositionedWidget flutterWidget;
   late final GlobalStringKey<PositionedWidgetState> widgetKey;
   late final KDDWBindingsFlutter.View kddwView;
+  late final int m_id;
+  static int m_nextId = 0;
   WindowWidget?
       windowWidget; // For now, while we don't have multi-window support
 
@@ -41,6 +43,7 @@ class View_mixin {
       {required KDDWBindingsCore.View? parent,
       var color = Colors.transparent,
       var debugName = ""}) {
+    m_id = View_mixin.m_nextId++;
     this.kddwView = kddwView;
     m_color = color;
     this.debugName = debugName;
@@ -50,11 +53,8 @@ class View_mixin {
     if (widgetKey.currentWidget == null) {
       flutterWidget = createFlutterWidget();
     } else {
-      // It can happen that a C++ object gets the address of a previous C++
-      // object which was already deleted. Reuse the Widget in that case.
-      flutterWidget = widgetKey.currentWidget! as PositionedWidget;
-      flutterWidget.kddwView = this;
-      widgetKey.currentState!.kddwView = this;
+      // unexpected, keys are unique
+      assert(false);
     }
 
     if (parent != null) {
@@ -65,9 +65,7 @@ class View_mixin {
   }
 
   GlobalStringKey<PositionedWidgetState> globalKeyForView() {
-    // The key is the C++ View pointer, which is stable and unique
-    final ffi.Pointer<ffi.Void> ptr = kddwView.thisCpp.cast<ffi.Void>();
-    return GlobalStringKey("${this.runtimeType} - ${ptr.address}");
+    return GlobalStringKey("KDDockWidgets_View_mixin-${m_id}");
   }
 
   QRect viewGeometry() {
