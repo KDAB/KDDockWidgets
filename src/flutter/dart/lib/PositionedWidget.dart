@@ -14,9 +14,9 @@ import 'package:flutter/material.dart' hide View;
 
 /// A widget that supports being positioned. It's child of a Stack widget.
 class PositionedWidget extends StatefulWidget {
-  final View_mixin kddwView;
+  View_mixin kddwView;
 
-  const PositionedWidget(this.kddwView, {Key? key}) : super(key: key);
+  PositionedWidget(this.kddwView, {Key? key}) : super(key: key);
 
   @override
   State<PositionedWidget> createState() {
@@ -26,7 +26,7 @@ class PositionedWidget extends StatefulWidget {
 
 class PositionedWidgetState extends State<PositionedWidget>
     with WidgetsBindingObserver {
-  final View_mixin kddwView;
+  View_mixin kddwView;
   final bool _fillsParent;
 
   PositionedWidgetState(this.kddwView) : _fillsParent = kddwView.m_fillsParent;

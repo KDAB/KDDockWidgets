@@ -51,7 +51,11 @@ class View_mixin {
     if (widgetKey.currentWidget == null) {
       flutterWidget = createFlutterWidget();
     } else {
+      // It can happen that a C++ object gets the address of a previous C++
+      // object which was already deleted. Reuse the Widget in that case.
       flutterWidget = widgetKey.currentWidget! as PositionedWidget;
+      flutterWidget.kddwView = this;
+      widgetKey.currentState!.kddwView = this;
     }
 
     if (parent != null) {
