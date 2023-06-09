@@ -44,9 +44,7 @@ class View_mixin {
     m_color = color;
     this.debugName = debugName;
 
-    // The key is the C++ View pointer, which is stable and unique
-    final ffi.Pointer<ffi.Void> ptr = kddwView.thisCpp.cast<ffi.Void>();
-    widgetKey = GlobalObjectKey(ptr.address);
+    widgetKey = globalKeyForView();
 
     if (widgetKey.currentWidget == null) {
       flutterWidget = createFlutterWidget();
@@ -63,6 +61,12 @@ class View_mixin {
       // because there's no View_mixin yet. So do it here
       fromCpp(parent).onChildAdded(kddwView);
     }
+  }
+
+  GlobalObjectKey<PositionedWidgetState> globalKeyForView() {
+    // The key is the C++ View pointer, which is stable and unique
+    final ffi.Pointer<ffi.Void> ptr = kddwView.thisCpp.cast<ffi.Void>();
+    return GlobalObjectKey(ptr.address);
   }
 
   QRect viewGeometry() {

@@ -29,7 +29,7 @@ class IndicatorWidget extends StatefulWidget {
     final ffi.Pointer<ffi.Void> ptr =
         indicatorWindow.kddwView.thisCpp.cast<ffi.Void>();
 
-    return GlobalObjectKey("${ptr.address}-${loc}");
+    return GlobalObjectKey("IndicatorWidget-${ptr.address}-${loc}");
   }
 
   @override
