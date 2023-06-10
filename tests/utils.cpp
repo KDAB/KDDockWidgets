@@ -147,39 +147,22 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
 
 void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, Window::Ptr receiver)
 {
-    Platform::instance()->setCursorPos(globalPos);
-    MouseEvent ev(Event::MouseButtonDblClick, receiver->mapFromGlobal(globalPos),
-                  receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
-                  Qt::NoModifier);
-
-    pressOn(globalPos, receiver); // double-click involves an initial press
-    Platform::instance()->tests_sendEvent(receiver, &ev);
+    Platform::instance()->tests_doubleClickOn(globalPos, receiver);
 }
 
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, View *receiver)
 {
-    Platform::instance()->setCursorPos(globalPos);
-    MouseEvent ev(Event::MouseButtonPress, receiver->mapFromGlobal(globalPos),
-                  receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
-                  Qt::LeftButton, Qt::NoModifier);
-    Platform::instance()->sendEvent(receiver, &ev);
+    Platform::instance()->tests_pressOn(globalPos, receiver);
 }
 
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, Window::Ptr receiver)
 {
-    Platform::instance()->setCursorPos(globalPos);
-    MouseEvent ev(Event::MouseButtonPress, receiver->mapFromGlobal(globalPos),
-                  receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
-                  Qt::NoModifier);
-    Platform::instance()->tests_sendEvent(receiver, &ev);
+    Platform::instance()->tests_pressOn(globalPos, receiver);
 }
 
 void KDDockWidgets::Tests::releaseOn(QPoint globalPos, View *receiver)
 {
-    MouseEvent ev(Event::MouseButtonRelease, receiver->mapFromGlobal(globalPos),
-                  receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
-                  Qt::LeftButton, Qt::NoModifier);
-    Platform::instance()->sendEvent(receiver, &ev);
+    Platform::instance()->tests_releaseOn(globalPos, receiver);
 }
 
 void KDDockWidgets::Tests::clickOn(QPoint globalPos, View *receiver)
@@ -191,7 +174,7 @@ void KDDockWidgets::Tests::clickOn(QPoint globalPos, View *receiver)
 void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
 {
     QPoint globalSrc = receiver->mapToGlobal(QPoint(5, 5));
-    ViewGuard receiverP = receiver;
+
 
     while (globalSrc != globalDest) {
         if (globalSrc.x() < globalDest.x()) {
@@ -205,18 +188,8 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
             globalSrc.setY(globalSrc.y() - 1);
         }
 
-        Platform::instance()->setCursorPos(globalSrc);
-        MouseEvent ev(Event::MouseMove, receiver->mapFromGlobal(globalSrc),
-                      receiver->rootView()->mapFromGlobal(globalSrc), globalSrc, Qt::LeftButton,
-                      Qt::LeftButton, Qt::NoModifier);
-
-        if (!receiverP) {
-            qWarning() << "Receiver was deleted";
+        if (!Platform::instance()->tests_mouseMove(globalSrc, receiver))
             return;
-        }
-
-        Platform::instance()->sendEvent(receiver, &ev);
-        Platform::instance()->tests_wait(2);
     }
 }
 
