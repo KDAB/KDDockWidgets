@@ -84,6 +84,14 @@ public:
                      Core::View *parent = nullptr, Qt::WindowFlags flags = {}) const override;
 
     void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
+
+    void tests_doubleClickOn(QPoint globalPos, Core::View *receiver) override;
+    void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
+    void tests_pressOn(QPoint globalPos, Core::View *receiver) override;
+    void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
+    void tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
+    bool tests_mouseMove(QPoint globalPos, Core::View *receiver) override;
+
 #if !defined(DARTAGNAN_BINDINGS_RUN)
     KDDW_QCORO_TASK tests_wait(int ms) const override;
     KDDW_QCORO_TASK tests_waitForResize(Core::View *, int timeout) const override;

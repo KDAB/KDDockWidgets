@@ -396,6 +396,32 @@ void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) 
     ( void )ev;
 }
 
+
+void Platform::tests_doubleClickOn(QPoint, Core::View *)
+{
+}
+
+void Platform::tests_doubleClickOn(QPoint, std::shared_ptr<Core::Window>)
+{
+}
+
+void Platform::tests_pressOn(QPoint, Core::View *)
+{
+}
+
+void Platform::tests_pressOn(QPoint, std::shared_ptr<Core::Window>)
+{
+}
+
+void Platform::tests_releaseOn(QPoint, Core::View *)
+{
+}
+
+bool Platform::tests_mouseMove(QPoint, Core::View *)
+{
+    return true;
+}
+
 KDDW_QCORO_TASK Platform::tests_wait(int ms) const
 {
     co_await m_coRoutines.wait(ms);
