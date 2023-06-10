@@ -12,6 +12,7 @@
 #include "Platform.h"
 #include "kddockwidgets/qtcommon/Window.h"
 #include "qtcommon/View.h"
+#include "core/ViewGuard.h"
 
 #include <QString>
 #include <QTimer>
@@ -293,4 +294,59 @@ void Platform_qt::maybeSetOffscreenQPA(int argc, char **argv)
         // Use offscreen by default as it's less annoying, doesn't create visible windows
         qputenv("QT_QPA_PLATFORM", "offscreen");
     }
+}
+
+void Platform_qt::tests_pressOn(QPoint globalPos, Core::View *receiver)
+{
+    setCursorPos(globalPos);
+    MouseEvent ev(Event::MouseButtonPress, receiver->mapFromGlobal(globalPos),
+                  receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
+                  Qt::LeftButton, Qt::NoModifier);
+    sendEvent(receiver, &ev);
+}
+
+void Platform_qt::tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver)
+{
+    Platform::instance()->setCursorPos(globalPos);
+    MouseEvent ev(Event::MouseButtonPress, receiver->mapFromGlobal(globalPos),
+                  receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
+                  Qt::NoModifier);
+    tests_sendEvent(receiver, &ev);
+}
+
+void Platform_qt::tests_releaseOn(QPoint globalPos, Core::View *receiver)
+{
+    MouseEvent ev(Event::MouseButtonRelease, receiver->mapFromGlobal(globalPos),
+                  receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
+                  Qt::LeftButton, Qt::NoModifier);
+    Platform::instance()->sendEvent(receiver, &ev);
+}
+
+void Platform_qt::tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver)
+{
+    Platform::instance()->setCursorPos(globalPos);
+    MouseEvent ev(Event::MouseButtonDblClick, receiver->mapFromGlobal(globalPos),
+                  receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
+                  Qt::NoModifier);
+
+    tests_pressOn(globalPos, receiver); // double-click involves an initial press
+    Platform::instance()->tests_sendEvent(receiver, &ev);
+}
+
+bool Platform_qt::tests_mouseMove(QPoint globalPos, Core::View *receiver)
+{
+    Core::ViewGuard receiverP = receiver;
+    Platform::instance()->setCursorPos(globalPos);
+    MouseEvent ev(Event::MouseMove, receiver->mapFromGlobal(globalPos),
+                  receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
+                  Qt::LeftButton, Qt::NoModifier);
+
+    if (!receiverP) {
+        qWarning() << "Receiver was deleted";
+        return false;
+    }
+    Platform::instance()->sendEvent(receiver, &ev);
+    Platform::instance()->tests_wait(2);
+
+    return true;
 }

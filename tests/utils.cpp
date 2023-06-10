@@ -175,7 +175,6 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
 {
     QPoint globalSrc = receiver->mapToGlobal(QPoint(5, 5));
 
-
     while (globalSrc != globalDest) {
         if (globalSrc.x() < globalDest.x()) {
             globalSrc.setX(globalSrc.x() + 1);

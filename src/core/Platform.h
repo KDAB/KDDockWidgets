@@ -255,12 +255,12 @@ public:
 #endif
 
     /// Sends a double-click event to the specified receiver
-    virtual void tests_doubleClickOn(QPoint globalPos, View *receiver);
-    void tests_pressOn(QPoint globalPos, View *receiver);
-    void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver);
-    void tests_releaseOn(QPoint globalPos, View *receiver);
-    void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver);
-    bool tests_mouseMove(QPoint globalPos, View *receiver);
+    virtual void tests_doubleClickOn(QPoint globalPos, View *receiver) = 0;
+    virtual void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
+    virtual void tests_pressOn(QPoint globalPos, View *receiver) = 0;
+    virtual void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
+    virtual void tests_releaseOn(QPoint globalPos, View *receiver) = 0;
+    virtual bool tests_mouseMove(QPoint globalPos, View *receiver) = 0;
 
     virtual void installMessageHandler() = 0;
     virtual void uninstallMessageHandler() = 0;

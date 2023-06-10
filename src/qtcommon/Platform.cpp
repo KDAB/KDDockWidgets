@@ -174,11 +174,13 @@ Platform_qt::Platform_qt()
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
+
 // ctor used by the tests only
 Platform_qt::Platform_qt(QCoreApplication *)
     : m_globalEventFilter(new GlobalEventFilter(this))
 {
 }
+
 #endif
 
 Platform_qt::~Platform_qt()
