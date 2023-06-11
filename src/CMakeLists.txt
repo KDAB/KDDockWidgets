@@ -217,7 +217,6 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/Window.cpp
     flutter/Screen.cpp
     flutter/Platform.cpp
-    flutter/CoRoutines.cpp
     flutter/views/View.cpp
     flutter/views/ViewWrapper.cpp
     flutter/views/DropArea.cpp
@@ -237,7 +236,9 @@ endif()
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers.cpp)
-    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ../tests/flutter_tests_embedder/tests_embedder.cpp)
+    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/CoRoutines.cpp
+                                   ../tests/flutter_tests_embedder/tests_embedder.cpp
+    )
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
