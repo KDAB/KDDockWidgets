@@ -233,8 +233,8 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
 static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_invalidLayoutAfterRestore),
-#ifndef KDDW_FRONTEND_FLUTTER
     TEST(tst_setFloatingWhenSideBySide),
+#ifndef KDDW_FRONTEND_FLUTTER
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoCenter),
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoRight),
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoLeft)
