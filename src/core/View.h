@@ -102,7 +102,11 @@ public:
     virtual void hide() = 0;
     virtual void update() = 0;
     virtual void raiseAndActivate() = 0;
+
+    /// If this view is a root view, then raises its window, otherwise, raises itself
+    /// relatively to its siblings and does not raise its window
     virtual void raise() = 0;
+
     virtual void activateWindow() = 0;
     virtual bool isRootView() const = 0;
     virtual QPoint mapToGlobal(QPoint) const = 0;
