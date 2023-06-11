@@ -187,47 +187,10 @@ public:
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
-#ifdef DOCKS_DEVELOPER_MODE
 
-    class WarningObserver
-    {
-        Q_DISABLE_COPY(WarningObserver)
-    public:
-        WarningObserver() = default;
-        virtual ~WarningObserver();
-        virtual void onFatal() = 0;
-    };
+#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+    // Stuff required by the tests only and not used by dart bindings.
 
-    virtual void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const = 0;
-
-    /// @brief Creates the platform. Called by the tests at startup.
-    /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()
-    static void tests_initPlatform(int &argc, char *argv[], KDDockWidgets::FrontendType);
-
-    /// @brief Deletes the platform. Called at end of tests.
-    /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
-    static void tests_deinitPlatform();
-
-    /// @brief Returns whether the Platform was already initialized
-    static bool isInitialized();
-
-    /// @brief Creates a Window. For the sole purpose of unit-testing Window.
-    /// The created window should be visible.
-    virtual std::shared_ptr<Core::Window> tests_createWindow() = 0;
-
-    /// @brief Creates a view with the specified parent
-    /// If the parent is null then a new window is created and the returned view will be the root
-    /// view
-    virtual View *tests_createView(CreateViewOptions, View *parent = nullptr) = 0;
-
-    /// @brief Returns a view that can have keyboard focus
-    /// For example a line edit. This is used to for testing focus related features.
-    virtual View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) = 0;
-
-    /// @brief Returns a view that rejects close events
-    virtual View *tests_createNonClosableView(View *parent = nullptr) = 0;
-
-#if !defined(DARTAGNAN_BINDINGS_RUN)
     /// @brief halts the test during the specified number of milliseconds
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your
     /// test and see what's going on
@@ -252,7 +215,6 @@ public:
     virtual KDDW_QCORO_TASK tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
                                                int timeout = 5000) const = 0;
-#endif
 
     virtual void tests_doubleClickOn(QPoint globalPos, View *receiver) = 0;
     virtual void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
@@ -260,6 +222,46 @@ public:
     virtual void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
     virtual void tests_releaseOn(QPoint globalPos, View *receiver) = 0;
     virtual bool tests_mouseMove(QPoint globalPos, View *receiver) = 0;
+    virtual void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const = 0;
+
+    /// @brief Creates a Window. For the sole purpose of unit-testing Window.
+    /// The created window should be visible.
+    virtual std::shared_ptr<Core::Window> tests_createWindow() = 0;
+#endif
+
+#ifdef DOCKS_TESTING_METHODS
+
+    class WarningObserver
+    {
+        Q_DISABLE_COPY(WarningObserver)
+    public:
+        WarningObserver() = default;
+        virtual ~WarningObserver();
+        virtual void onFatal() = 0;
+    };
+
+    /// @brief Creates the platform. Called by the tests at startup.
+    /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()
+    static void tests_initPlatform(int &argc, char *argv[], KDDockWidgets::FrontendType);
+
+    /// @brief Deletes the platform. Called at end of tests.
+    /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
+    static void tests_deinitPlatform();
+
+    /// @brief Returns whether the Platform was already initialized
+    static bool isInitialized();
+
+    /// @brief Creates a view with the specified parent
+    /// If the parent is null then a new window is created and the returned view will be the root
+    /// view
+    virtual View *tests_createView(CreateViewOptions, View *parent = nullptr) = 0;
+
+    /// @brief Returns a view that can have keyboard focus
+    /// For example a line edit. This is used to for testing focus related features.
+    virtual View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) = 0;
+
+    /// @brief Returns a view that rejects close events
+    virtual View *tests_createNonClosableView(View *parent = nullptr) = 0;
 
     virtual void installMessageHandler() = 0;
     virtual void uninstallMessageHandler() = 0;
@@ -301,7 +303,7 @@ protected:
     Platform();
 };
 
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
 
 struct SetExpectedWarning
 {

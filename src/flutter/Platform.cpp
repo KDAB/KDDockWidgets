@@ -221,7 +221,7 @@ void Platform::setCursorPos(QPoint)
 }
 
 
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
 
 void Platform::installMessageHandler()
 {
@@ -236,7 +236,6 @@ void Platform::pauseForDebugger()
     pauseForDartDebugger();
 }
 
-Platform::RunTestsFunc Platform::s_runTestsFunc = nullptr;
 
 namespace KDDockWidgets::flutter {
 
@@ -310,6 +309,7 @@ FocusableTestView_flutter::~FocusableTestView_flutter() = default;
 static QMutex m_mutex;
 void Platform::runTests()
 {
+#ifdef DOCKS_DEVELOPER_MODE
     // Called from Flutter, so C++ tests run in the ui thread
     Q_ASSERT(s_runTestsFunc);
 
@@ -320,11 +320,14 @@ void Platform::runTests()
         Q_ASSERT(!m_testsResult.has_value());
         m_testsResult = result ? 0 : 1;
     });
+#endif
 }
 
 void Platform::maybeResumeCoRoutines()
 {
+#ifdef DOCKS_DEVELOPER_MODE
     m_coRoutines.maybeResume();
+#endif
 }
 
 std::optional<int> Platform::testsResult() const
@@ -367,6 +370,17 @@ Core::MainWindow *Platform::createMainWindow(const QString &, Core::CreateViewOp
     return {};
 }
 
+#endif
+
+
+void Platform::setFocusedView(std::shared_ptr<Core::View> view)
+{
+    m_focusedView = view;
+}
+
+#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+
+Platform::RunTestsFunc Platform::s_runTestsFunc = nullptr;
 
 KDDW_QCORO_TASK Platform::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int) const
 {
@@ -398,7 +412,6 @@ void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) 
     ( void )window;
     ( void )ev;
 }
-
 
 void Platform::tests_doubleClickOn(QPoint, Core::View *)
 {
@@ -476,9 +489,3 @@ std::shared_ptr<Core::Window> Platform::tests_createWindow()
 }
 
 #endif
-
-
-void Platform::setFocusedView(std::shared_ptr<Core::View> view)
-{
-    m_focusedView = view;
-}

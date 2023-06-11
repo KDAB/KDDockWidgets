@@ -25,7 +25,7 @@ class DOCKS_EXPORT TitleBarViewInterface
 public:
     explicit TitleBarViewInterface(Core::TitleBar *);
     virtual ~TitleBarViewInterface();
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
     virtual bool isFloatButtonVisible() const = 0;
     virtual bool isCloseButtonVisible() const = 0;
     virtual bool isCloseButtonEnabled() const = 0;

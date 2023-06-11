@@ -439,7 +439,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
 Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)
 
 
-#ifdef KDDW_FRONTEND_FLUTTER
+#if defined(KDDW_FRONTEND_FLUTTER) && defined(DOCKS_DEVELOPER_MODE)
 #define KDDW_QCORO_TASK QCoro::Task<bool>
 #define KDDW_CO_AWAIT co_await
 #define KDDW_CO_RETURN co_return

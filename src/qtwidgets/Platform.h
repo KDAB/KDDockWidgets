@@ -45,7 +45,7 @@ public:
     bool usesFallbackMouseGrabber() const override;
     void ungrabMouse() override;
 
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
     explicit Platform(int &argc, char **argv);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;

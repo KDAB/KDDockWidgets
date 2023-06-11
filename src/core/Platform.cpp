@@ -145,7 +145,7 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
     return types;
 }
 
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
 
 void Platform::pauseForDebugger()
 {

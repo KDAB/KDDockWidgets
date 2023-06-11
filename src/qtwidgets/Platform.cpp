@@ -200,7 +200,7 @@ void Platform::ungrabMouse()
         grabber->releaseMouse();
 }
 
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
 
 inline QCoreApplication *createCoreApplication(int &argc, char **argv)
 {

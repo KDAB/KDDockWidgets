@@ -13,6 +13,7 @@
 // TODOm4: Remove ?
 #ifndef DOCKS_DEVELOPER_MODE
 #define DOCKS_DEVELOPER_MODE
+#define DOCKS_TESTING_METHODS
 #endif
 
 #ifndef QT_NO_CAST_TO_ASCII

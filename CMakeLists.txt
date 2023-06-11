@@ -305,7 +305,7 @@ macro(set_compiler_flags targetName)
     if(KDDockWidgets_DEVELOPER_MODE)
         target_compile_definitions(
             ${targetName}
-            PUBLIC DOCKS_DEVELOPER_MODE
+            PUBLIC DOCKS_DEVELOPER_MODE DOCKS_TESTING_METHODS
             PRIVATE QT_FORCE_ASSERTS
         )
 
@@ -322,10 +322,10 @@ macro(set_compiler_flags targetName)
         endif()
     else()
         if(KDDW_FRONTEND_FLUTTER)
-            # Our Dart bindings are auto-generated and they include methods guarded with DOCKS_DEVELOPER_MODE
+            # Our Dart bindings are auto-generated and they include methods guarded with DOCKS_TESTING_METHODS
             # Since we won't generate 2 sets of bindings, we need to enable the macro in release as well
-            # It won't have much side-effects besides making the bindings compile. Werror will still be off.
-            target_compile_definitions(${targetName} PRIVATE DOCKS_DEVELOPER_MODE)
+            # It won't have much side-effects besides making the bindings compile.
+            target_compile_definitions(${targetName} PUBLIC DOCKS_TESTING_METHODS)
         endif()
     endif()
 

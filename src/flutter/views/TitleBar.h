@@ -35,13 +35,12 @@ public:
 
 
 protected:
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
     // These 3 just for unit-tests
     bool isCloseButtonEnabled() const override;
     bool isCloseButtonVisible() const override;
     bool isFloatButtonVisible() const override;
 #endif
-
 protected:
     void init() override;
 };

@@ -71,28 +71,8 @@ public:
 
     void runDelayed(int ms, Core::DelayedCall *c) override;
 
-#ifdef DOCKS_DEVELOPER_MODE
-    void tests_initPlatform_impl() override;
-    void tests_deinitPlatform_impl() override;
-    Core::View *tests_createView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
-    std::shared_ptr<Core::Window> tests_createWindow() override;
-    Core::View *tests_createFocusableView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
-    Core::View *tests_createNonClosableView(Core::View *parent = nullptr) override;
-    Core::MainWindow *
-    createMainWindow(const QString &uniqueName, Core::CreateViewOptions viewOpts,
-                     MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                     Core::View *parent = nullptr, Qt::WindowFlags flags = {}) const override;
-
-    void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
-
-    void tests_doubleClickOn(QPoint globalPos, Core::View *receiver) override;
-    void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
-    void tests_pressOn(QPoint globalPos, Core::View *receiver) override;
-    void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
-    void tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
-    bool tests_mouseMove(QPoint globalPos, Core::View *receiver) override;
-
-#if !defined(DARTAGNAN_BINDINGS_RUN)
+#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+    // Stuff required by the tests only and not used by dart bindings.
     KDDW_QCORO_TASK tests_wait(int ms) const override;
     KDDW_QCORO_TASK tests_waitForResize(Core::View *, int timeout) const override;
     KDDW_QCORO_TASK tests_waitForResize(Core::Controller *, int timeout) const override;
@@ -103,18 +83,39 @@ public:
     KDDW_QCORO_TASK tests_waitForEvent(Core::View *, Event::Type type, int timeout) const override;
     KDDW_QCORO_TASK tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type, int timeout) const override;
 
+    void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
+    void tests_doubleClickOn(QPoint globalPos, Core::View *receiver) override;
+    void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
+    void tests_pressOn(QPoint globalPos, Core::View *receiver) override;
+    void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
+    void tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
+    bool tests_mouseMove(QPoint globalPos, Core::View *receiver) override;
+    std::shared_ptr<Core::Window> tests_createWindow() override;
+
     mutable CoRoutines m_coRoutines;
+
     typedef KDDW_QCORO_TASK (*RunTestsFunc)();
     static RunTestsFunc s_runTestsFunc;
-    std::optional<int> m_testsResult;
 #endif
+
+#ifdef DOCKS_TESTING_METHODS
+    void tests_initPlatform_impl() override;
+    void tests_deinitPlatform_impl() override;
+    Core::View *tests_createView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
+    Core::View *tests_createFocusableView(Core::CreateViewOptions, Core::View *parent = nullptr) override;
+    Core::View *tests_createNonClosableView(Core::View *parent = nullptr) override;
+    Core::MainWindow *
+    createMainWindow(const QString &uniqueName, Core::CreateViewOptions viewOpts,
+                     MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                     Core::View *parent = nullptr, Qt::WindowFlags flags = {}) const override;
+
     void installMessageHandler() override;
     void uninstallMessageHandler() override;
 
     void pauseForDebugger() override;
 
     /// Pauses execution, so we can attach Dart's debugger
-    virtual void pauseForDartDebugger() = 0;
+    virtual void pauseForDartDebugger() {};
 
     // Called by unit-test's main.dart. Runs the tests.
     // The tests are in C++, as they are the same ones for QtWidgets and QtQuick
@@ -145,6 +146,7 @@ public:
     void setFocusedView(std::shared_ptr<Core::View>);
 
     std::shared_ptr<Core::View> m_focusedView;
+    std::optional<int> m_testsResult;
 };
 
 }

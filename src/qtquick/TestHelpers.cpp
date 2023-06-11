@@ -27,7 +27,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
 
 namespace KDDockWidgets::QtQuick {
 

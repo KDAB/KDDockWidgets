@@ -25,7 +25,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
 
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_TESTING_METHODS
 
 namespace KDDockWidgets::QtWidgets {
 class TestView : public QtWidgets::View<QWidget>

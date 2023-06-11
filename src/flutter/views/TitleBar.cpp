@@ -43,8 +43,7 @@ void TitleBar::onTitleBarChanged(const QString &)
     qWarning() << Q_FUNC_INFO << "Should be called in dart instead";
 }
 
-#ifdef DOCKS_DEVELOPER_MODE
-
+#ifdef DOCKS_TESTING_METHODS
 bool TitleBar::isCloseButtonEnabled() const
 {
     return true;
@@ -59,5 +58,4 @@ bool TitleBar::isFloatButtonVisible() const
 {
     return true;
 }
-
 #endif
