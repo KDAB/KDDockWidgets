@@ -43,58 +43,6 @@ if(KDDW_FRONTEND_QTQUICK)
 endif()
 
 #-----------------------------------------------------------------------------
-# Flutter embedder
-if(KDDW_FRONTEND_FLUTTER)
-
-    if(NOT DEFINED ENV{FLUTTER_ENGINE_FOLDER})
-        message(FATAL_ERROR "Point env var FLUTTER_ENGINE_FOLDER to engine folder")
-    endif()
-
-    add_library(flutter_tests_embedder STATIC flutter_tests_embedder/tests_embedder.cpp)
-
-    find_program(FLUTTER_EXE flutter REQUIRED)
-    message(STATUS "Flutter SDK: ${FLUTTER_EXE}")
-    get_filename_component(FLUTTER_SDK_PATH ${FLUTTER_EXE} PATH)
-    file(GLOB_RECURSE ICUDTL "${FLUTTER_SDK_PATH}/icudtl.dat")
-    message(STATUS "flutter icudtl.dat file: ${ICUDTL}")
-    if(ICUDTL)
-        add_custom_command(
-            TARGET flutter_tests_embedder
-            PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy ${ICUDTL} ${CMAKE_BINARY_DIR}
-            COMMENT "Copying icudtl.dat to ${CMAKE_BINARY_DIR}"
-        )
-    else()
-        message(FATAL_ERROR "icudtl.dat not found!")
-    endif()
-
-    # Build our dart code for the tests embedder
-    add_custom_command(
-        TARGET flutter_tests_embedder
-        PRE_BUILD
-        COMMAND ${FLUTTER_EXE} build bundle --suppress-analytics
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
-        COMMENT "Running flutter build bundle flutter_tests_embedder"
-    )
-
-    if(MSVC)
-        set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll.lib)
-    else()
-        set(FLUTTER_ENGINE_LIBRARY libflutter_engine.so)
-    endif()
-
-    target_link_libraries(
-        flutter_tests_embedder PRIVATE kddockwidgets Qt${Qt_VERSION_MAJOR}::Core glfw
-                                       $ENV{FLUTTER_ENGINE_FOLDER}/${FLUTTER_ENGINE_LIBRARY}
-    )
-    include_directories($ENV{FLUTTER_ENGINE_FOLDER})
-
-    target_compile_definitions(
-        flutter_tests_embedder PRIVATE FLUTTER_ICUDTL_DIR="${CMAKE_BINARY_DIR}"
-                                       FLUTTER_TEST_MAIN="${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
-    )
-endif()
-#-----------------------------------------------------------------------------
 # Add our tests:
 
 # Function to add a test
@@ -104,7 +52,7 @@ function(add_kddw_test test srcs)
     set_compiler_flags(${test})
 
     if(KDDW_FRONTEND_FLUTTER)
-        target_link_libraries(${test} flutter_tests_embedder)
+        target_link_libraries(${test} kddockwidgets)
         add_test(NAME ${test} COMMAND ${test})
         set_tests_properties(${test} PROPERTIES ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0")
     else()

@@ -237,6 +237,7 @@ endif()
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers.cpp)
+    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ../tests/flutter_tests_embedder/tests_embedder.cpp)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
@@ -393,11 +394,54 @@ if(KDDW_FRONTEND_FLUTTER)
     # So bindings are exported
     target_compile_definitions(kddockwidgets PRIVATE BUILDING_KDDockWidgets)
 
-    if(NOT MSVC)
+    if(MSVC)
+        set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll.lib)
+    else()
+        set(FLUTTER_ENGINE_LIBRARY libflutter_engine.so)
         set_source_files_properties(
             ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
             PROPERTIES COMPILE_FLAGS "-Wno-unused-function -Wno-unused-variable -Wno-format-security \
                 -Wno-unused-parameter -Wno-shadow -Wno-sign-conversion"
+        )
+    endif()
+
+    if(KDDockWidgets_DEVELOPER_MODE)
+
+        if(NOT DEFINED ENV{FLUTTER_ENGINE_FOLDER})
+            message(FATAL_ERROR "Point env var FLUTTER_ENGINE_FOLDER to engine folder")
+        endif()
+
+        find_program(FLUTTER_EXE flutter REQUIRED)
+        message(STATUS "Flutter SDK: ${FLUTTER_EXE}")
+        get_filename_component(FLUTTER_SDK_PATH ${FLUTTER_EXE} PATH)
+        file(GLOB_RECURSE ICUDTL "${FLUTTER_SDK_PATH}/icudtl.dat")
+        message(STATUS "flutter icudtl.dat file: ${ICUDTL}")
+        if(ICUDTL)
+            add_custom_command(
+                TARGET kddockwidgets
+                PRE_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy ${ICUDTL} ${CMAKE_BINARY_DIR}
+                COMMENT "Copying icudtl.dat to ${CMAKE_BINARY_DIR}"
+            )
+        else()
+            message(FATAL_ERROR "icudtl.dat not found!")
+        endif()
+
+        # Build our dart code for the tests embedder
+        add_custom_command(
+            TARGET kddockwidgets
+            PRE_BUILD
+            COMMAND ${FLUTTER_EXE} build bundle --suppress-analytics
+            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
+            COMMENT "Running flutter build bundle flutter_tests_embedder"
+        )
+
+        include_directories($ENV{FLUTTER_ENGINE_FOLDER})
+        target_link_libraries(kddockwidgets PRIVATE glfw $ENV{FLUTTER_ENGINE_FOLDER}/${FLUTTER_ENGINE_LIBRARY})
+
+        target_compile_definitions(
+            kddockwidgets PRIVATE FLUTTER_ICUDTL_DIR="${CMAKE_BINARY_DIR}"
+                                  FLUTTER_TEST_MAIN="${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
         )
     endif()
 endif()

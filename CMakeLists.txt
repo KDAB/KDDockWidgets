@@ -262,7 +262,6 @@ if(KDDockWidgets_DEVELOPER_MODE)
         )
         fetchcontent_makeavailable(qcoro)
 
-
         set(GLFW_BUILD_EXAMPLE OFF)
         set(GLFW_BUILD_DOCS OFF)
         set(GLFW_BUILD_WIN32 ON)
@@ -319,7 +318,7 @@ macro(set_compiler_flags targetName)
         endif()
 
         if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
-            target_compile_options(${targetName} PRIVATE -fcoroutines)
+            target_compile_options(${targetName} PRIVATE -fcoroutines -Wno-missing-field-initializers)
         endif()
     else()
         if(KDDW_FRONTEND_FLUTTER)
@@ -481,7 +480,7 @@ if(KDDockWidgets_EXAMPLES)
             COMMENT "Building flutter example"
         )
 
-        if (MSVC)
+        if(MSVC)
             set(FLUTTER_PLATFORM "windows")
         else()
             set(FLUTTER_PLATFORM "linux")

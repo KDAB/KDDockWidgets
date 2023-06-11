@@ -28,6 +28,7 @@
 
 #pragma once
 
+#include "docks_export.h"
 #include <string>
 
 class QString;
@@ -40,7 +41,7 @@ namespace flutter {
 
 /// @brief a Flutter embedder that runs our C++ tests
 /// So we don't have to port 200 tests from C++ to Dart
-class TestsEmbedder
+class DOCKS_EXPORT TestsEmbedder
 {
 public:
     static TestsEmbedder *self();
