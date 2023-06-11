@@ -1155,12 +1155,8 @@ void *c_KDDockWidgets__Core__Platform__tests_createView_CreateViewOptions_View(v
 void c_static_KDDockWidgets__Core__Platform__tests_deinitPlatform();
 // KDDockWidgets::Core::Platform::tests_deinitPlatform_impl()
 void c_KDDockWidgets__Core__Platform__tests_deinitPlatform_impl(void *thisObj);
-// KDDockWidgets::Core::Platform::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-void c_KDDockWidgets__Core__Platform__tests_doubleClickOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
 // KDDockWidgets::Core::Platform::tests_initPlatform_impl()
 void c_KDDockWidgets__Core__Platform__tests_initPlatform_impl(void *thisObj);
-// KDDockWidgets::Core::Platform::tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-void c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
 // KDDockWidgets::Core::Platform::ungrabMouse()
 void c_KDDockWidgets__Core__Platform__ungrabMouse(void *thisObj);
 // KDDockWidgets::Core::Platform::uninstallMessageHandler()
@@ -1247,8 +1243,6 @@ void *c_KDDockWidgets__flutter__Platform__tests_createNonClosableView_View(void 
 void *c_KDDockWidgets__flutter__Platform__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::Platform::tests_deinitPlatform_impl()
 void c_KDDockWidgets__flutter__Platform__tests_deinitPlatform_impl(void *thisObj);
-// KDDockWidgets::flutter::Platform::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-void c_KDDockWidgets__flutter__Platform__tests_doubleClickOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
 // KDDockWidgets::flutter::Platform::tests_initPlatform_impl()
 void c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::flutter::Platform::ungrabMouse()

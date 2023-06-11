@@ -16,15 +16,15 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qstring.h>
-#include <core/Layout.h>
-#include "core/Stack.h"
-#include <NonQtCompat_p.h>
-#include <core/DockWidget.h>
 #include <FloatingWindow.h>
 #include <TabBar.h>
-#include "core/DropArea.h"
+#include <core/DockWidget.h>
 #include "core/TitleBar.h"
+#include <core/Layout.h>
+#include "core/DropArea.h"
+#include "core/Stack.h"
 #include "core/MainWindow.h"
+#include <NonQtCompat_p.h>
 #include <core/Group.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

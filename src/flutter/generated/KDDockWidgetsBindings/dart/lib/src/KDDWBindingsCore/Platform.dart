@@ -819,37 +819,12 @@ class Platform {
       throw Error();
     }
     dartInstance.tests_deinitPlatform_impl();
-  } // tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-
-  tests_doubleClickOn(QPoint globalPos, KDDWBindingsCore.View? receiver) {
-    final void_Func_voidstar_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(763))
-        .asFunction();
-    func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp,
-        receiver == null ? ffi.nullptr : receiver.thisCpp);
-  }
-
-  static void tests_doubleClickOn_calledFromC(ffi.Pointer<void> thisCpp,
-      ffi.Pointer<void> globalPos, ffi.Pointer<void>? receiver) {
-    var dartInstance =
-        KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
-    if (dartInstance == null) {
-      print(
-          "Dart instance not found for Platform::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)! (${thisCpp.address})");
-      throw Error();
-    }
-    dartInstance.tests_doubleClickOn(
-        QPoint.fromCppPointer(globalPos),
-        (receiver == null || receiver.address == 0)
-            ? null
-            : KDDWBindingsCore.View.fromCppPointer(receiver));
   } // tests_initPlatform_impl()
 
   tests_initPlatform_impl() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(765))
+            cFunctionSymbolName(764))
         .asFunction();
     func(thisCpp);
   }
@@ -863,21 +838,12 @@ class Platform {
       throw Error();
     }
     dartInstance.tests_initPlatform_impl();
-  } // tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-
-  tests_pressOn(QPoint globalPos, KDDWBindingsCore.View? receiver) {
-    final void_Func_voidstar_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View')
-        .asFunction();
-    func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp,
-        receiver == null ? ffi.nullptr : receiver.thisCpp);
   } // ungrabMouse()
 
   ungrabMouse() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(767))
+            cFunctionSymbolName(765))
         .asFunction();
     func(thisCpp);
   }
@@ -896,7 +862,7 @@ class Platform {
   uninstallMessageHandler() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(768))
+            cFunctionSymbolName(766))
         .asFunction();
     func(thisCpp);
   }
@@ -915,7 +881,7 @@ class Platform {
   bool usesFallbackMouseGrabber() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(769))
+            cFunctionSymbolName(767))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -1000,15 +966,13 @@ class Platform {
         return "c_KDDockWidgets__Core__Platform__tests_createView_CreateViewOptions_View";
       case 762:
         return "c_KDDockWidgets__Core__Platform__tests_deinitPlatform_impl";
-      case 763:
-        return "c_KDDockWidgets__Core__Platform__tests_doubleClickOn_QPoint_View";
-      case 765:
+      case 764:
         return "c_KDDockWidgets__Core__Platform__tests_initPlatform_impl";
-      case 767:
+      case 765:
         return "c_KDDockWidgets__Core__Platform__ungrabMouse";
-      case 768:
+      case 766:
         return "c_KDDockWidgets__Core__Platform__uninstallMessageHandler";
-      case 769:
+      case 767:
         return "c_KDDockWidgets__Core__Platform__usesFallbackMouseGrabber";
     }
     return "";
@@ -1074,15 +1038,13 @@ class Platform {
         return "tests_createView";
       case 762:
         return "tests_deinitPlatform_impl";
-      case 763:
-        return "tests_doubleClickOn";
-      case 765:
+      case 764:
         return "tests_initPlatform_impl";
-      case 767:
+      case 765:
         return "ungrabMouse";
-      case 768:
+      case 766:
         return "uninstallMessageHandler";
-      case 769:
+      case 767:
         return "usesFallbackMouseGrabber";
     }
     throw Error();
@@ -1209,23 +1171,19 @@ class Platform {
     final callback762 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.Platform.tests_deinitPlatform_impl_calledFromC);
     registerCallback(thisCpp, callback762, 762);
-    final callback763 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.Platform.tests_doubleClickOn_calledFromC);
-    registerCallback(thisCpp, callback763, 763);
-    final callback765 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback764 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.Platform.tests_initPlatform_impl_calledFromC);
-    registerCallback(thisCpp, callback765, 765);
-    final callback767 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback764, 764);
+    final callback765 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.Platform.ungrabMouse_calledFromC);
-    registerCallback(thisCpp, callback767, 767);
-    final callback768 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback765, 765);
+    final callback766 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.Platform.uninstallMessageHandler_calledFromC);
-    registerCallback(thisCpp, callback768, 768);
-    const callbackExcept769 = 0;
-    final callback769 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback766, 766);
+    const callbackExcept767 = 0;
+    final callback767 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsCore.Platform.usesFallbackMouseGrabber_calledFromC,
-        callbackExcept769);
-    registerCallback(thisCpp, callback769, 769);
+        callbackExcept767);
+    registerCallback(thisCpp, callback767, 767);
   }
 }

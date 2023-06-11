@@ -280,14 +280,12 @@ void Platform_wrapper::pauseForDartDebugger()
         const void *thisPtr = this;
         m_pauseForDartDebuggerCallback(const_cast<void *>(thisPtr));
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
-        return;
+        ::KDDockWidgets::flutter::Platform::pauseForDartDebugger();
     }
 }
 void Platform_wrapper::pauseForDartDebugger_nocallback()
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
-    return;
+    ::KDDockWidgets::flutter::Platform::pauseForDartDebugger();
 }
 void Platform_wrapper::pauseForDebugger()
 {
@@ -478,19 +476,6 @@ void Platform_wrapper::tests_deinitPlatform_impl()
 void Platform_wrapper::tests_deinitPlatform_impl_nocallback()
 {
     ::KDDockWidgets::flutter::Platform::tests_deinitPlatform_impl();
-}
-void Platform_wrapper::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View *receiver)
-{
-    if (m_tests_doubleClickOnCallback) {
-        const void *thisPtr = this;
-        m_tests_doubleClickOnCallback(const_cast<void *>(thisPtr), &globalPos, receiver);
-    } else {
-        ::KDDockWidgets::flutter::Platform::tests_doubleClickOn(globalPos, receiver);
-    }
-}
-void Platform_wrapper::tests_doubleClickOn_nocallback(QPoint globalPos, KDDockWidgets::Core::View *receiver)
-{
-    ::KDDockWidgets::flutter::Platform::tests_doubleClickOn(globalPos, receiver);
 }
 void Platform_wrapper::tests_initPlatform_impl()
 {
@@ -782,14 +767,6 @@ void c_KDDockWidgets__flutter__Platform__tests_deinitPlatform_impl(void *thisObj
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_deinitPlatform_impl_nocallback();} else {    return targetPtr->tests_deinitPlatform_impl();} }();
 }
-// tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-void c_KDDockWidgets__flutter__Platform__tests_doubleClickOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_)
-{
-    assert(globalPos_);
-    auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
-    auto receiver = reinterpret_cast<KDDockWidgets::Core::View *>(receiver_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_doubleClickOn_nocallback(globalPos,receiver);} else {    return targetPtr->tests_doubleClickOn(globalPos,receiver);} }();
-}
 // tests_initPlatform_impl()
 void c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl(void *thisObj)
 {
@@ -854,10 +831,10 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
     case 743:
         wrapper->m_nameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_name>(callback);
         break;
-    case 779:
+    case 777:
         wrapper->m_onDropIndicatorOverlayCreatedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onDropIndicatorOverlayCreated>(callback);
         break;
-    case 780:
+    case 778:
         wrapper->m_onDropIndicatorOverlayDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onDropIndicatorOverlayDestroyed>(callback);
         break;
     case 744:
@@ -872,13 +849,13 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
     case 747:
         wrapper->m_onMainWindowDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onMainWindowDestroyed>(callback);
         break;
-    case 781:
+    case 779:
         wrapper->m_pauseForDartDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_pauseForDartDebugger>(callback);
         break;
     case 748:
         wrapper->m_pauseForDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_pauseForDebugger>(callback);
         break;
-    case 783:
+    case 781:
         wrapper->m_rebuildWindowOverlayCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_rebuildWindowOverlay>(callback);
         break;
     case 749:
@@ -917,19 +894,16 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
     case 762:
         wrapper->m_tests_deinitPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_tests_deinitPlatform_impl>(callback);
         break;
-    case 763:
-        wrapper->m_tests_doubleClickOnCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_tests_doubleClickOn>(callback);
-        break;
-    case 765:
+    case 764:
         wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_tests_initPlatform_impl>(callback);
         break;
-    case 767:
+    case 765:
         wrapper->m_ungrabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_ungrabMouse>(callback);
         break;
-    case 768:
+    case 766:
         wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_uninstallMessageHandler>(callback);
         break;
-    case 769:
+    case 767:
         wrapper->m_usesFallbackMouseGrabberCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_usesFallbackMouseGrabber>(callback);
         break;
     }

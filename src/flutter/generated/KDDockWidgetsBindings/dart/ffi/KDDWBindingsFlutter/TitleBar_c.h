@@ -13,9 +13,9 @@
 #include "core/TitleBar.h"
 #include <core/View.h>
 #include <qstring.h>
-#include <qsize.h>
-#include <qrect.h>
 #include <qpoint.h>
+#include <qrect.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {

@@ -477,19 +477,6 @@ void Platform_wrapper::tests_deinitPlatform_impl_nocallback()
 {
     ::KDDockWidgets::Core::Platform::tests_deinitPlatform_impl();
 }
-void Platform_wrapper::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View *receiver)
-{
-    if (m_tests_doubleClickOnCallback) {
-        const void *thisPtr = this;
-        m_tests_doubleClickOnCallback(const_cast<void *>(thisPtr), &globalPos, receiver);
-    } else {
-        ::KDDockWidgets::Core::Platform::tests_doubleClickOn(globalPos, receiver);
-    }
-}
-void Platform_wrapper::tests_doubleClickOn_nocallback(QPoint globalPos, KDDockWidgets::Core::View *receiver)
-{
-    ::KDDockWidgets::Core::Platform::tests_doubleClickOn(globalPos, receiver);
-}
 void Platform_wrapper::tests_initPlatform_impl()
 {
     if (m_tests_initPlatform_implCallback) {
@@ -502,10 +489,6 @@ void Platform_wrapper::tests_initPlatform_impl()
 void Platform_wrapper::tests_initPlatform_impl_nocallback()
 {
     ::KDDockWidgets::Core::Platform::tests_initPlatform_impl();
-}
-void Platform_wrapper::tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View *receiver)
-{
-    ::KDDockWidgets::Core::Platform::tests_pressOn(globalPos, receiver);
 }
 void Platform_wrapper::ungrabMouse()
 {
@@ -783,26 +766,10 @@ void c_KDDockWidgets__Core__Platform__tests_deinitPlatform_impl(void *thisObj)
 {
     fromWrapperPtr(thisObj)->tests_deinitPlatform_impl_nocallback();
 }
-// tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-void c_KDDockWidgets__Core__Platform__tests_doubleClickOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_)
-{
-    assert(globalPos_);
-    auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
-    auto receiver = reinterpret_cast<KDDockWidgets::Core::View *>(receiver_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tests_doubleClickOn_nocallback(globalPos,receiver);} else {    return targetPtr->tests_doubleClickOn(globalPos,receiver);} }();
-}
 // tests_initPlatform_impl()
 void c_KDDockWidgets__Core__Platform__tests_initPlatform_impl(void *thisObj)
 {
     fromWrapperPtr(thisObj)->tests_initPlatform_impl_nocallback();
-}
-// tests_pressOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-void c_KDDockWidgets__Core__Platform__tests_pressOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_)
-{
-    assert(globalPos_);
-    auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
-    auto receiver = reinterpret_cast<KDDockWidgets::Core::View *>(receiver_);
-    fromPtr(thisObj)->tests_pressOn(globalPos, receiver);
 }
 // ungrabMouse()
 void c_KDDockWidgets__Core__Platform__ungrabMouse(void *thisObj)
@@ -922,19 +889,16 @@ void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, v
     case 762:
         wrapper->m_tests_deinitPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_deinitPlatform_impl>(callback);
         break;
-    case 763:
-        wrapper->m_tests_doubleClickOnCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_doubleClickOn>(callback);
-        break;
-    case 765:
+    case 764:
         wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_initPlatform_impl>(callback);
         break;
-    case 767:
+    case 765:
         wrapper->m_ungrabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_ungrabMouse>(callback);
         break;
-    case 768:
+    case 766:
         wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_uninstallMessageHandler>(callback);
         break;
-    case 769:
+    case 767:
         wrapper->m_usesFallbackMouseGrabberCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_usesFallbackMouseGrabber>(callback);
         break;
     }

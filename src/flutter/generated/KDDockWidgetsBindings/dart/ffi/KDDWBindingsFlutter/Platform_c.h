@@ -101,8 +101,6 @@ public:
     virtual KDDockWidgets::Core::View *tests_createView_nocallback(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
     virtual void tests_deinitPlatform_impl();
     virtual void tests_deinitPlatform_impl_nocallback();
-    virtual void tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View *receiver);
-    virtual void tests_doubleClickOn_nocallback(QPoint globalPos, KDDockWidgets::Core::View *receiver);
     virtual void tests_initPlatform_impl();
     virtual void tests_initPlatform_impl_nocallback();
     virtual void ungrabMouse();
@@ -177,8 +175,6 @@ public:
     Callback_tests_createView m_tests_createViewCallback = nullptr;
     typedef void (*Callback_tests_deinitPlatform_impl)(void *);
     Callback_tests_deinitPlatform_impl m_tests_deinitPlatform_implCallback = nullptr;
-    typedef void (*Callback_tests_doubleClickOn)(void *, QPoint *globalPos, KDDockWidgets::Core::View *receiver);
-    Callback_tests_doubleClickOn m_tests_doubleClickOnCallback = nullptr;
     typedef void (*Callback_tests_initPlatform_impl)(void *);
     Callback_tests_initPlatform_impl m_tests_initPlatform_implCallback = nullptr;
     typedef void (*Callback_ungrabMouse)(void *);
@@ -267,8 +263,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__tests_cre
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::Platform::tests_deinitPlatform_impl()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_deinitPlatform_impl(void *thisObj);
-// KDDockWidgets::flutter::Platform::tests_doubleClickOn(QPoint globalPos, KDDockWidgets::Core::View * receiver)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_doubleClickOn_QPoint_View(void *thisObj, void *globalPos_, void *receiver_);
 // KDDockWidgets::flutter::Platform::tests_initPlatform_impl()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::flutter::Platform::ungrabMouse()
