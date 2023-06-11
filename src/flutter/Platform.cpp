@@ -29,6 +29,9 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
+void kddw_fakeMouseMove(QPoint globalPos);
+void kddw_fakeMouseButton(QPoint globalPos, bool isPress);
+
 QPoint Platform::s_lastCursorPosition = { -1, -1 };
 
 Platform::Platform()
@@ -399,26 +402,32 @@ void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) 
 
 void Platform::tests_doubleClickOn(QPoint, Core::View *)
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented yet";
 }
 
 void Platform::tests_doubleClickOn(QPoint, std::shared_ptr<Core::Window>)
 {
+    qWarning() << Q_FUNC_INFO << "Not implemented yet";
 }
 
-void Platform::tests_pressOn(QPoint, Core::View *)
+void Platform::tests_pressOn(QPoint globalPos, Core::View *)
 {
+    kddw_fakeMouseButton(globalPos, /*isPress=*/true);
 }
 
-void Platform::tests_pressOn(QPoint, std::shared_ptr<Core::Window>)
+void Platform::tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window>)
 {
+    kddw_fakeMouseButton(globalPos, /*isPress=*/true);
 }
 
-void Platform::tests_releaseOn(QPoint, Core::View *)
+void Platform::tests_releaseOn(QPoint globalPos, Core::View *)
 {
+    kddw_fakeMouseButton(globalPos, /*isPress=*/false);
 }
 
-bool Platform::tests_mouseMove(QPoint, Core::View *)
+bool Platform::tests_mouseMove(QPoint globalPos, Core::View *)
 {
+    kddw_fakeMouseMove(globalPos);
     return true;
 }
 

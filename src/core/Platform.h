@@ -254,7 +254,6 @@ public:
                                                int timeout = 5000) const = 0;
 #endif
 
-    /// Sends a double-click event to the specified receiver
     virtual void tests_doubleClickOn(QPoint globalPos, View *receiver) = 0;
     virtual void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
     virtual void tests_pressOn(QPoint globalPos, View *receiver) = 0;

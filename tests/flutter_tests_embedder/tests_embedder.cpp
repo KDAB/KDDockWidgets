@@ -46,6 +46,7 @@
 static double g_pixelRatio = 1.0;
 static const size_t kInitialWindowWidth = 1600;
 static const size_t kInitialWindowHeight = 1400;
+static GLFWwindow *s_window = nullptr;
 
 static_assert(FLUTTER_ENGINE_VERSION == 1,
               "This Flutter Embedder was authored against the stable Flutter "
@@ -77,24 +78,53 @@ void GLFWcursorPositionCallback(GLFWwindow *window, double x, double y)
     GLFWcursorPositionCallbackAtPhase(window, FlutterPointerPhase::kMove, x, y);
 }
 
+static std::optional<QPoint> s_requestedPos;
 void GLFWmouseButtonCallback(GLFWwindow *window,
                              int key,
                              int action,
                              int /*mods*/)
 {
-    if (key == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
-        double x, y;
+    if (key != GLFW_MOUSE_BUTTON_1)
+        return;
+
+    if (action != GLFW_PRESS && action != GLFW_RELEASE)
+        return;
+
+    double x, y;
+    if (s_requestedPos == std::nullopt) {
         glfwGetCursorPos(window, &x, &y);
+    } else {
+        x = s_requestedPos->x();
+        y = s_requestedPos->y();
+    }
+
+    if (action == GLFW_PRESS) {
         GLFWcursorPositionCallbackAtPhase(window, FlutterPointerPhase::kDown, x, y);
         glfwSetCursorPosCallback(window, GLFWcursorPositionCallback);
     }
 
-    if (key == GLFW_MOUSE_BUTTON_1 && action == GLFW_RELEASE) {
-        double x, y;
-        glfwGetCursorPos(window, &x, &y);
+    if (action == GLFW_RELEASE) {
         GLFWcursorPositionCallbackAtPhase(window, FlutterPointerPhase::kUp, x, y);
         glfwSetCursorPosCallback(window, nullptr);
     }
+}
+
+void kddw_fakeMouseButton(QPoint globalPos, bool isPress)
+{
+    if (!s_window)
+        return;
+
+    s_requestedPos = globalPos;
+    GLFWmouseButtonCallback(s_window, GLFW_MOUSE_BUTTON_1, isPress ? GLFW_PRESS : GLFW_RELEASE, 0);
+    s_requestedPos = std::nullopt;
+}
+
+void kddw_fakeMouseMove(QPoint globalPos)
+{
+    if (!s_window)
+        return;
+
+    GLFWcursorPositionCallback(s_window, globalPos.x(), globalPos.y());
 }
 
 static void GLFWKeyCallback(GLFWwindow *window,
@@ -188,10 +218,13 @@ void TestsEmbedder::init(const QString &projectPath, const QString &icudtlPath)
     glfwSetMouseButtonCallback(window, GLFWmouseButtonCallback);
 
     m_glfwWindow = window;
+    s_window = window;
 }
 
 void TestsEmbedder::deinit()
 {
+    s_window = nullptr;
+
     if (m_flutterEngine) {
         const FlutterEngineResult res = FlutterEngineShutdown(m_flutterEngine);
         m_flutterEngine = nullptr;
