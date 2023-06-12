@@ -1768,6 +1768,10 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         const int offset = 10;
         const QPoint globalDest = globalSrc + QPoint(offset, 0);
         CHECK(dock2->isVisible());
+
+        // Flutter is a bit slower showing stuff, needs 1 event loop
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+
         KDDW_CO_AWAIT drag(dock2->view(), globalDest);
         CHECK(fw->dropArea()->checkSanity());
         const QPoint actualEndPos = dock2->mapToGlobal(QPoint(0, 0));
