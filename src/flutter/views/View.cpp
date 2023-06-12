@@ -277,6 +277,8 @@ void View::setParent(Core::View *parent)
 
 void View::raiseAndActivate()
 {
+    raise();
+    activateWindow();
 }
 
 void View::activateWindow()
@@ -285,6 +287,11 @@ void View::activateWindow()
 
 void View::raise()
 {
+    if (isRootView()) {
+        raiseWindow(this);
+    } else {
+        m_parentView->raiseChild(this);
+    }
 }
 
 QVariant View::property(const char *) const
@@ -528,6 +535,18 @@ void View::onChildVisibilityChanged(Core::View *childView)
 }
 
 void View::onGeometryChanged()
+{
+    dumpDebug();
+    qFatal("Derived class should be called instead");
+}
+
+void View::raiseChild(Core::View *)
+{
+    dumpDebug();
+    qFatal("Derived class should be called instead");
+}
+
+void View::raiseWindow(Core::View *)
 {
     dumpDebug();
     qFatal("Derived class should be called instead");

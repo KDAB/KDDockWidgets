@@ -126,6 +126,18 @@ class Platform extends KDDWBindingsFlutter.Platform {
     if (oldSize != indicatorWindows.length) rebuildWindowOverlay();
   }
 
+  void raiseFloatingWindow(KDDWBindingsCore.FloatingWindow fw) {
+    final int oldSize = floatingWindows.length;
+
+    floatingWindows.removeWhere((it) => it.thisCpp == fw.thisCpp);
+    if (oldSize == floatingWindows.length) {
+      print("raiseFloatingWindow: Failed to find floating window");
+    } else {
+      floatingWindows.add(fw);
+      rebuildWindowOverlay();
+    }
+  }
+
   @override
   void rebuildWindowOverlay() {
     WindowOverlayWidget.globalKey().currentState?.onWindowCountChanged();

@@ -11,6 +11,7 @@
 
 import 'dart:ffi' as ffi;
 import 'package:KDDockWidgets/DropArea.dart';
+import 'package:KDDockWidgets/Platform.dart';
 import 'package:KDDockWidgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/GlobalStringKey.dart';
 import 'package:KDDockWidgets/WindowWidget.dart';
@@ -153,6 +154,34 @@ class View_mixin {
     if (state != null) {
       state.childrenChanged();
     }
+  }
+
+  raiseChild(KDDWBindingsCore.View? childViewCpp) {
+    final View_mixin childView = fromCpp(childViewCpp);
+    if (childWidgets.isEmpty) {
+      print(
+          "raiseChild: Unexpected empty children for $flutterWidget child=${childView.flutterWidget}");
+      return;
+    }
+
+    /// Already raised
+    if (childWidgets.last == childView.flutterWidget) return;
+
+    if (childWidgets.remove(childView.flutterWidget)) {
+      childWidgets.add(childView.flutterWidget);
+      widgetKey.currentState?.childrenChanged();
+    } else {
+      print(
+          "raiseChild: Could not find child=${childView.flutterWidget} in $flutterWidget");
+    }
+  }
+
+  raiseWindow(KDDWBindingsCore.View? rootView) {
+    // We only raise floating windows, not main windows
+    if (rootView!.type() != Core_ViewType.FloatingWindow) return;
+
+    final fw = rootView.asFloatingWindowController();
+    Platform.plat().raiseFloatingWindow(fw);
   }
 
   bool isMounted() {

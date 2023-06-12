@@ -124,6 +124,8 @@ public:
     virtual void onChildAdded(Core::View *childView);
     virtual void onChildRemoved(Core::View *childView);
     virtual void onChildVisibilityChanged(Core::View *childView);
+    virtual void raiseChild(Core::View *childView);
+    virtual void raiseWindow(Core::View *rootView);
     virtual void onGeometryChanged();
 
     /// Returns whether the flutter Widget associated with this view is mounted
