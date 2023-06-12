@@ -65,7 +65,8 @@
         "request": "launch",
         "type": "dart",
         "flutterMode": "debug",
-        "cwd": "${workspaceFolder:kddockwidgets}/examples/flutter"
+        "cwd": "${workspaceFolder:kddockwidgets}/examples/flutter",
+        "deviceId": "linux"
       },
       {
         "name": "Flutter example (native)",
