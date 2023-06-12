@@ -781,6 +781,8 @@ QSize Group::biggestDockWidgetMaxSize() const
 {
     QSize size = Item::hardcodedMaximumSize;
     for (DockWidget *dw : dockWidgets()) {
+        if (dw->inDtor())
+            continue;
         const QSize dwMax = dw->view()->maxSizeHint();
         if (size == Item::hardcodedMaximumSize) {
             size = dwMax;
