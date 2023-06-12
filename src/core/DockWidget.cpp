@@ -64,6 +64,8 @@ DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions option
 
 DockWidget::~DockWidget()
 {
+    m_inDtor = true;
+
     Q_EMIT aboutToDelete(this);
     DockRegistry::self()->unregisterDockWidget(this);
     delete d;

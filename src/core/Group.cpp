@@ -768,8 +768,11 @@ void Group::scheduleDeleteLater()
 QSize Group::dockWidgetsMinSize() const
 {
     QSize size = Item::hardcodedMinimumSize;
-    for (DockWidget *dw : dockWidgets())
-        size = size.expandedTo(dw->view()->minSize());
+    for (DockWidget *dw : dockWidgets()) {
+        if (!dw->inDtor())
+            size = size.expandedTo(dw->view()->minSize());
+    }
+
 
     return size;
 }
