@@ -73,7 +73,7 @@ KDDW_QCORO_TASK tst_dragByTabBar()
         CHECK(fw->isVisible());
         CHECK(!fw->titleBar()->isVisible());
 
-        dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
+        KDDW_CO_AWAIT dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
 
         KDDW_TEST_RETURN(true);
     };

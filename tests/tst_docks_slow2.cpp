@@ -172,12 +172,12 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     // QtQuick is a bit more async than QWidgets. Wait for the move.
-    Platform::instance()->tests_waitForEvent(fw2->view()->window(), Event::Move);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(fw2->view()->window(), Event::Move);
 
     auto da2 = fw2->dropArea();
     const QPoint dragDestPos = da2->mapToGlobal(da2->rect().center());
 
-    dragFloatingWindowTo(fw, dragDestPos);
+    KDDW_CO_AWAIT dragFloatingWindowTo(fw, dragDestPos);
     CHECK(fw2->dropArea()->checkSanity());
 
     CHECK_EQ(fw2->groups().size(), 1);
@@ -200,7 +200,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
     auto fw2 = createFloatingWindow();
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
-    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
+    KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
 
@@ -223,7 +223,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     CHECK(fw2->dropArea()->checkSanity());
-    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
+    KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
     CHECK_EQ(fw2->groups().size(), 3);
 
     CHECK(fw2->dropArea()->checkSanity());

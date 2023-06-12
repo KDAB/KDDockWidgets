@@ -59,7 +59,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     CHECK(dock2->isFloating());
 
     QPoint finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
-    drag(titlebar1->view(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
+    KDDW_CO_AWAIT drag(titlebar1->view(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
 
     // It morphed into a FloatingWindow
     QPointer<Core::Group> group2 = dock2->dptr()->group();
@@ -78,8 +78,8 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     QPoint globalPressPos = dragPointForWidget(group2.data(), 0);
     Core::TabBar *tabBar = group2->stack()->tabBar();
     CHECK(tabBar);
-    drag(tabBar->view(), globalPressPos,
-         group2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
+    KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos,
+                       group2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
 
     CHECK(group2->dockWidgetCount() == 1);
     CHECK(dock1->floatingWindow());
@@ -90,7 +90,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     fw1 = dock1->floatingWindow();
     globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100, 5));
     finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
-    drag(fw1->titleBar()->view(), globalPressPos, finalPoint);
+    KDDW_CO_AWAIT drag(fw1->titleBar()->view(), globalPressPos, finalPoint);
 
     CHECK_EQ(group2->dockWidgetCount(), 2);
 
@@ -99,7 +99,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     tabBar = group2->stack()->tabBar();
 
     finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
-    drag(tabBar->view(), globalPressPos, finalPoint);
+    KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos, finalPoint);
     CHECK_EQ(group2->dockWidgetCount(), 2);
 
     // 2.6 Drag the tabbed group over a 3rd floating window
@@ -108,7 +108,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
 
     auto fw2 = dock2->floatingWindow();
     finalPoint = dock3->window()->geometry().center() + QPoint(7, 7);
-    drag(fw2->titleBar()->view(), group2->mapToGlobal(QPoint(10, 10)), finalPoint);
+    KDDW_CO_AWAIT drag(fw2->titleBar()->view(), group2->mapToGlobal(QPoint(10, 10)), finalPoint);
 
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1));
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group2));
@@ -126,8 +126,8 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
         m->view()->setGeometry(QRect(500, 300, 300, 300));
         CHECK(!dock3->isFloating());
         auto fw3 = dock3->floatingWindow();
-        drag(fw3->titleBar()->view(), dock3->window()->mapToGlobal(QPoint(10, 10)),
-             m->geometry().center());
+        KDDW_CO_AWAIT drag(fw3->titleBar()->view(), dock3->window()->mapToGlobal(QPoint(10, 10)),
+                           m->geometry().center());
         CHECK(!dock3->isFloating());
         CHECK(dock3->window()->equals(m->view()));
         CHECK_EQ(dock3->dptr()->group()->dockWidgetCount(), 3);

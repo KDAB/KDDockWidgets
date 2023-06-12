@@ -89,7 +89,7 @@ public:
     void tests_pressOn(QPoint globalPos, Core::View *receiver) override;
     void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
     void tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
-    bool tests_mouseMove(QPoint globalPos, Core::View *receiver) override;
+    KDDW_QCORO_TASK tests_mouseMove(QPoint globalPos, Core::View *receiver) override;
     std::shared_ptr<Core::Window> tests_createWindow() override;
 
     mutable CoRoutines m_coRoutines;

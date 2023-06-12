@@ -1768,7 +1768,7 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         const int offset = 10;
         const QPoint globalDest = globalSrc + QPoint(offset, 0);
         CHECK(dock2->isVisible());
-        drag(dock2->view(), globalDest);
+        KDDW_CO_AWAIT drag(dock2->view(), globalDest);
         CHECK(fw->dropArea()->checkSanity());
         const QPoint actualEndPos = dock2->mapToGlobal(QPoint(0, 0));
         CHECK(actualEndPos.x() - globalSrc.x()
@@ -1893,7 +1893,7 @@ KDDW_QCORO_TASK tst_addAndReadd()
     auto fw = dock1->floatingWindow();
     CHECK(fw);
     auto dropArea = m->dropArea();
-    dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
+    KDDW_CO_AWAIT dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
     CHECK(dock1->dptr()->group()->titleBar()->isVisible());
     fw->titleBar()->makeWindow();
     m->layout()->checkSanity();
@@ -2000,7 +2000,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow3()
     auto fw = dock2->dptr()->morphIntoFloatingWindow();
     CHECK(fw->isVisible());
     CHECK(dropArea->checkSanity());
-    dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
+    KDDW_CO_AWAIT dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
     CHECK(m->dropArea()->checkSanity());
     delete fw;
     KDDW_TEST_RETURN(true);
@@ -4519,7 +4519,7 @@ KDDW_QCORO_TASK tst_dragBySingleTab()
     CHECK(tabBar);
     SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing
                                                            // in this case
-    drag(tabBar->view(), globalPressPos, QPoint(0, 0));
+    KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos, QPoint(0, 0));
 
     delete dock1;
     KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1);

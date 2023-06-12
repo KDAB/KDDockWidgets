@@ -171,7 +171,7 @@ void KDDockWidgets::Tests::clickOn(QPoint globalPos, View *receiver)
     releaseOn(globalPos, receiver);
 }
 
-void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
+KDDW_QCORO_TASK KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
 {
     QPoint globalSrc = receiver->mapToGlobal(QPoint(5, 5));
 
@@ -187,9 +187,11 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
             globalSrc.setY(globalSrc.y() - 1);
         }
 
-        if (!Platform::instance()->tests_mouseMove(globalSrc, receiver))
-            return;
+        if (!KDDW_CO_AWAIT Platform::instance()->tests_mouseMove(globalSrc, receiver))
+            KDDW_CO_RETURN true;
     }
+
+    KDDW_CO_RETURN true;
 }
 
 void KDDockWidgets::Tests::nestDockWidget(Core::DockWidget *dock, DropArea *dropArea,
