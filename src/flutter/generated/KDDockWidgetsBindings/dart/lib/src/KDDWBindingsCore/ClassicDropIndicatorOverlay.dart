@@ -223,19 +223,19 @@ class ClassicDropIndicatorOverlay extends DropIndicatorOverlay {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1667:
+      case 1669:
         return "c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__dropIndicatorVisible_DropLocation";
-      case 1671:
+      case 1673:
         return "c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__hover_impl_QPoint";
-      case 1683:
+      case 1685:
         return "c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onHoveredGroupChanged_Group";
-      case 1686:
+      case 1688:
         return "c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__posForIndicator_DropLocation";
-      case 1689:
+      case 1691:
         return "c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setCurrentDropLocation_DropLocation";
       case 908:
         return "c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__setParentView_impl_View";
-      case 1699:
+      case 1701:
         return "c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__updateVisibility";
     }
     return super.cFunctionSymbolName(methodId);
@@ -243,19 +243,19 @@ class ClassicDropIndicatorOverlay extends DropIndicatorOverlay {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1667:
+      case 1669:
         return "dropIndicatorVisible";
-      case 1671:
+      case 1673:
         return "hover_impl";
-      case 1683:
+      case 1685:
         return "onHoveredGroupChanged";
-      case 1686:
+      case 1688:
         return "posForIndicator";
-      case 1689:
+      case 1691:
         return "setCurrentDropLocation";
       case 908:
         return "setParentView_impl";
-      case 1699:
+      case 1701:
         return "updateVisibility";
     }
     throw Error();
@@ -267,39 +267,39 @@ class ClassicDropIndicatorOverlay extends DropIndicatorOverlay {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1667 = 0;
-    final callback1667 =
+    const callbackExcept1669 = 0;
+    final callback1669 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_FFI>(
             DropIndicatorOverlay.dropIndicatorVisible_calledFromC,
-            callbackExcept1667);
-    registerCallback(thisCpp, callback1667, 1667);
-    const callbackExcept1671 = 0;
-    final callback1671 =
+            callbackExcept1669);
+    registerCallback(thisCpp, callback1669, 1669);
+    const callbackExcept1673 = 0;
+    final callback1673 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ClassicDropIndicatorOverlay.hover_impl_calledFromC,
-            callbackExcept1671);
-    registerCallback(thisCpp, callback1671, 1671);
-    final callback1683 =
+            callbackExcept1673);
+    registerCallback(thisCpp, callback1673, 1673);
+    final callback1685 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             DropIndicatorOverlay.onHoveredGroupChanged_calledFromC);
-    registerCallback(thisCpp, callback1683, 1683);
-    final callback1686 =
+    registerCallback(thisCpp, callback1685, 1685);
+    final callback1688 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsCore
                 .ClassicDropIndicatorOverlay.posForIndicator_calledFromC);
-    registerCallback(thisCpp, callback1686, 1686);
-    final callback1689 =
+    registerCallback(thisCpp, callback1688, 1688);
+    final callback1691 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsCore.ClassicDropIndicatorOverlay
                 .setCurrentDropLocation_calledFromC);
-    registerCallback(thisCpp, callback1689, 1689);
+    registerCallback(thisCpp, callback1691, 1691);
     final callback908 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
     registerCallback(thisCpp, callback908, 908);
-    final callback1699 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback1701 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore
             .ClassicDropIndicatorOverlay.updateVisibility_calledFromC);
-    registerCallback(thisCpp, callback1699, 1699);
+    registerCallback(thisCpp, callback1701, 1701);
   }
 }

@@ -467,6 +467,34 @@ class DockWidget extends KDDWBindingsFlutter.View {
     dartInstance.raiseAndActivate();
   }
 
+  static void raiseChild_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? childView) {
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as DockWidget;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for DockWidget::raiseChild(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.raiseChild((childView == null || childView.address == 0)
+        ? null
+        : KDDWBindingsCore.View.fromCppPointer(childView));
+  }
+
+  static void raiseWindow_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? rootView) {
+    var dartInstance = KDDWBindingsCore
+        .View.s_dartInstanceByCppPtr[thisCpp.address] as DockWidget;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for DockWidget::raiseWindow(KDDockWidgets::Core::View * rootView)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.raiseWindow((rootView == null || rootView.address == 0)
+        ? null
+        : KDDWBindingsCore.View.fromCppPointer(rootView));
+  }
+
   static void releaseKeyboard_calledFromC(ffi.Pointer<void> thisCpp) {
     var dartInstance = KDDWBindingsCore
         .View.s_dartInstanceByCppPtr[thisCpp.address] as DockWidget;
@@ -820,6 +848,10 @@ class DockWidget extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__DockWidget__raise";
       case 981:
         return "c_KDDockWidgets__flutter__DockWidget__raiseAndActivate";
+      case 1054:
+        return "c_KDDockWidgets__flutter__DockWidget__raiseChild_View";
+      case 1055:
+        return "c_KDDockWidgets__flutter__DockWidget__raiseWindow_View";
       case 983:
         return "c_KDDockWidgets__flutter__DockWidget__releaseKeyboard";
       case 984:
@@ -942,6 +974,10 @@ class DockWidget extends KDDWBindingsFlutter.View {
         return "raise";
       case 981:
         return "raiseAndActivate";
+      case 1054:
+        return "raiseChild";
+      case 1055:
+        return "raiseWindow";
       case 983:
         return "releaseKeyboard";
       case 984:
@@ -1125,6 +1161,14 @@ class DockWidget extends KDDWBindingsFlutter.View {
     final callback981 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raiseAndActivate_calledFromC);
     registerCallback(thisCpp, callback981, 981);
+    final callback1054 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.raiseChild_calledFromC);
+    registerCallback(thisCpp, callback1054, 1054);
+    final callback1055 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.raiseWindow_calledFromC);
+    registerCallback(thisCpp, callback1055, 1055);
     final callback983 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseKeyboard_calledFromC);
     registerCallback(thisCpp, callback983, 983);

@@ -526,6 +526,32 @@ void TitleBar_wrapper::raiseAndActivate_nocallback()
 {
     ::KDDockWidgets::flutter::TitleBar::raiseAndActivate();
 }
+void TitleBar_wrapper::raiseChild(KDDockWidgets::Core::View *childView)
+{
+    if (m_raiseChildCallback) {
+        const void *thisPtr = this;
+        m_raiseChildCallback(const_cast<void *>(thisPtr), childView);
+    } else {
+        ::KDDockWidgets::flutter::TitleBar::raiseChild(childView);
+    }
+}
+void TitleBar_wrapper::raiseChild_nocallback(KDDockWidgets::Core::View *childView)
+{
+    ::KDDockWidgets::flutter::TitleBar::raiseChild(childView);
+}
+void TitleBar_wrapper::raiseWindow(KDDockWidgets::Core::View *rootView)
+{
+    if (m_raiseWindowCallback) {
+        const void *thisPtr = this;
+        m_raiseWindowCallback(const_cast<void *>(thisPtr), rootView);
+    } else {
+        ::KDDockWidgets::flutter::TitleBar::raiseWindow(rootView);
+    }
+}
+void TitleBar_wrapper::raiseWindow_nocallback(KDDockWidgets::Core::View *rootView)
+{
+    ::KDDockWidgets::flutter::TitleBar::raiseWindow(rootView);
+}
 void TitleBar_wrapper::releaseKeyboard()
 {
     if (m_releaseKeyboardCallback) {
@@ -1065,6 +1091,18 @@ void c_KDDockWidgets__flutter__TitleBar__raiseAndActivate(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseAndActivate_nocallback();} else {    return targetPtr->raiseAndActivate();} }();
 }
+// raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__TitleBar__raiseChild_View(void *thisObj, void *childView_)
+{
+    auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseChild_nocallback(childView);} else {    return targetPtr->raiseChild(childView);} }();
+}
+// raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__TitleBar__raiseWindow_View(void *thisObj, void *rootView_)
+{
+    auto rootView = reinterpret_cast<KDDockWidgets::Core::View *>(rootView_);
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseWindow_nocallback(rootView);} else {    return targetPtr->raiseWindow(rootView);} }();
+}
 // releaseKeyboard()
 void c_KDDockWidgets__flutter__TitleBar__releaseKeyboard(void *thisObj)
 {
@@ -1232,16 +1270,16 @@ void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr
     case 958:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isActiveWindow>(callback);
         break;
-    case 1068:
+    case 1070:
         wrapper->m_isCloseButtonEnabledCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isCloseButtonEnabled>(callback);
         break;
-    case 1069:
+    case 1071:
         wrapper->m_isCloseButtonVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isCloseButtonVisible>(callback);
         break;
     case 959:
         wrapper->m_isExplicitlyHiddenCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isExplicitlyHidden>(callback);
         break;
-    case 1070:
+    case 1072:
         wrapper->m_isFloatButtonVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isFloatButtonVisible>(callback);
         break;
     case 960:
@@ -1307,7 +1345,7 @@ void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr
     case 977:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_onResize_2>(callback);
         break;
-    case 1073:
+    case 1075:
         wrapper->m_onTitleBarChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_onTitleBarChanged>(callback);
         break;
     case 980:
@@ -1315,6 +1353,12 @@ void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr
         break;
     case 981:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_raiseAndActivate>(callback);
+        break;
+    case 1054:
+        wrapper->m_raiseChildCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_raiseChild>(callback);
+        break;
+    case 1055:
+        wrapper->m_raiseWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_raiseWindow>(callback);
         break;
     case 983:
         wrapper->m_releaseKeyboardCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_releaseKeyboard>(callback);

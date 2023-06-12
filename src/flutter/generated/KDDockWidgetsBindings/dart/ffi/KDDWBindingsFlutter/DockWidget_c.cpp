@@ -478,6 +478,32 @@ void DockWidget_wrapper::raiseAndActivate_nocallback()
 {
     ::KDDockWidgets::flutter::DockWidget::raiseAndActivate();
 }
+void DockWidget_wrapper::raiseChild(KDDockWidgets::Core::View *childView)
+{
+    if (m_raiseChildCallback) {
+        const void *thisPtr = this;
+        m_raiseChildCallback(const_cast<void *>(thisPtr), childView);
+    } else {
+        ::KDDockWidgets::flutter::DockWidget::raiseChild(childView);
+    }
+}
+void DockWidget_wrapper::raiseChild_nocallback(KDDockWidgets::Core::View *childView)
+{
+    ::KDDockWidgets::flutter::DockWidget::raiseChild(childView);
+}
+void DockWidget_wrapper::raiseWindow(KDDockWidgets::Core::View *rootView)
+{
+    if (m_raiseWindowCallback) {
+        const void *thisPtr = this;
+        m_raiseWindowCallback(const_cast<void *>(thisPtr), rootView);
+    } else {
+        ::KDDockWidgets::flutter::DockWidget::raiseWindow(rootView);
+    }
+}
+void DockWidget_wrapper::raiseWindow_nocallback(KDDockWidgets::Core::View *rootView)
+{
+    ::KDDockWidgets::flutter::DockWidget::raiseWindow(rootView);
+}
 void DockWidget_wrapper::releaseKeyboard()
 {
     if (m_releaseKeyboardCallback) {
@@ -1002,6 +1028,18 @@ void c_KDDockWidgets__flutter__DockWidget__raiseAndActivate(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DockWidget_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseAndActivate_nocallback();} else {    return targetPtr->raiseAndActivate();} }();
 }
+// raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__DockWidget__raiseChild_View(void *thisObj, void *childView_)
+{
+    auto childView = reinterpret_cast<KDDockWidgets::Core::View *>(childView_);
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DockWidget_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseChild_nocallback(childView);} else {    return targetPtr->raiseChild(childView);} }();
+}
+// raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__DockWidget__raiseWindow_View(void *thisObj, void *rootView_)
+{
+    auto rootView = reinterpret_cast<KDDockWidgets::Core::View *>(rootView_);
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DockWidget_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raiseWindow_nocallback(rootView);} else {    return targetPtr->raiseWindow(rootView);} }();
+}
 // releaseKeyboard()
 void c_KDDockWidgets__flutter__DockWidget__releaseKeyboard(void *thisObj)
 {
@@ -1240,6 +1278,12 @@ void c_KDDockWidgets__flutter__DockWidget__registerVirtualMethodCallback(void *p
         break;
     case 981:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DockWidget_wrapper::Callback_raiseAndActivate>(callback);
+        break;
+    case 1054:
+        wrapper->m_raiseChildCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DockWidget_wrapper::Callback_raiseChild>(callback);
+        break;
+    case 1055:
+        wrapper->m_raiseWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DockWidget_wrapper::Callback_raiseWindow>(callback);
         break;
     case 983:
         wrapper->m_releaseKeyboardCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::DockWidget_wrapper::Callback_releaseKeyboard>(callback);

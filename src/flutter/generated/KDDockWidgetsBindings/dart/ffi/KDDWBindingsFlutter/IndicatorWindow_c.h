@@ -102,6 +102,10 @@ public:
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
     virtual void raiseAndActivate_nocallback();
+    virtual void raiseChild(KDDockWidgets::Core::View *childView);
+    virtual void raiseChild_nocallback(KDDockWidgets::Core::View *childView);
+    virtual void raiseWindow(KDDockWidgets::Core::View *rootView);
+    virtual void raiseWindow_nocallback(KDDockWidgets::Core::View *rootView);
     virtual void releaseKeyboard();
     virtual void releaseKeyboard_nocallback();
     virtual void releaseMouse();
@@ -233,6 +237,10 @@ public:
     Callback_raise m_raiseCallback = nullptr;
     typedef void (*Callback_raiseAndActivate)(void *);
     Callback_raiseAndActivate m_raiseAndActivateCallback = nullptr;
+    typedef void (*Callback_raiseChild)(void *, KDDockWidgets::Core::View *childView);
+    Callback_raiseChild m_raiseChildCallback = nullptr;
+    typedef void (*Callback_raiseWindow)(void *, KDDockWidgets::Core::View *rootView);
+    Callback_raiseWindow m_raiseWindowCallback = nullptr;
     typedef void (*Callback_releaseKeyboard)(void *);
     Callback_releaseKeyboard m_releaseKeyboardCallback = nullptr;
     typedef void (*Callback_releaseMouse)(void *);
@@ -371,6 +379,10 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__po
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raise(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::raiseAndActivate()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::raiseChild(KDDockWidgets::Core::View * childView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::IndicatorWindow::raiseWindow(KDDockWidgets::Core::View * rootView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::IndicatorWindow::releaseKeyboard()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::releaseMouse()

@@ -518,6 +518,50 @@ class View extends KDDWBindingsCore.View {
       throw Error();
     }
     dartInstance.raiseAndActivate();
+  } // raiseChild(KDDockWidgets::Core::View * childView)
+
+  raiseChild(KDDWBindingsCore.View? childView) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(1054))
+        .asFunction();
+    func(thisCpp, childView == null ? ffi.nullptr : childView.thisCpp);
+  }
+
+  static void raiseChild_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? childView) {
+    var dartInstance =
+        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as View;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for View::raiseChild(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.raiseChild((childView == null || childView.address == 0)
+        ? null
+        : KDDWBindingsCore.View.fromCppPointer(childView));
+  } // raiseWindow(KDDockWidgets::Core::View * rootView)
+
+  raiseWindow(KDDWBindingsCore.View? rootView) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            cFunctionSymbolName(1055))
+        .asFunction();
+    func(thisCpp, rootView == null ? ffi.nullptr : rootView.thisCpp);
+  }
+
+  static void raiseWindow_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? rootView) {
+    var dartInstance =
+        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as View;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for View::raiseWindow(KDDockWidgets::Core::View * rootView)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.raiseWindow((rootView == null || rootView.address == 0)
+        ? null
+        : KDDWBindingsCore.View.fromCppPointer(rootView));
   }
 
   static void releaseKeyboard_calledFromC(ffi.Pointer<void> thisCpp) {
@@ -895,6 +939,10 @@ class View extends KDDWBindingsCore.View {
         return "c_KDDockWidgets__flutter__View__raise";
       case 981:
         return "c_KDDockWidgets__flutter__View__raiseAndActivate";
+      case 1054:
+        return "c_KDDockWidgets__flutter__View__raiseChild_View";
+      case 1055:
+        return "c_KDDockWidgets__flutter__View__raiseWindow_View";
       case 983:
         return "c_KDDockWidgets__flutter__View__releaseKeyboard";
       case 984:
@@ -1017,6 +1065,10 @@ class View extends KDDWBindingsCore.View {
         return "raise";
       case 981:
         return "raiseAndActivate";
+      case 1054:
+        return "raiseChild";
+      case 1055:
+        return "raiseWindow";
       case 983:
         return "releaseKeyboard";
       case 984:
@@ -1200,6 +1252,14 @@ class View extends KDDWBindingsCore.View {
     final callback981 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raiseAndActivate_calledFromC);
     registerCallback(thisCpp, callback981, 981);
+    final callback1054 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.raiseChild_calledFromC);
+    registerCallback(thisCpp, callback1054, 1054);
+    final callback1055 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.raiseWindow_calledFromC);
+    registerCallback(thisCpp, callback1055, 1055);
     final callback983 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseKeyboard_calledFromC);
     registerCallback(thisCpp, callback983, 983);

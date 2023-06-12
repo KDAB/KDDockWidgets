@@ -14,8 +14,8 @@
 #include <View.h>
 #include <qrect.h>
 #include <core/View.h>
-#include <qsize.h>
 #include <qpoint.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -94,6 +94,10 @@ public:
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
     virtual void raiseAndActivate_nocallback();
+    virtual void raiseChild(KDDockWidgets::Core::View *childView);
+    virtual void raiseChild_nocallback(KDDockWidgets::Core::View *childView);
+    virtual void raiseWindow(KDDockWidgets::Core::View *rootView);
+    virtual void raiseWindow_nocallback(KDDockWidgets::Core::View *rootView);
     virtual void releaseKeyboard();
     virtual void releaseKeyboard_nocallback();
     virtual void releaseMouse();
@@ -214,6 +218,10 @@ public:
     Callback_raise m_raiseCallback = nullptr;
     typedef void (*Callback_raiseAndActivate)(void *);
     Callback_raiseAndActivate m_raiseAndActivateCallback = nullptr;
+    typedef void (*Callback_raiseChild)(void *, KDDockWidgets::Core::View *childView);
+    Callback_raiseChild m_raiseChildCallback = nullptr;
+    typedef void (*Callback_raiseWindow)(void *, KDDockWidgets::Core::View *rootView);
+    Callback_raiseWindow m_raiseWindowCallback = nullptr;
     typedef void (*Callback_releaseKeyboard)(void *);
     Callback_releaseKeyboard m_releaseKeyboardCallback = nullptr;
     typedef void (*Callback_releaseMouse)(void *);
@@ -340,6 +348,10 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__MainWindow__onResize
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__raise(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::raiseAndActivate()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::MainWindow::raiseChild(KDDockWidgets::Core::View * childView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::MainWindow::raiseWindow(KDDockWidgets::Core::View * rootView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::MainWindow::releaseKeyboard()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::releaseMouse()

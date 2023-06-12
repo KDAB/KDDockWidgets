@@ -1685,6 +1685,10 @@ bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int h, int 
 void c_KDDockWidgets__flutter__View__raise(void *thisObj);
 // KDDockWidgets::flutter::View::raiseAndActivate()
 void c_KDDockWidgets__flutter__View__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::View::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__View__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::View::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__View__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::View::releaseKeyboard()
 void c_KDDockWidgets__flutter__View__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::View::releaseMouse()
@@ -1819,6 +1823,10 @@ void c_KDDockWidgets__flutter__TitleBar__onTitleBarChanged_QString(void *thisObj
 void c_KDDockWidgets__flutter__TitleBar__raise(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::raiseAndActivate()
 void c_KDDockWidgets__flutter__TitleBar__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::TitleBar::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__TitleBar__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::TitleBar::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__TitleBar__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::TitleBar::releaseKeyboard()
 void c_KDDockWidgets__flutter__TitleBar__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::releaseMouse()
@@ -1943,6 +1951,10 @@ bool c_KDDockWidgets__flutter__TabBar__onResize_int_int(void *thisObj, int h, in
 void c_KDDockWidgets__flutter__TabBar__raise(void *thisObj);
 // KDDockWidgets::flutter::TabBar::raiseAndActivate()
 void c_KDDockWidgets__flutter__TabBar__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::TabBar::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__TabBar__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::TabBar::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__TabBar__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::TabBar::rectForTab(int index) const
 void *c_KDDockWidgets__flutter__TabBar__rectForTab_int(void *thisObj, int index);
 // KDDockWidgets::flutter::TabBar::releaseKeyboard()
@@ -2077,6 +2089,10 @@ bool c_KDDockWidgets__flutter__Stack__onResize_int_int(void *thisObj, int h, int
 void c_KDDockWidgets__flutter__Stack__raise(void *thisObj);
 // KDDockWidgets::flutter::Stack::raiseAndActivate()
 void c_KDDockWidgets__flutter__Stack__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::Stack::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__Stack__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::Stack::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__Stack__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::Stack::releaseKeyboard()
 void c_KDDockWidgets__flutter__Stack__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::Stack::releaseMouse()
@@ -2201,6 +2217,10 @@ bool c_KDDockWidgets__flutter__MainWindow__onResize_int_int(void *thisObj, int h
 void c_KDDockWidgets__flutter__MainWindow__raise(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::raiseAndActivate()
 void c_KDDockWidgets__flutter__MainWindow__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::MainWindow::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__MainWindow__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::MainWindow::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__MainWindow__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::MainWindow::releaseKeyboard()
 void c_KDDockWidgets__flutter__MainWindow__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::releaseMouse()
@@ -2327,6 +2347,10 @@ bool c_KDDockWidgets__flutter__Group__onResize_int_int(void *thisObj, int h, int
 void c_KDDockWidgets__flutter__Group__raise(void *thisObj);
 // KDDockWidgets::flutter::Group::raiseAndActivate()
 void c_KDDockWidgets__flutter__Group__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::Group::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__Group__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::Group::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__Group__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::Group::releaseKeyboard()
 void c_KDDockWidgets__flutter__Group__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::Group::releaseMouse()
@@ -2449,6 +2473,10 @@ bool c_KDDockWidgets__flutter__DropArea__onResize_int_int(void *thisObj, int h, 
 void c_KDDockWidgets__flutter__DropArea__raise(void *thisObj);
 // KDDockWidgets::flutter::DropArea::raiseAndActivate()
 void c_KDDockWidgets__flutter__DropArea__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::DropArea::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__DropArea__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::DropArea::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__DropArea__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::DropArea::releaseKeyboard()
 void c_KDDockWidgets__flutter__DropArea__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::DropArea::releaseMouse()
@@ -2571,6 +2599,10 @@ bool c_KDDockWidgets__flutter__DockWidget__onResize_int_int(void *thisObj, int h
 void c_KDDockWidgets__flutter__DockWidget__raise(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::raiseAndActivate()
 void c_KDDockWidgets__flutter__DockWidget__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::DockWidget::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__DockWidget__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::DockWidget::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__DockWidget__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::DockWidget::releaseKeyboard()
 void c_KDDockWidgets__flutter__DockWidget__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::releaseMouse()
@@ -3545,6 +3577,10 @@ void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation(vo
 void c_KDDockWidgets__flutter__IndicatorWindow__raise(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::raiseAndActivate()
 void c_KDDockWidgets__flutter__IndicatorWindow__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::raiseChild(KDDockWidgets::Core::View * childView)
+void c_KDDockWidgets__flutter__IndicatorWindow__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::IndicatorWindow::raiseWindow(KDDockWidgets::Core::View * rootView)
+void c_KDDockWidgets__flutter__IndicatorWindow__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::IndicatorWindow::releaseKeyboard()
 void c_KDDockWidgets__flutter__IndicatorWindow__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::releaseMouse()

@@ -96,6 +96,10 @@ public:
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
     virtual void raiseAndActivate_nocallback();
+    virtual void raiseChild(KDDockWidgets::Core::View *childView);
+    virtual void raiseChild_nocallback(KDDockWidgets::Core::View *childView);
+    virtual void raiseWindow(KDDockWidgets::Core::View *rootView);
+    virtual void raiseWindow_nocallback(KDDockWidgets::Core::View *rootView);
     virtual QRect rectForTab(int index) const;
     virtual QRect rectForTab_nocallback(int index) const;
     virtual void releaseKeyboard();
@@ -228,6 +232,10 @@ public:
     Callback_raise m_raiseCallback = nullptr;
     typedef void (*Callback_raiseAndActivate)(void *);
     Callback_raiseAndActivate m_raiseAndActivateCallback = nullptr;
+    typedef void (*Callback_raiseChild)(void *, KDDockWidgets::Core::View *childView);
+    Callback_raiseChild m_raiseChildCallback = nullptr;
+    typedef void (*Callback_raiseWindow)(void *, KDDockWidgets::Core::View *rootView);
+    Callback_raiseWindow m_raiseWindowCallback = nullptr;
     typedef QRect *(*Callback_rectForTab)(void *, int index);
     Callback_rectForTab m_rectForTabCallback = nullptr;
     typedef void (*Callback_releaseKeyboard)(void *);
@@ -366,6 +374,10 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__TabBar__onResize_int
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__raise(void *thisObj);
 // KDDockWidgets::flutter::TabBar::raiseAndActivate()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__raiseAndActivate(void *thisObj);
+// KDDockWidgets::flutter::TabBar::raiseChild(KDDockWidgets::Core::View * childView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__raiseChild_View(void *thisObj, void *childView_);
+// KDDockWidgets::flutter::TabBar::raiseWindow(KDDockWidgets::Core::View * rootView)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__TabBar__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::TabBar::rectForTab(int index) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__TabBar__rectForTab_int(void *thisObj, int index);
 // KDDockWidgets::flutter::TabBar::releaseKeyboard()

@@ -218,7 +218,7 @@ class Stack extends KDDWBindingsFlutter.View {
   bool isPositionDraggable(QPoint p) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1092))
+            cFunctionSymbolName(1094))
         .asFunction();
     return func(thisCpp, p == null ? ffi.nullptr : p.thisCpp) != 0;
   }
@@ -474,6 +474,34 @@ class Stack extends KDDWBindingsFlutter.View {
     dartInstance.raiseAndActivate();
   }
 
+  static void raiseChild_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? childView) {
+    var dartInstance =
+        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Stack;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for Stack::raiseChild(KDDockWidgets::Core::View * childView)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.raiseChild((childView == null || childView.address == 0)
+        ? null
+        : KDDWBindingsCore.View.fromCppPointer(childView));
+  }
+
+  static void raiseWindow_calledFromC(
+      ffi.Pointer<void> thisCpp, ffi.Pointer<void>? rootView) {
+    var dartInstance =
+        KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Stack;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for Stack::raiseWindow(KDDockWidgets::Core::View * rootView)! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.raiseWindow((rootView == null || rootView.address == 0)
+        ? null
+        : KDDWBindingsCore.View.fromCppPointer(rootView));
+  }
+
   static void releaseKeyboard_calledFromC(ffi.Pointer<void> thisCpp) {
     var dartInstance =
         KDDWBindingsCore.View.s_dartInstanceByCppPtr[thisCpp.address] as Stack;
@@ -510,7 +538,7 @@ class Stack extends KDDWBindingsFlutter.View {
   setDocumentMode(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(1095))
+            cFunctionSymbolName(1097))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -808,7 +836,7 @@ class Stack extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__Stack__isMounted";
       case 962:
         return "c_KDDockWidgets__flutter__Stack__isNull";
-      case 1092:
+      case 1094:
         return "c_KDDockWidgets__flutter__Stack__isPositionDraggable_QPoint";
       case 963:
         return "c_KDDockWidgets__flutter__Stack__isRootView";
@@ -848,13 +876,17 @@ class Stack extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__Stack__raise";
       case 981:
         return "c_KDDockWidgets__flutter__Stack__raiseAndActivate";
+      case 1054:
+        return "c_KDDockWidgets__flutter__Stack__raiseChild_View";
+      case 1055:
+        return "c_KDDockWidgets__flutter__Stack__raiseWindow_View";
       case 983:
         return "c_KDDockWidgets__flutter__Stack__releaseKeyboard";
       case 984:
         return "c_KDDockWidgets__flutter__Stack__releaseMouse";
       case 988:
         return "c_KDDockWidgets__flutter__Stack__setCursor_CursorShape";
-      case 1095:
+      case 1097:
         return "c_KDDockWidgets__flutter__Stack__setDocumentMode_bool";
       case 989:
         return "c_KDDockWidgets__flutter__Stack__setFixedHeight_int";
@@ -934,7 +966,7 @@ class Stack extends KDDWBindingsFlutter.View {
         return "isMounted";
       case 962:
         return "isNull";
-      case 1092:
+      case 1094:
         return "isPositionDraggable";
       case 963:
         return "isRootView";
@@ -974,13 +1006,17 @@ class Stack extends KDDWBindingsFlutter.View {
         return "raise";
       case 981:
         return "raiseAndActivate";
+      case 1054:
+        return "raiseChild";
+      case 1055:
+        return "raiseWindow";
       case 983:
         return "releaseKeyboard";
       case 984:
         return "releaseMouse";
       case 988:
         return "setCursor";
-      case 1095:
+      case 1097:
         return "setDocumentMode";
       case 989:
         return "setFixedHeight";
@@ -1089,12 +1125,12 @@ class Stack extends KDDWBindingsFlutter.View {
     final callback962 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsCore.View.isNull_calledFromC, callbackExcept962);
     registerCallback(thisCpp, callback962, 962);
-    const callbackExcept1092 = 0;
-    final callback1092 =
+    const callbackExcept1094 = 0;
+    final callback1094 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.Stack.isPositionDraggable_calledFromC,
-            callbackExcept1092);
-    registerCallback(thisCpp, callback1092, 1092);
+            callbackExcept1094);
+    registerCallback(thisCpp, callback1094, 1094);
     const callbackExcept963 = 0;
     final callback963 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.isRootView_calledFromC, callbackExcept963);
@@ -1165,6 +1201,14 @@ class Stack extends KDDWBindingsFlutter.View {
     final callback981 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raiseAndActivate_calledFromC);
     registerCallback(thisCpp, callback981, 981);
+    final callback1054 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.raiseChild_calledFromC);
+    registerCallback(thisCpp, callback1054, 1054);
+    final callback1055 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.raiseWindow_calledFromC);
+    registerCallback(thisCpp, callback1055, 1055);
     final callback983 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseKeyboard_calledFromC);
     registerCallback(thisCpp, callback983, 983);
@@ -1175,10 +1219,10 @@ class Stack extends KDDWBindingsFlutter.View {
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.setCursor_calledFromC);
     registerCallback(thisCpp, callback988, 988);
-    final callback1095 =
+    final callback1097 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             KDDWBindingsFlutter.Stack.setDocumentMode_calledFromC);
-    registerCallback(thisCpp, callback1095, 1095);
+    registerCallback(thisCpp, callback1097, 1097);
     final callback989 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.setFixedHeight_calledFromC);
