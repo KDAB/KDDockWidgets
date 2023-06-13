@@ -16,11 +16,10 @@
 
 using namespace KDDockWidgets::flutter;
 
-class SleepTask
+class SuspendTask
 {
 public:
-    explicit SleepTask(int ms)
-        : m_duration(ms)
+    SuspendTask()
     {
     }
 
@@ -31,47 +30,41 @@ public:
 
     void await_suspend(std::coroutine_handle<> h) const noexcept
     {
-        // Q_ASSERT(!s_currentSleepTask);
+        // Q_ASSERT(!s_task);
         // Q_ASSERT(!m_handle);
         m_handle = h.address();
-        s_currentSleepTask = const_cast<SleepTask *>(this);
-        m_startTime = std::chrono::steady_clock::now();
+        s_task = const_cast<SuspendTask *>(this);
     }
 
     void await_resume() const noexcept
     {
     }
 
-    void maybeResume()
+    void resume()
     {
-        if (std::chrono::steady_clock::now() - m_startTime < m_duration)
-            return;
-
         auto h = std::coroutine_handle<>::from_address(m_handle);
-        s_currentSleepTask = nullptr;
+        s_task = nullptr;
         m_handle = nullptr;
 
         h.resume();
     }
 
 public:
-    static SleepTask *s_currentSleepTask;
+    static SuspendTask *s_task;
 
 private:
-    mutable std::chrono::steady_clock::time_point m_startTime;
     mutable void *m_handle = nullptr;
-    const std::chrono::milliseconds m_duration;
 };
 
-SleepTask *SleepTask::s_currentSleepTask = nullptr;
+SuspendTask *SuspendTask::s_task = nullptr;
 
-QCoro::Task<> CoRoutines::wait(int ms)
+QCoro::Task<> CoRoutines::suspend()
 {
-    co_await SleepTask(ms);
+    co_await SuspendTask();
 }
 
-void CoRoutines::maybeResume()
+void CoRoutines::resume()
 {
-    if (SleepTask::s_currentSleepTask)
-        SleepTask::s_currentSleepTask->maybeResume();
+    if (SuspendTask::s_task)
+        SuspendTask::s_task->resume();
 }

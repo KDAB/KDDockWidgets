@@ -177,6 +177,14 @@ class Platform extends KDDWBindingsFlutter.Platform {
         c.release();
       });
   }
+
+  @override
+  @pragma("vm:entry-point")
+  void scheduleResumeCoRoutines(int ms) {
+    Future.delayed(Duration(milliseconds: ms), () {
+      resumeCoRoutines();
+    });
+  }
 }
 
 class GenericView extends KDDWBindingsFlutter.View with View_mixin {

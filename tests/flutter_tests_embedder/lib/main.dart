@@ -24,15 +24,6 @@ import 'package:KDDockWidgets/View.dart' as KDDW;
 import 'package:KDDockWidgets/Platform.dart' as KDDW;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
 
-void maybeResumeCoRoutines() {
-  KDDW.Platform.plat().maybeResumeCoRoutines();
-
-  /// TODOm3: Check if this consumes a lot of CPU
-  Future.delayed(const Duration(seconds: 1), () {
-    maybeResumeCoRoutines();
-  });
-}
-
 void main(List<String> args) {
   window.setIsolateDebugName("Main dart isolate");
 
@@ -41,8 +32,6 @@ void main(List<String> args) {
 
   var plat = KDDW.Platform();
   plat.runTests();
-
-  maybeResumeCoRoutines();
 }
 
 class MyApp extends StatelessWidget {

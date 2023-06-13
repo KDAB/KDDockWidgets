@@ -121,7 +121,10 @@ public:
     void runTests();
 
     // Called by Dart's event loop, to wake up paused C++ unit-tests
-    void maybeResumeCoRoutines();
+    void resumeCoRoutines();
+
+    /// Implemented in Dart, resums C++ coroutines after ms
+    virtual void scheduleResumeCoRoutines(int ms) const;
 
     std::optional<int> testsResult() const;
 #endif

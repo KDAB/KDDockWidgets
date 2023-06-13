@@ -126,7 +126,7 @@ QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos)
 
     GLFWcursorPositionCallback(s_window, globalPos.x(), globalPos.y());
 
-    co_await KDDockWidgets::flutter::Platform::platformFlutter()->tests_wait(200);
+    co_await KDDockWidgets::flutter::Platform::platformFlutter()->tests_wait(1);
     co_return true;
 }
 

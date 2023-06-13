@@ -320,11 +320,16 @@ void Platform::runTests()
 #endif
 }
 
-void Platform::maybeResumeCoRoutines()
+void Platform::resumeCoRoutines()
 {
 #ifdef DOCKS_DEVELOPER_MODE
-    m_coRoutines.maybeResume();
+    m_coRoutines.resume();
 #endif
+}
+
+void Platform::scheduleResumeCoRoutines(int) const
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in Dart instead";
 }
 
 std::optional<int> Platform::testsResult() const
@@ -402,7 +407,12 @@ KDDW_QCORO_TASK Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Even
 
 KDDW_QCORO_TASK Platform::tests_wait(int ms) const
 {
-    co_await m_coRoutines.wait(ms);
+    /// Tell Dart to wake us up soon
+    scheduleResumeCoRoutines(ms);
+
+    /// Return to Dart's event loop
+    co_await m_coRoutines.suspend();
+
     co_return true;
 }
 

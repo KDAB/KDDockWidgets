@@ -20,13 +20,14 @@ namespace flutter {
 class DOCKS_EXPORT CoRoutines
 {
 public:
-    /// Suspends a coroutine for a certain amount of time
+    /// Suspends a coroutine
     /// While running the C++ tests we sometimes want to go back to the
     /// dart event loop for some time and then resume the C++
-    QCoro::Task<> wait(int ms);
+    /// It's up to Dart to return control to C++
+    QCoro::Task<> suspend();
 
-    /// Checks if we can wake up from the wait
-    void maybeResume();
+    /// Resumes the co-routine
+    void resume();
 };
 
 
