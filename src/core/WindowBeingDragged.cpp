@@ -134,7 +134,7 @@ void WindowBeingDragged::grabMouse(bool grab)
     if (!m_guard)
         return;
 
-    qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab << m_draggableView;
+    qCDebug(general) << "WindowBeingDragged: grab " << m_floatingWindow << grab << m_draggableView;
     if (grab)
         DragController::instance()->grabMouseFor(m_draggableView);
     else

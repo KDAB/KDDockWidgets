@@ -14,26 +14,16 @@
 
 #include <QLoggingCategory>
 
-Q_DECLARE_LOGGING_CATEGORY(hovering)
-Q_DECLARE_LOGGING_CATEGORY(creation)
+/// The general and more useful category to enable
+Q_DECLARE_LOGGING_CATEGORY(general)
+
+/// Very verbose logging of mouse events
 Q_DECLARE_LOGGING_CATEGORY(mouseevents)
-Q_DECLARE_LOGGING_CATEGORY(state)
-Q_DECLARE_LOGGING_CATEGORY(docking)
-Q_DECLARE_LOGGING_CATEGORY(globalevents)
-Q_DECLARE_LOGGING_CATEGORY(hiding)
-Q_DECLARE_LOGGING_CATEGORY(closing)
-Q_DECLARE_LOGGING_CATEGORY(overlay)
-Q_DECLARE_LOGGING_CATEGORY(dropping)
-Q_DECLARE_LOGGING_CATEGORY(restoring)
-Q_DECLARE_LOGGING_CATEGORY(title)
-Q_DECLARE_LOGGING_CATEGORY(closebutton)
-Q_DECLARE_LOGGING_CATEGORY(sizing)
-Q_DECLARE_LOGGING_CATEGORY(multisplittercreation)
-Q_DECLARE_LOGGING_CATEGORY(addwidget)
-Q_DECLARE_LOGGING_CATEGORY(anchors)
-Q_DECLARE_LOGGING_CATEGORY(item)
-Q_DECLARE_LOGGING_CATEGORY(placeholder)
+
+/// Verbose logging regarding OS related top level windows
 Q_DECLARE_LOGGING_CATEGORY(toplevels)
-Q_DECLARE_LOGGING_CATEGORY(separators)
+
+/// Verbose logging in ctors and dtors
+Q_DECLARE_LOGGING_CATEGORY(creation)
 
 #endif

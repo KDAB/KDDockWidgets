@@ -273,9 +273,6 @@ void Layout::removeItem(Core::Item *item)
 void Layout::updateSizeConstraints()
 {
     const QSize newMinSize = d->m_rootItem->minSize();
-    qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << view()->minSize() << "to"
-                    << newMinSize;
-
     setLayoutMinimumSize(newMinSize);
 }
 

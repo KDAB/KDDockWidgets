@@ -63,7 +63,7 @@ void Stack::addDockWidget(DockWidget *dock)
 bool Stack::insertDockWidget(DockWidget *dock, int index)
 {
     Q_ASSERT(dock);
-    qCDebug(addwidget) << Q_FUNC_INFO << dock << "; count before=" << numDockWidgets();
+    qCDebug(general) << Q_FUNC_INFO << dock << "; count before=" << numDockWidgets();
 
     if (index < 0)
         index = 0;

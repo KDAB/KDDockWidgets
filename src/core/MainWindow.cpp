@@ -162,7 +162,7 @@ MainWindow::~MainWindow()
 void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
 {
     Q_ASSERT(widget);
-    qCDebug(addwidget) << Q_FUNC_INFO << widget;
+    qCDebug(general) << Q_FUNC_INFO << widget;
 
     if (!DockRegistry::self()->affinitiesMatch(d->affinities, widget->affinities())) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."

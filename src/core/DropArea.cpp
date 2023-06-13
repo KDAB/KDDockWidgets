@@ -331,11 +331,11 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
     }
 
     if (d->m_dropIndicatorOverlay->currentDropLocation() == DropLocation_None) {
-        qCDebug(hovering) << "DropArea::drop: bailing out, drop location = none";
+        qCDebug(general) << "DropArea::drop: bailing out, drop location = none";
         return false;
     }
 
-    qCDebug(dropping) << "DropArea::drop:" << droppedWindow;
+    qCDebug(general) << "DropArea::drop:" << droppedWindow;
 
     hover(droppedWindow, globalPos);
     auto droploc = d->m_dropIndicatorOverlay->currentDropLocation();
@@ -395,7 +395,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
                       DropIndicatorOverlay::multisplitterLocationFor(droploc), nullptr);
         break;
     case DropLocation_Center:
-        qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingGroup;
+        qCDebug(general) << "Tabbing" << droppedWindow << "into" << acceptingGroup;
         if (!validateAffinity(droppedWindow, acceptingGroup))
             return false;
         acceptingGroup->addTab(droppedWindow);
@@ -438,7 +438,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
 bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location,
                     Core::Group *relativeTo)
 {
-    qCDebug(docking) << "DropArea::addFrame";
+    qCDebug(general) << "DropArea::addFrame";
 
     if (auto dock = droppedWindow->asDockWidgetController()) {
         if (!validateAffinity(dock))
@@ -639,7 +639,7 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
 void DropArea::addMultiSplitter(Core::DropArea *sourceMultiSplitter, Location location,
                                 Core::Group *relativeTo, InitialOption option)
 {
-    qCDebug(addwidget) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
+    qCDebug(general) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
     addWidget(sourceMultiSplitter->view(), location, relativeTo, option);
 
     // Some widgets changed to/from floating

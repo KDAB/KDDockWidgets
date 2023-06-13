@@ -122,7 +122,6 @@ Group::~Group()
 
 void Group::onCloseEvent(CloseEvent *e)
 {
-    qCDebug(closing) << "Frame::closeEvent";
     e->accept(); // Accepted by default (will close unless ignored)
     const DockWidget::List docks = dockWidgets();
     for (DockWidget *dock : docks) {
@@ -380,7 +379,7 @@ int Group::dockWidgetCount() const
 
 void Group::onDockWidgetCountChanged()
 {
-    qCDebug(docking) << "Frame::onDockWidgetCountChanged:" << this
+    qCDebug(general) << "Frame::onDockWidgetCountChanged:" << this
                      << "; widgetCount=" << dockWidgetCount();
     if (isEmpty() && !isCentralFrame()) {
         scheduleDeleteLater();
@@ -555,14 +554,14 @@ void Group::restoreToPreviousPosition()
     }
 
     if (!m_layoutItem) {
-        qCDebug(placeholder) << Q_FUNC_INFO << "There's no previous position known";
+        qCDebug(general) << Q_FUNC_INFO << "There's no previous position known";
         return;
     }
 
     if (!m_layoutItem->isPlaceholder()) {
         // Maybe in this case just fold the group into the placeholder, which probably has other
         // dockwidgets which were added meanwhile. TODO
-        qCDebug(placeholder) << Q_FUNC_INFO << "Previous position isn't a placeholder";
+        qCDebug(general) << Q_FUNC_INFO << "Previous position isn't a placeholder";
         return;
     }
 

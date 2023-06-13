@@ -167,7 +167,7 @@ StateNone::StateNone(DragController *parent)
 
 void StateNone::onEntry()
 {
-    qCDebug(state) << "StateNone entered";
+    qCDebug(general) << "StateNone entered";
     q->m_pressPos = QPoint();
     q->m_offset = QPoint();
     q->m_draggable = nullptr;
@@ -186,8 +186,8 @@ void StateNone::onEntry()
 
 bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
 {
-    qCDebug(state) << "StateNone::handleMouseButtonPress: draggable" << draggable << "; globalPos"
-                   << globalPos;
+    qCDebug(general) << "StateNone::handleMouseButtonPress: draggable" << draggable << "; globalPos"
+                     << globalPos;
 
     if (!draggable->isPositionDraggable(pos))
         return false;
@@ -212,7 +212,7 @@ StatePreDrag::~StatePreDrag() = default;
 
 void StatePreDrag::onEntry()
 {
-    qCDebug(state) << "StatePreDrag entered" << q->m_draggableGuard;
+    qCDebug(general) << "StatePreDrag entered" << q->m_draggableGuard;
     WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
 }
 
@@ -260,8 +260,8 @@ StateDragging::StateDragging(DragController *parent)
 
         const bool mouseButtonIsReallyDown = (GetKeyState(VK_LBUTTON) & 0x8000);
         if (!mouseButtonIsReallyDown && Platform::instance()->isLeftMouseButtonPressed()) {
-            qCDebug(state) << "Canceling drag, Qt thinks mouse button is pressed"
-                           << "but Windows knows it's not";
+            qCDebug(general) << "Canceling drag, Qt thinks mouse button is pressed"
+                             << "but Windows knows it's not";
             handleMouseButtonRelease(Platform::instance()->cursorPos());
             Q_EMIT q->dragCanceled();
         }
@@ -313,8 +313,8 @@ void StateDragging::onEntry()
         Q_UNUSED(needsUndocking);
 #endif
 
-        qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable
-                       << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
+        qCDebug(general) << "StateDragging entered. m_draggable=" << q->m_draggable
+                         << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
 
         auto fw = q->m_windowBeingDragged->floatingWindow();
 #ifdef Q_OS_LINUX
@@ -376,18 +376,18 @@ void StateDragging::onExit()
 
 bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
 {
-    qCDebug(state) << "StateDragging: handleMouseButtonRelease";
+    qCDebug(general) << "StateDragging: handleMouseButtonRelease";
 
     FloatingWindow *floatingWindow = q->m_windowBeingDragged->floatingWindow();
     if (!floatingWindow) {
         // It was deleted externally
-        qCDebug(state) << "StateDragging: Bailling out, deleted externally";
+        qCDebug(general) << "StateDragging: Bailling out, deleted externally";
         Q_EMIT q->dragCanceled();
         return true;
     }
 
     if (floatingWindow->anyNonDockable()) {
-        qCDebug(state) << "StateDragging: Ignoring floating window with non dockable widgets";
+        qCDebug(general) << "StateDragging: Ignoring floating window with non dockable widgets";
         Q_EMIT q->dragCanceled();
         return true;
     }
@@ -396,11 +396,11 @@ bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
         if (q->m_currentDropArea->drop(q->m_windowBeingDragged.get(), globalPos)) {
             Q_EMIT q->dropped();
         } else {
-            qCDebug(state) << "StateDragging: Bailling out, drop not accepted";
+            qCDebug(general) << "StateDragging: Bailling out, drop not accepted";
             Q_EMIT q->dragCanceled();
         }
     } else {
-        qCDebug(state) << "StateDragging: Bailling out, not over a drop area";
+        qCDebug(general) << "StateDragging: Bailling out, not over a drop area";
         Q_EMIT q->dragCanceled();
     }
     return true;
@@ -410,7 +410,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
 {
     FloatingWindow *fw = q->m_windowBeingDragged->floatingWindow();
     if (!fw) {
-        qCDebug(state) << "Canceling drag, window was deleted";
+        qCDebug(general) << "Canceling drag, window was deleted";
         Q_EMIT q->dragCanceled();
         return true;
     }
@@ -438,7 +438,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
         fw->view()->window()->setFramePosition(globalPos - q->m_offset);
 
     if (fw->anyNonDockable()) {
-        qCDebug(state) << "StateDragging: Ignoring non dockable floating window";
+        qCDebug(general) << "StateDragging: Ignoring non dockable floating window";
         return true;
     }
 
@@ -449,7 +449,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
     if (dropArea) {
         if (FloatingWindow *targetFw = dropArea->floatingWindow()) {
             if (targetFw->anyNonDockable()) {
-                qCDebug(state) << "StateDragging: Ignoring non dockable target floating window";
+                qCDebug(general) << "StateDragging: Ignoring non dockable target floating window";
                 return false;
             }
         }
@@ -481,7 +481,7 @@ StateInternalMDIDragging::~StateInternalMDIDragging()
 
 void StateInternalMDIDragging::onEntry()
 {
-    qCDebug(state) << "StateInternalMDIDragging entered. draggable=" << q->m_draggable;
+    qCDebug(general) << "StateInternalMDIDragging entered. draggable=" << q->m_draggable;
 
     // Raise the dock widget being dragged
     if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
@@ -560,7 +560,7 @@ StateDraggingWayland::~StateDraggingWayland()
 
 void StateDraggingWayland::onEntry()
 {
-    qCDebug(state) << "StateDragging entered";
+    qCDebug(general) << "StateDragging entered";
 
     if (m_inQDrag) {
         // Maybe we can exit the state due to the nested event loop of QDrag::Exec();
@@ -586,7 +586,7 @@ void StateDraggingWayland::onEntry()
 
 bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
 {
-    qCDebug(state) << Q_FUNC_INFO;
+    qCDebug(general) << Q_FUNC_INFO;
     Q_EMIT q->dragCanceled();
     return true;
 }
@@ -602,7 +602,7 @@ bool StateDraggingWayland::handleMouseMove(QPoint)
 bool StateDraggingWayland::handleDragEnter(DragEnterEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
-    qCDebug(state) << Q_FUNC_INFO << mimeData << dropArea << q->m_windowBeingDragged.get();
+    qCDebug(general) << Q_FUNC_INFO << mimeData << dropArea << q->m_windowBeingDragged.get();
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
@@ -620,14 +620,14 @@ bool StateDraggingWayland::handleDragEnter(DragEnterEvent *ev, DropArea *dropAre
 
 bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
 {
-    qCDebug(state) << Q_FUNC_INFO;
+    qCDebug(general) << Q_FUNC_INFO;
     dropArea->removeHover();
     return true;
 }
 
 bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
 {
-    qCDebug(state) << Q_FUNC_INFO;
+    qCDebug(general) << Q_FUNC_INFO;
     auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
@@ -1044,7 +1044,7 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     std::shared_ptr<View> topLevel = qtTopLevelUnderCursor();
     if (!topLevel) {
-        qCDebug(state) << Q_FUNC_INFO << "No drop area under cursor";
+        qCDebug(general) << Q_FUNC_INFO << "No drop area under cursor";
         return nullptr;
     }
 
@@ -1052,7 +1052,7 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     if (auto fw = topLevel->asFloatingWindowController()) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities)) {
-            qCDebug(state) << Q_FUNC_INFO << "Found drop area in floating window";
+            qCDebug(general) << Q_FUNC_INFO << "Found drop area in floating window";
             return fw->dropArea();
         }
     }
@@ -1064,11 +1064,11 @@ DropArea *DragController::dropAreaUnderCursor() const
     }
 
     if (auto dt = deepestDropAreaInTopLevel(topLevel, Platform::instance()->cursorPos(), affinities)) {
-        qCDebug(state) << Q_FUNC_INFO << "Found drop area" << dt << dt->view()->rootView().get();
+        qCDebug(general) << Q_FUNC_INFO << "Found drop area" << dt << dt->view()->rootView().get();
         return dt;
     }
 
-    qCDebug(state) << "DragController::dropAreaUnderCursor: null2";
+    qCDebug(general) << "DragController::dropAreaUnderCursor: null2";
     return nullptr;
 }
 
