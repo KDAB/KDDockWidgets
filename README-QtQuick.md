@@ -32,7 +32,9 @@ You can however be explicit and exclude the QtWidgets support:
   all windows into a single native window.
 
 - `module "QtQuick.Controls" is not installed`
-Set the `QML_IMPORT_PATH` env var pointing to your Qt qml plugin dir or check the Qt documentation on how to deploy QtQuick applications.
+
+Set the `QML_IMPORT_PATH` env var pointing to your Qt qml plugin dir or check the
+Qt documentation on how to deploy QtQuick applications.
 
 ```bash
 # Replace with your actual path
