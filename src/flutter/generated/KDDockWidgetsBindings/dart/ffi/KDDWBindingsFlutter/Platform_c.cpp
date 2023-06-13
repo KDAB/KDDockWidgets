@@ -179,10 +179,6 @@ bool Platform_wrapper::isProcessingAppQuitEvent_nocallback() const
 {
     return ::KDDockWidgets::flutter::Platform::isProcessingAppQuitEvent();
 }
-void Platform_wrapper::maybeResumeCoRoutines()
-{
-    ::KDDockWidgets::flutter::Platform::maybeResumeCoRoutines();
-}
 const char *Platform_wrapper::name() const
 {
     if (m_nameCallback) {
@@ -330,6 +326,10 @@ void Platform_wrapper::restoreMouseCursor_nocallback()
 {
     ::KDDockWidgets::flutter::Platform::restoreMouseCursor();
 }
+void Platform_wrapper::resumeCoRoutines()
+{
+    ::KDDockWidgets::flutter::Platform::resumeCoRoutines();
+}
 void Platform_wrapper::runDelayed(int ms, KDDockWidgets::Core::DelayedCall *c)
 {
     if (m_runDelayedCallback) {
@@ -346,6 +346,19 @@ void Platform_wrapper::runDelayed_nocallback(int ms, KDDockWidgets::Core::Delaye
 void Platform_wrapper::runTests()
 {
     ::KDDockWidgets::flutter::Platform::runTests();
+}
+void Platform_wrapper::scheduleResumeCoRoutines(int ms) const
+{
+    if (m_scheduleResumeCoRoutinesCallback) {
+        const void *thisPtr = this;
+        m_scheduleResumeCoRoutinesCallback(const_cast<void *>(thisPtr), ms);
+    } else {
+        ::KDDockWidgets::flutter::Platform::scheduleResumeCoRoutines(ms);
+    }
+}
+void Platform_wrapper::scheduleResumeCoRoutines_nocallback(int ms) const
+{
+    ::KDDockWidgets::flutter::Platform::scheduleResumeCoRoutines(ms);
 }
 int Platform_wrapper::screenNumberFor(KDDockWidgets::Core::View *arg__1) const
 {
@@ -622,11 +635,6 @@ bool c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isProcessingAppQuitEvent_nocallback();} else {    return targetPtr->isProcessingAppQuitEvent();} }();
 }
-// maybeResumeCoRoutines()
-void c_KDDockWidgets__flutter__Platform__maybeResumeCoRoutines(void *thisObj)
-{
-    fromPtr(thisObj)->maybeResumeCoRoutines();
-}
 // name() const
 const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj)
 {
@@ -693,6 +701,11 @@ void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->restoreMouseCursor_nocallback();} else {    return targetPtr->restoreMouseCursor();} }();
 }
+// resumeCoRoutines()
+void c_KDDockWidgets__flutter__Platform__resumeCoRoutines(void *thisObj)
+{
+    fromPtr(thisObj)->resumeCoRoutines();
+}
 // runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
 void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_)
 {
@@ -703,6 +716,11 @@ void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall(void *thisOb
 void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj)
 {
     fromPtr(thisObj)->runTests();
+}
+// scheduleResumeCoRoutines(int ms) const
+void c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int(void *thisObj, int ms)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->scheduleResumeCoRoutines_nocallback(ms);} else {    return targetPtr->scheduleResumeCoRoutines(ms);} }();
 }
 // screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_)
@@ -831,10 +849,10 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
     case 743:
         wrapper->m_nameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_name>(callback);
         break;
-    case 777:
+    case 776:
         wrapper->m_onDropIndicatorOverlayCreatedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onDropIndicatorOverlayCreated>(callback);
         break;
-    case 778:
+    case 777:
         wrapper->m_onDropIndicatorOverlayDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onDropIndicatorOverlayDestroyed>(callback);
         break;
     case 744:
@@ -849,13 +867,13 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
     case 747:
         wrapper->m_onMainWindowDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_onMainWindowDestroyed>(callback);
         break;
-    case 779:
+    case 778:
         wrapper->m_pauseForDartDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_pauseForDartDebugger>(callback);
         break;
     case 748:
         wrapper->m_pauseForDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_pauseForDebugger>(callback);
         break;
-    case 781:
+    case 780:
         wrapper->m_rebuildWindowOverlayCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_rebuildWindowOverlay>(callback);
         break;
     case 749:
@@ -863,6 +881,9 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
         break;
     case 750:
         wrapper->m_runDelayedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_runDelayed>(callback);
+        break;
+    case 783:
+        wrapper->m_scheduleResumeCoRoutinesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_scheduleResumeCoRoutines>(callback);
         break;
     case 751:
         wrapper->m_screenNumberForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_screenNumberFor>(callback);

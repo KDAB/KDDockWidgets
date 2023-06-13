@@ -200,14 +200,6 @@ class Platform extends KDDWBindingsCore.Platform {
     }
     final result = dartInstance.isProcessingAppQuitEvent();
     return result ? 1 : 0;
-  } // maybeResumeCoRoutines()
-
-  maybeResumeCoRoutines() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__flutter__Platform__maybeResumeCoRoutines')
-        .asFunction();
-    func(thisCpp);
   }
 
   static ffi.Pointer<Utf8> name_calledFromC(ffi.Pointer<void> thisCpp) {
@@ -225,7 +217,7 @@ class Platform extends KDDWBindingsCore.Platform {
   onDropIndicatorOverlayCreated(KDDWBindingsFlutter.IndicatorWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(777))
+            cFunctionSymbolName(776))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -248,7 +240,7 @@ class Platform extends KDDWBindingsCore.Platform {
   onDropIndicatorOverlayDestroyed(KDDWBindingsFlutter.IndicatorWindow? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(778))
+            cFunctionSymbolName(777))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -328,7 +320,7 @@ class Platform extends KDDWBindingsCore.Platform {
   pauseForDartDebugger() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(779))
+            cFunctionSymbolName(778))
         .asFunction();
     func(thisCpp);
   }
@@ -368,7 +360,7 @@ class Platform extends KDDWBindingsCore.Platform {
   rebuildWindowOverlay() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(781))
+            cFunctionSymbolName(780))
         .asFunction();
     func(thisCpp);
   }
@@ -393,6 +385,14 @@ class Platform extends KDDWBindingsCore.Platform {
       throw Error();
     }
     dartInstance.restoreMouseCursor();
+  } // resumeCoRoutines()
+
+  resumeCoRoutines() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__flutter__Platform__resumeCoRoutines')
+        .asFunction();
+    func(thisCpp);
   }
 
   static void runDelayed_calledFromC(
@@ -417,6 +417,26 @@ class Platform extends KDDWBindingsCore.Platform {
             'c_KDDockWidgets__flutter__Platform__runTests')
         .asFunction();
     func(thisCpp);
+  } // scheduleResumeCoRoutines(int ms) const
+
+  scheduleResumeCoRoutines(int ms) {
+    final void_Func_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
+            cFunctionSymbolName(783))
+        .asFunction();
+    func(thisCpp, ms);
+  }
+
+  static void scheduleResumeCoRoutines_calledFromC(
+      ffi.Pointer<void> thisCpp, int ms) {
+    var dartInstance = KDDWBindingsCore
+        .Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform;
+    if (dartInstance == null) {
+      print(
+          "Dart instance not found for Platform::scheduleResumeCoRoutines(int ms) const! (${thisCpp.address})");
+      throw Error();
+    }
+    dartInstance.scheduleResumeCoRoutines(ms);
   }
 
   static int screenNumberFor_calledFromC(
@@ -649,9 +669,9 @@ class Platform extends KDDWBindingsCore.Platform {
         return "c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent";
       case 743:
         return "c_KDDockWidgets__flutter__Platform__name";
-      case 777:
+      case 776:
         return "c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayCreated_IndicatorWindow";
-      case 778:
+      case 777:
         return "c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayDestroyed_IndicatorWindow";
       case 744:
         return "c_KDDockWidgets__flutter__Platform__onFloatingWindowCreated_FloatingWindow";
@@ -661,16 +681,18 @@ class Platform extends KDDWBindingsCore.Platform {
         return "c_KDDockWidgets__flutter__Platform__onMainWindowCreated_MainWindow";
       case 747:
         return "c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow";
-      case 779:
+      case 778:
         return "c_KDDockWidgets__flutter__Platform__pauseForDartDebugger";
       case 748:
         return "c_KDDockWidgets__flutter__Platform__pauseForDebugger";
-      case 781:
+      case 780:
         return "c_KDDockWidgets__flutter__Platform__rebuildWindowOverlay";
       case 749:
         return "c_KDDockWidgets__flutter__Platform__restoreMouseCursor";
       case 750:
         return "c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall";
+      case 783:
+        return "c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int";
       case 751:
         return "c_KDDockWidgets__flutter__Platform__screenNumberFor_View";
       case 752:
@@ -729,9 +751,9 @@ class Platform extends KDDWBindingsCore.Platform {
         return "isProcessingAppQuitEvent";
       case 743:
         return "name";
-      case 777:
+      case 776:
         return "onDropIndicatorOverlayCreated";
-      case 778:
+      case 777:
         return "onDropIndicatorOverlayDestroyed";
       case 744:
         return "onFloatingWindowCreated";
@@ -741,16 +763,18 @@ class Platform extends KDDWBindingsCore.Platform {
         return "onMainWindowCreated";
       case 747:
         return "onMainWindowDestroyed";
-      case 779:
+      case 778:
         return "pauseForDartDebugger";
       case 748:
         return "pauseForDebugger";
-      case 781:
+      case 780:
         return "rebuildWindowOverlay";
       case 749:
         return "restoreMouseCursor";
       case 750:
         return "runDelayed";
+      case 783:
+        return "scheduleResumeCoRoutines";
       case 751:
         return "screenNumberFor";
       case 752:
@@ -836,15 +860,15 @@ class Platform extends KDDWBindingsCore.Platform {
     final callback743 = ffi.Pointer.fromFunction<string_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.name_calledFromC);
     registerCallback(thisCpp, callback743, 743);
-    final callback777 = ffi.Pointer.fromFunction<
+    final callback776 = ffi.Pointer.fromFunction<
             void_Func_voidstar_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.onDropIndicatorOverlayCreated_calledFromC);
-    registerCallback(thisCpp, callback777, 777);
-    final callback778 =
+    registerCallback(thisCpp, callback776, 776);
+    final callback777 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter
                 .Platform.onDropIndicatorOverlayDestroyed_calledFromC);
-    registerCallback(thisCpp, callback778, 778);
+    registerCallback(thisCpp, callback777, 777);
     final callback744 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.Platform.onFloatingWindowCreated_calledFromC);
@@ -861,15 +885,15 @@ class Platform extends KDDWBindingsCore.Platform {
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.Platform.onMainWindowDestroyed_calledFromC);
     registerCallback(thisCpp, callback747, 747);
-    final callback779 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback778 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.pauseForDartDebugger_calledFromC);
-    registerCallback(thisCpp, callback779, 779);
+    registerCallback(thisCpp, callback778, 778);
     final callback748 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.pauseForDebugger_calledFromC);
     registerCallback(thisCpp, callback748, 748);
-    final callback781 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback780 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.rebuildWindowOverlay_calledFromC);
-    registerCallback(thisCpp, callback781, 781);
+    registerCallback(thisCpp, callback780, 780);
     final callback749 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Platform.restoreMouseCursor_calledFromC);
     registerCallback(thisCpp, callback749, 749);
@@ -877,6 +901,10 @@ class Platform extends KDDWBindingsCore.Platform {
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_voidstar_FFI>(
             KDDWBindingsFlutter.Platform.runDelayed_calledFromC);
     registerCallback(thisCpp, callback750, 750);
+    final callback783 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsFlutter.Platform.scheduleResumeCoRoutines_calledFromC);
+    registerCallback(thisCpp, callback783, 783);
     const callbackExcept751 = 0;
     final callback751 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(

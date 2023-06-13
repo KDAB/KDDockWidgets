@@ -54,7 +54,6 @@ public:
     virtual bool isLeftMouseButtonPressed_nocallback() const;
     virtual bool isProcessingAppQuitEvent() const;
     virtual bool isProcessingAppQuitEvent_nocallback() const;
-    void maybeResumeCoRoutines();
     virtual const char *name() const;
     virtual const char *name_nocallback() const;
     virtual void onDropIndicatorOverlayCreated(KDDockWidgets::flutter::IndicatorWindow *arg__1);
@@ -78,9 +77,12 @@ public:
     virtual void rebuildWindowOverlay_nocallback();
     virtual void restoreMouseCursor();
     virtual void restoreMouseCursor_nocallback();
+    void resumeCoRoutines();
     virtual void runDelayed(int ms, KDDockWidgets::Core::DelayedCall *c);
     virtual void runDelayed_nocallback(int ms, KDDockWidgets::Core::DelayedCall *c);
     void runTests();
+    virtual void scheduleResumeCoRoutines(int ms) const;
+    virtual void scheduleResumeCoRoutines_nocallback(int ms) const;
     virtual int screenNumberFor(KDDockWidgets::Core::View *arg__1) const;
     virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual QSize screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
@@ -155,6 +157,8 @@ public:
     Callback_restoreMouseCursor m_restoreMouseCursorCallback = nullptr;
     typedef void (*Callback_runDelayed)(void *, int ms, KDDockWidgets::Core::DelayedCall *c);
     Callback_runDelayed m_runDelayedCallback = nullptr;
+    typedef void (*Callback_scheduleResumeCoRoutines)(void *, int ms);
+    Callback_scheduleResumeCoRoutines m_scheduleResumeCoRoutinesCallback = nullptr;
     typedef int (*Callback_screenNumberFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenNumberFor m_screenNumberForCallback = nullptr;
     typedef QSize *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
@@ -213,8 +217,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__installMes
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__isLeftMouseButtonPressed(void *thisObj);
 // KDDockWidgets::flutter::Platform::isProcessingAppQuitEvent() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent(void *thisObj);
-// KDDockWidgets::flutter::Platform::maybeResumeCoRoutines()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__maybeResumeCoRoutines(void *thisObj);
 // KDDockWidgets::flutter::Platform::name() const
 KDDockWidgetsBindings_EXPORT const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj);
 // KDDockWidgets::flutter::Platform::onDropIndicatorOverlayCreated(KDDockWidgets::flutter::IndicatorWindow * arg__1)
@@ -239,10 +241,14 @@ KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__Platform__pl
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__rebuildWindowOverlay(void *thisObj);
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
+// KDDockWidgets::flutter::Platform::resumeCoRoutines()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__resumeCoRoutines(void *thisObj);
 // KDDockWidgets::flutter::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
 // KDDockWidgets::flutter::Platform::runTests()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
+// KDDockWidgets::flutter::Platform::scheduleResumeCoRoutines(int ms) const
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int(void *thisObj, int ms);
 // KDDockWidgets::flutter::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
