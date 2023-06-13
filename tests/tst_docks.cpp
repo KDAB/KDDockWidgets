@@ -1761,7 +1761,9 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         EnsureTopLevelsDeleted e;
         auto fw = createFloatingWindow();
         auto dock2 = createDockWidget("doc2");
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
         nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnRight);
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
         CHECK(fw->dropArea()->checkSanity());
         // When dragging the right one there was a bug where it jumped
         const QPoint globalSrc = dock2->mapToGlobal(QPoint(0, 0));
@@ -1770,7 +1772,7 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         CHECK(dock2->isVisible());
 
         // Flutter is a bit slower showing stuff, needs 1 event loop
-        KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
         KDDW_CO_AWAIT drag(dock2->view(), globalDest);
         CHECK(fw->dropArea()->checkSanity());
