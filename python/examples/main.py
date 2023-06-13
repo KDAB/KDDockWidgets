@@ -14,6 +14,7 @@
 import sys
 
 from PySide2 import QtWidgets, QtCore
+# pylint: disable=no-name-in-module
 from PyKDDockWidgets import KDDockWidgets
 
 from MyWidget import MyWidget
