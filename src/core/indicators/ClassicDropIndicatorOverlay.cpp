@@ -125,14 +125,14 @@ void ClassicDropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
         return;
     }
 
+    m_rubberBand->raise();
+
     if (location == DropLocation_Center) {
         m_rubberBand->setGeometry(
             geometryForRubberband(m_hoveredGroup ? m_hoveredGroup->view()->geometry() : rect()));
         m_rubberBand->setVisible(true);
-        if (rubberBandIsTopLevel()) {
-            m_rubberBand->raise();
+        if (rubberBandIsTopLevel())
             raiseIndicators();
-        }
 
         return;
     }

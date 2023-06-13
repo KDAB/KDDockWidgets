@@ -59,15 +59,11 @@ class DropAreaPositionedWidgetState extends PositionedWidgetState {
 
   @override
   Widget buildContents(BuildContext ctx) {
-    final rb = rubberBand();
     return Container(
         color: kddwView.m_color,
         child: Stack(
           fit: StackFit.expand,
-          children: [
-            ...kddwView.visibleChildWidgets(),
-            if (rb.isVisible()) rb.flutterWidget
-          ],
+          children: kddwView.visibleChildWidgets(),
         ));
   }
 }
