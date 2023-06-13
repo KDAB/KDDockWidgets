@@ -381,27 +381,23 @@ Platform::RunTestsFunc Platform::s_runTestsFunc = nullptr;
 
 KDDW_QCORO_TASK Platform::tests_waitForWindowActive(std::shared_ptr<Core::Window>, int) const
 {
-    co_await m_coRoutines.wait(1000);
-    co_return true;
+    co_return co_await tests_wait(1000);
 }
 
 KDDW_QCORO_TASK Platform::tests_waitForEvent(QObject *, Event::Type, int) const
 {
-    co_await m_coRoutines.wait(1000);
-    co_return true;
+    co_return co_await tests_wait(1000);
 }
 
 KDDW_QCORO_TASK Platform::tests_waitForEvent(Core::View *, Event::Type, int) const
 {
-    co_await m_coRoutines.wait(1000);
-    co_return true;
+    co_return co_await tests_wait(1000);
 }
 
 KDDW_QCORO_TASK Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type,
                                              int) const
 {
-    co_await m_coRoutines.wait(1000);
-    co_return true;
+    co_return co_await tests_wait(1000);
 }
 
 void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const
@@ -452,14 +448,12 @@ KDDW_QCORO_TASK Platform::tests_wait(int ms) const
 
 KDDW_QCORO_TASK Platform::tests_waitForResize(Core::View *, int) const
 {
-    co_await m_coRoutines.wait(1000);
-    co_return true;
+    co_return co_await tests_wait(1000);
 }
 
 KDDW_QCORO_TASK Platform::tests_waitForResize(Core::Controller *, int) const
 {
-    co_await m_coRoutines.wait(1000);
-    co_return true;
+    co_return co_await tests_wait(1000);
 }
 
 KDDW_QCORO_TASK Platform::tests_waitForDeleted(QObject *obj, int) const
@@ -468,7 +462,7 @@ KDDW_QCORO_TASK Platform::tests_waitForDeleted(QObject *obj, int) const
         co_return true;
 
     QPointer<QObject> guard = obj;
-    co_await m_coRoutines.wait(1000);
+    co_await tests_wait(1000);
     co_return guard.isNull();
 }
 
@@ -478,7 +472,7 @@ KDDW_QCORO_TASK Platform::tests_waitForDeleted(Core::View *view, int) const
         co_return true;
 
     Core::ViewGuard guard(view);
-    co_await m_coRoutines.wait(1000);
+    co_await tests_wait(1000);
     co_return guard.isNull();
 }
 
