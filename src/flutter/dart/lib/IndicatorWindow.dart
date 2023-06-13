@@ -35,6 +35,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   }
 
   @override
+  @pragma("vm:entry-point")
   bool updatePositions_flutter(int overlayWidth, int overlayHeight,
       KDDWBindingsCore.Group? hoveredGroup, int visibleLocations) {
     final state = widgetState<IndicatorWindowWidgetState>();
@@ -46,6 +47,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   }
 
   @override
+  @pragma("vm:entry-point")
   int hover_flutter(QPoint pt) {
     // TODOm3: Receive 2 doubles, less allocations and ffi
     final localPt = Offset(pt.x().toDouble(), pt.y().toDouble());

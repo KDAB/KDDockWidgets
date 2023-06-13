@@ -30,6 +30,7 @@ import 'TabBar.dart';
 
 class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createDropArea(
       KDDWBindingsCore.DropArea? controller, KDDWBindingsCore.View? parent) {
     return DropArea(
@@ -37,6 +38,7 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsFlutter.IndicatorWindow createClassicIndicatorWindow_flutter(
       KDDWBindingsCore.ClassicDropIndicatorOverlay? indicators,
       {required KDDWBindingsCore.View? parent}) {
@@ -46,41 +48,48 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createGroup(KDDWBindingsCore.Group? group,
       {required KDDWBindingsCore.View? parent}) {
     return Group(group, parent);
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createTabBar(KDDWBindingsCore.TabBar? tabBar,
       {required KDDWBindingsCore.View? parent}) {
     return TabBar(tabBar, parent);
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createTitleBar(
       KDDWBindingsCore.TitleBar? controller, KDDWBindingsCore.View? parent) {
     return TitleBar(controller, parent);
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createStack(
       KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent) {
     return Stack(stack, parent);
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createSeparator(KDDWBindingsCore.Separator? separator,
       {required KDDWBindingsCore.View? parent}) {
     return Separator(separator, parent: parent);
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createRubberBand(KDDWBindingsCore.View? parent) {
     return RubberBand(parent);
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createDockWidget(String? uniqueName,
       {int options = 0, int layoutSaverOptions = 0, int windowFlags = 0}) {
     return DockWidget(uniqueName,
@@ -88,6 +97,7 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createFloatingWindow(
       KDDWBindingsCore.FloatingWindow? controller,
       {required KDDWBindingsCore.MainWindow? parent,
