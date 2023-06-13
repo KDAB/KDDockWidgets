@@ -61,6 +61,17 @@
         "vmServiceUri": "${command:dart.promptForVmService}"
       },
       {
+        "name": "Flutter test (dart)",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "debug",
+        "cwd": "${workspaceFolder:kddockwidgets}/tests/flutter_tests_embedder/",
+        "deviceId": "kddw_test_gltf_embedder",
+        "args": [
+          "-v"
+        ]
+      },
+      {
         "name": "Flutter example (dart)",
         "request": "launch",
         "type": "dart",
