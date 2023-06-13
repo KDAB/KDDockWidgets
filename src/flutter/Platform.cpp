@@ -416,23 +416,38 @@ KDDW_QCORO_TASK Platform::tests_waitForResize(Core::Controller *, int) const
     co_return co_await tests_wait(1000);
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForDeleted(QObject *obj, int) const
+KDDW_QCORO_TASK Platform::tests_waitForDeleted(QObject *obj, int timeout) const
 {
     if (!obj)
         co_return true;
 
     QPointer<QObject> guard = obj;
-    co_await tests_wait(1000);
+    int elapsed = 0;
+    const int step = 100;
+
+    while (guard && elapsed < timeout) {
+        co_await tests_wait(step);
+        elapsed += step;
+    }
+
     co_return guard.isNull();
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForDeleted(Core::View *view, int) const
+KDDW_QCORO_TASK Platform::tests_waitForDeleted(Core::View *view, int timeout) const
 {
     if (!view)
         co_return true;
 
     Core::ViewGuard guard(view);
-    co_await tests_wait(1000);
+
+    int elapsed = 0;
+    const int step = 100;
+
+    while (guard && elapsed < timeout) {
+        co_await tests_wait(step);
+        elapsed += step;
+    }
+
     co_return guard.isNull();
 }
 
