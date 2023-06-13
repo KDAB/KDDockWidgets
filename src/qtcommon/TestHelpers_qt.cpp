@@ -234,11 +234,6 @@ void Platform_qt::tests_doubleClickOn(QPoint globalPos, Core::View *receiver)
     }
 }
 
-void Platform_qt::tests_sendEvent(Core::Window::Ptr window, QEvent *ev) const
-{
-    qGuiApp->sendEvent(static_cast<Window *>(window.get())->qtWindow(), ev);
-}
-
 void Platform_qt::installMessageHandler()
 {
     Tests::s_original = qInstallMessageHandler(Tests::fatalWarningsMessageHandler);
@@ -311,7 +306,7 @@ void Platform_qt::tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> 
     MouseEvent ev(Event::MouseButtonPress, receiver->mapFromGlobal(globalPos),
                   receiver->mapFromGlobal(globalPos), globalPos, Qt::LeftButton, Qt::LeftButton,
                   Qt::NoModifier);
-    tests_sendEvent(receiver, &ev);
+    qGuiApp->sendEvent(static_cast<Window *>(receiver.get())->qtWindow(), &ev);
 }
 
 void Platform_qt::tests_releaseOn(QPoint globalPos, Core::View *receiver)
@@ -330,7 +325,7 @@ void Platform_qt::tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Wi
                   Qt::NoModifier);
 
     tests_pressOn(globalPos, receiver); // double-click involves an initial press
-    Platform::instance()->tests_sendEvent(receiver, &ev);
+    qGuiApp->sendEvent(static_cast<Window *>(receiver.get())->qtWindow(), &ev);
 }
 
 bool Platform_qt::tests_mouseMove(QPoint globalPos, Core::View *receiver)

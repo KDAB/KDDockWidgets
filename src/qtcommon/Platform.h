@@ -80,7 +80,6 @@ public:
     bool tests_waitForEvent(Core::View *, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(std::shared_ptr<Core::Window>, QEvent::Type type,
                             int timeout = 5000) const override;
-    void tests_sendEvent(std::shared_ptr<Core::Window>, QEvent *) const override;
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     bool tests_wait(int ms) const override;

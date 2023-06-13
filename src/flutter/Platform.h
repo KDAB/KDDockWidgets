@@ -83,7 +83,6 @@ public:
     KDDW_QCORO_TASK tests_waitForEvent(Core::View *, Event::Type type, int timeout) const override;
     KDDW_QCORO_TASK tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type, int timeout) const override;
 
-    void tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const override;
     void tests_doubleClickOn(QPoint globalPos, Core::View *receiver) override;
     void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
     void tests_pressOn(QPoint globalPos, Core::View *receiver) override;

@@ -400,46 +400,6 @@ KDDW_QCORO_TASK Platform::tests_waitForEvent(std::shared_ptr<Core::Window>, Even
     co_return co_await tests_wait(1000);
 }
 
-void Platform::tests_sendEvent(std::shared_ptr<Core::Window> window, Event *ev) const
-{
-    ( void )window;
-    ( void )ev;
-}
-
-void Platform::tests_doubleClickOn(QPoint, Core::View *)
-{
-    qWarning() << Q_FUNC_INFO << "Not implemented yet";
-}
-
-void Platform::tests_doubleClickOn(QPoint, std::shared_ptr<Core::Window>)
-{
-    qWarning() << Q_FUNC_INFO << "Not implemented yet";
-}
-
-QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos);
-void kddw_fakeMouseButton(QPoint globalPos, bool isPress);
-
-void Platform::tests_pressOn(QPoint globalPos, Core::View *)
-{
-    kddw_fakeMouseButton(globalPos, /*isPress=*/true);
-}
-
-void Platform::tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window>)
-{
-    kddw_fakeMouseButton(globalPos, /*isPress=*/true);
-}
-
-void Platform::tests_releaseOn(QPoint globalPos, Core::View *)
-{
-    kddw_fakeMouseButton(globalPos, /*isPress=*/false);
-}
-
-KDDW_QCORO_TASK Platform::tests_mouseMove(QPoint globalPos, Core::View *)
-{
-    co_await kddw_fakeMouseMove(globalPos);
-    co_return true;
-}
-
 KDDW_QCORO_TASK Platform::tests_wait(int ms) const
 {
     co_await m_coRoutines.wait(ms);
@@ -480,6 +440,40 @@ std::shared_ptr<Core::Window> Platform::tests_createWindow()
 {
     auto window = new flutter::Window(tests_createView({}, nullptr)->asWrapper());
     return std::shared_ptr<Core::Window>(window);
+}
+
+void Platform::tests_doubleClickOn(QPoint, Core::View *)
+{
+    qWarning() << Q_FUNC_INFO << "Not implemented yet";
+}
+
+void Platform::tests_doubleClickOn(QPoint, std::shared_ptr<Core::Window>)
+{
+    qWarning() << Q_FUNC_INFO << "Not implemented yet";
+}
+
+QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos);
+void kddw_fakeMouseButton(QPoint globalPos, bool isPress);
+
+void Platform::tests_pressOn(QPoint globalPos, Core::View *)
+{
+    kddw_fakeMouseButton(globalPos, /*isPress=*/true);
+}
+
+void Platform::tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window>)
+{
+    kddw_fakeMouseButton(globalPos, /*isPress=*/true);
+}
+
+void Platform::tests_releaseOn(QPoint globalPos, Core::View *)
+{
+    kddw_fakeMouseButton(globalPos, /*isPress=*/false);
+}
+
+KDDW_QCORO_TASK Platform::tests_mouseMove(QPoint globalPos, Core::View *)
+{
+    co_await kddw_fakeMouseMove(globalPos);
+    co_return true;
 }
 
 #endif
