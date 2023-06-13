@@ -98,6 +98,7 @@ class View_mixin {
     asFlutterView().onMouseEvent(eventType, localPos, globalPos, leftIsPressed);
   }
 
+  @pragma("vm:entry-point")
   void onGeometryChanged() {
     final state = widgetKey.currentState;
     if (state != null) {
@@ -117,6 +118,7 @@ class View_mixin {
     return KDDWBindingsFlutter.View.fromCache(viewCpp!.thisCpp) as View_mixin;
   }
 
+  @pragma("vm:entry-point")
   void onChildAdded(KDDWBindingsCore.View? childViewCpp) {
     final View_mixin childView = fromCpp(childViewCpp);
     if (childWidgets.contains(childView.flutterWidget)) return;
@@ -129,6 +131,7 @@ class View_mixin {
     }
   }
 
+  @pragma("vm:entry-point")
   void onChildRemoved(KDDWBindingsCore.View? childViewCpp) {
     final state = widgetKey.currentState;
     final View_mixin childView = fromCpp(childViewCpp);
@@ -140,6 +143,7 @@ class View_mixin {
     }
   }
 
+  @pragma("vm:entry-point")
   void onChildVisibilityChanged(KDDWBindingsCore.View? childViewCpp) {
     final state = widgetKey.currentState;
     final View_mixin childView = fromCpp(childViewCpp);
@@ -156,6 +160,7 @@ class View_mixin {
     }
   }
 
+  @pragma("vm:entry-point")
   raiseChild(KDDWBindingsCore.View? childViewCpp) {
     final View_mixin childView = fromCpp(childViewCpp);
     if (childWidgets.isEmpty) {
@@ -176,6 +181,7 @@ class View_mixin {
     }
   }
 
+  @pragma("vm:entry-point")
   raiseWindow(KDDWBindingsCore.View? rootView) {
     // We only raise floating windows, not main windows
     if (rootView!.type() != Core_ViewType.FloatingWindow) return;
@@ -184,6 +190,7 @@ class View_mixin {
     Platform.plat().raiseFloatingWindow(fw);
   }
 
+  @pragma("vm:entry-point")
   bool isMounted() {
     return widgetKey.currentContext != null;
   }
@@ -192,6 +199,7 @@ class View_mixin {
     return flutterWidget is DropAreaWidget;
   }
 
+  @pragma("vm:entry-point")
   QPoint mapToGlobal(QPoint localPt) {
     final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
     if (box == null) {
@@ -206,6 +214,7 @@ class View_mixin {
     return QPoint.ctor2(global.dx.toInt(), global.dy.toInt());
   }
 
+  @pragma("vm:entry-point")
   QPoint mapFromGlobal(QPoint globalPt) {
     final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
     if (box == null) {

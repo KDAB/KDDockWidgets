@@ -31,6 +31,7 @@ class Platform extends KDDWBindingsFlutter.Platform {
   var indicatorWindows = <KDDWBindingsFlutter.IndicatorWindow>[];
 
   @override
+  @pragma("vm:entry-point")
   String name() {
     return "flutter";
   }
@@ -42,11 +43,13 @@ class Platform extends KDDWBindingsFlutter.Platform {
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.ViewFactory createDefaultViewFactory() {
     return ViewFactory();
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View tests_createView(
       KDDockWidgetBindings.CreateViewOptions opts,
       {required KDDWBindingsCore.View? parent}) {
@@ -61,12 +64,14 @@ class Platform extends KDDWBindingsFlutter.Platform {
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.View createView(KDDWBindingsCore.Controller? controller,
       {required KDDWBindingsCore.View? parent}) {
     return GenericView(controller, parent);
   }
 
   @override
+  @pragma("vm:entry-point")
   KDDWBindingsCore.MainWindow createMainWindow(
       String? uniqueName, CreateViewOptions viewOpts,
       {int options =
@@ -84,12 +89,14 @@ class Platform extends KDDWBindingsFlutter.Platform {
   }
 
   @override
+  @pragma("vm:entry-point")
   onFloatingWindowCreated(KDDWBindingsCore.FloatingWindow? fw) {
     floatingWindows.add(fw!);
     rebuildWindowOverlay();
   }
 
   @override
+  @pragma("vm:entry-point")
   onFloatingWindowDestroyed(KDDWBindingsCore.FloatingWindow? fw) {
     final oldSize = floatingWindows.length;
     floatingWindows.removeWhere((it) => it.thisCpp == fw!.thisCpp);
@@ -101,12 +108,14 @@ class Platform extends KDDWBindingsFlutter.Platform {
   }
 
   @override
+  @pragma("vm:entry-point")
   onMainWindowCreated(KDDWBindingsCore.MainWindow? mw) {
     mainWindows.add(mw!);
     rebuildWindowOverlay();
   }
 
   @override
+  @pragma("vm:entry-point")
   onMainWindowDestroyed(KDDWBindingsCore.MainWindow? mw) {
     final oldSize = mainWindows.length;
     mainWindows.removeWhere((it) => it.thisCpp == mw!.thisCpp);
@@ -114,12 +123,14 @@ class Platform extends KDDWBindingsFlutter.Platform {
   }
 
   @override
+  @pragma("vm:entry-point")
   onDropIndicatorOverlayCreated(KDDWBindingsFlutter.IndicatorWindow? w) {
     indicatorWindows.add(w!);
     rebuildWindowOverlay();
   }
 
   @override
+  @pragma("vm:entry-point")
   onDropIndicatorOverlayDestroyed(KDDWBindingsFlutter.IndicatorWindow? w) {
     final oldSize = indicatorWindows.length;
     indicatorWindows.removeWhere((it) => it.thisCpp == w!.thisCpp);
@@ -139,22 +150,26 @@ class Platform extends KDDWBindingsFlutter.Platform {
   }
 
   @override
+  @pragma("vm:entry-point")
   void rebuildWindowOverlay() {
     WindowOverlayWidget.globalKey().currentState?.onWindowCountChanged();
   }
 
   @override
+  @pragma("vm:entry-point")
   void dumpManagedBacktrace() {
     print(StackTrace.current);
   }
 
   @override
+  @pragma("vm:entry-point")
   void pauseForDartDebugger() {
     print("pauseForDartDebugger");
     debugger();
   }
 
   @override
+  @pragma("vm:entry-point")
   void runDelayed(int ms, KDDWBindingsCore.DelayedCall? c) {
     if (c != null)
       Future.delayed(Duration(milliseconds: ms), () {
