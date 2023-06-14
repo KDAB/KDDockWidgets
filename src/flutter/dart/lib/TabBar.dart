@@ -34,10 +34,6 @@ class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
     return TabBarWidget(this, widgetKey);
   }
 
-  @override
-  @pragma("vm:entry-point")
-  onRebuildRequested() {}
-
   void tabsForTabBar(RenderBox rb, List<RenderBox> result) {
     rb.visitChildren((child) {
       final rbChild = child as RenderBox?;

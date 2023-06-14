@@ -581,3 +581,9 @@ bool View::isMounted() const
     qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
     return false;
 }
+
+
+void View::onRebuildRequested()
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
+}

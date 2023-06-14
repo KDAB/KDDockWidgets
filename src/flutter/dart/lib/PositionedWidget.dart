@@ -72,6 +72,10 @@ class PositionedWidgetState extends State<PositionedWidget>
     setState(() {});
   }
 
+  void rebuildRequested() {
+    _updateState();
+  }
+
   void resizeKDDWLayout() {
     // If the widget is resized by flutter then tell KDDW.
     // Example use case: User resizes the window, which resizes the KDDW layout

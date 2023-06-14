@@ -70,6 +70,10 @@ void TabBar::changeTabIcon(int index, const Icon &)
 void TabBar::removeDockWidget(Core::DockWidget *)
 {
     onRebuildRequested();
+
+    // Rebuild the group as well, as it might want to remove the tabbar completely in case there's
+    // no tabs or a single tab
+    static_cast<flutter::View *>(m_controller->group()->view())->onRebuildRequested();
 }
 
 void TabBar::insertDockWidget(int, Core::DockWidget *dw, const Icon &,
@@ -78,6 +82,9 @@ void TabBar::insertDockWidget(int, Core::DockWidget *dw, const Icon &,
     dw->view()->setParent(this);
 
     onRebuildRequested();
+
+    // Rebuild the group as well, it might need to show the tabbar if it was hidden before
+    static_cast<flutter::View *>(m_controller->group()->view())->onRebuildRequested();
 }
 
 void TabBar::renameTab(int index, const QString &)

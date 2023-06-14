@@ -56,9 +56,6 @@ public:
 
     void onMousePress(MouseEvent *) override;
 
-    /// Tells flutter to rebuild our tab widget. Called when adding or removing tabs.
-    virtual void onRebuildRequested() = 0;
-
 protected:
     void init() override;
 

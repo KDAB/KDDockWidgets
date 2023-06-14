@@ -282,4 +282,12 @@ class View_mixin {
   T? widgetState<T>() {
     return widgetKey.currentState as T?;
   }
+
+  @pragma("vm:entry-point")
+  void onRebuildRequested() {
+    final state = widgetKey.currentState;
+    if (state != null) {
+      state.rebuildRequested();
+    }
+  }
 }

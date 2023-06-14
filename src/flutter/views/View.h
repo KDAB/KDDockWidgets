@@ -140,6 +140,9 @@ public:
     {
     }
 
+    /// Implemented in Dart
+    virtual void onRebuildRequested();
+
     void setSizeHint(QSize);
 
 private:
