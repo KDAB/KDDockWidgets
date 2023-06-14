@@ -128,7 +128,7 @@ void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
 void doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver);
 void pressOn(QPoint globalPos, Core::View *receiver);
 void pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver);
-void releaseOn(QPoint globalPos, Core::View *receiver);
+KDDW_QCORO_TASK releaseOn(QPoint globalPos, Core::View *receiver);
 void clickOn(QPoint globalPos, Core::View *receiver);
 KDDW_QCORO_TASK moveMouseTo(QPoint globalDest, Core::View *receiver);
 
@@ -185,7 +185,7 @@ inline KDDW_QCORO_TASK drag(Core::View *sourceWidget, QPoint pressGlobalPos, QPo
     KDDW_CO_AWAIT moveMouseTo(globalDest, sourceWidget);
     pressGlobalPos = sourceWidget->mapToGlobal(QPoint(10, 10));
     if (buttonActions & ButtonAction_Release)
-        releaseOn(globalDest, sourceWidget);
+        KDDW_CO_AWAIT releaseOn(globalDest, sourceWidget);
 
     KDDW_CO_RETURN true;
 }

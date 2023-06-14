@@ -109,14 +109,20 @@ void GLFWmouseButtonCallback(GLFWwindow *window,
     }
 }
 
-void kddw_fakeMouseButton(QPoint globalPos, bool isPress)
+QCoro::Task<bool> kddw_fakeMouseButton(QPoint globalPos, bool isPress)
 {
     if (!s_window)
-        return;
+        co_return true;
 
     s_requestedPos = globalPos;
     GLFWmouseButtonCallback(s_window, GLFW_MOUSE_BUTTON_1, isPress ? GLFW_PRESS : GLFW_RELEASE, 0);
     s_requestedPos = std::nullopt;
+
+    // Let the release render and rebuild stuff
+    if (!isPress)
+        co_await KDDockWidgets::flutter::Platform::platformFlutter()->tests_wait(1000);
+
+    co_return true;
 }
 
 QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos)
@@ -126,7 +132,7 @@ QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos)
 
     GLFWcursorPositionCallback(s_window, globalPos.x(), globalPos.y());
 
-    co_await KDDockWidgets::flutter::Platform::platformFlutter()->tests_wait(1);
+    co_await KDDockWidgets::flutter::Platform::platformFlutter()->tests_wait(10);
     co_return true;
 }
 

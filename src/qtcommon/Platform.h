@@ -85,7 +85,7 @@ public:
     bool tests_wait(int ms) const override;
     void tests_pressOn(QPoint globalPos, Core::View *receiver) override;
     void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
-    void tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
+    bool tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
     void tests_doubleClickOn(QPoint globalPos, Core::View *receiver) override;
     void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
     bool tests_mouseMove(QPoint globalPos, Core::View *receiver) override;

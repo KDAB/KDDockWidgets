@@ -478,7 +478,7 @@ void Platform::tests_doubleClickOn(QPoint, std::shared_ptr<Core::Window>)
 }
 
 QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos);
-void kddw_fakeMouseButton(QPoint globalPos, bool isPress);
+QCoro::Task<bool> kddw_fakeMouseButton(QPoint globalPos, bool isPress);
 
 void Platform::tests_pressOn(QPoint globalPos, Core::View *)
 {
@@ -490,9 +490,10 @@ void Platform::tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window>)
     kddw_fakeMouseButton(globalPos, /*isPress=*/true);
 }
 
-void Platform::tests_releaseOn(QPoint globalPos, Core::View *)
+KDDW_QCORO_TASK Platform::tests_releaseOn(QPoint globalPos, Core::View *)
 {
-    kddw_fakeMouseButton(globalPos, /*isPress=*/false);
+    co_await kddw_fakeMouseButton(globalPos, /*isPress=*/false);
+    co_return true;
 }
 
 KDDW_QCORO_TASK Platform::tests_mouseMove(QPoint globalPos, Core::View *)

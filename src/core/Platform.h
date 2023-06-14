@@ -220,7 +220,7 @@ public:
     virtual void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
     virtual void tests_pressOn(QPoint globalPos, View *receiver) = 0;
     virtual void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
-    virtual void tests_releaseOn(QPoint globalPos, View *receiver) = 0;
+    virtual KDDW_QCORO_TASK tests_releaseOn(QPoint globalPos, View *receiver) = 0;
     virtual KDDW_QCORO_TASK tests_mouseMove(QPoint globalPos, View *receiver) = 0;
 
     /// @brief Creates a Window. For the sole purpose of unit-testing Window.

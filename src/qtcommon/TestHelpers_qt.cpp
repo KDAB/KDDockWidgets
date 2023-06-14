@@ -309,12 +309,14 @@ void Platform_qt::tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> 
     qGuiApp->sendEvent(static_cast<Window *>(receiver.get())->qtWindow(), &ev);
 }
 
-void Platform_qt::tests_releaseOn(QPoint globalPos, Core::View *receiver)
+bool Platform_qt::tests_releaseOn(QPoint globalPos, Core::View *receiver)
 {
     MouseEvent ev(Event::MouseButtonRelease, receiver->mapFromGlobal(globalPos),
                   receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
                   Qt::LeftButton, Qt::NoModifier);
     Platform::instance()->sendEvent(receiver, &ev);
+
+    return true;
 }
 
 void Platform_qt::tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver)

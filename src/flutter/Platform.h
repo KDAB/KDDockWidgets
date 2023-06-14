@@ -87,7 +87,7 @@ public:
     void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
     void tests_pressOn(QPoint globalPos, Core::View *receiver) override;
     void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
-    void tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
+    KDDW_QCORO_TASK tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
     KDDW_QCORO_TASK tests_mouseMove(QPoint globalPos, Core::View *receiver) override;
     std::shared_ptr<Core::Window> tests_createWindow() override;
 

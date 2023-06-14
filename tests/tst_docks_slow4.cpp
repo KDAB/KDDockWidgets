@@ -70,7 +70,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     CHECK(group2);
     CHECK_EQ(group2->dockWidgetCount(), 1);
 
-    releaseOn(finalPoint, titlebar1->view());
+    KDDW_CO_AWAIT releaseOn(finalPoint, titlebar1->view());
     CHECK_EQ(group2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1));
 

@@ -160,9 +160,10 @@ void KDDockWidgets::Tests::pressOn(QPoint globalPos, Window::Ptr receiver)
     Platform::instance()->tests_pressOn(globalPos, receiver);
 }
 
-void KDDockWidgets::Tests::releaseOn(QPoint globalPos, View *receiver)
+KDDW_QCORO_TASK KDDockWidgets::Tests::releaseOn(QPoint globalPos, View *receiver)
 {
-    Platform::instance()->tests_releaseOn(globalPos, receiver);
+    KDDW_CO_AWAIT Platform::instance()->tests_releaseOn(globalPos, receiver);
+    KDDW_CO_RETURN true;
 }
 
 void KDDockWidgets::Tests::clickOn(QPoint globalPos, View *receiver)

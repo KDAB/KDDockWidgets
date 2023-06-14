@@ -176,10 +176,8 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 
     auto da2 = fw2->dropArea();
     const QPoint dragDestPos = da2->mapToGlobal(da2->rect().center());
-
     KDDW_CO_AWAIT dragFloatingWindowTo(fw, dragDestPos);
     CHECK(fw2->dropArea()->checkSanity());
-
     CHECK_EQ(fw2->groups().size(), 1);
     auto f2 = fw2->groups().constFirst();
     CHECK_EQ(f2->dockWidgetCount(), 3);
@@ -234,8 +232,8 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_invalidLayoutAfterRestore),
     TEST(tst_setFloatingWhenSideBySide),
-#ifndef KDDW_FRONTEND_FLUTTER
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoCenter),
+#ifndef KDDW_FRONTEND_FLUTTER
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoRight),
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoLeft)
 #endif
