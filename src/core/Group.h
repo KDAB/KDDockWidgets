@@ -31,6 +31,7 @@ class WidgetResizeHandler;
 
 namespace KDDockWidgets::Core {
 
+class DropArea;
 class MDILayout;
 class DockWidget;
 class FloatingWindow;

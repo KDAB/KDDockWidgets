@@ -20,9 +20,12 @@
 #define KD_DOCKWIDGETS_FOCUSSCOPE_H
 
 #include "kddockwidgets/docks_export.h"
-#include "View.h"
+
+#include <QWidget>
 
 namespace KDDockWidgets::Core {
+
+class View;
 
 ///@brief Allows to implement a similar functionality to QtQuick's FocusScope item, in QtWidgets
 class DOCKS_EXPORT FocusScope

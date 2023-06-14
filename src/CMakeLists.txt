@@ -270,6 +270,7 @@ set(KDDW_CORE_HEADERS
     core/MDILayout.h
     core/SideBar.h
     core/TabBar.h
+    core/FocusScope.h
     core/MainWindow.h
     core/Separator.h
     core/Stack.h

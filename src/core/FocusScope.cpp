@@ -23,6 +23,7 @@
 #include "core/Group.h"
 #include "DockRegistry.h"
 #include "core/Platform_p.h"
+#include "View.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
