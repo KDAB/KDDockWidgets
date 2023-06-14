@@ -100,17 +100,22 @@ class View_mixin {
 
   @pragma("vm:entry-point")
   void onGeometryChanged() {
-    final state = widgetKey.currentState;
-    if (state != null) {
-      state.updateSize();
-    }
-
-    if (windowWidget != null) {
-      final windowState = (windowWidget!.key as GlobalStringKey).currentState;
-
-      if (windowState != null) {
-        (windowState as WindowWidgetState).onGeometryChanged();
+    try {
+      final state = widgetKey.currentState;
+      if (state != null) {
+        state.updateSize();
       }
+
+      if (windowWidget != null) {
+        final windowState = (windowWidget!.key as GlobalStringKey).currentState;
+
+        if (windowState != null) {
+          (windowState as WindowWidgetState).onGeometryChanged();
+        }
+      }
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
     }
   }
 
@@ -120,74 +125,99 @@ class View_mixin {
 
   @pragma("vm:entry-point")
   void onChildAdded(KDDWBindingsCore.View? childViewCpp) {
-    final View_mixin childView = fromCpp(childViewCpp);
-    if (childWidgets.contains(childView.flutterWidget)) return;
+    try {
+      final View_mixin childView = fromCpp(childViewCpp);
+      if (childWidgets.contains(childView.flutterWidget)) return;
 
-    childWidgets.add(childView.flutterWidget);
+      childWidgets.add(childView.flutterWidget);
 
-    final state = widgetKey.currentState;
-    if (state != null) {
-      state.childrenChanged();
+      final state = widgetKey.currentState;
+      if (state != null) {
+        state.childrenChanged();
+      }
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
     }
   }
 
   @pragma("vm:entry-point")
   void onChildRemoved(KDDWBindingsCore.View? childViewCpp) {
-    final state = widgetKey.currentState;
-    final View_mixin childView = fromCpp(childViewCpp);
+    try {
+      final state = widgetKey.currentState;
+      final View_mixin childView = fromCpp(childViewCpp);
 
-    final bool removed = childWidgets.remove(childView.flutterWidget);
+      final bool removed = childWidgets.remove(childView.flutterWidget);
 
-    if (state != null && removed) {
-      state.childrenChanged();
+      if (state != null && removed) {
+        state.childrenChanged();
+      }
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
     }
   }
 
   @pragma("vm:entry-point")
   void onChildVisibilityChanged(KDDWBindingsCore.View? childViewCpp) {
-    final state = widgetKey.currentState;
-    final View_mixin childView = fromCpp(childViewCpp);
+    try {
+      final state = widgetKey.currentState;
+      final View_mixin childView = fromCpp(childViewCpp);
 
-    if (!childWidgets.contains(childView.flutterWidget)) {
-      print(
-          "ASSERT! $flutterWidget does not contain ${childView.flutterWidget}! state=$state ; children={$childWidgets} ; childVisible=${childViewCpp!.isVisible()}");
-      // assert(false); // Should we assert here ? TODOm3
-      return;
-    }
+      if (!childWidgets.contains(childView.flutterWidget)) {
+        print(
+            "ASSERT! $flutterWidget does not contain ${childView.flutterWidget}! state=$state ; children={$childWidgets} ; childVisible=${childViewCpp!.isVisible()}");
+        // assert(false); // Should we assert here ? TODOm3
+        return;
+      }
 
-    if (state != null) {
-      state.childrenChanged();
+      if (state != null) {
+        state.childrenChanged();
+      }
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
     }
   }
 
   @pragma("vm:entry-point")
   raiseChild(KDDWBindingsCore.View? childViewCpp) {
-    final View_mixin childView = fromCpp(childViewCpp);
-    if (childWidgets.isEmpty) {
-      print(
-          "raiseChild: Unexpected empty children for $flutterWidget child=${childView.flutterWidget}");
-      return;
-    }
+    try {
+      final View_mixin childView = fromCpp(childViewCpp);
+      if (childWidgets.isEmpty) {
+        print(
+            "raiseChild: Unexpected empty children for $flutterWidget child=${childView.flutterWidget}");
+        return;
+      }
 
-    /// Already raised
-    if (childWidgets.last == childView.flutterWidget) return;
+      /// Already raised
+      if (childWidgets.last == childView.flutterWidget) return;
 
-    if (childWidgets.remove(childView.flutterWidget)) {
-      childWidgets.add(childView.flutterWidget);
-      widgetKey.currentState?.childrenChanged();
-    } else {
-      print(
-          "raiseChild: Could not find child=${childView.flutterWidget} in $flutterWidget");
+      if (childWidgets.remove(childView.flutterWidget)) {
+        childWidgets.add(childView.flutterWidget);
+        widgetKey.currentState?.childrenChanged();
+      } else {
+        print(
+            "raiseChild: Could not find child=${childView.flutterWidget} in $flutterWidget");
+      }
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
     }
   }
 
   @pragma("vm:entry-point")
   raiseWindow(KDDWBindingsCore.View? rootView) {
-    // We only raise floating windows, not main windows
-    if (rootView!.type() != Core_ViewType.FloatingWindow) return;
+    try {
+      // We only raise floating windows, not main windows
+      if (rootView!.type() != Core_ViewType.FloatingWindow) return;
 
-    final fw = rootView.asFloatingWindowController();
-    Platform.plat().raiseFloatingWindow(fw);
+      final fw = rootView.asFloatingWindowController();
+      Platform.plat().raiseFloatingWindow(fw);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @pragma("vm:entry-point")
@@ -201,30 +231,41 @@ class View_mixin {
 
   @pragma("vm:entry-point")
   QPoint mapToGlobal(QPoint localPt) {
-    final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box == null) {
-      print("mapToGlobal: Could not find render box for widget=$flutterWidget"
-          "; context=${widgetKey.currentContext}; visible=${kddwView.isVisible()}");
-      kddwView.dumpDebug();
-      return QPoint();
-    }
+    try {
+      final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
+      if (box == null) {
+        print("mapToGlobal: Could not find render box for widget=$flutterWidget"
+            "; context=${widgetKey.currentContext}; visible=${kddwView.isVisible()}");
+        kddwView.dumpDebug();
+        return QPoint();
+      }
 
-    final Offset global = box
-        .localToGlobal(Offset(localPt.x().toDouble(), localPt.y().toDouble()));
-    return QPoint.ctor2(global.dx.toInt(), global.dy.toInt());
+      final Offset global = box.localToGlobal(
+          Offset(localPt.x().toDouble(), localPt.y().toDouble()));
+      return QPoint.ctor2(global.dx.toInt(), global.dy.toInt());
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @pragma("vm:entry-point")
   QPoint mapFromGlobal(QPoint globalPt) {
-    final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box == null) {
-      print("mapFromGlobal: Could not find render box for widget=$flutterWidget"
-          "; context=${widgetKey.currentContext}; visible=${kddwView.isVisible()}");
-      return QPoint();
+    try {
+      final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
+      if (box == null) {
+        print(
+            "mapFromGlobal: Could not find render box for widget=$flutterWidget"
+            "; context=${widgetKey.currentContext}; visible=${kddwView.isVisible()}");
+        return QPoint();
+      }
+      final Offset local = box.globalToLocal(
+          Offset(globalPt.x().toDouble(), globalPt.y().toDouble()));
+      return QPoint.ctor2(local.dx.toInt(), local.dy.toInt());
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
     }
-    final Offset local = box.globalToLocal(
-        Offset(globalPt.x().toDouble(), globalPt.y().toDouble()));
-    return QPoint.ctor2(local.dx.toInt(), local.dy.toInt());
   }
 
   List<Widget> visibleChildWidgets() {

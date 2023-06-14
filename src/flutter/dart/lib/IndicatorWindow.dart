@@ -38,10 +38,15 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   @pragma("vm:entry-point")
   bool updatePositions_flutter(int overlayWidth, int overlayHeight,
       KDDWBindingsCore.Group? hoveredGroup, int visibleLocations) {
-    final state = widgetState<IndicatorWindowWidgetState>();
-    if (state == null) return false;
-    state.updatePositions(
-        overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
+    try {
+      final state = widgetState<IndicatorWindowWidgetState>();
+      if (state == null) return false;
+      state.updatePositions(
+          overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
 
     return true;
   }
@@ -50,8 +55,13 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   @pragma("vm:entry-point")
   int hover_flutter(QPoint pt) {
     // TODOm3: Receive 2 doubles, less allocations and ffi
-    final localPt = Offset(pt.x().toDouble(), pt.y().toDouble());
-    return widgetState<IndicatorWindowWidgetState>()?.hover(localPt) ?? 0;
+    try {
+      final localPt = Offset(pt.x().toDouble(), pt.y().toDouble());
+      return widgetState<IndicatorWindowWidgetState>()?.hover(localPt) ?? 0;
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 }
 

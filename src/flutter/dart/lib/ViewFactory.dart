@@ -33,8 +33,13 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   @pragma("vm:entry-point")
   KDDWBindingsCore.View createDropArea(
       KDDWBindingsCore.DropArea? controller, KDDWBindingsCore.View? parent) {
-    return DropArea(
-        controller, KDDockWidgetBindings.Core_ViewType.DropArea, parent);
+    try {
+      return DropArea(
+          controller, KDDockWidgetBindings.Core_ViewType.DropArea, parent);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
@@ -42,58 +47,98 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
   KDDWBindingsFlutter.IndicatorWindow createClassicIndicatorWindow_flutter(
       KDDWBindingsCore.ClassicDropIndicatorOverlay? indicators,
       {required KDDWBindingsCore.View? parent}) {
-    // Not using parent. It won't be parented on DropArea, but will be
-    // a transparent top-level window
-    return IndicatorWindow(indicators, null);
+    try {
+      // Not using parent. It won't be parented on DropArea, but will be
+      // a transparent top-level window
+      return IndicatorWindow(indicators, null);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
   @pragma("vm:entry-point")
   KDDWBindingsCore.View createGroup(KDDWBindingsCore.Group? group,
       {required KDDWBindingsCore.View? parent}) {
-    return Group(group, parent);
+    try {
+      return Group(group, parent);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
   @pragma("vm:entry-point")
   KDDWBindingsCore.View createTabBar(KDDWBindingsCore.TabBar? tabBar,
       {required KDDWBindingsCore.View? parent}) {
-    return TabBar(tabBar, parent);
+    try {
+      return TabBar(tabBar, parent);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
   @pragma("vm:entry-point")
   KDDWBindingsCore.View createTitleBar(
       KDDWBindingsCore.TitleBar? controller, KDDWBindingsCore.View? parent) {
-    return TitleBar(controller, parent);
+    try {
+      return TitleBar(controller, parent);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
   @pragma("vm:entry-point")
   KDDWBindingsCore.View createStack(
       KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent) {
-    return Stack(stack, parent);
+    try {
+      return Stack(stack, parent);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
   @pragma("vm:entry-point")
   KDDWBindingsCore.View createSeparator(KDDWBindingsCore.Separator? separator,
       {required KDDWBindingsCore.View? parent}) {
-    return Separator(separator, parent: parent);
+    try {
+      return Separator(separator, parent: parent);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
   @pragma("vm:entry-point")
   KDDWBindingsCore.View createRubberBand(KDDWBindingsCore.View? parent) {
-    return RubberBand(parent);
+    try {
+      return RubberBand(parent);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
   @pragma("vm:entry-point")
   KDDWBindingsCore.View createDockWidget(String? uniqueName,
       {int options = 0, int layoutSaverOptions = 0, int windowFlags = 0}) {
-    return DockWidget(uniqueName,
-        options: options, layoutSaverOptions: layoutSaverOptions);
+    try {
+      return DockWidget(uniqueName,
+          options: options, layoutSaverOptions: layoutSaverOptions);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 
   @override
@@ -102,7 +147,12 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
       KDDWBindingsCore.FloatingWindow? controller,
       {required KDDWBindingsCore.MainWindow? parent,
       int windowFlags = 0}) {
-    // TODOm4: What to do with main window pointer
-    return FloatingWindow(controller, null);
+    try {
+      // TODOm4: What to do with main window pointer
+      return FloatingWindow(controller, null);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
   }
 }
