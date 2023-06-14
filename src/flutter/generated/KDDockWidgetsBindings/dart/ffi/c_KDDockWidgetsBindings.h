@@ -1681,6 +1681,8 @@ bool c_KDDockWidgets__flutter__View__onFlutterWidgetResized_int_int(void *thisOb
 void c_KDDockWidgets__flutter__View__onGeometryChanged(void *thisObj);
 // KDDockWidgets::flutter::View::onMouseEvent(KDDockWidgets::Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
 void c_KDDockWidgets__flutter__View__onMouseEvent_Type_QPoint_QPoint_bool(void *thisObj, int eventType, void *localPos_, void *globalPos_, bool leftIsPressed);
+// KDDockWidgets::flutter::View::onRebuildRequested()
+void c_KDDockWidgets__flutter__View__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::View::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__View__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::View::raise()
@@ -1817,6 +1819,8 @@ void c_KDDockWidgets__flutter__TitleBar__onChildRemoved_View(void *thisObj, void
 void c_KDDockWidgets__flutter__TitleBar__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TitleBar::onGeometryChanged()
 void c_KDDockWidgets__flutter__TitleBar__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::TitleBar::onRebuildRequested()
+void c_KDDockWidgets__flutter__TitleBar__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__TitleBar__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::TitleBar::onTitleBarChanged(const QString & arg__1)
@@ -2085,6 +2089,8 @@ void c_KDDockWidgets__flutter__Stack__onChildRemoved_View(void *thisObj, void *c
 void c_KDDockWidgets__flutter__Stack__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Stack::onGeometryChanged()
 void c_KDDockWidgets__flutter__Stack__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::Stack::onRebuildRequested()
+void c_KDDockWidgets__flutter__Stack__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::Stack::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__Stack__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::Stack::raise()
@@ -2213,6 +2219,8 @@ void c_KDDockWidgets__flutter__MainWindow__onChildRemoved_View(void *thisObj, vo
 void c_KDDockWidgets__flutter__MainWindow__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::MainWindow::onGeometryChanged()
 void c_KDDockWidgets__flutter__MainWindow__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::MainWindow::onRebuildRequested()
+void c_KDDockWidgets__flutter__MainWindow__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__MainWindow__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::MainWindow::raise()
@@ -2343,6 +2351,8 @@ void c_KDDockWidgets__flutter__Group__onChildRemoved_View(void *thisObj, void *c
 void c_KDDockWidgets__flutter__Group__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Group::onGeometryChanged()
 void c_KDDockWidgets__flutter__Group__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::Group::onRebuildRequested()
+void c_KDDockWidgets__flutter__Group__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::Group::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__Group__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::Group::raise()
@@ -2469,6 +2479,8 @@ void c_KDDockWidgets__flutter__DropArea__onChildRemoved_View(void *thisObj, void
 void c_KDDockWidgets__flutter__DropArea__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DropArea::onGeometryChanged()
 void c_KDDockWidgets__flutter__DropArea__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::DropArea::onRebuildRequested()
+void c_KDDockWidgets__flutter__DropArea__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::DropArea::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__DropArea__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::DropArea::raise()
@@ -2595,6 +2607,8 @@ void c_KDDockWidgets__flutter__DockWidget__onChildRemoved_View(void *thisObj, vo
 void c_KDDockWidgets__flutter__DockWidget__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DockWidget::onGeometryChanged()
 void c_KDDockWidgets__flutter__DockWidget__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::DockWidget::onRebuildRequested()
+void c_KDDockWidgets__flutter__DockWidget__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__DockWidget__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::DockWidget::raise()
@@ -3571,6 +3585,8 @@ void c_KDDockWidgets__flutter__IndicatorWindow__onChildRemoved_View(void *thisOb
 void c_KDDockWidgets__flutter__IndicatorWindow__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::IndicatorWindow::onGeometryChanged()
 void c_KDDockWidgets__flutter__IndicatorWindow__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::onRebuildRequested()
+void c_KDDockWidgets__flutter__IndicatorWindow__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::onResize(int h, int w)
 bool c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation arg__1) const

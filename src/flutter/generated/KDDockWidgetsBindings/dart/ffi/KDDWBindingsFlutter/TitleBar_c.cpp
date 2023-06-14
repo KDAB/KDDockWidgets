@@ -474,6 +474,19 @@ void TitleBar_wrapper::onGeometryChanged_nocallback()
 {
     ::KDDockWidgets::flutter::TitleBar::onGeometryChanged();
 }
+void TitleBar_wrapper::onRebuildRequested()
+{
+    if (m_onRebuildRequestedCallback) {
+        const void *thisPtr = this;
+        m_onRebuildRequestedCallback(const_cast<void *>(thisPtr));
+    } else {
+        ::KDDockWidgets::flutter::TitleBar::onRebuildRequested();
+    }
+}
+void TitleBar_wrapper::onRebuildRequested_nocallback()
+{
+    ::KDDockWidgets::flutter::TitleBar::onRebuildRequested();
+}
 bool TitleBar_wrapper::onResize(int h, int w)
 {
     if (m_onResize_2Callback) {
@@ -1070,6 +1083,11 @@ void c_KDDockWidgets__flutter__TitleBar__onGeometryChanged(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onGeometryChanged_nocallback();} else {    return targetPtr->onGeometryChanged();} }();
 }
+// onRebuildRequested()
+void c_KDDockWidgets__flutter__TitleBar__onRebuildRequested(void *thisObj)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onRebuildRequested_nocallback();} else {    return targetPtr->onRebuildRequested();} }();
+}
 // onResize(int h, int w)
 bool c_KDDockWidgets__flutter__TitleBar__onResize_int_int(void *thisObj, int h, int w)
 {
@@ -1270,16 +1288,16 @@ void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr
     case 959:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isActiveWindow>(callback);
         break;
-    case 1071:
+    case 1072:
         wrapper->m_isCloseButtonEnabledCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isCloseButtonEnabled>(callback);
         break;
-    case 1072:
+    case 1073:
         wrapper->m_isCloseButtonVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isCloseButtonVisible>(callback);
         break;
     case 960:
         wrapper->m_isExplicitlyHiddenCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isExplicitlyHidden>(callback);
         break;
-    case 1073:
+    case 1074:
         wrapper->m_isFloatButtonVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_isFloatButtonVisible>(callback);
         break;
     case 961:
@@ -1342,10 +1360,13 @@ void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr
     case 1050:
         wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_onGeometryChanged>(callback);
         break;
+    case 1052:
+        wrapper->m_onRebuildRequestedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_onRebuildRequested>(callback);
+        break;
     case 978:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_onResize_2>(callback);
         break;
-    case 1076:
+    case 1077:
         wrapper->m_onTitleBarChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_onTitleBarChanged>(callback);
         break;
     case 981:
@@ -1354,10 +1375,10 @@ void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr
     case 982:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 1055:
+    case 1056:
         wrapper->m_raiseChildCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_raiseChild>(callback);
         break;
-    case 1056:
+    case 1057:
         wrapper->m_raiseWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TitleBar_wrapper::Callback_raiseWindow>(callback);
         break;
     case 984:

@@ -1392,7 +1392,7 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 974:
         wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_move_2>(callback);
         break;
-    case 1081:
+    case 1082:
         wrapper->m_moveTabToCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_moveTabTo>(callback);
         break;
     case 975:
@@ -1413,7 +1413,7 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 1050:
         wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_onGeometryChanged>(callback);
         break;
-    case 1084:
+    case 1052:
         wrapper->m_onRebuildRequestedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_onRebuildRequested>(callback);
         break;
     case 978:
@@ -1425,10 +1425,10 @@ void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, 
     case 982:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 1055:
+    case 1056:
         wrapper->m_raiseChildCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_raiseChild>(callback);
         break;
-    case 1056:
+    case 1057:
         wrapper->m_raiseWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper::Callback_raiseWindow>(callback);
         break;
     case 1085:

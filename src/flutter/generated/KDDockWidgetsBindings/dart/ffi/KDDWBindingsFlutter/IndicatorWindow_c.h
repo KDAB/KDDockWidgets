@@ -94,6 +94,8 @@ public:
     virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onGeometryChanged();
     virtual void onGeometryChanged_nocallback();
+    virtual void onRebuildRequested();
+    virtual void onRebuildRequested_nocallback();
     virtual bool onResize(int h, int w);
     virtual bool onResize_nocallback(int h, int w);
     virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
@@ -229,6 +231,8 @@ public:
     Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
     typedef void (*Callback_onGeometryChanged)(void *);
     Callback_onGeometryChanged m_onGeometryChangedCallback = nullptr;
+    typedef void (*Callback_onRebuildRequested)(void *);
+    Callback_onRebuildRequested m_onRebuildRequestedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
@@ -371,6 +375,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onC
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::IndicatorWindow::onGeometryChanged()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::onRebuildRequested()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::onResize(int h, int w)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation arg__1) const

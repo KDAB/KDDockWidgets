@@ -478,6 +478,19 @@ void IndicatorWindow_wrapper::onGeometryChanged_nocallback()
 {
     ::KDDockWidgets::flutter::IndicatorWindow::onGeometryChanged();
 }
+void IndicatorWindow_wrapper::onRebuildRequested()
+{
+    if (m_onRebuildRequestedCallback) {
+        const void *thisPtr = this;
+        m_onRebuildRequestedCallback(const_cast<void *>(thisPtr));
+    } else {
+        ::KDDockWidgets::flutter::IndicatorWindow::onRebuildRequested();
+    }
+}
+void IndicatorWindow_wrapper::onRebuildRequested_nocallback()
+{
+    ::KDDockWidgets::flutter::IndicatorWindow::onRebuildRequested();
+}
 bool IndicatorWindow_wrapper::onResize(int h, int w)
 {
     if (m_onResize_2Callback) {
@@ -1126,6 +1139,11 @@ void c_KDDockWidgets__flutter__IndicatorWindow__onGeometryChanged(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onGeometryChanged_nocallback();} else {    return targetPtr->onGeometryChanged();} }();
 }
+// onRebuildRequested()
+void c_KDDockWidgets__flutter__IndicatorWindow__onRebuildRequested(void *thisObj)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onRebuildRequested_nocallback();} else {    return targetPtr->onRebuildRequested();} }();
+}
 // onResize(int h, int w)
 bool c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int(void *thisObj, int h, int w)
 {
@@ -1420,6 +1438,9 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 1050:
         wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onGeometryChanged>(callback);
         break;
+    case 1052:
+        wrapper->m_onRebuildRequestedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onRebuildRequested>(callback);
+        break;
     case 978:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onResize_2>(callback);
         break;
@@ -1432,10 +1453,10 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
     case 982:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 1055:
+    case 1056:
         wrapper->m_raiseChildCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raiseChild>(callback);
         break;
-    case 1056:
+    case 1057:
         wrapper->m_raiseWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raiseWindow>(callback);
         break;
     case 984:

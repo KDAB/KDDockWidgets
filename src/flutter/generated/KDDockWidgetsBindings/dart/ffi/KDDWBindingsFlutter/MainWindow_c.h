@@ -13,9 +13,9 @@
 #include <qstring.h>
 #include <View.h>
 #include <qrect.h>
+#include <core/View.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -88,6 +88,8 @@ public:
     virtual void onChildVisibilityChanged_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onGeometryChanged();
     virtual void onGeometryChanged_nocallback();
+    virtual void onRebuildRequested();
+    virtual void onRebuildRequested_nocallback();
     virtual bool onResize(int h, int w);
     virtual bool onResize_nocallback(int h, int w);
     virtual void raise();
@@ -212,6 +214,8 @@ public:
     Callback_onChildVisibilityChanged m_onChildVisibilityChangedCallback = nullptr;
     typedef void (*Callback_onGeometryChanged)(void *);
     Callback_onGeometryChanged m_onGeometryChangedCallback = nullptr;
+    typedef void (*Callback_onRebuildRequested)(void *);
+    Callback_onRebuildRequested m_onRebuildRequestedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef void (*Callback_raise)(void *);
@@ -342,6 +346,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__onChildR
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::MainWindow::onGeometryChanged()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__onGeometryChanged(void *thisObj);
+// KDDockWidgets::flutter::MainWindow::onRebuildRequested()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__MainWindow__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::onResize(int h, int w)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__MainWindow__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::MainWindow::raise()
