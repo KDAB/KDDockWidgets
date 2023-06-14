@@ -162,7 +162,7 @@ inline Core::View *draggableFor(Core::View *view)
         draggable = view;
     }
 
-    qDebug() << "Draggable is" << draggable << "for" << view;
+    // qCDebug(tests) << "Draggable is" << draggable << "for" << view;
     return draggable;
 }
 
