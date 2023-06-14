@@ -131,6 +131,9 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
   Widget buildContents(BuildContext ctx) {
     final tabBarView = this.tabBarView();
     final int numTabs = tabBarView.m_controller.numDockWidgets();
+
+    if (numTabs == 0) return Container();
+
     final tabs = <Widget>[];
     for (var i = 0; i < numTabs; ++i) {
       final dw = tabBarView.m_controller.dockWidgetAt_2(i);
@@ -138,6 +141,9 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
     }
 
     final curIndex = tabBarView.m_controller.currentIndex();
+    if (curIndex == -1) {
+      print("ERROR: Expected curIndex >= 0");
+    }
 
     return Listener(
         onPointerDown: (event) {
@@ -153,7 +159,7 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
         child: SizedBox(
             height: 50,
             child: DefaultTabController(
-                initialIndex: curIndex,
+                initialIndex: curIndex == -1 ? 0 : curIndex,
                 length: numTabs,
                 child: Builder(
                   builder: (context) {
