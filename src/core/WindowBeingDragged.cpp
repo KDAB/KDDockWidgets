@@ -210,6 +210,13 @@ FloatingWindow *WindowBeingDragged::floatingWindow() const
     return m_floatingWindow;
 }
 
+Core::View *WindowBeingDragged::floatingWindowView() const
+{
+    if (m_floatingWindow)
+        return m_floatingWindow->view();
+
+    return nullptr;
+}
 
 WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
     : WindowBeingDragged(draggable)

@@ -313,19 +313,10 @@ static bool isOutterLocation(DropLocation location)
 
 bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 {
-    Core::FloatingWindow *floatingWindow = droppedWindow->floatingWindow();
+    // fv might be null, if on wayland
+    Core::View *fv = droppedWindow->floatingWindowView();
 
-    if (!floatingWindow) {
-        qWarning() << Q_FUNC_INFO << "Expected floating window controller";
-        return false;
-    }
-
-    if (!floatingWindow->view()) {
-        qWarning() << Q_FUNC_INFO << "Expected floating window view";
-        return false;
-    }
-
-    if (floatingWindow->view()->equals(window())) {
+    if (fv && fv->equals(window())) {
         qWarning() << "Refusing to drop onto itself"; // Doesn't happen
         return false;
     }

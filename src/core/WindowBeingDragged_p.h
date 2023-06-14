@@ -42,6 +42,9 @@ public:
 
     FloatingWindow *floatingWindow() const;
 
+    /// Convenience that returns the floating window as a view (QWidget/QQuickItem/etc) instead of the controller
+    Core::View *floatingWindowView() const;
+
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);
 
