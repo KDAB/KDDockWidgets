@@ -14,6 +14,8 @@
 
 #include <QLoggingCategory>
 
+namespace KDDockWidgets {
+
 /// The general and more useful category to enable
 Q_DECLARE_LOGGING_CATEGORY(general)
 
@@ -25,5 +27,7 @@ Q_DECLARE_LOGGING_CATEGORY(toplevels)
 
 /// Verbose logging in ctors and dtors
 Q_DECLARE_LOGGING_CATEGORY(creation)
+
+}
 
 #endif
