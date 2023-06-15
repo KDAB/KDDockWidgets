@@ -192,6 +192,11 @@ void TitleBar::init()
     });
 }
 
+Core::TitleBar *TitleBar::titleBar() const
+{
+    return m_titleBar;
+}
+
 void TitleBar::paintEvent(QPaintEvent *)
 {
     if (freed())

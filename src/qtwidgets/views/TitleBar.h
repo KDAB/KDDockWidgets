@@ -37,6 +37,9 @@ public:
     /// style things twice.
     explicit TitleBar(QWidget *parent = nullptr);
 
+    /// Returns the controller
+    Core::TitleBar *titleBar() const;
+
 #ifdef DOCKS_DEVELOPER_MODE
     // The following are needed for the unit-tests
     bool isCloseButtonVisible() const override;
