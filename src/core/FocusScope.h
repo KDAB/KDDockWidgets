@@ -21,7 +21,7 @@
 
 #include "kddockwidgets/docks_export.h"
 
-#include <QWidget>
+#include <qnamespace.h>
 
 namespace KDDockWidgets::Core {
 
