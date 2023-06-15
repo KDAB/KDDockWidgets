@@ -18,6 +18,12 @@
 
 #include <QString>
 
+namespace KDDockWidgets {
+namespace QtWidgets {
+class TitleBar;
+}
+}
+
 namespace KDDockWidgets::Core {
 
 class Group;
@@ -28,8 +34,18 @@ class DOCKS_EXPORT TitleBar : public Controller, public Draggable
 {
     Q_OBJECT
 public:
-    explicit TitleBar(Group *parent);
+    /// Creates the TitleBar used by Floating windows
     explicit TitleBar(FloatingWindow *parent);
+
+    /// Creates the TitleBar used by tab groups
+    explicit TitleBar(Group *parent);
+
+    /// Creates a standalone TitleBar
+    /// That means it's not associated with any docking. To allow users to reuse it.
+    /// For example, to add a title bar to a QMessageBox popup on EGLFS
+    /// @sa isStandalone()
+    explicit TitleBar(Core::View *);
+
     virtual ~TitleBar() override;
 
     /// From Draggable interface
@@ -43,6 +59,9 @@ public:
 
     ///@brief Returns true if this title-bar is the title bar of a floating window
     bool isFloating() const;
+
+    /// Returns whether this titlebar is standalone. See comment in the ctor.
+    bool isStandalone() const;
 
     ///@brief the list of dockwidgets under this TitleBar.
     /// There should always be at least 1. If more than 1 then they are tabbed.
@@ -141,6 +160,7 @@ protected:
 
 private:
     friend class ::TestDocks;
+    friend class KDDockWidgets::QtWidgets::TitleBar;
 
     void updateAutoHideButton();
     void updateMaximizeButton();
@@ -157,6 +177,7 @@ private:
     Core::Group *const m_group;
     FloatingWindow *const m_floatingWindow;
     const bool m_supportsAutoHide;
+    const bool m_isStandalone;
     bool m_closeButtonEnabled = true;
     bool m_floatButtonVisible = true;
     bool m_maximizeButtonVisible = false;

@@ -107,6 +107,14 @@ TitleBar::TitleBar(Core::TitleBar *controller, Core::View *parent)
 {
 }
 
+TitleBar::TitleBar(QWidget *parent)
+    : View(new Core::TitleBar(this), Core::ViewType::TitleBar, parent)
+    , Core::TitleBarViewInterface(static_cast<Core::TitleBar *>(controller()))
+    , m_layout(new QHBoxLayout(this))
+{
+    m_titleBar->init();
+}
+
 void TitleBar::init()
 {
     if (m_titleBar->titleBarIsFocusable())

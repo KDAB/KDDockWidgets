@@ -39,6 +39,7 @@ TitleBar::TitleBar(Group *parent)
     , m_group(parent)
     , m_floatingWindow(nullptr)
     , m_supportsAutoHide((Config::self().flags() & Config::Flag_AutoHideSupport) == Config::Flag_AutoHideSupport)
+    , m_isStandalone(false)
 {
     init();
     connect(m_group, &Group::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
@@ -55,6 +56,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     , m_group(nullptr)
     , m_floatingWindow(parent)
     , m_supportsAutoHide((Config::self().flags() & Config::Flag_AutoHideSupport) == Config::Flag_AutoHideSupport)
+    , m_isStandalone(false)
 {
     init();
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
@@ -63,6 +65,16 @@ TitleBar::TitleBar(FloatingWindow *parent)
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this,
             &TitleBar::updateMaximizeButton);
     connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);
+}
+
+TitleBar::TitleBar(Core::View *view)
+    : Controller(ViewType::TitleBar, view)
+    , Draggable(view, /*enabled=*/false)
+    , m_group(nullptr)
+    , m_floatingWindow(nullptr)
+    , m_supportsAutoHide(false)
+    , m_isStandalone(true)
+{
 }
 
 void TitleBar::init()
@@ -92,7 +104,7 @@ bool TitleBar::titleBarIsFocusable() const
 
 MainWindow *TitleBar::mainWindow() const
 {
-    if (m_floatingWindow)
+    if (m_floatingWindow || m_isStandalone)
         return nullptr;
 
     if (m_group)
@@ -158,6 +170,9 @@ bool TitleBar::maximizeButtonVisible() const
 
 bool TitleBar::supportsFloatingButton() const
 {
+    if (m_isStandalone)
+        return {}; // not applicable
+
     if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton) {
         // Apps having a maximize/restore button traditionally don't have a floating one,
         // QDockWidget style only has floating and no maximize/restore.
@@ -377,6 +392,8 @@ void TitleBar::onCloseClicked()
         } else {
             m_floatingWindow->view()->close();
         }
+    } else if (m_isStandalone) {
+        view()->closeRootView();
     }
 }
 
@@ -482,6 +499,9 @@ bool TitleBar::closeButtonEnabled() const
 
 std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 {
+    if (m_isStandalone)
+        return {}; // not applicable
+
     if (!isVisible() && view()->rootView()->controller()->isVisible()
         && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
 
@@ -544,6 +564,9 @@ Core::DockWidget::List TitleBar::dockWidgets() const
     if (m_group)
         return m_group->dockWidgets();
 
+    if (m_isStandalone)
+        return {}; // not applicable
+
     qWarning() << "TitleBar::dockWidget: shouldn't happen";
     return {};
 }
@@ -562,6 +585,9 @@ bool TitleBar::isFloating() const
     if (m_group)
         return m_group->isFloating();
 
+    if (m_isStandalone)
+        return false; // not applicable
+
     qWarning() << "TitleBar::isFloating: shouldn't happen";
     return false;
 }
@@ -572,6 +598,8 @@ bool TitleBar::isFocused() const
         return m_group->isFocused();
     else if (m_floatingWindow)
         return m_floatingWindow->view()->isActiveWindow();
+    else if (m_isStandalone)
+        return view()->isActiveWindow();
 
     return false;
 }
@@ -607,4 +635,9 @@ TabBar *TitleBar::tabBar() const
 TitleBarButtonType TitleBar::maximizeButtonType() const
 {
     return m_maximizeButtonType;
+}
+
+bool TitleBar::isStandalone() const
+{
+    return m_isStandalone;
 }

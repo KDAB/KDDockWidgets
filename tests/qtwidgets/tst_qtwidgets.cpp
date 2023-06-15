@@ -35,6 +35,7 @@
 #include "qtwidgets/views/MainWindow.h"
 #include "qtwidgets/views/ViewWrapper.h"
 #include "qtwidgets/views/DockWidget.h"
+#include "qtwidgets/views/TitleBar.h"
 #include "qtcommon/View.h"
 
 #include <QObject>
@@ -155,6 +156,7 @@ private Q_SLOTS:
     void tst_crash326();
     void tst_restoreWithIncompleteFactory();
     void tst_deleteDockWidget();
+    void tst_standaloneTitleBar();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1698,6 +1700,24 @@ void TestQtWidgets::tst_findAncestor()
 
     QCOMPARE(mainWindow, KDDockWidgets::findAncestor<QMainWindow>(mainWindow));
     QCOMPARE(mainWindow, KDDockWidgets::findAncestor<QMainWindow>(dockWidget));
+}
+
+void TestQtWidgets::tst_standaloneTitleBar()
+{
+    QWidget window;
+
+    QtWidgets::TitleBar titleBar(&window);
+    titleBar.asTitleBarController()->setTitle("some title");
+
+    auto lay = new QVBoxLayout(&window);
+    lay->addWidget(&titleBar);
+    lay->addStretch();
+
+    window.show();
+
+    QVERIFY(window.isVisible());
+    titleBar.asTitleBarController()->onCloseClicked();
+    QVERIFY(!window.isVisible());
 }
 
 int main(int argc, char *argv[])

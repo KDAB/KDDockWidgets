@@ -28,7 +28,14 @@ class DOCKS_EXPORT TitleBar : public View<QWidget>,
 {
     Q_OBJECT
 public:
+    /// Constructor called by the framework automatically
+    /// Use it also if you're inheriting from QtWidgets::TitleBar while creating something custom
     explicit TitleBar(Core::TitleBar *controller, Core::View *parent = nullptr);
+
+    /// Special ctor for the rare use case of using QtWidgets::TitleBar in a non-dock widget.
+    /// For example, just to have a title bar in QMessageBox popups under EGLFS, so you don't have to
+    /// style things twice.
+    explicit TitleBar(QWidget *parent = nullptr);
 
 #ifdef DOCKS_DEVELOPER_MODE
     // The following are needed for the unit-tests
