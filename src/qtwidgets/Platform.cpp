@@ -55,7 +55,7 @@ public:
 
     bool eventFilter(QObject *o, QEvent *ev) override
     {
-        if (!o->isWidgetType()) // QWindow is not receiving it
+        if (ev->type() != QEvent::WindowActivate && ev->type() != QEvent::WindowDeactivate && !o->isWidgetType()) // QWindow is not receiving it
             return false;
 
         if (auto w = qobject_cast<QWidget *>(o)) {
