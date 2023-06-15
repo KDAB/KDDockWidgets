@@ -52,19 +52,17 @@ public:
             return handleDnDEvent(o, ev);
         else if (ev->type() == QEvent::Move)
             return handleMoveEvent(o, ev);
+        else if (ev->type() != QEvent::Quit || m_isProcessingAppQuitEvent)
+            return false;
 
         auto view = Platform_qt::instance()->qobjectAsView(o);
         if (!view)
             return false;
 
-        if (ev->type() == QEvent::Quit && !m_isProcessingAppQuitEvent) {
-            m_isProcessingAppQuitEvent = true;
-            qGuiApp->sendEvent(qApp, ev);
-            m_isProcessingAppQuitEvent = false;
-            return true;
-        }
-
-        return false;
+        m_isProcessingAppQuitEvent = true;
+        qGuiApp->sendEvent(qApp, ev);
+        m_isProcessingAppQuitEvent = false;
+        return true;
     }
 
     bool handleMoveEvent(QObject *o, QEvent *)
