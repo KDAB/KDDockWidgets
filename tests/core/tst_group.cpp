@@ -12,6 +12,7 @@
 #include "../simple_test_framework.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Platform.h"
+#include "kddockwidgets/Config.h"
 
 using namespace KDDockWidgets;
 
@@ -25,6 +26,16 @@ KDDW_QCORO_TASK tst_groupCtor()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> { TEST(tst_groupCtor) };
+KDDW_QCORO_TASK tst_dragRect()
+{
+    auto group = new Core::Group(nullptr, {});
+    // This used to crash. Test that it doesn't.
+    group->dragRect();
+    delete group;
+
+    KDDW_TEST_RETURN(true);
+}
+
+static const auto s_tests = std::vector<KDDWTest> { TEST(tst_groupCtor), TEST(tst_dragRect) };
 
 #include "../tests_main.h"

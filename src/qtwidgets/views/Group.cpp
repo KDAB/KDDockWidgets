@@ -120,9 +120,7 @@ QSize Group::maxSizeHint() const
 
 QRect Group::dragRect() const
 {
-    QRect rect = m_group->dragRect();
-    if (rect.isValid())
-        return rect;
+    QRect rect;
 
     if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) {
         auto tabBar = qobject_cast<QTabBar *>(asQWidget(m_group->tabBar()));
