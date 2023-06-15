@@ -5,8 +5,8 @@
 ![KDDockWidgetsLogo](https://github.com/KDAB/KDDockWidgets/blob/1.7/images/kddockwidgets.png?raw=true)
 
 > ⚠️⚠️: 2.0 is under development, there might be API breaks before release.
-> Stick with version 1.6 if you're using QtWidgets. However, if you're using
-> QtQuick it's better to base on 2.0, as 1.6 won't be receiving much QtQuick development.
+> Stick with version 1.7 if you're using QtWidgets. However, if you're using
+> QtQuick it's better to base on 2.0, as 1.7 won't be receiving much QtQuick development.
 
 `KDDockWidgets` is a Qt dock widget library written by KDAB, suitable for replacing
 `QDockWidget` and implementing advanced functionalities missing in Qt.
@@ -167,12 +167,14 @@ and `v2` which is an ongoing effort to make KDDW support multiple "frontends"
 (QtWidgets, QtQuick and even non-Qt technologies, like flutter).
 
 1.x will be supported for many years to come, at least for bug fixes and small features.
-Use `v1.6.0` tag for the latest stable.<br>
+Use `v1.7.0` tag for the latest stable.<br>
 
-Use `2.0` if you need non-QtWidgets support, for example `QtQuick/QML`. While `1.6`
+Use `2.0` if you need non-QtWidgets support, for example `QtQuick/QML`. While `1.7`
 has support for `QtQuick/QML` it won't be receiving bug fixes. `2.0` is under active
 development, you might encounter minor source/ABI incompatibilities. Despite that,
 it is pretty stable, and all 200 unit-tests pass.
+
+See [README-porting.md](README-porting.md) for API differences between v1 and v2.
 
 We'll try to remain source-compatible across versions (except for the v1 -> v2 jump).<br>
 API will get a deprecation notice before being removed in the next version. Note that this
