@@ -361,12 +361,12 @@ bool ViewWrapper::hasFocus() const
     return m_item->hasActiveFocus();
 }
 
-QString ViewWrapper::objectName() const
+QString ViewWrapper::viewName() const
 {
     return m_item->objectName();
 }
 
-QVariant ViewWrapper::property(const char *name) const
+QVariant ViewWrapper::viewProperty(const char *name) const
 {
     return m_item->property(name);
 }

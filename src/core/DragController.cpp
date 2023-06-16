@@ -1057,7 +1057,7 @@ DropArea *DragController::dropAreaUnderCursor() const
         }
     }
 
-    if (topLevel->objectName() == QStringLiteral("_docks_IndicatorWindow")) {
+    if (topLevel->viewName() == QStringLiteral("_docks_IndicatorWindow")) {
         qWarning() << "Indicator window should be hidden " << topLevel.get()
                    << topLevel->isVisible();
         Q_ASSERT(false);

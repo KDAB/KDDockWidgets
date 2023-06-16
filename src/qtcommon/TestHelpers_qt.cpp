@@ -225,7 +225,7 @@ void Platform_qt::tests_doubleClickOn(QPoint globalPos, Core::View *receiver)
                   receiver->rootView()->mapFromGlobal(globalPos), globalPos, Qt::LeftButton,
                   Qt::LeftButton, Qt::NoModifier);
 
-    if (auto actualReceiver = receiver->property("titleBarMouseArea").value<QObject *>()) {
+    if (auto actualReceiver = receiver->viewProperty("titleBarMouseArea").value<QObject *>()) {
         // QtQuick case, we need to send the event to the mouse area
         qGuiApp->sendEvent(actualReceiver, &ev);
     } else {

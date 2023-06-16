@@ -81,7 +81,7 @@ Core::MainWindow *Layout::mainWindow(bool honourNesting) const
         if (auto pw = view()->parentView()) {
             // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too,
             // as it's parented
-            if (pw->objectName() == QLatin1String("MyCentralWidget"))
+            if (pw->viewName() == QLatin1String("MyCentralWidget"))
                 return pw->parentView()->asMainWindowController();
 
             if (auto mw = pw->asMainWindowController())

@@ -297,12 +297,12 @@ void ViewWrapper::setFocus(Qt::FocusReason reason)
     m_widget->setFocus(reason);
 }
 
-QString ViewWrapper::objectName() const
+QString ViewWrapper::viewName() const
 {
     return m_widget->QWidget::objectName();
 }
 
-QVariant ViewWrapper::property(const char *name) const
+QVariant ViewWrapper::viewProperty(const char *name) const
 {
     return m_widget->property(name);
 }

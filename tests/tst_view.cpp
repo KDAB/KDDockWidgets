@@ -195,10 +195,10 @@ KDDW_QCORO_TASK tst_viewObjectName()
 {
     auto rootView = createViewAndWindow({});
 
-    CHECK_EQ(rootView->objectName(), QString());
+    CHECK_EQ(rootView->viewName(), QString());
     const QString newName = QStringLiteral("name1");
-    rootView->setObjectName(newName);
-    CHECK_EQ(rootView->objectName(), newName);
+    rootView->setViewName(newName);
+    CHECK_EQ(rootView->viewName(), newName);
 
     KDDW_TEST_RETURN(true);
 }

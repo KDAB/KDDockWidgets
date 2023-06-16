@@ -68,7 +68,7 @@ KDDockWidgets::HANDLE View_qt::handle() const
     return m_thisObj;
 }
 
-void View_qt::setObjectName(const QString &name)
+void View_qt::setViewName(const QString &name)
 {
     if (m_thisObj) {
         m_thisObj->setObjectName(name);

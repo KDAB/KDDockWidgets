@@ -141,7 +141,7 @@ KDDW_QCORO_TASK tst_hasLastDockedLocation()
     auto dock1 = createDockWidget("1");
     m->layout()->checkSanity();
     m->multiSplitter()->setObjectName("mainWindow-dropArea");
-    dock1->floatingWindow()->layout()->view()->setObjectName("first-dropArea1");
+    dock1->floatingWindow()->layout()->view()->setViewName("first-dropArea1");
     dock1->floatingWindow()->layout()->checkSanity();
     auto window1 = dock1->window();
     CHECK(dock1->isFloating());
@@ -158,7 +158,7 @@ KDDW_QCORO_TASK tst_hasLastDockedLocation()
     CHECK(dock1->setFloating(true));
 
     auto ms1 = dock1->floatingWindow()->layout();
-    ms1->view()->setObjectName("dropArea1");
+    ms1->view()->setViewName("dropArea1");
     ms1->checkSanity();
     CHECK(dock1->hasPreviousDockedLocation());
     auto window11 = dock1->window();
@@ -3487,7 +3487,7 @@ KDDW_QCORO_TASK tst_titleBarFocusedWhenTabsChange()
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
 
     auto le1 = Platform::instance()->tests_createFocusableView({ true });
-    le1->setObjectName("le1");
+    le1->setViewName("le1");
     auto dock1 = createDockWidget(QStringLiteral("dock1"), le1);
     auto dock2 = createDockWidget(QStringLiteral("dock2"),
                                   Platform::instance()->tests_createFocusableView({ true }));
@@ -3839,8 +3839,8 @@ KDDW_QCORO_TASK tst_raise()
     if (!isOffscreen) { // offscreen qpa doesn't seem to keep window Z.
         auto dock3 = createDockWidget("3");
         dock3->window()->setGeometry(dock1->window()->geometry());
-        dock3->window()->setObjectName("3");
-        dock1->window()->setObjectName("1");
+        dock3->window()->setViewName("3");
+        dock1->window()->setViewName("1");
         dock3->raise();
         KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
 

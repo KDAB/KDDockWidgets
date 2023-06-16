@@ -160,9 +160,13 @@ public:
         return false;
     }
 
-    virtual QVariant property(const char *) const = 0;
-    virtual void setObjectName(const QString &) = 0;
-    virtual QString objectName() const = 0;
+    /// Equivalent to Qt's QObject::property()
+    virtual QVariant viewProperty(const char *) const = 0;
+
+    /// Equivalent to Qt's QObject::objectProperty()
+    virtual void setViewName(const QString &) = 0;
+    virtual QString viewName() const = 0;
+
     virtual void render(QPainter *) = 0;
 
     virtual std::shared_ptr<View> childViewAt(QPoint localPos) const = 0;

@@ -53,7 +53,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
 static std::unique_ptr<ItemBoxContainer> createRoot()
 {
     auto hostWidget = Core::Platform::instance()->tests_createView({});
-    hostWidget->setObjectName("HostWidget");
+    hostWidget->setViewName("HostWidget");
     hostWidget->show();
     auto root = new ItemBoxContainer(hostWidget);
     root->setSize({ 1000, 1000 });
@@ -65,7 +65,7 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
     static int count = 0;
     count++;
     auto hostWidget = Core::Platform::instance()->tests_createView({});
-    hostWidget->setObjectName("HostWidget");
+    hostWidget->setViewName("HostWidget");
     hostWidget->show();
     auto item = new Item(hostWidget);
     item->setGeometry(QRect(0, 0, 200, 200));
@@ -77,7 +77,7 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
         opts.maxSize = maxSz;
     auto guest = Core::Platform::instance()->tests_createView(opts);
 
-    guest->setObjectName(item->objectName());
+    guest->setViewName(item->objectName());
     item->setGuestView(guest);
     return item;
 }

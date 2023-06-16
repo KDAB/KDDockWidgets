@@ -37,7 +37,7 @@ public:
     QObject *thisObject() const;
 
     HANDLE handle() const override;
-    void setObjectName(const QString &name) override;
+    void setViewName(const QString &name) override;
 
     static QObject *asQObject(View *);
 

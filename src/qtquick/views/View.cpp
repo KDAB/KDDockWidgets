@@ -574,7 +574,7 @@ void View::raise()
     }
 }
 
-QVariant View::property(const char *name) const
+QVariant View::viewProperty(const char *name) const
 {
     return QObject::property(name);
 }
@@ -768,7 +768,7 @@ void View::setFocusPolicy(Qt::FocusPolicy policy)
     m_focusPolicy = policy;
 }
 
-QString View::objectName() const
+QString View::viewName() const
 {
     return QQuickItem::objectName();
 }

@@ -49,8 +49,8 @@ public:
     void releaseMouse() override;
     void setFocus(Qt::FocusReason) override;
     void setFocusPolicy(Qt::FocusPolicy) override;
-    QString objectName() const override;
-    QVariant property(const char *) const override;
+    QString viewName() const override;
+    QVariant viewProperty(const char *) const override;
     bool isNull() const override;
     void setWindowTitle(const QString &title) override;
     QPoint mapTo(Core::View *someAncestor, QPoint pos) const override;

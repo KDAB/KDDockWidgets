@@ -48,8 +48,8 @@ public:
     void grabMouse() override;
     void releaseMouse() override;
     void setFocus(Qt::FocusReason) override;
-    QString objectName() const override;
-    QVariant property(const char *) const override;
+    QString viewName() const override;
+    QVariant viewProperty(const char *) const override;
     bool isNull() const override;
     void setWindowTitle(const QString &title) override;
     QPoint mapTo(View *, QPoint) const override;

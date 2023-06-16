@@ -92,7 +92,7 @@ public:
     void raiseAndActivate() override;
     void activateWindow() override;
     void raise() override;
-    QVariant property(const char *name) const override;
+    QVariant viewProperty(const char *name) const override;
     static bool isRootView(const QQuickItem *);
     bool isRootView() const override;
     QQuickView *quickView() const;
@@ -134,7 +134,7 @@ public:
     Qt::FocusPolicy focusPolicy() const override;
     bool hasFocus() const override;
     void setFocusPolicy(Qt::FocusPolicy) override;
-    QString objectName() const override;
+    QString viewName() const override;
     void setMinimumSize(QSize sz) override;
     void render(QPainter *) override;
     void setCursor(Qt::CursorShape shape) override;

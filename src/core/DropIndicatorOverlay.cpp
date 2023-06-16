@@ -28,7 +28,7 @@ DropIndicatorOverlay::DropIndicatorOverlay(DropArea *dropArea, View *view)
     , m_dropArea(dropArea)
 {
     setVisible(false);
-    view->setObjectName(QStringLiteral("DropIndicatorOverlay"));
+    view->setViewName(QStringLiteral("DropIndicatorOverlay"));
 
     // Set transparent for mouse events so that topLevel->childAt() never returns the drop indicator
     // overlay

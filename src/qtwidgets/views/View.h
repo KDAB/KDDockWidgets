@@ -357,12 +357,12 @@ public:
         QWidget::setFocusPolicy(policy);
     }
 
-    QString objectName() const override
+    QString viewName() const override
     {
         return QWidget::objectName();
     }
 
-    QVariant property(const char *name) const override
+    QVariant viewProperty(const char *name) const override
     {
         return QWidget::property(name);
     }

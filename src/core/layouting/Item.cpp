@@ -792,7 +792,7 @@ void Item::updateObjectName()
         return;
 
     if (auto w = guestView()) {
-        setObjectName(w->objectName().isEmpty() ? QStringLiteral("widget") : w->objectName());
+        setObjectName(w->viewName().isEmpty() ? QStringLiteral("widget") : w->viewName());
     } else if (!isVisible()) {
         setObjectName(QStringLiteral("hidden"));
     } else if (!m_guest) {
