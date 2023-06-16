@@ -23,3 +23,14 @@ if you're customizing the default visuals.
 
 If some API is missing in the View, try looking in the controller, so, for example, look in `KDDockWidgets::Core::TitleBar` instead of
 `KDDockWidgets::QtWidgets::TitleBar`.
+
+
+## Headers
+
+`<kddockwidgets/FrameworkWidgetFactory.h>` -> `<kddockwidgets/ViewFactory.h>`
+<br>
+`<kddockwidgets/private/widgets/TitleBarWidget_p.h>` -> `<kddockwidgets/qtwidgets/views/TitleBar.h>`
+<br>
+`<kddockwidgets/private/TabWidget_p.h>` -> `<kddockwidgets/qtwidgets/Stack.h>`
+<br>
+`<kddockwidgets/private/widgets/TabBarWidget_p.h>` -> `<kddockwidgets/qtwidgets/views/TabBar.h>`
