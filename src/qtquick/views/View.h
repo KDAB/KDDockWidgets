@@ -51,9 +51,6 @@ class DOCKS_EXPORT View : public QQuickItem, public QtCommon::View_qt
 public:
     using Core::View::close;
     using Core::View::height;
-    using Core::View::minimumHeight;
-
-    using Core::View::minimumWidth;
     using Core::View::rect;
     using Core::View::resize;
     using Core::View::width;

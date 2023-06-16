@@ -26,8 +26,6 @@ class DOCKS_EXPORT View : public Core::View
 public:
     using Core::View::close;
     using Core::View::height;
-    using Core::View::minimumHeight;
-    using Core::View::minimumWidth;
     using Core::View::rect;
     using Core::View::resize;
     using Core::View::width;

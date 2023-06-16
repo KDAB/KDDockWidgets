@@ -74,15 +74,6 @@ public:
     virtual void setParent(View *) = 0;
     virtual QSize minSize() const = 0;
     virtual void setMinimumSize(QSize) = 0;
-    virtual int minimumWidth() const
-    {
-        return minSize().width();
-    }
-
-    virtual int minimumHeight() const
-    {
-        return minSize().height();
-    }
 
     virtual Qt::FocusPolicy focusPolicy() const = 0;
     virtual bool hasFocus() const = 0;

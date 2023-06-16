@@ -4400,7 +4400,7 @@ KDDW_QCORO_TASK tst_propagateSizeHonoursMinSize()
 
     if (dock1->width() < min1) {
         qDebug() << "\ndock1->width()=" << dock1->width() << "\nmin1=" << min1
-                 << "\ndock min sizes=" << dock1->view()->minimumWidth()
+                 << "\ndock min sizes=" << dock1->view()->minSize()
                  << "\ngroup1->width()=" << dock1->dptr()->group()->view()->width()
                  << "\ngroup1->min="
                  << lengthForSize(dock1->dptr()->group()->view()->minSize(), Qt::Horizontal);
@@ -4442,8 +4442,6 @@ KDDW_QCORO_TASK tst_constraintsPropagateUp()
 
     CHECK_EQ(widgetMinLength(guestWidget, Qt::Vertical), minHeight);
     CHECK_EQ(widgetMinLength(guestWidget, Qt::Horizontal), minWidth);
-    CHECK_EQ(dock1->view()->minimumWidth(), minWidth);
-    CHECK_EQ(dock1->view()->minimumHeight(), minHeight);
     CHECK_EQ(dock1->view()->minSize(), minSz);
 
     auto group1 = dock1->dptr()->group();
@@ -4485,8 +4483,8 @@ KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
     if (Platform::instance()->isQtWidgets())
         CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m.get()));
 
-    CHECK(m->view()->minimumHeight() > minHeight * 3); // > since some vertical space is occupied
-                                                       // by the separators
+    CHECK(m->view()->minSize().height() > minHeight * 3); // > since some vertical space is occupied
+                                                          // by the separators
 
     // Now close dock1 and check again
     dock1->close();
