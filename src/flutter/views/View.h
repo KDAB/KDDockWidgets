@@ -37,7 +37,6 @@ public:
 
     ~View() override;
 
-    QSize sizeHint() const override;
     QSize minSize() const override;
     QSize maxSizeHint() const override;
     QRect geometry() const override;
@@ -140,12 +139,9 @@ public:
     /// Implemented in Dart
     virtual void onRebuildRequested();
 
-    void setSizeHint(QSize);
-
 private:
     View *m_parentView = nullptr;
     QString m_name;
-    QSize m_sizeHint;
     QSize m_minSize;
     QSize m_maxSize;
     QRect m_geometry;

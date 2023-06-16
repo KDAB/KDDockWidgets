@@ -438,11 +438,6 @@ Qt::WindowFlags View::flags() const
     return m_windowFlags;
 }
 
-QSize View::sizeHint() const
-{
-    return m_sizeHint;
-}
-
 QSize View::minSize() const
 {
     const QSize min = property("kddockwidgets_min_size").toSize();

@@ -61,7 +61,6 @@ class Platform extends KDDWBindingsFlutter.Platform {
     try {
       final view = View(null, 0, parent);
 
-      view.setSizeHint(opts.getSizeHint());
       view.setMinimumSize(opts.getMinSize());
       view.setMaximumSize(opts.getMaxSize());
       view.setVisible(opts.isVisible);

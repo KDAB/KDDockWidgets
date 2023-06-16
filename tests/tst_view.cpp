@@ -153,15 +153,6 @@ KDDW_QCORO_TASK tst_viewGeometry()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewSizeHint()
-{
-    const QSize sizeHint = QSize(200, 200);
-    auto rootView = createViewAndWindow({ true, sizeHint });
-    CHECK_EQ(rootView->sizeHint(), sizeHint);
-
-    KDDW_TEST_RETURN(true);
-}
-
 KDDW_QCORO_TASK tst_viewMinSize()
 {
     const QSize sizeHint = {};
@@ -296,7 +287,6 @@ static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_viewRoot),
     TEST(tst_viewIsVisible),
     TEST(tst_viewGeometry),
-    TEST(tst_viewSizeHint),
     TEST(tst_viewMinSize),
     TEST(tst_viewMaxSize),
     TEST(tst_viewObjectName),

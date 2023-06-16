@@ -329,12 +329,6 @@ struct CreateViewOptions
     QSize size = { 1000, 1000 };
     bool createWindow = false;
 
-    /// Getter needed for flutter. TODO: Auto generate them
-    QSize getSizeHint() const
-    {
-        return sizeHint;
-    }
-
     QSize getMinSize() const
     {
         return minSize;

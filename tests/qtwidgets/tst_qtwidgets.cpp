@@ -1389,7 +1389,6 @@ void TestQtWidgets::tst_fixedSizePolicy()
     const int buttonMaxHeight = button->sizeHint().height();
 
     QWidget *dockWidget1 = QtCommon::View_qt::asQWidget(dock1->view());
-    QCOMPARE(dock1->view()->sizeHint(), button->sizeHint());
     QCOMPARE(dockWidget1->sizePolicy().verticalPolicy(),
              button->sizePolicy().verticalPolicy());
     QCOMPARE(dockWidget1->sizePolicy().horizontalPolicy(),

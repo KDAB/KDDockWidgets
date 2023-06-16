@@ -72,7 +72,6 @@ public:
     virtual bool isNull() const;
 
     virtual void setParent(View *) = 0;
-    virtual QSize sizeHint() const;
     virtual QSize minSize() const = 0;
     virtual void setMinimumSize(QSize) = 0;
     virtual int minimumWidth() const

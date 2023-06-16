@@ -42,11 +42,6 @@ public:
 
     ~View() override = default;
 
-    QSize sizeHint() const override
-    {
-        return Base::sizeHint();
-    }
-
     QSize minSize() const override
     {
         const int minW =
@@ -79,9 +74,9 @@ public:
         const auto hPolicy = QWidget::sizePolicy().horizontalPolicy();
 
         if (vPolicy == QSizePolicy::Fixed || vPolicy == QSizePolicy::Maximum)
-            max.setHeight(qMin(max.height(), sizeHint().height()));
+            max.setHeight(qMin(max.height(), Base::sizeHint().height()));
         if (hPolicy == QSizePolicy::Fixed || hPolicy == QSizePolicy::Maximum)
-            max.setWidth(qMin(max.width(), sizeHint().width()));
+            max.setWidth(qMin(max.width(), Base::sizeHint().width()));
 
         max = View::boundedMaxSize(min, max); // for safety against weird values
         return max;

@@ -109,11 +109,6 @@ bool View::inDtor() const
     return m_inDtor;
 }
 
-QSize View::sizeHint() const
-{
-    return {};
-}
-
 QSize View::size() const
 {
     return geometry().size();

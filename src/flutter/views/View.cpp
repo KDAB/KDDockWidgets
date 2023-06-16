@@ -145,16 +145,6 @@ Qt::WindowFlags View::flags() const
     return {};
 }
 
-QSize View::sizeHint() const
-{
-    return m_sizeHint;
-}
-
-void View::setSizeHint(QSize s)
-{
-    m_sizeHint = s;
-}
-
 QSize View::minSize() const
 {
     return m_minSize;

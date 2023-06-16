@@ -44,11 +44,6 @@ public:
 
     ~TestView();
 
-    QSize sizeHint() const override
-    {
-        return m_opts.sizeHint;
-    }
-
 private:
     Core::CreateViewOptions m_opts;
 };

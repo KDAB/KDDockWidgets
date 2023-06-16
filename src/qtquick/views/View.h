@@ -63,7 +63,6 @@ public:
 
     ~View() override = default;
 
-    QSize sizeHint() const override;
     QSize minSize() const override;
     QSize maxSizeHint() const override;
     QRect geometry() const override;
@@ -175,7 +174,6 @@ private:
     void updateNormalGeometry();
     void sendVisibleChangeEvent();
     bool m_inSetParent = false;
-    QSize m_sizeHint;
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
