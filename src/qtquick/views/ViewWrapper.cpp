@@ -457,22 +457,6 @@ const Core::View *ViewWrapper::unwrap() const
     return qobject_cast<const QtQuick::View *>(m_item);
 }
 
-SizePolicy ViewWrapper::verticalSizePolicy() const
-{
-    if (auto view = unwrap()) {
-        return view->verticalSizePolicy();
-    }
-    return {};
-}
-
-SizePolicy ViewWrapper::horizontalSizePolicy() const
-{
-    if (auto view = unwrap()) {
-        return view->horizontalSizePolicy();
-    }
-    return {};
-}
-
 /*static*/
 std::shared_ptr<Core::View> ViewWrapper::create(QObject *item)
 {

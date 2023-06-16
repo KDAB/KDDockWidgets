@@ -378,16 +378,6 @@ bool ViewWrapper::hasFocus() const
     return m_widget->hasFocus();
 }
 
-SizePolicy ViewWrapper::horizontalSizePolicy() const
-{
-    return SizePolicy(m_widget->sizePolicy().horizontalPolicy());
-}
-
-SizePolicy ViewWrapper::verticalSizePolicy() const
-{
-    return SizePolicy(m_widget->sizePolicy().verticalPolicy());
-}
-
 QSize ViewWrapper::maxSizeHint() const
 {
     return m_widget->maximumSize();

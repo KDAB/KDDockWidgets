@@ -214,21 +214,6 @@ void ViewWrapper::setWindowOpacity(double opacity)
     m_wrappedView->setWindowOpacity(opacity);
 }
 
-void ViewWrapper::setSizePolicy(SizePolicy hp, SizePolicy vp)
-{
-    m_wrappedView->setSizePolicy(hp, vp);
-}
-
-SizePolicy ViewWrapper::verticalSizePolicy() const
-{
-    return m_wrappedView->verticalSizePolicy();
-}
-
-SizePolicy ViewWrapper::horizontalSizePolicy() const
-{
-    return m_wrappedView->horizontalSizePolicy();
-}
-
 void ViewWrapper::setWindowTitle(const QString &title)
 {
     m_wrappedView->setWindowTitle(title);

@@ -332,20 +332,6 @@ void View::setWindowOpacity(double)
 {
 }
 
-void View::setSizePolicy(SizePolicy, SizePolicy)
-{
-}
-
-SizePolicy View::verticalSizePolicy() const
-{
-    return {};
-}
-
-SizePolicy View::horizontalSizePolicy() const
-{
-    return {};
-}
-
 void View::setWindowTitle(const QString &)
 {
 }

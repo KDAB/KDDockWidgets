@@ -71,9 +71,6 @@ public:
     QPoint mapFromGlobal(QPoint globalPt) const override;
     QPoint mapTo(Core::View *parent, QPoint pos) const override;
     void setWindowOpacity(double v) override;
-    void setSizePolicy(SizePolicy hPolicy, SizePolicy vPolicy) override;
-    SizePolicy verticalSizePolicy() const override;
-    SizePolicy horizontalSizePolicy() const override;
 
     /// Called when the flutter widget was resized by its own initiative (and not kddw)
     /// Usually it's kddw driving geometry, but there's 2 cases where flutter might trigger it

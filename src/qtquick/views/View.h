@@ -100,9 +100,6 @@ public:
     QPoint mapFromGlobal(QPoint globalPt) const override;
     QPoint mapTo(Core::View *parent, QPoint pos) const override;
     void setWindowOpacity(double v) override;
-    void setSizePolicy(SizePolicy, SizePolicy) override;
-    SizePolicy verticalSizePolicy() const override;
-    SizePolicy horizontalSizePolicy() const override;
 
     static bool close(QQuickItem *);
     bool close() override;
@@ -179,8 +176,6 @@ private:
     void sendVisibleChangeEvent();
     bool m_inSetParent = false;
     QSize m_sizeHint;
-    SizePolicy m_verticalSizePolicy = SizePolicy::Preferred;
-    SizePolicy m_horizontalSizePolicy = SizePolicy::Preferred;
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;

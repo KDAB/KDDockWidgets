@@ -62,8 +62,9 @@ DockWidget::~DockWidget()
 void DockWidget::init()
 {
     connect(m_dockWidget, &Core::DockWidget::guestViewChanged, this, [this] {
-        if (auto guest = dockWidget()->guestView()) {
-            d->layout->addWidget(View_qt::asQWidget(guest.get()));
+        if (auto guest = widget()) {
+            QWidget::setSizePolicy(guest->sizePolicy());
+            d->layout->addWidget(guest);
         }
     });
 }

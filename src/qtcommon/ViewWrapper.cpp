@@ -84,11 +84,6 @@ void ViewWrapper::raise()
     qFatal("Not implemented");
 }
 
-void ViewWrapper::setSizePolicy(SizePolicy, SizePolicy)
-{
-    qFatal("Not implemented");
-}
-
 void ViewWrapper::setFlag(Qt::WindowType, bool)
 {
     qFatal("Not implemented");

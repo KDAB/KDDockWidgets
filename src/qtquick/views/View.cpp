@@ -632,22 +632,6 @@ void View::setWindowOpacity(double v)
         w->setOpacity(v);
 }
 
-void View::setSizePolicy(SizePolicy h, SizePolicy v)
-{
-    m_horizontalSizePolicy = h;
-    m_verticalSizePolicy = v;
-}
-
-SizePolicy View::verticalSizePolicy() const
-{
-    return m_verticalSizePolicy;
-}
-
-SizePolicy View::horizontalSizePolicy() const
-{
-    return m_horizontalSizePolicy;
-}
-
 void View::setWindowTitle(const QString &title)
 {
     if (QWindow *w = QQuickItem::window())
@@ -667,7 +651,6 @@ bool View::isActiveWindow() const
 
     return false;
 }
-
 
 void View::showNormal()
 {

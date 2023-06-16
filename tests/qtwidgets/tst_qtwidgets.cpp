@@ -1094,7 +1094,7 @@ void TestQtWidgets::tst_maximumSizePolicy()
     const int maxHeight = 250;
     auto widget =
         Platform::instance()->tests_createView({ true, QSize(250, maxHeight), QSize(200, 200) });
-    widget->setSizePolicy(SizePolicy::Preferred, SizePolicy::Maximum);
+    QtCommon::View_qt::asQWidget(widget)->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 
     auto dock1 = createDockWidget("dock1", widget);
     dock1->open();
@@ -1388,11 +1388,12 @@ void TestQtWidgets::tst_fixedSizePolicy()
 
     const int buttonMaxHeight = button->sizeHint().height();
 
+    QWidget *dockWidget1 = QtCommon::View_qt::asQWidget(dock1->view());
     QCOMPARE(dock1->view()->sizeHint(), button->sizeHint());
-    QCOMPARE(dock1->view()->verticalSizePolicy(),
-             SizePolicy(button->sizePolicy().verticalPolicy()));
-    QCOMPARE(dock1->view()->horizontalSizePolicy(),
-             SizePolicy(button->sizePolicy().horizontalPolicy()));
+    QCOMPARE(dockWidget1->sizePolicy().verticalPolicy(),
+             button->sizePolicy().verticalPolicy());
+    QCOMPARE(dockWidget1->sizePolicy().horizontalPolicy(),
+             button->sizePolicy().horizontalPolicy());
 
     QCOMPARE(group->view()->maxSizeHint().height(),
              qMax(buttonMaxHeight, Core::Item::hardcodedMinimumSize.height()));

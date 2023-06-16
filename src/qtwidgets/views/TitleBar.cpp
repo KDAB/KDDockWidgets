@@ -117,6 +117,7 @@ TitleBar::TitleBar(QWidget *parent)
 
 void TitleBar::init()
 {
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     if (m_titleBar->titleBarIsFocusable())
         setFocusPolicy(Qt::StrongFocus);
 

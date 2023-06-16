@@ -1718,15 +1718,12 @@ KDDW_QCORO_TASK tst_floatingLastPosAfterDoubleClose()
     KDDW_TEST_RETURN(true);
 }
 
-
-
 KDDW_QCORO_TASK tst_honourGeometryOfHiddenWindow()
 {
     EnsureTopLevelsDeleted e;
 
     auto d1 = newDockWidget("1");
     auto guest = Platform::instance()->tests_createFocusableView({ true });
-    guest->setSizePolicy(SizePolicy::Expanding, SizePolicy::Expanding);
     d1->setGuestView(guest->asWrapper());
 
     CHECK(!d1->isVisible());

@@ -70,9 +70,6 @@ public:
     QPoint mapFromGlobal(QPoint globalPt) const override;
     QPoint mapTo(Core::View *parent, QPoint pos) const override;
     void setWindowOpacity(double v) override;
-    void setSizePolicy(SizePolicy hPolicy, SizePolicy vPolicy) override;
-    SizePolicy verticalSizePolicy() const override;
-    SizePolicy horizontalSizePolicy() const override;
 
     bool onResize(int w, int h) override;
 

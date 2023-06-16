@@ -75,12 +75,12 @@ public:
         QSize max = Base::maximumSize();
         max = boundedMaxSize(min, max); // for safety against weird values
 
-        const SizePolicy vPolicy = verticalSizePolicy();
-        const SizePolicy hPolicy = horizontalSizePolicy();
+        const auto vPolicy = QWidget::sizePolicy().verticalPolicy();
+        const auto hPolicy = QWidget::sizePolicy().horizontalPolicy();
 
-        if (vPolicy == SizePolicy::Fixed || vPolicy == SizePolicy::Maximum)
+        if (vPolicy == QSizePolicy::Fixed || vPolicy == QSizePolicy::Maximum)
             max.setHeight(qMin(max.height(), sizeHint().height()));
-        if (hPolicy == SizePolicy::Fixed || hPolicy == SizePolicy::Maximum)
+        if (hPolicy == QSizePolicy::Fixed || hPolicy == QSizePolicy::Maximum)
             max.setWidth(qMin(max.width(), sizeHint().width()));
 
         max = View::boundedMaxSize(min, max); // for safety against weird values
@@ -225,21 +225,6 @@ public:
     QPoint mapTo(Core::View *someAncestor, QPoint pos) const override
     {
         return QWidget::mapTo(View_qt::asQWidget(someAncestor), pos);
-    }
-
-    void setSizePolicy(SizePolicy h, SizePolicy v) override
-    {
-        Base::setSizePolicy(QSizePolicy(QSizePolicy::Policy(h), QSizePolicy::Policy(v)));
-    }
-
-    SizePolicy verticalSizePolicy() const override
-    {
-        return SizePolicy(Base::sizePolicy().verticalPolicy());
-    }
-
-    SizePolicy horizontalSizePolicy() const override
-    {
-        return SizePolicy(Base::sizePolicy().horizontalPolicy());
     }
 
     void setWindowOpacity(double v) override

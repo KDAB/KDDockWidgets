@@ -112,9 +112,6 @@ public:
     virtual QPoint mapToGlobal(QPoint) const = 0;
     virtual QPoint mapFromGlobal(QPoint) const = 0;
     virtual QPoint mapTo(View *, QPoint) const = 0;
-    virtual void setSizePolicy(SizePolicy, SizePolicy) = 0;
-    virtual SizePolicy verticalSizePolicy() const = 0;
-    virtual SizePolicy horizontalSizePolicy() const = 0;
     virtual bool close() = 0;
     virtual void setFlag(Qt::WindowType, bool = true) = 0;
     virtual void setAttribute(Qt::WidgetAttribute, bool enable = true) = 0;

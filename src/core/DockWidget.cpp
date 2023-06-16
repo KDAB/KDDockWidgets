@@ -181,10 +181,8 @@ void DockWidget::setGuestView(std::shared_ptr<View> guest)
     }
 
     d->guest = guest;
-    if (guest) {
-        view()->setSizePolicy(guest->horizontalSizePolicy(), guest->verticalSizePolicy());
+    if (guest)
         guest->setParent(view());
-    }
 
     Q_EMIT guestViewChanged();
 }

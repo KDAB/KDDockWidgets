@@ -64,7 +64,7 @@ public:
     {
         create();
         setMinimumSize(opts.minSize.boundedTo(opts.maxSize));
-        setSizePolicy(SizePolicy::Preferred, SizePolicy::Preferred);
+        setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     }
 
     QSize sizeHint() const override

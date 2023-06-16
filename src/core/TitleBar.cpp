@@ -80,7 +80,6 @@ TitleBar::TitleBar(Core::View *view)
 void TitleBar::init()
 {
     view()->init();
-    view()->setSizePolicy(SizePolicy::Minimum, SizePolicy::Fixed);
 
     connect(this, &TitleBar::isFocusedChanged, this, [this] {
         // repaint
