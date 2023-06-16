@@ -55,7 +55,12 @@ public:
 
     bool eventFilter(QObject *o, QEvent *ev) override
     {
-        if (ev->type() != QEvent::WindowActivate && ev->type() != QEvent::WindowDeactivate && !o->isWidgetType()) // QWindow is not receiving it
+        // We're only interested in window activation events
+        if (ev->type() != QEvent::WindowActivate && ev->type() != QEvent::WindowDeactivate)
+            return false;
+
+        // QWindow is not receiving it
+        if (!o->isWidgetType())
             return false;
 
         if (auto w = qobject_cast<QWidget *>(o)) {
