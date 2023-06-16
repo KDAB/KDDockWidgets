@@ -27,10 +27,18 @@ If some API is missing in the View, try looking in the controller, so, for examp
 
 ## Headers
 
-`<kddockwidgets/FrameworkWidgetFactory.h>` -> `<kddockwidgets/ViewFactory.h>`
-<br>
-`<kddockwidgets/private/widgets/TitleBarWidget_p.h>` -> `<kddockwidgets/qtwidgets/views/TitleBar.h>`
-<br>
-`<kddockwidgets/private/TabWidget_p.h>` -> `<kddockwidgets/qtwidgets/Stack.h>`
-<br>
-`<kddockwidgets/private/widgets/TabBarWidget_p.h>` -> `<kddockwidgets/qtwidgets/views/TabBar.h>`
+Views are in `kddockwidgets/FRONTEND/views/`. Replace FRONTEND with `qtwidgets` or `qtquick`.
+
+So for example, if you had:
+```
+#include <kddockwidgets/private/widgets/TitleBarWidget_p.h>
+#include <kddockwidgets/private/TabWidget_p.h>
+#include <kddockwidgets/private/widgets/TabBarWidget_p.h>
+```
+
+You should now have:
+```
+#include <kddockwidgets/qtwidgets/views/TitleBar.h>
+#include <kddockwidgets/qtwidgets/Stack.h>
+#include <kddockwidgets/qtwidgets/views/TabBar.h>
+```
