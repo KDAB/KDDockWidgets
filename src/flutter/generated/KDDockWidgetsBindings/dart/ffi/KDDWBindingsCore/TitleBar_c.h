@@ -11,13 +11,13 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include "core/TitleBar.h"
 #include <qstring.h>
-#include <core/Group.h>
 #include <FloatingWindow.h>
+#include <core/Group.h>
+#include <core/View.h>
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
 #include <TabBar.h>
 #include <qpoint.h>
-#include <core/View.h>
 #include <qsize.h>
 #include <qrect.h>
 
@@ -29,6 +29,7 @@ public:
     ~TitleBar_wrapper();
     TitleBar_wrapper(KDDockWidgets::Core::FloatingWindow *parent);
     TitleBar_wrapper(KDDockWidgets::Core::Group *parent);
+    TitleBar_wrapper(KDDockWidgets::Core::View *arg__1);
     bool closeButtonEnabled() const;
     void closeButtonEnabledChanged(bool arg__1);
     QString floatButtonToolTip() const;
@@ -48,6 +49,7 @@ public:
     virtual bool isMDI() const;
     virtual bool isMDI_nocallback() const;
     bool isOverlayed() const;
+    bool isStandalone() const;
     virtual bool isWindow() const;
     virtual bool isWindow_nocallback() const;
     KDDockWidgets::Core::MainWindow *mainWindow() const;
@@ -94,6 +96,8 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_FloatingWindow(void *parent_);
 // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::Group * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_Group(void *parent_);
+// KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::View * arg__1)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_View(void *arg__1_);
 // KDDockWidgets::Core::TitleBar::closeButtonEnabled() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__closeButtonEnabled(void *thisObj);
 // KDDockWidgets::Core::TitleBar::closeButtonEnabledChanged(bool arg__1)
@@ -130,6 +134,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__isFocusedChan
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isMDI(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isOverlayed() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isOverlayed(void *thisObj);
+// KDDockWidgets::Core::TitleBar::isStandalone() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isStandalone(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isWindow(void *thisObj);
 // KDDockWidgets::Core::TitleBar::mainWindow() const

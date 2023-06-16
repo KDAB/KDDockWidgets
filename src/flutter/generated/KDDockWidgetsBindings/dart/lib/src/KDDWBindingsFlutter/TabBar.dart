@@ -439,14 +439,6 @@ class TabBar extends KDDWBindingsFlutter.View {
       throw Error();
     }
     dartInstance.onGeometryChanged();
-  } // onRebuildRequested()
-
-  onRebuildRequested() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1052))
-        .asFunction();
-    func(thisCpp);
   }
 
   static void onRebuildRequested_calledFromC(ffi.Pointer<void> thisCpp) {
@@ -1340,7 +1332,7 @@ class TabBar extends KDDWBindingsFlutter.View {
         KDDWBindingsFlutter.View.onGeometryChanged_calledFromC);
     registerCallback(thisCpp, callback1050, 1050);
     final callback1052 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.TabBar.onRebuildRequested_calledFromC);
+        KDDWBindingsFlutter.View.onRebuildRequested_calledFromC);
     registerCallback(thisCpp, callback1052, 1052);
     const callbackExcept978 = 0;
     final callback978 =

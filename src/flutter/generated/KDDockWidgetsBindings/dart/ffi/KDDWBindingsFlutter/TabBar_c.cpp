@@ -454,14 +454,12 @@ void TabBar_wrapper::onRebuildRequested()
         const void *thisPtr = this;
         m_onRebuildRequestedCallback(const_cast<void *>(thisPtr));
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
-        return;
+        ::KDDockWidgets::flutter::TabBar::onRebuildRequested();
     }
 }
 void TabBar_wrapper::onRebuildRequested_nocallback()
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
-    return;
+    ::KDDockWidgets::flutter::TabBar::onRebuildRequested();
 }
 bool TabBar_wrapper::onResize(int h, int w)
 {

@@ -36,6 +36,10 @@ TitleBar_wrapper::TitleBar_wrapper(KDDockWidgets::Core::Group *parent)
     : ::KDDockWidgets::Core::TitleBar(parent)
 {
 }
+TitleBar_wrapper::TitleBar_wrapper(KDDockWidgets::Core::View *arg__1)
+    : ::KDDockWidgets::Core::TitleBar(arg__1)
+{
+}
 bool TitleBar_wrapper::closeButtonEnabled() const
 {
     return ::KDDockWidgets::Core::TitleBar::closeButtonEnabled();
@@ -116,6 +120,10 @@ bool TitleBar_wrapper::isMDI_nocallback() const
 bool TitleBar_wrapper::isOverlayed() const
 {
     return ::KDDockWidgets::Core::TitleBar::isOverlayed();
+}
+bool TitleBar_wrapper::isStandalone() const
+{
+    return ::KDDockWidgets::Core::TitleBar::isStandalone();
 }
 bool TitleBar_wrapper::isWindow() const
 {
@@ -283,6 +291,12 @@ void *c_KDDockWidgets__Core__TitleBar__constructor_Group(void *parent_)
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper(parent);
     return reinterpret_cast<void *>(ptr);
 }
+void *c_KDDockWidgets__Core__TitleBar__constructor_View(void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
+    auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper(arg__1);
+    return reinterpret_cast<void *>(ptr);
+}
 // closeButtonEnabled() const
 bool c_KDDockWidgets__Core__TitleBar__closeButtonEnabled(void *thisObj)
 {
@@ -373,6 +387,11 @@ bool c_KDDockWidgets__Core__TitleBar__isMDI(void *thisObj)
 bool c_KDDockWidgets__Core__TitleBar__isOverlayed(void *thisObj)
 {
     return fromWrapperPtr(thisObj)->isOverlayed();
+}
+// isStandalone() const
+bool c_KDDockWidgets__Core__TitleBar__isStandalone(void *thisObj)
+{
+    return fromPtr(thisObj)->isStandalone();
 }
 // isWindow() const
 bool c_KDDockWidgets__Core__TitleBar__isWindow(void *thisObj)
@@ -519,16 +538,16 @@ void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1158:
+    case 1159:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 1161:
+    case 1163:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
     case 909:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1183:
+    case 1185:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

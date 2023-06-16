@@ -2673,6 +2673,8 @@ void c_KDDockWidgets__flutter__DockWidget_Finalizer(void *, void *cppObj, void *
 void *c_KDDockWidgets__Core__TitleBar__constructor_FloatingWindow(void *parent_);
 // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::Group * parent)
 void *c_KDDockWidgets__Core__TitleBar__constructor_Group(void *parent_);
+// KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::View * arg__1)
+void *c_KDDockWidgets__Core__TitleBar__constructor_View(void *arg__1_);
 // KDDockWidgets::Core::TitleBar::closeButtonEnabled() const
 bool c_KDDockWidgets__Core__TitleBar__closeButtonEnabled(void *thisObj);
 // KDDockWidgets::Core::TitleBar::closeButtonEnabledChanged(bool arg__1)
@@ -2709,6 +2711,8 @@ void c_KDDockWidgets__Core__TitleBar__isFocusedChanged(void *thisObj);
 bool c_KDDockWidgets__Core__TitleBar__isMDI(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isOverlayed() const
 bool c_KDDockWidgets__Core__TitleBar__isOverlayed(void *thisObj);
+// KDDockWidgets::Core::TitleBar::isStandalone() const
+bool c_KDDockWidgets__Core__TitleBar__isStandalone(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isWindow() const
 bool c_KDDockWidgets__Core__TitleBar__isWindow(void *thisObj);
 // KDDockWidgets::Core::TitleBar::mainWindow() const
