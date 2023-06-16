@@ -53,13 +53,13 @@ public:
     explicit View(Controller *controller, ViewType);
     virtual ~View();
 
-    virtual void init()
-    {
-    }
+    /// init method to solve cyclic ctor dependencies between view and controllers
+    /// Called by the controller
+    virtual void init();
 
     /// @brief Returns a handle for the GUI element
     /// This value only makes sense to the frontend. For example, for QtQuick it might be a
-    /// QQuickItem, while for QtWidgets it's a QWidget *. Can be whatever the frontend developer
+    /// QQuickItem, while for QtWidgets it's a QWidget. Can be whatever the frontend developer
     /// wants, as long as it uniquely identifies the GUI element. KDDW backend only uses it for
     /// comparison purposes
     virtual HANDLE handle() const = 0;

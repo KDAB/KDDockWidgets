@@ -99,6 +99,10 @@ void View::free()
     delete this;
 }
 
+void View::init()
+{
+}
+
 bool View::freed() const
 {
     return m_freed;
