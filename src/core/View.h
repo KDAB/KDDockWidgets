@@ -104,11 +104,14 @@ public:
     virtual QPoint mapTo(View *, QPoint) const = 0;
     virtual bool close() = 0;
     virtual void setFlag(Qt::WindowType, bool = true) = 0;
-    virtual void setAttribute(Qt::WidgetAttribute, bool enable = true) = 0;
-    virtual bool testAttribute(Qt::WidgetAttribute) const = 0;
     virtual Qt::WindowFlags flags() const = 0;
     virtual void setWindowTitle(const QString &title) = 0;
     virtual void setWindowIcon(const Icon &) = 0;
+
+    /// Enable/disable attributes. This is mostly for QtWidget compatibility
+    /// Do not use. We don't depend on Qt::WidgetAttribute in a future version.
+    virtual void enableAttribute(Qt::WidgetAttribute, bool enable = true) = 0;
+    virtual bool hasAttribute(Qt::WidgetAttribute) const = 0;
 
     /// @brief Installs an event filter in this view to intercept the event it receives
     /// Analogue to QObject::installEventFilter() in the Qt world

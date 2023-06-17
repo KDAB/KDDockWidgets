@@ -74,9 +74,9 @@ void ViewWrapper::setAttribute(Qt::WidgetAttribute attr, bool enabled)
     m_wrappedView->setAttribute(attr, enabled);
 }
 
-bool ViewWrapper::testAttribute(Qt::WidgetAttribute attr) const
+bool ViewWrapper::hasAttribute(Qt::WidgetAttribute attr) const
 {
-    return m_wrappedView->testAttribute(attr);
+    return m_wrappedView->hasAttribute(attr);
 }
 
 void ViewWrapper::setFlag(Qt::WindowType flag, bool enabled)

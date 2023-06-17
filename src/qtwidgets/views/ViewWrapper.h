@@ -53,7 +53,7 @@ public:
     bool isNull() const override;
     void setWindowTitle(const QString &title) override;
     QPoint mapTo(View *, QPoint) const override;
-    bool testAttribute(Qt::WidgetAttribute) const override;
+    bool hasAttribute(Qt::WidgetAttribute) const override;
     void setCursor(Qt::CursorShape) override;
     QSize minSize() const override;
     Qt::FocusPolicy focusPolicy() const override;

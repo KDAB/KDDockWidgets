@@ -32,7 +32,7 @@ DropIndicatorOverlay::DropIndicatorOverlay(DropArea *dropArea, View *view)
 
     // Set transparent for mouse events so that topLevel->childAt() never returns the drop indicator
     // overlay
-    view->setAttribute(Qt::WA_TransparentForMouseEvents);
+    view->enableAttribute(Qt::WA_TransparentForMouseEvents);
 
     connect(DockRegistry::self(), &DockRegistry::dropIndicatorsInhibitedChanged, this,
             [this](bool inhibited) {

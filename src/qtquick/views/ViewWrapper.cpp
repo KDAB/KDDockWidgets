@@ -210,7 +210,7 @@ void ViewWrapper::move(int x, int y)
 
     m_item->setX(x);
     m_item->setY(y);
-    setAttribute(Qt::WA_Moved);
+    enableAttribute(Qt::WA_Moved);
 }
 
 void ViewWrapper::activateWindow()
@@ -391,11 +391,11 @@ QPoint ViewWrapper::mapTo(View *parent, QPoint pos) const
     return parentItem->mapFromGlobal(m_item->mapToGlobal(pos)).toPoint();
 }
 
-bool ViewWrapper::testAttribute(Qt::WidgetAttribute attr) const
+bool ViewWrapper::hasAttribute(Qt::WidgetAttribute attr) const
 {
     if (auto view = unwrap()) {
         // Only real views have min size
-        return view->testAttribute(attr);
+        return view->hasAttribute(attr);
     } else {
         qFatal("not implemented");
         return false;

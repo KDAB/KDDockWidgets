@@ -250,12 +250,12 @@ public:
         QWidget::setWindowFlag(flag, on);
     }
 
-    void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override
+    void enableAttribute(Qt::WidgetAttribute attr, bool enable = true) override
     {
         QWidget::setAttribute(attr, enable);
     }
 
-    bool testAttribute(Qt::WidgetAttribute attr) const override
+    bool hasAttribute(Qt::WidgetAttribute attr) const override
     {
         return QWidget::testAttribute(attr);
     }

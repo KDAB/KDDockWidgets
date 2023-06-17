@@ -100,8 +100,8 @@ public:
     static bool close(QQuickItem *);
     bool close() override;
     void setFlag(Qt::WindowType f, bool on = true) override;
-    void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override;
-    bool testAttribute(Qt::WidgetAttribute attr) const override;
+    void enableAttribute(Qt::WidgetAttribute attr, bool enable = true) override;
+    bool hasAttribute(Qt::WidgetAttribute attr) const override;
     Qt::WindowFlags flags() const override;
 
     void setWindowTitle(const QString &title) override;

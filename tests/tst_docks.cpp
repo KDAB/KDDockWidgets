@@ -349,7 +349,7 @@ KDDW_QCORO_TASK tst_honourUserGeometry()
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dw1 = newDockWidget(QStringLiteral("1"));
-    CHECK(!dw1->view()->testAttribute(Qt::WA_PendingMoveEvent));
+    CHECK(!dw1->view()->hasAttribute(Qt::WA_PendingMoveEvent));
 
     const QPoint pt(10, 10);
     dw1->view()->move(pt);

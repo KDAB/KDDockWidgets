@@ -127,11 +127,11 @@ std::shared_ptr<Core::View> View::rootView() const
     return const_cast<View *>(this)->asWrapper();
 }
 
-void View::setAttribute(Qt::WidgetAttribute, bool)
+void View::enableAttribute(Qt::WidgetAttribute, bool)
 {
 }
 
-bool View::testAttribute(Qt::WidgetAttribute) const
+bool View::hasAttribute(Qt::WidgetAttribute) const
 {
     return false;
 }

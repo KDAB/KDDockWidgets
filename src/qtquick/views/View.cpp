@@ -237,7 +237,7 @@ void View::move(int x, int y)
 
     QQuickItem::setX(x);
     QQuickItem::setY(y);
-    setAttribute(Qt::WA_Moved);
+    enableAttribute(Qt::WA_Moved);
 }
 
 bool View::event(QEvent *ev)
@@ -411,7 +411,7 @@ void View::makeItemFillParent(QQuickItem *item)
     anchors->setProperty("fill", QVariant::fromValue(parentItem));
 }
 
-void View::setAttribute(Qt::WidgetAttribute attr, bool enable)
+void View::enableAttribute(Qt::WidgetAttribute attr, bool enable)
 {
     if (enable)
         m_widgetAttributes |= attr;
@@ -419,7 +419,7 @@ void View::setAttribute(Qt::WidgetAttribute attr, bool enable)
         m_widgetAttributes &= ~attr;
 }
 
-bool View::testAttribute(Qt::WidgetAttribute attr) const
+bool View::hasAttribute(Qt::WidgetAttribute attr) const
 {
     return m_widgetAttributes & attr;
 }

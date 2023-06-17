@@ -327,7 +327,7 @@ QPoint ViewWrapper::mapTo(Core::View *someAncestor, QPoint pos) const
     return m_widget->mapTo(View_qt::asQWidget(someAncestor), pos);
 }
 
-bool ViewWrapper::testAttribute(Qt::WidgetAttribute attr) const
+bool ViewWrapper::hasAttribute(Qt::WidgetAttribute attr) const
 {
     return m_widget->testAttribute(attr);
 }

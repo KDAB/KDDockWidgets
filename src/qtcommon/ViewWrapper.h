@@ -45,7 +45,7 @@ public:
     void raiseAndActivate() override;
     void raise() override;
     void setFlag(Qt::WindowType, bool = true) override;
-    void setAttribute(Qt::WidgetAttribute, bool enable = true) override;
+    void enableAttribute(Qt::WidgetAttribute, bool enable = true) override;
     Qt::WindowFlags flags() const override;
     void setWindowIcon(const QIcon &) override;
     void showNormal() override;

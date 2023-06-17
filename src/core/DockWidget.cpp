@@ -74,7 +74,7 @@ DockWidget::~DockWidget()
 void DockWidget::init()
 {
     d->init();
-    view()->setAttribute(Qt::WA_PendingMoveEvent, false);
+    view()->enableAttribute(Qt::WA_PendingMoveEvent, false);
 }
 
 void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
@@ -571,8 +571,8 @@ Core::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
         if (geo.isNull()) {
             geo = q->geometry();
 
-            if (!q->view()->testAttribute(Qt::WA_PendingMoveEvent)) { // If user already moved it,
-                                                                      // we don't
+            if (!q->view()->hasAttribute(Qt::WA_PendingMoveEvent)) { // If user already moved it,
+                                                                     // we don't
                 // interfere
                 const QPoint center = defaultCenterPosForFloating();
                 if (!center.isNull())

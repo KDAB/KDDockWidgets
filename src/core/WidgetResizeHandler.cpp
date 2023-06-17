@@ -517,7 +517,7 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
         const auto childViews = mTarget->childViews();
         for (int i = 0, total = childViews.size(); i < total; ++i) {
             auto child = childViews.at(i);
-            if (!child->testAttribute(Qt::WA_SetCursor)) {
+            if (!child->hasAttribute(Qt::WA_SetCursor)) {
                 child->setCursor(Qt::ArrowCursor);
             }
         }
