@@ -300,24 +300,24 @@ bool View::Private::isInWindow(std::shared_ptr<Core::Window> window) const
     return false;
 }
 
-QSize View::parentSize() const
+QSize View::Private::parentSize() const
 {
-    if (auto p = parentView())
+    if (auto p = q->parentView())
         return p->size();
     return {};
 }
 
-QRect View::windowGeometry() const
+QRect View::Private::windowGeometry() const
 {
-    if (Core::Window::Ptr window = this->window())
+    if (Core::Window::Ptr window = q->window())
         return window->geometry();
 
     return {};
 }
 
-void View::closeRootView()
+void View::Private::closeRootView()
 {
-    if (auto view = rootView())
+    if (auto view = q->rootView())
         view->close();
 }
 

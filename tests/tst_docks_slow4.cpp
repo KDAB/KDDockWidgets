@@ -79,7 +79,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     Core::TabBar *tabBar = group2->stack()->tabBar();
     CHECK(tabBar);
     KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos,
-                       group2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
+                       group2->view()->d->windowGeometry().bottomRight() + QPoint(10, 10));
 
     CHECK(group2->dockWidgetCount() == 1);
     CHECK(dock1->floatingWindow());

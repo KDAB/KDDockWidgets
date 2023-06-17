@@ -370,7 +370,7 @@ void TitleBar::onCloseClicked()
             }
         } else {
             if (m_group->isTheOnlyGroup() && m_group->isInFloatingWindow()) {
-                m_group->view()->closeRootView();
+                m_group->view()->d->closeRootView();
             } else {
                 m_group->view()->close();
             }
@@ -392,7 +392,7 @@ void TitleBar::onCloseClicked()
             m_floatingWindow->view()->close();
         }
     } else if (m_isStandalone) {
-        view()->closeRootView();
+        view()->d->closeRootView();
     }
 }
 

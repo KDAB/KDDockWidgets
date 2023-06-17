@@ -781,7 +781,7 @@ void DockWidget::Private::close()
         && q->isVisible()) { // only user-closing is interesting to save the geometry
         // We check for isVisible so we don't save geometry if you call close() on an already closed
         // dock widget
-        m_lastPosition->setLastFloatingGeometry(q->view()->windowGeometry());
+        m_lastPosition->setLastFloatingGeometry(q->view()->d->windowGeometry());
     }
 
     saveTabIndex();
@@ -1031,7 +1031,7 @@ void DockWidget::Private::saveLastFloatingGeometry()
 {
     if (q->isFloating() && q->isVisible()) {
         // It's getting docked, save last floating position
-        lastPosition()->setLastFloatingGeometry(q->view()->windowGeometry());
+        lastPosition()->setLastFloatingGeometry(q->view()->d->windowGeometry());
     }
 }
 

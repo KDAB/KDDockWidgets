@@ -213,10 +213,6 @@ public:
     void setSize(QSize);
 
 
-    void closeRootView();
-    QRect windowGeometry() const;
-    QSize parentSize() const;
-
     /// The minimum minimum size a dock widget can have
     static QSize hardcodedMinimumSize();
 

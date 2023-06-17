@@ -91,6 +91,10 @@ public:
     /// @brief Returns whether free() has already been called
     bool freed() const;
 
+    void closeRootView();
+    QRect windowGeometry() const;
+    QSize parentSize() const;
+
     /// If this view is wrapped in a shared ptr, this weak ptr allows us to promote to shared ptr
     std::weak_ptr<View> m_thisWeakPtr;
 

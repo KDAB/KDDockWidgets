@@ -516,7 +516,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
         return false;
     }
 
-    const QSize parentSize = group->view()->parentSize();
+    const QSize parentSize = group->view()->d->parentSize();
     const QPoint oldPos = group->mapToGlobal(QPoint(0, 0));
     const QPoint delta = globalPos - oldPos;
     const QPoint newLocalPos = group->pos() + delta - q->m_offset;

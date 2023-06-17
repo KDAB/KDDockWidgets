@@ -23,6 +23,7 @@
 #include "core/Logging_p.h"
 #include "core/Position_p.h"
 #include "core/Utils_p.h"
+#include "core/View_p.h"
 
 #include "core/DockRegistry.h"
 #include "core/Platform.h"
@@ -1102,7 +1103,7 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
     this->mainWindowName = mainWindowId;
     this->savedMainWindowGeometry = savedMainWindowGeo;
     realMainWindowGeometry =
-        mainWindow->window()->windowGeometry(); // window() as our main window might be embedded
+        mainWindow->window()->d->windowGeometry(); // window() as our main window might be embedded
     widthFactor = double(realMainWindowGeometry.width()) / savedMainWindowGeo.width();
     heightFactor = double(realMainWindowGeometry.height()) / savedMainWindowGeo.height();
     mainWindowChangedScreen = currentScreenIndex != screenIndex;
