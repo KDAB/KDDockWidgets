@@ -103,7 +103,16 @@ endmacro ()
 # MACRO check_compiler_support
 #------------------------------
 macro (enable_sanitizer_flags sanitize_option)
-    if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+
+    if (MSVC AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
+
+        if (${sanitize_option} MATCHES "address")
+            set(XSAN_COMPILE_FLAGS "-fsanitize=address")
+        elseif (${sanitize_option} MATCHES "undefined")
+            set(XSAN_COMPILE_FLAGS "-fsanitize=undefined")
+        endif()
+
+    elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
         if (${sanitize_option} MATCHES "address")
             set(msvc_asan_required_version "19.28")
             if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS ${msvc_asan_required_version})
@@ -147,7 +156,7 @@ macro (enable_sanitizer_flags sanitize_option)
 endmacro ()
 
 if (ECM_ENABLE_SANITIZERS)
-    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR (NOT MSVC AND CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
         # for each element of the ECM_ENABLE_SANITIZERS list
         foreach ( CUR_SANITIZER ${ECM_ENABLE_SANITIZERS} )
             # lowercase filter

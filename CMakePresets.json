@@ -255,7 +255,7 @@
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-clangcl-asan",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'",
