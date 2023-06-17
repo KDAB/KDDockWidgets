@@ -191,12 +191,6 @@ public:
     /// @Returns a list of child views
     virtual QVector<std::shared_ptr<View>> childViews() const = 0;
 
-    /// @brief Deletes this view and marks it as being deleted to avoid controller deleting it
-    void free();
-
-    /// @brief Returns whether free() has already been called
-    bool freed() const;
-
     /// @brief Returns whether the DTOR is currently running. freed() might be true while inDtor
     /// false, as the implementation of free() is free to delay it (with deleteLater() for example)
     bool inDtor() const;

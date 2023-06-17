@@ -201,7 +201,7 @@ Core::TitleBar *TitleBar::titleBar() const
 
 void TitleBar::paintEvent(QPaintEvent *)
 {
-    if (freed())
+    if (d->freed())
         return;
 
     QPainter p(this);
@@ -303,7 +303,7 @@ QSize TitleBar::sizeHint() const
 
 void TitleBar::focusInEvent(QFocusEvent *ev)
 {
-    if (!freed())
+    if (!d->freed())
         return;
 
     QWidget::focusInEvent(ev);

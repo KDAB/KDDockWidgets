@@ -11,6 +11,7 @@
 
 #include "MDILayout.h"
 #include "kddockwidgets/core/MDILayout.h"
+#include "core/View_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
@@ -24,6 +25,6 @@ MDILayout::MDILayout(Core::MDILayout *controller, Core::View *parent)
 
 MDILayout::~MDILayout()
 {
-    if (!freed())
+    if (!d->freed())
         m_controller->viewAboutToBeDeleted();
 }

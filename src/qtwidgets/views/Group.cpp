@@ -81,7 +81,7 @@ int Group::nonContentsHeight() const
 
 void Group::paintEvent(QPaintEvent *)
 {
-    if (freed())
+    if (d->freed())
         return;
 
     if (!m_group->isFloating()) {
@@ -110,7 +110,7 @@ void Group::paintEvent(QPaintEvent *)
 
 QSize Group::maxSizeHint() const
 {
-    if (freed())
+    if (d->freed())
         return {};
 
     // waste due to QTabWidget margins, tabbar etc.

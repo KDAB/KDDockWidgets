@@ -56,7 +56,7 @@ View::~View()
     m_inDtor = true;
     d->beingDestroyed.emit();
 
-    if (!freed() && !is(ViewType::ViewWrapper) && !is(ViewType::DropAreaIndicatorOverlay)) {
+    if (!d->freed() && !is(ViewType::ViewWrapper) && !is(ViewType::DropAreaIndicatorOverlay)) {
         // TODOm3
         // Views should be deleted via View::free()!
         // However some of our deletes are coming from widgets parent destroying their children
@@ -86,24 +86,24 @@ ViewType View::Private::type() const
     return m_type;
 }
 
-void View::free()
+void View::Private::free()
 {
-    if (d->m_freed) {
+    if (m_freed) {
         qWarning() << Q_FUNC_INFO << "Free already called";
         return;
     }
 
-    d->m_freed = true;
-    delete this;
+    m_freed = true;
+    delete q;
 }
 
 void View::init()
 {
 }
 
-bool View::freed() const
+bool View::Private::freed() const
 {
-    return d->m_freed;
+    return m_freed;
 }
 
 bool View::inDtor() const

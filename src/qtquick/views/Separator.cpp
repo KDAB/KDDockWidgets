@@ -12,6 +12,7 @@
 #include "Separator.h"
 #include "kddockwidgets/core/Separator.h"
 #include "core/Logging_p.h"
+#include "core/View_p.h"
 #include "core/layouting/Item_p.h"
 // #include "Rubberband_quick.h"
 
@@ -41,7 +42,7 @@ bool Separator::isVertical() const
 
 void Separator::onMousePressed()
 {
-    if (freed())
+    if (Core::View::d->freed())
         return;
 
     m_controller->onMousePress();
@@ -49,7 +50,7 @@ void Separator::onMousePressed()
 
 void Separator::onMouseMoved(QPointF localPos)
 {
-    if (freed())
+    if (Core::View::d->freed())
         return;
 
     const QPointF pos = QQuickItem::mapToItem(parentItem(), localPos);
@@ -58,7 +59,7 @@ void Separator::onMouseMoved(QPointF localPos)
 
 void Separator::onMouseReleased()
 {
-    if (freed())
+    if (Core::View::d->freed())
         return;
 
     m_controller->onMouseReleased();
@@ -66,7 +67,7 @@ void Separator::onMouseReleased()
 
 void Separator::onMouseDoubleClicked()
 {
-    if (freed())
+    if (Core::View::d->freed())
         return;
 
     m_controller->onMouseDoubleClick();

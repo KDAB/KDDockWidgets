@@ -14,6 +14,7 @@
 
 #include "Config.h"
 #include "core/Logging_p.h"
+#include "core/View_p.h"
 #include "kddockwidgets/core/Separator.h"
 
 #include <QMouseEvent>
@@ -32,7 +33,7 @@ Separator::Separator(Core::Separator *controller, Core::View *parent)
 
 void Separator::paintEvent(QPaintEvent *ev)
 {
-    if (freed())
+    if (d->freed())
         return;
 
     if (KDDockWidgets::Config::self().disabledPaintEvents()
@@ -58,7 +59,7 @@ void Separator::paintEvent(QPaintEvent *ev)
 
 void Separator::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
 {
-    if (freed())
+    if (d->freed())
         return;
 
     qCDebug(general) << Q_FUNC_INFO;
@@ -75,7 +76,7 @@ void Separator::leaveEvent(QEvent *)
 
 void Separator::mousePressEvent(QMouseEvent *)
 {
-    if (freed())
+    if (d->freed())
         return;
 
     m_controller->onMousePress();
@@ -83,7 +84,7 @@ void Separator::mousePressEvent(QMouseEvent *)
 
 void Separator::mouseMoveEvent(QMouseEvent *ev)
 {
-    if (freed())
+    if (d->freed())
         return;
 
     m_controller->onMouseMove(mapToParent(ev->pos()));
@@ -91,7 +92,7 @@ void Separator::mouseMoveEvent(QMouseEvent *ev)
 
 void Separator::mouseReleaseEvent(QMouseEvent *)
 {
-    if (freed())
+    if (d->freed())
         return;
 
     m_controller->onMouseReleased();
@@ -99,7 +100,7 @@ void Separator::mouseReleaseEvent(QMouseEvent *)
 
 void Separator::mouseDoubleClickEvent(QMouseEvent *)
 {
-    if (freed())
+    if (d->freed())
         return;
 
     m_controller->onMouseDoubleClick();

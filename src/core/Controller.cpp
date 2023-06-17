@@ -13,6 +13,7 @@
 #include "Platform.h"
 #include "DelayedCall.h"
 #include "View.h"
+#include "View_p.h"
 
 #include <QDebug>
 
@@ -31,7 +32,7 @@ Controller::~Controller()
 {
     m_inDtor = true;
     if (m_view && !m_view->inDtor())
-        m_view->free();
+        m_view->d->free();
 }
 
 ViewType Controller::type() const

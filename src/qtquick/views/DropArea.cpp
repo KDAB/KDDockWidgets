@@ -11,6 +11,7 @@
 
 #include "DropArea.h"
 #include "core/Utils_p.h"
+#include "core/View_p.h"
 #include "kddockwidgets/core/DropArea.h"
 
 using namespace KDDockWidgets;
@@ -28,6 +29,6 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
 
 DropArea::~DropArea()
 {
-    if (!freed())
+    if (!Core::View::d->freed())
         m_dropArea->viewAboutToBeDeleted();
 }

@@ -85,6 +85,12 @@ public:
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Core::Window> window) const;
 
+    /// @brief Deletes this view and marks it as being deleted to avoid controller deleting it
+    void free();
+
+    /// @brief Returns whether free() has already been called
+    bool freed() const;
+
     /// If this view is wrapped in a shared ptr, this weak ptr allows us to promote to shared ptr
     std::weak_ptr<View> m_thisWeakPtr;
 

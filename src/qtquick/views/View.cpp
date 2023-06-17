@@ -183,7 +183,7 @@ void View::redirectMouseEvents(QQuickItem *source)
 
 void View::sendVisibleChangeEvent()
 {
-    if (freed())
+    if (Core::View::d->freed())
         return;
 
     if (m_inSetParent) {
