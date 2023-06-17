@@ -953,7 +953,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                 continue;
 
             if (auto tl = qtTopLevelForHWND(hwnd)) {
-                const QRect windowGeometry = tl->windowGeometry();
+                const QRect windowGeometry = tl->d->windowGeometry();
 
                 if (windowGeometry.contains(globalPos)
                     && tl->viewName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
