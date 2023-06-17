@@ -1074,7 +1074,7 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
 
 static Core::Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
 {
-    return mw->view()->screen();
+    return mw->view()->d->screen();
 }
 
 LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo,

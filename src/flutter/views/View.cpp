@@ -68,7 +68,7 @@ bool View::close()
     // TODO: Ask flutter if we should close
 
     CloseEvent ev;
-    requestClose(&ev);
+    d->requestClose(&ev);
 
     if (ev.isAccepted()) {
         setVisible(false);

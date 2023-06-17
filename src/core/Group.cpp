@@ -125,7 +125,7 @@ void Group::onCloseEvent(CloseEvent *e)
     e->accept(); // Accepted by default (will close unless ignored)
     const DockWidget::List docks = dockWidgets();
     for (DockWidget *dock : docks) {
-        dock->view()->requestClose(e);
+        dock->view()->d->requestClose(e);
         if (!e->isAccepted())
             break; // Stop when the first dockwidget prevents closing
     }
@@ -742,7 +742,7 @@ LayoutSaver::Group Group::serialize() const
     group.geometry = geometry();
     group.options = options();
     group.currentTabIndex = currentTabIndex();
-    group.id = view()->id(); // for coorelation purposes
+    group.id = view()->d->id(); // for coorelation purposes
 
     if (MainWindow *mw = mainWindow()) {
         group.mainWindowUniqueName = mw->uniqueName();

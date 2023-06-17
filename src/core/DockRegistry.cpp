@@ -685,7 +685,7 @@ bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
         return false;
 
     // When clicking on a MDI Frame we raise the window
-    if (Controller *c = view->firstParentOfType(ViewType::Frame)) {
+    if (Controller *c = view->d->firstParentOfType(ViewType::Frame)) {
         auto group = static_cast<Group *>(c);
         if (group->isMDI())
             group->view()->raise();

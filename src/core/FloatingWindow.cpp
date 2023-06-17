@@ -315,12 +315,12 @@ FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
 FloatingWindow::~FloatingWindow()
 {
     m_inDtor = true;
-    view()->setAboutToBeDestroyed();
+    view()->d->setAboutToBeDestroyed();
 
     if (auto da = dropArea()) {
         // Avoid a bunch of QML warnings and constraints being violated at destruction.
         // Also simply avoiding unneeded work, as QML is destroying stuff 1 by 1
-        da->view()->setAboutToBeDestroyed();
+        da->view()->d->setAboutToBeDestroyed();
     }
 
     disconnect(m_layoutDestroyedConnection);
@@ -434,7 +434,7 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometry
 void FloatingWindow::scheduleDeleteLater()
 {
     m_deleteScheduled = true;
-    view()->setAboutToBeDestroyed();
+    view()->d->setAboutToBeDestroyed();
     DockRegistry::self()->unregisterFloatingWindow(this);
     destroyLater();
 }
@@ -648,7 +648,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.windowState = windowStateOverride();
     fw.flags = d->m_flags;
 
-    Window::Ptr transientParentWindow = view()->transientWindow();
+    Window::Ptr transientParentWindow = view()->d->transientWindow();
     auto transientMainWindow = DockRegistry::self()->mainWindowForHandle(transientParentWindow);
     fw.parentIndex =
         transientMainWindow ? DockRegistry::self()->mainwindows().indexOf(transientMainWindow) : -1;

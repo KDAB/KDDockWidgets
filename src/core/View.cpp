@@ -46,10 +46,8 @@ Controller *maybeCreateController(Controller *controller, ViewType type, View *v
 }
 
 View::View(Controller *controller, ViewType type)
-    : d(new Private())
+    : d(new Private(this, QString::number(KDDockWidgets::s_nextId++), type))
     , m_controller(maybeCreateController(controller, type, this))
-    , m_id(QString::number(KDDockWidgets::s_nextId++))
-    , m_type(type)
 {
 }
 
@@ -78,24 +76,24 @@ View::~View()
     delete d;
 }
 
-QString View::id() const
+QString View::Private::id() const
 {
     return m_id;
 }
 
-ViewType View::type() const
+ViewType View::Private::type() const
 {
     return m_type;
 }
 
 void View::free()
 {
-    if (m_freed) {
+    if (d->m_freed) {
         qWarning() << Q_FUNC_INFO << "Free already called";
         return;
     }
 
-    m_freed = true;
+    d->m_freed = true;
     delete this;
 }
 
@@ -105,12 +103,16 @@ void View::init()
 
 bool View::freed() const
 {
-    return m_freed;
+    return d->m_freed;
 }
 
 bool View::inDtor() const
 {
     return m_inDtor;
+}
+
+void View::setZOrder(int)
+{
 }
 
 QSize View::size() const
@@ -168,22 +170,6 @@ void View::resize(int w, int h)
     setSize(w, h);
 }
 
-QSize View::boundedMaxSize(QSize min, QSize max)
-{
-    // Max should be bigger than min, but not bigger than the hardcoded max
-    max = max.boundedTo(Core::Item::hardcodedMaximumSize);
-
-    // 0 interpreted as not having max
-    if (max.width() <= 0)
-        max.setWidth(Core::Item::hardcodedMaximumSize.width());
-    if (max.height() <= 0)
-        max.setHeight(Core::Item::hardcodedMaximumSize.height());
-
-    max = max.expandedTo(min);
-
-    return max;
-}
-
 Controller *View::controller() const
 {
     return m_controller;
@@ -197,7 +183,7 @@ QSize View::hardcodedMinimumSize()
 
 bool View::is(ViewType t) const
 {
-    return int(m_type) & int(t);
+    return int(d->m_type) & int(t);
 }
 
 Core::FloatingWindow *View::asFloatingWindowController() const
@@ -335,27 +321,27 @@ void View::closeRootView()
         view->close();
 }
 
-Screen::Ptr View::screen() const
+Screen::Ptr View::Private::screen() const
 {
-    if (Core::Window::Ptr window = this->window())
+    if (Core::Window::Ptr window = q->window())
         return window->screen();
 
     return nullptr;
 }
 
-void View::setAboutToBeDestroyed()
+void View::Private::setAboutToBeDestroyed()
 {
     m_aboutToBeDestroyed = true;
 }
 
-bool View::aboutToBeDestroyed() const
+bool View::Private::aboutToBeDestroyed() const
 {
     return m_aboutToBeDestroyed;
 }
 
 void View::dumpDebug()
 {
-    qDebug() << "View::dumpDebug:" << m_controller << int(type()) << "root=" << rootView()->controller();
+    qDebug() << "View::dumpDebug:" << m_controller << int(d->type()) << "root=" << rootView()->controller();
 }
 
 /** static */
@@ -376,21 +362,21 @@ Controller *View::firstParentOfType(View *view, ViewType type)
     return nullptr;
 }
 
-Controller *View::firstParentOfType(ViewType type) const
+Controller *View::Private::firstParentOfType(ViewType type) const
 {
-    return View::firstParentOfType(const_cast<View *>(this), type);
+    return View::firstParentOfType(const_cast<View *>(q), type);
 }
 
-void View::requestClose(CloseEvent *e)
+void View::Private::requestClose(CloseEvent *e)
 {
-    d->closeRequested.emit(e);
+    closeRequested.emit(e);
 }
 
-QRect View::globalGeometry() const
+QRect View::Private::globalGeometry() const
 {
-    QRect geo = geometry();
-    if (!isRootView())
-        geo.moveTopLeft(mapToGlobal(QPoint(0, 0)));
+    QRect geo = q->geometry();
+    if (!q->isRootView())
+        geo.moveTopLeft(q->mapToGlobal(QPoint(0, 0)));
     return geo;
 }
 
@@ -400,9 +386,9 @@ void View::createPlatformWindow()
     qFatal("Shouldn't be called on this platform");
 }
 
-std::shared_ptr<Core::Window> View::transientWindow() const
+std::shared_ptr<Core::Window> View::Private::transientWindow() const
 {
-    if (auto w = window())
+    if (auto w = q->window())
         return w->transientParent();
 
     return {};

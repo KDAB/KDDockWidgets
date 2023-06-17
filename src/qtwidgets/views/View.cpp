@@ -12,6 +12,7 @@
 #include "View.h"
 #include "../Window.h"
 #include "core/View_p.h"
+#include "core/layouting/Item_p.h"
 #include "ViewWrapper.h"
 
 #include <QTabBar>
@@ -104,7 +105,7 @@ bool View<T>::event(QEvent *e)
 template<class T>
 void View<T>::closeEvent(QCloseEvent *ev)
 {
-    requestClose(ev);
+    d->requestClose(ev);
 }
 
 template<class T>
@@ -169,10 +170,28 @@ QVector<std::shared_ptr<Core::View>> View<T>::childViewsFor(const QWidget *paren
 }
 
 namespace KDDockWidgets::QtWidgets {
+
 template class View<QWidget>;
 template class View<QMainWindow>;
 template class View<QLineEdit>;
 template class View<QRubberBand>;
 template class View<QTabWidget>;
 template class View<QTabBar>;
+
+QSize boundedMaxSize(QSize min, QSize max)
+{
+    // Max should be bigger than min, but not bigger than the hardcoded max
+    max = max.boundedTo(Core::Item::hardcodedMaximumSize);
+
+    // 0 interpreted as not having max
+    if (max.width() <= 0)
+        max.setWidth(Core::Item::hardcodedMaximumSize.width());
+    if (max.height() <= 0)
+        max.setHeight(Core::Item::hardcodedMaximumSize.height());
+
+    max = max.expandedTo(min);
+
+    return max;
+}
+
 }

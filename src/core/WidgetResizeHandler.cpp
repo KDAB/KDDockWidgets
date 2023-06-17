@@ -14,6 +14,7 @@
 #include "Config.h"
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"
+#include "View_p.h"
 
 #include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/MDILayout.h"
@@ -153,7 +154,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
         // margins, and would show resize cursor. We only want to continue if the cursor is near the
         // margins of our own group (mTarget)
 
-        auto f = widget->firstParentOfType(ViewType::Frame);
+        auto f = widget->d->firstParentOfType(ViewType::Frame);
         auto group = f ? f->view()->asGroupController() : nullptr;
         if (group && group->isMDIWrapper()) {
             // We don't care about the inner Option_MDINestable helper group
@@ -162,8 +163,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 
         if (group && !group->view()->equals(mTarget)) {
             auto groupParent =
-                group->view()->aboutToBeDestroyed() ? nullptr : group->view()->parentView();
-            auto targetParent = mTarget->aboutToBeDestroyed() ? nullptr : mTarget->parentView();
+                group->view()->d->aboutToBeDestroyed() ? nullptr : group->view()->parentView();
+            auto targetParent = mTarget->d->aboutToBeDestroyed() ? nullptr : mTarget->parentView();
             const bool areSiblings = groupParent && groupParent->equals(targetParent);
             if (areSiblings)
                 return false;
@@ -247,13 +248,13 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         return pos != CursorPosition_Undefined;
     }
 
-    const QRect oldGeometry = mTarget->globalGeometry();
+    const QRect oldGeometry = mTarget->d->globalGeometry();
     QRect newGeometry = oldGeometry;
 
     QRect parentGeometry;
     if (!mTarget->isRootView()) {
         auto parent = mTarget->parentView();
-        parentGeometry = parent->globalGeometry();
+        parentGeometry = parent->d->globalGeometry();
     }
 
     {

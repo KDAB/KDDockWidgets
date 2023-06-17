@@ -16,6 +16,7 @@
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/ViewFactory.h"
+#include "core/View_p.h"
 
 #include "Config.h"
 
@@ -43,7 +44,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
         if (auto view = item->guestView())
-            widgets.insert(view->id(), view);
+            widgets.insert(view->d->id(), view);
 
     root2.fillFromVariantMap(serialized, widgets);
 

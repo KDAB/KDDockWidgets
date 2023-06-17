@@ -25,6 +25,8 @@
 
 namespace KDDockWidgets::QtWidgets {
 
+DOCKS_EXPORT QSize boundedMaxSize(QSize min, QSize max);
+
 template<typename Base>
 class DOCKS_EXPORT View : public Base, public QtCommon::View_qt
 {
@@ -66,7 +68,7 @@ public:
 
         const QSize min = minSize();
         QSize max = Base::maximumSize();
-        max = boundedMaxSize(min, max); // for safety against weird values
+        max = QtWidgets::boundedMaxSize(min, max); // for safety against weird values
 
         const auto vPolicy = QWidget::sizePolicy().verticalPolicy();
         const auto hPolicy = QWidget::sizePolicy().horizontalPolicy();
@@ -76,7 +78,7 @@ public:
         if (hPolicy == QSizePolicy::Fixed || hPolicy == QSizePolicy::Maximum)
             max.setWidth(qMin(max.width(), Base::sizeHint().width()));
 
-        max = View::boundedMaxSize(min, max); // for safety against weird values
+        max = QtWidgets::boundedMaxSize(min, max); // for safety against weird values
         return max;
     }
 

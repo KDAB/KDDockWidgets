@@ -186,21 +186,10 @@ public:
 
     /// @brief Sets the z order
     /// Not supported on all platforms
-    virtual void setZOrder(int)
-    {
-    }
+    virtual void setZOrder(int);
 
     /// @Returns a list of child views
     virtual QVector<std::shared_ptr<View>> childViews() const = 0;
-
-    /// @brief Returns this view's controller
-    Controller *controller() const;
-
-    ///@brief returns an id for corelation purposes for saving layouts
-    QString id() const;
-
-    ///@brief Returns the type of this view
-    ViewType type() const;
 
     /// @brief Deletes this view and marks it as being deleted to avoid controller deleting it
     void free();
@@ -217,11 +206,6 @@ public:
     bool equals(const std::shared_ptr<View> &) const;
     static bool equals(const View *one, const View *two);
 
-    std::shared_ptr<Screen> screen() const;
-
-    /// @brief Returns the views's geometry, but always in global space
-    QRect globalGeometry() const;
-
     QPoint pos() const;
     QSize size() const;
     QRect rect() const;
@@ -234,18 +218,32 @@ public:
     void move(QPoint);
     void setSize(QSize);
 
-    /// @brief Convenience. See Window::transientWindow().
-    std::shared_ptr<Core::Window> transientWindow() const;
 
     void closeRootView();
     QRect windowGeometry() const;
     QSize parentSize() const;
 
+    /// The minimum minimum size a dock widget can have
     static QSize hardcodedMinimumSize();
-    static QSize boundedMaxSize(QSize min, QSize max);
 
-    /// @brief if this view is a FloatingWindow, then returns its controller
-    /// Mostly to save the call sites from having too many casts
+    /// @brief Returns the controller of the first parent view of the specified type
+    /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
+    static Controller *firstParentOfType(View *view, ViewType);
+
+    /// @brief Returns this view's controller
+    Controller *controller() const;
+
+    /// Returns the View's controller, casted as T
+    template<typename T>
+    T *asController()
+    {
+        if (m_inDtor)
+            return false;
+
+        return qobject_cast<T *>(m_controller);
+    }
+
+    /// asFooController() are deprecated. Use asController<T>() instead
     Core::FloatingWindow *asFloatingWindowController() const;
     Core::Group *asGroupController() const;
     Core::TitleBar *asTitleBarController() const;
@@ -260,29 +258,8 @@ public:
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Core::Window> window) const;
 
-    /// @brief If true, it means destruction hasn't happen yet but is about to happen.
-    /// Useful when a controller is under destructions and wants all related views to stop painting
-    /// or doing anything that would call back into the controller. If false, it doesn't mean
-    /// anything, as not all controllers are using this.
-    void setAboutToBeDestroyed();
-    bool aboutToBeDestroyed() const;
-
+    /// Prints some debug to stderr
     void dumpDebug();
-
-    /// optional, for debug purposes
-    virtual QDebug toQDebug(QDebug &deb) const
-    {
-        return deb;
-    }
-
-    /// @brief Returns the controller of the first parent view of the specified type
-    /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
-    static Controller *firstParentOfType(View *view, ViewType);
-
-    /// @overload
-    Controller *firstParentOfType(ViewType) const;
-
-    void requestClose(CloseEvent *);
 
 public:
     class Private;
@@ -304,23 +281,7 @@ protected:
     // No shared pointers, as lifetime is managed by parent-children relationship (as in QObject)
     QVector<Core::View *> m_childViews;
 #endif
-
-private:
-    bool m_freed = false;
-    bool m_aboutToBeDestroyed = false;
-    const QString m_id;
-    const ViewType m_type;
 };
-
-/// for debug purposes
-inline QDebug operator<<(QDebug deb, View *view)
-{
-    if (!view)
-        return deb;
-
-    view->toQDebug(deb);
-    return deb;
-}
 
 }
 

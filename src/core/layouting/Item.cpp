@@ -246,7 +246,7 @@ QVariantMap Item::toVariantMap() const
     result[QStringLiteral("objectName")] = objectName();
     if (m_guest)
         result[QStringLiteral("guestId")] =
-            m_guest->id(); // just for coorelation purposes when restoring
+            m_guest->d->id(); // just for coorelation purposes when restoring
 
     return result;
 }

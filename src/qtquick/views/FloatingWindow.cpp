@@ -17,6 +17,7 @@
 
 #include "core/Logging_p.h"
 #include "core/Utils_p.h"
+#include "core/View_p.h"
 #include "core/layouting/Item_p.h"
 
 #include "kddockwidgets/core/DropArea.h"
@@ -226,7 +227,7 @@ void FloatingWindow::init()
     m_quickWindow->show();
 
     connect(this, &QQuickItem::visibleChanged, this, [this] {
-        if (!isVisible() && !aboutToBeDestroyed())
+        if (!isVisible() && !Core::View::d->aboutToBeDestroyed())
             m_controller->scheduleDeleteLater();
     });
 }

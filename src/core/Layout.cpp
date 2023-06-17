@@ -74,7 +74,7 @@ Core::MainWindow *Layout::mainWindow(bool honourNesting) const
 
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.
-        if (Controller *c = view()->firstParentOfType(ViewType::MainWindow))
+        if (Controller *c = view()->d->firstParentOfType(ViewType::MainWindow))
             return static_cast<Core::MainWindow *>(c);
         return nullptr;
     } else {
@@ -319,7 +319,7 @@ LayoutSaver::MultiSplitter Layout::serialize() const
     for (Core::Item *item : items) {
         if (!item->isContainer()) {
             if (auto group = item->asGroupController()) {
-                l.groups.insert(group->view()->id(), group->serialize());
+                l.groups.insert(group->view()->d->id(), group->serialize());
             }
         }
     }
@@ -351,7 +351,7 @@ void Layout::onCloseEvent(CloseEvent *e)
 
     const Core::Group::List groups = this->groups();
     for (Core::Group *group : groups) {
-        group->view()->requestClose(e);
+        group->view()->d->requestClose(e);
         if (!e->isAccepted())
             break; // Stop when the first group prevents closing
     }

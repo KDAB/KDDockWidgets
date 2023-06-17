@@ -26,6 +26,13 @@ class EventFilterInterface;
 class View::Private
 {
 public:
+    explicit Private(View *qq, const QString &id, ViewType type)
+        : q(qq)
+        , m_id(id)
+        , m_type(type)
+    {
+    }
+
     /// @brief signal emitted once ~View starts
     KDBindings::Signal<> beingDestroyed;
 
@@ -45,8 +52,43 @@ public:
     /// List of event filters
     std::vector<EventFilterInterface *> m_viewEventFilters;
 
+    /// @brief Returns the views's geometry, but always in global space
+    QRect globalGeometry() const;
+
+    /// Returns which screen this view is on
+    /// In Qt this is QWindow::screen()
+    std::shared_ptr<Screen> screen() const;
+
+    /// Called by the framework when the user tries to close the view
+    /// The view can accept or ignore this event
+    void requestClose(CloseEvent *);
+
+    /// @brief If true, it means destruction hasn't happen yet but is about to happen.
+    /// Useful when a controller is under destructions and wants all related views to stop painting
+    /// or doing anything that would call back into the controller. If false, it doesn't mean
+    /// anything, as not all controllers are using this.
+    void setAboutToBeDestroyed();
+    bool aboutToBeDestroyed() const;
+
+    /// @brief Convenience. See Window::transientWindow().
+    std::shared_ptr<Core::Window> transientWindow() const;
+
+    ///@brief Returns the type of this view
+    ViewType type() const;
+
+    ///@brief returns an id for corelation purposes for saving layouts
+    QString id() const;
+
+    Controller *firstParentOfType(ViewType) const;
+
     /// If this view is wrapped in a shared ptr, this weak ptr allows us to promote to shared ptr
     std::weak_ptr<View> m_thisWeakPtr;
+
+    View *const q;
+    bool m_freed = false;
+    bool m_aboutToBeDestroyed = false;
+    const QString m_id;
+    const ViewType m_type;
 };
 
 }
