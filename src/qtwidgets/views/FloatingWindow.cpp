@@ -19,6 +19,7 @@
 
 #include "core/Logging_p.h"
 #include "core/Utils_p.h"
+#include "core/View_p.h"
 #include "core/DragController_p.h"
 #include "core/WidgetResizeHandler_p.h"
 
@@ -130,7 +131,7 @@ void FloatingWindow::init()
     d->m_vlayout->addWidget(View_qt::asQWidget(d->m_controller->dropArea()));
 
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
-        if (isInWindow(w))
+        if (View::d->isInWindow(w))
             updateMargins();
     });
 }

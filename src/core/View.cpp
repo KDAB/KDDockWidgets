@@ -289,12 +289,12 @@ bool View::isNull() const
     return false;
 }
 
-bool View::isInWindow(std::shared_ptr<Core::Window> window) const
+bool View::Private::isInWindow(std::shared_ptr<Core::Window> window) const
 {
     if (!window)
         return false;
 
-    if (auto ourWindow = this->window())
+    if (auto ourWindow = q->window())
         return ourWindow->equals(window);
 
     return false;

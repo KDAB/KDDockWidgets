@@ -16,6 +16,7 @@
 #include "kddockwidgets/core/Window.h"
 
 #include "core/Utils_p.h"
+#include "core/View_p.h"
 #include "core/Logging_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/DockRegistry.h"
@@ -188,7 +189,7 @@ void TitleBar::init()
     m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
 
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
-        if (isInWindow(w))
+        if (d->isInWindow(w))
             updateMargins();
     });
 }

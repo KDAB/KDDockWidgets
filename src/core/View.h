@@ -255,9 +255,6 @@ public:
     Core::MDILayout *asMDILayoutController() const;
     Core::Layout *asLayout() const;
 
-    /// @brief returns whether this view is inside the specified window
-    bool isInWindow(std::shared_ptr<Core::Window> window) const;
-
     /// Prints some debug to stderr
     void dumpDebug();
 

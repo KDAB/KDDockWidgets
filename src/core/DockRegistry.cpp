@@ -610,7 +610,7 @@ Core::MainWindow *DockRegistry::mainWindowForHandle(Core::Window::Ptr window) co
         return nullptr;
 
     for (Core::MainWindow *mw : m_mainWindows) {
-        if (mw->view()->isInWindow(window))
+        if (mw->view()->d->isInWindow(window))
             return mw;
     }
 

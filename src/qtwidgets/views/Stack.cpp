@@ -145,7 +145,7 @@ void Stack::setupTabBarButtons()
 
     updateMargins();
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
-        if (isInWindow(w))
+        if (View::d->isInWindow(w))
             updateMargins();
     });
 }
