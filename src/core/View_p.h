@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "kddockwidgets/docks_export.h"
 #include "core/View.h"
 #include "kdbindings/signal.h"
 #include "NonQtCompat_p.h"
@@ -23,7 +24,7 @@ namespace KDDockWidgets {
 namespace Core {
 
 class EventFilterInterface;
-class View::Private
+class DOCKS_EXPORT_FOR_UNIT_TESTS View::Private
 {
 public:
     explicit Private(View *qq, const QString &id, ViewType type)
