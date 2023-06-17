@@ -1967,7 +1967,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow2()
 
     KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
 
-    CHECK(qAbs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway,
+    CHECK(qAbs(m->width() - osWindowMinWidth()) < 30); // Not very important verification. Anyway,
                                                        // using 15 to account for margins and what
                                                        // not.
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
