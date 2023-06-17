@@ -170,28 +170,34 @@ KDDW_QCORO_TASK tst_setAsCurrentTab()
 KDDW_QCORO_TASK tst_dwCloseAndReopen()
 {
     qDebug() << Q_FUNC_INFO;
-    Tests::EnsureTopLevelsDeleted e;
+    {
+        Tests::EnsureTopLevelsDeleted e;
 
-    // Tests that a floating window is deleted after being closed
+        // Tests that a floating window is deleted after being closed
 
-    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    dw->view()->show();
-    QPointer<Core::FloatingWindow> fw = dw->floatingWindow();
-    CHECK(fw);
+        auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+        dw->view()->show();
+        QPointer<Core::FloatingWindow> fw = dw->floatingWindow();
+        CHECK(fw);
 
-    auto titleBar = fw->titleBar();
-    CHECK(titleBar);
-    CHECK(titleBar->isVisible());
-    titleBar->onCloseClicked();
-    CHECK(!dw->isOpen());
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw));
-    CHECK(!fw);
+        auto titleBar = fw->titleBar();
+        CHECK(titleBar);
+        CHECK(titleBar->isVisible());
+        titleBar->onCloseClicked();
+        CHECK(!dw->isOpen());
+        CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw));
+        CHECK(!fw);
 
-    CHECK(!dw->floatingWindow());
-    CHECK(!dw->view()->parentView());
-    dw->open();
+        CHECK(!dw->floatingWindow());
+        CHECK(!dw->view()->parentView());
+        dw->open();
 
-    delete dw;
+        delete dw;
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+
     KDDW_TEST_RETURN(true);
 }
 

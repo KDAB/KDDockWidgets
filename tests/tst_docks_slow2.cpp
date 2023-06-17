@@ -229,14 +229,22 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     KDDW_CO_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_keepLast()
+{
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    KDDW_TEST_RETURN(true);
+}
+
 static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_invalidLayoutAfterRestore),
     TEST(tst_setFloatingWhenSideBySide),
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoCenter),
 #ifndef KDDW_FRONTEND_FLUTTER
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoRight),
-    TEST(tst_dockWindowWithTwoSideBySideFramesIntoLeft)
+    TEST(tst_dockWindowWithTwoSideBySideFramesIntoLeft),
 #endif
+    TEST(tst_keepLast), // Keep this test at the end
 };
 
 #include "tests_main.h"

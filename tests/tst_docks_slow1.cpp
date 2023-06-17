@@ -242,11 +242,19 @@ KDDW_QCORO_TASK tst_invalidJSON()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_keepLast()
+{
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    KDDW_TEST_RETURN(true);
+}
+
 static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_invalidPlaceholderPosition),
     TEST(tst_startHidden),
     TEST(tst_startHidden2),
-    TEST(tst_invalidJSON)
+    TEST(tst_invalidJSON),
+    TEST(tst_keepLast), // Keep this test at the end
 };
 
 #include "tests_main.h"

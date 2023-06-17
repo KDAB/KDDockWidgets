@@ -224,52 +224,57 @@ void TestDocks::tst_tabBarWithHiddenTitleBar_data()
 
 void TestDocks::tst_tabBarWithHiddenTitleBar()
 {
-    EnsureTopLevelsDeleted e;
-    QFETCH(bool, hiddenTitleBar);
-    QFETCH(bool, tabsAlwaysVisible);
+    {
+        EnsureTopLevelsDeleted e;
+        QFETCH(bool, hiddenTitleBar);
+        QFETCH(bool, tabsAlwaysVisible);
 
-    const auto originalFlags = KDDockWidgets::Config::self().flags();
+        const auto originalFlags = KDDockWidgets::Config::self().flags();
 
-    auto newFlags = originalFlags;
+        auto newFlags = originalFlags;
 
-    if (hiddenTitleBar)
-        newFlags = newFlags | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
-
-    if (tabsAlwaysVisible)
-        newFlags = newFlags | KDDockWidgets::Config::Flag_AlwaysShowTabs;
-
-    KDDockWidgets::Config::self().setFlags(newFlags);
-
-    auto m = createMainWindow();
-
-    auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
-    auto d2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
-    m->addDockWidget(d1, Location_OnTop);
-
-    if (tabsAlwaysVisible) {
         if (hiddenTitleBar)
-            QVERIFY(!d1->dptr()->group()->titleBar()->isVisible());
-        else
+            newFlags = newFlags | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
+
+        if (tabsAlwaysVisible)
+            newFlags = newFlags | KDDockWidgets::Config::Flag_AlwaysShowTabs;
+
+        KDDockWidgets::Config::self().setFlags(newFlags);
+
+        auto m = createMainWindow();
+
+        auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+        auto d2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
+        m->addDockWidget(d1, Location_OnTop);
+
+        if (tabsAlwaysVisible) {
+            if (hiddenTitleBar)
+                QVERIFY(!d1->dptr()->group()->titleBar()->isVisible());
+            else
+                QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
+        } else {
             QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
-    } else {
-        QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
+        }
+
+        d1->addDockWidgetAsTab(d2);
+
+        QVERIFY(d2->dptr()->group()->titleBar()->isVisible() ^ hiddenTitleBar);
+
+        d2->close();
+        m->layout()->checkSanity();
+        delete d2;
+        if (tabsAlwaysVisible) {
+            if (hiddenTitleBar)
+                QVERIFY(!d1->dptr()->group()->titleBar()->isVisible());
+            else
+                QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
+        } else {
+            QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
+        }
     }
 
-    d1->addDockWidgetAsTab(d2);
-
-    QVERIFY(d2->dptr()->group()->titleBar()->isVisible() ^ hiddenTitleBar);
-
-    d2->close();
-    m->layout()->checkSanity();
-    delete d2;
-    if (tabsAlwaysVisible) {
-        if (hiddenTitleBar)
-            QVERIFY(!d1->dptr()->group()->titleBar()->isVisible());
-        else
-            QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
-    } else {
-        QVERIFY(d1->dptr()->group()->titleBar()->isVisible());
-    }
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
 }
 
 #include "tst_docks_main.h"

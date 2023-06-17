@@ -17,6 +17,7 @@
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
 #include "Config.h"
+#include "tests/utils.h"
 
 #include <QPointer>
 
@@ -25,6 +26,8 @@ using namespace KDDockWidgets::Core;
 
 KDDW_QCORO_TASK tst_floatingWindowCtor()
 {
+    Tests::EnsureTopLevelsDeleted ensure;
+
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     CHECK(dw->view()->rootView()->is(ViewType::DockWidget));
     CHECK(!dw->view()->parentView());
@@ -49,9 +52,6 @@ KDDW_QCORO_TASK tst_floatingWindowCtor()
     Core::FloatingWindow *fw = dw->floatingWindow();
     CHECK(fw);
     CHECK(fw->view()->equals(rootView));
-
-    delete dw;
-
 
     KDDW_TEST_RETURN(true);
 }

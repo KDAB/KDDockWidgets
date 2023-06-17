@@ -149,40 +149,45 @@ void TestQtQuick::tst_titlebarNumDockWidgetsChanged()
 
 void TestQtQuick::tst_isFloatingIsEmitted()
 {
-    EnsureTopLevelsDeleted e;
-    QQmlApplicationEngine engine(":/main350.qml");
+    {
+        EnsureTopLevelsDeleted e;
+        QQmlApplicationEngine engine(":/main350.qml");
 
-    auto dw4 = DockRegistry::self()->dockByName("dock4");
-    auto dw5 = DockRegistry::self()->dockByName("dock5");
-    QVERIFY(dw4);
-    QVERIFY(dw5);
+        auto dw4 = DockRegistry::self()->dockByName("dock4");
+        auto dw5 = DockRegistry::self()->dockByName("dock5");
+        QVERIFY(dw4);
+        QVERIFY(dw5);
 
-    dw4->setFloating(true);
-    dw5->addDockWidgetToContainingWindow(dw4, KDDockWidgets::Location_OnLeft);
-    dw4->titleBar()->onFloatClicked();
+        dw4->setFloating(true);
+        dw5->addDockWidgetToContainingWindow(dw4, KDDockWidgets::Location_OnLeft);
+        dw4->titleBar()->onFloatClicked();
 
-    QVERIFY(dw4->isFloating());
-    auto mw = DockRegistry::self()->mainWindowByName("MyWindowName-1");
-    QVERIFY(mw);
+        QVERIFY(dw4->isFloating());
+        auto mw = DockRegistry::self()->mainWindowByName("MyWindowName-1");
+        QVERIFY(mw);
 
-    auto floatingDropArea = dw4->floatingWindow()->multiSplitter();
-    QVERIFY(floatingDropArea);
+        auto floatingDropArea = dw4->floatingWindow()->multiSplitter();
+        QVERIFY(floatingDropArea);
 
-    // Add to main window again and make sure signal was emitted
+        // Add to main window again and make sure signal was emitted
 
-    bool signalReceived = false;
-    connect(dw4, &Core::DockWidget::isFloatingChanged, dw4, [&signalReceived] {
-        signalReceived = true;
-    });
+        bool signalReceived = false;
+        connect(dw4, &Core::DockWidget::isFloatingChanged, dw4, [&signalReceived] {
+            signalReceived = true;
+        });
 
 
-    QVERIFY(dw4->isFloating());
-    QVERIFY(dw4->floatAction()->isChecked());
-    mw->dropArea()->addMultiSplitter(floatingDropArea, KDDockWidgets::Location_OnLeft);
-    QVERIFY(!dw4->isFloating());
-    QVERIFY(!dw4->floatAction()->isChecked());
+        QVERIFY(dw4->isFloating());
+        QVERIFY(dw4->floatAction()->isChecked());
+        mw->dropArea()->addMultiSplitter(floatingDropArea, KDDockWidgets::Location_OnLeft);
+        QVERIFY(!dw4->isFloating());
+        QVERIFY(!dw4->floatAction()->isChecked());
 
-    QVERIFY(signalReceived);
+        QVERIFY(signalReceived);
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()

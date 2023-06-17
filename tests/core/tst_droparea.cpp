@@ -17,6 +17,7 @@
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/Action.h"
+#include "tests/utils.h"
 
 using namespace KDDockWidgets;
 
@@ -52,7 +53,9 @@ KDDW_QCORO_TASK tst_addWidgetHidden()
     CHECK(dw->isOpen());
     CHECK(dw->toggleAction()->isChecked());
 
+    auto group = dw->dptr()->group();
     delete dw;
+    KDDW_CO_AWAIT Core::Platform::instance()->tests_waitForDeleted(group);
 
     KDDW_TEST_RETURN(true);
 }

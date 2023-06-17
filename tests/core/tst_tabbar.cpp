@@ -161,46 +161,51 @@ KDDW_QCORO_TASK tst_tabBarDWDestroyed()
 
 KDDW_QCORO_TASK tst_tabBarDWClosed()
 {
-    /// Tests if indexes are correct if dock widget are closed (but not destroyed)
-    /// Tests if indexes are correct if dock widget destroyed itself
-    Core::Group group(nullptr, {});
-    Core::TabBar *tabBar = group.tabBar();
+    {
+        /// Tests if indexes are correct if dock widget are closed (but not destroyed)
+        /// Tests if indexes are correct if dock widget destroyed itself
+        Core::Group group(nullptr, {});
+        Core::TabBar *tabBar = group.tabBar();
 
-    // Add 3: [dw0, dw1, dw2]
-    auto dw0 = Config::self().viewFactory()->createDockWidget("dock0")->asDockWidgetController();
-    auto dw1 = Config::self().viewFactory()->createDockWidget("dock1")->asDockWidgetController();
-    auto dw2 = Config::self().viewFactory()->createDockWidget("dock2")->asDockWidgetController();
-    tabBar->insertDockWidget(0, dw0, {}, {});
-    tabBar->insertDockWidget(1, dw1, {}, {});
-    tabBar->insertDockWidget(2, dw2, {}, {});
+        // Add 3: [dw0, dw1, dw2]
+        auto dw0 = Config::self().viewFactory()->createDockWidget("dock0")->asDockWidgetController();
+        auto dw1 = Config::self().viewFactory()->createDockWidget("dock1")->asDockWidgetController();
+        auto dw2 = Config::self().viewFactory()->createDockWidget("dock2")->asDockWidgetController();
+        tabBar->insertDockWidget(0, dw0, {}, {});
+        tabBar->insertDockWidget(1, dw1, {}, {});
+        tabBar->insertDockWidget(2, dw2, {}, {});
 
-    CHECK_EQ(tabBar->numDockWidgets(), 3);
-    CHECK_EQ(tabBar->currentIndex(), 0);
-    CHECK_EQ(tabBar->currentDockWidget(), dw0);
+        CHECK_EQ(tabBar->numDockWidgets(), 3);
+        CHECK_EQ(tabBar->currentIndex(), 0);
+        CHECK_EQ(tabBar->currentDockWidget(), dw0);
 
-    if (Platform::instance()->isQtQuick()) {
-        // Workaround for QtQuick, which works fine with adding dock widgets through
-        // DropArea::addDockWidget(). But not when using TabBar isolated.
-        dw0->view()->setParent(group.view());
-        dw1->view()->setParent(group.view());
-        dw2->view()->setParent(group.view());
+        if (Platform::instance()->isQtQuick()) {
+            // Workaround for QtQuick, which works fine with adding dock widgets through
+            // DropArea::addDockWidget(). But not when using TabBar isolated.
+            dw0->view()->setParent(group.view());
+            dw1->view()->setParent(group.view());
+            dw2->view()->setParent(group.view());
+        }
+
+        // Close middle one: [dw0, dw2]
+        dw1->close();
+        CHECK_EQ(tabBar->numDockWidgets(), 2);
+        CHECK_EQ(tabBar->currentIndex(), 0);
+        CHECK_EQ(tabBar->currentDockWidget(), dw0);
+
+        // Close current
+        dw0->close();
+        CHECK_EQ(tabBar->numDockWidgets(), 1);
+        CHECK_EQ(tabBar->currentIndex(), 0);
+        CHECK_EQ(tabBar->currentDockWidget(), dw2);
+
+        delete dw0;
+        delete dw1;
+        delete dw2;
     }
 
-    // Close middle one: [dw0, dw2]
-    dw1->close();
-    CHECK_EQ(tabBar->numDockWidgets(), 2);
-    CHECK_EQ(tabBar->currentIndex(), 0);
-    CHECK_EQ(tabBar->currentDockWidget(), dw0);
-
-    // Close current
-    dw0->close();
-    CHECK_EQ(tabBar->numDockWidgets(), 1);
-    CHECK_EQ(tabBar->currentIndex(), 0);
-    CHECK_EQ(tabBar->currentDockWidget(), dw2);
-
-    delete dw0;
-    delete dw1;
-    delete dw2;
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
 
     KDDW_TEST_RETURN(true);
 }

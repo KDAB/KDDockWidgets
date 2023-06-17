@@ -428,6 +428,13 @@ KDDW_QCORO_TASK tst_crash2()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_keepLast()
+{
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    KDDW_TEST_RETURN(true);
+}
+
 static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_dragByTabBar),
     TEST(tst_negativeAnchorPosition),
@@ -437,7 +444,8 @@ static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_negativeAnchorPosition5),
     TEST(tst_negativeAnchorPosition6),
     TEST(tst_negativeAnchorPosition7),
-    TEST(tst_crash2)
+    TEST(tst_crash2),
+    TEST(tst_keepLast), // Keep this test at the end
 };
 
 #include "tests_main.h"
