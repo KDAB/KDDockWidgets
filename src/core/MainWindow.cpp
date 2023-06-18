@@ -485,14 +485,14 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
             break;
         }
         case SideBarLocation::South: {
-            const int maxHeight = sb->pos().y() - m_layout->view()->pos().y() - 10; // gap
+            const int maxHeight = sb->pos().y() - m_layout->view()->d->pos().y() - 10; // gap
             const int bottom = newGeometry.bottom();
             newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
             newGeometry.moveBottom(bottom);
             break;
         }
         case SideBarLocation::East: {
-            const int maxWidth = sb->pos().x() - m_layout->view()->pos().x() - 10; // gap
+            const int maxWidth = sb->pos().x() - m_layout->view()->d->pos().x() - 10; // gap
             const int right = newGeometry.right();
             newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
             newGeometry.moveRight(right);

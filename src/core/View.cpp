@@ -115,44 +115,44 @@ void View::setZOrder(int)
 {
 }
 
-QSize View::size() const
+QSize View::Private::size() const
 {
-    return geometry().size();
+    return q->geometry().size();
 }
 
-QPoint View::pos() const
+QPoint View::Private::pos() const
 {
-    return geometry().topLeft();
+    return q->geometry().topLeft();
 }
 
-QRect View::rect() const
+QRect View::Private::rect() const
 {
     return QRect(QPoint(0, 0), size());
 }
 
-int View::x() const
+int View::Private::x() const
 {
-    return geometry().x();
+    return q->geometry().x();
 }
 
-int View::y() const
+int View::Private::y() const
 {
-    return geometry().y();
+    return q->geometry().y();
 }
 
-int View::height() const
+int View::Private::height() const
 {
-    return geometry().height();
+    return q->geometry().height();
 }
 
-int View::width() const
+int View::Private::width() const
 {
-    return geometry().width();
+    return q->geometry().width();
 }
 
-void View::move(QPoint pt)
+void View::Private::move(QPoint pt)
 {
-    move(pt.x(), pt.y());
+    q->move(pt.x(), pt.y());
 }
 
 void View::resize(QSize sz)
@@ -160,9 +160,9 @@ void View::resize(QSize sz)
     setSize(sz.width(), sz.height());
 }
 
-void View::setSize(QSize sz)
+void View::Private::setSize(QSize sz)
 {
-    setSize(sz.width(), sz.height());
+    q->setSize(sz.width(), sz.height());
 }
 
 void View::resize(int w, int h)
@@ -303,7 +303,7 @@ bool View::Private::isInWindow(std::shared_ptr<Core::Window> window) const
 QSize View::Private::parentSize() const
 {
     if (auto p = q->parentView())
-        return p->size();
+        return p->d->size();
     return {};
 }
 
@@ -417,43 +417,43 @@ bool View::equals(const View *one, const View *two)
     return one->equals(two);
 }
 
-void View::installViewEventFilter(EventFilterInterface *filter)
+void View::Private::installViewEventFilter(EventFilterInterface *filter)
 {
-    d->m_viewEventFilters.push_back(filter);
+    m_viewEventFilters.push_back(filter);
 }
 
-void View::removeViewEventFilter(EventFilterInterface *filter)
+void View::Private::removeViewEventFilter(EventFilterInterface *filter)
 {
-    d->m_viewEventFilters.erase(
-        std::remove(d->m_viewEventFilters.begin(), d->m_viewEventFilters.end(), filter),
-        d->m_viewEventFilters.end());
+    m_viewEventFilters.erase(
+        std::remove(m_viewEventFilters.begin(), m_viewEventFilters.end(), filter),
+        m_viewEventFilters.end());
 }
 
-bool View::deliverViewEventToFilters(Event *ev)
+bool View::Private::deliverViewEventToFilters(Event *ev)
 {
-    for (Core::EventFilterInterface *filter : qAsConst(d->m_viewEventFilters)) {
+    for (Core::EventFilterInterface *filter : qAsConst(m_viewEventFilters)) {
         if (ev->type() == Event::Move) {
-            if (filter->onMoveEvent(this))
+            if (filter->onMoveEvent(q))
                 return true;
         } else if (auto me = mouseEvent(ev)) {
-            if (filter->onMouseEvent(this, me))
+            if (filter->onMouseEvent(q, me))
                 return true;
 
             switch (ev->type()) {
             case Event::MouseButtonPress:
-                if (filter->onMouseButtonPress(this, me))
+                if (filter->onMouseButtonPress(q, me))
                     return true;
                 break;
             case Event::MouseButtonRelease:
-                if (filter->onMouseButtonRelease(this, me))
+                if (filter->onMouseButtonRelease(q, me))
                     return true;
                 break;
             case Event::MouseMove:
-                if (filter->onMouseButtonMove(this, me))
+                if (filter->onMouseButtonMove(q, me))
                     return true;
                 break;
             case Event::MouseButtonDblClick:
-                if (filter->onMouseDoubleClick(this, me))
+                if (filter->onMouseDoubleClick(q, me))
                     return true;
                 break;
             default:

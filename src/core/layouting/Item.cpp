@@ -819,11 +819,11 @@ void Item::onWidgetDestroyed()
 void Item::onWidgetLayoutRequested()
 {
     if (View *w = guestView()) {
-        if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
-                                               // mouse
+        if (w->d->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
+            // mouse
             qDebug() << Q_FUNC_INFO
                      << "TODO: Not implemented yet. Widget can't just decide to resize yet"
-                     << "View.size=" << w->size() << "Item.size=" << size() << m_sizingInfo.geometry
+                     << "View.size=" << w->d->size() << "Item.size=" << size() << m_sizingInfo.geometry
                      << m_sizingInfo.isBeingInserted;
         }
 

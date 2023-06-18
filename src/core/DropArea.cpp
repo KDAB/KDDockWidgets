@@ -91,7 +91,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     DockRegistry::self()->registerLayout(this);
 
     if (parent)
-        setLayoutSize(parent->size());
+        setLayoutSize(parent->d->size());
 
     // Initialize min size
     updateSizeConstraints();

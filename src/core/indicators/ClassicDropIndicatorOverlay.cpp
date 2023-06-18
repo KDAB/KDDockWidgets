@@ -21,6 +21,7 @@
 #include "core/DragController_p.h"
 #include "core/Logging_p.h"
 #include "core/Utils_p.h"
+#include "core/View_p.h"
 
 
 using namespace KDDockWidgets;
@@ -63,7 +64,7 @@ QPoint ClassicDropIndicatorOverlay::posForIndicator(DropLocation loc) const
 
 bool ClassicDropIndicatorOverlay::onResize(QSize)
 {
-    m_indicatorWindow->resize(window()->size());
+    m_indicatorWindow->resize(window()->d->size());
     return false;
 }
 

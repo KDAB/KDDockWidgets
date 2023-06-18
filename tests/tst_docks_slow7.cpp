@@ -69,7 +69,7 @@ KDDW_QCORO_TASK tst_dragByTabBar()
             dock2->dptr()->group()->stack()->setDocumentMode(true);
 
         auto fw = dock2->floatingWindow();
-        fw->view()->move(m->pos() + QPoint(500, 500));
+        fw->view()->d->move(m->pos() + QPoint(500, 500));
         CHECK(fw->isVisible());
         CHECK(!fw->titleBar()->isVisible());
 

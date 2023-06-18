@@ -13,6 +13,7 @@
 #include "layouting/Item_p.h"
 #include "View.h"
 #include "core/Logging_p.h"
+#include "core/View_p.h"
 #include "Config.h"
 #include "Platform.h"
 #include "Controller.h"
@@ -117,9 +118,9 @@ void Separator::move(int p)
 
     if (View *v = view()) {
         if (isVertical()) {
-            v->move(v->x(), p);
+            v->move(v->d->x(), p);
         } else {
-            v->move(p, v->y());
+            v->move(p, v->d->y());
         }
     }
 }

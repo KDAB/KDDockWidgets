@@ -22,6 +22,7 @@
 #include "LayoutSaver.h"
 #include "Qt5Qt6Compat_p.h"
 
+#include "core/View_p.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Layout.h"
@@ -249,7 +250,7 @@ DebugWindow::DebugWindow(QWidget *parent)
         const auto layouts = DockRegistry::self()->layouts();
         for (auto l : layouts) {
             auto tlw = l->view()->rootView();
-            tlw->resize(tlw->size() + QSize(1, 1));
+            tlw->resize(tlw->d->size() + QSize(1, 1));
         }
     });
 

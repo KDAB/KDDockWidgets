@@ -224,7 +224,7 @@ inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Core::Drop
 
     // First we drag over it, so the drop indicators appear:
     KDDW_CO_AWAIT drag(draggable, draggable->mapToGlobal(QPoint(10, 10)),
-                       target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
+                       target->window()->mapToGlobal(target->window()->d->rect().center()), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
     Core::DropIndicatorOverlay *dropIndicatorOverlay = target->dropIndicatorOverlay();

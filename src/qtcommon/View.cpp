@@ -38,7 +38,7 @@ public:
 
     bool eventFilter(QObject *, QEvent *ev) override
     {
-        return q->deliverViewEventToFilters(ev);
+        return q->d->deliverViewEventToFilters(ev);
     }
 
     View_qt *const q;

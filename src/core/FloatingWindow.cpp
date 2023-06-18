@@ -418,7 +418,7 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometry
         if ((hint & SuggestedGeometryHint_GeometryIsFromDocked)
             && (d->m_flags & FloatingWindowFlag::NativeTitleBar)) {
             const QMargins margins = contentMargins();
-            suggestedRect.setHeight(suggestedRect.height() - m_titleBar->view()->height()
+            suggestedRect.setHeight(suggestedRect.height() - m_titleBar->view()->d->height()
                                     + margins.top() + margins.bottom());
         }
 

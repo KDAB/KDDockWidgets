@@ -568,7 +568,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
 
     Core::Group *group1 = mdiArea->groups().at(0);
 
-    const QSize sz1 = group1->view()->size();
+    const QSize sz1 = group1->view()->d->size();
     const QSize increment(200, 200);
 
     QVERIFY(mdiWidget1->d->mdiLayout());
@@ -832,7 +832,7 @@ void TestQtWidgets::tst_sidebarOverlayGetsHiddenOnClick()
         dw2->setGuestView(widget2->asWrapper());
         m1->overlayOnSideBar(dw1);
         QVERIFY(dw1->isOverlayed());
-        Tests::clickOn(widget2->mapToGlobal(widget2->rect().bottomLeft() + QPoint(5, -5)), widget2);
+        Tests::clickOn(widget2->mapToGlobal(widget2->d->rect().bottomLeft() + QPoint(5, -5)), widget2);
         QVERIFY(!dw1->isOverlayed());
 
         m1.reset();
@@ -1074,8 +1074,8 @@ void TestQtWidgets::tst_restoreNonRelativeFloatingWindowGeometry()
 
     const QByteArray saved = saver.serializeLayout();
 
-    const QSize floatingWindowSize = dock1->window()->size();
-    const QSize floatingWindowSize2 = dock2->window()->size();
+    const QSize floatingWindowSize = dock1->window()->d->size();
+    const QSize floatingWindowSize2 = dock2->window()->d->size();
 
     m->view()->resize(QSize(m->width() * 2, m->height()));
     saver.restoreLayout(saved);
@@ -1083,8 +1083,8 @@ void TestQtWidgets::tst_restoreNonRelativeFloatingWindowGeometry()
     QVERIFY(dock2->isFloating());
     QVERIFY(!dock2->isOpen());
 
-    QCOMPARE(dock1->window()->size(), floatingWindowSize);
-    QCOMPARE(dock2->window()->size(), floatingWindowSize2);
+    QCOMPARE(dock1->window()->d->size(), floatingWindowSize);
+    QCOMPARE(dock2->window()->d->size(), floatingWindowSize2);
 }
 
 void TestQtWidgets::tst_maximumSizePolicy()
@@ -1105,9 +1105,9 @@ void TestQtWidgets::tst_maximumSizePolicy()
     auto oldFw2 = dock1->window();
 
     const int tolerance = 50;
-    QVERIFY(dock1->window()->height() <= maxHeight + tolerance); // +tolerance as the floating
-                                                                 // window is a bit bigger, due to
-                                                                 // margins etc.
+    QVERIFY(dock1->window()->d->height() <= maxHeight + tolerance); // +tolerance as the floating
+                                                                    // window is a bit bigger, due to
+                                                                    // margins etc.
     QVERIFY(dock1->height() <= maxHeight);
 
     auto m1 = createMainWindow();
@@ -1281,9 +1281,9 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
     QVERIFY(separator->position() >= min1);
     QVERIFY(separator->position() <= max2);
     const int item1MaxHeight = dock1->dptr()->group()->view()->maxSizeHint().height();
-    QVERIFY(dock1->dptr()->group()->view()->height() <= item1MaxHeight);
+    QVERIFY(dock1->dptr()->group()->view()->d->height() <= item1MaxHeight);
     root->dumpLayout();
-    QCOMPARE(dock2->dptr()->group()->view()->height(),
+    QCOMPARE(dock2->dptr()->group()->view()->d->height(),
              root->height() - item1MaxHeight - Item::separatorThickness);
 }
 

@@ -206,24 +206,24 @@ KDDW_QCORO_TASK tst_close()
     auto da = mainwindow->dropArea();
 
     CHECK(da->checkSanity());
-    CHECK_EQ(leftDock->dptr()->group()->view()->x(), 0);
+    CHECK_EQ(leftDock->dptr()->group()->view()->d->x(), 0);
 
-    CHECK_EQ(centralDock->dptr()->group()->view()->x(),
+    CHECK_EQ(centralDock->dptr()->group()->view()->d->x(),
              leftDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness + 1);
-    CHECK_EQ(rightDock->dptr()->group()->view()->x(),
+    CHECK_EQ(rightDock->dptr()->group()->view()->d->x(),
              centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
                  + 1);
     leftDock->close();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(250);
-    CHECK_EQ(centralDock->dptr()->group()->view()->x(), 0);
-    CHECK_EQ(rightDock->dptr()->group()->view()->x(),
+    CHECK_EQ(centralDock->dptr()->group()->view()->d->x(), 0);
+    CHECK_EQ(rightDock->dptr()->group()->view()->d->x(),
              centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
                  + 1);
 
     rightDock->close();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(250);
     QMargins margins = mainwindow->centerWidgetMargins();
-    CHECK_EQ(centralDock->dptr()->group()->view()->width(),
+    CHECK_EQ(centralDock->dptr()->group()->view()->d->width(),
              mainwindow->width() - 0 * 2 - margins.left() - margins.right());
     delete leftDock;
     delete rightDock;
@@ -231,13 +231,13 @@ KDDW_QCORO_TASK tst_close()
 
     // 1.9 Close tabbed dock, side docks will maintain their position
     mainwindow = createSimpleNestedMainWindow(&centralDock, &leftDock, &rightDock);
-    const int leftX = leftDock->dptr()->group()->view()->x();
-    const int rightX = rightDock->dptr()->group()->view()->x();
+    const int leftX = leftDock->dptr()->group()->view()->d->x();
+    const int rightX = rightDock->dptr()->group()->view()->d->x();
 
     centralDock->close();
 
-    CHECK_EQ(leftDock->dptr()->group()->view()->x(), leftX);
-    CHECK_EQ(rightDock->dptr()->group()->view()->x(), rightX);
+    CHECK_EQ(leftDock->dptr()->group()->view()->d->x(), leftX);
+    CHECK_EQ(rightDock->dptr()->group()->view()->d->x(), rightX);
     delete leftDock;
     delete rightDock;
     delete centralDock;

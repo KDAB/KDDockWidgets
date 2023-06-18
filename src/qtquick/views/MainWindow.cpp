@@ -15,6 +15,7 @@
 #include "kddockwidgets/core/Window.h"
 #include "kddockwidgets/core/DockRegistry.h"
 #include "core/layouting/Item_p.h"
+#include "core/View_p.h"
 
 #include <QDebug>
 #include <QTimer>
@@ -34,7 +35,7 @@ public:
     void onLayoutGeometryUpdated()
     {
         const QSize minSz = q->minSize();
-        const bool mainWindowIsTooSmall = minSz.expandedTo(q->Core::View::size()) != q->Core::View::size();
+        const bool mainWindowIsTooSmall = minSz.expandedTo(q->Core::View::d->size()) != q->Core::View::d->size();
         if (mainWindowIsTooSmall) {
             if (q->isRootView()) {
                 // If we're a top-level, let's go ahead and resize the QWindow

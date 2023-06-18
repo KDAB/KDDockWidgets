@@ -97,7 +97,7 @@ public:
 
     void updateSize()
     {
-        resize(m_view->Core::View::size());
+        resize(m_view->Core::View::d->size());
     }
 
     void updateRootItemSize()
@@ -106,7 +106,7 @@ public:
             return;
 
         Core::AtomicSanityChecks checks(m_view->rootItem());
-        m_view->Core::View::setSize(size());
+        m_view->Core::View::d->setSize(size());
     }
 
 #ifdef KDDW_FRONTEND_QT_WINDOWS
@@ -215,7 +215,7 @@ void FloatingWindow::init()
     Q_ASSERT(m_visualItem);
 
     // Ensure our window size is never smaller than our min-size
-    Core::View::setSize(Core::View::size().expandedTo(minSize()));
+    Core::View::d->setSize(Core::View::d->size().expandedTo(minSize()));
 
     m_visualItem->setParent(this);
     m_visualItem->setParentItem(this);
