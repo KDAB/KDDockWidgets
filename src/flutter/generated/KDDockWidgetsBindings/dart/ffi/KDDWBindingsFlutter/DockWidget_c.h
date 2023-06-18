@@ -13,8 +13,8 @@
 #include <qstring.h>
 #include <qsize.h>
 #include <core/DockWidget.h>
-#include <core/View.h>
 #include <qrect.h>
+#include <core/View.h>
 #include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -69,16 +69,10 @@ public:
     virtual QSize maxSizeHint_nocallback() const;
     virtual QSize minSize() const;
     virtual QSize minSize_nocallback() const;
-    virtual int minimumHeight() const;
-    virtual int minimumHeight_nocallback() const;
-    virtual int minimumWidth() const;
-    virtual int minimumWidth_nocallback() const;
     virtual void move(int x, int y);
     virtual void move_nocallback(int x, int y);
     virtual QRect normalGeometry() const;
     virtual QRect normalGeometry_nocallback() const;
-    virtual QString objectName() const;
-    virtual QString objectName_nocallback() const;
     virtual void onChildAdded(KDDockWidgets::Core::View *childView);
     virtual void onChildAdded_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved(KDDockWidgets::Core::View *childView);
@@ -119,12 +113,12 @@ public:
     virtual void setMinimumSize_nocallback(QSize sz);
     virtual void setMouseTracking(bool enable);
     virtual void setMouseTracking_nocallback(bool enable);
-    virtual void setObjectName(const QString &name);
-    virtual void setObjectName_nocallback(const QString &name);
     virtual void setParent(KDDockWidgets::Core::View *parent);
     virtual void setParent_nocallback(KDDockWidgets::Core::View *parent);
     virtual void setSize(int w, int h);
     virtual void setSize_nocallback(int w, int h);
+    virtual void setViewName(const QString &name);
+    virtual void setViewName_nocallback(const QString &name);
     virtual void setVisible(bool visible);
     virtual void setVisible_nocallback(bool visible);
     virtual void setWidth(int w);
@@ -143,10 +137,10 @@ public:
     virtual void showMinimized_nocallback();
     virtual void showNormal();
     virtual void showNormal_nocallback();
-    virtual QSize sizeHint() const;
-    virtual QSize sizeHint_nocallback() const;
     virtual void update();
     virtual void update_nocallback();
+    virtual QString viewName() const;
+    virtual QString viewName_nocallback() const;
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -191,16 +185,10 @@ public:
     Callback_maxSizeHint m_maxSizeHintCallback = nullptr;
     typedef QSize *(*Callback_minSize)(void *);
     Callback_minSize m_minSizeCallback = nullptr;
-    typedef int (*Callback_minimumHeight)(void *);
-    Callback_minimumHeight m_minimumHeightCallback = nullptr;
-    typedef int (*Callback_minimumWidth)(void *);
-    Callback_minimumWidth m_minimumWidthCallback = nullptr;
-    typedef void (*Callback_move_2)(void *, int x, int y);
-    Callback_move_2 m_move_2Callback = nullptr;
+    typedef void (*Callback_move)(void *, int x, int y);
+    Callback_move m_moveCallback = nullptr;
     typedef QRect *(*Callback_normalGeometry)(void *);
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
-    typedef QString *(*Callback_objectName)(void *);
-    Callback_objectName m_objectNameCallback = nullptr;
     typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
     typedef void (*Callback_onChildRemoved)(void *, KDDockWidgets::Core::View *childView);
@@ -241,12 +229,12 @@ public:
     Callback_setMinimumSize m_setMinimumSizeCallback = nullptr;
     typedef void (*Callback_setMouseTracking)(void *, bool enable);
     Callback_setMouseTracking m_setMouseTrackingCallback = nullptr;
-    typedef void (*Callback_setObjectName)(void *, const QString &name);
-    Callback_setObjectName m_setObjectNameCallback = nullptr;
     typedef void (*Callback_setParent)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParent m_setParentCallback = nullptr;
-    typedef void (*Callback_setSize_2)(void *, int w, int h);
-    Callback_setSize_2 m_setSize_2Callback = nullptr;
+    typedef void (*Callback_setSize)(void *, int w, int h);
+    Callback_setSize m_setSizeCallback = nullptr;
+    typedef void (*Callback_setViewName)(void *, const QString &name);
+    Callback_setViewName m_setViewNameCallback = nullptr;
     typedef void (*Callback_setVisible)(void *, bool visible);
     Callback_setVisible m_setVisibleCallback = nullptr;
     typedef void (*Callback_setWidth)(void *, int w);
@@ -265,10 +253,10 @@ public:
     Callback_showMinimized m_showMinimizedCallback = nullptr;
     typedef void (*Callback_showNormal)(void *);
     Callback_showNormal m_showNormalCallback = nullptr;
-    typedef QSize *(*Callback_sizeHint)(void *);
-    Callback_sizeHint m_sizeHintCallback = nullptr;
     typedef void (*Callback_update)(void *);
     Callback_update m_updateCallback = nullptr;
+    typedef QString *(*Callback_viewName)(void *);
+    Callback_viewName m_viewNameCallback = nullptr;
 };
 }
 }
@@ -321,16 +309,10 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__mapToGl
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::minSize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__minSize(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::minimumHeight() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__DockWidget__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::minimumWidth() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__DockWidget__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::move(int x, int y)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::DockWidget::normalGeometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::objectName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__objectName(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::onChildAdded(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DockWidget::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -371,12 +353,12 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__setMaxim
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::DockWidget::setMouseTracking(bool enable)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::flutter::DockWidget::setObjectName(const QString & name)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::DockWidget::setParent(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::DockWidget::setSize(int w, int h)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::DockWidget::setViewName(const QString & name)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::DockWidget::setVisible(bool visible)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::DockWidget::setWidth(int w)
@@ -395,10 +377,10 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__showMaxi
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::showNormal()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__showNormal(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::sizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::update()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__update(void *thisObj);
+// KDDockWidgets::flutter::DockWidget::viewName() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DockWidget__viewName(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DockWidget_Finalizer(void *, void *cppObj, void *);

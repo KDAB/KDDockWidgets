@@ -21,7 +21,6 @@ public:
     QSize getMaxSize() const;
     QSize getMinSize() const;
     QSize getSize() const;
-    QSize getSizeHint() const;
 };
 }
 extern "C" {
@@ -33,8 +32,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__get
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getMinSize(void *thisObj);
 // KDDockWidgets::Core::CreateViewOptions::getSize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getSize(void *thisObj);
-// KDDockWidgets::Core::CreateViewOptions::getSizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getSizeHint(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_isVisible(void *thisObj);
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_createWindow(void *thisObj);

@@ -361,37 +361,11 @@ QSize IndicatorWindow_wrapper::minSize_nocallback() const
 {
     return ::KDDockWidgets::flutter::IndicatorWindow::minSize();
 }
-int IndicatorWindow_wrapper::minimumHeight() const
-{
-    if (m_minimumHeightCallback) {
-        const void *thisPtr = this;
-        return m_minimumHeightCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::flutter::IndicatorWindow::minimumHeight();
-    }
-}
-int IndicatorWindow_wrapper::minimumHeight_nocallback() const
-{
-    return ::KDDockWidgets::flutter::IndicatorWindow::minimumHeight();
-}
-int IndicatorWindow_wrapper::minimumWidth() const
-{
-    if (m_minimumWidthCallback) {
-        const void *thisPtr = this;
-        return m_minimumWidthCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::flutter::IndicatorWindow::minimumWidth();
-    }
-}
-int IndicatorWindow_wrapper::minimumWidth_nocallback() const
-{
-    return ::KDDockWidgets::flutter::IndicatorWindow::minimumWidth();
-}
 void IndicatorWindow_wrapper::move(int x, int y)
 {
-    if (m_move_2Callback) {
+    if (m_moveCallback) {
         const void *thisPtr = this;
-        m_move_2Callback(const_cast<void *>(thisPtr), x, y);
+        m_moveCallback(const_cast<void *>(thisPtr), x, y);
     } else {
         ::KDDockWidgets::flutter::IndicatorWindow::move(x, y);
     }
@@ -412,19 +386,6 @@ QRect IndicatorWindow_wrapper::normalGeometry() const
 QRect IndicatorWindow_wrapper::normalGeometry_nocallback() const
 {
     return ::KDDockWidgets::flutter::IndicatorWindow::normalGeometry();
-}
-QString IndicatorWindow_wrapper::objectName() const
-{
-    if (m_objectNameCallback) {
-        const void *thisPtr = this;
-        return *m_objectNameCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::flutter::IndicatorWindow::objectName();
-    }
-}
-QString IndicatorWindow_wrapper::objectName_nocallback() const
-{
-    return ::KDDockWidgets::flutter::IndicatorWindow::objectName();
 }
 void IndicatorWindow_wrapper::onChildAdded(KDDockWidgets::Core::View *childView)
 {
@@ -744,9 +705,9 @@ void IndicatorWindow_wrapper::setParent_nocallback(KDDockWidgets::Core::View *pa
 }
 void IndicatorWindow_wrapper::setSize(int w, int h)
 {
-    if (m_setSize_2Callback) {
+    if (m_setSizeCallback) {
         const void *thisPtr = this;
-        m_setSize_2Callback(const_cast<void *>(thisPtr), w, h);
+        m_setSizeCallback(const_cast<void *>(thisPtr), w, h);
     } else {
         ::KDDockWidgets::flutter::IndicatorWindow::setSize(w, h);
     }
@@ -754,6 +715,19 @@ void IndicatorWindow_wrapper::setSize(int w, int h)
 void IndicatorWindow_wrapper::setSize_nocallback(int w, int h)
 {
     ::KDDockWidgets::flutter::IndicatorWindow::setSize(w, h);
+}
+void IndicatorWindow_wrapper::setViewName(const QString &name)
+{
+    if (m_setViewNameCallback) {
+        const void *thisPtr = this;
+        m_setViewNameCallback(const_cast<void *>(thisPtr), name);
+    } else {
+        ::KDDockWidgets::flutter::IndicatorWindow::setViewName(name);
+    }
+}
+void IndicatorWindow_wrapper::setViewName_nocallback(const QString &name)
+{
+    ::KDDockWidgets::flutter::IndicatorWindow::setViewName(name);
 }
 void IndicatorWindow_wrapper::setVisible(bool arg__1)
 {
@@ -872,19 +846,6 @@ void IndicatorWindow_wrapper::showNormal_nocallback()
 {
     ::KDDockWidgets::flutter::IndicatorWindow::showNormal();
 }
-QSize IndicatorWindow_wrapper::sizeHint() const
-{
-    if (m_sizeHintCallback) {
-        const void *thisPtr = this;
-        return *m_sizeHintCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::flutter::IndicatorWindow::sizeHint();
-    }
-}
-QSize IndicatorWindow_wrapper::sizeHint_nocallback() const
-{
-    return ::KDDockWidgets::flutter::IndicatorWindow::sizeHint();
-}
 void IndicatorWindow_wrapper::update()
 {
     if (m_updateCallback) {
@@ -923,6 +884,19 @@ bool IndicatorWindow_wrapper::updatePositions_flutter(int overlayWidth, int over
 bool IndicatorWindow_wrapper::updatePositions_flutter_nocallback(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations)
 {
     return ::KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(overlayWidth, overlayHeight, hoveredGroup, visibleLocations);
+}
+QString IndicatorWindow_wrapper::viewName() const
+{
+    if (m_viewNameCallback) {
+        const void *thisPtr = this;
+        return *m_viewNameCallback(const_cast<void *>(thisPtr));
+    } else {
+        return ::KDDockWidgets::flutter::IndicatorWindow::viewName();
+    }
+}
+QString IndicatorWindow_wrapper::viewName_nocallback() const
+{
+    return ::KDDockWidgets::flutter::IndicatorWindow::viewName();
 }
 IndicatorWindow_wrapper::~IndicatorWindow_wrapper()
 {
@@ -1091,16 +1065,6 @@ void *c_KDDockWidgets__flutter__IndicatorWindow__minSize(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
 }
-// minimumHeight() const
-int c_KDDockWidgets__flutter__IndicatorWindow__minimumHeight(void *thisObj)
-{
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minimumHeight_nocallback();} else {    return targetPtr->minimumHeight();} }();
-}
-// minimumWidth() const
-int c_KDDockWidgets__flutter__IndicatorWindow__minimumWidth(void *thisObj)
-{
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minimumWidth_nocallback();} else {    return targetPtr->minimumWidth();} }();
-}
 // move(int x, int y)
 void c_KDDockWidgets__flutter__IndicatorWindow__move_int_int(void *thisObj, int x, int y)
 {
@@ -1110,11 +1074,6 @@ void c_KDDockWidgets__flutter__IndicatorWindow__move_int_int(void *thisObj, int 
 void *c_KDDockWidgets__flutter__IndicatorWindow__normalGeometry(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
-}
-// objectName() const
-void *c_KDDockWidgets__flutter__IndicatorWindow__objectName(void *thisObj)
-{
-    return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->objectName_nocallback();} else {    return targetPtr->objectName();} }() };
 }
 // onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__IndicatorWindow__onChildAdded_View(void *thisObj, void *childView_)
@@ -1261,6 +1220,12 @@ void c_KDDockWidgets__flutter__IndicatorWindow__setSize_int_int(void *thisObj, i
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setSize_nocallback(w,h);} else {    return targetPtr->setSize(w,h);} }();
 }
+// setViewName(const QString & name)
+void c_KDDockWidgets__flutter__IndicatorWindow__setViewName_QString(void *thisObj, const char *name_)
+{
+    const auto name = QString::fromUtf8(name_);
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setViewName_nocallback(name);} else {    return targetPtr->setViewName(name);} }();
+}
 // setVisible(bool arg__1)
 void c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool(void *thisObj, bool arg__1)
 {
@@ -1307,11 +1272,6 @@ void c_KDDockWidgets__flutter__IndicatorWindow__showNormal(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->showNormal_nocallback();} else {    return targetPtr->showNormal();} }();
 }
-// sizeHint() const
-void *c_KDDockWidgets__flutter__IndicatorWindow__sizeHint(void *thisObj)
-{
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->sizeHint_nocallback();} else {    return targetPtr->sizeHint();} }() };
-}
 // update()
 void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj)
 {
@@ -1328,6 +1288,11 @@ bool c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_
     auto hoveredGroup = reinterpret_cast<KDDockWidgets::Core::Group *>(hoveredGroup_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->updatePositions_flutter_nocallback(overlayWidth,overlayHeight,hoveredGroup,visibleLocations);} else {    return targetPtr->updatePositions_flutter(overlayWidth,overlayHeight,hoveredGroup,visibleLocations);} }();
 }
+// viewName() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__viewName(void *thisObj)
+{
+    return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->viewName_nocallback();} else {    return targetPtr->viewName();} }() };
+}
 void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
@@ -1336,209 +1301,203 @@ void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(vo
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 923:
+    case 921:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_activateWindow>(callback);
         break;
-    case 934:
+    case 931:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_close>(callback);
         break;
-    case 937:
+    case 933:
         wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_createPlatformWindow>(callback);
         break;
-    case 944:
+    case 938:
         wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_flags>(callback);
         break;
-    case 947:
+    case 939:
         wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_geometry>(callback);
         break;
-    case 949:
+    case 940:
         wrapper->m_grabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_grabMouse>(callback);
         break;
-    case 952:
+    case 943:
         wrapper->m_hasFocusCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_hasFocus>(callback);
         break;
-    case 954:
+    case 944:
         wrapper->m_hideCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_hide>(callback);
         break;
-    case 1789:
+    case 1735:
         wrapper->m_hoverCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_hover>(callback);
         break;
-    case 1799:
+    case 1745:
         wrapper->m_hover_flutterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_hover_flutter>(callback);
         break;
-    case 957:
+    case 946:
         wrapper->m_initCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_init>(callback);
         break;
-    case 959:
+    case 948:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isActiveWindow>(callback);
         break;
-    case 960:
+    case 949:
         wrapper->m_isExplicitlyHiddenCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isExplicitlyHidden>(callback);
         break;
-    case 961:
+    case 950:
         wrapper->m_isMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isMaximized>(callback);
         break;
-    case 962:
+    case 951:
         wrapper->m_isMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isMinimized>(callback);
         break;
-    case 1045:
+    case 1009:
         wrapper->m_isMountedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isMounted>(callback);
         break;
-    case 963:
+    case 952:
         wrapper->m_isNullCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isNull>(callback);
         break;
-    case 964:
+    case 953:
         wrapper->m_isRootViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isRootView>(callback);
         break;
-    case 965:
+    case 954:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isVisible>(callback);
         break;
-    case 1790:
+    case 1736:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_isWindow>(callback);
         break;
-    case 966:
+    case 955:
         wrapper->m_mapFromGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_mapFromGlobal>(callback);
         break;
-    case 967:
+    case 956:
         wrapper->m_mapToCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_mapTo>(callback);
         break;
-    case 968:
+    case 957:
         wrapper->m_mapToGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_mapToGlobal>(callback);
         break;
-    case 969:
+    case 958:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 970:
+    case 959:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_minSize>(callback);
         break;
-    case 971:
-        wrapper->m_minimumHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_minimumHeight>(callback);
+    case 960:
+        wrapper->m_moveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_move>(callback);
         break;
-    case 972:
-        wrapper->m_minimumWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_minimumWidth>(callback);
-        break;
-    case 974:
-        wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_move_2>(callback);
-        break;
-    case 975:
+    case 961:
         wrapper->m_normalGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_normalGeometry>(callback);
         break;
-    case 976:
-        wrapper->m_objectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_objectName>(callback);
-        break;
-    case 1046:
+    case 1010:
         wrapper->m_onChildAddedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onChildAdded>(callback);
         break;
-    case 1047:
+    case 1011:
         wrapper->m_onChildRemovedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onChildRemoved>(callback);
         break;
-    case 1048:
+    case 1012:
         wrapper->m_onChildVisibilityChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onChildVisibilityChanged>(callback);
         break;
-    case 1050:
+    case 1014:
         wrapper->m_onGeometryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onGeometryChanged>(callback);
         break;
-    case 1052:
+    case 1016:
         wrapper->m_onRebuildRequestedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onRebuildRequested>(callback);
         break;
-    case 978:
+    case 963:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_onResize_2>(callback);
         break;
-    case 1791:
+    case 1737:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 1792:
+    case 1738:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raise>(callback);
         break;
-    case 982:
+    case 965:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 1056:
+    case 1018:
         wrapper->m_raiseChildCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raiseChild>(callback);
         break;
-    case 1057:
+    case 1019:
         wrapper->m_raiseWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_raiseWindow>(callback);
         break;
-    case 984:
+    case 966:
         wrapper->m_releaseKeyboardCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_releaseKeyboard>(callback);
         break;
-    case 985:
+    case 967:
         wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_releaseMouse>(callback);
         break;
-    case 1793:
+    case 1739:
         wrapper->m_resizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_resize>(callback);
         break;
-    case 989:
+    case 970:
         wrapper->m_setCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setCursor>(callback);
         break;
-    case 990:
+    case 971:
         wrapper->m_setFixedHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setFixedHeight>(callback);
         break;
-    case 991:
+    case 972:
         wrapper->m_setFixedWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setFixedWidth>(callback);
         break;
-    case 1794:
+    case 1740:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setGeometry>(callback);
         break;
-    case 993:
+    case 974:
         wrapper->m_setHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setHeight>(callback);
         break;
-    case 994:
+    case 975:
         wrapper->m_setMaximumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setMaximumSize>(callback);
         break;
-    case 995:
+    case 976:
         wrapper->m_setMinimumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setMinimumSize>(callback);
         break;
-    case 996:
+    case 977:
         wrapper->m_setMouseTrackingCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setMouseTracking>(callback);
         break;
-    case 1795:
+    case 1741:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setObjectName>(callback);
         break;
-    case 998:
+    case 978:
         wrapper->m_setParentCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setParent>(callback);
         break;
-    case 1000:
-        wrapper->m_setSize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setSize_2>(callback);
+    case 979:
+        wrapper->m_setSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setSize>(callback);
         break;
-    case 1796:
+    case 980:
+        wrapper->m_setViewNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setViewName>(callback);
+        break;
+    case 1742:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setVisible>(callback);
         break;
-    case 1002:
+    case 982:
         wrapper->m_setWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setWidth>(callback);
         break;
-    case 1003:
+    case 983:
         wrapper->m_setWindowOpacityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setWindowOpacity>(callback);
         break;
-    case 1004:
+    case 984:
         wrapper->m_setWindowTitleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setWindowTitle>(callback);
         break;
-    case 1005:
+    case 985:
         wrapper->m_setZOrderCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_setZOrder>(callback);
         break;
-    case 1006:
+    case 986:
         wrapper->m_showCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_show>(callback);
         break;
-    case 1007:
+    case 987:
         wrapper->m_showMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_showMaximized>(callback);
         break;
-    case 1008:
+    case 988:
         wrapper->m_showMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_showMinimized>(callback);
         break;
-    case 1009:
+    case 989:
         wrapper->m_showNormalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_showNormal>(callback);
         break;
-    case 1011:
-        wrapper->m_sizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_sizeHint>(callback);
-        break;
-    case 1013:
+    case 990:
         wrapper->m_updateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_update>(callback);
         break;
-    case 1797:
+    case 1743:
         wrapper->m_updatePositionsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_updatePositions>(callback);
         break;
-    case 1807:
+    case 1752:
         wrapper->m_updatePositions_flutterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_updatePositions_flutter>(callback);
+        break;
+    case 991:
+        wrapper->m_viewNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::IndicatorWindow_wrapper::Callback_viewName>(callback);
         break;
     }
 }

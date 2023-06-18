@@ -1370,8 +1370,6 @@ void *c_KDDockWidgets__Core__CreateViewOptions__getMaxSize(void *thisObj);
 void *c_KDDockWidgets__Core__CreateViewOptions__getMinSize(void *thisObj);
 // KDDockWidgets::Core::CreateViewOptions::getSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getSize(void *thisObj);
-// KDDockWidgets::Core::CreateViewOptions::getSizeHint() const
-void *c_KDDockWidgets__Core__CreateViewOptions__getSizeHint(void *thisObj);
 void c_KDDockWidgets__Core__CreateViewOptions__destructor(void *thisObj);
 bool c_KDDockWidgets__Core__CreateViewOptions___get_isVisible(void *thisObj);
 bool c_KDDockWidgets__Core__CreateViewOptions___get_createWindow(void *thisObj);
@@ -1423,9 +1421,7 @@ int c_KDDockWidgets__Core__Controller__x(void *thisObj);
 int c_KDDockWidgets__Core__Controller__y(void *thisObj);
 void c_KDDockWidgets__Core__Controller__destructor(void *thisObj);
 void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Controller_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::View::aboutToBeDestroyed() const
-bool c_KDDockWidgets__Core__View__aboutToBeDestroyed(void *thisObj);
-// KDDockWidgets::Core::View::activateWindow()
+void c_KDDockWidgets__Core__Controller_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::View::activateWindow()
 void c_KDDockWidgets__Core__View__activateWindow(void *thisObj);
 // KDDockWidgets::Core::View::asDockWidgetController() const
 void *c_KDDockWidgets__Core__View__asDockWidgetController(void *thisObj);
@@ -1445,18 +1441,12 @@ void *c_KDDockWidgets__Core__View__asStackController(void *thisObj);
 void *c_KDDockWidgets__Core__View__asTabBarController(void *thisObj);
 // KDDockWidgets::Core::View::asTitleBarController() const
 void *c_KDDockWidgets__Core__View__asTitleBarController(void *thisObj);
-// KDDockWidgets::Core::View::boundedMaxSize(QSize min, QSize max)
-void *c_static_KDDockWidgets__Core__View__boundedMaxSize_QSize_QSize(void *min_, void *max_);
 // KDDockWidgets::Core::View::close()
 bool c_KDDockWidgets__Core__View__close(void *thisObj);
-// KDDockWidgets::Core::View::closeRootView()
-void c_KDDockWidgets__Core__View__closeRootView(void *thisObj);
 // KDDockWidgets::Core::View::controller() const
 void *c_KDDockWidgets__Core__View__controller(void *thisObj);
 // KDDockWidgets::Core::View::createPlatformWindow()
 void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj);
-// KDDockWidgets::Core::View::deliverViewEventToFilters(KDDockWidgets::Event * e)
-bool c_KDDockWidgets__Core__View__deliverViewEventToFilters_Event(void *thisObj, void *e_);
 // KDDockWidgets::Core::View::dumpDebug()
 void c_KDDockWidgets__Core__View__dumpDebug(void *thisObj);
 // KDDockWidgets::Core::View::equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
@@ -1465,30 +1455,18 @@ bool c_static_KDDockWidgets__Core__View__equals_View_View(void *one_, void *two_
 bool c_KDDockWidgets__Core__View__equals_View(void *thisObj, void *other_);
 // KDDockWidgets::Core::View::firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::Core::ViewType arg__2)
 void *c_static_KDDockWidgets__Core__View__firstParentOfType_View_ViewType(void *view_, int arg__2);
-// KDDockWidgets::Core::View::firstParentOfType(KDDockWidgets::Core::ViewType arg__1) const
-void *c_KDDockWidgets__Core__View__firstParentOfType_ViewType(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::flags() const
 int c_KDDockWidgets__Core__View__flags(void *thisObj);
-// KDDockWidgets::Core::View::free()
-void c_KDDockWidgets__Core__View__free(void *thisObj);
-// KDDockWidgets::Core::View::freed() const
-bool c_KDDockWidgets__Core__View__freed(void *thisObj);
 // KDDockWidgets::Core::View::geometry() const
 void *c_KDDockWidgets__Core__View__geometry(void *thisObj);
-// KDDockWidgets::Core::View::globalGeometry() const
-void *c_KDDockWidgets__Core__View__globalGeometry(void *thisObj);
 // KDDockWidgets::Core::View::grabMouse()
 void c_KDDockWidgets__Core__View__grabMouse(void *thisObj);
 // KDDockWidgets::Core::View::hardcodedMinimumSize()
 void *c_static_KDDockWidgets__Core__View__hardcodedMinimumSize();
 // KDDockWidgets::Core::View::hasFocus() const
 bool c_KDDockWidgets__Core__View__hasFocus(void *thisObj);
-// KDDockWidgets::Core::View::height() const
-int c_KDDockWidgets__Core__View__height(void *thisObj);
 // KDDockWidgets::Core::View::hide()
 void c_KDDockWidgets__Core__View__hide(void *thisObj);
-// KDDockWidgets::Core::View::id() const
-void *c_KDDockWidgets__Core__View__id(void *thisObj);
 // KDDockWidgets::Core::View::inDtor() const
 bool c_KDDockWidgets__Core__View__inDtor(void *thisObj);
 // KDDockWidgets::Core::View::init()
@@ -1517,32 +1495,18 @@ void *c_KDDockWidgets__Core__View__mapToGlobal_QPoint(void *thisObj, void *arg__
 void *c_KDDockWidgets__Core__View__maxSizeHint(void *thisObj);
 // KDDockWidgets::Core::View::minSize() const
 void *c_KDDockWidgets__Core__View__minSize(void *thisObj);
-// KDDockWidgets::Core::View::minimumHeight() const
-int c_KDDockWidgets__Core__View__minimumHeight(void *thisObj);
-// KDDockWidgets::Core::View::minimumWidth() const
-int c_KDDockWidgets__Core__View__minimumWidth(void *thisObj);
-// KDDockWidgets::Core::View::move(QPoint arg__1)
-void c_KDDockWidgets__Core__View__move_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::move(int x, int y)
 void c_KDDockWidgets__Core__View__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::Core::View::normalGeometry() const
 void *c_KDDockWidgets__Core__View__normalGeometry(void *thisObj);
-// KDDockWidgets::Core::View::objectName() const
-void *c_KDDockWidgets__Core__View__objectName(void *thisObj);
 // KDDockWidgets::Core::View::onResize(QSize arg__1)
 bool c_KDDockWidgets__Core__View__onResize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::onResize(int h, int w)
 bool c_KDDockWidgets__Core__View__onResize_int_int(void *thisObj, int h, int w);
-// KDDockWidgets::Core::View::parentSize() const
-void *c_KDDockWidgets__Core__View__parentSize(void *thisObj);
-// KDDockWidgets::Core::View::pos() const
-void *c_KDDockWidgets__Core__View__pos(void *thisObj);
 // KDDockWidgets::Core::View::raise()
 void c_KDDockWidgets__Core__View__raise(void *thisObj);
 // KDDockWidgets::Core::View::raiseAndActivate()
 void c_KDDockWidgets__Core__View__raiseAndActivate(void *thisObj);
-// KDDockWidgets::Core::View::rect() const
-void *c_KDDockWidgets__Core__View__rect(void *thisObj);
 // KDDockWidgets::Core::View::releaseKeyboard()
 void c_KDDockWidgets__Core__View__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Core::View::releaseMouse()
@@ -1551,8 +1515,6 @@ void c_KDDockWidgets__Core__View__releaseMouse(void *thisObj);
 void c_KDDockWidgets__Core__View__resize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::resize(int w, int h)
 void c_KDDockWidgets__Core__View__resize_int_int(void *thisObj, int w, int h);
-// KDDockWidgets::Core::View::setAboutToBeDestroyed()
-void c_KDDockWidgets__Core__View__setAboutToBeDestroyed(void *thisObj);
 // KDDockWidgets::Core::View::setCursor(Qt::CursorShape arg__1)
 void c_KDDockWidgets__Core__View__setCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::setFixedHeight(int arg__1)
@@ -1569,14 +1531,12 @@ void c_KDDockWidgets__Core__View__setMaximumSize_QSize(void *thisObj, void *sz_)
 void c_KDDockWidgets__Core__View__setMinimumSize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::setMouseTracking(bool arg__1)
 void c_KDDockWidgets__Core__View__setMouseTracking_bool(void *thisObj, bool arg__1);
-// KDDockWidgets::Core::View::setObjectName(const QString & arg__1)
-void c_KDDockWidgets__Core__View__setObjectName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::View::setParent(KDDockWidgets::Core::View * arg__1)
 void c_KDDockWidgets__Core__View__setParent_View(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::View::setSize(QSize arg__1)
-void c_KDDockWidgets__Core__View__setSize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::setSize(int width, int height)
 void c_KDDockWidgets__Core__View__setSize_int_int(void *thisObj, int width, int height);
+// KDDockWidgets::Core::View::setViewName(const QString & arg__1)
+void c_KDDockWidgets__Core__View__setViewName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::View::setVisible(bool arg__1)
 void c_KDDockWidgets__Core__View__setVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::View::setWidth(int width)
@@ -1595,22 +1555,10 @@ void c_KDDockWidgets__Core__View__showMaximized(void *thisObj);
 void c_KDDockWidgets__Core__View__showMinimized(void *thisObj);
 // KDDockWidgets::Core::View::showNormal()
 void c_KDDockWidgets__Core__View__showNormal(void *thisObj);
-// KDDockWidgets::Core::View::size() const
-void *c_KDDockWidgets__Core__View__size(void *thisObj);
-// KDDockWidgets::Core::View::sizeHint() const
-void *c_KDDockWidgets__Core__View__sizeHint(void *thisObj);
-// KDDockWidgets::Core::View::type() const
-int c_KDDockWidgets__Core__View__type(void *thisObj);
 // KDDockWidgets::Core::View::update()
 void c_KDDockWidgets__Core__View__update(void *thisObj);
-// KDDockWidgets::Core::View::width() const
-int c_KDDockWidgets__Core__View__width(void *thisObj);
-// KDDockWidgets::Core::View::windowGeometry() const
-void *c_KDDockWidgets__Core__View__windowGeometry(void *thisObj);
-// KDDockWidgets::Core::View::x() const
-int c_KDDockWidgets__Core__View__x(void *thisObj);
-// KDDockWidgets::Core::View::y() const
-int c_KDDockWidgets__Core__View__y(void *thisObj);
+// KDDockWidgets::Core::View::viewName() const
+void *c_KDDockWidgets__Core__View__viewName(void *thisObj);
 void c_KDDockWidgets__Core__View__destructor(void *thisObj);
 void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__Core__View_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::View::View(KDDockWidgets::Core::Controller * controller, KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
@@ -1659,16 +1607,10 @@ void *c_KDDockWidgets__flutter__View__mapToGlobal_QPoint(void *thisObj, void *lo
 void *c_KDDockWidgets__flutter__View__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::View::minSize() const
 void *c_KDDockWidgets__flutter__View__minSize(void *thisObj);
-// KDDockWidgets::flutter::View::minimumHeight() const
-int c_KDDockWidgets__flutter__View__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::View::minimumWidth() const
-int c_KDDockWidgets__flutter__View__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::View::move(int x, int y)
 void c_KDDockWidgets__flutter__View__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::View::normalGeometry() const
 void *c_KDDockWidgets__flutter__View__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::View::objectName() const
-void *c_KDDockWidgets__flutter__View__objectName(void *thisObj);
 // KDDockWidgets::flutter::View::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__View__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::View::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -1715,14 +1657,12 @@ void c_KDDockWidgets__flutter__View__setMinimumSize_QSize(void *thisObj, void *s
 void c_KDDockWidgets__flutter__View__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::flutter::View::setNormalGeometry(QRect geo)
 void c_KDDockWidgets__flutter__View__setNormalGeometry_QRect(void *thisObj, void *geo_);
-// KDDockWidgets::flutter::View::setObjectName(const QString & name)
-void c_KDDockWidgets__flutter__View__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::View::setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__flutter__View__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::View::setSize(int w, int h)
 void c_KDDockWidgets__flutter__View__setSize_int_int(void *thisObj, int w, int h);
-// KDDockWidgets::flutter::View::setSizeHint(QSize arg__1)
-void c_KDDockWidgets__flutter__View__setSizeHint_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::View::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__View__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::View::setVisible(bool visible)
 void c_KDDockWidgets__flutter__View__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::View::setWidth(int w)
@@ -1741,12 +1681,12 @@ void c_KDDockWidgets__flutter__View__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__View__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::View::showNormal()
 void c_KDDockWidgets__flutter__View__showNormal(void *thisObj);
-// KDDockWidgets::flutter::View::sizeHint() const
-void *c_KDDockWidgets__flutter__View__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::View::update()
 void c_KDDockWidgets__flutter__View__update(void *thisObj);
 // KDDockWidgets::flutter::View::updateGeometry()
 void c_KDDockWidgets__flutter__View__updateGeometry(void *thisObj);
+// KDDockWidgets::flutter::View::viewName() const
+void *c_KDDockWidgets__flutter__View__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__View__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__View_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::TitleBar::TitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent)
@@ -1801,16 +1741,10 @@ void *c_KDDockWidgets__flutter__TitleBar__mapToGlobal_QPoint(void *thisObj, void
 void *c_KDDockWidgets__flutter__TitleBar__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::minSize() const
 void *c_KDDockWidgets__flutter__TitleBar__minSize(void *thisObj);
-// KDDockWidgets::flutter::TitleBar::minimumHeight() const
-int c_KDDockWidgets__flutter__TitleBar__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::TitleBar::minimumWidth() const
-int c_KDDockWidgets__flutter__TitleBar__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::move(int x, int y)
 void c_KDDockWidgets__flutter__TitleBar__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::TitleBar::normalGeometry() const
 void *c_KDDockWidgets__flutter__TitleBar__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::TitleBar::objectName() const
-void *c_KDDockWidgets__flutter__TitleBar__objectName(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__TitleBar__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TitleBar::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -1853,12 +1787,12 @@ void c_KDDockWidgets__flutter__TitleBar__setMaximumSize_QSize(void *thisObj, voi
 void c_KDDockWidgets__flutter__TitleBar__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::TitleBar::setMouseTracking(bool enable)
 void c_KDDockWidgets__flutter__TitleBar__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::flutter::TitleBar::setObjectName(const QString & name)
-void c_KDDockWidgets__flutter__TitleBar__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::TitleBar::setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__flutter__TitleBar__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::TitleBar::setSize(int w, int h)
 void c_KDDockWidgets__flutter__TitleBar__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::TitleBar::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__TitleBar__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::TitleBar::setVisible(bool visible)
 void c_KDDockWidgets__flutter__TitleBar__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::TitleBar::setWidth(int w)
@@ -1877,10 +1811,10 @@ void c_KDDockWidgets__flutter__TitleBar__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__TitleBar__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::showNormal()
 void c_KDDockWidgets__flutter__TitleBar__showNormal(void *thisObj);
-// KDDockWidgets::flutter::TitleBar::sizeHint() const
-void *c_KDDockWidgets__flutter__TitleBar__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::TitleBar::update()
 void c_KDDockWidgets__flutter__TitleBar__update(void *thisObj);
+// KDDockWidgets::flutter::TitleBar::viewName() const
+void *c_KDDockWidgets__flutter__TitleBar__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__TitleBar__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__TitleBar_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::TabBar::TabBar(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::Core::View * parent)
@@ -1929,18 +1863,12 @@ void *c_KDDockWidgets__flutter__TabBar__mapToGlobal_QPoint(void *thisObj, void *
 void *c_KDDockWidgets__flutter__TabBar__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::TabBar::minSize() const
 void *c_KDDockWidgets__flutter__TabBar__minSize(void *thisObj);
-// KDDockWidgets::flutter::TabBar::minimumHeight() const
-int c_KDDockWidgets__flutter__TabBar__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::TabBar::minimumWidth() const
-int c_KDDockWidgets__flutter__TabBar__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::TabBar::move(int x, int y)
 void c_KDDockWidgets__flutter__TabBar__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::TabBar::moveTabTo(int from, int to)
 void c_KDDockWidgets__flutter__TabBar__moveTabTo_int_int(void *thisObj, int from, int to);
 // KDDockWidgets::flutter::TabBar::normalGeometry() const
 void *c_KDDockWidgets__flutter__TabBar__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::TabBar::objectName() const
-void *c_KDDockWidgets__flutter__TabBar__objectName(void *thisObj);
 // KDDockWidgets::flutter::TabBar::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__TabBar__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::TabBar::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -1989,12 +1917,12 @@ void c_KDDockWidgets__flutter__TabBar__setMaximumSize_QSize(void *thisObj, void 
 void c_KDDockWidgets__flutter__TabBar__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::TabBar::setMouseTracking(bool enable)
 void c_KDDockWidgets__flutter__TabBar__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::flutter::TabBar::setObjectName(const QString & name)
-void c_KDDockWidgets__flutter__TabBar__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::TabBar::setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__flutter__TabBar__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::TabBar::setSize(int w, int h)
 void c_KDDockWidgets__flutter__TabBar__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::TabBar::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__TabBar__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::TabBar::setVisible(bool visible)
 void c_KDDockWidgets__flutter__TabBar__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::TabBar::setWidth(int w)
@@ -2013,14 +1941,14 @@ void c_KDDockWidgets__flutter__TabBar__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__TabBar__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::TabBar::showNormal()
 void c_KDDockWidgets__flutter__TabBar__showNormal(void *thisObj);
-// KDDockWidgets::flutter::TabBar::sizeHint() const
-void *c_KDDockWidgets__flutter__TabBar__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::TabBar::tabAt(QPoint localPos) const
 int c_KDDockWidgets__flutter__TabBar__tabAt_QPoint(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::TabBar::text(int index) const
 void *c_KDDockWidgets__flutter__TabBar__text_int(void *thisObj, int index);
 // KDDockWidgets::flutter::TabBar::update()
 void c_KDDockWidgets__flutter__TabBar__update(void *thisObj);
+// KDDockWidgets::flutter::TabBar::viewName() const
+void *c_KDDockWidgets__flutter__TabBar__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__TabBar__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__TabBar_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::Stack::Stack(KDDockWidgets::Core::Stack * controller, KDDockWidgets::Core::View * parent)
@@ -2071,16 +1999,10 @@ void *c_KDDockWidgets__flutter__Stack__mapToGlobal_QPoint(void *thisObj, void *l
 void *c_KDDockWidgets__flutter__Stack__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::Stack::minSize() const
 void *c_KDDockWidgets__flutter__Stack__minSize(void *thisObj);
-// KDDockWidgets::flutter::Stack::minimumHeight() const
-int c_KDDockWidgets__flutter__Stack__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::Stack::minimumWidth() const
-int c_KDDockWidgets__flutter__Stack__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::Stack::move(int x, int y)
 void c_KDDockWidgets__flutter__Stack__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::Stack::normalGeometry() const
 void *c_KDDockWidgets__flutter__Stack__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::Stack::objectName() const
-void *c_KDDockWidgets__flutter__Stack__objectName(void *thisObj);
 // KDDockWidgets::flutter::Stack::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__Stack__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Stack::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -2123,12 +2045,12 @@ void c_KDDockWidgets__flutter__Stack__setMaximumSize_QSize(void *thisObj, void *
 void c_KDDockWidgets__flutter__Stack__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::Stack::setMouseTracking(bool enable)
 void c_KDDockWidgets__flutter__Stack__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::flutter::Stack::setObjectName(const QString & name)
-void c_KDDockWidgets__flutter__Stack__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::Stack::setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__flutter__Stack__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::Stack::setSize(int w, int h)
 void c_KDDockWidgets__flutter__Stack__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::Stack::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__Stack__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::Stack::setVisible(bool visible)
 void c_KDDockWidgets__flutter__Stack__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::Stack::setWidth(int w)
@@ -2147,10 +2069,10 @@ void c_KDDockWidgets__flutter__Stack__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__Stack__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::Stack::showNormal()
 void c_KDDockWidgets__flutter__Stack__showNormal(void *thisObj);
-// KDDockWidgets::flutter::Stack::sizeHint() const
-void *c_KDDockWidgets__flutter__Stack__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::Stack::update()
 void c_KDDockWidgets__flutter__Stack__update(void *thisObj);
+// KDDockWidgets::flutter::Stack::viewName() const
+void *c_KDDockWidgets__flutter__Stack__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__Stack__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__Stack__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__Stack_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::MainWindow::MainWindow(const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::flutter::View * parent, Qt::WindowFlags flags)
@@ -2201,16 +2123,10 @@ void *c_KDDockWidgets__flutter__MainWindow__mapToGlobal_QPoint(void *thisObj, vo
 void *c_KDDockWidgets__flutter__MainWindow__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::minSize() const
 void *c_KDDockWidgets__flutter__MainWindow__minSize(void *thisObj);
-// KDDockWidgets::flutter::MainWindow::minimumHeight() const
-int c_KDDockWidgets__flutter__MainWindow__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::MainWindow::minimumWidth() const
-int c_KDDockWidgets__flutter__MainWindow__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::move(int x, int y)
 void c_KDDockWidgets__flutter__MainWindow__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::MainWindow::normalGeometry() const
 void *c_KDDockWidgets__flutter__MainWindow__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::MainWindow::objectName() const
-void *c_KDDockWidgets__flutter__MainWindow__objectName(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__MainWindow__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::MainWindow::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -2253,12 +2169,12 @@ void c_KDDockWidgets__flutter__MainWindow__setMaximumSize_QSize(void *thisObj, v
 void c_KDDockWidgets__flutter__MainWindow__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::MainWindow::setMouseTracking(bool enable)
 void c_KDDockWidgets__flutter__MainWindow__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::flutter::MainWindow::setObjectName(const QString & name)
-void c_KDDockWidgets__flutter__MainWindow__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::MainWindow::setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__flutter__MainWindow__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::MainWindow::setSize(int w, int h)
 void c_KDDockWidgets__flutter__MainWindow__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::MainWindow::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__MainWindow__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::MainWindow::setVisible(bool visible)
 void c_KDDockWidgets__flutter__MainWindow__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::MainWindow::setWidth(int w)
@@ -2277,10 +2193,10 @@ void c_KDDockWidgets__flutter__MainWindow__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__MainWindow__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::showNormal()
 void c_KDDockWidgets__flutter__MainWindow__showNormal(void *thisObj);
-// KDDockWidgets::flutter::MainWindow::sizeHint() const
-void *c_KDDockWidgets__flutter__MainWindow__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::update()
 void c_KDDockWidgets__flutter__MainWindow__update(void *thisObj);
+// KDDockWidgets::flutter::MainWindow::viewName() const
+void *c_KDDockWidgets__flutter__MainWindow__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__MainWindow__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__MainWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__MainWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::Group::Group(KDDockWidgets::Core::Group * controller, KDDockWidgets::Core::View * parent)
@@ -2331,18 +2247,12 @@ void *c_KDDockWidgets__flutter__Group__mapToGlobal_QPoint(void *thisObj, void *l
 void *c_KDDockWidgets__flutter__Group__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::Group::minSize() const
 void *c_KDDockWidgets__flutter__Group__minSize(void *thisObj);
-// KDDockWidgets::flutter::Group::minimumHeight() const
-int c_KDDockWidgets__flutter__Group__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::Group::minimumWidth() const
-int c_KDDockWidgets__flutter__Group__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::Group::move(int x, int y)
 void c_KDDockWidgets__flutter__Group__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::Group::nonContentsHeight() const
 int c_KDDockWidgets__flutter__Group__nonContentsHeight(void *thisObj);
 // KDDockWidgets::flutter::Group::normalGeometry() const
 void *c_KDDockWidgets__flutter__Group__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::Group::objectName() const
-void *c_KDDockWidgets__flutter__Group__objectName(void *thisObj);
 // KDDockWidgets::flutter::Group::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__Group__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::Group::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -2383,12 +2293,12 @@ void c_KDDockWidgets__flutter__Group__setMaximumSize_QSize(void *thisObj, void *
 void c_KDDockWidgets__flutter__Group__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::Group::setMouseTracking(bool enable)
 void c_KDDockWidgets__flutter__Group__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::flutter::Group::setObjectName(const QString & name)
-void c_KDDockWidgets__flutter__Group__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::Group::setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__flutter__Group__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::Group::setSize(int w, int h)
 void c_KDDockWidgets__flutter__Group__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::Group::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__Group__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::Group::setVisible(bool visible)
 void c_KDDockWidgets__flutter__Group__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::Group::setWidth(int w)
@@ -2407,10 +2317,10 @@ void c_KDDockWidgets__flutter__Group__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__Group__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::Group::showNormal()
 void c_KDDockWidgets__flutter__Group__showNormal(void *thisObj);
-// KDDockWidgets::flutter::Group::sizeHint() const
-void *c_KDDockWidgets__flutter__Group__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::Group::update()
 void c_KDDockWidgets__flutter__Group__update(void *thisObj);
+// KDDockWidgets::flutter::Group::viewName() const
+void *c_KDDockWidgets__flutter__Group__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__Group__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__Group_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::DropArea::DropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent)
@@ -2461,16 +2371,10 @@ void *c_KDDockWidgets__flutter__DropArea__mapToGlobal_QPoint(void *thisObj, void
 void *c_KDDockWidgets__flutter__DropArea__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::DropArea::minSize() const
 void *c_KDDockWidgets__flutter__DropArea__minSize(void *thisObj);
-// KDDockWidgets::flutter::DropArea::minimumHeight() const
-int c_KDDockWidgets__flutter__DropArea__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::DropArea::minimumWidth() const
-int c_KDDockWidgets__flutter__DropArea__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::DropArea::move(int x, int y)
 void c_KDDockWidgets__flutter__DropArea__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::DropArea::normalGeometry() const
 void *c_KDDockWidgets__flutter__DropArea__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::DropArea::objectName() const
-void *c_KDDockWidgets__flutter__DropArea__objectName(void *thisObj);
 // KDDockWidgets::flutter::DropArea::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__DropArea__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DropArea::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -2511,12 +2415,12 @@ void c_KDDockWidgets__flutter__DropArea__setMaximumSize_QSize(void *thisObj, voi
 void c_KDDockWidgets__flutter__DropArea__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::DropArea::setMouseTracking(bool enable)
 void c_KDDockWidgets__flutter__DropArea__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::flutter::DropArea::setObjectName(const QString & name)
-void c_KDDockWidgets__flutter__DropArea__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::DropArea::setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__flutter__DropArea__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::DropArea::setSize(int w, int h)
 void c_KDDockWidgets__flutter__DropArea__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::DropArea::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__DropArea__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::DropArea::setVisible(bool visible)
 void c_KDDockWidgets__flutter__DropArea__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::DropArea::setWidth(int w)
@@ -2535,10 +2439,10 @@ void c_KDDockWidgets__flutter__DropArea__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__DropArea__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::DropArea::showNormal()
 void c_KDDockWidgets__flutter__DropArea__showNormal(void *thisObj);
-// KDDockWidgets::flutter::DropArea::sizeHint() const
-void *c_KDDockWidgets__flutter__DropArea__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::DropArea::update()
 void c_KDDockWidgets__flutter__DropArea__update(void *thisObj);
+// KDDockWidgets::flutter::DropArea::viewName() const
+void *c_KDDockWidgets__flutter__DropArea__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__DropArea__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__DropArea_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::DockWidget::DockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
@@ -2589,16 +2493,10 @@ void *c_KDDockWidgets__flutter__DockWidget__mapToGlobal_QPoint(void *thisObj, vo
 void *c_KDDockWidgets__flutter__DockWidget__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::minSize() const
 void *c_KDDockWidgets__flutter__DockWidget__minSize(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::minimumHeight() const
-int c_KDDockWidgets__flutter__DockWidget__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::minimumWidth() const
-int c_KDDockWidgets__flutter__DockWidget__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::move(int x, int y)
 void c_KDDockWidgets__flutter__DockWidget__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::DockWidget::normalGeometry() const
 void *c_KDDockWidgets__flutter__DockWidget__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::objectName() const
-void *c_KDDockWidgets__flutter__DockWidget__objectName(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__DockWidget__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DockWidget::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -2639,12 +2537,12 @@ void c_KDDockWidgets__flutter__DockWidget__setMaximumSize_QSize(void *thisObj, v
 void c_KDDockWidgets__flutter__DockWidget__setMinimumSize_QSize(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::DockWidget::setMouseTracking(bool enable)
 void c_KDDockWidgets__flutter__DockWidget__setMouseTracking_bool(void *thisObj, bool enable);
-// KDDockWidgets::flutter::DockWidget::setObjectName(const QString & name)
-void c_KDDockWidgets__flutter__DockWidget__setObjectName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::DockWidget::setParent(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__flutter__DockWidget__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::DockWidget::setSize(int w, int h)
 void c_KDDockWidgets__flutter__DockWidget__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::DockWidget::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__DockWidget__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::DockWidget::setVisible(bool visible)
 void c_KDDockWidgets__flutter__DockWidget__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::DockWidget::setWidth(int w)
@@ -2663,10 +2561,10 @@ void c_KDDockWidgets__flutter__DockWidget__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__DockWidget__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::showNormal()
 void c_KDDockWidgets__flutter__DockWidget__showNormal(void *thisObj);
-// KDDockWidgets::flutter::DockWidget::sizeHint() const
-void *c_KDDockWidgets__flutter__DockWidget__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::DockWidget::update()
 void c_KDDockWidgets__flutter__DockWidget__update(void *thisObj);
+// KDDockWidgets::flutter::DockWidget::viewName() const
+void *c_KDDockWidgets__flutter__DockWidget__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__DockWidget__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__DockWidget__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__DockWidget_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::FloatingWindow * parent)
@@ -3571,16 +3469,10 @@ void *c_KDDockWidgets__flutter__IndicatorWindow__mapToGlobal_QPoint(void *thisOb
 void *c_KDDockWidgets__flutter__IndicatorWindow__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::minSize() const
 void *c_KDDockWidgets__flutter__IndicatorWindow__minSize(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::minimumHeight() const
-int c_KDDockWidgets__flutter__IndicatorWindow__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::minimumWidth() const
-int c_KDDockWidgets__flutter__IndicatorWindow__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::move(int x, int y)
 void c_KDDockWidgets__flutter__IndicatorWindow__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::IndicatorWindow::normalGeometry() const
 void *c_KDDockWidgets__flutter__IndicatorWindow__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::objectName() const
-void *c_KDDockWidgets__flutter__IndicatorWindow__objectName(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__IndicatorWindow__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::IndicatorWindow::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -3633,6 +3525,8 @@ void c_KDDockWidgets__flutter__IndicatorWindow__setObjectName_QString(void *this
 void c_KDDockWidgets__flutter__IndicatorWindow__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::IndicatorWindow::setSize(int w, int h)
 void c_KDDockWidgets__flutter__IndicatorWindow__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::IndicatorWindow::setViewName(const QString & name)
+void c_KDDockWidgets__flutter__IndicatorWindow__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::IndicatorWindow::setVisible(bool arg__1)
 void c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::flutter::IndicatorWindow::setWidth(int w)
@@ -3651,14 +3545,14 @@ void c_KDDockWidgets__flutter__IndicatorWindow__showMaximized(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::showNormal()
 void c_KDDockWidgets__flutter__IndicatorWindow__showNormal(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::sizeHint() const
-void *c_KDDockWidgets__flutter__IndicatorWindow__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::update()
 void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)
 bool c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_, int visibleLocations);
+// KDDockWidgets::flutter::IndicatorWindow::viewName() const
+void *c_KDDockWidgets__flutter__IndicatorWindow__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea)

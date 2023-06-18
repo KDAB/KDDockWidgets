@@ -76,16 +76,10 @@ public:
     virtual QSize maxSizeHint_nocallback() const;
     virtual QSize minSize() const;
     virtual QSize minSize_nocallback() const;
-    virtual int minimumHeight() const;
-    virtual int minimumHeight_nocallback() const;
-    virtual int minimumWidth() const;
-    virtual int minimumWidth_nocallback() const;
     virtual void move(int x, int y);
     virtual void move_nocallback(int x, int y);
     virtual QRect normalGeometry() const;
     virtual QRect normalGeometry_nocallback() const;
-    virtual QString objectName() const;
-    virtual QString objectName_nocallback() const;
     virtual void onChildAdded(KDDockWidgets::Core::View *childView);
     virtual void onChildAdded_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved(KDDockWidgets::Core::View *childView);
@@ -137,6 +131,8 @@ public:
     virtual void setParent_nocallback(KDDockWidgets::Core::View *parent);
     virtual void setSize(int w, int h);
     virtual void setSize_nocallback(int w, int h);
+    virtual void setViewName(const QString &name);
+    virtual void setViewName_nocallback(const QString &name);
     virtual void setVisible(bool arg__1);
     virtual void setVisible_nocallback(bool arg__1);
     virtual void setWidth(int w);
@@ -155,14 +151,14 @@ public:
     virtual void showMinimized_nocallback();
     virtual void showNormal();
     virtual void showNormal_nocallback();
-    virtual QSize sizeHint() const;
-    virtual QSize sizeHint_nocallback() const;
     virtual void update();
     virtual void update_nocallback();
     virtual void updatePositions();
     virtual void updatePositions_nocallback();
     virtual bool updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
     virtual bool updatePositions_flutter_nocallback(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
+    virtual QString viewName() const;
+    virtual QString viewName_nocallback() const;
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -213,16 +209,10 @@ public:
     Callback_maxSizeHint m_maxSizeHintCallback = nullptr;
     typedef QSize *(*Callback_minSize)(void *);
     Callback_minSize m_minSizeCallback = nullptr;
-    typedef int (*Callback_minimumHeight)(void *);
-    Callback_minimumHeight m_minimumHeightCallback = nullptr;
-    typedef int (*Callback_minimumWidth)(void *);
-    Callback_minimumWidth m_minimumWidthCallback = nullptr;
-    typedef void (*Callback_move_2)(void *, int x, int y);
-    Callback_move_2 m_move_2Callback = nullptr;
+    typedef void (*Callback_move)(void *, int x, int y);
+    Callback_move m_moveCallback = nullptr;
     typedef QRect *(*Callback_normalGeometry)(void *);
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
-    typedef QString *(*Callback_objectName)(void *);
-    Callback_objectName m_objectNameCallback = nullptr;
     typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
     typedef void (*Callback_onChildRemoved)(void *, KDDockWidgets::Core::View *childView);
@@ -271,8 +261,10 @@ public:
     Callback_setObjectName m_setObjectNameCallback = nullptr;
     typedef void (*Callback_setParent)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParent m_setParentCallback = nullptr;
-    typedef void (*Callback_setSize_2)(void *, int w, int h);
-    Callback_setSize_2 m_setSize_2Callback = nullptr;
+    typedef void (*Callback_setSize)(void *, int w, int h);
+    Callback_setSize m_setSizeCallback = nullptr;
+    typedef void (*Callback_setViewName)(void *, const QString &name);
+    Callback_setViewName m_setViewNameCallback = nullptr;
     typedef void (*Callback_setVisible)(void *, bool arg__1);
     Callback_setVisible m_setVisibleCallback = nullptr;
     typedef void (*Callback_setWidth)(void *, int w);
@@ -291,14 +283,14 @@ public:
     Callback_showMinimized m_showMinimizedCallback = nullptr;
     typedef void (*Callback_showNormal)(void *);
     Callback_showNormal m_showNormalCallback = nullptr;
-    typedef QSize *(*Callback_sizeHint)(void *);
-    Callback_sizeHint m_sizeHintCallback = nullptr;
     typedef void (*Callback_update)(void *);
     Callback_update m_updateCallback = nullptr;
     typedef void (*Callback_updatePositions)(void *);
     Callback_updatePositions m_updatePositionsCallback = nullptr;
     typedef bool (*Callback_updatePositions_flutter)(void *, int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
     Callback_updatePositions_flutter m_updatePositions_flutterCallback = nullptr;
+    typedef QString *(*Callback_viewName)(void *);
+    Callback_viewName m_viewNameCallback = nullptr;
 };
 }
 }
@@ -357,16 +349,10 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__ma
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::minSize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__minSize(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::minimumHeight() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__minimumHeight(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::minimumWidth() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__minimumWidth(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::move(int x, int y)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::IndicatorWindow::normalGeometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__normalGeometry(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::objectName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__objectName(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::onChildAdded(KDDockWidgets::Core::View * childView)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::IndicatorWindow::onChildRemoved(KDDockWidgets::Core::View * childView)
@@ -419,6 +405,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__set
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::IndicatorWindow::setSize(int w, int h)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setSize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::flutter::IndicatorWindow::setViewName(const QString & name)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::IndicatorWindow::setVisible(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::flutter::IndicatorWindow::setWidth(int w)
@@ -437,14 +425,14 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__sho
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::showNormal()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showNormal(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::sizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__sizeHint(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::update()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_, int visibleLocations);
+// KDDockWidgets::flutter::IndicatorWindow::viewName() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__viewName(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *, void *cppObj, void *);

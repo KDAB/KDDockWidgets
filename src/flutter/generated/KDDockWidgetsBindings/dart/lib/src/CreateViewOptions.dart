@@ -114,15 +114,6 @@ class CreateViewOptions {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
-  } // getSizeHint() const
-
-  QSize getSizeHint() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__CreateViewOptions__getSizeHint')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
   }
 
   void release() {
