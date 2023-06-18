@@ -14,8 +14,8 @@
 #include <core/View.h>
 #include <View.h>
 #include <qsize.h>
-#include <qstring.h>
 #include <qrect.h>
+#include <qstring.h>
 #include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

@@ -3487,6 +3487,8 @@ void c_KDDockWidgets__flutter__IndicatorWindow__onRebuildRequested(void *thisObj
 bool c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation(void *thisObj, int arg__1);
+// KDDockWidgets::flutter::IndicatorWindow::posForIndicator_flutter(KDDockWidgets::DropLocation arg__1) const
+void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_flutter_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::flutter::IndicatorWindow::raise()
 void c_KDDockWidgets__flutter__IndicatorWindow__raise(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::raiseAndActivate()

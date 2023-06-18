@@ -94,6 +94,8 @@ public:
     virtual bool onResize_nocallback(int h, int w);
     virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
     virtual QPoint posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
+    virtual QPoint posForIndicator_flutter(KDDockWidgets::DropLocation arg__1) const;
+    virtual QPoint posForIndicator_flutter_nocallback(KDDockWidgets::DropLocation arg__1) const;
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -227,6 +229,8 @@ public:
     Callback_onResize_2 m_onResize_2Callback = nullptr;
     typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
+    typedef QPoint *(*Callback_posForIndicator_flutter)(void *, KDDockWidgets::DropLocation arg__1);
+    Callback_posForIndicator_flutter m_posForIndicator_flutterCallback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
     typedef void (*Callback_raiseAndActivate)(void *);
@@ -367,6 +371,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onR
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation(void *thisObj, int arg__1);
+// KDDockWidgets::flutter::IndicatorWindow::posForIndicator_flutter(KDDockWidgets::DropLocation arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_flutter_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::flutter::IndicatorWindow::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raise(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::raiseAndActivate()
