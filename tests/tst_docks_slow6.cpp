@@ -57,7 +57,7 @@ KDDW_QCORO_TASK tst_isFocused()
     // 2. Raise dock1 and focus its line edit
     dock1->raise();
     dock1->guestView()->setFocus(Qt::OtherFocusReason);
-    Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
 
     CHECK(dock1->isFocused());
     CHECK(!dock2->isFocused());
@@ -65,10 +65,10 @@ KDDW_QCORO_TASK tst_isFocused()
     // 3. Raise dock2 and focus its line edit
     dock2->view()->raiseAndActivate();
     if (!dock2->window()->window()->isActive())
-        Platform::instance()->tests_waitForEvent(dock2->view()->window(), Event::WindowActivate);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock2->view()->window(), Event::WindowActivate);
 
     dock2->guestView()->setFocus(Qt::OtherFocusReason);
-    Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
 
     CHECK(!dock1->isFocused());
     CHECK(dock2->guestView()->hasFocus());
@@ -91,7 +91,7 @@ KDDW_QCORO_TASK tst_isFocused()
     auto oldFw3 = dock3->window();
     dock3->raise();
     dock3->guestView()->setFocus(Qt::OtherFocusReason);
-    Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
     CHECK(!dock1->isFocused());
     CHECK(!dock2->isFocused());
     CHECK(dock3->isFocused());
@@ -100,7 +100,7 @@ KDDW_QCORO_TASK tst_isFocused()
     dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
     dock2->raise();
     dock2->guestView()->setFocus(Qt::OtherFocusReason);
-    Platform::instance()->tests_waitForEvent(dock2->guestView().get(), Event::FocusIn);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock2->guestView().get(), Event::FocusIn);
     CHECK(!dock1->isFocused());
     CHECK(dock2->isFocused());
     CHECK(!dock3->isFocused());

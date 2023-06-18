@@ -81,7 +81,7 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
 
     CHECK(fw1->view()->isActiveWindow());
     KDDW_CO_AWAIT dragFloatingWindowTo(fw2, fw1->dropArea(), DropLocation_Left);
-    Platform::instance()->tests_waitForEvent(fw1, Event::WindowActivate);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(fw1, Event::WindowActivate);
 
     /// We dropped into floating window 1, it should still be active
     CHECK(fw1->view()->isActiveWindow());

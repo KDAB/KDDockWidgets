@@ -3445,7 +3445,7 @@ KDDW_QCORO_TASK tst_lastFloatingPositionIsRestored()
     dock1->window()->window()->setFramePosition(targetPos);
     CHECK_EQ(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
-    Platform::instance()->tests_waitForEvent(dock1->window().get(), Event::Move);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->window().get(), Event::Move);
 
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
