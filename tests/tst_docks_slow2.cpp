@@ -180,6 +180,10 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     CHECK(fw2->dropArea()->checkSanity());
     CHECK_EQ(fw2->groups().size(), 1);
     auto f2 = fw2->groups().constFirst();
+
+    // run one event loop, needed by flutter
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+
     CHECK_EQ(f2->dockWidgetCount(), 3);
 
     KDDW_CO_RETURN(true);

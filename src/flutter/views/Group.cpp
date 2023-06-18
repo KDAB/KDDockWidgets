@@ -76,6 +76,6 @@ int Group::nonContentsHeight() const
 
 QRect Group::dragRect() const
 {
-    qFatal("Not implemented");
+    // Not implemented for flutter
     return {};
 }
