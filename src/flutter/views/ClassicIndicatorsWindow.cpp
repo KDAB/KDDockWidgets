@@ -14,6 +14,7 @@
 #include "kddockwidgets/core/Group.h"
 #include "View.h"
 #include "core/Utils_p.h"
+#include "core/View_p.h"
 #include "flutter/Platform.h"
 
 using namespace KDDockWidgets;
@@ -52,7 +53,7 @@ DropLocation IndicatorWindow::hover(QPoint globalPos)
 
 void IndicatorWindow::updatePositions()
 {
-    auto sz = size();
+    auto sz = d->size();
     const bool updated = updatePositions_flutter(sz.width(), sz.height(),
                                                  classicIndicators->hoveredGroup(), visibleDropIndicatorLocations());
     m_updatePending = !updated;

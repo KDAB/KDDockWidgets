@@ -26,17 +26,11 @@ class DOCKS_EXPORT ViewWrapper : public Core::View
 {
 public:
     using Core::View::close;
-    using Core::View::height;
-    using Core::View::minimumHeight;
-    using Core::View::minimumWidth;
-    using Core::View::rect;
     using Core::View::resize;
-    using View::width;
 
     static std::shared_ptr<Core::View> create(flutter::View *wrapped);
     ~ViewWrapper() override;
 
-    QSize sizeHint() const override;
     QSize minSize() const override;
     QSize maxSizeHint() const override;
     QRect geometry() const override;
@@ -64,7 +58,7 @@ public:
     void raiseAndActivate() override;
     void activateWindow() override;
     void raise() override;
-    QVariant property(const char *name) const override;
+    QVariant viewProperty(const char *name) const override;
     bool isRootView() const override;
     QPoint mapToGlobal(QPoint localPt) const override;
     QPoint mapFromGlobal(QPoint globalPt) const override;
@@ -75,7 +69,7 @@ public:
 
     bool close() override;
     void setFlag(Qt::WindowType f, bool on = true) override;
-    void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override;
+    void enableAttribute(Qt::WidgetAttribute attr, bool enable = true) override;
     bool hasAttribute(Qt::WidgetAttribute attr) const override;
     Qt::WindowFlags flags() const override;
 
@@ -96,7 +90,7 @@ public:
     std::shared_ptr<Core::View> parentView() const override;
     std::shared_ptr<Core::View> asWrapper() override;
 
-    void setObjectName(const QString &name) override;
+    void setViewName(const QString &name) override;
     void grabMouse() override;
     void releaseMouse() override;
     void releaseKeyboard() override;
@@ -104,7 +98,7 @@ public:
     Qt::FocusPolicy focusPolicy() const override;
     bool hasFocus() const override;
     void setFocusPolicy(Qt::FocusPolicy policy) override;
-    QString objectName() const override;
+    QString viewName() const override;
     void setMinimumSize(QSize sz) override;
     void render(QPainter *) override;
     void setCursor(Qt::CursorShape shape) override;

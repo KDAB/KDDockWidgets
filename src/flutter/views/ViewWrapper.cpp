@@ -69,9 +69,9 @@ std::shared_ptr<Core::View> ViewWrapper::rootView() const
     return m_wrappedView->rootView();
 }
 
-void ViewWrapper::setAttribute(Qt::WidgetAttribute attr, bool enabled)
+void ViewWrapper::enableAttribute(Qt::WidgetAttribute attr, bool enabled)
 {
-    m_wrappedView->setAttribute(attr, enabled);
+    m_wrappedView->enableAttribute(attr, enabled);
 }
 
 bool ViewWrapper::hasAttribute(Qt::WidgetAttribute attr) const
@@ -87,11 +87,6 @@ void ViewWrapper::setFlag(Qt::WindowType flag, bool enabled)
 Qt::WindowFlags ViewWrapper::flags() const
 {
     return m_wrappedView->flags();
-}
-
-QSize ViewWrapper::sizeHint() const
-{
-    return m_wrappedView->sizeHint();
 }
 
 QSize ViewWrapper::minSize() const
@@ -184,9 +179,9 @@ void ViewWrapper::raise()
     m_wrappedView->raise();
 }
 
-QVariant ViewWrapper::property(const char *name) const
+QVariant ViewWrapper::viewProperty(const char *name) const
 {
-    return m_wrappedView->property(name);
+    return m_wrappedView->viewProperty(name);
 }
 
 bool ViewWrapper::isRootView() const
@@ -274,9 +269,9 @@ std::shared_ptr<Core::View> ViewWrapper::asWrapper()
     return m_thisWeakPtr.lock();
 }
 
-void ViewWrapper::setObjectName(const QString &name)
+void ViewWrapper::setViewName(const QString &name)
 {
-    m_wrappedView->setObjectName(name);
+    m_wrappedView->setViewName(name);
 }
 
 void ViewWrapper::grabMouse()
@@ -314,9 +309,9 @@ void ViewWrapper::setFocusPolicy(Qt::FocusPolicy policy)
     m_wrappedView->setFocusPolicy(policy);
 }
 
-QString ViewWrapper::objectName() const
+QString ViewWrapper::viewName() const
 {
-    return m_wrappedView->objectName();
+    return m_wrappedView->viewName();
 }
 
 void ViewWrapper::setMinimumSize(QSize size)
@@ -357,7 +352,7 @@ HANDLE ViewWrapper::handle() const
 bool ViewWrapper::is(Core::ViewType type) const
 {
     if (m_wrappedView)
-        return m_wrappedView->type() == type;
+        return m_wrappedView->d->type() == type;
 
     return type == Core::ViewType::ViewWrapper;
 }

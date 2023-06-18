@@ -381,7 +381,7 @@ std::shared_ptr<Core::View> View::childViewAt(QPoint localPos) const
         }
 
         // We favored depth first, but now it's our turn
-        if (rect().contains(localPos))
+        if (d->rect().contains(localPos))
             return const_cast<flutter::View *>(this)->asWrapper();
     }
 
@@ -438,7 +438,7 @@ void View::setFocusPolicy(Qt::FocusPolicy)
 {
 }
 
-QString View::objectName() const
+QString View::viewName() const
 {
     return m_name;
 }

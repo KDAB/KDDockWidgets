@@ -13,6 +13,7 @@
 #include "ClassicDropIndicatorOverlay.h"
 #include "ClassicIndicatorWindowViewInterface.h"
 #include "kddockwidgets/core/DropArea.h"
+#include "core/View_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
@@ -27,7 +28,7 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
 DropArea::~DropArea()
 {
     m_inDtor = true;
-    if (!freed())
+    if (!d->freed())
         m_dropArea->viewAboutToBeDeleted();
 }
 

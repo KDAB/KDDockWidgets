@@ -247,11 +247,6 @@ public:
 
     ~TestView_flutter();
 
-    QSize sizeHint() const override
-    {
-        return m_opts.sizeHint;
-    }
-
     QSize maxSizeHint() const override
     {
         return {};
@@ -271,11 +266,6 @@ public:
     }
 
     ~FocusableTestView_flutter();
-
-    QSize sizeHint() const override
-    {
-        return m_opts.sizeHint;
-    }
 
     QSize maxSizeHint() const override
     {
