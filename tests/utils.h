@@ -219,6 +219,9 @@ inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, QPoint glo
 inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Core::DropArea *target,
                                             DropLocation dropLocation)
 {
+    // run one event loop, needed by flutter
+    KDDW_CO_AWAIT Core::Platform::instance()->tests_wait(100);
+
     auto draggable = draggableFor(fw->view());
     Q_ASSERT(draggable);
 

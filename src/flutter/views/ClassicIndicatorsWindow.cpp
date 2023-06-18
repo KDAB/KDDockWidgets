@@ -35,8 +35,7 @@ IndicatorWindow::~IndicatorWindow()
 
 QPoint IndicatorWindow::posForIndicator(DropLocation loc) const
 {
-    qWarning() << Q_FUNC_INFO << "Implement me" << loc;
-    return {};
+    return posForIndicator_flutter(loc);
 }
 
 DropLocation IndicatorWindow::hover(QPoint globalPos)
@@ -96,6 +95,12 @@ bool IndicatorWindow::isWindow() const
 Core::Group *IndicatorWindow::hoveredGroup() const
 {
     return classicIndicators->hoveredGroup();
+}
+
+QPoint IndicatorWindow::posForIndicator_flutter(DropLocation) const
+{
+    qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
+    return {};
 }
 
 DropLocation IndicatorWindow::hover_flutter(QPoint)

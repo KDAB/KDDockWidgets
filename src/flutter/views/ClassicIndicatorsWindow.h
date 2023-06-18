@@ -41,6 +41,7 @@ public:
     void setObjectName(const QString &) override;
 
     /// implemented in dart. workaround for multi-inheritance binding limitations
+    virtual QPoint posForIndicator_flutter(DropLocation) const;
     virtual DropLocation hover_flutter(QPoint globalPos);
     virtual bool updatePositions_flutter(int overlayWidth, int overlayHeight,
                                          Core::Group *hoveredGroup, int visibleLocations);

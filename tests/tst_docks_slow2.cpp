@@ -67,8 +67,8 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     CHECK(dock3->titleBar()->isVisible());
     dock2->open();
     dock1->open();
-    Platform::instance()->tests_waitForEvent(m.get(), Event::LayoutRequest); // So MainWindow min
-                                                                             // size is updated
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(m.get(), Event::LayoutRequest); // So MainWindow min
+                                                                                           // size is updated
 
     Item *item1 = layout->itemForFrame(dock1->dptr()->group());
     Item *item3 = layout->itemForFrame(dock3->dptr()->group());
@@ -203,6 +203,10 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
+
+    // run one event loop, needed by flutter
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
 
@@ -244,10 +248,8 @@ static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_invalidLayoutAfterRestore),
     TEST(tst_setFloatingWhenSideBySide),
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoCenter),
-#ifndef KDDW_FRONTEND_FLUTTER
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoRight),
     TEST(tst_dockWindowWithTwoSideBySideFramesIntoLeft),
-#endif
     TEST(tst_keepLast), // Keep this test at the end
 };
 

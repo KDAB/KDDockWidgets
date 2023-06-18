@@ -63,6 +63,19 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
       throw e;
     }
   }
+
+  @override
+  @pragma("vm:entry-point")
+  QPoint posForIndicator_flutter(int droploc) {
+    try {
+      return widgetState<IndicatorWindowWidgetState>()
+              ?.posForIndicator(droploc) ??
+          QPoint.ctor2(0, 0);
+    } on Exception catch (e) {
+      print("Exception $e");
+      throw e;
+    }
+  }
 }
 
 class IndicatorWindowWidget extends PositionedWidget {
@@ -123,5 +136,15 @@ class IndicatorWindowWidgetState extends PositionedWidgetState {
     }
 
     return result;
+  }
+
+  IndicatorWidget indicatorWidgetForLoc(int loc) {
+    return indicatorWidgets.firstWhere((w) => w.loc == loc);
+  }
+
+  QPoint posForIndicator(int droploc) {
+    IndicatorWidget indicator = indicatorWidgetForLoc(droploc);
+    final Offset globalPos = indicator.globalPosOfCenter();
+    return QPoint.ctor2(globalPos.dx.toInt(), globalPos.dy.toInt());
   }
 }

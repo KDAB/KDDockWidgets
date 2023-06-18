@@ -41,6 +41,21 @@ class IndicatorWidget extends StatefulWidget {
     return globalKey.currentState as _IndicatorWidgetState?;
   }
 
+  Offset globalPosOfCenter() {
+    final globalKey = key as GlobalStringKey;
+    final renderBox =
+        globalKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox == null) {
+      print("globalPosOfCenter(): No renderbox found");
+      return Offset.zero;
+    }
+
+    final localPos =
+        Offset(renderBox.size.width / 2.0, renderBox.size.height / 2.0);
+
+    return renderBox.localToGlobal(localPos);
+  }
+
   int hover(Offset pt) {
     return widgetState()?.hover(pt) ??
         KDDockWidgets_DropLocation.DropLocation_None;
