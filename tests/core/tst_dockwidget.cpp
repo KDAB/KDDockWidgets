@@ -28,7 +28,6 @@ using namespace KDDockWidgets::Core;
 
 KDDW_QCORO_TASK tst_dockWidgetCtor()
 {
-    qDebug() << Q_FUNC_INFO;
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
@@ -43,7 +42,6 @@ KDDW_QCORO_TASK tst_dockWidgetCtor()
 
 KDDW_QCORO_TASK tst_setGuestView()
 {
-    qDebug() << Q_FUNC_INFO;
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
@@ -80,7 +78,6 @@ KDDW_QCORO_TASK tst_setGuestView()
 
 KDDW_QCORO_TASK tst_toggleAction()
 {
-    qDebug() << Q_FUNC_INFO;
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
@@ -96,7 +93,6 @@ KDDW_QCORO_TASK tst_toggleAction()
 
 KDDW_QCORO_TASK tst_isOpen()
 {
-    qDebug() << Q_FUNC_INFO;
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
@@ -135,7 +131,6 @@ KDDW_QCORO_TASK tst_isOpen()
 
 KDDW_QCORO_TASK tst_setAsCurrentTab()
 {
-    qDebug() << Q_FUNC_INFO;
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
@@ -169,7 +164,6 @@ KDDW_QCORO_TASK tst_setAsCurrentTab()
 
 KDDW_QCORO_TASK tst_dwCloseAndReopen()
 {
-    qDebug() << Q_FUNC_INFO;
     {
         Tests::EnsureTopLevelsDeleted e;
 

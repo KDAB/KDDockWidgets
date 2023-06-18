@@ -237,9 +237,7 @@ void TestsEmbedder::deinit()
     if (m_flutterEngine) {
         const FlutterEngineResult res = FlutterEngineShutdown(m_flutterEngine);
         m_flutterEngine = nullptr;
-        if (res == kSuccess)
-            qDebug() << Q_FUNC_INFO << "Flutter stopped";
-        else
+        if (res != kSuccess)
             qDebug() << Q_FUNC_INFO << "Could not stop flutter" << res;
     }
 
@@ -249,7 +247,7 @@ void TestsEmbedder::deinit()
     }
 
     glfwTerminate();
-    qDebug() << Q_FUNC_INFO << "glfw terminated";
+    // qDebug() << Q_FUNC_INFO << "glfw terminated";
 }
 
 int TestsEmbedder::run()
