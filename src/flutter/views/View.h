@@ -25,10 +25,7 @@ class DOCKS_EXPORT View : public Core::View
 {
 public:
     using Core::View::close;
-    using Core::View::height;
-    using Core::View::rect;
     using Core::View::resize;
-    using Core::View::width;
 
     explicit View(Core::Controller *controller, Core::ViewType type, Core::View *,
                   Qt::WindowFlags windowFlags = {});
@@ -62,7 +59,7 @@ public:
     void raiseAndActivate() override;
     void activateWindow() override;
     void raise() override;
-    QVariant property(const char *name) const override;
+    QVariant viewProperty(const char *name) const override;
     bool isRootView() const override;
     QPoint mapToGlobal(QPoint localPt) const override;
     QPoint mapFromGlobal(QPoint globalPt) const override;
@@ -98,7 +95,7 @@ public:
     std::shared_ptr<Core::View> parentView() const override;
     std::shared_ptr<Core::View> asWrapper() override;
 
-    void setObjectName(const QString &name) override;
+    void setViewName(const QString &name) override;
     void grabMouse() override;
     void releaseMouse() override;
     void releaseKeyboard() override;
@@ -106,7 +103,7 @@ public:
     Qt::FocusPolicy focusPolicy() const override;
     bool hasFocus() const override;
     void setFocusPolicy(Qt::FocusPolicy policy) override;
-    QString objectName() const override;
+    QString viewName() const override;
     void setMinimumSize(QSize sz) override;
     void render(QPainter *) override;
     void setCursor(Qt::CursorShape shape) override;

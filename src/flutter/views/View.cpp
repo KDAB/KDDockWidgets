@@ -284,7 +284,7 @@ void View::raise()
     }
 }
 
-QVariant View::property(const char *) const
+QVariant View::viewProperty(const char *) const
 {
     return {};
 }
@@ -401,7 +401,7 @@ std::shared_ptr<Core::View> View::asWrapper()
     return ViewWrapper::create(this);
 }
 
-void View::setObjectName(const QString &name)
+void View::setViewName(const QString &name)
 {
     m_name = name;
 }
