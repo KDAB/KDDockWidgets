@@ -194,6 +194,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
     EnsureTopLevelsDeleted e;
 
     auto fw = createFloatingWindow();
+    fw->view()->move(50, 50);
     auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr,
                    KDDockWidgets::Location_OnTop); // No we stack on top, unlike in previous test
@@ -205,7 +206,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
     KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
 
     // run one event loop, needed by flutter
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
@@ -218,6 +219,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     EnsureTopLevelsDeleted e;
 
     auto fw = createFloatingWindow();
+    fw->view()->move(50, 50);
     fw->setObjectName("fw1");
 
     auto dock2 = createDockWidget("doc2");
@@ -229,9 +231,13 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     CHECK(fw2->dropArea()->checkSanity());
-    KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
-    CHECK_EQ(fw2->groups().size(), 3);
 
+    KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
+
+    // run one event loop, needed by flutter
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
+
+    CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
 
     KDDW_CO_RETURN(true);
