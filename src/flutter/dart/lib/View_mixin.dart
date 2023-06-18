@@ -210,7 +210,7 @@ class View_mixin {
   raiseWindow(KDDWBindingsCore.View? rootView) {
     try {
       // We only raise floating windows, not main windows
-      if (rootView!.type() != Core_ViewType.FloatingWindow) return;
+      if (rootView!.controller().type() != Core_ViewType.FloatingWindow) return;
 
       final fw = rootView.asFloatingWindowController();
       Platform.plat().raiseFloatingWindow(fw);
