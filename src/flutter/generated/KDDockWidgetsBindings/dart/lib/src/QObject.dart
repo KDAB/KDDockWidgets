@@ -299,16 +299,12 @@ class QObject implements ffi.Finalizable {
   }
 
   String cFunctionSymbolName(int methodId) {
-    switch (methodId) {
-
-    }
+    switch (methodId) {}
     return "";
   }
 
   static String methodNameFromId(int methodId) {
-    switch (methodId) {
-
-    }
+    switch (methodId) {}
     throw Error();
   }
 
