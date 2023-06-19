@@ -170,6 +170,16 @@ void View::resize(int w, int h)
     setSize(w, h);
 }
 
+int View::minimumWidth() const
+{
+    return minSize().width();
+}
+
+int View::minimumHeight() const
+{
+    return minSize().height();
+}
+
 Controller *View::controller() const
 {
     return m_controller;

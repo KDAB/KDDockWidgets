@@ -211,7 +211,8 @@ public:
     void resize(int w, int h);
     void move(QPoint);
     void setSize(QSize);
-
+    int minimumWidth() const;
+    int minimumHeight() const;
 
     /// The minimum minimum size a dock widget can have
     static QSize hardcodedMinimumSize();
