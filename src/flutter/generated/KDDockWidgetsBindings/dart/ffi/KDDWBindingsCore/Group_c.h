@@ -281,5 +281,5 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__updateTitleBarVi
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Group__userType(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group_Finalizer(void *cppObj);
 }

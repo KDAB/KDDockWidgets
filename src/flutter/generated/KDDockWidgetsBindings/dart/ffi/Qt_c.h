@@ -12,5 +12,5 @@
 #include <qnamespace.h>
 
 extern "C" {
-KDDockWidgetsBindings_EXPORT void c_Qt_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_Qt_Finalizer(void *cppObj);
 }

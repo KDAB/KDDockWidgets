@@ -161,7 +161,7 @@ static KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper *fromWrapperPtr(vo
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__DockRegistry_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__DockRegistry_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper *>(cppObj);
 } // checkSanityAll(bool dumpDebug)

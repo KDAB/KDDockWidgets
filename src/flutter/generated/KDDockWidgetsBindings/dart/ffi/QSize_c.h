@@ -59,5 +59,5 @@ KDDockWidgetsBindings_EXPORT void *c_QSize__transposed(void *thisObj);
 // QSize::width() const
 KDDockWidgetsBindings_EXPORT int c_QSize__width(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_QSize__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QSize_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QSize_Finalizer(void *cppObj);
 }

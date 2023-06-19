@@ -113,5 +113,5 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__updateFloatin
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea__validateInputs_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeToFrame_, void *option_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea_Finalizer(void *cppObj);
 }

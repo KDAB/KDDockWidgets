@@ -208,5 +208,5 @@ KDDockWidgetsBindings_EXPORT int c_QRect__x(void *thisObj);
 // QRect::y() const
 KDDockWidgetsBindings_EXPORT int c_QRect__y(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_QRect__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QRect_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QRect_Finalizer(void *cppObj);
 }

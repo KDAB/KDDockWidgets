@@ -42,5 +42,5 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Event___get_m_accepted(void *
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Event___get_m_spontaneous(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Event___set_m_accepted_bool(void *thisObj, bool m_accepted_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Event___set_m_spontaneous_bool(void *thisObj, bool m_spontaneous_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Event_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Event_Finalizer(void *cppObj);
 }

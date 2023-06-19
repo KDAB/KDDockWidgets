@@ -100,5 +100,5 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__x(void *this
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__y(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller_Finalizer(void *cppObj);
 }

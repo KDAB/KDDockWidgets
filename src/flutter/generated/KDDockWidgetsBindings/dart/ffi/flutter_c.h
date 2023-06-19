@@ -19,5 +19,5 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__asView_flutter_Controller(void *controller_);
 // KDDockWidgets::flutter::asView_flutter(KDDockWidgets::Core::View * view)
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__asView_flutter_View(void *view_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter_Finalizer(void *cppObj);
 }

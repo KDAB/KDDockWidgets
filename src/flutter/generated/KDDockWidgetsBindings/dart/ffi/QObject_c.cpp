@@ -149,7 +149,7 @@ static KDDockWidgetsBindings_wrappersNS::QObject_wrapper *fromWrapperPtr(void *p
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper *>(ptr);
 }
 extern "C" {
-void c_QObject_Finalizer(void *, void *cppObj, void *)
+void c_QObject_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QObject_wrapper *>(cppObj);
 }

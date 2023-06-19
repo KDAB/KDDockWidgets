@@ -373,7 +373,7 @@ static KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper *fromWrapperPtr(void
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper *>(ptr);
 }
 extern "C" {
-void c_QByteArray_Finalizer(void *, void *cppObj, void *)
+void c_QByteArray_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper *>(cppObj);
 }

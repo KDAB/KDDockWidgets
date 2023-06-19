@@ -115,5 +115,5 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__create
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *cppObj);
 }

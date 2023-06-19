@@ -121,7 +121,7 @@ static KDDockWidgetsBindings_wrappersNS::Config_wrapper *fromWrapperPtr(void *pt
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Config_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Config_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Config_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Config_wrapper *>(cppObj);
 } // absoluteWidgetMaxSize() const

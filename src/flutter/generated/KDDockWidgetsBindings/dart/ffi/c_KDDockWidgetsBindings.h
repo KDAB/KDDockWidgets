@@ -11,7 +11,7 @@
 #include <stdbool.h>
 #include <QtCore/qglobal.h>
 
-void c_Qt_Finalizer(void *, void *cppObj, void *); // QString::QString()
+void c_Qt_Finalizer(void *cppObj); // QString::QString()
 void *c_QString__constructor();
 // QString::append(const QString & s)
 void *c_QString__append_QString(void *thisObj, const char *s_);
@@ -182,7 +182,7 @@ void *c_QString__trimmed(void *thisObj);
 // QString::truncate(int pos)
 void c_QString__truncate_int(void *thisObj, int pos);
 void c_QString__destructor(void *thisObj);
-void c_QString_Finalizer(void *, void *cppObj, void *); // QSize::QSize()
+void c_QString_Finalizer(void *cppObj); // QSize::QSize()
 void *c_QSize__constructor();
 // QSize::QSize(int w, int h)
 void *c_QSize__constructor_int_int(int w, int h);
@@ -209,7 +209,7 @@ void *c_QSize__transposed(void *thisObj);
 // QSize::width() const
 int c_QSize__width(void *thisObj);
 void c_QSize__destructor(void *thisObj);
-void c_QSize_Finalizer(void *, void *cppObj, void *); // QRect::QRect()
+void c_QSize_Finalizer(void *cppObj); // QRect::QRect()
 void *c_QRect__constructor();
 // QRect::QRect(const QPoint & topleft, const QPoint & bottomright)
 void *c_QRect__constructor_QPoint_QPoint(void *topleft_, void *bottomright_);
@@ -334,7 +334,7 @@ int c_QRect__x(void *thisObj);
 // QRect::y() const
 int c_QRect__y(void *thisObj);
 void c_QRect__destructor(void *thisObj);
-void c_QRect_Finalizer(void *, void *cppObj, void *); // QPoint::QPoint()
+void c_QRect_Finalizer(void *cppObj); // QPoint::QPoint()
 void *c_QPoint__constructor();
 // QPoint::QPoint(int xpos, int ypos)
 void *c_QPoint__constructor_int_int(int xpos, int ypos);
@@ -355,7 +355,7 @@ int c_QPoint__x(void *thisObj);
 // QPoint::y() const
 int c_QPoint__y(void *thisObj);
 void c_QPoint__destructor(void *thisObj);
-void c_QPoint_Finalizer(void *, void *cppObj, void *); // QObject::QObject(QObject * parent)
+void c_QPoint_Finalizer(void *cppObj); // QObject::QObject(QObject * parent)
 void *c_QObject__constructor_QObject(void *parent_);
 // QObject::blockSignals(bool b)
 bool c_QObject__blockSignals_bool(void *thisObj, bool b);
@@ -411,7 +411,7 @@ int c_QObject__startTimer_int(void *thisObj, int interval);
 void *c_static_QObject__tr_char_char_int(const char *s, const char *c, int n);
 void c_QObject__destructor(void *thisObj);
 void c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_QObject_Finalizer(void *, void *cppObj, void *); // QList::QList<T>()
+void c_QObject_Finalizer(void *cppObj); // QList::QList<T>()
 void *c_QList_T_QObject_T___constructor();
 // QList::append(const QList<T > & t)
 void c_QList_T_QObject_T___append_QList_T(void *thisObj, void *t_);
@@ -508,7 +508,7 @@ void *c_QList_T_QObject_T___value_int(void *thisObj, int i);
 // QList::value(int i, const T & defaultValue) const
 void *c_QList_T_QObject_T___value_int_QObject(void *thisObj, int i, void *defaultValue_);
 void c_QList_T_QObject_T___destructor(void *thisObj);
-void c_QList_T_QObject_T__Finalizer(void *, void *cppObj, void *); // QList::QList<T>()
+void c_QList_T_QObject_T__Finalizer(void *cppObj); // QList::QList<T>()
 void *c_QList_T_QByteArray_T___constructor();
 // QList::append(const QList<T > & t)
 void c_QList_T_QByteArray_T___append_QList_T(void *thisObj, void *t_);
@@ -605,7 +605,7 @@ void *c_QList_T_QByteArray_T___value_int(void *thisObj, int i);
 // QList::value(int i, const T & defaultValue) const
 void *c_QList_T_QByteArray_T___value_int_QByteArray(void *thisObj, int i, void *defaultValue_);
 void c_QList_T_QByteArray_T___destructor(void *thisObj);
-void c_QList_T_QByteArray_T__Finalizer(void *, void *cppObj, void *); // QList::QList<T>()
+void c_QList_T_QByteArray_T__Finalizer(void *cppObj); // QList::QList<T>()
 void *c_QList_T_Group_T___constructor();
 // QList::append(const QList<T > & t)
 void c_QList_T_Group_T___append_QList_T(void *thisObj, void *t_);
@@ -702,7 +702,7 @@ void *c_QList_T_Group_T___value_int(void *thisObj, int i);
 // QList::value(int i, const T & defaultValue) const
 void *c_QList_T_Group_T___value_int_Group(void *thisObj, int i, void *defaultValue_);
 void c_QList_T_Group_T___destructor(void *thisObj);
-void c_QList_T_Group_T__Finalizer(void *, void *cppObj, void *); // QByteArray::QByteArray()
+void c_QList_T_Group_T__Finalizer(void *cppObj); // QByteArray::QByteArray()
 void *c_QByteArray__constructor();
 // QByteArray::QByteArray(const char * arg__1, int size)
 void *c_QByteArray__constructor_char_int(const char *arg__1, int size);
@@ -875,13 +875,13 @@ void *c_QByteArray__trimmed(void *thisObj);
 // QByteArray::truncate(int pos)
 void c_QByteArray__truncate_int(void *thisObj, int pos);
 void c_QByteArray__destructor(void *thisObj);
-void c_QByteArray_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)
+void c_QByteArray_Finalizer(void *cppObj); // KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)
 void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1);
-void c_KDDockWidgets_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::asView_flutter(KDDockWidgets::Core::Controller * controller)
+void c_KDDockWidgets_Finalizer(void *cppObj); // KDDockWidgets::flutter::asView_flutter(KDDockWidgets::Core::Controller * controller)
 void *c_static_KDDockWidgets__flutter__asView_flutter_Controller(void *controller_);
 // KDDockWidgets::flutter::asView_flutter(KDDockWidgets::Core::View * view)
 void *c_static_KDDockWidgets__flutter__asView_flutter_View(void *view_);
-void c_KDDockWidgets__flutter_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::Window::destroy()
+void c_KDDockWidgets__flutter_Finalizer(void *cppObj); // KDDockWidgets::flutter::Window::destroy()
 void c_KDDockWidgets__flutter__Window__destroy(void *thisObj);
 // KDDockWidgets::flutter::Window::frameGeometry() const
 void *c_KDDockWidgets__flutter__Window__frameGeometry(void *thisObj);
@@ -915,7 +915,7 @@ void c_KDDockWidgets__flutter__Window__setVisible_bool(void *thisObj, bool arg__
 bool c_KDDockWidgets__flutter__Window__supportsHonouringLayoutMinSize(void *thisObj);
 void c_KDDockWidgets__flutter__Window__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__Window__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__Window_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::LayoutSaver::LayoutSaver()
+void c_KDDockWidgets__flutter__Window_Finalizer(void *cppObj); // KDDockWidgets::LayoutSaver::LayoutSaver()
 void *c_KDDockWidgets__LayoutSaver__constructor();
 // KDDockWidgets::LayoutSaver::restoreFromFile(const QString & jsonFilename)
 bool c_KDDockWidgets__LayoutSaver__restoreFromFile_QString(void *thisObj, const char *jsonFilename_);
@@ -928,7 +928,7 @@ bool c_KDDockWidgets__LayoutSaver__saveToFile_QString(void *thisObj, const char 
 // KDDockWidgets::LayoutSaver::serializeLayout() const
 void *c_KDDockWidgets__LayoutSaver__serializeLayout(void *thisObj);
 void c_KDDockWidgets__LayoutSaver__destructor(void *thisObj);
-void c_KDDockWidgets__LayoutSaver_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::InitialOption::InitialOption()
+void c_KDDockWidgets__LayoutSaver_Finalizer(void *cppObj); // KDDockWidgets::InitialOption::InitialOption()
 void *c_KDDockWidgets__InitialOption__constructor();
 // KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::DefaultSizeMode mode)
 void *c_KDDockWidgets__InitialOption__constructor_DefaultSizeMode(int mode);
@@ -943,7 +943,7 @@ bool c_KDDockWidgets__InitialOption__preservesCurrentTab(void *thisObj);
 // KDDockWidgets::InitialOption::startsHidden() const
 bool c_KDDockWidgets__InitialOption__startsHidden(void *thisObj);
 void c_KDDockWidgets__InitialOption__destructor(void *thisObj);
-void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Event::Event(KDDockWidgets::Event::Type type)
+void c_KDDockWidgets__InitialOption_Finalizer(void *cppObj); // KDDockWidgets::Event::Event(KDDockWidgets::Event::Type type)
 void *c_KDDockWidgets__Event__constructor_Type(int type);
 // KDDockWidgets::Event::accept()
 void c_KDDockWidgets__Event__accept(void *thisObj);
@@ -960,7 +960,7 @@ bool c_KDDockWidgets__Event___get_m_accepted(void *thisObj);
 bool c_KDDockWidgets__Event___get_m_spontaneous(void *thisObj);
 void c_KDDockWidgets__Event___set_m_accepted_bool(void *thisObj, bool m_accepted_);
 void c_KDDockWidgets__Event___set_m_spontaneous_bool(void *thisObj, bool m_spontaneous_);
-void c_KDDockWidgets__Event_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::DockRegistry::checkSanityAll(bool dumpDebug)
+void c_KDDockWidgets__Event_Finalizer(void *cppObj); // KDDockWidgets::DockRegistry::checkSanityAll(bool dumpDebug)
 void c_KDDockWidgets__DockRegistry__checkSanityAll_bool(void *thisObj, bool dumpDebug);
 // KDDockWidgets::DockRegistry::clear()
 void c_KDDockWidgets__DockRegistry__clear(void *thisObj);
@@ -1022,8 +1022,8 @@ void c_KDDockWidgets__DockRegistry__unregisterLayout_Layout(void *thisObj, void 
 void c_KDDockWidgets__DockRegistry__unregisterMainWindow_MainWindow(void *thisObj, void *arg__1_);
 void c_KDDockWidgets__DockRegistry__destructor(void *thisObj);
 void c_KDDockWidgets__DockRegistry__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__DockRegistry_Finalizer(void *, void *cppObj, void *);
-void c_KDDockWidgets__Core_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::ViewFactory::ViewFactory()
+void c_KDDockWidgets__DockRegistry_Finalizer(void *cppObj);
+void c_KDDockWidgets__Core_Finalizer(void *cppObj); // KDDockWidgets::Core::ViewFactory::ViewFactory()
 void *c_KDDockWidgets__Core__ViewFactory__constructor();
 // KDDockWidgets::Core::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View(void *thisObj, void *arg__1_, void *parent_);
@@ -1051,7 +1051,7 @@ void *c_KDDockWidgets__Core__ViewFactory__createTitleBar_TitleBar_View(void *thi
 void *c_static_KDDockWidgets__Core__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
 void c_KDDockWidgets__Core__ViewFactory__destructor(void *thisObj);
 void c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__ViewFactory_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::ViewFactory::ViewFactory()
+void c_KDDockWidgets__Core__ViewFactory_Finalizer(void *cppObj); // KDDockWidgets::flutter::ViewFactory::ViewFactory()
 void *c_KDDockWidgets__flutter__ViewFactory__constructor();
 // KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
 void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View(void *thisObj, void *arg__1_, void *parent_);
@@ -1081,7 +1081,7 @@ void *c_KDDockWidgets__flutter__ViewFactory__createTitleBar_TitleBar_View(void *
 void *c_static_KDDockWidgets__flutter__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
 void c_KDDockWidgets__flutter__ViewFactory__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Platform::Platform()
+void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *cppObj); // KDDockWidgets::Core::Platform::Platform()
 void *c_KDDockWidgets__Core__Platform__constructor();
 // KDDockWidgets::Core::Platform::applicationName() const
 void *c_KDDockWidgets__Core__Platform__applicationName(void *thisObj);
@@ -1167,7 +1167,7 @@ void c_KDDockWidgets__Core__Platform__destructor(void *thisObj);
 int c_KDDockWidgets__Core__Platform___get_m_numWarningsEmitted(void *thisObj);
 void c_KDDockWidgets__Core__Platform___set_m_numWarningsEmitted_int(void *thisObj, int m_numWarningsEmitted_);
 void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Platform_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::Platform::Platform()
+void c_KDDockWidgets__Core__Platform_Finalizer(void *cppObj); // KDDockWidgets::flutter::Platform::Platform()
 void *c_KDDockWidgets__flutter__Platform__constructor();
 // KDDockWidgets::flutter::Platform::applicationName() const
 void *c_KDDockWidgets__flutter__Platform__applicationName(void *thisObj);
@@ -1255,7 +1255,7 @@ void c_KDDockWidgets__flutter__Platform__uninstallMessageHandler(void *thisObj);
 bool c_KDDockWidgets__flutter__Platform__usesFallbackMouseGrabber(void *thisObj);
 void c_KDDockWidgets__flutter__Platform__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__Platform_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Item::Item(KDDockWidgets::Core::View * hostWidget)
+void c_KDDockWidgets__flutter__Platform_Finalizer(void *cppObj); // KDDockWidgets::Core::Item::Item(KDDockWidgets::Core::View * hostWidget)
 void *c_KDDockWidgets__Core__Item__constructor_View(void *hostWidget_);
 // KDDockWidgets::Core::Item::asGroupController() const
 void *c_KDDockWidgets__Core__Item__asGroupController(void *thisObj);
@@ -1356,13 +1356,13 @@ void c_static_KDDockWidgets__Core__Item___set_separatorThickness_int(int separat
 void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
 void c_KDDockWidgets__Core__Item___set_m_isSettingGuest_bool(void *thisObj, bool m_isSettingGuest_);
 void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Item_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::DelayedCall::DelayedCall()
+void c_KDDockWidgets__Core__Item_Finalizer(void *cppObj); // KDDockWidgets::Core::DelayedCall::DelayedCall()
 void *c_KDDockWidgets__Core__DelayedCall__constructor();
 // KDDockWidgets::Core::DelayedCall::call()
 void c_KDDockWidgets__Core__DelayedCall__call(void *thisObj);
 void c_KDDockWidgets__Core__DelayedCall__destructor(void *thisObj);
 void c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::CreateViewOptions::CreateViewOptions()
+void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *cppObj); // KDDockWidgets::Core::CreateViewOptions::CreateViewOptions()
 void *c_KDDockWidgets__Core__CreateViewOptions__constructor();
 // KDDockWidgets::Core::CreateViewOptions::getMaxSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getMaxSize(void *thisObj);
@@ -1375,7 +1375,7 @@ bool c_KDDockWidgets__Core__CreateViewOptions___get_isVisible(void *thisObj);
 bool c_KDDockWidgets__Core__CreateViewOptions___get_createWindow(void *thisObj);
 void c_KDDockWidgets__Core__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
 void c_KDDockWidgets__Core__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
-void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Controller::Controller(KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View * arg__2)
+void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *cppObj); // KDDockWidgets::Core::Controller::Controller(KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View * arg__2)
 void *c_KDDockWidgets__Core__Controller__constructor_ViewType_View(int type, void *arg__2_);
 // KDDockWidgets::Core::Controller::close()
 bool c_KDDockWidgets__Core__Controller__close(void *thisObj);
@@ -1421,7 +1421,7 @@ int c_KDDockWidgets__Core__Controller__x(void *thisObj);
 int c_KDDockWidgets__Core__Controller__y(void *thisObj);
 void c_KDDockWidgets__Core__Controller__destructor(void *thisObj);
 void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Controller_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::View::activateWindow()
+void c_KDDockWidgets__Core__Controller_Finalizer(void *cppObj); // KDDockWidgets::Core::View::activateWindow()
 void c_KDDockWidgets__Core__View__activateWindow(void *thisObj);
 // KDDockWidgets::Core::View::asDockWidgetController() const
 void *c_KDDockWidgets__Core__View__asDockWidgetController(void *thisObj);
@@ -1447,6 +1447,8 @@ bool c_KDDockWidgets__Core__View__close(void *thisObj);
 void *c_KDDockWidgets__Core__View__controller(void *thisObj);
 // KDDockWidgets::Core::View::createPlatformWindow()
 void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj);
+// KDDockWidgets::Core::View::deliverViewEventToFilters(KDDockWidgets::Event * e)
+bool c_KDDockWidgets__Core__View__deliverViewEventToFilters_Event(void *thisObj, void *e_);
 // KDDockWidgets::Core::View::dumpDebug()
 void c_KDDockWidgets__Core__View__dumpDebug(void *thisObj);
 // KDDockWidgets::Core::View::equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
@@ -1465,6 +1467,8 @@ void c_KDDockWidgets__Core__View__grabMouse(void *thisObj);
 void *c_static_KDDockWidgets__Core__View__hardcodedMinimumSize();
 // KDDockWidgets::Core::View::hasFocus() const
 bool c_KDDockWidgets__Core__View__hasFocus(void *thisObj);
+// KDDockWidgets::Core::View::height() const
+int c_KDDockWidgets__Core__View__height(void *thisObj);
 // KDDockWidgets::Core::View::hide()
 void c_KDDockWidgets__Core__View__hide(void *thisObj);
 // KDDockWidgets::Core::View::inDtor() const
@@ -1495,6 +1499,12 @@ void *c_KDDockWidgets__Core__View__mapToGlobal_QPoint(void *thisObj, void *arg__
 void *c_KDDockWidgets__Core__View__maxSizeHint(void *thisObj);
 // KDDockWidgets::Core::View::minSize() const
 void *c_KDDockWidgets__Core__View__minSize(void *thisObj);
+// KDDockWidgets::Core::View::minimumHeight() const
+int c_KDDockWidgets__Core__View__minimumHeight(void *thisObj);
+// KDDockWidgets::Core::View::minimumWidth() const
+int c_KDDockWidgets__Core__View__minimumWidth(void *thisObj);
+// KDDockWidgets::Core::View::move(QPoint arg__1)
+void c_KDDockWidgets__Core__View__move_QPoint(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::move(int x, int y)
 void c_KDDockWidgets__Core__View__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::Core::View::normalGeometry() const
@@ -1503,10 +1513,14 @@ void *c_KDDockWidgets__Core__View__normalGeometry(void *thisObj);
 bool c_KDDockWidgets__Core__View__onResize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::onResize(int h, int w)
 bool c_KDDockWidgets__Core__View__onResize_int_int(void *thisObj, int h, int w);
+// KDDockWidgets::Core::View::pos() const
+void *c_KDDockWidgets__Core__View__pos(void *thisObj);
 // KDDockWidgets::Core::View::raise()
 void c_KDDockWidgets__Core__View__raise(void *thisObj);
 // KDDockWidgets::Core::View::raiseAndActivate()
 void c_KDDockWidgets__Core__View__raiseAndActivate(void *thisObj);
+// KDDockWidgets::Core::View::rect() const
+void *c_KDDockWidgets__Core__View__rect(void *thisObj);
 // KDDockWidgets::Core::View::releaseKeyboard()
 void c_KDDockWidgets__Core__View__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Core::View::releaseMouse()
@@ -1533,6 +1547,8 @@ void c_KDDockWidgets__Core__View__setMinimumSize_QSize(void *thisObj, void *arg_
 void c_KDDockWidgets__Core__View__setMouseTracking_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::View::setParent(KDDockWidgets::Core::View * arg__1)
 void c_KDDockWidgets__Core__View__setParent_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::View::setSize(QSize arg__1)
+void c_KDDockWidgets__Core__View__setSize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::setSize(int width, int height)
 void c_KDDockWidgets__Core__View__setSize_int_int(void *thisObj, int width, int height);
 // KDDockWidgets::Core::View::setViewName(const QString & arg__1)
@@ -1555,13 +1571,21 @@ void c_KDDockWidgets__Core__View__showMaximized(void *thisObj);
 void c_KDDockWidgets__Core__View__showMinimized(void *thisObj);
 // KDDockWidgets::Core::View::showNormal()
 void c_KDDockWidgets__Core__View__showNormal(void *thisObj);
+// KDDockWidgets::Core::View::size() const
+void *c_KDDockWidgets__Core__View__size(void *thisObj);
 // KDDockWidgets::Core::View::update()
 void c_KDDockWidgets__Core__View__update(void *thisObj);
 // KDDockWidgets::Core::View::viewName() const
 void *c_KDDockWidgets__Core__View__viewName(void *thisObj);
+// KDDockWidgets::Core::View::width() const
+int c_KDDockWidgets__Core__View__width(void *thisObj);
+// KDDockWidgets::Core::View::x() const
+int c_KDDockWidgets__Core__View__x(void *thisObj);
+// KDDockWidgets::Core::View::y() const
+int c_KDDockWidgets__Core__View__y(void *thisObj);
 void c_KDDockWidgets__Core__View__destructor(void *thisObj);
 void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__View_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::View::View(KDDockWidgets::Core::Controller * controller, KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
+void c_KDDockWidgets__Core__View_Finalizer(void *cppObj); // KDDockWidgets::flutter::View::View(KDDockWidgets::Core::Controller * controller, KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
 void *c_KDDockWidgets__flutter__View__constructor_Controller_ViewType_View_WindowFlags(void *controller_, int type, void *arg__3_, int windowFlags);
 // KDDockWidgets::flutter::View::activateWindow()
 void c_KDDockWidgets__flutter__View__activateWindow(void *thisObj);
@@ -1689,7 +1713,7 @@ void c_KDDockWidgets__flutter__View__updateGeometry(void *thisObj);
 void *c_KDDockWidgets__flutter__View__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__View__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__View_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::TitleBar::TitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__flutter__View_Finalizer(void *cppObj); // KDDockWidgets::flutter::TitleBar::TitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__flutter__TitleBar__constructor_TitleBar_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::TitleBar::activateWindow()
 void c_KDDockWidgets__flutter__TitleBar__activateWindow(void *thisObj);
@@ -1817,7 +1841,7 @@ void c_KDDockWidgets__flutter__TitleBar__update(void *thisObj);
 void *c_KDDockWidgets__flutter__TitleBar__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__TitleBar__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__TitleBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__TitleBar_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::TabBar::TabBar(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__flutter__TitleBar_Finalizer(void *cppObj); // KDDockWidgets::flutter::TabBar::TabBar(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__flutter__TabBar__constructor_TabBar_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::TabBar::activateWindow()
 void c_KDDockWidgets__flutter__TabBar__activateWindow(void *thisObj);
@@ -1951,7 +1975,7 @@ void c_KDDockWidgets__flutter__TabBar__update(void *thisObj);
 void *c_KDDockWidgets__flutter__TabBar__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__TabBar__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__TabBar_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::Stack::Stack(KDDockWidgets::Core::Stack * controller, KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__flutter__TabBar_Finalizer(void *cppObj); // KDDockWidgets::flutter::Stack::Stack(KDDockWidgets::Core::Stack * controller, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__flutter__Stack__constructor_Stack_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::Stack::activateWindow()
 void c_KDDockWidgets__flutter__Stack__activateWindow(void *thisObj);
@@ -2075,7 +2099,7 @@ void c_KDDockWidgets__flutter__Stack__update(void *thisObj);
 void *c_KDDockWidgets__flutter__Stack__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__Stack__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__Stack__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__Stack_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::MainWindow::MainWindow(const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::flutter::View * parent, Qt::WindowFlags flags)
+void c_KDDockWidgets__flutter__Stack_Finalizer(void *cppObj); // KDDockWidgets::flutter::MainWindow::MainWindow(const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::flutter::View * parent, Qt::WindowFlags flags)
 void *c_KDDockWidgets__flutter__MainWindow__constructor_QString_MainWindowOptions_View_WindowFlags(const char *uniqueName_, int options_, void *parent_, int flags);
 // KDDockWidgets::flutter::MainWindow::activateWindow()
 void c_KDDockWidgets__flutter__MainWindow__activateWindow(void *thisObj);
@@ -2199,7 +2223,7 @@ void c_KDDockWidgets__flutter__MainWindow__update(void *thisObj);
 void *c_KDDockWidgets__flutter__MainWindow__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__MainWindow__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__MainWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__MainWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::Group::Group(KDDockWidgets::Core::Group * controller, KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__flutter__MainWindow_Finalizer(void *cppObj); // KDDockWidgets::flutter::Group::Group(KDDockWidgets::Core::Group * controller, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__flutter__Group__constructor_Group_View(void *controller_, void *parent_);
 // KDDockWidgets::flutter::Group::activateWindow()
 void c_KDDockWidgets__flutter__Group__activateWindow(void *thisObj);
@@ -2323,7 +2347,7 @@ void c_KDDockWidgets__flutter__Group__update(void *thisObj);
 void *c_KDDockWidgets__flutter__Group__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__Group__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__Group_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::DropArea::DropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__flutter__Group_Finalizer(void *cppObj); // KDDockWidgets::flutter::DropArea::DropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__flutter__DropArea__constructor_DropArea_View(void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::DropArea::activateWindow()
 void c_KDDockWidgets__flutter__DropArea__activateWindow(void *thisObj);
@@ -2445,7 +2469,7 @@ void c_KDDockWidgets__flutter__DropArea__update(void *thisObj);
 void *c_KDDockWidgets__flutter__DropArea__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__DropArea__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__DropArea_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::DockWidget::DockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+void c_KDDockWidgets__flutter__DropArea_Finalizer(void *cppObj); // KDDockWidgets::flutter::DockWidget::DockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
 void *c_KDDockWidgets__flutter__DockWidget__constructor_QString_DockWidgetOptions_LayoutSaverOptions(const char *uniqueName_, int options_, int layoutSaverOptions_);
 // KDDockWidgets::flutter::DockWidget::activateWindow()
 void c_KDDockWidgets__flutter__DockWidget__activateWindow(void *thisObj);
@@ -2567,7 +2591,7 @@ void c_KDDockWidgets__flutter__DockWidget__update(void *thisObj);
 void *c_KDDockWidgets__flutter__DockWidget__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__DockWidget__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__DockWidget__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__DockWidget_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::FloatingWindow * parent)
+void c_KDDockWidgets__flutter__DockWidget_Finalizer(void *cppObj); // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::FloatingWindow * parent)
 void *c_KDDockWidgets__Core__TitleBar__constructor_FloatingWindow(void *parent_);
 // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::Group * parent)
 void *c_KDDockWidgets__Core__TitleBar__constructor_Group(void *parent_);
@@ -2667,7 +2691,7 @@ void *c_static_KDDockWidgets__Core__TitleBar__tr_char_char_int(const char *s, co
 void c_KDDockWidgets__Core__TitleBar__updateButtons(void *thisObj);
 void c_KDDockWidgets__Core__TitleBar__destructor(void *thisObj);
 void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__TitleBar_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::TabBar::TabBar(KDDockWidgets::Core::Stack * tabWidget)
+void c_KDDockWidgets__Core__TitleBar_Finalizer(void *cppObj); // KDDockWidgets::Core::TabBar::TabBar(KDDockWidgets::Core::Stack * tabWidget)
 void *c_KDDockWidgets__Core__TabBar__constructor_Stack(void *tabWidget_);
 // KDDockWidgets::Core::TabBar::countChanged()
 void c_KDDockWidgets__Core__TabBar__countChanged(void *thisObj);
@@ -2725,7 +2749,7 @@ void *c_KDDockWidgets__Core__TabBar__text_int(void *thisObj, int index);
 void *c_static_KDDockWidgets__Core__TabBar__tr_char_char_int(const char *s, const char *c, int n);
 void c_KDDockWidgets__Core__TabBar__destructor(void *thisObj);
 void c_KDDockWidgets__Core__TabBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__TabBar_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Stack::addDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
+void c_KDDockWidgets__Core__TabBar_Finalizer(void *cppObj); // KDDockWidgets::Core::Stack::addDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 void c_KDDockWidgets__Core__Stack__addDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Stack::contains(KDDockWidgets::Core::DockWidget * dw) const
 bool c_KDDockWidgets__Core__Stack__contains_DockWidget(void *thisObj, void *dw_);
@@ -2759,7 +2783,7 @@ bool c_KDDockWidgets__Core__Stack__tabBarAutoHide(void *thisObj);
 void *c_static_KDDockWidgets__Core__Stack__tr_char_char_int(const char *s, const char *c, int n);
 void c_KDDockWidgets__Core__Stack__destructor(void *thisObj);
 void c_KDDockWidgets__Core__Stack__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Stack_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::SideBar::addDockWidget(KDDockWidgets::Core::DockWidget * dw)
+void c_KDDockWidgets__Core__Stack_Finalizer(void *cppObj); // KDDockWidgets::Core::SideBar::addDockWidget(KDDockWidgets::Core::DockWidget * dw)
 void c_KDDockWidgets__Core__SideBar__addDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::SideBar::clear()
 void c_KDDockWidgets__Core__SideBar__clear(void *thisObj);
@@ -2783,7 +2807,7 @@ void c_KDDockWidgets__Core__SideBar__toggleOverlay_DockWidget(void *thisObj, voi
 void *c_static_KDDockWidgets__Core__SideBar__tr_char_char_int(const char *s, const char *c, int n);
 void c_KDDockWidgets__Core__SideBar__destructor(void *thisObj);
 void c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__SideBar_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Separator::Separator(KDDockWidgets::Core::View * host)
+void c_KDDockWidgets__Core__SideBar_Finalizer(void *cppObj); // KDDockWidgets::Core::Separator::Separator(KDDockWidgets::Core::View * host)
 void *c_KDDockWidgets__Core__Separator__constructor_View(void *host_);
 // KDDockWidgets::Core::Separator::isResizing()
 bool c_static_KDDockWidgets__Core__Separator__isResizing();
@@ -2811,7 +2835,7 @@ void c_KDDockWidgets__Core__Separator__setGeometry_int_int_int(void *thisObj, in
 void c_KDDockWidgets__Core__Separator__setParentView_impl_View(void *thisObj, void *parent_);
 void c_KDDockWidgets__Core__Separator__destructor(void *thisObj);
 void c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Separator_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::MainWindow::MainWindow(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
+void c_KDDockWidgets__Core__Separator_Finalizer(void *cppObj); // KDDockWidgets::Core::MainWindow::MainWindow(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
 void *c_KDDockWidgets__Core__MainWindow__constructor_View_QString_MainWindowOptions(void *view_, const char *uniqueName_, int options_);
 // KDDockWidgets::Core::MainWindow::addDockWidget(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
 void c_KDDockWidgets__Core__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dockWidget_, int location, void *relativeTo_, void *initialOption_);
@@ -2875,7 +2899,7 @@ void *c_KDDockWidgets__Core__MainWindow__uniqueName(void *thisObj);
 void c_KDDockWidgets__Core__MainWindow__uniqueNameChanged(void *thisObj);
 void c_KDDockWidgets__Core__MainWindow__destructor(void *thisObj);
 void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__MainWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Layout::Layout(KDDockWidgets::Core::ViewType arg__1, KDDockWidgets::Core::View * arg__2)
+void c_KDDockWidgets__Core__MainWindow_Finalizer(void *cppObj); // KDDockWidgets::Core::Layout::Layout(KDDockWidgets::Core::ViewType arg__1, KDDockWidgets::Core::View * arg__2)
 void *c_KDDockWidgets__Core__Layout__constructor_ViewType_View(int arg__1, void *arg__2_);
 // KDDockWidgets::Core::Layout::asDropArea() const
 void *c_KDDockWidgets__Core__Layout__asDropArea(void *thisObj);
@@ -2935,7 +2959,7 @@ void c_KDDockWidgets__Core__Layout__viewAboutToBeDeleted(void *thisObj);
 int c_KDDockWidgets__Core__Layout__visibleCount(void *thisObj);
 void c_KDDockWidgets__Core__Layout__destructor(void *thisObj);
 void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Layout_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::DropArea::DropArea(KDDockWidgets::Core::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+void c_KDDockWidgets__Core__Layout_Finalizer(void *cppObj); // KDDockWidgets::Core::DropArea::DropArea(KDDockWidgets::Core::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
 void *c_KDDockWidgets__Core__DropArea__constructor_View_MainWindowOptions_bool(void *parent_, int options_, bool isMDIWrapper);
 // KDDockWidgets::Core::DropArea::addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
 void c_KDDockWidgets__Core__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_);
@@ -2987,7 +3011,7 @@ void c_KDDockWidgets__Core__DropArea__updateFloatingActions(void *thisObj);
 bool c_KDDockWidgets__Core__DropArea__validateInputs_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeToFrame_, void *option_);
 void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj);
 void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__DropArea_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::Group::Group(KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__Core__DropArea_Finalizer(void *cppObj); // KDDockWidgets::Core::Group::Group(KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__Core__Group__constructor_View(void *parent_);
 // KDDockWidgets::Core::Group::actualTitleBar() const
 void *c_KDDockWidgets__Core__Group__actualTitleBar(void *thisObj);
@@ -3143,7 +3167,7 @@ void c_KDDockWidgets__Core__Group__updateTitleBarVisibility(void *thisObj);
 int c_KDDockWidgets__Core__Group__userType(void *thisObj);
 void c_KDDockWidgets__Core__Group__destructor(void *thisObj);
 void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__Group_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Core::Group * group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
+void c_KDDockWidgets__Core__Group_Finalizer(void *cppObj); // KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Core::Group * group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
 void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_QRect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::FloatingWindow(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
 void *c_KDDockWidgets__Core__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_, void *parent_);
@@ -3223,7 +3247,7 @@ int c_KDDockWidgets__Core__FloatingWindow__userType(void *thisObj);
 void c_KDDockWidgets__Core__FloatingWindow__windowStateChanged(void *thisObj);
 void c_KDDockWidgets__Core__FloatingWindow__destructor(void *thisObj);
 void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__FloatingWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::DropIndicatorOverlay::DropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea)
+void c_KDDockWidgets__Core__FloatingWindow_Finalizer(void *cppObj); // KDDockWidgets::Core::DropIndicatorOverlay::DropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea)
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__constructor_DropArea(void *dropArea_);
 // KDDockWidgets::Core::DropIndicatorOverlay::DropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea, KDDockWidgets::Core::View * view)
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__constructor_DropArea_View(void *dropArea_, void *view_);
@@ -3269,7 +3293,7 @@ void *c_static_KDDockWidgets__Core__DropIndicatorOverlay__tr_char_char_int(const
 void c_KDDockWidgets__Core__DropIndicatorOverlay__updateVisibility(void *thisObj);
 void c_KDDockWidgets__Core__DropIndicatorOverlay__destructor(void *thisObj);
 void c_KDDockWidgets__Core__DropIndicatorOverlay__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__DropIndicatorOverlay_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::DockWidget::DockWidget(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+void c_KDDockWidgets__Core__DropIndicatorOverlay_Finalizer(void *cppObj); // KDDockWidgets::Core::DockWidget::DockWidget(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
 void *c_KDDockWidgets__Core__DockWidget__constructor_View_QString_DockWidgetOptions_LayoutSaverOptions(void *view_, const char *uniqueName_, int options_, int layoutSaverOptions_);
 // KDDockWidgets::Core::DockWidget::aboutToDelete(KDDockWidgets::Core::DockWidget * arg__1)
 void c_KDDockWidgets__Core__DockWidget__aboutToDelete_DockWidget(void *thisObj, void *arg__1_);
@@ -3393,7 +3417,7 @@ int c_KDDockWidgets__Core__DockWidget__userType(void *thisObj);
 void c_KDDockWidgets__Core__DockWidget__windowActiveAboutToChange_bool(void *thisObj, bool activated);
 void c_KDDockWidgets__Core__DockWidget__destructor(void *thisObj);
 void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__DockWidget_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::ClassicIndicatorWindowViewInterface()
+void c_KDDockWidgets__Core__DockWidget_Finalizer(void *cppObj); // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::ClassicIndicatorWindowViewInterface()
 void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__constructor();
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::hover(QPoint arg__1)
 int c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_QPoint(void *thisObj, void *arg__1_);
@@ -3415,7 +3439,7 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::flutter::IndicatorWindow::IndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent)
+void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *cppObj); // KDDockWidgets::flutter::IndicatorWindow::IndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicDropIndicatorOverlay_View(void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::IndicatorWindow::activateWindow()
 void c_KDDockWidgets__flutter__IndicatorWindow__activateWindow(void *thisObj);
@@ -3557,7 +3581,7 @@ bool c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_
 void *c_KDDockWidgets__flutter__IndicatorWindow__viewName(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Core::ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea)
+void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *cppObj); // KDDockWidgets::Core::ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(KDDockWidgets::Core::DropArea * dropArea)
 void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__constructor_DropArea(void *dropArea_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const
 bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__dropIndicatorVisible_DropLocation(void *thisObj, int arg__1);
@@ -3585,7 +3609,7 @@ void *c_static_KDDockWidgets__Core__ClassicDropIndicatorOverlay__tr_char_char_in
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__updateVisibility(void *thisObj);
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__destructor(void *thisObj);
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay_Finalizer(void *, void *cppObj, void *); // KDDockWidgets::Config::absoluteWidgetMaxSize() const
+void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay_Finalizer(void *cppObj); // KDDockWidgets::Config::absoluteWidgetMaxSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj);
 // KDDockWidgets::Config::absoluteWidgetMinSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj);
@@ -3626,4 +3650,4 @@ bool c_KDDockWidgets__Config__transparencyOnlyOverDropIndicator(void *thisObj);
 // KDDockWidgets::Config::viewFactory() const
 void *c_KDDockWidgets__Config__viewFactory(void *thisObj);
 void c_KDDockWidgets__Config__destructor(void *thisObj);
-void c_KDDockWidgets__Config_Finalizer(void *, void *cppObj, void *);
+void c_KDDockWidgets__Config_Finalizer(void *cppObj);

@@ -279,5 +279,5 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__uninstallM
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__usesFallbackMouseGrabber(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform_Finalizer(void *cppObj);
 }

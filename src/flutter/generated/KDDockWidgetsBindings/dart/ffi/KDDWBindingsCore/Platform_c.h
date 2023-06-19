@@ -258,5 +258,5 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__destructor(vo
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform___get_m_numWarningsEmitted(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform___set_m_numWarningsEmitted_int(void *thisObj, int m_numWarningsEmitted_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform_Finalizer(void *cppObj);
 }

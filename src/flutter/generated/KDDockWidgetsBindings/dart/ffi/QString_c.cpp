@@ -381,7 +381,7 @@ static KDDockWidgetsBindings_wrappersNS::QString_wrapper *fromWrapperPtr(void *p
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QString_wrapper *>(ptr);
 }
 extern "C" {
-void c_QString_Finalizer(void *, void *cppObj, void *)
+void c_QString_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QString_wrapper *>(cppObj);
 }

@@ -289,7 +289,7 @@ static KDDockWidgetsBindings_wrappersNS::QRect_wrapper *fromWrapperPtr(void *ptr
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QRect_wrapper *>(ptr);
 }
 extern "C" {
-void c_QRect_Finalizer(void *, void *cppObj, void *)
+void c_QRect_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QRect_wrapper *>(cppObj);
 }

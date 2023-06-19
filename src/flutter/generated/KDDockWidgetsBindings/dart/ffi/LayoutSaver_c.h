@@ -40,5 +40,5 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__LayoutSaver__saveToFile_QStri
 // KDDockWidgets::LayoutSaver::serializeLayout() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__LayoutSaver__serializeLayout(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__LayoutSaver__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__LayoutSaver_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__LayoutSaver_Finalizer(void *cppObj);
 }

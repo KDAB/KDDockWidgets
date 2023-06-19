@@ -69,7 +69,7 @@ static KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper *fromWrapperPtr(v
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__InitialOption_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::InitialOption_wrapper *>(cppObj);
 }

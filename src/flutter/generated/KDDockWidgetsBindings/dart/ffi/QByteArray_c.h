@@ -279,5 +279,5 @@ KDDockWidgetsBindings_EXPORT void *c_QByteArray__trimmed(void *thisObj);
 // QByteArray::truncate(int pos)
 KDDockWidgetsBindings_EXPORT void c_QByteArray__truncate_int(void *thisObj, int pos);
 KDDockWidgetsBindings_EXPORT void c_QByteArray__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QByteArray_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QByteArray_Finalizer(void *cppObj);
 }

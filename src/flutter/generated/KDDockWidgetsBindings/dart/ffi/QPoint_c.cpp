@@ -81,7 +81,7 @@ static KDDockWidgetsBindings_wrappersNS::QPoint_wrapper *fromWrapperPtr(void *pt
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QPoint_wrapper *>(ptr);
 }
 extern "C" {
-void c_QPoint_Finalizer(void *, void *cppObj, void *)
+void c_QPoint_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QPoint_wrapper *>(cppObj);
 }

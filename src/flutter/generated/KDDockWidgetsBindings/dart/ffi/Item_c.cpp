@@ -315,7 +315,7 @@ static KDDockWidgetsBindings_wrappersNS::Item_wrapper *fromWrapperPtr(void *ptr)
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Core__Item_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__Item_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper *>(cppObj);
 }

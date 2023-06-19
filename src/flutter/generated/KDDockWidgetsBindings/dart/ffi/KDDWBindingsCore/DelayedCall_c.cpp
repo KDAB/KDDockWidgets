@@ -62,7 +62,7 @@ static KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DelayedCall_wrapper *
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DelayedCall_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DelayedCall_wrapper *>(cppObj);
 }

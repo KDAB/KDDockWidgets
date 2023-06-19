@@ -105,5 +105,5 @@ KDDockWidgetsBindings_EXPORT int c_QObject__startTimer_int(void *thisObj, int in
 KDDockWidgetsBindings_EXPORT void *c_static_QObject__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_QObject__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_QObject_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QObject_Finalizer(void *cppObj);
 }

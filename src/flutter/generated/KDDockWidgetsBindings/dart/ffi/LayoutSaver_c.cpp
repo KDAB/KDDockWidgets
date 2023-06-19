@@ -65,7 +65,7 @@ static KDDockWidgetsBindings_wrappersNS::LayoutSaver_wrapper *fromWrapperPtr(voi
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::LayoutSaver_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__LayoutSaver_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__LayoutSaver_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::LayoutSaver_wrapper *>(cppObj);
 }

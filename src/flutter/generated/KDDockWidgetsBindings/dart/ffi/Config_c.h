@@ -82,5 +82,5 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Config__transparencyOnlyOverD
 // KDDockWidgets::Config::viewFactory() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Config__viewFactory(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config_Finalizer(void *cppObj);
 }

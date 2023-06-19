@@ -152,7 +152,7 @@ static KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper *fro
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Core__DropArea_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__DropArea_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper *>(cppObj);
 }

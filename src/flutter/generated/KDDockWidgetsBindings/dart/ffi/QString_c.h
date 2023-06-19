@@ -276,5 +276,5 @@ KDDockWidgetsBindings_EXPORT void *c_QString__trimmed(void *thisObj);
 // QString::truncate(int pos)
 KDDockWidgetsBindings_EXPORT void c_QString__truncate_int(void *thisObj, int pos);
 KDDockWidgetsBindings_EXPORT void c_QString__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QString_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QString_Finalizer(void *cppObj);
 }

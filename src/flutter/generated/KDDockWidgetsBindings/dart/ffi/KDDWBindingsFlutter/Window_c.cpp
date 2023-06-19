@@ -251,7 +251,7 @@ static KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper *fr
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__flutter__Window_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__flutter__Window_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper *>(cppObj);
 } // destroy()

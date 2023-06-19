@@ -32,5 +32,5 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DelayedCall__construct
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall__call(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *cppObj);
 }

@@ -15,12 +15,12 @@ import '../Bindings.dart';
 import '../Bindings_KDDWBindingsCore.dart' as KDDWBindingsCore;
 import '../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
 import '../LibraryLoader.dart';
-import '../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
-final _finalizer =
-    _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
+final _finalizerFunc =
+    _dylib.lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
         'c_KDDockWidgets__Event_Finalizer');
+final _finalizer = ffi.NativeFinalizer(_finalizerFunc.cast());
 
 class Event_Type {
   static const MouseButtonPress = 0;
@@ -45,7 +45,7 @@ class Event_Type {
   static const Close = 19;
 }
 
-class Event {
+class Event implements ffi.Finalizable {
   static var s_dartInstanceByCppPtr = Map<int, Event>();
   var _thisCpp = null;
   bool _needsAutoDelete = true;
@@ -53,8 +53,7 @@ class Event {
   set thisCpp(var ptr) {
     _thisCpp = ptr;
     ffi.Pointer<ffi.Void> ptrvoid = ptr.cast<ffi.Void>();
-    if (_needsAutoDelete)
-      newWeakPersistentHandle?.call(this, ptrvoid, 0, _finalizer);
+    if (_needsAutoDelete) _finalizer.attach(this, ptrvoid);
   }
 
   static bool isCached(var cppPointer) {

@@ -42,5 +42,5 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__InitialOption__preservesCurre
 // KDDockWidgets::InitialOption::startsHidden() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__InitialOption__startsHidden(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__InitialOption__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__InitialOption_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__InitialOption_Finalizer(void *cppObj);
 }

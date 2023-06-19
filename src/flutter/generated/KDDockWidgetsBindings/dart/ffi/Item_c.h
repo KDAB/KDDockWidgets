@@ -205,5 +205,5 @@ KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__Item___set_separ
 KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item___set_m_isSettingGuest_bool(void *thisObj, bool m_isSettingGuest_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item_Finalizer(void *cppObj);
 }

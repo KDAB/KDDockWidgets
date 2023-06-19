@@ -15,20 +15,25 @@ import '../Bindings.dart';
 import '../Bindings_KDDWBindingsCore.dart' as KDDWBindingsCore;
 import '../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
 import '../LibraryLoader.dart';
-import '../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
-final _finalizer_T_QObject_T_ =
-    _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
+final _finalizer_T_QObject_T_Func =
+    _dylib.lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
         'c_QList_T_QObject_T__Finalizer');
-final _finalizer_T_QByteArray_T_ =
-    _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
+final _finalizer_T_QObject_T_ =
+    ffi.NativeFinalizer(_finalizer_T_QObject_T_Func.cast());
+final _finalizer_T_QByteArray_T_Func =
+    _dylib.lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
         'c_QList_T_QByteArray_T__Finalizer');
-final _finalizer_T_Group_T_ =
-    _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
+final _finalizer_T_QByteArray_T_ =
+    ffi.NativeFinalizer(_finalizer_T_QByteArray_T_Func.cast());
+final _finalizer_T_Group_T_Func =
+    _dylib.lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
         'c_QList_T_Group_T__Finalizer');
+final _finalizer_T_Group_T_ =
+    ffi.NativeFinalizer(_finalizer_T_Group_T_Func.cast());
 
-class QList<T> {
+class QList<T> implements ffi.Finalizable {
   static var s_dartInstanceByCppPtr = Map<int, QList>();
   var _thisCpp = null;
   bool _needsAutoDelete = true;
@@ -36,8 +41,7 @@ class QList<T> {
   set thisCpp(var ptr) {
     _thisCpp = ptr;
     ffi.Pointer<ffi.Void> ptrvoid = ptr.cast<ffi.Void>();
-    if (_needsAutoDelete)
-      newWeakPersistentHandle?.call(this, ptrvoid, 0, getFinalizer());
+    if (_needsAutoDelete) getFinalizer().attach(this, ptrvoid);
   }
 
   static bool isCached(var cppPointer) {

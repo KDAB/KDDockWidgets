@@ -15,14 +15,14 @@ import '../../Bindings.dart';
 import '../../Bindings_KDDWBindingsCore.dart' as KDDWBindingsCore;
 import '../../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
 import '../../LibraryLoader.dart';
-import '../../FinalizerHelpers.dart';
 
 var _dylib = Library.instance().dylib;
-final _finalizer =
-    _dylib.lookup<ffi.NativeFunction<Dart_WeakPersistentHandleFinalizer_Type>>(
+final _finalizerFunc =
+    _dylib.lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
         'c_KDDockWidgets__flutter__Window_Finalizer');
+final _finalizer = ffi.NativeFinalizer(_finalizerFunc.cast());
 
-class Window {
+class Window implements ffi.Finalizable {
   static var s_dartInstanceByCppPtr = Map<int, Window>();
   var _thisCpp = null;
   bool _needsAutoDelete = false;
@@ -30,8 +30,7 @@ class Window {
   set thisCpp(var ptr) {
     _thisCpp = ptr;
     ffi.Pointer<ffi.Void> ptrvoid = ptr.cast<ffi.Void>();
-    if (_needsAutoDelete)
-      newWeakPersistentHandle?.call(this, ptrvoid, 0, _finalizer);
+    if (_needsAutoDelete) _finalizer.attach(this, ptrvoid);
   }
 
   static bool isCached(var cppPointer) {

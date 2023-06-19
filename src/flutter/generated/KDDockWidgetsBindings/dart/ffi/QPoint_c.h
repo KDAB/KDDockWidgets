@@ -50,5 +50,5 @@ KDDockWidgetsBindings_EXPORT int c_QPoint__x(void *thisObj);
 // QPoint::y() const
 KDDockWidgetsBindings_EXPORT int c_QPoint__y(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_QPoint__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QPoint_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QPoint_Finalizer(void *cppObj);
 }

@@ -122,5 +122,5 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__unregisterLayou
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__unregisterMainWindow_MainWindow(void *thisObj, void *arg__1_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry_Finalizer(void *cppObj);
 }

@@ -183,7 +183,7 @@ KDDockWidgetsBindings_EXPORT void *c_QList_T_QObject_T___value_int(void *thisObj
 // QList::value(int i, const T & defaultValue) const
 KDDockWidgetsBindings_EXPORT void *c_QList_T_QObject_T___value_int_QObject(void *thisObj, int i, void *defaultValue_);
 KDDockWidgetsBindings_EXPORT void c_QList_T_QObject_T___destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QList_T_QObject_T__Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QList_T_QObject_T__Finalizer(void *cppObj);
 }
 extern "C" {
 // QList::QList<T>()
@@ -283,7 +283,7 @@ KDDockWidgetsBindings_EXPORT void *c_QList_T_QByteArray_T___value_int(void *this
 // QList::value(int i, const T & defaultValue) const
 KDDockWidgetsBindings_EXPORT void *c_QList_T_QByteArray_T___value_int_QByteArray(void *thisObj, int i, void *defaultValue_);
 KDDockWidgetsBindings_EXPORT void c_QList_T_QByteArray_T___destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QList_T_QByteArray_T__Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QList_T_QByteArray_T__Finalizer(void *cppObj);
 }
 extern "C" {
 // QList::QList<T>()
@@ -383,5 +383,5 @@ KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___value_int(void *thisObj, 
 // QList::value(int i, const T & defaultValue) const
 KDDockWidgetsBindings_EXPORT void *c_QList_T_Group_T___value_int_Group(void *thisObj, int i, void *defaultValue_);
 KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T___destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T__Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_QList_T_Group_T__Finalizer(void *cppObj);
 }

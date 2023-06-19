@@ -93,7 +93,7 @@ static KDDockWidgetsBindings_wrappersNS::QSize_wrapper *fromWrapperPtr(void *ptr
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QSize_wrapper *>(ptr);
 }
 extern "C" {
-void c_QSize_Finalizer(void *, void *cppObj, void *)
+void c_QSize_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QSize_wrapper *>(cppObj);
 }

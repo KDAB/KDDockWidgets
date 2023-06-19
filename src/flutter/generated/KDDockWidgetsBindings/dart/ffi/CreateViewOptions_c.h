@@ -37,5 +37,5 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_createWindow(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *cppObj);
 }

@@ -65,7 +65,7 @@ static KDDockWidgetsBindings_wrappersNS::Event_wrapper *fromWrapperPtr(void *ptr
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Event_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Event_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Event_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Event_wrapper *>(cppObj);
 }

@@ -13,8 +13,8 @@
 #include <core/View.h>
 #include <qrect.h>
 #include <qpoint.h>
-#include <qsize.h>
 #include <qstring.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -70,5 +70,5 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__setGeometry_
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__setParentView_impl_View(void *thisObj, void *parent_);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator_Finalizer(void *cppObj);
 }

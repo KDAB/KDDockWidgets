@@ -284,7 +284,7 @@ static KDDockWidgetsBindings_wrappersNS::QList_wrapper<T> *fromWrapperPtr(void *
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QList_wrapper<T> *>(ptr);
 }
 extern "C" {
-void c_QList_T_QObject_T__Finalizer(void *, void *cppObj, void *)
+void c_QList_T_QObject_T__Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QList_wrapper<QObject *> *>(cppObj);
 }
@@ -553,7 +553,7 @@ void c_QList_T_QObject_T___destructor(void *thisObj)
 }
 }
 extern "C" {
-void c_QList_T_QByteArray_T__Finalizer(void *, void *cppObj, void *)
+void c_QList_T_QByteArray_T__Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QList_wrapper<QByteArray> *>(cppObj);
 }
@@ -837,7 +837,7 @@ void c_QList_T_QByteArray_T___destructor(void *thisObj)
 }
 }
 extern "C" {
-void c_QList_T_Group_T__Finalizer(void *, void *cppObj, void *)
+void c_QList_T_Group_T__Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::QList_wrapper<KDDockWidgets::Core::Group *> *>(cppObj);
 }

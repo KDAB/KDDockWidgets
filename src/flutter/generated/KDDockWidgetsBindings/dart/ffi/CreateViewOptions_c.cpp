@@ -57,7 +57,7 @@ static KDDockWidgetsBindings_wrappersNS::CreateViewOptions_wrapper *fromWrapperP
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::CreateViewOptions_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::CreateViewOptions_wrapper *>(cppObj);
 }

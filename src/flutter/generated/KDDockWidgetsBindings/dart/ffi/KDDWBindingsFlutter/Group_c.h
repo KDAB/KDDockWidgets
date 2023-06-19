@@ -14,8 +14,8 @@
 #include <core/View.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <qstring.h>
 #include <qpoint.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -187,8 +187,8 @@ public:
     Callback_maxSizeHint m_maxSizeHintCallback = nullptr;
     typedef QSize *(*Callback_minSize)(void *);
     Callback_minSize m_minSizeCallback = nullptr;
-    typedef void (*Callback_move)(void *, int x, int y);
-    Callback_move m_moveCallback = nullptr;
+    typedef void (*Callback_move_2)(void *, int x, int y);
+    Callback_move_2 m_move_2Callback = nullptr;
     typedef int (*Callback_nonContentsHeight)(void *);
     Callback_nonContentsHeight m_nonContentsHeightCallback = nullptr;
     typedef QRect *(*Callback_normalGeometry)(void *);
@@ -235,8 +235,8 @@ public:
     Callback_setMouseTracking m_setMouseTrackingCallback = nullptr;
     typedef void (*Callback_setParent)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParent m_setParentCallback = nullptr;
-    typedef void (*Callback_setSize)(void *, int w, int h);
-    Callback_setSize m_setSizeCallback = nullptr;
+    typedef void (*Callback_setSize_2)(void *, int w, int h);
+    Callback_setSize_2 m_setSize_2Callback = nullptr;
     typedef void (*Callback_setViewName)(void *, const QString &name);
     Callback_setViewName m_setViewNameCallback = nullptr;
     typedef void (*Callback_setVisible)(void *, bool visible);
@@ -389,5 +389,5 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__update(void *
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__viewName(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group_Finalizer(void *, void *cppObj, void *);
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group_Finalizer(void *cppObj);
 }

@@ -557,7 +557,7 @@ static KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper *
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__flutter__Platform_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__flutter__Platform_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper *>(cppObj);
 }

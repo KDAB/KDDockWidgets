@@ -207,7 +207,7 @@ static KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrappe
     return reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper *>(ptr);
 }
 extern "C" {
-void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *, void *cppObj, void *)
+void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper *>(cppObj);
 }
