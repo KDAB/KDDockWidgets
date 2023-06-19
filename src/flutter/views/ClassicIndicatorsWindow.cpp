@@ -52,7 +52,7 @@ DropLocation IndicatorWindow::hover(QPoint globalPos)
 
 void IndicatorWindow::updatePositions()
 {
-    auto sz = d->size();
+    auto sz = size();
     const bool updated = updatePositions_flutter(sz.width(), sz.height(),
                                                  classicIndicators->hoveredGroup(), visibleDropIndicatorLocations());
     m_updatePending = !updated;

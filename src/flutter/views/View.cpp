@@ -381,7 +381,7 @@ std::shared_ptr<Core::View> View::childViewAt(QPoint localPos) const
         }
 
         // We favored depth first, but now it's our turn
-        if (d->rect().contains(localPos))
+        if (rect().contains(localPos))
             return const_cast<flutter::View *>(this)->asWrapper();
     }
 
