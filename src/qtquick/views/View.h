@@ -50,7 +50,10 @@ class DOCKS_EXPORT View : public QQuickItem, public QtCommon::View_qt
     Q_OBJECT
 public:
     using Core::View::close;
+    using Core::View::height;
+    using Core::View::rect;
     using Core::View::resize;
+    using Core::View::width;
 
     explicit View(Core::Controller *controller, Core::ViewType type,
                   QQuickItem *parent = nullptr, Qt::WindowFlags windowFlags = {});

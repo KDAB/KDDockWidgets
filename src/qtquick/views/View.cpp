@@ -135,14 +135,14 @@ View::View(Core::Controller *controller, Core::ViewType type, QQuickItem *parent
 
     connect(this, &QQuickItem::widthChanged, this, [this] {
         if (!Core::View::d->aboutToBeDestroyed()) { // If Window is being destroyed we don't bother
-            onResize(Core::View::d->size());
+            onResize(Core::View::size());
             updateGeometry();
         }
     });
 
     connect(this, &QQuickItem::heightChanged, this, [this] {
         if (!Core::View::d->aboutToBeDestroyed()) { // If Window is being destroyed we don't bother
-            onResize(Core::View::d->size());
+            onResize(Core::View::size());
             updateGeometry();
         }
     });
@@ -154,7 +154,7 @@ View::View(Core::Controller *controller, Core::ViewType type, QQuickItem *parent
 void View::setGeometry(QRect rect)
 {
     setSize(rect.width(), rect.height());
-    Core::View::d->move(rect.topLeft());
+    Core::View::move(rect.topLeft());
 }
 
 QQuickItem *View::createItem(QQmlEngine *engine, const QString &filename)

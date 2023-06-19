@@ -113,6 +113,17 @@ public:
     virtual void enableAttribute(Qt::WidgetAttribute, bool enable = true) = 0;
     virtual bool hasAttribute(Qt::WidgetAttribute) const = 0;
 
+    /// @brief Installs an event filter in this view to intercept the event it receives
+    /// Analogue to QObject::installEventFilter() in the Qt world
+    /// @sa removeViewEventFilter
+    void installViewEventFilter(EventFilterInterface *);
+
+    /// @brief Removes the event filter
+    void removeViewEventFilter(EventFilterInterface *);
+
+    /// @brief Delivers mouse events and such to event filters
+    bool deliverViewEventToFilters(Event *e);
+
     // TODOm3: Move these to Window instead
     virtual void showNormal() = 0;
     virtual void showMinimized() = 0;
@@ -189,8 +200,18 @@ public:
     bool equals(const std::shared_ptr<View> &) const;
     static bool equals(const View *one, const View *two);
 
+    QPoint pos() const;
+    QSize size() const;
+    QRect rect() const;
+    int x() const;
+    int y() const;
+    int height() const;
+    int width() const;
     void resize(QSize);
     void resize(int w, int h);
+    void move(QPoint);
+    void setSize(QSize);
+
 
     /// The minimum minimum size a dock widget can have
     static QSize hardcodedMinimumSize();

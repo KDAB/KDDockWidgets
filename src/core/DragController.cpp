@@ -692,13 +692,13 @@ DragController *DragController::instance()
 void DragController::registerDraggable(Draggable *drg)
 {
     m_draggables << drg;
-    drg->asView()->d->installViewEventFilter(this);
+    drg->asView()->installViewEventFilter(this);
 }
 
 void DragController::unregisterDraggable(Draggable *drg)
 {
     m_draggables.removeOne(drg);
-    drg->asView()->d->removeViewEventFilter(this);
+    drg->asView()->removeViewEventFilter(this);
 }
 
 bool DragController::isDragging() const

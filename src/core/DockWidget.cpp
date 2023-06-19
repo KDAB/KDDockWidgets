@@ -874,7 +874,7 @@ void DockWidget::onResize(QSize)
 {
     if (isOverlayed()) {
         if (auto group = d->group()) {
-            d->m_lastOverlayedSize = group->view()->d->size();
+            d->m_lastOverlayedSize = group->view()->size();
         } else {
             qWarning() << Q_FUNC_INFO << "Overlayed dock widget without group shouldn't happen";
         }

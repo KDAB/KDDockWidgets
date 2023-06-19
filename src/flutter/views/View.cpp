@@ -542,7 +542,7 @@ void View::onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos
 
     auto me = new MouseEvent(eventType, localPos, globalPos, globalPos, buttons, buttons, modifiers);
 
-    if (!d->deliverViewEventToFilters(me)) {
+    if (!deliverViewEventToFilters(me)) {
         // filters allowed the event to propagate, give it to the view.
         // only pressed handled, there's no use case for the others
         if (eventType == Event::Type::MouseButtonPress)

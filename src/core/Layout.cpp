@@ -291,7 +291,7 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 
     // This qMin() isn't needed for QtWidgets (but harmless), but it's required for QtQuick
     // as some sizing is async
-    const QSize newLayoutSize = view()->d->size().expandedTo(d->m_rootItem->minSize());
+    const QSize newLayoutSize = view()->size().expandedTo(d->m_rootItem->minSize());
 
     d->m_rootItem->setSize_recursive(newLayoutSize);
 

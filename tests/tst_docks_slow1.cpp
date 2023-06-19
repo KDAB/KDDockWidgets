@@ -65,7 +65,7 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         auto group1 = dock1->dptr()->group();
         auto group2 = dock2->dptr()->group();
         auto group3 = dock3->dptr()->group();
-        CHECK_EQ(group1->view()->d->y(), 0);
+        CHECK_EQ(group1->view()->y(), 0);
 
         // Close 1
         CHECK(dock1->isOpen());
@@ -77,7 +77,7 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(group2->view());
 
         // Check that group2 moved up to y=0
-        CHECK_EQ(group2->view()->d->y(), 0);
+        CHECK_EQ(group2->view()->y(), 0);
 
         // Close 2
         dock2->close();
@@ -88,7 +88,7 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         CHECK_EQ(layout->placeholderCount(), 2);
 
         // Check that group3 moved up to y=1
-        CHECK_EQ(group3->view()->d->y(), 0);
+        CHECK_EQ(group3->view()->y(), 0);
 
         // Now restore:
         auto toRestore1 = restore1First ? dock1 : dock2;

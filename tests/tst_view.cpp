@@ -123,17 +123,17 @@ KDDW_QCORO_TASK tst_viewGeometry()
 
     const QRect initialGeo = QRect(200, 201, 500, 501);
     rootView->setGeometry(initialGeo);
-    CHECK_EQ(rootView->d->pos(), initialGeo.topLeft());
+    CHECK_EQ(rootView->pos(), initialGeo.topLeft());
 
     Core::Window::Ptr window = rootView->window();
     CHECK_EQ(window->geometry(), initialGeo);
 
-    CHECK_EQ(rootView->d->size(), initialGeo.size());
-    CHECK_EQ(rootView->d->x(), initialGeo.x());
-    CHECK_EQ(rootView->d->y(), initialGeo.y());
-    CHECK_EQ(rootView->d->width(), initialGeo.width());
-    CHECK_EQ(rootView->d->height(), initialGeo.height());
-    CHECK_EQ(rootView->d->rect(), QRect(QPoint(0, 0), initialGeo.size()));
+    CHECK_EQ(rootView->size(), initialGeo.size());
+    CHECK_EQ(rootView->x(), initialGeo.x());
+    CHECK_EQ(rootView->y(), initialGeo.y());
+    CHECK_EQ(rootView->width(), initialGeo.width());
+    CHECK_EQ(rootView->height(), initialGeo.height());
+    CHECK_EQ(rootView->rect(), QRect(QPoint(0, 0), initialGeo.size()));
 
     // Now test with child view
     auto childView = createViewAndWindow({ true }, rootView);
@@ -146,8 +146,8 @@ KDDW_QCORO_TASK tst_viewGeometry()
     KDDW_CO_AWAIT Platform::instance()->tests_wait(500);
 
     CHECK(!childView->isRootView());
-    CHECK_EQ(childView->d->size(), newChildGeo.size());
-    CHECK_EQ(childView->d->x(), newChildGeo.x());
+    CHECK_EQ(childView->size(), newChildGeo.size());
+    CHECK_EQ(childView->x(), newChildGeo.x());
     CHECK_EQ(childView->geometry(), newChildGeo);
 
     KDDW_TEST_RETURN(true);

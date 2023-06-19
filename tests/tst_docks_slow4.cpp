@@ -170,8 +170,8 @@ KDDW_QCORO_TASK tst_restoreSimple()
     LayoutSaver saver;
     CHECK(saver.saveToFile(QStringLiteral("layout_tst_restoreSimple.json")));
     auto f1 = dock1->dptr()->group();
-    dock2->window()->d->move(QPoint(0, 0)); // Move *after* we saved.
-    dock3->window()->d->move(QPoint(0, 0)); // Move *after* we saved.
+    dock2->window()->move(QPoint(0, 0)); // Move *after* we saved.
+    dock3->window()->move(QPoint(0, 0)); // Move *after* we saved.
     dock1->close();
     dock2->close();
     CHECK(!dock2->isVisible());

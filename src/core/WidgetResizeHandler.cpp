@@ -79,7 +79,7 @@ WidgetResizeHandler::~WidgetResizeHandler()
 {
     if (m_isTopLevelWindowResizer) {
         if (mTargetGuard)
-            mTarget->d->removeViewEventFilter(this);
+            mTarget->removeViewEventFilter(this);
     } else {
         Platform::instance()->removeGlobalEventFilter(this);
     }
@@ -182,7 +182,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
             return false;
 
         const int m = widgetResizeHandlerMargin();
-        const QRect widgetRect = mTarget->d->rect().marginsAdded(QMargins(m, m, m, m));
+        const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(m, m, m, m));
         const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(e));
         if (!widgetRect.contains(cursorPoint) || e->button() != Qt::LeftButton)
             return false;
@@ -269,8 +269,8 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         case CursorPosition_BottomLeft: {
             parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
             deltaWidth = oldGeometry.left() - globalPos.x();
-            newWidth = qBound(minWidth, mTarget->d->width() + deltaWidth, maxWidth);
-            deltaWidth = newWidth - mTarget->d->width();
+            newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
+            deltaWidth = newWidth - mTarget->width();
             if (deltaWidth != 0) {
                 newGeometry.setLeft(newGeometry.left() - deltaWidth);
             }
@@ -283,8 +283,8 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         case CursorPosition_BottomRight: {
             parentGeometry = parentGeometry.adjusted(0, 0, -m_resizeGap, 0);
             deltaWidth = globalPos.x() - newGeometry.right();
-            newWidth = qBound(minWidth, mTarget->d->width() + deltaWidth, maxWidth);
-            deltaWidth = newWidth - mTarget->d->width();
+            newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
+            deltaWidth = newWidth - mTarget->width();
             if (deltaWidth != 0) {
                 newGeometry.setRight(oldGeometry.right() + deltaWidth);
             }
@@ -306,8 +306,8 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         case CursorPosition_TopRight: {
             parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
             deltaHeight = oldGeometry.top() - globalPos.y();
-            newHeight = qBound(minHeight, mTarget->d->height() + deltaHeight, maxHeight);
-            deltaHeight = newHeight - mTarget->d->height();
+            newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
+            deltaHeight = newHeight - mTarget->height();
             if (deltaHeight != 0) {
                 newGeometry.setTop(newGeometry.top() - deltaHeight);
             }
@@ -320,8 +320,8 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         case CursorPosition_BottomRight: {
             parentGeometry = parentGeometry.adjusted(0, 0, 0, -m_resizeGap);
             deltaHeight = globalPos.y() - newGeometry.bottom();
-            newHeight = qBound(minHeight, mTarget->d->height() + deltaHeight, maxHeight);
-            deltaHeight = newHeight - mTarget->d->height();
+            newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
+            deltaHeight = newHeight - mTarget->height();
             if (deltaHeight != 0) {
                 newGeometry.setBottom(oldGeometry.bottom() + deltaHeight);
             }
@@ -343,7 +343,7 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         newGeometry = newGeometry.intersected(parentGeometry);
 
         // Back to local.
-        newGeometry.moveTopLeft(mTarget->mapFromGlobal(newGeometry.topLeft()) + mTarget->d->pos());
+        newGeometry.moveTopLeft(mTarget->mapFromGlobal(newGeometry.topLeft()) + mTarget->pos());
     }
 
     mTarget->setGeometry(newGeometry);
@@ -503,7 +503,7 @@ void WidgetResizeHandler::setTarget(View *w)
         if (m_usesGlobalEventFilter) {
             Platform::instance()->installGlobalEventFilter(this);
         } else {
-            mTarget->d->installViewEventFilter(this);
+            mTarget->installViewEventFilter(this);
         }
     } else {
         qWarning() << "Target widget is null!";
@@ -587,17 +587,17 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
     const int margin = widgetResizeHandlerMargin();
 
     QFlags<CursorPosition>::Int result = CursorPosition_Undefined;
-    if (y >= -margin && y <= mTarget->d->height() + margin) {
+    if (y >= -margin && y <= mTarget->height() + margin) {
         if (qAbs(x) <= margin)
             result |= CursorPosition_Left;
-        else if (qAbs(x - (mTarget->d->width() - margin)) <= margin)
+        else if (qAbs(x - (mTarget->width() - margin)) <= margin)
             result |= CursorPosition_Right;
     }
 
-    if (x >= -margin && x <= mTarget->d->width() + margin) {
+    if (x >= -margin && x <= mTarget->width() + margin) {
         if (qAbs(y) <= margin)
             result |= CursorPosition_Top;
-        else if (qAbs(y - (mTarget->d->height() - margin)) <= margin)
+        else if (qAbs(y - (mTarget->height() - margin)) <= margin)
             result |= CursorPosition_Bottom;
     }
 

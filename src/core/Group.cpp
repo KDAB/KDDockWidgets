@@ -806,7 +806,7 @@ QRect Group::dragRect() const
 {
     QRect rect;
     if (m_titleBar->isVisible()) {
-        rect = m_titleBar->view()->d->rect();
+        rect = m_titleBar->view()->rect();
         rect.moveTopLeft(m_titleBar->view()->mapToGlobal(QPoint(0, 0)));
     }
 

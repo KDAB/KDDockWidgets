@@ -260,7 +260,7 @@ KDDW_QCORO_TASK tst_floatingWindowSize()
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     CHECK(!fw1->geometry().isNull());
-    CHECK_EQ(fw1->d->size(), fw1->window()->size());
+    CHECK_EQ(fw1->size(), fw1->window()->size());
 
     KDDW_TEST_RETURN(true);
 }
@@ -321,7 +321,7 @@ KDDW_QCORO_TASK tst_sizeAfterRedock()
     dw2->setFloating(true);
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
-    CHECK_EQ(height2, dw2->window()->d->height());
+    CHECK_EQ(height2, dw2->window()->height());
     auto oldFw2 = dw2->floatingWindow();
 
     // Redock
@@ -352,7 +352,7 @@ KDDW_QCORO_TASK tst_honourUserGeometry()
     CHECK(!dw1->view()->hasAttribute(Qt::WA_PendingMoveEvent));
 
     const QPoint pt(10, 10);
-    dw1->view()->d->move(pt);
+    dw1->view()->move(pt);
     dw1->open();
     Core::FloatingWindow *fw1 = dw1->floatingWindow();
     CHECK_EQ(fw1->view()->window()->geometry().topLeft(), pt);
@@ -2172,7 +2172,7 @@ KDDW_QCORO_TASK tst_restoreRestoresMainWindowPosition()
         LayoutSaver saver;
         const QByteArray saved = saver.serializeLayout();
 
-        m->view()->d->move(originalPos + QPoint(100, 100));
+        m->view()->move(originalPos + QPoint(100, 100));
 
         saver.restoreLayout(saved);
         CHECK_EQ(originalPos, m->pos());
@@ -2348,7 +2348,7 @@ KDDW_QCORO_TASK tst_restoreNestedAndTabbed()
         auto dock5 =
             createDockWidget("5", Platform::instance()->tests_createFocusableView({ true }));
         dock4->addDockWidgetAsTab(dock5);
-        oldFW4Pos = dock4->window()->d->pos();
+        oldFW4Pos = dock4->window()->pos();
 
         m->addDockWidget(dock1, Location_OnLeft);
         m->addDockWidget(dock2, Location_OnRight);
@@ -2719,8 +2719,8 @@ KDDW_QCORO_TASK tst_addDockWidgetToMainWindow()
     CHECK(dock1->window()->equals(m->view()));
     CHECK(dock2->window()->equals(m->view()));
 
-    CHECK(dock1->dptr()->group()->view()->d->y() > dock2->dptr()->group()->view()->d->y());
-    CHECK_EQ(dock1->dptr()->group()->view()->d->x(), dock2->dptr()->group()->view()->d->x());
+    CHECK(dock1->dptr()->group()->view()->y() > dock2->dptr()->group()->view()->y());
+    CHECK_EQ(dock1->dptr()->group()->view()->x(), dock2->dptr()->group()->view()->x());
     KDDW_TEST_RETURN(true);
 }
 
@@ -2739,9 +2739,9 @@ KDDW_QCORO_TASK tst_addDockWidgetToContainingWindow()
         CHECK(dock1->window()->equals(dock2->window()));
         CHECK(dock2->window()->equals(dock3->window()));
 
-        CHECK(dock3->dptr()->group()->view()->d->y() < dock2->dptr()->group()->view()->d->y());
-        CHECK(dock1->dptr()->group()->view()->d->x() < dock2->dptr()->group()->view()->d->x());
-        CHECK_EQ(dock2->dptr()->group()->view()->d->x(), dock3->dptr()->group()->view()->d->x());
+        CHECK(dock3->dptr()->group()->view()->y() < dock2->dptr()->group()->view()->y());
+        CHECK(dock1->dptr()->group()->view()->x() < dock2->dptr()->group()->view()->x());
+        CHECK_EQ(dock2->dptr()->group()->view()->x(), dock3->dptr()->group()->view()->x());
     }
 
     { // Also test with a main window
@@ -4230,7 +4230,7 @@ KDDW_QCORO_TASK tst_maxSizedHonouredAfterRemoved()
     dock2->close();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100); // wait for the resize, so dock1 gets taller"
 
-    CHECK(dock1->dptr()->group()->view()->d->height()
+    CHECK(dock1->dptr()->group()->view()->height()
           <= dock1->dptr()->group()->view()->maxSizeHint().height());
     delete dock2;
     KDDW_TEST_RETURN(true);
@@ -4401,7 +4401,7 @@ KDDW_QCORO_TASK tst_propagateSizeHonoursMinSize()
     if (dock1->width() < min1) {
         qDebug() << "\ndock1->width()=" << dock1->width() << "\nmin1=" << min1
                  << "\ndock min sizes=" << dock1->view()->minSize()
-                 << "\ngroup1->width()=" << dock1->dptr()->group()->view()->d->width()
+                 << "\ngroup1->width()=" << dock1->dptr()->group()->view()->width()
                  << "\ngroup1->min="
                  << lengthForSize(dock1->dptr()->group()->view()->minSize(), Qt::Horizontal);
         l->dumpLayout();
@@ -4773,14 +4773,14 @@ KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
     layout->addDockWidget(dock0, initialPoint, {});
 
     Core::Group *group = dock0->DockWidget::d->group();
-    CHECK_EQ(group->view()->d->pos(), initialPoint);
+    CHECK_EQ(group->view()->pos(), initialPoint);
 
     const QSize initialSize = group->size();
 
     dock0->setFloating(true);
     dock0->setFloating(false);
     group = dock0->DockWidget::d->group();
-    CHECK_EQ(group->view()->d->pos(), initialPoint);
+    CHECK_EQ(group->view()->pos(), initialPoint);
 
     const QPoint anotherPos = QPoint(250, 250);
     dock0->setMDIPosition(anotherPos);
@@ -4792,7 +4792,7 @@ KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
     Item *item = layout->itemForFrame(group);
     CHECK_EQ(item->pos(), anotherPos);
     CHECK_EQ(item->geometry(), group->geometry());
-    CHECK_EQ(group->view()->d->pos(), anotherPos);
+    CHECK_EQ(group->view()->pos(), anotherPos);
     CHECK_EQ(group->size(), initialSize);
 
     const QSize anotherSize = QSize(500, 500);

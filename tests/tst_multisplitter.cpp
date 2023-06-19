@@ -1586,9 +1586,9 @@ KDDW_QCORO_TASK tst_maxSizeHonoured1()
 
     auto guest2 = item2->guestView();
     const int maxHeight = 250;
-    CHECK_EQ(guest2->d->size(), item2->size());
+    CHECK_EQ(guest2->size(), item2->size());
     guest2->setMaximumSize(QSize(250, maxHeight));
-    CHECK_EQ(guest2->d->size(), item2->size());
+    CHECK_EQ(guest2->size(), item2->size());
     CHECK_EQ(item2->maxSizeHint(), guest2->maxSizeHint());
 
     root->insertItem(item2, Location_OnBottom);
