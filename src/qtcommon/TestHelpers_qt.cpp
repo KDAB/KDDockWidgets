@@ -285,7 +285,7 @@ void Platform_qt::maybeSetOffscreenQPA(int argc, char **argv)
         }
     }
 
-    if (!qpaPassed) {
+    if (!qpaPassed && !qEnvironmentVariableIsSet("KDDW_NO_OFFSCREEN")) {
         // Use offscreen by default as it's less annoying, doesn't create visible windows
         qputenv("QT_QPA_PLATFORM", "offscreen");
     }
