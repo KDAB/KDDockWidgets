@@ -3844,9 +3844,11 @@ KDDW_QCORO_TASK tst_raise()
         dock3->raise();
         KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
 
-        if (!Platform::instance()
-                 ->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))
-                 ->equals(dock3->view()->window())) {
+        auto window = Platform::instance()
+                          ->windowAt(dock3->window()->geometry().topLeft() + QPoint(100, 100));
+        CHECK(window);
+
+        if (!window->equals(dock3->view()->window())) {
             qDebug() << "Failing before raise" << dock3->window().get()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             CHECK(false);
@@ -3856,9 +3858,10 @@ KDDW_QCORO_TASK tst_raise()
         KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
         CHECK(dock1->isCurrentTab());
 
-        if (Platform::instance()
-                ->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))
-                ->equals(dock1->view()->window())) {
+        window = Platform::instance()
+                     ->windowAt(dock3->window()->geometry().topLeft() + QPoint(100, 100));
+        CHECK(window);
+        if (window->equals(dock1->view()->window())) {
             qDebug() << "Failing after raise" << dock1->window().get()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             CHECK(false);
