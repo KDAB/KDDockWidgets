@@ -12,6 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/core/Controller.h"
+#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/qtcommon/View.h"
 
 #include <QDebug>
@@ -385,19 +386,16 @@ private:
 
 inline qreal logicalDpiFactor(const QWidget *w)
 {
+#ifdef DOCKS_DEVELOPER_MODE
+    if (Core::Platform::s_logicalDpiFactorOverride > 0)
+        return Core::Platform::s_logicalDpiFactorOverride;
+#endif
+
 #ifdef Q_OS_MACOS
     // It's always 72 on mac
     Q_UNUSED(w);
     return 1;
 #else
-
-#ifdef KDDW_TEST
-    // We want stability during tests.
-    // QMainWindow uses the factor for its margins, we don't want tests failing due
-    // to off by 1 or 2 pixels. Use 96dpi everywhere.
-    return 1;
-#endif
-
     return w->logicalDpiX() / 96.0;
 #endif
 }

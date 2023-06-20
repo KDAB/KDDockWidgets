@@ -41,6 +41,7 @@ static Platform *s_platform = nullptr;
 EventFilterInterface::~EventFilterInterface() = default;
 
 #ifdef DOCKS_DEVELOPER_MODE
+int Platform::s_logicalDpiFactorOverride = 0;
 QString Platform::s_expectedWarning = {};
 Platform::WarningObserver *Platform::s_warningObserver = nullptr;
 #endif
@@ -190,6 +191,11 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     }
 
     Platform::instance()->m_numWarningsEmitted = 0;
+
+    // We want stability during tests.
+    // QMainWindow uses the factor for its margins, we don't want tests failing due
+    // to off by 1 or 2 pixels. Use 96dpi everywhere.
+    Platform::s_logicalDpiFactorOverride = 1;
 
     /// Reset the default framework factory, so we can test several frontends in the same test run
     Config::self().setViewFactory(Platform::instance()->createDefaultViewFactory());

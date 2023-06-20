@@ -275,6 +275,7 @@ public:
     virtual void pauseForDebugger();
 
     static QString s_expectedWarning;
+    static int s_logicalDpiFactorOverride;
     static WarningObserver *s_warningObserver;
     int m_numWarningsEmitted = 0;
 
