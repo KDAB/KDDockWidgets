@@ -59,8 +59,8 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
     auto le2 = Platform::instance()->tests_createFocusableView({ true });
     dw1->setGuestView(le1->asWrapper());
     dw2->setGuestView(le2->asWrapper());
-    dw2->open();
     dw1->open();
+    dw2->open();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
 
     auto fw1 = dw1->floatingWindow();
