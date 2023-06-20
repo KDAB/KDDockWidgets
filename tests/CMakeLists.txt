@@ -30,13 +30,16 @@ set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 # tst_qtwidgets
 if(KDDW_FRONTEND_QTWIDGETS)
     add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
+    target_compile_definitions(tst_qtwidgets PRIVATE KDDW_TEST)
     target_link_libraries(tst_qtwidgets kdbindings kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
     set_compiler_flags(tst_qtwidgets)
     add_test(NAME tst_qtwidgets COMMAND tst_qtwidgets)
 endif()
 
+# tst_qtquick
 if(KDDW_FRONTEND_QTQUICK)
     add_executable(tst_qtquick qtquick/tst_qtquick.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
+    target_compile_definitions(tst_qtwidgets PRIVATE KDDW_TEST)
     target_link_libraries(tst_qtquick kddockwidgets kdbindings Qt${Qt_VERSION_MAJOR}::Test)
     set_compiler_flags(tst_qtquick)
     add_test(NAME tst_qtquick COMMAND tst_qtquick)
@@ -48,6 +51,7 @@ endif()
 # Function to add a test
 function(add_kddw_test test srcs)
     add_executable(${test} ${srcs} ${TESTING_RESOURCES} utils.cpp)
+    target_compile_definitions(${test} PRIVATE KDDW_TEST)
     target_link_libraries(${test} kddockwidgets kdbindings)
     set_compiler_flags(${test})
 

@@ -390,6 +390,14 @@ inline qreal logicalDpiFactor(const QWidget *w)
     Q_UNUSED(w);
     return 1;
 #else
+
+#ifdef KDDW_TEST
+    // We want stability during tests.
+    // QMainWindow uses the factor for its margins, we don't want tests failing due
+    // to off by 1 or 2 pixels. Use 96dpi everywhere.
+    return 1;
+#endif
+
     return w->logicalDpiX() / 96.0;
 #endif
 }
