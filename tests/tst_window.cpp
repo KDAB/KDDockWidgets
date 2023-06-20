@@ -104,7 +104,7 @@ KDDW_QCORO_TASK tst_geometry()
 {
     auto window = Platform::instance()->tests_createWindow();
 
-    const QRect geo = QRect(10, 10, 1000, 1000);
+    const QRect geo = QRect(100, 100, 1000, 1000);
     window->setGeometry(geo);
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
