@@ -4500,7 +4500,15 @@ KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
     const int expectedMinHeight = item2->minLength(Qt::Vertical) + item3->minLength(Qt::Vertical)
         + 1 * Item::separatorThickness + margins.top() + margins.bottom();
 
-    CHECK_EQ(m->view()->minSize().height(), expectedMinHeight);
+    const int tolerance
+#if KDDW_FRONTEND_QTWIDGETS && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        // Qt5 QtWidgets has a HDPI bug
+        = 4;
+#else
+        = 0;
+#endif
+
+    CHECK(qAbs(m->view()->minSize().height() - expectedMinHeight) <= tolerance);
 
     dock1->destroyLater();
     KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock1);
