@@ -21,7 +21,10 @@ namespace Qt5Qt6Compat {
 
 #define QQUICKITEMgeometryChanged geometryChange
 
+#ifdef KDDW_FRONTEND_QTWIDGETS
 using QEnterEvent = QEnterEvent;
+#endif
+
 using qintptr = ::qintptr;
 using qhashtype = size_t;
 
