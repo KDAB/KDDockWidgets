@@ -183,6 +183,7 @@ private:
     bool m_maximizeButtonVisible = false;
     TitleBarButtonType m_maximizeButtonType = TitleBarButtonType::Maximize;
     QString m_floatButtonToolTip;
+    QMetaObject::Connection m_focusChangedConnection;
 };
 
 }

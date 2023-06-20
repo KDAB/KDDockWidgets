@@ -81,7 +81,7 @@ void TitleBar::init()
 {
     view()->init();
 
-    connect(this, &TitleBar::isFocusedChanged, this, [this] {
+    m_focusChangedConnection = connect(this, &TitleBar::isFocusedChanged, this, [this] {
         // repaint
         view()->update();
     });
@@ -93,6 +93,7 @@ void TitleBar::init()
 
 TitleBar::~TitleBar()
 {
+    disconnect(m_focusChangedConnection);
 }
 
 bool TitleBar::titleBarIsFocusable() const

@@ -23,6 +23,7 @@
 #include "core/Group.h"
 #include "DockRegistry.h"
 #include "core/Platform_p.h"
+#include "core/ViewGuard.h"
 #include "View.h"
 
 using namespace KDDockWidgets;
@@ -58,7 +59,7 @@ public:
     bool isInFocusScope(std::shared_ptr<View> view) const;
 
     FocusScope *const q;
-    View *const m_thisView;
+    ViewGuard m_thisView;
     bool m_isFocused = false;
     bool m_inCtor = true;
     std::shared_ptr<View> m_lastFocusedInScope;
@@ -139,6 +140,9 @@ void FocusScope::Private::onFocusedViewChanged(std::shared_ptr<View> view)
 
 bool FocusScope::Private::isInFocusScope(std::shared_ptr<View> view) const
 {
+    if (m_thisView.isNull())
+        return false;
+
     auto p = (view && !view->isNull()) ? view : std::shared_ptr<View>();
     while (p) {
         if (p->handle() == m_thisView->handle())
