@@ -43,6 +43,10 @@
 #include <QMenuBar>
 #include <QTabBar>
 #include <QVBoxLayout>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QLineEdit>
+#include <QGraphicsProxyWidget>
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
@@ -136,6 +140,7 @@ private Q_SLOTS:
     void tst_deleteOnClose();
     void tstCloseNestedMdi();
     void tstCloseNestedMDIPropagates();
+    void tstQGraphicsProxyWidget();
 
     // But these are fine to be widget only:
     void tst_tabsNotClickable();
@@ -1718,6 +1723,29 @@ void TestQtWidgets::tst_standaloneTitleBar()
     QVERIFY(window.isVisible());
     titleBar.asTitleBarController()->onCloseClicked();
     QVERIFY(!window.isVisible());
+}
+
+void TestQtWidgets::tstQGraphicsProxyWidget()
+{
+    // Tests that using a QGraphicsProxyWidget doesn't crash
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
+    m1->addDockWidget(dock1->asDockWidgetController(), Location_OnBottom);
+
+    auto qgv = new QGraphicsView();
+    dock1->setWidget(qgv);
+    qgv->setVisible(true);
+
+    auto scene = new QGraphicsScene();
+    qgv->setScene(scene);
+
+    auto lineEdit = new QLineEdit();
+    auto proxyWidget = new QGraphicsProxyWidget();
+    proxyWidget->setWidget(lineEdit);
+    lineEdit->setText("Test");
+
+    scene->addItem(proxyWidget);
 }
 
 int main(int argc, char *argv[])
