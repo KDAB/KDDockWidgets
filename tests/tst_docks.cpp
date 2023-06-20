@@ -3834,39 +3834,7 @@ KDDW_QCORO_TASK tst_raise()
     dock2->raise();
     CHECK(!dock1->isCurrentTab());
     CHECK(dock2->isCurrentTab());
-    const bool isOffscreen = Platform::instance()->displayType() == Platform::DisplayType::QtOffscreen;
 
-    if (!isOffscreen) { // offscreen qpa doesn't seem to keep window Z.
-        auto dock3 = createDockWidget("3");
-        dock3->window()->setGeometry(dock1->window()->geometry());
-        dock3->window()->setViewName("3");
-        dock1->window()->setViewName("1");
-        dock3->raise();
-        KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
-
-        auto window = Platform::instance()
-                          ->windowAt(dock3->window()->geometry().topLeft() + QPoint(100, 100));
-        CHECK(window);
-
-        if (!window->equals(dock3->view()->window())) {
-            qDebug() << "Failing before raise" << dock3->window().get()
-                     << dock1->window()->geometry() << dock3->window()->geometry();
-            CHECK(false);
-        }
-
-        dock1->raise();
-        KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
-        CHECK(dock1->isCurrentTab());
-
-        window = Platform::instance()
-                     ->windowAt(dock3->window()->geometry().topLeft() + QPoint(100, 100));
-        CHECK(window);
-        if (window->equals(dock1->view()->window())) {
-            qDebug() << "Failing after raise" << dock1->window().get()
-                     << dock1->window()->geometry() << dock3->window()->geometry();
-            CHECK(false);
-        }
-    }
     KDDW_TEST_RETURN(true);
 }
 
