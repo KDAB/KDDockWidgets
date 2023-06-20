@@ -60,6 +60,7 @@ public:
     bool close() override;
     Qt::FocusPolicy focusPolicy() const override;
     bool hasFocus() const override;
+    void raiseAndActivate() override;
 
     const Core::View *unwrap() const;
     Core::View *unwrap();

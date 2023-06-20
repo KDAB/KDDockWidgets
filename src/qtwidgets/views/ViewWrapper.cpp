@@ -382,3 +382,8 @@ QSize ViewWrapper::maxSizeHint() const
 {
     return m_widget->maximumSize();
 }
+
+void ViewWrapper::raiseAndActivate()
+{
+    QtWidgets::View<QWidget>::raiseAndActivate(m_widget);
+}

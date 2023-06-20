@@ -457,6 +457,11 @@ const Core::View *ViewWrapper::unwrap() const
     return qobject_cast<const QtQuick::View *>(m_item);
 }
 
+void ViewWrapper::raiseAndActivate()
+{
+    QtQuick::View::raiseAndActivate(m_item);
+}
+
 /*static*/
 std::shared_ptr<Core::View> ViewWrapper::create(QObject *item)
 {

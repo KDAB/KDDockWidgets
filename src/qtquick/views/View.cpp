@@ -541,12 +541,17 @@ void View::setParent(Core::View *parent)
     setParent(QtQuick::asQQuickItem(parent));
 }
 
-void View::raiseAndActivate()
+void View::raiseAndActivate(QQuickItem *item)
 {
-    if (QWindow *w = QQuickItem::window()) {
+    if (QWindow *w = item->window()) {
         w->raise();
         w->requestActivate();
     }
+}
+
+void View::raiseAndActivate()
+{
+    raiseAndActivate(this);
 }
 
 void View::activateWindow()

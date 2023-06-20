@@ -21,6 +21,7 @@
 #include <QSizePolicy>
 #include <QWidget>
 #include <QApplication>
+#include <QWindow>
 
 #include <memory>
 
@@ -185,12 +186,17 @@ public:
         setParentFor(this, parent);
     }
 
-    void raiseAndActivate() override
+    static void raiseAndActivate(QWidget *w)
     {
-        Base::window()->raise();
+        w->window()->raise();
         const bool isWayland = qApp->platformName() == QLatin1String("wayland");
         if (!isWayland)
-            Base::window()->activateWindow();
+            w->window()->activateWindow();
+    }
+
+    void raiseAndActivate() override
+    {
+        raiseAndActivate(this);
     }
 
     void activateWindow() override

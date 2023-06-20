@@ -60,6 +60,7 @@ public:
     void setFocusPolicy(Qt::FocusPolicy) override;
     bool hasFocus() const override;
     QSize maxSizeHint() const override;
+    void raiseAndActivate() override;
     QWidget *widget() const;
 
     static std::shared_ptr<View> create(QObject *widget);

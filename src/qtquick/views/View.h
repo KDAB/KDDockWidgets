@@ -85,6 +85,7 @@ public:
     void update() override;
     void setParent(Core::View *parent) override;
     void setParent(QQuickItem *parent);
+    static void raiseAndActivate(QQuickItem *);
     void raiseAndActivate() override;
     void activateWindow() override;
     void raise() override;
