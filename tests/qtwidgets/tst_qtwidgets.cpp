@@ -1751,7 +1751,7 @@ void TestQtWidgets::tstQGraphicsProxyWidget()
 int main(int argc, char *argv[])
 {
     // Might be disabled by env var
-    const auto frontends = Platform::instance()->frontendTypes();
+    const auto frontends = Platform::frontendTypes();
     if (std::find(frontends.cbegin(), frontends.cend(), FrontendType::QtWidgets)
         == frontends.cend())
         return 0;
