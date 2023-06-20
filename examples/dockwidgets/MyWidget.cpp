@@ -16,6 +16,8 @@
 #include <QFile>
 #include <QLineEdit>
 #include <QCloseEvent>
+#include <QPushButton>
+#include <QApplication>
 
 static QHash<QString, QImage> s_images; /// clazy:exclude=non-pod-global-static
 
@@ -44,6 +46,11 @@ MyWidget::MyWidget(const QString &backgroundFile, const QString &logoFile, QWidg
         l2->move(0, 100);
         setFocusProxy(l2);
     }
+
+    auto but = new QPushButton("click me", this);
+    but->connect(but, &QPushButton::clicked, this, [but] {
+        qDebug() << QApplication::topLevelAt(50, 50) << but->window()->geometry();
+    });
 }
 
 MyWidget::~MyWidget()
