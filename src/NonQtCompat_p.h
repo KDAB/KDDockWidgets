@@ -132,6 +132,12 @@ public:
     {
         return {};
     }
+
+    // Qt6 signature
+    QPointF position() const
+    {
+        return {};
+    }
 };
 
 class MouseEvent : public Event
@@ -152,6 +158,12 @@ public:
     }
 
     QPoint globalPos() const
+    {
+        return m_globalPos;
+    }
+
+    // Qt6 signature:
+    QPointF globalPosition() const
     {
         return m_globalPos;
     }
@@ -181,6 +193,12 @@ public:
     using Event::Event;
 
     QPoint pos() const
+    {
+        return {};
+    }
+
+    // Qt6 signature
+    QPointF position() const
     {
         return {};
     }

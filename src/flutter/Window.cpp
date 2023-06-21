@@ -13,6 +13,7 @@
 #include "Window.h"
 
 #include <QDebug>
+#include <QVariant>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
