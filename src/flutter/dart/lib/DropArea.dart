@@ -17,7 +17,6 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
     as KDDWBindingsFlutter;
-// ignore: undefined_hidden_name
 import 'package:flutter/material.dart' hide View;
 
 class DropArea extends KDDWBindingsFlutter.DropArea with View_mixin {

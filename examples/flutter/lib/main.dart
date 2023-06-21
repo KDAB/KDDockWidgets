@@ -12,7 +12,6 @@
 import 'dart:developer';
 import 'package:KDDockWidgets/DockWidget.dart';
 import 'package:KDDockWidgets/MainWindow.dart';
-// ignore: undefined_hidden_name
 import 'package:flutter/material.dart' hide View;
 import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
