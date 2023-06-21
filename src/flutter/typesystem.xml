@@ -18,7 +18,6 @@
         <modify-function signature="swap(QString &amp;)" remove="all"/>
     </object-type>
     <object-type name="QByteArray" />
-    <object-type name="QList" />
 
     <namespace-type name="Qt">
         <enum-type name="CursorShape" />
