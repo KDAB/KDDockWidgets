@@ -250,7 +250,7 @@ if(KDDockWidgets_DEVELOPER_MODE)
 
     if(KDDW_FRONTEND_FLUTTER)
         include(FetchContent)
-        set(USE_QT_VERSION 5)
+        set(USE_QT_VERSION 6)
         set(QCORO_BUILD_EXAMPLES OFF)
         set(QCORO_BUILD_TESTING OFF)
         set(QCORO_WITH_QTQUICK OFF)

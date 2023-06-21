@@ -170,7 +170,6 @@ set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
 set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QRect_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QObject_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QList_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QSize_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QPoint_c.cpp
@@ -516,7 +515,7 @@ if(KDDW_FRONTEND_FLUTTER)
     if(KDDockWidgets_DEVELOPER_MODE)
         # Coroutines are needed for running the C++ tests for flutter
         # We can move to Qt6 soon and not support Qt5, doesn't matter.
-        target_link_libraries(kddockwidgets PUBLIC QCoro5Core)
+        target_link_libraries(kddockwidgets PUBLIC QCoro6Core)
     endif()
 
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)

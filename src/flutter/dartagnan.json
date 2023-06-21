@@ -1,7 +1,7 @@
 {
     "createCMakeLists": false,
     "supportsQtSignals": false,
-    "bindingsLibrary": "kddockwidgets",
+    "bindingsLibrary": "kddockwidgets-qt6",
     "pureVirtualClassOverrides": [
         "KDDockWidgets::Core::View"
     ],
