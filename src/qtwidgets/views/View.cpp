@@ -21,8 +21,6 @@
 #include <QRubberBand>
 #include <QLineEdit>
 
-#include <QtWidgets/private/qwidget_p.h>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
 
@@ -194,18 +192,6 @@ QSize boundedMaxSize(QSize min, QSize max)
     max = max.expandedTo(min);
 
     return max;
-}
-
-bool isInQGraphicsViewProxyWidget(QWidget *w)
-{
-    if (!w)
-        return false;
-
-    auto priv = QWidgetPrivate::get(w);
-    if (priv && priv->extra)
-        return priv->extra->proxyWidget != nullptr;
-
-    return false;
 }
 
 }
