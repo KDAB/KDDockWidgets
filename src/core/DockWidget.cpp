@@ -65,6 +65,8 @@ DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions option
 DockWidget::~DockWidget()
 {
     m_inDtor = true;
+    d->m_windowActivatedConnection->disconnect();
+    d->m_windowDeactivatedConnection->disconnect();
 
     Q_EMIT aboutToDelete(this);
     DockRegistry::self()->unregisterDockWidget(this);
@@ -693,10 +695,12 @@ void DockWidget::Private::onWindowActivated(std::shared_ptr<View> rootView)
 
 void DockWidget::Private::onWindowDeactivated(std::shared_ptr<View> rootView)
 {
+    if (rootView->inDtor() || q->view()->inDtor())
+        return;
+
     if (View::equals(rootView.get(), q->view()->rootView().get()))
         Q_EMIT q->windowActiveAboutToChange(false);
 }
-
 
 void DockWidget::Private::updateTitle()
 {
