@@ -16,11 +16,9 @@
 #include <FloatingWindow.h>
 #include <core/Layout.h>
 #include <core/Group.h>
-#include <qlist.h>
 #include <Item_p.h>
 #include <SideBar.h>
 #include <qobject.h>
-#include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockRegistry_wrapper : public ::KDDockWidgets::DockRegistry
@@ -37,7 +35,6 @@ public:
     KDDockWidgets::Core::DockWidget *focusedDockWidget() const;
     KDDockWidgets::Core::Group *groupInMDIResize() const;
     void groupInMDIResizeChanged();
-    const QList<KDDockWidgets::Core::Group *> groups() const;
     bool hasFloatingWindows() const;
     bool isEmpty(bool excludeBeingDeleted = false) const;
     bool isSane() const;
@@ -80,8 +77,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__focusedDockWid
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__groupInMDIResize(void *thisObj);
 // KDDockWidgets::DockRegistry::groupInMDIResizeChanged()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__groupInMDIResizeChanged(void *thisObj);
-// KDDockWidgets::DockRegistry::groups() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__groups(void *thisObj);
 // KDDockWidgets::DockRegistry::hasFloatingWindows() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj);
 // KDDockWidgets::DockRegistry::isEmpty(bool excludeBeingDeleted) const

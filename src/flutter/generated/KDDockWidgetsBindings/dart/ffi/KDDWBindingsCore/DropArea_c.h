@@ -12,16 +12,15 @@
 #include "core/DropArea.h"
 #include <qstring.h>
 #include <core/View.h>
-#include <qlist.h>
-#include <core/Group.h>
 #include <Item_p.h>
 #include <core/DropIndicatorOverlay.h>
 #include <core/DockWidget.h>
 #include <KDDockWidgets.h>
+#include <core/Group.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <FloatingWindow.h>
 #include "core/MainWindow.h"
+#include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -42,7 +41,6 @@ public:
     bool drop(KDDockWidgets::Core::View *droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo);
     KDDockWidgets::Core::DropIndicatorOverlay *dropIndicatorOverlay() const;
     KDDockWidgets::Core::Group *groupContainingPos(QPoint globalPos) const;
-    QList<KDDockWidgets::Core::Group *> groups() const;
     bool hasSingleFloatingFrame() const;
     bool hasSingleFrame() const;
     bool isMDIWrapper() const;
@@ -87,8 +85,6 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea__drop_View_Loc
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj);
 // KDDockWidgets::Core::DropArea::groupContainingPos(QPoint globalPos) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__groupContainingPos_QPoint(void *thisObj, void *globalPos_);
-// KDDockWidgets::Core::DropArea::groups() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__groups(void *thisObj);
 // KDDockWidgets::Core::DropArea::hasSingleFloatingFrame() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj);
 // KDDockWidgets::Core::DropArea::hasSingleFrame() const

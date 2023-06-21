@@ -35,10 +35,6 @@ bool QObject_wrapper::blockSignals(bool b)
 {
     return ::QObject::blockSignals(b);
 }
-const QList<QObject *> &QObject_wrapper::children() const
-{
-    return ::QObject::children();
-}
 void QObject_wrapper::deleteLater()
 {
     ::QObject::deleteLater();
@@ -59,17 +55,13 @@ bool QObject_wrapper::disconnect(const char *signal, const QObject *receiver, co
 {
     return ::QObject::disconnect(signal, receiver, member);
 }
-void QObject_wrapper::dumpObjectInfo()
+void QObject_wrapper::dumpObjectInfo() const
 {
     ::QObject::dumpObjectInfo();
 }
-void QObject_wrapper::dumpObjectTree()
+void QObject_wrapper::dumpObjectTree() const
 {
     ::QObject::dumpObjectTree();
-}
-QList<QByteArray> QObject_wrapper::dynamicPropertyNames() const
-{
-    return ::QObject::dynamicPropertyNames();
 }
 bool QObject_wrapper::inherits(const char *classname) const
 {
@@ -78,6 +70,10 @@ bool QObject_wrapper::inherits(const char *classname) const
 void QObject_wrapper::installEventFilter(QObject *filterObj)
 {
     ::QObject::installEventFilter(filterObj);
+}
+bool QObject_wrapper::isQuickItemType() const
+{
+    return ::QObject::isQuickItemType();
 }
 bool QObject_wrapper::isWidgetType() const
 {
@@ -114,10 +110,6 @@ QObject *QObject_wrapper::sender() const
 int QObject_wrapper::senderSignalIndex() const
 {
     return ::QObject::senderSignalIndex();
-}
-void QObject_wrapper::setObjectName(const QString &name)
-{
-    ::QObject::setObjectName(name);
 }
 void QObject_wrapper::setParent(QObject *parent)
 {
@@ -164,11 +156,6 @@ bool c_QObject__blockSignals_bool(void *thisObj, bool b)
 {
     return fromPtr(thisObj)->blockSignals(b);
 }
-// children() const
-void *c_QObject__children(void *thisObj)
-{
-    return const_cast<void *>(static_cast<const void *>(&fromPtr(thisObj)->children()));
-}
 // deleteLater()
 void c_QObject__deleteLater(void *thisObj)
 {
@@ -199,20 +186,15 @@ bool c_QObject__disconnect_char_QObject_char(void *thisObj, const char *signal, 
     auto receiver = reinterpret_cast<QObject *>(receiver_);
     return fromPtr(thisObj)->disconnect(signal, receiver, member);
 }
-// dumpObjectInfo()
+// dumpObjectInfo() const
 void c_QObject__dumpObjectInfo(void *thisObj)
 {
     fromPtr(thisObj)->dumpObjectInfo();
 }
-// dumpObjectTree()
+// dumpObjectTree() const
 void c_QObject__dumpObjectTree(void *thisObj)
 {
     fromPtr(thisObj)->dumpObjectTree();
-}
-// dynamicPropertyNames() const
-void *c_QObject__dynamicPropertyNames(void *thisObj)
-{
-    return new Dartagnan::ValueWrapper<QList<QByteArray>> { fromPtr(thisObj)->dynamicPropertyNames() };
 }
 // inherits(const char * classname) const
 bool c_QObject__inherits_char(void *thisObj, const char *classname)
@@ -224,6 +206,11 @@ void c_QObject__installEventFilter_QObject(void *thisObj, void *filterObj_)
 {
     auto filterObj = reinterpret_cast<QObject *>(filterObj_);
     fromPtr(thisObj)->installEventFilter(filterObj);
+}
+// isQuickItemType() const
+bool c_QObject__isQuickItemType(void *thisObj)
+{
+    return fromPtr(thisObj)->isQuickItemType();
 }
 // isWidgetType() const
 bool c_QObject__isWidgetType(void *thisObj)
@@ -270,12 +257,6 @@ void *c_QObject__sender(void *thisObj)
 int c_QObject__senderSignalIndex(void *thisObj)
 {
     return fromWrapperPtr(thisObj)->senderSignalIndex();
-}
-// setObjectName(const QString & name)
-void c_QObject__setObjectName_QString(void *thisObj, const char *name_)
-{
-    const auto name = QString::fromUtf8(name_);
-    fromPtr(thisObj)->setObjectName(name);
 }
 // setParent(QObject * parent)
 void c_QObject__setParent_QObject(void *thisObj, void *parent_)

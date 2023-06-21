@@ -67,10 +67,6 @@ void DockRegistry_wrapper::groupInMDIResizeChanged()
 {
     ::KDDockWidgets::DockRegistry::groupInMDIResizeChanged();
 }
-const QList<KDDockWidgets::Core::Group *> DockRegistry_wrapper::groups() const
-{
-    return ::KDDockWidgets::DockRegistry::groups();
-}
 bool DockRegistry_wrapper::hasFloatingWindows() const
 {
     return ::KDDockWidgets::DockRegistry::hasFloatingWindows();
@@ -216,11 +212,6 @@ void *c_KDDockWidgets__DockRegistry__groupInMDIResize(void *thisObj)
 void c_KDDockWidgets__DockRegistry__groupInMDIResizeChanged(void *thisObj)
 {
     fromPtr(thisObj)->groupInMDIResizeChanged();
-}
-// groups() const
-void *c_KDDockWidgets__DockRegistry__groups(void *thisObj)
-{
-    return new Dartagnan::ValueWrapper<const QList<KDDockWidgets::Core::Group *>> { fromPtr(thisObj)->groups() };
 }
 // hasFloatingWindows() const
 bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj)

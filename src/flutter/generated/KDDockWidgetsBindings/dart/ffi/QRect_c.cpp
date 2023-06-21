@@ -227,6 +227,10 @@ QSize QRect_wrapper::size() const
 {
     return ::QRect::size();
 }
+QRect QRect_wrapper::span(const QPoint &p1, const QPoint &p2)
+{
+    return ::QRect::span(p1, p2);
+}
 int QRect_wrapper::top() const
 {
     return ::QRect::top();
@@ -580,6 +584,15 @@ void c_QRect__setY_int(void *thisObj, int y)
 void *c_QRect__size(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->size() };
+}
+// span(const QPoint & p1, const QPoint & p2)
+void *c_static_QRect__span_QPoint_QPoint(void *p1_, void *p2_)
+{
+    assert(p1_);
+    auto &p1 = *reinterpret_cast<QPoint *>(p1_);
+    assert(p2_);
+    auto &p2 = *reinterpret_cast<QPoint *>(p2_);
+    return new Dartagnan::ValueWrapper<QRect> { KDDockWidgetsBindings_wrappersNS::QRect_wrapper::span(p1, p2) };
 }
 // top() const
 int c_QRect__top(void *thisObj)

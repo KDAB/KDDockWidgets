@@ -17,11 +17,10 @@
 #include <core/DockWidget.h>
 #include <Item_p.h>
 #include <core/Group.h>
-#include <qlist.h>
 #include "core/DropArea.h"
+#include <qpoint.h>
 #include <qrect.h>
 #include <qstring.h>
-#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -38,8 +37,6 @@ public:
     int count() const;
     void dumpLayout() const;
     KDDockWidgets::Core::FloatingWindow *floatingWindow() const;
-    QList<KDDockWidgets::Core::Group *> groups() const;
-    QList<KDDockWidgets::Core::Group *> groupsFrom(KDDockWidgets::Core::View *groupOrMultiSplitter) const;
     bool isInMainWindow(bool honourNesting = false) const;
     KDDockWidgets::Core::Item *itemForFrame(const KDDockWidgets::Core::Group *group) const;
     int layoutHeight() const;
@@ -55,7 +52,6 @@ public:
     void setLayoutSize(QSize arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
-    void unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group *> &groupsBeingAdded) const;
     void updateSizeConstraints();
     void viewAboutToBeDeleted();
     int visibleCount() const;
@@ -83,10 +79,6 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Layout__count(void *this
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__dumpLayout(void *thisObj);
 // KDDockWidgets::Core::Layout::floatingWindow() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj);
-// KDDockWidgets::Core::Layout::groups() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__groups(void *thisObj);
-// KDDockWidgets::Core::Layout::groupsFrom(KDDockWidgets::Core::View * groupOrMultiSplitter) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_);
 // KDDockWidgets::Core::Layout::isInMainWindow(bool honourNesting) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Core::Layout::itemForFrame(const KDDockWidgets::Core::Group * group) const
@@ -115,8 +107,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutMinimu
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setParentView_impl_View(void *thisObj, void *parent_);
-// KDDockWidgets::Core::Layout::unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded) const
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__unrefOldPlaceholders_QList_Group(void *thisObj, void *groupsBeingAdded_);
 // KDDockWidgets::Core::Layout::updateSizeConstraints()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__updateSizeConstraints(void *thisObj);
 // KDDockWidgets::Core::Layout::viewAboutToBeDeleted()

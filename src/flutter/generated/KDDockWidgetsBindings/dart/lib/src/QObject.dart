@@ -61,15 +61,6 @@ class QObject implements ffi.Finalizable {
             'c_QObject__blockSignals_bool')
         .asFunction();
     return func(thisCpp, b ? 1 : 0) != 0;
-  } // children() const
-
-  QList children() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_QObject__children')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QList<QObject>.fromCppPointer(result, false);
   } // deleteLater()
 
   deleteLater() {
@@ -129,7 +120,15 @@ class QObject implements ffi.Finalizable {
             receiver == null ? ffi.nullptr : receiver.thisCpp,
             member?.toNativeUtf8() ?? ffi.nullptr) !=
         0;
-  } // dumpObjectInfo()
+  } // doSetObjectName(const QString & name)
+
+  doSetObjectName(String? name) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_QObject__doSetObjectName_QString')
+        .asFunction();
+    func(thisCpp, name?.toNativeUtf8() ?? ffi.nullptr);
+  } // dumpObjectInfo() const
 
   dumpObjectInfo() {
     final void_Func_voidstar func = _dylib
@@ -137,7 +136,7 @@ class QObject implements ffi.Finalizable {
             'c_QObject__dumpObjectInfo')
         .asFunction();
     func(thisCpp);
-  } // dumpObjectTree()
+  } // dumpObjectTree() const
 
   dumpObjectTree() {
     final void_Func_voidstar func = _dylib
@@ -145,15 +144,6 @@ class QObject implements ffi.Finalizable {
             'c_QObject__dumpObjectTree')
         .asFunction();
     func(thisCpp);
-  } // dynamicPropertyNames() const
-
-  QList dynamicPropertyNames() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_QObject__dynamicPropertyNames')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QList<QByteArray>.fromCppPointer(result, true);
   } // inherits(const char * classname) const
 
   bool inherits(String? classname) {
@@ -170,6 +160,14 @@ class QObject implements ffi.Finalizable {
             'c_QObject__installEventFilter_QObject')
         .asFunction();
     func(thisCpp, filterObj == null ? ffi.nullptr : filterObj.thisCpp);
+  } // isQuickItemType() const
+
+  bool isQuickItemType() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_QObject__isQuickItemType')
+        .asFunction();
+    return func(thisCpp) != 0;
   } // isWidgetType() const
 
   bool isWidgetType() {
@@ -245,14 +243,6 @@ class QObject implements ffi.Finalizable {
             'c_QObject__senderSignalIndex')
         .asFunction();
     return func(thisCpp);
-  } // setObjectName(const QString & name)
-
-  setObjectName(String? name) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_QObject__setObjectName_QString')
-        .asFunction();
-    func(thisCpp, name?.toNativeUtf8() ?? ffi.nullptr);
   } // setParent(QObject * parent)
 
   setParent(QObject? parent) {

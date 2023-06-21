@@ -111,15 +111,6 @@ class DockRegistry extends QObject {
             'c_KDDockWidgets__DockRegistry__groupInMDIResizeChanged')
         .asFunction();
     func(thisCpp);
-  } // groups() const
-
-  QList groups() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__DockRegistry__groups')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QList<KDDWBindingsCore.Group>.fromCppPointer(result, true);
   } // hasFloatingWindows() const
 
   bool hasFloatingWindows() {

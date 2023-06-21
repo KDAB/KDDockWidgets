@@ -80,10 +80,6 @@ KDDockWidgets::Core::Group *DropArea_wrapper::groupContainingPos(QPoint globalPo
 {
     return ::KDDockWidgets::Core::DropArea::groupContainingPos(globalPos);
 }
-QList<KDDockWidgets::Core::Group *> DropArea_wrapper::groups() const
-{
-    return ::KDDockWidgets::Core::DropArea::groups();
-}
 bool DropArea_wrapper::hasSingleFloatingFrame() const
 {
     return ::KDDockWidgets::Core::DropArea::hasSingleFloatingFrame();
@@ -241,11 +237,6 @@ void *c_KDDockWidgets__Core__DropArea__groupContainingPos_QPoint(void *thisObj, 
     auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
     return fromPtr(thisObj)->groupContainingPos(globalPos);
 }
-// groups() const
-void *c_KDDockWidgets__Core__DropArea__groups(void *thisObj)
-{
-    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Core::Group *>> { fromPtr(thisObj)->groups() };
-}
 // hasSingleFloatingFrame() const
 bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj)
 {
@@ -315,7 +306,7 @@ void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 908:
+    case 811:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

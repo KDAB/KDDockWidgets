@@ -72,153 +72,9 @@ class QString implements ffi.Finalizable {
     ffi.Pointer<void> result =
         func(thisCpp, a?.toNativeUtf8() ?? ffi.nullptr, fieldWidth);
     return QString.fromCppPointer(result, true);
-  } // arg(const QString & a1, const QString & a2) const
-
-  QString arg_2(String? a1, String? a2) {
-    final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
-        .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            'c_QString__arg_QString_QString')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp, a1?.toNativeUtf8() ?? ffi.nullptr,
-        a2?.toNativeUtf8() ?? ffi.nullptr);
-    return QString.fromCppPointer(result, true);
-  } // arg(const QString & a1, const QString & a2, const QString & a3) const
-
-  QString arg_3(String? a1, String? a2, String? a3) {
-    final voidstar_Func_voidstar_voidstar_voidstar_voidstar func = _dylib
-        .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_voidstar_FFI>>(
-            'c_QString__arg_QString_QString_QString')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp, a1?.toNativeUtf8() ?? ffi.nullptr,
-        a2?.toNativeUtf8() ?? ffi.nullptr, a3?.toNativeUtf8() ?? ffi.nullptr);
-    return QString.fromCppPointer(result, true);
-  } // arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4) const
-
-  QString arg_4(String? a1, String? a2, String? a3, String? a4) {
-    final voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar func = _dylib
-        .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_FFI>>(
-            'c_QString__arg_QString_QString_QString_QString')
-        .asFunction();
-    ffi.Pointer<void> result = func(
-        thisCpp,
-        a1?.toNativeUtf8() ?? ffi.nullptr,
-        a2?.toNativeUtf8() ?? ffi.nullptr,
-        a3?.toNativeUtf8() ?? ffi.nullptr,
-        a4?.toNativeUtf8() ?? ffi.nullptr);
-    return QString.fromCppPointer(result, true);
-  } // arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5) const
-
-  QString arg_5(String? a1, String? a2, String? a3, String? a4, String? a5) {
-    final voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar
-        func = _dylib
-            .lookup<
-                    ffi.NativeFunction<
-                        voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_FFI>>(
-                'c_QString__arg_QString_QString_QString_QString_QString')
-            .asFunction();
-    ffi.Pointer<void> result = func(
-        thisCpp,
-        a1?.toNativeUtf8() ?? ffi.nullptr,
-        a2?.toNativeUtf8() ?? ffi.nullptr,
-        a3?.toNativeUtf8() ?? ffi.nullptr,
-        a4?.toNativeUtf8() ?? ffi.nullptr,
-        a5?.toNativeUtf8() ?? ffi.nullptr);
-    return QString.fromCppPointer(result, true);
-  } // arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6) const
-
-  QString arg_6(
-      String? a1, String? a2, String? a3, String? a4, String? a5, String? a6) {
-    final voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar
-        func = _dylib
-            .lookup<
-                    ffi.NativeFunction<
-                        voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_FFI>>(
-                'c_QString__arg_QString_QString_QString_QString_QString_QString')
-            .asFunction();
-    ffi.Pointer<void> result = func(
-        thisCpp,
-        a1?.toNativeUtf8() ?? ffi.nullptr,
-        a2?.toNativeUtf8() ?? ffi.nullptr,
-        a3?.toNativeUtf8() ?? ffi.nullptr,
-        a4?.toNativeUtf8() ?? ffi.nullptr,
-        a5?.toNativeUtf8() ?? ffi.nullptr,
-        a6?.toNativeUtf8() ?? ffi.nullptr);
-    return QString.fromCppPointer(result, true);
-  } // arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7) const
-
-  QString arg_7(String? a1, String? a2, String? a3, String? a4, String? a5,
-      String? a6, String? a7) {
-    final voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar
-        func = _dylib
-            .lookup<
-                    ffi.NativeFunction<
-                        voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_FFI>>(
-                'c_QString__arg_QString_QString_QString_QString_QString_QString_QString')
-            .asFunction();
-    ffi.Pointer<void> result = func(
-        thisCpp,
-        a1?.toNativeUtf8() ?? ffi.nullptr,
-        a2?.toNativeUtf8() ?? ffi.nullptr,
-        a3?.toNativeUtf8() ?? ffi.nullptr,
-        a4?.toNativeUtf8() ?? ffi.nullptr,
-        a5?.toNativeUtf8() ?? ffi.nullptr,
-        a6?.toNativeUtf8() ?? ffi.nullptr,
-        a7?.toNativeUtf8() ?? ffi.nullptr);
-    return QString.fromCppPointer(result, true);
-  } // arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8) const
-
-  QString arg_8(String? a1, String? a2, String? a3, String? a4, String? a5,
-      String? a6, String? a7, String? a8) {
-    final voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar
-        func = _dylib
-            .lookup<
-                    ffi.NativeFunction<
-                        voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_FFI>>(
-                'c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString')
-            .asFunction();
-    ffi.Pointer<void> result = func(
-        thisCpp,
-        a1?.toNativeUtf8() ?? ffi.nullptr,
-        a2?.toNativeUtf8() ?? ffi.nullptr,
-        a3?.toNativeUtf8() ?? ffi.nullptr,
-        a4?.toNativeUtf8() ?? ffi.nullptr,
-        a5?.toNativeUtf8() ?? ffi.nullptr,
-        a6?.toNativeUtf8() ?? ffi.nullptr,
-        a7?.toNativeUtf8() ?? ffi.nullptr,
-        a8?.toNativeUtf8() ?? ffi.nullptr);
-    return QString.fromCppPointer(result, true);
-  } // arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8, const QString & a9) const
-
-  QString arg_9(String? a1, String? a2, String? a3, String? a4, String? a5,
-      String? a6, String? a7, String? a8, String? a9) {
-    final voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar
-        func = _dylib
-            .lookup<
-                    ffi.NativeFunction<
-                        voidstar_Func_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_voidstar_FFI>>(
-                'c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString_QString')
-            .asFunction();
-    ffi.Pointer<void> result = func(
-        thisCpp,
-        a1?.toNativeUtf8() ?? ffi.nullptr,
-        a2?.toNativeUtf8() ?? ffi.nullptr,
-        a3?.toNativeUtf8() ?? ffi.nullptr,
-        a4?.toNativeUtf8() ?? ffi.nullptr,
-        a5?.toNativeUtf8() ?? ffi.nullptr,
-        a6?.toNativeUtf8() ?? ffi.nullptr,
-        a7?.toNativeUtf8() ?? ffi.nullptr,
-        a8?.toNativeUtf8() ?? ffi.nullptr,
-        a9?.toNativeUtf8() ?? ffi.nullptr);
-    return QString.fromCppPointer(result, true);
   } // arg(int a, int fieldWidth, int base) const
 
-  QString arg_10(int a, {int fieldWidth = 0, int base = 10}) {
+  QString arg_2(int a, {int fieldWidth = 0, int base = 10}) {
     final voidstar_Func_voidstar_int_int_int func = _dylib
         .lookup<
                 ffi.NativeFunction<
@@ -245,20 +101,20 @@ class QString implements ffi.Finalizable {
             'c_QString__capacity')
         .asFunction();
     return func(thisCpp);
-  } // chop(int n)
+  } // chop(qsizetype n)
 
   chop(int n) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__chop_int')
+            'c_QString__chop_qsizetype')
         .asFunction();
     func(thisCpp, n);
-  } // chopped(int n) const
+  } // chopped(qsizetype n) const
 
   QString chopped(int n) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__chopped_int')
+            'c_QString__chopped_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, n);
     return QString.fromCppPointer(result, true);
@@ -295,16 +151,9 @@ class QString implements ffi.Finalizable {
             'c_QString__contains_QString')
         .asFunction();
     return func(thisCpp, s?.toNativeUtf8() ?? ffi.nullptr) != 0;
-  } // count() const
-
-  int count() {
-    final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>('c_QString__count')
-        .asFunction();
-    return func(thisCpp);
   } // count(const QString & s) const
 
-  int count_2(String? s) {
+  int count(String? s) {
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
             'c_QString__count_QString')
@@ -325,111 +174,61 @@ class QString implements ffi.Finalizable {
             'c_QString__endsWith_QString')
         .asFunction();
     return func(thisCpp, s?.toNativeUtf8() ?? ffi.nullptr) != 0;
-  } // expand(int i)
+  } // first(qsizetype n) const
 
-  expand(int i) {
-    final void_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__expand_int')
+  QString first(int n) {
+    final voidstar_Func_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
+            'c_QString__first_qsizetype')
         .asFunction();
-    func(thisCpp, i);
-  }
-
-  static // fromLatin1(const QByteArray & str)
-      QString fromLatin1(QByteArray? str) {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_static_QString__fromLatin1_QByteArray')
-        .asFunction();
-    ffi.Pointer<void> result = func(str == null ? ffi.nullptr : str.thisCpp);
+    ffi.Pointer<void> result = func(thisCpp, n);
     return QString.fromCppPointer(result, true);
   }
 
-  static // fromLatin1(const char * str, int size)
-      QString fromLatin1_2(String? str, {int size = -1}) {
+  static // fromLatin1(const char * str, qsizetype size)
+      QString fromLatin1(String? str, int size) {
     final voidstar_Func_string_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_string_ffi_Int32_FFI>>(
-            'c_static_QString__fromLatin1_char_int')
+            'c_static_QString__fromLatin1_char_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(str?.toNativeUtf8() ?? ffi.nullptr, size);
     return QString.fromCppPointer(result, true);
   }
 
-  static // fromLocal8Bit(const QByteArray & str)
-      QString fromLocal8Bit(QByteArray? str) {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_static_QString__fromLocal8Bit_QByteArray')
-        .asFunction();
-    ffi.Pointer<void> result = func(str == null ? ffi.nullptr : str.thisCpp);
-    return QString.fromCppPointer(result, true);
-  }
-
-  static // fromLocal8Bit(const char * str, int size)
-      QString fromLocal8Bit_2(String? str, {int size = -1}) {
+  static // fromLocal8Bit(const char * str, qsizetype size)
+      QString fromLocal8Bit(String? str, int size) {
     final voidstar_Func_string_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_string_ffi_Int32_FFI>>(
-            'c_static_QString__fromLocal8Bit_char_int')
+            'c_static_QString__fromLocal8Bit_char_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(str?.toNativeUtf8() ?? ffi.nullptr, size);
     return QString.fromCppPointer(result, true);
   }
 
-  static // fromLocal8Bit_helper(const char * arg__1, int size)
-      QString fromLocal8Bit_helper(String? arg__1, int size) {
+  static // fromUtf8(const char * utf8, qsizetype size)
+      QString fromUtf8(String? utf8, int size) {
     final voidstar_Func_string_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_string_ffi_Int32_FFI>>(
-            'c_static_QString__fromLocal8Bit_helper_char_int')
+            'c_static_QString__fromUtf8_char_qsizetype')
         .asFunction();
-    ffi.Pointer<void> result =
-        func(arg__1?.toNativeUtf8() ?? ffi.nullptr, size);
+    ffi.Pointer<void> result = func(utf8?.toNativeUtf8() ?? ffi.nullptr, size);
     return QString.fromCppPointer(result, true);
-  }
-
-  static // fromUtf8(const QByteArray & str)
-      QString fromUtf8(QByteArray? str) {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_static_QString__fromUtf8_QByteArray')
-        .asFunction();
-    ffi.Pointer<void> result = func(str == null ? ffi.nullptr : str.thisCpp);
-    return QString.fromCppPointer(result, true);
-  }
-
-  static // fromUtf8(const char * str, int size)
-      QString fromUtf8_2(String? str, {int size = -1}) {
-    final voidstar_Func_string_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_string_ffi_Int32_FFI>>(
-            'c_static_QString__fromUtf8_char_int')
-        .asFunction();
-    ffi.Pointer<void> result = func(str?.toNativeUtf8() ?? ffi.nullptr, size);
-    return QString.fromCppPointer(result, true);
-  }
-
-  static // fromUtf8_helper(const char * str, int size)
-      QString fromUtf8_helper(String? str, int size) {
-    final voidstar_Func_string_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_string_ffi_Int32_FFI>>(
-            'c_static_QString__fromUtf8_helper_char_int')
-        .asFunction();
-    ffi.Pointer<void> result = func(str?.toNativeUtf8() ?? ffi.nullptr, size);
-    return QString.fromCppPointer(result, true);
-  } // indexOf(const QString & s, int from) const
+  } // indexOf(const QString & s, qsizetype from) const
 
   int indexOf(String? s, {int from = 0}) {
     final int_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            'c_QString__indexOf_QString_int')
+            'c_QString__indexOf_QString_qsizetype')
         .asFunction();
     return func(thisCpp, s?.toNativeUtf8() ?? ffi.nullptr, from);
-  } // insert(int i, const QString & s)
+  } // insert(qsizetype i, const QString & s)
 
   QString insert(int i, String? s) {
     final voidstar_Func_voidstar_int_voidstar func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_ffi_Int32_voidstar_FFI>>(
-            'c_QString__insert_int_QString')
+            'c_QString__insert_qsizetype_QString')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, i, s?.toNativeUtf8() ?? ffi.nullptr);
@@ -505,29 +304,46 @@ class QString implements ffi.Finalizable {
             'c_QString__isValidUtf16')
         .asFunction();
     return func(thisCpp) != 0;
-  } // lastIndexOf(const QString & s, int from) const
+  } // last(qsizetype n) const
 
-  int lastIndexOf(String? s, {int from = -1}) {
+  QString last(int n) {
+    final voidstar_Func_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
+            'c_QString__last_qsizetype')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp, n);
+    return QString.fromCppPointer(result, true);
+  } // lastIndexOf(const QString & s) const
+
+  int lastIndexOf(String? s) {
+    final int_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
+            'c_QString__lastIndexOf_QString')
+        .asFunction();
+    return func(thisCpp, s?.toNativeUtf8() ?? ffi.nullptr);
+  } // lastIndexOf(const QString & s, qsizetype from) const
+
+  int lastIndexOf_2(String? s, int from) {
     final int_Func_voidstar_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_ffi_Int32_FFI>>(
-            'c_QString__lastIndexOf_QString_int')
+            'c_QString__lastIndexOf_QString_qsizetype')
         .asFunction();
     return func(thisCpp, s?.toNativeUtf8() ?? ffi.nullptr, from);
-  } // left(int n) const
+  } // left(qsizetype n) const
 
   QString left(int n) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__left_int')
+            'c_QString__left_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, n);
     return QString.fromCppPointer(result, true);
-  } // leftJustified(int width) const
+  } // leftJustified(qsizetype width) const
 
   QString leftJustified(int width) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__leftJustified_int')
+            'c_QString__leftJustified_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, width);
     return QString.fromCppPointer(result, true);
@@ -556,14 +372,14 @@ class QString implements ffi.Finalizable {
         .asFunction();
     return func(
         s1?.toNativeUtf8() ?? ffi.nullptr, s2?.toNativeUtf8() ?? ffi.nullptr);
-  } // mid(int position, int n) const
+  } // mid(qsizetype position, qsizetype n) const
 
   QString mid(int position, {int n = -1}) {
     final voidstar_Func_voidstar_int_int func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            'c_QString__mid_int_int')
+            'c_QString__mid_qsizetype_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, position, n);
     return QString.fromCppPointer(result, true);
@@ -602,6 +418,14 @@ class QString implements ffi.Finalizable {
             'c_QString__push_front_QString')
         .asFunction();
     func(thisCpp, s?.toNativeUtf8() ?? ffi.nullptr);
+  } // reallocGrowData(qsizetype n)
+
+  reallocGrowData(int n) {
+    final void_Func_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
+            'c_QString__reallocGrowData_qsizetype')
+        .asFunction();
+    func(thisCpp, n);
   } // remove(const QString & s)
 
   QString remove(String? s) {
@@ -611,23 +435,50 @@ class QString implements ffi.Finalizable {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, s?.toNativeUtf8() ?? ffi.nullptr);
     return QString.fromCppPointer(result, false);
-  } // remove(int i, int len)
+  } // remove(qsizetype i, qsizetype len)
 
   QString remove_2(int i, int len) {
     final voidstar_Func_voidstar_int_int func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            'c_QString__remove_int_int')
+            'c_QString__remove_qsizetype_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, i, len);
     return QString.fromCppPointer(result, false);
-  } // repeated(int times) const
+  } // removeAt(qsizetype pos)
+
+  QString removeAt(int pos) {
+    final voidstar_Func_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
+            'c_QString__removeAt_qsizetype')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp, pos);
+    return QString.fromCppPointer(result, false);
+  } // removeFirst()
+
+  QString removeFirst() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_QString__removeFirst')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return QString.fromCppPointer(result, false);
+  } // removeLast()
+
+  QString removeLast() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_QString__removeLast')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return QString.fromCppPointer(result, false);
+  } // repeated(qsizetype times) const
 
   QString repeated(int times) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__repeated_int')
+            'c_QString__repeated_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, times);
     return QString.fromCppPointer(result, true);
@@ -645,60 +496,60 @@ class QString implements ffi.Finalizable {
         before?.toNativeUtf8() ?? ffi.nullptr,
         after?.toNativeUtf8() ?? ffi.nullptr);
     return QString.fromCppPointer(result, false);
-  } // replace(int i, int len, const QString & after)
+  } // replace(qsizetype i, qsizetype len, const QString & after)
 
   QString replace_2(int i, int len, String? after) {
     final voidstar_Func_voidstar_int_int_voidstar func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_FFI>>(
-            'c_QString__replace_int_int_QString')
+            'c_QString__replace_qsizetype_qsizetype_QString')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, i, len, after?.toNativeUtf8() ?? ffi.nullptr);
     return QString.fromCppPointer(result, false);
-  } // reserve(int size)
+  } // reserve(qsizetype size)
 
   reserve(int size) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__reserve_int')
+            'c_QString__reserve_qsizetype')
         .asFunction();
     func(thisCpp, size);
-  } // resize(int size)
+  } // resize(qsizetype size)
 
   resize(int size) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__resize_int')
+            'c_QString__resize_qsizetype')
         .asFunction();
     func(thisCpp, size);
-  } // right(int n) const
+  } // right(qsizetype n) const
 
   QString right(int n) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__right_int')
+            'c_QString__right_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, n);
     return QString.fromCppPointer(result, true);
-  } // rightJustified(int width) const
+  } // rightJustified(qsizetype width) const
 
   QString rightJustified(int width) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__rightJustified_int')
+            'c_QString__rightJustified_qsizetype')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, width);
     return QString.fromCppPointer(result, true);
-  } // section(const QString & in_sep, int start, int end) const
+  } // section(const QString & in_sep, qsizetype start, qsizetype end) const
 
   QString section(String? in_sep, int start, {int end = -1}) {
     final voidstar_Func_voidstar_voidstar_int_int func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            'c_QString__section_QString_int_int')
+            'c_QString__section_QString_qsizetype_qsizetype')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, in_sep?.toNativeUtf8() ?? ffi.nullptr, start, end);
@@ -758,6 +609,26 @@ class QString implements ffi.Finalizable {
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>('c_QString__size')
         .asFunction();
     return func(thisCpp);
+  } // sliced(qsizetype pos) const
+
+  QString sliced(int pos) {
+    final voidstar_Func_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
+            'c_QString__sliced_qsizetype')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp, pos);
+    return QString.fromCppPointer(result, true);
+  } // sliced(qsizetype pos, qsizetype n) const
+
+  QString sliced_2(int pos, int n) {
+    final voidstar_Func_voidstar_int_int func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    voidstar_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
+            'c_QString__sliced_qsizetype_qsizetype')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp, pos, n);
+    return QString.fromCppPointer(result, true);
   } // squeeze()
 
   squeeze() {
@@ -956,12 +827,12 @@ class QString implements ffi.Finalizable {
         .asFunction();
     ffi.Pointer<void> result = func(str?.toNativeUtf8() ?? ffi.nullptr);
     return QString.fromCppPointer(result, true);
-  } // truncate(int pos)
+  } // truncate(qsizetype pos)
 
   truncate(int pos) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QString__truncate_int')
+            'c_QString__truncate_qsizetype')
         .asFunction();
     func(thisCpp, pos);
   }

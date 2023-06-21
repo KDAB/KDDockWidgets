@@ -459,6 +459,17 @@ class QRect implements ffi.Finalizable {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
+  }
+
+  static // span(const QPoint & p1, const QPoint & p2)
+      QRect span(QPoint? p1, QPoint? p2) {
+    final voidstar_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
+            'c_static_QRect__span_QPoint_QPoint')
+        .asFunction();
+    ffi.Pointer<void> result = func(p1 == null ? ffi.nullptr : p1.thisCpp,
+        p2 == null ? ffi.nullptr : p2.thisCpp);
+    return QRect.fromCppPointer(result, true);
   } // top() const
 
   int top() {

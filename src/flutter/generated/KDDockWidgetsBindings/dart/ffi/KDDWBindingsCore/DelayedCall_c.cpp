@@ -84,7 +84,7 @@ void c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback(void *ptr
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 864:
+    case 770:
         wrapper->m_callCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DelayedCall_wrapper::Callback_call>(callback);
         break;
     }

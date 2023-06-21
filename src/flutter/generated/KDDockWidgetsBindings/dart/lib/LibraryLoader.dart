@@ -37,7 +37,7 @@ class Library {
     // introduce our own env variable for the same use case
     var bindingsPath = Platform.environment["DARTAGNAN_BINDINGSLIB_PATH"] ?? "";
 
-    var libraryPath = bindingsLibraryName("kddockwidgets");
+    var libraryPath = bindingsLibraryName("kddockwidgets-qt6");
     if (!bindingsPath.isEmpty) {
       libraryPath = bindingsPath + "/" + libraryPath;
     }

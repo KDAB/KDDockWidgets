@@ -102,28 +102,6 @@ class Layout extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.FloatingWindow.fromCppPointer(result, false);
-  } // groups() const
-
-  QList groups() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__groups')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QList<KDDWBindingsCore.Group>.fromCppPointer(result, true);
-  } // groupsFrom(KDDockWidgets::Core::View * groupOrMultiSplitter) const
-
-  QList groupsFrom(KDDWBindingsCore.View? groupOrMultiSplitter) {
-    final voidstar_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__groupsFrom_View')
-        .asFunction();
-    ffi.Pointer<void> result = func(
-        thisCpp,
-        groupOrMultiSplitter == null
-            ? ffi.nullptr
-            : groupOrMultiSplitter.thisCpp);
-    return QList<KDDWBindingsCore.Group>.fromCppPointer(result, true);
   } // isInMainWindow(bool honourNesting) const
 
   bool isInMainWindow({bool honourNesting = false}) {
@@ -260,15 +238,6 @@ class Layout extends KDDWBindingsCore.Controller {
     dartInstance.setParentView_impl((parent == null || parent.address == 0)
         ? null
         : KDDWBindingsCore.View.fromCppPointer(parent));
-  } // unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded) const
-
-  unrefOldPlaceholders(QList? groupsBeingAdded) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__unrefOldPlaceholders_QList_Group')
-        .asFunction();
-    func(thisCpp,
-        groupsBeingAdded == null ? ffi.nullptr : groupsBeingAdded.thisCpp);
   } // updateSizeConstraints()
 
   updateSizeConstraints() {
@@ -305,7 +274,7 @@ class Layout extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 908:
+      case 811:
         return "c_KDDockWidgets__Core__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -313,7 +282,7 @@ class Layout extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 908:
+      case 811:
         return "setParentView_impl";
     }
     throw Error();
@@ -325,9 +294,9 @@ class Layout extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback')
         .asFunction();
-    final callback908 =
+    final callback811 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback908, 908);
+    registerCallback(thisCpp, callback811, 811);
   }
 }

@@ -41,7 +41,6 @@ export 'src/KDDockWidgets.dart'
         KDDockWidgets_InitialVisibilityOption,
         KDDockWidgets_DropLocation;
 export 'src/QByteArray.dart' show QByteArray;
-export 'src/QList.dart' show QList;
 export 'src/QObject.dart' show QObject;
 export 'src/QPoint.dart' show QPoint;
 export 'src/QRect.dart' show QRect;

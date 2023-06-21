@@ -64,14 +64,6 @@ KDDockWidgets::Core::FloatingWindow *Layout_wrapper::floatingWindow() const
 {
     return ::KDDockWidgets::Core::Layout::floatingWindow();
 }
-QList<KDDockWidgets::Core::Group *> Layout_wrapper::groups() const
-{
-    return ::KDDockWidgets::Core::Layout::groups();
-}
-QList<KDDockWidgets::Core::Group *> Layout_wrapper::groupsFrom(KDDockWidgets::Core::View *groupOrMultiSplitter) const
-{
-    return ::KDDockWidgets::Core::Layout::groupsFrom(groupOrMultiSplitter);
-}
 bool Layout_wrapper::isInMainWindow(bool honourNesting) const
 {
     return ::KDDockWidgets::Core::Layout::isInMainWindow(honourNesting);
@@ -136,10 +128,6 @@ void Layout_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 void Layout_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *parent)
 {
     ::KDDockWidgets::Core::Layout::setParentView_impl(parent);
-}
-void Layout_wrapper::unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group *> &groupsBeingAdded) const
-{
-    ::KDDockWidgets::Core::Layout::unrefOldPlaceholders(groupsBeingAdded);
 }
 void Layout_wrapper::updateSizeConstraints()
 {
@@ -220,17 +208,6 @@ void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj)
 {
     return fromPtr(thisObj)->floatingWindow();
 }
-// groups() const
-void *c_KDDockWidgets__Core__Layout__groups(void *thisObj)
-{
-    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Core::Group *>> { fromPtr(thisObj)->groups() };
-}
-// groupsFrom(KDDockWidgets::Core::View * groupOrMultiSplitter) const
-void *c_KDDockWidgets__Core__Layout__groupsFrom_View(void *thisObj, void *groupOrMultiSplitter_)
-{
-    auto groupOrMultiSplitter = reinterpret_cast<KDDockWidgets::Core::View *>(groupOrMultiSplitter_);
-    return new Dartagnan::ValueWrapper<QList<KDDockWidgets::Core::Group *>> { fromWrapperPtr(thisObj)->groupsFrom(groupOrMultiSplitter) };
-}
 // isInMainWindow(bool honourNesting) const
 bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting)
 {
@@ -310,13 +287,6 @@ void c_KDDockWidgets__Core__Layout__setParentView_impl_View(void *thisObj, void 
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
-// unrefOldPlaceholders(const QList<KDDockWidgets::Core::Group* > & groupsBeingAdded) const
-void c_KDDockWidgets__Core__Layout__unrefOldPlaceholders_QList_Group(void *thisObj, void *groupsBeingAdded_)
-{
-    assert(groupsBeingAdded_);
-    auto &groupsBeingAdded = *reinterpret_cast<QList<KDDockWidgets::Core::Group *> *>(groupsBeingAdded_);
-    fromWrapperPtr(thisObj)->unrefOldPlaceholders(groupsBeingAdded);
-}
 // updateSizeConstraints()
 void c_KDDockWidgets__Core__Layout__updateSizeConstraints(void *thisObj)
 {
@@ -340,7 +310,7 @@ void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, voi
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 908:
+    case 811:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

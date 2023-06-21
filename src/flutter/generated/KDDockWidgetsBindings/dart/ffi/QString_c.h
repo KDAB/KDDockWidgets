@@ -20,38 +20,27 @@ public:
     QString_wrapper();
     QString &append(const QString &s);
     QString arg(const QString &a, int fieldWidth = 0) const;
-    QString arg(const QString &a1, const QString &a2) const;
-    QString arg(const QString &a1, const QString &a2, const QString &a3) const;
-    QString arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4) const;
-    QString arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5) const;
-    QString arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5, const QString &a6) const;
-    QString arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5, const QString &a6, const QString &a7) const;
-    QString arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5, const QString &a6, const QString &a7, const QString &a8) const;
-    QString arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5, const QString &a6, const QString &a7, const QString &a8, const QString &a9) const;
     QString arg(int a, int fieldWidth = 0, int base = 10) const;
     QString arg(long a, int fieldwidth = 0, int base = 10) const;
     QString arg(qint64 a, int fieldwidth = 0, int base = 10) const;
     QString arg(short a, int fieldWidth = 0, int base = 10) const;
     static QString asprintf(const char *format);
-    int capacity() const;
-    void chop(int n);
-    QString chopped(int n) const;
+    qsizetype capacity() const;
+    void chop(qsizetype n);
+    QString chopped(qsizetype n) const;
     void clear();
     int compare(const QString &s) const;
     static int compare(const QString &s1, const QString &s2);
     bool contains(const QString &s) const;
-    int count() const;
-    int count(const QString &s) const;
+    qsizetype count(const QString &s) const;
     void detach();
     bool endsWith(const QString &s) const;
-    static QString fromLatin1(const QByteArray &str);
-    static QString fromLatin1(const char *str, int size = -1);
-    static QString fromLocal8Bit(const QByteArray &str);
-    static QString fromLocal8Bit(const char *str, int size = -1);
-    static QString fromUtf8(const QByteArray &str);
-    static QString fromUtf8(const char *str, int size = -1);
-    int indexOf(const QString &s, int from = 0) const;
-    QString &insert(int i, const QString &s);
+    QString first(qsizetype n) const;
+    static QString fromLatin1(const char *str, qsizetype size);
+    static QString fromLocal8Bit(const char *str, qsizetype size);
+    static QString fromUtf8(const char *utf8, qsizetype size);
+    qsizetype indexOf(const QString &s, qsizetype from = 0) const;
+    QString &insert(qsizetype i, const QString &s);
     bool isDetached() const;
     bool isEmpty() const;
     bool isLower() const;
@@ -61,13 +50,15 @@ public:
     bool isSimpleText() const;
     bool isUpper() const;
     bool isValidUtf16() const;
-    int lastIndexOf(const QString &s, int from = -1) const;
-    QString left(int n) const;
-    QString leftJustified(int width) const;
-    int length() const;
+    QString last(qsizetype n) const;
+    qsizetype lastIndexOf(const QString &s) const;
+    qsizetype lastIndexOf(const QString &s, qsizetype from) const;
+    QString left(qsizetype n) const;
+    QString leftJustified(qsizetype width) const;
+    qsizetype length() const;
     int localeAwareCompare(const QString &s) const;
     static int localeAwareCompare(const QString &s1, const QString &s2);
-    QString mid(int position, int n = -1) const;
+    QString mid(qsizetype position, qsizetype n = -1) const;
     static QString number(int arg__1, int base = 10);
     static QString number(long arg__1, int base = 10);
     static QString number(qint64 arg__1, int base = 10);
@@ -75,22 +66,27 @@ public:
     void push_back(const QString &s);
     void push_front(const QString &s);
     QString &remove(const QString &s);
-    QString &remove(int i, int len);
-    QString repeated(int times) const;
+    QString &remove(qsizetype i, qsizetype len);
+    QString &removeAt(qsizetype pos);
+    QString &removeFirst();
+    QString &removeLast();
+    QString repeated(qsizetype times) const;
     QString &replace(const QString &before, const QString &after);
-    QString &replace(int i, int len, const QString &after);
-    void reserve(int size);
-    void resize(int size);
-    QString right(int n) const;
-    QString rightJustified(int width) const;
-    QString section(const QString &in_sep, int start, int end = -1) const;
+    QString &replace(qsizetype i, qsizetype len, const QString &after);
+    void reserve(qsizetype size);
+    void resize(qsizetype size);
+    QString right(qsizetype n) const;
+    QString rightJustified(qsizetype width) const;
+    QString section(const QString &in_sep, qsizetype start, qsizetype end = -1) const;
     QString &setNum(int arg__1, int base = 10);
     QString &setNum(long arg__1, int base = 10);
     QString &setNum(qint64 arg__1, int base = 10);
     QString &setNum(short arg__1, int base = 10);
     void shrink_to_fit();
     QString simplified();
-    int size() const;
+    qsizetype size() const;
+    QString sliced(qsizetype pos) const;
+    QString sliced(qsizetype pos, qsizetype n) const;
     void squeeze();
     bool startsWith(const QString &s) const;
     QString toCaseFolded();
@@ -101,7 +97,7 @@ public:
     QString toUpper();
     QByteArray toUtf8();
     QString trimmed();
-    void truncate(int pos);
+    void truncate(qsizetype pos);
 };
 }
 extern "C" {
@@ -111,22 +107,6 @@ KDDockWidgetsBindings_EXPORT void *c_QString__constructor();
 KDDockWidgetsBindings_EXPORT void *c_QString__append_QString(void *thisObj, const char *s_);
 // QString::arg(const QString & a, int fieldWidth) const
 KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_int(void *thisObj, const char *a_, int fieldWidth);
-// QString::arg(const QString & a1, const QString & a2) const
-KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_QString(void *thisObj, const char *a1_, const char *a2_);
-// QString::arg(const QString & a1, const QString & a2, const QString & a3) const
-KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_);
-// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4) const
-KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_);
-// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5) const
-KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_);
-// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6) const
-KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_);
-// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7) const
-KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_);
-// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8) const
-KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_, const char *a8_);
-// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8, const QString & a9) const
-KDDockWidgetsBindings_EXPORT void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_, const char *a8_, const char *a9_);
 // QString::arg(int a, int fieldWidth, int base) const
 KDDockWidgetsBindings_EXPORT void *c_QString__arg_int_int_int(void *thisObj, int a, int fieldWidth, int base);
 // QString::arg(long a, int fieldwidth, int base) const
@@ -138,11 +118,11 @@ KDDockWidgetsBindings_EXPORT void *c_QString__arg_short_int_int(void *thisObj, s
 // QString::asprintf(const char * format)
 KDDockWidgetsBindings_EXPORT void *c_static_QString__asprintf_char(const char *format);
 // QString::capacity() const
-KDDockWidgetsBindings_EXPORT int c_QString__capacity(void *thisObj);
-// QString::chop(int n)
-KDDockWidgetsBindings_EXPORT void c_QString__chop_int(void *thisObj, int n);
-// QString::chopped(int n) const
-KDDockWidgetsBindings_EXPORT void *c_QString__chopped_int(void *thisObj, int n);
+KDDockWidgetsBindings_EXPORT qsizetype c_QString__capacity(void *thisObj);
+// QString::chop(qsizetype n)
+KDDockWidgetsBindings_EXPORT void c_QString__chop_qsizetype(void *thisObj, qsizetype n);
+// QString::chopped(qsizetype n) const
+KDDockWidgetsBindings_EXPORT void *c_QString__chopped_qsizetype(void *thisObj, qsizetype n);
 // QString::clear()
 KDDockWidgetsBindings_EXPORT void c_QString__clear(void *thisObj);
 // QString::compare(const QString & s) const
@@ -151,30 +131,24 @@ KDDockWidgetsBindings_EXPORT int c_QString__compare_QString(void *thisObj, const
 KDDockWidgetsBindings_EXPORT int c_static_QString__compare_QString_QString(const char *s1_, const char *s2_);
 // QString::contains(const QString & s) const
 KDDockWidgetsBindings_EXPORT bool c_QString__contains_QString(void *thisObj, const char *s_);
-// QString::count() const
-KDDockWidgetsBindings_EXPORT int c_QString__count(void *thisObj);
 // QString::count(const QString & s) const
-KDDockWidgetsBindings_EXPORT int c_QString__count_QString(void *thisObj, const char *s_);
+KDDockWidgetsBindings_EXPORT qsizetype c_QString__count_QString(void *thisObj, const char *s_);
 // QString::detach()
 KDDockWidgetsBindings_EXPORT void c_QString__detach(void *thisObj);
 // QString::endsWith(const QString & s) const
 KDDockWidgetsBindings_EXPORT bool c_QString__endsWith_QString(void *thisObj, const char *s_);
-// QString::fromLatin1(const QByteArray & str)
-KDDockWidgetsBindings_EXPORT void *c_static_QString__fromLatin1_QByteArray(void *str_);
-// QString::fromLatin1(const char * str, int size)
-KDDockWidgetsBindings_EXPORT void *c_static_QString__fromLatin1_char_int(const char *str, int size);
-// QString::fromLocal8Bit(const QByteArray & str)
-KDDockWidgetsBindings_EXPORT void *c_static_QString__fromLocal8Bit_QByteArray(void *str_);
-// QString::fromLocal8Bit(const char * str, int size)
-KDDockWidgetsBindings_EXPORT void *c_static_QString__fromLocal8Bit_char_int(const char *str, int size);
-// QString::fromUtf8(const QByteArray & str)
-KDDockWidgetsBindings_EXPORT void *c_static_QString__fromUtf8_QByteArray(void *str_);
-// QString::fromUtf8(const char * str, int size)
-KDDockWidgetsBindings_EXPORT void *c_static_QString__fromUtf8_char_int(const char *str, int size);
-// QString::indexOf(const QString & s, int from) const
-KDDockWidgetsBindings_EXPORT int c_QString__indexOf_QString_int(void *thisObj, const char *s_, int from);
-// QString::insert(int i, const QString & s)
-KDDockWidgetsBindings_EXPORT void *c_QString__insert_int_QString(void *thisObj, int i, const char *s_);
+// QString::first(qsizetype n) const
+KDDockWidgetsBindings_EXPORT void *c_QString__first_qsizetype(void *thisObj, qsizetype n);
+// QString::fromLatin1(const char * str, qsizetype size)
+KDDockWidgetsBindings_EXPORT void *c_static_QString__fromLatin1_char_qsizetype(const char *str, qsizetype size);
+// QString::fromLocal8Bit(const char * str, qsizetype size)
+KDDockWidgetsBindings_EXPORT void *c_static_QString__fromLocal8Bit_char_qsizetype(const char *str, qsizetype size);
+// QString::fromUtf8(const char * utf8, qsizetype size)
+KDDockWidgetsBindings_EXPORT void *c_static_QString__fromUtf8_char_qsizetype(const char *utf8, qsizetype size);
+// QString::indexOf(const QString & s, qsizetype from) const
+KDDockWidgetsBindings_EXPORT qsizetype c_QString__indexOf_QString_qsizetype(void *thisObj, const char *s_, qsizetype from);
+// QString::insert(qsizetype i, const QString & s)
+KDDockWidgetsBindings_EXPORT void *c_QString__insert_qsizetype_QString(void *thisObj, qsizetype i, const char *s_);
 // QString::isDetached() const
 KDDockWidgetsBindings_EXPORT bool c_QString__isDetached(void *thisObj);
 // QString::isEmpty() const
@@ -193,20 +167,24 @@ KDDockWidgetsBindings_EXPORT bool c_QString__isSimpleText(void *thisObj);
 KDDockWidgetsBindings_EXPORT bool c_QString__isUpper(void *thisObj);
 // QString::isValidUtf16() const
 KDDockWidgetsBindings_EXPORT bool c_QString__isValidUtf16(void *thisObj);
-// QString::lastIndexOf(const QString & s, int from) const
-KDDockWidgetsBindings_EXPORT int c_QString__lastIndexOf_QString_int(void *thisObj, const char *s_, int from);
-// QString::left(int n) const
-KDDockWidgetsBindings_EXPORT void *c_QString__left_int(void *thisObj, int n);
-// QString::leftJustified(int width) const
-KDDockWidgetsBindings_EXPORT void *c_QString__leftJustified_int(void *thisObj, int width);
+// QString::last(qsizetype n) const
+KDDockWidgetsBindings_EXPORT void *c_QString__last_qsizetype(void *thisObj, qsizetype n);
+// QString::lastIndexOf(const QString & s) const
+KDDockWidgetsBindings_EXPORT qsizetype c_QString__lastIndexOf_QString(void *thisObj, const char *s_);
+// QString::lastIndexOf(const QString & s, qsizetype from) const
+KDDockWidgetsBindings_EXPORT qsizetype c_QString__lastIndexOf_QString_qsizetype(void *thisObj, const char *s_, qsizetype from);
+// QString::left(qsizetype n) const
+KDDockWidgetsBindings_EXPORT void *c_QString__left_qsizetype(void *thisObj, qsizetype n);
+// QString::leftJustified(qsizetype width) const
+KDDockWidgetsBindings_EXPORT void *c_QString__leftJustified_qsizetype(void *thisObj, qsizetype width);
 // QString::length() const
-KDDockWidgetsBindings_EXPORT int c_QString__length(void *thisObj);
+KDDockWidgetsBindings_EXPORT qsizetype c_QString__length(void *thisObj);
 // QString::localeAwareCompare(const QString & s) const
 KDDockWidgetsBindings_EXPORT int c_QString__localeAwareCompare_QString(void *thisObj, const char *s_);
 // QString::localeAwareCompare(const QString & s1, const QString & s2)
 KDDockWidgetsBindings_EXPORT int c_static_QString__localeAwareCompare_QString_QString(const char *s1_, const char *s2_);
-// QString::mid(int position, int n) const
-KDDockWidgetsBindings_EXPORT void *c_QString__mid_int_int(void *thisObj, int position, int n);
+// QString::mid(qsizetype position, qsizetype n) const
+KDDockWidgetsBindings_EXPORT void *c_QString__mid_qsizetype_qsizetype(void *thisObj, qsizetype position, qsizetype n);
 // QString::number(int arg__1, int base)
 KDDockWidgetsBindings_EXPORT void *c_static_QString__number_int_int(int arg__1, int base);
 // QString::number(long arg__1, int base)
@@ -221,24 +199,30 @@ KDDockWidgetsBindings_EXPORT void c_QString__push_back_QString(void *thisObj, co
 KDDockWidgetsBindings_EXPORT void c_QString__push_front_QString(void *thisObj, const char *s_);
 // QString::remove(const QString & s)
 KDDockWidgetsBindings_EXPORT void *c_QString__remove_QString(void *thisObj, const char *s_);
-// QString::remove(int i, int len)
-KDDockWidgetsBindings_EXPORT void *c_QString__remove_int_int(void *thisObj, int i, int len);
-// QString::repeated(int times) const
-KDDockWidgetsBindings_EXPORT void *c_QString__repeated_int(void *thisObj, int times);
+// QString::remove(qsizetype i, qsizetype len)
+KDDockWidgetsBindings_EXPORT void *c_QString__remove_qsizetype_qsizetype(void *thisObj, qsizetype i, qsizetype len);
+// QString::removeAt(qsizetype pos)
+KDDockWidgetsBindings_EXPORT void *c_QString__removeAt_qsizetype(void *thisObj, qsizetype pos);
+// QString::removeFirst()
+KDDockWidgetsBindings_EXPORT void *c_QString__removeFirst(void *thisObj);
+// QString::removeLast()
+KDDockWidgetsBindings_EXPORT void *c_QString__removeLast(void *thisObj);
+// QString::repeated(qsizetype times) const
+KDDockWidgetsBindings_EXPORT void *c_QString__repeated_qsizetype(void *thisObj, qsizetype times);
 // QString::replace(const QString & before, const QString & after)
 KDDockWidgetsBindings_EXPORT void *c_QString__replace_QString_QString(void *thisObj, const char *before_, const char *after_);
-// QString::replace(int i, int len, const QString & after)
-KDDockWidgetsBindings_EXPORT void *c_QString__replace_int_int_QString(void *thisObj, int i, int len, const char *after_);
-// QString::reserve(int size)
-KDDockWidgetsBindings_EXPORT void c_QString__reserve_int(void *thisObj, int size);
-// QString::resize(int size)
-KDDockWidgetsBindings_EXPORT void c_QString__resize_int(void *thisObj, int size);
-// QString::right(int n) const
-KDDockWidgetsBindings_EXPORT void *c_QString__right_int(void *thisObj, int n);
-// QString::rightJustified(int width) const
-KDDockWidgetsBindings_EXPORT void *c_QString__rightJustified_int(void *thisObj, int width);
-// QString::section(const QString & in_sep, int start, int end) const
-KDDockWidgetsBindings_EXPORT void *c_QString__section_QString_int_int(void *thisObj, const char *in_sep_, int start, int end);
+// QString::replace(qsizetype i, qsizetype len, const QString & after)
+KDDockWidgetsBindings_EXPORT void *c_QString__replace_qsizetype_qsizetype_QString(void *thisObj, qsizetype i, qsizetype len, const char *after_);
+// QString::reserve(qsizetype size)
+KDDockWidgetsBindings_EXPORT void c_QString__reserve_qsizetype(void *thisObj, qsizetype size);
+// QString::resize(qsizetype size)
+KDDockWidgetsBindings_EXPORT void c_QString__resize_qsizetype(void *thisObj, qsizetype size);
+// QString::right(qsizetype n) const
+KDDockWidgetsBindings_EXPORT void *c_QString__right_qsizetype(void *thisObj, qsizetype n);
+// QString::rightJustified(qsizetype width) const
+KDDockWidgetsBindings_EXPORT void *c_QString__rightJustified_qsizetype(void *thisObj, qsizetype width);
+// QString::section(const QString & in_sep, qsizetype start, qsizetype end) const
+KDDockWidgetsBindings_EXPORT void *c_QString__section_QString_qsizetype_qsizetype(void *thisObj, const char *in_sep_, qsizetype start, qsizetype end);
 // QString::setNum(int arg__1, int base)
 KDDockWidgetsBindings_EXPORT void *c_QString__setNum_int_int(void *thisObj, int arg__1, int base);
 // QString::setNum(long arg__1, int base)
@@ -252,7 +236,11 @@ KDDockWidgetsBindings_EXPORT void c_QString__shrink_to_fit(void *thisObj);
 // QString::simplified()
 KDDockWidgetsBindings_EXPORT void *c_QString__simplified(void *thisObj);
 // QString::size() const
-KDDockWidgetsBindings_EXPORT int c_QString__size(void *thisObj);
+KDDockWidgetsBindings_EXPORT qsizetype c_QString__size(void *thisObj);
+// QString::sliced(qsizetype pos) const
+KDDockWidgetsBindings_EXPORT void *c_QString__sliced_qsizetype(void *thisObj, qsizetype pos);
+// QString::sliced(qsizetype pos, qsizetype n) const
+KDDockWidgetsBindings_EXPORT void *c_QString__sliced_qsizetype_qsizetype(void *thisObj, qsizetype pos, qsizetype n);
 // QString::squeeze()
 KDDockWidgetsBindings_EXPORT void c_QString__squeeze(void *thisObj);
 // QString::startsWith(const QString & s) const
@@ -273,8 +261,8 @@ KDDockWidgetsBindings_EXPORT void *c_QString__toUpper(void *thisObj);
 KDDockWidgetsBindings_EXPORT void *c_QString__toUtf8(void *thisObj);
 // QString::trimmed()
 KDDockWidgetsBindings_EXPORT void *c_QString__trimmed(void *thisObj);
-// QString::truncate(int pos)
-KDDockWidgetsBindings_EXPORT void c_QString__truncate_int(void *thisObj, int pos);
+// QString::truncate(qsizetype pos)
+KDDockWidgetsBindings_EXPORT void c_QString__truncate_qsizetype(void *thisObj, qsizetype pos);
 KDDockWidgetsBindings_EXPORT void c_QString__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_QString_Finalizer(void *cppObj);
 }
