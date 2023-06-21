@@ -17,31 +17,38 @@ String bindingsLibraryName(String name) {
   return "lib${name}.so";
 }
 
+typedef LibraryGetPathFunc = String Function();
+
 class Library {
   var _dylib;
+  static Library? _library;
+  static LibraryGetPathFunc? libraryGetPathFunc;
 
   ffi.DynamicLibrary get dylib {
     return _dylib;
   }
 
-  static var _library = null;
-
   factory Library.instance() {
     // Singleton impl.
     if (_library == null) _library = Library._();
-    return _library;
+    return _library!;
   }
 
   Library._() {
-    // DYLD_LIBRARY_PATH doesn't work by default on newer macOS. Instead
-    // introduce our own env variable for the same use case
-    var bindingsPath = Platform.environment["DARTAGNAN_BINDINGSLIB_PATH"] ?? "";
+    if (libraryGetPathFunc == null) {
+      // DYLD_LIBRARY_PATH doesn't work by default on newer macOS. Instead
+      // introduce our own env variable for the same use case
+      var bindingsPath =
+          Platform.environment["DARTAGNAN_BINDINGSLIB_PATH"] ?? "";
 
-    var libraryPath = bindingsLibraryName("kddockwidgets-qt6");
-    if (!bindingsPath.isEmpty) {
-      libraryPath = bindingsPath + "/" + libraryPath;
+      var libraryPath = bindingsLibraryName("kddockwidgets-qt6");
+      if (!bindingsPath.isEmpty) {
+        libraryPath = bindingsPath + "/" + libraryPath;
+      }
+
+      _dylib = ffi.DynamicLibrary.open(libraryPath);
+    } else {
+      _dylib = ffi.DynamicLibrary.open(libraryGetPathFunc!());
     }
-
-    _dylib = ffi.DynamicLibrary.open(libraryPath);
   }
 }

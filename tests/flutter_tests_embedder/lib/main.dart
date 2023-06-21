@@ -22,12 +22,17 @@ import 'package:KDDockWidgets/WindowOverlayWidget.dart' as KDDW;
 import 'package:flutter/scheduler.dart';
 import 'package:KDDockWidgets/View.dart' as KDDW;
 import 'package:KDDockWidgets/Platform.dart' as KDDW;
+import 'package:KDDockWidgets/LibraryLoader.dart' as KDDW;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
 
 void main(List<String> args) {
   window.setIsolateDebugName("Main dart isolate");
 
   if (args.contains("--wait")) debugger();
+
+  // Needs to be called before using, so it loads the C++ library
+  KDDW.initLibraryLoader();
+
   runApp(const MyApp());
 
   var plat = KDDW.Platform();

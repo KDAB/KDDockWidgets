@@ -17,6 +17,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgets/WindowOverlayWidget.dart' as KDDW;
 import 'package:KDDockWidgets/Platform.dart' as KDDW;
+import 'package:KDDockWidgets/LibraryLoader.dart' as KDDW;
 import 'package:KDDockWidgetsBindings/Bindings.dart' as KDDWBindings;
 import 'package:kddockwidgets_flutter_example/MyMenuBar.dart';
 import 'package:kddockwidgets_flutter_example/MyWidget.dart';
@@ -25,7 +26,8 @@ void main(List<String> args) {
   // Just for debug
   if (args.contains("--wait")) debugger();
 
-  KDDWBindings.initFrontend(KDDWBindings.KDDockWidgets_FrontendType.Flutter);
+  // Needs to be called before using, so it loads the C++ library
+  KDDW.initLibraryLoader();
 
   runApp(const MyApp());
 }
