@@ -24,7 +24,7 @@ export PATH=/home/user/Qt/6.5.1/gcc_64/bin/:$PATH
 export KDDW_SOURCE_DIR=/home/user/somewhere/kddockwidgets/
 ```
 
-Release build:
+Release build (Recommended):
 
 ```bash
 export DARTAGNAN_BINDINGSLIB_PATH=$KDDW_SOURCE_DIR/build-release-flutter/lib
@@ -33,12 +33,15 @@ cmake --preset=release-flutter
 cmake --build build-release-flutter
 ```
 
-A developer build is slower to build, but it allows running the unit tests.
+If you need to run tests, then you need a developer build, which is a bit more involved.<br>
+You'll need to point `FLUTTER_ENGINE_FOLDER` to the folder containing a vanilla
+flutter engine along with `flutter_embedder.h`.
 
 Developer build:
 
 ```bash
 export DARTAGNAN_BINDINGSLIB_PATH=$KDDW_SOURCE_DIR/build-dev-flutter/lib
+export FLUTTER_ENGINE_FOLDER=/home/user/somewhere/flutter-embedder/
 cd $KDDW_SOURCE_DIR
 cmake --preset=dev-flutter
 cmake --build build-dev-flutter
