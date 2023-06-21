@@ -1745,6 +1745,8 @@ void TestQtWidgets::tstQGraphicsProxyWidget()
     proxyWidget->setWidget(lineEdit);
     lineEdit->setText("Test");
 
+    QVERIFY(QtWidgets::isInQGraphicsViewProxyWidget(lineEdit));
+
     scene->addItem(proxyWidget);
 }
 

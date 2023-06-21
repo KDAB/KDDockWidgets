@@ -28,6 +28,7 @@
 namespace KDDockWidgets::QtWidgets {
 
 DOCKS_EXPORT QSize boundedMaxSize(QSize min, QSize max);
+DOCKS_EXPORT bool isInQGraphicsViewProxyWidget(QWidget *);
 
 template<typename Base>
 class DOCKS_EXPORT View : public Base, public QtCommon::View_qt
