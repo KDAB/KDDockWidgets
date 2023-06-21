@@ -211,8 +211,14 @@ if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
     set(KDDW_FRONTEND_QT ON)
 endif()
 
-if(KDDW_FRONTEND_FLUTTER AND KDDW_FRONTEND_QT)
-    message(FATAL_ERROR "The flutter frontend is not compatible with the Qt frontends. Chose a single one.")
+if(KDDW_FRONTEND_FLUTTER)
+    if (KDDW_FRONTEND_QT)
+        message(FATAL_ERROR "The flutter frontend is not compatible with the Qt frontends. Chose a single one.")
+    endif()
+
+    if (KDDockWidgets_DEVELOPER_MODE AND (APPLE OR WIN32))
+        message(FATAL_ERROR "The flutter frontend only supports developer-mode on Linux. You can still develop on Windows/macOS but wait for test results from KDAB CI.")
+    endif()
 endif()
 
 # END frontend enabling
