@@ -25,7 +25,7 @@ import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart' hide View;
 
-class View_mixin {
+mixin View_mixin {
   late final PositionedWidget flutterWidget;
   late final GlobalStringKey<PositionedWidgetState> widgetKey;
   late final KDDWBindingsFlutter.View kddwView;
