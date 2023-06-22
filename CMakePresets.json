@@ -450,6 +450,15 @@
                 "KDDockWidgets_QT6": "ON",
                 "KDDockWidgets_FRONTENDS": "qtquick"
             }
+        },
+        {
+            "name": "ci-release-flutter",
+            "description": "Release flutter",
+            "displayName": "ci-release-flutter",
+            "binaryDir": "${sourceDir}/build-ci-release-flutter",
+            "inherits": [
+                "release-flutter"
+            ]
         }
     ],
     "buildPresets": [
