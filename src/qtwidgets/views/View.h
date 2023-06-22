@@ -35,9 +35,17 @@ class DOCKS_EXPORT View : public Base, public QtCommon::View_qt
 public:
     using Core::View::close;
     using Core::View::height;
+    using Core::View::minimumHeight;
+    using Core::View::minimumWidth;
+    using Core::View::move;
+    using Core::View::pos;
     using Core::View::rect;
     using Core::View::resize;
+    using Core::View::setSize;
+    using Core::View::size;
     using Core::View::width;
+    using Core::View::x;
+    using Core::View::y;
 
     explicit View(Core::Controller *controller, Core::ViewType type,
                   QWidget *parent = nullptr, Qt::WindowFlags windowFlags = {});
