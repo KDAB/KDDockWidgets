@@ -174,7 +174,7 @@ if(KDDockWidgets_FRONTENDS)
     # flutter
     if("flutter" IN_LIST KDDockWidgets_FRONTENDS)
         # For now flutter still depends on Qt
-        find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Gui)
+        find_package(Qt${Qt_VERSION_MAJOR} 6.5.0 NO_MODULE REQUIRED COMPONENTS Gui)
         set(KDDW_FRONTEND_FLUTTER ON)
     endif()
 
