@@ -55,7 +55,7 @@ cmake --build build-dev-flutter
 
 ```bash
 cd $KDDW_SOURCE_DIR/examples/flutter
-flutter run -d linux # Or mac/windows, or nothing if you only have 1 flutter "device"
+flutter run -d linux # Or macos/windows or nothing if you only have 1 flutter "device"
 ```
 
 ## macOS
