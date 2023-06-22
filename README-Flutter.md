@@ -11,7 +11,11 @@
 
 - CMake, Ninja
 
+- KDDW (git clone https://github.com/KDAB/KDDockWidgets.git)
+
 ## Build instructions
+
+Checkout branch `2.0`.
 
 ### Linux
 
@@ -54,9 +58,14 @@ cd $KDDW_SOURCE_DIR/examples/flutter
 flutter run -d linux # Or mac/windows, or nothing if you only have 1 flutter "device"
 ```
 
-## Windows && macOS
+## macOS
 
-To be tested. Probably won't be too different.
+Similar to Linux. The dev preset is not supported though, only `release-flutter`.
+
+## Windows
+
+Similar to Linux, just use cmd syntax or so.<br>
+The dev preset is not supported though, only `release-flutter`.
 
 ## TODO
 
