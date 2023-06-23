@@ -798,8 +798,9 @@ bool DragController::onMoveEvent(View *)
 {
     if (m_nonClientDrag) {
         // On Windows, non-client mouse moves are only sent at the end, so we must fake it:
-        qCDebug(mouseevents) << "DragController::onMoveEvent";
-        activeState()->handleMouseMove(Platform::instance()->cursorPos());
+        spdlog::trace("DragController::onMoveEvent");
+        activeState()
+            ->handleMouseMove(Platform::instance()->cursorPos());
     }
 
     return false;
@@ -810,8 +811,7 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
     if (!w)
         return false;
 
-    qCDebug(mouseevents) << "DragController::onMouseEvent e=" << me->type()
-                         << "; m_nonClientDrag=" << m_nonClientDrag;
+    spdlog::trace("DragController::onMouseEvent e={} ; nonClientDrag=", me->type(), m_nonClientDrag);
 
     switch (me->type()) {
     case Event::NonClientAreaMouseButtonPress: {
@@ -898,7 +898,7 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
         }
     }
 
-    qCDebug(toplevels) << Q_FUNC_INFO << "Couldn't find hwnd for top-level" << hwnd;
+    spdlog::trace("Couldn't find hwnd for top-level hwnd={}", hwnd);
     return nullptr;
 }
 
@@ -919,7 +919,7 @@ static std::shared_ptr<View> qtTopLevelUnderCursor_impl(QPoint globalPos,
             continue;
 
         if (window->geometry().contains(globalPos)) {
-            qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl.get();
+            spdlog::trace("Found top-level {}", ( void * )tl.get());
             return tl;
         }
     }
@@ -955,7 +955,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
 
                 if (windowGeometry.contains(globalPos)
                     && tl->viewName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl.get();
+                    spdlog::trace("Found top-level {}", ( void * )tl.get());
                     return tl;
                 }
             } else {
@@ -970,8 +970,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                                 if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos))
                                     && topLevel->objectName()
                                         != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                                    qCDebug(toplevels)
-                                        << Q_FUNC_INFO << "Found top-level" << topLevel;
+                                    spdlog::trace("Found top-level {}", ( void * )topLevel);
                                     return QtCommon::Platform_qt::instance()->qobjectAsView(topLevel);
                                 }
                             }
@@ -979,8 +978,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                     }
                 }
 #endif // QtWidgets A window belonging to another app is below the cursor
-                qCDebug(toplevels)
-                    << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
+                spdlog::trace("Window from another app is under cursor {}", hwnd);
                 return nullptr;
             }
         }
@@ -994,8 +992,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
             return tl;
 
         if (!ok) {
-            qCDebug(toplevels) << Q_FUNC_INFO
-                               << "No top-level found. Some windows weren't seen by XLib";
+            spdlog::trace("No top-level found. Some windows weren't seen by XLib");
         }
     } else {
         // !Windows: Linux, macOS, offscreen (offscreen on Windows too), etc.
@@ -1014,7 +1011,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
             globalPos, DockRegistry::self()->topLevels(/*excludeFloating=*/true), tlwBeingDragged);
     }
 
-    qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found";
+    spdlog::trace("No top-level found");
     return nullptr;
 }
 

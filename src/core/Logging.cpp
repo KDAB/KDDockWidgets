@@ -10,10 +10,3 @@
 */
 
 #include "Logging_p.h"
-
-namespace KDDockWidgets {
-
-Q_LOGGING_CATEGORY(mouseevents, "kdab.kddockwidgets.mouseevents", QtWarningMsg)
-Q_LOGGING_CATEGORY(toplevels, "kdab.kddockwidgets.toplevels", QtWarningMsg)
-
-}

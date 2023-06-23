@@ -13,25 +13,10 @@
 #define KD_DOCK_LOGGING_P_H
 #pragma once
 
+#ifdef KDDW_HAS_SPDLOG
+
 #include "NonQtCompat_p.h"
-
-#include <QLoggingCategory>
-
-#ifdef KDDW_HAS_SPDLOG
 #include <spdlog/spdlog.h>
-#endif
-
-namespace KDDockWidgets {
-
-/// Very verbose logging of mouse events
-Q_DECLARE_LOGGING_CATEGORY(mouseevents)
-
-/// Verbose logging regarding OS related top level windows
-Q_DECLARE_LOGGING_CATEGORY(toplevels)
-
-}
-
-#ifdef KDDW_HAS_SPDLOG
 
 template<>
 struct fmt::formatter<QSize>
