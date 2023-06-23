@@ -353,7 +353,7 @@ bool View::Private::aboutToBeDestroyed() const
 
 void View::dumpDebug()
 {
-    std::cerr << "View::dumpDebug: controller={} type={}, rootController={}" << m_controller << int(d->type()) << rootView()->controller() << "\n";
+    spdlog::debug("View::dumpDebug: controller={}, type={}, rootController={}\n", ( void * )m_controller, int(d->type()), ( void * )rootView()->controller());
 }
 
 /** static */

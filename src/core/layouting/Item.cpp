@@ -21,11 +21,11 @@
 #include "core/View_p.h"
 #include "core/Platform_p.h"
 
-#include <QDebug>
 #include <QScopedValueRollback>
 #include <QTimer>
 
 #include <algorithm>
+#include <iostream>
 
 #ifdef Q_CC_MSVC
 #pragma warning(push)
@@ -725,31 +725,54 @@ void Item::setGeometry(QRect rect)
     }
 }
 
+template<typename CharT, typename Traits>
+std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, const QSize &size)
+{
+    os << "QSize(" << size.width() << ", " << size.height() << ")";
+    return os;
+}
+
+template<typename CharT, typename Traits>
+std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, const QRect &rect)
+{
+    os << "QRect(" << rect.x() << "," << rect.y() << " " << rect.width() << "x" << rect.height() << ")";
+    return os;
+}
+
+template<typename CharT, typename Traits>
+std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, const QVector<double> &vec)
+{
+    os << "{ ";
+    for (double v : vec) {
+        os << v << ", ";
+    }
+    os << " }";
+    return os;
+}
+
+
 void Item::dumpLayout(int level)
 {
-    QString indent;
-    indent.fill(QLatin1Char(' '), level);
+    std::string indent(size_t(level), ' ');
 
-    auto dbg = qDebug().noquote();
-
-    dbg << indent << "- Widget: " << objectName()
-        << m_sizingInfo.geometry // << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
-        << "; min=" << minSize();
+    std::cerr << indent << "- Widget: " << objectName().toStdString() << " "
+              << m_sizingInfo.geometry // << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
+              << "; min=" << minSize();
 
     if (maxSizeHint() != hardcodedMaximumSize)
-        dbg << "; max=" << maxSizeHint();
+        std::cerr << "; max=" << maxSizeHint() << "; ";
 
     if (!isVisible())
-        dbg << QStringLiteral(";hidden;");
+        std::cerr << ";hidden;";
 
     if (m_guest && geometry() != m_guest->geometry()) {
-        dbg << "; guest geometry=" << m_guest->geometry();
+        std::cerr << "; guest geometry=" << m_guest->geometry();
     }
 
     if (m_sizingInfo.isBeingInserted)
-        dbg << QStringLiteral(";beingInserted;");
+        std::cerr << ";beingInserted;";
 
-    dbg << this << "; guest=" << this;
+    std::cerr << this << "; guest=" << this << "\n";
 }
 
 Item::Item(View *hostWidget, ItemContainer *parent)
@@ -821,10 +844,10 @@ void Item::onWidgetLayoutRequested()
     if (View *w = guestView()) {
         if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
                                                // mouse
-            qDebug() << Q_FUNC_INFO
-                     << "TODO: Not implemented yet. Widget can't just decide to resize yet"
-                     << "View.size=" << w->size() << "Item.size=" << size() << m_sizingInfo.geometry
-                     << m_sizingInfo.isBeingInserted;
+            std::cerr << Q_FUNC_INFO
+                      << "TODO: Not implemented yet. Widget can't just decide to resize yet"
+                      << "View.size=" << w->size() << "Item.size=" << size() << m_sizingInfo.geometry
+                      << m_sizingInfo.isBeingInserted << "\n";
         }
 
         if (w->minSize() != minSize()) {
@@ -2128,29 +2151,28 @@ void ItemBoxContainer::dumpLayout(int level)
 
         const auto screens = Platform::instance()->screens();
         for (const auto &screen : screens) {
-            qDebug().noquote() << "Screen" << screen->geometry() << screen->availableGeometry()
-                               << "; drp=" << screen->devicePixelRatio();
+            std::cerr << "Screen: " << screen->geometry() << "; " << screen->availableGeometry()
+                      << "; drp=" << screen->devicePixelRatio() << "\n";
         }
     }
 
-    QString indent;
-    indent.fill(QLatin1Char(' '), level);
-    const QString beingInserted =
-        m_sizingInfo.isBeingInserted ? QStringLiteral("; beingInserted;") : QString();
-    const QString visible = !isVisible() ? QStringLiteral(";hidden;") : QString();
+    std::string indent(size_t(level), ' ');
+    const std::string beingInserted =
+        m_sizingInfo.isBeingInserted ? "; beingInserted;" : "";
+    const std::string visible = !isVisible() ? ";hidden;" : "";
 
-    const QString typeStr = isRoot() ? QStringLiteral("* Root: ") : QStringLiteral("* Layout: ");
+    const std::string typeStr = isRoot() ? "* Root: " : "* Layout: ";
 
     {
-        auto dbg = qDebug().noquote();
-        dbg << indent << typeStr << d->m_orientation
-            << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" <<
-                                        m_geometry.bottom()*/
-            << "; min=" << minSize() << "; this=" << this << beingInserted << visible
-            << "; %=" << d->childPercentages();
+        std::cerr << indent << typeStr << "; isVertical=" << (d->m_orientation == Qt::Vertical) << "; "
+                  << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" <<
+                                              m_geometry.bottom()*/
+                  << "; min=" << minSize() << "; this=" << this << beingInserted << visible
+                  << "; %=" << d->childPercentages();
 
         if (maxSizeHint() != Item::hardcodedMaximumSize)
-            dbg << "; max=" << maxSizeHint();
+            std::cerr << "; max=" << maxSizeHint();
+        std::cerr << "\n";
     }
 
     int i = 0;
@@ -2159,9 +2181,9 @@ void ItemBoxContainer::dumpLayout(int level)
         if (item->isVisible()) {
             if (i < d->m_separators.size()) {
                 auto separator = d->m_separators.at(i);
-                qDebug().noquote() << indent << " - Separator: "
-                                   << "local.geo=" << mapFromRoot(separator->view()->geometry())
-                                   << "global.geo=" << separator->view()->geometry() << separator;
+                std::cerr << indent << " - Separator: "
+                          << "local.geo=" << mapFromRoot(separator->view()->geometry())
+                          << " ; global.geo=" << separator->view()->geometry() << "; separator=" << separator << "\n ";
             }
             ++i;
         }
