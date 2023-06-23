@@ -529,7 +529,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     if (FloatingWindow *fw = floatingWindow()) { // Already floating
         if (m_group->isTheOnlyGroup()) { // We don't detach. This one drags the entire window
                                          // instead.
-            qCDebug(general) << "TitleBar::makeWindow no detach needed";
+            spdlog::debug("TitleBar::makeWindow no detach needed");
             return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
         }
     }

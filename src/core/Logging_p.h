@@ -23,9 +23,6 @@
 
 namespace KDDockWidgets {
 
-/// The general and more useful category to enable
-Q_DECLARE_LOGGING_CATEGORY(general)
-
 /// Very verbose logging of mouse events
 Q_DECLARE_LOGGING_CATEGORY(mouseevents)
 
@@ -50,6 +47,22 @@ struct fmt::formatter<QSize>
         return fmt::format_to(ctx.out(), "{}x{}", size.width(), size.height());
     }
 };
+
+template<>
+struct fmt::formatter<QPoint>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(QPoint point, FormatContext &ctx)
+    {
+        return fmt::format_to(ctx.out(), "{}x{}", point.x(), point.y());
+    }
+};
+
 
 #else
 

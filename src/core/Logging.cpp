@@ -13,9 +13,7 @@
 
 namespace KDDockWidgets {
 
-Q_LOGGING_CATEGORY(general, "kdab.kddockwidgets.general", QtWarningMsg)
 Q_LOGGING_CATEGORY(mouseevents, "kdab.kddockwidgets.mouseevents", QtWarningMsg)
 Q_LOGGING_CATEGORY(toplevels, "kdab.kddockwidgets.toplevels", QtWarningMsg)
-Q_LOGGING_CATEGORY(creation, "kdab.kddockwidgets.creation", QtWarningMsg)
 
 }

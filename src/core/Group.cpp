@@ -379,8 +379,7 @@ int Group::dockWidgetCount() const
 
 void Group::onDockWidgetCountChanged()
 {
-    qCDebug(general) << "Frame::onDockWidgetCountChanged:" << this
-                     << "; widgetCount=" << dockWidgetCount();
+    spdlog::debug("Group::onDockWidgetCountChanged: {} ; widgetCount=", ( void * )this, dockWidgetCount());
     if (isEmpty() && !isCentralFrame()) {
         scheduleDeleteLater();
     } else {
@@ -554,14 +553,14 @@ void Group::restoreToPreviousPosition()
     }
 
     if (!m_layoutItem) {
-        qCDebug(general) << Q_FUNC_INFO << "There's no previous position known";
+        spdlog::debug("{} There's no previous position known", Q_FUNC_INFO);
         return;
     }
 
     if (!m_layoutItem->isPlaceholder()) {
         // Maybe in this case just fold the group into the placeholder, which probably has other
         // dockwidgets which were added meanwhile. TODO
-        qCDebug(general) << Q_FUNC_INFO << "Previous position isn't a placeholder";
+        spdlog::debug("{} Previous position isn't a placeholder", Q_FUNC_INFO);
         return;
     }
 
