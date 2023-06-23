@@ -660,7 +660,7 @@ bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea)
 DragController::DragController(QObject *parent)
     : MinimalStateMachine(parent)
 {
-    qCDebug(creation) << "DragController()";
+    spdlog::trace("DragController CTOR");
 
     m_stateNone = new StateNone(this);
     auto statepreDrag = new StatePreDrag(this);

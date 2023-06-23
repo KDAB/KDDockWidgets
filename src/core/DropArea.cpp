@@ -96,7 +96,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     // Initialize min size
     updateSizeConstraints();
 
-    qCDebug(creation) << "DropArea";
+    spdlog::trace("DropArea CTOR");
 
     if (d->m_isMDIWrapper) {
         d->m_visibleWidgetCountConnection = Layout::d_ptr()->visibleWidgetCountChanged.connect([this] {
@@ -126,7 +126,7 @@ DropArea::~DropArea()
     d->m_inDestructor = true;
     delete d->m_dropIndicatorOverlay;
     delete d;
-    qCDebug(creation) << "~DropArea";
+    spdlog::trace("~DropArea");
 }
 
 Core::Group::List DropArea::groups() const

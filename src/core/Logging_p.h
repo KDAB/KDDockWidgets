@@ -32,9 +32,6 @@ Q_DECLARE_LOGGING_CATEGORY(mouseevents)
 /// Verbose logging regarding OS related top level windows
 Q_DECLARE_LOGGING_CATEGORY(toplevels)
 
-/// Verbose logging in ctors and dtors
-Q_DECLARE_LOGGING_CATEGORY(creation)
-
 }
 
 #ifdef KDDW_HAS_SPDLOG

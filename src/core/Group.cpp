@@ -756,7 +756,7 @@ LayoutSaver::Group Group::serialize() const
 
 void Group::scheduleDeleteLater()
 {
-    qCDebug(creation) << Q_FUNC_INFO << this;
+    spdlog::trace("{} {}", Q_FUNC_INFO, ( void * )this);
     m_beingDeleted = true;
 
     // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if

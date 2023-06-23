@@ -62,7 +62,6 @@ void Separator::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
     if (d->freed())
         return;
 
-    qCDebug(general) << Q_FUNC_INFO;
     if (m_controller->isVertical())
         setCursor(Qt::SizeVerCursor);
     else
