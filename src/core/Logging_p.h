@@ -39,22 +39,18 @@ Q_DECLARE_LOGGING_CATEGORY(creation)
 
 #ifdef KDDW_HAS_SPDLOG
 
-// Formatter for QSize
 template<>
 struct fmt::formatter<QSize>
 {
-    // Parse is a no-op for this example
     constexpr auto parse(format_parse_context &ctx)
     {
         return ctx.begin();
     }
 
-    // Format the QSize argument
     template<typename FormatContext>
-    auto format(const QSize &size, FormatContext &ctx)
+    auto format(QSize size, FormatContext &ctx)
     {
-        // Format the QSize as "width x height"
-        return format_to(ctx.out(), "{}x{}", size.width(), size.height());
+        return fmt::format_to(ctx.out(), "{}x{}", size.width(), size.height());
     }
 };
 

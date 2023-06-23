@@ -14,8 +14,6 @@
 #include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/core/View.h"
 
-#include <QDebug>
-
 #include <memory>
 #include <optional>
 
