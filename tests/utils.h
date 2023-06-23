@@ -165,7 +165,7 @@ inline Core::View *draggableFor(Core::View *view)
         draggable = view;
     }
 
-    // qCDebug(tests) << "Draggable is" << draggable << "for" << view;
+    // spdlog:info("Draggable is {} for {}", draggable, view);
     return draggable;
 }
 

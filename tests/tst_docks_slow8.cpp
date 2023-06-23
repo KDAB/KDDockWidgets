@@ -20,6 +20,7 @@
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/LayoutSaver_p.h"
+#include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Action.h"
@@ -277,6 +278,22 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
 }
 
-#include "tst_docks_main.h"
+int main(int argc, char *argv[])
+{
+    int exitCode = 0;
+    for (FrontendType type : Platform::frontendTypes()) {
+        spdlog::info("\nTesting platform {}\n", int(type));
+        KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, type);
+
+        TestDocks test;
+
+        const int code = QTest::qExec(&test, argc, argv);
+        if (code != 0)
+            exitCode = 1;
+        KDDockWidgets::Core::Platform::tests_deinitPlatform();
+    }
+
+    return exitCode;
+}
 
 #include "tst_docks_slow8.moc"
