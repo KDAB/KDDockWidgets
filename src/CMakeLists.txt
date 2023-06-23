@@ -527,6 +527,10 @@ endif()
 
 target_link_libraries(kddockwidgets PRIVATE kdbindings)
 
+if(KDDockWidgets_HAS_SPDLOG)
+    target_link_libraries(kddockwidgets PRIVATE spdlog::spdlog)
+endif()
+
 if(KDDW_FRONTEND_QT)
     if(WIN32)
         target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate dwmapi)

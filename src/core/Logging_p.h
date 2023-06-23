@@ -11,8 +11,15 @@
 
 #ifndef KD_DOCK_LOGGING_P_H
 #define KD_DOCK_LOGGING_P_H
+#pragma once
+
+#include "NonQtCompat_p.h"
 
 #include <QLoggingCategory>
+
+#ifdef KDDW_HAS_SPDLOG
+#include <spdlog/spdlog.h>
+#endif
 
 namespace KDDockWidgets {
 
@@ -29,5 +36,52 @@ Q_DECLARE_LOGGING_CATEGORY(toplevels)
 Q_DECLARE_LOGGING_CATEGORY(creation)
 
 }
+
+#ifdef KDDW_HAS_SPDLOG
+
+// Formatter for QSize
+template<>
+struct fmt::formatter<QSize>
+{
+    // Parse is a no-op for this example
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    // Format the QSize argument
+    template<typename FormatContext>
+    auto format(const QSize &size, FormatContext &ctx)
+    {
+        // Format the QSize as "width x height"
+        return format_to(ctx.out(), "{}x{}", size.width(), size.height());
+    }
+};
+
+#else
+
+// KDDW is built without logging support.
+// Declare some stubs, so caller code doesn't get littered with #ifdefs
+
+namespace KDDockWidgets::spdlog {
+
+template<typename... Args>
+void warn(const char *, const Args &...)
+{
+}
+
+template<typename... Args>
+void info(const char *, const Args &...)
+{
+}
+
+template<typename... Args>
+void error(const char *, const Args &...)
+{
+}
+
+}
+
+#endif
 
 #endif
