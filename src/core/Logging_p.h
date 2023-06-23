@@ -62,14 +62,25 @@ void warn(const char *, const Args &...)
 }
 
 template<typename... Args>
+void error(const char *, const Args &...)
+{
+}
+
+template<typename... Args>
 void info(const char *, const Args &...)
 {
 }
 
 template<typename... Args>
-void error(const char *, const Args &...)
+void debug(const char *, const Args &...)
 {
 }
+
+template<typename... Args>
+void trace(const char *, const Args &...)
+{
+}
+
 
 }
 
