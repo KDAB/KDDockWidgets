@@ -30,6 +30,7 @@
 #include "tests_embedder.h"
 
 #include "../../src/flutter/Platform.h"
+#include "../../src/core/Logging_p.h"
 
 #include <cassert>
 #include <chrono>
@@ -39,7 +40,6 @@
 #include "GLFW/glfw3.h"
 #include "flutter_embedder.h"
 
-#include <QDebug>
 #include <QFileInfo>
 
 // This value is calculated after the window is created.
@@ -238,7 +238,7 @@ void TestsEmbedder::deinit()
         const FlutterEngineResult res = FlutterEngineShutdown(m_flutterEngine);
         m_flutterEngine = nullptr;
         if (res != kSuccess)
-            qDebug() << Q_FUNC_INFO << "Could not stop flutter" << res;
+            spdlog::warn("TestsEmbedder::deinit: Could not stop flutter {}", res);
     }
 
     if (m_glfwWindow) {
@@ -247,7 +247,7 @@ void TestsEmbedder::deinit()
     }
 
     glfwTerminate();
-    // qDebug() << Q_FUNC_INFO << "glfw terminated";
+    spdlog::warn("TestsEmbedder::deinit: glfw terminated}");
 }
 
 int TestsEmbedder::run()

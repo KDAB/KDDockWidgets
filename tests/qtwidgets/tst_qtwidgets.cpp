@@ -18,6 +18,7 @@
 #include "../utils.h"
 #include "Config.h"
 #include "LayoutSaver.h"
+#include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/WindowBeingDragged_p.h"
 
@@ -84,7 +85,7 @@ inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
         if (Platform::instance()->tests_waitForWindowActive(dock->view()->window(), 1000)) {
             return dock;
         }
-        qWarning() << Q_FUNC_INFO << "Couldn't activate window";
+        spdlog::warn("KDDockWidgets::Tests::createDockWidget: Couldn't activate window");
         return nullptr;
     } else {
         return dock;
@@ -234,14 +235,10 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
     QCOMPARE(dropArea->count(), 1);
     QCOMPARE(centralFrame->dockWidgetCount(), 1);
 
-    qDebug() << "Central widget width=" << central->size() << "; mainwindow=" << m->size();
-
     // Detach tab
     QPoint globalPressPos = dragPointForWidget(centralFrame.data(), 0);
     auto tabBar = centralFrame->tabBar()->view();
     QVERIFY(tabBar);
-    qDebug() << "Detaching tab from dropArea->size=" << dropArea->size()
-             << "; dropArea=" << dropArea;
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
 
     QVERIFY(centralFrame);
@@ -1410,7 +1407,6 @@ void TestQtWidgets::tst_restoreFloatingMaximizedState()
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     const QRect originalNormalGeometry = dock1->floatingWindow()->view()->normalGeometry();
     dock1->floatingWindow()->view()->showMaximized();
-    qDebug() << originalNormalGeometry;
 
     QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), WindowState::Maximized);
 

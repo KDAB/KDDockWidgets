@@ -15,8 +15,8 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 #include "Config.h"
+#include "core/Logging_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
-
 #include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/DropIndicatorOverlay.h"
 #include "kddockwidgets/core/DropArea.h"
@@ -85,10 +85,13 @@ struct EnsureTopLevelsDeleted
 
         if (!DockRegistry::self()->isEmpty()) {
             auto dr = DockRegistry::self();
-            qWarning() << "There's still top-level widgets present!"
-                       << "\nfloatings:" << dr->floatingWindows(/*includeBeingDeleted=*/true)
-                       << "\nmainwindows:" << dr->mainWindowsNames()
-                       << "\ndocks:" << dr->dockWidgetNames();
+            spdlog::warn("There's still top-level widgets present!"
+                         "\nfloatings: {}"
+                         "\nmainWindows: {}"
+                         "\ndocks: {}",
+                         dr->floatingWindows(/*includeBeingDeleted=*/true).size(),
+                         dr->mainWindowsNames().size(),
+                         dr->dockWidgetNames().size());
         }
 
         // Other cleanup, since we use this class everywhere

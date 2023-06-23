@@ -127,7 +127,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
     d2->close();
 
     KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(d3->view());
-    d2->open(); // Should not result in negative anchor positions (Test will fail due to a qWarning)
+    d2->open(); // Should not result in negative anchor positions (Test will fail due to a spdlog warning)
     KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(d3->view());
     layout->checkSanity();
 
@@ -139,11 +139,8 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
     const int availableToShrink =
         layout->layoutSize().height() - layout->view()->minSize().height();
     const QSize newSize = { layout->layoutWidth(), layout->layoutHeight() - availableToShrink };
-    if (layout->layoutMinimumSize().expandedTo(newSize) != newSize) {
-        qDebug() << "Size to set is too small=" << newSize
-                 << "; min=" << layout->layoutMinimumSize();
-        Q_ASSERT(false);
-    }
+
+    Q_ASSERT(layout->layoutMinimumSize().expandedTo(newSize) == newSize);
 
     layout->setLayoutSize(newSize);
 

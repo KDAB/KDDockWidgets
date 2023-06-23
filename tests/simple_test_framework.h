@@ -20,18 +20,21 @@
 
 #include "KDDockWidgets.h"
 #include "core/Platform.h"
+#include "core/Logging_p.h"
 
 #include <string>
 #include <functional>
 #include <iostream>
 
+using namespace KDDockWidgets;
+
 #ifdef KDDW_FRONTEND_FLUTTER
 #include "qcoro/core/qcorocore.h"
 #endif
 
-#define KDDW_TEST_RETURN(res)                                             \
-    if (!res)                                                             \
-        qDebug() << "FAILED: at" << Q_FUNC_INFO << "; line=" << __LINE__; \
+#define KDDW_TEST_RETURN(res)                                           \
+    if (!res)                                                           \
+        spdlog::warn("FAILED: at={} ; line={}", Q_FUNC_INFO, __LINE__); \
     KDDW_CO_RETURN res;
 
 // TODOm4: Investigate something more fancy

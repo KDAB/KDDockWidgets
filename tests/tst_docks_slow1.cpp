@@ -44,7 +44,6 @@ using namespace KDDockWidgets::Tests;
 
 KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
 {
-    qDebug() << Q_FUNC_INFO;
     auto func = [](bool restore1First) -> KDDW_QCORO_TASK {
         // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
         // result: the bottom most one didn't have it's top separator at y=0
@@ -129,8 +128,6 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
 KDDW_QCORO_TASK tst_startHidden()
 {
     // A really simple test for InitialVisibilityOption::StartHidden
-
-    qDebug() << Q_FUNC_INFO;
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {},
@@ -143,8 +140,6 @@ KDDW_QCORO_TASK tst_startHidden()
 
 KDDW_QCORO_TASK tst_startHidden2()
 {
-    qDebug() << Q_FUNC_INFO;
-
     EnsureTopLevelsDeleted e;
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
@@ -208,7 +203,6 @@ KDDW_QCORO_TASK tst_startHidden2()
 
 KDDW_QCORO_TASK tst_invalidJSON()
 {
-    qDebug() << Q_FUNC_INFO;
     auto func = [](QString layoutFileName, int numDockWidgets, QString expectedWarning, bool expectedResult) -> KDDW_QCORO_TASK {
         const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
 

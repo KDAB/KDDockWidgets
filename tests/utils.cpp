@@ -17,9 +17,8 @@
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/Platform.h"
 #include "core/ViewGuard.h"
+#include "core/Logging_p.h"
 #include "kddockwidgets/core/Window.h"
-
-#include <QDebug>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -83,7 +82,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
         }
 #endif
 
-        qWarning() << Q_FUNC_INFO << "Couldn't activate window";
+        spdlog::info("KDDockWidgets::Tests::createDockWidget: Couldn't activate window");
         Q_ASSERT(false);
         return nullptr;
     } else {
