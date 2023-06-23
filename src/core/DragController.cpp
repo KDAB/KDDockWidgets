@@ -898,7 +898,7 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
         }
     }
 
-    spdlog::trace("Couldn't find hwnd for top-level hwnd={}", hwnd);
+    spdlog::trace("Couldn't find hwnd for top-level hwnd={}", ( void * )hwnd);
     return nullptr;
 }
 
@@ -978,7 +978,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                     }
                 }
 #endif // QtWidgets A window belonging to another app is below the cursor
-                spdlog::trace("Window from another app is under cursor {}", hwnd);
+                spdlog::trace("Window from another app is under cursor {}", ( void * )hwnd);
                 return nullptr;
             }
         }
