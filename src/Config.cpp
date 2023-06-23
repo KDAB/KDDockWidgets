@@ -26,8 +26,9 @@
 #include "core/Platform.h"
 #include "core/View.h"
 
-#include <QDebug>
 #include <QOperatingSystemVersion>
+
+#include <iostream>
 
 using namespace KDDockWidgets::Core;
 
@@ -89,11 +90,11 @@ void Config::setFlags(Flags f)
 {
     auto dr = DockRegistry::self();
     if (!dr->isEmpty(/*excludeBeingDeleted=*/true)) {
-        qWarning()
+        std::cerr
             << Q_FUNC_INFO
             << "Only use this function at startup before creating any DockWidget or MainWindow"
-            << "; These are already created: " << dr->mainWindowsNames() << dr->dockWidgetNames()
-            << dr->floatingWindows();
+            << "; These are already created: " << dr->mainWindowsNames().size() << dr->dockWidgetNames().size()
+            << dr->floatingWindows().size() << "\n";
         return;
     }
 
@@ -141,14 +142,14 @@ int Config::separatorThickness() const
 void Config::setSeparatorThickness(int value)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/true)) {
-        qWarning()
+        std::cerr
             << Q_FUNC_INFO
-            << "Only use this function at startup before creating any DockWidget or MainWindow";
+            << "Only use this function at startup before creating any DockWidget or MainWindow\n";
         return;
     }
 
     if (value < 0 || value >= 100) {
-        qWarning() << Q_FUNC_INFO << "Invalid value" << value;
+        std::cerr << Q_FUNC_INFO << "Invalid value" << value << "\n";
         return;
     }
 
@@ -198,9 +199,9 @@ DropIndicatorAllowedFunc Config::dropIndicatorAllowedFunc() const
 void Config::setAbsoluteWidgetMinSize(QSize size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
-        qWarning()
+        std::cerr
             << Q_FUNC_INFO
-            << "Only use this function at startup before creating any DockWidget or MainWindow";
+            << "Only use this function at startup before creating any DockWidget or MainWindow\n";
         return;
     }
 
@@ -215,9 +216,9 @@ QSize Config::absoluteWidgetMinSize() const
 void Config::setAbsoluteWidgetMaxSize(QSize size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
-        qWarning()
+        std::cerr
             << Q_FUNC_INFO
-            << "Only use this function at startup before creating any DockWidget or MainWindow";
+            << "Only use this function at startup before creating any DockWidget or MainWindow\n";
         return;
     }
 
@@ -344,7 +345,7 @@ int Config::startDragDistance() const
 
 void Config::printDebug()
 {
-    qDebug() << "Flags: " << d->m_flags << d->m_internalFlags;
+    std::cerr << "Flags: " << d->m_flags << d->m_internalFlags << "\n";
 }
 
 }

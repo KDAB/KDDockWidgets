@@ -22,9 +22,11 @@
 #include "core/MainWindow.h"
 #include "core/DropArea.h"
 #include "core/MDILayout.h"
-
+#include "core/Logging_p.h"
 #include "core/Platform.h"
 #include "core/Window.h"
+
+#include <iostream>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -351,7 +353,7 @@ bool View::Private::aboutToBeDestroyed() const
 
 void View::dumpDebug()
 {
-    qDebug() << "View::dumpDebug:" << m_controller << int(d->type()) << "root=" << rootView()->controller();
+    std::cerr << "View::dumpDebug: controller={} type={}, rootController={}" << m_controller << int(d->type()) << rootView()->controller() << "\n";
 }
 
 /** static */
