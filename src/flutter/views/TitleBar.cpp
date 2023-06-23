@@ -12,7 +12,7 @@
 #include "TitleBar.h"
 
 #include "core/DragController_p.h"
-
+#include "core/Logging_p.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/TitleBar.h"
@@ -40,7 +40,7 @@ void TitleBar::init()
 
 void TitleBar::onTitleBarChanged(const QString &)
 {
-    qWarning() << Q_FUNC_INFO << "Should be called in dart instead";
+    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
 }
 
 #ifdef DOCKS_TESTING_METHODS

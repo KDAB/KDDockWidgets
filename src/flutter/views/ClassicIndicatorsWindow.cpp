@@ -14,6 +14,7 @@
 #include "kddockwidgets/core/Group.h"
 #include "View.h"
 #include "core/Utils_p.h"
+#include "core/Logging_p.h"
 #include "core/View_p.h"
 #include "flutter/Platform.h"
 
@@ -99,19 +100,19 @@ Core::Group *IndicatorWindow::hoveredGroup() const
 
 QPoint IndicatorWindow::posForIndicator_flutter(DropLocation) const
 {
-    qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
+    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
     return {};
 }
 
 DropLocation IndicatorWindow::hover_flutter(QPoint)
 {
-    qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
+    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
     return {};
 }
 
 bool IndicatorWindow::updatePositions_flutter(int, int, Core::Group *, int)
 {
-    qWarning() << Q_FUNC_INFO << "Implemented in dart instead";
+    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
     return false;
 }
 
