@@ -85,9 +85,9 @@ bool Window::isVisible() const
     return m_isVisible;
 }
 
-WId Window::handle() const
+Core::WId Window::handle() const
 {
-    return WId(m_rootView ? m_rootView->handle() : HANDLE());
+    return Core::WId(m_rootView ? m_rootView->handle() : Core::HANDLE());
 }
 
 bool Window::equals(std::shared_ptr<Core::Window> w) const

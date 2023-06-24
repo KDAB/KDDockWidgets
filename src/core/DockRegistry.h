@@ -131,7 +131,7 @@ public:
     floatingWindowForHandle(std::shared_ptr<Core::Window> windowHandle) const;
 
     ///@brief returns the FloatingWindow with handle @p hwnd
-    Core::FloatingWindow *floatingWindowForHandle(WId hwnd) const;
+    Core::FloatingWindow *floatingWindowForHandle(Core::WId hwnd) const;
 
     ///@brief returns the MainWindow with handle @p windowHandle
     Core::MainWindow *mainWindowForHandle(std::shared_ptr<Core::Window> windowHandle) const;

@@ -34,7 +34,7 @@ public:
     void setProperty(const char *name, const QVariant &value) override;
     QVariant property(const char *name) const override;
     bool isVisible() const override;
-    WId handle() const override;
+    Core::WId handle() const override;
     bool equals(std::shared_ptr<Core::Window> other) const override;
     void setFramePosition(QPoint targetPos) override;
     QRect frameGeometry() const override;

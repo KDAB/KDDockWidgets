@@ -36,7 +36,7 @@ public:
 
     QObject *thisObject() const;
 
-    KDDockWidgets::HANDLE handle() const override;
+    Core::HANDLE handle() const override;
     void setViewName(const QString &name) override;
 
     static QObject *asQObject(View *);

@@ -26,10 +26,10 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+namespace Core {
+
 using HANDLE = const void *;
 using WId = quintptr;
-
-namespace Core {
 
 class Item;
 class EventFilterInterface;
@@ -62,7 +62,7 @@ public:
     /// QQuickItem, while for QtWidgets it's a QWidget. Can be whatever the frontend developer
     /// wants, as long as it uniquely identifies the GUI element. KDDW backend only uses it for
     /// comparison purposes
-    virtual KDDockWidgets::HANDLE handle() const = 0;
+    virtual HANDLE handle() const = 0;
 
     /// @brief Returns whether the gui item represented by this view was already deleted
     /// Usually false, as KDDW internal gui elements inherit View, and nobody will access them after

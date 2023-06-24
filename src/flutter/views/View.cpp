@@ -478,7 +478,7 @@ void View::setZOrder(int)
 {
 }
 
-HANDLE View::handle() const
+Core::HANDLE View::handle() const
 {
     return this;
 }
