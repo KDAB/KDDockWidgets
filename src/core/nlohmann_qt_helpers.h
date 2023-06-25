@@ -14,7 +14,6 @@
 #include <nlohmann/json.hpp>
 
 #include <QVariantMap>
-#include <QDebug>
 #include <QRect>
 #include <QSize>
 
@@ -180,13 +179,5 @@ inline void from_json(const nlohmann::json &j, QRect &rect)
 }
 
 QT_END_NAMESPACE
-
-inline QDebug operator<<(QDebug debug, const nlohmann::json &j)
-{
-    QDebugStateSaver s(debug);
-    debug.nospace() << '\n'
-                    << j.dump(4).data() << '\n';
-    return debug;
-}
 
 #endif

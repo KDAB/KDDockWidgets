@@ -13,7 +13,6 @@
 
 #include "kddockwidgets/docks_export.h"
 
-#include <QDebug>
 #include <QObject>
 
 #if defined(QT_WIDGETS_LIB)

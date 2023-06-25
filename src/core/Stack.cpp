@@ -22,7 +22,6 @@
 #include "core/Group.h"
 #include "core/FloatingWindow.h"
 
-#include <QDebug>
 #include <QPointer>
 
 using namespace KDDockWidgets;

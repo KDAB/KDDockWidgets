@@ -37,7 +37,6 @@
 #include "core/layouting/Item_p.h"
 
 #include <qmath.h>
-#include <QDebug>
 #include <QFile>
 
 /**
@@ -81,7 +80,7 @@ inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
     }
 
     if (options != RestoreOption_None) {
-        qWarning() << Q_FUNC_INFO << "Unknown options" << options;
+        spdlog::error("Unknown options={}", int(options));
     }
 
     return ret;
@@ -389,7 +388,7 @@ bool LayoutSaver::saveToFile(const QString &jsonFilename)
 
     QFile f(jsonFilename);
     if (!f.open(QIODevice::WriteOnly)) {
-        qWarning() << Q_FUNC_INFO << "Failed to open" << jsonFilename << f.errorString();
+        spdlog::error("Failed to open {}, error={}", jsonFilename, f.errorString());
         return false;
     }
 
@@ -401,7 +400,7 @@ bool LayoutSaver::restoreFromFile(const QString &jsonFilename)
 {
     QFile f(jsonFilename);
     if (!f.open(QIODevice::ReadOnly)) {
-        qWarning() << Q_FUNC_INFO << "Failed to open" << jsonFilename << f.errorString();
+        spdlog::error("Failed to open {}, error={}", jsonFilename, f.errorString());
         return false;
     }
 
@@ -515,8 +514,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             if (auto mwFunc = Config::self().mainWindowFactoryFunc()) {
                 mainWindow = mwFunc(mw.uniqueName);
             } else {
-                qWarning() << "Failed to restore layout create MainWindow with name"
-                           << mw.uniqueName << "first";
+                spdlog::error("Failed to restore layout create MainWindow with name {} first");
                 return false;
             }
         }
@@ -573,7 +571,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
                 dw->uniqueName, DockRegistry::DockByNameFlag::ConsultRemapping)) {
             dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
         } else {
-            qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;
+            spdlog::error("Couldn't find dock widget {}", dw->uniqueName);
         }
     }
 
@@ -705,8 +703,7 @@ bool LayoutSaver::restoreInProgress()
 bool LayoutSaver::Layout::isValid() const
 {
     if (serializationVersion != KDDOCKWIDGETS_SERIALIZATION_VERSION) {
-        qWarning() << Q_FUNC_INFO << "Serialization format is too old" << serializationVersion
-                   << "current=" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
+        spdlog::error("Serialization format is too old {}, current={}", serializationVersion, KDDOCKWIDGETS_SERIALIZATION_VERSION);
         return false;
     }
 
@@ -911,8 +908,7 @@ bool LayoutSaver::Group::isValid() const
 
     if (!dockWidgets.isEmpty()) {
         if (currentTabIndex >= dockWidgets.size() || currentTabIndex < 0) {
-            qWarning() << Q_FUNC_INFO << "Invalid tab index" << currentTabIndex
-                       << dockWidgets.size();
+            spdlog::error("Invalid tab index {}, {}", currentTabIndex, dockWidgets.size());
             return false;
         }
     }
@@ -1083,17 +1079,17 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
 {
     auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
     if (!mainWindow) {
-        qWarning() << Q_FUNC_INFO << "Failed to find main window with name" << mainWindowName;
+        spdlog::error("Failed to find main window with name {}", mainWindowName);
         return;
     }
 
     if (!savedMainWindowGeo.isValid() || savedMainWindowGeo.isNull()) {
-        qWarning() << Q_FUNC_INFO << "Invalid saved main window geometry" << savedMainWindowGeo;
+        spdlog::error("Invalid saved main window geometry {}", savedMainWindowGeo);
         return;
     }
 
     if (!mainWindow->geometry().isValid() || mainWindow->geometry().isNull()) {
-        qWarning() << Q_FUNC_INFO << "Invalid main window geometry" << mainWindow->geometry();
+        spdlog::error("Invalid main window geometry {}", mainWindow->geometry());
         return;
     }
 

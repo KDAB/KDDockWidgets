@@ -264,7 +264,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View 
             setGuestView(guest);
             m_guest->controller()->setParentView(hostView());
         } else if (hostView()) {
-            qWarning() << Q_FUNC_INFO << "Couldn't find group to restore for" << this;
+            spdlog::error("Couldn't find group to restore for item={}", ( void * )this);
         }
     }
 }
@@ -305,8 +305,7 @@ View *Item::hostView() const
 void Item::restore(View *guest)
 {
     if (isVisible() || m_guest) {
-        qWarning() << Q_FUNC_INFO << "Hitting assert. visible=" << isVisible()
-                   << "; guest=" << this;
+        spdlog::error("Hitting assert. visible={}, guest={}", isVisible(), ( void * )this);
         Q_ASSERT(false);
     }
 
@@ -637,8 +636,7 @@ bool Item::checkSanity()
 
     if (minSize().width() > width() || minSize().height() > height()) {
         root()->dumpLayout();
-        qWarning() << Q_FUNC_INFO << "Size constraints not honoured" << this
-                   << "; min=" << minSize() << "; size=" << size();
+        spdlog::error("Size constraints not honoured this={}, min={}, size={}", ( void * )this, minSize(), size());
         return false;
     }
 
@@ -646,26 +644,21 @@ bool Item::checkSanity()
         if (m_guest->parentView() && !m_guest->parentView()->equals(hostView())) {
             if (root())
                 root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest."
-                       << "; this=" << this << "; item.parentContainer=" << parentContainer()
-                       << "; item.root.parent=" << (root() ? root()->parent() : nullptr);
+            spdlog::error("Unexpected parent for our guest. this={}, item.parentContainer={}, item.root.parent={}",
+                          ( void * )this, ( void * )parentContainer(), ( void * )(root() ? root()->parent() : nullptr));
             return false;
         }
 
 #if 0 // if guest is explicitly hidden we're not hiding the item yet. And probably won't
         if (!m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
 
-            qWarning() << Q_FUNC_INFO << "Guest widget isn't visible" << this;
+            spdlog::error("Guest widget isn't visible {}", this);
             return false;
         }
 #endif
         if (m_guest->geometry() != mapToRoot(rect())) {
             root()->dumpLayout();
-            auto d = qWarning();
-            d << Q_FUNC_INFO << "Guest widget doesn't have correct geometry. has"
-              << "guest.global=" << m_guest->geometry() << "; item.local=" << geometry()
-              << "; item.global=" << mapToRoot(rect()) << this;
-
+            spdlog::error("Guest widget doesn't have correct geometry. has={}, guest.global={}, item.local={}, item.global={}", m_guest->geometry(), geometry(), mapToRoot(rect()), ( void * )this);
             return false;
         }
     }
@@ -706,9 +699,7 @@ void Item::setGeometry(QRect rect)
             && (rect.width() < minSz.width() || rect.height() < minSz.height())) {
             if (auto r = root())
                 r->dumpLayout();
-            qWarning() << Q_FUNC_INFO << this << "Constraints not honoured."
-                       << "sz=" << rect.size() << "; min=" << minSz
-                       << ": parent=" << parentContainer();
+            spdlog::error("Constraints not honoured. this={}, sz={}, min={}, parent={}", rect.size(), minSz, ( void * )parentContainer());
         }
 
         geometryChanged.emit();
@@ -1056,7 +1047,7 @@ bool ItemBoxContainer::checkSanity()
     }
 
     if (d->m_orientation != Qt::Vertical && d->m_orientation != Qt::Horizontal) {
-        qWarning() << Q_FUNC_INFO << "Invalid orientation" << d->m_orientation << this;
+        spdlog::error("Invalid orientation={}, this={}", d->m_orientation, ( void * )this);
         return false;
     }
 
@@ -1069,8 +1060,8 @@ bool ItemBoxContainer::checkSanity()
         const int pos = Core::pos(item->pos(), d->m_orientation);
         if (expectedPos != pos) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Unexpected pos" << pos << "; expected=" << expectedPos
-                       << "; for item=" << item << "; isContainer=" << item->isContainer();
+            spdlog::error("Unexpected pos={}, expected={}, item={}, isContainer={}", pos, expectedPos, ( void * )item,
+                          item->isContainer());
             return false;
         }
 
@@ -1080,14 +1071,12 @@ bool ItemBoxContainer::checkSanity()
     const int h1 = Core::length(size(), oppositeOrientation(d->m_orientation));
     for (Item *item : children) {
         if (item->parentContainer() != this) {
-            qWarning() << "Invalid parent container for" << item
-                       << "; is=" << item->parentContainer() << "; expected=" << this;
+            spdlog::error("Invalid parent container for item={}, is={}, expected={}", ( void * )item, ( void * )item->parentContainer(), ( void * )this);
             return false;
         }
 
         if (item->parent() != this) {
-            qWarning() << "Invalid QObject parent for" << item << "; is=" << item->parent()
-                       << "; expected=" << this;
+            spdlog::error("Invalid QObject parent for item={}, is={}, expected={}", ( void * )item, ( void * )item->parent(), ( void * )this);
             return false;
         }
 
@@ -1096,15 +1085,13 @@ bool ItemBoxContainer::checkSanity()
             const int h2 = Core::length(item->size(), oppositeOrientation(d->m_orientation));
             if (h1 != h2) {
                 root()->dumpLayout();
-                qWarning() << Q_FUNC_INFO << "Invalid size for item." << item
-                           << "Container.length=" << h1 << "; item.length=" << h2;
+                spdlog::error("Invalid size for item {}, Container.length={}, item.length={}", ( void * )item, h1, h2);
                 return false;
             }
 
             if (!rect().contains(item->geometry())) {
                 root()->dumpLayout();
-                qWarning() << Q_FUNC_INFO << "Item geo is out of bounds. item=" << item
-                           << "; geo=" << item->geometry() << "; parent.rect=" << rect();
+                spdlog::error("Item geo is out of bounds. item={}, geo={}, parent.rect={}", ( void * )item, item->geometry(), rect());
                 return false;
             }
         }
@@ -1123,8 +1110,7 @@ bool ItemBoxContainer::checkSanity()
 
         if (occupied != length()) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Unexpected length. Expected=" << occupied
-                       << "; got=" << length() << "; this=" << this;
+            spdlog::error("Unexpected length. Expected={}, got={}, this={}", occupied, length(), ( void * )this);
             return false;
         }
 
@@ -1133,10 +1119,9 @@ bool ItemBoxContainer::checkSanity()
         const double expectedPercentage = visibleChildren.isEmpty() ? 0.0 : 1.0;
         if (!qFuzzyCompare(totalPercentage, expectedPercentage)) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Percentages don't add up" << totalPercentage
-                       << percentages << this;
+            spdlog::error("Percentages don't add up", totalPercentage, percentages, ( void * )this);
             const_cast<ItemBoxContainer *>(this)->d->updateSeparators_recursive();
-            qWarning() << Q_FUNC_INFO << d->childPercentages();
+            spdlog::error(d->childPercentages());
             return false;
         }
     }
@@ -1144,8 +1129,7 @@ bool ItemBoxContainer::checkSanity()
     const auto numVisibleChildren = visibleChildren.size();
     if (d->m_separators.size() != qMax(0, numVisibleChildren - 1)) {
         root()->dumpLayout();
-        qWarning() << Q_FUNC_INFO << "Unexpected number of separators" << d->m_separators.size()
-                   << numVisibleChildren;
+        spdlog::error("Unexpected number of separators sz={}, numVisibleChildren={}", d->m_separators.size(), numVisibleChildren);
         return false;
     }
 
@@ -1161,28 +1145,24 @@ bool ItemBoxContainer::checkSanity()
             mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
         if (!View::equals(separator->view()->parentView().get(), hostView())) {
-            qWarning() << Q_FUNC_INFO << "Invalid host widget for separator" << this;
+            spdlog::error("Invalid host widget for separator this={}", ( void * )this);
             return false;
         }
 
         if (separator->parentContainer() != this) {
-            qWarning() << Q_FUNC_INFO << "Invalid parent container for separator"
-                       << separator->parentContainer() << separator << this;
+            spdlog::error("Invalid parent container for separator parent={}, separator={}, this={}", ( void * )separator->parentContainer(), ( void * )separator, ( void * )this);
             return false;
         }
 
         if (separator->position() != expectedSeparatorPos) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Unexpected separator position" << separator->position()
-                       << "; expected=" << expectedSeparatorPos << separator << "; this=" << this;
+            spdlog::error("Unexpected separator position, expected={}, separator={}, this={}", separator->position(), expectedSeparatorPos, ( void * )separator, ( void * )this);
             return false;
         }
 
         View *separatorWidget = separator->view();
         if (separatorWidget->geometry().size() != expectedSeparatorSize) {
-            qWarning() << Q_FUNC_INFO << "Unexpected separator size"
-                       << separatorWidget->geometry().size()
-                       << "; expected=" << expectedSeparatorSize << separator << "; this=" << this;
+            spdlog::error("Unexpected separator size={}, expected={}, separator={}, this={}", separatorWidget->geometry().size(), expectedSeparatorSize, ( void * )separator, ( void * )this);
             return false;
         }
 
@@ -1192,8 +1172,7 @@ bool ItemBoxContainer::checkSanity()
                       oppositeOrientation(d->m_orientation))
             != pos2) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Unexpected position pos2=" << separatorPos2
-                       << "; expected=" << pos2 << separator << "; this=" << this;
+            spdlog::error("Unexpected position pos2={}, expected={}, separator={}, this={}", separatorPos2, pos2, ( void * )separator, ( void * )this);
             return false;
         }
 
@@ -1211,8 +1190,7 @@ bool ItemBoxContainer::checkSanity()
         if (separatorPos < separatorMinPos || separatorPos > separatorMaxPos || separatorMinPos < 0
             || separatorMaxPos <= 0) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Invalid bounds for separator, pos=" << separatorPos
-                       << "; min=" << separatorMinPos << "; max=" << separatorMaxPos << separator;
+            spdlog::error("Invalid bounds for separator, pos={}, min={}, max={}, separator={}", separatorPos, separatorMinPos, separatorMaxPos, ( void * )separator);
             return false;
         }
     }
@@ -1350,8 +1328,7 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
 
     ItemBoxContainer *parent = relativeTo->parentBoxContainer();
     if (!parent) {
-        qWarning() << Q_FUNC_INFO << "This method should only be called for box containers"
-                   << item->parent();
+        spdlog::error("This method should only be called for box containers parent={}", ( void * )item->parent());
         return;
     }
 
@@ -1539,8 +1516,7 @@ QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relative
 
     if (rootCopy.size() != root()->size()) {
         // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "The root copy grew ?!" << rootCopy.size() << root()->size()
-                   << loc;
+        spdlog::error("The root copy grew ?! copy={}, sz={}, loc={}", rootCopy.size(), root()->size(), loc);
         return suggestedDropRectFallback(item, relativeTo, loc);
     }
 
@@ -1924,7 +1900,7 @@ void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize,
 
             if (newItemLength <= 0) {
                 q->root()->dumpLayout();
-                qWarning() << Q_FUNC_INFO << "Invalid resize newItemLength=" << newItemLength;
+                spdlog::error("Invalid resize newItemLength={}", newItemLength);
                 Q_ASSERT(false);
                 return;
             }
@@ -2099,8 +2075,7 @@ void ItemBoxContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy s
     if (newSize.width() < minSize.width() || newSize.height() < minSize.height()) {
         if (!s_silenceSanityChecks && hostSupportsHonouringLayoutMinSize()) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "New size doesn't respect size constraints"
-                       << "; new=" << newSize << "; min=" << minSize << this;
+            spdlog::error("New size doesn't respect size constraints new={}, min={}, this={}", newSize, minSize, ( void * )this);
         }
         return;
     }
@@ -2311,7 +2286,7 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
     const auto separatorIndex = d->m_separators.indexOf(separator);
     if (separatorIndex == -1) {
         // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "Unknown separator" << separator << this;
+        spdlog::error("Unknown separator {}, this={}", ( void * )separator, ( void * )this);
         root()->dumpLayout();
         return;
     }
@@ -2329,9 +2304,8 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
                                             // (negative delta, which is fine), just don't increase
                                             // if further
         root()->dumpLayout();
-        qWarning() << "Separator would have gone out of bounds"
-                   << "; separators=" << separator << "; min=" << min << "; pos=" << pos
-                   << "; max=" << max << "; delta=" << delta;
+        spdlog::error("Separator would have gone out of bounds, separator={}, min={}, pos={}, max={}, deleta={}", ( void * )separator,
+                      min, pos, max, delta);
         return;
     }
 
@@ -2339,8 +2313,7 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
     const Item::List children = visibleChildren();
     if (children.size() <= separatorIndex) {
         // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "Not enough children for separator index" << separator << this
-                   << separatorIndex;
+        spdlog::error("Not enough children for separator index", ( void * )separator, ( void * )this, separatorIndex);
         root()->dumpLayout();
         return;
     }
@@ -2397,7 +2370,7 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
         // Go up the hierarchy and move the next separator on the left
         if (Q_UNLIKELY(isRoot())) {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "Not enough space to move separator" << this;
+            spdlog::error("Not enough space to move separator {}", ( void * )this);
         } else {
             KDDockWidgets::Core::Separator *nextSeparator =
                 parentBoxContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection,
@@ -2420,7 +2393,7 @@ void ItemBoxContainer::requestEqualSize(KDDockWidgets::Core::Separator *separato
     const auto separatorIndex = d->m_separators.indexOf(separator);
     if (separatorIndex == -1) {
         // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "Separator not found" << separator;
+        spdlog::error("Separator not found {}", ( void * )separator);
         return;
     }
 
@@ -2629,7 +2602,7 @@ int ItemBoxContainer::neighboursLengthFor(const Item *item, Side side, Qt::Orien
     const Item::List children = visibleChildren();
     const auto index = children.indexOf(const_cast<Item *>(item));
     if (index == -1) {
-        qWarning() << Q_FUNC_INFO << "Couldn't find item" << item;
+        spdlog::error("Couldn't find item {}", ( void * )item);
         return 0;
     }
 
@@ -2667,7 +2640,7 @@ int ItemBoxContainer::neighboursMinLengthFor(const Item *item, Side side, Qt::Or
     const Item::List children = visibleChildren();
     const auto index = children.indexOf(const_cast<Item *>(item));
     if (index == -1) {
-        qWarning() << Q_FUNC_INFO << "Couldn't find item" << item;
+        spdlog::error("Couldn't find item {}", ( void * )item);
         return 0;
     }
 
@@ -2698,7 +2671,7 @@ int ItemBoxContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Or
     const Item::List children = visibleChildren();
     const auto index = children.indexOf(const_cast<Item *>(item));
     if (index == -1) {
-        qWarning() << Q_FUNC_INFO << "Couldn't find item" << item;
+        spdlog::error("Couldn't find item {}", ( void * )item);
         return 0;
     }
 
@@ -2793,8 +2766,7 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
         if (index1 == -1 || index2 == -1 || index1 >= childSizes.count()
             || index2 >= childSizes.count()) {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "Invalid indexes" << index1 << index2
-                       << childSizes.count();
+            spdlog::error("Invalid indexes {} {} {}", index1, index2, childSizes.count());
             return;
         }
 
@@ -2816,7 +2788,7 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
         const int index1 = indexOfVisibleChild(side1Neighbour);
         if (index1 == -1 || index1 >= childSizes.count()) {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "Invalid indexes" << index1 << childSizes.count();
+            spdlog::error("Invalid indexes {} {}", index1, childSizes.count());
             return;
         }
 
@@ -2831,7 +2803,7 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
         const int index2 = indexOfVisibleChild(side2Neighbour);
         if (index2 == -1 || index2 >= childSizes.count()) {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "Invalid indexes" << index2 << childSizes.count();
+            spdlog::error("Invalid indexes {} {}", index2, childSizes.count());
             return;
         }
 
@@ -3068,7 +3040,7 @@ QVector<int> ItemBoxContainer::calculateSqueezes(
 
     if (missing < 0) {
         // Doesn't really happen
-        qWarning() << Q_FUNC_INFO << "Missing is negative" << missing << squeezes;
+        spdlog::error("Missing is negative. missing={}, squeezes={}", missing, squeezes);
     }
 
     return squeezes;
@@ -3420,16 +3392,14 @@ bool ItemBoxContainer::test_suggestedRect()
                     return false;
                 } else if (!root()->rect().contains(rect)) {
                     root()->dumpLayout();
-                    qWarning() << Q_FUNC_INFO << "Suggested rect is out of bounds" << rect
-                               << "; loc=" << loc << "; relativeTo=" << relativeTo;
+                    spdlog::error("Suggested rect is out of bounds rect={}, loc={}, relativeTo={}", rect, loc, ( void * )relativeTo);
                     return false;
                 }
             }
             if (rects.value(Location_OnBottom).y() <= rects.value(Location_OnTop).y()
                 || rects.value(Location_OnRight).x() <= rects.value(Location_OnLeft).x()) {
                 root()->dumpLayout();
-                qWarning() << Q_FUNC_INFO << "Invalid suggested rects" << rects << this
-                           << "; relativeTo=" << relativeTo;
+                spdlog::error("Invalid suggested rects. this={}, relativeTo={}", ( void * )this, ( void * )relativeTo);
                 return false;
             }
         }
@@ -3510,7 +3480,7 @@ const Item *ItemBoxContainer::Private::itemFromPath(const QVector<int> &path) co
         if (index < 0 || index >= container->m_children.size()) {
             // Doesn't happen
             q->root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Invalid index" << index << this << path << q->isRoot();
+            spdlog::error("Invalid index {}, this={}, path={}, isRoot={}", index, ( void * )this, path, q->isRoot());
             return nullptr;
         }
 
@@ -3519,7 +3489,7 @@ const Item *ItemBoxContainer::Private::itemFromPath(const QVector<int> &path) co
         } else {
             container = container->m_children.at(index)->asBoxContainer();
             if (!container) {
-                qWarning() << Q_FUNC_INFO << "Invalid index" << path;
+                spdlog::error("Invalid index path={}", path);
                 return nullptr;
             }
         }
@@ -3535,7 +3505,7 @@ ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side,
     Item::List children = q->visibleChildren();
     const auto itemIndex = children.indexOf(const_cast<Item *>(item));
     if (itemIndex == -1) {
-        qWarning() << Q_FUNC_INFO << "Item not found" << item << this;
+        spdlog::error("Item not found item={}, this={}", ( void * )item, ( void * )this);
         q->root()->dumpLayout();
         return nullptr;
     }
@@ -3582,7 +3552,7 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
                     widget->setGeometry(q->mapToRoot(item->geometry()));
                     widget->setVisible(true);
                 } else {
-                    qWarning() << Q_FUNC_INFO << "visible item doesn't have a guest" << item;
+                    spdlog::error("visible item doesn't have a guest item=", ( void * )item);
                 }
             }
         }

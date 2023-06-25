@@ -20,7 +20,6 @@
 #include "kddockwidgets/docks_export.h"
 
 #include <QVector>
-#include <QDebug>
 #include <QPointer>
 
 class TestDocks;

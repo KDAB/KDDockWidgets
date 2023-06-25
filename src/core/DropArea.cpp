@@ -189,7 +189,7 @@ void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
                              Core::DockWidget *relativeTo, InitialOption option)
 {
     if (!dw || dw == relativeTo || location == Location_None) {
-        qWarning() << Q_FUNC_INFO << "Invalid parameters" << dw << relativeTo << location;
+        spdlog::error("Invalid parameters {}, {} {}", ( void * )dw, ( void * )relativeTo, location);
         return;
     }
 
@@ -272,7 +272,7 @@ void DropArea::layoutParentContainerEqually(Core::DockWidget *dw)
 {
     Core::Item *item = itemForFrame(dw->d->group());
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Item not found for" << dw << dw->d->group();
+        spdlog::error("Item not found for dw={}, group={}", ( void * )dw, ( void * )dw->d->group());
         return;
     }
 
@@ -332,8 +332,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
     auto droploc = d->m_dropIndicatorOverlay->currentDropLocation();
     Core::Group *acceptingGroup = d->m_dropIndicatorOverlay->hoveredGroup();
     if (!(acceptingGroup || isOutterLocation(droploc))) {
-        qWarning() << "DropArea::drop: asserted with group=" << acceptingGroup
-                   << "; Location=" << droploc;
+        spdlog::error("DropArea::drop: asserted with group={}, location={}", ( void * )acceptingGroup, droploc);
         return false;
     }
 
@@ -356,7 +355,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
             draggedWindow ? draggedWindow->draggable()->makeWindow()->floatingWindow() : nullptr;
         if (!droppedWindow) {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "Wayland: Expected window" << draggedWindow;
+            spdlog::error("Wayland: Expected window {}", ( void * )draggedWindow);
             return false;
         }
     }
@@ -394,8 +393,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
         break;
 
     default:
-        qWarning() << "DropArea::drop: Unexpected drop location"
-                   << d->m_dropIndicatorOverlay->currentDropLocation();
+        spdlog::error("DropArea::drop: Unexpected drop location = {}", d->m_dropIndicatorOverlay->currentDropLocation());
         result = false;
         break;
     }
@@ -449,7 +447,7 @@ bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location,
         floatingWindow->scheduleDeleteLater();
         return true;
     } else {
-        qWarning() << "Unknown dropped widget" << droppedWindow;
+        spdlog::error("Unknown dropped widget {}", ( void * )droppedWindow);
         return false;
     }
 
@@ -530,12 +528,12 @@ bool DropArea::validateInputs(View *widget, Location location,
 
     const bool isLayout = widget->is(ViewType::DropArea) || widget->is(ViewType::MDILayout);
     if (!widget->is(ViewType::Frame) && !isLayout && !isDockWidget) {
-        qWarning() << Q_FUNC_INFO << "Unknown widget type" << widget;
+        spdlog::error("Unknown widget type {}", ( void * )widget);
         return false;
     }
 
     if (isDockWidget != isStartHidden) {
-        qWarning() << Q_FUNC_INFO << "Wrong parameters" << isDockWidget << isStartHidden;
+        spdlog::error("Wrong parameters isDockWidget={}, isStartHidden={}", isDockWidget, isStartHidden);
         return false;
     }
 
@@ -547,7 +545,7 @@ bool DropArea::validateInputs(View *widget, Location location,
     Core::Item *item = itemForFrame(widget->asGroupController());
 
     if (containsItem(item)) {
-        qWarning() << Q_FUNC_INFO << "DropArea::addWidget: Already contains" << widget;
+        spdlog::error("DropArea::addWidget: Already contains w={}", ( void * )widget);
         return false;
     }
 
@@ -560,9 +558,7 @@ bool DropArea::validateInputs(View *widget, Location location,
 
     Core::Item *relativeToItem = itemForFrame(relativeToFrame);
     if (!relativeToThis && !containsItem(relativeToItem)) {
-        qWarning() << "DropArea::addWidget: Doesn't contain relativeTo:"
-                   << "; relativeToFrame=" << relativeToFrame
-                   << "; relativeToItem=" << relativeToItem << "; options=" << option;
+        spdlog::error("DropArea::addWidget: Doesn't contain relativeTo: relativeToGroup={}, relativeToItem{}, options={}", ( void * )relativeToFrame, "; relativeToItem=", ( void * )relativeToItem, option);
         return false;
     }
 
@@ -617,7 +613,7 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
     } else {
         // This doesn't happen but let's make coverity happy.
         // Tests will fail if this is ever printed.
-        qWarning() << Q_FUNC_INFO << "Unknown widget added" << w;
+        spdlog::error("Unknown widget added", ( void * )w);
         return;
     }
 

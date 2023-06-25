@@ -23,7 +23,6 @@
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Platform.h"
 
-#include <QDebug>
 #include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN)

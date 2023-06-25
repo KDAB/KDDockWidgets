@@ -16,6 +16,7 @@
 
 #include <QString>
 #include <QTimer>
+#include <QDebug>
 #include <QEventLoop>
 #include <QWindow>
 #include <QGuiApplication>

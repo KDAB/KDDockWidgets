@@ -17,6 +17,7 @@
 
 #include "NonQtCompat_p.h"
 #include "KDDockWidgets.h"
+
 #include <spdlog/spdlog.h>
 
 template<>
@@ -50,6 +51,22 @@ struct fmt::formatter<QPoint>
 };
 
 template<>
+struct fmt::formatter<QRect>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(QRect r, FormatContext &ctx)
+    {
+        return fmt::format_to(ctx.out(), "Rect({},{} {}x{})", r.x(), r.y(), r.width(), r.height());
+    }
+};
+
+
+template<>
 struct fmt::formatter<QString>
 {
     constexpr auto parse(format_parse_context &ctx)
@@ -79,6 +96,29 @@ struct fmt::formatter<QStringList>
     }
 };
 
+template<typename T>
+struct fmt::formatter<QVector<T>>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(const QVector<T> &vec, FormatContext &ctx)
+    {
+
+        auto out = ctx.out();
+        out = fmt::format_to(out, "{}", "{ ");
+        for (const auto &element : vec)
+            out = fmt::format_to(out, "{}, ", element);
+        out = fmt::format_to(out, "{}", " }");
+
+        return out;
+    }
+};
+
+
 template<>
 struct fmt::formatter<KDDockWidgets::DropLocation>
 {
@@ -90,11 +130,48 @@ struct fmt::formatter<KDDockWidgets::DropLocation>
     template<typename FormatContext>
     auto format(KDDockWidgets::DropLocation loc, FormatContext &ctx)
     {
-        Q_UNUSED(loc);
-        // switch (loc) {
-        // }
 
-        return fmt::format_to(ctx.out(), "{}", "");
+        switch (loc) {
+        case KDDockWidgets::DropLocation_None:
+            return fmt::format_to(ctx.out(), "DropLocation_None");
+        case KDDockWidgets::DropLocation_Left:
+            return fmt::format_to(ctx.out(), "DropLocation_Left");
+        case KDDockWidgets::DropLocation_Top:
+            return fmt::format_to(ctx.out(), "DropLocation_Top");
+        case KDDockWidgets::DropLocation_Right:
+            return fmt::format_to(ctx.out(), "DropLocation_Right");
+        case KDDockWidgets::DropLocation_Bottom:
+            return fmt::format_to(ctx.out(), "DropLocation_Bottom");
+        case KDDockWidgets::DropLocation_Center:
+            return fmt::format_to(ctx.out(), "DropLocation_Center");
+        case KDDockWidgets::DropLocation_OutterLeft:
+            return fmt::format_to(ctx.out(), "DropLocation_OutterLeft");
+        case KDDockWidgets::DropLocation_OutterTop:
+            return fmt::format_to(ctx.out(), "DropLocation_OutterTop");
+        case KDDockWidgets::DropLocation_OutterRight:
+            return fmt::format_to(ctx.out(), "DropLocation_OutterRight");
+        case KDDockWidgets::DropLocation_OutterBottom:
+            return fmt::format_to(ctx.out(), "DropLocation_OutterBottom");
+        default:
+            break;
+        }
+
+        return fmt::format_to(ctx.out(), "{}", ( int )loc);
+    }
+};
+
+template<>
+struct fmt::formatter<KDDockWidgets::InitialOption>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(const KDDockWidgets::InitialOption &opt, FormatContext &ctx)
+    {
+        return fmt::format_to(ctx.out(), "[InitialOption: preferredSize={}, visibility={}]", opt.preferredSize, ( int )opt.visibility);
     }
 };
 

@@ -161,8 +161,6 @@ public:
     }
 
 private:
-    friend inline QDebug operator<<(QDebug, const KDDockWidgets::Position::Ptr &);
-
     // The last places where this dock widget was (or is), so it can be restored when
     // setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
@@ -170,15 +168,6 @@ private:
     QHash<SideBarLocation, QRect> m_lastOverlayedGeometries;
     bool m_clearing = false; // to prevent re-entrancy
 };
-
-inline QDebug operator<<(QDebug d, const KDDockWidgets::Position::Ptr &p)
-{
-    if (!p)
-        return d;
-
-    d << "; placeholdersSize=" << p->m_placeholders.size();
-    return d;
-}
 
 }
 

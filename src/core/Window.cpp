@@ -11,8 +11,6 @@
 
 #include "Window.h"
 
-#include <QDebug>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 

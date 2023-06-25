@@ -32,7 +32,6 @@
 #include "kdbindings/signal.h"
 
 #include <QPointer>
-#include <QDebug>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

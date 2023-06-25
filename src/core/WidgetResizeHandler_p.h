@@ -20,7 +20,6 @@
 #include "core/ViewGuard.h"
 
 #include <QPoint>
-#include <QDebug>
 #include <QAbstractNativeEventFilter>
 
 #if defined(Q_OS_WIN)
