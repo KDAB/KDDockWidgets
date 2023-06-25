@@ -20,6 +20,7 @@
 #include <QVector>
 #include <QObject>
 #include <QPointer>
+#include <QHash>
 
 #include <memory>
 

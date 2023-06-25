@@ -699,7 +699,7 @@ void Item::setGeometry(QRect rect)
             && (rect.width() < minSz.width() || rect.height() < minSz.height())) {
             if (auto r = root())
                 r->dumpLayout();
-            spdlog::error("Constraints not honoured. this={}, sz={}, min={}, parent={}", rect.size(), minSz, ( void * )parentContainer());
+            spdlog::error("Constraints not honoured. this={}, sz={}, min={}, parent={}", ( void * )this, rect.size(), minSz, ( void * )parentContainer());
         }
 
         geometryChanged.emit();
