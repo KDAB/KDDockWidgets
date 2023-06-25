@@ -20,6 +20,7 @@
 #include "core/View.h"
 #include "core/View_p.h"
 #include "core/Platform_p.h"
+#include "core/Logging_p.h"
 
 #include <QScopedValueRollback>
 #include <QTimer>
@@ -310,7 +311,7 @@ void Item::restore(View *guest)
     }
 
     if (isContainer()) {
-        qWarning() << Q_FUNC_INFO << "Containers can't be restored";
+        spdlog::error("Containers can't be restored");
     } else {
         setGuestView(guest);
         parentContainer()->restore(this);
@@ -696,7 +697,7 @@ void Item::setGeometry(QRect rect)
                     Q_ASSERT(false);
                 }
             } else {
-                qWarning() << Q_FUNC_INFO << "Empty rect";
+                spdlog::error("Empty rect");
             }
         }
 
@@ -1050,7 +1051,7 @@ bool ItemBoxContainer::checkSanity()
         return false;
 
     if (numChildren() == 0 && !isRoot()) {
-        qWarning() << Q_FUNC_INFO << "Container is empty. Should be deleted";
+        spdlog::error("Container is empty. Should be deleted");
         return false;
     }
 
@@ -1198,7 +1199,7 @@ bool ItemBoxContainer::checkSanity()
 
         if (separator->view()->parentView()
             && !separator->view()->parentView()->equals(hostView())) {
-            qWarning() << Q_FUNC_INFO << "Unexpected host widget in separator";
+            spdlog::error("Unexpected host widget in separator");
             return false;
         }
 
@@ -1380,7 +1381,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
 {
     Q_ASSERT(item != this);
     if (contains(item)) {
-        qWarning() << Q_FUNC_INFO << "Item already exists";
+        spdlog::error("Item already exists");
         return;
     }
 
@@ -1488,22 +1489,22 @@ QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relative
 
 
     if (relativeTo && !relativeTo->parentContainer()) {
-        qWarning() << Q_FUNC_INFO << "No parent container";
+        spdlog::error("No parent container");
         return {};
     }
 
     if (relativeTo && relativeTo->parentContainer() != this) {
-        qWarning() << Q_FUNC_INFO << "Called on the wrong container";
+        spdlog::error("Called on the wrong container");
         return {};
     }
 
     if (relativeTo && !relativeTo->isVisible()) {
-        qWarning() << Q_FUNC_INFO << "relative to isn't visible";
+        spdlog::error("relative to isn't visible");
         return {};
     }
 
     if (loc == Location_None) {
-        qWarning() << Q_FUNC_INFO << "Invalid location";
+        spdlog::error("Invalid location");
         return {};
     }
 
@@ -1609,7 +1610,7 @@ QRect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *
         return rect;
 
     } else {
-        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
+        spdlog::error("Shouldn't happen");
     }
 
     return {};
@@ -2403,7 +2404,7 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
                                                                       d->m_orientation);
             if (!nextSeparator) {
                 // Doesn't happen
-                qWarning() << Q_FUNC_INFO << "nextSeparator is null, report a bug";
+                spdlog::error("nextSeparator is null, report a bug");
                 return;
             }
 
@@ -2537,7 +2538,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
                     return;
 
                 if (lengthToGive < 0) {
-                    qWarning() << Q_FUNC_INFO << "Breaking infinite loop";
+                    spdlog::error("Breaking infinite loop");
                     return;
                 }
             }
@@ -2928,7 +2929,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
 
             if (isLast) {
                 // Doesn't happen
-                qWarning() << Q_FUNC_INFO << "No more items to grow";
+                spdlog::error("No more items to grow");
             } else {
                 growItem(index + 1, sizes, missing, growthStrategy, neighbourSqueezeStrategy,
                          accountForNewSeparator);
@@ -2947,7 +2948,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
 
             if (isFirst) {
                 // Doesn't happen
-                qWarning() << Q_FUNC_INFO << "No more items to grow";
+                spdlog::error("No more items to grow");
             } else {
                 growItem(index - 1, sizes, missing, growthStrategy, neighbourSqueezeStrategy,
                          accountForNewSeparator);
@@ -3389,7 +3390,7 @@ void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
         minSizeChanged.emit(this);
 #ifdef DOCKS_DEVELOPER_MODE
         if (!checkSanity())
-            qWarning() << Q_FUNC_INFO << "Resulting layout is invalid";
+            spdlog::error("Resulting layout is invalid");
 #endif
     }
 }
@@ -3415,7 +3416,7 @@ bool ItemBoxContainer::test_suggestedRect()
                 const QRect rect = suggestedDropRect(itemToDrop, relativeTo, loc);
                 rects.insert(loc, rect);
                 if (rect.isEmpty()) {
-                    qWarning() << Q_FUNC_INFO << "Empty rect";
+                    spdlog::error("Empty rect");
                     return false;
                 } else if (!root()->rect().contains(rect)) {
                     root()->dumpLayout();

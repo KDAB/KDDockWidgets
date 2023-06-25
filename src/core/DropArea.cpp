@@ -102,7 +102,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
         d->m_visibleWidgetCountConnection = Layout::d_ptr()->visibleWidgetCountChanged.connect([this] {
             auto dw = mdiDockWidgetWrapper();
             if (!dw) {
-                qWarning() << Q_FUNC_INFO << "Unexpected null wrapper dock widget";
+                spdlog::error("Unexpected null wrapper dock widget");
                 return;
             }
 
@@ -195,7 +195,7 @@ void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
 
     if ((option.visibility == InitialVisibilityOption::StartHidden) && dw->d->group() != nullptr) {
         // StartHidden is just to be used at startup, not to moving stuff around
-        qWarning() << Q_FUNC_INFO << "Dock widget already exists in the layout";
+        spdlog::error("Dock widget already exists in the layout");
         return;
     }
 
@@ -285,7 +285,7 @@ DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos
         return DropLocation_None;
 
     if (!d->m_dropIndicatorOverlay) {
-        qWarning() << Q_FUNC_INFO << "The frontend is missing a drop indicator overlay";
+        spdlog::error("The frontend is missing a drop indicator overlay");
         return DropLocation_None;
     }
 
@@ -317,7 +317,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
     Core::View *fv = droppedWindow->floatingWindowView();
 
     if (fv && fv->equals(window())) {
-        qWarning() << "Refusing to drop onto itself"; // Doesn't happen
+        spdlog::error("Refusing to drop onto itself"); // Doesn't happen
         return false;
     }
 
@@ -419,7 +419,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
                 group->FocusScope::focus(Qt::MouseFocusReason);
             } else {
                 // Doesn't happen.
-                qWarning() << Q_FUNC_INFO << "Nothing was dropped?";
+                spdlog::error("Nothing was dropped?");
             }
         }
     }
@@ -521,7 +521,7 @@ bool DropArea::validateInputs(View *widget, Location location,
                               const Core::Group *relativeToFrame, InitialOption option) const
 {
     if (!widget) {
-        qWarning() << Q_FUNC_INFO << "Widget is null";
+        spdlog::error("Widget is null");
         return false;
     }
 
@@ -540,7 +540,7 @@ bool DropArea::validateInputs(View *widget, Location location,
     }
 
     if (relativeToFrame && relativeToFrame->view()->equals(widget)) {
-        qWarning() << Q_FUNC_INFO << "widget can't be relative to itself";
+        spdlog::error("widget can't be relative to itself");
         return false;
     }
 
@@ -552,7 +552,7 @@ bool DropArea::validateInputs(View *widget, Location location,
     }
 
     if (location == Location_None) {
-        qWarning() << Q_FUNC_INFO << "DropArea::addWidget: not adding to location None";
+        spdlog::error("DropArea::addWidget: not adding to location None");
         return false;
     }
 
@@ -671,7 +671,7 @@ void DropArea::layoutEqually(Core::ItemBoxContainer *container)
     if (container) {
         container->layoutEqually_recursive();
     } else {
-        qWarning() << Q_FUNC_INFO << "null container";
+        spdlog::error("null container");
     }
 }
 

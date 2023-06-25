@@ -200,7 +200,7 @@ void Group::updateTitleAndIcon()
         setObjectName(dw->uniqueName());
 
     } else if (currentTabIndex() != -1) {
-        qWarning() << Q_FUNC_INFO << "Invalid dock widget for group." << currentTabIndex();
+        spdlog::error("Invalid dock widget for group. index={}", currentTabIndex());
     }
 }
 
@@ -225,7 +225,7 @@ void Group::addTab(DockWidget *dockWidget, InitialOption addingOption)
 void Group::addTab(Group *group, InitialOption addingOption)
 {
     if (group->isEmpty()) {
-        qWarning() << "Group::addTab: group is empty." << group;
+        spdlog::error("Group::addTab: group is empty. group={}", ( void * )group);
         return;
     }
 
@@ -246,8 +246,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
         if (!dockWidget->isPersistentCentralDockWidget())
-            qWarning() << "Group::addTab dockWidget already exists. this=" << this
-                       << "; dockWidget=" << dockWidget;
+            spdlog::error("Group::addTab dockWidget already exists. this={} ; dockWidget={}", ( void * )this, ( void * )dockWidget);
         return;
     }
     if (m_layoutItem)
@@ -548,7 +547,7 @@ FloatingWindow *Group::floatingWindow() const
 void Group::restoreToPreviousPosition()
 {
     if (hasSingleDockWidget()) {
-        qWarning() << Q_FUNC_INFO << "Invalid usage, there's no tabs";
+        spdlog::error("Invalid usage, there's no tabs");
         return;
     }
 
@@ -696,19 +695,18 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
 
         if (f.mainWindowUniqueName.isEmpty()) {
             // Can happen with older serialization formats
-            qWarning() << Q_FUNC_INFO << "Frame is the persistent central group but doesn't have"
-                       << "an associated window name";
+            spdlog::error("Frame is the persistent central group but doesn't have"
+                          "an associated window name");
         } else {
             if (MainWindow *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
                 group = mw->dropArea()->centralGroup();
                 if (!group) {
                     // Doesn't happen...
-                    qWarning() << "Main window" << f.mainWindowUniqueName
-                               << "doesn't have central group";
+                    spdlog::error("Main window {} doesn't have central group", f.mainWindowUniqueName);
                 }
             } else {
                 // Doesn't happen...
-                qWarning() << Q_FUNC_INFO << "Couldn't find main window" << f.mainWindowUniqueName;
+                spdlog::error("Couldn't find main window {}", f.mainWindowUniqueName);
             }
         }
     }
@@ -910,7 +908,7 @@ bool Group::hasNestedMDIDockWidgets() const
         return false;
 
     if (dockWidgetCount() != 1) {
-        qWarning() << Q_FUNC_INFO << "Expected a single dock widget wrapper as group child";
+        spdlog::error("Expected a single dock widget wrapper as group child");
         return false;
     }
 

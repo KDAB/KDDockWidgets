@@ -75,7 +75,7 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
     , m_guard(m_draggableView)
 {
     if (!isWayland()) {
-        qWarning() << Q_FUNC_INFO << "Wrong ctor called."; // Doesn't happen
+        spdlog::error("Wrong ctor called."); // Doesn't happen
         Q_ASSERT(false);
         return;
     }
@@ -224,7 +224,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
 {
     if (!isWayland()) {
         // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "This CTOR is only called on Wayland";
+        spdlog::error("This CTOR is only called on Wayland");
         Q_ASSERT(false);
         return;
     }
@@ -236,7 +236,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         } else if (Group *group = tb->group()) {
             m_group = group;
         } else {
-            qWarning() << Q_FUNC_INFO << "Shouldn't happen. TitleBar of what ?";
+            spdlog::error("Shouldn't happen. TitleBar of what ?");
         }
     } else if (auto fw = draggable->asView()->asFloatingWindowController()) {
         // case #2: the floating window itself is the draggable, happens on platforms that support
@@ -249,7 +249,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         if (Platform::instance()->isQtWidgets())
             m_group = stack->group();
     } else {
-        qWarning() << "Unknown draggable" << draggable << "please fix";
+        spdlog::error("Unknown draggable {} please fix)", ( void * )draggable);
     }
 }
 
@@ -312,7 +312,7 @@ QSize WindowBeingDraggedWayland::size() const
     else if (m_dockWidget)
         return m_dockWidget->size();
 
-    qWarning() << Q_FUNC_INFO << "Unknown size, shouldn't happen";
+    spdlog::error("Unknown size, shouldn't happen");
     return QSize();
 }
 
@@ -326,7 +326,7 @@ QSize WindowBeingDraggedWayland::minSize() const
         return m_dockWidget->view()->minSize();
     }
 
-    qWarning() << Q_FUNC_INFO << "Unknown minSize, shouldn't happen";
+    spdlog::error("Unknown minSize, shouldn't happen");
     return {};
 }
 
@@ -340,6 +340,6 @@ QSize WindowBeingDraggedWayland::maxSize() const
         return m_dockWidget->view()->maxSizeHint();
     }
 
-    qWarning() << Q_FUNC_INFO << "Unknown maxSize, shouldn't happen";
+    spdlog::error("Unknown maxSize, shouldn't happen");
     return {};
 }

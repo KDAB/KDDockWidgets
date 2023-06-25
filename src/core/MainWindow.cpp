@@ -93,7 +93,7 @@ public:
         dw->dptr()->m_isPersistentCentralDockWidget = true;
         Core::Group *group = dropArea()->centralGroup();
         if (!group) {
-            qWarning() << Q_FUNC_INFO << "Expected central group";
+            spdlog::error("Expected central group");
             return nullptr;
         }
 
@@ -188,7 +188,7 @@ void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
     } else if (d->supportsCentralFrame()) {
         dropArea()->centralGroup()->addTab(widget);
     } else {
-        qWarning() << Q_FUNC_INFO << "Not supported without MainWindowOption_HasCentralFrame";
+        spdlog::error("Not supported without MainWindowOption_HasCentralFrame");
     }
 }
 
@@ -400,7 +400,7 @@ SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) cons
 {
     Core::Item *item = q->layout()->itemForFrame(dw->d->group());
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "No item for dock widget";
+        spdlog::error("No item for dock widget");
         return SideBarLocation::None;
     }
 
@@ -467,7 +467,7 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
 
     Core::SideBar *sb = q->sideBarForDockWidget(m_overlayedDockWidget);
     if (!sb) {
-        qWarning() << Q_FUNC_INFO << "Expected a sidebar";
+        spdlog::error("Expected a sidebar");
         return;
     }
 
@@ -505,7 +505,7 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
         }
         case SideBarLocation::None:
         case SideBarLocation::Last:
-            qWarning() << Q_FUNC_INFO << "Unexpected sidebar value";
+            spdlog::error("Unexpected sidebar value");
             break;
         }
     }
@@ -566,7 +566,7 @@ void MainWindow::restoreFromSideBar(Core::DockWidget *dw)
     Core::SideBar *sb = sideBarForDockWidget(dw);
     if (!sb) {
         // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "Dock widget isn't in any sidebar";
+        spdlog::error("Dock widget isn't in any sidebar");
         return;
     }
 
@@ -824,7 +824,7 @@ void MainWindow::setPersistentCentralView(std::shared_ptr<View> widget)
     if (auto dw = d->m_persistentCentralDockWidget) {
         dw->setGuestView(widget);
     } else {
-        qWarning() << Q_FUNC_INFO << "Unexpected null central dock widget";
+        spdlog::error("Unexpected null central dock widget");
     }
 }
 

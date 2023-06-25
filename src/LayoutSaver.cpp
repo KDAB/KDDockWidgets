@@ -152,7 +152,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
 
     auto &frms = *it;
     if (!frms.is_object())
-        qWarning() << Q_FUNC_INFO << "Unexpected not object";
+        spdlog::error("Unexpected not object");
 
     for (const auto &kv : frms.items()) {
         QString key = QString::fromStdString(kv.key());
@@ -344,7 +344,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
 
     dw.uniqueName = json.value("uniqueName", QString());
     if (dw.uniqueName.isEmpty())
-        qWarning() << Q_FUNC_INFO << "Unexpected no uniqueName for dockWidget";
+        spdlog::error("Unexpected no uniqueName for dockWidget");
 
     dw.lastPosition = json.value("lastPosition", LayoutSaver::Position());
 }
@@ -361,7 +361,7 @@ void from_json(const nlohmann::json &json, typename LayoutSaver::DockWidget::Lis
     for (const auto &v : json) {
         auto it = v.find("uniqueName");
         if (it == v.end()) {
-            qWarning() << Q_FUNC_INFO << "Unexpected no uniqueName";
+            spdlog::error("Unexpected no uniqueName");
             continue;
         }
         QString uniqueName = it->get<QString>();
@@ -414,7 +414,7 @@ bool LayoutSaver::restoreFromFile(const QString &jsonFilename)
 QByteArray LayoutSaver::serializeLayout() const
 {
     if (!d->m_dockRegistry->isSane()) {
-        qWarning() << Q_FUNC_INFO << "Refusing to serialize this layout. Check previous warnings.";
+        spdlog::error("Refusing to serialize this layout. Check previous warnings.");
         return {};
     }
 
@@ -486,7 +486,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     FrameCleanup cleanup(this);
     LayoutSaver::Layout layout;
     if (!layout.fromJson(data)) {
-        qWarning() << Q_FUNC_INFO << "Failed to parse json data";
+        spdlog::error("Failed to parse json data");
         return false;
     }
 
@@ -551,7 +551,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         fw.floatingWindowInstance = floatingWindow;
         d->deserializeWindowGeometry(fw, floatingWindow->view()->window());
         if (!floatingWindow->deserialize(fw)) {
-            qWarning() << Q_FUNC_INFO << "Failed to deserialize floating window";
+            spdlog::error("Failed to deserialize floating window");
             return false;
         }
     }
@@ -690,7 +690,7 @@ void LayoutSaver::Private::deleteEmptyGroups()
                 item->turnIntoPlaceholder();
             } else {
                 // This doesn't happen. But the warning will make the tests fail if there's a regression.
-                qWarning() << Q_FUNC_INFO << "Expected item for frame";
+                spdlog::error("Expected item for frame");
             }
             delete group;
         }
@@ -900,12 +900,12 @@ bool LayoutSaver::Group::isValid() const
         return true;
 
     if (!geometry.isValid()) {
-        qWarning() << Q_FUNC_INFO << "Invalid geometry";
+        spdlog::error("Invalid geometry");
         return false;
     }
 
     if (id.isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "Invalid id";
+        spdlog::error("Invalid id");
         return false;
     }
 
@@ -968,7 +968,7 @@ bool LayoutSaver::FloatingWindow::isValid() const
         return false;
 
     if (!geometry.isValid()) {
-        qWarning() << Q_FUNC_INFO << "Invalid geometry";
+        spdlog::error("Invalid geometry");
         return false;
     }
 
@@ -1020,7 +1020,7 @@ bool LayoutSaver::MultiSplitter::isValid() const
         return false;
 
     /*if (!size.isValid()) {
-        qWarning() << Q_FUNC_INFO << "Invalid size";
+        spdlog::error("Invalid size");
         return false;
     }*/
 

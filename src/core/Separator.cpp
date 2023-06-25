@@ -84,7 +84,7 @@ Separator::~Separator()
 void Separator::init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation)
 {
     if (!parentContainer) {
-        qWarning() << Q_FUNC_INFO << "null parentContainer";
+        spdlog::error("null parentContainer");
         return;
     }
 

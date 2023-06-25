@@ -71,7 +71,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
         index = numDockWidgets();
 
     if (contains(dock)) {
-        qWarning() << Q_FUNC_INFO << "Refusing to add already existing widget";
+        spdlog::error("Refusing to add already existing widget");
         return false;
     }
 

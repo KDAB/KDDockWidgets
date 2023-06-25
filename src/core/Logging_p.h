@@ -16,6 +16,7 @@
 #ifdef KDDW_HAS_SPDLOG
 
 #include "NonQtCompat_p.h"
+#include "KDDockWidgets.h"
 #include <spdlog/spdlog.h>
 
 template<>
@@ -48,6 +49,54 @@ struct fmt::formatter<QPoint>
     }
 };
 
+template<>
+struct fmt::formatter<QString>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(const QString &str, FormatContext &ctx)
+    {
+        return fmt::format_to(ctx.out(), "{}", str.toStdString());
+    }
+};
+
+template<>
+struct fmt::formatter<QStringList>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(const QStringList &strings, FormatContext &ctx)
+    {
+        return fmt::format_to(ctx.out(), "{}", strings.join(QLatin1Char(',')));
+    }
+};
+
+template<>
+struct fmt::formatter<KDDockWidgets::DropLocation>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(KDDockWidgets::DropLocation loc, FormatContext &ctx)
+    {
+        Q_UNUSED(loc);
+        // switch (loc) {
+        // }
+
+        return fmt::format_to(ctx.out(), "{}", "");
+    }
+};
 
 #else
 

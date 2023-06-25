@@ -41,12 +41,12 @@ public:
 
     void setIcon(const KDDockWidgets::Icon &)
     {
-        qWarning() << "Not implemented for QtQuick";
+        spdlog::error("Not implemented for QtQuick");
     }
 
     KDDockWidgets::Icon icon() const
     {
-        qWarning() << "Not implemented for QtQuick/Flutter";
+        spdlog::error("Not implemented for QtQuick/Flutter");
         return {};
     }
 

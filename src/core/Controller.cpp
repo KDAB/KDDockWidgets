@@ -14,6 +14,7 @@
 #include "DelayedCall.h"
 #include "View.h"
 #include "View_p.h"
+#include "Logging_p.h"
 
 #include <QDebug>
 
@@ -140,7 +141,7 @@ void Controller::setParentView_impl(View *parent)
     if (auto v = view()) {
         v->setParent(parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "No view()";
+        spdlog::error("No view()");
     }
 }
 

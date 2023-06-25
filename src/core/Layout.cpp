@@ -18,6 +18,7 @@
 #include "core/View_p.h"
 #include "core/Layout.h"
 #include "core/Layout_p.h"
+#include "core/Logging_p.h"
 #include "core/DropArea.h"
 #include "core/DockWidget_p.h"
 #include "core/Group.h"
@@ -263,7 +264,7 @@ Core::Group::List Layout::groups() const
 void Layout::removeItem(Core::Item *item)
 {
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "nullptr item";
+        spdlog::error("nullptr item");
         return;
     }
 

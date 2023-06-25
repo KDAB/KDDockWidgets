@@ -180,7 +180,7 @@ static MainWindow *hackFindParentHarder(Core::Group *group, MainWindow *candidat
             DockRegistry::self()->mainWindowsWithAffinity(affinities);
 
         if (mainWindows.isEmpty()) {
-            qWarning() << Q_FUNC_INFO << "No window with affinity" << affinities << "found";
+            spdlog::error("No window with affinity={} found", affinities, "found");
             return nullptr;
         } else {
             return mainWindows.first();
@@ -266,7 +266,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
 
         if (group->dockWidgetCount() == 0) {
             // doesn't happen
-            qWarning() << Q_FUNC_INFO << "Unexpected empty group";
+            spdlog::error("Unexpected empty group");
             return;
         }
 
@@ -665,7 +665,7 @@ QRect FloatingWindow::dragRect() const
     } else if (hasSingleFrame()) {
         rect = groups().constFirst()->dragRect();
     } else {
-        qWarning() << Q_FUNC_INFO << "Expected a title bar";
+        spdlog::error("Expected a title bar");
     }
 
     return rect;

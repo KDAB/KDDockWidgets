@@ -184,8 +184,8 @@ public:
      *
      * @param dumpDebug If true then each layout is dumped too
      *
-     * This is called by the unit-tests. If during this the framework spits a
-     * qWarning() then the app will qFatal()
+     * This is called by the unit-tests. If during this the framework throws an error
+     * then the app will qFatal()
      */
     void checkSanityAll(bool dumpDebug = false);
 

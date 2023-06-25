@@ -219,7 +219,7 @@ void StatePreDrag::onEntry()
 bool StatePreDrag::handleMouseMove(QPoint globalPos)
 {
     if (!q->m_draggableGuard) {
-        qWarning() << Q_FUNC_INFO << "Draggable was destroyed, canceling the drag";
+        spdlog::error("Draggable was destroyed, canceling the drag");
         Q_EMIT q->dragCanceled();
         return false;
     }
@@ -359,7 +359,7 @@ void StateDragging::onEntry()
         }
     } else {
         // Shouldn't happen
-        qWarning() << Q_FUNC_INFO << "No window being dragged for " << q->m_draggable << q->m_draggable->asController();
+        spdlog::error("No window being dragged for {} {}", ( void * )q->m_draggable, ( void * )q->m_draggable->asController());
         Q_EMIT q->dragCanceled();
     }
 
@@ -502,7 +502,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     // for MDI we only support dragging via the title bar, other cases don't make sense conceptually
     auto tb = q->m_draggable->asView()->asTitleBarController();
     if (!tb) {
-        qWarning() << Q_FUNC_INFO << "expected a title bar, not" << q->m_draggable;
+        spdlog::error("expected a title bar, not {}", ( void * )q->m_draggable);
         Q_EMIT q->dragCanceled();
         return false;
     }
@@ -510,7 +510,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     Group *group = tb->group();
     if (!group) {
         // Doesn't happen.
-        qWarning() << Q_FUNC_INFO << "null group.";
+        spdlog::error("null group.");
         Q_EMIT q->dragCanceled();
         return false;
     }
@@ -563,7 +563,7 @@ void StateDraggingWayland::onEntry()
 
     if (m_inQDrag) {
         // Maybe we can exit the state due to the nested event loop of QDrag::Exec();
-        qWarning() << Q_FUNC_INFO << "Impossible!";
+        spdlog::error("Impossible!");
         return;
     }
 
@@ -1053,8 +1053,7 @@ DropArea *DragController::dropAreaUnderCursor() const
     }
 
     if (topLevel->viewName() == QStringLiteral("_docks_IndicatorWindow")) {
-        qWarning() << "Indicator window should be hidden " << topLevel.get()
-                   << topLevel->isVisible();
+        spdlog::error("Indicator window should be hidden {} isVisible={}", ( void * )topLevel.get(), topLevel->isVisible());
         Q_ASSERT(false);
     }
 

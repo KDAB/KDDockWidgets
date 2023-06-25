@@ -110,7 +110,7 @@ MainWindow *TitleBar::mainWindow() const
     if (m_group)
         return m_group->mainWindow();
 
-    qWarning() << Q_FUNC_INFO << "null group and null floating window";
+    spdlog::error("null group and null floating window");
     return nullptr;
 }
 
@@ -367,7 +367,7 @@ void TitleBar::onCloseClicked()
                 dw->view()->close();
             } else {
                 // Doesn't happen
-                qWarning() << Q_FUNC_INFO << "Frame with no dock widgets";
+                spdlog::error("Frame with no dock widgets");
             }
         } else {
             if (m_group->isTheOnlyGroup() && m_group->isInFloatingWindow()) {
@@ -384,7 +384,7 @@ void TitleBar::onCloseClicked()
                     dw->view()->close();
                 } else {
                     // Doesn't happen
-                    qWarning() << Q_FUNC_INFO << "Frame with no dock widgets";
+                    spdlog::error("Frame with no dock widgets");
                 }
             } else {
                 m_floatingWindow->view()->close();
@@ -404,7 +404,7 @@ void TitleBar::onFloatClicked()
         // Let's dock it
 
         if (dockWidgets.isEmpty()) {
-            qWarning() << "TitleBar::onFloatClicked: empty list. Shouldn't happen";
+            spdlog::error("TitleBar::onFloatClicked: empty list. Shouldn't happen");
             return;
         }
 
@@ -476,7 +476,7 @@ void TitleBar::onAutoHideClicked()
 {
     if (!m_group) {
         // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "Minimize not supported on floating windows";
+        spdlog::error("Minimize not supported on floating windows");
         return;
     }
 
@@ -508,13 +508,11 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab
         // bar's buttons to the title bar's buttons, just to reuse logic
 
-        qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar" << this
-                   << view()->rootView()->controller()->isVisible();
+        spdlog::error("TitleBar::makeWindow shouldn't be called on invisible title bar this={}, root.isVisible={}", ( void * )this, view()->rootView()->isVisible());
         if (m_group) {
-            qWarning() << "this=" << this << "; actual=" << m_group->actualTitleBar();
+            spdlog::error("this={}; actual={}", ( void * )this, ( void * )m_group->actualTitleBar());
         } else if (m_floatingWindow) {
-            qWarning() << "Has floating window with titlebar=" << m_floatingWindow->titleBar()
-                       << "; fw->isVisible=" << m_floatingWindow->isVisible();
+            spdlog::error("Has floating window with titlebar=", ( void * )m_floatingWindow->titleBar(), "; fw->isVisible=", m_floatingWindow->isVisible());
         }
 
         Q_ASSERT(false);
@@ -567,7 +565,7 @@ Core::DockWidget::List TitleBar::dockWidgets() const
     if (m_isStandalone)
         return {}; // not applicable
 
-    qWarning() << "TitleBar::dockWidget: shouldn't happen";
+    spdlog::error("TitleBar::dockWidget: shouldn't happen");
     return {};
 }
 
@@ -588,7 +586,7 @@ bool TitleBar::isFloating() const
     if (m_isStandalone)
         return false; // not applicable
 
-    qWarning() << "TitleBar::isFloating: shouldn't happen";
+    spdlog::error("TitleBar::isFloating: shouldn't happen");
     return false;
 }
 
@@ -622,7 +620,7 @@ TabBar *TitleBar::tabBar() const
             return group->stack()->tabBar();
         } else {
             // Shouldn't happen
-            qWarning() << Q_FUNC_INFO << "Expected a group";
+            spdlog::error("Expected a group");
         }
 
     } else if (m_group) {

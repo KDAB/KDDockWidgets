@@ -91,7 +91,7 @@ ViewType View::Private::type() const
 void View::Private::free()
 {
     if (m_freed) {
-        qWarning() << Q_FUNC_INFO << "Free already called";
+        spdlog::error("Free already called");
         return;
     }
 
