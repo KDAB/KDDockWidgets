@@ -1121,7 +1121,7 @@ bool ItemBoxContainer::checkSanity()
             root()->dumpLayout();
             spdlog::error("Percentages don't add up", totalPercentage, percentages, ( void * )this);
             const_cast<ItemBoxContainer *>(this)->d->updateSeparators_recursive();
-            spdlog::error(d->childPercentages());
+            spdlog::error("percentages={}", d->childPercentages());
             return false;
         }
     }

@@ -19,6 +19,10 @@
 #include <QRect>
 #include <QSize>
 
+#ifndef KDDW_HAS_SPDLOG
+using namespace KDDockWidgets;
+#endif
+
 QT_BEGIN_NAMESPACE
 
 inline void from_json(const nlohmann::json &j, QString &string)

@@ -339,6 +339,16 @@
             }
         },
         {
+            "name": "dev-no-spdlog",
+            "binaryDir": "${sourceDir}/build-dev-no-spdlog",
+            "inherits": [
+                "dev"
+            ],
+            "cacheVariables": {
+                "KDDockWidgets_NO_SPDLOG": "ON"
+            }
+        },
+        {
             "name": "ci-dev-qt5",
             "displayName": "ci-dev-qt5",
             "description": "Qt5 dev-mode build",
