@@ -253,7 +253,7 @@ if(NOT WIN32
 endif()
 
 if(NOT KDDockWidgets_NO_SPDLOG)
-    find_package(spdlog QUIET)
+    find_package(spdlog 1.8.0 QUIET)
     find_package(fmt QUIET)
 endif()
 
