@@ -108,6 +108,7 @@ public:
     Q_INVOKABLE void setAsCurrentTab();
     Q_INVOKABLE void forceClose();
     Q_INVOKABLE bool isOpen() const;
+    Q_INVOKABLE void open();
     Q_INVOKABLE void show();
     Q_INVOKABLE void raise();
     Q_INVOKABLE void moveToSideBar();
