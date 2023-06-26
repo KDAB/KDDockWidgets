@@ -33,7 +33,7 @@ void ItemFreeContainer::addDockWidget(Item *item, QPoint localPt)
 {
     Q_ASSERT(item != this);
     if (contains(item)) {
-        spdlog::error("Item already exists");
+        KDDW_ERROR("Item already exists");
         return;
     }
     item->setIsVisible(true); // Use OptionStartHidden here too ?

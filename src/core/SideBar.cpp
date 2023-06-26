@@ -38,7 +38,7 @@ void SideBar::addDockWidget(DockWidget *dw)
         return;
 
     if (m_dockWidgets.contains(dw)) {
-        spdlog::error("Already contains dock widget with title={}", dw->title());
+        KDDW_ERROR("Already contains dock widget with title={}", dw->title());
         return;
     }
 
@@ -52,7 +52,7 @@ void SideBar::addDockWidget(DockWidget *dw)
 void SideBar::removeDockWidget(DockWidget *dw)
 {
     if (!m_dockWidgets.contains(dw)) {
-        spdlog::error("Doesn't contain dock widget with title={}", dw->title());
+        KDDW_ERROR("Doesn't contain dock widget with title={}", dw->title());
         return;
     }
 

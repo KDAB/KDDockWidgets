@@ -100,19 +100,19 @@ Core::Group *IndicatorWindow::hoveredGroup() const
 
 QPoint IndicatorWindow::posForIndicator_flutter(DropLocation) const
 {
-    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
     return {};
 }
 
 DropLocation IndicatorWindow::hover_flutter(QPoint)
 {
-    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
     return {};
 }
 
 bool IndicatorWindow::updatePositions_flutter(int, int, Core::Group *, int)
 {
-    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
     return false;
 }
 

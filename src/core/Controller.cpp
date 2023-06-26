@@ -139,7 +139,7 @@ void Controller::setParentView_impl(View *parent)
     if (auto v = view()) {
         v->setParent(parent);
     } else {
-        spdlog::error("No view()");
+        KDDW_ERROR("No view()");
     }
 }
 

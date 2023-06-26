@@ -62,7 +62,7 @@ void Stack::addDockWidget(DockWidget *dock)
 bool Stack::insertDockWidget(DockWidget *dock, int index)
 {
     Q_ASSERT(dock);
-    spdlog::debug("dock={}; count before={}", ( void * )dock, numDockWidgets());
+    KDDW_DEBUG("dock={}; count before={}", ( void * )dock, numDockWidgets());
 
     if (index < 0)
         index = 0;
@@ -70,7 +70,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
         index = numDockWidgets();
 
     if (contains(dock)) {
-        spdlog::error("Refusing to add already existing widget");
+        KDDW_ERROR("Refusing to add already existing widget");
         return false;
     }
 

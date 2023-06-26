@@ -22,7 +22,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
 #define PRINT_UNEXPECTED_CALL_MESSAGE \
-    spdlog::warn("Unexpected call {} {} {}", static_cast<void*>(m_controller), int(m_controller->type(), Q_FUNC_INFO);
+    KDDW_WARN("Unexpected call {} {} {}", static_cast<void*>(m_controller), int(m_controller->type(), Q_FUNC_INFO);
 
 View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent,
            Qt::WindowFlags)
@@ -296,13 +296,13 @@ bool View::isRootView() const
 
 QPoint View::mapToGlobal(QPoint) const
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
     return {};
 }
 
 QPoint View::mapFromGlobal(QPoint) const
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
     return {};
 }
 
@@ -493,39 +493,39 @@ void View::onChildAdded(Core::View *childView)
 {
     Q_UNUSED(childView);
     dumpDebug();
-    spdlog::error("Derived class should be called instead");
+    KDDW_ERROR("Derived class should be called instead");
 }
 
 void View::onChildRemoved(Core::View *childView)
 {
     Q_UNUSED(childView);
     dumpDebug();
-    spdlog::error("Derived class should be called instead");
+    KDDW_ERROR("Derived class should be called instead");
 }
 
 void View::onChildVisibilityChanged(Core::View *childView)
 {
     Q_UNUSED(childView);
     dumpDebug();
-    spdlog::error("Derived class should be called instead");
+    KDDW_ERROR("Derived class should be called instead");
 }
 
 void View::onGeometryChanged()
 {
     dumpDebug();
-    spdlog::error("Derived class should be called instead");
+    KDDW_ERROR("Derived class should be called instead");
 }
 
 void View::raiseChild(Core::View *)
 {
     dumpDebug();
-    spdlog::error("Derived class should be called instead");
+    KDDW_ERROR("Derived class should be called instead");
 }
 
 void View::raiseWindow(Core::View *)
 {
     dumpDebug();
-    spdlog::error("Derived class should be called instead");
+    KDDW_ERROR("Derived class should be called instead");
 }
 
 void View::onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
@@ -553,12 +553,12 @@ void View::onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos
 
 bool View::isMounted() const
 {
-    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
     return false;
 }
 
 
 void View::onRebuildRequested()
 {
-    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
 }

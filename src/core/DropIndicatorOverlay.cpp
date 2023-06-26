@@ -133,7 +133,7 @@ KDDockWidgets::Location DropIndicatorOverlay::multisplitterLocationFor(DropLocat
     case DropLocation_Outter:
     case DropLocation_Horizontal:
     case DropLocation_Vertical:
-        spdlog::error("Unexpected drop location={}", dropLoc);
+        KDDW_ERROR("Unexpected drop location={}", dropLoc);
         break;
     }
 
@@ -181,7 +181,7 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
                                                    windowBeingDragged->affinities()))
             return false;
     } else {
-        spdlog::error("Unknown drop indicator location={}", dropLoc);
+        KDDW_ERROR("Unknown drop indicator location={}", dropLoc);
         return false;
     }
 

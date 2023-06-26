@@ -93,7 +93,7 @@ public:
         dw->dptr()->m_isPersistentCentralDockWidget = true;
         Core::Group *group = dropArea()->centralGroup();
         if (!group) {
-            spdlog::error("Expected central group");
+            KDDW_ERROR("Expected central group");
             return nullptr;
         }
 
@@ -162,15 +162,15 @@ MainWindow::~MainWindow()
 void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
 {
     Q_ASSERT(widget);
-    spdlog::debug("dock={}", ( void * )widget);
+    KDDW_DEBUG("dock={}", ( void * )widget);
 
     if (!DockRegistry::self()->affinitiesMatch(d->affinities, widget->affinities())) {
-        spdlog::error("Refusing to dock widget with incompatible affinity. {} {}", widget->affinities(), affinities());
+        KDDW_ERROR("Refusing to dock widget with incompatible affinity. {} {}", widget->affinities(), affinities());
         return;
     }
 
     if (widget->options() & DockWidgetOption_NotDockable) {
-        spdlog::error("Refusing to dock non-dockable widget {}", ( void * )widget);
+        KDDW_ERROR("Refusing to dock non-dockable widget {}", ( void * )widget);
         return;
     }
 
@@ -180,14 +180,14 @@ void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
     }
 
     if (d->supportsPersistentCentralWidget()) {
-        spdlog::error("Not supported with MainWindowOption_HasCentralWidget."
-                      "MainWindowOption_HasCentralWidget can only have 1 widget in the center.",
-                      "Use MainWindowOption_HasCentralFrame instead, which is similar but supports "
-                      "tabbing");
+        KDDW_ERROR("Not supported with MainWindowOption_HasCentralWidget."
+                   "MainWindowOption_HasCentralWidget can only have 1 widget in the center.",
+                   "Use MainWindowOption_HasCentralFrame instead, which is similar but supports "
+                   "tabbing");
     } else if (d->supportsCentralFrame()) {
         dropArea()->centralGroup()->addTab(widget);
     } else {
-        spdlog::error("Not supported without MainWindowOption_HasCentralFrame");
+        KDDW_ERROR("Not supported without MainWindowOption_HasCentralFrame");
     }
 }
 
@@ -195,7 +195,7 @@ void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
                                Core::DockWidget *relativeTo, InitialOption option)
 {
     if (dw->options() & DockWidgetOption_NotDockable) {
-        spdlog::error("Refusing to dock non-dockable widget dw={}", ( void * )dw);
+        KDDW_ERROR("Refusing to dock non-dockable widget dw={}", ( void * )dw);
         return;
     }
 
@@ -246,8 +246,8 @@ void MainWindow::setAffinities(const QStringList &affinityNames)
         return;
 
     if (!d->affinities.isEmpty()) {
-        spdlog::error("Affinity is already set, refusing to change."
-                      "Submit a feature request with a good justification.");
+        KDDW_ERROR("Affinity is already set, refusing to change."
+                   "Submit a feature request with a good justification.");
         return;
     }
 
@@ -370,7 +370,7 @@ static SideBarLocation opposedSideBarLocationForBorder(Core::LayoutBorderLocatio
         break;
     }
 
-    spdlog::error("Unknown loc={}", loc);
+    KDDW_ERROR("Unknown loc={}", loc);
     return SideBarLocation::None;
 }
 
@@ -399,7 +399,7 @@ SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) cons
 {
     Core::Item *item = q->layout()->itemForFrame(dw->d->group());
     if (!item) {
-        spdlog::error("No item for dock widget");
+        KDDW_ERROR("No item for dock widget");
         return SideBarLocation::None;
     }
 
@@ -466,7 +466,7 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
 
     Core::SideBar *sb = q->sideBarForDockWidget(m_overlayedDockWidget);
     if (!sb) {
-        spdlog::error("Expected a sidebar");
+        KDDW_ERROR("Expected a sidebar");
         return;
     }
 
@@ -504,7 +504,7 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
         }
         case SideBarLocation::None:
         case SideBarLocation::Last:
-            spdlog::error("Unexpected sidebar value");
+            KDDW_ERROR("Unexpected sidebar value");
             break;
         }
     }
@@ -551,7 +551,7 @@ void MainWindow::moveToSideBar(Core::DockWidget *dw, SideBarLocation location)
         sb->addDockWidget(dw);
     } else {
         // Shouldn't happen
-        spdlog::error("Minimization supported, probably disabled in Config::self().flags()");
+        KDDW_ERROR("Minimization supported, probably disabled in Config::self().flags()");
     }
 }
 
@@ -564,7 +564,7 @@ void MainWindow::restoreFromSideBar(Core::DockWidget *dw)
     Core::SideBar *sb = sideBarForDockWidget(dw);
     if (!sb) {
         // Doesn't happen
-        spdlog::error("Dock widget isn't in any sidebar");
+        KDDW_ERROR("Dock widget isn't in any sidebar");
         return;
     }
 
@@ -579,7 +579,7 @@ void MainWindow::overlayOnSideBar(Core::DockWidget *dw)
 
     const Core::SideBar *sb = sideBarForDockWidget(dw);
     if (!sb) {
-        spdlog::error("You need to add the dock widget to the sidebar before you can overlay it");
+        KDDW_ERROR("You need to add the dock widget to the sidebar before you can overlay it");
         return;
     }
 
@@ -730,19 +730,19 @@ void MainWindow::setUniqueName(const QString &uniqueName)
         Q_EMIT uniqueNameChanged();
         DockRegistry::self()->registerMainWindow(this);
     } else {
-        spdlog::error("Already has a name. {} {}", this->uniqueName(), uniqueName);
+        KDDW_ERROR("Already has a name. {} {}", this->uniqueName(), uniqueName);
     }
 }
 
 bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
 {
     if (mw.options != options()) {
-        spdlog::error("Refusing to restore MainWindow with different options ; expected={}, has={}", mw.options, options());
+        KDDW_ERROR("Refusing to restore MainWindow with different options ; expected={}, has={}", mw.options, options());
         return false;
     }
 
     if (d->affinities != mw.affinities) {
-        spdlog::error("Affinity name changed from {} to {}", d->affinities, mw.affinities);
+        KDDW_ERROR("Affinity name changed from {} to {}", d->affinities, mw.affinities);
 
         d->affinities = mw.affinities;
     }
@@ -763,7 +763,7 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
             Core::DockWidget *dw = DockRegistry::self()->dockByName(
                 uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
             if (!dw) {
-                spdlog::error("Could not find dock widget {} . Won't restore it to sidebar", uniqueName);
+                KDDW_ERROR("Could not find dock widget {} . Won't restore it to sidebar", uniqueName);
                 continue;
             }
 
@@ -810,15 +810,15 @@ LayoutSaver::MainWindow MainWindow::serialize() const
 void MainWindow::setPersistentCentralView(std::shared_ptr<View> widget)
 {
     if (!d->supportsPersistentCentralWidget()) {
-        spdlog::error("MainWindow::setPersistentCentralWidget() requires "
-                      "MainWindowOption_HasCentralWidget");
+        KDDW_ERROR("MainWindow::setPersistentCentralWidget() requires "
+                   "MainWindowOption_HasCentralWidget");
         return;
     }
 
     if (auto dw = d->m_persistentCentralDockWidget) {
         dw->setGuestView(widget);
     } else {
-        spdlog::error("Unexpected null central dock widget");
+        KDDW_ERROR("Unexpected null central dock widget");
     }
 }
 

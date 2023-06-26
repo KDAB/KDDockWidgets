@@ -20,12 +20,12 @@ QAction::~QAction() = default;
 
 void QAction::setIcon(const KDDockWidgets::Icon &)
 {
-    spdlog::error("Not implemented for QtQuick");
+    KDDW_ERROR("Not implemented for QtQuick");
 }
 
 KDDockWidgets::Icon QAction::icon() const
 {
-    spdlog::error("Not implemented for QtQuick/Flutter");
+    KDDW_ERROR("Not implemented for QtQuick/Flutter");
     return {};
 }
 

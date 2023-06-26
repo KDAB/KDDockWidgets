@@ -1933,7 +1933,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow1()
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(300);
     if (dock1->height() > mainWindowLength) {
-        spdlog::info("dock1->height={} ; mainWindowLength={}", dock1->height(), mainWindowLength);
+        KDDW_INFO("dock1->height={} ; mainWindowLength={}", dock1->height(), mainWindowLength);
         CHECK(false);
     }
 
@@ -2294,7 +2294,7 @@ KDDW_QCORO_TASK tst_restoreAfterResize()
 
     if (oldContentsSize != layout->layoutSize()) {
         // Hard to reproduce but sometimes happens. Added a wait to see if it's timing related
-        spdlog::info("tst_restoreAfterResize: Unexpected layout size={}, expected={}", layout->layoutSize(), oldContentsSize);
+        KDDW_INFO("tst_restoreAfterResize: Unexpected layout size={}, expected={}", layout->layoutSize(), oldContentsSize);
         KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
         CHECK_EQ(oldContentsSize, layout->layoutSize());
     }
@@ -4365,8 +4365,8 @@ KDDW_QCORO_TASK tst_propagateSizeHonoursMinSize()
     l->checkSanity();
 
     if (dock1->width() < min1) {
-        spdlog::info("dock1->width()={}, \nmin1={}, \ndock min sizes={}, \ngroup1->width()={}, \ngroup1->min={}", dock1->width(), min1,
-                     dock1->view()->minSize(), dock1->dptr()->group()->view()->width(), lengthForSize(dock1->dptr()->group()->view()->minSize(), Qt::Horizontal));
+        KDDW_INFO("dock1->width()={}, \nmin1={}, \ndock min sizes={}, \ngroup1->width()={}, \ngroup1->min={}", dock1->width(), min1,
+                  dock1->view()->minSize(), dock1->dptr()->group()->view()->width(), lengthForSize(dock1->dptr()->group()->view()->minSize(), Qt::Horizontal));
         l->dumpLayout();
         CHECK(false);
     }

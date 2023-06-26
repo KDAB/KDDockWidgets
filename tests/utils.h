@@ -85,13 +85,13 @@ struct EnsureTopLevelsDeleted
 
         if (!DockRegistry::self()->isEmpty()) {
             auto dr = DockRegistry::self();
-            spdlog::warn("There's still top-level widgets present!"
-                         "\nfloatings: {}"
-                         "\nmainWindows: {}"
-                         "\ndocks: {}",
-                         dr->floatingWindows(/*includeBeingDeleted=*/true).size(),
-                         dr->mainWindowsNames().size(),
-                         dr->dockWidgetNames().size());
+            KDDW_WARN("There's still top-level widgets present!"
+                      "\nfloatings: {}"
+                      "\nmainWindows: {}"
+                      "\ndocks: {}",
+                      dr->floatingWindows(/*includeBeingDeleted=*/true).size(),
+                      dr->mainWindowsNames().size(),
+                      dr->dockWidgetNames().size());
         }
 
         // Other cleanup, since we use this class everywhere

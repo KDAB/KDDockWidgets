@@ -85,7 +85,7 @@ inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
         if (Platform::instance()->tests_waitForWindowActive(dock->view()->window(), 1000)) {
             return dock;
         }
-        spdlog::warn("KDDockWidgets::Tests::createDockWidget: Couldn't activate window");
+        KDDW_WARN("KDDockWidgets::Tests::createDockWidget: Couldn't activate window");
         return nullptr;
     } else {
         return dock;

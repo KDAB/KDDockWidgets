@@ -506,7 +506,7 @@ void WidgetResizeHandler::setTarget(View *w)
             mTarget->installViewEventFilter(this);
         }
     } else {
-        spdlog::error("Target widget is null!");
+        KDDW_ERROR("Target widget is null!");
     }
 }
 
@@ -707,7 +707,7 @@ void CustomFrameHelper::applyCustomFrame(Core::Window::Ptr window)
     WidgetResizeHandler::setupWindow(window);
 #else
     Q_UNUSED(window);
-    spdlog::error("Not implemented on this platform");
+    KDDW_ERROR("Not implemented on this platform");
 #endif
 }
 

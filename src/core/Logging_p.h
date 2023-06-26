@@ -198,36 +198,6 @@ struct fmt::formatter<KDDockWidgets::InitialOption>
 #define KDDW_DEBUG(...) KDDW_LOG(spdlog::level::debug, __VA_ARGS__)
 #define KDDW_TRACE(...) KDDW_LOG(spdlog::level::trace, __VA_ARGS__)
 
-namespace KDDockWidgets::spdlog {
-
-template<typename... Args>
-void warn(const char *, const Args &...)
-{
-}
-
-template<typename... Args>
-void error(const char *, const Args &...)
-{
-}
-
-template<typename... Args>
-void info(const char *, const Args &...)
-{
-}
-
-template<typename... Args>
-void debug(const char *, const Args &...)
-{
-}
-
-template<typename... Args>
-void trace(const char *, const Args &...)
-{
-}
-
-
-}
-
 #endif
 
 #endif

@@ -19,10 +19,6 @@
 #include <QRect>
 #include <QSize>
 
-#ifndef KDDW_HAS_SPDLOG
-using namespace KDDockWidgets;
-#endif
-
 QT_BEGIN_NAMESPACE
 
 inline void from_json(const nlohmann::json &j, QString &string)
@@ -38,7 +34,7 @@ inline void to_json(nlohmann::json &j, const QString &s)
 inline void from_json(const nlohmann::json &j, QStringList &stringList)
 {
     if (!j.is_null() && !j.is_array()) {
-        spdlog::error("This is not an array, fix the code");
+        KDDW_ERROR("This is not an array, fix the code");
         stringList.clear();
         return;
     }
@@ -87,7 +83,7 @@ inline void from_json(const nlohmann::json &j, QVariant &variant)
 inline void to_json(nlohmann::json &j, const QVariant &variant)
 {
     if (!variant.isValid()) {
-        spdlog::error("Unexpected invalid variant");
+        KDDW_ERROR("Unexpected invalid variant");
         return;
     }
 
@@ -108,7 +104,7 @@ inline void to_json(nlohmann::json &j, const QVariant &variant)
     } else if (type == QMetaType::UInt) {
         j = variant.toUInt();
     } else {
-        spdlog::error("Unexpected type={}, name={}", type, variant.typeName());
+        KDDW_ERROR("Unexpected type={}, name={}", type, variant.typeName());
         j.clear();
     }
 }
@@ -127,7 +123,7 @@ inline void from_json(const nlohmann::json &j, QVariantList &list)
     if (!j.is_array()) {
         Q_UNUSED(list)
         list.clear();
-        spdlog::error("Unexpected j not an array");
+        KDDW_ERROR("Unexpected j not an array");
         return;
     }
 

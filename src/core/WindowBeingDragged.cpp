@@ -75,7 +75,7 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
     , m_guard(m_draggableView)
 {
     if (!isWayland()) {
-        spdlog::error("Wrong ctor called."); // Doesn't happen
+        KDDW_ERROR("Wrong ctor called."); // Doesn't happen
         Q_ASSERT(false);
         return;
     }
@@ -134,7 +134,7 @@ void WindowBeingDragged::grabMouse(bool grab)
     if (!m_guard)
         return;
 
-    spdlog::debug("WindowBeingDragged: fw={}, grab={}, draggableView={} ", ( void * )m_floatingWindow, grab, ( void * )m_draggableView);
+    KDDW_DEBUG("WindowBeingDragged: fw={}, grab={}, draggableView={} ", ( void * )m_floatingWindow, grab, ( void * )m_draggableView);
 
     if (grab)
         DragController::instance()->grabMouseFor(m_draggableView);
@@ -224,7 +224,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
 {
     if (!isWayland()) {
         // Doesn't happen
-        spdlog::error("This CTOR is only called on Wayland");
+        KDDW_ERROR("This CTOR is only called on Wayland");
         Q_ASSERT(false);
         return;
     }
@@ -236,7 +236,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         } else if (Group *group = tb->group()) {
             m_group = group;
         } else {
-            spdlog::error("Shouldn't happen. TitleBar of what ?");
+            KDDW_ERROR("Shouldn't happen. TitleBar of what ?");
         }
     } else if (auto fw = draggable->asView()->asFloatingWindowController()) {
         // case #2: the floating window itself is the draggable, happens on platforms that support
@@ -249,7 +249,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         if (Platform::instance()->isQtWidgets())
             m_group = stack->group();
     } else {
-        spdlog::error("Unknown draggable {} please fix)", ( void * )draggable);
+        KDDW_ERROR("Unknown draggable {} please fix)", ( void * )draggable);
     }
 }
 
@@ -312,7 +312,7 @@ QSize WindowBeingDraggedWayland::size() const
     else if (m_dockWidget)
         return m_dockWidget->size();
 
-    spdlog::error("Unknown size, shouldn't happen");
+    KDDW_ERROR("Unknown size, shouldn't happen");
     return QSize();
 }
 
@@ -326,7 +326,7 @@ QSize WindowBeingDraggedWayland::minSize() const
         return m_dockWidget->view()->minSize();
     }
 
-    spdlog::error("Unknown minSize, shouldn't happen");
+    KDDW_ERROR("Unknown minSize, shouldn't happen");
     return {};
 }
 
@@ -340,6 +340,6 @@ QSize WindowBeingDraggedWayland::maxSize() const
         return m_dockWidget->view()->maxSizeHint();
     }
 
-    spdlog::error("Unknown maxSize, shouldn't happen");
+    KDDW_ERROR("Unknown maxSize, shouldn't happen");
     return {};
 }

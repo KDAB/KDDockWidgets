@@ -238,7 +238,7 @@ void TestsEmbedder::deinit()
         const FlutterEngineResult res = FlutterEngineShutdown(m_flutterEngine);
         m_flutterEngine = nullptr;
         if (res != kSuccess)
-            spdlog::warn("TestsEmbedder::deinit: Could not stop flutter {}", res);
+            KDDW_WARN("TestsEmbedder::deinit: Could not stop flutter {}", res);
     }
 
     if (m_glfwWindow) {
@@ -247,7 +247,7 @@ void TestsEmbedder::deinit()
     }
 
     glfwTerminate();
-    spdlog::warn("TestsEmbedder::deinit: glfw terminated}");
+    KDDW_WARN("TestsEmbedder::deinit: glfw terminated}");
 }
 
 int TestsEmbedder::run()

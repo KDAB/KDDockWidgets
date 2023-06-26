@@ -264,7 +264,7 @@ Core::Group::List Layout::groups() const
 void Layout::removeItem(Core::Item *item)
 {
     if (!item) {
-        spdlog::error("nullptr item");
+        KDDW_ERROR("nullptr item");
         return;
     }
 

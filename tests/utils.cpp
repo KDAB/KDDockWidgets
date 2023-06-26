@@ -82,7 +82,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
         }
 #endif
 
-        spdlog::info("KDDockWidgets::Tests::createDockWidget: Couldn't activate window");
+        KDDW_INFO("KDDockWidgets::Tests::createDockWidget: Couldn't activate window");
         Q_ASSERT(false);
         return nullptr;
     } else {

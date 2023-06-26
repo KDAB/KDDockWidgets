@@ -152,7 +152,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
                         continue;
                     }
                 } else {
-                    spdlog::error("Invalid floating window position to restore. index={}", index);
+                    KDDW_ERROR("Invalid floating window position to restore. index={}", index);
                     continue;
                 }
             }
@@ -168,7 +168,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             addPlaceholderItem(item);
         } else {
             // Shouldn't happen, maybe even assert
-            spdlog::error("Couldn't find item index {}", itemIndex);
+            KDDW_ERROR("Couldn't find item index {}", itemIndex);
         }
     }
 

@@ -61,7 +61,7 @@ bool Window::supportsHonouringLayoutMinSize() const
 
 void Window::setWindowState(WindowState)
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }
 
 QRect Window::geometry() const
@@ -71,12 +71,12 @@ QRect Window::geometry() const
 
 void Window::setProperty(const char *, const QVariant &)
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }
 
 QVariant Window::property(const char *) const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
@@ -120,64 +120,64 @@ void Window::resize(int w, int h)
 
 bool Window::isActive() const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 WindowState Window::windowState() const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 QPoint Window::mapFromGlobal(QPoint) const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 QPoint Window::mapToGlobal(QPoint) const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 void Window::destroy()
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }
 
 QSize Window::minSize() const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 QSize Window::maxSize() const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 QPoint Window::fromNativePixels(QPoint) const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 bool Window::isFullScreen() const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 Core::Screen::Ptr Window::screen() const
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 void Window::onScreenChanged(QObject *, WindowScreenChangedCallback)
 {
-    spdlog::warn("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }

@@ -29,13 +29,13 @@ MainWindow::~MainWindow()
 
 QMargins MainWindow::centerWidgetMargins() const
 {
-    spdlog::warn("SideBar hasn't been implemented yet {}", Q_FUNC_INFO);
+    KDDW_WARN("SideBar hasn't been implemented yet {}", Q_FUNC_INFO);
     return {};
 }
 
 QRect MainWindow::centralAreaGeometry() const
 {
-    spdlog::warn("MainWindow::centralAreaGeometry hasn't been implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("MainWindow::centralAreaGeometry hasn't been implemented {}", Q_FUNC_INFO);
     return {};
 }
 
@@ -45,5 +45,5 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
     Q_UNUSED(right);
     Q_UNUSED(top);
     Q_UNUSED(bottom);
-    spdlog::warn("MainWindow::setContentsMargins hasn't been implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("MainWindow::setContentsMargins hasn't been implemented {}", Q_FUNC_INFO);
 }

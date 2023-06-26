@@ -200,7 +200,7 @@ void Group::updateTitleAndIcon()
         setObjectName(dw->uniqueName());
 
     } else if (currentTabIndex() != -1) {
-        spdlog::error("Invalid dock widget for group. index={}", currentTabIndex());
+        KDDW_ERROR("Invalid dock widget for group. index={}", currentTabIndex());
     }
 }
 
@@ -225,7 +225,7 @@ void Group::addTab(DockWidget *dockWidget, InitialOption addingOption)
 void Group::addTab(Group *group, InitialOption addingOption)
 {
     if (group->isEmpty()) {
-        spdlog::error("Group::addTab: group is empty. group={}", ( void * )group);
+        KDDW_ERROR("Group::addTab: group is empty. group={}", ( void * )group);
         return;
     }
 
@@ -246,7 +246,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
         if (!dockWidget->isPersistentCentralDockWidget())
-            spdlog::error("Group::addTab dockWidget already exists. this={} ; dockWidget={}", ( void * )this, ( void * )dockWidget);
+            KDDW_ERROR("Group::addTab dockWidget already exists. this={} ; dockWidget={}", ( void * )this, ( void * )dockWidget);
         return;
     }
     if (m_layoutItem)
@@ -378,7 +378,7 @@ int Group::dockWidgetCount() const
 
 void Group::onDockWidgetCountChanged()
 {
-    spdlog::debug("Group::onDockWidgetCountChanged: {} ; widgetCount=", ( void * )this, dockWidgetCount());
+    KDDW_DEBUG("Group::onDockWidgetCountChanged: {} ; widgetCount=", ( void * )this, dockWidgetCount());
     if (isEmpty() && !isCentralFrame()) {
         scheduleDeleteLater();
     } else {
@@ -547,19 +547,19 @@ FloatingWindow *Group::floatingWindow() const
 void Group::restoreToPreviousPosition()
 {
     if (hasSingleDockWidget()) {
-        spdlog::error("Invalid usage, there's no tabs");
+        KDDW_ERROR("Invalid usage, there's no tabs");
         return;
     }
 
     if (!m_layoutItem) {
-        spdlog::debug("{} There's no previous position known", Q_FUNC_INFO);
+        KDDW_DEBUG("{} There's no previous position known", Q_FUNC_INFO);
         return;
     }
 
     if (!m_layoutItem->isPlaceholder()) {
         // Maybe in this case just fold the group into the placeholder, which probably has other
         // dockwidgets which were added meanwhile. TODO
-        spdlog::debug("{} Previous position isn't a placeholder", Q_FUNC_INFO);
+        KDDW_DEBUG("{} Previous position isn't a placeholder", Q_FUNC_INFO);
         return;
     }
 
@@ -695,18 +695,18 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
 
         if (f.mainWindowUniqueName.isEmpty()) {
             // Can happen with older serialization formats
-            spdlog::error("Frame is the persistent central group but doesn't have"
-                          "an associated window name");
+            KDDW_ERROR("Frame is the persistent central group but doesn't have"
+                       "an associated window name");
         } else {
             if (MainWindow *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
                 group = mw->dropArea()->centralGroup();
                 if (!group) {
                     // Doesn't happen...
-                    spdlog::error("Main window {} doesn't have central group", f.mainWindowUniqueName);
+                    KDDW_ERROR("Main window {} doesn't have central group", f.mainWindowUniqueName);
                 }
             } else {
                 // Doesn't happen...
-                spdlog::error("Couldn't find main window {}", f.mainWindowUniqueName);
+                KDDW_ERROR("Couldn't find main window {}", f.mainWindowUniqueName);
             }
         }
     }
@@ -753,7 +753,7 @@ LayoutSaver::Group Group::serialize() const
 
 void Group::scheduleDeleteLater()
 {
-    spdlog::trace("{} {}", Q_FUNC_INFO, ( void * )this);
+    KDDW_TRACE("{} {}", Q_FUNC_INFO, ( void * )this);
     m_beingDeleted = true;
 
     // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
@@ -908,7 +908,7 @@ bool Group::hasNestedMDIDockWidgets() const
         return false;
 
     if (dockWidgetCount() != 1) {
-        spdlog::error("Expected a single dock widget wrapper as group child");
+        KDDW_ERROR("Expected a single dock widget wrapper as group child");
         return false;
     }
 

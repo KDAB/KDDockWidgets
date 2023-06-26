@@ -26,15 +26,13 @@
 #include <functional>
 #include <iostream>
 
-using namespace KDDockWidgets;
-
 #ifdef KDDW_FRONTEND_FLUTTER
 #include "qcoro/core/qcorocore.h"
 #endif
 
-#define KDDW_TEST_RETURN(res)                                           \
-    if (!res)                                                           \
-        spdlog::warn("FAILED: at={} ; line={}", Q_FUNC_INFO, __LINE__); \
+#define KDDW_TEST_RETURN(res)                                        \
+    if (!res)                                                        \
+        KDDW_WARN("FAILED: at={} ; line={}", Q_FUNC_INFO, __LINE__); \
     KDDW_CO_RETURN res;
 
 // TODOm4: Investigate something more fancy

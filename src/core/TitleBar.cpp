@@ -110,7 +110,7 @@ MainWindow *TitleBar::mainWindow() const
     if (m_group)
         return m_group->mainWindow();
 
-    spdlog::error("null group and null floating window");
+    KDDW_ERROR("null group and null floating window");
     return nullptr;
 }
 
@@ -367,7 +367,7 @@ void TitleBar::onCloseClicked()
                 dw->view()->close();
             } else {
                 // Doesn't happen
-                spdlog::error("Frame with no dock widgets");
+                KDDW_ERROR("Frame with no dock widgets");
             }
         } else {
             if (m_group->isTheOnlyGroup() && m_group->isInFloatingWindow()) {
@@ -384,7 +384,7 @@ void TitleBar::onCloseClicked()
                     dw->view()->close();
                 } else {
                     // Doesn't happen
-                    spdlog::error("Frame with no dock widgets");
+                    KDDW_ERROR("Frame with no dock widgets");
                 }
             } else {
                 m_floatingWindow->view()->close();
@@ -404,7 +404,7 @@ void TitleBar::onFloatClicked()
         // Let's dock it
 
         if (dockWidgets.isEmpty()) {
-            spdlog::error("TitleBar::onFloatClicked: empty list. Shouldn't happen");
+            KDDW_ERROR("TitleBar::onFloatClicked: empty list. Shouldn't happen");
             return;
         }
 
@@ -476,7 +476,7 @@ void TitleBar::onAutoHideClicked()
 {
     if (!m_group) {
         // Doesn't happen
-        spdlog::error("Minimize not supported on floating windows");
+        KDDW_ERROR("Minimize not supported on floating windows");
         return;
     }
 
@@ -508,11 +508,11 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab
         // bar's buttons to the title bar's buttons, just to reuse logic
 
-        spdlog::error("TitleBar::makeWindow shouldn't be called on invisible title bar this={}, root.isVisible={}", ( void * )this, view()->rootView()->isVisible());
+        KDDW_ERROR("TitleBar::makeWindow shouldn't be called on invisible title bar this={}, root.isVisible={}", ( void * )this, view()->rootView()->isVisible());
         if (m_group) {
-            spdlog::error("this={}; actual={}", ( void * )this, ( void * )m_group->actualTitleBar());
+            KDDW_ERROR("this={}; actual={}", ( void * )this, ( void * )m_group->actualTitleBar());
         } else if (m_floatingWindow) {
-            spdlog::error("Has floating window with titlebar={}, isVisible={}", ( void * )m_floatingWindow->titleBar(), m_floatingWindow->isVisible());
+            KDDW_ERROR("Has floating window with titlebar={}, isVisible={}", ( void * )m_floatingWindow->titleBar(), m_floatingWindow->isVisible());
         }
 
         Q_ASSERT(false);
@@ -527,7 +527,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     if (FloatingWindow *fw = floatingWindow()) { // Already floating
         if (m_group->isTheOnlyGroup()) { // We don't detach. This one drags the entire window
                                          // instead.
-            spdlog::debug("TitleBar::makeWindow no detach needed");
+            KDDW_DEBUG("TitleBar::makeWindow no detach needed");
             return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
         }
     }
@@ -565,7 +565,7 @@ Core::DockWidget::List TitleBar::dockWidgets() const
     if (m_isStandalone)
         return {}; // not applicable
 
-    spdlog::error("TitleBar::dockWidget: shouldn't happen");
+    KDDW_ERROR("TitleBar::dockWidget: shouldn't happen");
     return {};
 }
 
@@ -586,7 +586,7 @@ bool TitleBar::isFloating() const
     if (m_isStandalone)
         return false; // not applicable
 
-    spdlog::error("TitleBar::isFloating: shouldn't happen");
+    KDDW_ERROR("TitleBar::isFloating: shouldn't happen");
     return false;
 }
 
@@ -620,7 +620,7 @@ TabBar *TitleBar::tabBar() const
             return group->stack()->tabBar();
         } else {
             // Shouldn't happen
-            spdlog::error("Expected a group");
+            KDDW_ERROR("Expected a group");
         }
 
     } else if (m_group) {

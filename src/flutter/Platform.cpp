@@ -48,13 +48,13 @@ std::shared_ptr<Core::View> Platform::focusedView() const
 
 QVector<std::shared_ptr<Core::Window>> Platform::windows() const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
 void Platform::sendEvent(Core::View *, Event *) const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 
 Platform::~Platform()
@@ -63,7 +63,7 @@ Platform::~Platform()
 
 const char *Platform::name() const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return nullptr;
 }
 
@@ -79,43 +79,43 @@ Core::ViewFactory *Platform::createDefaultViewFactory()
 
 Core::Window::Ptr Platform::windowAt(QPoint) const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
 int Platform::screenNumberFor(Core::View *) const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return -1;
 }
 
 int Platform::screenNumberFor(std::shared_ptr<Core::Window>) const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
 bool Platform::isProcessingAppQuitEvent() const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
 QString Platform::applicationName() const
 {
     // TODOm3
-    // spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    // KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
 void Platform::setMouseCursor(Qt::CursorShape)
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 
 void Platform::restoreMouseCursor()
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 
 Core::Platform::DisplayType Platform::displayType() const
@@ -126,19 +126,19 @@ Core::Platform::DisplayType Platform::displayType() const
 
 bool Platform::isLeftMouseButtonPressed() const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
 QSize Platform::screenSizeFor(Core::View *) const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
 Core::View *Platform::createView(Core::Controller *, Core::View *) const
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return nullptr;
 }
 
@@ -154,7 +154,7 @@ bool Platform::inDisallowedDragView(QPoint) const
 
 void Platform::ungrabMouse()
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 
 Core::Screen::List Platform::screens() const
@@ -170,37 +170,37 @@ Core::Screen::Ptr Platform::primaryScreen() const
 
 void Platform::onFloatingWindowCreated(Core::FloatingWindow *)
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
 }
 
 void Platform::onFloatingWindowDestroyed(Core::FloatingWindow *)
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
 }
 
 void Platform::onMainWindowCreated(Core::MainWindow *)
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
 }
 
 void Platform::onMainWindowDestroyed(Core::MainWindow *)
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
 }
 
 void Platform::onDropIndicatorOverlayCreated(flutter::IndicatorWindow *)
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
 }
 
 void Platform::onDropIndicatorOverlayDestroyed(flutter::IndicatorWindow *)
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
 }
 
 void Platform::rebuildWindowOverlay()
 {
-    spdlog::warn("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
 }
 
 void Platform::runDelayed(int, Core::DelayedCall *)
@@ -215,7 +215,7 @@ QPoint Platform::cursorPos() const
 
 void Platform::setCursorPos(QPoint)
 {
-    spdlog::warn("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 
 
@@ -320,7 +320,7 @@ void Platform::resumeCoRoutines()
 
 void Platform::scheduleResumeCoRoutines(int) const
 {
-    spdlog::warn("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
 }
 
 std::optional<int> Platform::testsResult() const
@@ -460,12 +460,12 @@ std::shared_ptr<Core::Window> Platform::tests_createWindow()
 
 void Platform::tests_doubleClickOn(QPoint, Core::View *)
 {
-    spdlog::warn("Not implemented yet {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented yet {}", Q_FUNC_INFO);
 }
 
 void Platform::tests_doubleClickOn(QPoint, std::shared_ptr<Core::Window>)
 {
-    spdlog::warn("Not implemented yet {}", Q_FUNC_INFO);
+    KDDW_WARN("Not implemented yet {}", Q_FUNC_INFO);
 }
 
 QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos);

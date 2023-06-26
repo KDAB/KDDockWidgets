@@ -80,7 +80,7 @@ inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
     }
 
     if (options != RestoreOption_None) {
-        spdlog::error("Unknown options={}", int(options));
+        KDDW_ERROR("Unknown options={}", int(options));
     }
 
     return ret;
@@ -151,7 +151,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
 
     auto &frms = *it;
     if (!frms.is_object())
-        spdlog::error("Unexpected not object");
+        KDDW_ERROR("Unexpected not object");
 
     for (const auto &kv : frms.items()) {
         QString key = QString::fromStdString(kv.key());
@@ -343,7 +343,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
 
     dw.uniqueName = json.value("uniqueName", QString());
     if (dw.uniqueName.isEmpty())
-        spdlog::error("Unexpected no uniqueName for dockWidget");
+        KDDW_ERROR("Unexpected no uniqueName for dockWidget");
 
     dw.lastPosition = json.value("lastPosition", LayoutSaver::Position());
 }
@@ -360,7 +360,7 @@ void from_json(const nlohmann::json &json, typename LayoutSaver::DockWidget::Lis
     for (const auto &v : json) {
         auto it = v.find("uniqueName");
         if (it == v.end()) {
-            spdlog::error("Unexpected no uniqueName");
+            KDDW_ERROR("Unexpected no uniqueName");
             continue;
         }
         QString uniqueName = it->get<QString>();
@@ -388,7 +388,7 @@ bool LayoutSaver::saveToFile(const QString &jsonFilename)
 
     QFile f(jsonFilename);
     if (!f.open(QIODevice::WriteOnly)) {
-        spdlog::error("Failed to open {}, error={}", jsonFilename, f.errorString());
+        KDDW_ERROR("Failed to open {}, error={}", jsonFilename, f.errorString());
         return false;
     }
 
@@ -400,7 +400,7 @@ bool LayoutSaver::restoreFromFile(const QString &jsonFilename)
 {
     QFile f(jsonFilename);
     if (!f.open(QIODevice::ReadOnly)) {
-        spdlog::error("Failed to open {}, error={}", jsonFilename, f.errorString());
+        KDDW_ERROR("Failed to open {}, error={}", jsonFilename, f.errorString());
         return false;
     }
 
@@ -413,7 +413,7 @@ bool LayoutSaver::restoreFromFile(const QString &jsonFilename)
 QByteArray LayoutSaver::serializeLayout() const
 {
     if (!d->m_dockRegistry->isSane()) {
-        spdlog::error("Refusing to serialize this layout. Check previous warnings.");
+        KDDW_ERROR("Refusing to serialize this layout. Check previous warnings.");
         return {};
     }
 
@@ -485,7 +485,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     FrameCleanup cleanup(this);
     LayoutSaver::Layout layout;
     if (!layout.fromJson(data)) {
-        spdlog::error("Failed to parse json data");
+        KDDW_ERROR("Failed to parse json data");
         return false;
     }
 
@@ -514,7 +514,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             if (auto mwFunc = Config::self().mainWindowFactoryFunc()) {
                 mainWindow = mwFunc(mw.uniqueName);
             } else {
-                spdlog::error("Failed to restore layout create MainWindow with name {} first");
+                KDDW_ERROR("Failed to restore layout create MainWindow with name {} first");
                 return false;
             }
         }
@@ -549,7 +549,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         fw.floatingWindowInstance = floatingWindow;
         d->deserializeWindowGeometry(fw, floatingWindow->view()->window());
         if (!floatingWindow->deserialize(fw)) {
-            spdlog::error("Failed to deserialize floating window");
+            KDDW_ERROR("Failed to deserialize floating window");
             return false;
         }
     }
@@ -571,7 +571,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
                 dw->uniqueName, DockRegistry::DockByNameFlag::ConsultRemapping)) {
             dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
         } else {
-            spdlog::error("Couldn't find dock widget {}", dw->uniqueName);
+            KDDW_ERROR("Couldn't find dock widget {}", dw->uniqueName);
         }
     }
 
@@ -688,7 +688,7 @@ void LayoutSaver::Private::deleteEmptyGroups()
                 item->turnIntoPlaceholder();
             } else {
                 // This doesn't happen. But the warning will make the tests fail if there's a regression.
-                spdlog::error("Expected item for frame");
+                KDDW_ERROR("Expected item for frame");
             }
             delete group;
         }
@@ -703,7 +703,7 @@ bool LayoutSaver::restoreInProgress()
 bool LayoutSaver::Layout::isValid() const
 {
     if (serializationVersion != KDDOCKWIDGETS_SERIALIZATION_VERSION) {
-        spdlog::error("Serialization format is too old {}, current={}", serializationVersion, KDDOCKWIDGETS_SERIALIZATION_VERSION);
+        KDDW_ERROR("Serialization format is too old {}, current={}", serializationVersion, KDDOCKWIDGETS_SERIALIZATION_VERSION);
         return false;
     }
 
@@ -897,18 +897,18 @@ bool LayoutSaver::Group::isValid() const
         return true;
 
     if (!geometry.isValid()) {
-        spdlog::error("Invalid geometry");
+        KDDW_ERROR("Invalid geometry");
         return false;
     }
 
     if (id.isEmpty()) {
-        spdlog::error("Invalid id");
+        KDDW_ERROR("Invalid id");
         return false;
     }
 
     if (!dockWidgets.isEmpty()) {
         if (currentTabIndex >= dockWidgets.size() || currentTabIndex < 0) {
-            spdlog::error("Invalid tab index {}, {}", currentTabIndex, dockWidgets.size());
+            KDDW_ERROR("Invalid tab index {}, {}", currentTabIndex, dockWidgets.size());
             return false;
         }
     }
@@ -964,7 +964,7 @@ bool LayoutSaver::FloatingWindow::isValid() const
         return false;
 
     if (!geometry.isValid()) {
-        spdlog::error("Invalid geometry");
+        KDDW_ERROR("Invalid geometry");
         return false;
     }
 
@@ -1016,7 +1016,7 @@ bool LayoutSaver::MultiSplitter::isValid() const
         return false;
 
     /*if (!size.isValid()) {
-        spdlog::error("Invalid size");
+        KDDW_ERROR("Invalid size");
         return false;
     }*/
 
@@ -1079,17 +1079,17 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
 {
     auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
     if (!mainWindow) {
-        spdlog::error("Failed to find main window with name {}", mainWindowName);
+        KDDW_ERROR("Failed to find main window with name {}", mainWindowName);
         return;
     }
 
     if (!savedMainWindowGeo.isValid() || savedMainWindowGeo.isNull()) {
-        spdlog::error("Invalid saved main window geometry {}", savedMainWindowGeo);
+        KDDW_ERROR("Invalid saved main window geometry {}", savedMainWindowGeo);
         return;
     }
 
     if (!mainWindow->geometry().isValid() || mainWindow->geometry().isNull()) {
-        spdlog::error("Invalid main window geometry {}", mainWindow->geometry());
+        KDDW_ERROR("Invalid main window geometry {}", mainWindow->geometry());
         return;
     }
 

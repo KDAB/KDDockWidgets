@@ -91,7 +91,7 @@ ViewType View::Private::type() const
 void View::Private::free()
 {
     if (m_freed) {
-        spdlog::error("Free already called");
+        KDDW_ERROR("Free already called");
         return;
     }
 
@@ -353,7 +353,7 @@ bool View::Private::aboutToBeDestroyed() const
 
 void View::dumpDebug()
 {
-    spdlog::debug("View::dumpDebug: controller={}, type={}, rootController={}\n", ( void * )m_controller, int(d->type()), ( void * )rootView()->controller());
+    KDDW_DEBUG("View::dumpDebug: controller={}, type={}, rootController={}\n", ( void * )m_controller, int(d->type()), ( void * )rootView()->controller());
 }
 
 /** static */

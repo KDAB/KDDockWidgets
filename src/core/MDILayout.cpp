@@ -35,7 +35,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, QPoint localPt,
                               InitialOption addingOption)
 {
     if (!dw) {
-        spdlog::error("Refusing to add null dock widget");
+        KDDW_ERROR("Refusing to add null dock widget");
         return;
     }
 
@@ -71,7 +71,7 @@ void MDILayout::setDockWidgetGeometry(Core::Group *group, QRect geometry)
 
     Core::Item *item = itemForFrame(group);
     if (!item) {
-        spdlog::error("Group not found in the layout {}", ( void * )group);
+        KDDW_ERROR("Group not found in the layout {}", ( void * )group);
         return;
     }
 
@@ -90,7 +90,7 @@ void MDILayout::moveDockWidget(Core::Group *group, QPoint pos)
 
     Core::Item *item = itemForFrame(group);
     if (!item) {
-        spdlog::error("Group not found in the layout {}.", ( void * )group);
+        KDDW_ERROR("Group not found in the layout {}.", ( void * )group);
         return;
     }
 
@@ -111,7 +111,7 @@ void MDILayout::resizeDockWidget(Core::Group *group, QSize size)
 
     Core::Item *item = itemForFrame(group);
     if (!item) {
-        spdlog::error("Group not found in the layout {} isMDI={}, isMDIWrapper={}", ( void * )group, group->isMDI(), group->isMDIWrapper());
+        KDDW_ERROR("Group not found in the layout {} isMDI={}, isMDIWrapper={}", ( void * )group, group->isMDI(), group->isMDIWrapper());
         return;
     }
 
