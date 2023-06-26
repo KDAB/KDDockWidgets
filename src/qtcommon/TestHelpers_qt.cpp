@@ -64,10 +64,6 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
             return;
 
         if (!Platform_qt::isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {
-
-            if (Core::Platform::s_warningObserver)
-                Core::Platform::s_warningObserver->onFatal();
-
             Core::Platform::instance()->m_numWarningsEmitted++;
             // We don't link to QTest, so no QFAIL here. Bue will be heard by the CI:
             qFatal("Something is wrong, as KDDW is warnings clean!");
