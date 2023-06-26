@@ -512,7 +512,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         if (m_group) {
             spdlog::error("this={}; actual={}", ( void * )this, ( void * )m_group->actualTitleBar());
         } else if (m_floatingWindow) {
-            spdlog::error("Has floating window with titlebar=", ( void * )m_floatingWindow->titleBar(), "; fw->isVisible=", m_floatingWindow->isVisible());
+            spdlog::error("Has floating window with titlebar={}, isVisible={}", ( void * )m_floatingWindow->titleBar(), m_floatingWindow->isVisible());
         }
 
         Q_ASSERT(false);

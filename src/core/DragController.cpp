@@ -480,7 +480,7 @@ StateInternalMDIDragging::~StateInternalMDIDragging()
 
 void StateInternalMDIDragging::onEntry()
 {
-    spdlog::debug("StateInternalMDIDragging entered. draggable=", ( void * )q->m_draggable);
+    spdlog::debug("StateInternalMDIDragging entered. draggable={}", ( void * )q->m_draggable);
 
     // Raise the dock widget being dragged
     if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
@@ -811,7 +811,7 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
     if (!w)
         return false;
 
-    spdlog::trace("DragController::onMouseEvent e={} ; nonClientDrag=", me->type(), m_nonClientDrag);
+    spdlog::trace("DragController::onMouseEvent e={} ; nonClientDrag={}", me->type(), m_nonClientDrag);
 
     switch (me->type()) {
     case Event::NonClientAreaMouseButtonPress: {
