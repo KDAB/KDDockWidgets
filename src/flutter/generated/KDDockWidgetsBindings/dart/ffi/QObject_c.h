@@ -24,11 +24,10 @@ public:
     bool disconnect(const QObject *receiver, const char *member = nullptr) const;
     static bool disconnect(const QObject *sender, const char *signal, const QObject *receiver, const char *member);
     bool disconnect(const char *signal = nullptr, const QObject *receiver = nullptr, const char *member = nullptr) const;
-    void dumpObjectInfo() const;
-    void dumpObjectTree() const;
+    void dumpObjectInfo();
+    void dumpObjectTree();
     bool inherits(const char *classname) const;
     void installEventFilter(QObject *filterObj);
-    bool isQuickItemType() const;
     bool isWidgetType() const;
     bool isWindowType() const;
     void killTimer(int id);
@@ -38,6 +37,7 @@ public:
     void removeEventFilter(QObject *obj);
     QObject *sender() const;
     int senderSignalIndex() const;
+    void setObjectName(const QString &name);
     void setParent(QObject *parent);
     bool signalsBlocked() const;
     int startTimer(int interval);
@@ -59,16 +59,14 @@ KDDockWidgetsBindings_EXPORT bool c_QObject__disconnect_QObject_char(void *thisO
 KDDockWidgetsBindings_EXPORT bool c_static_QObject__disconnect_QObject_char_QObject_char(void *sender_, const char *signal, void *receiver_, const char *member);
 // QObject::disconnect(const char * signal, const QObject * receiver, const char * member) const
 KDDockWidgetsBindings_EXPORT bool c_QObject__disconnect_char_QObject_char(void *thisObj, const char *signal, void *receiver_, const char *member);
-// QObject::dumpObjectInfo() const
+// QObject::dumpObjectInfo()
 KDDockWidgetsBindings_EXPORT void c_QObject__dumpObjectInfo(void *thisObj);
-// QObject::dumpObjectTree() const
+// QObject::dumpObjectTree()
 KDDockWidgetsBindings_EXPORT void c_QObject__dumpObjectTree(void *thisObj);
 // QObject::inherits(const char * classname) const
 KDDockWidgetsBindings_EXPORT bool c_QObject__inherits_char(void *thisObj, const char *classname);
 // QObject::installEventFilter(QObject * filterObj)
 KDDockWidgetsBindings_EXPORT void c_QObject__installEventFilter_QObject(void *thisObj, void *filterObj_);
-// QObject::isQuickItemType() const
-KDDockWidgetsBindings_EXPORT bool c_QObject__isQuickItemType(void *thisObj);
 // QObject::isWidgetType() const
 KDDockWidgetsBindings_EXPORT bool c_QObject__isWidgetType(void *thisObj);
 // QObject::isWindowType() const
@@ -87,6 +85,8 @@ KDDockWidgetsBindings_EXPORT void c_QObject__removeEventFilter_QObject(void *thi
 KDDockWidgetsBindings_EXPORT void *c_QObject__sender(void *thisObj);
 // QObject::senderSignalIndex() const
 KDDockWidgetsBindings_EXPORT int c_QObject__senderSignalIndex(void *thisObj);
+// QObject::setObjectName(const QString & name)
+KDDockWidgetsBindings_EXPORT void c_QObject__setObjectName_QString(void *thisObj, const char *name_);
 // QObject::setParent(QObject * parent)
 KDDockWidgetsBindings_EXPORT void c_QObject__setParent_QObject(void *thisObj, void *parent_);
 // QObject::signalsBlocked() const

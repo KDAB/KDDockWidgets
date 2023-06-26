@@ -11,7 +11,7 @@
 #include "Layout_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {
@@ -310,7 +310,7 @@ void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, voi
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 811:
+    case 826:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

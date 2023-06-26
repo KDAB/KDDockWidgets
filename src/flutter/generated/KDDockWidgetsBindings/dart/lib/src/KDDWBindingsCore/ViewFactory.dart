@@ -46,7 +46,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(596))
+            cFunctionSymbolName(608))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -84,7 +84,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(597))
+            cFunctionSymbolName(609))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -122,7 +122,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(598))
+            cFunctionSymbolName(610))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -158,7 +158,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(599))
+            cFunctionSymbolName(611))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -197,7 +197,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(600))
+            cFunctionSymbolName(612))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -228,7 +228,7 @@ class ViewFactory extends QObject {
   KDDWBindingsCore.View createRubberBand(KDDWBindingsCore.View? parent) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(601))
+            cFunctionSymbolName(613))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
@@ -257,7 +257,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(602))
+            cFunctionSymbolName(614))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -293,7 +293,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(603))
+            cFunctionSymbolName(615))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -327,7 +327,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(604))
+            cFunctionSymbolName(616))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -361,7 +361,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(605))
+            cFunctionSymbolName(617))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -395,7 +395,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(606))
+            cFunctionSymbolName(618))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -444,27 +444,27 @@ class ViewFactory extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 596:
+      case 608:
         return "c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View";
-      case 597:
+      case 609:
         return "c_KDDockWidgets__Core__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
-      case 598:
+      case 610:
         return "c_KDDockWidgets__Core__ViewFactory__createDropArea_DropArea_View";
-      case 599:
+      case 611:
         return "c_KDDockWidgets__Core__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags";
-      case 600:
+      case 612:
         return "c_KDDockWidgets__Core__ViewFactory__createGroup_Group_View";
-      case 601:
+      case 613:
         return "c_KDDockWidgets__Core__ViewFactory__createRubberBand_View";
-      case 602:
+      case 614:
         return "c_KDDockWidgets__Core__ViewFactory__createSeparator_Separator_View";
-      case 603:
+      case 615:
         return "c_KDDockWidgets__Core__ViewFactory__createSideBar_SideBar_View";
-      case 604:
+      case 616:
         return "c_KDDockWidgets__Core__ViewFactory__createStack_Stack_View";
-      case 605:
+      case 617:
         return "c_KDDockWidgets__Core__ViewFactory__createTabBar_TabBar_View";
-      case 606:
+      case 618:
         return "c_KDDockWidgets__Core__ViewFactory__createTitleBar_TitleBar_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -472,27 +472,27 @@ class ViewFactory extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 596:
+      case 608:
         return "createClassicIndicatorWindow";
-      case 597:
+      case 609:
         return "createDockWidget";
-      case 598:
+      case 610:
         return "createDropArea";
-      case 599:
+      case 611:
         return "createFloatingWindow";
-      case 600:
+      case 612:
         return "createGroup";
-      case 601:
+      case 613:
         return "createRubberBand";
-      case 602:
+      case 614:
         return "createSeparator";
-      case 603:
+      case 615:
         return "createSideBar";
-      case 604:
+      case 616:
         return "createStack";
-      case 605:
+      case 617:
         return "createTabBar";
-      case 606:
+      case 618:
         return "createTitleBar";
     }
     throw Error();
@@ -504,49 +504,49 @@ class ViewFactory extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback')
         .asFunction();
-    final callback596 = ffi.Pointer.fromFunction<
+    final callback608 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_voidstar_FFI>(
         KDDWBindingsCore.ViewFactory.createClassicIndicatorWindow_calledFromC);
-    registerCallback(thisCpp, callback596, 596);
-    final callback597 = ffi.Pointer.fromFunction<
+    registerCallback(thisCpp, callback608, 608);
+    final callback609 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
         KDDWBindingsCore.ViewFactory.createDockWidget_calledFromC);
-    registerCallback(thisCpp, callback597, 597);
-    final callback598 =
+    registerCallback(thisCpp, callback609, 609);
+    final callback610 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createDropArea_calledFromC);
-    registerCallback(thisCpp, callback598, 598);
-    final callback599 = ffi.Pointer.fromFunction<
+    registerCallback(thisCpp, callback610, 610);
+    final callback611 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>(
         KDDWBindingsCore.ViewFactory.createFloatingWindow_calledFromC);
-    registerCallback(thisCpp, callback599, 599);
-    final callback600 =
+    registerCallback(thisCpp, callback611, 611);
+    final callback612 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createGroup_calledFromC);
-    registerCallback(thisCpp, callback600, 600);
-    final callback601 =
+    registerCallback(thisCpp, callback612, 612);
+    final callback613 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback601, 601);
-    final callback602 =
+    registerCallback(thisCpp, callback613, 613);
+    final callback614 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createSeparator_calledFromC);
-    registerCallback(thisCpp, callback602, 602);
-    final callback603 =
+    registerCallback(thisCpp, callback614, 614);
+    final callback615 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createSideBar_calledFromC);
-    registerCallback(thisCpp, callback603, 603);
-    final callback604 =
+    registerCallback(thisCpp, callback615, 615);
+    final callback616 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createStack_calledFromC);
-    registerCallback(thisCpp, callback604, 604);
-    final callback605 =
+    registerCallback(thisCpp, callback616, 616);
+    final callback617 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createTabBar_calledFromC);
-    registerCallback(thisCpp, callback605, 605);
-    final callback606 =
+    registerCallback(thisCpp, callback617, 617);
+    final callback618 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createTitleBar_calledFromC);
-    registerCallback(thisCpp, callback606, 606);
+    registerCallback(thisCpp, callback618, 618);
   }
 }

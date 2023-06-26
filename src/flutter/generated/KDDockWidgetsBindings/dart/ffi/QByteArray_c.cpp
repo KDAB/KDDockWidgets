@@ -11,7 +11,7 @@
 #include "QByteArray_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {
@@ -31,7 +31,7 @@ QByteArray_wrapper::QByteArray_wrapper()
     : ::QByteArray()
 {
 }
-QByteArray_wrapper::QByteArray_wrapper(const char *arg__1, qsizetype size)
+QByteArray_wrapper::QByteArray_wrapper(const char *arg__1, int size)
     : ::QByteArray(arg__1, size)
 {
 }
@@ -43,15 +43,19 @@ QByteArray &QByteArray_wrapper::append(const char *s)
 {
     return ::QByteArray::append(s);
 }
-QByteArray &QByteArray_wrapper::append(const char *s, qsizetype len)
+QByteArray &QByteArray_wrapper::append(const char *s, int len)
 {
     return ::QByteArray::append(s, len);
 }
-char QByteArray_wrapper::at(qsizetype i) const
+char QByteArray_wrapper::at(int i) const
 {
     return ::QByteArray::at(i);
 }
-qsizetype QByteArray_wrapper::capacity() const
+char QByteArray_wrapper::back() const
+{
+    return ::QByteArray::back();
+}
+int QByteArray_wrapper::capacity() const
 {
     return ::QByteArray::capacity();
 }
@@ -63,17 +67,25 @@ const char *QByteArray_wrapper::cend() const
 {
     return ::QByteArray::cend();
 }
-void QByteArray_wrapper::chop(qsizetype n)
+void QByteArray_wrapper::chop(int n)
 {
     ::QByteArray::chop(n);
 }
-QByteArray QByteArray_wrapper::chopped(qsizetype len) const
+QByteArray QByteArray_wrapper::chopped(int len) const
 {
     return ::QByteArray::chopped(len);
 }
 void QByteArray_wrapper::clear()
 {
     ::QByteArray::clear();
+}
+int QByteArray_wrapper::compare(const QByteArray &a) const
+{
+    return ::QByteArray::compare(a);
+}
+int QByteArray_wrapper::compare(const char *c) const
+{
+    return ::QByteArray::compare(c);
 }
 const char *QByteArray_wrapper::constBegin() const
 {
@@ -87,13 +99,37 @@ const char *QByteArray_wrapper::constEnd() const
 {
     return ::QByteArray::constEnd();
 }
+bool QByteArray_wrapper::contains(const QByteArray &a) const
+{
+    return ::QByteArray::contains(a);
+}
+bool QByteArray_wrapper::contains(const char *a) const
+{
+    return ::QByteArray::contains(a);
+}
+int QByteArray_wrapper::count() const
+{
+    return ::QByteArray::count();
+}
+int QByteArray_wrapper::count(const QByteArray &a) const
+{
+    return ::QByteArray::count(a);
+}
+int QByteArray_wrapper::count(const char *a) const
+{
+    return ::QByteArray::count(a);
+}
 void QByteArray_wrapper::detach()
 {
     ::QByteArray::detach();
 }
-QByteArray QByteArray_wrapper::first(qsizetype n) const
+bool QByteArray_wrapper::endsWith(const QByteArray &a) const
 {
-    return ::QByteArray::first(n);
+    return ::QByteArray::endsWith(a);
+}
+bool QByteArray_wrapper::endsWith(const char *c) const
+{
+    return ::QByteArray::endsWith(c);
 }
 QByteArray QByteArray_wrapper::fromBase64(const QByteArray &base64)
 {
@@ -103,19 +139,31 @@ QByteArray QByteArray_wrapper::fromHex(const QByteArray &hexEncoded)
 {
     return ::QByteArray::fromHex(hexEncoded);
 }
-QByteArray QByteArray_wrapper::fromRawData(const char *data, qsizetype size)
+QByteArray QByteArray_wrapper::fromRawData(const char *arg__1, int size)
 {
-    return ::QByteArray::fromRawData(data, size);
+    return ::QByteArray::fromRawData(arg__1, size);
 }
-QByteArray &QByteArray_wrapper::insert(qsizetype i, const QByteArray &data)
+char QByteArray_wrapper::front() const
 {
-    return ::QByteArray::insert(i, data);
+    return ::QByteArray::front();
 }
-QByteArray &QByteArray_wrapper::insert(qsizetype i, const char *s)
+int QByteArray_wrapper::indexOf(const QByteArray &a, int from) const
+{
+    return ::QByteArray::indexOf(a, from);
+}
+int QByteArray_wrapper::indexOf(const char *c, int from) const
+{
+    return ::QByteArray::indexOf(c, from);
+}
+QByteArray &QByteArray_wrapper::insert(int i, const QByteArray &a)
+{
+    return ::QByteArray::insert(i, a);
+}
+QByteArray &QByteArray_wrapper::insert(int i, const char *s)
 {
     return ::QByteArray::insert(i, s);
 }
-QByteArray &QByteArray_wrapper::insert(qsizetype i, const char *s, qsizetype len)
+QByteArray &QByteArray_wrapper::insert(int i, const char *s, int len)
 {
     return ::QByteArray::insert(i, s, len);
 }
@@ -143,31 +191,27 @@ bool QByteArray_wrapper::isUpper() const
 {
     return ::QByteArray::isUpper();
 }
-bool QByteArray_wrapper::isValidUtf8() const
+int QByteArray_wrapper::lastIndexOf(const QByteArray &a, int from) const
 {
-    return ::QByteArray::isValidUtf8();
+    return ::QByteArray::lastIndexOf(a, from);
 }
-QByteArray QByteArray_wrapper::last(qsizetype n) const
+int QByteArray_wrapper::lastIndexOf(const char *c, int from) const
 {
-    return ::QByteArray::last(n);
+    return ::QByteArray::lastIndexOf(c, from);
 }
-QByteArray QByteArray_wrapper::left(qsizetype len) const
+QByteArray QByteArray_wrapper::left(int len) const
 {
     return ::QByteArray::left(len);
 }
-qsizetype QByteArray_wrapper::length() const
+int QByteArray_wrapper::length() const
 {
     return ::QByteArray::length();
 }
-QByteArray QByteArray_wrapper::mid(qsizetype index, qsizetype len) const
+QByteArray QByteArray_wrapper::mid(int index, int len) const
 {
     return ::QByteArray::mid(index, len);
 }
 QByteArray QByteArray_wrapper::number(int arg__1, int base)
-{
-    return ::QByteArray::number(arg__1, base);
-}
-QByteArray QByteArray_wrapper::number(long arg__1, int base)
 {
     return ::QByteArray::number(arg__1, base);
 }
@@ -183,7 +227,7 @@ QByteArray &QByteArray_wrapper::prepend(const char *s)
 {
     return ::QByteArray::prepend(s);
 }
-QByteArray &QByteArray_wrapper::prepend(const char *s, qsizetype len)
+QByteArray &QByteArray_wrapper::prepend(const char *s, int len)
 {
     return ::QByteArray::prepend(s, len);
 }
@@ -191,9 +235,9 @@ void QByteArray_wrapper::push_back(const QByteArray &a)
 {
     ::QByteArray::push_back(a);
 }
-void QByteArray_wrapper::push_back(const char *s)
+void QByteArray_wrapper::push_back(const char *c)
 {
-    ::QByteArray::push_back(s);
+    ::QByteArray::push_back(c);
 }
 void QByteArray_wrapper::push_front(const QByteArray &a)
 {
@@ -203,51 +247,59 @@ void QByteArray_wrapper::push_front(const char *c)
 {
     ::QByteArray::push_front(c);
 }
-QByteArray &QByteArray_wrapper::remove(qsizetype index, qsizetype len)
+QByteArray &QByteArray_wrapper::remove(int index, int len)
 {
     return ::QByteArray::remove(index, len);
 }
-QByteArray &QByteArray_wrapper::removeAt(qsizetype pos)
-{
-    return ::QByteArray::removeAt(pos);
-}
-QByteArray &QByteArray_wrapper::removeFirst()
-{
-    return ::QByteArray::removeFirst();
-}
-QByteArray &QByteArray_wrapper::removeLast()
-{
-    return ::QByteArray::removeLast();
-}
-QByteArray QByteArray_wrapper::repeated(qsizetype times) const
+QByteArray QByteArray_wrapper::repeated(int times) const
 {
     return ::QByteArray::repeated(times);
 }
-QByteArray &QByteArray_wrapper::replace(const char *before, qsizetype bsize, const char *after, qsizetype asize)
+QByteArray &QByteArray_wrapper::replace(const QByteArray &before, const QByteArray &after)
+{
+    return ::QByteArray::replace(before, after);
+}
+QByteArray &QByteArray_wrapper::replace(const QByteArray &before, const char *after)
+{
+    return ::QByteArray::replace(before, after);
+}
+QByteArray &QByteArray_wrapper::replace(const char *before, const QByteArray &after)
+{
+    return ::QByteArray::replace(before, after);
+}
+QByteArray &QByteArray_wrapper::replace(const char *before, const char *after)
+{
+    return ::QByteArray::replace(before, after);
+}
+QByteArray &QByteArray_wrapper::replace(const char *before, int bsize, const char *after, int asize)
 {
     return ::QByteArray::replace(before, bsize, after, asize);
 }
-QByteArray &QByteArray_wrapper::replace(qsizetype index, qsizetype len, const char *s, qsizetype alen)
+QByteArray &QByteArray_wrapper::replace(int index, int len, const QByteArray &s)
+{
+    return ::QByteArray::replace(index, len, s);
+}
+QByteArray &QByteArray_wrapper::replace(int index, int len, const char *s)
+{
+    return ::QByteArray::replace(index, len, s);
+}
+QByteArray &QByteArray_wrapper::replace(int index, int len, const char *s, int alen)
 {
     return ::QByteArray::replace(index, len, s, alen);
 }
-void QByteArray_wrapper::reserve(qsizetype size)
+void QByteArray_wrapper::reserve(int size)
 {
     ::QByteArray::reserve(size);
 }
-void QByteArray_wrapper::resize(qsizetype size)
+void QByteArray_wrapper::resize(int size)
 {
     ::QByteArray::resize(size);
 }
-QByteArray QByteArray_wrapper::right(qsizetype len) const
+QByteArray QByteArray_wrapper::right(int len) const
 {
     return ::QByteArray::right(len);
 }
 QByteArray &QByteArray_wrapper::setNum(int arg__1, int base)
-{
-    return ::QByteArray::setNum(arg__1, base);
-}
-QByteArray &QByteArray_wrapper::setNum(long arg__1, int base)
 {
     return ::QByteArray::setNum(arg__1, base);
 }
@@ -259,10 +311,6 @@ QByteArray &QByteArray_wrapper::setNum(short arg__1, int base)
 {
     return ::QByteArray::setNum(arg__1, base);
 }
-QByteArray &QByteArray_wrapper::setRawData(const char *a, qsizetype n)
-{
-    return ::QByteArray::setRawData(a, n);
-}
 void QByteArray_wrapper::shrink_to_fit()
 {
     ::QByteArray::shrink_to_fit();
@@ -271,25 +319,29 @@ QByteArray QByteArray_wrapper::simplified()
 {
     return ::QByteArray::simplified();
 }
-qsizetype QByteArray_wrapper::size() const
+int QByteArray_wrapper::size() const
 {
     return ::QByteArray::size();
-}
-QByteArray QByteArray_wrapper::sliced(qsizetype pos) const
-{
-    return ::QByteArray::sliced(pos);
-}
-QByteArray QByteArray_wrapper::sliced(qsizetype pos, qsizetype n) const
-{
-    return ::QByteArray::sliced(pos, n);
 }
 void QByteArray_wrapper::squeeze()
 {
     ::QByteArray::squeeze();
 }
+bool QByteArray_wrapper::startsWith(const QByteArray &a) const
+{
+    return ::QByteArray::startsWith(a);
+}
+bool QByteArray_wrapper::startsWith(const char *c) const
+{
+    return ::QByteArray::startsWith(c);
+}
 QByteArray QByteArray_wrapper::toBase64() const
 {
     return ::QByteArray::toBase64();
+}
+QByteArray QByteArray_wrapper::toHex() const
+{
+    return ::QByteArray::toHex();
 }
 QByteArray QByteArray_wrapper::toLower()
 {
@@ -303,7 +355,7 @@ QByteArray QByteArray_wrapper::trimmed()
 {
     return ::QByteArray::trimmed();
 }
-void QByteArray_wrapper::truncate(qsizetype pos)
+void QByteArray_wrapper::truncate(int pos)
 {
     ::QByteArray::truncate(pos);
 }
@@ -330,7 +382,7 @@ void *c_QByteArray__constructor()
     auto ptr = new KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper();
     return reinterpret_cast<void *>(ptr);
 }
-void *c_QByteArray__constructor_char_qsizetype(const char *arg__1, qsizetype size)
+void *c_QByteArray__constructor_char_int(const char *arg__1, int size)
 {
     auto ptr = new KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper(arg__1, size);
     return reinterpret_cast<void *>(ptr);
@@ -347,18 +399,23 @@ void *c_QByteArray__append_char(void *thisObj, const char *s)
 {
     return &fromPtr(thisObj)->append(s);
 }
-// append(const char * s, qsizetype len)
-void *c_QByteArray__append_char_qsizetype(void *thisObj, const char *s, qsizetype len)
+// append(const char * s, int len)
+void *c_QByteArray__append_char_int(void *thisObj, const char *s, int len)
 {
     return &fromPtr(thisObj)->append(s, len);
 }
-// at(qsizetype i) const
-char c_QByteArray__at_qsizetype(void *thisObj, qsizetype i)
+// at(int i) const
+char c_QByteArray__at_int(void *thisObj, int i)
 {
     return fromPtr(thisObj)->at(i);
 }
+// back() const
+char c_QByteArray__back(void *thisObj)
+{
+    return fromPtr(thisObj)->back();
+}
 // capacity() const
-qsizetype c_QByteArray__capacity(void *thisObj)
+int c_QByteArray__capacity(void *thisObj)
 {
     return fromPtr(thisObj)->capacity();
 }
@@ -372,13 +429,13 @@ const char *c_QByteArray__cend(void *thisObj)
 {
     return fromPtr(thisObj)->cend();
 }
-// chop(qsizetype n)
-void c_QByteArray__chop_qsizetype(void *thisObj, qsizetype n)
+// chop(int n)
+void c_QByteArray__chop_int(void *thisObj, int n)
 {
     fromPtr(thisObj)->chop(n);
 }
-// chopped(qsizetype len) const
-void *c_QByteArray__chopped_qsizetype(void *thisObj, qsizetype len)
+// chopped(int len) const
+void *c_QByteArray__chopped_int(void *thisObj, int len)
 {
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->chopped(len) };
 }
@@ -386,6 +443,18 @@ void *c_QByteArray__chopped_qsizetype(void *thisObj, qsizetype len)
 void c_QByteArray__clear(void *thisObj)
 {
     fromPtr(thisObj)->clear();
+}
+// compare(const QByteArray & a) const
+int c_QByteArray__compare_QByteArray(void *thisObj, void *a_)
+{
+    assert(a_);
+    auto &a = *reinterpret_cast<QByteArray *>(a_);
+    return fromPtr(thisObj)->compare(a);
+}
+// compare(const char * c) const
+int c_QByteArray__compare_char(void *thisObj, const char *c)
+{
+    return fromPtr(thisObj)->compare(c);
 }
 // constBegin() const
 const char *c_QByteArray__constBegin(void *thisObj)
@@ -402,15 +471,51 @@ const char *c_QByteArray__constEnd(void *thisObj)
 {
     return fromPtr(thisObj)->constEnd();
 }
+// contains(const QByteArray & a) const
+bool c_QByteArray__contains_QByteArray(void *thisObj, void *a_)
+{
+    assert(a_);
+    auto &a = *reinterpret_cast<QByteArray *>(a_);
+    return fromPtr(thisObj)->contains(a);
+}
+// contains(const char * a) const
+bool c_QByteArray__contains_char(void *thisObj, const char *a)
+{
+    return fromPtr(thisObj)->contains(a);
+}
+// count() const
+int c_QByteArray__count(void *thisObj)
+{
+    return fromPtr(thisObj)->count();
+}
+// count(const QByteArray & a) const
+int c_QByteArray__count_QByteArray(void *thisObj, void *a_)
+{
+    assert(a_);
+    auto &a = *reinterpret_cast<QByteArray *>(a_);
+    return fromPtr(thisObj)->count(a);
+}
+// count(const char * a) const
+int c_QByteArray__count_char(void *thisObj, const char *a)
+{
+    return fromPtr(thisObj)->count(a);
+}
 // detach()
 void c_QByteArray__detach(void *thisObj)
 {
     fromPtr(thisObj)->detach();
 }
-// first(qsizetype n) const
-void *c_QByteArray__first_qsizetype(void *thisObj, qsizetype n)
+// endsWith(const QByteArray & a) const
+bool c_QByteArray__endsWith_QByteArray(void *thisObj, void *a_)
 {
-    return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->first(n) };
+    assert(a_);
+    auto &a = *reinterpret_cast<QByteArray *>(a_);
+    return fromPtr(thisObj)->endsWith(a);
+}
+// endsWith(const char * c) const
+bool c_QByteArray__endsWith_char(void *thisObj, const char *c)
+{
+    return fromPtr(thisObj)->endsWith(c);
 }
 // fromBase64(const QByteArray & base64)
 void *c_static_QByteArray__fromBase64_QByteArray(void *base64_)
@@ -426,25 +531,42 @@ void *c_static_QByteArray__fromHex_QByteArray(void *hexEncoded_)
     auto &hexEncoded = *reinterpret_cast<QByteArray *>(hexEncoded_);
     return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromHex(hexEncoded) };
 }
-// fromRawData(const char * data, qsizetype size)
-void *c_static_QByteArray__fromRawData_char_qsizetype(const char *data, qsizetype size)
+// fromRawData(const char * arg__1, int size)
+void *c_static_QByteArray__fromRawData_char_int(const char *arg__1, int size)
 {
-    return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromRawData(data, size) };
+    return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::fromRawData(arg__1, size) };
 }
-// insert(qsizetype i, const QByteArray & data)
-void *c_QByteArray__insert_qsizetype_QByteArray(void *thisObj, qsizetype i, void *data_)
+// front() const
+char c_QByteArray__front(void *thisObj)
 {
-    assert(data_);
-    auto &data = *reinterpret_cast<QByteArray *>(data_);
-    return &fromPtr(thisObj)->insert(i, data);
+    return fromPtr(thisObj)->front();
 }
-// insert(qsizetype i, const char * s)
-void *c_QByteArray__insert_qsizetype_char(void *thisObj, qsizetype i, const char *s)
+// indexOf(const QByteArray & a, int from) const
+int c_QByteArray__indexOf_QByteArray_int(void *thisObj, void *a_, int from)
+{
+    assert(a_);
+    auto &a = *reinterpret_cast<QByteArray *>(a_);
+    return fromPtr(thisObj)->indexOf(a, from);
+}
+// indexOf(const char * c, int from) const
+int c_QByteArray__indexOf_char_int(void *thisObj, const char *c, int from)
+{
+    return fromPtr(thisObj)->indexOf(c, from);
+}
+// insert(int i, const QByteArray & a)
+void *c_QByteArray__insert_int_QByteArray(void *thisObj, int i, void *a_)
+{
+    assert(a_);
+    auto &a = *reinterpret_cast<QByteArray *>(a_);
+    return &fromPtr(thisObj)->insert(i, a);
+}
+// insert(int i, const char * s)
+void *c_QByteArray__insert_int_char(void *thisObj, int i, const char *s)
 {
     return &fromPtr(thisObj)->insert(i, s);
 }
-// insert(qsizetype i, const char * s, qsizetype len)
-void *c_QByteArray__insert_qsizetype_char_qsizetype(void *thisObj, qsizetype i, const char *s, qsizetype len)
+// insert(int i, const char * s, int len)
+void *c_QByteArray__insert_int_char_int(void *thisObj, int i, const char *s, int len)
 {
     return &fromPtr(thisObj)->insert(i, s, len);
 }
@@ -480,38 +602,35 @@ bool c_QByteArray__isUpper(void *thisObj)
 {
     return fromPtr(thisObj)->isUpper();
 }
-// isValidUtf8() const
-bool c_QByteArray__isValidUtf8(void *thisObj)
+// lastIndexOf(const QByteArray & a, int from) const
+int c_QByteArray__lastIndexOf_QByteArray_int(void *thisObj, void *a_, int from)
 {
-    return fromPtr(thisObj)->isValidUtf8();
+    assert(a_);
+    auto &a = *reinterpret_cast<QByteArray *>(a_);
+    return fromPtr(thisObj)->lastIndexOf(a, from);
 }
-// last(qsizetype n) const
-void *c_QByteArray__last_qsizetype(void *thisObj, qsizetype n)
+// lastIndexOf(const char * c, int from) const
+int c_QByteArray__lastIndexOf_char_int(void *thisObj, const char *c, int from)
 {
-    return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->last(n) };
+    return fromPtr(thisObj)->lastIndexOf(c, from);
 }
-// left(qsizetype len) const
-void *c_QByteArray__left_qsizetype(void *thisObj, qsizetype len)
+// left(int len) const
+void *c_QByteArray__left_int(void *thisObj, int len)
 {
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->left(len) };
 }
 // length() const
-qsizetype c_QByteArray__length(void *thisObj)
+int c_QByteArray__length(void *thisObj)
 {
     return fromPtr(thisObj)->length();
 }
-// mid(qsizetype index, qsizetype len) const
-void *c_QByteArray__mid_qsizetype_qsizetype(void *thisObj, qsizetype index, qsizetype len)
+// mid(int index, int len) const
+void *c_QByteArray__mid_int_int(void *thisObj, int index, int len)
 {
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->mid(index, len) };
 }
 // number(int arg__1, int base)
 void *c_static_QByteArray__number_int_int(int arg__1, int base)
-{
-    return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::number(arg__1, base) };
-}
-// number(long arg__1, int base)
-void *c_static_QByteArray__number_long_int(long arg__1, int base)
 {
     return new Dartagnan::ValueWrapper<QByteArray> { KDDockWidgetsBindings_wrappersNS::QByteArray_wrapper::number(arg__1, base) };
 }
@@ -532,8 +651,8 @@ void *c_QByteArray__prepend_char(void *thisObj, const char *s)
 {
     return &fromPtr(thisObj)->prepend(s);
 }
-// prepend(const char * s, qsizetype len)
-void *c_QByteArray__prepend_char_qsizetype(void *thisObj, const char *s, qsizetype len)
+// prepend(const char * s, int len)
+void *c_QByteArray__prepend_char_int(void *thisObj, const char *s, int len)
 {
     return &fromPtr(thisObj)->prepend(s, len);
 }
@@ -544,10 +663,10 @@ void c_QByteArray__push_back_QByteArray(void *thisObj, void *a_)
     auto &a = *reinterpret_cast<QByteArray *>(a_);
     fromPtr(thisObj)->push_back(a);
 }
-// push_back(const char * s)
-void c_QByteArray__push_back_char(void *thisObj, const char *s)
+// push_back(const char * c)
+void c_QByteArray__push_back_char(void *thisObj, const char *c)
 {
-    fromPtr(thisObj)->push_back(s);
+    fromPtr(thisObj)->push_back(c);
 }
 // push_front(const QByteArray & a)
 void c_QByteArray__push_front_QByteArray(void *thisObj, void *a_)
@@ -561,63 +680,83 @@ void c_QByteArray__push_front_char(void *thisObj, const char *c)
 {
     fromPtr(thisObj)->push_front(c);
 }
-// remove(qsizetype index, qsizetype len)
-void *c_QByteArray__remove_qsizetype_qsizetype(void *thisObj, qsizetype index, qsizetype len)
+// remove(int index, int len)
+void *c_QByteArray__remove_int_int(void *thisObj, int index, int len)
 {
     return &fromPtr(thisObj)->remove(index, len);
 }
-// removeAt(qsizetype pos)
-void *c_QByteArray__removeAt_qsizetype(void *thisObj, qsizetype pos)
-{
-    return &fromPtr(thisObj)->removeAt(pos);
-}
-// removeFirst()
-void *c_QByteArray__removeFirst(void *thisObj)
-{
-    return &fromPtr(thisObj)->removeFirst();
-}
-// removeLast()
-void *c_QByteArray__removeLast(void *thisObj)
-{
-    return &fromPtr(thisObj)->removeLast();
-}
-// repeated(qsizetype times) const
-void *c_QByteArray__repeated_qsizetype(void *thisObj, qsizetype times)
+// repeated(int times) const
+void *c_QByteArray__repeated_int(void *thisObj, int times)
 {
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->repeated(times) };
 }
-// replace(const char * before, qsizetype bsize, const char * after, qsizetype asize)
-void *c_QByteArray__replace_char_qsizetype_char_qsizetype(void *thisObj, const char *before, qsizetype bsize, const char *after, qsizetype asize)
+// replace(const QByteArray & before, const QByteArray & after)
+void *c_QByteArray__replace_QByteArray_QByteArray(void *thisObj, void *before_, void *after_)
+{
+    assert(before_);
+    auto &before = *reinterpret_cast<QByteArray *>(before_);
+    assert(after_);
+    auto &after = *reinterpret_cast<QByteArray *>(after_);
+    return &fromPtr(thisObj)->replace(before, after);
+}
+// replace(const QByteArray & before, const char * after)
+void *c_QByteArray__replace_QByteArray_char(void *thisObj, void *before_, const char *after)
+{
+    assert(before_);
+    auto &before = *reinterpret_cast<QByteArray *>(before_);
+    return &fromPtr(thisObj)->replace(before, after);
+}
+// replace(const char * before, const QByteArray & after)
+void *c_QByteArray__replace_char_QByteArray(void *thisObj, const char *before, void *after_)
+{
+    assert(after_);
+    auto &after = *reinterpret_cast<QByteArray *>(after_);
+    return &fromPtr(thisObj)->replace(before, after);
+}
+// replace(const char * before, const char * after)
+void *c_QByteArray__replace_char_char(void *thisObj, const char *before, const char *after)
+{
+    return &fromPtr(thisObj)->replace(before, after);
+}
+// replace(const char * before, int bsize, const char * after, int asize)
+void *c_QByteArray__replace_char_int_char_int(void *thisObj, const char *before, int bsize, const char *after, int asize)
 {
     return &fromPtr(thisObj)->replace(before, bsize, after, asize);
 }
-// replace(qsizetype index, qsizetype len, const char * s, qsizetype alen)
-void *c_QByteArray__replace_qsizetype_qsizetype_char_qsizetype(void *thisObj, qsizetype index, qsizetype len, const char *s, qsizetype alen)
+// replace(int index, int len, const QByteArray & s)
+void *c_QByteArray__replace_int_int_QByteArray(void *thisObj, int index, int len, void *s_)
+{
+    assert(s_);
+    auto &s = *reinterpret_cast<QByteArray *>(s_);
+    return &fromPtr(thisObj)->replace(index, len, s);
+}
+// replace(int index, int len, const char * s)
+void *c_QByteArray__replace_int_int_char(void *thisObj, int index, int len, const char *s)
+{
+    return &fromPtr(thisObj)->replace(index, len, s);
+}
+// replace(int index, int len, const char * s, int alen)
+void *c_QByteArray__replace_int_int_char_int(void *thisObj, int index, int len, const char *s, int alen)
 {
     return &fromPtr(thisObj)->replace(index, len, s, alen);
 }
-// reserve(qsizetype size)
-void c_QByteArray__reserve_qsizetype(void *thisObj, qsizetype size)
+// reserve(int size)
+void c_QByteArray__reserve_int(void *thisObj, int size)
 {
     fromPtr(thisObj)->reserve(size);
 }
-// resize(qsizetype size)
-void c_QByteArray__resize_qsizetype(void *thisObj, qsizetype size)
+// resize(int size)
+void c_QByteArray__resize_int(void *thisObj, int size)
 {
     fromPtr(thisObj)->resize(size);
 }
-// right(qsizetype len) const
-void *c_QByteArray__right_qsizetype(void *thisObj, qsizetype len)
+// right(int len) const
+void *c_QByteArray__right_int(void *thisObj, int len)
 {
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->right(len) };
 }
 // setNum(int arg__1, int base)
 void *c_QByteArray__setNum_int_int(void *thisObj, int arg__1, int base)
-{
-    return &fromPtr(thisObj)->setNum(arg__1, base);
-}
-// setNum(long arg__1, int base)
-void *c_QByteArray__setNum_long_int(void *thisObj, long arg__1, int base)
 {
     return &fromPtr(thisObj)->setNum(arg__1, base);
 }
@@ -631,11 +770,6 @@ void *c_QByteArray__setNum_short_int(void *thisObj, short arg__1, int base)
 {
     return &fromPtr(thisObj)->setNum(arg__1, base);
 }
-// setRawData(const char * a, qsizetype n)
-void *c_QByteArray__setRawData_char_qsizetype(void *thisObj, const char *a, qsizetype n)
-{
-    return &fromPtr(thisObj)->setRawData(a, n);
-}
 // shrink_to_fit()
 void c_QByteArray__shrink_to_fit(void *thisObj)
 {
@@ -647,29 +781,36 @@ void *c_QByteArray__simplified(void *thisObj)
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->simplified() };
 }
 // size() const
-qsizetype c_QByteArray__size(void *thisObj)
+int c_QByteArray__size(void *thisObj)
 {
     return fromPtr(thisObj)->size();
-}
-// sliced(qsizetype pos) const
-void *c_QByteArray__sliced_qsizetype(void *thisObj, qsizetype pos)
-{
-    return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->sliced(pos) };
-}
-// sliced(qsizetype pos, qsizetype n) const
-void *c_QByteArray__sliced_qsizetype_qsizetype(void *thisObj, qsizetype pos, qsizetype n)
-{
-    return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->sliced(pos, n) };
 }
 // squeeze()
 void c_QByteArray__squeeze(void *thisObj)
 {
     fromPtr(thisObj)->squeeze();
 }
+// startsWith(const QByteArray & a) const
+bool c_QByteArray__startsWith_QByteArray(void *thisObj, void *a_)
+{
+    assert(a_);
+    auto &a = *reinterpret_cast<QByteArray *>(a_);
+    return fromPtr(thisObj)->startsWith(a);
+}
+// startsWith(const char * c) const
+bool c_QByteArray__startsWith_char(void *thisObj, const char *c)
+{
+    return fromPtr(thisObj)->startsWith(c);
+}
 // toBase64() const
 void *c_QByteArray__toBase64(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->toBase64() };
+}
+// toHex() const
+void *c_QByteArray__toHex(void *thisObj)
+{
+    return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->toHex() };
 }
 // toLower()
 void *c_QByteArray__toLower(void *thisObj)
@@ -686,8 +827,8 @@ void *c_QByteArray__trimmed(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->trimmed() };
 }
-// truncate(qsizetype pos)
-void c_QByteArray__truncate_qsizetype(void *thisObj, qsizetype pos)
+// truncate(int pos)
+void c_QByteArray__truncate_int(void *thisObj, int pos)
 {
     fromPtr(thisObj)->truncate(pos);
 }

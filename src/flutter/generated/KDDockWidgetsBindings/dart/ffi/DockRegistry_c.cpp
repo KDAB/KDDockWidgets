@@ -11,7 +11,7 @@
 #include "DockRegistry_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {

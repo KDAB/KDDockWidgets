@@ -48,7 +48,7 @@ class Window implements ffi.Finalizable {
   destroy() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(501))
+            cFunctionSymbolName(514))
         .asFunction();
     func(thisCpp);
   }
@@ -67,7 +67,7 @@ class Window implements ffi.Finalizable {
   QRect frameGeometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(502))
+            cFunctionSymbolName(515))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -89,7 +89,7 @@ class Window implements ffi.Finalizable {
   QPoint fromNativePixels(QPoint arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(503))
+            cFunctionSymbolName(516))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
@@ -112,7 +112,7 @@ class Window implements ffi.Finalizable {
   QRect geometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(504))
+            cFunctionSymbolName(517))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
@@ -133,7 +133,7 @@ class Window implements ffi.Finalizable {
   bool isActive() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(506))
+            cFunctionSymbolName(518))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -153,7 +153,7 @@ class Window implements ffi.Finalizable {
   bool isFullScreen() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(507))
+            cFunctionSymbolName(519))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -173,7 +173,7 @@ class Window implements ffi.Finalizable {
   bool isVisible() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(508))
+            cFunctionSymbolName(520))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -193,7 +193,7 @@ class Window implements ffi.Finalizable {
   QPoint mapFromGlobal(QPoint globalPos) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(509))
+            cFunctionSymbolName(521))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp);
@@ -216,7 +216,7 @@ class Window implements ffi.Finalizable {
   QPoint mapToGlobal(QPoint localPos) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(510))
+            cFunctionSymbolName(522))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, localPos == null ? ffi.nullptr : localPos.thisCpp);
@@ -239,7 +239,7 @@ class Window implements ffi.Finalizable {
   QSize maxSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(511))
+            cFunctionSymbolName(523))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -260,7 +260,7 @@ class Window implements ffi.Finalizable {
   QSize minSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(512))
+            cFunctionSymbolName(524))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
@@ -281,7 +281,7 @@ class Window implements ffi.Finalizable {
   resize(int width, int height) {
     final void_Func_voidstar_int_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(513))
+            cFunctionSymbolName(525))
         .asFunction();
     func(thisCpp, width, height);
   }
@@ -301,7 +301,7 @@ class Window implements ffi.Finalizable {
   setFramePosition(QPoint targetPos) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(514))
+            cFunctionSymbolName(526))
         .asFunction();
     func(thisCpp, targetPos == null ? ffi.nullptr : targetPos.thisCpp);
   }
@@ -321,7 +321,7 @@ class Window implements ffi.Finalizable {
   setGeometry(QRect arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(515))
+            cFunctionSymbolName(527))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -341,7 +341,7 @@ class Window implements ffi.Finalizable {
   setVisible(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(516))
+            cFunctionSymbolName(528))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -360,7 +360,7 @@ class Window implements ffi.Finalizable {
   bool supportsHonouringLayoutMinSize() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(517))
+            cFunctionSymbolName(529))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -388,37 +388,37 @@ class Window implements ffi.Finalizable {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 501:
-        return "c_KDDockWidgets__flutter__Window__destroy";
-      case 502:
-        return "c_KDDockWidgets__flutter__Window__frameGeometry";
-      case 503:
-        return "c_KDDockWidgets__flutter__Window__fromNativePixels_QPoint";
-      case 504:
-        return "c_KDDockWidgets__flutter__Window__geometry";
-      case 506:
-        return "c_KDDockWidgets__flutter__Window__isActive";
-      case 507:
-        return "c_KDDockWidgets__flutter__Window__isFullScreen";
-      case 508:
-        return "c_KDDockWidgets__flutter__Window__isVisible";
-      case 509:
-        return "c_KDDockWidgets__flutter__Window__mapFromGlobal_QPoint";
-      case 510:
-        return "c_KDDockWidgets__flutter__Window__mapToGlobal_QPoint";
-      case 511:
-        return "c_KDDockWidgets__flutter__Window__maxSize";
-      case 512:
-        return "c_KDDockWidgets__flutter__Window__minSize";
-      case 513:
-        return "c_KDDockWidgets__flutter__Window__resize_int_int";
       case 514:
-        return "c_KDDockWidgets__flutter__Window__setFramePosition_QPoint";
+        return "c_KDDockWidgets__flutter__Window__destroy";
       case 515:
-        return "c_KDDockWidgets__flutter__Window__setGeometry_QRect";
+        return "c_KDDockWidgets__flutter__Window__frameGeometry";
       case 516:
-        return "c_KDDockWidgets__flutter__Window__setVisible_bool";
+        return "c_KDDockWidgets__flutter__Window__fromNativePixels_QPoint";
       case 517:
+        return "c_KDDockWidgets__flutter__Window__geometry";
+      case 518:
+        return "c_KDDockWidgets__flutter__Window__isActive";
+      case 519:
+        return "c_KDDockWidgets__flutter__Window__isFullScreen";
+      case 520:
+        return "c_KDDockWidgets__flutter__Window__isVisible";
+      case 521:
+        return "c_KDDockWidgets__flutter__Window__mapFromGlobal_QPoint";
+      case 522:
+        return "c_KDDockWidgets__flutter__Window__mapToGlobal_QPoint";
+      case 523:
+        return "c_KDDockWidgets__flutter__Window__maxSize";
+      case 524:
+        return "c_KDDockWidgets__flutter__Window__minSize";
+      case 525:
+        return "c_KDDockWidgets__flutter__Window__resize_int_int";
+      case 526:
+        return "c_KDDockWidgets__flutter__Window__setFramePosition_QPoint";
+      case 527:
+        return "c_KDDockWidgets__flutter__Window__setGeometry_QRect";
+      case 528:
+        return "c_KDDockWidgets__flutter__Window__setVisible_bool";
+      case 529:
         return "c_KDDockWidgets__flutter__Window__supportsHonouringLayoutMinSize";
     }
     return "";
@@ -426,37 +426,37 @@ class Window implements ffi.Finalizable {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 501:
-        return "destroy";
-      case 502:
-        return "frameGeometry";
-      case 503:
-        return "fromNativePixels";
-      case 504:
-        return "geometry";
-      case 506:
-        return "isActive";
-      case 507:
-        return "isFullScreen";
-      case 508:
-        return "isVisible";
-      case 509:
-        return "mapFromGlobal";
-      case 510:
-        return "mapToGlobal";
-      case 511:
-        return "maxSize";
-      case 512:
-        return "minSize";
-      case 513:
-        return "resize";
       case 514:
-        return "setFramePosition";
+        return "destroy";
       case 515:
-        return "setGeometry";
+        return "frameGeometry";
       case 516:
-        return "setVisible";
+        return "fromNativePixels";
       case 517:
+        return "geometry";
+      case 518:
+        return "isActive";
+      case 519:
+        return "isFullScreen";
+      case 520:
+        return "isVisible";
+      case 521:
+        return "mapFromGlobal";
+      case 522:
+        return "mapToGlobal";
+      case 523:
+        return "maxSize";
+      case 524:
+        return "minSize";
+      case 525:
+        return "resize";
+      case 526:
+        return "setFramePosition";
+      case 527:
+        return "setGeometry";
+      case 528:
+        return "setVisible";
+      case 529:
         return "supportsHonouringLayoutMinSize";
     }
     throw Error();
@@ -468,65 +468,65 @@ class Window implements ffi.Finalizable {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__flutter__Window__registerVirtualMethodCallback')
         .asFunction();
-    final callback501 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback514 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Window.destroy_calledFromC);
-    registerCallback(thisCpp, callback501, 501);
-    final callback502 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Window.frameGeometry_calledFromC);
-    registerCallback(thisCpp, callback502, 502);
-    final callback503 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.Window.fromNativePixels_calledFromC);
-    registerCallback(thisCpp, callback503, 503);
-    final callback504 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Window.geometry_calledFromC);
-    registerCallback(thisCpp, callback504, 504);
-    const callbackExcept506 = 0;
-    final callback506 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Window.isActive_calledFromC, callbackExcept506);
-    registerCallback(thisCpp, callback506, 506);
-    const callbackExcept507 = 0;
-    final callback507 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Window.isFullScreen_calledFromC, callbackExcept507);
-    registerCallback(thisCpp, callback507, 507);
-    const callbackExcept508 = 0;
-    final callback508 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Window.isVisible_calledFromC, callbackExcept508);
-    registerCallback(thisCpp, callback508, 508);
-    final callback509 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.Window.mapFromGlobal_calledFromC);
-    registerCallback(thisCpp, callback509, 509);
-    final callback510 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.Window.mapToGlobal_calledFromC);
-    registerCallback(thisCpp, callback510, 510);
-    final callback511 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Window.maxSize_calledFromC);
-    registerCallback(thisCpp, callback511, 511);
-    final callback512 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.Window.minSize_calledFromC);
-    registerCallback(thisCpp, callback512, 512);
-    final callback513 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.Window.resize_calledFromC);
-    registerCallback(thisCpp, callback513, 513);
-    final callback514 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.Window.setFramePosition_calledFromC);
     registerCallback(thisCpp, callback514, 514);
-    final callback515 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.Window.setGeometry_calledFromC);
+    final callback515 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.Window.frameGeometry_calledFromC);
     registerCallback(thisCpp, callback515, 515);
     final callback516 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.Window.fromNativePixels_calledFromC);
+    registerCallback(thisCpp, callback516, 516);
+    final callback517 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.Window.geometry_calledFromC);
+    registerCallback(thisCpp, callback517, 517);
+    const callbackExcept518 = 0;
+    final callback518 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.Window.isActive_calledFromC, callbackExcept518);
+    registerCallback(thisCpp, callback518, 518);
+    const callbackExcept519 = 0;
+    final callback519 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.Window.isFullScreen_calledFromC, callbackExcept519);
+    registerCallback(thisCpp, callback519, 519);
+    const callbackExcept520 = 0;
+    final callback520 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.Window.isVisible_calledFromC, callbackExcept520);
+    registerCallback(thisCpp, callback520, 520);
+    final callback521 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.Window.mapFromGlobal_calledFromC);
+    registerCallback(thisCpp, callback521, 521);
+    final callback522 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.Window.mapToGlobal_calledFromC);
+    registerCallback(thisCpp, callback522, 522);
+    final callback523 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.Window.maxSize_calledFromC);
+    registerCallback(thisCpp, callback523, 523);
+    final callback524 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.Window.minSize_calledFromC);
+    registerCallback(thisCpp, callback524, 524);
+    final callback525 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
+            KDDWBindingsFlutter.Window.resize_calledFromC);
+    registerCallback(thisCpp, callback525, 525);
+    final callback526 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.Window.setFramePosition_calledFromC);
+    registerCallback(thisCpp, callback526, 526);
+    final callback527 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.Window.setGeometry_calledFromC);
+    registerCallback(thisCpp, callback527, 527);
+    final callback528 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             KDDWBindingsFlutter.Window.setVisible_calledFromC);
-    registerCallback(thisCpp, callback516, 516);
-    const callbackExcept517 = 0;
-    final callback517 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback528, 528);
+    const callbackExcept529 = 0;
+    final callback529 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsFlutter.Window.supportsHonouringLayoutMinSize_calledFromC,
-        callbackExcept517);
-    registerCallback(thisCpp, callback517, 517);
+        callbackExcept529);
+    registerCallback(thisCpp, callback529, 529);
   }
 }

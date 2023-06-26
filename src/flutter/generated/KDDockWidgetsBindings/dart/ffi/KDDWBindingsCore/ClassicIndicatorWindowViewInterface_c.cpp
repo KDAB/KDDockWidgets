@@ -11,7 +11,7 @@
 #include "ClassicIndicatorWindowViewInterface_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {
@@ -38,13 +38,13 @@ KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover(Q
         const void *thisPtr = this;
         return m_hoverCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover_nocallback(QPoint arg__1)
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 bool ClassicIndicatorWindowViewInterface_wrapper::isWindow() const
@@ -53,13 +53,13 @@ bool ClassicIndicatorWindowViewInterface_wrapper::isWindow() const
         const void *thisPtr = this;
         return m_isWindowCallback(const_cast<void *>(thisPtr));
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool ClassicIndicatorWindowViewInterface_wrapper::isWindow_nocallback() const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 QPoint ClassicIndicatorWindowViewInterface_wrapper::posForIndicator(KDDockWidgets::DropLocation arg__1) const
@@ -68,13 +68,13 @@ QPoint ClassicIndicatorWindowViewInterface_wrapper::posForIndicator(KDDockWidget
         const void *thisPtr = this;
         return *m_posForIndicatorCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 QPoint ClassicIndicatorWindowViewInterface_wrapper::posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 void ClassicIndicatorWindowViewInterface_wrapper::raise()
@@ -83,13 +83,13 @@ void ClassicIndicatorWindowViewInterface_wrapper::raise()
         const void *thisPtr = this;
         m_raiseCallback(const_cast<void *>(thisPtr));
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return;
     }
 }
 void ClassicIndicatorWindowViewInterface_wrapper::raise_nocallback()
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
 void ClassicIndicatorWindowViewInterface_wrapper::resize(QSize arg__1)
@@ -98,13 +98,13 @@ void ClassicIndicatorWindowViewInterface_wrapper::resize(QSize arg__1)
         const void *thisPtr = this;
         m_resizeCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return;
     }
 }
 void ClassicIndicatorWindowViewInterface_wrapper::resize_nocallback(QSize arg__1)
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
 void ClassicIndicatorWindowViewInterface_wrapper::setGeometry(QRect arg__1)
@@ -113,13 +113,13 @@ void ClassicIndicatorWindowViewInterface_wrapper::setGeometry(QRect arg__1)
         const void *thisPtr = this;
         m_setGeometryCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return;
     }
 }
 void ClassicIndicatorWindowViewInterface_wrapper::setGeometry_nocallback(QRect arg__1)
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
 void ClassicIndicatorWindowViewInterface_wrapper::setObjectName(const QString &arg__1)
@@ -128,13 +128,13 @@ void ClassicIndicatorWindowViewInterface_wrapper::setObjectName(const QString &a
         const void *thisPtr = this;
         m_setObjectNameCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return;
     }
 }
 void ClassicIndicatorWindowViewInterface_wrapper::setObjectName_nocallback(const QString &arg__1)
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
 void ClassicIndicatorWindowViewInterface_wrapper::setVisible(bool arg__1)
@@ -143,13 +143,13 @@ void ClassicIndicatorWindowViewInterface_wrapper::setVisible(bool arg__1)
         const void *thisPtr = this;
         m_setVisibleCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return;
     }
 }
 void ClassicIndicatorWindowViewInterface_wrapper::setVisible_nocallback(bool arg__1)
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
 void ClassicIndicatorWindowViewInterface_wrapper::updatePositions()
@@ -158,13 +158,13 @@ void ClassicIndicatorWindowViewInterface_wrapper::updatePositions()
         const void *thisPtr = this;
         m_updatePositionsCallback(const_cast<void *>(thisPtr));
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return;
     }
 }
 void ClassicIndicatorWindowViewInterface_wrapper::updatePositions_nocallback()
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
 ClassicIndicatorWindowViewInterface_wrapper::~ClassicIndicatorWindowViewInterface_wrapper()
@@ -251,31 +251,31 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtual
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1654:
+    case 1669:
         wrapper->m_hoverCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_hover>(callback);
         break;
-    case 1655:
+    case 1670:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_isWindow>(callback);
         break;
-    case 1656:
+    case 1671:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 1657:
+    case 1672:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_raise>(callback);
         break;
-    case 1658:
+    case 1673:
         wrapper->m_resizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_resize>(callback);
         break;
-    case 1659:
+    case 1674:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setGeometry>(callback);
         break;
-    case 1660:
+    case 1675:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setObjectName>(callback);
         break;
-    case 1661:
+    case 1676:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setVisible>(callback);
         break;
-    case 1662:
+    case 1677:
         wrapper->m_updatePositionsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_updatePositions>(callback);
         break;
     }

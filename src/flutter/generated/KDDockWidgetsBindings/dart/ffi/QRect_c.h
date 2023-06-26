@@ -68,7 +68,6 @@ public:
     void setX(int x);
     void setY(int y);
     QSize size() const;
-    static QRect span(const QPoint &p1, const QPoint &p2);
     int top() const;
     QPoint topLeft() const;
     QPoint topRight() const;
@@ -184,8 +183,6 @@ KDDockWidgetsBindings_EXPORT void c_QRect__setX_int(void *thisObj, int x);
 KDDockWidgetsBindings_EXPORT void c_QRect__setY_int(void *thisObj, int y);
 // QRect::size() const
 KDDockWidgetsBindings_EXPORT void *c_QRect__size(void *thisObj);
-// QRect::span(const QPoint & p1, const QPoint & p2)
-KDDockWidgetsBindings_EXPORT void *c_static_QRect__span_QPoint_QPoint(void *p1_, void *p2_);
 // QRect::top() const
 KDDockWidgetsBindings_EXPORT int c_QRect__top(void *thisObj);
 // QRect::topLeft() const

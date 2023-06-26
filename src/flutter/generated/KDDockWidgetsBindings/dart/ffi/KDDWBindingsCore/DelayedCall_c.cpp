@@ -11,7 +11,7 @@
 #include "DelayedCall_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {
@@ -38,13 +38,13 @@ void DelayedCall_wrapper::call()
         const void *thisPtr = this;
         m_callCallback(const_cast<void *>(thisPtr));
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return;
     }
 }
 void DelayedCall_wrapper::call_nocallback()
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
 DelayedCall_wrapper::~DelayedCall_wrapper()
@@ -84,7 +84,7 @@ void c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback(void *ptr
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 770:
+    case 784:
         wrapper->m_callCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DelayedCall_wrapper::Callback_call>(callback);
         break;
     }
