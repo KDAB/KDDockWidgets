@@ -103,6 +103,7 @@ option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
 option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
 option(KDDockWidgets_FLUTTER_NO_BINDINGS "Don't build flutter bindings, only the flutter frontend" OFF)
+option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
@@ -251,6 +252,17 @@ if(NOT WIN32
     set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} x11extras")
 endif()
 
+if(NOT KDDockWidgets_NO_SPDLOG)
+    find_package(spdlog QUIET)
+    find_package(fmt QUIET)
+endif()
+
+if(spdlog_FOUND AND fmt_FOUND)
+    set(KDDockWidgets_HAS_SPDLOG TRUE)
+else()
+    set(KDDockWidgets_HAS_SPDLOG FALSE)
+endif()
+
 # Always build the test harness in developer-mode
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDockWidgets_TESTS ON)
@@ -341,6 +353,10 @@ macro(set_compiler_flags targetName)
     # Enable -Werror
     if(KDDockWidgets_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts these too
         target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
+    endif()
+
+    if(KDDockWidgets_HAS_SPDLOG)
+        target_compile_definitions(${targetName} PRIVATE KDDW_HAS_SPDLOG)
     endif()
 endmacro()
 
