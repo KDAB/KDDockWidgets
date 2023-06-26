@@ -26,10 +26,10 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+namespace Core {
+
 using HANDLE = const void *;
 using WId = quintptr;
-
-namespace Core {
 
 class Item;
 class EventFilterInterface;

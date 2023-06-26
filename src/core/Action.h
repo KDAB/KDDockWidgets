@@ -13,7 +13,6 @@
 
 #include "kddockwidgets/docks_export.h"
 
-#include <QDebug>
 #include <QObject>
 
 #if defined(QT_WIDGETS_LIB)
@@ -39,16 +38,8 @@ public:
         return m_checkable;
     }
 
-    void setIcon(const KDDockWidgets::Icon &)
-    {
-        qWarning() << "Not implemented for QtQuick";
-    }
-
-    KDDockWidgets::Icon icon() const
-    {
-        qWarning() << "Not implemented for QtQuick/Flutter";
-        return {};
-    }
+    void setIcon(const KDDockWidgets::Icon &);
+    KDDockWidgets::Icon icon() const;
 
     void setText(const QString &text)
     {

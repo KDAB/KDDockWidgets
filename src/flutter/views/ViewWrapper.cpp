@@ -344,7 +344,7 @@ void ViewWrapper::setZOrder(int z)
     m_wrappedView->setZOrder(z);
 }
 
-HANDLE ViewWrapper::handle() const
+Core::HANDLE ViewWrapper::handle() const
 {
     return m_wrappedView->handle();
 }

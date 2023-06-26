@@ -64,7 +64,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     // It morphed into a FloatingWindow
     QPointer<Core::Group> group2 = dock2->dptr()->group();
     if (!dock2->floatingWindow()) {
-        qWarning() << "dock2->floatingWindow()=" << dock2->floatingWindow();
+        KDDW_WARN("dock2->floatingWindow()={}", ( void * )(dock2->floatingWindow()));
         CHECK(false);
     }
     CHECK(group2);

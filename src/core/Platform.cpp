@@ -11,6 +11,7 @@
 
 #include "Platform.h"
 #include "core/Platform_p.h"
+#include "core/Logging_p.h"
 #include "core/Window.h"
 #include "core/EventFilterInterface.h"
 
@@ -29,7 +30,6 @@
 #include "Config.h"
 
 #include <qglobal.h>
-#include <QDebug>
 
 #include "kdbindings/signal.h"
 
@@ -184,8 +184,7 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     }
 
     if (!platform) {
-        qCritical() << "Could not initialize platform for" << type
-                    << ". KDDockWidgets was built without support for it";
+        KDDW_ERROR("Could not initialize platform for type={}. KDDockWidgets was built without support for it");
         qFatal("Aborting");
         return;
     }

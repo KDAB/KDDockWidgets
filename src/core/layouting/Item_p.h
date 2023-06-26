@@ -18,7 +18,6 @@
 #include <QVector>
 #include <QRect>
 #include <QVariant>
-#include <QDebug>
 
 #include "kdbindings/signal.h"
 

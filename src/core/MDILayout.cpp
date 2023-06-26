@@ -15,6 +15,7 @@
 #include "core/ViewFactory.h"
 #include "core/Group.h"
 #include "core/DockWidget_p.h"
+#include "core/Logging_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -34,7 +35,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, QPoint localPt,
                               InitialOption addingOption)
 {
     if (!dw) {
-        qWarning() << Q_FUNC_INFO << "Refusing to add null dock widget";
+        KDDW_ERROR("Refusing to add null dock widget");
         return;
     }
 
@@ -70,7 +71,7 @@ void MDILayout::setDockWidgetGeometry(Core::Group *group, QRect geometry)
 
     Core::Item *item = itemForFrame(group);
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << group;
+        KDDW_ERROR("Group not found in the layout {}", ( void * )group);
         return;
     }
 
@@ -89,7 +90,7 @@ void MDILayout::moveDockWidget(Core::Group *group, QPoint pos)
 
     Core::Item *item = itemForFrame(group);
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << group;
+        KDDW_ERROR("Group not found in the layout {}.", ( void * )group);
         return;
     }
 
@@ -110,8 +111,7 @@ void MDILayout::resizeDockWidget(Core::Group *group, QSize size)
 
     Core::Item *item = itemForFrame(group);
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Group not found in the layout" << group << group->isMDI()
-                   << group->isMDIWrapper();
+        KDDW_ERROR("Group not found in the layout {} isMDI={}, isMDIWrapper={}", ( void * )group, group->isMDI(), group->isMDIWrapper());
         return;
     }
 

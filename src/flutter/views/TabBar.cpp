@@ -20,6 +20,7 @@
 #include "TabBar.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
+#include "core/Logging_p.h"
 
 #include <QMetaObject>
 
@@ -39,19 +40,19 @@ void TabBar::init()
 
 int TabBar::tabAt(QPoint) const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented";
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return -1;
 }
 
 QString TabBar::text(int) const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented";
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
 QRect TabBar::rectForTab(int) const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented";
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
 }
 
@@ -59,12 +60,12 @@ void TabBar::moveTabTo(int from, int to)
 {
     Q_UNUSED(from);
     Q_UNUSED(to);
-    qDebug() << Q_FUNC_INFO << "Not implemented";
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 
-void TabBar::changeTabIcon(int index, const Icon &)
+void TabBar::changeTabIcon(int, const Icon &)
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented" << index;
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 
 void TabBar::removeDockWidget(Core::DockWidget *)
@@ -87,9 +88,9 @@ void TabBar::insertDockWidget(int, Core::DockWidget *dw, const Icon &,
     static_cast<flutter::View *>(m_controller->group()->view())->onRebuildRequested();
 }
 
-void TabBar::renameTab(int index, const QString &)
+void TabBar::renameTab(int, const QString &)
 {
-    qWarning() << Q_FUNC_INFO << "Not implemented" << index;
+    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 
 void TabBar::setCurrentIndex(int)

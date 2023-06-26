@@ -23,7 +23,6 @@
 #include "Qt5Qt6Compat_p.h"
 
 #include <QObject>
-#include <QDebug>
 #include <QSize>
 
 #ifdef Q_OS_WIN
@@ -416,15 +415,6 @@ inline T *findAncestor(QWidget *widget)
 #endif
 
 } // end namespace
-
-QT_BEGIN_NAMESPACE
-///@internal
-inline QDebug operator<<(QDebug d, KDDockWidgets::InitialOption o)
-{
-    d << o.startsHidden();
-    return d;
-}
-QT_END_NAMESPACE
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
 Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)

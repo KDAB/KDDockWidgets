@@ -20,6 +20,7 @@
 #include <QVector>
 #include <QObject>
 #include <QPointer>
+#include <QHash>
 
 #include <memory>
 
@@ -131,7 +132,7 @@ public:
     floatingWindowForHandle(std::shared_ptr<Core::Window> windowHandle) const;
 
     ///@brief returns the FloatingWindow with handle @p hwnd
-    Core::FloatingWindow *floatingWindowForHandle(WId hwnd) const;
+    Core::FloatingWindow *floatingWindowForHandle(Core::WId hwnd) const;
 
     ///@brief returns the MainWindow with handle @p windowHandle
     Core::MainWindow *mainWindowForHandle(std::shared_ptr<Core::Window> windowHandle) const;
@@ -184,8 +185,8 @@ public:
      *
      * @param dumpDebug If true then each layout is dumped too
      *
-     * This is called by the unit-tests. If during this the framework spits a
-     * qWarning() then the app will qFatal()
+     * This is called by the unit-tests. If during this the framework throws an error
+     * then the app will qFatal()
      */
     void checkSanityAll(bool dumpDebug = false);
 

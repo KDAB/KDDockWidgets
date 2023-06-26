@@ -13,8 +13,9 @@
 
 #include <nlohmann/json.hpp>
 
+#include "Logging_p.h"
+
 #include <QVariantMap>
-#include <QDebug>
 #include <QRect>
 #include <QSize>
 
@@ -33,7 +34,7 @@ inline void to_json(nlohmann::json &j, const QString &s)
 inline void from_json(const nlohmann::json &j, QStringList &stringList)
 {
     if (!j.is_null() && !j.is_array()) {
-        qWarning() << Q_FUNC_INFO << "This is not an array, fix the code";
+        KDDW_ERROR("This is not an array, fix the code");
         stringList.clear();
         return;
     }
@@ -82,7 +83,7 @@ inline void from_json(const nlohmann::json &j, QVariant &variant)
 inline void to_json(nlohmann::json &j, const QVariant &variant)
 {
     if (!variant.isValid()) {
-        qWarning() << Q_FUNC_INFO << "Unexpected invalid variant";
+        KDDW_ERROR("Unexpected invalid variant");
         return;
     }
 
@@ -103,7 +104,7 @@ inline void to_json(nlohmann::json &j, const QVariant &variant)
     } else if (type == QMetaType::UInt) {
         j = variant.toUInt();
     } else {
-        qWarning() << Q_FUNC_INFO << "Unexpected type << " << type << variant.typeName();
+        KDDW_ERROR("Unexpected type={}, name={}", type, variant.typeName());
         j.clear();
     }
 }
@@ -122,7 +123,7 @@ inline void from_json(const nlohmann::json &j, QVariantList &list)
     if (!j.is_array()) {
         Q_UNUSED(list)
         list.clear();
-        qWarning() << Q_FUNC_INFO << "Unexpected j not an array";
+        KDDW_ERROR("Unexpected j not an array");
         return;
     }
 
@@ -178,13 +179,5 @@ inline void from_json(const nlohmann::json &j, QRect &rect)
 }
 
 QT_END_NAMESPACE
-
-inline QDebug operator<<(QDebug debug, const nlohmann::json &j)
-{
-    QDebugStateSaver s(debug);
-    debug.nospace() << '\n'
-                    << j.dump(4).data() << '\n';
-    return debug;
-}
 
 #endif

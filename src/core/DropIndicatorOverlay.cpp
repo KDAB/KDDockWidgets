@@ -16,6 +16,7 @@
 
 #include "core/DropArea.h"
 #include "core/Group.h"
+#include "core/Logging_p.h"
 
 #include "core/DragController_p.h"
 #include "DockRegistry.h"
@@ -132,7 +133,7 @@ KDDockWidgets::Location DropIndicatorOverlay::multisplitterLocationFor(DropLocat
     case DropLocation_Outter:
     case DropLocation_Horizontal:
     case DropLocation_Vertical:
-        qWarning() << Q_FUNC_INFO << "Unexpected drop location" << dropLoc;
+        KDDW_ERROR("Unexpected drop location={}", dropLoc);
         break;
     }
 
@@ -180,7 +181,7 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
                                                    windowBeingDragged->affinities()))
             return false;
     } else {
-        qWarning() << Q_FUNC_INFO << "Unknown drop indicator location" << dropLoc;
+        KDDW_ERROR("Unknown drop indicator location={}", dropLoc);
         return false;
     }
 

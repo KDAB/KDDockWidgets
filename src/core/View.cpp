@@ -22,9 +22,11 @@
 #include "core/MainWindow.h"
 #include "core/DropArea.h"
 #include "core/MDILayout.h"
-
+#include "core/Logging_p.h"
 #include "core/Platform.h"
 #include "core/Window.h"
+
+#include <iostream>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -89,7 +91,7 @@ ViewType View::Private::type() const
 void View::Private::free()
 {
     if (m_freed) {
-        qWarning() << Q_FUNC_INFO << "Free already called";
+        KDDW_ERROR("Free already called");
         return;
     }
 
@@ -351,7 +353,7 @@ bool View::Private::aboutToBeDestroyed() const
 
 void View::dumpDebug()
 {
-    qDebug() << "View::dumpDebug:" << m_controller << int(d->type()) << "root=" << rootView()->controller();
+    KDDW_DEBUG("View::dumpDebug: controller={}, type={}, rootController={}\n", ( void * )m_controller, int(d->type()), ( void * )rootView()->controller());
 }
 
 /** static */

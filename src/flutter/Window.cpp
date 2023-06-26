@@ -11,8 +11,8 @@
 
 
 #include "Window.h"
+#include "core/Logging_p.h"
 
-#include <QDebug>
 #include <QVariant>
 
 using namespace KDDockWidgets;
@@ -61,7 +61,7 @@ bool Window::supportsHonouringLayoutMinSize() const
 
 void Window::setWindowState(WindowState)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }
 
 QRect Window::geometry() const
@@ -71,12 +71,12 @@ QRect Window::geometry() const
 
 void Window::setProperty(const char *, const QVariant &)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }
 
 QVariant Window::property(const char *) const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
@@ -85,9 +85,9 @@ bool Window::isVisible() const
     return m_isVisible;
 }
 
-WId Window::handle() const
+Core::WId Window::handle() const
 {
-    return WId(m_rootView ? m_rootView->handle() : HANDLE());
+    return Core::WId(m_rootView ? m_rootView->handle() : Core::HANDLE());
 }
 
 bool Window::equals(std::shared_ptr<Core::Window> w) const
@@ -120,64 +120,64 @@ void Window::resize(int w, int h)
 
 bool Window::isActive() const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 WindowState Window::windowState() const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 QPoint Window::mapFromGlobal(QPoint) const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 QPoint Window::mapToGlobal(QPoint) const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 void Window::destroy()
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }
 
 QSize Window::minSize() const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 QSize Window::maxSize() const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 QPoint Window::fromNativePixels(QPoint) const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 bool Window::isFullScreen() const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 Core::Screen::Ptr Window::screen() const
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
 void Window::onScreenChanged(QObject *, WindowScreenChangedCallback)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet";
+    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }

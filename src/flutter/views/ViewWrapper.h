@@ -14,8 +14,6 @@
 #include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/core/View.h"
 
-#include <QDebug>
-
 #include <memory>
 
 namespace KDDockWidgets::flutter {
@@ -105,7 +103,7 @@ public:
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<Core::View>> childViews() const override;
     void setZOrder(int z) override;
-    HANDLE handle() const override;
+    Core::HANDLE handle() const override;
 
     bool is(Core::ViewType) const override;
 

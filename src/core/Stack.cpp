@@ -22,7 +22,6 @@
 #include "core/Group.h"
 #include "core/FloatingWindow.h"
 
-#include <QDebug>
 #include <QPointer>
 
 using namespace KDDockWidgets;
@@ -63,7 +62,7 @@ void Stack::addDockWidget(DockWidget *dock)
 bool Stack::insertDockWidget(DockWidget *dock, int index)
 {
     Q_ASSERT(dock);
-    qCDebug(general) << Q_FUNC_INFO << dock << "; count before=" << numDockWidgets();
+    KDDW_DEBUG("dock={}; count before={}", ( void * )dock, numDockWidgets());
 
     if (index < 0)
         index = 0;
@@ -71,7 +70,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
         index = numDockWidgets();
 
     if (contains(dock)) {
-        qWarning() << Q_FUNC_INFO << "Refusing to add already existing widget";
+        KDDW_ERROR("Refusing to add already existing widget");
         return false;
     }
 

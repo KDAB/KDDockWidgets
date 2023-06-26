@@ -14,6 +14,7 @@
 
 #include "ClassicIndicatorsWindow.h"
 #include "core/Utils_p.h"
+#include "core/Logging_p.h"
 
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
@@ -140,6 +141,6 @@ ViewFactory::createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *con
 flutter::IndicatorWindow *
 ViewFactory::createClassicIndicatorWindow_flutter(Core::ClassicDropIndicatorOverlay *, Core::View *) const
 {
-    qWarning() << Q_FUNC_INFO << "Called in Dart instead";
+    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
     return nullptr;
 }

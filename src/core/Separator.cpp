@@ -84,7 +84,7 @@ Separator::~Separator()
 void Separator::init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation)
 {
     if (!parentContainer) {
-        qWarning() << Q_FUNC_INFO << "null parentContainer";
+        KDDW_ERROR("null parentContainer");
         return;
     }
 
@@ -200,7 +200,7 @@ void Separator::onMousePress()
 {
     s_separatorBeingDragged = this;
 
-    qCDebug(general) << "Drag started";
+    KDDW_DEBUG("Drag started");
 
     if (d->lazyResizeRubberBand) {
         setLazyPosition(position());
@@ -236,8 +236,8 @@ void Separator::onMouseMove(QPoint pos)
         // Workaround a bug in Qt where we're getting mouse moves without without the button being
         // pressed
         if (!Platform::instance()->isLeftMouseButtonPressed()) {
-            qCDebug(general) << Q_FUNC_INFO
-                             << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+            KDDW_DEBUG(
+                "{} Ignoring spurious mouse event. Someone ate our ReleaseEvent", Q_FUNC_INFO);
             onMouseReleased();
             return;
         }
@@ -247,8 +247,8 @@ void Separator::onMouseMove(QPoint pos)
         const bool mouseButtonIsReallyDown =
             (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
         if (!mouseButtonIsReallyDown) {
-            qCDebug(general) << Q_FUNC_INFO
-                             << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+            KDDW_DEBUG(
+                "{} Ignoring spurious mouse event. Someone ate our ReleaseEvent", Q_FUNC_INFO);
             onMouseReleased();
             return;
         }

@@ -60,7 +60,7 @@ int main(int argc, char **argv)
     KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);
     const int result = embedder.run();
 
-    qDebug() << Q_FUNC_INFO << "tests ended with result=" << result;
+    KDDW_INFO("tests ended with result={}", result);
     return result;
 
 #else

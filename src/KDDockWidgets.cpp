@@ -24,8 +24,6 @@
 #include "flutter/Platform.h"
 #endif
 
-#include <QDebug>
-
 void KDDockWidgets::initFrontend(FrontendType type)
 {
     if (Core::Platform::instance())

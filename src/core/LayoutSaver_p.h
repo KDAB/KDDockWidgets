@@ -17,7 +17,6 @@
 #include "kddockwidgets/core/Platform.h"
 #include "core/Window.h"
 
-#include <QDebug>
 #include <QRect>
 #include <QVariant>
 

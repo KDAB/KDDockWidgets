@@ -15,6 +15,7 @@
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"
 #include "View_p.h"
+#include "Logging_p.h"
 
 #include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/MDILayout.h"
@@ -22,7 +23,6 @@
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Platform.h"
 
-#include <QDebug>
 #include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN)
@@ -506,7 +506,7 @@ void WidgetResizeHandler::setTarget(View *w)
             mTarget->installViewEventFilter(this);
         }
     } else {
-        qWarning() << "Target widget is null!";
+        KDDW_ERROR("Target widget is null!");
     }
 }
 
@@ -707,7 +707,7 @@ void CustomFrameHelper::applyCustomFrame(Core::Window::Ptr window)
     WidgetResizeHandler::setupWindow(window);
 #else
     Q_UNUSED(window);
-    qWarning() << Q_FUNC_INFO << "Not implemented on this platform";
+    KDDW_ERROR("Not implemented on this platform");
 #endif
 }
 

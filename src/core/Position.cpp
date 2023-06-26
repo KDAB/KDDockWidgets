@@ -17,6 +17,7 @@
 
 #include "Position_p.h"
 #include "LayoutSaver_p.h"
+#include "Logging_p.h"
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Layout.h"
@@ -151,7 +152,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
                         continue;
                     }
                 } else {
-                    qWarning() << "Invalid floating window position to restore" << index;
+                    KDDW_ERROR("Invalid floating window position to restore. index={}", index);
                     continue;
                 }
             }
@@ -167,7 +168,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             addPlaceholderItem(item);
         } else {
             // Shouldn't happen, maybe even assert
-            qWarning() << Q_FUNC_INFO << "Couldn't find item index" << itemIndex << "in" << items;
+            KDDW_ERROR("Couldn't find item index {}", itemIndex);
         }
     }
 

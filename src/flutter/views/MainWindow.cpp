@@ -11,6 +11,7 @@
 
 #include "MainWindow.h"
 #include "kddockwidgets/core/MainWindow.h"
+#include "core/Logging_p.h"
 
 using namespace KDDockWidgets::flutter;
 
@@ -28,13 +29,13 @@ MainWindow::~MainWindow()
 
 QMargins MainWindow::centerWidgetMargins() const
 {
-    qDebug() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";
+    KDDW_WARN("SideBar hasn't been implemented yet {}", Q_FUNC_INFO);
     return {};
 }
 
 QRect MainWindow::centralAreaGeometry() const
 {
-    qFatal("Not implemented");
+    KDDW_WARN("MainWindow::centralAreaGeometry hasn't been implemented {}", Q_FUNC_INFO);
     return {};
 }
 
@@ -44,5 +45,5 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
     Q_UNUSED(right);
     Q_UNUSED(top);
     Q_UNUSED(bottom);
-    qDebug() << Q_FUNC_INFO << "not implemented";
+    KDDW_WARN("MainWindow::setContentsMargins hasn't been implemented {}", Q_FUNC_INFO);
 }

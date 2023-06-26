@@ -54,7 +54,7 @@ DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions option
     DockRegistry::self()->registerDockWidget(this);
 
     if (name.isEmpty())
-        qWarning() << Q_FUNC_INFO << "Name can't be null";
+        KDDW_ERROR("Name can't be null");
 
     d->m_windowActivatedConnection = Platform::instance()->d->windowActivated.connect(
         &DockWidget::Private::onWindowActivated, d);
@@ -82,32 +82,31 @@ void DockWidget::init()
 void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
 {
     if (other == this) {
-        qWarning() << Q_FUNC_INFO << "Refusing to add dock widget into itself" << other;
+        KDDW_ERROR("Refusing to add dock widget into itself {}", ( void * )other);
         return;
     }
 
     if (!other) {
-        qWarning() << Q_FUNC_INFO << "dock widget is null";
+        KDDW_ERROR("dock widget is null");
         return;
     }
 
     if (!DockRegistry::self()->affinitiesMatch(other->affinities(), d->affinities)) {
-        qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
-                   << other->affinities() << affinities();
+        KDDW_ERROR("Refusing to dock widget with incompatible affinity. {} {}", other->affinities(), affinities());
         return;
     }
 
     if ((other->options() & DockWidgetOption_NotDockable)
         || (options() & DockWidgetOption_NotDockable)) {
-        qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
+        KDDW_ERROR("Refusing to dock non-dockable widget {}", ( void * )other);
         return;
     }
 
     if (isPersistentCentralDockWidget()) {
-        qWarning() << Q_FUNC_INFO << "Not supported with MainWindowOption_HasCentralWidget."
-                   << "MainWindowOption_HasCentralWidget can only have 1 widget in the center."
-                   << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports "
-                      "tabbing.";
+        KDDW_ERROR("Not supported with MainWindowOption_HasCentralWidget."
+                   "MainWindowOption_HasCentralWidget can only have 1 widget in the center."
+                   "Use MainWindowOption_HasCentralFrame instead, which is similar but supports "
+                   "tabbing.");
         return;
     }
 
@@ -115,7 +114,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
 
     if (group) {
         if (group->containsDockWidget(other)) {
-            qWarning() << Q_FUNC_INFO << "Already contains" << other;
+            KDDW_ERROR("Already contains {}", ( void * )other);
             return;
         }
     } else {
@@ -126,7 +125,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
             Q_ASSERT(group);
         } else {
             // Doesn't happen
-            qWarning() << Q_FUNC_INFO << "null group";
+            KDDW_ERROR("null group");
             return;
         }
     }
@@ -146,14 +145,13 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location loc
     }
 
     if (!DockRegistry::self()->affinitiesMatch(other->affinities(), d->affinities)) {
-        qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
-                   << other->affinities() << affinities();
+        KDDW_ERROR("Refusing to dock widget with incompatible affinity. {} {}", other->affinities(), affinities());
         return;
     }
 
     if ((other->options() & DockWidgetOption_NotDockable)
         || (options() & DockWidgetOption_NotDockable)) {
-        qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
+        KDDW_ERROR("Refusing to dock non-dockable widget {}", ( void * )other);
         return;
     }
 
@@ -163,7 +161,7 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location loc
     if (auto fw = floatingWindow()) {
         fw->addDockWidget(other, location, relativeTo, initialOption);
     } else {
-        qWarning() << Q_FUNC_INFO << "Couldn't find floating nested window";
+        KDDW_ERROR("Couldn't find floating nested window");
     }
 }
 
@@ -223,7 +221,7 @@ bool DockWidget::setFloating(bool floats)
         if (isTabbed()) {
             auto group = d->group();
             if (!group) {
-                qWarning() << "DockWidget::setFloating: Tabbed but no group exists" << this;
+                KDDW_ERROR("DockWidget::setFloating: Tabbed but no group exists", ( void * )this);
                 Q_ASSERT(false);
                 return false;
             }
@@ -308,8 +306,8 @@ LayoutSaverOptions DockWidget::layoutSaverOptions() const
 void DockWidget::setOptions(DockWidgetOptions options)
 {
     if ((d->options & DockWidgetOption_NotDockable) != (options & DockWidgetOption_NotDockable)) {
-        qWarning() << Q_FUNC_INFO
-                   << "Option_NotDockable not allowed to change. Pass via ctor only.";
+        KDDW_ERROR(
+            "DockWidget::setOptions: Option_NotDockable not allowed to change. Pass via ctor only.");
         return;
     }
 
@@ -327,7 +325,7 @@ bool DockWidget::isTabbed() const
         return group->alwaysShowsTabs() || group->dockWidgetCount() > 1;
     } else {
         if (!isFloating())
-            qWarning() << "DockWidget::isTabbed() Couldn't find any tab widget.";
+            KDDW_ERROR("DockWidget::isTabbed() Couldn't find any tab widget.");
         return false;
     }
 }
@@ -484,8 +482,8 @@ void DockWidget::setAffinities(const QStringList &affinityNames)
         return;
 
     if (!d->affinities.isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "Affinity is already set, refusing to change."
-                   << "Submit a feature request with a good justification.";
+        KDDW_ERROR("Affinity is already set, refusing to change."
+                   "Submit a feature request with a good justification.");
         return;
     }
 
@@ -880,7 +878,7 @@ void DockWidget::onResize(QSize)
         if (auto group = d->group()) {
             d->m_lastOverlayedSize = group->view()->size();
         } else {
-            qWarning() << Q_FUNC_INFO << "Overlayed dock widget without group shouldn't happen";
+            KDDW_ERROR("Overlayed dock widget without group shouldn't happen");
         }
     }
 }
@@ -896,8 +894,7 @@ Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &sa
         dw->setProperty("kddockwidget_was_restored", true);
 
         if (dw->affinities() != saved->affinities) {
-            qWarning() << Q_FUNC_INFO << "Affinity name changed from" << dw->affinities() << "; to"
-                       << saved->affinities;
+            KDDW_ERROR("Affinity name changed from {} to {}", dw->affinities(), "; to", saved->affinities);
             dw->d->affinities = saved->affinities;
         }
     }
@@ -1083,7 +1080,7 @@ void DockWidget::Private::setIsOpen(bool is)
 void DockWidget::setFloatingWindowFlags(FloatingWindowFlags flags)
 {
     if (floatingWindow()) {
-        qWarning() << Q_FUNC_INFO << "Call this function only before having a floating window";
+        KDDW_ERROR("Call this function only before having a floating window");
     } else {
         d->m_flags = flags;
     }

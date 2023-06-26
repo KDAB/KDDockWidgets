@@ -32,7 +32,6 @@
 #include "kdbindings/signal.h"
 
 #include <QPointer>
-#include <QDebug>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -308,10 +307,9 @@ DockRegistry *DockRegistry::self()
 void DockRegistry::registerDockWidget(Core::DockWidget *dock)
 {
     if (dock->uniqueName().isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "DockWidget" << dock << " doesn't have an ID";
+        KDDW_ERROR("DockWidget doesn't have an ID");
     } else if (auto other = dockByName(dock->uniqueName())) {
-        qWarning() << Q_FUNC_INFO << "Another DockWidget" << other << "with name"
-                   << dock->uniqueName() << " already exists." << dock;
+        KDDW_ERROR("Another DockWidget {} with name {} already exists.", ( void * )other, dock->uniqueName(), ( void * )dock);
     }
 
     m_dockWidgets << dock;
@@ -329,10 +327,9 @@ void DockRegistry::unregisterDockWidget(Core::DockWidget *dock)
 void DockRegistry::registerMainWindow(Core::MainWindow *mainWindow)
 {
     if (mainWindow->uniqueName().isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "MainWindow" << mainWindow << " doesn't have an ID";
+        KDDW_ERROR("MainWindow doesn't have an ID");
     } else if (auto other = mainWindowByName(mainWindow->uniqueName())) {
-        qWarning() << Q_FUNC_INFO << "Another MainWindow" << other << "with name"
-                   << mainWindow->uniqueName() << " already exists." << mainWindow;
+        KDDW_ERROR("Another MainWindow {} with name {} already exists {}", ( void * )other, mainWindow->uniqueName(), ( void * )mainWindow);
     }
 
     m_mainWindows << mainWindow;
@@ -420,7 +417,7 @@ Core::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags 
             }
             return dw;
         } else {
-            qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
+            KDDW_ERROR("Couldn't find dock widget name={}", name);
         }
     }
 
@@ -443,10 +440,10 @@ bool DockRegistry::isSane() const
     for (auto dock : qAsConst(m_dockWidgets)) {
         const QString name = dock->uniqueName();
         if (name.isEmpty()) {
-            qWarning() << "DockRegistry::isSane: DockWidget" << dock << "is missing a name";
+            KDDW_ERROR("DockRegistry::isSane: DockWidget is missing a name");
             return false;
         } else if (names.contains(name)) {
-            qWarning() << "DockRegistry::isSane: dockWidgets with duplicate names:" << name;
+            KDDW_ERROR("DockRegistry::isSane: dockWidgets with duplicate names: {}", name);
             return false;
         } else {
             names.insert(name);
@@ -457,10 +454,10 @@ bool DockRegistry::isSane() const
     for (auto mainwindow : qAsConst(m_mainWindows)) {
         const QString name = mainwindow->uniqueName();
         if (name.isEmpty()) {
-            qWarning() << "DockRegistry::isSane: MainWindow" << mainwindow << "is missing a name";
+            KDDW_ERROR("DockRegistry::isSane: MainWindow is missing a name");
             return false;
         } else if (names.contains(name)) {
-            qWarning() << "DockRegistry::isSane: mainWindow with duplicate names:" << name;
+            KDDW_ERROR("DockRegistry::isSane: mainWindow with duplicate names: {}", name);
             return false;
         } else {
             names.insert(name);
@@ -569,7 +566,7 @@ const Window::List DockRegistry::floatingQWindows() const
             if (Core::Window::Ptr window = fw->view()->window()) {
                 windows.push_back(window);
             } else {
-                qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
+                KDDW_ERROR("FloatingWindow doesn't have QWindow");
             }
         }
     }
@@ -628,7 +625,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
                 if (Core::Window::Ptr window = fw->view()->window()) {
                     windows << window;
                 } else {
-                    qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
+                    KDDW_ERROR("FloatingWindow doesn't have QWindow");
                 }
             }
         }
@@ -639,7 +636,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
             if (Core::Window::Ptr window = m->view()->window()) {
                 windows << window;
             } else {
-                qWarning() << Q_FUNC_INFO << "MainWindow doesn't have QWindow";
+                KDDW_ERROR("MainWindow doesn't have QWindow");
             }
         }
     }

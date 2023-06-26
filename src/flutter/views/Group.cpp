@@ -34,8 +34,6 @@
 #include "core/ViewFactory.h"
 #include "core/WidgetResizeHandler_p.h"
 
-#include <QDebug>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 

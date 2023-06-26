@@ -11,6 +11,7 @@
 
 #include "ItemFreeContainer_p.h"
 #include "core/View.h"
+#include "core/Logging_p.h"
 
 using namespace KDDockWidgets::Core;
 
@@ -32,7 +33,7 @@ void ItemFreeContainer::addDockWidget(Item *item, QPoint localPt)
 {
     Q_ASSERT(item != this);
     if (contains(item)) {
-        qWarning() << Q_FUNC_INFO << "Item already exists";
+        KDDW_ERROR("Item already exists");
         return;
     }
     item->setIsVisible(true); // Use OptionStartHidden here too ?

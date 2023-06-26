@@ -18,6 +18,7 @@
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
+#include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Action.h"
@@ -1932,8 +1933,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow1()
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(300);
     if (dock1->height() > mainWindowLength) {
-        qDebug() << "dock1->height=" << dock1->height()
-                 << "; mainWindowLength=" << mainWindowLength;
+        KDDW_INFO("dock1->height={} ; mainWindowLength={}", dock1->height(), mainWindowLength);
         CHECK(false);
     }
 
@@ -2075,7 +2075,6 @@ KDDW_QCORO_TASK tst_fairResizeAfterRemoveWidget()
     QPointer<Core::Group> group2 = dock2->dptr()->group();
 
     const int oldWidth1 = dock1->dptr()->group()->width();
-    const int oldWidth2 = dock2->dptr()->group()->width();
     const int oldWidth3 = dock3->dptr()->group()->width();
     Core::DropArea *layout = fw->dropArea();
     CHECK_EQ(layout->count(), 3);
@@ -2092,9 +2091,6 @@ KDDW_QCORO_TASK tst_fairResizeAfterRemoveWidget()
 
     const int delta1 = (dock1->dptr()->group()->width() - oldWidth1);
     const int delta3 = (dock3->dptr()->group()->width() - oldWidth3);
-
-    qDebug() << "old1=" << oldWidth1 << "; old3=" << oldWidth3 << "; to spread=" << oldWidth2
-             << "; Delta1=" << delta1 << "; Delta3=" << delta3;
 
     CHECK(delta1 > 0);
     CHECK(delta3 > 0);
@@ -2298,8 +2294,7 @@ KDDW_QCORO_TASK tst_restoreAfterResize()
 
     if (oldContentsSize != layout->layoutSize()) {
         // Hard to reproduce but sometimes happens. Added a wait to see if it's timing related
-        qDebug() << Q_FUNC_INFO << "Unexpected layout size" << layout->layoutSize()
-                 << "expected=" << oldContentsSize;
+        KDDW_INFO("tst_restoreAfterResize: Unexpected layout size={}, expected={}", layout->layoutSize(), oldContentsSize);
         KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
         CHECK_EQ(oldContentsSize, layout->layoutSize());
     }
@@ -4370,11 +4365,8 @@ KDDW_QCORO_TASK tst_propagateSizeHonoursMinSize()
     l->checkSanity();
 
     if (dock1->width() < min1) {
-        qDebug() << "\ndock1->width()=" << dock1->width() << "\nmin1=" << min1
-                 << "\ndock min sizes=" << dock1->view()->minSize()
-                 << "\ngroup1->width()=" << dock1->dptr()->group()->view()->width()
-                 << "\ngroup1->min="
-                 << lengthForSize(dock1->dptr()->group()->view()->minSize(), Qt::Horizontal);
+        KDDW_INFO("dock1->width()={}, \nmin1={}, \ndock min sizes={}, \ngroup1->width()={}, \ngroup1->min={}", dock1->width(), min1,
+                  dock1->view()->minSize(), dock1->dptr()->group()->view()->width(), lengthForSize(dock1->dptr()->group()->view()->minSize(), Qt::Horizontal));
         l->dumpLayout();
         CHECK(false);
     }

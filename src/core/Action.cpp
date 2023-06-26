@@ -14,6 +14,19 @@
 
 #if !defined(QT_WIDGETS_LIB)
 
+#include "Logging_p.h"
+
 QAction::~QAction() = default;
+
+void QAction::setIcon(const KDDockWidgets::Icon &)
+{
+    KDDW_ERROR("Not implemented for QtQuick");
+}
+
+KDDockWidgets::Icon QAction::icon() const
+{
+    KDDW_ERROR("Not implemented for QtQuick/Flutter");
+    return {};
+}
 
 #endif

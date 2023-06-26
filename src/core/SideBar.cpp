@@ -13,10 +13,9 @@
 #include "DockWidget.h"
 #include "MainWindow.h"
 #include "core/ViewFactory.h"
+#include "core/Logging_p.h"
 #include "views/SideBarViewInterface.h"
 #include "Config.h"
-
-#include <QDebug>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -39,7 +38,7 @@ void SideBar::addDockWidget(DockWidget *dw)
         return;
 
     if (m_dockWidgets.contains(dw)) {
-        qWarning() << Q_FUNC_INFO << "Already contains dock widget" << dw->title();
+        KDDW_ERROR("Already contains dock widget with title={}", dw->title());
         return;
     }
 
@@ -53,7 +52,7 @@ void SideBar::addDockWidget(DockWidget *dw)
 void SideBar::removeDockWidget(DockWidget *dw)
 {
     if (!m_dockWidgets.contains(dw)) {
-        qWarning() << Q_FUNC_INFO << "Doesn't contain dock widget" << dw->title();
+        KDDW_ERROR("Doesn't contain dock widget with title={}", dw->title());
         return;
     }
 

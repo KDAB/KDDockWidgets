@@ -247,17 +247,6 @@ KDDW_QCORO_TASK tst_hasFocus()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_operatorqDebug()
-{
-    View *view = nullptr;
-    qDebug() << "Null view=" << view;
-
-    view = createViewAndWindow({});
-    qDebug() << "rootView=" << view;
-
-    KDDW_TEST_RETURN(true);
-}
-
 KDDW_QCORO_TASK tst_parentDeletesChildViews()
 {
     // Tests that deleting a parent view also deletes its children
@@ -293,7 +282,6 @@ static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_viewCloseRequested),
     TEST(tst_viewFocusPolicy),
     TEST(tst_hasFocus),
-    TEST(tst_operatorqDebug),
     TEST(tst_parentDeletesChildViews),
 };
 

@@ -63,7 +63,7 @@ QObject *View_qt::thisObject() const
     return m_thisObj;
 }
 
-KDDockWidgets::HANDLE View_qt::handle() const
+KDDockWidgets::Core::HANDLE View_qt::handle() const
 {
     return m_thisObj;
 }
