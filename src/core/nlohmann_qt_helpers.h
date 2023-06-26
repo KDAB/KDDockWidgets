@@ -13,11 +13,11 @@
 
 #include <nlohmann/json.hpp>
 
+#include "Logging_p.h"
+
 #include <QVariantMap>
 #include <QRect>
 #include <QSize>
-
-#include <spdlog/spdlog.h>
 
 QT_BEGIN_NAMESPACE
 
