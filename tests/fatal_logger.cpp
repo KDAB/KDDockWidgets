@@ -26,7 +26,7 @@ void FatalLogger::log(const spdlog::details::log_msg &msg)
         return;
 
     const QString text = QString::fromUtf8(msg.payload.data());
-    if (text.contains(Core::Platform::s_expectedWarning))
+    if (!Core::Platform::s_expectedWarning.isEmpty() && text.contains(Core::Platform::s_expectedWarning))
         return;
 
     spdlog::critical("KDDockWidgets should be error free. Aborting tests.");

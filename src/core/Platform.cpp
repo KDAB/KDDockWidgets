@@ -188,8 +188,6 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
         return;
     }
 
-    Platform::instance()->m_numWarningsEmitted = 0;
-
     // We want stability during tests.
     // QMainWindow uses the factor for its margins, we don't want tests failing due
     // to off by 1 or 2 pixels. Use 96dpi everywhere.

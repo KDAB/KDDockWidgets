@@ -79,11 +79,6 @@ int main(int argc, char **argv)
         if (!result)
             return result;
 
-        if (Core::Platform::instance()->m_numWarningsEmitted > 0) {
-            std::cerr << "ABORTING! Test caused a warning.\n";
-            return 1;
-        }
-
         std::cout << "SUCCESS\n\n";
         Core::Platform::instance()->uninstallMessageHandler();
         Core::Platform::tests_deinitPlatform();

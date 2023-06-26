@@ -276,7 +276,6 @@ public:
 
     static QString s_expectedWarning;
     static int s_logicalDpiFactorOverride;
-    int m_numWarningsEmitted = 0;
 
 protected:
     /// @brief Implement any needed initializations before tests starting to run, if any
