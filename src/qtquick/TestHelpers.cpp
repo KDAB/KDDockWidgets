@@ -153,7 +153,9 @@ std::shared_ptr<Core::Window> Platform::tests_createWindow()
 {
     Core::CreateViewOptions viewOpts;
     viewOpts.isVisible = true;
-    auto mainWindow = createMainWindow(QStringLiteral("testWindow"), viewOpts);
+    static int id = 0;
+    id++;
+    auto mainWindow = createMainWindow(QStringLiteral("testWindow-%1").arg(id), viewOpts);
     return mainWindow->view()->window();
 }
 
