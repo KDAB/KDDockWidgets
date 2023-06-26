@@ -20,6 +20,17 @@
 
 #include <spdlog/spdlog.h>
 
+#define KDDW_LOG(level, ...)             \
+    if (spdlog::should_log(level)) {     \
+        spdlog::log(level, __VA_ARGS__); \
+    }
+
+#define KDDW_ERROR(...) KDDW_LOG(spdlog::level::err, __VA_ARGS__)
+#define KDDW_WARN(...) KDDW_LOG(spdlog::level::warn, __VA_ARGS__)
+#define KDDW_INFO(...) KDDW_LOG(spdlog::level::info, __VA_ARGS__)
+#define KDDW_DEBUG(...) KDDW_LOG(spdlog::level::debug, __VA_ARGS__)
+#define KDDW_TRACE(...) KDDW_LOG(spdlog::level::trace, __VA_ARGS__)
+
 template<>
 struct fmt::formatter<QSize>
 {
@@ -179,6 +190,13 @@ struct fmt::formatter<KDDockWidgets::InitialOption>
 
 // KDDW is built without logging support.
 // Declare some stubs, so caller code doesn't get littered with #ifdefs
+
+#define KDDW_LOG(level, ...) (( void )0)
+#define KDDW_ERROR(...) KDDW_LOG(spdlog::level::err, __VA_ARGS__)
+#define KDDW_WARN(...) KDDW_LOG(spdlog::level::warn, __VA_ARGS__)
+#define KDDW_INFO(...) KDDW_LOG(spdlog::level::info, __VA_ARGS__)
+#define KDDW_DEBUG(...) KDDW_LOG(spdlog::level::debug, __VA_ARGS__)
+#define KDDW_TRACE(...) KDDW_LOG(spdlog::level::trace, __VA_ARGS__)
 
 namespace KDDockWidgets::spdlog {
 
