@@ -387,6 +387,9 @@ Q_DECLARE_FLAGS(WindowStates, WindowState)
 /// then KDDW will call this automatically.
 void DOCKS_EXPORT initFrontend(FrontendType);
 
+/// Returns the name of the logger used by KDDW
+/// You can pass this name to spdlog::get() and change log level
+DOCKS_EXPORT const char *spdlogLoggerName();
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 

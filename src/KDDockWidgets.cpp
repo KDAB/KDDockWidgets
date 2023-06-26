@@ -45,3 +45,8 @@ void KDDockWidgets::initFrontend(FrontendType type)
         break;
     }
 }
+
+const char *KDDockWidgets::spdlogLoggerName()
+{
+    return "com.kdab.kddockwidgets";
+}

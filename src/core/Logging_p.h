@@ -26,15 +26,15 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-#define KDDW_LOG(level, ...)                                            \
-    if (spdlog::should_log(level)) {                                    \
-        auto logger = spdlog::get("com.kdab.kddockwidgets");            \
-        if (!logger) {                                                  \
-            logger = spdlog::stdout_color_mt("com.kdab.kddockwidgets"); \
-        }                                                               \
-        if (logger->should_log(level)) {                                \
-            logger->log(level, __VA_ARGS__);                            \
-        }                                                               \
+#define KDDW_LOG(level, ...)                                                     \
+    if (spdlog::should_log(level)) {                                             \
+        auto logger = spdlog::get(KDDockWidgets::spdlogLoggerName());            \
+        if (!logger) {                                                           \
+            logger = spdlog::stdout_color_mt(KDDockWidgets::spdlogLoggerName()); \
+        }                                                                        \
+        if (logger->should_log(level)) {                                         \
+            logger->log(level, __VA_ARGS__);                                     \
+        }                                                                        \
     }
 
 #define KDDW_ERROR(...) KDDW_LOG(spdlog::level::err, __VA_ARGS__)
