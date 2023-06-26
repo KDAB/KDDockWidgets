@@ -33,7 +33,7 @@
 #include "core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/MainWindow.h"
-#include "core/nlohmann_qt_helpers.h"
+#include "core/nlohmann_helpers_p.h"
 #include "core/layouting/Item_p.h"
 
 #include <qmath.h>
