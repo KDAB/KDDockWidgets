@@ -85,6 +85,7 @@ struct EnsureTopLevelsDeleted
 
         if (!DockRegistry::self()->isEmpty()) {
             auto dr = DockRegistry::self();
+            Q_UNUSED(dr);
             KDDW_WARN("There's still top-level widgets present!"
                       "\nfloatings: {}"
                       "\nmainWindows: {}"

@@ -9,14 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_DOCK_LOGGING_P_H
-#define KD_DOCK_LOGGING_P_H
 #pragma once
+
+#include "KDDockWidgets.h"
 
 #ifdef KDDW_HAS_SPDLOG
 
 #include "NonQtCompat_p.h"
-#include "KDDockWidgets.h"
 
 #include <spdlog/spdlog.h>
 
@@ -188,16 +187,55 @@ struct fmt::formatter<KDDockWidgets::InitialOption>
 
 #else
 
-// KDDW is built without logging support.
-// Declare some stubs, so caller code doesn't get littered with #ifdefs
+#ifdef KDDW_FRONTEND_QT
 
-#define KDDW_LOG(level, ...) (( void )0)
-#define KDDW_ERROR(...) KDDW_LOG(spdlog::level::err, __VA_ARGS__)
-#define KDDW_WARN(...) KDDW_LOG(spdlog::level::warn, __VA_ARGS__)
-#define KDDW_INFO(...) KDDW_LOG(spdlog::level::info, __VA_ARGS__)
-#define KDDW_DEBUG(...) KDDW_LOG(spdlog::level::debug, __VA_ARGS__)
-#define KDDW_TRACE(...) KDDW_LOG(spdlog::level::trace, __VA_ARGS__)
+#include <QDebug>
+
+// KDDW was built without spdlog support.
+// trace/debug logging will be disabled, but let's have a fallback for important errors.
+// spdlog::error() will be transformed into qWarning.
+
+QT_BEGIN_NAMESPACE
+
+inline QDebug operator<<(QDebug d, KDDockWidgets::InitialOption o)
+{
+    d << o.startsHidden();
+    return d;
+}
+
+QT_END_NAMESPACE
+
+template<typename Arg>
+void printQWarningArg(Arg &&arg, QDebug &stream)
+{
+    stream << std::forward<Arg>(arg);
+}
+
+template<typename First, typename... Args>
+void printQWarningArg(First &&first, Args &&...args, QDebug &stream)
+{
+    stream << std::forward<First>(first);
+    printQWarningArg(std::forward<Args>(args)..., stream);
+}
+
+template<typename... Args>
+void printQWarning(Args &&...args)
+{
+    auto stream = qWarning();
+    (printQWarningArg(std::forward<Args>(args), stream), ...);
+}
+
+#define KDDW_ERROR(...) printQWarning(__VA_ARGS__)
+
+#else
+
+#define KDDW_ERROR(...) (( void )0)
 
 #endif
+
+#define KDDW_WARN(...) (( void )0)
+#define KDDW_INFO(...) (( void )0)
+#define KDDW_DEBUG(...) (( void )0)
+#define KDDW_TRACE(...) (( void )0)
 
 #endif
