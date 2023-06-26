@@ -39,6 +39,10 @@
 #include "qtwidgets/views/TitleBar.h"
 #include "qtcommon/View.h"
 
+#ifdef KDDW_HAS_SPDLOG
+#include "../fatal_logger.h"
+#endif
+
 #include <QObject>
 #include <QPushButton>
 #include <QMenuBar>
@@ -1749,6 +1753,10 @@ void TestQtWidgets::tstQGraphicsProxyWidget()
 
 int main(int argc, char *argv[])
 {
+#ifdef KDDW_HAS_SPDLOG
+    FatalLogger::create();
+#endif
+
     // Might be disabled by env var
     const auto frontends = Platform::frontendTypes();
     if (std::find(frontends.cbegin(), frontends.cend(), FrontendType::QtWidgets)

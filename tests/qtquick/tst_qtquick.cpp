@@ -20,6 +20,10 @@
 
 #include "../utils.h"
 
+#ifdef KDDW_HAS_SPDLOG
+#include "../fatal_logger.h"
+#endif
+
 #include <QtTest/QTest>
 #include <QQmlApplicationEngine>
 
@@ -224,6 +228,10 @@ void TestQtQuick::tst_effectiveVisibilityBug()
 
 int main(int argc, char *argv[])
 {
+#ifdef KDDW_HAS_SPDLOG
+    FatalLogger::create();
+#endif
+
     // Might be disabled by env var
     const auto frontends = Platform::frontendTypes();
     if (std::find(frontends.cbegin(), frontends.cend(), FrontendType::QtQuick) == frontends.cend())
