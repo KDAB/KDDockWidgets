@@ -19,15 +19,16 @@
 #include "kddockwidgets/core/Platform.h"
 
 #ifdef KDDW_FRONTEND_FLUTTER
-
 #include "../flutter/Platform.h"
 #include "flutter_tests_embedder/tests_embedder.h"
-
 #include "qcoro/core/qcorocore.h"
-
 #endif
 
 #include <iostream>
+
+#ifdef KDDW_HAS_SPDLOG
+#include "fatal_logger.h"
+#endif
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -36,6 +37,10 @@ static std::vector<KDDWTest> s_testsToRun;
 
 int main(int argc, char **argv)
 {
+#ifdef KDDW_HAS_SPDLOG
+    FatalLogger::create();
+#endif
+
     if (argc >= 2) {
         auto it = std::find_if(s_tests.cbegin(), s_tests.cend(), [argv](const KDDWTest &test) {
             return test.name == argv[1];

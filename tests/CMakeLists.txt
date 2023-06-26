@@ -18,14 +18,16 @@ find_package(Qt${Qt_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-set(TESTING_SRCS utils.cpp)
-
 include_directories(..)
 include_directories(../src)
 include_directories(../src/private)
 add_definitions(-DQT_NO_KEYWORDS)
 
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
+set(TESTING_SRCS utils.cpp)
+if(KDDockWidgets_HAS_SPDLOG)
+    set(TESTING_SRCS ${TESTING_SRCS} fatal_logger.cpp)
+endif()
 
 # tst_qtwidgets
 if(KDDW_FRONTEND_QTWIDGETS)
@@ -54,7 +56,7 @@ endif()
 
 # Function to add a test
 function(add_kddw_test test srcs)
-    add_executable(${test} ${srcs} ${TESTING_RESOURCES} utils.cpp)
+    add_executable(${test} ${srcs} ${TESTING_RESOURCES} ${TESTING_SRCS})
     target_link_libraries(${test} kddockwidgets kdbindings)
     if(KDDockWidgets_HAS_SPDLOG)
         target_link_libraries(${test} spdlog::spdlog)
