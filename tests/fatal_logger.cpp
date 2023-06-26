@@ -21,13 +21,24 @@ FatalLogger::~FatalLogger() = default;
 
 void FatalLogger::log(const spdlog::details::log_msg &msg)
 {
-    spdlog::sinks::stdout_color_sink_mt::log(msg);
-    if (msg.level < spdlog::level::err)
+    if (msg.level < spdlog::level::err) {
+        // Nothing to do if less than err
+        spdlog::sinks::stdout_color_sink_mt::log(msg);
         return;
+    }
 
-    const QString text = QString::fromUtf8(msg.payload.data());
-    if (!Core::Platform::s_expectedWarning.isEmpty() && text.contains(Core::Platform::s_expectedWarning))
-        return;
+    if (!Core::Platform::s_expectedWarning.isEmpty()) {
+        const QString text = QString::fromUtf8(msg.payload.data());
+        if (text.contains(Core::Platform::s_expectedWarning)) {
+            // It's whitelisted, downgrade to warning level
+            spdlog::details::log_msg copy = msg;
+            copy.level = spdlog::level::warn;
+            spdlog::sinks::stdout_color_sink_mt::log(copy);
+            return;
+        }
+    }
+
+    spdlog::sinks::stdout_color_sink_mt::log(msg);
 
     spdlog::critical("KDDockWidgets should be error free. Aborting tests.");
     std::terminate();
