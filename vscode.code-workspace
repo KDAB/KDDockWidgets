@@ -10,7 +10,8 @@
     "editor.formatOnSave": true,
     "C_Cpp.autocompleteAddParentheses": true,
     "clangd.arguments": [
-      "-header-insertion=never"
+      "-header-insertion=never",
+      "--clang-tidy=false"
     ],
     "todo-tree.tree.scanMode": "workspace only",
     "todo-tree.tree.disableCompactFolders": false,
