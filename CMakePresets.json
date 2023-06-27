@@ -349,6 +349,16 @@
             }
         },
         {
+            "name": "release-clang-tidy",
+            "binaryDir": "${sourceDir}/build-release-clang-tidy",
+            "inherits": [
+                "release"
+            ],
+            "cacheVariables": {
+                "CMAKE_CXX_CLANG_TIDY": "clang-tidy"
+            }
+        },
+        {
             "name": "ci-dev-qt5",
             "displayName": "ci-dev-qt5",
             "description": "Qt5 dev-mode build",
