@@ -41,9 +41,9 @@ QRect MainWindow::centralAreaGeometry() const
 
 void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 {
-    Q_UNUSED(left);
-    Q_UNUSED(right);
-    Q_UNUSED(top);
-    Q_UNUSED(bottom);
+    KDDW_UNUSED(left);
+    KDDW_UNUSED(right);
+    KDDW_UNUSED(top);
+    KDDW_UNUSED(bottom);
     KDDW_WARN("MainWindow::setContentsMargins hasn't been implemented {}", Q_FUNC_INFO);
 }

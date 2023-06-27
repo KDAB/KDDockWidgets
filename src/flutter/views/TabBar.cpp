@@ -58,8 +58,8 @@ QRect TabBar::rectForTab(int) const
 
 void TabBar::moveTabTo(int from, int to)
 {
-    Q_UNUSED(from);
-    Q_UNUSED(to);
+    KDDW_UNUSED(from);
+    KDDW_UNUSED(to);
     KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
 

@@ -179,7 +179,7 @@ inline bool scalingFactorIsSupported(qreal factor)
     const bool isInteger = int(factor) == factor;
     return isInteger;
 #else
-    Q_UNUSED(factor);
+    KDDW_UNUSED(factor);
     return true;
 #endif
 }

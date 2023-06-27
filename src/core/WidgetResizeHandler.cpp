@@ -636,7 +636,7 @@ void WidgetResizeHandler::setupWindow(Core::Window::Ptr window)
         }
     }
 #else
-    Q_UNUSED(window);
+    KDDW_UNUSED(window);
 #endif // Q_OS_WIN
 }
 
@@ -704,7 +704,7 @@ void CustomFrameHelper::applyCustomFrame(Core::Window::Ptr window)
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     WidgetResizeHandler::setupWindow(window);
 #else
-    Q_UNUSED(window);
+    KDDW_UNUSED(window);
     KDDW_ERROR("Not implemented on this platform");
 #endif
 }
@@ -750,9 +750,9 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
 
     return WidgetResizeHandler::handleWindowsNativeEvent(window, msg, result, features);
 #else
-    Q_UNUSED(eventType);
-    Q_UNUSED(message);
-    Q_UNUSED(result);
+    KDDW_UNUSED(eventType);
+    KDDW_UNUSED(message);
+    KDDW_UNUSED(result);
     return false;
 #endif
 }

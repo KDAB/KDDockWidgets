@@ -438,4 +438,8 @@ Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)
     NAME(const NAME &&) = delete;           \
     NAME &operator=(const NAME &) = delete; \
     NAME &operator=(const NAME &&) = delete;
+
+#define KDDW_UNUSED(name) (( void * )0) name;
+
+
 #endif

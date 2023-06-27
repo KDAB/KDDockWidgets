@@ -237,7 +237,7 @@ int main(int argc, char **argv)
     parser.addOption(noAeroSnap);
 #endif
 #else
-    Q_UNUSED(centralFrame)
+    KDDW_UNUSED(centralFrame)
 #endif
 
     parser.process(app);
@@ -351,8 +351,8 @@ int main(int argc, char **argv)
                        const KDDockWidgets::Core::DockWidget::List &source,
                        const KDDockWidgets::Core::DockWidget::List &target,
                        Core::DropArea *) {
-            Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already
-                              // tabbed dock widgets
+            KDDW_UNUSED(target); // When dragging into a tab, 'target' would have the list of already
+                                 // tabbed dock widgets
 
             const bool isDraggingDW8 =
                 std::find_if(source.cbegin(), source.cend(),

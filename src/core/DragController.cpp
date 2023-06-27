@@ -310,7 +310,7 @@ void StateDragging::onEntry()
             window->startSystemMove();
         }
 #else
-        Q_UNUSED(needsUndocking);
+        KDDW_UNUSED(needsUndocking);
 #endif
 
         KDDW_DEBUG("StateDragging entered. m_draggable={}; m_windowBeingDragged={}", ( void * )q->m_draggable, ( void * )q->m_windowBeingDragged->floatingWindow());

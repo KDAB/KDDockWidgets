@@ -4607,7 +4607,7 @@ KDDW_QCORO_TASK tst_redocksToPreviousTabIndex()
         // An XFAIL so we remember to implement this
         // QEXPECT_FAIL("", "TabBar::moveTabTo not implemented for QtQuick yet", Continue);
         // CHECK(false);
-        Q_UNUSED(group);
+        KDDW_UNUSED(group);
     }
     KDDW_TEST_RETURN(true);
 }

@@ -64,7 +64,7 @@ public:
      */
     virtual bool isPositionDraggable(QPoint p) const
     {
-        Q_UNUSED(p)
+        KDDW_UNUSED(p)
         return true;
     }
 

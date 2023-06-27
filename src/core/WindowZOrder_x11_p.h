@@ -88,7 +88,7 @@ namespace KDDockWidgets {
 /// adding more #ifdefery
 static Core::Window::List orderedWindows(bool &ok)
 {
-    Q_UNUSED(ok);
+    KDDW_UNUSED(ok);
     Q_UNREACHABLE();
     return {};
 }

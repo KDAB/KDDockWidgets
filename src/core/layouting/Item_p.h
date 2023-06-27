@@ -610,7 +610,7 @@ struct AtomicSanityChecks
 #ifdef DOCKS_DEVELOPER_MODE
         if (m_root) {
             const bool result = m_root->checkSanity();
-            Q_UNUSED(result);
+            KDDW_UNUSED(result);
         }
 #endif
     }

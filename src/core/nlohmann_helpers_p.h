@@ -121,7 +121,7 @@ inline void to_json(nlohmann::json &j, const QVariantList &list)
 inline void from_json(const nlohmann::json &j, QVariantList &list)
 {
     if (!j.is_array()) {
-        Q_UNUSED(list)
+        KDDW_UNUSED(list)
         list.clear();
         KDDW_ERROR("Unexpected j not an array");
         return;

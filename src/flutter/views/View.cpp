@@ -491,21 +491,21 @@ bool View::onFlutterWidgetResized(int w, int h)
 
 void View::onChildAdded(Core::View *childView)
 {
-    Q_UNUSED(childView);
+    KDDW_UNUSED(childView);
     dumpDebug();
     KDDW_ERROR("Derived class should be called instead");
 }
 
 void View::onChildRemoved(Core::View *childView)
 {
-    Q_UNUSED(childView);
+    KDDW_UNUSED(childView);
     dumpDebug();
     KDDW_ERROR("Derived class should be called instead");
 }
 
 void View::onChildVisibilityChanged(Core::View *childView)
 {
-    Q_UNUSED(childView);
+    KDDW_UNUSED(childView);
     dumpDebug();
     KDDW_ERROR("Derived class should be called instead");
 }
