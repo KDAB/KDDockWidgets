@@ -22,6 +22,7 @@
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
+#include "core/nlohmann_helpers_p.h"
 
 #include <algorithm>
 #include <iostream>
@@ -3585,6 +3586,24 @@ void SizingInfo::fromVariantMap(const QVariantMap &map)
     geometry = mapToRect(map[QStringLiteral("geometry")].toMap());
     minSize = mapToSize(map[QStringLiteral("minSize")].toMap());
     maxSizeHint = mapToSize(map[QStringLiteral("maxSize")].toMap());
+}
+
+void Core::to_json(nlohmann::json &j, const SizingInfo &info)
+{
+    j["geometry"] = info.geometry;
+    j["minSize"] = info.minSize;
+    j["maxSizeHint"] = info.maxSizeHint;
+    j["percentageWithinParent"] = info.percentageWithinParent;
+    j["isBeingInserted"] = info.isBeingInserted;
+}
+
+void Core::from_json(const nlohmann::json &j, SizingInfo &info)
+{
+    info.geometry = j["geometry"];
+    info.minSize = j["minSize"];
+    info.maxSizeHint = j["maxSizeHint"];
+    info.percentageWithinParent = j["percentageWithinParent"];
+    info.isBeingInserted = j["isBeingInserted"];
 }
 
 int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option) const

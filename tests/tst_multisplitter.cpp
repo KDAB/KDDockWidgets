@@ -17,6 +17,7 @@
 #include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "core/View_p.h"
+#include "core/nlohmann_helpers_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "Config.h"
 
@@ -1884,6 +1885,29 @@ KDDW_QCORO_TASK tst_numSideBySide_recursive()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_sizingInfoSerialization()
+{
+    SizingInfo info;
+    info.minSize = { 10, 10 };
+    info.geometry = { 10, 10, 100, 100 };
+    info.maxSizeHint = { 300, 300 };
+    info.percentageWithinParent = 5;
+    info.isBeingInserted = true;
+
+    nlohmann::json json = info;
+
+    SizingInfo info2;
+    json.get_to(info2);
+
+    CHECK_EQ(info2.minSize, info.minSize);
+    CHECK_EQ(info2.maxSizeHint, info.maxSizeHint);
+    CHECK_EQ(info2.geometry, info.geometry);
+    CHECK_EQ(info2.isBeingInserted, info.isBeingInserted);
+    CHECK_EQ(info2.percentageWithinParent, info.percentageWithinParent);
+
+    KDDW_TEST_RETURN(true);
+}
+
 static const std::vector<KDDWTest> s_tests = {
     TEST(tst_createRoot),
     TEST(tst_insertOne),
@@ -1937,6 +1961,7 @@ static const std::vector<KDDWTest> s_tests = {
     TEST(tst_simplify),
     TEST(tst_adjacentLayoutBorders),
     TEST(tst_numSideBySide_recursive),
+    TEST(tst_sizingInfoSerialization),
 };
 
 #include "tests_main.h"

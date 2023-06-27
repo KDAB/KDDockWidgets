@@ -17,9 +17,11 @@
 #include <QObject>
 #include <QVector>
 #include <QRect>
+#include <QSize>
 #include <QVariant>
 
 #include "kdbindings/signal.h"
+#include "nlohmann/json.hpp"
 
 #include <memory>
 
@@ -124,9 +126,8 @@ inline QRect mapToRect(const QVariantMap &map)
                  map.value(QStringLiteral("height")).toInt());
 }
 
-struct SizingInfo
+struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
 {
-
     SizingInfo();
 
     QSize size() const
@@ -620,6 +621,9 @@ struct AtomicSanityChecks
     KDDW_DELETE_COPY_CTOR(AtomicSanityChecks)
 };
 
-}
+DOCKS_EXPORT void from_json(const nlohmann::json &, SizingInfo &);
+DOCKS_EXPORT void to_json(nlohmann::json &, const SizingInfo &);
 
-}
+} // Core
+
+} // KDDockWidgets
