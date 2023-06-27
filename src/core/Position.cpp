@@ -135,7 +135,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
     m_lastOverlayedGeometries = lp.lastOverlayedGeometries;
 
     for (const auto &placeholder : qAsConst(lp.placeholders)) {
-        Core::Layout *layout;
+        Core::Layout *layout = nullptr;
         int itemIndex = placeholder.itemIndex;
         if (placeholder.isFloatingWindow) {
             const int index = placeholder.indexOfFloatingWindow;

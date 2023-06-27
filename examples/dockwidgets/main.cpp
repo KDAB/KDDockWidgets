@@ -434,7 +434,7 @@ int main(int argc, char **argv)
     }
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() >= 1) {
+    if (!args.isEmpty()) {
         const QString sourceJsonFileName = args[0];
         KDDockWidgets::LayoutSaver loader;
         if (!loader.restoreFromFile(sourceJsonFileName)) {

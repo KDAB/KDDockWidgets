@@ -58,7 +58,7 @@ public:
         connect(item, &QQuickItem::heightChanged, this, &QuickView::onRootItemHeightChanged);
     }
 
-    ~QuickView();
+    ~QuickView() override;
 
     bool event(QEvent *ev) override
     {

@@ -98,6 +98,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     view()->init();
     view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
 
+    // NOLINTNEXTLINE(cppcoreguidelines-prefer-member-initializer)
     m_inCtor = false;
 }
 

@@ -330,7 +330,7 @@ public:
 
     template<typename T>
     void deserializeWindowGeometry(const T &saved, Core::Window::Ptr);
-    void deleteEmptyGroups();
+    void deleteEmptyGroups() const;
     void clearRestoredProperty();
 
     DockRegistry *const m_dockRegistry;

@@ -42,6 +42,8 @@ public:
         m_connection = plat->d->focusedViewChanged.connect(&Private::onFocusedViewChanged, this);
 
         onFocusedViewChanged(plat->focusedView());
+
+        // NOLINTNEXTLINE(cppcoreguidelines-prefer-member-initializer)
         m_inCtor = false;
     }
 

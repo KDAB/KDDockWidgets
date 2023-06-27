@@ -55,10 +55,8 @@ using namespace KDDockWidgets::Debug;
 class DebugAppEventFilter : public QAbstractNativeEventFilter
 {
 public:
-    DebugAppEventFilter()
-    {
-    }
-    ~DebugAppEventFilter();
+    DebugAppEventFilter() = default;
+    ~DebugAppEventFilter() override;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *) override
 #else

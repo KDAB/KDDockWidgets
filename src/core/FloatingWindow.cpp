@@ -107,7 +107,7 @@ static FloatingWindowFlags floatingWindowFlagsForGroup(Group *group)
 class FloatingWindow::Private
 {
 public:
-    Private(FloatingWindowFlags requestedFlags)
+    explicit Private(FloatingWindowFlags requestedFlags)
         : m_flags(flagsForFloatingWindow(requestedFlags))
     {
     }
@@ -172,20 +172,19 @@ static MainWindow *hackFindParentHarder(Core::Group *group, MainWindow *candidat
     if (windows.isEmpty())
         return nullptr;
 
-    if (windows.size() == 1) {
+    if (windows.size() == 1)
         return windows.first();
-    } else {
-        const QStringList affinities = group ? group->affinities() : QStringList();
-        const MainWindow::List mainWindows =
-            DockRegistry::self()->mainWindowsWithAffinity(affinities);
 
-        if (mainWindows.isEmpty()) {
-            KDDW_ERROR("No window with affinity={} found", affinities, "found");
-            return nullptr;
-        } else {
-            return mainWindows.first();
-        }
+    const QStringList affinities = group ? group->affinities() : QStringList();
+    const MainWindow::List mainWindows =
+        DockRegistry::self()->mainWindowsWithAffinity(affinities);
+
+    if (mainWindows.isEmpty()) {
+        KDDW_ERROR("No window with affinity={} found", affinities, "found");
+        return nullptr;
     }
+
+    return mainWindows.first();
 }
 
 MainWindow *actualParent(MainWindow *candidate)
@@ -631,9 +630,9 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
 
         Q_EMIT numDockWidgetsChanged();
         return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 LayoutSaver::FloatingWindow FloatingWindow::serialize() const

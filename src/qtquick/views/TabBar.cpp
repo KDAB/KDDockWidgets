@@ -266,10 +266,8 @@ QVariant DockWidgetModel::data(const QModelIndex &index, int role) const
     if (row < 0 || row >= m_dockWidgets.size())
         return {};
 
-    Core::DockWidget *dw = m_dockWidgets.at(row);
-
-    switch (role) {
-    case Role_Title:
+    if (role == Role_Title) {
+        Core::DockWidget *dw = m_dockWidgets.at(row);
         return dw->title();
     }
 

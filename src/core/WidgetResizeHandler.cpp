@@ -116,8 +116,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
     if (s_disableAllHandlers || !widget)
         return false;
 
-    if (!(e->type() == Event::MouseButtonPress || e->type() == Event::MouseButtonRelease
-          || e->type() == Event::MouseMove))
+    if (e->type() != Event::MouseButtonPress && e->type() != Event::MouseButtonRelease
+        && e->type() != Event::MouseMove)
         return false;
 
     auto me = mouseEvent(e);
@@ -512,12 +512,10 @@ void WidgetResizeHandler::setTarget(View *w)
 
 void WidgetResizeHandler::updateCursor(CursorPosition m)
 {
-
     if (Platform::instance()->isQtWidgets()) {
         // Need for updating cursor when we change child widget
         const auto childViews = mTarget->childViews();
-        for (int i = 0, total = childViews.size(); i < total; ++i) {
-            auto child = childViews.at(i);
+        for (const auto &child : childViews) {
             if (!child->hasAttribute(Qt::WA_SetCursor)) {
                 child->setCursor(Qt::ArrowCursor);
             }

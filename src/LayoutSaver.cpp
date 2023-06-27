@@ -677,7 +677,7 @@ void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout
     }
 }
 
-void LayoutSaver::Private::deleteEmptyGroups()
+void LayoutSaver::Private::deleteEmptyGroups() const
 {
     // After a restore it can happen that some DockWidgets didn't exist, so weren't restored.
     // Delete their group now.
@@ -993,10 +993,7 @@ void LayoutSaver::FloatingWindow::scaleSizes(const ScalingInfo &scalingInfo)
 
 bool LayoutSaver::MainWindow::isValid() const
 {
-    if (!multiSplitterLayout.isValid())
-        return false;
-
-    return true;
+    return multiSplitterLayout.isValid();
 }
 
 void LayoutSaver::MainWindow::scaleSizes()
@@ -1012,15 +1009,7 @@ void LayoutSaver::MainWindow::scaleSizes()
 
 bool LayoutSaver::MultiSplitter::isValid() const
 {
-    if (layout.isEmpty())
-        return false;
-
-    /*if (!size.isValid()) {
-        KDDW_ERROR("Invalid size");
-        return false;
-    }*/
-
-    return true;
+    return !layout.isEmpty();
 }
 
 bool LayoutSaver::MultiSplitter::hasSingleDockWidget() const
