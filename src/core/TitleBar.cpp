@@ -25,8 +25,6 @@
 #include "core/MDILayout.h"
 #include "core/Stack.h"
 
-#include <QTimer>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
@@ -87,8 +85,12 @@ void TitleBar::init()
     });
 
     updateButtons();
+
+#ifdef KDDW_FRONTEND_QT
+    // Auto-hide not supported in flutter yet
     QTimer::singleShot(0, this, &TitleBar::updateAutoHideButton); // have to wait after the group is
                                                                   // constructed
+#endif
 }
 
 TitleBar::~TitleBar()

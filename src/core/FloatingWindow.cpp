@@ -35,8 +35,6 @@
 
 #include "kdbindings/signal.h"
 
-#include <QTimer>
-
 #if defined(KDDW_FRONTEND_QT_WINDOWS)
 #include <QGuiApplication>
 #ifndef NOMINMAX
@@ -743,7 +741,8 @@ int FloatingWindow::userType() const
 
 void FloatingWindow::updateSizeConstraints()
 {
-    // Doing a delayed call to make sure the layout has completled any ongoing operation.
+#ifdef KDDW_FRONTEND_QT
+    // Doing a delayed call to make sure the layout has completed any ongoing operation.
     QTimer::singleShot(0, this, [this] {
         // Not simply using layout's max-size support because
         // 1) that's not portable to QtQuick
@@ -751,6 +750,7 @@ void FloatingWindow::updateSizeConstraints()
         // Doing it manually instead.
         view()->setMaximumSize(maxSizeHint());
     });
+#endif
 }
 
 void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)

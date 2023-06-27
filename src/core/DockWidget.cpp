@@ -34,8 +34,6 @@
 #include "core/ViewFactory.h"
 #include "core/ScopedValueRollback_p.h"
 
-#include <QTimer>
-
 /**
  * @file
  * @brief The DockWidget base-class that's shared between QtWidgets and QtQuick stack.

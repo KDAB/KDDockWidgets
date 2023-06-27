@@ -22,6 +22,7 @@
 #include <QPixmap>
 #include <QPolygon>
 #include <QDrag>
+#include <QTimer>
 #else
 #include <QPoint>
 #include <QRect>

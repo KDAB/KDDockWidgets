@@ -23,10 +23,6 @@
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
 
-#if KDDW_FRONTEND_QT
-#include <QTimer>
-#endif
-
 #include <algorithm>
 #include <iostream>
 

@@ -16,10 +16,10 @@
 
 #include "WindowBeingDragged_p.h"
 #include "core/EventFilterInterface.h"
+#include "kddockwidgets/NonQtCompat_p.h"
 
 #include <QPoint>
 #include <QMimeData>
-#include <QTimer>
 
 #include <memory>
 
@@ -239,8 +239,10 @@ public:
     bool handleMouseMove(QPoint globalPos) override;
     bool handleMouseDoubleClick() override;
 
+#if defined(KDDW_FRONTEND_QT_WINDOWS)
 private:
     QTimer m_maybeCancelDrag;
+#endif
 };
 
 
