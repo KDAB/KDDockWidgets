@@ -717,7 +717,7 @@ void DockWidget::Private::toggle(bool enabled)
     } else {
         // The most common case. The dock widget is not in the sidebar. just close or open it.
         if (enabled) {
-            q->show();
+            q->open();
         } else {
             q->view()->close();
         }
