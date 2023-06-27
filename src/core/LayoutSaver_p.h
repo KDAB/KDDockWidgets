@@ -57,9 +57,6 @@ struct LayoutSaver::Placeholder
 {
     typedef QVector<LayoutSaver::Placeholder> List;
 
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
-
     bool isFloatingWindow;
     int indexOfFloatingWindow;
     int itemIndex;

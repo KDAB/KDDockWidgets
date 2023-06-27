@@ -1036,28 +1036,6 @@ void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)
     scalingInfo.applyFactorsTo(/*by-ref*/ lastFloatingGeometry);
 }
 
-QVariantMap LayoutSaver::Placeholder::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("isFloatingWindow"), isFloatingWindow);
-    map.insert(QStringLiteral("itemIndex"), itemIndex);
-
-    if (isFloatingWindow)
-        map.insert(QStringLiteral("indexOfFloatingWindow"), indexOfFloatingWindow);
-    else
-        map.insert(QStringLiteral("mainWindowUniqueName"), mainWindowUniqueName);
-
-    return map;
-}
-
-void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
-{
-    isFloatingWindow = map.value(QStringLiteral("isFloatingWindow")).toBool();
-    indexOfFloatingWindow = map.value(QStringLiteral("indexOfFloatingWindow"), -1).toInt();
-    itemIndex = map.value(QStringLiteral("itemIndex")).toInt();
-    mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
-}
-
 static Core::Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
 {
     return mw->view()->d->screen();
