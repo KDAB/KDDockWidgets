@@ -16,6 +16,7 @@
 #include "simple_test_framework.h"
 #include "utils.h"
 #include "core/LayoutSaver_p.h"
+#include "core/ScopedValueRollback_p.h"
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/Logging_p.h"
@@ -5085,6 +5086,40 @@ KDDW_QCORO_TASK tst_keepLast()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_scopedValueRollback()
+{
+    bool v1 = false;
+    bool v2 = true;
+
+    {
+        ScopedValueRollback r1(v1, true);
+        CHECK(v1);
+    }
+
+    {
+        ScopedValueRollback r2(v2, false);
+        CHECK(!v2);
+    }
+
+    CHECK(!v1);
+    CHECK(v2);
+
+    {
+        ScopedValueRollback r1(v1, false);
+        CHECK(!v1);
+    }
+
+    {
+        ScopedValueRollback r2(v2, true);
+        CHECK(v2);
+    }
+
+    CHECK(!v1);
+    CHECK(v2);
+
+    KDDW_TEST_RETURN(true);
+}
+
 static const auto s_tests = std::vector<KDDWTest>
 {
     TEST(tst_simple1),
@@ -5189,6 +5224,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_childViewAt),
         TEST(tst_detachPos),
         TEST(tst_floatMaintainsSize),
+        TEST(tst_scopedValueRollback),
 #if !defined(KDDW_FRONTEND_FLUTTER)
         TEST(tst_doesntHaveNativeTitleBar),
         TEST(tst_sizeAfterRedock),

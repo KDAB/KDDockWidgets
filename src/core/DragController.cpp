@@ -26,9 +26,9 @@
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/DockWidget_p.h"
+#include "core/ScopedValueRollback_p.h"
 
 #include <QObject>
-#include <QScopedValueRollback>
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "kddockwidgets/qtcommon/Platform.h"
@@ -567,7 +567,7 @@ void StateDraggingWayland::onEntry()
         return;
     }
 
-    QScopedValueRollback<bool> guard(m_inQDrag, true);
+    ScopedValueRollback guard(m_inQDrag, true);
     q->m_windowBeingDragged =
         std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
 

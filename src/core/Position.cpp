@@ -18,6 +18,7 @@
 #include "Position_p.h"
 #include "LayoutSaver_p.h"
 #include "Logging_p.h"
+#include "ScopedValueRollback_p.h"
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Layout.h"
@@ -90,7 +91,7 @@ bool Position::containsPlaceholder(Core::Item *item) const
 
 void Position::removePlaceholders()
 {
-    QScopedValueRollback<bool> clearGuard(m_clearing, true);
+    ScopedValueRollback clearGuard(m_clearing, true);
     m_placeholders.clear();
 }
 

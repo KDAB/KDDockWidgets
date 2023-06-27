@@ -14,6 +14,7 @@
 #include "core/View_p.h"
 #include "ViewWrapper.h"
 #include "core/layouting/Item_p.h"
+#include "core/ScopedValueRollback_p.h"
 #include "kddockwidgets/qtquick/Window.h"
 #include "qtquick/Platform.h"
 
@@ -524,7 +525,7 @@ void View::update()
 void View::setParent(QQuickItem *parentItem)
 {
     {
-        QScopedValueRollback<bool> guard(m_inSetParent, true);
+        ScopedValueRollback guard(m_inSetParent, true);
         QQuickItem::setParent(parentItem);
         QQuickItem::setParentItem(parentItem);
     }

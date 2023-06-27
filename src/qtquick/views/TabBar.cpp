@@ -22,11 +22,11 @@
 #include "kddockwidgets/core/DockWidget_p.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
+#include "core/ScopedValueRollback_p.h"
 
 #include <QMetaObject>
 #include <QMouseEvent>
 #include <QDebug>
-#include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
@@ -302,7 +302,7 @@ void DockWidgetModel::setCurrentDockWidget(Core::DockWidget *dw)
     m_currentDockWidget = dw;
     setCurrentIndex(indexOf(dw));
     if (m_currentDockWidget) {
-        QScopedValueRollback<bool> guard(m_currentDockWidget->d->m_isSettingCurrent, true);
+        ScopedValueRollback guard(m_currentDockWidget->d->m_isSettingCurrent, true);
         m_currentDockWidget->setVisible(true);
     }
 }
@@ -325,7 +325,7 @@ void DockWidgetModel::emitDataChangedFor(Core::DockWidget *dw)
 
 void DockWidgetModel::remove(Core::DockWidget *dw)
 {
-    QScopedValueRollback<bool> guard(m_removeGuard, true);
+    ScopedValueRollback guard(m_removeGuard, true);
     const int row = indexOf(dw);
 
     if (row == -1) {

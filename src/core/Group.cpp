@@ -17,6 +17,7 @@
 #include "Controller.h"
 #include "View.h"
 #include "Layout_p.h"
+#include "ScopedValueRollback_p.h"
 #include "Platform.h"
 #include "views/GroupViewInterface.h"
 
@@ -419,7 +420,7 @@ void Group::updateTitleBarVisibility()
         return;
     }
 
-    QScopedValueRollback<bool> guard(m_updatingTitleBar, true);
+    ScopedValueRollback guard(m_updatingTitleBar, true);
 
     bool visible = false;
     if (isCentralFrame()) {

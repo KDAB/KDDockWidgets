@@ -24,7 +24,6 @@
 #include <QHash>
 #include <QPointer>
 #include <QRect>
-#include <QScopedValueRollback>
 
 #include <memory>
 

@@ -19,6 +19,7 @@
 #include "core/Layout.h"
 #include "core/Layout_p.h"
 #include "core/Logging_p.h"
+#include "core/ScopedValueRollback_p.h"
 #include "core/DropArea.h"
 #include "core/DockWidget_p.h"
 #include "core/Group.h"
@@ -301,7 +302,7 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 
 bool Layout::onResize(QSize newSize)
 {
-    QScopedValueRollback<bool> resizeGuard(d->m_inResizeEvent, true); // to avoid re-entrancy
+    ScopedValueRollback resizeGuard(d->m_inResizeEvent, true); // to avoid re-entrancy
 
     if (!LayoutSaver::restoreInProgress()) {
         // don't resize anything while we're restoring the layout

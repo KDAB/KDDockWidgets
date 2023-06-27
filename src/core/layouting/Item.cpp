@@ -21,8 +21,7 @@
 #include "core/View_p.h"
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"
-
-#include <QScopedValueRollback>
+#include "core/ScopedValueRollback_p.h"
 
 #if KDDW_FRONTEND_QT
 #include <QTimer>
@@ -201,7 +200,7 @@ void Item::setGuestView(View *guest)
                                             });
 
         {
-            QScopedValueRollback<bool> guard(m_isSettingGuest, true);
+            ScopedValueRollback guard(m_isSettingGuest, true);
             setMinSize(guest->minSize());
             setMaxSizeHint(guest->maxSizeHint());
         }
@@ -1299,7 +1298,7 @@ void ItemBoxContainer::setGeometry_recursive(QRect rect)
 
 ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 {
-    QScopedValueRollback<bool> converting(d->m_convertingItemToContainer, true);
+    ScopedValueRollback converting(d->m_convertingItemToContainer, true);
 
     const auto index = m_children.indexOf(leaf);
     Q_ASSERT(index != -1);
@@ -2074,7 +2073,7 @@ bool ItemBoxContainer::hostSupportsHonouringLayoutMinSize() const
 
 void ItemBoxContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy)
 {
-    QScopedValueRollback<bool> block(d->m_blockUpdatePercentages, true);
+    ScopedValueRollback block(d->m_blockUpdatePercentages, true);
 
     const QSize minSize = this->minSize();
     if (newSize.width() < minSize.width() || newSize.height() < minSize.height()) {
@@ -3191,7 +3190,7 @@ void ItemBoxContainer::simplify()
     // Removes unneeded nesting. For example, a vertical layout doesn't need to have vertical
     // layouts inside. It can simply have the contents of said sub-layouts
 
-    QScopedValueRollback<bool> isInSimplify(d->m_isSimplifying, true);
+    ScopedValueRollback isInSimplify(d->m_isSimplifying, true);
 
     Item::List newChildren;
     newChildren.reserve(m_children.size() + 20); // over-reserve a bit
@@ -3339,7 +3338,7 @@ QVariantMap ItemBoxContainer::toVariantMap() const
 void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
                                           const QHash<QString, View *> &widgets)
 {
-    QScopedValueRollback<bool> deserializing(d->m_isDeserializing, true);
+    ScopedValueRollback deserializing(d->m_isDeserializing, true);
 
     Item::fillFromVariantMap(map, widgets);
     const QVariantList childrenV = map[QStringLiteral("children")].toList();

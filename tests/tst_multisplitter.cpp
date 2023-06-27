@@ -17,10 +17,9 @@
 #include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "core/View_p.h"
-
+#include "core/ScopedValueRollback_p.h"
 #include "Config.h"
 
-#include <QScopedValueRollback>
 #include <QPointer>
 
 #include <memory.h>
@@ -1775,7 +1774,7 @@ KDDW_QCORO_TASK tst_maxSizeHonouredWhenAnotherRemoved()
 
 KDDW_QCORO_TASK tst_simplify()
 {
-    QScopedValueRollback<bool> inhibitSimplify(ItemBoxContainer::s_inhibitSimplify, true);
+    ScopedValueRollback inhibitSimplify(ItemBoxContainer::s_inhibitSimplify, true);
 
     auto root = createRoot();
     auto item1 = createItem();

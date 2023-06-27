@@ -32,9 +32,9 @@
 
 #include "Config.h"
 #include "core/ViewFactory.h"
+#include "core/ScopedValueRollback_p.h"
 
 #include <QTimer>
-#include <QScopedValueRollback>
 
 /**
  * @file
@@ -712,7 +712,7 @@ void DockWidget::Private::toggle(bool enabled)
 {
     if (Core::SideBar *sb = sideBar()) {
         // The widget is in the sidebar, let's toggle its overlayed state
-        QScopedValueRollback<bool> guard(m_removingFromOverlay, true);
+        ScopedValueRollback guard(m_removingFromOverlay, true);
         sb->toggleOverlay(q);
     } else {
         // The most common case. The dock widget is not in the sidebar. just close or open it.
@@ -726,8 +726,8 @@ void DockWidget::Private::toggle(bool enabled)
 
 void DockWidget::Private::updateToggleAction()
 {
-    QScopedValueRollback<bool> recursionGuard(m_updatingToggleAction,
-                                              true); // Guard against recursiveness
+    ScopedValueRollback recursionGuard(m_updatingToggleAction,
+                                       true); // Guard against recursiveness
 
     if ((q->isVisible() || group()) && !toggleAction->isChecked()) {
         toggleAction->setChecked(true);
@@ -741,8 +741,8 @@ void DockWidget::Private::updateFloatAction()
     if (m_willUpdateActions || m_removingFromOverlay)
         return;
 
-    QScopedValueRollback<bool> recursionGuard(m_updatingFloatAction,
-                                              true); // Guard against recursiveness
+    ScopedValueRollback recursionGuard(m_updatingFloatAction,
+                                       true); // Guard against recursiveness
 
     if (q->isFloating()) {
         floatAction->setEnabled(m_lastPosition->isValid());
@@ -759,7 +759,7 @@ void DockWidget::Private::close()
 {
     if (m_inClose)
         return;
-    QScopedValueRollback<bool> guard(m_inClose, true);
+    ScopedValueRollback guard(m_inClose, true);
 
     if (!m_processingToggleAction && !q->isOpen()) {
         q->setParentView(nullptr);
@@ -959,7 +959,7 @@ LayoutSaver::DockWidget::Ptr DockWidget::Private::serialize() const
 
 void DockWidget::Private::forceClose()
 {
-    QScopedValueRollback<bool> rollback(m_isForceClosing, true);
+    ScopedValueRollback rollback(m_isForceClosing, true);
     close();
 }
 
@@ -1053,7 +1053,7 @@ void DockWidget::Private::setIsOpen(bool is)
     if (is == m_isOpen || m_inOpenSetter)
         return;
 
-    QScopedValueRollback<bool> guard(m_inOpenSetter, true);
+    ScopedValueRollback guard(m_inOpenSetter, true);
 
     if (!is)
         close();

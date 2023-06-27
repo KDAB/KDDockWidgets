@@ -22,8 +22,7 @@
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Platform.h"
-
-#include <QScopedValueRollback>
+#include "core/ScopedValueRollback_p.h"
 
 #if defined(Q_OS_WIN)
 #if defined(KDDW_FRONTEND_QTWIDGETS)
@@ -715,7 +714,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
     if (m_shouldUseCustomFrameFunc == nullptr || m_recursionGuard)
         return false;
 
-    QScopedValueRollback<bool> guard(m_recursionGuard, true);
+    ScopedValueRollback guard(m_recursionGuard, true);
 
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     if (m_inDtor || !KDDockWidgets::usesAeroSnapWithCustomDecos())

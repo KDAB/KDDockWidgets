@@ -25,6 +25,7 @@
 #include "core/DropArea.h"
 #include "core/Utils_p.h"
 #include "core/Logging_p.h"
+#include "core/ScopedValueRollback_p.h"
 #include "core/WidgetResizeHandler_p.h"
 #include "core/ViewFactory.h"
 #include "core/LayoutSaver_p.h"
@@ -546,7 +547,7 @@ void MainWindow::moveToSideBar(Core::DockWidget *dw, SideBarLocation location)
         return;
 
     if (Core::SideBar *sb = sideBar(location)) {
-        QScopedValueRollback<bool> rollback(dw->d->m_isMovingToSideBar, true);
+        ScopedValueRollback rollback(dw->d->m_isMovingToSideBar, true);
         dw->forceClose();
         sb->addDockWidget(dw);
     } else {

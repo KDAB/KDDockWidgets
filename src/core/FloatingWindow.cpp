@@ -28,14 +28,13 @@
 #include "core/LayoutSaver_p.h"
 #include "DockWidget_p.h"
 #include "DropArea.h"
-
+#include "core/ScopedValueRollback_p.h"
 #include "core/layouting/Item_p.h"
 #include "View.h"
 #include "core/View_p.h"
 
 #include "kdbindings/signal.h"
 
-#include <QScopedValueRollback>
 #include <QTimer>
 
 #if defined(KDDW_FRONTEND_QT_WINDOWS)
@@ -256,7 +255,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
                                MainWindow *parent)
     : FloatingWindow({}, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
 {
-    QScopedValueRollback<bool> guard(m_disableSetVisible, true);
+    ScopedValueRollback guard(m_disableSetVisible, true);
 
     if (group->hasNestedMDIDockWidgets()) {
         // When using DockWidget::MDINestable, the docked MDI widget is wrapped by a drop area so we
@@ -554,7 +553,7 @@ void FloatingWindow::updateTitleBarVisibility()
     if (m_updatingTitleBarVisibility)
         return; // Break recursion
 
-    QScopedValueRollback<bool> guard(m_updatingTitleBarVisibility, true);
+    ScopedValueRollback guard(m_updatingTitleBarVisibility, true);
     updateTitleAndIcon();
 
     bool visible = true;

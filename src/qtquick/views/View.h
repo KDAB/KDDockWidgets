@@ -19,7 +19,6 @@
 #include <QResizeEvent>
 #include <QQuickItem>
 #include <QQuickWindow>
-#include <QScopedValueRollback>
 #include <QQuickView>
 #include <QScreen>
 
