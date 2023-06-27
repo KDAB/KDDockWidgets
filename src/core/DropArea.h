@@ -144,7 +144,7 @@ public:
 #else
 private:
 #endif
-    Q_DISABLE_COPY(DropArea)
+    KDDW_DELETE_COPY_CTOR(DropArea)
     friend class Core::MainWindow;
     friend class Core::Group;
     friend class Core::FloatingWindow;

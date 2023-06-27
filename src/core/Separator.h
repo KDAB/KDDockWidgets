@@ -12,6 +12,7 @@
 #pragma once
 
 #include "Controller.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include <QVector>
 #include <QPoint>
@@ -62,7 +63,7 @@ public:
 private:
     friend class KDDockWidgets::Config;
 
-    Q_DISABLE_COPY(Separator)
+    KDDW_DELETE_COPY_CTOR(Separator)
     void setLazyPosition(int);
     bool isBeingDragged() const;
     bool usesLazyResize() const;

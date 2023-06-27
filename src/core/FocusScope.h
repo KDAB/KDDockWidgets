@@ -20,6 +20,7 @@
 #define KD_DOCKWIDGETS_FOCUSSCOPE_H
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include <qnamespace.h>
 
@@ -30,7 +31,7 @@ class View;
 ///@brief Allows to implement a similar functionality to QtQuick's FocusScope item, in QtWidgets
 class DOCKS_EXPORT FocusScope
 {
-    Q_DISABLE_COPY(FocusScope)
+    KDDW_DELETE_COPY_CTOR(FocusScope)
 public:
     ///@brief constructor
     explicit FocusScope(View *thisView);

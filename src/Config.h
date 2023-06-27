@@ -391,7 +391,7 @@ public:
     void printDebug();
 
 private:
-    Q_DISABLE_COPY(Config)
+    KDDW_DELETE_COPY_CTOR(Config)
     Config();
     class Private;
     Private *const d;

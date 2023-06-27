@@ -112,7 +112,7 @@ private:
     void setWeakPtr(std::weak_ptr<ViewWrapper> thisPtr);
     flutter::View *const m_wrappedView = nullptr;
     std::weak_ptr<ViewWrapper> m_thisWeakPtr;
-    Q_DISABLE_COPY(ViewWrapper)
+    KDDW_DELETE_COPY_CTOR(ViewWrapper)
 };
 
 } // namespace KDDockWidgets::flutter

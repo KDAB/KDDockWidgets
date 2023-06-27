@@ -13,6 +13,8 @@
 #define KD_DRAGGABLE_P_H
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
+
 #include <QVector>
 #include <QPoint>
 
@@ -116,7 +118,7 @@ public:
 private:
     class Private;
     Private *const d;
-    Q_DISABLE_COPY(Draggable)
+    KDDW_DELETE_COPY_CTOR(Draggable)
 };
 
 }

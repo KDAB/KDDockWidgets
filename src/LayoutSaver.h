@@ -131,7 +131,7 @@ public:
     struct ScreenInfo;
 
 private:
-    Q_DISABLE_COPY(LayoutSaver)
+    KDDW_DELETE_COPY_CTOR(LayoutSaver)
     friend class ::TestDocks;
 
     Private *const d;

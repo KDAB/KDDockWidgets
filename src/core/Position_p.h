@@ -50,7 +50,7 @@ struct ItemRef
     const QMetaObject::Connection connection;
 
 private:
-    Q_DISABLE_COPY(ItemRef)
+    KDDW_DELETE_COPY_CTOR(ItemRef)
 };
 
 
@@ -63,7 +63,7 @@ private:
  */
 class DOCKS_EXPORT_FOR_UNIT_TESTS Position
 {
-    Q_DISABLE_COPY(Position)
+    KDDW_DELETE_COPY_CTOR(Position)
 public:
     typedef std::shared_ptr<Position> Ptr;
     Position() = default;

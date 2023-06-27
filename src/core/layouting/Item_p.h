@@ -617,7 +617,7 @@ struct AtomicSanityChecks
 
     const bool m_oldValue;
     Item *const m_root;
-    Q_DISABLE_COPY(AtomicSanityChecks)
+    KDDW_DELETE_COPY_CTOR(AtomicSanityChecks)
 };
 
 }

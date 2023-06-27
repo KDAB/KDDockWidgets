@@ -91,7 +91,7 @@ private:
     bool m_tabBarAutoHide = true;
     const StackOptions m_options;
 
-    Q_DISABLE_COPY(Stack)
+    KDDW_DELETE_COPY_CTOR(Stack)
 };
 
 }

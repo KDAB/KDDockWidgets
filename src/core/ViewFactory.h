@@ -138,7 +138,7 @@ public:
     static DropIndicatorType s_dropIndicatorType;
 
 private:
-    Q_DISABLE_COPY(ViewFactory)
+    KDDW_DELETE_COPY_CTOR(ViewFactory)
 };
 
 }

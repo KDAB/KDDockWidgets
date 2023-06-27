@@ -77,7 +77,7 @@ public:
 
 protected:
     explicit WindowBeingDragged(Draggable *);
-    Q_DISABLE_COPY(WindowBeingDragged)
+    KDDW_DELETE_COPY_CTOR(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
     View *m_draggableView = nullptr;

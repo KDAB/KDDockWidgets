@@ -433,4 +433,9 @@ Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)
 #define KDDW_CO_RETURN return
 #endif
 
+#define KDDW_DELETE_COPY_CTOR(NAME)         \
+    NAME(const NAME &) = delete;            \
+    NAME(const NAME &&) = delete;           \
+    NAME &operator=(const NAME &) = delete; \
+    NAME &operator=(const NAME &&) = delete;
 #endif

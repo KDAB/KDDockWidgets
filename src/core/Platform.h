@@ -232,7 +232,7 @@ public:
 
     class WarningObserver
     {
-        Q_DISABLE_COPY(WarningObserver)
+        KDDW_DELETE_COPY_CTOR(WarningObserver)
     public:
         WarningObserver() = default;
         virtual ~WarningObserver();
@@ -316,7 +316,7 @@ struct SetExpectedWarning
         Platform::s_expectedWarning.clear();
     }
 
-    Q_DISABLE_COPY(SetExpectedWarning)
+    KDDW_DELETE_COPY_CTOR(SetExpectedWarning)
 };
 
 struct CreateViewOptions

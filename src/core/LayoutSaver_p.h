@@ -309,7 +309,7 @@ public:
     ScreenInfo::List screenInfo;
 
 private:
-    Q_DISABLE_COPY(Layout)
+    KDDW_DELETE_COPY_CTOR(Layout)
 };
 
 class LayoutSaver::Private
@@ -319,7 +319,7 @@ public:
     {
         RAIIIsRestoring();
         ~RAIIIsRestoring();
-        Q_DISABLE_COPY(RAIIIsRestoring)
+        KDDW_DELETE_COPY_CTOR(RAIIIsRestoring)
     };
 
     explicit Private(RestoreOptions options);

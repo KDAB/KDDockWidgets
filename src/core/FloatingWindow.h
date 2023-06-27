@@ -216,7 +216,7 @@ protected:
     WindowState m_lastWindowManagerState = WindowState::None;
 
 private:
-    Q_DISABLE_COPY(FloatingWindow)
+    KDDW_DELETE_COPY_CTOR(FloatingWindow)
     QSize maxSizeHint() const;
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);

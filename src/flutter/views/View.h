@@ -140,7 +140,7 @@ private:
     QRect m_geometry;
     std::optional<bool> m_visible;
     bool m_inCtor = true;
-    Q_DISABLE_COPY(View)
+    KDDW_DELETE_COPY_CTOR(View)
 };
 
 inline View *asView_flutter(Core::View *view)

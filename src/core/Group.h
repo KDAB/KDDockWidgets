@@ -353,7 +353,7 @@ protected:
     Core::TitleBar *const m_titleBar;
 
 private:
-    Q_DISABLE_COPY(Group)
+    KDDW_DELETE_COPY_CTOR(Group)
     friend class ::TestDocks;
     friend class KDDockWidgets::Core::Stack;
 

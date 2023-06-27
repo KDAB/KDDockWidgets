@@ -28,7 +28,7 @@ public:
     void setDocumentMode(bool) override;
 
 private:
-    Q_DISABLE_COPY(Stack)
+    KDDW_DELETE_COPY_CTOR(Stack)
 };
 
 }

@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "KDDockWidgets.h"
+
 #include <QPointer>
 
 namespace KDDockWidgets::Core {
@@ -18,19 +20,22 @@ namespace KDDockWidgets::Core {
 class DelayedCall
 {
 public:
+    DelayedCall() = default;
     virtual ~DelayedCall();
     virtual void call() = 0;
-};
 
+    KDDW_DELETE_COPY_CTOR(DelayedCall)
+};
 
 class DelayedDelete : public DelayedCall
 {
 public:
-    DelayedDelete(QObject *obj);
+    explicit DelayedDelete(QObject *obj);
     ~DelayedDelete() override;
 
     void call() override;
 
+    KDDW_DELETE_COPY_CTOR(DelayedDelete)
 private:
     QPointer<QObject> m_object;
 };

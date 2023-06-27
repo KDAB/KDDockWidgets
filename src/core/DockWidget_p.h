@@ -50,7 +50,7 @@ public:
         }
 
     private:
-        Q_DISABLE_COPY(UpdateActions)
+        KDDW_DELETE_COPY_CTOR(UpdateActions)
         Core::DockWidget *const dw;
     };
 

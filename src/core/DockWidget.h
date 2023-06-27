@@ -522,7 +522,7 @@ public:
     static DockWidget *deserialize(const std::shared_ptr<LayoutSaver::DockWidget> &);
 
 private:
-    Q_DISABLE_COPY(DockWidget)
+    KDDW_DELETE_COPY_CTOR(DockWidget)
 };
 }
 }
