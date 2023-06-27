@@ -324,7 +324,9 @@ FloatingWindow::~FloatingWindow()
     }
 
     disconnect(m_layoutDestroyedConnection);
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     delete m_nchittestFilter;
+#endif
 
     DockRegistry::self()->unregisterFloatingWindow(this);
     delete m_titleBar;

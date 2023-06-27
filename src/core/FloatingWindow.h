@@ -228,9 +228,9 @@ private:
     bool m_inDtor = false;
     bool m_updatingTitleBarVisibility = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
-    QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
     WindowState windowStateOverride() const;
 #ifdef KDDW_FRONTEND_QT_WINDOWS
+    QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
     int m_lastHitTest = 0;
 #endif
 };
