@@ -251,6 +251,16 @@ QVariantMap Item::toVariantMap() const
     return result;
 }
 
+void Item::to_json(nlohmann::json &json)
+{
+    json["sizingInfo"] = m_sizingInfo;
+    json["isVisible"] = m_isVisible;
+    json["isContainer"] = isContainer();
+    json["objectName"] = objectName();
+    if (m_guest)
+        json["guestId"] = m_guest->d->id(); // just for coorelation purposes when restoring
+}
+
 void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View *> &widgets)
 {
     m_sizingInfo.fromVariantMap(map[QStringLiteral("sizingInfo")].toMap());
@@ -3332,6 +3342,14 @@ QVariantMap ItemBoxContainer::toVariantMap() const
     return result;
 }
 
+void ItemBoxContainer::to_json(nlohmann::json &j)
+{
+    Item::to_json(j);
+
+    j["children"] = m_children;
+    j["orientation"] = d->m_orientation;
+}
+
 void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
                                           const QHash<QString, View *> &widgets)
 {
@@ -3604,6 +3622,15 @@ void Core::from_json(const nlohmann::json &j, SizingInfo &info)
     info.maxSizeHint = j["maxSizeHint"];
     info.percentageWithinParent = j["percentageWithinParent"];
     info.isBeingInserted = j["isBeingInserted"];
+}
+
+void Core::to_json(nlohmann::json &j, Item *item)
+{
+    if (!item)
+        return;
+
+    // virtual dispatch
+    item->to_json(j);
 }
 
 int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option) const

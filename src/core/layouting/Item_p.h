@@ -326,6 +326,8 @@ public:
     virtual void dumpLayout(int level = 0);
     virtual void setHostView(KDDockWidgets::Core::View *);
     virtual QVariantMap toVariantMap() const;
+    virtual void to_json(nlohmann::json &);
+
     virtual void fillFromVariantMap(const QVariantMap &map,
                                     const QHash<QString, KDDockWidgets::Core::View *> &widgets);
 
@@ -472,6 +474,7 @@ public:
     QRect suggestedDropRect(const Item *item, const Item *relativeTo,
                             KDDockWidgets::Location) const;
     QVariantMap toVariantMap() const override;
+    void to_json(nlohmann::json &) override;
     void fillFromVariantMap(const QVariantMap &map,
                             const QHash<QString, KDDockWidgets::Core::View *> &widgets) override;
     void clear() override;
@@ -623,6 +626,7 @@ struct AtomicSanityChecks
 
 DOCKS_EXPORT void from_json(const nlohmann::json &, SizingInfo &);
 DOCKS_EXPORT void to_json(nlohmann::json &, const SizingInfo &);
+DOCKS_EXPORT void to_json(nlohmann::json &, Item *);
 
 } // Core
 

@@ -1908,6 +1908,31 @@ KDDW_QCORO_TASK tst_sizingInfoSerialization()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_itemSerialization()
+{
+    auto root = createRoot();
+
+    auto item1 = createItem();
+    root->insertItem(item1, Location_OnRight);
+
+    auto item2 = createItem();
+    root->insertItem(item2, Location_OnRight);
+
+    auto item3 = createItem();
+    ItemBoxContainer::insertItemRelativeTo(item3, item1, Location_OnBottom);
+
+    Item *rootItem = root.get();
+    nlohmann::json json = rootItem;
+
+    CHECK_EQ(json["children"].size(), 2);
+    CHECK(json["isContainer"]);
+    CHECK(json["children"][0]["isContainer"]);
+    CHECK(!json["children"][1]["isContainer"]);
+
+
+    KDDW_TEST_RETURN(true);
+}
+
 static const std::vector<KDDWTest> s_tests = {
     TEST(tst_createRoot),
     TEST(tst_insertOne),
@@ -1962,6 +1987,7 @@ static const std::vector<KDDWTest> s_tests = {
     TEST(tst_adjacentLayoutBorders),
     TEST(tst_numSideBySide_recursive),
     TEST(tst_sizingInfoSerialization),
+    TEST(tst_itemSerialization),
 };
 
 #include "tests_main.h"
