@@ -23,7 +23,10 @@
 #include "core/Logging_p.h"
 
 #include <QScopedValueRollback>
+
+#if KDDW_FRONTEND_QT
 #include <QTimer>
+#endif
 
 #include <algorithm>
 #include <iostream>
@@ -1208,10 +1211,12 @@ bool ItemBoxContainer::checkSanity()
 
 void ItemBoxContainer::Private::scheduleCheckSanity() const
 {
+#if KDDW_FRONTEND_QT
     if (!m_checkSanityScheduled) {
         m_checkSanityScheduled = true;
         QTimer::singleShot(0, q->root(), &ItemBoxContainer::checkSanity);
     }
+#endif
 }
 
 bool ItemBoxContainer::hasOrientation() const
