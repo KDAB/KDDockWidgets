@@ -69,7 +69,7 @@ TabBarBase {
             }
         }
 
-        return -1;
+        return tabBar.currentIndex;
     }
 
     implicitHeight: tabBar.implicitHeight
