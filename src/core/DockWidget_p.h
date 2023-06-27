@@ -19,7 +19,6 @@
 #include "core/View_p.h"
 #include "NonQtCompat_p.h"
 
-#include <QCoreApplication>
 #include <QString>
 #include <QSize>
 
