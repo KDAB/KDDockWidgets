@@ -46,7 +46,7 @@ struct Separator::Private
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2
     // otherwise.
 
-    Private(View *host)
+    explicit Private(View *host)
         : m_hostView(host)
     {
         s_numSeparators++;

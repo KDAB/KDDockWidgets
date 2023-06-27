@@ -49,7 +49,7 @@ class FallbackMouseGrabber : public QObject,
                              public EventFilterInterface /// clazy:exclude=missing-qobject-macro
 {
 public:
-    FallbackMouseGrabber(QObject *parent)
+    explicit FallbackMouseGrabber(QObject *parent)
         : QObject(parent)
     {
     }

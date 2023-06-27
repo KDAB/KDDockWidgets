@@ -31,7 +31,7 @@ using namespace KDDockWidgets::QtWidgets;
 class MDIArea::Private
 {
 public:
-    Private(View *parent)
+    explicit Private(View *parent)
         : layout(new MDILayout(parent))
     {
     }

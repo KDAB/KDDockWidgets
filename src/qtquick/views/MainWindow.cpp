@@ -26,7 +26,7 @@ namespace KDDockWidgets {
 class MainWindow::Private
 {
 public:
-    Private(MainWindow *qq)
+    explicit Private(MainWindow *qq)
         : q(qq)
     {
     }

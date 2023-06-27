@@ -931,7 +931,7 @@ int Item::visibleCount_recursive() const
 
 struct ItemBoxContainer::Private
 {
-    Private(ItemBoxContainer *qq)
+    explicit Private(ItemBoxContainer *qq)
         : q(qq)
     {
     }
@@ -3623,7 +3623,7 @@ int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option
 
 struct ItemContainer::Private
 {
-    Private(ItemContainer *qq)
+    explicit Private(ItemContainer *qq)
         : q(qq)
     {
         ( void )Config::self(); // Ensure Config ctor runs, as it registers qml types

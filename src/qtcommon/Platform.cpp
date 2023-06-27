@@ -32,7 +32,7 @@ using namespace KDDockWidgets::Core;
 class Platform_qt::GlobalEventFilter : public QObject
 {
 public:
-    GlobalEventFilter(Platform_qt *qq)
+    explicit GlobalEventFilter(Platform_qt *qq)
         : q(qq)
     {
         if (qGuiApp) {
