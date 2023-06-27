@@ -1061,8 +1061,10 @@ void DockWidget::Private::setIsOpen(bool is)
     if (is) {
         maybeRestoreToPreviousPosition();
 
+#ifdef KDDW_FRONTEND_QT
         // Transform into a FloatingWindow if this will be a regular floating dock widget.
         QTimer::singleShot(0, this, &DockWidget::Private::maybeMorphIntoFloatingWindow);
+#endif
     }
 
     updateToggleAction();

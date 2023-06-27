@@ -1206,7 +1206,7 @@ bool ItemBoxContainer::checkSanity()
 
 void ItemBoxContainer::Private::scheduleCheckSanity() const
 {
-#if KDDW_FRONTEND_QT
+#ifdef KDDW_FRONTEND_QT
     if (!m_checkSanityScheduled) {
         m_checkSanityScheduled = true;
         QTimer::singleShot(0, q->root(), &ItemBoxContainer::checkSanity);
