@@ -249,9 +249,6 @@ void Item::to_json(nlohmann::json &json) const
 void Item::fillFromJson(const nlohmann::json &j,
                         const QHash<QString, KDDockWidgets::Core::View *> &widgets)
 {
-    if (j.contains("sizingInfo"))
-        j["sizingInfo"].get_to(m_sizingInfo);
-
     m_sizingInfo = j.value("sizingInfo", SizingInfo());
     m_isVisible = j.value("isVisible", false);
     setObjectName(j.value("objectName", QString()));
