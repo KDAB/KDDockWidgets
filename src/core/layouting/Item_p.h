@@ -18,7 +18,6 @@
 #include <QVector>
 #include <QRect>
 #include <QSize>
-#include <QVariant>
 
 #include "kdbindings/signal.h"
 #include "nlohmann/json.hpp"
@@ -91,39 +90,6 @@ inline int pos(QPoint p, Qt::Orientation o)
 inline int length(QSize sz, Qt::Orientation o)
 {
     return o == Qt::Vertical ? sz.height() : sz.width();
-}
-
-inline QVariantMap sizeToMap(QSize sz)
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("width"), sz.width());
-    map.insert(QStringLiteral("height"), sz.height());
-
-    return map;
-}
-
-inline QVariantMap rectToMap(QRect rect)
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("x"), rect.x());
-    map.insert(QStringLiteral("y"), rect.y());
-    map.insert(QStringLiteral("width"), rect.width());
-    map.insert(QStringLiteral("height"), rect.height());
-
-    return map;
-}
-
-inline QSize mapToSize(const QVariantMap &map)
-{
-    return { map.value(QStringLiteral("width")).toInt(),
-             map.value(QStringLiteral("height")).toInt() };
-}
-
-inline QRect mapToRect(const QVariantMap &map)
-{
-    return QRect(map.value(QStringLiteral("x")).toInt(), map.value(QStringLiteral("y")).toInt(),
-                 map.value(QStringLiteral("width")).toInt(),
-                 map.value(QStringLiteral("height")).toInt());
 }
 
 struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
@@ -229,9 +195,6 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
         return availableToGrow(o) >= 0;
     }
 
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &);
-
     typedef QVector<SizingInfo> List;
     QRect geometry;
     QSize minSize;
@@ -325,15 +288,14 @@ public:
     virtual void setGeometry_recursive(QRect rect);
     virtual void dumpLayout(int level = 0);
     virtual void setHostView(KDDockWidgets::Core::View *);
-    virtual QVariantMap toVariantMap() const;
-    virtual void to_json(nlohmann::json &);
+    virtual void to_json(nlohmann::json &) const;
 
-    virtual void fillFromVariantMap(const QVariantMap &map,
-                                    const QHash<QString, KDDockWidgets::Core::View *> &widgets);
+    virtual void fillFromJson(const nlohmann::json &,
+                              const QHash<QString, KDDockWidgets::Core::View *> &);
 
-    static Item *createFromVariantMap(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent,
-                                      const QVariantMap &map,
-                                      const QHash<QString, KDDockWidgets::Core::View *> &widgets);
+    static Item *createFromJson(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent,
+                                const nlohmann::json &,
+                                const QHash<QString, KDDockWidgets::Core::View *> &widgets);
 
     KDBindings::Signal<> geometryChanged;
     KDBindings::Signal<> xChanged;
@@ -473,10 +435,9 @@ public:
     bool hostSupportsHonouringLayoutMinSize() const;
     QRect suggestedDropRect(const Item *item, const Item *relativeTo,
                             KDDockWidgets::Location) const;
-    QVariantMap toVariantMap() const override;
-    void to_json(nlohmann::json &) override;
-    void fillFromVariantMap(const QVariantMap &map,
-                            const QHash<QString, KDDockWidgets::Core::View *> &widgets) override;
+    void to_json(nlohmann::json &) const override;
+    void fillFromJson(const nlohmann::json &,
+                      const QHash<QString, KDDockWidgets::Core::View *> &) override;
     void clear() override;
     Qt::Orientation orientation() const;
     bool isVertical() const;

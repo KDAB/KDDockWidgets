@@ -236,22 +236,7 @@ void Item::updateWidgetGeometries()
     }
 }
 
-QVariantMap Item::toVariantMap() const
-{
-    QVariantMap result;
-
-    result[QStringLiteral("sizingInfo")] = m_sizingInfo.toVariantMap();
-    result[QStringLiteral("isVisible")] = m_isVisible;
-    result[QStringLiteral("isContainer")] = isContainer();
-    result[QStringLiteral("objectName")] = objectName();
-    if (m_guest)
-        result[QStringLiteral("guestId")] =
-            m_guest->d->id(); // just for coorelation purposes when restoring
-
-    return result;
-}
-
-void Item::to_json(nlohmann::json &json)
+void Item::to_json(nlohmann::json &json) const
 {
     json["sizingInfo"] = m_sizingInfo;
     json["isVisible"] = m_isVisible;
@@ -261,13 +246,16 @@ void Item::to_json(nlohmann::json &json)
         json["guestId"] = m_guest->d->id(); // just for coorelation purposes when restoring
 }
 
-void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View *> &widgets)
+void Item::fillFromJson(const nlohmann::json &j,
+                        const QHash<QString, KDDockWidgets::Core::View *> &widgets)
 {
-    m_sizingInfo.fromVariantMap(map[QStringLiteral("sizingInfo")].toMap());
-    m_isVisible = map[QStringLiteral("isVisible")].toBool();
-    setObjectName(map[QStringLiteral("objectName")].toString());
+    if (j.contains("sizingInfo"))
+        j["sizingInfo"].get_to(m_sizingInfo);
 
-    const QString guestId = map.value(QStringLiteral("guestId")).toString();
+    m_sizingInfo = j.value("sizingInfo", SizingInfo());
+    m_isVisible = j.value("isVisible", false);
+    setObjectName(j.value("objectName", QString()));
+    const QString guestId = j.value("guestId", QString());
     if (!guestId.isEmpty()) {
         if (View *guest = widgets.value(guestId)) {
             setGuestView(guest);
@@ -278,11 +266,11 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View 
     }
 }
 
-Item *Item::createFromVariantMap(View *hostWidget, ItemContainer *parent, const QVariantMap &map,
-                                 const QHash<QString, View *> &widgets)
+Item *Item::createFromJson(View *hostWidget, ItemContainer *parent, const nlohmann::json &json,
+                           const QHash<QString, View *> &widgets)
 {
     auto item = new Item(hostWidget, parent);
-    item->fillFromVariantMap(map, widgets);
+    item->fillFromJson(json, widgets);
     return item;
 }
 
@@ -1507,16 +1495,19 @@ QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relative
     if (windowNeedsGrowing)
         return suggestedDropRectFallback(item, relativeTo, loc);
 
-    const QVariantMap rootSerialized = root()->toVariantMap();
+    nlohmann::json rootSerialized;
+    root()->to_json(rootSerialized);
+
     ItemBoxContainer rootCopy(nullptr);
-    rootCopy.fillFromVariantMap(rootSerialized, {});
+    rootCopy.fillFromJson(rootSerialized, {});
 
     if (relativeTo)
         relativeTo = rootCopy.d->itemFromPath(relativeTo->pathFromRoot());
 
-    const QVariantMap itemSerialized = item->toVariantMap();
+    nlohmann::json itemSerialized;
+    item->to_json(itemSerialized);
     auto itemCopy = new Item(nullptr);
-    itemCopy->fillFromVariantMap(itemSerialized, {});
+    itemCopy->fillFromJson(itemSerialized, {});
 
     if (relativeTo) {
         auto r = const_cast<Item *>(relativeTo);
@@ -3326,23 +3317,7 @@ int ItemBoxContainer::maxPosForSeparator_global(KDDockWidgets::Core::Separator *
     return separator->position() + availableToSqueeze;
 }
 
-QVariantMap ItemBoxContainer::toVariantMap() const
-{
-    QVariantMap result = Item::toVariantMap();
-
-    QVariantList childrenV;
-    childrenV.reserve(m_children.size());
-    for (Item *child : qAsConst(m_children)) {
-        childrenV.push_back(child->toVariantMap());
-    }
-
-    result[QStringLiteral("children")] = childrenV;
-    result[QStringLiteral("orientation")] = d->m_orientation;
-
-    return result;
-}
-
-void ItemBoxContainer::to_json(nlohmann::json &j)
+void ItemBoxContainer::to_json(nlohmann::json &j) const
 {
     Item::to_json(j);
 
@@ -3350,22 +3325,25 @@ void ItemBoxContainer::to_json(nlohmann::json &j)
     j["orientation"] = d->m_orientation;
 }
 
-void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
-                                          const QHash<QString, View *> &widgets)
+void ItemBoxContainer::fillFromJson(const nlohmann::json &j,
+                                    const QHash<QString, KDDockWidgets::Core::View *> &widgets)
 {
+    if (!j.is_object()) {
+        KDDW_ERROR("Expected a JSON object");
+        return;
+    }
+
     ScopedValueRollback deserializing(d->m_isDeserializing, true);
+    Item::fillFromJson(j, widgets);
 
-    Item::fillFromVariantMap(map, widgets);
-    const QVariantList childrenV = map[QStringLiteral("children")].toList();
-    d->m_orientation = Qt::Orientation(map[QStringLiteral("orientation")].toInt());
+    d->m_orientation = Qt::Orientation(j.value<Qt::Orientation>("orientation", {}));
 
-    for (const QVariant &childV : childrenV) {
-        const QVariantMap childMap = childV.toMap();
-        const bool isContainer = childMap.value(QStringLiteral("isContainer")).toBool();
-        Item *child =
+    for (const auto &child : j.value("children", nlohmann::json::array())) {
+        const bool isContainer = child.value<bool>("isContainer", {});
+        Item *childItem =
             isContainer ? new ItemBoxContainer(hostView(), this) : new Item(hostView(), this);
-        child->fillFromVariantMap(childMap, widgets);
-        m_children.push_back(child);
+        childItem->fillFromJson(child, widgets);
+        m_children.push_back(childItem);
     }
 
     if (isRoot()) {
@@ -3589,23 +3567,6 @@ void SizingInfo::setOppositeLength(int l, Qt::Orientation o)
     setLength(l, oppositeOrientation(o));
 }
 
-QVariantMap SizingInfo::toVariantMap() const
-{
-    QVariantMap result;
-    result[QStringLiteral("geometry")] = rectToMap(geometry);
-    result[QStringLiteral("minSize")] = sizeToMap(minSize);
-    result[QStringLiteral("maxSize")] = sizeToMap(maxSizeHint);
-    return result;
-}
-
-void SizingInfo::fromVariantMap(const QVariantMap &map)
-{
-    *this = SizingInfo(); // reset any non-important fields to their default
-    geometry = mapToRect(map[QStringLiteral("geometry")].toMap());
-    minSize = mapToSize(map[QStringLiteral("minSize")].toMap());
-    maxSizeHint = mapToSize(map[QStringLiteral("maxSize")].toMap());
-}
-
 void Core::to_json(nlohmann::json &j, const SizingInfo &info)
 {
     j["geometry"] = info.geometry;
@@ -3617,11 +3578,11 @@ void Core::to_json(nlohmann::json &j, const SizingInfo &info)
 
 void Core::from_json(const nlohmann::json &j, SizingInfo &info)
 {
-    info.geometry = j["geometry"];
-    info.minSize = j["minSize"];
-    info.maxSizeHint = j["maxSizeHint"];
-    info.percentageWithinParent = j["percentageWithinParent"];
-    info.isBeingInserted = j["isBeingInserted"];
+    info.geometry = j.value("geometry", QRect());
+    info.minSize = j.value("minSize", QSize());
+    info.maxSizeHint = j.value("maxSizeHint", QSize());
+    info.percentageWithinParent = j.value<double>("percentageWithinParent", {});
+    info.isBeingInserted = j.value<bool>("isBeingInserted", {});
 }
 
 void Core::to_json(nlohmann::json &j, Item *item)

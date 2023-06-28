@@ -139,10 +139,11 @@ void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
         groups[group.id.toStdString()] = group;
     }
 }
+
 void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
 {
     s.groups.clear();
-    s.layout = json.value("layout", QVariantMap());
+    s.layout = json.value("layout", nlohmann::json::object());
     auto it = json.find("frames");
     if (it == json.end())
         return;
@@ -292,7 +293,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::Placeholder &placeHolder
 void to_json(nlohmann::json &json, const QHash<KDDockWidgets::SideBarLocation, QRect> &geometries)
 {
     for (auto it = geometries.cbegin(), end = geometries.cend(); it != end; ++it) {
-        json[QString::number(static_cast<int>(it.key())).toLatin1().data()] = Core::rectToMap(it.value());
+        json[QString::number(static_cast<int>(it.key())).toLatin1().data()] = it.value();
     }
 }
 
@@ -743,10 +744,10 @@ void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
     layout.allDockWidgets = j.value("allDockWidgets", LayoutSaver::DockWidget::List {});
 
     layout.closedDockWidgets.clear();
-    const QVariantList closedDockWidgetsV = j.value("closedDockWidgets", QVariantList {});
-    for (const QVariant &v : closedDockWidgetsV) {
+
+    for (const QString &name : j.value("closedDockWidgets", QStringList())) {
         layout.closedDockWidgets.push_back(
-            LayoutSaver::DockWidget::dockWidgetForName(v.toString()));
+            LayoutSaver::DockWidget::dockWidgetForName(name));
     }
 
     layout.floatingWindows = j.value("floatingWindows", LayoutSaver::FloatingWindow::List {});
@@ -1009,7 +1010,7 @@ void LayoutSaver::MainWindow::scaleSizes()
 
 bool LayoutSaver::MultiSplitter::isValid() const
 {
-    return !layout.isEmpty();
+    return layout.is_object() && !layout.empty();
 }
 
 bool LayoutSaver::MultiSplitter::hasSingleDockWidget() const

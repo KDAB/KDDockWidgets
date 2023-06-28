@@ -287,8 +287,7 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
         groups.insert(group.id, f->view());
     }
 
-    d->m_rootItem->fillFromVariantMap(l.layout, groups);
-
+    d->m_rootItem->fillFromJson(l.layout, groups);
     updateSizeConstraints();
 
     // This qMin() isn't needed for QtWidgets (but harmless), but it's required for QtQuick
@@ -315,7 +314,7 @@ bool Layout::onResize(QSize newSize)
 LayoutSaver::MultiSplitter Layout::serialize() const
 {
     LayoutSaver::MultiSplitter l;
-    l.layout = d->m_rootItem->toVariantMap();
+    d->m_rootItem->to_json(l.layout);
     const Core::Item::List items = d->m_rootItem->items_recursive();
     l.groups.reserve(items.size());
     for (Core::Item *item : items) {

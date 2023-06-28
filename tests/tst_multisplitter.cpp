@@ -37,7 +37,8 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
     if (!root->checkSanity())
         return false;
 
-    const QVariantMap serialized = root->toVariantMap();
+    nlohmann::json serialized;
+    root->to_json(serialized);
     ItemBoxContainer root2(root->hostView());
 
     QHash<QString, View *> widgets;
@@ -46,7 +47,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
         if (auto view = item->guestView())
             widgets.insert(view->d->id(), view);
 
-    root2.fillFromVariantMap(serialized, widgets);
+    root2.fillFromJson(serialized, widgets);
 
     return root2.checkSanity();
 }

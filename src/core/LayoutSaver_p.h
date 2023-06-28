@@ -16,9 +16,9 @@
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/core/Platform.h"
 #include "core/Window.h"
+#include "nlohmann_helpers_p.h"
 
 #include <QRect>
-#include <QVariant>
 
 #include <memory>
 
@@ -140,9 +140,9 @@ private:
     }
 };
 
-inline QVariantList dockWidgetNames(const LayoutSaver::DockWidget::List &list)
+inline QStringList dockWidgetNames(const LayoutSaver::DockWidget::List &list)
 {
-    QVariantList result;
+    QStringList result;
     result.reserve(list.size());
     for (auto &dw : list)
         result.push_back(dw->uniqueName);
@@ -182,7 +182,7 @@ struct LayoutSaver::MultiSplitter
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
     bool skipsRestore() const;
 
-    QVariantMap layout;
+    nlohmann::json layout;
     QHash<QString, LayoutSaver::Group> groups;
 };
 
