@@ -69,17 +69,6 @@ QRect Window::geometry() const
     return m_geometry;
 }
 
-void Window::setProperty(const char *, const QVariant &)
-{
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
-}
-
-QVariant Window::property(const char *) const
-{
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
-    return {};
-}
-
 bool Window::isVisible() const
 {
     return m_isVisible;

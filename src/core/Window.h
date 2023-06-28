@@ -75,9 +75,6 @@ public:
     /// title bar, but can also be done programmatically.
     virtual bool isActive() const = 0;
 
-    virtual void setProperty(const char *name, const QVariant &value) = 0;
-    virtual QVariant property(const char *name) const = 0;
-
     /// @brief Returns the root view of this window
     /// For example, for QtWidgets, this would be the top-level QWidget
     /// represented by this QWindow

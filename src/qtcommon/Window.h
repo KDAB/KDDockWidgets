@@ -36,9 +36,10 @@ public:
     void setVisible(bool) override;
     WId handle() const override;
 
-    // TODOm3: Remove
-    void setProperty(const char *name, const QVariant &value) override;
-    QVariant property(const char *name) const override;
+
+    void setProperty(const char *name, const QVariant &value);
+    QVariant property(const char *name) const;
+
     bool equals(std::shared_ptr<Core::Window> other) const override;
     void setFramePosition(QPoint targetPos) override;
     void resize(int width, int height) override;
