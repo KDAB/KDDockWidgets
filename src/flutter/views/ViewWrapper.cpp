@@ -179,11 +179,6 @@ void ViewWrapper::raise()
     m_wrappedView->raise();
 }
 
-QVariant ViewWrapper::viewProperty(const char *name) const
-{
-    return m_wrappedView->viewProperty(name);
-}
-
 bool ViewWrapper::isRootView() const
 {
     return m_wrappedView->isRootView();

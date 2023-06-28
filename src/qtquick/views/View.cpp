@@ -575,11 +575,6 @@ void View::raise()
     }
 }
 
-QVariant View::viewProperty(const char *name) const
-{
-    return QObject::property(name);
-}
-
 /*static*/ bool View::isRootView(const QQuickItem *item)
 {
     QQuickItem *parent = item->parentItem();

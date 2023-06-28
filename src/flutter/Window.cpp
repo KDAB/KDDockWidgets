@@ -13,8 +13,6 @@
 #include "Window.h"
 #include "core/Logging_p.h"
 
-#include <QVariant>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 

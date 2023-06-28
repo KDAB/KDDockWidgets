@@ -66,6 +66,10 @@ Window::Ptr windowForHandle(WId id)
 }
 #endif
 
+#if defined(KDDW_FRONTEND_QTQUICK)
+#include "qtcommon/View.h"
+#endif
+
 bool WidgetResizeHandler::s_disableAllHandlers = false;
 WidgetResizeHandler::WidgetResizeHandler(EventFilterMode filterMode, WindowMode windowMode,
                                          View *target)
@@ -570,13 +574,16 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
     if (!mTarget)
         return CursorPosition_Undefined;
 
-    if (isMDI()) {
+#ifdef KDDW_FRONTEND_QTQUICK
+    if (Platform::instance()->isQtQuick() && isMDI()) {
         // Special case for QtQuick. The MouseAreas are driving it and know better what's the
         // cursor position
-        const QVariant v = mTarget->viewProperty("cursorPosition");
+        auto qtview = static_cast<KDDockWidgets::QtCommon::View_qt *>(mTarget);
+        const QVariant v = qtview->viewProperty("cursorPosition");
         if (v.isValid())
             return CursorPosition(v.toInt());
     }
+#endif
 
     QPoint pos = mTarget->mapFromGlobal(globalPos);
 

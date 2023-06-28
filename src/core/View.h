@@ -153,9 +153,6 @@ public:
         return false;
     }
 
-    /// Equivalent to Qt's QObject::property()
-    virtual QVariant viewProperty(const char *) const = 0;
-
     /// Equivalent to Qt's QObject::objectProperty()
     virtual void setViewName(const QString &) = 0;
     virtual QString viewName() const = 0;

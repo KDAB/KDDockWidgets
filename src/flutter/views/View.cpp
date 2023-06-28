@@ -284,11 +284,6 @@ void View::raise()
     }
 }
 
-QVariant View::viewProperty(const char *) const
-{
-    return {};
-}
-
 bool View::isRootView() const
 {
     return m_parentView == nullptr;

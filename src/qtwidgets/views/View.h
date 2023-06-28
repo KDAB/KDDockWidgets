@@ -372,11 +372,6 @@ public:
         return QWidget::objectName();
     }
 
-    QVariant viewProperty(const char *name) const override
-    {
-        return QWidget::property(name);
-    }
-
     static QVector<std::shared_ptr<Core::View>> childViewsFor(const QWidget *parent);
 
     QVector<std::shared_ptr<Core::View>> childViews() const override

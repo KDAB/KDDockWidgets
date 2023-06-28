@@ -88,7 +88,6 @@ public:
     void raiseAndActivate() override;
     void activateWindow() override;
     void raise() override;
-    QVariant viewProperty(const char *name) const override;
     static bool isRootView(const QQuickItem *);
     bool isRootView() const override;
     QQuickView *quickView() const;

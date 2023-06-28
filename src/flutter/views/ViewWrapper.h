@@ -56,7 +56,6 @@ public:
     void raiseAndActivate() override;
     void activateWindow() override;
     void raise() override;
-    QVariant viewProperty(const char *name) const override;
     bool isRootView() const override;
     QPoint mapToGlobal(QPoint localPt) const override;
     QPoint mapFromGlobal(QPoint globalPt) const override;

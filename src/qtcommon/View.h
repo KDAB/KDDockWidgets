@@ -50,6 +50,12 @@ public:
     static QQuickItem *asQQuickItem(Core::View *);
 #endif
 
+    /// Equivalent to Qt's QObject::property()
+    virtual QVariant viewProperty(const char *name) const
+    {
+        return m_thisObj->property(name);
+    };
+
 protected:
     class EventFilter;
     EventFilter *const m_eventFilter;
