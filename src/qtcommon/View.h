@@ -54,7 +54,7 @@ public:
     virtual QVariant viewProperty(const char *name) const
     {
         return m_thisObj->property(name);
-    };
+    }
 
 protected:
     class EventFilter;
