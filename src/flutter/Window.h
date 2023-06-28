@@ -31,8 +31,6 @@ public:
 
     void setWindowState(WindowState) override;
     QRect geometry() const override;
-    void setProperty(const char *name, const QVariant &value) override;
-    QVariant property(const char *name) const override;
     bool isVisible() const override;
     Core::WId handle() const override;
     bool equals(std::shared_ptr<Core::Window> other) const override;

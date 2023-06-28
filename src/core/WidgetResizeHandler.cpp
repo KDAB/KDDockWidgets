@@ -31,6 +31,7 @@
 #endif
 
 #if defined(KDDW_FRONTEND_QT)
+#include "kddockwidgets/qtcommon/Window.h"
 #include <QGuiApplication>
 #include <QtGui/private/qhighdpiscaling_p.h>
 #endif
@@ -740,11 +741,12 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
     }
 
     const char *propertyName = "kddw_customframe_setup_ran";
-    const bool setupRan = window->property(propertyName).toBool();
+    auto windowQt = static_cast<QtCommon::Window *>(window.get());
+    const bool setupRan = windowQt->property(propertyName).toBool();
     if (!setupRan) {
         // Add drop shadow
         WidgetResizeHandler::setupWindow(window);
-        window->setProperty(propertyName, true);
+        windowQt->setProperty(propertyName, true);
     }
 
     return WidgetResizeHandler::handleWindowsNativeEvent(window, msg, result, features);

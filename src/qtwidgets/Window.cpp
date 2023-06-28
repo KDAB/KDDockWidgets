@@ -44,7 +44,7 @@ std::shared_ptr<Core::View> Window::rootView() const
     if (!m_window)
         return {};
 
-    if (QWidget *widget = m_window->property("kddockwidgets_qwidget").value<QWidget *>())
+    if (auto widget = m_window->property("kddockwidgets_qwidget").value<QWidget *>())
         return QtWidgets::ViewWrapper::create(widget);
 
     qWarning() << Q_FUNC_INFO << "Window does not have a root";
