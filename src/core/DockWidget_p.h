@@ -202,6 +202,7 @@ public:
     bool m_inOpenSetter = false;
     bool m_inClose = false;
     bool m_removingFromOverlay = false;
+    bool m_wasRestored = false;
     QSize m_lastOverlayedSize = QSize(0, 0);
     int m_userType = 0;
     bool m_willUpdateActions = false;

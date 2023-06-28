@@ -889,7 +889,7 @@ Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &sa
     if (dw) {
         if (auto guest = dw->guestView())
             guest->setVisible(true);
-        dw->setProperty("kddockwidget_was_restored", true);
+        dw->d->m_wasRestored = true;
 
         if (dw->affinities() != saved->affinities) {
             KDDW_ERROR("Affinity name changed from {} to {}", dw->affinities(), "; to", saved->affinities);
