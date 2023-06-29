@@ -22,6 +22,7 @@
 #include "views/TitleBarViewInterface.h"
 #include "core/DockWidget_p.h"
 #include "core/FloatingWindow.h"
+#include "core/FloatingWindow_p.h"
 #include "core/TabBar.h"
 #include "core/MainWindow.h"
 #include "core/MDILayout.h"
@@ -69,16 +70,11 @@ TitleBar::TitleBar(FloatingWindow *parent)
     , m_isStandalone(false)
 {
     init();
-    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
-    connect(m_floatingWindow, &FloatingWindow::numDockWidgetsChanged, this, [this] {
-        d->numDockWidgetsChanged.emit();
-    });
-    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this,
-            &TitleBar::updateMaximizeButton);
-
-    connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, [this] {
-        d->isFocusedChanged.emit();
-    });
+    auto fwPrivate = m_floatingWindow->dptr();
+    fwPrivate->numFramesChanged.connect([this] { updateButtons(); });
+    fwPrivate->numDockWidgetsChanged.connect([this] { d->numDockWidgetsChanged.emit(); });
+    fwPrivate->windowStateChanged.connect([this] { updateMaximizeButton(); });
+    fwPrivate->activatedChanged.connect([this] { d->isFocusedChanged.emit(); });
 }
 
 TitleBar::TitleBar(Core::View *view)

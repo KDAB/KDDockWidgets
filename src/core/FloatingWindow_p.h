@@ -68,7 +68,13 @@ public:
     {
     }
 
+    KDBindings::Signal<> activatedChanged;
+    KDBindings::Signal<> numFramesChanged;
+    KDBindings::Signal<> numDockWidgetsChanged;
+    KDBindings::Signal<> windowStateChanged;
+
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
+
     const FloatingWindowFlags m_flags;
 };
 

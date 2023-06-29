@@ -200,14 +200,10 @@ public:
     /// Returns the per-floating window flags
     FloatingWindowFlags floatingWindowFlags() const;
 
-Q_SIGNALS:
-    void activatedChanged();
-    void numFramesChanged();
-    void numDockWidgetsChanged();
-    void windowStateChanged();
+    class Private;
+    Private *dptr() const;
 
 private:
-    class Private;
     Private *const d;
 
 protected:

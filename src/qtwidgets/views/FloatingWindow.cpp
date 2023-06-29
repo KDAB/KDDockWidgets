@@ -10,6 +10,7 @@
 */
 
 #include "FloatingWindow.h"
+#include "core/FloatingWindow_p.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/TitleBar.h"
@@ -114,7 +115,7 @@ bool FloatingWindow::event(QEvent *ev)
         QWidget::windowHandle()->installEventFilter(this);
     } else if (ev->type() == QEvent::ActivationChange) {
         // Since QWidget is missing a signal for window activation
-        Q_EMIT d->m_controller->activatedChanged();
+        d->m_controller->dptr()->activatedChanged.emit();
     } else if (ev->type() == QEvent::StatusTip && QWidget::parent()) {
         // show status tips in the main window
         return QWidget::parent()->event(ev); // TODOm3: Move to base class
@@ -156,7 +157,7 @@ bool FloatingWindow::eventFilter(QObject *, QEvent *ev)
         // the state has actually changed See also QTBUG-102430
         if (ev->spontaneous()) {
             d->m_controller->setLastWindowManagerState(WindowState(windowHandle()->windowState()));
-            Q_EMIT d->m_controller->windowStateChanged();
+            d->m_controller->dptr()->windowStateChanged.emit();
         }
     }
 

@@ -183,7 +183,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     d->m_visibleWidgetCountConnection =
         m_dropArea->d_ptr()->visibleWidgetCountChanged.connect([this](int count) {
             onFrameCountChanged(count);
-            numFramesChanged();
+            d->numFramesChanged.emit();
             onVisibleFrameCountChanged(count);
         });
 
@@ -194,7 +194,9 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     m_layoutDestroyedConnection =
         connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 
-    connect(this, &FloatingWindow::numFramesChanged, this, &FloatingWindow::numDockWidgetsChanged);
+    d->numFramesChanged.connect([this] {
+        d->numDockWidgetsChanged.emit();
+    });
 }
 
 FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
@@ -573,7 +575,7 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
             view()->showNormal();
         }
 
-        Q_EMIT numDockWidgetsChanged();
+        d->numDockWidgetsChanged.emit();
         return true;
     }
 
@@ -768,4 +770,9 @@ bool FloatingWindow::isUtilityWindow() const
 FloatingWindowFlags FloatingWindow::floatingWindowFlags() const
 {
     return d->m_flags;
+}
+
+FloatingWindow::Private *FloatingWindow::dptr() const
+{
+    return d;
 }

@@ -17,6 +17,7 @@
 #include "Controller.h"
 #include "View.h"
 #include "Layout_p.h"
+#include "FloatingWindow_p.h"
 #include "ScopedValueRollback_p.h"
 #include "Platform.h"
 #include "views/GroupViewInterface.h"
@@ -394,7 +395,7 @@ void Group::onDockWidgetCountChanged()
             dock->d->updateFloatAction();
 
         if (auto fw = floatingWindow()) {
-            Q_EMIT fw->numDockWidgetsChanged();
+            fw->dptr()->numDockWidgetsChanged.emit();
         }
     }
 
