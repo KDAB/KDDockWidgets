@@ -21,11 +21,11 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/LayoutSaver.h"
 
-#include <QHash>
 #include <QPointer>
 #include <QRect>
 
 #include <memory>
+#include <unordered_map>
 
 namespace KDDockWidgets {
 
@@ -151,7 +151,8 @@ public:
 
     QRect lastOverlayedGeometry(SideBarLocation loc) const
     {
-        return m_lastOverlayedGeometries.value(loc);
+        auto it = m_lastOverlayedGeometries.find(loc);
+        return it == m_lastOverlayedGeometries.cend() ? QRect() : it->second;
     }
 
     void setLastOverlayedGeometry(SideBarLocation loc, QRect rect)
@@ -164,7 +165,7 @@ private:
     // setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
     QRect m_lastFloatingGeometry;
-    QHash<SideBarLocation, QRect> m_lastOverlayedGeometries;
+    std::unordered_map<SideBarLocation, QRect> m_lastOverlayedGeometries;
     bool m_clearing = false; // to prevent re-entrancy
 };
 

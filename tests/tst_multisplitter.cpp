@@ -41,11 +41,11 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
     root->to_json(serialized);
     ItemBoxContainer root2(root->hostView());
 
-    QHash<QString, View *> widgets;
+    std::unordered_map<QString, View *> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
         if (auto view = item->guestView())
-            widgets.insert(view->d->id(), view);
+            widgets[view->d->id()] = view;
 
     root2.fillFromJson(serialized, widgets);
 

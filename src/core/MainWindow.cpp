@@ -36,6 +36,7 @@
 #include "core/SideBar.h"
 #include "kddockwidgets/core/views/MainWindowViewInterface.h"
 
+#include <unordered_map>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -63,7 +64,7 @@ public:
         if (m_supportsAutoHide) {
             for (auto location : { SideBarLocation::North, SideBarLocation::East,
                                    SideBarLocation::West, SideBarLocation::South }) {
-                m_sideBars.insert(location, new Core::SideBar(location, q));
+                m_sideBars[location] = new Core::SideBar(location, q);
             }
         }
     }
@@ -126,7 +127,7 @@ public:
     const MainWindowOptions m_options;
     MainWindow *const q;
     QPointer<Core::DockWidget> m_overlayedDockWidget;
-    QHash<SideBarLocation, Core::SideBar *> m_sideBars;
+    std::unordered_map<SideBarLocation, Core::SideBar *> m_sideBars;
     Layout *m_layout = nullptr;
     Core::DockWidget *m_persistentCentralDockWidget = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
@@ -758,7 +759,7 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         if (!sb)
             continue;
 
-        const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
+        const QStringList dockWidgets = mw.dockWidgetsForSideBar(loc);
         for (const QString &uniqueName : dockWidgets) {
 
             Core::DockWidget *dw = DockRegistry::self()->dockByName(
@@ -801,7 +802,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
         if (Core::SideBar *sb = sideBar(loc)) {
             const QStringList dockwidgets = sb->serialize();
             if (!dockwidgets.isEmpty())
-                m.dockWidgetsPerSideBar.insert(loc, dockwidgets);
+                m.dockWidgetsPerSideBar[loc] = dockwidgets;
         }
     }
 
@@ -845,7 +846,8 @@ QMargins MainWindow::centerWidgetMargins() const
 
 Core::SideBar *MainWindow::sideBar(SideBarLocation loc) const
 {
-    return d->m_sideBars.value(loc);
+    auto it = d->m_sideBars.find(loc);
+    return it == d->m_sideBars.cend() ? nullptr : it->second;
 }
 
 QRect MainWindow::centralAreaGeometry() const

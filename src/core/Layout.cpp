@@ -28,6 +28,8 @@
 
 #include "core/layouting/Item_p.h"
 
+#include <unordered_map>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
@@ -280,11 +282,12 @@ void Layout::updateSizeConstraints()
 
 bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 {
-    QHash<QString, View *> groups;
-    for (const LayoutSaver::Group &group : qAsConst(l.groups)) {
+    std::unordered_map<QString, View *> groups;
+    for (auto it : l.groups) {
+        const LayoutSaver::Group &group = it.second;
         Core::Group *f = Core::Group::deserialize(group);
         Q_ASSERT(!group.id.isEmpty());
-        groups.insert(group.id, f->view());
+        groups[group.id] = f->view();
     }
 
     d->m_rootItem->fillFromJson(l.layout, groups);
@@ -316,11 +319,11 @@ LayoutSaver::MultiSplitter Layout::serialize() const
     LayoutSaver::MultiSplitter l;
     d->m_rootItem->to_json(l.layout);
     const Core::Item::List items = d->m_rootItem->items_recursive();
-    l.groups.reserve(items.size());
+    l.groups.reserve(size_t(items.size()));
     for (Core::Item *item : items) {
         if (!item->isContainer()) {
             if (auto group = item->asGroupController()) {
-                l.groups.insert(group->view()->d->id(), group->serialize());
+                l.groups[group->view()->d->id()] = group->serialize();
             }
         }
     }

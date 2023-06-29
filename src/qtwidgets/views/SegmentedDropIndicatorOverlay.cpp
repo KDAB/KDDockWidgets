@@ -39,12 +39,15 @@ void SegmentedDropIndicatorOverlay::paintEvent(QPaintEvent *)
 
 void SegmentedDropIndicatorOverlay::drawSegments(QPainter *p)
 {
-    const QHash<DropLocation, QPolygon> segments = m_controller->segments();
+    const std::unordered_map<DropLocation, QPolygon> &segments = m_controller->segments();
     for (DropLocation loc :
          { DropLocation_Left, DropLocation_Top, DropLocation_Right, DropLocation_Bottom,
            DropLocation_Center, DropLocation_OutterLeft, DropLocation_OutterTop,
-           DropLocation_OutterRight, DropLocation_OutterBottom })
-        drawSegment(p, segments.value(loc));
+           DropLocation_OutterRight, DropLocation_OutterBottom }) {
+        auto it = segments.find(loc);
+        const Polygon segment = it == segments.cend() ? Polygon() : it->second;
+        drawSegment(p, segment);
+    }
 }
 
 void SegmentedDropIndicatorOverlay::drawSegment(QPainter *p, const QPolygon &segment)

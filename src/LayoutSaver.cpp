@@ -62,7 +62,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
+std::unordered_map<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
 
 
@@ -135,7 +135,8 @@ void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
 {
     json["layout"] = s.layout;
     auto &groups = json["frames"];
-    for (const auto &group : qAsConst(s.groups)) {
+    for (auto it : s.groups) {
+        const auto &group = it.second;
         groups[group.id.toStdString()] = group;
     }
 }
@@ -157,7 +158,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
     for (const auto &kv : frms.items()) {
         QString key = QString::fromStdString(kv.key());
         auto group = kv.value().get<LayoutSaver::Group>();
-        s.groups.insert(key, group);
+        s.groups[key] = group;
     }
 }
 
@@ -176,7 +177,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
                                  SideBarLocation::West, SideBarLocation::South }) {
-        const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
+        const QStringList dockWidgets = mw.dockWidgetsForSideBar(loc);
         if (!dockWidgets.isEmpty()) {
             std::string key = std::string("sidebar-") + std::to_string(( int )loc);
             json[key] = dockWidgets;
@@ -290,27 +291,6 @@ void from_json(const nlohmann::json &json, LayoutSaver::Placeholder &placeHolder
     placeHolder.mainWindowUniqueName = json.value("mainWindowUniqueName", QString());
 }
 
-void to_json(nlohmann::json &json, const QHash<KDDockWidgets::SideBarLocation, QRect> &geometries)
-{
-    for (auto it = geometries.cbegin(), end = geometries.cend(); it != end; ++it) {
-        json[QString::number(static_cast<int>(it.key())).toLatin1().data()] = it.value();
-    }
-}
-
-void from_json(const nlohmann::json &json, QHash<KDDockWidgets::SideBarLocation, QRect> &geometries)
-{
-    const int numKeys = int(SideBarLocation::Last);
-    const char *keys[numKeys] = { "0", "1", "2", "3", "4" };
-
-    for (int i = 0; i < numKeys; ++i) {
-        auto location = KDDockWidgets::SideBarLocation(i);
-        if (json.contains(keys[i])) {
-            const QRect rect = json.value(keys[i], QRect());
-            geometries.insert(location, rect);
-        }
-    }
-}
-
 void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
 {
     json["lastFloatingGeometry"] = pos.lastFloatingGeometry;
@@ -323,7 +303,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
 void from_json(const nlohmann::json &json, LayoutSaver::Position &pos)
 {
     pos.lastFloatingGeometry = json.value("lastFloatingGeometry", QRect());
-    pos.lastOverlayedGeometries = json.value("lastOverlayedGeometries", QHash<KDDockWidgets::SideBarLocation, QRect>());
+    pos.lastOverlayedGeometries = json.value("lastOverlayedGeometries", std::unordered_map<KDDockWidgets::SideBarLocation, QRect>());
     pos.tabIndex = json.value("tabIndex", 0);
     pos.wasFloating = json.value("wasFloating", false);
     pos.placeholders = json.value("placeholders", LayoutSaver::Placeholder::List());
@@ -997,6 +977,12 @@ bool LayoutSaver::MainWindow::isValid() const
     return multiSplitterLayout.isValid();
 }
 
+QStringList LayoutSaver::MainWindow::dockWidgetsForSideBar(SideBarLocation loc) const
+{
+    auto it = dockWidgetsPerSideBar.find(loc);
+    return it == dockWidgetsPerSideBar.cend() ? QStringList() : it->second;
+}
+
 void LayoutSaver::MainWindow::scaleSizes()
 {
     if (scalingInfo.isValid()) {
@@ -1015,7 +1001,7 @@ bool LayoutSaver::MultiSplitter::isValid() const
 
 bool LayoutSaver::MultiSplitter::hasSingleDockWidget() const
 {
-    return groups.size() == 1 && groups.cbegin()->hasSingleDockWidget();
+    return groups.size() == 1 && groups.cbegin()->second.hasSingleDockWidget();
 }
 
 LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() const
@@ -1023,13 +1009,14 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() cons
     if (!hasSingleDockWidget())
         return {};
 
-    return groups.cbegin()->singleDockWidget();
+    auto group = groups.begin()->second;
+    return group.singleDockWidget();
 }
 
 bool LayoutSaver::MultiSplitter::skipsRestore() const
 {
     return std::all_of(groups.cbegin(), groups.cend(),
-                       [](const LayoutSaver::Group &group) { return group.skipsRestore(); });
+                       [](auto it) { return it.second.skipsRestore(); });
 }
 
 void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)

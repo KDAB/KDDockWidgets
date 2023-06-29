@@ -20,7 +20,7 @@
 #include <QVector>
 #include <QObject>
 #include <QPointer>
-#include <QHash>
+#include <unordered_map>
 
 #include <memory>
 
@@ -270,7 +270,7 @@ private:
     /// attempt to call a user provided factory function. That function can however return a dock
     /// widget with another ID, such as "bar". When that happens this QHash gets a "foo" : "bar"
     /// entry
-    mutable QHash<QString, QString> m_dockWidgetIdRemapping;
+    mutable std::unordered_map<QString, QString> m_dockWidgetIdRemapping;
 };
 
 }

@@ -23,6 +23,7 @@
 #include "nlohmann/json.hpp"
 
 #include <memory>
+#include <unordered_map>
 
 class TestMultiSplitter;
 
@@ -291,11 +292,11 @@ public:
     virtual void to_json(nlohmann::json &) const;
 
     virtual void fillFromJson(const nlohmann::json &,
-                              const QHash<QString, KDDockWidgets::Core::View *> &);
+                              const std::unordered_map<QString, KDDockWidgets::Core::View *> &);
 
     static Item *createFromJson(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent,
                                 const nlohmann::json &,
-                                const QHash<QString, KDDockWidgets::Core::View *> &widgets);
+                                const std::unordered_map<QString, KDDockWidgets::Core::View *> &);
 
     KDBindings::Signal<> geometryChanged;
     KDBindings::Signal<> xChanged;
@@ -437,7 +438,7 @@ public:
                             KDDockWidgets::Location) const;
     void to_json(nlohmann::json &) const override;
     void fillFromJson(const nlohmann::json &,
-                      const QHash<QString, KDDockWidgets::Core::View *> &) override;
+                      const std::unordered_map<QString, KDDockWidgets::Core::View *> &) override;
     void clear() override;
     Qt::Orientation orientation() const;
     bool isVertical() const;

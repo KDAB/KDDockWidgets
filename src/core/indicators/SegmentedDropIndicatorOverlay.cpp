@@ -51,16 +51,16 @@ DropLocation SegmentedDropIndicatorOverlay::hover_impl(QPoint pt)
 DropLocation SegmentedDropIndicatorOverlay::dropLocationForPos(QPoint pos) const
 {
     for (auto it = m_segments.cbegin(), end = m_segments.cend(); it != end; ++it) {
-        if (it.value().containsPoint(pos, Qt::OddEvenFill)) {
-            return it.key();
+        if (it->second.containsPoint(pos, Qt::OddEvenFill)) {
+            return it->first;
         }
     }
 
     return DropLocation_None;
 }
 
-QHash<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segmentsForRect(QRect r, bool inner,
-                                                                            bool useOffset) const
+std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segmentsForRect(QRect r, bool inner,
+                                                                                         bool useOffset) const
 {
     const int halfPenWidth = s_segmentPenWidth / 2;
 
@@ -135,18 +135,22 @@ void SegmentedDropIndicatorOverlay::updateSegments()
     for (auto indicator : { DropLocation_OutterLeft, DropLocation_OutterRight,
                             DropLocation_OutterTop, DropLocation_OutterBottom }) {
         if (dropIndicatorVisible(indicator)) {
-            m_segments.insert(indicator, outterSegments.value(indicator));
+            auto it = outterSegments.find(indicator);
+            const Polygon segment = it == outterSegments.cend() ? Polygon() : it->second;
+            m_segments[indicator] = segment;
         }
     }
 
-    const bool hasOutter = !m_segments.isEmpty();
+    const bool hasOutter = !m_segments.empty();
     const bool useOffset = hasOutter;
     const auto innerSegments = segmentsForRect(hoveredGroupRect(), /*inner=*/true, useOffset);
 
     for (auto indicator : { DropLocation_Left, DropLocation_Top, DropLocation_Right,
                             DropLocation_Bottom, DropLocation_Center }) {
         if (dropIndicatorVisible(indicator)) {
-            m_segments.insert(indicator, innerSegments.value(indicator));
+            auto it = innerSegments.find(indicator);
+            const Polygon segment = it == innerSegments.cend() ? Polygon() : it->second;
+            m_segments[indicator] = segment;
         }
     }
 
@@ -164,7 +168,7 @@ QPoint SegmentedDropIndicatorOverlay::hoveredPt() const
     return m_hoveredPt;
 }
 
-QHash<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segments() const
+const std::unordered_map<DropLocation, Polygon> &SegmentedDropIndicatorOverlay::segments() const
 {
     return m_segments;
 }

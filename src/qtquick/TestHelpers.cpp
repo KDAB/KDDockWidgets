@@ -16,6 +16,7 @@
 #include "kddockwidgets/core/MainWindow.h"
 #include "Helpers_p.h"
 #include "core/View_p.h"
+#include "core/Logging_p.h"
 
 #include <QGuiApplication>
 #include <QQmlEngine>

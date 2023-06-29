@@ -400,7 +400,8 @@ Core::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags 
 
     if (flags.testFlag(DockByNameFlag::ConsultRemapping)) {
         // Name doesn't exist, let's check if it was remapped during a layout restore.
-        const QString newName = m_dockWidgetIdRemapping.value(name);
+        auto it = m_dockWidgetIdRemapping.find(name);
+        const QString newName = it == m_dockWidgetIdRemapping.cend() ? QString() : it->second;
         if (!newName.isEmpty())
             return dockByName(newName);
     }
@@ -413,7 +414,7 @@ Core::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags 
                 // Very special case
                 // The user's factory function returned a dock widget with a different ID.
                 // We support it. Save the mapping though.
-                m_dockWidgetIdRemapping.insert(name, dw->uniqueName());
+                m_dockWidgetIdRemapping[name] = dw->uniqueName();
             }
             return dw;
         } else {

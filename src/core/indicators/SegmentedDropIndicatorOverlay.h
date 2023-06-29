@@ -15,7 +15,7 @@
 #include <kddockwidgets/NonQtCompat_p.h>
 #include <kddockwidgets/core/DropIndicatorOverlay.h>
 
-#include <QHash>
+#include <unordered_map>
 
 namespace KDDockWidgets {
 
@@ -31,7 +31,7 @@ public:
 
     DropLocation dropLocationForPos(QPoint pos) const;
     QPoint hoveredPt() const;
-    QHash<DropLocation, Polygon> segments() const;
+    const std::unordered_map<DropLocation, Polygon> &segments() const;
 
     static int s_segmentGirth;
     static int s_segmentPenWidth;
@@ -43,10 +43,10 @@ protected:
     QPoint posForIndicator(DropLocation) const override;
 
 private:
-    QHash<DropLocation, Polygon> segmentsForRect(QRect, bool inner, bool useOffset = false) const;
+    std::unordered_map<DropLocation, Polygon> segmentsForRect(QRect, bool inner, bool useOffset = false) const;
     void updateSegments();
     QPoint m_hoveredPt = {};
-    QHash<DropLocation, Polygon> m_segments;
+    std::unordered_map<DropLocation, Polygon> m_segments;
 };
 
 }

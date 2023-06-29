@@ -21,6 +21,7 @@
 #include <QRect>
 
 #include <memory>
+#include <unordered_map>
 
 /**
  * Bump whenever the format changes, so we can still load old layouts.
@@ -95,7 +96,7 @@ struct LayoutSaver::Position
     int tabIndex;
     bool wasFloating;
     LayoutSaver::Placeholder::List placeholders;
-    QHash<SideBarLocation, QRect> lastOverlayedGeometries;
+    std::unordered_map<SideBarLocation, QRect> lastOverlayedGeometries;
 
     /// Iterates through the layout and patches all absolute sizes. See
     /// RestoreOption_RelativeToMainWindow.
@@ -107,7 +108,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     // Using shared ptr, as we need to modify shared instances
     typedef std::shared_ptr<LayoutSaver::DockWidget> Ptr;
     typedef QVector<Ptr> List;
-    static QHash<QString, Ptr> s_dockWidgets;
+    static std::unordered_map<QString, Ptr> s_dockWidgets;
 
     bool isValid() const;
 
@@ -117,12 +118,13 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 
     static Ptr dockWidgetForName(const QString &name)
     {
-        auto dw = s_dockWidgets.value(name);
+        auto it = s_dockWidgets.find(name);
+        auto dw = it == s_dockWidgets.cend() ? nullptr : it->second;
         if (dw)
             return dw;
 
         dw = Ptr(new LayoutSaver::DockWidget);
-        s_dockWidgets.insert(name, dw);
+        s_dockWidgets[name] = dw;
         dw->uniqueName = name;
 
         return dw;
@@ -183,7 +185,7 @@ struct LayoutSaver::MultiSplitter
     bool skipsRestore() const;
 
     nlohmann::json layout;
-    QHash<QString, LayoutSaver::Group> groups;
+    std::unordered_map<QString, LayoutSaver::Group> groups;
 };
 
 struct LayoutSaver::FloatingWindow
@@ -226,7 +228,9 @@ public:
     /// RestoreOption_RelativeToMainWindow.
     void scaleSizes();
 
-    QHash<SideBarLocation, QStringList> dockWidgetsPerSideBar;
+    QStringList dockWidgetsForSideBar(SideBarLocation) const;
+
+    std::unordered_map<SideBarLocation, QStringList> dockWidgetsPerSideBar;
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitter multiSplitterLayout;
     QString uniqueName;

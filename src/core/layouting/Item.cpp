@@ -247,24 +247,26 @@ void Item::to_json(nlohmann::json &json) const
 }
 
 void Item::fillFromJson(const nlohmann::json &j,
-                        const QHash<QString, KDDockWidgets::Core::View *> &widgets)
+                        const std::unordered_map<QString, KDDockWidgets::Core::View *> &widgets)
 {
     m_sizingInfo = j.value("sizingInfo", SizingInfo());
     m_isVisible = j.value("isVisible", false);
     setObjectName(j.value("objectName", QString()));
     const QString guestId = j.value("guestId", QString());
     if (!guestId.isEmpty()) {
-        if (View *guest = widgets.value(guestId)) {
-            setGuestView(guest);
+        auto it = widgets.find(guestId);
+        if (it != widgets.cend()) {
+            setGuestView(it->second);
             m_guest->controller()->setParentView(hostView());
         } else if (hostView()) {
             KDDW_ERROR("Couldn't find group to restore for item={}", ( void * )this);
+            Q_ASSERT(false);
         }
     }
 }
 
 Item *Item::createFromJson(View *hostWidget, ItemContainer *parent, const nlohmann::json &json,
-                           const QHash<QString, View *> &widgets)
+                           const std::unordered_map<QString, View *> &widgets)
 {
     auto item = new Item(hostWidget, parent);
     item->fillFromJson(json, widgets);
@@ -3323,7 +3325,7 @@ void ItemBoxContainer::to_json(nlohmann::json &j) const
 }
 
 void ItemBoxContainer::fillFromJson(const nlohmann::json &j,
-                                    const QHash<QString, KDDockWidgets::Core::View *> &widgets)
+                                    const std::unordered_map<QString, KDDockWidgets::Core::View *> &widgets)
 {
     if (!j.is_object()) {
         KDDW_ERROR("Expected a JSON object");
@@ -3376,11 +3378,11 @@ bool ItemBoxContainer::test_suggestedRect()
         if (auto c = relativeTo->asBoxContainer()) {
             c->test_suggestedRect();
         } else {
-            QHash<Location, QRect> rects;
+            std::unordered_map<Location, QRect> rects;
             for (Location loc :
                  { Location_OnTop, Location_OnLeft, Location_OnRight, Location_OnBottom }) {
                 const QRect rect = suggestedDropRect(itemToDrop, relativeTo, loc);
-                rects.insert(loc, rect);
+                rects[loc] = rect;
                 if (rect.isEmpty()) {
                     KDDW_ERROR("Empty rect");
                     return false;
@@ -3390,8 +3392,14 @@ bool ItemBoxContainer::test_suggestedRect()
                     return false;
                 }
             }
-            if (rects.value(Location_OnBottom).y() <= rects.value(Location_OnTop).y()
-                || rects.value(Location_OnRight).x() <= rects.value(Location_OnLeft).x()) {
+
+            auto rectFor = [&rects](Location loc) -> QRect {
+                auto it = rects.find(loc);
+                return it == rects.cend() ? QRect() : it->second;
+            };
+
+            if (rectFor(Location_OnBottom).y() <= rectFor(Location_OnTop).y()
+                || rectFor(Location_OnRight).x() <= rectFor(Location_OnLeft).x()) {
                 root()->dumpLayout();
                 KDDW_ERROR("Invalid suggested rects. this={}, relativeTo={}", ( void * )this, ( void * )relativeTo);
                 return false;
