@@ -17,6 +17,7 @@
 #include "core/DropArea.h"
 #include "core/Group.h"
 #include "core/Logging_p.h"
+#include "core/DropIndicatorOverlay_p.h"
 
 #include "core/DragController_p.h"
 #include "DockRegistry.h"
@@ -26,6 +27,7 @@ using namespace KDDockWidgets::Core;
 
 DropIndicatorOverlay::DropIndicatorOverlay(DropArea *dropArea, View *view)
     : Controller(ViewType::DropAreaIndicatorOverlay, view)
+    , d(new Private())
     , m_dropArea(dropArea)
 {
     setVisible(false);
@@ -54,7 +56,10 @@ DropIndicatorOverlay::DropIndicatorOverlay(Core::DropArea *dropArea)
 {
 }
 
-DropIndicatorOverlay::~DropIndicatorOverlay() = default;
+DropIndicatorOverlay::~DropIndicatorOverlay()
+{
+    delete d;
+}
 
 void DropIndicatorOverlay::setWindowBeingDragged(bool is)
 {
@@ -96,7 +101,7 @@ void DropIndicatorOverlay::setHoveredGroup(Core::Group *group)
     }
 
     updateVisibility();
-    Q_EMIT hoveredGroupChanged(m_hoveredGroup);
+    d->hoveredGroupChanged.emit(m_hoveredGroup);
     onHoveredGroupChanged(m_hoveredGroup);
 }
 
@@ -199,6 +204,11 @@ void DropIndicatorOverlay::onGroupDestroyed()
     setHoveredGroup(nullptr);
 }
 
+DropIndicatorOverlay::Private *DropIndicatorOverlay::dptr() const
+{
+    return d;
+}
+
 void DropIndicatorOverlay::onHoveredGroupChanged(Core::Group *)
 {
 }
@@ -207,7 +217,7 @@ void DropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
 {
     if (m_currentDropLocation != location) {
         m_currentDropLocation = location;
-        Q_EMIT currentDropLocationChanged();
+        d->currentDropLocationChanged.emit();
     }
 }
 
@@ -222,7 +232,7 @@ void DropIndicatorOverlay::setHoveredGroupRect(QRect rect)
 {
     if (m_hoveredGroupRect != rect) {
         m_hoveredGroupRect = rect;
-        Q_EMIT hoveredGroupRectChanged();
+        d->hoveredGroupRectChanged.emit();
     }
 }
 

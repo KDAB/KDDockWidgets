@@ -47,7 +47,6 @@ public:
     /// This will call QWidget::focus() on the last QWidget that was focused in this scope.
     void focus(Qt::FocusReason = Qt::OtherFocusReason);
 
-    /*Q_SIGNALS:*/
 protected:
     ///@brief reimplement in the 1st QObject derived class
     virtual void isFocusedChangedCallback() = 0;
