@@ -132,14 +132,17 @@ struct fmt::formatter<QFlags<F>>
     }
 };
 
+// using enable_if_t = typename std::enable_if<B, T>::type;
+
+
 namespace KDDockWidgets {
-template<typename Enum, FMT_ENABLE_IF(std::is_enum<Enum>::value)>
+template<typename Enum, typename std::enable_if<std::is_enum<Enum>::value, int>::type = 0>
 constexpr auto format_as(Enum e) noexcept -> fmt::underlying_t<Enum>
 {
     return static_cast<fmt::underlying_t<Enum>>(e);
 }
 namespace Core {
-template<typename Enum, FMT_ENABLE_IF(std::is_enum<Enum>::value)>
+template<typename Enum, fmt::enable_if_t<std::is_enum<Enum>::value, int> = 0>
 constexpr auto format_as(Enum e) noexcept -> fmt::underlying_t<Enum>
 {
     return static_cast<fmt::underlying_t<Enum>>(e);
