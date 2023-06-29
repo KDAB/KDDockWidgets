@@ -20,6 +20,7 @@
 #include "Config.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "ViewWrapper.h"
+#include "core/DockRegistry_p.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/Group.h"
@@ -132,7 +133,7 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
         window()->onScreenChanged(this, [](QObject *context, auto window) {
             if (auto mw = qobject_cast<MainWindow *>(context))
                 mw->updateMargins(); // logical dpi might have changed
-            Q_EMIT DockRegistry::self()->windowChangedScreen(window);
+            DockRegistry::self()->dptr()->windowChangedScreen.emit(window);
         });
     }
 }

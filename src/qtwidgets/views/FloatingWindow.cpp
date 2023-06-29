@@ -15,7 +15,6 @@
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/MainWindow.h"
-#include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/DropArea.h"
 
 #include "core/Logging_p.h"
@@ -23,6 +22,7 @@
 #include "core/View_p.h"
 #include "core/DragController_p.h"
 #include "core/WidgetResizeHandler_p.h"
+#include "core/DockRegistry_p.h"
 
 #include "TitleBar.h"
 
@@ -109,7 +109,7 @@ bool FloatingWindow::event(QEvent *ev)
         // intercept screen events
         d->m_connectedToScreenChanged = true;
         window()->onScreenChanged(this, [](QObject *, auto window) {
-            Q_EMIT DockRegistry::self()->windowChangedScreen(window);
+            DockRegistry::self()->dptr()->windowChangedScreen.emit(window);
         });
 
         QWidget::windowHandle()->installEventFilter(this);
@@ -131,7 +131,7 @@ void FloatingWindow::init()
     d->m_vlayout->addWidget(View_qt::asQWidget(d->m_controller->titleBar()));
     d->m_vlayout->addWidget(View_qt::asQWidget(d->m_controller->dropArea()));
 
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
+    DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
         if (View::d->isInWindow(w))
             updateMargins();
     });

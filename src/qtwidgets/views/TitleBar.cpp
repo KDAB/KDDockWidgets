@@ -19,8 +19,8 @@
 #include "core/View_p.h"
 #include "core/Logging_p.h"
 #include "core/TitleBar_p.h"
+#include "core/DockRegistry_p.h"
 #include "kddockwidgets/ViewFactory.h"
-#include "kddockwidgets/core/DockRegistry.h"
 #include "qtwidgets/ViewFactory.h"
 
 #include <QPainter>
@@ -180,7 +180,7 @@ void TitleBar::init()
     m_floatButton->setVisible(m_titleBar->floatButtonVisible());
     m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
 
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
+    DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
         if (d->isInWindow(w))
             updateMargins();
     });

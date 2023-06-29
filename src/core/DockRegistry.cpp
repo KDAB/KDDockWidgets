@@ -10,6 +10,7 @@
 */
 
 #include "DockRegistry.h"
+#include "DockRegistry_p.h"
 #include "Config.h"
 #include "core/Logging_p.h"
 #include "core/Position_p.h"
@@ -35,12 +36,6 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-
-class DockRegistry::Private
-{
-public:
-    KDBindings::ConnectionHandle m_connection;
-};
 
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
@@ -259,6 +254,11 @@ Core::Group *DockRegistry::groupInMDIResize() const
     }
 
     return nullptr;
+}
+
+DockRegistry::Private *DockRegistry::dptr() const
+{
+    return d;
 }
 
 Core::MainWindow::List

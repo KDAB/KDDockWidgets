@@ -20,7 +20,7 @@
 #include "core/DropIndicatorOverlay_p.h"
 
 #include "core/DragController_p.h"
-#include "DockRegistry.h"
+#include "core/DockRegistry_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -37,17 +37,16 @@ DropIndicatorOverlay::DropIndicatorOverlay(DropArea *dropArea, View *view)
     // overlay
     view->enableAttribute(Qt::WA_TransparentForMouseEvents);
 
-    connect(DockRegistry::self(), &DockRegistry::dropIndicatorsInhibitedChanged, this,
-            [this](bool inhibited) {
-                if (inhibited) {
-                    removeHover();
-                } else {
-                    // Re-add hover. Fastest way is simply faking a mouse move
-                    if (auto state = qobject_cast<StateDragging *>(DragController::instance()->activeState())) {
-                        state->handleMouseMove(Platform::instance()->cursorPos());
-                    }
-                }
-            });
+    DockRegistry::self()->dptr()->dropIndicatorsInhibitedChanged.connect([this](bool inhibited) {
+        if (inhibited) {
+            removeHover();
+        } else {
+            // Re-add hover. Fastest way is simply faking a mouse move
+            if (auto state = qobject_cast<StateDragging *>(DragController::instance()->activeState())) {
+                state->handleMouseMove(Platform::instance()->cursorPos());
+            }
+        }
+    });
 }
 
 

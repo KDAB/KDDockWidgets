@@ -11,6 +11,7 @@
 
 #include "Helpers_p.h"
 #include "core/DockRegistry.h"
+#include "core/DockRegistry_p.h"
 #include "core/Group.h"
 #include "qtcommon/View.h"
 
@@ -20,8 +21,9 @@ using namespace KDDockWidgets;
 
 QtQuickHelpers::QtQuickHelpers()
 {
-    connect(DockRegistry::self(), &DockRegistry::groupInMDIResizeChanged, this,
-            &QtQuickHelpers::groupInMDIResizeChanged);
+    DockRegistry::self()->dptr()->groupInMDIResizeChanged.connect([this] {
+        Q_EMIT groupInMDIResizeChanged();
+    });
 }
 
 qreal QtQuickHelpers::logicalDpiFactor(const QQuickItem *) const
