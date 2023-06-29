@@ -28,6 +28,7 @@
 #include "core/DropArea.h"
 #include "core/Layout.h"
 #include "core/MainWindow.h"
+#include "core/TabBar_p.h"
 
 #include "DockRegistry.h"
 #include "DockWidget_p.h"
@@ -92,7 +93,9 @@ Group::Group(View *parent, FrameOptions options, int userType)
     s_dbg_numFrames++;
     DockRegistry::self()->registerGroup(this);
 
-    connect(m_tabBar, &TabBar::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
+    m_tabBar->dptr()->currentDockWidgetChanged.connect([this] {
+        updateTitleAndIcon();
+    });
 
     setLayout(parent ? parent->asLayout() : nullptr);
     m_stack->setTabBarAutoHide(!alwaysShowsTabs());

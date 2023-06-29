@@ -13,6 +13,8 @@
 
 #include <kdbindings/signal.h>
 
+#pragma once
+
 // Pimpl class so we can keep kdbindings private
 
 namespace KDDockWidgets {

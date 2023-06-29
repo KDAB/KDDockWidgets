@@ -32,6 +32,7 @@
 #include "Stack.h"
 #include "Config.h"
 #include "core/WidgetResizeHandler_p.h"
+#include "core/TabBar_p.h"
 
 #include <QDebug>
 
@@ -57,16 +58,18 @@ Group::~Group()
 
 void Group::init()
 {
-    connect(m_group->tabBar(), &Core::TabBar::countChanged, this,
-            &Group::updateConstriants);
+    m_group->tabBar()->dptr()->countChanged.connect([this] {
+        updateConstriants();
+    });
+
+    m_group->tabBar()->dptr()->currentDockWidgetChanged.connect([this] {
+        currentDockWidgetChanged();
+    });
 
     connect(this, &View::geometryUpdated, this,
             [this] { Core::View::d->layoutInvalidated.emit(); });
 
-    /// QML interface connect, since controllers won't be QObjects for much longer:
     connect(m_group, &Core::Group::isMDIChanged, this, &Group::isMDIChanged);
-    connect(m_group->tabBar(), &Core::TabBar::currentDockWidgetChanged, this,
-            &Group::currentDockWidgetChanged);
 
     // Minor hack: While the controllers keep track of "current widget",
     // the QML StackLayout deals in "current index", these can differ when removing a non-current

@@ -23,6 +23,7 @@
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
 #include "core/ScopedValueRollback_p.h"
+#include "core/TabBar_p.h"
 
 #include <QMetaObject>
 #include <QMouseEvent>
@@ -37,7 +38,7 @@ TabBar::TabBar(Core::TabBar *controller, QQuickItem *parent)
     , m_dockWidgetModel(new DockWidgetModel(controller, this))
 {
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
-            [controller] { Q_EMIT controller->countChanged(); });
+            [controller] { controller->dptr()->countChanged.emit(); });
 }
 
 void TabBar::init()

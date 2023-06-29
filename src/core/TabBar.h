@@ -85,11 +85,12 @@ public:
 
     ///@brief change the tab's icon
     void changeTabIcon(int index, const Icon &);
-Q_SIGNALS:
-    void currentDockWidgetChanged(KDDockWidgets::Core::DockWidget *);
-    void countChanged();
+
+    class Private;
+    Private *dptr() const;
 
 private:
+    Private *const d;
     Core::Stack *const m_stack;
     QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
     DockWidget *m_currentDockWidget = nullptr;

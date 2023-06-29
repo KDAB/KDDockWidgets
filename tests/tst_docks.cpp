@@ -19,6 +19,7 @@
 #include "core/ScopedValueRollback_p.h"
 #include "core/Position_p.h"
 #include "core/TitleBar_p.h"
+#include "core/TabBar_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
@@ -4042,8 +4043,7 @@ KDDW_QCORO_TASK tst_tabWidgetCurrentIndex()
 
     Core::DockWidget *currentDw = nullptr;
     auto group = dock1->dptr()->group();
-    QObject::connect(group->tabBar(), &Core::TabBar::currentDockWidgetChanged,
-                     [&currentDw](Core::DockWidget *dw) { currentDw = dw; });
+    group->tabBar()->dptr()->currentDockWidgetChanged.connect([&currentDw](Core::DockWidget *dw) { currentDw = dw; });
 
     CHECK_EQ(group->tabBar()->currentIndex(), 0);
     dock1->addDockWidgetAsTab(dock2);

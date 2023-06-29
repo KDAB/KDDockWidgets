@@ -13,7 +13,7 @@
 
 // Pimpl class so we can keep kdbindings private
 
-#include "Controller.h"
+#include "TabBar.h"
 
 #include <kdbindings/signal.h>
 
@@ -21,20 +21,11 @@ namespace KDDockWidgets {
 
 namespace Core {
 
-class Controller::Private
+class TabBar::Private
 {
 public:
-    explicit Private(ViewType type, View *view)
-        : m_view(view)
-        , m_type(type)
-    {
-    }
-
-    ///@brief signal counterpart for setParentView()
-    KDBindings::Signal<Core::View *> parentViewChanged;
-
-    View *const m_view;
-    const ViewType m_type;
+    KDBindings::Signal<KDDockWidgets::Core::DockWidget *> currentDockWidgetChanged;
+    KDBindings::Signal<> countChanged;
 };
 
 }

@@ -10,6 +10,7 @@
 */
 
 #include "TabBar.h"
+#include "TabBar_p.h"
 #include "core/Draggable_p.h"
 #include "Controller.h"
 #include "core/Stack.h"
@@ -29,6 +30,7 @@ using namespace KDDockWidgets::Core;
 Core::TabBar::TabBar(Stack *stack)
     : Controller(ViewType::TabBar, Config::self().viewFactory()->createTabBar(this, stack->view()))
     , Draggable(view())
+    , d(new Private())
     , m_stack(stack)
 {
     view()->init();
@@ -37,6 +39,7 @@ Core::TabBar::TabBar(Stack *stack)
 
 Core::TabBar::~TabBar()
 {
+    delete d;
 }
 
 bool Core::TabBar::tabsAreMovable() const
@@ -293,7 +296,7 @@ void TabBar::setCurrentIndex(int index)
         return;
 
     m_currentDockWidget = newCurrentDw;
-    Q_EMIT currentDockWidgetChanged(newCurrentDw);
+    d->currentDockWidgetChanged.emit(newCurrentDw);
     dynamic_cast<Core::TabBarViewInterface *>(view())->setCurrentIndex(index);
 }
 
@@ -305,4 +308,9 @@ void TabBar::renameTab(int index, const QString &text)
 void TabBar::changeTabIcon(int index, const Icon &icon)
 {
     dynamic_cast<Core::TabBarViewInterface *>(view())->changeTabIcon(index, icon);
+}
+
+TabBar::Private *TabBar::dptr() const
+{
+    return d;
 }
