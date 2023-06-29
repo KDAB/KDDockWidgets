@@ -260,7 +260,6 @@ set(KDDW_PUBLIC_HEADERS
 
 set(KDDW_CORE_HEADERS
     core/DockWidget.h
-    core/DockWidget_p.h
     core/DropIndicatorOverlay.h
     core/DropArea.h
     core/FloatingWindow.h

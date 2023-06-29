@@ -26,7 +26,7 @@
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
 
 #include "Group.h"
 #include "core/Group_p.h"

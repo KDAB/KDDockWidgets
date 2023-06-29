@@ -29,7 +29,7 @@
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
 #include "kddockwidgets/core/Separator.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"

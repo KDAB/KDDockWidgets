@@ -19,7 +19,7 @@
 
 #include "TabBar.h"
 #include "Stack.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
 #include "core/ScopedValueRollback_p.h"

@@ -13,7 +13,7 @@
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
 #include "kddockwidgets/core/Group.h"
 #include "qtquick/Platform.h"
 #include "qtquick/views/TitleBar.h"

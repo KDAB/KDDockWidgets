@@ -12,7 +12,7 @@
 #include "DockWidgetViewInterface.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
 
 namespace KDDockWidgets::Core {
 
