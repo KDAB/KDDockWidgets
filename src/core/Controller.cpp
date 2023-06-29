@@ -15,33 +15,34 @@
 #include "View.h"
 #include "View_p.h"
 #include "Logging_p.h"
+#include "Controller_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 Controller::Controller(ViewType type, View *view)
-    : m_view(view)
-    , m_type(type)
+    : d(new Private(type, view))
 {
-
     Q_ASSERT(view);
 }
 
 Controller::~Controller()
 {
     m_inDtor = true;
-    if (m_view && !m_view->inDtor())
-        m_view->d->free();
+    if (d->m_view && !d->m_view->inDtor())
+        d->m_view->d->free();
+
+    delete d;
 }
 
 ViewType Controller::type() const
 {
-    return m_type;
+    return d->m_type;
 }
 
 bool Controller::is(ViewType t) const
 {
-    return int(m_type) & int(t);
+    return int(d->m_type) & int(t);
 }
 
 bool Controller::inDtor() const
@@ -51,66 +52,66 @@ bool Controller::inDtor() const
 
 View *Controller::view() const
 {
-    return m_view;
+    return d->m_view;
 }
 
 bool Controller::isVisible() const
 {
-    return m_view && m_view->isVisible();
+    return d->m_view && d->m_view->isVisible();
 }
 
 void Controller::setVisible(bool is)
 {
-    if (m_view)
-        m_view->setVisible(is);
+    if (d->m_view)
+        d->m_view->setVisible(is);
 }
 
 QRect Controller::rect() const
 {
-    if (m_view)
-        return m_view->rect();
+    if (d->m_view)
+        return d->m_view->rect();
 
     return {};
 }
 
 QPoint Controller::mapToGlobal(QPoint localPt) const
 {
-    return m_view->mapToGlobal(localPt);
+    return d->m_view->mapToGlobal(localPt);
 }
 
 int Controller::height() const
 {
-    return m_view->height();
+    return d->m_view->height();
 }
 
 int Controller::width() const
 {
-    return m_view->width();
+    return d->m_view->width();
 }
 
 QSize Controller::size() const
 {
-    return m_view->size();
+    return d->m_view->size();
 }
 
 QRect Controller::geometry() const
 {
-    return m_view->geometry();
+    return d->m_view->geometry();
 }
 
 QPoint Controller::pos() const
 {
-    return m_view->geometry().topLeft();
+    return d->m_view->geometry().topLeft();
 }
 
 int Controller::x() const
 {
-    return m_view->x();
+    return d->m_view->x();
 }
 
 int Controller::y() const
 {
-    return m_view->y();
+    return d->m_view->y();
 }
 
 bool Controller::close()
@@ -131,7 +132,7 @@ void Controller::show() const
 void Controller::setParentView(View *parent)
 {
     setParentView_impl(parent);
-    Q_EMIT parentViewChanged(parent);
+    d->parentViewChanged.emit(parent);
 }
 
 void Controller::setParentView_impl(View *parent)
@@ -146,4 +147,9 @@ void Controller::setParentView_impl(View *parent)
 void Controller::destroyLater()
 {
     Platform::instance()->runDelayed(0, new DelayedDelete(this));
+}
+
+Controller::Private *Controller::dptr() const
+{
+    return d;
 }

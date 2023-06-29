@@ -92,9 +92,8 @@ public:
     /// but works with Flutter as well
     void destroyLater();
 
-Q_SIGNALS:
-    ///@brief signal counterpart for setParentView()
-    void parentViewChanged(View *parent);
+    class Private;
+    Controller::Private *dptr() const;
 
 protected:
     virtual void setParentView_impl(View *parent);
@@ -102,9 +101,8 @@ protected:
 
 private:
     void setParent(QObject *) = delete;
-    View *m_view = nullptr;
 
-    const ViewType m_type;
+    Private *const d;
 };
 
 }

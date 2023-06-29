@@ -19,6 +19,7 @@
 #include "core/Platform.h"
 #include "core/View.h"
 #include "core/View_p.h"
+#include "core/Controller_p.h"
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
@@ -176,7 +177,7 @@ void Item::setGuestView(View *guest)
     Q_ASSERT(!guest || !m_guest);
 
     m_guest = guest;
-    disconnect(m_parentChangedConnection);
+    m_parentChangedConnection.disconnect();
     m_guestDebugNameChangedConnection->disconnect();
     m_guestDestroyedConnection->disconnect();
     m_layoutInvalidatedConnection->disconnect();
@@ -186,15 +187,14 @@ void Item::setGuestView(View *guest)
         if (Core::Group *group = asGroupController())
             group->setLayoutItem(this);
 
-        m_parentChangedConnection = connect(m_guest->controller(), &Controller::parentViewChanged,
-                                            this, [this](View *parent) {
-                                                if (!View::equals(parent, hostView())) {
-                                                    // Frame was detached into floating window. Turn
-                                                    // into placeholder
-                                                    Q_ASSERT(isVisible());
-                                                    turnIntoPlaceholder();
-                                                }
-                                            });
+        m_parentChangedConnection = m_guest->controller()->dptr()->parentViewChanged.connect([this](View *parent) {
+            if (!View::equals(parent, hostView())) {
+                // Frame was detached into floating window. Turn
+                // into placeholder
+                Q_ASSERT(isVisible());
+                turnIntoPlaceholder();
+            }
+        });
 
         {
             ScopedValueRollback guard(m_isSettingGuest, true);
@@ -785,6 +785,7 @@ Item::~Item()
 {
     m_minSizeChangedHandle.disconnect();
     m_visibleChangedHandle.disconnect();
+    m_parentChangedConnection.disconnect();
 }
 
 void Item::turnIntoPlaceholder()
@@ -816,7 +817,7 @@ void Item::updateObjectName()
 void Item::onWidgetDestroyed()
 {
     m_guest = nullptr;
-    disconnect(m_parentChangedConnection);
+    m_parentChangedConnection.disconnect();
     m_guestDebugNameChangedConnection->disconnect();
     m_guestDestroyedConnection->disconnect();
 
