@@ -40,6 +40,10 @@ public:
 
     /// @brief Emitted to tell the views to update their maximize button
     KDBindings::Signal<bool, bool, KDDockWidgets::TitleBarButtonType> maximizeButtonChanged;
+
+    KDBindings::ScopedConnection isFocusedChangedConnection;
+    KDBindings::ScopedConnection isInMainWindowChangedConnection;
+    KDBindings::ScopedConnection numDockWidgetsChangedConnection;
 };
 
 }

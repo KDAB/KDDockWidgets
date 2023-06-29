@@ -29,6 +29,7 @@
 #include "core/Layout.h"
 #include "core/MainWindow.h"
 #include "core/TabBar_p.h"
+#include "core/Group_p.h"
 
 #include "DockRegistry.h"
 #include "DockWidget_p.h"
@@ -53,12 +54,6 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets {
-
-class Group::Private
-{
-public:
-    KDBindings::ScopedConnection m_visibleWidgetCountChangedConnection;
-};
 
 static FrameOptions actualOptions(FrameOptions options)
 {
@@ -159,10 +154,10 @@ void Group::setLayout(Layout *dt)
             m_layout->d_ptr()->visibleWidgetCountChanged.connect(&Group::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
-            Q_EMIT isInMainWindowChanged();
+            d->isInMainWindowChanged.emit();
     }
 
-    Q_EMIT isMDIChanged();
+    d->isMDIChanged.emit();
 }
 
 void Group::renameTab(int index, const QString &title)
@@ -392,7 +387,7 @@ void Group::onDockWidgetCountChanged()
         // We don't really keep track of the state, so emit even if the visibility didn't change. No
         // biggie.
         if (!(m_options & FrameOption_AlwaysShowsTabs))
-            Q_EMIT hasTabsVisibleChanged();
+            d->hasTabsVisibleChanged.emit();
 
         const DockWidget::List docks = dockWidgets();
         for (DockWidget *dock : docks)
@@ -403,17 +398,17 @@ void Group::onDockWidgetCountChanged()
         }
     }
 
-    Q_EMIT numDockWidgetsChanged();
+    d->numDockWidgetsChanged.emit();
 }
 
 void Group::isFocusedChangedCallback()
 {
-    Q_EMIT isFocusedChanged();
+    d->isFocusedChanged.emit();
 }
 
 void Group::focusedWidgetChangedCallback()
 {
-    Q_EMIT focusedWidgetChanged();
+    d->focusedWidgetChanged.emit();
 }
 
 void Group::updateTitleBarVisibility()
@@ -445,7 +440,7 @@ void Group::updateTitleBarVisibility()
     m_titleBar->setVisible(visible);
 
     if (wasVisible != visible) {
-        Q_EMIT actualTitleBarChanged();
+        d->actualTitleBarChanged.emit();
         for (auto dw : dockWidgets())
             Q_EMIT dw->actualTitleBarChanged();
     }
@@ -943,4 +938,9 @@ FloatingWindowFlags Group::requestedFloatingWindowFlags() const
         return dockwidgets.first()->floatingWindowFlags();
 
     return FloatingWindowFlag::FromGlobalConfig;
+}
+
+Group::Private *Group::dptr() const
+{
+    return d;
 }

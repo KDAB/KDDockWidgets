@@ -303,16 +303,6 @@ public:
     /// @brief User requested floating window flags for when this group floats
     FloatingWindowFlags requestedFloatingWindowFlags() const;
 
-
-Q_SIGNALS:
-    void numDockWidgetsChanged();
-    void hasTabsVisibleChanged();
-    void isInMainWindowChanged();
-    void isFocusedChanged();
-    void focusedWidgetChanged();
-    void actualTitleBarChanged();
-    void isMDIChanged();
-
 protected:
     void isFocusedChangedCallback() override;
     void focusedWidgetChangedCallback() override;
@@ -341,8 +331,10 @@ public:
     QSize biggestDockWidgetMaxSize() const;
     int nonContentsHeight() const;
 
-private:
     class Private;
+    Private *dptr() const;
+
+private:
     Private *const d;
     bool m_inCtor = true; // Needs to be initialized early, as pointed out by UBSAN
 protected:

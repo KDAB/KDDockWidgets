@@ -17,6 +17,7 @@
 #include "core/Utils_p.h"
 #include "core/Logging_p.h"
 #include "core/TitleBar_p.h"
+#include "core/Group_p.h"
 
 #include "views/TitleBarViewInterface.h"
 #include "core/DockWidget_p.h"
@@ -42,17 +43,18 @@ TitleBar::TitleBar(Group *parent)
     , m_isStandalone(false)
 {
     init();
-    connect(m_group, &Group::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
-
-    connect(m_group, &Group::numDockWidgetsChanged, this, [this] {
+    d->numDockWidgetsChangedConnection = m_group->dptr()->numDockWidgetsChanged.connect([this] {
+        updateCloseButton();
         d->numDockWidgetsChanged.emit();
     });
 
-    connect(m_group, &Group::isFocusedChanged, this, [this] {
+    d->isFocusedChangedConnection = m_group->dptr()->isFocusedChanged.connect([this] {
         d->isFocusedChanged.emit();
     });
 
-    connect(m_group, &Group::isInMainWindowChanged, this, &TitleBar::updateAutoHideButton);
+    d->isInMainWindowChangedConnection = m_group->dptr()->isInMainWindowChanged.connect([this] {
+        updateAutoHideButton();
+    });
 }
 
 TitleBar::TitleBar(FloatingWindow *parent)

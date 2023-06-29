@@ -29,6 +29,7 @@
 #include "kddockwidgets/core/DockWidget_p.h"
 
 #include "Group.h"
+#include "core/Group_p.h"
 #include "Stack.h"
 #include "Config.h"
 #include "core/WidgetResizeHandler_p.h"
@@ -39,21 +40,32 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
+namespace KDDockWidgets::QtQuick {
+
+class Group::Private
+{
+public:
+    KDBindings::ScopedConnection isMDIConnection;
+};
+
+}
+
 Group::Group(Core::Group *controller, QQuickItem *parent)
     : QtQuick::View(controller, Core::ViewType::Frame, parent)
     , Core::GroupViewInterface(controller)
+    , d(new Private())
 {
 }
 
 Group::~Group()
 {
-    disconnect(m_group, &Core::Group::isMDIChanged, this, &Group::isMDIChanged);
-
     // The QML item must be deleted with deleteLater(), as we might be currently with its mouse
     // handler in the stack. QML doesn't support it being deleted in that case.
     // So unparent it and deleteLater().
     m_visualItem->setParent(nullptr);
     m_visualItem->deleteLater();
+
+    delete d;
 }
 
 void Group::init()
@@ -69,17 +81,15 @@ void Group::init()
     connect(this, &View::geometryUpdated, this,
             [this] { Core::View::d->layoutInvalidated.emit(); });
 
-    connect(m_group, &Core::Group::isMDIChanged, this, &Group::isMDIChanged);
+    d->isMDIConnection = m_group->dptr()->isMDIChanged.connect([this] { Q_EMIT isMDIChanged(); });
 
     // Minor hack: While the controllers keep track of "current widget",
     // the QML StackLayout deals in "current index", these can differ when removing a non-current
     // tab. The currentDockWidgetChanged() won't be emitted but the index did decrement.
     // As a workaround, always emit the signal, which is harmless if not needed.
-    connect(m_group, &Core::Group::numDockWidgetsChanged, this,
-            &Group::currentDockWidgetChanged);
 
-    connect(m_group, &Core::Group::actualTitleBarChanged, this,
-            &Group::actualTitleBarChanged);
+    m_group->dptr()->numDockWidgetsChanged.connect([this] { Q_EMIT currentDockWidgetChanged(); });
+    m_group->dptr()->actualTitleBarChanged.connect([this] { Q_EMIT actualTitleBarChanged(); });
 
     connect(this, &View::itemGeometryChanged, this, [this] {
         for (auto dw : m_group->dockWidgets()) {

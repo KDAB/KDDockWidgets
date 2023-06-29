@@ -84,6 +84,9 @@ private:
     Stack *stackView() const;
     TabBar *tabBarView() const;
 
+    class Private;
+    Private *const d;
+
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
 };
