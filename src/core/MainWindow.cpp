@@ -66,7 +66,7 @@ void MainWindow::init(const QString &name)
     setUniqueName(name);
 
     d->m_visibleWidgetCountConnection =
-        d->m_layout->d_ptr()->visibleWidgetCountChanged.connect(&MainWindow::groupCountChanged, this);
+        d->m_layout->d_ptr()->visibleWidgetCountChanged.connect([this](int count) { d->groupCountChanged.emit(count); });
     view()->d->closeRequested.connect([this](CloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
 }
 
@@ -644,7 +644,7 @@ void MainWindow::setUniqueName(const QString &uniqueName)
 
     if (d->name.isEmpty()) {
         d->name = uniqueName;
-        Q_EMIT uniqueNameChanged();
+        d->uniqueNameChanged.emit();
         DockRegistry::self()->registerMainWindow(this);
     } else {
         KDDW_ERROR("Already has a name. {} {}", this->uniqueName(), uniqueName);
@@ -781,7 +781,6 @@ void MainWindow::setOverlayMargin(int margin)
     if (margin == d->m_overlayMargin)
         return;
 
-
     d->m_overlayMargin = margin;
-    Q_EMIT overlayMarginChanged(margin);
+    d->overlayMarginChanged.emit(margin);
 }

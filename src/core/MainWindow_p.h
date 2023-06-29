@@ -20,6 +20,8 @@
 #include "DockWidget_p.h"
 #include "Group.h"
 
+#include <kdbindings/signal.h>
+
 namespace KDDockWidgets {
 
 namespace Core {
@@ -88,6 +90,15 @@ public:
         if (m_overlayedDockWidget)
             updateOverlayGeometry(m_overlayedDockWidget->d->group()->size());
     }
+
+    KDBindings::Signal<> uniqueNameChanged;
+
+    /// @brief emitted when the number of docked groups changes
+    /// Note that we're using the "Frame" nomenculature instead of "DockWidget" here, as DockWidgets
+    /// can be tabbed together, in which case this signal isn't emitted.
+    KDBindings::Signal<int> groupCountChanged;
+
+    KDBindings::Signal<int> overlayMarginChanged;
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
 
