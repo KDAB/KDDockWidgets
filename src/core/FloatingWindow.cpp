@@ -10,6 +10,7 @@
 */
 
 #include "FloatingWindow.h"
+#include "FloatingWindow_p.h"
 #include "MainWindow.h"
 #include "core/Logging_p.h"
 #include "TitleBar.h"
@@ -48,46 +49,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-
-static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedFlags)
-{
-    if (!(requestedFlags & FloatingWindowFlag::FromGlobalConfig)) {
-        // User requested specific flags for this floating window
-        return requestedFlags;
-    }
-
-    // Use from KDDockWidgets::Config instead. This is app-wide and not per window.
-
-    FloatingWindowFlags flags = {};
-
-    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
-        == Config::Flag_TitleBarHasMinimizeButton)
-        flags |= FloatingWindowFlag::TitleBarHasMinimizeButton;
-
-    if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton)
-        flags |= FloatingWindowFlag::TitleBarHasMaximizeButton;
-
-    if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
-        flags |= FloatingWindowFlag::KeepAboveIfNotUtilityWindow;
-
-    if (Config::self().flags() & Config::Flag_NativeTitleBar)
-        flags |= FloatingWindowFlag::NativeTitleBar;
-
-    if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
-        flags |= FloatingWindowFlag::HideTitleBarWhenTabsVisible;
-
-    if (Config::self().flags() & Config::Flag_AlwaysTitleBarWhenFloating)
-        flags |= FloatingWindowFlag::AlwaysTitleBarWhenFloating;
-
-    if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
-        flags |= FloatingWindowFlag::DontUseParentForFloatingWindows;
-
-    if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
-        flags |= FloatingWindowFlag::UseQtWindow;
-
-    return flags;
-}
-
 static FloatingWindowFlags floatingWindowFlagsForGroup(Group *group)
 {
     if (!group)
@@ -99,19 +60,6 @@ static FloatingWindowFlags floatingWindowFlagsForGroup(Group *group)
 
     return FloatingWindowFlag::FromGlobalConfig;
 }
-
-
-class FloatingWindow::Private
-{
-public:
-    explicit Private(FloatingWindowFlags requestedFlags)
-        : m_flags(flagsForFloatingWindow(requestedFlags))
-    {
-    }
-
-    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
-    const FloatingWindowFlags m_flags;
-};
 
 /** static */
 Qt::WindowFlags FloatingWindow::s_windowFlagsOverride = {};
