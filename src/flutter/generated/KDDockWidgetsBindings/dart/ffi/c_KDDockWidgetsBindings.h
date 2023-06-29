@@ -17,6 +17,22 @@ void *c_QString__constructor();
 void *c_QString__append_QString(void *thisObj, const char *s_);
 // QString::arg(const QString & a, int fieldWidth) const
 void *c_QString__arg_QString_int(void *thisObj, const char *a_, int fieldWidth);
+// QString::arg(const QString & a1, const QString & a2) const
+void *c_QString__arg_QString_QString(void *thisObj, const char *a1_, const char *a2_);
+// QString::arg(const QString & a1, const QString & a2, const QString & a3) const
+void *c_QString__arg_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_);
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4) const
+void *c_QString__arg_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_);
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5) const
+void *c_QString__arg_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_);
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6) const
+void *c_QString__arg_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_);
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7) const
+void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_);
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8) const
+void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_, const char *a8_);
+// QString::arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8, const QString & a9) const
+void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_, const char *a8_, const char *a9_);
 // QString::arg(int a, int fieldWidth, int base) const
 void *c_QString__arg_int_int_int(void *thisObj, int a, int fieldWidth, int base);
 // QString::arg(long a, int fieldwidth, int base) const
@@ -28,11 +44,11 @@ void *c_QString__arg_short_int_int(void *thisObj, short a, int fieldWidth, int b
 // QString::asprintf(const char * format)
 void *c_static_QString__asprintf_char(const char *format);
 // QString::capacity() const
-qsizetype c_QString__capacity(void *thisObj);
-// QString::chop(qsizetype n)
-void c_QString__chop_qsizetype(void *thisObj, qsizetype n);
-// QString::chopped(qsizetype n) const
-void *c_QString__chopped_qsizetype(void *thisObj, qsizetype n);
+int c_QString__capacity(void *thisObj);
+// QString::chop(int n)
+void c_QString__chop_int(void *thisObj, int n);
+// QString::chopped(int n) const
+void *c_QString__chopped_int(void *thisObj, int n);
 // QString::clear()
 void c_QString__clear(void *thisObj);
 // QString::compare(const QString & s) const
@@ -41,24 +57,30 @@ int c_QString__compare_QString(void *thisObj, const char *s_);
 int c_static_QString__compare_QString_QString(const char *s1_, const char *s2_);
 // QString::contains(const QString & s) const
 bool c_QString__contains_QString(void *thisObj, const char *s_);
+// QString::count() const
+int c_QString__count(void *thisObj);
 // QString::count(const QString & s) const
-qsizetype c_QString__count_QString(void *thisObj, const char *s_);
+int c_QString__count_QString(void *thisObj, const char *s_);
 // QString::detach()
 void c_QString__detach(void *thisObj);
 // QString::endsWith(const QString & s) const
 bool c_QString__endsWith_QString(void *thisObj, const char *s_);
-// QString::first(qsizetype n) const
-void *c_QString__first_qsizetype(void *thisObj, qsizetype n);
-// QString::fromLatin1(const char * str, qsizetype size)
-void *c_static_QString__fromLatin1_char_qsizetype(const char *str, qsizetype size);
-// QString::fromLocal8Bit(const char * str, qsizetype size)
-void *c_static_QString__fromLocal8Bit_char_qsizetype(const char *str, qsizetype size);
-// QString::fromUtf8(const char * utf8, qsizetype size)
-void *c_static_QString__fromUtf8_char_qsizetype(const char *utf8, qsizetype size);
-// QString::indexOf(const QString & s, qsizetype from) const
-qsizetype c_QString__indexOf_QString_qsizetype(void *thisObj, const char *s_, qsizetype from);
-// QString::insert(qsizetype i, const QString & s)
-void *c_QString__insert_qsizetype_QString(void *thisObj, qsizetype i, const char *s_);
+// QString::fromLatin1(const QByteArray & str)
+void *c_static_QString__fromLatin1_QByteArray(void *str_);
+// QString::fromLatin1(const char * str, int size)
+void *c_static_QString__fromLatin1_char_int(const char *str, int size);
+// QString::fromLocal8Bit(const QByteArray & str)
+void *c_static_QString__fromLocal8Bit_QByteArray(void *str_);
+// QString::fromLocal8Bit(const char * str, int size)
+void *c_static_QString__fromLocal8Bit_char_int(const char *str, int size);
+// QString::fromUtf8(const QByteArray & str)
+void *c_static_QString__fromUtf8_QByteArray(void *str_);
+// QString::fromUtf8(const char * str, int size)
+void *c_static_QString__fromUtf8_char_int(const char *str, int size);
+// QString::indexOf(const QString & s, int from) const
+int c_QString__indexOf_QString_int(void *thisObj, const char *s_, int from);
+// QString::insert(int i, const QString & s)
+void *c_QString__insert_int_QString(void *thisObj, int i, const char *s_);
 // QString::isDetached() const
 bool c_QString__isDetached(void *thisObj);
 // QString::isEmpty() const
@@ -77,24 +99,20 @@ bool c_QString__isSimpleText(void *thisObj);
 bool c_QString__isUpper(void *thisObj);
 // QString::isValidUtf16() const
 bool c_QString__isValidUtf16(void *thisObj);
-// QString::last(qsizetype n) const
-void *c_QString__last_qsizetype(void *thisObj, qsizetype n);
-// QString::lastIndexOf(const QString & s) const
-qsizetype c_QString__lastIndexOf_QString(void *thisObj, const char *s_);
-// QString::lastIndexOf(const QString & s, qsizetype from) const
-qsizetype c_QString__lastIndexOf_QString_qsizetype(void *thisObj, const char *s_, qsizetype from);
-// QString::left(qsizetype n) const
-void *c_QString__left_qsizetype(void *thisObj, qsizetype n);
-// QString::leftJustified(qsizetype width) const
-void *c_QString__leftJustified_qsizetype(void *thisObj, qsizetype width);
+// QString::lastIndexOf(const QString & s, int from) const
+int c_QString__lastIndexOf_QString_int(void *thisObj, const char *s_, int from);
+// QString::left(int n) const
+void *c_QString__left_int(void *thisObj, int n);
+// QString::leftJustified(int width) const
+void *c_QString__leftJustified_int(void *thisObj, int width);
 // QString::length() const
-qsizetype c_QString__length(void *thisObj);
+int c_QString__length(void *thisObj);
 // QString::localeAwareCompare(const QString & s) const
 int c_QString__localeAwareCompare_QString(void *thisObj, const char *s_);
 // QString::localeAwareCompare(const QString & s1, const QString & s2)
 int c_static_QString__localeAwareCompare_QString_QString(const char *s1_, const char *s2_);
-// QString::mid(qsizetype position, qsizetype n) const
-void *c_QString__mid_qsizetype_qsizetype(void *thisObj, qsizetype position, qsizetype n);
+// QString::mid(int position, int n) const
+void *c_QString__mid_int_int(void *thisObj, int position, int n);
 // QString::number(int arg__1, int base)
 void *c_static_QString__number_int_int(int arg__1, int base);
 // QString::number(long arg__1, int base)
@@ -109,30 +127,24 @@ void c_QString__push_back_QString(void *thisObj, const char *s_);
 void c_QString__push_front_QString(void *thisObj, const char *s_);
 // QString::remove(const QString & s)
 void *c_QString__remove_QString(void *thisObj, const char *s_);
-// QString::remove(qsizetype i, qsizetype len)
-void *c_QString__remove_qsizetype_qsizetype(void *thisObj, qsizetype i, qsizetype len);
-// QString::removeAt(qsizetype pos)
-void *c_QString__removeAt_qsizetype(void *thisObj, qsizetype pos);
-// QString::removeFirst()
-void *c_QString__removeFirst(void *thisObj);
-// QString::removeLast()
-void *c_QString__removeLast(void *thisObj);
-// QString::repeated(qsizetype times) const
-void *c_QString__repeated_qsizetype(void *thisObj, qsizetype times);
+// QString::remove(int i, int len)
+void *c_QString__remove_int_int(void *thisObj, int i, int len);
+// QString::repeated(int times) const
+void *c_QString__repeated_int(void *thisObj, int times);
 // QString::replace(const QString & before, const QString & after)
 void *c_QString__replace_QString_QString(void *thisObj, const char *before_, const char *after_);
-// QString::replace(qsizetype i, qsizetype len, const QString & after)
-void *c_QString__replace_qsizetype_qsizetype_QString(void *thisObj, qsizetype i, qsizetype len, const char *after_);
-// QString::reserve(qsizetype size)
-void c_QString__reserve_qsizetype(void *thisObj, qsizetype size);
-// QString::resize(qsizetype size)
-void c_QString__resize_qsizetype(void *thisObj, qsizetype size);
-// QString::right(qsizetype n) const
-void *c_QString__right_qsizetype(void *thisObj, qsizetype n);
-// QString::rightJustified(qsizetype width) const
-void *c_QString__rightJustified_qsizetype(void *thisObj, qsizetype width);
-// QString::section(const QString & in_sep, qsizetype start, qsizetype end) const
-void *c_QString__section_QString_qsizetype_qsizetype(void *thisObj, const char *in_sep_, qsizetype start, qsizetype end);
+// QString::replace(int i, int len, const QString & after)
+void *c_QString__replace_int_int_QString(void *thisObj, int i, int len, const char *after_);
+// QString::reserve(int size)
+void c_QString__reserve_int(void *thisObj, int size);
+// QString::resize(int size)
+void c_QString__resize_int(void *thisObj, int size);
+// QString::right(int n) const
+void *c_QString__right_int(void *thisObj, int n);
+// QString::rightJustified(int width) const
+void *c_QString__rightJustified_int(void *thisObj, int width);
+// QString::section(const QString & in_sep, int start, int end) const
+void *c_QString__section_QString_int_int(void *thisObj, const char *in_sep_, int start, int end);
 // QString::setNum(int arg__1, int base)
 void *c_QString__setNum_int_int(void *thisObj, int arg__1, int base);
 // QString::setNum(long arg__1, int base)
@@ -146,11 +158,7 @@ void c_QString__shrink_to_fit(void *thisObj);
 // QString::simplified()
 void *c_QString__simplified(void *thisObj);
 // QString::size() const
-qsizetype c_QString__size(void *thisObj);
-// QString::sliced(qsizetype pos) const
-void *c_QString__sliced_qsizetype(void *thisObj, qsizetype pos);
-// QString::sliced(qsizetype pos, qsizetype n) const
-void *c_QString__sliced_qsizetype_qsizetype(void *thisObj, qsizetype pos, qsizetype n);
+int c_QString__size(void *thisObj);
 // QString::squeeze()
 void c_QString__squeeze(void *thisObj);
 // QString::startsWith(const QString & s) const
@@ -171,8 +179,8 @@ void *c_QString__toUpper(void *thisObj);
 void *c_QString__toUtf8(void *thisObj);
 // QString::trimmed()
 void *c_QString__trimmed(void *thisObj);
-// QString::truncate(qsizetype pos)
-void c_QString__truncate_qsizetype(void *thisObj, qsizetype pos);
+// QString::truncate(int pos)
+void c_QString__truncate_int(void *thisObj, int pos);
 void c_QString__destructor(void *thisObj);
 void c_QString_Finalizer(void *cppObj); // QSize::QSize()
 void *c_QSize__constructor();
@@ -301,8 +309,6 @@ void c_QRect__setX_int(void *thisObj, int x);
 void c_QRect__setY_int(void *thisObj, int y);
 // QRect::size() const
 void *c_QRect__size(void *thisObj);
-// QRect::span(const QPoint & p1, const QPoint & p2)
-void *c_static_QRect__span_QPoint_QPoint(void *p1_, void *p2_);
 // QRect::top() const
 int c_QRect__top(void *thisObj);
 // QRect::topLeft() const
@@ -363,16 +369,14 @@ bool c_QObject__disconnect_QObject_char(void *thisObj, void *receiver_, const ch
 bool c_static_QObject__disconnect_QObject_char_QObject_char(void *sender_, const char *signal, void *receiver_, const char *member);
 // QObject::disconnect(const char * signal, const QObject * receiver, const char * member) const
 bool c_QObject__disconnect_char_QObject_char(void *thisObj, const char *signal, void *receiver_, const char *member);
-// QObject::dumpObjectInfo() const
+// QObject::dumpObjectInfo()
 void c_QObject__dumpObjectInfo(void *thisObj);
-// QObject::dumpObjectTree() const
+// QObject::dumpObjectTree()
 void c_QObject__dumpObjectTree(void *thisObj);
 // QObject::inherits(const char * classname) const
 bool c_QObject__inherits_char(void *thisObj, const char *classname);
 // QObject::installEventFilter(QObject * filterObj)
 void c_QObject__installEventFilter_QObject(void *thisObj, void *filterObj_);
-// QObject::isQuickItemType() const
-bool c_QObject__isQuickItemType(void *thisObj);
 // QObject::isWidgetType() const
 bool c_QObject__isWidgetType(void *thisObj);
 // QObject::isWindowType() const
@@ -391,6 +395,8 @@ void c_QObject__removeEventFilter_QObject(void *thisObj, void *obj_);
 void *c_QObject__sender(void *thisObj);
 // QObject::senderSignalIndex() const
 int c_QObject__senderSignalIndex(void *thisObj);
+// QObject::setObjectName(const QString & name)
+void c_QObject__setObjectName_QString(void *thisObj, const char *name_);
 // QObject::setParent(QObject * parent)
 void c_QObject__setParent_QObject(void *thisObj, void *parent_);
 // QObject::signalsBlocked() const
@@ -403,60 +409,80 @@ void c_QObject__destructor(void *thisObj);
 void c_QObject__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_QObject_Finalizer(void *cppObj); // QByteArray::QByteArray()
 void *c_QByteArray__constructor();
-// QByteArray::QByteArray(const char * arg__1, qsizetype size)
-void *c_QByteArray__constructor_char_qsizetype(const char *arg__1, qsizetype size);
+// QByteArray::QByteArray(const char * arg__1, int size)
+void *c_QByteArray__constructor_char_int(const char *arg__1, int size);
 // QByteArray::append(const QByteArray & a)
 void *c_QByteArray__append_QByteArray(void *thisObj, void *a_);
 // QByteArray::append(const char * s)
 void *c_QByteArray__append_char(void *thisObj, const char *s);
-// QByteArray::append(const char * s, qsizetype len)
-void *c_QByteArray__append_char_qsizetype(void *thisObj, const char *s, qsizetype len);
-// QByteArray::at(qsizetype i) const
-char c_QByteArray__at_qsizetype(void *thisObj, qsizetype i);
+// QByteArray::append(const char * s, int len)
+void *c_QByteArray__append_char_int(void *thisObj, const char *s, int len);
+// QByteArray::at(int i) const
+char c_QByteArray__at_int(void *thisObj, int i);
 // QByteArray::back() const
 char c_QByteArray__back(void *thisObj);
 // QByteArray::begin() const
 const char *c_QByteArray__begin(void *thisObj);
 // QByteArray::capacity() const
-qsizetype c_QByteArray__capacity(void *thisObj);
+int c_QByteArray__capacity(void *thisObj);
 // QByteArray::cbegin() const
 const char *c_QByteArray__cbegin(void *thisObj);
 // QByteArray::cend() const
 const char *c_QByteArray__cend(void *thisObj);
-// QByteArray::chop(qsizetype n)
-void c_QByteArray__chop_qsizetype(void *thisObj, qsizetype n);
-// QByteArray::chopped(qsizetype len) const
-void *c_QByteArray__chopped_qsizetype(void *thisObj, qsizetype len);
+// QByteArray::chop(int n)
+void c_QByteArray__chop_int(void *thisObj, int n);
+// QByteArray::chopped(int len) const
+void *c_QByteArray__chopped_int(void *thisObj, int len);
 // QByteArray::clear()
 void c_QByteArray__clear(void *thisObj);
+// QByteArray::compare(const QByteArray & a) const
+int c_QByteArray__compare_QByteArray(void *thisObj, void *a_);
+// QByteArray::compare(const char * c) const
+int c_QByteArray__compare_char(void *thisObj, const char *c);
 // QByteArray::constBegin() const
 const char *c_QByteArray__constBegin(void *thisObj);
 // QByteArray::constData() const
 const char *c_QByteArray__constData(void *thisObj);
 // QByteArray::constEnd() const
 const char *c_QByteArray__constEnd(void *thisObj);
+// QByteArray::contains(const QByteArray & a) const
+bool c_QByteArray__contains_QByteArray(void *thisObj, void *a_);
+// QByteArray::contains(const char * a) const
+bool c_QByteArray__contains_char(void *thisObj, const char *a);
+// QByteArray::count() const
+int c_QByteArray__count(void *thisObj);
+// QByteArray::count(const QByteArray & a) const
+int c_QByteArray__count_QByteArray(void *thisObj, void *a_);
+// QByteArray::count(const char * a) const
+int c_QByteArray__count_char(void *thisObj, const char *a);
 // QByteArray::data() const
 const char *c_QByteArray__data(void *thisObj);
 // QByteArray::detach()
 void c_QByteArray__detach(void *thisObj);
 // QByteArray::end() const
 const char *c_QByteArray__end(void *thisObj);
-// QByteArray::first(qsizetype n) const
-void *c_QByteArray__first_qsizetype(void *thisObj, qsizetype n);
+// QByteArray::endsWith(const QByteArray & a) const
+bool c_QByteArray__endsWith_QByteArray(void *thisObj, void *a_);
+// QByteArray::endsWith(const char * c) const
+bool c_QByteArray__endsWith_char(void *thisObj, const char *c);
 // QByteArray::fromBase64(const QByteArray & base64)
 void *c_static_QByteArray__fromBase64_QByteArray(void *base64_);
 // QByteArray::fromHex(const QByteArray & hexEncoded)
 void *c_static_QByteArray__fromHex_QByteArray(void *hexEncoded_);
-// QByteArray::fromRawData(const char * data, qsizetype size)
-void *c_static_QByteArray__fromRawData_char_qsizetype(const char *data, qsizetype size);
+// QByteArray::fromRawData(const char * arg__1, int size)
+void *c_static_QByteArray__fromRawData_char_int(const char *arg__1, int size);
 // QByteArray::front() const
 char c_QByteArray__front(void *thisObj);
-// QByteArray::insert(qsizetype i, const QByteArray & data)
-void *c_QByteArray__insert_qsizetype_QByteArray(void *thisObj, qsizetype i, void *data_);
-// QByteArray::insert(qsizetype i, const char * s)
-void *c_QByteArray__insert_qsizetype_char(void *thisObj, qsizetype i, const char *s);
-// QByteArray::insert(qsizetype i, const char * s, qsizetype len)
-void *c_QByteArray__insert_qsizetype_char_qsizetype(void *thisObj, qsizetype i, const char *s, qsizetype len);
+// QByteArray::indexOf(const QByteArray & a, int from) const
+int c_QByteArray__indexOf_QByteArray_int(void *thisObj, void *a_, int from);
+// QByteArray::indexOf(const char * c, int from) const
+int c_QByteArray__indexOf_char_int(void *thisObj, const char *c, int from);
+// QByteArray::insert(int i, const QByteArray & a)
+void *c_QByteArray__insert_int_QByteArray(void *thisObj, int i, void *a_);
+// QByteArray::insert(int i, const char * s)
+void *c_QByteArray__insert_int_char(void *thisObj, int i, const char *s);
+// QByteArray::insert(int i, const char * s, int len)
+void *c_QByteArray__insert_int_char_int(void *thisObj, int i, const char *s, int len);
 // QByteArray::isDetached() const
 bool c_QByteArray__isDetached(void *thisObj);
 // QByteArray::isEmpty() const
@@ -469,91 +495,95 @@ bool c_QByteArray__isNull(void *thisObj);
 bool c_QByteArray__isSharedWith_QByteArray(void *thisObj, void *other_);
 // QByteArray::isUpper() const
 bool c_QByteArray__isUpper(void *thisObj);
-// QByteArray::isValidUtf8() const
-bool c_QByteArray__isValidUtf8(void *thisObj);
-// QByteArray::last(qsizetype n) const
-void *c_QByteArray__last_qsizetype(void *thisObj, qsizetype n);
-// QByteArray::left(qsizetype len) const
-void *c_QByteArray__left_qsizetype(void *thisObj, qsizetype len);
+// QByteArray::lastIndexOf(const QByteArray & a, int from) const
+int c_QByteArray__lastIndexOf_QByteArray_int(void *thisObj, void *a_, int from);
+// QByteArray::lastIndexOf(const char * c, int from) const
+int c_QByteArray__lastIndexOf_char_int(void *thisObj, const char *c, int from);
+// QByteArray::left(int len) const
+void *c_QByteArray__left_int(void *thisObj, int len);
 // QByteArray::length() const
-qsizetype c_QByteArray__length(void *thisObj);
-// QByteArray::mid(qsizetype index, qsizetype len) const
-void *c_QByteArray__mid_qsizetype_qsizetype(void *thisObj, qsizetype index, qsizetype len);
+int c_QByteArray__length(void *thisObj);
+// QByteArray::mid(int index, int len) const
+void *c_QByteArray__mid_int_int(void *thisObj, int index, int len);
 // QByteArray::number(int arg__1, int base)
 void *c_static_QByteArray__number_int_int(int arg__1, int base);
-// QByteArray::number(long arg__1, int base)
-void *c_static_QByteArray__number_long_int(long arg__1, int base);
 // QByteArray::number(qint64 arg__1, int base)
 void *c_static_QByteArray__number_qint64_int(qint64 arg__1, int base);
 // QByteArray::prepend(const QByteArray & a)
 void *c_QByteArray__prepend_QByteArray(void *thisObj, void *a_);
 // QByteArray::prepend(const char * s)
 void *c_QByteArray__prepend_char(void *thisObj, const char *s);
-// QByteArray::prepend(const char * s, qsizetype len)
-void *c_QByteArray__prepend_char_qsizetype(void *thisObj, const char *s, qsizetype len);
+// QByteArray::prepend(const char * s, int len)
+void *c_QByteArray__prepend_char_int(void *thisObj, const char *s, int len);
 // QByteArray::push_back(const QByteArray & a)
 void c_QByteArray__push_back_QByteArray(void *thisObj, void *a_);
-// QByteArray::push_back(const char * s)
-void c_QByteArray__push_back_char(void *thisObj, const char *s);
+// QByteArray::push_back(const char * c)
+void c_QByteArray__push_back_char(void *thisObj, const char *c);
 // QByteArray::push_front(const QByteArray & a)
 void c_QByteArray__push_front_QByteArray(void *thisObj, void *a_);
 // QByteArray::push_front(const char * c)
 void c_QByteArray__push_front_char(void *thisObj, const char *c);
-// QByteArray::remove(qsizetype index, qsizetype len)
-void *c_QByteArray__remove_qsizetype_qsizetype(void *thisObj, qsizetype index, qsizetype len);
-// QByteArray::removeAt(qsizetype pos)
-void *c_QByteArray__removeAt_qsizetype(void *thisObj, qsizetype pos);
-// QByteArray::removeFirst()
-void *c_QByteArray__removeFirst(void *thisObj);
-// QByteArray::removeLast()
-void *c_QByteArray__removeLast(void *thisObj);
-// QByteArray::repeated(qsizetype times) const
-void *c_QByteArray__repeated_qsizetype(void *thisObj, qsizetype times);
-// QByteArray::replace(const char * before, qsizetype bsize, const char * after, qsizetype asize)
-void *c_QByteArray__replace_char_qsizetype_char_qsizetype(void *thisObj, const char *before, qsizetype bsize, const char *after, qsizetype asize);
-// QByteArray::replace(qsizetype index, qsizetype len, const char * s, qsizetype alen)
-void *c_QByteArray__replace_qsizetype_qsizetype_char_qsizetype(void *thisObj, qsizetype index, qsizetype len, const char *s, qsizetype alen);
-// QByteArray::reserve(qsizetype size)
-void c_QByteArray__reserve_qsizetype(void *thisObj, qsizetype size);
-// QByteArray::resize(qsizetype size)
-void c_QByteArray__resize_qsizetype(void *thisObj, qsizetype size);
-// QByteArray::right(qsizetype len) const
-void *c_QByteArray__right_qsizetype(void *thisObj, qsizetype len);
+// QByteArray::remove(int index, int len)
+void *c_QByteArray__remove_int_int(void *thisObj, int index, int len);
+// QByteArray::repeated(int times) const
+void *c_QByteArray__repeated_int(void *thisObj, int times);
+// QByteArray::replace(const QByteArray & before, const QByteArray & after)
+void *c_QByteArray__replace_QByteArray_QByteArray(void *thisObj, void *before_, void *after_);
+// QByteArray::replace(const QByteArray & before, const char * after)
+void *c_QByteArray__replace_QByteArray_char(void *thisObj, void *before_, const char *after);
+// QByteArray::replace(const char * before, const QByteArray & after)
+void *c_QByteArray__replace_char_QByteArray(void *thisObj, const char *before, void *after_);
+// QByteArray::replace(const char * before, const char * after)
+void *c_QByteArray__replace_char_char(void *thisObj, const char *before, const char *after);
+// QByteArray::replace(const char * before, int bsize, const char * after, int asize)
+void *c_QByteArray__replace_char_int_char_int(void *thisObj, const char *before, int bsize, const char *after, int asize);
+// QByteArray::replace(int index, int len, const QByteArray & s)
+void *c_QByteArray__replace_int_int_QByteArray(void *thisObj, int index, int len, void *s_);
+// QByteArray::replace(int index, int len, const char * s)
+void *c_QByteArray__replace_int_int_char(void *thisObj, int index, int len, const char *s);
+// QByteArray::replace(int index, int len, const char * s, int alen)
+void *c_QByteArray__replace_int_int_char_int(void *thisObj, int index, int len, const char *s, int alen);
+// QByteArray::reserve(int size)
+void c_QByteArray__reserve_int(void *thisObj, int size);
+// QByteArray::resize(int size)
+void c_QByteArray__resize_int(void *thisObj, int size);
+// QByteArray::right(int len) const
+void *c_QByteArray__right_int(void *thisObj, int len);
 // QByteArray::setNum(int arg__1, int base)
 void *c_QByteArray__setNum_int_int(void *thisObj, int arg__1, int base);
-// QByteArray::setNum(long arg__1, int base)
-void *c_QByteArray__setNum_long_int(void *thisObj, long arg__1, int base);
 // QByteArray::setNum(qint64 arg__1, int base)
 void *c_QByteArray__setNum_qint64_int(void *thisObj, qint64 arg__1, int base);
 // QByteArray::setNum(short arg__1, int base)
 void *c_QByteArray__setNum_short_int(void *thisObj, short arg__1, int base);
-// QByteArray::setRawData(const char * a, qsizetype n)
-void *c_QByteArray__setRawData_char_qsizetype(void *thisObj, const char *a, qsizetype n);
 // QByteArray::shrink_to_fit()
 void c_QByteArray__shrink_to_fit(void *thisObj);
 // QByteArray::simplified()
 void *c_QByteArray__simplified(void *thisObj);
 // QByteArray::size() const
-qsizetype c_QByteArray__size(void *thisObj);
-// QByteArray::sliced(qsizetype pos) const
-void *c_QByteArray__sliced_qsizetype(void *thisObj, qsizetype pos);
-// QByteArray::sliced(qsizetype pos, qsizetype n) const
-void *c_QByteArray__sliced_qsizetype_qsizetype(void *thisObj, qsizetype pos, qsizetype n);
+int c_QByteArray__size(void *thisObj);
 // QByteArray::squeeze()
 void c_QByteArray__squeeze(void *thisObj);
+// QByteArray::startsWith(const QByteArray & a) const
+bool c_QByteArray__startsWith_QByteArray(void *thisObj, void *a_);
+// QByteArray::startsWith(const char * c) const
+bool c_QByteArray__startsWith_char(void *thisObj, const char *c);
 // QByteArray::toBase64() const
 void *c_QByteArray__toBase64(void *thisObj);
+// QByteArray::toHex() const
+void *c_QByteArray__toHex(void *thisObj);
 // QByteArray::toLower()
 void *c_QByteArray__toLower(void *thisObj);
 // QByteArray::toUpper()
 void *c_QByteArray__toUpper(void *thisObj);
 // QByteArray::trimmed()
 void *c_QByteArray__trimmed(void *thisObj);
-// QByteArray::truncate(qsizetype pos)
-void c_QByteArray__truncate_qsizetype(void *thisObj, qsizetype pos);
+// QByteArray::truncate(int pos)
+void c_QByteArray__truncate_int(void *thisObj, int pos);
 void c_QByteArray__destructor(void *thisObj);
 void c_QByteArray_Finalizer(void *cppObj); // KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)
 void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1);
+// KDDockWidgets::spdlogLoggerName()
+const char *c_static_KDDockWidgets__spdlogLoggerName();
 void c_KDDockWidgets_Finalizer(void *cppObj); // KDDockWidgets::flutter::asView_flutter(KDDockWidgets::Core::Controller * controller)
 void *c_static_KDDockWidgets__flutter__asView_flutter_Controller(void *controller_);
 // KDDockWidgets::flutter::asView_flutter(KDDockWidgets::Core::View * view)
@@ -840,9 +870,7 @@ void c_KDDockWidgets__Core__Platform__uninstallMessageHandler(void *thisObj);
 bool c_KDDockWidgets__Core__Platform__usesFallbackMouseGrabber(void *thisObj);
 void c_KDDockWidgets__Core__Platform__destructor(void *thisObj);
 int c_static_KDDockWidgets__Core__Platform___get_s_logicalDpiFactorOverride();
-int c_KDDockWidgets__Core__Platform___get_m_numWarningsEmitted(void *thisObj);
 void c_static_KDDockWidgets__Core__Platform___set_s_logicalDpiFactorOverride_int(int s_logicalDpiFactorOverride_);
-void c_KDDockWidgets__Core__Platform___set_m_numWarningsEmitted_int(void *thisObj, int m_numWarningsEmitted_);
 void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__Core__Platform_Finalizer(void *cppObj); // KDDockWidgets::flutter::Platform::Platform()
 void *c_KDDockWidgets__flutter__Platform__constructor();

@@ -100,4 +100,13 @@ initFrontend(int arg__1) {
           'c_static_KDDockWidgets__initFrontend_FrontendType')
       .asFunction();
   func(arg__1);
+} // spdlogLoggerName()
+
+String spdlogLoggerName() {
+  final string_Func_void func = _dylib
+      .lookup<ffi.NativeFunction<string_Func_void_FFI>>(
+          'c_static_KDDockWidgets__spdlogLoggerName')
+      .asFunction();
+  ffi.Pointer<Utf8> result = func();
+  return result.toDartString();
 }

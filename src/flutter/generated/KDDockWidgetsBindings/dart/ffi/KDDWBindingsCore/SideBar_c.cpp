@@ -11,7 +11,7 @@
 #include "SideBar_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {
@@ -168,7 +168,7 @@ void c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback(void *ptr, vo
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 811:
+    case 827:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::SideBar_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

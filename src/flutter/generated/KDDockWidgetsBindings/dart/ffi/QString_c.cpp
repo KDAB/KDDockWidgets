@@ -11,7 +11,7 @@
 #include "QString_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {
@@ -39,6 +39,38 @@ QString QString_wrapper::arg(const QString &a, int fieldWidth) const
 {
     return ::QString::arg(a, fieldWidth);
 }
+QString QString_wrapper::arg(const QString &a1, const QString &a2) const
+{
+    return ::QString::arg(a1, a2);
+}
+QString QString_wrapper::arg(const QString &a1, const QString &a2, const QString &a3) const
+{
+    return ::QString::arg(a1, a2, a3);
+}
+QString QString_wrapper::arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4) const
+{
+    return ::QString::arg(a1, a2, a3, a4);
+}
+QString QString_wrapper::arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5) const
+{
+    return ::QString::arg(a1, a2, a3, a4, a5);
+}
+QString QString_wrapper::arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5, const QString &a6) const
+{
+    return ::QString::arg(a1, a2, a3, a4, a5, a6);
+}
+QString QString_wrapper::arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5, const QString &a6, const QString &a7) const
+{
+    return ::QString::arg(a1, a2, a3, a4, a5, a6, a7);
+}
+QString QString_wrapper::arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5, const QString &a6, const QString &a7, const QString &a8) const
+{
+    return ::QString::arg(a1, a2, a3, a4, a5, a6, a7, a8);
+}
+QString QString_wrapper::arg(const QString &a1, const QString &a2, const QString &a3, const QString &a4, const QString &a5, const QString &a6, const QString &a7, const QString &a8, const QString &a9) const
+{
+    return ::QString::arg(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+}
 QString QString_wrapper::arg(int a, int fieldWidth, int base) const
 {
     return ::QString::arg(a, fieldWidth, base);
@@ -59,15 +91,15 @@ QString QString_wrapper::asprintf(const char *format)
 {
     return ::QString::asprintf(format);
 }
-qsizetype QString_wrapper::capacity() const
+int QString_wrapper::capacity() const
 {
     return ::QString::capacity();
 }
-void QString_wrapper::chop(qsizetype n)
+void QString_wrapper::chop(int n)
 {
     ::QString::chop(n);
 }
-QString QString_wrapper::chopped(qsizetype n) const
+QString QString_wrapper::chopped(int n) const
 {
     return ::QString::chopped(n);
 }
@@ -87,7 +119,11 @@ bool QString_wrapper::contains(const QString &s) const
 {
     return ::QString::contains(s);
 }
-qsizetype QString_wrapper::count(const QString &s) const
+int QString_wrapper::count() const
+{
+    return ::QString::count();
+}
+int QString_wrapper::count(const QString &s) const
 {
     return ::QString::count(s);
 }
@@ -99,27 +135,35 @@ bool QString_wrapper::endsWith(const QString &s) const
 {
     return ::QString::endsWith(s);
 }
-QString QString_wrapper::first(qsizetype n) const
+QString QString_wrapper::fromLatin1(const QByteArray &str)
 {
-    return ::QString::first(n);
+    return ::QString::fromLatin1(str);
 }
-QString QString_wrapper::fromLatin1(const char *str, qsizetype size)
+QString QString_wrapper::fromLatin1(const char *str, int size)
 {
     return ::QString::fromLatin1(str, size);
 }
-QString QString_wrapper::fromLocal8Bit(const char *str, qsizetype size)
+QString QString_wrapper::fromLocal8Bit(const QByteArray &str)
+{
+    return ::QString::fromLocal8Bit(str);
+}
+QString QString_wrapper::fromLocal8Bit(const char *str, int size)
 {
     return ::QString::fromLocal8Bit(str, size);
 }
-QString QString_wrapper::fromUtf8(const char *utf8, qsizetype size)
+QString QString_wrapper::fromUtf8(const QByteArray &str)
 {
-    return ::QString::fromUtf8(utf8, size);
+    return ::QString::fromUtf8(str);
 }
-qsizetype QString_wrapper::indexOf(const QString &s, qsizetype from) const
+QString QString_wrapper::fromUtf8(const char *str, int size)
+{
+    return ::QString::fromUtf8(str, size);
+}
+int QString_wrapper::indexOf(const QString &s, int from) const
 {
     return ::QString::indexOf(s, from);
 }
-QString &QString_wrapper::insert(qsizetype i, const QString &s)
+QString &QString_wrapper::insert(int i, const QString &s)
 {
     return ::QString::insert(i, s);
 }
@@ -159,27 +203,19 @@ bool QString_wrapper::isValidUtf16() const
 {
     return ::QString::isValidUtf16();
 }
-QString QString_wrapper::last(qsizetype n) const
-{
-    return ::QString::last(n);
-}
-qsizetype QString_wrapper::lastIndexOf(const QString &s) const
-{
-    return ::QString::lastIndexOf(s);
-}
-qsizetype QString_wrapper::lastIndexOf(const QString &s, qsizetype from) const
+int QString_wrapper::lastIndexOf(const QString &s, int from) const
 {
     return ::QString::lastIndexOf(s, from);
 }
-QString QString_wrapper::left(qsizetype n) const
+QString QString_wrapper::left(int n) const
 {
     return ::QString::left(n);
 }
-QString QString_wrapper::leftJustified(qsizetype width) const
+QString QString_wrapper::leftJustified(int width) const
 {
     return ::QString::leftJustified(width);
 }
-qsizetype QString_wrapper::length() const
+int QString_wrapper::length() const
 {
     return ::QString::length();
 }
@@ -191,7 +227,7 @@ int QString_wrapper::localeAwareCompare(const QString &s1, const QString &s2)
 {
     return ::QString::localeAwareCompare(s1, s2);
 }
-QString QString_wrapper::mid(qsizetype position, qsizetype n) const
+QString QString_wrapper::mid(int position, int n) const
 {
     return ::QString::mid(position, n);
 }
@@ -223,23 +259,11 @@ QString &QString_wrapper::remove(const QString &s)
 {
     return ::QString::remove(s);
 }
-QString &QString_wrapper::remove(qsizetype i, qsizetype len)
+QString &QString_wrapper::remove(int i, int len)
 {
     return ::QString::remove(i, len);
 }
-QString &QString_wrapper::removeAt(qsizetype pos)
-{
-    return ::QString::removeAt(pos);
-}
-QString &QString_wrapper::removeFirst()
-{
-    return ::QString::removeFirst();
-}
-QString &QString_wrapper::removeLast()
-{
-    return ::QString::removeLast();
-}
-QString QString_wrapper::repeated(qsizetype times) const
+QString QString_wrapper::repeated(int times) const
 {
     return ::QString::repeated(times);
 }
@@ -247,27 +271,27 @@ QString &QString_wrapper::replace(const QString &before, const QString &after)
 {
     return ::QString::replace(before, after);
 }
-QString &QString_wrapper::replace(qsizetype i, qsizetype len, const QString &after)
+QString &QString_wrapper::replace(int i, int len, const QString &after)
 {
     return ::QString::replace(i, len, after);
 }
-void QString_wrapper::reserve(qsizetype size)
+void QString_wrapper::reserve(int size)
 {
     ::QString::reserve(size);
 }
-void QString_wrapper::resize(qsizetype size)
+void QString_wrapper::resize(int size)
 {
     ::QString::resize(size);
 }
-QString QString_wrapper::right(qsizetype n) const
+QString QString_wrapper::right(int n) const
 {
     return ::QString::right(n);
 }
-QString QString_wrapper::rightJustified(qsizetype width) const
+QString QString_wrapper::rightJustified(int width) const
 {
     return ::QString::rightJustified(width);
 }
-QString QString_wrapper::section(const QString &in_sep, qsizetype start, qsizetype end) const
+QString QString_wrapper::section(const QString &in_sep, int start, int end) const
 {
     return ::QString::section(in_sep, start, end);
 }
@@ -295,17 +319,9 @@ QString QString_wrapper::simplified()
 {
     return ::QString::simplified();
 }
-qsizetype QString_wrapper::size() const
+int QString_wrapper::size() const
 {
     return ::QString::size();
-}
-QString QString_wrapper::sliced(qsizetype pos) const
-{
-    return ::QString::sliced(pos);
-}
-QString QString_wrapper::sliced(qsizetype pos, qsizetype n) const
-{
-    return ::QString::sliced(pos, n);
 }
 void QString_wrapper::squeeze()
 {
@@ -347,7 +363,7 @@ QString QString_wrapper::trimmed()
 {
     return ::QString::trimmed();
 }
-void QString_wrapper::truncate(qsizetype pos)
+void QString_wrapper::truncate(int pos)
 {
     ::QString::truncate(pos);
 }
@@ -386,6 +402,90 @@ void *c_QString__arg_QString_int(void *thisObj, const char *a_, int fieldWidth)
     const auto a = QString::fromUtf8(a_);
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a, fieldWidth) };
 }
+// arg(const QString & a1, const QString & a2) const
+void *c_QString__arg_QString_QString(void *thisObj, const char *a1_, const char *a2_)
+{
+    const auto a1 = QString::fromUtf8(a1_);
+    const auto a2 = QString::fromUtf8(a2_);
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a1, a2) };
+}
+// arg(const QString & a1, const QString & a2, const QString & a3) const
+void *c_QString__arg_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_)
+{
+    const auto a1 = QString::fromUtf8(a1_);
+    const auto a2 = QString::fromUtf8(a2_);
+    const auto a3 = QString::fromUtf8(a3_);
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a1, a2, a3) };
+}
+// arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4) const
+void *c_QString__arg_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_)
+{
+    const auto a1 = QString::fromUtf8(a1_);
+    const auto a2 = QString::fromUtf8(a2_);
+    const auto a3 = QString::fromUtf8(a3_);
+    const auto a4 = QString::fromUtf8(a4_);
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a1, a2, a3, a4) };
+}
+// arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5) const
+void *c_QString__arg_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_)
+{
+    const auto a1 = QString::fromUtf8(a1_);
+    const auto a2 = QString::fromUtf8(a2_);
+    const auto a3 = QString::fromUtf8(a3_);
+    const auto a4 = QString::fromUtf8(a4_);
+    const auto a5 = QString::fromUtf8(a5_);
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a1, a2, a3, a4, a5) };
+}
+// arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6) const
+void *c_QString__arg_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_)
+{
+    const auto a1 = QString::fromUtf8(a1_);
+    const auto a2 = QString::fromUtf8(a2_);
+    const auto a3 = QString::fromUtf8(a3_);
+    const auto a4 = QString::fromUtf8(a4_);
+    const auto a5 = QString::fromUtf8(a5_);
+    const auto a6 = QString::fromUtf8(a6_);
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a1, a2, a3, a4, a5, a6) };
+}
+// arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7) const
+void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_)
+{
+    const auto a1 = QString::fromUtf8(a1_);
+    const auto a2 = QString::fromUtf8(a2_);
+    const auto a3 = QString::fromUtf8(a3_);
+    const auto a4 = QString::fromUtf8(a4_);
+    const auto a5 = QString::fromUtf8(a5_);
+    const auto a6 = QString::fromUtf8(a6_);
+    const auto a7 = QString::fromUtf8(a7_);
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a1, a2, a3, a4, a5, a6, a7) };
+}
+// arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8) const
+void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_, const char *a8_)
+{
+    const auto a1 = QString::fromUtf8(a1_);
+    const auto a2 = QString::fromUtf8(a2_);
+    const auto a3 = QString::fromUtf8(a3_);
+    const auto a4 = QString::fromUtf8(a4_);
+    const auto a5 = QString::fromUtf8(a5_);
+    const auto a6 = QString::fromUtf8(a6_);
+    const auto a7 = QString::fromUtf8(a7_);
+    const auto a8 = QString::fromUtf8(a8_);
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a1, a2, a3, a4, a5, a6, a7, a8) };
+}
+// arg(const QString & a1, const QString & a2, const QString & a3, const QString & a4, const QString & a5, const QString & a6, const QString & a7, const QString & a8, const QString & a9) const
+void *c_QString__arg_QString_QString_QString_QString_QString_QString_QString_QString_QString(void *thisObj, const char *a1_, const char *a2_, const char *a3_, const char *a4_, const char *a5_, const char *a6_, const char *a7_, const char *a8_, const char *a9_)
+{
+    const auto a1 = QString::fromUtf8(a1_);
+    const auto a2 = QString::fromUtf8(a2_);
+    const auto a3 = QString::fromUtf8(a3_);
+    const auto a4 = QString::fromUtf8(a4_);
+    const auto a5 = QString::fromUtf8(a5_);
+    const auto a6 = QString::fromUtf8(a6_);
+    const auto a7 = QString::fromUtf8(a7_);
+    const auto a8 = QString::fromUtf8(a8_);
+    const auto a9 = QString::fromUtf8(a9_);
+    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->arg(a1, a2, a3, a4, a5, a6, a7, a8, a9) };
+}
 // arg(int a, int fieldWidth, int base) const
 void *c_QString__arg_int_int_int(void *thisObj, int a, int fieldWidth, int base)
 {
@@ -412,17 +512,17 @@ void *c_static_QString__asprintf_char(const char *format)
     return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::asprintf(format) };
 }
 // capacity() const
-qsizetype c_QString__capacity(void *thisObj)
+int c_QString__capacity(void *thisObj)
 {
     return fromPtr(thisObj)->capacity();
 }
-// chop(qsizetype n)
-void c_QString__chop_qsizetype(void *thisObj, qsizetype n)
+// chop(int n)
+void c_QString__chop_int(void *thisObj, int n)
 {
     fromPtr(thisObj)->chop(n);
 }
-// chopped(qsizetype n) const
-void *c_QString__chopped_qsizetype(void *thisObj, qsizetype n)
+// chopped(int n) const
+void *c_QString__chopped_int(void *thisObj, int n)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->chopped(n) };
 }
@@ -450,8 +550,13 @@ bool c_QString__contains_QString(void *thisObj, const char *s_)
     const auto s = QString::fromUtf8(s_);
     return fromPtr(thisObj)->contains(s);
 }
+// count() const
+int c_QString__count(void *thisObj)
+{
+    return fromPtr(thisObj)->count();
+}
 // count(const QString & s) const
-qsizetype c_QString__count_QString(void *thisObj, const char *s_)
+int c_QString__count_QString(void *thisObj, const char *s_)
 {
     const auto s = QString::fromUtf8(s_);
     return fromPtr(thisObj)->count(s);
@@ -467,34 +572,50 @@ bool c_QString__endsWith_QString(void *thisObj, const char *s_)
     const auto s = QString::fromUtf8(s_);
     return fromPtr(thisObj)->endsWith(s);
 }
-// first(qsizetype n) const
-void *c_QString__first_qsizetype(void *thisObj, qsizetype n)
+// fromLatin1(const QByteArray & str)
+void *c_static_QString__fromLatin1_QByteArray(void *str_)
 {
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->first(n) };
+    assert(str_);
+    auto &str = *reinterpret_cast<QByteArray *>(str_);
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromLatin1(str) };
 }
-// fromLatin1(const char * str, qsizetype size)
-void *c_static_QString__fromLatin1_char_qsizetype(const char *str, qsizetype size)
+// fromLatin1(const char * str, int size)
+void *c_static_QString__fromLatin1_char_int(const char *str, int size)
 {
     return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromLatin1(str, size) };
 }
-// fromLocal8Bit(const char * str, qsizetype size)
-void *c_static_QString__fromLocal8Bit_char_qsizetype(const char *str, qsizetype size)
+// fromLocal8Bit(const QByteArray & str)
+void *c_static_QString__fromLocal8Bit_QByteArray(void *str_)
+{
+    assert(str_);
+    auto &str = *reinterpret_cast<QByteArray *>(str_);
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromLocal8Bit(str) };
+}
+// fromLocal8Bit(const char * str, int size)
+void *c_static_QString__fromLocal8Bit_char_int(const char *str, int size)
 {
     return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromLocal8Bit(str, size) };
 }
-// fromUtf8(const char * utf8, qsizetype size)
-void *c_static_QString__fromUtf8_char_qsizetype(const char *utf8, qsizetype size)
+// fromUtf8(const QByteArray & str)
+void *c_static_QString__fromUtf8_QByteArray(void *str_)
 {
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromUtf8(utf8, size) };
+    assert(str_);
+    auto &str = *reinterpret_cast<QByteArray *>(str_);
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromUtf8(str) };
 }
-// indexOf(const QString & s, qsizetype from) const
-qsizetype c_QString__indexOf_QString_qsizetype(void *thisObj, const char *s_, qsizetype from)
+// fromUtf8(const char * str, int size)
+void *c_static_QString__fromUtf8_char_int(const char *str, int size)
+{
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromUtf8(str, size) };
+}
+// indexOf(const QString & s, int from) const
+int c_QString__indexOf_QString_int(void *thisObj, const char *s_, int from)
 {
     const auto s = QString::fromUtf8(s_);
     return fromPtr(thisObj)->indexOf(s, from);
 }
-// insert(qsizetype i, const QString & s)
-void *c_QString__insert_qsizetype_QString(void *thisObj, qsizetype i, const char *s_)
+// insert(int i, const QString & s)
+void *c_QString__insert_int_QString(void *thisObj, int i, const char *s_)
 {
     const auto s = QString::fromUtf8(s_);
     return &fromPtr(thisObj)->insert(i, s);
@@ -545,35 +666,24 @@ bool c_QString__isValidUtf16(void *thisObj)
 {
     return fromPtr(thisObj)->isValidUtf16();
 }
-// last(qsizetype n) const
-void *c_QString__last_qsizetype(void *thisObj, qsizetype n)
-{
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->last(n) };
-}
-// lastIndexOf(const QString & s) const
-qsizetype c_QString__lastIndexOf_QString(void *thisObj, const char *s_)
-{
-    const auto s = QString::fromUtf8(s_);
-    return fromPtr(thisObj)->lastIndexOf(s);
-}
-// lastIndexOf(const QString & s, qsizetype from) const
-qsizetype c_QString__lastIndexOf_QString_qsizetype(void *thisObj, const char *s_, qsizetype from)
+// lastIndexOf(const QString & s, int from) const
+int c_QString__lastIndexOf_QString_int(void *thisObj, const char *s_, int from)
 {
     const auto s = QString::fromUtf8(s_);
     return fromPtr(thisObj)->lastIndexOf(s, from);
 }
-// left(qsizetype n) const
-void *c_QString__left_qsizetype(void *thisObj, qsizetype n)
+// left(int n) const
+void *c_QString__left_int(void *thisObj, int n)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->left(n) };
 }
-// leftJustified(qsizetype width) const
-void *c_QString__leftJustified_qsizetype(void *thisObj, qsizetype width)
+// leftJustified(int width) const
+void *c_QString__leftJustified_int(void *thisObj, int width)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->leftJustified(width) };
 }
 // length() const
-qsizetype c_QString__length(void *thisObj)
+int c_QString__length(void *thisObj)
 {
     return fromPtr(thisObj)->length();
 }
@@ -590,8 +700,8 @@ int c_static_QString__localeAwareCompare_QString_QString(const char *s1_, const 
     const auto s2 = QString::fromUtf8(s2_);
     return KDDockWidgetsBindings_wrappersNS::QString_wrapper::localeAwareCompare(s1, s2);
 }
-// mid(qsizetype position, qsizetype n) const
-void *c_QString__mid_qsizetype_qsizetype(void *thisObj, qsizetype position, qsizetype n)
+// mid(int position, int n) const
+void *c_QString__mid_int_int(void *thisObj, int position, int n)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->mid(position, n) };
 }
@@ -634,28 +744,13 @@ void *c_QString__remove_QString(void *thisObj, const char *s_)
     const auto s = QString::fromUtf8(s_);
     return &fromPtr(thisObj)->remove(s);
 }
-// remove(qsizetype i, qsizetype len)
-void *c_QString__remove_qsizetype_qsizetype(void *thisObj, qsizetype i, qsizetype len)
+// remove(int i, int len)
+void *c_QString__remove_int_int(void *thisObj, int i, int len)
 {
     return &fromPtr(thisObj)->remove(i, len);
 }
-// removeAt(qsizetype pos)
-void *c_QString__removeAt_qsizetype(void *thisObj, qsizetype pos)
-{
-    return &fromPtr(thisObj)->removeAt(pos);
-}
-// removeFirst()
-void *c_QString__removeFirst(void *thisObj)
-{
-    return &fromPtr(thisObj)->removeFirst();
-}
-// removeLast()
-void *c_QString__removeLast(void *thisObj)
-{
-    return &fromPtr(thisObj)->removeLast();
-}
-// repeated(qsizetype times) const
-void *c_QString__repeated_qsizetype(void *thisObj, qsizetype times)
+// repeated(int times) const
+void *c_QString__repeated_int(void *thisObj, int times)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->repeated(times) };
 }
@@ -666,34 +761,34 @@ void *c_QString__replace_QString_QString(void *thisObj, const char *before_, con
     const auto after = QString::fromUtf8(after_);
     return &fromPtr(thisObj)->replace(before, after);
 }
-// replace(qsizetype i, qsizetype len, const QString & after)
-void *c_QString__replace_qsizetype_qsizetype_QString(void *thisObj, qsizetype i, qsizetype len, const char *after_)
+// replace(int i, int len, const QString & after)
+void *c_QString__replace_int_int_QString(void *thisObj, int i, int len, const char *after_)
 {
     const auto after = QString::fromUtf8(after_);
     return &fromPtr(thisObj)->replace(i, len, after);
 }
-// reserve(qsizetype size)
-void c_QString__reserve_qsizetype(void *thisObj, qsizetype size)
+// reserve(int size)
+void c_QString__reserve_int(void *thisObj, int size)
 {
     fromPtr(thisObj)->reserve(size);
 }
-// resize(qsizetype size)
-void c_QString__resize_qsizetype(void *thisObj, qsizetype size)
+// resize(int size)
+void c_QString__resize_int(void *thisObj, int size)
 {
     fromPtr(thisObj)->resize(size);
 }
-// right(qsizetype n) const
-void *c_QString__right_qsizetype(void *thisObj, qsizetype n)
+// right(int n) const
+void *c_QString__right_int(void *thisObj, int n)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->right(n) };
 }
-// rightJustified(qsizetype width) const
-void *c_QString__rightJustified_qsizetype(void *thisObj, qsizetype width)
+// rightJustified(int width) const
+void *c_QString__rightJustified_int(void *thisObj, int width)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->rightJustified(width) };
 }
-// section(const QString & in_sep, qsizetype start, qsizetype end) const
-void *c_QString__section_QString_qsizetype_qsizetype(void *thisObj, const char *in_sep_, qsizetype start, qsizetype end)
+// section(const QString & in_sep, int start, int end) const
+void *c_QString__section_QString_int_int(void *thisObj, const char *in_sep_, int start, int end)
 {
     const auto in_sep = QString::fromUtf8(in_sep_);
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->section(in_sep, start, end) };
@@ -729,19 +824,9 @@ void *c_QString__simplified(void *thisObj)
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->simplified() };
 }
 // size() const
-qsizetype c_QString__size(void *thisObj)
+int c_QString__size(void *thisObj)
 {
     return fromPtr(thisObj)->size();
-}
-// sliced(qsizetype pos) const
-void *c_QString__sliced_qsizetype(void *thisObj, qsizetype pos)
-{
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->sliced(pos) };
-}
-// sliced(qsizetype pos, qsizetype n) const
-void *c_QString__sliced_qsizetype_qsizetype(void *thisObj, qsizetype pos, qsizetype n)
-{
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->sliced(pos, n) };
 }
 // squeeze()
 void c_QString__squeeze(void *thisObj)
@@ -794,8 +879,8 @@ void *c_QString__trimmed(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->trimmed() };
 }
-// truncate(qsizetype pos)
-void c_QString__truncate_qsizetype(void *thisObj, qsizetype pos)
+// truncate(int pos)
+void c_QString__truncate_int(void *thisObj, int pos)
 {
     fromPtr(thisObj)->truncate(pos);
 }

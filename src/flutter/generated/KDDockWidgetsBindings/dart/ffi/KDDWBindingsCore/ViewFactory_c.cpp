@@ -11,7 +11,7 @@
 #include "ViewFactory_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {
@@ -38,13 +38,13 @@ KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::c
         const void *thisPtr = this;
         return m_createClassicIndicatorWindowCallback(const_cast<void *>(thisPtr), arg__1, parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *ViewFactory_wrapper::createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createDockWidget(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
@@ -53,13 +53,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createDockWidget(const QString &
         const void *thisPtr = this;
         return m_createDockWidgetCallback(const_cast<void *>(thisPtr), uniqueName, options, layoutSaverOptions, windowFlags);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createDockWidget_nocallback(const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createDropArea(KDDockWidgets::Core::DropArea *arg__1, KDDockWidgets::Core::View *parent) const
@@ -68,13 +68,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createDropArea(KDDockWidgets::Co
         const void *thisPtr = this;
         return m_createDropAreaCallback(const_cast<void *>(thisPtr), arg__1, parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createDropArea_nocallback(KDDockWidgets::Core::DropArea *arg__1, KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createFloatingWindow(KDDockWidgets::Core::FloatingWindow *controller, KDDockWidgets::Core::MainWindow *parent, Qt::WindowFlags windowFlags) const
@@ -83,13 +83,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createFloatingWindow(KDDockWidge
         const void *thisPtr = this;
         return m_createFloatingWindowCallback(const_cast<void *>(thisPtr), controller, parent, windowFlags);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createFloatingWindow_nocallback(KDDockWidgets::Core::FloatingWindow *controller, KDDockWidgets::Core::MainWindow *parent, Qt::WindowFlags windowFlags) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createGroup(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::Core::View *parent) const
@@ -98,13 +98,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createGroup(KDDockWidgets::Core:
         const void *thisPtr = this;
         return m_createGroupCallback(const_cast<void *>(thisPtr), arg__1, parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createGroup_nocallback(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createRubberBand(KDDockWidgets::Core::View *parent) const
@@ -113,13 +113,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createRubberBand(KDDockWidgets::
         const void *thisPtr = this;
         return m_createRubberBandCallback(const_cast<void *>(thisPtr), parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createRubberBand_nocallback(KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createSeparator(KDDockWidgets::Core::Separator *arg__1, KDDockWidgets::Core::View *parent) const
@@ -128,13 +128,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createSeparator(KDDockWidgets::C
         const void *thisPtr = this;
         return m_createSeparatorCallback(const_cast<void *>(thisPtr), arg__1, parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createSeparator_nocallback(KDDockWidgets::Core::Separator *arg__1, KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createSideBar(KDDockWidgets::Core::SideBar *arg__1, KDDockWidgets::Core::View *parent) const
@@ -143,13 +143,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createSideBar(KDDockWidgets::Cor
         const void *thisPtr = this;
         return m_createSideBarCallback(const_cast<void *>(thisPtr), arg__1, parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createSideBar_nocallback(KDDockWidgets::Core::SideBar *arg__1, KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createStack(KDDockWidgets::Core::Stack *stack, KDDockWidgets::Core::View *parent) const
@@ -158,13 +158,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createStack(KDDockWidgets::Core:
         const void *thisPtr = this;
         return m_createStackCallback(const_cast<void *>(thisPtr), stack, parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createStack_nocallback(KDDockWidgets::Core::Stack *stack, KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createTabBar(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::Core::View *parent) const
@@ -173,13 +173,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createTabBar(KDDockWidgets::Core
         const void *thisPtr = this;
         return m_createTabBarCallback(const_cast<void *>(thisPtr), tabBar, parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createTabBar_nocallback(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createTitleBar(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent) const
@@ -188,13 +188,13 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createTitleBar(KDDockWidgets::Co
         const void *thisPtr = this;
         return m_createTitleBarCallback(const_cast<void *>(thisPtr), controller, parent);
     } else {
-        qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *ViewFactory_wrapper::createTitleBar_nocallback(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent) const
 {
-    qWarning() << Q_FUNC_INFO << "Warning: Calling pure-virtual";
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
 QString ViewFactory_wrapper::tr(const char *s, const char *c, int n)
@@ -315,37 +315,37 @@ void c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback(void *ptr
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 596:
+    case 609:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createClassicIndicatorWindow>(callback);
         break;
-    case 597:
+    case 610:
         wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createDockWidget>(callback);
         break;
-    case 598:
+    case 611:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createDropArea>(callback);
         break;
-    case 599:
+    case 612:
         wrapper->m_createFloatingWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createFloatingWindow>(callback);
         break;
-    case 600:
+    case 613:
         wrapper->m_createGroupCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createGroup>(callback);
         break;
-    case 601:
+    case 614:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createRubberBand>(callback);
         break;
-    case 602:
+    case 615:
         wrapper->m_createSeparatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createSeparator>(callback);
         break;
-    case 603:
+    case 616:
         wrapper->m_createSideBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createSideBar>(callback);
         break;
-    case 604:
+    case 617:
         wrapper->m_createStackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createStack>(callback);
         break;
-    case 605:
+    case 618:
         wrapper->m_createTabBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createTabBar>(callback);
         break;
-    case 606:
+    case 619:
         wrapper->m_createTitleBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::Callback_createTitleBar>(callback);
         break;
     }

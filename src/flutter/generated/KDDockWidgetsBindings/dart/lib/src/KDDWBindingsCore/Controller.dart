@@ -134,7 +134,7 @@ class Controller extends QObject {
   setParentView_impl(KDDWBindingsCore.View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(811))
+            cFunctionSymbolName(827))
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
@@ -240,7 +240,7 @@ class Controller extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 811:
+      case 827:
         return "c_KDDockWidgets__Core__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -248,7 +248,7 @@ class Controller extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 811:
+      case 827:
         return "setParentView_impl";
     }
     throw Error();
@@ -260,9 +260,9 @@ class Controller extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback')
         .asFunction();
-    final callback811 =
+    final callback827 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback811, 811);
+    registerCallback(thisCpp, callback827, 827);
   }
 }

@@ -120,15 +120,7 @@ class QObject implements ffi.Finalizable {
             receiver == null ? ffi.nullptr : receiver.thisCpp,
             member?.toNativeUtf8() ?? ffi.nullptr) !=
         0;
-  } // doSetObjectName(const QString & name)
-
-  doSetObjectName(String? name) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_QObject__doSetObjectName_QString')
-        .asFunction();
-    func(thisCpp, name?.toNativeUtf8() ?? ffi.nullptr);
-  } // dumpObjectInfo() const
+  } // dumpObjectInfo()
 
   dumpObjectInfo() {
     final void_Func_voidstar func = _dylib
@@ -136,7 +128,7 @@ class QObject implements ffi.Finalizable {
             'c_QObject__dumpObjectInfo')
         .asFunction();
     func(thisCpp);
-  } // dumpObjectTree() const
+  } // dumpObjectTree()
 
   dumpObjectTree() {
     final void_Func_voidstar func = _dylib
@@ -160,14 +152,6 @@ class QObject implements ffi.Finalizable {
             'c_QObject__installEventFilter_QObject')
         .asFunction();
     func(thisCpp, filterObj == null ? ffi.nullptr : filterObj.thisCpp);
-  } // isQuickItemType() const
-
-  bool isQuickItemType() {
-    final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_QObject__isQuickItemType')
-        .asFunction();
-    return func(thisCpp) != 0;
   } // isWidgetType() const
 
   bool isWidgetType() {
@@ -243,6 +227,14 @@ class QObject implements ffi.Finalizable {
             'c_QObject__senderSignalIndex')
         .asFunction();
     return func(thisCpp);
+  } // setObjectName(const QString & name)
+
+  setObjectName(String? name) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_QObject__setObjectName_QString')
+        .asFunction();
+    func(thisCpp, name?.toNativeUtf8() ?? ffi.nullptr);
   } // setParent(QObject * parent)
 
   setParent(QObject? parent) {

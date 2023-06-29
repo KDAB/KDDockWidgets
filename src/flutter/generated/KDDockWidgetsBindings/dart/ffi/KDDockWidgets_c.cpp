@@ -11,7 +11,7 @@
 #include "KDDockWidgets_c.h"
 
 
-#include <QDebug>
+#include <iostream>
 
 
 namespace Dartagnan {
@@ -31,5 +31,10 @@ extern "C" {
 void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1)
 {
     KDDockWidgets::initFrontend(static_cast<KDDockWidgets::FrontendType>(arg__1));
+}
+// spdlogLoggerName()
+const char *c_static_KDDockWidgets__spdlogLoggerName()
+{
+    return KDDockWidgets::spdlogLoggerName();
 }
 }

@@ -30,6 +30,7 @@ export 'src/KDDockWidgets.dart'
         qt_getEnumName,
         qt_getEnumName,
         qt_getEnumName,
+        spdlogLoggerName,
         KDDockWidgets_Location,
         KDDockWidgets_MainWindowOption,
         KDDockWidgets_DockWidgetOption,
