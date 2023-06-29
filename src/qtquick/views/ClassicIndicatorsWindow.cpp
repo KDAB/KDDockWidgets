@@ -67,7 +67,6 @@ static QString iconName(DropLocation loc, bool active)
 }
 }
 
-
 IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndicators)
     : QQuickView()
     , m_classicIndicators(classicIndicators)
@@ -79,9 +78,6 @@ IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndic
                                       QVariant::fromValue<QObject *>(this));
     setSource(
         QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
-
-    connect(classicIndicators, &ClassicDropIndicatorOverlay::indicatorsVisibleChanged, this,
-            &IndicatorWindow::indicatorsVisibleChanged);
 
     connect(classicIndicators, &ClassicDropIndicatorOverlay::hoveredGroupRectChanged, this,
             &IndicatorWindow::hoveredGroupRectChanged);
@@ -113,6 +109,11 @@ DropLocation IndicatorWindow::hover(QPoint pt)
 {
     QQuickItem *item = indicatorForPos(pt);
     return item ? locationForIndicator(item) : DropLocation_None;
+}
+
+void IndicatorWindow::updateIndicatorVisibility()
+{
+    Q_EMIT indicatorsVisibleChanged();
 }
 
 QQuickItem *IndicatorWindow::indicatorForPos(QPoint pt) const

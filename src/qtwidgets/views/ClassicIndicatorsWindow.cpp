@@ -154,11 +154,6 @@ IndicatorWindow::IndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators_
 
     setAttribute(Qt::WA_TranslucentBackground);
 
-    connect(classicIndicators, &ClassicDropIndicatorOverlay::indicatorsVisibleChanged, this,
-            &IndicatorWindow::updateIndicatorVisibility);
-    connect(classicIndicators, &ClassicDropIndicatorOverlay::indicatorsVisibleChanged, this,
-            &IndicatorWindow::updateIndicatorVisibility);
-
     m_indicators << m_center << m_left << m_right << m_top << m_bottom << m_outterBottom
                  << m_outterTop << m_outterLeft << m_outterRight;
 }

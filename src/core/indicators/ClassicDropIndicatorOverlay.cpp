@@ -79,7 +79,7 @@ void ClassicDropIndicatorOverlay::updateVisibility()
         m_indicatorWindow->setVisible(false);
     }
 
-    Q_EMIT indicatorsVisibleChanged();
+    m_indicatorWindow->updateIndicatorVisibility();
 }
 
 Core::ClassicIndicatorWindowViewInterface *ClassicDropIndicatorOverlay::indicatorWindow() const

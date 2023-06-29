@@ -44,9 +44,9 @@ public:
     void setGeometry(QRect) override;
     void resize(QSize) override;
     void setObjectName(const QString &) override;
+    void updateIndicatorVisibility() override;
 
 private:
-    void updateIndicatorVisibility();
     void resizeEvent(QResizeEvent *ev) override;
 
     // When the compositor doesn't support translucency, we use a mask instead

@@ -76,6 +76,8 @@ public:
     QRect hoveredGroupRect() const;
     DropLocation currentDropLocation() const;
 
+    void updateIndicatorVisibility() override;
+
 Q_SIGNALS:
     void indicatorsVisibleChanged();
     void hoveredGroupRectChanged();

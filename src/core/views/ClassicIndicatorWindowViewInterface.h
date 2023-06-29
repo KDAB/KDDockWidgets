@@ -54,6 +54,7 @@ public:
     virtual void resize(QSize) = 0;
     virtual void setGeometry(QRect) = 0;
     virtual bool isWindow() const = 0;
+    virtual void updateIndicatorVisibility() = 0;
 };
 
 }

@@ -38,9 +38,6 @@ public:
     Core::ClassicIndicatorWindowViewInterface *indicatorWindow() const;
     View *rubberBand() const;
 
-Q_SIGNALS:
-    void indicatorsVisibleChanged();
-
 private:
     friend class KDDockWidgets::Indicator;
     bool rubberBandIsTopLevel() const;
