@@ -811,7 +811,7 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
     if (!w)
         return false;
 
-    KDDW_TRACE("DragController::onMouseEvent e={} ; nonClientDrag={}", me->type(), m_nonClientDrag);
+    KDDW_TRACE("DragController::onMouseEvent e={} ; nonClientDrag={}", int(me->type()), m_nonClientDrag);
 
     switch (me->type()) {
     case Event::NonClientAreaMouseButtonPress: {

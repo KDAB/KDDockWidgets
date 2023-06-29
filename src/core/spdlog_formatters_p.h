@@ -114,6 +114,59 @@ struct fmt::formatter<QVector<T>>
     }
 };
 
+template<typename F>
+struct fmt::formatter<QFlags<F>>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(QFlags<F> flags, FormatContext &ctx)
+    {
+
+        auto out = ctx.out();
+        out = fmt::format_to(out, "{}", ( int )flags);
+        return out;
+    }
+};
+
+namespace KDDockWidgets {
+template<typename Enum, FMT_ENABLE_IF(std::is_enum<Enum>::value)>
+constexpr auto format_as(Enum e) noexcept -> fmt::underlying_t<Enum>
+{
+    return static_cast<fmt::underlying_t<Enum>>(e);
+}
+namespace Core {
+template<typename Enum, FMT_ENABLE_IF(std::is_enum<Enum>::value)>
+constexpr auto format_as(Enum e) noexcept -> fmt::underlying_t<Enum>
+{
+    return static_cast<fmt::underlying_t<Enum>>(e);
+}
+}
+}
+
+template<>
+struct fmt::formatter<Qt::Orientation>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(Qt::Orientation o, FormatContext &ctx)
+    {
+        if (o == Qt::Horizontal) {
+            return fmt::format_to(ctx.out(), "Horizontal");
+        } else if (o == Qt::Vertical) {
+            return fmt::format_to(ctx.out(), "Vertical");
+        } else {
+            return fmt::format_to(ctx.out(), "InvalidOrientation!");
+        }
+    }
+};
 
 template<>
 struct fmt::formatter<KDDockWidgets::DropLocation>
