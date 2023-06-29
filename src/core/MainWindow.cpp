@@ -18,6 +18,7 @@
  */
 
 #include "MainWindow.h"
+#include "MainWindow_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "DockRegistry.h"
 #include "Layout_p.h"
@@ -48,92 +49,6 @@ static Layout *createLayout(MainWindow *mainWindow, MainWindowOptions options)
 
     return new DropArea(mainWindow->view(), options);
 }
-
-class MainWindow::Private
-{
-public:
-    explicit Private(MainWindow *mainWindow, const QString &, MainWindowOptions options)
-        : m_options(options)
-        , q(mainWindow)
-        , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
-    {
-    }
-
-    void init()
-    {
-        if (m_supportsAutoHide) {
-            for (auto location : { SideBarLocation::North, SideBarLocation::East,
-                                   SideBarLocation::West, SideBarLocation::South }) {
-                m_sideBars[location] = new Core::SideBar(location, q);
-            }
-        }
-    }
-
-    bool supportsCentralFrame() const
-    {
-        return m_options & MainWindowOption_HasCentralFrame;
-    }
-
-    bool supportsPersistentCentralWidget() const
-    {
-        if (!dropArea()) {
-            // This is the MDI case
-            return false;
-        }
-
-        return (m_options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
-    }
-
-    Core::DockWidget *createPersistentCentralDockWidget(const QString &uniqueName) const
-    {
-        if (!supportsPersistentCentralWidget())
-            return nullptr;
-
-        auto dockView = Config::self().viewFactory()->createDockWidget(
-            QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
-        auto dw = dockView->asDockWidgetController();
-        dw->dptr()->m_isPersistentCentralDockWidget = true;
-        Core::Group *group = dropArea()->centralGroup();
-        if (!group) {
-            KDDW_ERROR("Expected central group");
-            return nullptr;
-        }
-
-        group->addTab(dw);
-        return dw;
-    }
-
-    DropArea *dropArea() const
-    {
-        return m_layout->asDropArea();
-    }
-
-    void onResized(QSize)
-    {
-        if (m_overlayedDockWidget)
-            updateOverlayGeometry(m_overlayedDockWidget->d->group()->size());
-    }
-
-    CursorPositions allowedResizeSides(SideBarLocation loc) const;
-
-    QRect rectForOverlay(Core::Group *, SideBarLocation) const;
-    SideBarLocation preferredSideBar(Core::DockWidget *) const;
-    void updateOverlayGeometry(QSize suggestedSize);
-    void clearSideBars();
-    QRect windowGeometry() const;
-
-    QString name;
-    QStringList affinities;
-    const MainWindowOptions m_options;
-    MainWindow *const q;
-    QPointer<Core::DockWidget> m_overlayedDockWidget;
-    std::unordered_map<SideBarLocation, Core::SideBar *> m_sideBars;
-    Layout *m_layout = nullptr;
-    Core::DockWidget *m_persistentCentralDockWidget = nullptr;
-    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
-    const bool m_supportsAutoHide;
-    int m_overlayMargin = 1;
-};
 
 MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions options)
     : Controller(ViewType::MainWindow, view)
