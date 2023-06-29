@@ -18,6 +18,7 @@
 #include "core/LayoutSaver_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "core/Position_p.h"
+#include "core/TitleBar_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
@@ -4946,7 +4947,10 @@ KDDW_QCORO_TASK tst_titlebarNumDockWidgetsChanged()
     auto tb = dock0->titleBar();
 
     int numSignalEmittions = 0;
-    QObject::connect(tb, &TitleBar::numDockWidgetsChanged, [&numSignalEmittions] { numSignalEmittions++; });
+    tb->dptr()->numDockWidgetsChanged.connect([&numSignalEmittions] {
+        numSignalEmittions++;
+    });
+
     dock0->addDockWidgetAsTab(dock1);
 
     CHECK(numSignalEmittions > 0);

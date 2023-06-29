@@ -18,6 +18,7 @@
 #include "core/Utils_p.h"
 #include "core/View_p.h"
 #include "core/Logging_p.h"
+#include "core/TitleBar_p.h"
 #include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/core/DockRegistry.h"
 #include "qtwidgets/ViewFactory.h"
@@ -158,32 +159,23 @@ void TitleBar::init()
     m_minimizeButton->setToolTip(tr("Minimize"));
     m_closeButton->setToolTip(tr("Close"));
 
-    connect(m_titleBar, &Core::TitleBar::titleChanged, this, [this] { update(); });
+    m_titleBar->dptr()->titleChanged.connect([this] { update(); });
 
-    connect(m_titleBar, &Core::TitleBar::iconChanged, this, [this] {
-        if (m_titleBar->icon().isNull()) {
+
+    m_titleBar->dptr()->iconChanged.connect([this] { if (m_titleBar->icon().isNull()) {
             m_dockWidgetIcon->setPixmap(QPixmap());
         } else {
             const QPixmap pix = m_titleBar->icon().pixmap(QSize(28, 28));
             m_dockWidgetIcon->setPixmap(pix);
         }
-        update();
-    });
+        update(); });
 
-    m_closeButton->setEnabled(m_titleBar->closeButtonEnabled());
-    connect(m_titleBar, &Core::TitleBar::closeButtonEnabledChanged, m_closeButton,
-            &QAbstractButton::setEnabled);
-
-    connect(m_titleBar, &Core::TitleBar::floatButtonToolTipChanged, m_floatButton,
-            &QWidget::setToolTip);
-    connect(m_titleBar, &Core::TitleBar::floatButtonVisibleChanged, m_floatButton,
-            &QWidget::setVisible);
-    connect(m_titleBar, &Core::TitleBar::autoHideButtonChanged, this,
-            &TitleBar::updateAutoHideButton);
-    connect(m_titleBar, &Core::TitleBar::minimizeButtonChanged, this,
-            &TitleBar::updateMinimizeButton);
-    connect(m_titleBar, &Core::TitleBar::maximizeButtonChanged, this,
-            &TitleBar::updateMaximizeButton);
+    m_titleBar->dptr()->closeButtonEnabledChanged.connect([this](bool enabled) { m_closeButton->setEnabled(enabled); });
+    m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { m_floatButton->setToolTip(text); });
+    m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { m_floatButton->setVisible(visible); });
+    m_titleBar->dptr()->autoHideButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateAutoHideButton(visible, enabled, type); });
+    m_titleBar->dptr()->minimizeButtonChanged.connect([this](bool visible, bool enabled) { updateMinimizeButton(visible, enabled); });
+    m_titleBar->dptr()->maximizeButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateMaximizeButton(visible, enabled, type); });
 
     m_floatButton->setVisible(m_titleBar->floatButtonVisible());
     m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
@@ -191,6 +183,10 @@ void TitleBar::init()
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
         if (d->isInWindow(w))
             updateMargins();
+    });
+
+    m_titleBar->dptr()->isFocusedChanged.connect([this] {
+        Q_EMIT isFocusedChanged();
     });
 }
 

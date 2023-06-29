@@ -20,7 +20,7 @@
 #include "core/Logging_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/Utils_p.h"
-
+#include "core/TitleBar_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
@@ -40,23 +40,15 @@ TitleBar::~TitleBar()
 void TitleBar::init()
 {
     // QML interface signals
-    connect(m_titleBar, &Core::TitleBar::titleChanged, this,
-            &TitleBar::titleChanged);
-    connect(m_titleBar, &Core::TitleBar::iconChanged, this, &TitleBar::iconChanged);
-    connect(m_titleBar, &Core::TitleBar::isFocusedChanged, this,
-            &TitleBar::isFocusedChanged);
-    connect(m_titleBar, &Core::TitleBar::closeButtonEnabledChanged, this,
-            &TitleBar::closeButtonEnabledChanged);
-    connect(m_titleBar, &Core::TitleBar::floatButtonVisibleChanged, this,
-            &TitleBar::floatButtonVisibleChanged);
-    connect(m_titleBar, &Core::TitleBar::floatButtonToolTipChanged, this,
-            &TitleBar::floatButtonToolTipChanged);
-    connect(m_titleBar, &Core::TitleBar::numDockWidgetsChanged, this,
-            &TitleBar::numDockWidgetsChanged);
-    connect(m_titleBar, &Core::TitleBar::maximizeButtonChanged, this,
-            &TitleBar::maximizeButtonVisibleChanged);
-    connect(m_titleBar, &Core::TitleBar::minimizeButtonChanged, this,
-            &TitleBar::minimizeButtonVisibleChanged);
+    m_titleBar->dptr()->titleChanged.connect([this] { titleChanged(); });
+    m_titleBar->dptr()->iconChanged.connect([this] { iconChanged(); });
+    m_titleBar->dptr()->isFocusedChanged.connect([this] { isFocusedChanged(); });
+    m_titleBar->dptr()->closeButtonEnabledChanged.connect([this](bool enabled) { closeButtonEnabledChanged(enabled); });
+    m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { floatButtonVisibleChanged(visible); });
+    m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { floatButtonToolTipChanged(text); });
+    m_titleBar->dptr()->numDockWidgetsChanged.connect([this] { numDockWidgetsChanged(); });
+    m_titleBar->dptr()->maximizeButtonChanged.connect([this](bool visible) { maximizeButtonVisibleChanged(visible); });
+    m_titleBar->dptr()->minimizeButtonChanged.connect([this](bool visible) { minimizeButtonVisibleChanged(visible); });
 }
 
 #ifdef DOCKS_DEVELOPER_MODE

@@ -47,6 +47,9 @@ public:
     bool isFloatButtonVisible() const override;
 #endif
 
+Q_SIGNALS:
+    void isFocusedChanged();
+
 protected:
     void init() override;
     void paintEvent(QPaintEvent *) override;
