@@ -95,7 +95,6 @@ private:
     QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
     DockWidget *m_currentDockWidget = nullptr;
     QVector<const DockWidget *> m_dockWidgets;
-    QObject m_connectionGuard;
     bool m_removeGuard = false;
 };
 

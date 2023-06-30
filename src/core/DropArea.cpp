@@ -23,7 +23,6 @@
 #include "core/DelayedCall.h"
 #include "core/Group.h"
 #include "core/FloatingWindow.h"
-#include "core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/MainWindow.h"
 #include "core/DropIndicatorOverlay.h"
@@ -109,7 +108,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
             if (visibleCount() > 0) {
                 // The title of our MDI group will need to change to the app name if we have more
                 // than 1 dock widget nested
-                Q_EMIT dw->titleChanged(dw->title());
+                dw->d->titleChanged.emit(dw->title());
             } else {
                 // Our wrapeper isn't needed anymore
                 dw->destroyLater();

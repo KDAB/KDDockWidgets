@@ -16,6 +16,7 @@
 #include "core/Stack.h"
 #include "core/FloatingWindow.h"
 #include "core/DockWidget_p.h"
+#include "core/Logging_p.h"
 #include "views/TabBarViewInterface.h"
 #include "Platform.h"
 
@@ -107,6 +108,10 @@ void TabBar::removeDockWidget(Core::DockWidget *dw)
     if (m_inDtor)
         return;
 
+    auto it = d->aboutToDeleteConnections.find(dw);
+    if (it != d->aboutToDeleteConnections.end())
+        d->aboutToDeleteConnections.erase(it);
+
     const bool wasCurrent = dw == m_currentDockWidget;
     const int index = m_dockWidgets.indexOf(dw);
 
@@ -140,7 +145,10 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
     }
 
     m_dockWidgets.insert(index, dw);
-    connect(dw, &DockWidget::aboutToDelete, &m_connectionGuard, [this, dw] { removeDockWidget(dw); });
+    KDBindings::ScopedConnection conn = dw->d->aboutToDelete.connect([this, dw] {
+        removeDockWidget(dw);
+    });
+    d->aboutToDeleteConnections[dw] = std::move(conn);
 
     dynamic_cast<Core::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
     if (!m_currentDockWidget)

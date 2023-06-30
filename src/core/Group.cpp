@@ -205,16 +205,14 @@ void Group::updateTitleAndIcon()
     }
 }
 
-void Group::onDockWidgetTitleChanged()
+void Group::onDockWidgetTitleChanged(DockWidget *dw)
 {
     updateTitleAndIcon();
 
     if (!m_inCtor) { // don't call pure virtual in ctor
-        if (auto dw = qobject_cast<DockWidget *>(sender())) {
-            int index = indexOfDockWidget(dw);
-            renameTab(index, dw->title());
-            changeTabIcon(index, dw->icon(IconPlace::TabBar));
-        }
+        int index = indexOfDockWidget(dw);
+        renameTab(index, dw->title());
+        changeTabIcon(index, dw->icon(IconPlace::TabBar));
     }
 }
 
@@ -275,14 +273,25 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
         dockWidget->d->setIsOpen(true);
     }
 
-    connect(dockWidget, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
-    connect(dockWidget, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
+    KDBindings::ScopedConnection titleChangedConnection = dockWidget->d->titleChanged.connect(
+        [this, dockWidget] { onDockWidgetTitleChanged(dockWidget); });
+
+    KDBindings::ScopedConnection iconChangedConnection = dockWidget->d->iconChanged.connect(
+        [this, dockWidget] { onDockWidgetTitleChanged(dockWidget); });
+
+    d->titleChangedConnections[dockWidget] = std::move(titleChangedConnection);
+    d->iconChangedConnections[dockWidget] = std::move(iconChangedConnection);
 }
 
 void Group::removeWidget(DockWidget *dw)
 {
-    disconnect(dw, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
-    disconnect(dw, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
+    auto it = d->titleChangedConnections.find(dw);
+    if (it != d->titleChangedConnections.end())
+        d->titleChangedConnections.erase(it);
+
+    it = d->iconChangedConnections.find(dw);
+    if (it != d->iconChangedConnections.end())
+        d->iconChangedConnections.erase(it);
 
     dynamic_cast<Core::GroupViewInterface *>(view())->removeDockWidget(dw);
 }
@@ -379,7 +388,6 @@ int Group::dockWidgetCount() const
 
 void Group::onDockWidgetCountChanged()
 {
-    KDDW_DEBUG("Group::onDockWidgetCountChanged: {} ; widgetCount=", ( void * )this, dockWidgetCount());
     if (isEmpty() && !isCentralFrame()) {
         scheduleDeleteLater();
     } else {
@@ -443,7 +451,7 @@ void Group::updateTitleBarVisibility()
     if (wasVisible != visible) {
         d->actualTitleBarChanged.emit();
         for (auto dw : dockWidgets())
-            Q_EMIT dw->actualTitleBarChanged();
+            dw->d->actualTitleBarChanged.emit();
     }
 
     if (auto fw = floatingWindow()) {

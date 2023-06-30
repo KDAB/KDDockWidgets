@@ -10,18 +10,36 @@
 */
 
 #include "SideBar.h"
-#include "DockWidget.h"
+#include "DockWidget_p.h"
 #include "MainWindow.h"
 #include "core/ViewFactory.h"
 #include "core/Logging_p.h"
 #include "views/SideBarViewInterface.h"
 #include "Config.h"
 
+#include <unordered_map>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
+class SideBar::Private
+{
+public:
+    void removeConnection(DockWidget *dw)
+    {
+        auto it = connections.find(dw);
+        if (it == connections.end()) {
+            KDDW_ERROR("Could not find DockWidget to remove in side bar connections");
+        } else {
+            connections.erase(it);
+        }
+    }
+    std::unordered_map<DockWidget *, KDBindings::ScopedConnection> connections;
+};
+
 SideBar::SideBar(SideBarLocation location, MainWindow *parent)
     : Controller(ViewType::SideBar, Config::self().viewFactory()->createSideBar(this, parent->view()))
+    , d(new Private())
     , m_mainWindow(parent)
     , m_location(location)
     , m_orientation((location == SideBarLocation::North || location == SideBarLocation::South)
@@ -30,6 +48,11 @@ SideBar::SideBar(SideBarLocation location, MainWindow *parent)
 {
     updateSize();
     view()->init();
+}
+
+SideBar::~SideBar()
+{
+    delete d;
 }
 
 void SideBar::addDockWidget(DockWidget *dw)
@@ -42,7 +65,8 @@ void SideBar::addDockWidget(DockWidget *dw)
         return;
     }
 
-    connect(dw, &DockWidget::aboutToDelete, this, &SideBar::removeDockWidget);
+    KDBindings::ScopedConnection conn = dw->d->aboutToDelete.connect([this](auto dock) { removeDockWidget(dock); });
+    d->connections[dw] = std::move(conn);
 
     m_dockWidgets << dw;
     dynamic_cast<Core::SideBarViewInterface *>(view())->addDockWidget_Impl(dw);
@@ -56,10 +80,10 @@ void SideBar::removeDockWidget(DockWidget *dw)
         return;
     }
 
-    disconnect(dw, &DockWidget::aboutToDelete, this, &SideBar::removeDockWidget);
+    d->removeConnection(dw);
     m_dockWidgets.removeOne(dw);
     dynamic_cast<Core::SideBarViewInterface *>(view())->removeDockWidget_Impl(dw);
-    Q_EMIT dw->removedFromSideBar();
+    dw->d->removedFromSideBar.emit();
     updateSize();
 }
 

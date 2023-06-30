@@ -517,7 +517,7 @@ void MainWindow::overlayOnSideBar(Core::DockWidget *dw)
     group->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
     group->view()->show();
 
-    Q_EMIT dw->isOverlayedChanged(true);
+    dw->d->isOverlayedChanged.emit(true);
 }
 
 void MainWindow::toggleOverlayOnSideBar(Core::DockWidget *dw)
@@ -552,13 +552,13 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
         overlayedDockWidget->d->m_removingFromOverlay = true; // TODOm4: Remove soon
         overlayedDockWidget->setParentView(nullptr);
         overlayedDockWidget->d->m_removingFromOverlay = false;
-        Q_EMIT overlayedDockWidget->isOverlayedChanged(false);
+        overlayedDockWidget->d->isOverlayedChanged.emit(false);
         overlayedDockWidget = nullptr;
         delete group;
     } else {
         // No cleanup, just unset. When we drag the overlay it becomes a normal floating window
         // meaning we reuse Frame. Don't delete it.
-        Q_EMIT overlayedDockWidget->isOverlayedChanged(false);
+        overlayedDockWidget->d->isOverlayedChanged.emit(false);
         overlayedDockWidget = nullptr;
     }
 }

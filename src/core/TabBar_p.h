@@ -26,6 +26,7 @@ class TabBar::Private
 public:
     KDBindings::Signal<KDDockWidgets::Core::DockWidget *> currentDockWidgetChanged;
     KDBindings::Signal<> countChanged;
+    std::unordered_map<KDDockWidgets::Core::DockWidget *, KDBindings::ScopedConnection> aboutToDeleteConnections;
 };
 
 }

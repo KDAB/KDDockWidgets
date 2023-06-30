@@ -11,11 +11,10 @@
 
 #include "DockWidgetInstantiator.h"
 #include "kddockwidgets/core/DockRegistry.h"
-#include "kddockwidgets/core/DockWidget.h"
+#include "core/DockWidget_p.h"
 #include "ViewFactory.h"
 #include "Config.h"
 #include "Platform.h"
-#include "core/DockWidget.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
@@ -200,31 +199,21 @@ void DockWidgetInstantiator::componentComplete()
                        ->createDockWidget(m_uniqueName, qmlEngine(this))
                        ->asDockWidgetController();
 
-    connect(m_dockWidget, &Core::DockWidget::titleChanged, this,
-            &DockWidgetInstantiator::titleChanged);
-    connect(m_dockWidget, &Core::DockWidget::actualTitleBarChanged, this,
-            &DockWidgetInstantiator::actualTitleBarChanged);
-    connect(m_dockWidget, &Core::DockWidget::optionsChanged, this,
-            &DockWidgetInstantiator::optionsChanged);
-    connect(m_dockWidget, &Core::DockWidget::iconChanged, this,
-            &DockWidgetInstantiator::iconChanged);
-    connect(m_dockWidget, &Core::DockWidget::closed, this,
-            &DockWidgetInstantiator::closed);
-    connect(m_dockWidget, &Core::DockWidget::guestViewChanged, this, [this] {
-        Q_EMIT guestViewChanged(QtQuick::asQQuickItem(m_dockWidget->guestView().get()));
-    });
-    connect(m_dockWidget, &Core::DockWidget::isFocusedChanged, this,
-            &DockWidgetInstantiator::isFocusedChanged);
-    connect(m_dockWidget, &Core::DockWidget::isOverlayedChanged, this,
-            &DockWidgetInstantiator::isOverlayedChanged);
-    connect(m_dockWidget, &Core::DockWidget::isFloatingChanged, this,
-            &DockWidgetInstantiator::isFloatingChanged);
-    connect(m_dockWidget, &Core::DockWidget::isOpenChanged, this,
-            &DockWidgetInstantiator::isOpenChanged);
-    connect(m_dockWidget, &Core::DockWidget::removedFromSideBar, this,
-            &DockWidgetInstantiator::removedFromSideBar);
-    connect(m_dockWidget, &Core::DockWidget::windowActiveAboutToChange, this,
-            &DockWidgetInstantiator::windowActiveAboutToChange);
+    m_dockWidget->d->titleChanged.connect([this](const QString &title) { Q_EMIT titleChanged(title); });
+    m_dockWidget->d->closed.connect([this] { Q_EMIT closed(); });
+    m_dockWidget->d->iconChanged.connect([this] { Q_EMIT iconChanged(); });
+    m_dockWidget->d->actualTitleBarChanged.connect([this] { Q_EMIT actualTitleBarChanged(); });
+    m_dockWidget->d->optionsChanged.connect([this](KDDockWidgets::DockWidgetOptions opts) { Q_EMIT optionsChanged(opts); });
+
+    m_dockWidget->d->windowActiveAboutToChange.connect([this](bool is) { Q_EMIT windowActiveAboutToChange(is); });
+    m_dockWidget->d->isFocusedChanged.connect([this](bool is) { Q_EMIT isFocusedChanged(is); });
+
+    m_dockWidget->d->isOverlayedChanged.connect([this](bool is) { Q_EMIT isOverlayedChanged(is); });
+    m_dockWidget->d->isFloatingChanged.connect([this](bool is) { Q_EMIT isFloatingChanged(is); });
+    m_dockWidget->d->isOpenChanged.connect([this](bool is) { Q_EMIT isOpenChanged(is); });
+
+    m_dockWidget->d->guestViewChanged.connect([this] { Q_EMIT guestViewChanged(QtQuick::asQQuickItem(m_dockWidget->guestView().get())); });
+    m_dockWidget->d->removedFromSideBar.connect([this] { Q_EMIT removedFromSideBar(); });
 
     if (m_sourceFilename.isEmpty()) {
         m_dockWidget->setGuestView(QtQuick::View::asQQuickWrapper(childItems.constFirst()));

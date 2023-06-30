@@ -66,7 +66,7 @@ DockWidget::~DockWidget()
     d->m_windowActivatedConnection->disconnect();
     d->m_windowDeactivatedConnection->disconnect();
 
-    Q_EMIT aboutToDelete(this);
+    d->aboutToDelete.emit(this);
     DockRegistry::self()->unregisterDockWidget(this);
     delete d;
 }
@@ -182,7 +182,7 @@ void DockWidget::setGuestView(std::shared_ptr<View> guest)
     if (guest)
         guest->setParent(view());
 
-    Q_EMIT guestViewChanged();
+    d->guestViewChanged.emit();
 }
 
 bool DockWidget::isFloating() const
@@ -278,7 +278,7 @@ void DockWidget::setTitle(const QString &title)
     if (title != d->title) {
         d->title = title;
         d->updateTitle();
-        Q_EMIT titleChanged(title);
+        d->titleChanged.emit(title);
     }
 }
 
@@ -311,7 +311,7 @@ void DockWidget::setOptions(DockWidgetOptions options)
 
     if (options != d->options) {
         d->options = options;
-        Q_EMIT optionsChanged(options);
+        d->optionsChanged.emit(options);
         if (auto tb = titleBar())
             tb->updateButtons();
     }
@@ -370,7 +370,7 @@ void DockWidget::setIcon(const Icon &icon, IconPlaces places)
     if (places & IconPlace::ToggleAction)
         d->toggleAction->setIcon(icon);
 
-    Q_EMIT iconChanged();
+    d->iconChanged.emit();
 }
 
 Icon DockWidget::icon(IconPlace place) const
@@ -686,7 +686,7 @@ QPoint DockWidget::Private::defaultCenterPosForFloating()
 void DockWidget::Private::onWindowActivated(std::shared_ptr<View> rootView)
 {
     if (View::equals(rootView.get(), q->view()->rootView().get()))
-        Q_EMIT q->windowActiveAboutToChange(true);
+        windowActiveAboutToChange.emit(true);
 }
 
 void DockWidget::Private::onWindowDeactivated(std::shared_ptr<View> rootView)
@@ -695,7 +695,7 @@ void DockWidget::Private::onWindowDeactivated(std::shared_ptr<View> rootView)
         return;
 
     if (View::equals(rootView.get(), q->view()->rootView().get()))
-        Q_EMIT q->windowActiveAboutToChange(false);
+        windowActiveAboutToChange.emit(false);
 }
 
 void DockWidget::Private::updateTitle()
@@ -798,7 +798,7 @@ void DockWidget::Private::close()
     }
 
     if (!m_isMovingToSideBar && (options & DockWidgetOption_DeleteOnClose)) {
-        Q_EMIT q->aboutToDeleteOnClose();
+        aboutToDeleteOnClose.emit();
         q->destroyLater();
     }
 }
@@ -867,7 +867,7 @@ void DockWidget::Private::onParentChanged()
     updateToggleAction();
     updateFloatAction();
 
-    Q_EMIT q->actualTitleBarChanged();
+    actualTitleBarChanged.emit();
 }
 
 void DockWidget::onResize(QSize)
@@ -989,7 +989,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
             q->setFloating(checked);
         }
 
-        Q_EMIT q->isFloatingChanged(checked);
+        isFloatingChanged.emit(checked);
 
         // When floating, we remove from the sidebar
         if (checked && q->isOpen()) {
@@ -1071,10 +1071,10 @@ void DockWidget::Private::setIsOpen(bool is)
     updateFloatAction();
 
     if (!is) {
-        Q_EMIT q->closed();
+        closed.emit();
     }
 
-    Q_EMIT q->isOpenChanged(is);
+    isOpenChanged.emit(is);
 }
 
 void DockWidget::setFloatingWindowFlags(FloatingWindowFlags flags)

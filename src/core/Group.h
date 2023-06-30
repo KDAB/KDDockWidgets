@@ -96,7 +96,7 @@ public:
     Core::TabBar *tabBar() const;
 
     void updateTitleAndIcon();
-    void onDockWidgetTitleChanged();
+    void onDockWidgetTitleChanged(DockWidget *);
     void updateTitleBarVisibility();
     void updateFloatingActions();
     bool containsMouse(QPoint globalPos) const;

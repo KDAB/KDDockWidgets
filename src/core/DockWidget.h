@@ -449,62 +449,6 @@ public:
     void setFloatingWindowFlags(FloatingWindowFlags);
     KDDockWidgets::FloatingWindowFlags floatingWindowFlags() const;
 
-Q_SIGNALS:
-
-    ///@brief signal emitted when the icon changed
-    void iconChanged();
-
-    ///@brief signal emitted when the title changed
-    ///@param title the new title
-    void titleChanged(const QString &title);
-
-    /// @brief emitted when the hosted guest widget changed
-    void guestViewChanged();
-
-    ///@brief emitted when the options change
-    ///@sa setOptions(), options()
-    void optionsChanged(KDDockWidgets::DockWidgetOptions);
-
-    ///@brief emitted when isFocused changes
-    ///@sa isFocused
-    void isFocusedChanged(bool);
-
-    ///@brief emitted when isOverlayed changes
-    ///@sa isOverlayed
-    void isOverlayedChanged(bool);
-
-    ///@brief emitted when isFloating changes
-    void isFloatingChanged(bool);
-
-    ///@brief emitted when this dock widget is removed from a side-bar.
-    /// Only relevant for the auto-hide/sidebar feature
-    void removedFromSideBar();
-
-    ///@brief Emitted when the top-level window this dock widget is in is activated or deactivated
-    /// This is convenience to replace tracking dockWidget->window(), since the window changes when
-    /// docking and undocking
-    ///
-    /// It's called 'aboutTo' because it's done in an event filter and the target window doesn't
-    /// have it's 'activeWindow' property updated yet at this point.
-    void windowActiveAboutToChange(bool activated);
-
-    ///@brief Emitted when the title bar that serves this dock widget changes
-    void actualTitleBarChanged();
-
-    /// @brief Emitted when this dock widget is about to be deleted due to Option_DeleteOnClose
-    void aboutToDeleteOnClose();
-
-    /// @brief Emitted when this dock widget is about to be deleted
-    void aboutToDelete(KDDockWidgets::Core::DockWidget *);
-
-    /// @brief Emitted when a dock widget is closed
-    /// This is equivalent to the openedChanged(false) signal
-    void closed();
-
-    /// @brief Emitted when a dock widget is opened or closed
-    /// For the false case, closed() is also emitted
-    void isOpenChanged(bool isOpen);
-
 protected:
     void setParentView_impl(View *parent) override;
 
@@ -524,8 +468,11 @@ public:
 private:
     KDDW_DELETE_COPY_CTOR(DockWidget)
 };
+
 }
+
 }
+
 Q_DECLARE_METATYPE(KDDockWidgets::Location)
 
 #endif

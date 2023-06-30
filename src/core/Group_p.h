@@ -17,6 +17,9 @@
 
 #include <kdbindings/signal.h>
 
+#include <unordered_map>
+#include <vector>
+
 namespace KDDockWidgets {
 
 namespace Core {
@@ -33,6 +36,12 @@ public:
     KDBindings::Signal<> isMDIChanged;
 
     KDBindings::ScopedConnection m_visibleWidgetCountChangedConnection;
+
+    std::unordered_map<Core::DockWidget *, KDBindings::ScopedConnection>
+        titleChangedConnections;
+
+    std::unordered_map<Core::DockWidget *, KDBindings::ScopedConnection>
+        iconChangedConnections;
 };
 
 }

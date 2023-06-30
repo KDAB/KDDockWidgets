@@ -46,6 +46,8 @@ class Group::Private
 {
 public:
     KDBindings::ScopedConnection isMDIConnection;
+    KDBindings::ScopedConnection currentDockWidgetChangedConnection;
+    KDBindings::ScopedConnection updateConstraintsConnection;
 };
 
 }
@@ -59,22 +61,22 @@ Group::Group(Core::Group *controller, QQuickItem *parent)
 
 Group::~Group()
 {
+    delete d;
+
     // The QML item must be deleted with deleteLater(), as we might be currently with its mouse
     // handler in the stack. QML doesn't support it being deleted in that case.
     // So unparent it and deleteLater().
     m_visualItem->setParent(nullptr);
     m_visualItem->deleteLater();
-
-    delete d;
 }
 
 void Group::init()
 {
-    m_group->tabBar()->dptr()->countChanged.connect([this] {
+    d->currentDockWidgetChangedConnection = m_group->tabBar()->dptr()->countChanged.connect([this] {
         updateConstriants();
     });
 
-    m_group->tabBar()->dptr()->currentDockWidgetChanged.connect([this] {
+    d->updateConstraintsConnection = m_group->tabBar()->dptr()->currentDockWidgetChanged.connect([this] {
         currentDockWidgetChanged();
     });
 

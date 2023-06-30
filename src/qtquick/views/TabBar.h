@@ -112,6 +112,8 @@ public:
     };
 
     explicit DockWidgetModel(Core::TabBar *, QObject *parent);
+    ~DockWidgetModel() override;
+
     int count() const;
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
@@ -135,12 +137,8 @@ Q_SIGNALS:
 private:
     void emitDataChangedFor(Core::DockWidget *);
 
-    Core::TabBar *const m_tabBar = nullptr;
-    QVector<Core::DockWidget *> m_dockWidgets;
-    QHash<Core::DockWidget *, QVector<QMetaObject::Connection>>
-        m_connections; // To make it easy to disconnect from lambdas
-    bool m_removeGuard = false;
-    Core::DockWidget *m_currentDockWidget = nullptr;
+    class Private;
+    Private *const d;
 };
 
 }

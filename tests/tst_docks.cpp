@@ -3683,6 +3683,8 @@ KDDW_QCORO_TASK tst_floatingAction()
         int floatActionCount2 = 0;
         int floatingChangedCount1 = 0;
         int floatingChangedCount2 = 0;
+
+#ifdef KDDW_FRONTEND_QT
         QObject::connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
             floatActionCount1++;
         });
@@ -3690,12 +3692,13 @@ KDDW_QCORO_TASK tst_floatingAction()
         QObject::connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
             floatActionCount2++;
         });
+#endif
 
-        QObject::connect(dock1, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount1] {
+        dock1->d->isFloatingChanged.connect([&floatingChangedCount1] {
             floatingChangedCount1++;
         });
 
-        QObject::connect(dock2, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount2] {
+        dock2->d->isFloatingChanged.connect([&floatingChangedCount2] {
             floatingChangedCount2++;
         });
 
@@ -3730,6 +3733,8 @@ KDDW_QCORO_TASK tst_floatingAction()
         int floatActionCount2 = 0;
         int floatingChangedCount1 = 0;
         int floatingChangedCount2 = 0;
+
+#ifdef KDDW_FRONTEND_QT
         QObject::connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
             floatActionCount1++;
         });
@@ -3737,12 +3742,12 @@ KDDW_QCORO_TASK tst_floatingAction()
         QObject::connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
             floatActionCount2++;
         });
-
-        QObject::connect(dock1, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount1] {
+#endif
+        dock1->d->isFloatingChanged.connect([&floatingChangedCount1] {
             floatingChangedCount1++;
         });
 
-        QObject::connect(dock2, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount2] {
+        dock2->d->isFloatingChanged.connect([&floatingChangedCount2] {
             floatingChangedCount2++;
         });
 
@@ -3783,6 +3788,8 @@ KDDW_QCORO_TASK tst_floatingAction()
         int floatActionCount2 = 0;
         int floatingChangedCount1 = 0;
         int floatingChangedCount2 = 0;
+
+#ifdef KDDW_FRONTEND_QT
         QObject::connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
             floatActionCount1++;
         });
@@ -3790,14 +3797,15 @@ KDDW_QCORO_TASK tst_floatingAction()
         QObject::connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
             floatActionCount2++;
         });
-
-        QObject::connect(dock1, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount1] {
+#endif
+        dock1->d->isFloatingChanged.connect([&floatingChangedCount1] {
             floatingChangedCount1++;
         });
 
-        QObject::connect(dock2, &Core::DockWidget::isFloatingChanged, [&floatingChangedCount2] {
+        dock2->d->isFloatingChanged.connect([&floatingChangedCount2] {
             floatingChangedCount2++;
         });
+
         dock1->addDockWidgetAsTab(dock2);
 
         CHECK_EQ(floatActionCount1, 1);
@@ -4978,8 +4986,9 @@ KDDW_QCORO_TASK tst_closed()
 
     int numCloseA = 0;
     int numCloseB = 0;
-    QObject::connect(dockA, &DockWidget::closed, [&] { numCloseA++; });
-    QObject::connect(dockB, &DockWidget::closed, [&] { numCloseB++; });
+
+    dockA->d->closed.connect([&] { numCloseA++; });
+    dockB->d->closed.connect([&] { numCloseB++; });
 
     dockA->setFloating(true);
     m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
@@ -4991,7 +5000,7 @@ KDDW_QCORO_TASK tst_closed()
     CHECK_EQ(numCloseA, 0);
     CHECK_EQ(numCloseB, 1);
 
-    dockA->closed();
+    dockA->close();
     CHECK_EQ(numCloseA, 1);
     CHECK_EQ(numCloseB, 1);
     KDDW_TEST_RETURN(true);

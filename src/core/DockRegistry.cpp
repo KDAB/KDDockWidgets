@@ -98,7 +98,7 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
         QMetaObject::invokeMethod(
             oldDw, [oldDw] {
                 if (oldDw) // QPointer
-                    Q_EMIT oldDw->isFocusedChanged(false);
+                    oldDw->d->isFocusedChanged.emit(false);
             },
             Qt::QueuedConnection);
     }
@@ -112,7 +112,7 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
         QMetaObject::invokeMethod(
             this, [this] {
                 if (m_focusedDockWidget) { // QPointer
-                    Q_EMIT m_focusedDockWidget->isFocusedChanged(true);
+                    m_focusedDockWidget->d->isFocusedChanged.emit(true);
                 }
             },
             Qt::QueuedConnection);
