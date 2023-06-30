@@ -33,6 +33,8 @@
 
 #include <QPointer>
 
+#include <set>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
@@ -437,13 +439,13 @@ Core::MainWindow *DockRegistry::mainWindowByName(const QString &name) const
 
 bool DockRegistry::isSane() const
 {
-    QSet<QString> names;
+    std::set<QString> names;
     for (auto dock : qAsConst(m_dockWidgets)) {
         const QString name = dock->uniqueName();
         if (name.isEmpty()) {
             KDDW_ERROR("DockRegistry::isSane: DockWidget is missing a name");
             return false;
-        } else if (names.contains(name)) {
+        } else if (names.find(name) != names.cend()) {
             KDDW_ERROR("DockRegistry::isSane: dockWidgets with duplicate names: {}", name);
             return false;
         } else {
@@ -457,7 +459,7 @@ bool DockRegistry::isSane() const
         if (name.isEmpty()) {
             KDDW_ERROR("DockRegistry::isSane: MainWindow is missing a name");
             return false;
-        } else if (names.contains(name)) {
+        } else if (names.find(name) != names.cend()) {
             KDDW_ERROR("DockRegistry::isSane: mainWindow with duplicate names: {}", name);
             return false;
         } else {
