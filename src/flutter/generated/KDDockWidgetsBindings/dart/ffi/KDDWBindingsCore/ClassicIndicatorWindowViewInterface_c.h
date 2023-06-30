@@ -38,6 +38,8 @@ public:
     virtual void setObjectName_nocallback(const QString &arg__1);
     virtual void setVisible(bool arg__1);
     virtual void setVisible_nocallback(bool arg__1);
+    virtual void updateIndicatorVisibility();
+    virtual void updateIndicatorVisibility_nocallback();
     virtual void updatePositions();
     virtual void updatePositions_nocallback();
     typedef KDDockWidgets::DropLocation (*Callback_hover)(void *, QPoint *arg__1);
@@ -56,6 +58,8 @@ public:
     Callback_setObjectName m_setObjectNameCallback = nullptr;
     typedef void (*Callback_setVisible)(void *, bool arg__1);
     Callback_setVisible m_setVisibleCallback = nullptr;
+    typedef void (*Callback_updateIndicatorVisibility)(void *);
+    Callback_updateIndicatorVisibility m_updateIndicatorVisibilityCallback = nullptr;
     typedef void (*Callback_updatePositions)(void *);
     Callback_updatePositions m_updatePositionsCallback = nullptr;
 };
@@ -80,6 +84,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowV
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setObjectName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setVisible(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::updateIndicatorVisibility()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updateIndicatorVisibility(void *thisObj);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::updatePositions()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);

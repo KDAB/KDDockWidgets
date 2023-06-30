@@ -1096,8 +1096,6 @@ bool c_KDDockWidgets__Core__Controller__inDtor(void *thisObj);
 bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj);
 // KDDockWidgets::Core::Controller::mapToGlobal(QPoint arg__1) const
 void *c_KDDockWidgets__Core__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Controller::parentViewChanged(KDDockWidgets::Core::View * parent)
-void c_KDDockWidgets__Core__Controller__parentViewChanged_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Controller::pos() const
 void *c_KDDockWidgets__Core__Controller__pos(void *thisObj);
 // KDDockWidgets::Core::Controller::rect() const
@@ -3132,6 +3130,8 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_QRe
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setObjectName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setVisible(bool arg__1)
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::updateIndicatorVisibility()
+void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updateIndicatorVisibility(void *thisObj);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::updatePositions()
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);
@@ -3270,6 +3270,8 @@ void c_KDDockWidgets__flutter__IndicatorWindow__showMinimized(void *thisObj);
 void c_KDDockWidgets__flutter__IndicatorWindow__showNormal(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::update()
 void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::updateIndicatorVisibility()
+void c_KDDockWidgets__flutter__IndicatorWindow__updateIndicatorVisibility(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)
@@ -3286,8 +3288,6 @@ bool c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__dropIndicatorVisible_Dr
 int c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__hover_impl_QPoint(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::indicatorWindow() const
 void *c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__indicatorWindow(void *thisObj);
-// KDDockWidgets::Core::ClassicDropIndicatorOverlay::indicatorsVisibleChanged()
-void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__indicatorsVisibleChanged(void *thisObj);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
 void c_KDDockWidgets__Core__ClassicDropIndicatorOverlay__onHoveredGroupChanged_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ClassicDropIndicatorOverlay::onResize(QSize newSize)

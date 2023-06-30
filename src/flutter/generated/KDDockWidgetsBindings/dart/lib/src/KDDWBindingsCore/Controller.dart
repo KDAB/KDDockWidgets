@@ -95,14 +95,6 @@ class Controller extends QObject {
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
     return QPoint.fromCppPointer(result, true);
-  } // parentViewChanged(KDDockWidgets::Core::View * parent)
-
-  parentViewChanged(KDDWBindingsCore.View? parent) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Controller__parentViewChanged_View')
-        .asFunction();
-    func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   } // pos() const
 
   QPoint pos() {
@@ -134,7 +126,7 @@ class Controller extends QObject {
   setParentView_impl(KDDWBindingsCore.View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(827))
+            cFunctionSymbolName(826))
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
@@ -240,7 +232,7 @@ class Controller extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 827:
+      case 826:
         return "c_KDDockWidgets__Core__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -248,7 +240,7 @@ class Controller extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 827:
+      case 826:
         return "setParentView_impl";
     }
     throw Error();
@@ -260,9 +252,9 @@ class Controller extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback')
         .asFunction();
-    final callback827 =
+    final callback826 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback827, 827);
+    registerCallback(thisCpp, callback826, 826);
   }
 }

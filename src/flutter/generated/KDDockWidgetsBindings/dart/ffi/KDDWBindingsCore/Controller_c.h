@@ -31,7 +31,6 @@ public:
     bool inDtor() const;
     bool isVisible() const;
     QPoint mapToGlobal(QPoint arg__1) const;
-    void parentViewChanged(KDDockWidgets::Core::View *parent);
     QPoint pos() const;
     QRect rect() const;
     void setParentView(KDDockWidgets::Core::View *parent);
@@ -68,8 +67,6 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Controller__inDtor(void
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj);
 // KDDockWidgets::Core::Controller::mapToGlobal(QPoint arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Controller::parentViewChanged(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__parentViewChanged_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Controller::pos() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__pos(void *thisObj);
 // KDDockWidgets::Core::Controller::rect() const

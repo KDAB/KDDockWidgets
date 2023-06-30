@@ -60,10 +60,6 @@ QPoint Controller_wrapper::mapToGlobal(QPoint arg__1) const
 {
     return ::KDDockWidgets::Core::Controller::mapToGlobal(arg__1);
 }
-void Controller_wrapper::parentViewChanged(KDDockWidgets::Core::View *parent)
-{
-    ::KDDockWidgets::Core::Controller::parentViewChanged(parent);
-}
 QPoint Controller_wrapper::pos() const
 {
     return ::KDDockWidgets::Core::Controller::pos();
@@ -187,12 +183,6 @@ void *c_KDDockWidgets__Core__Controller__mapToGlobal_QPoint(void *thisObj, void 
     auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
     return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapToGlobal(arg__1) };
 }
-// parentViewChanged(KDDockWidgets::Core::View * parent)
-void c_KDDockWidgets__Core__Controller__parentViewChanged_View(void *thisObj, void *parent_)
-{
-    auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
-    fromPtr(thisObj)->parentViewChanged(parent);
-}
 // pos() const
 void *c_KDDockWidgets__Core__Controller__pos(void *thisObj)
 {
@@ -268,7 +258,7 @@ void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 827:
+    case 826:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }
