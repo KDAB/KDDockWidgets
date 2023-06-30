@@ -74,6 +74,7 @@ public:
     KDBindings::Signal<> windowStateChanged;
 
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
+    KDBindings::ScopedConnection m_currentStateChangedConnection;
 
     const FloatingWindowFlags m_flags;
 };

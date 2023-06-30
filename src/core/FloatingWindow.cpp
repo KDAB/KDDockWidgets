@@ -238,11 +238,12 @@ FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
             // We're dragging a MDI window and we reached the border, detaching it, and making it
             // float. We can't delete the wrapper group just yet, as that would delete the title bar
             // which is currently being dragged. Delete it once the drag finishes
-            QObject::connect(DragController::instance(), &DragController::currentStateChanged,
-                             dwMDIWrapper, [dwMDIWrapper] {
-                                 if (DragController::instance()->isIdle())
-                                     delete dwMDIWrapper;
-                             });
+            d->m_currentStateChangedConnection = DragController::instance()->currentStateChanged.connect([this, dwMDIWrapper] {
+                if (DragController::instance()->isIdle()) {
+                    d->m_currentStateChangedConnection = KDBindings::ScopedConnection();
+                    delete dwMDIWrapper;
+                }
+            });
         } else {
             dwMDIWrapper->destroyLater();
         }

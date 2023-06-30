@@ -116,16 +116,15 @@ MinimalStateMachine::MinimalStateMachine(QObject *parent)
 {
 }
 
-template<typename Obj, typename Signal>
-void State::addTransition(Obj *obj, Signal signal, State *dest)
+template<typename Signal>
+void State::addTransition(Signal &signal, State *dest)
 {
-    connect(obj, signal, this, [this, dest] {
+    signal.connect([this, dest] {
         if (isCurrentState()) {
             m_machine->setCurrentState(dest);
         }
     });
 }
-
 
 State *MinimalStateMachine::currentState() const
 {
@@ -143,7 +142,7 @@ void MinimalStateMachine::setCurrentState(State *state)
         if (state)
             state->onEntry();
 
-        Q_EMIT currentStateChanged();
+        currentStateChanged.emit();
     }
 }
 
@@ -181,7 +180,7 @@ void StateNone::onEntry()
         q->m_currentDropArea = nullptr;
     }
 
-    Q_EMIT q->isDraggingChanged();
+    q->isDraggingChanged.emit();
 }
 
 bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
@@ -196,7 +195,8 @@ bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, Q
     q->m_draggableGuard = draggable->asView();
     q->m_pressPos = globalPos;
     q->m_offset = draggable->mapToWindow(pos);
-    Q_EMIT q->mousePressed();
+    q->mousePressed.emit();
+
     return false;
 }
 
@@ -220,15 +220,15 @@ bool StatePreDrag::handleMouseMove(QPoint globalPos)
 {
     if (!q->m_draggableGuard) {
         KDDW_ERROR("Draggable was destroyed, canceling the drag");
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
         return false;
     }
 
     if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
         if (q->m_draggable->isMDI())
-            Q_EMIT q->manhattanLengthMoveMDI();
+            q->manhattanLengthMoveMDI.emit();
         else
-            Q_EMIT q->manhattanLengthMove();
+            q->manhattanLengthMove.emit();
         return true;
     }
     return false;
@@ -236,7 +236,7 @@ bool StatePreDrag::handleMouseMove(QPoint globalPos)
 
 bool StatePreDrag::handleMouseButtonRelease(QPoint)
 {
-    Q_EMIT q->dragCanceled();
+    q->dragCanceled.emit();
     return false;
 }
 
@@ -245,7 +245,7 @@ bool StatePreDrag::handleMouseDoubleClick()
     // This is only needed for QtQuick.
     // With QtQuick, when double clicking, we get: Press, Release, Press, Double-click. and never
     // receive the last Release event.
-    Q_EMIT q->dragCanceled();
+    q->dragCanceled.emit();
     return false;
 }
 
@@ -263,7 +263,7 @@ StateDragging::StateDragging(DragController *parent)
             KDDW_DEBUG("Canceling drag, Qt thinks mouse button is pressed"
                        "but Windows knows it's not");
             handleMouseButtonRelease(Platform::instance()->cursorPos());
-            Q_EMIT q->dragCanceled();
+            q->dragCanceled.emit();
         }
     });
 #endif
@@ -360,10 +360,10 @@ void StateDragging::onEntry()
     } else {
         // Shouldn't happen
         KDDW_ERROR("No window being dragged for {} {}", ( void * )q->m_draggable, ( void * )q->m_draggable->asController());
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
     }
 
-    Q_EMIT q->isDraggingChanged();
+    q->isDraggingChanged.emit();
 }
 
 void StateDragging::onExit()
@@ -381,26 +381,26 @@ bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
     if (!floatingWindow) {
         // It was deleted externally
         KDDW_DEBUG("StateDragging: Bailling out, deleted externally");
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
         return true;
     }
 
     if (floatingWindow->anyNonDockable()) {
         KDDW_DEBUG("StateDragging: Ignoring floating window with non dockable widgets");
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
         return true;
     }
 
     if (q->m_currentDropArea) {
         if (q->m_currentDropArea->drop(q->m_windowBeingDragged.get(), globalPos)) {
-            Q_EMIT q->dropped();
+            q->dropped.emit();
         } else {
             KDDW_DEBUG("StateDragging: Bailling out, drop not accepted");
-            Q_EMIT q->dragCanceled();
+            q->dragCanceled.emit();
         }
     } else {
         KDDW_DEBUG("StateDragging: Bailling out, not over a drop area");
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
     }
     return true;
 }
@@ -410,7 +410,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
     FloatingWindow *fw = q->m_windowBeingDragged->floatingWindow();
     if (!fw) {
         KDDW_DEBUG("Canceling drag, window was deleted");
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
         return true;
     }
 
@@ -465,7 +465,7 @@ bool StateDragging::handleMouseDoubleClick()
 {
     // See comment in StatePreDrag::handleMouseDoubleClick().
     // Very unlikely that we're in this state though, due to manhattan length
-    Q_EMIT q->dragCanceled();
+    q->dragCanceled.emit();
     return false;
 }
 
@@ -488,12 +488,12 @@ void StateInternalMDIDragging::onEntry()
             f->view()->raise();
     }
 
-    Q_EMIT q->isDraggingChanged();
+    q->isDraggingChanged.emit();
 }
 
 bool StateInternalMDIDragging::handleMouseButtonRelease(QPoint)
 {
-    Q_EMIT q->dragCanceled();
+    q->dragCanceled.emit();
     return false;
 }
 
@@ -503,7 +503,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     auto tb = q->m_draggable->asView()->asTitleBarController();
     if (!tb) {
         KDDW_ERROR("expected a title bar, not {}", ( void * )q->m_draggable);
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
         return false;
     }
 
@@ -511,7 +511,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     if (!group) {
         // Doesn't happen.
         KDDW_ERROR("null group.");
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
         return false;
     }
 
@@ -536,7 +536,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     if (threshold != -1) {
         const QPoint overflow = newLocalPosBounded - newLocalPos;
         if (qAbs(overflow.x()) > threshold || qAbs(overflow.y()) > threshold)
-            Q_EMIT q->mdiPopOut();
+            q->mdiPopOut.emit();
     }
 
     return false;
@@ -544,7 +544,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
 
 bool StateInternalMDIDragging::handleMouseDoubleClick()
 {
-    Q_EMIT q->dragCanceled();
+    q->dragCanceled.emit();
     return false;
 }
 
@@ -580,13 +580,13 @@ void StateDraggingWayland::onEntry()
     const Qt::DropAction result = drag.exec();
     Platform::instance()->removeGlobalEventFilter(q);
     if (result == Qt::IgnoreAction)
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
 }
 
 bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
 {
     KDDW_DEBUG(Q_FUNC_INFO);
-    Q_EMIT q->dragCanceled();
+    q->dragCanceled.emit();
     return true;
 }
 
@@ -634,9 +634,9 @@ bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
                        dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)))) {
         ev->setDropAction(Qt::MoveAction);
         ev->accept();
-        Q_EMIT q->dropped();
+        q->dropped.emit();
     } else {
-        Q_EMIT q->dragCanceled();
+        q->dragCanceled.emit();
     }
 
     dropArea->removeHover();
@@ -665,15 +665,15 @@ DragController::DragController(QObject *parent)
     auto stateDragging = isWayland() ? new StateDraggingWayland(this) : new StateDragging(this);
     m_stateDraggingMDI = new StateInternalMDIDragging(this);
 
-    m_stateNone->addTransition(this, &DragController::mousePressed, statepreDrag);
-    statepreDrag->addTransition(this, &DragController::dragCanceled, m_stateNone);
-    statepreDrag->addTransition(this, &DragController::manhattanLengthMove, stateDragging);
-    statepreDrag->addTransition(this, &DragController::manhattanLengthMoveMDI, m_stateDraggingMDI);
-    stateDragging->addTransition(this, &DragController::dragCanceled, m_stateNone);
-    stateDragging->addTransition(this, &DragController::dropped, m_stateNone);
+    m_stateNone->addTransition(mousePressed, statepreDrag);
+    statepreDrag->addTransition(dragCanceled, m_stateNone);
+    statepreDrag->addTransition(manhattanLengthMove, stateDragging);
+    statepreDrag->addTransition(manhattanLengthMoveMDI, m_stateDraggingMDI);
+    stateDragging->addTransition(dragCanceled, m_stateNone);
+    stateDragging->addTransition(dropped, m_stateNone);
 
-    m_stateDraggingMDI->addTransition(this, &DragController::dragCanceled, m_stateNone);
-    m_stateDraggingMDI->addTransition(this, &DragController::mdiPopOut, stateDragging);
+    m_stateDraggingMDI->addTransition(dragCanceled, m_stateNone);
+    m_stateDraggingMDI->addTransition(mdiPopOut, stateDragging);
 
     if (Platform::instance()->usesFallbackMouseGrabber())
         enableFallbackMouseGrabber();

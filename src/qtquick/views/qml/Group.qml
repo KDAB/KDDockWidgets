@@ -24,7 +24,7 @@ Rectangle {
     property int titleBarContentsMargin: 1
     property int mouseResizeMargin: 8
     readonly property bool isMDI: groupCpp && groupCpp.isMDI
-    readonly property bool resizeAllowed: root.isMDI && !_kddwDragController.isDragging && _kddwDockRegistry && (!_kddwHelpers.groupViewInMDIResize || _kddwHelpers.groupViewInMDIResize === groupCpp)
+    readonly property bool resizeAllowed: root.isMDI && !_kddwHelpers.isDragging && _kddwDockRegistry && (!_kddwHelpers.groupViewInMDIResize || _kddwHelpers.groupViewInMDIResize === groupCpp)
     property alias tabBarHeight: tabbar.height
     readonly property bool hasCustomMouseEventRedirector: false
 

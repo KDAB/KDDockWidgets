@@ -18,6 +18,8 @@
 #include "core/EventFilterInterface.h"
 #include "kddockwidgets/NonQtCompat_p.h"
 
+#include <kdbindings/signal.h>
+
 #include <QPoint>
 #include <QMimeData>
 
@@ -41,8 +43,9 @@ public:
     explicit State(MinimalStateMachine *parent);
     ~State() override;
 
-    template<typename Obj, typename Signal>
-    void addTransition(Obj *, Signal, State *dest);
+    template<typename Signal>
+    void addTransition(Signal &, State *dest);
+
     bool isCurrentState() const;
 
     virtual void onEntry() = 0;
@@ -63,8 +66,7 @@ public:
     State *currentState() const;
     void setCurrentState(State *);
 
-Q_SIGNALS:
-    void currentStateChanged();
+    KDBindings::Signal<> currentStateChanged;
 
 private:
     State *m_currentState = nullptr;
@@ -73,7 +75,6 @@ private:
 class DOCKS_EXPORT_FOR_UNIT_TESTS DragController : public MinimalStateMachine, public EventFilterInterface
 {
     Q_OBJECT
-    Q_PROPERTY(bool isDragging READ isDragging NOTIFY isDraggingChanged)
 public:
     enum State {
         State_None = 0,
@@ -114,14 +115,13 @@ public:
     /// The user needs to be dragging a window and be over a drop indicator, otherwise DropLocation_None is returned
     DropLocation currentDropLocation() const;
 
-Q_SIGNALS:
-    void mousePressed();
-    void manhattanLengthMove();
-    void manhattanLengthMoveMDI();
-    void mdiPopOut();
-    void dragCanceled();
-    void dropped();
-    void isDraggingChanged();
+    KDBindings::Signal<> mousePressed;
+    KDBindings::Signal<> manhattanLengthMove;
+    KDBindings::Signal<> manhattanLengthMoveMDI;
+    KDBindings::Signal<> mdiPopOut;
+    KDBindings::Signal<> dragCanceled;
+    KDBindings::Signal<> dropped;
+    KDBindings::Signal<> isDraggingChanged;
 
 private:
     friend class StateBase;

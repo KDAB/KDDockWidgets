@@ -14,6 +14,10 @@
 
 #include <QObject>
 
+#include <kdbindings/signal.h>
+
+#include <vector>
+
 QT_BEGIN_NAMESPACE
 class QQuickItem;
 QT_END_NAMESPACE
@@ -25,9 +29,14 @@ class QtQuickHelpers : public QObject
     Q_PROPERTY(
         QObject *groupViewInMDIResize READ groupViewInMDIResize NOTIFY groupInMDIResizeChanged)
 
+    Q_PROPERTY(bool isDragging READ isDragging NOTIFY isDraggingChanged)
+
 Q_SIGNALS:
     /// @brief emitted when the MDI group that's being resized changed
     void groupInMDIResizeChanged();
+
+    /// emitted when users starts or stops dragging
+    void isDraggingChanged();
 
 public:
     QtQuickHelpers();
@@ -35,6 +44,9 @@ public:
     Q_INVOKABLE qreal logicalDpiFactor(const QQuickItem *item) const;
 
     QObject *groupViewInMDIResize() const;
+    bool isDragging() const;
+
+    std::vector<KDBindings::ScopedConnection> m_connections;
 };
 
 }
