@@ -180,7 +180,7 @@ bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message,
         auto msg = static_cast<MSG *>(message);
         if (msg->message == WM_SIZING) {
             // Cancel any drag if we're resizing
-            Q_EMIT Core::DragController::instance()->dragCanceled();
+            Core::DragController::instance()->dragCanceled.emit();
         }
     }
 
