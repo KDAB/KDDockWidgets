@@ -17,7 +17,6 @@
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/TitleBar.h"
-#include "kddockwidgets/core/Action.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/Window.h"
