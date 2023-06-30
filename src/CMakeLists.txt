@@ -275,7 +275,6 @@ set(KDDW_CORE_HEADERS
     core/TitleBar.h
     core/View.h
     core/EventFilterInterface.h
-    core/DragController_p.h
     core/Draggable_p.h
     core/LayoutSaver_p.h
     core/WindowBeingDragged_p.h

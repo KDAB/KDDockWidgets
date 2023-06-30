@@ -70,7 +70,7 @@ private:
     State *m_currentState = nullptr;
 };
 
-class DOCKS_EXPORT DragController : public MinimalStateMachine, public EventFilterInterface
+class DOCKS_EXPORT_FOR_UNIT_TESTS DragController : public MinimalStateMachine, public EventFilterInterface
 {
     Q_OBJECT
     Q_PROPERTY(bool isDragging READ isDragging NOTIFY isDraggingChanged)
