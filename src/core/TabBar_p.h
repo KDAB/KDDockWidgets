@@ -17,6 +17,8 @@
 
 #include <kdbindings/signal.h>
 
+#include <unordered_map>
+
 namespace KDDockWidgets {
 
 namespace Core {
