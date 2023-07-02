@@ -130,7 +130,7 @@ ViewFactory::createClassicIndicatorWindow_flutter(Core::ClassicDropIndicatorOver
     return nullptr;
 }
 
-KDDockWidgets::Action *ViewFactory::createAction(Core::DockWidget *dw, const char *debugName) const
+KDDockWidgets::Core::Action *ViewFactory::createAction(Core::DockWidget *dw, const char *debugName) const
 {
     return new Flutter::Action(dw, debugName);
 }

@@ -23,10 +23,9 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class Action;
-
 namespace Core {
 
+class Action;
 class ClassicIndicatorWindowViewInterface;
 class DropIndicatorOverlay;
 class DropArea;
@@ -134,7 +133,7 @@ public:
 
     /// @brief Creates a QAction if QtWidgets, or an equivalent fallback if QtQuick/Flutter
     /// Not needed to be overridden by users.
-    virtual KDDockWidgets::Action *createAction(Core::DockWidget *, const char *debugName) const = 0;
+    virtual KDDockWidgets::Core::Action *createAction(Core::DockWidget *, const char *debugName) const = 0;
 
     /// @brief Returns the icon to be used with the specified @p type
     /// @param dpr the device pixel ratio of the button

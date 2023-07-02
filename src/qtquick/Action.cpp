@@ -18,7 +18,7 @@ using namespace KDDockWidgets::QtQuick;
 
 Action::Action(Core::DockWidget *dw, const char *debugName)
     : QObject(dw)
-    , KDDockWidgets::Action(dw, debugName)
+    , KDDockWidgets::Core::Action(dw, debugName)
 {
 }
 

@@ -21,7 +21,6 @@ namespace KDDockWidgets {
 
 namespace Core {
 class DockWidget;
-}
 
 class Action::Private
 {
@@ -36,5 +35,7 @@ public:
     Core::DockWidget *const dockWidget;
     const char *const debugName;
 };
+
+}
 
 }

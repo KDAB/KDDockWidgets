@@ -17,7 +17,7 @@
 using namespace KDDockWidgets::QtWidgets;
 
 Action::Action(Core::DockWidget *dw, const char *debugName)
-    : KDDockWidgets::Action(dw, debugName)
+    : Core::Action(dw, debugName)
 {
     connect(this, &QAction::toggled, this, [this](bool checked) {
         if (m_lastCheckedState != checked) {

@@ -17,7 +17,7 @@
 using namespace KDDockWidgets::Flutter;
 
 Action::Action(Core::DockWidget *dw, const char *debugName)
-    : KDDockWidgets::Action(dw, debugName)
+    : KDDockWidgets::Core::Action(dw, debugName)
 {
 }
 

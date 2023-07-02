@@ -17,7 +17,7 @@ namespace KDDockWidgets {
 
 namespace Flutter {
 
-class DOCKS_EXPORT Action : public KDDockWidgets::Action
+class DOCKS_EXPORT Action : public KDDockWidgets::Core::Action
 {
 
 public:

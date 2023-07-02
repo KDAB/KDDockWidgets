@@ -20,7 +20,6 @@ namespace KDDockWidgets {
 
 namespace Core {
 class DockWidget;
-}
 
 class DOCKS_EXPORT Action
 {
@@ -60,5 +59,7 @@ public:
     class Private;
     Private *const d;
 };
+
+}
 
 }

@@ -17,7 +17,7 @@ namespace KDDockWidgets {
 
 namespace QtQuick {
 
-class DOCKS_EXPORT Action : public QObject, public KDDockWidgets::Action
+class DOCKS_EXPORT Action : public QObject, public KDDockWidgets::Core::Action
 {
     Q_OBJECT
 public:

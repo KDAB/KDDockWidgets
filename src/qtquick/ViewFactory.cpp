@@ -221,7 +221,7 @@ ViewFactory *ViewFactory::self()
     return factory;
 }
 
-KDDockWidgets::Action *ViewFactory::createAction(Core::DockWidget *dw, const char *debugName) const
+KDDockWidgets::Core::Action *ViewFactory::createAction(Core::DockWidget *dw, const char *debugName) const
 {
     return new QtQuick::Action(dw, debugName);
 }

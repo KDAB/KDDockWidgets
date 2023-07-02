@@ -13,8 +13,9 @@
 #include "Action_p.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
 
-Action::Action(Core::DockWidget *dw, const char *debugName)
+Action::Action(DockWidget *dw, const char *debugName)
     : d(new Private(dw, debugName))
 {
 }

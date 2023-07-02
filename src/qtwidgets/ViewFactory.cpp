@@ -204,7 +204,7 @@ void ViewFactory::clearIconCache()
     m_cachedIcons.clear();
 }
 
-KDDockWidgets::Action *ViewFactory::createAction(Core::DockWidget *dw, const char *debugName) const
+KDDockWidgets::Core::Action *ViewFactory::createAction(Core::DockWidget *dw, const char *debugName) const
 {
     return new QtWidgets::Action(dw, debugName);
 }

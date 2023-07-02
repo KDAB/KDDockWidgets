@@ -78,7 +78,7 @@ public:
     virtual QUrl groupFilename() const;
     virtual QUrl floatingWindowFilename() const;
 
-    KDDockWidgets::Action *createAction(Core::DockWidget *, const char *debugName) const override;
+    KDDockWidgets::Core::Action *createAction(Core::DockWidget *, const char *debugName) const override;
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     Core::ClassicIndicatorWindowViewInterface *

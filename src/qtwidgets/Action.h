@@ -20,7 +20,7 @@ namespace KDDockWidgets {
 
 namespace QtWidgets {
 
-class DOCKS_EXPORT Action : public QAction, public KDDockWidgets::Action
+class DOCKS_EXPORT Action : public QAction, public Core::Action
 {
     Q_OBJECT
 public:

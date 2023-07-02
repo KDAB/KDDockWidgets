@@ -81,7 +81,7 @@ public:
     Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *controller,
                                                         Core::View *parent) const override;
 
-    KDDockWidgets::Action *createAction(Core::DockWidget *, const char *debugName) const override;
+    KDDockWidgets::Core::Action *createAction(Core::DockWidget *, const char *debugName) const override;
 
 private:
     Q_DISABLE_COPY(ViewFactory)
