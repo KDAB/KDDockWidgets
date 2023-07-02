@@ -92,7 +92,9 @@ bool Action::blockSignals(bool b)
     return QAction::blockSignals(b);
 }
 
+#ifdef DOCKS_DEVELOPER_MODE
 void Action::trigger()
 {
     QAction::trigger();
 }
+#endif

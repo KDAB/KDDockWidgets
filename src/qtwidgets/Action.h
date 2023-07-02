@@ -45,7 +45,10 @@ public:
     void setChecked(bool) override;
 
     bool blockSignals(bool) override;
+
+#ifdef DOCKS_DEVELOPER_MODE
     void trigger() override;
+#endif
 
 private:
     bool m_lastCheckedState = false;
