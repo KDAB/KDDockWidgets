@@ -27,7 +27,7 @@
 #include "core/Position_p.h"
 #include "core/Platform_p.h"
 #include "core/Action_p.h"
-#include "core/DelayedCall.h"
+#include "core/DelayedCall_p.h"
 #include "Platform.h"
 #include "core/layouting/Item_p.h"
 

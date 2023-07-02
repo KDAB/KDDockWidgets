@@ -24,7 +24,7 @@
 #include "Config.h"
 #include "Layout_p.h"
 #include "core/ViewFactory.h"
-#include "core/DelayedCall.h"
+#include "core/DelayedCall_p.h"
 #include "core/DragController_p.h"
 #include "core/LayoutSaver_p.h"
 #include "DockWidget_p.h"
@@ -150,8 +150,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
                                                                 // Otherwise the
                                                                 // KDDockWidgets::TitleBar is the
                                                                 // draggable
-    , d(new Private(requestedFlags))
-    , m_dropArea(new DropArea(view(), MainWindowOption_None))
+    , d(new Private(requestedFlags, this))
     , m_titleBar(new Core::TitleBar(this))
 {
     view()->init();
@@ -181,7 +180,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     updateTitleBarVisibility();
 
     d->m_visibleWidgetCountConnection =
-        m_dropArea->d_ptr()->visibleWidgetCountChanged.connect([this](int count) {
+        d->m_dropArea->d_ptr()->visibleWidgetCountChanged.connect([this](int count) {
             onFrameCountChanged(count);
             d->numFramesChanged.emit();
             onVisibleFrameCountChanged(count);
@@ -192,7 +191,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     view()->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
 
     m_layoutDestroyedConnection =
-        connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
+        connect(d->m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 
     d->numFramesChanged.connect([this] {
         d->numDockWidgetsChanged.emit();
@@ -232,7 +231,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
             }
         }
 
-        m_dropArea->addMultiSplitter(dropAreaMDIWrapper, Location_OnTop);
+        d->m_dropArea->addMultiSplitter(dropAreaMDIWrapper, Location_OnTop);
         dwMDIWrapper->setVisible(false);
         if (!DragController::instance()->isIdle()) {
             // We're dragging a MDI window and we reached the border, detaching it, and making it
@@ -252,7 +251,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
         // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
         // The problem with setVisible(true) will forget about or requested geometry and place the
         // window at 0,0 So disable the setVisible(true) call while in the ctor.
-        m_dropArea->addWidget(group->view(), KDDockWidgets::Location_OnTop, {});
+        d->m_dropArea->addWidget(group->view(), KDDockWidgets::Location_OnTop, {});
     }
 
     if (!suggestedGeometry.isNull())
@@ -295,7 +294,7 @@ void FloatingWindow::maybeCreateResizeHandler()
 
 DropArea *FloatingWindow::dropArea() const
 {
-    return m_dropArea;
+    return d->m_dropArea;
 }
 
 std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
@@ -317,20 +316,20 @@ Core::DockWidget *FloatingWindow::singleDockWidget() const
 
 const Core::DockWidget::List FloatingWindow::dockWidgets() const
 {
-    return m_dropArea->dockWidgets();
+    return d->m_dropArea->dockWidgets();
 }
 
 const Core::Group::List FloatingWindow::groups() const
 {
-    Q_ASSERT(m_dropArea);
-    return m_dropArea->groups();
+    Q_ASSERT(d->m_dropArea);
+    return d->m_dropArea->groups();
 }
 
 QSize FloatingWindow::maxSizeHint() const
 {
     QSize result = Core::Item::hardcodedMaximumSize;
 
-    if (!m_dropArea) {
+    if (!d->m_dropArea) {
         // Still early, no layout set
         return result;
     }
@@ -390,12 +389,12 @@ void FloatingWindow::scheduleDeleteLater()
 
 Core::DropArea *FloatingWindow::multiSplitter() const
 {
-    return m_dropArea;
+    return d->m_dropArea;
 }
 
 Layout *FloatingWindow::layout() const
 {
-    return m_dropArea;
+    return d->m_dropArea;
 }
 
 bool FloatingWindow::isInDragArea(QPoint globalPoint) const
@@ -431,7 +430,7 @@ bool FloatingWindow::anyNonDockable() const
 
 bool FloatingWindow::hasSingleFrame() const
 {
-    return m_dropArea->hasSingleFrame();
+    return d->m_dropArea->hasSingleFrame();
 }
 
 bool FloatingWindow::hasSingleDockWidget() const
@@ -560,7 +559,7 @@ void FloatingWindow::onCloseEvent(CloseEvent *e)
         return;
     }
 
-    m_dropArea->onCloseEvent(e);
+    d->m_dropArea->onCloseEvent(e);
 }
 
 bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
@@ -655,7 +654,7 @@ bool FloatingWindow::anyDockWidgetsHas(LayoutSaverOption option) const
 void FloatingWindow::addDockWidget(Core::DockWidget *dw, Location location,
                                    Core::DockWidget *relativeTo, InitialOption option)
 {
-    m_dropArea->addDockWidget(dw, location, relativeTo, option);
+    d->m_dropArea->addDockWidget(dw, location, relativeTo, option);
 }
 
 bool FloatingWindow::isMDI() const
@@ -776,4 +775,49 @@ FloatingWindowFlags FloatingWindow::floatingWindowFlags() const
 FloatingWindow::Private *FloatingWindow::dptr() const
 {
     return d;
+}
+
+inline FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedFlags)
+{
+    if (!(requestedFlags & FloatingWindowFlag::FromGlobalConfig)) {
+        // User requested specific flags for this floating window
+        return requestedFlags;
+    }
+
+    // Use from KDDockWidgets::Config instead. This is app-wide and not per window.
+
+    FloatingWindowFlags flags = {};
+
+    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
+        == Config::Flag_TitleBarHasMinimizeButton)
+        flags |= FloatingWindowFlag::TitleBarHasMinimizeButton;
+
+    if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton)
+        flags |= FloatingWindowFlag::TitleBarHasMaximizeButton;
+
+    if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
+        flags |= FloatingWindowFlag::KeepAboveIfNotUtilityWindow;
+
+    if (Config::self().flags() & Config::Flag_NativeTitleBar)
+        flags |= FloatingWindowFlag::NativeTitleBar;
+
+    if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
+        flags |= FloatingWindowFlag::HideTitleBarWhenTabsVisible;
+
+    if (Config::self().flags() & Config::Flag_AlwaysTitleBarWhenFloating)
+        flags |= FloatingWindowFlag::AlwaysTitleBarWhenFloating;
+
+    if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
+        flags |= FloatingWindowFlag::DontUseParentForFloatingWindows;
+
+    if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
+        flags |= FloatingWindowFlag::UseQtWindow;
+
+    return flags;
+}
+
+FloatingWindow::Private::Private(FloatingWindowFlags requestedFlags, FloatingWindow *q)
+    : m_flags(flagsForFloatingWindow(requestedFlags))
+    , m_dropArea(new DropArea(q->view(), MainWindowOption_None))
+{
 }

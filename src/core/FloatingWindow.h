@@ -207,7 +207,6 @@ private:
     Private *const d;
 
 protected:
-    QPointer<DropArea> m_dropArea;
     Core::TitleBar *const m_titleBar;
     WindowState m_lastWindowManagerState = WindowState::None;
 

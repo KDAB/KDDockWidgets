@@ -50,7 +50,7 @@
 #include "views/DropArea.h"
 #include "views/ClassicIndicatorsWindow.h"
 
-#include "../core/DelayedCall.h"
+#include "../core/DelayedCall_p.h"
 #include "../core/ViewFactory.h"
 #include "../core/Layout.h"
 #include "../core/DropArea.h"

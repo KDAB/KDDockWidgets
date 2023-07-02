@@ -20,7 +20,6 @@
 #include "kddockwidgets/docks_export.h"
 
 #include <QVector>
-#include <QPointer>
 
 class TestDocks;
 
@@ -355,7 +354,6 @@ private:
     Layout *m_layout = nullptr;
     WidgetResizeHandler *m_resizeHandler = nullptr;
     FrameOptions m_options = FrameOption_None;
-    QPointer<Core::Item> m_layoutItem;
     bool m_updatingTitleBar = false;
     bool m_beingDeleted = false;
     int m_userType = 0;

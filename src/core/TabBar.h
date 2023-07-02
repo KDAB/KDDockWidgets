@@ -13,10 +13,8 @@
 
 #include "Controller.h"
 #include "Group.h"
-#include "../core/Draggable_p.h"
+#include "Draggable_p.h"
 #include "DockWidget.h"
-
-#include <QPointer>
 
 namespace KDDockWidgets::Core {
 
@@ -91,11 +89,6 @@ public:
 
 private:
     Private *const d;
-    Core::Stack *const m_stack;
-    QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
-    DockWidget *m_currentDockWidget = nullptr;
-    QVector<const DockWidget *> m_dockWidgets;
-    bool m_removeGuard = false;
 };
 
 }

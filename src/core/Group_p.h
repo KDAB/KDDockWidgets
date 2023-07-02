@@ -17,6 +17,8 @@
 
 #include <kdbindings/signal.h>
 
+#include <QPointer>
+
 #include <unordered_map>
 #include <vector>
 
@@ -27,6 +29,8 @@ namespace Core {
 class Group ::Private
 {
 public:
+    QPointer<Core::Item> m_layoutItem;
+
     KDBindings::Signal<> numDockWidgetsChanged;
     KDBindings::Signal<> hasTabsVisibleChanged;
     KDBindings::Signal<> isInMainWindowChanged;

@@ -10,17 +10,18 @@
 */
 
 #include "Stack.h"
+#include "Stack_p.h"
 #include "Config.h"
-#include "core/ViewFactory.h"
-#include "core/Logging_p.h"
-#include "core/Utils_p.h"
-#include "core/WindowBeingDragged_p.h"
+#include "ViewFactory.h"
+#include "Logging_p.h"
+#include "Utils_p.h"
+#include "WindowBeingDragged_p.h"
 #include "DockWidget_p.h"
+#include "TabBar.h"
+#include "Group.h"
+#include "FloatingWindow.h"
 
 #include "views/StackViewInterface.h"
-#include "core/TabBar.h"
-#include "core/Group.h"
-#include "core/FloatingWindow.h"
 
 #include <QPointer>
 
@@ -32,21 +33,21 @@ Stack::Stack(Group *group, StackOptions options)
     , Draggable(view(),
                 Config::self().flags()
                     & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
-    , m_tabBar(new TabBar(this))
-    , m_group(group)
-    , m_options(options)
+    , d(new Private(group, options, this))
+
 {
     view()->init();
 }
 
 Stack::~Stack()
 {
-    delete m_tabBar;
+    delete d->m_tabBar;
+    delete d;
 }
 
 StackOptions Stack::options() const
 {
-    return m_options;
+    return d->m_options;
 }
 
 bool Stack::isPositionDraggable(QPoint p) const
@@ -76,8 +77,8 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
 
     QPointer<Group> oldFrame = dock->d->group();
 
-    m_tabBar->insertDockWidget(index, dock, dock->icon(IconPlace::TabBar), dock->title());
-    m_tabBar->setCurrentIndex(index);
+    d->m_tabBar->insertDockWidget(index, dock, dock->icon(IconPlace::TabBar), dock->title());
+    d->m_tabBar->setCurrentIndex(index);
 
     if (oldFrame && oldFrame->beingDeletedLater()) {
         // give it a push and delete it immediately.
@@ -97,12 +98,12 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
 
 bool Stack::contains(DockWidget *dw) const
 {
-    return m_tabBar->indexOfDockWidget(dw) != -1;
+    return d->m_tabBar->indexOfDockWidget(dw) != -1;
 }
 
 Group *Stack::group() const
 {
-    return m_group;
+    return d->m_group;
 }
 
 std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
@@ -118,11 +119,11 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
         }
     }
 
-    QRect r = m_group->view()->geometry();
+    QRect r = d->m_group->view()->geometry();
 
     const QPoint globalPoint = view()->mapToGlobal(QPoint(0, 0));
 
-    auto floatingWindow = new FloatingWindow(m_group, {});
+    auto floatingWindow = new FloatingWindow(d->m_group, {});
     r.moveTopLeft(globalPoint);
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();
@@ -142,15 +143,15 @@ bool Stack::isWindow() const
 
 Core::DockWidget *Stack::singleDockWidget() const
 {
-    if (m_group->hasSingleDockWidget())
-        return m_group->dockWidgets().first();
+    if (d->m_group->hasSingleDockWidget())
+        return d->m_group->dockWidgets().first();
 
     return nullptr;
 }
 
 bool Stack::isMDI() const
 {
-    return m_group && m_group->isMDI();
+    return d->m_group && d->m_group->isMDI();
 }
 
 bool Stack::onMouseDoubleClick(QPoint localPos)
@@ -183,26 +184,26 @@ bool Stack::onMouseDoubleClick(QPoint localPos)
 
 void Stack::setTabBarAutoHide(bool is)
 {
-    if (is == m_tabBarAutoHide)
+    if (is == d->m_tabBarAutoHide)
         return;
 
-    m_tabBarAutoHide = is;
+    d->m_tabBarAutoHide = is;
     tabBarAutoHideChanged.emit(is);
 }
 
 bool Stack::tabBarAutoHide() const
 {
-    return m_tabBarAutoHide;
+    return d->m_tabBarAutoHide;
 }
 
 Core::TabBar *Stack::tabBar() const
 {
-    return m_tabBar;
+    return d->m_tabBar;
 }
 
 int Stack::numDockWidgets() const
 {
-    return m_tabBar->numDockWidgets();
+    return d->m_tabBar->numDockWidgets();
 }
 
 void Stack::setDocumentMode(bool is)

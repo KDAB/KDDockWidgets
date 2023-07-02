@@ -11,7 +11,7 @@
 
 #include "Controller.h"
 #include "Platform.h"
-#include "DelayedCall.h"
+#include "DelayedCall_p.h"
 #include "View.h"
 #include "View_p.h"
 #include "Logging_p.h"

@@ -19,7 +19,7 @@
 
 #include <QVector>
 #include <QObject>
-#include <QPointer>
+
 #include <unordered_map>
 
 #include <memory>
@@ -254,7 +254,6 @@ private:
     QList<Core::Group *> m_groups;
     QVector<Core::FloatingWindow *> m_floatingWindows;
     QVector<Core::Layout *> m_layouts;
-    QPointer<Core::DockWidget> m_focusedDockWidget;
 
     ///@brief Dock widget id remapping, used by LayoutSaver
     ///

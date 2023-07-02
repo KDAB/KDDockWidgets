@@ -41,11 +41,12 @@
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
 #include "core/WidgetResizeHandler_p.h"
-#include "core/DelayedCall.h"
+#include "core/DelayedCall_p.h"
 #include "core/layouting/Item_p.h"
 
 #include "kdbindings/signal.h"
 
+#include <QPointer>
 
 #define MARGIN_THRESHOLD 100
 
@@ -106,8 +107,8 @@ Group::~Group()
 {
     m_inDtor = true;
     s_dbg_numFrames--;
-    if (m_layoutItem)
-        m_layoutItem->unref();
+    if (d->m_layoutItem)
+        d->m_layoutItem->unref();
 
     delete m_resizeHandler;
     m_resizeHandler = nullptr;
@@ -248,8 +249,8 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
             KDDW_ERROR("Group::addTab dockWidget already exists. this={} ; dockWidget={}", ( void * )this, ( void * )dockWidget);
         return;
     }
-    if (m_layoutItem)
-        dockWidget->d->addPlaceholderItem(m_layoutItem);
+    if (d->m_layoutItem)
+        dockWidget->d->addPlaceholderItem(d->m_layoutItem);
 
     const int originalCurrentIndex = currentIndex();
     insertDockWidget(dockWidget, index);
@@ -260,7 +261,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
         if (hasSingleDockWidget()) {
             setObjectName(dockWidget->uniqueName());
 
-            if (!m_layoutItem) {
+            if (!d->m_layoutItem) {
                 // When adding the 1st dock widget of a fresh group, let's give the group the size
                 // of the dock widget, so that when adding it to the main window, the main window
                 // can use that size as the initial suggested size.
@@ -560,19 +561,19 @@ void Group::restoreToPreviousPosition()
         return;
     }
 
-    if (!m_layoutItem) {
+    if (!d->m_layoutItem) {
         KDDW_DEBUG("{} There's no previous position known", Q_FUNC_INFO);
         return;
     }
 
-    if (!m_layoutItem->isPlaceholder()) {
+    if (!d->m_layoutItem->isPlaceholder()) {
         // Maybe in this case just fold the group into the placeholder, which probably has other
         // dockwidgets which were added meanwhile. TODO
         KDDW_DEBUG("{} Previous position isn't a placeholder", Q_FUNC_INFO);
         return;
     }
 
-    m_layoutItem->restore(view());
+    d->m_layoutItem->restore(view());
 }
 
 int Group::currentTabIndex() const
@@ -603,16 +604,16 @@ bool Group::anyNonDockable() const
 
 void Group::setLayoutItem(Item *item)
 {
-    if (item == m_layoutItem)
+    if (item == d->m_layoutItem)
         return;
 
-    if (m_layoutItem)
-        m_layoutItem->unref();
+    if (d->m_layoutItem)
+        d->m_layoutItem->unref();
 
     if (item)
         item->ref();
 
-    m_layoutItem = item;
+    d->m_layoutItem = item;
     if (item) {
         for (DockWidget *dw : dockWidgets())
             dw->d->addPlaceholderItem(item);
@@ -624,7 +625,7 @@ void Group::setLayoutItem(Item *item)
 
 Item *Group::layoutItem() const
 {
-    return m_layoutItem;
+    return d->m_layoutItem;
 }
 
 int Group::dbg_numFrames()

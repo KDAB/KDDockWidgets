@@ -12,13 +12,11 @@
 #pragma once
 
 #include "Controller.h"
-#include "../core/Draggable_p.h"
+#include "Draggable_p.h"
 #include "Group.h"
 #include "TabBar.h"
 
 #include "kdbindings/signal.h"
-
-#include <QPointer>
 
 namespace KDDockWidgets::Core {
 
@@ -29,7 +27,7 @@ class DOCKS_EXPORT Stack : public Controller, public Draggable
 {
     Q_OBJECT
 public:
-    explicit Stack(Group *group, StackOptions);
+    explicit Stack(Group *, StackOptions);
     virtual ~Stack() override;
 
     /**
@@ -86,10 +84,8 @@ public: // TODOm3
     bool onMouseDoubleClick(QPoint localPos);
 
 private:
-    QPointer<TabBar> m_tabBar;
-    Group *const m_group;
-    bool m_tabBarAutoHide = true;
-    const StackOptions m_options;
+    class Private;
+    Private *const d;
 
     KDDW_DELETE_COPY_CTOR(Stack)
 };

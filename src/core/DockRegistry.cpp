@@ -89,14 +89,14 @@ void DockRegistry::onFocusedViewChanged(std::shared_ptr<View> view)
 
 void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
 {
-    if (m_focusedDockWidget.data() == dw)
+    if (d->m_focusedDockWidget.data() == dw)
         return;
 
-    if (m_focusedDockWidget) {
+    if (d->m_focusedDockWidget) {
         // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
         // as the FocusScope hasn't been updated yet.
         // It's just for styling purposes, so can be delayed
-        auto oldDw = m_focusedDockWidget;
+        auto oldDw = d->m_focusedDockWidget;
         QMetaObject::invokeMethod(
             oldDw, [oldDw] {
                 if (oldDw) // QPointer
@@ -105,7 +105,7 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
             Qt::QueuedConnection);
     }
 
-    m_focusedDockWidget = dw;
+    d->m_focusedDockWidget = dw;
 
     if (dw) {
         // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
@@ -113,8 +113,8 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
         // It's just for styling purposes, so can be delayed
         QMetaObject::invokeMethod(
             this, [this] {
-                if (m_focusedDockWidget) { // QPointer
-                    m_focusedDockWidget->d->isFocusedChanged.emit(true);
+                if (d->m_focusedDockWidget) { // QPointer
+                    d->m_focusedDockWidget->d->isFocusedChanged.emit(true);
                 }
             },
             Qt::QueuedConnection);
@@ -319,8 +319,8 @@ void DockRegistry::registerDockWidget(Core::DockWidget *dock)
 
 void DockRegistry::unregisterDockWidget(Core::DockWidget *dock)
 {
-    if (m_focusedDockWidget == dock)
-        m_focusedDockWidget = nullptr;
+    if (d->m_focusedDockWidget == dock)
+        d->m_focusedDockWidget = nullptr;
 
     m_dockWidgets.removeOne(dock);
     maybeDelete();
@@ -380,7 +380,7 @@ void DockRegistry::unregisterGroup(Core::Group *group)
 
 Core::DockWidget *DockRegistry::focusedDockWidget() const
 {
-    return m_focusedDockWidget;
+    return d->m_focusedDockWidget;
 }
 
 bool DockRegistry::containsDockWidget(const QString &uniqueName) const

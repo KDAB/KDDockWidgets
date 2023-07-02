@@ -14,8 +14,12 @@
 // Pimpl class so we can keep kdbindings private
 
 #include "TabBar.h"
+#include "DockWidget.h"
 
 #include <kdbindings/signal.h>
+
+#include <QVector>
+#include <QPointer>
 
 #include <unordered_map>
 
@@ -23,12 +27,26 @@ namespace KDDockWidgets {
 
 namespace Core {
 
+class Stack;
+class Group;
+
 class TabBar::Private
 {
 public:
+    explicit Private(Stack *stack)
+        : m_stack(stack)
+    {
+    }
+
+    Core::Stack *const m_stack;
+    QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
+    DockWidget *m_currentDockWidget = nullptr;
+    QVector<const DockWidget *> m_dockWidgets;
+    bool m_removeGuard = false;
+    std::unordered_map<KDDockWidgets::Core::DockWidget *, KDBindings::ScopedConnection> aboutToDeleteConnections;
+
     KDBindings::Signal<KDDockWidgets::Core::DockWidget *> currentDockWidgetChanged;
     KDBindings::Signal<> countChanged;
-    std::unordered_map<KDDockWidgets::Core::DockWidget *, KDBindings::ScopedConnection> aboutToDeleteConnections;
 };
 
 }

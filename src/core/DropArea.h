@@ -24,8 +24,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/core/Layout.h"
 
-#include <QPointer>
-
 class TestQtWidgets;
 class TestDocks;
 

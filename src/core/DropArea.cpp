@@ -20,7 +20,7 @@
 #include "core/Utils_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/WindowBeingDragged_p.h"
-#include "core/DelayedCall.h"
+#include "core/DelayedCall_p.h"
 #include "core/Group.h"
 #include "core/FloatingWindow.h"
 #include "core/DockWidget_p.h"

@@ -16,7 +16,7 @@
 #include <qsize.h>
 #include <core/Controller.h>
 #include <qpoint.h>
-#include <DelayedCall.h>
+#include <DelayedCall_p.h>
 #include <qstring.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"

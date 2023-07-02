@@ -18,7 +18,7 @@
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
 #include <ClassicIndicatorsWindow.h>
-#include <DelayedCall.h>
+#include <DelayedCall_p.h>
 #include <core/Platform.h>
 #include <qstring.h>
 #include <NonQtCompat_p.h>

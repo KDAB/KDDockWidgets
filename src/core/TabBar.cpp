@@ -31,8 +31,7 @@ using namespace KDDockWidgets::Core;
 Core::TabBar::TabBar(Stack *stack)
     : Controller(ViewType::TabBar, Config::self().viewFactory()->createTabBar(this, stack->view()))
     , Draggable(view())
-    , d(new Private())
-    , m_stack(stack)
+    , d(new Private(stack))
 {
     view()->init();
     dynamic_cast<Core::TabBarViewInterface *>(view())->setTabsAreMovable(tabsAreMovable());
@@ -90,7 +89,7 @@ Core::DockWidget *Core::TabBar::dockWidgetAt(int index) const
     if (index < 0 || index >= numDockWidgets())
         return nullptr;
 
-    return const_cast<DockWidget *>(m_dockWidgets.value(index));
+    return const_cast<DockWidget *>(d->m_dockWidgets.value(index));
 }
 
 Core::DockWidget *Core::TabBar::dockWidgetAt(QPoint localPos) const
@@ -100,7 +99,7 @@ Core::DockWidget *Core::TabBar::dockWidgetAt(QPoint localPos) const
 
 int TabBar::indexOfDockWidget(const Core::DockWidget *dw) const
 {
-    return m_dockWidgets.indexOf(dw);
+    return d->m_dockWidgets.indexOf(dw);
 }
 
 void TabBar::removeDockWidget(Core::DockWidget *dw)
@@ -112,24 +111,24 @@ void TabBar::removeDockWidget(Core::DockWidget *dw)
     if (it != d->aboutToDeleteConnections.end())
         d->aboutToDeleteConnections.erase(it);
 
-    const bool wasCurrent = dw == m_currentDockWidget;
-    const int index = m_dockWidgets.indexOf(dw);
+    const bool wasCurrent = dw == d->m_currentDockWidget;
+    const int index = d->m_dockWidgets.indexOf(dw);
 
     if (wasCurrent) {
-        const bool isLast = index == m_dockWidgets.count() - 1;
+        const bool isLast = index == d->m_dockWidgets.count() - 1;
         const int newCurrentIndex = isLast ? index - 1 : index + 1;
         setCurrentIndex(newCurrentIndex);
     }
 
     dw->disconnect(this);
 
-    m_removeGuard = true;
-    // The view might call setCurrenteIndex() before our m_dockWidgets reflectig the state.
-    // m_removeGuard protects against that.
+    d->m_removeGuard = true;
+    // The view might call setCurrenteIndex() before our d->m_dockWidgets reflectig the state.
+    // d->m_removeGuard protects against that.
     dynamic_cast<Core::TabBarViewInterface *>(view())->removeDockWidget(dw);
-    m_removeGuard = false;
+    d->m_removeGuard = false;
 
-    m_dockWidgets.removeOne(dw);
+    d->m_dockWidgets.removeOne(dw);
     group()->onDockWidgetCountChanged();
 }
 
@@ -144,14 +143,14 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
         }
     }
 
-    m_dockWidgets.insert(index, dw);
+    d->m_dockWidgets.insert(index, dw);
     KDBindings::ScopedConnection conn = dw->d->aboutToDelete.connect([this, dw] {
         removeDockWidget(dw);
     });
     d->aboutToDeleteConnections[dw] = std::move(conn);
 
     dynamic_cast<Core::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
-    if (!m_currentDockWidget)
+    if (!d->m_currentDockWidget)
         setCurrentDockWidget(dw);
 
     group()->onDockWidgetCountChanged();
@@ -159,8 +158,8 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
 
 std::unique_ptr<WindowBeingDragged> Core::TabBar::makeWindow()
 {
-    auto dock = m_lastPressedDockWidget;
-    m_lastPressedDockWidget = nullptr;
+    auto dock = d->m_lastPressedDockWidget;
+    d->m_lastPressedDockWidget = nullptr;
 
     const bool hideTitleBarWhenTabsVisible =
         Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible;
@@ -171,13 +170,13 @@ std::unique_ptr<WindowBeingDragged> Core::TabBar::makeWindow()
             if (alwaysShowTabs && hasSingleDockWidget()) {
                 // Case #1. User is dragging a tab but there's only 1 tab (and tabs are always
                 // visible), so drag everything instead, no detaching happens
-                return m_stack->makeWindow();
+                return d->m_stack->makeWindow();
             }
         } else {
             // Case #2. User is dragging on the QTabBar background, not on an actual tab.
             // As Flag_HideTitleBarWhenTabsVisible is set, we let the user drag through the tab
             // widget background.
-            return m_stack->makeWindow();
+            return d->m_stack->makeWindow();
         }
     } else {
         if (dock && hasSingleDockWidget() && alwaysShowTabs) {
@@ -202,12 +201,12 @@ std::unique_ptr<WindowBeingDragged> Core::TabBar::makeWindow()
 bool Core::TabBar::isWindow() const
 {
     // Same semantics as tab widget, no need to duplicate logic
-    return m_stack->isWindow();
+    return d->m_stack->isWindow();
 }
 
 void Core::TabBar::onMousePress(QPoint localPos)
 {
-    m_lastPressedDockWidget = dockWidgetAt(localPos);
+    d->m_lastPressedDockWidget = dockWidgetAt(localPos);
     Group *group = this->group();
     if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !group->isFocused()) {
         // User clicked on a tab which was already focused
@@ -229,12 +228,12 @@ bool Core::TabBar::hasSingleDockWidget() const
 
 int Core::TabBar::numDockWidgets() const
 {
-    return m_dockWidgets.size();
+    return d->m_dockWidgets.size();
 }
 
 Core::DockWidget *Core::TabBar::singleDockWidget() const
 {
-    return m_stack->singleDockWidget();
+    return d->m_stack->singleDockWidget();
 }
 
 bool Core::TabBar::isMDI() const
@@ -245,18 +244,18 @@ bool Core::TabBar::isMDI() const
 
 Group *Core::TabBar::group() const
 {
-    return m_stack->group();
+    return d->m_stack->group();
 }
 
 Stack *TabBar::stack() const
 {
-    return m_stack;
+    return d->m_stack;
 }
 
 void Core::TabBar::moveTabTo(int from, int to)
 {
-    auto fromDw = m_dockWidgets.takeAt(from);
-    m_dockWidgets.insert(to, fromDw);
+    auto fromDw = d->m_dockWidgets.takeAt(from);
+    d->m_dockWidgets.insert(to, fromDw);
     dynamic_cast<Core::TabBarViewInterface *>(view())->moveTabTo(from, to);
 }
 
@@ -272,15 +271,15 @@ QRect Core::TabBar::rectForTab(int index) const
 
 DockWidget *TabBar::currentDockWidget() const
 {
-    return m_currentDockWidget;
+    return d->m_currentDockWidget;
 }
 
 void TabBar::setCurrentDockWidget(DockWidget *dw)
 {
-    if (m_removeGuard) // We're in the middle of a remove.
+    if (d->m_removeGuard) // We're in the middle of a remove.
         return;
 
-    if (dw == m_currentDockWidget)
+    if (dw == d->m_currentDockWidget)
         return;
 
     setCurrentIndex(indexOfDockWidget(dw));
@@ -288,22 +287,22 @@ void TabBar::setCurrentDockWidget(DockWidget *dw)
 
 int TabBar::currentIndex() const
 {
-    if (!m_currentDockWidget)
+    if (!d->m_currentDockWidget)
         return -1;
 
-    return m_dockWidgets.indexOf(m_currentDockWidget);
+    return d->m_dockWidgets.indexOf(d->m_currentDockWidget);
 }
 
 void TabBar::setCurrentIndex(int index)
 {
-    if (m_removeGuard) // We're in the middle of a remove.
+    if (d->m_removeGuard) // We're in the middle of a remove.
         return;
 
     auto newCurrentDw = dockWidgetAt(index);
-    if (newCurrentDw == m_currentDockWidget)
+    if (newCurrentDw == d->m_currentDockWidget)
         return;
 
-    m_currentDockWidget = newCurrentDw;
+    d->m_currentDockWidget = newCurrentDw;
     d->currentDockWidgetChanged.emit(newCurrentDw);
     dynamic_cast<Core::TabBarViewInterface *>(view())->setCurrentIndex(index);
 }

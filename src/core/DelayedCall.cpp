@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DelayedCall.h"
+#include "DelayedCall_p.h"
 
 #include <QObject>
 

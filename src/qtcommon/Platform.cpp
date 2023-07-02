@@ -15,7 +15,7 @@
 #include "kddockwidgets/core/EventFilterInterface.h"
 #include "core/Platform_p.h"
 #include "core/Utils_p.h"
-#include "core/DelayedCall.h"
+#include "core/DelayedCall_p.h"
 #include "qtcommon/View.h"
 
 #include <QWindow>
