@@ -15,6 +15,8 @@
 #include "core/views/TitleBarViewInterface.h"
 #include "View.h"
 
+#include <kdbindings/signal.h>
+
 namespace KDDockWidgets {
 
 
@@ -43,6 +45,9 @@ protected:
 #endif
 protected:
     void init() override;
+
+private:
+    KDBindings::ScopedConnection m_titleChangedConnection;
 };
 
 }

@@ -12,7 +12,6 @@
 #pragma once
 
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/core/Action.h"
 
 namespace KDDockWidgets {
 
@@ -40,8 +39,6 @@ public:
     QString title() const;
     void setTitle(const QString &);
     void setAsCurrentTab();
-    QAction *toggleAction() const;
-    QAction *floatAction() const;
     bool isOpen() const;
     void forceClose();
     void open();

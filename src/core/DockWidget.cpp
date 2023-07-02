@@ -26,6 +26,7 @@
 #include "core/WindowBeingDragged_p.h"
 #include "core/Position_p.h"
 #include "core/Platform_p.h"
+#include "core/Action_p.h"
 #include "core/DelayedCall.h"
 #include "Platform.h"
 #include "core/layouting/Item_p.h"
@@ -241,12 +242,12 @@ bool DockWidget::setFloating(bool floats)
     }
 }
 
-QAction *DockWidget::toggleAction() const
+Action *DockWidget::toggleAction() const
 {
     return d->toggleAction;
 }
 
-QAction *DockWidget::floatAction() const
+Action *DockWidget::floatAction() const
 {
     return d->floatAction;
 }
@@ -969,26 +970,28 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
     , q(qq)
     , options(options_)
     , layoutSaverOptions(layoutSaverOptions_)
-    , toggleAction(new QAction(q))
-    , floatAction(new QAction(q))
+    , toggleAction(Config::self().viewFactory()->createAction(q, "toggle"))
+    , floatAction(Config::self().viewFactory()->createAction(q, "float"))
 {
-    q->connect(toggleAction, &QAction::toggled, q, [this](bool enabled) {
-        if (!m_updatingToggleAction) { // guard against recursiveness
-            toggleAction->blockSignals(true); // and don't emit spurious toggle. Like when a dock
-                                              // widget is inserted into a tab widget it might get
-                                              // hide events, ignore those. The Dock Widget is open.
-            m_processingToggleAction = true;
-            toggle(enabled);
-            toggleAction->blockSignals(false);
-            m_processingToggleAction = false;
-        }
-    });
+    toggleAction->d->toggled.connect(
+        [this](bool enabled) {
+            if (!m_updatingToggleAction) { // guard against recursiveness
+                toggleAction->blockSignals(true); // and don't emit spurious toggle. Like when a dock
+                                                  // widget is inserted into a tab widget it might get
+                                                  // hide events, ignore those. The Dock Widget is open.
+                m_processingToggleAction = true;
+                toggle(enabled);
+                toggleAction->blockSignals(false);
+                m_processingToggleAction = false;
+            }
+        });
 
-    q->connect(floatAction, &QAction::toggled, q, [this](bool checked) {
+    floatAction->d->toggled.connect([this](bool checked) {
         if (!m_updatingFloatAction) { // guard against recursiveness
             q->setFloating(checked);
         }
 
+        KDDW_TRACE("Emitting DockWidget::isFloatingChanged({})", checked);
         isFloatingChanged.emit(checked);
 
         // When floating, we remove from the sidebar

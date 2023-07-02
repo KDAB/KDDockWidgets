@@ -15,6 +15,7 @@
 #include "ClassicIndicatorsWindow.h"
 #include "core/Utils_p.h"
 #include "core/Logging_p.h"
+#include "Action.h"
 
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
@@ -23,22 +24,6 @@
 #include "kddockwidgets/core/indicators/NullDropIndicatorOverlay.h"
 #include "kddockwidgets/core/indicators/SegmentedDropIndicatorOverlay.h"
 #include "kddockwidgets/core/MainWindow.h"
-
-// #include "qtwidgets/views/ClassicIndicatorsWindow.h"
-// #include "qtwidgets/views/SegmentedDropIndicatorOverlay.h"
-// #include "qtwidgets/views/FloatingWindow.h"
-// #include "qtwidgets/views/DockWidget.h"
-// #include "qtwidgets/views/DropArea.h"
-// #include "qtwidgets/views/Group.h"
-// #include "qtwidgets/views/View.h"
-// #include "qtwidgets/views/Separator.h"
-// #include "qtwidgets/views/TitleBar.h"
-// #include "qtwidgets/views/TabBar.h"
-// #include "qtwidgets/views/SideBar.h"
-// #include "qtwidgets/views/Stack.h"
-// #include "qtwidgets/views/MainWindow.h"
-// #include "qtwidgets/views/MDILayout.h"
-// #include "qtwidgets/views/RubberBand.h"
 
 #include "views/ClassicIndicatorWindowViewInterface.h"
 
@@ -143,4 +128,9 @@ ViewFactory::createClassicIndicatorWindow_flutter(Core::ClassicDropIndicatorOver
 {
     KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
     return nullptr;
+}
+
+KDDockWidgets::Action *ViewFactory::createAction(Core::DockWidget *dw, const char *debugName) const
+{
+    return new Flutter::Action(dw, debugName);
 }

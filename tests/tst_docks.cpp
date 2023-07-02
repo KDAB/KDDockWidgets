@@ -20,6 +20,7 @@
 #include "core/Position_p.h"
 #include "core/TitleBar_p.h"
 #include "core/TabBar_p.h"
+#include "core/Action_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
@@ -3627,12 +3628,12 @@ KDDW_QCORO_TASK tst_floatingAction()
         bool dock1IsFloating = dock1->floatAction()->isChecked();
         bool dock2IsFloating = dock2->floatAction()->isChecked();
 
-        auto conn1 = QObject::connect(dock1->floatAction(), &QAction::toggled, [&dock1IsFloating](bool t) {
+        KDBindings::ScopedConnection conn1 = dock1->floatAction()->d->toggled.connect([&dock1IsFloating](bool t) {
             Q_ASSERT(dock1IsFloating != t);
             dock1IsFloating = t;
         });
 
-        auto conn2 = QObject::connect(dock2->floatAction(), &QAction::toggled, [&dock2IsFloating](bool t) {
+        KDBindings::ScopedConnection conn2 = dock2->floatAction()->d->toggled.connect([&dock2IsFloating](bool t) {
             Q_ASSERT(dock2IsFloating != t);
             dock2IsFloating = t;
         });
@@ -3659,8 +3660,6 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(dock1IsFloating);
         CHECK(dock2IsFloating);
 
-        QObject::disconnect(conn1);
-        QObject::disconnect(conn2);
         delete fw2;
     }
 
@@ -3684,15 +3683,13 @@ KDDW_QCORO_TASK tst_floatingAction()
         int floatingChangedCount1 = 0;
         int floatingChangedCount2 = 0;
 
-#ifdef KDDW_FRONTEND_QT
-        QObject::connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
+        KDBindings::ScopedConnection conn1 = dock1->floatAction()->d->toggled.connect([&floatActionCount1] {
             floatActionCount1++;
         });
 
-        QObject::connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
+        KDBindings::ScopedConnection conn2 = dock2->floatAction()->d->toggled.connect([&floatActionCount2] {
             floatActionCount2++;
         });
-#endif
 
         dock1->d->isFloatingChanged.connect([&floatingChangedCount1] {
             floatingChangedCount1++;
@@ -3729,20 +3726,9 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(dock2->floatAction()->isChecked());
         auto oldFw2 = dock2->floatingWindow();
 
-        int floatActionCount1 = 0;
-        int floatActionCount2 = 0;
         int floatingChangedCount1 = 0;
         int floatingChangedCount2 = 0;
 
-#ifdef KDDW_FRONTEND_QT
-        QObject::connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
-            floatActionCount1++;
-        });
-
-        QObject::connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
-            floatActionCount2++;
-        });
-#endif
         dock1->d->isFloatingChanged.connect([&floatingChangedCount1] {
             floatingChangedCount1++;
         });
@@ -3754,8 +3740,6 @@ KDDW_QCORO_TASK tst_floatingAction()
         auto dropArea1 = dock1->floatingWindow()->dropArea();
         dropArea1->drop(oldFw2->view(), Location_OnRight, nullptr);
 
-        CHECK_EQ(floatActionCount1, 1);
-        CHECK_EQ(floatActionCount2, 1);
         CHECK_EQ(floatingChangedCount1, 1);
         CHECK_EQ(floatingChangedCount2, 1);
 
@@ -3784,20 +3768,9 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(dock2->floatAction()->isChecked());
         auto oldFw2 = dock2->window();
 
-        int floatActionCount1 = 0;
-        int floatActionCount2 = 0;
         int floatingChangedCount1 = 0;
         int floatingChangedCount2 = 0;
 
-#ifdef KDDW_FRONTEND_QT
-        QObject::connect(dock1->floatAction(), &QAction::toggled, [&floatActionCount1] {
-            floatActionCount1++;
-        });
-
-        QObject::connect(dock2->floatAction(), &QAction::toggled, [&floatActionCount2] {
-            floatActionCount2++;
-        });
-#endif
         dock1->d->isFloatingChanged.connect([&floatingChangedCount1] {
             floatingChangedCount1++;
         });
@@ -3808,11 +3781,10 @@ KDDW_QCORO_TASK tst_floatingAction()
 
         dock1->addDockWidgetAsTab(dock2);
 
-        CHECK_EQ(floatActionCount1, 1);
+        CHECK_EQ(floatingChangedCount1, 1);
 
         // On earlier Qt versions this is flaky, but technically correct.
         // Windows can get hidden while being reparented and floating changes momentarily.
-        CHECK(floatActionCount2 == 1 || floatActionCount2 == 3);
         CHECK(floatingChangedCount2 == 1 || floatingChangedCount2 == 3);
         CHECK_EQ(floatingChangedCount1, 1);
 

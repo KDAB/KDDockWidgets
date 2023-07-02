@@ -175,3 +175,13 @@ void DockWidget::onGeometryUpdated()
         }
     }
 }
+
+QtQuick::Action *DockWidget::toggleAction() const
+{
+    return static_cast<QtQuick::Action *>(m_dockWidget->toggleAction());
+}
+
+QtQuick::Action *DockWidget::floatAction() const
+{
+    return static_cast<QtQuick::Action *>(m_dockWidget->toggleAction());
+}

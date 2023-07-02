@@ -81,6 +81,8 @@ public:
     Core::View *createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *controller,
                                                         Core::View *parent) const override;
 
+    KDDockWidgets::Action *createAction(Core::DockWidget *, const char *debugName) const override;
+
 private:
     Q_DISABLE_COPY(ViewFactory)
     mutable QMap<std::pair<TitleBarButtonType, qreal>, QIcon> m_cachedIcons;

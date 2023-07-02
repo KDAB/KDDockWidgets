@@ -123,7 +123,7 @@ KDDW_QCORO_TASK tst_close()
 
     // 1.0 Call QWidget::close() on QDockWidget
     auto dock1 = createDockWidget("doc1");
-    QAction *toggleAction = dock1->toggleAction();
+    auto toggleAction = dock1->toggleAction();
     CHECK(toggleAction->isChecked());
     CHECK(dock1->isFloating());
     CHECK(dock1->isVisible());

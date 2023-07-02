@@ -9,24 +9,27 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-
 #include "Action.h"
+#include "Action_p.h"
 
-#if !defined(QT_WIDGETS_LIB)
+using namespace KDDockWidgets;
 
-#include "Logging_p.h"
-
-QAction::~QAction() = default;
-
-void QAction::setIcon(const KDDockWidgets::Icon &)
+Action::Action(Core::DockWidget *dw, const char *debugName)
+    : d(new Private(dw, debugName))
 {
-    KDDW_ERROR("Not implemented for QtQuick");
 }
 
-KDDockWidgets::Icon QAction::icon() const
+Action::~Action()
 {
-    KDDW_ERROR("Not implemented for QtQuick/Flutter");
-    return {};
+    delete d;
 }
 
-#endif
+bool Action::enabled() const
+{
+    return isEnabled();
+}
+
+void Action::toggle()
+{
+    setChecked(!isChecked());
+}

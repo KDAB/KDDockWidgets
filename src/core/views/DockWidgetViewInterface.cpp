@@ -70,16 +70,6 @@ void DockWidgetViewInterface::setFloating(bool is)
     m_dockWidget->setFloating(is);
 }
 
-QAction *DockWidgetViewInterface::toggleAction() const
-{
-    return m_dockWidget->toggleAction();
-}
-
-QAction *DockWidgetViewInterface::floatAction() const
-{
-    return m_dockWidget->floatAction();
-}
-
 void DockWidgetViewInterface::setAsCurrentTab()
 {
     m_dockWidget->setAsCurrentTab();

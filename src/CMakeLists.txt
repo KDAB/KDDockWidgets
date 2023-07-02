@@ -75,6 +75,7 @@ set(KDDW_QTCOMMON_SRCS qtcommon/Platform.cpp qtcommon/Window.cpp qtcommon/View.c
 )
 
 set(KDDW_FRONTEND_QTWIDGETS_SRCS
+    qtwidgets/Action.cpp
     qtwidgets/Window.cpp
     qtwidgets/Platform.cpp
     qtwidgets/views/View.cpp
@@ -122,6 +123,7 @@ set(KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS
 )
 
 set(KDDW_FRONTEND_QTQUICK_SRCS
+    qtquick/Action.cpp
     qtquick/Window.cpp
     qtquick/Platform.cpp
     qtquick/Helpers.cpp
@@ -212,6 +214,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
+    flutter/Action.cpp
     flutter/ViewFactory.cpp
     flutter/Window.cpp
     flutter/Screen.cpp
@@ -605,7 +608,7 @@ endif()
 
 if(KDDW_FRONTEND_QTWIDGETS)
 
-    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform.h qtwidgets/ViewFactory.h)
+    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform.h qtwidgets/ViewFactory.h qtwidgets/Action.h)
 
     set(KDDW_QTWIDGET_VIEW_HEADERS
         qtwidgets/views/DockWidget.h

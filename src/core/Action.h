@@ -12,93 +12,53 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/NonQtCompat_p.h"
 
-#include <QObject>
+/// Class to abstract QAction, so code still works with Flutter and QtQuicks
 
-#if defined(QT_WIDGETS_LIB)
-#include <QAction>
-#else
-#include "../NonQtCompat_p.h"
-// A QAction for QtQuick. So it compiles without widgets
-class DOCKS_EXPORT QAction : public QObject
+namespace KDDockWidgets {
+
+namespace Core {
+class DockWidget;
+}
+
+class DOCKS_EXPORT Action
 {
-    Q_OBJECT
 public:
-    using QObject::QObject;
+    explicit Action(Core::DockWidget *, const char *debugName = "");
+    virtual ~Action();
 
-    ~QAction() override;
+    virtual void setCheckable(bool is) = 0;
+    virtual bool isCheckable() const = 0;
 
-    void setCheckable(bool is)
+    virtual void setIcon(const KDDockWidgets::Icon &) = 0;
+    virtual KDDockWidgets::Icon icon() const = 0;
+
+    virtual void setText(const QString &text) = 0;
+
+    virtual void setToolTip(const QString &text) = 0;
+    virtual QString toolTip() const = 0;
+
+    virtual void setEnabled(bool enabled) = 0;
+    virtual bool isEnabled() const = 0;
+
+    virtual bool isChecked() const = 0;
+    virtual void setChecked(bool checked) = 0;
+
+    virtual bool blockSignals(bool) = 0;
+
+#ifdef DOCKS_DEVELOPER_MODE
+    // Only used by QtWidget tests
+    virtual void trigger()
     {
-        m_checkable = is;
     }
+#endif
 
-    bool isCheckable() const
-    {
-        return m_checkable;
-    }
+    bool enabled() const;
+    void toggle();
 
-    void setIcon(const KDDockWidgets::Icon &);
-    KDDockWidgets::Icon icon() const;
-
-    void setText(const QString &text)
-    {
-        m_text = text;
-    }
-
-    void setToolTip(const QString &text)
-    {
-        m_toolTip = text;
-    }
-
-    QString toolTip() const
-    {
-        return m_toolTip;
-    }
-
-    bool enabled() const
-    {
-        return m_enabled;
-    }
-
-    void setEnabled(bool enabled)
-    {
-        m_enabled = enabled;
-    }
-
-    bool isChecked() const
-    {
-        return m_checked;
-    }
-
-    void setChecked(bool checked)
-    {
-        if (m_checked != checked) {
-            m_checked = checked;
-            Q_EMIT toggled(checked);
-        }
-    }
-
-    bool isEnabled() const
-    {
-        return m_enabled;
-    }
-
-    void toggle()
-    {
-        setChecked(!m_checked);
-    }
-
-Q_SIGNALS:
-    bool toggled(bool);
-
-private:
-    QString m_text;
-    QString m_toolTip;
-
-    bool m_checkable = true;
-    bool m_enabled = true;
-    bool m_checked = false;
+    class Private;
+    Private *const d;
 };
 
-#endif
+}

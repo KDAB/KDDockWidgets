@@ -471,7 +471,7 @@ void FloatingWindow::onFrameCountChanged(int count)
     } else {
         updateTitleBarVisibility();
         if (count == 1) // if something was removed, then our single dock widget is floating, we
-                        // need to check the QAction
+                        // need to check the Action
             dropArea()->updateFloatingActions();
     }
 }

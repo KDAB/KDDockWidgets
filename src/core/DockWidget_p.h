@@ -249,8 +249,8 @@ public:
     DockWidgetOptions options;
     FloatingWindowFlags m_flags = FloatingWindowFlag::FromGlobalConfig;
     const LayoutSaverOptions layoutSaverOptions;
-    QAction *const toggleAction;
-    QAction *const floatAction;
+    Action *const toggleAction;
+    Action *const floatAction;
     Position::Ptr m_lastPosition = std::make_shared<Position>();
     bool m_isPersistentCentralDockWidget = false;
     bool m_processingToggleAction = false;

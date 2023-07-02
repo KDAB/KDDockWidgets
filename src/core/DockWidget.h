@@ -144,16 +144,16 @@ public:
     FloatingWindow *floatingWindow() const;
 
     /**
-     * @brief Returns the QAction that allows to hide/show the dock widget
+     * @brief Returns the Action that allows to hide/show the dock widget
      * Useful to put in menus.
      */
-    QAction *toggleAction() const;
+    Action *toggleAction() const;
 
     /**
-     * @brief Returns the QAction that allows to dock/undock the dock widget
+     * @brief Returns the Action that allows to dock/undock the dock widget
      * Useful to put in menus.
      */
-    QAction *floatAction() const;
+    Action *floatAction() const;
 
     /**
      * @brief the dock widget's unique name.

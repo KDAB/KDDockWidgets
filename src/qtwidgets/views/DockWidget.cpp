@@ -95,3 +95,13 @@ QWidget *DockWidget::widget() const
 
     return nullptr;
 }
+
+QAction *DockWidget::toggleAction() const
+{
+    return reinterpret_cast<QAction *>(m_dockWidget->toggleAction());
+}
+
+QAction *DockWidget::floatAction() const
+{
+    return reinterpret_cast<QAction *>(m_dockWidget->floatAction());
+}
