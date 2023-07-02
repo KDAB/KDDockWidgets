@@ -155,6 +155,8 @@ public:
     virtual void showNormal_nocallback();
     virtual void update();
     virtual void update_nocallback();
+    virtual void updateIndicatorVisibility();
+    virtual void updateIndicatorVisibility_nocallback();
     virtual void updatePositions();
     virtual void updatePositions_nocallback();
     virtual bool updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
@@ -289,6 +291,8 @@ public:
     Callback_showNormal m_showNormalCallback = nullptr;
     typedef void (*Callback_update)(void *);
     Callback_update m_updateCallback = nullptr;
+    typedef void (*Callback_updateIndicatorVisibility)(void *);
+    Callback_updateIndicatorVisibility m_updateIndicatorVisibilityCallback = nullptr;
     typedef void (*Callback_updatePositions)(void *);
     Callback_updatePositions m_updatePositionsCallback = nullptr;
     typedef bool (*Callback_updatePositions_flutter)(void *, int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
@@ -433,6 +437,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__sho
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showNormal(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::update()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::updateIndicatorVisibility()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updateIndicatorVisibility(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)

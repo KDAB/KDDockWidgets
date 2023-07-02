@@ -32,18 +32,6 @@ DockWidget_wrapper::DockWidget_wrapper(KDDockWidgets::Core::View *view, const QS
     : ::KDDockWidgets::Core::DockWidget(view, uniqueName, options, layoutSaverOptions)
 {
 }
-void DockWidget_wrapper::aboutToDelete(KDDockWidgets::Core::DockWidget *arg__1)
-{
-    ::KDDockWidgets::Core::DockWidget::aboutToDelete(arg__1);
-}
-void DockWidget_wrapper::aboutToDeleteOnClose()
-{
-    ::KDDockWidgets::Core::DockWidget::aboutToDeleteOnClose();
-}
-void DockWidget_wrapper::actualTitleBarChanged()
-{
-    ::KDDockWidgets::Core::DockWidget::actualTitleBarChanged();
-}
 void DockWidget_wrapper::addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *other, KDDockWidgets::InitialOption initialOption)
 {
     ::KDDockWidgets::Core::DockWidget::addDockWidgetAsTab(other, initialOption);
@@ -55,10 +43,6 @@ void DockWidget_wrapper::addDockWidgetToContainingWindow(KDDockWidgets::Core::Do
 KDDockWidgets::Core::DockWidget *DockWidget_wrapper::byName(const QString &uniqueName)
 {
     return ::KDDockWidgets::Core::DockWidget::byName(uniqueName);
-}
-void DockWidget_wrapper::closed()
-{
-    ::KDDockWidgets::Core::DockWidget::closed();
 }
 int DockWidget_wrapper::currentTabIndex() const
 {
@@ -76,17 +60,9 @@ QRect DockWidget_wrapper::groupGeometry() const
 {
     return ::KDDockWidgets::Core::DockWidget::groupGeometry();
 }
-void DockWidget_wrapper::guestViewChanged()
-{
-    ::KDDockWidgets::Core::DockWidget::guestViewChanged();
-}
 bool DockWidget_wrapper::hasPreviousDockedLocation() const
 {
     return ::KDDockWidgets::Core::DockWidget::hasPreviousDockedLocation();
-}
-void DockWidget_wrapper::iconChanged()
-{
-    ::KDDockWidgets::Core::DockWidget::iconChanged();
 }
 void DockWidget_wrapper::init()
 {
@@ -100,17 +76,9 @@ bool DockWidget_wrapper::isFloating() const
 {
     return ::KDDockWidgets::Core::DockWidget::isFloating();
 }
-void DockWidget_wrapper::isFloatingChanged(bool arg__1)
-{
-    ::KDDockWidgets::Core::DockWidget::isFloatingChanged(arg__1);
-}
 bool DockWidget_wrapper::isFocused() const
 {
     return ::KDDockWidgets::Core::DockWidget::isFocused();
-}
-void DockWidget_wrapper::isFocusedChanged(bool arg__1)
-{
-    ::KDDockWidgets::Core::DockWidget::isFocusedChanged(arg__1);
 }
 bool DockWidget_wrapper::isInMainWindow() const
 {
@@ -128,17 +96,9 @@ bool DockWidget_wrapper::isOpen() const
 {
     return ::KDDockWidgets::Core::DockWidget::isOpen();
 }
-void DockWidget_wrapper::isOpenChanged(bool isOpen)
-{
-    ::KDDockWidgets::Core::DockWidget::isOpenChanged(isOpen);
-}
 bool DockWidget_wrapper::isOverlayed() const
 {
     return ::KDDockWidgets::Core::DockWidget::isOverlayed();
-}
-void DockWidget_wrapper::isOverlayedChanged(bool arg__1)
-{
-    ::KDDockWidgets::Core::DockWidget::isOverlayedChanged(arg__1);
 }
 bool DockWidget_wrapper::isPersistentCentralDockWidget() const
 {
@@ -176,17 +136,9 @@ QFlags<KDDockWidgets::DockWidgetOption> DockWidget_wrapper::options() const
 {
     return ::KDDockWidgets::Core::DockWidget::options();
 }
-void DockWidget_wrapper::optionsChanged(QFlags<KDDockWidgets::DockWidgetOption> arg__1)
-{
-    ::KDDockWidgets::Core::DockWidget::optionsChanged(arg__1);
-}
 void DockWidget_wrapper::raise()
 {
     ::KDDockWidgets::Core::DockWidget::raise();
-}
-void DockWidget_wrapper::removedFromSideBar()
-{
-    ::KDDockWidgets::Core::DockWidget::removedFromSideBar();
 }
 void DockWidget_wrapper::setAffinityName(const QString &name)
 {
@@ -261,10 +213,6 @@ KDDockWidgets::Core::TitleBar *DockWidget_wrapper::titleBar() const
 {
     return ::KDDockWidgets::Core::DockWidget::titleBar();
 }
-void DockWidget_wrapper::titleChanged(const QString &title)
-{
-    ::KDDockWidgets::Core::DockWidget::titleChanged(title);
-}
 QString DockWidget_wrapper::tr(const char *s, const char *c, int n)
 {
     return ::KDDockWidgets::Core::DockWidget::tr(s, c, n);
@@ -276,10 +224,6 @@ QString DockWidget_wrapper::uniqueName() const
 int DockWidget_wrapper::userType() const
 {
     return ::KDDockWidgets::Core::DockWidget::userType();
-}
-void DockWidget_wrapper::windowActiveAboutToChange(bool activated)
-{
-    ::KDDockWidgets::Core::DockWidget::windowActiveAboutToChange(activated);
 }
 DockWidget_wrapper::~DockWidget_wrapper()
 {
@@ -309,22 +253,6 @@ void *c_KDDockWidgets__Core__DockWidget__constructor_View_QString_DockWidgetOpti
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper(view, uniqueName, options, layoutSaverOptions);
     return reinterpret_cast<void *>(ptr);
 }
-// aboutToDelete(KDDockWidgets::Core::DockWidget * arg__1)
-void c_KDDockWidgets__Core__DockWidget__aboutToDelete_DockWidget(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
-    fromPtr(thisObj)->aboutToDelete(arg__1);
-}
-// aboutToDeleteOnClose()
-void c_KDDockWidgets__Core__DockWidget__aboutToDeleteOnClose(void *thisObj)
-{
-    fromPtr(thisObj)->aboutToDeleteOnClose();
-}
-// actualTitleBarChanged()
-void c_KDDockWidgets__Core__DockWidget__actualTitleBarChanged(void *thisObj)
-{
-    fromPtr(thisObj)->actualTitleBarChanged();
-}
 // addDockWidgetAsTab(KDDockWidgets::Core::DockWidget * other, KDDockWidgets::InitialOption initialOption)
 void c_KDDockWidgets__Core__DockWidget__addDockWidgetAsTab_DockWidget_InitialOption(void *thisObj, void *other_, void *initialOption_)
 {
@@ -348,11 +276,6 @@ void *c_static_KDDockWidgets__Core__DockWidget__byName_QString(const char *uniqu
     const auto uniqueName = QString::fromUtf8(uniqueName_);
     return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::byName(uniqueName);
 }
-// closed()
-void c_KDDockWidgets__Core__DockWidget__closed(void *thisObj)
-{
-    fromPtr(thisObj)->closed();
-}
 // currentTabIndex() const
 int c_KDDockWidgets__Core__DockWidget__currentTabIndex(void *thisObj)
 {
@@ -373,20 +296,10 @@ void *c_KDDockWidgets__Core__DockWidget__groupGeometry(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->groupGeometry() };
 }
-// guestViewChanged()
-void c_KDDockWidgets__Core__DockWidget__guestViewChanged(void *thisObj)
-{
-    fromPtr(thisObj)->guestViewChanged();
-}
 // hasPreviousDockedLocation() const
 bool c_KDDockWidgets__Core__DockWidget__hasPreviousDockedLocation(void *thisObj)
 {
     return fromPtr(thisObj)->hasPreviousDockedLocation();
-}
-// iconChanged()
-void c_KDDockWidgets__Core__DockWidget__iconChanged(void *thisObj)
-{
-    fromPtr(thisObj)->iconChanged();
 }
 // init()
 void c_KDDockWidgets__Core__DockWidget__init(void *thisObj)
@@ -403,20 +316,10 @@ bool c_KDDockWidgets__Core__DockWidget__isFloating(void *thisObj)
 {
     return fromPtr(thisObj)->isFloating();
 }
-// isFloatingChanged(bool arg__1)
-void c_KDDockWidgets__Core__DockWidget__isFloatingChanged_bool(void *thisObj, bool arg__1)
-{
-    fromPtr(thisObj)->isFloatingChanged(arg__1);
-}
 // isFocused() const
 bool c_KDDockWidgets__Core__DockWidget__isFocused(void *thisObj)
 {
     return fromPtr(thisObj)->isFocused();
-}
-// isFocusedChanged(bool arg__1)
-void c_KDDockWidgets__Core__DockWidget__isFocusedChanged_bool(void *thisObj, bool arg__1)
-{
-    fromPtr(thisObj)->isFocusedChanged(arg__1);
 }
 // isInMainWindow() const
 bool c_KDDockWidgets__Core__DockWidget__isInMainWindow(void *thisObj)
@@ -438,20 +341,10 @@ bool c_KDDockWidgets__Core__DockWidget__isOpen(void *thisObj)
 {
     return fromPtr(thisObj)->isOpen();
 }
-// isOpenChanged(bool isOpen)
-void c_KDDockWidgets__Core__DockWidget__isOpenChanged_bool(void *thisObj, bool isOpen)
-{
-    fromPtr(thisObj)->isOpenChanged(isOpen);
-}
 // isOverlayed() const
 bool c_KDDockWidgets__Core__DockWidget__isOverlayed(void *thisObj)
 {
     return fromPtr(thisObj)->isOverlayed();
-}
-// isOverlayedChanged(bool arg__1)
-void c_KDDockWidgets__Core__DockWidget__isOverlayedChanged_bool(void *thisObj, bool arg__1)
-{
-    fromPtr(thisObj)->isOverlayedChanged(arg__1);
 }
 // isPersistentCentralDockWidget() const
 bool c_KDDockWidgets__Core__DockWidget__isPersistentCentralDockWidget(void *thisObj)
@@ -500,21 +393,10 @@ int c_KDDockWidgets__Core__DockWidget__options(void *thisObj)
 {
     return fromPtr(thisObj)->options();
 }
-// optionsChanged(QFlags<KDDockWidgets::DockWidgetOption> arg__1)
-void c_KDDockWidgets__Core__DockWidget__optionsChanged_DockWidgetOptions(void *thisObj, int arg__1_)
-{
-    auto arg__1 = static_cast<QFlags<KDDockWidgets::DockWidgetOption>>(arg__1_);
-    fromPtr(thisObj)->optionsChanged(arg__1);
-}
 // raise()
 void c_KDDockWidgets__Core__DockWidget__raise(void *thisObj)
 {
     fromPtr(thisObj)->raise();
-}
-// removedFromSideBar()
-void c_KDDockWidgets__Core__DockWidget__removedFromSideBar(void *thisObj)
-{
-    fromPtr(thisObj)->removedFromSideBar();
 }
 // setAffinityName(const QString & name)
 void c_KDDockWidgets__Core__DockWidget__setAffinityName_QString(void *thisObj, const char *name_)
@@ -606,12 +488,6 @@ void *c_KDDockWidgets__Core__DockWidget__titleBar(void *thisObj)
 {
     return fromPtr(thisObj)->titleBar();
 }
-// titleChanged(const QString & title)
-void c_KDDockWidgets__Core__DockWidget__titleChanged_QString(void *thisObj, const char *title_)
-{
-    const auto title = QString::fromUtf8(title_);
-    fromPtr(thisObj)->titleChanged(title);
-}
 // tr(const char * s, const char * c, int n)
 void *c_static_KDDockWidgets__Core__DockWidget__tr_char_char_int(const char *s, const char *c, int n)
 {
@@ -627,11 +503,6 @@ int c_KDDockWidgets__Core__DockWidget__userType(void *thisObj)
 {
     return fromPtr(thisObj)->userType();
 }
-// windowActiveAboutToChange(bool activated)
-void c_KDDockWidgets__Core__DockWidget__windowActiveAboutToChange_bool(void *thisObj, bool activated)
-{
-    fromPtr(thisObj)->windowActiveAboutToChange(activated);
-}
 void c_KDDockWidgets__Core__DockWidget__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
@@ -640,7 +511,7 @@ void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 827:
+    case 824:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

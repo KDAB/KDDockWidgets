@@ -39,10 +39,6 @@ KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::currentDropLocation() 
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::currentDropLocation();
 }
-void DropIndicatorOverlay_wrapper::currentDropLocationChanged()
-{
-    ::KDDockWidgets::Core::DropIndicatorOverlay::currentDropLocationChanged();
-}
 bool DropIndicatorOverlay_wrapper::dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const
 {
     if (m_dropIndicatorVisibleCallback) {
@@ -79,17 +75,9 @@ KDDockWidgets::Core::Group *DropIndicatorOverlay_wrapper::hoveredGroup() const
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroup();
 }
-void DropIndicatorOverlay_wrapper::hoveredGroupChanged(KDDockWidgets::Core::Group *arg__1)
-{
-    ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupChanged(arg__1);
-}
 QRect DropIndicatorOverlay_wrapper::hoveredGroupRect() const
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupRect();
-}
-void DropIndicatorOverlay_wrapper::hoveredGroupRectChanged()
-{
-    ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupRectChanged();
 }
 bool DropIndicatorOverlay_wrapper::isHovered() const
 {
@@ -218,11 +206,6 @@ int c_KDDockWidgets__Core__DropIndicatorOverlay__currentDropLocation(void *thisO
 {
     return int(fromPtr(thisObj)->currentDropLocation());
 }
-// currentDropLocationChanged()
-void c_KDDockWidgets__Core__DropIndicatorOverlay__currentDropLocationChanged(void *thisObj)
-{
-    fromPtr(thisObj)->currentDropLocationChanged();
-}
 // dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const
 bool c_KDDockWidgets__Core__DropIndicatorOverlay__dropIndicatorVisible_DropLocation(void *thisObj, int arg__1)
 {
@@ -247,21 +230,10 @@ void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroup(void *thisObj)
 {
     return fromPtr(thisObj)->hoveredGroup();
 }
-// hoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
-void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupChanged_Group(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
-    fromPtr(thisObj)->hoveredGroupChanged(arg__1);
-}
 // hoveredGroupRect() const
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRect(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->hoveredGroupRect() };
-}
-// hoveredGroupRectChanged()
-void c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRectChanged(void *thisObj)
-{
-    fromPtr(thisObj)->hoveredGroupRectChanged();
 }
 // isHovered() const
 bool c_KDDockWidgets__Core__DropIndicatorOverlay__isHovered(void *thisObj)
@@ -329,25 +301,25 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__registerVirtualMethodCallback(
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1553:
+    case 1516:
         wrapper->m_dropIndicatorVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_dropIndicatorVisible>(callback);
         break;
-    case 1557:
+    case 1520:
         wrapper->m_hover_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_hover_impl>(callback);
         break;
-    case 1569:
+    case 1530:
         wrapper->m_onHoveredGroupChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_onHoveredGroupChanged>(callback);
         break;
-    case 1572:
+    case 1532:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 1575:
+    case 1535:
         wrapper->m_setCurrentDropLocationCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_setCurrentDropLocation>(callback);
         break;
-    case 827:
+    case 824:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1585:
+    case 1545:
         wrapper->m_updateVisibilityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_updateVisibility>(callback);
         break;
     }

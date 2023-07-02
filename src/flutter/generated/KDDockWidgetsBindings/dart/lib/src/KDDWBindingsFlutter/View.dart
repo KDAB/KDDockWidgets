@@ -196,7 +196,7 @@ class View extends KDDWBindingsCore.View {
   bool isMounted() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(942))
+            cFunctionSymbolName(939))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -343,7 +343,7 @@ class View extends KDDWBindingsCore.View {
   onChildAdded(KDDWBindingsCore.View? childView) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(945))
+            cFunctionSymbolName(942))
         .asFunction();
     func(thisCpp, childView == null ? ffi.nullptr : childView.thisCpp);
   }
@@ -365,7 +365,7 @@ class View extends KDDWBindingsCore.View {
   onChildRemoved(KDDWBindingsCore.View? childView) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(946))
+            cFunctionSymbolName(943))
         .asFunction();
     func(thisCpp, childView == null ? ffi.nullptr : childView.thisCpp);
   }
@@ -387,7 +387,7 @@ class View extends KDDWBindingsCore.View {
   onChildVisibilityChanged(KDDWBindingsCore.View? childView) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(947))
+            cFunctionSymbolName(944))
         .asFunction();
     func(thisCpp, childView == null ? ffi.nullptr : childView.thisCpp);
   }
@@ -418,7 +418,7 @@ class View extends KDDWBindingsCore.View {
   onGeometryChanged() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(949))
+            cFunctionSymbolName(946))
         .asFunction();
     func(thisCpp);
   }
@@ -453,7 +453,7 @@ class View extends KDDWBindingsCore.View {
   onRebuildRequested() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(951))
+            cFunctionSymbolName(948))
         .asFunction();
     func(thisCpp);
   }
@@ -505,7 +505,7 @@ class View extends KDDWBindingsCore.View {
   raiseChild(KDDWBindingsCore.View? childView) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(954))
+            cFunctionSymbolName(951))
         .asFunction();
     func(thisCpp, childView == null ? ffi.nullptr : childView.thisCpp);
   }
@@ -527,7 +527,7 @@ class View extends KDDWBindingsCore.View {
   raiseWindow(KDDWBindingsCore.View? rootView) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(955))
+            cFunctionSymbolName(952))
         .asFunction();
     func(thisCpp, rootView == null ? ffi.nullptr : rootView.thisCpp);
   }
@@ -845,121 +845,121 @@ class View extends KDDWBindingsCore.View {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 840:
+      case 837:
         return "c_KDDockWidgets__flutter__View__activateWindow";
-      case 850:
+      case 847:
         return "c_KDDockWidgets__flutter__View__close";
-      case 852:
+      case 849:
         return "c_KDDockWidgets__flutter__View__createPlatformWindow";
-      case 858:
+      case 855:
         return "c_KDDockWidgets__flutter__View__flags";
-      case 859:
+      case 856:
         return "c_KDDockWidgets__flutter__View__geometry";
-      case 860:
+      case 857:
         return "c_KDDockWidgets__flutter__View__grabMouse";
-      case 863:
+      case 860:
         return "c_KDDockWidgets__flutter__View__hasFocus";
-      case 865:
+      case 862:
         return "c_KDDockWidgets__flutter__View__hide";
-      case 867:
+      case 864:
         return "c_KDDockWidgets__flutter__View__init";
-      case 869:
+      case 866:
         return "c_KDDockWidgets__flutter__View__isActiveWindow";
-      case 870:
+      case 867:
         return "c_KDDockWidgets__flutter__View__isExplicitlyHidden";
-      case 871:
+      case 868:
         return "c_KDDockWidgets__flutter__View__isMaximized";
-      case 872:
+      case 869:
         return "c_KDDockWidgets__flutter__View__isMinimized";
-      case 942:
+      case 939:
         return "c_KDDockWidgets__flutter__View__isMounted";
-      case 873:
+      case 870:
         return "c_KDDockWidgets__flutter__View__isNull";
-      case 874:
+      case 871:
         return "c_KDDockWidgets__flutter__View__isRootView";
-      case 875:
+      case 872:
         return "c_KDDockWidgets__flutter__View__isVisible";
-      case 876:
+      case 873:
         return "c_KDDockWidgets__flutter__View__mapFromGlobal_QPoint";
-      case 877:
+      case 874:
         return "c_KDDockWidgets__flutter__View__mapTo_View_QPoint";
-      case 878:
+      case 875:
         return "c_KDDockWidgets__flutter__View__mapToGlobal_QPoint";
-      case 879:
+      case 876:
         return "c_KDDockWidgets__flutter__View__maxSizeHint";
-      case 880:
+      case 877:
         return "c_KDDockWidgets__flutter__View__minSize";
-      case 884:
+      case 881:
         return "c_KDDockWidgets__flutter__View__move_int_int";
-      case 885:
+      case 882:
         return "c_KDDockWidgets__flutter__View__normalGeometry";
-      case 945:
+      case 942:
         return "c_KDDockWidgets__flutter__View__onChildAdded_View";
-      case 946:
+      case 943:
         return "c_KDDockWidgets__flutter__View__onChildRemoved_View";
-      case 947:
+      case 944:
         return "c_KDDockWidgets__flutter__View__onChildVisibilityChanged_View";
-      case 949:
+      case 946:
         return "c_KDDockWidgets__flutter__View__onGeometryChanged";
-      case 951:
+      case 948:
         return "c_KDDockWidgets__flutter__View__onRebuildRequested";
-      case 887:
+      case 884:
         return "c_KDDockWidgets__flutter__View__onResize_int_int";
-      case 889:
+      case 886:
         return "c_KDDockWidgets__flutter__View__raise";
-      case 890:
+      case 887:
         return "c_KDDockWidgets__flutter__View__raiseAndActivate";
-      case 954:
+      case 951:
         return "c_KDDockWidgets__flutter__View__raiseChild_View";
-      case 955:
+      case 952:
         return "c_KDDockWidgets__flutter__View__raiseWindow_View";
-      case 892:
+      case 889:
         return "c_KDDockWidgets__flutter__View__releaseKeyboard";
-      case 893:
+      case 890:
         return "c_KDDockWidgets__flutter__View__releaseMouse";
-      case 896:
+      case 893:
         return "c_KDDockWidgets__flutter__View__setCursor_CursorShape";
-      case 897:
+      case 894:
         return "c_KDDockWidgets__flutter__View__setFixedHeight_int";
-      case 898:
+      case 895:
         return "c_KDDockWidgets__flutter__View__setFixedWidth_int";
-      case 899:
+      case 896:
         return "c_KDDockWidgets__flutter__View__setGeometry_QRect";
-      case 900:
+      case 897:
         return "c_KDDockWidgets__flutter__View__setHeight_int";
-      case 901:
+      case 898:
         return "c_KDDockWidgets__flutter__View__setMaximumSize_QSize";
-      case 902:
+      case 899:
         return "c_KDDockWidgets__flutter__View__setMinimumSize_QSize";
-      case 903:
+      case 900:
         return "c_KDDockWidgets__flutter__View__setMouseTracking_bool";
-      case 904:
+      case 901:
         return "c_KDDockWidgets__flutter__View__setParent_View";
-      case 906:
+      case 903:
         return "c_KDDockWidgets__flutter__View__setSize_int_int";
-      case 907:
+      case 904:
         return "c_KDDockWidgets__flutter__View__setViewName_QString";
-      case 908:
+      case 905:
         return "c_KDDockWidgets__flutter__View__setVisible_bool";
-      case 909:
+      case 906:
         return "c_KDDockWidgets__flutter__View__setWidth_int";
-      case 910:
+      case 907:
         return "c_KDDockWidgets__flutter__View__setWindowOpacity_double";
-      case 911:
+      case 908:
         return "c_KDDockWidgets__flutter__View__setWindowTitle_QString";
-      case 912:
+      case 909:
         return "c_KDDockWidgets__flutter__View__setZOrder_int";
-      case 913:
+      case 910:
         return "c_KDDockWidgets__flutter__View__show";
-      case 914:
+      case 911:
         return "c_KDDockWidgets__flutter__View__showMaximized";
-      case 915:
+      case 912:
         return "c_KDDockWidgets__flutter__View__showMinimized";
-      case 916:
+      case 913:
         return "c_KDDockWidgets__flutter__View__showNormal";
-      case 918:
+      case 915:
         return "c_KDDockWidgets__flutter__View__update";
-      case 919:
+      case 916:
         return "c_KDDockWidgets__flutter__View__viewName";
     }
     return super.cFunctionSymbolName(methodId);
@@ -967,121 +967,121 @@ class View extends KDDWBindingsCore.View {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 840:
+      case 837:
         return "activateWindow";
-      case 850:
+      case 847:
         return "close";
-      case 852:
+      case 849:
         return "createPlatformWindow";
-      case 858:
+      case 855:
         return "flags";
-      case 859:
+      case 856:
         return "geometry";
-      case 860:
+      case 857:
         return "grabMouse";
-      case 863:
+      case 860:
         return "hasFocus";
-      case 865:
+      case 862:
         return "hide";
-      case 867:
+      case 864:
         return "init";
-      case 869:
+      case 866:
         return "isActiveWindow";
-      case 870:
+      case 867:
         return "isExplicitlyHidden";
-      case 871:
+      case 868:
         return "isMaximized";
-      case 872:
+      case 869:
         return "isMinimized";
-      case 942:
+      case 939:
         return "isMounted";
-      case 873:
+      case 870:
         return "isNull";
-      case 874:
+      case 871:
         return "isRootView";
-      case 875:
+      case 872:
         return "isVisible";
-      case 876:
+      case 873:
         return "mapFromGlobal";
-      case 877:
+      case 874:
         return "mapTo";
-      case 878:
+      case 875:
         return "mapToGlobal";
-      case 879:
+      case 876:
         return "maxSizeHint";
-      case 880:
+      case 877:
         return "minSize";
-      case 884:
+      case 881:
         return "move_2";
-      case 885:
+      case 882:
         return "normalGeometry";
-      case 945:
+      case 942:
         return "onChildAdded";
-      case 946:
+      case 943:
         return "onChildRemoved";
-      case 947:
+      case 944:
         return "onChildVisibilityChanged";
-      case 949:
+      case 946:
         return "onGeometryChanged";
-      case 951:
+      case 948:
         return "onRebuildRequested";
-      case 887:
+      case 884:
         return "onResize_2";
-      case 889:
+      case 886:
         return "raise";
-      case 890:
+      case 887:
         return "raiseAndActivate";
-      case 954:
+      case 951:
         return "raiseChild";
-      case 955:
+      case 952:
         return "raiseWindow";
-      case 892:
+      case 889:
         return "releaseKeyboard";
-      case 893:
+      case 890:
         return "releaseMouse";
-      case 896:
+      case 893:
         return "setCursor";
-      case 897:
+      case 894:
         return "setFixedHeight";
-      case 898:
+      case 895:
         return "setFixedWidth";
-      case 899:
+      case 896:
         return "setGeometry";
-      case 900:
+      case 897:
         return "setHeight";
-      case 901:
+      case 898:
         return "setMaximumSize";
-      case 902:
+      case 899:
         return "setMinimumSize";
-      case 903:
+      case 900:
         return "setMouseTracking";
-      case 904:
+      case 901:
         return "setParent";
-      case 906:
+      case 903:
         return "setSize_2";
-      case 907:
+      case 904:
         return "setViewName";
-      case 908:
+      case 905:
         return "setVisible";
-      case 909:
+      case 906:
         return "setWidth";
-      case 910:
+      case 907:
         return "setWindowOpacity";
-      case 911:
+      case 908:
         return "setWindowTitle";
-      case 912:
+      case 909:
         return "setZOrder";
-      case 913:
+      case 910:
         return "show";
-      case 914:
+      case 911:
         return "showMaximized";
-      case 915:
+      case 912:
         return "showMinimized";
-      case 916:
+      case 913:
         return "showNormal";
-      case 918:
+      case 915:
         return "update";
-      case 919:
+      case 916:
         return "viewName";
     }
     throw Error();
@@ -1093,218 +1093,218 @@ class View extends KDDWBindingsCore.View {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__flutter__View__registerVirtualMethodCallback')
         .asFunction();
-    final callback840 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback837 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.activateWindow_calledFromC);
-    registerCallback(thisCpp, callback840, 840);
-    const callbackExcept850 = 0;
-    final callback850 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.close_calledFromC, callbackExcept850);
-    registerCallback(thisCpp, callback850, 850);
-    final callback852 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback837, 837);
+    const callbackExcept847 = 0;
+    final callback847 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.close_calledFromC, callbackExcept847);
+    registerCallback(thisCpp, callback847, 847);
+    final callback849 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.createPlatformWindow_calledFromC);
-    registerCallback(thisCpp, callback852, 852);
-    const callbackExcept858 = 0;
-    final callback858 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.flags_calledFromC, callbackExcept858);
-    registerCallback(thisCpp, callback858, 858);
-    final callback859 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback849, 849);
+    const callbackExcept855 = 0;
+    final callback855 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.flags_calledFromC, callbackExcept855);
+    registerCallback(thisCpp, callback855, 855);
+    final callback856 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.geometry_calledFromC);
-    registerCallback(thisCpp, callback859, 859);
-    final callback860 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback856, 856);
+    final callback857 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.grabMouse_calledFromC);
+    registerCallback(thisCpp, callback857, 857);
+    const callbackExcept860 = 0;
+    final callback860 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.hasFocus_calledFromC, callbackExcept860);
     registerCallback(thisCpp, callback860, 860);
-    const callbackExcept863 = 0;
-    final callback863 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.hasFocus_calledFromC, callbackExcept863);
-    registerCallback(thisCpp, callback863, 863);
-    final callback865 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback862 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.hide_calledFromC);
-    registerCallback(thisCpp, callback865, 865);
-    final callback867 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback862, 862);
+    final callback864 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.init_calledFromC);
+    registerCallback(thisCpp, callback864, 864);
+    const callbackExcept866 = 0;
+    final callback866 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.isActiveWindow_calledFromC, callbackExcept866);
+    registerCallback(thisCpp, callback866, 866);
+    const callbackExcept867 = 0;
+    final callback867 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.isExplicitlyHidden_calledFromC,
+        callbackExcept867);
     registerCallback(thisCpp, callback867, 867);
+    const callbackExcept868 = 0;
+    final callback868 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.isMaximized_calledFromC, callbackExcept868);
+    registerCallback(thisCpp, callback868, 868);
     const callbackExcept869 = 0;
     final callback869 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.isActiveWindow_calledFromC, callbackExcept869);
+        KDDWBindingsFlutter.View.isMinimized_calledFromC, callbackExcept869);
     registerCallback(thisCpp, callback869, 869);
+    const callbackExcept939 = 0;
+    final callback939 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.isMounted_calledFromC, callbackExcept939);
+    registerCallback(thisCpp, callback939, 939);
     const callbackExcept870 = 0;
     final callback870 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.isExplicitlyHidden_calledFromC,
-        callbackExcept870);
+        KDDWBindingsCore.View.isNull_calledFromC, callbackExcept870);
     registerCallback(thisCpp, callback870, 870);
     const callbackExcept871 = 0;
     final callback871 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.isMaximized_calledFromC, callbackExcept871);
+        KDDWBindingsFlutter.View.isRootView_calledFromC, callbackExcept871);
     registerCallback(thisCpp, callback871, 871);
     const callbackExcept872 = 0;
     final callback872 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.isMinimized_calledFromC, callbackExcept872);
+        KDDWBindingsFlutter.View.isVisible_calledFromC, callbackExcept872);
     registerCallback(thisCpp, callback872, 872);
-    const callbackExcept942 = 0;
-    final callback942 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.isMounted_calledFromC, callbackExcept942);
-    registerCallback(thisCpp, callback942, 942);
-    const callbackExcept873 = 0;
-    final callback873 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.View.isNull_calledFromC, callbackExcept873);
-    registerCallback(thisCpp, callback873, 873);
-    const callbackExcept874 = 0;
-    final callback874 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.isRootView_calledFromC, callbackExcept874);
-    registerCallback(thisCpp, callback874, 874);
-    const callbackExcept875 = 0;
-    final callback875 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.isVisible_calledFromC, callbackExcept875);
-    registerCallback(thisCpp, callback875, 875);
-    final callback876 =
+    final callback873 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.mapFromGlobal_calledFromC);
-    registerCallback(thisCpp, callback876, 876);
-    final callback877 =
+    registerCallback(thisCpp, callback873, 873);
+    final callback874 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.mapTo_calledFromC);
-    registerCallback(thisCpp, callback877, 877);
-    final callback878 =
+    registerCallback(thisCpp, callback874, 874);
+    final callback875 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.mapToGlobal_calledFromC);
-    registerCallback(thisCpp, callback878, 878);
-    final callback879 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback875, 875);
+    final callback876 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.maxSizeHint_calledFromC);
-    registerCallback(thisCpp, callback879, 879);
-    final callback880 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback876, 876);
+    final callback877 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.minSize_calledFromC);
-    registerCallback(thisCpp, callback880, 880);
-    final callback884 =
+    registerCallback(thisCpp, callback877, 877);
+    final callback881 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.move_2_calledFromC);
-    registerCallback(thisCpp, callback884, 884);
-    final callback885 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback881, 881);
+    final callback882 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.normalGeometry_calledFromC);
-    registerCallback(thisCpp, callback885, 885);
-    final callback945 =
+    registerCallback(thisCpp, callback882, 882);
+    final callback942 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildAdded_calledFromC);
-    registerCallback(thisCpp, callback945, 945);
-    final callback946 =
+    registerCallback(thisCpp, callback942, 942);
+    final callback943 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildRemoved_calledFromC);
-    registerCallback(thisCpp, callback946, 946);
-    final callback947 =
+    registerCallback(thisCpp, callback943, 943);
+    final callback944 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.onChildVisibilityChanged_calledFromC);
-    registerCallback(thisCpp, callback947, 947);
-    final callback949 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback944, 944);
+    final callback946 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.onGeometryChanged_calledFromC);
-    registerCallback(thisCpp, callback949, 949);
-    final callback951 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback946, 946);
+    final callback948 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.onRebuildRequested_calledFromC);
-    registerCallback(thisCpp, callback951, 951);
-    const callbackExcept887 = 0;
-    final callback887 =
+    registerCallback(thisCpp, callback948, 948);
+    const callbackExcept884 = 0;
+    final callback884 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept887);
-    registerCallback(thisCpp, callback887, 887);
-    final callback889 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+            KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept884);
+    registerCallback(thisCpp, callback884, 884);
+    final callback886 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raise_calledFromC);
-    registerCallback(thisCpp, callback889, 889);
-    final callback890 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback886, 886);
+    final callback887 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raiseAndActivate_calledFromC);
-    registerCallback(thisCpp, callback890, 890);
-    final callback954 =
+    registerCallback(thisCpp, callback887, 887);
+    final callback951 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.raiseChild_calledFromC);
-    registerCallback(thisCpp, callback954, 954);
-    final callback955 =
+    registerCallback(thisCpp, callback951, 951);
+    final callback952 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.raiseWindow_calledFromC);
-    registerCallback(thisCpp, callback955, 955);
-    final callback892 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback952, 952);
+    final callback889 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseKeyboard_calledFromC);
-    registerCallback(thisCpp, callback892, 892);
-    final callback893 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback889, 889);
+    final callback890 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.releaseMouse_calledFromC);
-    registerCallback(thisCpp, callback893, 893);
-    final callback896 =
+    registerCallback(thisCpp, callback890, 890);
+    final callback893 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.setCursor_calledFromC);
+    registerCallback(thisCpp, callback893, 893);
+    final callback894 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsFlutter.View.setFixedHeight_calledFromC);
+    registerCallback(thisCpp, callback894, 894);
+    final callback895 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsFlutter.View.setFixedWidth_calledFromC);
+    registerCallback(thisCpp, callback895, 895);
+    final callback896 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.setGeometry_calledFromC);
     registerCallback(thisCpp, callback896, 896);
     final callback897 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.setFixedHeight_calledFromC);
+            KDDWBindingsFlutter.View.setHeight_calledFromC);
     registerCallback(thisCpp, callback897, 897);
     final callback898 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.setFixedWidth_calledFromC);
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.setMaximumSize_calledFromC);
     registerCallback(thisCpp, callback898, 898);
     final callback899 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.View.setGeometry_calledFromC);
+            KDDWBindingsFlutter.View.setMinimumSize_calledFromC);
     registerCallback(thisCpp, callback899, 899);
     final callback900 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.setHeight_calledFromC);
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
+            KDDWBindingsFlutter.View.setMouseTracking_calledFromC);
     registerCallback(thisCpp, callback900, 900);
     final callback901 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.View.setMaximumSize_calledFromC);
+            KDDWBindingsFlutter.View.setParent_calledFromC);
     registerCallback(thisCpp, callback901, 901);
-    final callback902 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.View.setMinimumSize_calledFromC);
-    registerCallback(thisCpp, callback902, 902);
     final callback903 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
-            KDDWBindingsFlutter.View.setMouseTracking_calledFromC);
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
+            KDDWBindingsFlutter.View.setSize_2_calledFromC);
     registerCallback(thisCpp, callback903, 903);
     final callback904 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.View.setParent_calledFromC);
-    registerCallback(thisCpp, callback904, 904);
-    final callback906 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.setSize_2_calledFromC);
-    registerCallback(thisCpp, callback906, 906);
-    final callback907 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.View.setViewName_calledFromC);
-    registerCallback(thisCpp, callback907, 907);
-    final callback908 =
+    registerCallback(thisCpp, callback904, 904);
+    final callback905 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             KDDWBindingsFlutter.View.setVisible_calledFromC);
+    registerCallback(thisCpp, callback905, 905);
+    final callback906 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
+            KDDWBindingsFlutter.View.setWidth_calledFromC);
+    registerCallback(thisCpp, callback906, 906);
+    final callback907 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Double_FFI>(
+            KDDWBindingsFlutter.View.setWindowOpacity_calledFromC);
+    registerCallback(thisCpp, callback907, 907);
+    final callback908 =
+        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsFlutter.View.setWindowTitle_calledFromC);
     registerCallback(thisCpp, callback908, 908);
     final callback909 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
-            KDDWBindingsFlutter.View.setWidth_calledFromC);
-    registerCallback(thisCpp, callback909, 909);
-    final callback910 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Double_FFI>(
-            KDDWBindingsFlutter.View.setWindowOpacity_calledFromC);
-    registerCallback(thisCpp, callback910, 910);
-    final callback911 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.View.setWindowTitle_calledFromC);
-    registerCallback(thisCpp, callback911, 911);
-    final callback912 =
-        ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter.View.setZOrder_calledFromC);
+    registerCallback(thisCpp, callback909, 909);
+    final callback910 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.show_calledFromC);
+    registerCallback(thisCpp, callback910, 910);
+    final callback911 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.showMaximized_calledFromC);
+    registerCallback(thisCpp, callback911, 911);
+    final callback912 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+        KDDWBindingsFlutter.View.showMinimized_calledFromC);
     registerCallback(thisCpp, callback912, 912);
     final callback913 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.show_calledFromC);
-    registerCallback(thisCpp, callback913, 913);
-    final callback914 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.showMaximized_calledFromC);
-    registerCallback(thisCpp, callback914, 914);
-    final callback915 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
-        KDDWBindingsFlutter.View.showMinimized_calledFromC);
-    registerCallback(thisCpp, callback915, 915);
-    final callback916 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.showNormal_calledFromC);
-    registerCallback(thisCpp, callback916, 916);
-    final callback918 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback913, 913);
+    final callback915 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.update_calledFromC);
-    registerCallback(thisCpp, callback918, 918);
-    final callback919 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback915, 915);
+    final callback916 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.viewName_calledFromC);
-    registerCallback(thisCpp, callback919, 919);
+    registerCallback(thisCpp, callback916, 916);
   }
 }

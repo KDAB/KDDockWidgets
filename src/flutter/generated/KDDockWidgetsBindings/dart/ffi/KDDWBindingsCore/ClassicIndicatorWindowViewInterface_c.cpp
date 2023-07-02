@@ -152,6 +152,21 @@ void ClassicIndicatorWindowViewInterface_wrapper::setVisible_nocallback(bool arg
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
+void ClassicIndicatorWindowViewInterface_wrapper::updateIndicatorVisibility()
+{
+    if (m_updateIndicatorVisibilityCallback) {
+        const void *thisPtr = this;
+        m_updateIndicatorVisibilityCallback(const_cast<void *>(thisPtr));
+    } else {
+        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        return;
+    }
+}
+void ClassicIndicatorWindowViewInterface_wrapper::updateIndicatorVisibility_nocallback()
+{
+    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    return;
+}
 void ClassicIndicatorWindowViewInterface_wrapper::updatePositions()
 {
     if (m_updatePositionsCallback) {
@@ -238,6 +253,11 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setVisible_nocallback(arg__1);} else {    return targetPtr->setVisible(arg__1);} }();
 }
+// updateIndicatorVisibility()
+void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updateIndicatorVisibility(void *thisObj)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->updateIndicatorVisibility_nocallback();} else {    return targetPtr->updateIndicatorVisibility();} }();
+}
 // updatePositions()
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj)
 {
@@ -251,31 +271,34 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtual
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1670:
+    case 1615:
         wrapper->m_hoverCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_hover>(callback);
         break;
-    case 1671:
+    case 1616:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_isWindow>(callback);
         break;
-    case 1672:
+    case 1617:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 1673:
+    case 1618:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_raise>(callback);
         break;
-    case 1674:
+    case 1619:
         wrapper->m_resizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_resize>(callback);
         break;
-    case 1675:
+    case 1620:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setGeometry>(callback);
         break;
-    case 1676:
+    case 1621:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setObjectName>(callback);
         break;
-    case 1677:
+    case 1622:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setVisible>(callback);
         break;
-    case 1678:
+    case 1623:
+        wrapper->m_updateIndicatorVisibilityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_updateIndicatorVisibility>(callback);
+        break;
+    case 1624:
         wrapper->m_updatePositionsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_updatePositions>(callback);
         break;
     }

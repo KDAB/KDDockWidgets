@@ -107,14 +107,6 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.DropArea.fromCppPointer(result, false);
-  } // groupCountChanged(int arg__1)
-
-  groupCountChanged(int arg__1) {
-    final void_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Core__MainWindow__groupCountChanged_int')
-        .asFunction();
-    func(thisCpp, arg__1);
   } // init(const QString & name)
 
   init(String? name) {
@@ -189,14 +181,6 @@ class MainWindow extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__MainWindow__overlayMargin')
         .asFunction();
     return func(thisCpp);
-  } // overlayMarginChanged(int margin)
-
-  overlayMarginChanged(int margin) {
-    final void_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Core__MainWindow__overlayMarginChanged_int')
-        .asFunction();
-    func(thisCpp, margin);
   } // overlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
 
   overlayOnSideBar(KDDWBindingsCore.DockWidget? dw) {
@@ -301,14 +285,6 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QString.fromCppPointer(result, true);
-  } // uniqueNameChanged()
-
-  uniqueNameChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__MainWindow__uniqueNameChanged')
-        .asFunction();
-    func(thisCpp);
   }
 
   void release() {
@@ -321,7 +297,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 827:
+      case 824:
         return "c_KDDockWidgets__Core__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -329,7 +305,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 827:
+      case 824:
         return "setParentView_impl";
     }
     throw Error();
@@ -341,9 +317,9 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback')
         .asFunction();
-    final callback827 =
+    final callback824 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback827, 827);
+    registerCallback(thisCpp, callback824, 824);
   }
 }

@@ -60,10 +60,6 @@ KDDockWidgets::Core::DropArea *MainWindow_wrapper::dropArea() const
 {
     return ::KDDockWidgets::Core::MainWindow::dropArea();
 }
-void MainWindow_wrapper::groupCountChanged(int arg__1)
-{
-    ::KDDockWidgets::Core::MainWindow::groupCountChanged(arg__1);
-}
 void MainWindow_wrapper::init(const QString &name)
 {
     ::KDDockWidgets::Core::MainWindow::init(name);
@@ -99,10 +95,6 @@ QFlags<KDDockWidgets::MainWindowOption> MainWindow_wrapper::options() const
 int MainWindow_wrapper::overlayMargin() const
 {
     return ::KDDockWidgets::Core::MainWindow::overlayMargin();
-}
-void MainWindow_wrapper::overlayMarginChanged(int margin)
-{
-    ::KDDockWidgets::Core::MainWindow::overlayMarginChanged(margin);
 }
 void MainWindow_wrapper::overlayOnSideBar(KDDockWidgets::Core::DockWidget *dw)
 {
@@ -156,10 +148,6 @@ QString MainWindow_wrapper::tr(const char *s, const char *c, int n)
 QString MainWindow_wrapper::uniqueName() const
 {
     return ::KDDockWidgets::Core::MainWindow::uniqueName();
-}
-void MainWindow_wrapper::uniqueNameChanged()
-{
-    ::KDDockWidgets::Core::MainWindow::uniqueNameChanged();
 }
 MainWindow_wrapper::~MainWindow_wrapper()
 {
@@ -228,11 +216,6 @@ void *c_KDDockWidgets__Core__MainWindow__dropArea(void *thisObj)
 {
     return fromPtr(thisObj)->dropArea();
 }
-// groupCountChanged(int arg__1)
-void c_KDDockWidgets__Core__MainWindow__groupCountChanged_int(void *thisObj, int arg__1)
-{
-    fromPtr(thisObj)->groupCountChanged(arg__1);
-}
 // init(const QString & name)
 void c_KDDockWidgets__Core__MainWindow__init_QString(void *thisObj, const char *name_)
 {
@@ -280,11 +263,6 @@ int c_KDDockWidgets__Core__MainWindow__options(void *thisObj)
 int c_KDDockWidgets__Core__MainWindow__overlayMargin(void *thisObj)
 {
     return fromPtr(thisObj)->overlayMargin();
-}
-// overlayMarginChanged(int margin)
-void c_KDDockWidgets__Core__MainWindow__overlayMarginChanged_int(void *thisObj, int margin)
-{
-    fromPtr(thisObj)->overlayMarginChanged(margin);
 }
 // overlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
 void c_KDDockWidgets__Core__MainWindow__overlayOnSideBar_DockWidget(void *thisObj, void *dw_)
@@ -347,11 +325,6 @@ void *c_KDDockWidgets__Core__MainWindow__uniqueName(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->uniqueName() };
 }
-// uniqueNameChanged()
-void c_KDDockWidgets__Core__MainWindow__uniqueNameChanged(void *thisObj)
-{
-    fromPtr(thisObj)->uniqueNameChanged();
-}
 void c_KDDockWidgets__Core__MainWindow__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
@@ -360,7 +333,7 @@ void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 827:
+    case 824:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::MainWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

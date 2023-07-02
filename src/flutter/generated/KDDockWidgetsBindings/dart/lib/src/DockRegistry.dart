@@ -69,14 +69,6 @@ class DockRegistry extends QObject {
     ffi.Pointer<void> result =
         func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
     return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
-  } // dropIndicatorsInhibitedChanged(bool inhibited)
-
-  dropIndicatorsInhibitedChanged(bool inhibited) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__DockRegistry__dropIndicatorsInhibitedChanged_bool')
-        .asFunction();
-    func(thisCpp, inhibited ? 1 : 0);
   } // ensureAllFloatingWidgetsAreMorphed()
 
   ensureAllFloatingWidgetsAreMorphed() {
@@ -103,14 +95,6 @@ class DockRegistry extends QObject {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.Group.fromCppPointer(result, false);
-  } // groupInMDIResizeChanged()
-
-  groupInMDIResizeChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__DockRegistry__groupInMDIResizeChanged')
-        .asFunction();
-    func(thisCpp);
   } // hasFloatingWindows() const
 
   bool hasFloatingWindows() {

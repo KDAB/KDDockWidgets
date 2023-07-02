@@ -16,8 +16,8 @@
 #include <qpoint.h>
 #include <core/Group.h>
 #include <qrect.h>
-#include <core/View.h>
 #include <qsize.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -26,9 +26,7 @@ class TabBar_wrapper : public ::KDDockWidgets::Core::TabBar
 public:
     ~TabBar_wrapper();
     TabBar_wrapper(KDDockWidgets::Core::Stack *tabWidget = nullptr);
-    void countChanged();
     KDDockWidgets::Core::DockWidget *currentDockWidget() const;
-    void currentDockWidgetChanged(KDDockWidgets::Core::DockWidget *arg__1);
     int currentIndex() const;
     KDDockWidgets::Core::DockWidget *dockWidgetAt(QPoint localPos) const;
     KDDockWidgets::Core::DockWidget *dockWidgetAt(int index) const;
@@ -74,12 +72,8 @@ public:
 extern "C" {
 // KDDockWidgets::Core::TabBar::TabBar(KDDockWidgets::Core::Stack * tabWidget)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__constructor_Stack(void *tabWidget_);
-// KDDockWidgets::Core::TabBar::countChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__countChanged(void *thisObj);
 // KDDockWidgets::Core::TabBar::currentDockWidget() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__currentDockWidget(void *thisObj);
-// KDDockWidgets::Core::TabBar::currentDockWidgetChanged(KDDockWidgets::Core::DockWidget * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__currentDockWidgetChanged_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::TabBar::currentIndex() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__TabBar__currentIndex(void *thisObj);
 // KDDockWidgets::Core::TabBar::dockWidgetAt(QPoint localPos) const
