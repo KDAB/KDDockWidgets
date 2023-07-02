@@ -19,6 +19,15 @@ using namespace KDDockWidgets::QtWidgets;
 Action::Action(Core::DockWidget *dw, const char *debugName)
     : KDDockWidgets::Action(dw, debugName)
 {
+    connect(this, &QAction::toggled, this, [this](bool checked) {
+        if (m_lastCheckedState != checked) {
+            m_lastCheckedState = checked;
+            if (!signalsBlocked()) {
+                KDDW_TRACE("Action::toggled({}) ; dw={} ; {}", checked, ( void * )d->dockWidget, d->debugName);
+                d->toggled.emit(checked);
+            }
+        }
+    });
 }
 
 Action::~Action() = default;
@@ -75,14 +84,7 @@ bool Action::isChecked() const
 
 void Action::setChecked(bool checked)
 {
-    const bool wasChecked = isChecked();
     QAction::setChecked(checked);
-    if (wasChecked != checked) {
-        KDDW_TRACE("({}) KDDockWidgets::Action::setChecked({}) ; dw={}", d->debugName, checked, ( void * )d->dockWidget);
-        d->toggled.emit(checked);
-    } else {
-        KDDW_TRACE("({}) KDDockWidgets::Action::setChecked({}) ; ignored,  dw={}", d->debugName, checked, ( void * )d->dockWidget);
-    }
 }
 
 bool Action::blockSignals(bool b)
@@ -93,5 +95,4 @@ bool Action::blockSignals(bool b)
 void Action::trigger()
 {
     QAction::trigger();
-    d->toggled.emit(isChecked());
 }

@@ -46,6 +46,9 @@ public:
 
     bool blockSignals(bool) override;
     void trigger() override;
+
+private:
+    bool m_lastCheckedState = false;
 };
 
 }
