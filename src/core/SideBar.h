@@ -31,6 +31,7 @@ class DOCKS_EXPORT SideBar : public Controller
     Q_OBJECT
 public:
     explicit SideBar(SideBarLocation, MainWindow *parent = nullptr);
+    ~SideBar() override;
 
     void addDockWidget(DockWidget *dw);
     void removeDockWidget(DockWidget *dw);
@@ -71,6 +72,9 @@ public:
 
 private:
     void updateSize();
+
+    class Private;
+    Private *const d;
 
     MainWindow *const m_mainWindow;
     QVector<DockWidget *> m_dockWidgets;

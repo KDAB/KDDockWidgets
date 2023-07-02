@@ -80,6 +80,9 @@ public:
     /// @brief Returns the guest widget
     QWidget *widget() const;
 
+    QAction *toggleAction() const;
+    QAction *floatAction() const;
+
 protected:
 #ifndef PYTHON_BINDINGS
     void init() override;

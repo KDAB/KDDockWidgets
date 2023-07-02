@@ -10,6 +10,7 @@
 */
 
 #include "ClassicIndicatorsWindow.h"
+#include "core/DropIndicatorOverlay_p.h"
 #include "kddockwidgets/core/indicators/ClassicDropIndicatorOverlay.h"
 #include "core/Utils_p.h"
 
@@ -79,11 +80,8 @@ IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndic
     setSource(
         QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
 
-    connect(classicIndicators, &ClassicDropIndicatorOverlay::hoveredGroupRectChanged, this,
-            &IndicatorWindow::hoveredGroupRectChanged);
-
-    connect(classicIndicators, &ClassicDropIndicatorOverlay::currentDropLocationChanged, this,
-            &IndicatorWindow::currentDropLocationChanged);
+    classicIndicators->dptr()->hoveredGroupRectChanged.connect([this] { hoveredGroupRectChanged(); });
+    classicIndicators->dptr()->currentDropLocationChanged.connect([this] { currentDropLocationChanged(); });
 
     // Two workarounds for two unrelated bugs:
     if (KDDockWidgets::isOffscreen()) {

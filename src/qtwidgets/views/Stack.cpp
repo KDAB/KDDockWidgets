@@ -16,7 +16,7 @@
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/Window.h"
 #include "qtwidgets/ViewFactory.h"
-#include "core/DockRegistry.h"
+#include "core/DockRegistry_p.h"
 #include "Config.h"
 #include "core/View_p.h"
 
@@ -144,7 +144,7 @@ void Stack::setupTabBarButtons()
     });
 
     updateMargins();
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Core::Window::Ptr w) {
+    DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
         if (View::d->isInWindow(w))
             updateMargins();
     });

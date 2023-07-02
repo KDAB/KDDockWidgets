@@ -16,10 +16,13 @@
 #include "core/WindowBeingDragged_p.h"
 #include "core/Utils_p.h"
 #include "core/Logging_p.h"
+#include "core/TitleBar_p.h"
+#include "core/Group_p.h"
 
 #include "views/TitleBarViewInterface.h"
 #include "core/DockWidget_p.h"
 #include "core/FloatingWindow.h"
+#include "core/FloatingWindow_p.h"
 #include "core/TabBar.h"
 #include "core/MainWindow.h"
 #include "core/MDILayout.h"
@@ -34,16 +37,25 @@ TitleBar::TitleBar(Group *parent)
         ViewType::TitleBar,
         Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
+    , d(new Private())
     , m_group(parent)
     , m_floatingWindow(nullptr)
     , m_supportsAutoHide((Config::self().flags() & Config::Flag_AutoHideSupport) == Config::Flag_AutoHideSupport)
     , m_isStandalone(false)
 {
     init();
-    connect(m_group, &Group::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
-    connect(m_group, &Group::numDockWidgetsChanged, this, &TitleBar::numDockWidgetsChanged);
-    connect(m_group, &Group::isFocusedChanged, this, &TitleBar::isFocusedChanged);
-    connect(m_group, &Group::isInMainWindowChanged, this, &TitleBar::updateAutoHideButton);
+    d->numDockWidgetsChangedConnection = m_group->dptr()->numDockWidgetsChanged.connect([this] {
+        updateCloseButton();
+        d->numDockWidgetsChanged.emit();
+    });
+
+    d->isFocusedChangedConnection = m_group->dptr()->isFocusedChanged.connect([this] {
+        d->isFocusedChanged.emit();
+    });
+
+    d->isInMainWindowChangedConnection = m_group->dptr()->isInMainWindowChanged.connect([this] {
+        updateAutoHideButton();
+    });
 }
 
 TitleBar::TitleBar(FloatingWindow *parent)
@@ -51,23 +63,24 @@ TitleBar::TitleBar(FloatingWindow *parent)
         ViewType::TitleBar,
         Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
+    , d(new Private())
     , m_group(nullptr)
     , m_floatingWindow(parent)
     , m_supportsAutoHide((Config::self().flags() & Config::Flag_AutoHideSupport) == Config::Flag_AutoHideSupport)
     , m_isStandalone(false)
 {
     init();
-    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
-    connect(m_floatingWindow, &FloatingWindow::numDockWidgetsChanged, this,
-            &TitleBar::numDockWidgetsChanged);
-    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this,
-            &TitleBar::updateMaximizeButton);
-    connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);
+    auto fwPrivate = m_floatingWindow->dptr();
+    fwPrivate->numFramesChanged.connect([this] { updateButtons(); });
+    fwPrivate->numDockWidgetsChanged.connect([this] { d->numDockWidgetsChanged.emit(); });
+    fwPrivate->windowStateChanged.connect([this] { updateMaximizeButton(); });
+    fwPrivate->activatedChanged.connect([this] { d->isFocusedChanged.emit(); });
 }
 
 TitleBar::TitleBar(Core::View *view)
     : Controller(ViewType::TitleBar, view)
     , Draggable(view, /*enabled=*/false)
+    , d(new Private())
     , m_group(nullptr)
     , m_floatingWindow(nullptr)
     , m_supportsAutoHide(false)
@@ -79,7 +92,7 @@ void TitleBar::init()
 {
     view()->init();
 
-    m_focusChangedConnection = connect(this, &TitleBar::isFocusedChanged, this, [this] {
+    d->isFocusedChanged.connect([this] {
         // repaint
         view()->update();
     });
@@ -95,7 +108,7 @@ void TitleBar::init()
 
 TitleBar::~TitleBar()
 {
-    disconnect(m_focusChangedConnection);
+    delete d;
 }
 
 bool TitleBar::titleBarIsFocusable() const
@@ -261,7 +274,7 @@ void TitleBar::updateButtons()
     updateFloatButton();
     updateMaximizeButton();
 
-    Q_EMIT minimizeButtonChanged(supportsMinimizeButton(), true);
+    d->minimizeButtonChanged.emit(supportsMinimizeButton(), true);
 
     updateAutoHideButton();
 }
@@ -277,7 +290,7 @@ void TitleBar::updateAutoHideButton()
             type = TitleBarButtonType::UnautoHide;
     }
 
-    Q_EMIT autoHideButtonChanged(visible, enabled, type);
+    d->autoHideButtonChanged.emit(visible, enabled, type);
 }
 
 void TitleBar::updateMaximizeButton()
@@ -291,7 +304,7 @@ void TitleBar::updateMaximizeButton()
         m_maximizeButtonVisible = supportsMaximizeButton();
     }
 
-    Q_EMIT maximizeButtonChanged(m_maximizeButtonVisible, /*enabled=*/true, m_maximizeButtonType);
+    d->maximizeButtonChanged.emit(m_maximizeButtonVisible, /*enabled=*/true, m_maximizeButtonType);
 }
 
 void TitleBar::updateCloseButton()
@@ -324,7 +337,7 @@ void TitleBar::setCloseButtonEnabled(bool enabled)
 {
     if (enabled != m_closeButtonEnabled) {
         m_closeButtonEnabled = enabled;
-        Q_EMIT closeButtonEnabledChanged(enabled);
+        d->closeButtonEnabledChanged.emit(enabled);
     }
 }
 
@@ -332,7 +345,7 @@ void TitleBar::setFloatButtonVisible(bool visible)
 {
     if (visible != m_floatButtonVisible) {
         m_floatButtonVisible = visible;
-        Q_EMIT floatButtonVisibleChanged(visible);
+        d->floatButtonVisibleChanged.emit(visible);
     }
 }
 
@@ -340,7 +353,7 @@ void TitleBar::setFloatButtonToolTip(const QString &tip)
 {
     if (tip != m_floatButtonToolTip) {
         m_floatButtonToolTip = tip;
-        Q_EMIT floatButtonToolTipChanged(tip);
+        d->floatButtonToolTipChanged.emit(tip);
     }
 }
 
@@ -349,14 +362,14 @@ void TitleBar::setTitle(const QString &title)
     if (title != m_title) {
         m_title = title;
         view()->update();
-        Q_EMIT titleChanged();
+        d->titleChanged.emit();
     }
 }
 
 void TitleBar::setIcon(const Icon &icon)
 {
     m_icon = icon;
-    Q_EMIT iconChanged();
+    d->iconChanged.emit();
 }
 
 void TitleBar::onCloseClicked()
@@ -640,4 +653,9 @@ TitleBarButtonType TitleBar::maximizeButtonType() const
 bool TitleBar::isStandalone() const
 {
     return m_isStandalone;
+}
+
+TitleBar::Private *TitleBar::dptr() const
+{
+    return d;
 }

@@ -17,6 +17,7 @@
 #include "Controller.h"
 #include "View.h"
 #include "Layout_p.h"
+#include "FloatingWindow_p.h"
 #include "ScopedValueRollback_p.h"
 #include "Platform.h"
 #include "views/GroupViewInterface.h"
@@ -28,6 +29,8 @@
 #include "core/DropArea.h"
 #include "core/Layout.h"
 #include "core/MainWindow.h"
+#include "core/TabBar_p.h"
+#include "core/Group_p.h"
 
 #include "DockRegistry.h"
 #include "DockWidget_p.h"
@@ -52,12 +55,6 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets {
-
-class Group::Private
-{
-public:
-    KDBindings::ScopedConnection m_visibleWidgetCountChangedConnection;
-};
 
 static FrameOptions actualOptions(FrameOptions options)
 {
@@ -92,7 +89,9 @@ Group::Group(View *parent, FrameOptions options, int userType)
     s_dbg_numFrames++;
     DockRegistry::self()->registerGroup(this);
 
-    connect(m_tabBar, &TabBar::currentDockWidgetChanged, this, &Group::updateTitleAndIcon);
+    m_tabBar->dptr()->currentDockWidgetChanged.connect([this] {
+        updateTitleAndIcon();
+    });
 
     setLayout(parent ? parent->asLayout() : nullptr);
     m_stack->setTabBarAutoHide(!alwaysShowsTabs());
@@ -156,10 +155,10 @@ void Group::setLayout(Layout *dt)
             m_layout->d_ptr()->visibleWidgetCountChanged.connect(&Group::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
-            Q_EMIT isInMainWindowChanged();
+            d->isInMainWindowChanged.emit();
     }
 
-    Q_EMIT isMDIChanged();
+    d->isMDIChanged.emit();
 }
 
 void Group::renameTab(int index, const QString &title)
@@ -206,16 +205,14 @@ void Group::updateTitleAndIcon()
     }
 }
 
-void Group::onDockWidgetTitleChanged()
+void Group::onDockWidgetTitleChanged(DockWidget *dw)
 {
     updateTitleAndIcon();
 
     if (!m_inCtor) { // don't call pure virtual in ctor
-        if (auto dw = qobject_cast<DockWidget *>(sender())) {
-            int index = indexOfDockWidget(dw);
-            renameTab(index, dw->title());
-            changeTabIcon(index, dw->icon(IconPlace::TabBar));
-        }
+        int index = indexOfDockWidget(dw);
+        renameTab(index, dw->title());
+        changeTabIcon(index, dw->icon(IconPlace::TabBar));
     }
 }
 
@@ -276,14 +273,25 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
         dockWidget->d->setIsOpen(true);
     }
 
-    connect(dockWidget, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
-    connect(dockWidget, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
+    KDBindings::ScopedConnection titleChangedConnection = dockWidget->d->titleChanged.connect(
+        [this, dockWidget] { onDockWidgetTitleChanged(dockWidget); });
+
+    KDBindings::ScopedConnection iconChangedConnection = dockWidget->d->iconChanged.connect(
+        [this, dockWidget] { onDockWidgetTitleChanged(dockWidget); });
+
+    d->titleChangedConnections[dockWidget] = std::move(titleChangedConnection);
+    d->iconChangedConnections[dockWidget] = std::move(iconChangedConnection);
 }
 
 void Group::removeWidget(DockWidget *dw)
 {
-    disconnect(dw, &DockWidget::titleChanged, this, &Group::onDockWidgetTitleChanged);
-    disconnect(dw, &DockWidget::iconChanged, this, &Group::onDockWidgetTitleChanged);
+    auto it = d->titleChangedConnections.find(dw);
+    if (it != d->titleChangedConnections.end())
+        d->titleChangedConnections.erase(it);
+
+    it = d->iconChangedConnections.find(dw);
+    if (it != d->iconChangedConnections.end())
+        d->iconChangedConnections.erase(it);
 
     dynamic_cast<Core::GroupViewInterface *>(view())->removeDockWidget(dw);
 }
@@ -380,7 +388,6 @@ int Group::dockWidgetCount() const
 
 void Group::onDockWidgetCountChanged()
 {
-    KDDW_DEBUG("Group::onDockWidgetCountChanged: {} ; widgetCount=", ( void * )this, dockWidgetCount());
     if (isEmpty() && !isCentralFrame()) {
         scheduleDeleteLater();
     } else {
@@ -389,28 +396,28 @@ void Group::onDockWidgetCountChanged()
         // We don't really keep track of the state, so emit even if the visibility didn't change. No
         // biggie.
         if (!(m_options & FrameOption_AlwaysShowsTabs))
-            Q_EMIT hasTabsVisibleChanged();
+            d->hasTabsVisibleChanged.emit();
 
         const DockWidget::List docks = dockWidgets();
         for (DockWidget *dock : docks)
             dock->d->updateFloatAction();
 
         if (auto fw = floatingWindow()) {
-            Q_EMIT fw->numDockWidgetsChanged();
+            fw->dptr()->numDockWidgetsChanged.emit();
         }
     }
 
-    Q_EMIT numDockWidgetsChanged();
+    d->numDockWidgetsChanged.emit();
 }
 
 void Group::isFocusedChangedCallback()
 {
-    Q_EMIT isFocusedChanged();
+    d->isFocusedChanged.emit();
 }
 
 void Group::focusedWidgetChangedCallback()
 {
-    Q_EMIT focusedWidgetChanged();
+    d->focusedWidgetChanged.emit();
 }
 
 void Group::updateTitleBarVisibility()
@@ -442,9 +449,9 @@ void Group::updateTitleBarVisibility()
     m_titleBar->setVisible(visible);
 
     if (wasVisible != visible) {
-        Q_EMIT actualTitleBarChanged();
+        d->actualTitleBarChanged.emit();
         for (auto dw : dockWidgets())
-            Q_EMIT dw->actualTitleBarChanged();
+            dw->d->actualTitleBarChanged.emit();
     }
 
     if (auto fw = floatingWindow()) {
@@ -940,4 +947,9 @@ FloatingWindowFlags Group::requestedFloatingWindowFlags() const
         return dockwidgets.first()->floatingWindowFlags();
 
     return FloatingWindowFlag::FromGlobalConfig;
+}
+
+Group::Private *Group::dptr() const
+{
+    return d;
 }

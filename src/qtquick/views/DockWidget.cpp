@@ -13,7 +13,7 @@
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
 #include "kddockwidgets/core/Group.h"
 #include "qtquick/Platform.h"
 #include "qtquick/views/TitleBar.h"
@@ -63,14 +63,10 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
     init();
     m_dockWidget->init();
 
-    connect(m_dockWidget, &Core::DockWidget::isFloatingChanged, this,
-            &DockWidget::isFloatingChanged);
-    connect(m_dockWidget, &Core::DockWidget::isFocusedChanged, this,
-            &DockWidget::isFocusedChanged);
-    connect(m_dockWidget, &Core::DockWidget::titleChanged, this,
-            &DockWidget::titleChanged);
-    connect(m_dockWidget, &Core::DockWidget::optionsChanged, this,
-            &DockWidget::optionsChanged);
+    m_dockWidget->d->isFloatingChanged.connect(&DockWidget::isFloatingChanged, this);
+    m_dockWidget->d->isFocusedChanged.connect(&DockWidget::isFocusedChanged, this);
+    m_dockWidget->d->titleChanged.connect(&DockWidget::titleChanged, this);
+    m_dockWidget->d->optionsChanged.connect(&DockWidget::optionsChanged, this);
 }
 
 DockWidget::~DockWidget()
@@ -84,10 +80,8 @@ void DockWidget::init()
     setVisible(false);
 
     auto dw = this->dockWidget();
-    connect(dw, &Core::DockWidget::actualTitleBarChanged, this,
-            &DockWidget::actualTitleBarChanged);
-
-    connect(dw, &Core::DockWidget::guestViewChanged, this, [this, dw] {
+    dw->d->actualTitleBarChanged.connect(&DockWidget::actualTitleBarChanged, this);
+    dw->d->guestViewChanged.connect([this, dw] {
         if (auto guest = dw->guestView()) {
             guest->setVisible(true);
             Q_EMIT guestItemChanged();
@@ -180,4 +174,14 @@ void DockWidget::onGeometryUpdated()
             groupView->updateGeometry();
         }
     }
+}
+
+QtQuick::Action *DockWidget::toggleAction() const
+{
+    return static_cast<QtQuick::Action *>(m_dockWidget->toggleAction());
+}
+
+QtQuick::Action *DockWidget::floatAction() const
+{
+    return static_cast<QtQuick::Action *>(m_dockWidget->toggleAction());
 }

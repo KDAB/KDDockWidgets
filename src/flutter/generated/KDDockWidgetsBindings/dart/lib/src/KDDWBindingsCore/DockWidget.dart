@@ -42,31 +42,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
         uniqueName?.toNativeUtf8() ?? ffi.nullptr, options, layoutSaverOptions);
     QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  } // aboutToDelete(KDDockWidgets::Core::DockWidget * arg__1)
-  aboutToDelete(KDDWBindingsCore.DockWidget? arg__1) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__aboutToDelete_DockWidget')
-        .asFunction();
-    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // aboutToDeleteOnClose()
-
-  aboutToDeleteOnClose() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__aboutToDeleteOnClose')
-        .asFunction();
-    func(thisCpp);
-  } // actualTitleBarChanged()
-
-  actualTitleBarChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__actualTitleBarChanged')
-        .asFunction();
-    func(thisCpp);
   } // addDockWidgetAsTab(KDDockWidgets::Core::DockWidget * other, KDDockWidgets::InitialOption initialOption)
-
   addDockWidgetAsTab(KDDWBindingsCore.DockWidget? other,
       {required InitialOption initialOption}) {
     final void_Func_voidstar_voidstar_voidstar func = _dylib
@@ -103,14 +79,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(uniqueName?.toNativeUtf8() ?? ffi.nullptr);
     return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
-  } // closed()
-
-  closed() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__closed')
-        .asFunction();
-    func(thisCpp);
   } // currentTabIndex() const
 
   int currentTabIndex() {
@@ -145,14 +113,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QRect.fromCppPointer(result, true);
-  } // guestViewChanged()
-
-  guestViewChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__guestViewChanged')
-        .asFunction();
-    func(thisCpp);
   } // hasPreviousDockedLocation() const
 
   bool hasPreviousDockedLocation() {
@@ -161,14 +121,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__hasPreviousDockedLocation')
         .asFunction();
     return func(thisCpp) != 0;
-  } // iconChanged()
-
-  iconChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__iconChanged')
-        .asFunction();
-    func(thisCpp);
   } // init()
 
   init() {
@@ -193,14 +145,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__isFloating')
         .asFunction();
     return func(thisCpp) != 0;
-  } // isFloatingChanged(bool arg__1)
-
-  isFloatingChanged(bool arg__1) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__isFloatingChanged_bool')
-        .asFunction();
-    func(thisCpp, arg__1 ? 1 : 0);
   } // isFocused() const
 
   bool isFocused() {
@@ -209,14 +153,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__isFocused')
         .asFunction();
     return func(thisCpp) != 0;
-  } // isFocusedChanged(bool arg__1)
-
-  isFocusedChanged(bool arg__1) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__isFocusedChanged_bool')
-        .asFunction();
-    func(thisCpp, arg__1 ? 1 : 0);
   } // isInMainWindow() const
 
   bool isInMainWindow() {
@@ -249,14 +185,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__isOpen')
         .asFunction();
     return func(thisCpp) != 0;
-  } // isOpenChanged(bool isOpen)
-
-  isOpenChanged(bool isOpen) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__isOpenChanged_bool')
-        .asFunction();
-    func(thisCpp, isOpen ? 1 : 0);
   } // isOverlayed() const
 
   bool isOverlayed() {
@@ -265,14 +193,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__isOverlayed')
         .asFunction();
     return func(thisCpp) != 0;
-  } // isOverlayedChanged(bool arg__1)
-
-  isOverlayedChanged(bool arg__1) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__isOverlayedChanged_bool')
-        .asFunction();
-    func(thisCpp, arg__1 ? 1 : 0);
   } // isPersistentCentralDockWidget() const
 
   bool isPersistentCentralDockWidget() {
@@ -347,28 +267,12 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__options')
         .asFunction();
     return func(thisCpp);
-  } // optionsChanged(QFlags<KDDockWidgets::DockWidgetOption> arg__1)
-
-  optionsChanged(int arg__1) {
-    final void_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__optionsChanged_DockWidgetOptions')
-        .asFunction();
-    func(thisCpp, arg__1);
   } // raise()
 
   raise() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__raise')
-        .asFunction();
-    func(thisCpp);
-  } // removedFromSideBar()
-
-  removedFromSideBar() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__removedFromSideBar')
         .asFunction();
     func(thisCpp);
   } // setAffinityName(const QString & name)
@@ -507,14 +411,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.TitleBar.fromCppPointer(result, false);
-  } // titleChanged(const QString & title)
-
-  titleChanged(String? title) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__titleChanged_QString')
-        .asFunction();
-    func(thisCpp, title?.toNativeUtf8() ?? ffi.nullptr);
   }
 
   static // tr(const char * s, const char * c, int n)
@@ -543,14 +439,6 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__userType')
         .asFunction();
     return func(thisCpp);
-  } // windowActiveAboutToChange(bool activated)
-
-  windowActiveAboutToChange(bool activated) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__windowActiveAboutToChange_bool')
-        .asFunction();
-    func(thisCpp, activated ? 1 : 0);
   }
 
   void release() {
@@ -563,7 +451,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 826:
+      case 824:
         return "c_KDDockWidgets__Core__DockWidget__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -571,7 +459,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 826:
+      case 824:
         return "setParentView_impl";
     }
     throw Error();
@@ -583,9 +471,9 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback')
         .asFunction();
-    final callback826 =
+    final callback824 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.DockWidget.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback826, 826);
+    registerCallback(thisCpp, callback824, 824);
   }
 }

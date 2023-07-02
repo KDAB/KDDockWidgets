@@ -13,6 +13,7 @@
 
 #include "core/DragController_p.h"
 #include "core/Logging_p.h"
+#include "core/TitleBar_p.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/TitleBar.h"
@@ -35,7 +36,7 @@ TitleBar::~TitleBar()
 void TitleBar::init()
 {
     setFixedHeight(30);
-    QObject::connect(m_titleBar, &Core::TitleBar::titleChanged, [this] { onTitleBarChanged(m_titleBar->title()); });
+    m_titleChangedConnection = m_titleBar->dptr()->titleChanged.connect([this] { onTitleBarChanged(m_titleBar->title()); });
 }
 
 void TitleBar::onTitleBarChanged(const QString &)

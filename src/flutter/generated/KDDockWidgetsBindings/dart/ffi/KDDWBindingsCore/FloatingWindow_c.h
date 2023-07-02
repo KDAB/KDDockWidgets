@@ -31,7 +31,6 @@ public:
     ~FloatingWindow_wrapper();
     FloatingWindow_wrapper(KDDockWidgets::Core::Group *group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent = nullptr);
     FloatingWindow_wrapper(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent = nullptr);
-    void activatedChanged();
     void addDockWidget(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption arg__4 = {});
     bool allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const;
     bool allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const;
@@ -55,8 +54,6 @@ public:
     KDDockWidgets::Core::MainWindow *mainWindow() const;
     void maybeCreateResizeHandler();
     KDDockWidgets::Core::DropArea *multiSplitter() const;
-    void numDockWidgetsChanged();
-    void numFramesChanged();
     void scheduleDeleteLater();
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
@@ -71,7 +68,6 @@ public:
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
     int userType() const;
-    void windowStateChanged();
     typedef bool (*Callback_isMDI)(void *);
     Callback_isMDI m_isMDICallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
@@ -88,8 +84,6 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_QRect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::FloatingWindow(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_, void *parent_);
-// KDDockWidgets::Core::FloatingWindow::activatedChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__activatedChanged(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::addDockWidget(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
 // KDDockWidgets::Core::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
@@ -132,10 +126,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__mainWi
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__maybeCreateResizeHandler(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::multiSplitter() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__multiSplitter(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::numDockWidgetsChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__numDockWidgetsChanged(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::numFramesChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__numFramesChanged(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::scheduleDeleteLater()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__scheduleDeleteLater(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::setParentView_impl(KDDockWidgets::Core::View * parent)
@@ -160,8 +150,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__updateT
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__updateTitleBarVisibility(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::userType() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__FloatingWindow__userType(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::windowStateChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__windowStateChanged(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow_Finalizer(void *cppObj);

@@ -137,23 +137,8 @@ public:
 
     TitleBarButtonType maximizeButtonType() const;
 
-Q_SIGNALS:
-    void titleChanged();
-    void iconChanged();
-    void isFocusedChanged();
-    void closeButtonEnabledChanged(bool);
-    void floatButtonVisibleChanged(bool);
-    void floatButtonToolTipChanged(const QString &);
-    void numDockWidgetsChanged();
-
-    /// @brief Emitted to tell the views to update their auto-hide button
-    void autoHideButtonChanged(bool visible, bool enabled, KDDockWidgets::TitleBarButtonType);
-
-    /// @brief Emitted to tell the views to update their minimize button
-    void minimizeButtonChanged(bool visible, bool enabled);
-
-    /// @brief Emitted to tell the views to update their maximize button
-    void maximizeButtonChanged(bool visible, bool enabled, KDDockWidgets::TitleBarButtonType);
+    class Private;
+    Private *dptr() const;
 
 protected:
     bool isOverlayed() const;
@@ -170,6 +155,8 @@ private:
     void setFloatButtonToolTip(const QString &);
     void init();
 
+    Private *const d;
+
     QPoint m_pressPos;
     QString m_title;
     Icon m_icon;
@@ -183,7 +170,6 @@ private:
     bool m_maximizeButtonVisible = false;
     TitleBarButtonType m_maximizeButtonType = TitleBarButtonType::Maximize;
     QString m_floatButtonToolTip;
-    QMetaObject::Connection m_focusChangedConnection;
 };
 
 }

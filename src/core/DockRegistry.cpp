@@ -10,6 +10,7 @@
 */
 
 #include "DockRegistry.h"
+#include "DockRegistry_p.h"
 #include "Config.h"
 #include "core/Logging_p.h"
 #include "core/Position_p.h"
@@ -18,13 +19,13 @@
 #include "core/WidgetResizeHandler_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
+#include "core/DockWidget_p.h"
 
 #include "kddockwidgets/core/views/MainWindowViewInterface.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/Window.h"
@@ -37,12 +38,6 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
-
-class DockRegistry::Private
-{
-public:
-    KDBindings::ConnectionHandle m_connection;
-};
 
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
@@ -105,7 +100,7 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
         QMetaObject::invokeMethod(
             oldDw, [oldDw] {
                 if (oldDw) // QPointer
-                    Q_EMIT oldDw->isFocusedChanged(false);
+                    oldDw->d->isFocusedChanged.emit(false);
             },
             Qt::QueuedConnection);
     }
@@ -119,7 +114,7 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
         QMetaObject::invokeMethod(
             this, [this] {
                 if (m_focusedDockWidget) { // QPointer
-                    Q_EMIT m_focusedDockWidget->isFocusedChanged(true);
+                    m_focusedDockWidget->d->isFocusedChanged.emit(true);
                 }
             },
             Qt::QueuedConnection);
@@ -261,6 +256,11 @@ Core::Group *DockRegistry::groupInMDIResize() const
     }
 
     return nullptr;
+}
+
+DockRegistry::Private *DockRegistry::dptr() const
+{
+    return d;
 }
 
 Core::MainWindow::List

@@ -30,11 +30,9 @@ public:
     bool containsDockWidget(const QString &uniqueName) const;
     bool containsMainWindow(const QString &uniqueName) const;
     KDDockWidgets::Core::DockWidget *dockByName(const QString &arg__1) const;
-    void dropIndicatorsInhibitedChanged(bool inhibited);
     void ensureAllFloatingWidgetsAreMorphed();
     KDDockWidgets::Core::DockWidget *focusedDockWidget() const;
     KDDockWidgets::Core::Group *groupInMDIResize() const;
-    void groupInMDIResizeChanged();
     bool hasFloatingWindows() const;
     bool isEmpty(bool excludeBeingDeleted = false) const;
     bool isSane() const;
@@ -67,16 +65,12 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__DockRegistry__containsDockWid
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__DockRegistry__containsMainWindow_QString(void *thisObj, const char *uniqueName_);
 // KDDockWidgets::DockRegistry::dockByName(const QString & arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__dockByName_QString(void *thisObj, const char *arg__1_);
-// KDDockWidgets::DockRegistry::dropIndicatorsInhibitedChanged(bool inhibited)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__dropIndicatorsInhibitedChanged_bool(void *thisObj, bool inhibited);
 // KDDockWidgets::DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__ensureAllFloatingWidgetsAreMorphed(void *thisObj);
 // KDDockWidgets::DockRegistry::focusedDockWidget() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__focusedDockWidget(void *thisObj);
 // KDDockWidgets::DockRegistry::groupInMDIResize() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__groupInMDIResize(void *thisObj);
-// KDDockWidgets::DockRegistry::groupInMDIResizeChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__groupInMDIResizeChanged(void *thisObj);
 // KDDockWidgets::DockRegistry::hasFloatingWindows() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj);
 // KDDockWidgets::DockRegistry::isEmpty(bool excludeBeingDeleted) const

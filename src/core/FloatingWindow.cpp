@@ -10,6 +10,7 @@
 */
 
 #include "FloatingWindow.h"
+#include "FloatingWindow_p.h"
 #include "MainWindow.h"
 #include "core/Logging_p.h"
 #include "TitleBar.h"
@@ -48,46 +49,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-
-static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedFlags)
-{
-    if (!(requestedFlags & FloatingWindowFlag::FromGlobalConfig)) {
-        // User requested specific flags for this floating window
-        return requestedFlags;
-    }
-
-    // Use from KDDockWidgets::Config instead. This is app-wide and not per window.
-
-    FloatingWindowFlags flags = {};
-
-    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
-        == Config::Flag_TitleBarHasMinimizeButton)
-        flags |= FloatingWindowFlag::TitleBarHasMinimizeButton;
-
-    if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton)
-        flags |= FloatingWindowFlag::TitleBarHasMaximizeButton;
-
-    if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
-        flags |= FloatingWindowFlag::KeepAboveIfNotUtilityWindow;
-
-    if (Config::self().flags() & Config::Flag_NativeTitleBar)
-        flags |= FloatingWindowFlag::NativeTitleBar;
-
-    if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
-        flags |= FloatingWindowFlag::HideTitleBarWhenTabsVisible;
-
-    if (Config::self().flags() & Config::Flag_AlwaysTitleBarWhenFloating)
-        flags |= FloatingWindowFlag::AlwaysTitleBarWhenFloating;
-
-    if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
-        flags |= FloatingWindowFlag::DontUseParentForFloatingWindows;
-
-    if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
-        flags |= FloatingWindowFlag::UseQtWindow;
-
-    return flags;
-}
-
 static FloatingWindowFlags floatingWindowFlagsForGroup(Group *group)
 {
     if (!group)
@@ -99,19 +60,6 @@ static FloatingWindowFlags floatingWindowFlagsForGroup(Group *group)
 
     return FloatingWindowFlag::FromGlobalConfig;
 }
-
-
-class FloatingWindow::Private
-{
-public:
-    explicit Private(FloatingWindowFlags requestedFlags)
-        : m_flags(flagsForFloatingWindow(requestedFlags))
-    {
-    }
-
-    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
-    const FloatingWindowFlags m_flags;
-};
 
 /** static */
 Qt::WindowFlags FloatingWindow::s_windowFlagsOverride = {};
@@ -235,7 +183,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     d->m_visibleWidgetCountConnection =
         m_dropArea->d_ptr()->visibleWidgetCountChanged.connect([this](int count) {
             onFrameCountChanged(count);
-            numFramesChanged();
+            d->numFramesChanged.emit();
             onVisibleFrameCountChanged(count);
         });
 
@@ -246,7 +194,9 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     m_layoutDestroyedConnection =
         connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 
-    connect(this, &FloatingWindow::numFramesChanged, this, &FloatingWindow::numDockWidgetsChanged);
+    d->numFramesChanged.connect([this] {
+        d->numDockWidgetsChanged.emit();
+    });
 }
 
 FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
@@ -288,11 +238,12 @@ FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
             // We're dragging a MDI window and we reached the border, detaching it, and making it
             // float. We can't delete the wrapper group just yet, as that would delete the title bar
             // which is currently being dragged. Delete it once the drag finishes
-            QObject::connect(DragController::instance(), &DragController::currentStateChanged,
-                             dwMDIWrapper, [dwMDIWrapper] {
-                                 if (DragController::instance()->isIdle())
-                                     delete dwMDIWrapper;
-                             });
+            d->m_currentStateChangedConnection = DragController::instance()->currentStateChanged.connect([this, dwMDIWrapper] {
+                if (DragController::instance()->isIdle()) {
+                    d->m_currentStateChangedConnection = KDBindings::ScopedConnection();
+                    delete dwMDIWrapper;
+                }
+            });
         } else {
             dwMDIWrapper->destroyLater();
         }
@@ -520,7 +471,7 @@ void FloatingWindow::onFrameCountChanged(int count)
     } else {
         updateTitleBarVisibility();
         if (count == 1) // if something was removed, then our single dock widget is floating, we
-                        // need to check the QAction
+                        // need to check the Action
             dropArea()->updateFloatingActions();
     }
 }
@@ -625,7 +576,7 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
             view()->showNormal();
         }
 
-        Q_EMIT numDockWidgetsChanged();
+        d->numDockWidgetsChanged.emit();
         return true;
     }
 
@@ -820,4 +771,9 @@ bool FloatingWindow::isUtilityWindow() const
 FloatingWindowFlags FloatingWindow::floatingWindowFlags() const
 {
     return d->m_flags;
+}
+
+FloatingWindow::Private *FloatingWindow::dptr() const
+{
+    return d;
 }

@@ -232,15 +232,8 @@ public:
     ///@brief Returns the Group which is being resized in a MDI layout. nullptr if none
     Core::Group *groupInMDIResize() const;
 
-Q_SIGNALS:
-    /// @brief emitted when a main window or a floating window change screen
-    void windowChangedScreen(std::shared_ptr<Core::Window>);
-
-    /// @brief emitted when the MDI group that's being resized changed
-    void groupInMDIResizeChanged();
-
-    /// @brief emitted whenever Config::dropIndicatorsInhibited changes
-    void dropIndicatorsInhibitedChanged(bool inhibited);
+    class Private;
+    Private *dptr() const;
 
 private:
     friend class Core::FocusScope;
@@ -254,7 +247,6 @@ private:
     bool onExposeEvent(std::shared_ptr<Core::Window>) override;
     bool onMouseButtonPress(Core::View *, MouseEvent *) override;
 
-    class Private;
     Private *const d;
 
     QVector<Core::DockWidget *> m_dockWidgets;

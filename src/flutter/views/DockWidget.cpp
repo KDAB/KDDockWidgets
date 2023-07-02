@@ -14,7 +14,8 @@
 
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
+#include "core/Logging_p.h"
 #include "kddockwidgets/core/Group.h"
 #include "flutter/Platform.h"
 #include "flutter/views/TitleBar.h"
@@ -42,7 +43,8 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
 {
     init();
     m_dockWidget->init();
-    QObject::connect(m_dockWidget, &Core::DockWidget::guestViewChanged, m_dockWidget, [this] {
+
+    m_dockWidget->dptr()->guestViewChanged.connect([this] {
         if (auto guest = m_dockWidget->guestView()) {
             guest->setVisible(true);
         }

@@ -22,6 +22,7 @@
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 
+#include "qtquick/Action.h"
 #include "qtquick/views/FloatingWindow.h"
 #include "qtquick/views/DockWidget.h"
 #include "qtquick/views/DropArea.h"
@@ -218,4 +219,9 @@ ViewFactory *ViewFactory::self()
                    << Config::self().viewFactory();
 
     return factory;
+}
+
+KDDockWidgets::Action *ViewFactory::createAction(Core::DockWidget *dw, const char *debugName) const
+{
+    return new QtQuick::Action(dw, debugName);
 }

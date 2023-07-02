@@ -14,6 +14,7 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/MainWindow.h"
+#include "core/DockWidget_p.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -47,10 +48,11 @@ void SideBar::addDockWidget_Impl(Core::DockWidget *dw)
 {
     auto button = createButton(dw, this);
     button->setText(dw->title());
-    connect(dw, &Core::DockWidget::titleChanged, button, &SideBarButton::setText);
-    connect(dw, &Core::DockWidget::isOverlayedChanged, button,
-            [button] { button->update(); });
-    connect(dw, &Core::DockWidget::removedFromSideBar, button, &QObject::deleteLater);
+
+    dw->d->titleChanged.connect(&SideBarButton::setText, button);
+    dw->d->isOverlayedChanged.connect([button] { button->update(); });
+    dw->d->removedFromSideBar.connect(&QObject::deleteLater, button);
+
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
     connect(button, &SideBarButton::clicked, this, [this, dw] { m_sideBar->onButtonClicked(dw); });
 

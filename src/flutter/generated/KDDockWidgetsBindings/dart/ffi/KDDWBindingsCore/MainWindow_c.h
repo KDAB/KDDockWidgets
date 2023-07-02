@@ -18,8 +18,8 @@
 #include "core/DropArea.h"
 #include <core/Layout.h>
 #include <qrect.h>
-#include <qpoint.h>
 #include <qsize.h>
+#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -35,7 +35,6 @@ public:
     void clearSideBarOverlay(bool deleteFrame = true);
     bool closeDockWidgets(bool force = false);
     KDDockWidgets::Core::DropArea *dropArea() const;
-    void groupCountChanged(int arg__1);
     void init(const QString &name);
     bool isMDI() const;
     KDDockWidgets::Core::Layout *layout() const;
@@ -45,7 +44,6 @@ public:
     KDDockWidgets::Core::DropArea *multiSplitter() const;
     QFlags<KDDockWidgets::MainWindowOption> options() const;
     int overlayMargin() const;
-    void overlayMarginChanged(int margin);
     void overlayOnSideBar(KDDockWidgets::Core::DockWidget *dw);
     KDDockWidgets::Core::DockWidget *overlayedDockWidget() const;
     void restoreFromSideBar(KDDockWidgets::Core::DockWidget *dw);
@@ -58,7 +56,6 @@ public:
     void toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget *dw);
     static QString tr(const char *s, const char *c, int n);
     QString uniqueName() const;
-    void uniqueNameChanged();
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
@@ -81,8 +78,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__clearSideBa
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__MainWindow__closeDockWidgets_bool(void *thisObj, bool force);
 // KDDockWidgets::Core::MainWindow::dropArea() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__MainWindow__dropArea(void *thisObj);
-// KDDockWidgets::Core::MainWindow::groupCountChanged(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__groupCountChanged_int(void *thisObj, int arg__1);
 // KDDockWidgets::Core::MainWindow::init(const QString & name)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__init_QString(void *thisObj, const char *name_);
 // KDDockWidgets::Core::MainWindow::isMDI() const
@@ -101,8 +96,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__MainWindow__multiSplit
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__MainWindow__options(void *thisObj);
 // KDDockWidgets::Core::MainWindow::overlayMargin() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__MainWindow__overlayMargin(void *thisObj);
-// KDDockWidgets::Core::MainWindow::overlayMarginChanged(int margin)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__overlayMarginChanged_int(void *thisObj, int margin);
 // KDDockWidgets::Core::MainWindow::overlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__overlayOnSideBar_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::MainWindow::overlayedDockWidget() const
@@ -125,8 +118,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__toggleOverl
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__MainWindow__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::MainWindow::uniqueName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__MainWindow__uniqueName(void *thisObj);
-// KDDockWidgets::Core::MainWindow::uniqueNameChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__uniqueNameChanged(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow_Finalizer(void *cppObj);

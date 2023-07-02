@@ -44,25 +44,13 @@ bool TitleBar_wrapper::closeButtonEnabled() const
 {
     return ::KDDockWidgets::Core::TitleBar::closeButtonEnabled();
 }
-void TitleBar_wrapper::closeButtonEnabledChanged(bool arg__1)
-{
-    ::KDDockWidgets::Core::TitleBar::closeButtonEnabledChanged(arg__1);
-}
 QString TitleBar_wrapper::floatButtonToolTip() const
 {
     return ::KDDockWidgets::Core::TitleBar::floatButtonToolTip();
 }
-void TitleBar_wrapper::floatButtonToolTipChanged(const QString &arg__1)
-{
-    ::KDDockWidgets::Core::TitleBar::floatButtonToolTipChanged(arg__1);
-}
 bool TitleBar_wrapper::floatButtonVisible() const
 {
     return ::KDDockWidgets::Core::TitleBar::floatButtonVisible();
-}
-void TitleBar_wrapper::floatButtonVisibleChanged(bool arg__1)
-{
-    ::KDDockWidgets::Core::TitleBar::floatButtonVisibleChanged(arg__1);
 }
 KDDockWidgets::Core::FloatingWindow *TitleBar_wrapper::floatingWindow() const
 {
@@ -75,10 +63,6 @@ KDDockWidgets::Core::Group *TitleBar_wrapper::group() const
 bool TitleBar_wrapper::hasIcon() const
 {
     return ::KDDockWidgets::Core::TitleBar::hasIcon();
-}
-void TitleBar_wrapper::iconChanged()
-{
-    ::KDDockWidgets::Core::TitleBar::iconChanged();
 }
 bool TitleBar_wrapper::isCloseButtonEnabled() const
 {
@@ -99,10 +83,6 @@ bool TitleBar_wrapper::isFloating() const
 bool TitleBar_wrapper::isFocused() const
 {
     return ::KDDockWidgets::Core::TitleBar::isFocused();
-}
-void TitleBar_wrapper::isFocusedChanged()
-{
-    ::KDDockWidgets::Core::TitleBar::isFocusedChanged();
 }
 bool TitleBar_wrapper::isMDI() const
 {
@@ -145,14 +125,6 @@ KDDockWidgets::Core::MainWindow *TitleBar_wrapper::mainWindow() const
 bool TitleBar_wrapper::maximizeButtonVisible() const
 {
     return ::KDDockWidgets::Core::TitleBar::maximizeButtonVisible();
-}
-void TitleBar_wrapper::minimizeButtonChanged(bool visible, bool enabled)
-{
-    ::KDDockWidgets::Core::TitleBar::minimizeButtonChanged(visible, enabled);
-}
-void TitleBar_wrapper::numDockWidgetsChanged()
-{
-    ::KDDockWidgets::Core::TitleBar::numDockWidgetsChanged();
 }
 void TitleBar_wrapper::onAutoHideClicked()
 {
@@ -244,10 +216,6 @@ bool TitleBar_wrapper::titleBarIsFocusable() const
 {
     return ::KDDockWidgets::Core::TitleBar::titleBarIsFocusable();
 }
-void TitleBar_wrapper::titleChanged()
-{
-    ::KDDockWidgets::Core::TitleBar::titleChanged();
-}
 void TitleBar_wrapper::toggleMaximized()
 {
     ::KDDockWidgets::Core::TitleBar::toggleMaximized();
@@ -302,31 +270,15 @@ bool c_KDDockWidgets__Core__TitleBar__closeButtonEnabled(void *thisObj)
 {
     return fromPtr(thisObj)->closeButtonEnabled();
 }
-// closeButtonEnabledChanged(bool arg__1)
-void c_KDDockWidgets__Core__TitleBar__closeButtonEnabledChanged_bool(void *thisObj, bool arg__1)
-{
-    fromPtr(thisObj)->closeButtonEnabledChanged(arg__1);
-}
 // floatButtonToolTip() const
 void *c_KDDockWidgets__Core__TitleBar__floatButtonToolTip(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->floatButtonToolTip() };
 }
-// floatButtonToolTipChanged(const QString & arg__1)
-void c_KDDockWidgets__Core__TitleBar__floatButtonToolTipChanged_QString(void *thisObj, const char *arg__1_)
-{
-    const auto arg__1 = QString::fromUtf8(arg__1_);
-    fromPtr(thisObj)->floatButtonToolTipChanged(arg__1);
-}
 // floatButtonVisible() const
 bool c_KDDockWidgets__Core__TitleBar__floatButtonVisible(void *thisObj)
 {
     return fromPtr(thisObj)->floatButtonVisible();
-}
-// floatButtonVisibleChanged(bool arg__1)
-void c_KDDockWidgets__Core__TitleBar__floatButtonVisibleChanged_bool(void *thisObj, bool arg__1)
-{
-    fromPtr(thisObj)->floatButtonVisibleChanged(arg__1);
 }
 // floatingWindow() const
 void *c_KDDockWidgets__Core__TitleBar__floatingWindow(void *thisObj)
@@ -342,11 +294,6 @@ void *c_KDDockWidgets__Core__TitleBar__group(void *thisObj)
 bool c_KDDockWidgets__Core__TitleBar__hasIcon(void *thisObj)
 {
     return fromPtr(thisObj)->hasIcon();
-}
-// iconChanged()
-void c_KDDockWidgets__Core__TitleBar__iconChanged(void *thisObj)
-{
-    fromPtr(thisObj)->iconChanged();
 }
 // isCloseButtonEnabled() const
 bool c_KDDockWidgets__Core__TitleBar__isCloseButtonEnabled(void *thisObj)
@@ -372,11 +319,6 @@ bool c_KDDockWidgets__Core__TitleBar__isFloating(void *thisObj)
 bool c_KDDockWidgets__Core__TitleBar__isFocused(void *thisObj)
 {
     return fromPtr(thisObj)->isFocused();
-}
-// isFocusedChanged()
-void c_KDDockWidgets__Core__TitleBar__isFocusedChanged(void *thisObj)
-{
-    fromPtr(thisObj)->isFocusedChanged();
 }
 // isMDI() const
 bool c_KDDockWidgets__Core__TitleBar__isMDI(void *thisObj)
@@ -407,16 +349,6 @@ void *c_KDDockWidgets__Core__TitleBar__mainWindow(void *thisObj)
 bool c_KDDockWidgets__Core__TitleBar__maximizeButtonVisible(void *thisObj)
 {
     return fromPtr(thisObj)->maximizeButtonVisible();
-}
-// minimizeButtonChanged(bool visible, bool enabled)
-void c_KDDockWidgets__Core__TitleBar__minimizeButtonChanged_bool_bool(void *thisObj, bool visible, bool enabled)
-{
-    fromPtr(thisObj)->minimizeButtonChanged(visible, enabled);
-}
-// numDockWidgetsChanged()
-void c_KDDockWidgets__Core__TitleBar__numDockWidgetsChanged(void *thisObj)
-{
-    fromPtr(thisObj)->numDockWidgetsChanged();
 }
 // onAutoHideClicked()
 void c_KDDockWidgets__Core__TitleBar__onAutoHideClicked(void *thisObj)
@@ -510,11 +442,6 @@ bool c_KDDockWidgets__Core__TitleBar__titleBarIsFocusable(void *thisObj)
 {
     return fromPtr(thisObj)->titleBarIsFocusable();
 }
-// titleChanged()
-void c_KDDockWidgets__Core__TitleBar__titleChanged(void *thisObj)
-{
-    fromPtr(thisObj)->titleChanged();
-}
 // toggleMaximized()
 void c_KDDockWidgets__Core__TitleBar__toggleMaximized(void *thisObj)
 {
@@ -538,16 +465,16 @@ void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1045:
+    case 1038:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 1049:
+    case 1042:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
-    case 826:
+    case 824:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1070:
+    case 1061:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

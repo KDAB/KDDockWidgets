@@ -62,14 +62,6 @@ class TitleBar extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__TitleBar__closeButtonEnabled')
         .asFunction();
     return func(thisCpp) != 0;
-  } // closeButtonEnabledChanged(bool arg__1)
-
-  closeButtonEnabledChanged(bool arg__1) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__TitleBar__closeButtonEnabledChanged_bool')
-        .asFunction();
-    func(thisCpp, arg__1 ? 1 : 0);
   } // floatButtonToolTip() const
 
   QString floatButtonToolTip() {
@@ -79,14 +71,6 @@ class TitleBar extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QString.fromCppPointer(result, true);
-  } // floatButtonToolTipChanged(const QString & arg__1)
-
-  floatButtonToolTipChanged(String? arg__1) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__TitleBar__floatButtonToolTipChanged_QString')
-        .asFunction();
-    func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   } // floatButtonVisible() const
 
   bool floatButtonVisible() {
@@ -95,14 +79,6 @@ class TitleBar extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__TitleBar__floatButtonVisible')
         .asFunction();
     return func(thisCpp) != 0;
-  } // floatButtonVisibleChanged(bool arg__1)
-
-  floatButtonVisibleChanged(bool arg__1) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__TitleBar__floatButtonVisibleChanged_bool')
-        .asFunction();
-    func(thisCpp, arg__1 ? 1 : 0);
   } // floatingWindow() const
 
   KDDWBindingsCore.FloatingWindow floatingWindow() {
@@ -129,14 +105,6 @@ class TitleBar extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__TitleBar__hasIcon')
         .asFunction();
     return func(thisCpp) != 0;
-  } // iconChanged()
-
-  iconChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__TitleBar__iconChanged')
-        .asFunction();
-    func(thisCpp);
   } // init()
 
   init() {
@@ -185,20 +153,12 @@ class TitleBar extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__TitleBar__isFocused')
         .asFunction();
     return func(thisCpp) != 0;
-  } // isFocusedChanged()
-
-  isFocusedChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__TitleBar__isFocusedChanged')
-        .asFunction();
-    func(thisCpp);
   } // isMDI() const
 
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1045))
+            cFunctionSymbolName(1038))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -234,7 +194,7 @@ class TitleBar extends KDDWBindingsCore.Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1049))
+            cFunctionSymbolName(1042))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -266,22 +226,6 @@ class TitleBar extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__TitleBar__maximizeButtonVisible')
         .asFunction();
     return func(thisCpp) != 0;
-  } // minimizeButtonChanged(bool visible, bool enabled)
-
-  minimizeButtonChanged(bool visible, bool enabled) {
-    final void_Func_voidstar_bool_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Core__TitleBar__minimizeButtonChanged_bool_bool')
-        .asFunction();
-    func(thisCpp, visible ? 1 : 0, enabled ? 1 : 0);
-  } // numDockWidgetsChanged()
-
-  numDockWidgetsChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__TitleBar__numDockWidgetsChanged')
-        .asFunction();
-    func(thisCpp);
   } // onAutoHideClicked()
 
   onAutoHideClicked() {
@@ -381,7 +325,7 @@ class TitleBar extends KDDWBindingsCore.Controller {
   KDDWBindingsCore.DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1070))
+            cFunctionSymbolName(1061))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
@@ -456,14 +400,6 @@ class TitleBar extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__TitleBar__titleBarIsFocusable')
         .asFunction();
     return func(thisCpp) != 0;
-  } // titleChanged()
-
-  titleChanged() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__TitleBar__titleChanged')
-        .asFunction();
-    func(thisCpp);
   } // toggleMaximized()
 
   toggleMaximized() {
@@ -535,13 +471,13 @@ class TitleBar extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1045:
+      case 1038:
         return "c_KDDockWidgets__Core__TitleBar__isMDI";
-      case 1049:
+      case 1042:
         return "c_KDDockWidgets__Core__TitleBar__isWindow";
-      case 826:
+      case 824:
         return "c_KDDockWidgets__Core__TitleBar__setParentView_impl_View";
-      case 1070:
+      case 1061:
         return "c_KDDockWidgets__Core__TitleBar__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -549,13 +485,13 @@ class TitleBar extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1045:
+      case 1038:
         return "isMDI";
-      case 1049:
+      case 1042:
         return "isWindow";
-      case 826:
+      case 824:
         return "setParentView_impl";
-      case 1070:
+      case 1061:
         return "singleDockWidget";
     }
     throw Error();
@@ -567,20 +503,20 @@ class TitleBar extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1045 = 0;
-    final callback1045 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.TitleBar.isMDI_calledFromC, callbackExcept1045);
-    registerCallback(thisCpp, callback1045, 1045);
-    const callbackExcept1049 = 0;
-    final callback1049 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.TitleBar.isWindow_calledFromC, callbackExcept1049);
-    registerCallback(thisCpp, callback1049, 1049);
-    final callback826 =
+    const callbackExcept1038 = 0;
+    final callback1038 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.TitleBar.isMDI_calledFromC, callbackExcept1038);
+    registerCallback(thisCpp, callback1038, 1038);
+    const callbackExcept1042 = 0;
+    final callback1042 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.TitleBar.isWindow_calledFromC, callbackExcept1042);
+    registerCallback(thisCpp, callback1042, 1042);
+    final callback824 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback826, 826);
-    final callback1070 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback824, 824);
+    final callback1061 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.TitleBar.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1070, 1070);
+    registerCallback(thisCpp, callback1061, 1061);
   }
 }

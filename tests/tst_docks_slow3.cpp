@@ -28,7 +28,7 @@
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
 #include "kddockwidgets/core/Separator.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
@@ -70,10 +70,9 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
     CHECK(!dw1->isFocused());
     dw1->window()->activateWindow();
 
-    QObject::connect(
-        dw1, &Core::DockWidget::isFocusedChanged, dw1, [dw1](bool focused) {
-            Q_ASSERT(focused == dw1->isFocused());
-        });
+    dw1->d->isFocusedChanged.connect([dw1](bool focused) {
+        Q_ASSERT(focused == dw1->isFocused());
+    });
 
     le1->setFocus(Qt::MouseFocusReason);
     KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
@@ -124,7 +123,7 @@ KDDW_QCORO_TASK tst_close()
 
     // 1.0 Call QWidget::close() on QDockWidget
     auto dock1 = createDockWidget("doc1");
-    QAction *toggleAction = dock1->toggleAction();
+    auto toggleAction = dock1->toggleAction();
     CHECK(toggleAction->isChecked());
     CHECK(dock1->isFloating());
     CHECK(dock1->isVisible());

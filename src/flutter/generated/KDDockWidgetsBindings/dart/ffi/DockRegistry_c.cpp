@@ -47,10 +47,6 @@ KDDockWidgets::Core::DockWidget *DockRegistry_wrapper::dockByName(const QString 
 {
     return ::KDDockWidgets::DockRegistry::dockByName(arg__1);
 }
-void DockRegistry_wrapper::dropIndicatorsInhibitedChanged(bool inhibited)
-{
-    ::KDDockWidgets::DockRegistry::dropIndicatorsInhibitedChanged(inhibited);
-}
 void DockRegistry_wrapper::ensureAllFloatingWidgetsAreMorphed()
 {
     ::KDDockWidgets::DockRegistry::ensureAllFloatingWidgetsAreMorphed();
@@ -62,10 +58,6 @@ KDDockWidgets::Core::DockWidget *DockRegistry_wrapper::focusedDockWidget() const
 KDDockWidgets::Core::Group *DockRegistry_wrapper::groupInMDIResize() const
 {
     return ::KDDockWidgets::DockRegistry::groupInMDIResize();
-}
-void DockRegistry_wrapper::groupInMDIResizeChanged()
-{
-    ::KDDockWidgets::DockRegistry::groupInMDIResizeChanged();
 }
 bool DockRegistry_wrapper::hasFloatingWindows() const
 {
@@ -188,11 +180,6 @@ void *c_KDDockWidgets__DockRegistry__dockByName_QString(void *thisObj, const cha
     const auto arg__1 = QString::fromUtf8(arg__1_);
     return fromPtr(thisObj)->dockByName(arg__1);
 }
-// dropIndicatorsInhibitedChanged(bool inhibited)
-void c_KDDockWidgets__DockRegistry__dropIndicatorsInhibitedChanged_bool(void *thisObj, bool inhibited)
-{
-    fromPtr(thisObj)->dropIndicatorsInhibitedChanged(inhibited);
-}
 // ensureAllFloatingWidgetsAreMorphed()
 void c_KDDockWidgets__DockRegistry__ensureAllFloatingWidgetsAreMorphed(void *thisObj)
 {
@@ -207,11 +194,6 @@ void *c_KDDockWidgets__DockRegistry__focusedDockWidget(void *thisObj)
 void *c_KDDockWidgets__DockRegistry__groupInMDIResize(void *thisObj)
 {
     return fromPtr(thisObj)->groupInMDIResize();
-}
-// groupInMDIResizeChanged()
-void c_KDDockWidgets__DockRegistry__groupInMDIResizeChanged(void *thisObj)
-{
-    fromPtr(thisObj)->groupInMDIResizeChanged();
 }
 // hasFloatingWindows() const
 bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj)

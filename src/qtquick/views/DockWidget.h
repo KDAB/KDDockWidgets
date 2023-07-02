@@ -21,6 +21,7 @@
 
 #include "kddockwidgets/core/views/DockWidgetViewInterface.h"
 #include "View.h"
+#include "../Action.h"
 
 QT_BEGIN_NAMESPACE
 class QQmlEngine;
@@ -101,10 +102,11 @@ public:
     /// @brief Called by QtQuick when min-size changes
     Q_INVOKABLE void onGeometryUpdated();
 
+    Q_INVOKABLE KDDockWidgets::QtQuick::Action *toggleAction() const;
+    Q_INVOKABLE KDDockWidgets::QtQuick::Action *floatAction() const;
+
 #ifdef Q_MOC_RUN
     // DockWidgetViewInterface is not a QObject, so trick moc
-    Q_INVOKABLE QAction *toggleAction() const;
-    Q_INVOKABLE QAction *floatAction() const;
     Q_INVOKABLE void setAsCurrentTab();
     Q_INVOKABLE void forceClose();
     Q_INVOKABLE bool isOpen() const;

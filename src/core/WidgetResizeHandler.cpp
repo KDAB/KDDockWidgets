@@ -16,6 +16,7 @@
 #include "Utils_p.h"
 #include "View_p.h"
 #include "Logging_p.h"
+#include "DockRegistry_p.h"
 
 #include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/MDILayout.h"
@@ -193,7 +194,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 
         m_resizingInProgress = true;
         if (isMDI())
-            Q_EMIT DockRegistry::self()->groupInMDIResizeChanged();
+            DockRegistry::self()->dptr()->groupInMDIResizeChanged.emit();
         mNewPosition = Qt5Qt6Compat::eventGlobalPos(e);
         mCursorPos = cursorPos;
 
@@ -202,7 +203,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
     case Event::MouseButtonRelease: {
         m_resizingInProgress = false;
         if (isMDI()) {
-            Q_EMIT DockRegistry::self()->groupInMDIResizeChanged();
+            DockRegistry::self()->dptr()->groupInMDIResizeChanged.emit();
             // Usually in KDDW all geometry changes are done in the layout items, which propagate to
             // the widgets When resizing a MDI however, we're resizing the widget directly. So
             // update the corresponding layout item when we're finished.

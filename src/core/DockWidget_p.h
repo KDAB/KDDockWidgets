@@ -178,6 +178,67 @@ public:
 
     void setIsOpen(bool);
 
+    ///@brief signal emitted when the icon changed
+    KDBindings::Signal<> iconChanged;
+
+    ///@brief signal emitted when the title changed
+    ///@param title the new title
+    KDBindings::Signal<QString> titleChanged;
+
+    /// @brief emitted when the hosted guest widget changed
+    KDBindings::Signal<> guestViewChanged;
+
+    ///@brief emitted when the options change
+    ///@sa setOptions(), options()
+    ///@param options
+    KDBindings::Signal<KDDockWidgets::DockWidgetOptions> optionsChanged;
+
+    ///@brief emitted when isFocused changes
+    ///@sa isFocused
+    ///@param isFocused
+    KDBindings::Signal<bool> isFocusedChanged;
+
+    ///@brief emitted when isOverlayed changes
+    ///@sa isOverlayed
+    ///@param isOverlayed
+    KDBindings::Signal<bool> isOverlayedChanged;
+
+    ///@brief emitted when isFloating changes
+    ///@param isFloating
+    KDBindings::Signal<bool> isFloatingChanged;
+
+    ///@brief emitted when this dock widget is removed from a side-bar.
+    /// Only relevant for the auto-hide/sidebar feature
+    KDBindings::Signal<> removedFromSideBar;
+
+    ///@brief Emitted when the top-level window this dock widget is in is activated or deactivated
+    /// This is convenience to replace tracking dockWidget->window(), since the window changes when
+    /// docking and undocking
+    ///
+    /// It's called 'aboutTo' because it's done in an event filter and the target window doesn't
+    /// have it's 'activeWindow' property updated yet at this point.
+    /// @param activated
+    KDBindings::Signal<bool> windowActiveAboutToChange;
+
+    ///@brief Emitted when the title bar that serves this dock widget changes
+    KDBindings::Signal<> actualTitleBarChanged;
+
+    /// @brief Emitted when this dock widget is about to be deleted due to Option_DeleteOnClose
+    KDBindings::Signal<> aboutToDeleteOnClose;
+
+    /// @brief Emitted when this dock widget is about to be deleted
+    /// @param dockWidget
+    KDBindings::Signal<KDDockWidgets::Core::DockWidget *> aboutToDelete;
+
+    /// @brief Emitted when a dock widget is closed
+    /// This is equivalent to the openedChanged(false) signal
+    KDBindings::Signal<> closed;
+
+    /// @brief Emitted when a dock widget is opened or closed
+    /// For the false case, closed() is also emitted
+    /// @param isOpen
+    KDBindings::Signal<bool> isOpenChanged;
+
     const QString name;
     QStringList affinities;
     QString title;
@@ -188,8 +249,8 @@ public:
     DockWidgetOptions options;
     FloatingWindowFlags m_flags = FloatingWindowFlag::FromGlobalConfig;
     const LayoutSaverOptions layoutSaverOptions;
-    QAction *const toggleAction;
-    QAction *const floatAction;
+    Action *const toggleAction;
+    Action *const floatAction;
     Position::Ptr m_lastPosition = std::make_shared<Position>();
     bool m_isPersistentCentralDockWidget = false;
     bool m_processingToggleAction = false;

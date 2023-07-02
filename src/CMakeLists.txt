@@ -75,6 +75,7 @@ set(KDDW_QTCOMMON_SRCS qtcommon/Platform.cpp qtcommon/Window.cpp qtcommon/View.c
 )
 
 set(KDDW_FRONTEND_QTWIDGETS_SRCS
+    qtwidgets/Action.cpp
     qtwidgets/Window.cpp
     qtwidgets/Platform.cpp
     qtwidgets/views/View.cpp
@@ -122,6 +123,7 @@ set(KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS
 )
 
 set(KDDW_FRONTEND_QTQUICK_SRCS
+    qtquick/Action.cpp
     qtquick/Window.cpp
     qtquick/Platform.cpp
     qtquick/Helpers.cpp
@@ -212,6 +214,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
+    flutter/Action.cpp
     flutter/ViewFactory.cpp
     flutter/Window.cpp
     flutter/Screen.cpp
@@ -260,7 +263,6 @@ set(KDDW_PUBLIC_HEADERS
 
 set(KDDW_CORE_HEADERS
     core/DockWidget.h
-    core/DockWidget_p.h
     core/DropIndicatorOverlay.h
     core/DropArea.h
     core/FloatingWindow.h
@@ -276,7 +278,6 @@ set(KDDW_CORE_HEADERS
     core/TitleBar.h
     core/View.h
     core/EventFilterInterface.h
-    core/DragController_p.h
     core/Draggable_p.h
     core/LayoutSaver_p.h
     core/WindowBeingDragged_p.h
@@ -607,7 +608,7 @@ endif()
 
 if(KDDW_FRONTEND_QTWIDGETS)
 
-    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform.h qtwidgets/ViewFactory.h)
+    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform.h qtwidgets/ViewFactory.h qtwidgets/Action.h)
 
     set(KDDW_QTWIDGET_VIEW_HEADERS
         qtwidgets/views/DockWidget.h

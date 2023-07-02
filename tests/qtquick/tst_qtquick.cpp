@@ -176,10 +176,9 @@ void TestQtQuick::tst_isFloatingIsEmitted()
         // Add to main window again and make sure signal was emitted
 
         bool signalReceived = false;
-        connect(dw4, &Core::DockWidget::isFloatingChanged, dw4, [&signalReceived] {
+        dw4->d->isFloatingChanged.connect([&signalReceived] {
             signalReceived = true;
         });
-
 
         QVERIFY(dw4->isFloating());
         QVERIFY(dw4->floatAction()->isChecked());

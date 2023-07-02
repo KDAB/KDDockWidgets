@@ -32,17 +32,9 @@ TabBar_wrapper::TabBar_wrapper(KDDockWidgets::Core::Stack *tabWidget)
     : ::KDDockWidgets::Core::TabBar(tabWidget)
 {
 }
-void TabBar_wrapper::countChanged()
-{
-    ::KDDockWidgets::Core::TabBar::countChanged();
-}
 KDDockWidgets::Core::DockWidget *TabBar_wrapper::currentDockWidget() const
 {
     return ::KDDockWidgets::Core::TabBar::currentDockWidget();
-}
-void TabBar_wrapper::currentDockWidgetChanged(KDDockWidgets::Core::DockWidget *arg__1)
-{
-    ::KDDockWidgets::Core::TabBar::currentDockWidgetChanged(arg__1);
 }
 int TabBar_wrapper::currentIndex() const
 {
@@ -210,21 +202,10 @@ void *c_KDDockWidgets__Core__TabBar__constructor_Stack(void *tabWidget_)
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper(tabWidget);
     return reinterpret_cast<void *>(ptr);
 }
-// countChanged()
-void c_KDDockWidgets__Core__TabBar__countChanged(void *thisObj)
-{
-    fromPtr(thisObj)->countChanged();
-}
 // currentDockWidget() const
 void *c_KDDockWidgets__Core__TabBar__currentDockWidget(void *thisObj)
 {
     return fromPtr(thisObj)->currentDockWidget();
-}
-// currentDockWidgetChanged(KDDockWidgets::Core::DockWidget * arg__1)
-void c_KDDockWidgets__Core__TabBar__currentDockWidgetChanged_DockWidget(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
-    fromPtr(thisObj)->currentDockWidgetChanged(arg__1);
 }
 // currentIndex() const
 int c_KDDockWidgets__Core__TabBar__currentIndex(void *thisObj)
@@ -369,19 +350,19 @@ void c_KDDockWidgets__Core__TabBar__registerVirtualMethodCallback(void *ptr, voi
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1101:
+    case 1089:
         wrapper->m_dragCanStartCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_dragCanStart>(callback);
         break;
-    case 1109:
+    case 1097:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 1111:
+    case 1099:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_isWindow>(callback);
         break;
-    case 826:
+    case 824:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1127:
+    case 1115:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

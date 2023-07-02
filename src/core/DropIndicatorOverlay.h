@@ -74,16 +74,15 @@ public:
 
     static KDDockWidgets::Location multisplitterLocationFor(DropLocation);
 
-Q_SIGNALS:
-    void hoveredGroupChanged(KDDockWidgets::Core::Group *);
-    void hoveredGroupRectChanged();
-    void currentDropLocationChanged();
+    class Private;
+    Private *dptr() const;
 
 private:
     void onGroupDestroyed();
     void setHoveredGroupRect(QRect);
     QRect m_hoveredGroupRect;
     DropLocation m_currentDropLocation = DropLocation_None;
+    Private *const d;
 
 protected:
     virtual DropLocation hover_impl(QPoint globalPos) = 0;

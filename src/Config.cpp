@@ -19,6 +19,7 @@
 #include "Config.h"
 #include "core/layouting/Item_p.h"
 #include "core/DockRegistry.h"
+#include "core/DockRegistry_p.h"
 #include "core/Utils_p.h"
 #include "core/DragController_p.h"
 #include "core/ViewFactory.h"
@@ -324,7 +325,7 @@ void Config::setDropIndicatorsInhibited(bool inhibit) const
 {
     if (d->m_dropIndicatorsInhibited != inhibit) {
         d->m_dropIndicatorsInhibited = inhibit;
-        Q_EMIT DockRegistry::self()->dropIndicatorsInhibitedChanged(inhibit);
+        DockRegistry::self()->dptr()->dropIndicatorsInhibitedChanged.emit(inhibit);
     }
 }
 

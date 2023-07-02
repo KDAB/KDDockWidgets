@@ -750,7 +750,7 @@ void TestQtWidgets::tst_toggleActionOnSideBar()
     QVERIFY(dw1->isInSideBar());
     QVERIFY(!dw1->isInMainWindow());
 
-    QAction *action = dw1->toggleAction();
+    auto action = dw1->toggleAction();
     action->trigger();
 
     QVERIFY(dw1->isVisible());

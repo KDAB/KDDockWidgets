@@ -10,7 +10,7 @@
 */
 
 #include "DockWidget.h"
-#include "core/DockWidget.h"
+#include "core/DockWidget_p.h"
 #include "ViewWrapper.h"
 
 #include <QCloseEvent>
@@ -61,7 +61,7 @@ DockWidget::~DockWidget()
 
 void DockWidget::init()
 {
-    connect(m_dockWidget, &Core::DockWidget::guestViewChanged, this, [this] {
+    m_dockWidget->d->guestViewChanged.connect([this] {
         if (auto guest = widget()) {
             QWidget::setSizePolicy(guest->sizePolicy());
             d->layout->addWidget(guest);
@@ -94,4 +94,14 @@ QWidget *DockWidget::widget() const
         return View_qt::asQWidget(guest.get());
 
     return nullptr;
+}
+
+QAction *DockWidget::toggleAction() const
+{
+    return reinterpret_cast<QAction *>(m_dockWidget->toggleAction());
+}
+
+QAction *DockWidget::floatAction() const
+{
+    return reinterpret_cast<QAction *>(m_dockWidget->floatAction());
 }

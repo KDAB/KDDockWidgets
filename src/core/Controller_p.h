@@ -9,6 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#pragma once
+
+// Pimpl class so we can keep kdbindings private
+
 #include "Controller.h"
 
 #include <kdbindings/signal.h>

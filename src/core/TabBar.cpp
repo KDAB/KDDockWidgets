@@ -10,11 +10,13 @@
 */
 
 #include "TabBar.h"
+#include "TabBar_p.h"
 #include "core/Draggable_p.h"
 #include "Controller.h"
 #include "core/Stack.h"
 #include "core/FloatingWindow.h"
 #include "core/DockWidget_p.h"
+#include "core/Logging_p.h"
 #include "views/TabBarViewInterface.h"
 #include "Platform.h"
 
@@ -29,6 +31,7 @@ using namespace KDDockWidgets::Core;
 Core::TabBar::TabBar(Stack *stack)
     : Controller(ViewType::TabBar, Config::self().viewFactory()->createTabBar(this, stack->view()))
     , Draggable(view())
+    , d(new Private())
     , m_stack(stack)
 {
     view()->init();
@@ -37,6 +40,7 @@ Core::TabBar::TabBar(Stack *stack)
 
 Core::TabBar::~TabBar()
 {
+    delete d;
 }
 
 bool Core::TabBar::tabsAreMovable() const
@@ -104,6 +108,10 @@ void TabBar::removeDockWidget(Core::DockWidget *dw)
     if (m_inDtor)
         return;
 
+    auto it = d->aboutToDeleteConnections.find(dw);
+    if (it != d->aboutToDeleteConnections.end())
+        d->aboutToDeleteConnections.erase(it);
+
     const bool wasCurrent = dw == m_currentDockWidget;
     const int index = m_dockWidgets.indexOf(dw);
 
@@ -137,7 +145,10 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
     }
 
     m_dockWidgets.insert(index, dw);
-    connect(dw, &DockWidget::aboutToDelete, &m_connectionGuard, [this, dw] { removeDockWidget(dw); });
+    KDBindings::ScopedConnection conn = dw->d->aboutToDelete.connect([this, dw] {
+        removeDockWidget(dw);
+    });
+    d->aboutToDeleteConnections[dw] = std::move(conn);
 
     dynamic_cast<Core::TabBarViewInterface *>(view())->insertDockWidget(index, dw, icon, title);
     if (!m_currentDockWidget)
@@ -293,7 +304,7 @@ void TabBar::setCurrentIndex(int index)
         return;
 
     m_currentDockWidget = newCurrentDw;
-    Q_EMIT currentDockWidgetChanged(newCurrentDw);
+    d->currentDockWidgetChanged.emit(newCurrentDw);
     dynamic_cast<Core::TabBarViewInterface *>(view())->setCurrentIndex(index);
 }
 
@@ -305,4 +316,9 @@ void TabBar::renameTab(int index, const QString &text)
 void TabBar::changeTabIcon(int index, const Icon &icon)
 {
     dynamic_cast<Core::TabBarViewInterface *>(view())->changeTabIcon(index, icon);
+}
+
+TabBar::Private *TabBar::dptr() const
+{
+    return d;
 }

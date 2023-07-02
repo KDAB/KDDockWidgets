@@ -36,10 +36,6 @@ FloatingWindow_wrapper::FloatingWindow_wrapper(QRect suggestedGeometry, KDDockWi
     : ::KDDockWidgets::Core::FloatingWindow(suggestedGeometry, parent)
 {
 }
-void FloatingWindow_wrapper::activatedChanged()
-{
-    ::KDDockWidgets::Core::FloatingWindow::activatedChanged();
-}
 void FloatingWindow_wrapper::addDockWidget(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption arg__4)
 {
     ::KDDockWidgets::Core::FloatingWindow::addDockWidget(arg__1, location, relativeTo, arg__4);
@@ -142,14 +138,6 @@ KDDockWidgets::Core::DropArea *FloatingWindow_wrapper::multiSplitter() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::multiSplitter();
 }
-void FloatingWindow_wrapper::numDockWidgetsChanged()
-{
-    ::KDDockWidgets::Core::FloatingWindow::numDockWidgetsChanged();
-}
-void FloatingWindow_wrapper::numFramesChanged()
-{
-    ::KDDockWidgets::Core::FloatingWindow::numFramesChanged();
-}
 void FloatingWindow_wrapper::scheduleDeleteLater()
 {
     ::KDDockWidgets::Core::FloatingWindow::scheduleDeleteLater();
@@ -216,10 +204,6 @@ int FloatingWindow_wrapper::userType() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::userType();
 }
-void FloatingWindow_wrapper::windowStateChanged()
-{
-    ::KDDockWidgets::Core::FloatingWindow::windowStateChanged();
-}
 FloatingWindow_wrapper::~FloatingWindow_wrapper()
 {
 }
@@ -255,11 +239,6 @@ void *c_KDDockWidgets__Core__FloatingWindow__constructor_QRect_MainWindow(void *
     auto parent = reinterpret_cast<KDDockWidgets::Core::MainWindow *>(parent_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper(suggestedGeometry, parent);
     return reinterpret_cast<void *>(ptr);
-}
-// activatedChanged()
-void c_KDDockWidgets__Core__FloatingWindow__activatedChanged(void *thisObj)
-{
-    fromPtr(thisObj)->activatedChanged();
 }
 // addDockWidget(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
 void c_KDDockWidgets__Core__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_)
@@ -374,16 +353,6 @@ void *c_KDDockWidgets__Core__FloatingWindow__multiSplitter(void *thisObj)
 {
     return fromPtr(thisObj)->multiSplitter();
 }
-// numDockWidgetsChanged()
-void c_KDDockWidgets__Core__FloatingWindow__numDockWidgetsChanged(void *thisObj)
-{
-    fromPtr(thisObj)->numDockWidgetsChanged();
-}
-// numFramesChanged()
-void c_KDDockWidgets__Core__FloatingWindow__numFramesChanged(void *thisObj)
-{
-    fromPtr(thisObj)->numFramesChanged();
-}
 // scheduleDeleteLater()
 void c_KDDockWidgets__Core__FloatingWindow__scheduleDeleteLater(void *thisObj)
 {
@@ -447,11 +416,6 @@ int c_KDDockWidgets__Core__FloatingWindow__userType(void *thisObj)
 {
     return fromPtr(thisObj)->userType();
 }
-// windowStateChanged()
-void c_KDDockWidgets__Core__FloatingWindow__windowStateChanged(void *thisObj)
-{
-    fromPtr(thisObj)->windowStateChanged();
-}
 void c_KDDockWidgets__Core__FloatingWindow__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
@@ -460,16 +424,16 @@ void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1499:
+    case 1476:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 1502:
+    case 1479:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
-    case 826:
+    case 824:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1520:
+    case 1495:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

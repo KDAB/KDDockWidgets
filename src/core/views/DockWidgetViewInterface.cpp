@@ -12,7 +12,7 @@
 #include "DockWidgetViewInterface.h"
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DockWidget_p.h"
+#include "core/DockWidget_p.h"
 
 namespace KDDockWidgets::Core {
 
@@ -68,16 +68,6 @@ void DockWidgetViewInterface::setTitle(const QString &title)
 void DockWidgetViewInterface::setFloating(bool is)
 {
     m_dockWidget->setFloating(is);
-}
-
-QAction *DockWidgetViewInterface::toggleAction() const
-{
-    return m_dockWidget->toggleAction();
-}
-
-QAction *DockWidgetViewInterface::floatAction() const
-{
-    return m_dockWidget->floatAction();
 }
 
 void DockWidgetViewInterface::setAsCurrentTab()

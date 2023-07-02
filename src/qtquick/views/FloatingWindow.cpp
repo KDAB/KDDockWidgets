@@ -18,6 +18,7 @@
 #include "core/Logging_p.h"
 #include "core/Utils_p.h"
 #include "core/View_p.h"
+#include "core/FloatingWindow_p.h"
 #include "core/layouting/Item_p.h"
 
 #include "kddockwidgets/core/DropArea.h"
@@ -258,7 +259,7 @@ Core::Item *FloatingWindow::rootItem() const
 void FloatingWindow::onWindowStateChanged(Qt::WindowState state)
 {
     m_controller->setLastWindowManagerState(WindowState(state));
-    Q_EMIT m_controller->windowStateChanged();
+    m_controller->dptr()->windowStateChanged.emit();
 }
 
 #include "FloatingWindow.moc"
