@@ -45,19 +45,17 @@ KDDW_QCORO_TASK tst_viewGuard()
 
 KDDW_QCORO_TASK tst_objectGuard()
 {
-    // {
-    //     ObjectGuard<Controller> guard;
-    //     CHECK(!guard);
-    //     CHECK(guard.isNull());
-    //     CHECK(guard.data() == nullptr);
-    // }
+    {
+        ObjectGuard<Controller> guard;
+        CHECK(!guard);
+        CHECK(guard.isNull());
+        CHECK(guard.data() == nullptr);
+    }
 
     {
-        KDDW_WARN("START TEST")
         auto view = Platform::instance()->tests_createView({});
         auto c = new Controller(ViewType::DockWidget, view);
         ObjectGuard<Controller> guard(c);
-        KDDW_WARN("Guard is {}", ( void * )guard);
         CHECK(guard);
         CHECK(!guard.isNull());
         CHECK(guard.data() != nullptr);
@@ -80,8 +78,6 @@ KDDW_QCORO_TASK tst_objectGuard()
         CHECK(!guard);
         CHECK(guard.isNull());
         CHECK(guard.data() == nullptr);
-
-        KDDW_WARN("END TEST")
     }
 
     KDDW_TEST_RETURN(true);
