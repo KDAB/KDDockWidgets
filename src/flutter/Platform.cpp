@@ -17,6 +17,7 @@
 #include "views/View.h"
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"
+#include "core/ObjectGuard_p.h"
 #include "core/ViewGuard.h"
 #include "ViewFactory.h"
 #include "Platform.h"
@@ -422,7 +423,7 @@ KDDW_QCORO_TASK Platform::tests_waitForDeleted(QObject *obj, int timeout) const
     if (!obj)
         co_return true;
 
-    QPointer<QObject> guard = obj;
+    Core::ObjectGuard<QObject> guard = obj;
     int elapsed = 0;
     const int step = 100;
 
