@@ -42,7 +42,7 @@ DropIndicatorOverlay::DropIndicatorOverlay(DropArea *dropArea, View *view)
             removeHover();
         } else {
             // Re-add hover. Fastest way is simply faking a mouse move
-            if (auto state = qobject_cast<StateDragging *>(DragController::instance()->activeState())) {
+            if (auto state = object_cast<StateDragging *>(DragController::instance()->activeState())) {
                 state->handleMouseMove(Platform::instance()->cursorPos());
             }
         }

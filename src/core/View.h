@@ -228,7 +228,7 @@ public:
         if (m_inDtor)
             return false;
 
-        return qobject_cast<T *>(m_controller);
+        return object_cast<T *>(m_controller);
     }
 
     /// asFooController() are deprecated. Use asController<T>() instead

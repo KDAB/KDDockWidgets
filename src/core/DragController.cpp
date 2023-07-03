@@ -600,7 +600,7 @@ bool StateDraggingWayland::handleMouseMove(QPoint)
 
 bool StateDraggingWayland::handleDragEnter(DragEnterEvent *ev, DropArea *dropArea)
 {
-    auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
+    auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
@@ -626,7 +626,7 @@ bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
 bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
 {
     KDDW_DEBUG(Q_FUNC_INFO);
-    auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
+    auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
@@ -645,7 +645,7 @@ bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
 
 bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea)
 {
-    auto mimeData = qobject_cast<const WaylandMimeData *>(ev->mimeData());
+    auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 

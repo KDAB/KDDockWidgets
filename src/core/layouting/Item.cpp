@@ -113,7 +113,7 @@ struct LengthOnSide
 ItemBoxContainer *Item::root() const
 {
     return m_parent ? m_parent->root()
-                    : const_cast<ItemBoxContainer *>(qobject_cast<const ItemBoxContainer *>(this));
+                    : const_cast<ItemBoxContainer *>(object_cast<const ItemBoxContainer *>(this));
 }
 
 QRect Item::mapToRoot(QRect r) const
@@ -438,22 +438,22 @@ ItemContainer *Item::parentContainer() const
 
 ItemBoxContainer *Item::parentBoxContainer() const
 {
-    return qobject_cast<ItemBoxContainer *>(m_parent);
+    return object_cast<ItemBoxContainer *>(m_parent);
 }
 
 const ItemContainer *Item::asContainer() const
 {
-    return qobject_cast<const ItemContainer *>(this);
+    return object_cast<const ItemContainer *>(this);
 }
 
 ItemContainer *Item::asContainer()
 {
-    return qobject_cast<ItemContainer *>(this);
+    return object_cast<ItemContainer *>(this);
 }
 
 ItemBoxContainer *Item::asBoxContainer()
 {
-    return qobject_cast<ItemBoxContainer *>(this);
+    return object_cast<ItemBoxContainer *>(this);
 }
 
 void Item::setMinSize(QSize sz)
@@ -664,7 +664,7 @@ bool Item::checkSanity()
 
 bool Item::isMDI() const
 {
-    return qobject_cast<ItemFreeContainer *>(parentContainer()) != nullptr;
+    return object_cast<ItemFreeContainer *>(parentContainer()) != nullptr;
 }
 
 void Item::setGeometry(QRect rect)

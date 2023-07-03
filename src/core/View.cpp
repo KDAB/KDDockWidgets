@@ -201,7 +201,7 @@ bool View::is(ViewType t) const
 Core::FloatingWindow *View::asFloatingWindowController() const
 {
     if (m_controller && m_controller->is(ViewType::FloatingWindow))
-        return qobject_cast<Core::FloatingWindow *>(m_controller);
+        return object_cast<Core::FloatingWindow *>(m_controller);
 
     return nullptr;
 }
@@ -209,7 +209,7 @@ Core::FloatingWindow *View::asFloatingWindowController() const
 Core::Group *View::asGroupController() const
 {
     if (m_controller && m_controller->is(ViewType::Frame))
-        return qobject_cast<Core::Group *>(m_controller);
+        return object_cast<Core::Group *>(m_controller);
 
     return nullptr;
 }
@@ -217,7 +217,7 @@ Core::Group *View::asGroupController() const
 Core::TitleBar *View::asTitleBarController() const
 {
     if (m_controller && m_controller->is(ViewType::TitleBar))
-        return qobject_cast<Core::TitleBar *>(m_controller);
+        return object_cast<Core::TitleBar *>(m_controller);
 
     return nullptr;
 }
@@ -225,7 +225,7 @@ Core::TitleBar *View::asTitleBarController() const
 Core::TabBar *View::asTabBarController() const
 {
     if (m_controller && m_controller->is(ViewType::TabBar))
-        return qobject_cast<Core::TabBar *>(m_controller);
+        return object_cast<Core::TabBar *>(m_controller);
 
     return nullptr;
 }
@@ -233,7 +233,7 @@ Core::TabBar *View::asTabBarController() const
 Core::Stack *View::asStackController() const
 {
     if (m_controller && m_controller->is(ViewType::Stack))
-        return qobject_cast<Core::Stack *>(m_controller);
+        return object_cast<Core::Stack *>(m_controller);
 
     return nullptr;
 }
@@ -241,7 +241,7 @@ Core::Stack *View::asStackController() const
 Core::DockWidget *View::asDockWidgetController() const
 {
     if (m_controller && m_controller->is(ViewType::DockWidget))
-        return qobject_cast<Core::DockWidget *>(m_controller);
+        return object_cast<Core::DockWidget *>(m_controller);
 
     return nullptr;
 }
@@ -249,7 +249,7 @@ Core::DockWidget *View::asDockWidgetController() const
 Core::MainWindow *View::asMainWindowController() const
 {
     if (m_controller && m_controller->is(ViewType::MainWindow))
-        return qobject_cast<Core::MainWindow *>(m_controller);
+        return object_cast<Core::MainWindow *>(m_controller);
 
     return nullptr;
 }
@@ -257,7 +257,7 @@ Core::MainWindow *View::asMainWindowController() const
 Core::DropArea *View::asDropAreaController() const
 {
     if (!m_inDtor && m_controller && m_controller->is(ViewType::DropArea)) {
-        return qobject_cast<Core::DropArea *>(m_controller);
+        return object_cast<Core::DropArea *>(m_controller);
     }
     return nullptr;
 }
@@ -265,7 +265,7 @@ Core::DropArea *View::asDropAreaController() const
 Core::MDILayout *View::asMDILayoutController() const
 {
     if (!m_inDtor && m_controller && m_controller->is(ViewType::MDILayout))
-        return qobject_cast<Core::MDILayout *>(m_controller);
+        return object_cast<Core::MDILayout *>(m_controller);
 
     return nullptr;
 }

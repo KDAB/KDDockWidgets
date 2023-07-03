@@ -51,7 +51,32 @@ using DropEvent = QDropEvent;
 using DragEnterEvent = QDragEnterEvent;
 using DragMoveEvent = QDragMoveEvent;
 
+template<typename T>
+inline T object_cast(QObject *o)
+{
+    return qobject_cast<T>(o);
+}
+
+template<typename T>
+inline T object_cast(const QObject *o)
+{
+    return qobject_cast<T>(o);
+}
+
 #else
+
+
+template<typename T>
+inline T object_cast(QObject *o)
+{
+    return dynamic_cast<T>(o);
+}
+
+template<typename T>
+inline T object_cast(const QObject *o)
+{
+    return dynamic_cast<T>(o);
+}
 
 class Event
 {

@@ -39,7 +39,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, QPoint localPt,
         return;
     }
 
-    auto group = qobject_cast<Core::Group *>(dw->d->group());
+    auto group = object_cast<Core::Group *>(dw->d->group());
     if (itemForFrame(group) != nullptr) {
         // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
         group->setParentView(nullptr);

@@ -12,6 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/NonQtCompat_p.h"
 
 #include <QObject>
 
