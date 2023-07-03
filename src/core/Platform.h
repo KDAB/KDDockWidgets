@@ -202,7 +202,7 @@ public:
     virtual KDDW_QCORO_TASK tests_waitForResize(View *, int timeout = 2000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForResize(Controller *, int timeout = 2000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForDeleted(View *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForDeleted(QObject *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted(Controller *, int timeout = 2000) const = 0;
 
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true

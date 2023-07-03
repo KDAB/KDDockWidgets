@@ -100,7 +100,7 @@ public:
     bool tests_waitForResize(Core::View *, int timeout = 2000) const override;
     bool tests_waitForResize(Core::Controller *, int timeout = 2000) const override;
     bool tests_waitForDeleted(Core::View *, int timeout = 2000) const override;
-    bool tests_waitForDeleted(QObject *, int timeout = 2000) const override;
+    bool tests_waitForDeleted(Core::Controller *, int timeout = 2000) const override;
 
 #endif
 

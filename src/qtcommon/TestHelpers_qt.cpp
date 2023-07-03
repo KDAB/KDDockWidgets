@@ -193,7 +193,7 @@ bool Platform_qt::tests_waitForDeleted(Core::View *view, int timeout) const
 }
 
 
-bool Platform_qt::tests_waitForDeleted(QObject *o, int timeout) const
+bool Platform_qt::tests_waitForDeleted(Core::Controller *o, int timeout) const
 {
     if (!o)
         return true;

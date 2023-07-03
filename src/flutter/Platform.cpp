@@ -418,7 +418,7 @@ KDDW_QCORO_TASK Platform::tests_waitForResize(Core::Controller *, int) const
     co_return co_await tests_wait(1000);
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForDeleted(QObject *obj, int timeout) const
+KDDW_QCORO_TASK Platform::tests_waitForDeleted(Core::Controller *obj, int timeout) const
 {
     if (!obj)
         co_return true;

@@ -76,7 +76,7 @@ public:
     KDDW_QCORO_TASK tests_wait(int ms) const override;
     KDDW_QCORO_TASK tests_waitForResize(Core::View *, int timeout) const override;
     KDDW_QCORO_TASK tests_waitForResize(Core::Controller *, int timeout) const override;
-    KDDW_QCORO_TASK tests_waitForDeleted(QObject *, int timeout = 5000) const override;
+    KDDW_QCORO_TASK tests_waitForDeleted(Core::Controller *, int timeout = 5000) const override;
     KDDW_QCORO_TASK tests_waitForDeleted(Core::View *, int timeout = 5000) const override;
     KDDW_QCORO_TASK tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout) const override;
     KDDW_QCORO_TASK tests_waitForEvent(QObject *w, Event::Type type, int timeout) const override;
