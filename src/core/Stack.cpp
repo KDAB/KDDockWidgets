@@ -20,10 +20,10 @@
 #include "TabBar.h"
 #include "Group.h"
 #include "FloatingWindow.h"
+#include "ObjectGuard_p.h"
+#include "ObjectGuard_p.h"
 
 #include "views/StackViewInterface.h"
-
-#include <QPointer>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -75,7 +75,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
         return false;
     }
 
-    QPointer<Group> oldFrame = dock->d->group();
+    ObjectGuard<Group> oldFrame = dock->d->group();
 
     d->m_tabBar->insertDockWidget(index, dock, dock->icon(IconPlace::TabBar), dock->title());
     d->m_tabBar->setCurrentIndex(index);

@@ -12,6 +12,7 @@
 #include "simple_test_framework.h"
 #include "simple_test_framework.h"
 #include "core/ViewGuard.h"
+#include "core/ObjectGuard_p.h"
 #include "core/Platform.h"
 
 using namespace KDDockWidgets;
@@ -42,6 +43,50 @@ KDDW_QCORO_TASK tst_viewGuard()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> { TEST(tst_viewGuard) };
+KDDW_QCORO_TASK tst_objectGuard()
+{
+    // {
+    //     ObjectGuard<Controller> guard;
+    //     CHECK(!guard);
+    //     CHECK(guard.isNull());
+    //     CHECK(guard.data() == nullptr);
+    // }
+
+    {
+        KDDW_WARN("START TEST")
+        auto view = Platform::instance()->tests_createView({});
+        auto c = new Controller(ViewType::DockWidget, view);
+        ObjectGuard<Controller> guard(c);
+        KDDW_WARN("Guard is {}", ( void * )guard);
+        CHECK(guard);
+        CHECK(!guard.isNull());
+        CHECK(guard.data() != nullptr);
+
+        delete c;
+        CHECK(!guard);
+        CHECK(guard.isNull());
+        CHECK(guard.data() == nullptr);
+
+        auto view2 = Platform::instance()->tests_createView({});
+        auto c2 = new Controller(ViewType::DockWidget, view2);
+
+        // Test assignment
+        guard = c2;
+        CHECK(guard);
+        CHECK(!guard.isNull());
+        CHECK(guard.data() != nullptr);
+
+        delete c2;
+        CHECK(!guard);
+        CHECK(guard.isNull());
+        CHECK(guard.data() == nullptr);
+
+        KDDW_WARN("END TEST")
+    }
+
+    KDDW_TEST_RETURN(true);
+}
+
+static const auto s_tests = std::vector<KDDWTest> { TEST(tst_objectGuard) };
 
 #include "tests_main.h"

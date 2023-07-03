@@ -30,7 +30,7 @@ public:
         Q_ASSERT(thisView);
     }
 
-    QPointer<WidgetResizeHandler> widgetResizeHandler;
+    ObjectGuard<WidgetResizeHandler> widgetResizeHandler;
     View *const thisView;
     const bool enabled;
 };

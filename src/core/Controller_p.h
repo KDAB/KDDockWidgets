@@ -30,8 +30,11 @@ public:
     {
     }
 
-    ///@brief signal counterpart for setParentView()
+    /// signal counterpart for setParentView()
     KDBindings::Signal<Core::View *> parentViewChanged;
+
+    /// signal emitted when ~Controller starts
+    KDBindings::Signal<> aboutToBeDeleted;
 
     View *const m_view;
     const ViewType m_type;

@@ -20,8 +20,8 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/LayoutSaver.h"
+#include "ObjectGuard_p.h"
 
-#include <QPointer>
 #include <QRect>
 
 #include <memory>
@@ -45,7 +45,7 @@ struct ItemRef
     bool isInMainWindow() const;
 
     Core::Item *const item;
-    const QPointer<Core::Item> guard;
+    const Core::ObjectGuard<Core::Item> guard;
     const QMetaObject::Connection connection;
 
 private:

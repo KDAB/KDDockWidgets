@@ -16,10 +16,9 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/Platform.h"
+#include "core/ObjectGuard_p.h"
 #include "Config.h"
 #include "tests/utils.h"
-
-#include <QPointer>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -62,7 +61,7 @@ KDDW_QCORO_TASK tst_floatingWindowClose()
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     dw->view()->show();
-    QPointer<Core::FloatingWindow> fw = dw->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw = dw->floatingWindow();
     CHECK(fw);
 
     auto titleBar = fw->titleBar();

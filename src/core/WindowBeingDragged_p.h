@@ -15,8 +15,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "core/View.h"
 #include "core/ViewGuard.h"
-
-#include <QPointer>
+#include "core/ObjectGuard_p.h"
 
 namespace KDDockWidgets {
 
@@ -78,7 +77,7 @@ public:
 protected:
     explicit WindowBeingDragged(Draggable *);
     KDDW_DELETE_COPY_CTOR(WindowBeingDragged)
-    QPointer<FloatingWindow> m_floatingWindow;
+    ObjectGuard<FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
     View *m_draggableView = nullptr;
     ViewGuard m_guard;
@@ -101,8 +100,8 @@ public:
     // way to position it) So we're dragging either a group with multiple dock widgets or a single
     // tab, keep them here. It's important to know what we're dragging, so drop rubber band respect
     // min/max sizes.
-    QPointer<Group> m_group;
-    QPointer<DockWidget> m_dockWidget;
+    ObjectGuard<Group> m_group;
+    ObjectGuard<DockWidget> m_dockWidget;
 };
 
 }

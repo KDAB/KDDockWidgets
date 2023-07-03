@@ -17,11 +17,10 @@
 #include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "core/View_p.h"
+#include "core/ObjectGuard_p.h"
 #include "core/nlohmann_helpers_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "Config.h"
-
-#include <QPointer>
 
 #include <memory.h>
 
@@ -396,7 +395,7 @@ KDDW_QCORO_TASK tst_removeItem1()
 
     CHECK_EQ(item2->height(), item3->height());
 
-    QPointer<Item> c3 = item3->parentBoxContainer();
+    ObjectGuard<Item> c3 = item3->parentBoxContainer();
     root->removeItem(c3);
     CHECK(c3.isNull());
     CHECK(serializeDeserializeTest(root));

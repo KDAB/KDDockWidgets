@@ -15,11 +15,11 @@
 
 #include "TabBar.h"
 #include "DockWidget.h"
+#include "ObjectGuard_p.h"
 
 #include <kdbindings/signal.h>
 
 #include <QVector>
-#include <QPointer>
 
 #include <unordered_map>
 
@@ -39,7 +39,7 @@ public:
     }
 
     Core::Stack *const m_stack;
-    QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
+    ObjectGuard<DockWidget> m_lastPressedDockWidget = nullptr;
     DockWidget *m_currentDockWidget = nullptr;
     QVector<const DockWidget *> m_dockWidgets;
     bool m_removeGuard = false;

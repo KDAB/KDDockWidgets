@@ -22,7 +22,6 @@
 #include "View.h"
 #include "core/views/TabBarViewInterface.h"
 
-#include <QPointer>
 #include <QHash>
 
 #include "kdbindings/signal.h"

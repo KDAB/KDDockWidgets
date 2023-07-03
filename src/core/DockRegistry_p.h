@@ -10,10 +10,10 @@
 */
 
 #include "DockRegistry.h"
+#include "ObjectGuard_p.h"
 
 #include <kdbindings/signal.h>
 
-#include <QPointer>
 
 #pragma once
 
@@ -24,7 +24,7 @@ namespace KDDockWidgets {
 class DockRegistry::Private
 {
 public:
-    QPointer<Core::DockWidget> m_focusedDockWidget;
+    Core::ObjectGuard<Core::DockWidget> m_focusedDockWidget;
 
     /// @brief emitted when a main window or a floating window change screen
     KDBindings::Signal<std::shared_ptr<Core::Window>> windowChangedScreen;

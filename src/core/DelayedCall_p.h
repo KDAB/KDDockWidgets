@@ -12,8 +12,7 @@
 #pragma once
 
 #include "KDDockWidgets.h"
-
-#include <QPointer>
+#include "ObjectGuard_p.h"
 
 namespace KDDockWidgets::Core {
 
@@ -37,7 +36,7 @@ public:
 
     KDDW_DELETE_COPY_CTOR(DelayedDelete)
 private:
-    QPointer<QObject> m_object;
+    ObjectGuard<QObject> m_object;
 };
 
 }

@@ -73,7 +73,7 @@ public:
     bool m_inDestructor = false;
     const bool m_isMDIWrapper;
     QString m_affinityName;
-    QPointer<DropIndicatorOverlay> m_dropIndicatorOverlay;
+    ObjectGuard<DropIndicatorOverlay> m_dropIndicatorOverlay;
     Core::Group *const m_centralFrame = nullptr;
     Core::ItemBoxContainer *m_rootItem = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;

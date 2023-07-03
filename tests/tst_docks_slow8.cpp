@@ -88,8 +88,8 @@ void TestDocks::tst_resizeWindow()
         "1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     auto dock2 = createDockWidget(
         "2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
-    QPointer<Core::FloatingWindow> fw1 = dock1->floatingWindow();
-    QPointer<Core::FloatingWindow> fw2 = dock2->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw1 = dock1->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw2 = dock2->floatingWindow();
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
 

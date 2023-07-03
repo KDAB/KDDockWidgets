@@ -20,6 +20,7 @@
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/DockWidget_p.h"
+#include "core/ObjectGuard_p.h"
 
 #include "kddockwidgets/core/views/MainWindowViewInterface.h"
 #include "kddockwidgets/core/FloatingWindow.h"
@@ -31,8 +32,6 @@
 #include "kddockwidgets/core/Window.h"
 
 #include "kdbindings/signal.h"
-
-#include <QPointer>
 
 #include <set>
 
@@ -297,7 +296,7 @@ bool DockRegistry::itemIsInMainWindow(const Item *item) const
 
 DockRegistry *DockRegistry::self()
 {
-    static QPointer<DockRegistry> s_dockRegistry;
+    static ObjectGuard<DockRegistry> s_dockRegistry;
 
     if (!s_dockRegistry) {
         s_dockRegistry = new DockRegistry();

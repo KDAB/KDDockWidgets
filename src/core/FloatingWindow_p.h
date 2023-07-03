@@ -11,10 +11,9 @@
 
 #include "FloatingWindow.h"
 #include "Config.h"
+#include "ObjectGuard_p.h"
 
 #include <kdbindings/signal.h>
-
-#include <QPointer>
 
 #pragma once
 
@@ -37,7 +36,7 @@ public:
     KDBindings::ScopedConnection m_currentStateChangedConnection;
 
     const FloatingWindowFlags m_flags;
-    QPointer<DropArea> m_dropArea;
+    ObjectGuard<DropArea> m_dropArea;
 };
 
 }

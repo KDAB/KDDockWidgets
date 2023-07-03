@@ -181,9 +181,9 @@ KDDW_QCORO_TASK tst_ghostSeparator()
     auto dock2 = createDockWidget("2");
     auto dock3 = createDockWidget("3");
 
-    QPointer<Core::FloatingWindow> fw1 = dock1->floatingWindow();
-    QPointer<Core::FloatingWindow> fw2 = dock2->floatingWindow();
-    QPointer<Core::FloatingWindow> fw3 = dock3->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw1 = dock1->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw2 = dock2->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw3 = dock3->floatingWindow();
 
     dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
     CHECK_EQ(fw1->multiSplitter()->separators().size(), 1);
@@ -783,7 +783,7 @@ KDDW_QCORO_TASK tst_invalidAnchorGroup()
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
-        QPointer<Core::FloatingWindow> fw = dock2->dptr()->morphIntoFloatingWindow();
+        ObjectGuard<Core::FloatingWindow> fw = dock2->dptr()->morphIntoFloatingWindow();
         nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
 
         dock1->close();
@@ -1086,10 +1086,10 @@ KDDW_QCORO_TASK tst_refUnrefItem()
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
     auto dropArea = m->dropArea();
     auto layout = dropArea;
-    QPointer<Core::Group> group1 = dock1->dptr()->group();
-    QPointer<Core::Group> group2 = dock2->dptr()->group();
-    QPointer<Item> item1 = layout->itemForFrame(group1);
-    QPointer<Item> item2 = layout->itemForFrame(group2);
+    ObjectGuard<Core::Group> group1 = dock1->dptr()->group();
+    ObjectGuard<Core::Group> group2 = dock2->dptr()->group();
+    ObjectGuard<Item> item1 = layout->itemForFrame(group1);
+    ObjectGuard<Item> item2 = layout->itemForFrame(group2);
     CHECK(item1.data());
     CHECK(item2.data());
     CHECK_EQ(item1->refCount(), 2); // 2 - the item and its group, which can be persistent
@@ -1129,8 +1129,8 @@ KDDW_QCORO_TASK tst_refUnrefItem()
     auto dock4 = createDockWidget("dock4", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock4, KDDockWidgets::Location_OnLeft);
 
-    QPointer<Core::Group> group4 = dock4->dptr()->group();
-    QPointer<Item> item4 = layout->itemForFrame(group4);
+    ObjectGuard<Core::Group> group4 = dock4->dptr()->group();
+    ObjectGuard<Item> item4 = layout->itemForFrame(group4);
     dock4->close();
     KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group4);
     CHECK_EQ(item4->refCount(), 1);
@@ -1276,7 +1276,7 @@ KDDW_QCORO_TASK tst_placeholderDisappearsOnReadd()
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
     Core::DropArea *layout = m->multiSplitter();
 
-    QPointer<Core::DockWidget> dock1 =
+    ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     CHECK_EQ(layout->count(), 1);
@@ -1309,9 +1309,9 @@ KDDW_QCORO_TASK tst_placeholdersAreRemovedProperly()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
     Core::DropArea *layout = m->multiSplitter();
-    QPointer<Core::DockWidget> dock1 =
+    ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true }));
-    QPointer<Core::DockWidget> dock2 =
+    ObjectGuard<Core::DockWidget> dock2 =
         createDockWidget("2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     Item *item = layout->items().constFirst();
@@ -1387,7 +1387,7 @@ KDDW_QCORO_TASK tst_closeAllDockWidgets()
     auto dock5 = createDockWidget("dock5", Platform::instance()->tests_createView({ true }));
     auto dock6 = createDockWidget("dock6", Platform::instance()->tests_createView({ true }));
 
-    QPointer<Core::FloatingWindow> fw = dock3->dptr()->morphIntoFloatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw = dock3->dptr()->morphIntoFloatingWindow();
 
     nestDockWidget(dock4, dropArea, nullptr, KDDockWidgets::Location_OnRight);
     nestDockWidget(dock5, dropArea, nullptr, KDDockWidgets::Location_OnTop);
@@ -1440,11 +1440,11 @@ KDDW_QCORO_TASK tst_toggleMiddleDockCrash()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
     Core::DropArea *layout = m->multiSplitter();
-    QPointer<Core::DockWidget> dock1 =
+    ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true }));
-    QPointer<Core::DockWidget> dock2 =
+    ObjectGuard<Core::DockWidget> dock2 =
         createDockWidget("2", Platform::instance()->tests_createView({ true }));
-    QPointer<Core::DockWidget> dock3 =
+    ObjectGuard<Core::DockWidget> dock3 =
         createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
     m->addDockWidget(dock1, Location_OnLeft);
@@ -1491,7 +1491,7 @@ KDDW_QCORO_TASK tst_stealFrame()
     m1->addDockWidget(dock3, Location_OnRight);
     m1->addDockWidget(dock4, Location_OnRight);
     m2->addDockWidget(dock1, Location_OnRight);
-    QPointer<Item> item2 = dropArea1->itemForFrame(dock2->dptr()->group());
+    ObjectGuard<Item> item2 = dropArea1->itemForFrame(dock2->dptr()->group());
     m2->addDockWidget(dock2, Location_OnRight);
     CHECK(!item2.data());
 
@@ -1502,7 +1502,7 @@ KDDW_QCORO_TASK tst_stealFrame()
 
     // 2. MainWindow #1 steals a widget from MainWindow2 and vice-versa, but adds as tabs
     dock1->addDockWidgetAsTab(dock3);
-    QPointer<Core::Group> f2 = dock2->dptr()->group();
+    ObjectGuard<Core::Group> f2 = dock2->dptr()->group();
     dock4->addDockWidgetAsTab(dock2);
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f2.data()));
     CHECK(!f2.data());
@@ -1533,7 +1533,7 @@ KDDW_QCORO_TASK tst_stealFrame()
     CHECK_EQ(dropArea1->placeholderCount(), 0);
 
     // 5. And also steal a side-by-side one into the tab
-    QPointer<Core::Group> f4 = dock4->dptr()->group();
+    ObjectGuard<Core::Group> f4 = dock4->dptr()->group();
     dock1->addDockWidgetAsTab(dock4);
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f4.data()));
     CHECK_EQ(dropArea1->count(), 1);
@@ -1868,7 +1868,7 @@ KDDW_QCORO_TASK tst_createFloatingWindow()
 
     CHECK_EQ(dock->uniqueName(), QLatin1String("doc1")); // 1.0 objectName() is inherited
 
-    QPointer<Core::FloatingWindow> window = dock->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> window = dock->floatingWindow();
     CHECK(window); // 1.1 DockWidget creates a FloatingWindow and is reparented
     CHECK(window->dropArea()->checkSanity());
     dock->destroyLater();
@@ -2076,7 +2076,7 @@ KDDW_QCORO_TASK tst_fairResizeAfterRemoveWidget()
 
     auto fw = dock1->floatingWindow();
 
-    QPointer<Core::Group> group2 = dock2->dptr()->group();
+    ObjectGuard<Core::Group> group2 = dock2->dptr()->group();
 
     const int oldWidth1 = dock1->dptr()->group()->width();
     const int oldWidth3 = dock3->dptr()->group()->width();
@@ -2562,7 +2562,7 @@ KDDW_QCORO_TASK tst_restoreWithAffinity()
     saver.setAffinityNames({ "a1" });
     const QByteArray saved1 = saver.serializeLayout();
 
-    QPointer<Core::FloatingWindow> fw2 = dock2->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw2 = dock2->floatingWindow();
     saver.restoreLayout(saved1);
 
     // Restoring affinity 1 shouldn't close affinity 2
@@ -2648,7 +2648,7 @@ KDDW_QCORO_TASK tst_restoreWithDockFactory()
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
     CHECK(!saved.isEmpty());
-    QPointer<Core::Group> f1 = dock1->dptr()->group();
+    ObjectGuard<Core::Group> f1 = dock1->dptr()->group();
     delete dock1;
     KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f1);
     CHECK(!f1);
@@ -4477,7 +4477,7 @@ KDDW_QCORO_TASK tst_deleteOnClose()
     {
         EnsureTopLevelsDeleted e;
         // Tests that DockWidget::close() deletes itself if Option_DeleteOnClose is set
-        QPointer<Core::DockWidget> dock1 = createDockWidget(
+        ObjectGuard<Core::DockWidget> dock1 = createDockWidget(
             "1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
             DockWidgetOption_DeleteOnClose);
         dock1->open();
@@ -4491,10 +4491,10 @@ KDDW_QCORO_TASK tst_deleteOnClose()
         // Option_DeleteOnClose
         EnsureTopLevelsDeleted e;
 
-        QPointer<Core::DockWidget> dock1 = createDockWidget(
+        ObjectGuard<Core::DockWidget> dock1 = createDockWidget(
             "1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
             DockWidgetOption_DeleteOnClose, {}, /*show=*/false);
-        QPointer<Core::DockWidget> dock2 = createDockWidget(
+        ObjectGuard<Core::DockWidget> dock2 = createDockWidget(
             "2", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), {}, {},
             /*show=*/false);
         LayoutSaver saver;
@@ -4533,7 +4533,7 @@ KDDW_QCORO_TASK tst_toggleAction()
     auto root = m->multiSplitter()->rootItem();
     CHECK_EQ(root->visibleCount_recursive(), 3);
     CHECK(dock2->toggleAction()->isChecked());
-    QPointer<Core::Group> group2 = dock2->dptr()->group();
+    ObjectGuard<Core::Group> group2 = dock2->dptr()->group();
     dock2->toggleAction()->toggle();
     CHECK(!dock2->toggleAction()->isChecked());
 

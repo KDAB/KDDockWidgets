@@ -80,7 +80,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     CHECK_EQ(layout->placeholderCount(), 0);
 
     // Detach dock2
-    QPointer<Core::Group> f2 = dock2->dptr()->group();
+    ObjectGuard<Core::Group> f2 = dock2->dptr()->group();
     f2->detachTab(dock2);
     CHECK(!f2.data());
 
@@ -113,7 +113,7 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
-        QPointer<Core::Group> group1 = dock1->dptr()->group();
+        ObjectGuard<Core::Group> group1 = dock1->dptr()->group();
         dock1->setFloating(true);
         CHECK(dock1->isFloating());
         auto fw = dock1->floatingWindow();

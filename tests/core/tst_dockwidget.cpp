@@ -170,7 +170,7 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
 
         auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
         dw->view()->show();
-        QPointer<Core::FloatingWindow> fw = dw->floatingWindow();
+        ObjectGuard<Core::FloatingWindow> fw = dw->floatingWindow();
         CHECK(fw);
 
         auto titleBar = fw->titleBar();

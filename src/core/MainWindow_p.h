@@ -112,7 +112,7 @@ public:
     QStringList affinities;
     const MainWindowOptions m_options;
     MainWindow *const q;
-    QPointer<Core::DockWidget> m_overlayedDockWidget;
+    ObjectGuard<Core::DockWidget> m_overlayedDockWidget;
     std::unordered_map<SideBarLocation, Core::SideBar *> m_sideBars;
     Layout *m_layout = nullptr;
     Core::DockWidget *m_persistentCentralDockWidget = nullptr;

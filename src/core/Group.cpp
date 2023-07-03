@@ -34,6 +34,7 @@
 
 #include "DockRegistry.h"
 #include "DockWidget_p.h"
+#include "ObjectGuard_p.h"
 
 #include "core/Logging_p.h"
 #include "core/Utils_p.h"
@@ -46,7 +47,6 @@
 
 #include "kdbindings/signal.h"
 
-#include <QPointer>
 
 #define MARGIN_THRESHOLD 100
 

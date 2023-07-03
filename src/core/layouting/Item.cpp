@@ -783,6 +783,7 @@ Item::Item(bool isContainer, View *hostWidget, ItemContainer *parent)
 
 Item::~Item()
 {
+    aboutToBeDeleted.emit();
     m_minSizeChangedHandle.disconnect();
     m_visibleChangedHandle.disconnect();
     m_parentChangedConnection.disconnect();

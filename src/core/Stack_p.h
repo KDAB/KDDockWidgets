@@ -15,8 +15,7 @@
 
 #include "Stack.h"
 #include "TabBar.h"
-
-#include <QPointer>
+#include "ObjectGuard_p.h"
 
 namespace KDDockWidgets {
 
@@ -35,7 +34,7 @@ public:
     {
     }
     Stack *const q;
-    QPointer<TabBar> m_tabBar;
+    ObjectGuard<TabBar> m_tabBar;
     Group *const m_group;
     bool m_tabBarAutoHide = true;
     const StackOptions m_options;

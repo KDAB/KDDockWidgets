@@ -64,7 +64,7 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
     KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
 
     auto fw1 = dw1->floatingWindow();
-    QPointer<Core::FloatingWindow> fw2 = dw2->floatingWindow();
+    ObjectGuard<Core::FloatingWindow> fw2 = dw2->floatingWindow();
 
     // Focus dock widget 1 first
     CHECK(!dw1->isFocused());
@@ -101,7 +101,7 @@ KDDW_QCORO_TASK tst_closeShowWhenNoCentralFrame()
     // Tests a crash I got when hiding and showing and no central group
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
-    QPointer<Core::DockWidget> dock1 =
+    ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->close();
@@ -168,8 +168,8 @@ KDDW_QCORO_TASK tst_close()
     CHECK(!toggleAction->isChecked());
 
     // 1.4 close a FloatingWindow, via DockWidget::close
-    QPointer<Core::FloatingWindow> window = dock1->dptr()->morphIntoFloatingWindow();
-    QPointer<Core::Group> group1 = dock1->dptr()->group();
+    ObjectGuard<Core::FloatingWindow> window = dock1->dptr()->morphIntoFloatingWindow();
+    ObjectGuard<Core::Group> group1 = dock1->dptr()->group();
     CHECK(dock1->isVisible());
     CHECK(dock1->window()->controller()->isVisible());
     CHECK(group1->isVisible());
@@ -246,7 +246,7 @@ KDDW_QCORO_TASK tst_close()
     // 2. Test that closing the single group of a main window doesn't close the main window itself
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
-        QPointer<MainWindow> mainWindowPtr = m.get();
+        ObjectGuard<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
 
@@ -259,7 +259,7 @@ KDDW_QCORO_TASK tst_close()
     // 2.1 Test closing the group instead
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
-        QPointer<MainWindow> mainWindowPtr = m.get();
+        ObjectGuard<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
 
@@ -273,7 +273,7 @@ KDDW_QCORO_TASK tst_close()
     // 2.2 Repeat, but with a central group
     {
         auto m = createMainWindow(QSize(800, 500));
-        QPointer<MainWindow> mainWindowPtr = m.get();
+        ObjectGuard<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
 

@@ -306,6 +306,8 @@ public:
     KDBindings::Signal<Core::Item *, bool> visibleChanged;
     KDBindings::Signal<Core::Item *> minSizeChanged;
     KDBindings::Signal<Core::Item *> maxSizeChanged;
+    /// signal emitted when ~Item starts
+    KDBindings::Signal<> aboutToBeDeleted;
 
 public:
     friend class ::TestMultiSplitter;

@@ -226,7 +226,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
-    QPointer<Core::Group> centralFrame = dropArea->centralFrame()->asGroupController();
+    ObjectGuard<Core::Group> centralFrame = dropArea->centralFrame()->asGroupController();
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);
@@ -410,11 +410,11 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     Core::Group *group1 = mdiWidget1->d->group();
     Core::Group *mdiFrame1 = group1->mdiFrame();
 
-    QPointer<Core::Group> group2 = mdiWidget2->d->group();
-    QPointer<Core::Group> mdiFrame2 = group2->mdiFrame();
-    QPointer<DropArea> dropArea2 = group2->mdiDropAreaWrapper();
+    ObjectGuard<Core::Group> group2 = mdiWidget2->d->group();
+    ObjectGuard<Core::Group> mdiFrame2 = group2->mdiFrame();
+    ObjectGuard<DropArea> dropArea2 = group2->mdiDropAreaWrapper();
 
-    QPointer<DropArea> dropArea1 = group1->mdiDropAreaWrapper();
+    ObjectGuard<DropArea> dropArea1 = group1->mdiDropAreaWrapper();
     dropArea1->addDockWidget(mdiWidget3, Location_OnLeft, nullptr);
 
     QVERIFY(!group1->isMDI());
@@ -479,7 +479,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     // Test floating:
     group2 = mdiWidget2->d->group();
-    QPointer<Core::DockWidget> dwWrapper2 = group2->mdiDockWidgetWrapper();
+    ObjectGuard<Core::DockWidget> dwWrapper2 = group2->mdiDockWidgetWrapper();
     dropArea2 = group2->mdiDropAreaWrapper();
     QVERIFY(mdiWidget2->isVisible());
     QVERIFY(group2->isMDIWrapper());
@@ -772,7 +772,7 @@ void TestQtWidgets::tst_deleteOnCloseWhenOnSideBar()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    QPointer<Core::DockWidget> dock1 = createDockWidget(
+    ObjectGuard<Core::DockWidget> dock1 = createDockWidget(
         "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
         DockWidgetOption_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
@@ -1509,7 +1509,7 @@ void TestQtWidgets::tst_deleteOnClose()
     });
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    QPointer<Core::DockWidget> dock1 =
+    ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
                          DockWidgetOption_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
@@ -1532,7 +1532,7 @@ void TestQtWidgets::tstCloseNestedMdi()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
-    QPointer<Core::MainWindow> p = m.get();
+    ObjectGuard<Core::MainWindow> p = m.get();
 
     auto mdi = new QtWidgets::MDIArea();
     m->setPersistentCentralView(mdi->asWrapper());
@@ -1550,7 +1550,7 @@ void TestQtWidgets::tstCloseNestedMdi()
 void TestQtWidgets::tstCloseNestedMDIPropagates()
 {
     auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
-    QPointer<Core::MainWindow> p = m.get();
+    ObjectGuard<Core::MainWindow> p = m.get();
 
     auto mdi = new QtWidgets::MDIArea();
     m->setPersistentCentralView(mdi->asWrapper());
@@ -1628,7 +1628,7 @@ void TestQtWidgets::tst_crash326()
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
     auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
-    QPointer<Group> originalFrame = dock1->d->group();
+    ObjectGuard<Group> originalFrame = dock1->d->group();
     dock1->close();
     QVERIFY(dock1->parent() == nullptr);
     QVERIFY(originalFrame != dock1->d->group());

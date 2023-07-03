@@ -20,6 +20,7 @@
 #include "Config.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
+#include "core/ObjectGuard_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
 #include "kddockwidgets/core/ViewFactory.h"
@@ -49,7 +50,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     auto fw1 = dock1->floatingWindow();
     fw1->view()->setGeometry(QRect(500, 500, 400, 400));
     CHECK(dock1);
-    QPointer<Core::Group> group1 = dock1->dptr()->group();
+    ObjectGuard<Core::Group> group1 = dock1->dptr()->group();
 
     auto titlebar1 = fw1->titleBar();
     auto dock2 = createDockWidget("doc2");
@@ -61,7 +62,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     KDDW_CO_AWAIT drag(titlebar1->view(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
 
     // It morphed into a FloatingWindow
-    QPointer<Core::Group> group2 = dock2->dptr()->group();
+    ObjectGuard<Core::Group> group2 = dock2->dptr()->group();
     if (!dock2->floatingWindow()) {
         KDDW_WARN("dock2->floatingWindow()={}", ( void * )(dock2->floatingWindow()));
         CHECK(false);

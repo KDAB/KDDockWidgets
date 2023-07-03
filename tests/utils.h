@@ -26,9 +26,9 @@
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "core/DockWidget_p.h"
+#include "core/ObjectGuard_p.h"
 #include "kddockwidgets/core/Utils_p.h"
 
-#include <QPointer>
 #include <QVector>
 
 #include <memory>
@@ -54,7 +54,7 @@ struct DockDescriptor
 {
     Location loc;
     int relativeToIndex;
-    QPointer<Core::DockWidget> createdDock;
+    Core::ObjectGuard<Core::DockWidget> createdDock;
     KDDockWidgets::InitialVisibilityOption option;
 };
 
