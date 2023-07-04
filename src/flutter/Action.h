@@ -78,9 +78,6 @@ public:
 
     bool blockSignals(bool) override;
 
-Q_SIGNALS:
-    bool toggled(bool);
-
 private:
     QString m_text;
     QString m_toolTip;
