@@ -20,8 +20,6 @@
 #include "kddockwidgets/core/Window.h"
 #include "kddockwidgets/core/Platform.h"
 
-#include <QtTest/QTest>
-
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif
