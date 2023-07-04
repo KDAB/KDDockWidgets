@@ -58,17 +58,6 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-/// Helper function so we don't write such a big line everywhere
-inline Core::DockWidget *newDockWidget(const QString &uniqueName,
-                                       DockWidgetOptions opts = {},
-                                       LayoutSaverOptions layoutSaverOptions = {})
-{
-    return Config::self()
-        .viewFactory()
-        ->createDockWidget(uniqueName, opts, layoutSaverOptions)
-        ->asDockWidgetController();
-}
-
 
 inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
                                           DockWidgetOptions options = {},

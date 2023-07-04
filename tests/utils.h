@@ -28,10 +28,18 @@
 #include "core/DockWidget_p.h"
 #include "core/ObjectGuard_p.h"
 #include "kddockwidgets/core/Utils_p.h"
+#include "kddockwidgets/core/ViewFactory.h"
+#include "kddockwidgets/core/MainWindow.h"
+#include "kddockwidgets/core/Window.h"
+#include "kddockwidgets/core/Platform.h"
 
 #include <QVector>
 
 #include <memory>
+
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
 
 static bool s_pauseBeforePress = false; // for debugging
 static bool s_pauseBeforeMove = false; // for debugging
@@ -239,6 +247,55 @@ inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Core::Drop
 
     auto result = KDDW_CO_AWAIT drag(draggable, QPoint(), dropPoint, ButtonAction_Release);
     KDDW_CO_RETURN result;
+}
+
+inline int osWindowMinWidth()
+{
+#ifdef Q_OS_WIN
+    return GetSystemMetrics(SM_CXMIN);
+#else
+    return 140; // Some random value for our windows. It's only important on Windows
+#endif
+}
+
+/// Helper function so we don't write such a big line everywhere
+inline Core::DockWidget *newDockWidget(const QString &uniqueName,
+                                       DockWidgetOptions opts = {},
+                                       LayoutSaverOptions layoutSaverOptions = {})
+{
+    return Config::self()
+        .viewFactory()
+        ->createDockWidget(uniqueName, opts, layoutSaverOptions)
+        ->asDockWidgetController();
+}
+
+inline Core::DockWidget *createAndNestDockWidget(KDDockWidgets::Core::DropArea *dropArea,
+                                                 Core::Group *relativeTo,
+                                                 KDDockWidgets::Location location)
+{
+    static int count = 0;
+    count++;
+    const QString name = QString("dock%1").arg(count);
+    auto dock = createDockWidget(name);
+    dock->setObjectName(name);
+    nestDockWidget(dock, dropArea, relativeTo, location);
+    dropArea->checkSanity();
+    return dock;
+}
+
+inline std::unique_ptr<KDDockWidgets::Core::MainWindow>
+createSimpleNestedMainWindow(Core::DockWidget **centralDock,
+                             Core::DockWidget **leftDock,
+                             Core::DockWidget **rightDock)
+{
+    auto window = createMainWindow({ 900, 500 });
+    *centralDock = createDockWidget("centralDock");
+    window->addDockWidgetAsTab(*centralDock);
+    auto dropArea = window->dropArea();
+
+    *leftDock = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnLeft);
+    *rightDock = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnRight);
+    return window;
 }
 
 }

@@ -37,8 +37,6 @@
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Platform.h"
 
-#include "utils_qt.h"
-
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif

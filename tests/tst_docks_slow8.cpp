@@ -33,7 +33,6 @@
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Platform.h"
-#include "utils_qt.h"
 
 #include <QtTest/QTest>
 
