@@ -101,8 +101,6 @@ protected:
     bool m_inDtor = false;
 
 private:
-    void setParent(QObject *) = delete;
-
     Private *const d;
 };
 
