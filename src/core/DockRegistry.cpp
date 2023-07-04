@@ -10,6 +10,7 @@
 */
 
 #include "DockRegistry.h"
+#include "DelayedCall_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
 #include "core/Logging_p.h"
@@ -95,13 +96,7 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
         // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
         // as the FocusScope hasn't been updated yet.
         // It's just for styling purposes, so can be delayed
-        auto oldDw = d->m_focusedDockWidget;
-        QMetaObject::invokeMethod(
-            oldDw, [oldDw] {
-                if (oldDw) // QPointer
-                    oldDw->d->isFocusedChanged.emit(false);
-            },
-            Qt::QueuedConnection);
+        Platform::instance()->runDelayed(0, new DelayedEmitFocusChanged(d->m_focusedDockWidget, false));
     }
 
     d->m_focusedDockWidget = dw;
@@ -110,13 +105,7 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
         // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
         // as the FocusScope hasn't been updated yet.
         // It's just for styling purposes, so can be delayed
-        QMetaObject::invokeMethod(
-            this, [this] {
-                if (d->m_focusedDockWidget) { // QPointer
-                    d->m_focusedDockWidget->d->isFocusedChanged.emit(true);
-                }
-            },
-            Qt::QueuedConnection);
+        Platform::instance()->runDelayed(0, new DelayedEmitFocusChanged(d->m_focusedDockWidget, true));
     }
 }
 

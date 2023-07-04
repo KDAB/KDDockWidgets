@@ -10,6 +10,7 @@
 */
 
 #include "DelayedCall_p.h"
+#include "DockWidget_p.h"
 #include "Controller.h"
 
 using namespace KDDockWidgets::Core;
@@ -30,4 +31,20 @@ void DelayedDelete::call()
     // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
     // triggered by a sendEvent() before event loop starts)
     delete m_object;
+}
+
+
+DelayedEmitFocusChanged::DelayedEmitFocusChanged(DockWidget *dw, bool focused)
+    : m_dockWidget(dw)
+    , m_focused(focused)
+{
+}
+
+DelayedEmitFocusChanged::~DelayedEmitFocusChanged() = default;
+
+void DelayedEmitFocusChanged::call()
+{
+    if (m_dockWidget) {
+        m_dockWidget->d->isFocusedChanged.emit(m_focused);
+    }
 }
