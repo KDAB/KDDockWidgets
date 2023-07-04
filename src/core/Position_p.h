@@ -24,6 +24,8 @@
 
 #include <QRect>
 
+#include <kdbindings/signal.h>
+
 #include <memory>
 #include <unordered_map>
 
@@ -39,18 +41,17 @@ class Layout;
 // Just a RAII class so we don't forget to unref
 struct ItemRef
 {
-    explicit ItemRef(const QMetaObject::Connection &, Core::Item *);
+    explicit ItemRef(KDBindings::ConnectionHandle conn, Core::Item *);
     ~ItemRef();
 
     bool isInMainWindow() const;
 
-    const Core::ObjectGuard<Core::Item> item;
-    const QMetaObject::Connection connection;
+    Core::ObjectGuard<Core::Item> item;
+    KDBindings::ConnectionHandle connection;
 
 private:
     KDDW_DELETE_COPY_CTOR(ItemRef)
 };
-
 
 /**
  * @internal

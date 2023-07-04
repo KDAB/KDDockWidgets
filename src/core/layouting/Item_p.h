@@ -308,6 +308,7 @@ public:
     KDBindings::Signal<Core::Item *> maxSizeChanged;
     /// signal emitted when ~Item starts
     KDBindings::Signal<> aboutToBeDeleted;
+    KDBindings::Signal<> deleted;
 
 public:
     friend class ::TestMultiSplitter;
@@ -333,6 +334,7 @@ public:
     const bool m_isContainer;
     ItemContainer *m_parent = nullptr;
     bool m_isSettingGuest = false;
+    bool m_inDtor = false;
 private Q_SLOTS:
     void onWidgetLayoutRequested();
 

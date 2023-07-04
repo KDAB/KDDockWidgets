@@ -30,6 +30,7 @@ public:
     KDBindings::Signal<KDDockWidgets::Core::Group *> hoveredGroupChanged;
     KDBindings::Signal<> hoveredGroupRectChanged;
     KDBindings::Signal<> currentDropLocationChanged;
+    KDBindings::ScopedConnection groupConnection;
 };
 
 }

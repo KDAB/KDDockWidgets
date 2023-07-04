@@ -17,6 +17,7 @@
 #include "core/DropArea.h"
 #include "core/Group.h"
 #include "core/Logging_p.h"
+#include "core/Controller_p.h"
 #include "core/DropIndicatorOverlay_p.h"
 
 #include "core/DragController_p.h"
@@ -88,12 +89,11 @@ void DropIndicatorOverlay::setHoveredGroup(Core::Group *group)
         return;
 
     if (m_hoveredGroup)
-        disconnect(m_hoveredGroup, &QObject::destroyed, this,
-                   &DropIndicatorOverlay::onGroupDestroyed);
+        d->groupConnection = KDBindings::ScopedConnection();
 
     m_hoveredGroup = group;
     if (m_hoveredGroup) {
-        connect(group, &QObject::destroyed, this, &DropIndicatorOverlay::onGroupDestroyed);
+        d->groupConnection = group->Controller::dptr()->aboutToBeDeleted.connect([this] { onGroupDestroyed(); });
         setHoveredGroupRect(m_hoveredGroup->view()->geometry());
     } else {
         setHoveredGroupRect(QRect());

@@ -19,6 +19,7 @@
 #include "KDDockWidgets.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/Utils_p.h"
+#include "core/Controller_p.h"
 #include "core/WidgetResizeHandler_p.h"
 #include "DockRegistry.h"
 #include "Config.h"
@@ -190,8 +191,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
 
     view()->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
 
-    m_layoutDestroyedConnection =
-        connect(d->m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
+    d->m_layoutDestroyedConnection = d->m_dropArea->Controller::dptr()->aboutToBeDeleted.connect(&FloatingWindow::scheduleDeleteLater, this);
 
     d->numFramesChanged.connect([this] {
         d->numDockWidgetsChanged.emit();
@@ -269,7 +269,8 @@ FloatingWindow::~FloatingWindow()
         da->view()->d->setAboutToBeDestroyed();
     }
 
-    disconnect(m_layoutDestroyedConnection);
+    d->m_layoutDestroyedConnection = KDBindings::ScopedConnection();
+
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     delete m_nchittestFilter;
 #endif

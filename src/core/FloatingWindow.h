@@ -222,7 +222,6 @@ private:
     bool m_deleteScheduled = false;
     bool m_inDtor = false;
     bool m_updatingTitleBarVisibility = false;
-    QMetaObject::Connection m_layoutDestroyedConnection;
     WindowState windowStateOverride() const;
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;

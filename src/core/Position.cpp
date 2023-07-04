@@ -54,11 +54,9 @@ void Position::addPlaceholderItem(Core::Item *placeholder)
 
     // Make sure our list only contains valid placeholders. We save the result so we can disconnect
     // from the lambda, since the Item might outlive Position
-    QMetaObject::Connection connection =
-        QObject::connect(placeholder, &QObject::destroyed, placeholder,
-                         [this, placeholder] { removePlaceholder(placeholder); });
+    auto conn = placeholder->deleted.connect([this, placeholder] { removePlaceholder(placeholder); });
 
-    m_placeholders.push_back(std::unique_ptr<ItemRef>(new ItemRef(connection, placeholder)));
+    m_placeholders.push_back(std::unique_ptr<ItemRef>(new ItemRef(conn, placeholder)));
 
     // NOTE: We use a list instead of simply two variables to keep the placeholders, because
     // a placeholder from a FloatingWindow might become a MainWindow one without we knowing,
@@ -127,7 +125,7 @@ void Position::removePlaceholder(Core::Item *placeholder)
 
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(),
                                         [placeholder](const std::unique_ptr<ItemRef> &itemref) {
-                                            return itemref->item == placeholder;
+                                            return itemref->item == placeholder || !itemref->item;
                                         }),
                          m_placeholders.end());
 }
@@ -219,7 +217,7 @@ LayoutSaver::Position Position::serialize() const
     return l;
 }
 
-ItemRef::ItemRef(const QMetaObject::Connection &conn, Core::Item *it)
+ItemRef::ItemRef(KDBindings::ConnectionHandle conn, Core::Item *it)
     : item(it)
     , connection(conn)
 {
@@ -228,8 +226,8 @@ ItemRef::ItemRef(const QMetaObject::Connection &conn, Core::Item *it)
 
 ItemRef::~ItemRef()
 {
-    if (item) {
-        QObject::disconnect(connection);
+    if (item && !item->m_inDtor) {
+        connection.disconnect();
         item->unref();
     }
 }

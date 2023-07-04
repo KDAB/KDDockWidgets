@@ -34,6 +34,7 @@ public:
 
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
     KDBindings::ScopedConnection m_currentStateChangedConnection;
+    KDBindings::ScopedConnection m_layoutDestroyedConnection;
 
     const FloatingWindowFlags m_flags;
     ObjectGuard<DropArea> m_dropArea;

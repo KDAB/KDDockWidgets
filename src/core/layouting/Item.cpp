@@ -783,10 +783,14 @@ Item::Item(bool isContainer, View *hostWidget, ItemContainer *parent)
 
 Item::~Item()
 {
+    m_inDtor = true;
     aboutToBeDeleted.emit();
+
     m_minSizeChangedHandle.disconnect();
     m_visibleChangedHandle.disconnect();
     m_parentChangedConnection.disconnect();
+
+    deleted.emit();
 }
 
 void Item::turnIntoPlaceholder()
