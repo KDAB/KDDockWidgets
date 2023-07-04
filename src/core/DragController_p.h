@@ -21,7 +21,6 @@
 #include <kdbindings/signal.h>
 
 #include <QPoint>
-#include <QMimeData>
 
 #include <memory>
 
@@ -258,32 +257,6 @@ public:
     bool handleMouseButtonRelease(QPoint globalPos) override;
     bool handleMouseMove(QPoint globalPos) override;
     bool handleMouseDoubleClick() override;
-};
-
-// Used on wayland only to use QDrag instead of setting geometry on mouse-move.
-class StateDraggingWayland : public StateDragging
-{
-    Q_OBJECT
-public:
-    explicit StateDraggingWayland(DragController *parent);
-    ~StateDraggingWayland() override;
-    void onEntry() override;
-
-    bool handleMouseButtonRelease(QPoint globalPos) override;
-    bool handleDragEnter(DragEnterEvent *, DropArea *) override;
-    bool handleDragMove(DragMoveEvent *, DropArea *) override;
-    bool handleDragLeave(DropArea *) override;
-    bool handleDrop(DropEvent *, DropArea *) override;
-    bool handleMouseMove(QPoint globalPos) override;
-    bool m_inQDrag = false;
-};
-
-// A sub-class just so we don't use QMimeData directly. We'll only accept drops if its mime data
-// Can be qobject_casted to this class. For safety.
-class WaylandMimeData : public QMimeData
-{
-    Q_OBJECT
-public:
 };
 
 }

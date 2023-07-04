@@ -28,6 +28,7 @@ set(KDDW_BACKEND_SRCS
     core/Draggable.cpp
     core/WindowBeingDragged.cpp
     core/DragController.cpp
+    core/DragControllerWayland_p.cpp
     core/WidgetResizeHandler.cpp
     core/Action.cpp
     core/DockRegistry.cpp

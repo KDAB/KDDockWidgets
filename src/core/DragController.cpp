@@ -30,11 +30,15 @@
 
 #include <QObject>
 
+#ifdef KDDW_FRONTEND_QT
+#include "DragControllerWayland_p.h"
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "kddockwidgets/qtcommon/Platform.h"
 #include <QWidget>
 #include <QApplication>
 #endif
+#endif
+
 
 #if defined(Q_OS_WIN)
 #include <windows.h>
@@ -548,113 +552,6 @@ bool StateInternalMDIDragging::handleMouseDoubleClick()
     return false;
 }
 
-StateDraggingWayland::StateDraggingWayland(DragController *parent)
-    : StateDragging(parent)
-{
-}
-
-StateDraggingWayland::~StateDraggingWayland()
-{
-}
-
-void StateDraggingWayland::onEntry()
-{
-    KDDW_DEBUG("StateDragging entered");
-
-    if (m_inQDrag) {
-        // Maybe we can exit the state due to the nested event loop of QDrag::Exec();
-        KDDW_ERROR("Impossible!");
-        return;
-    }
-
-    ScopedValueRollback guard(m_inQDrag, true);
-    q->m_windowBeingDragged =
-        std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
-
-    auto mimeData = new WaylandMimeData();
-    Drag drag(this);
-    drag.setMimeData(mimeData);
-    drag.setPixmap(q->m_windowBeingDragged->pixmap());
-
-    Platform::instance()->installGlobalEventFilter(q);
-    const Qt::DropAction result = drag.exec();
-    Platform::instance()->removeGlobalEventFilter(q);
-    if (result == Qt::IgnoreAction)
-        q->dragCanceled.emit();
-}
-
-bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
-{
-    KDDW_DEBUG(Q_FUNC_INFO);
-    q->dragCanceled.emit();
-    return true;
-}
-
-bool StateDraggingWayland::handleMouseMove(QPoint)
-{
-    // Wayland uses QDrag to drag stuff while other platforms use mouse.
-    // So override handleMouseMove() just so the regular mouse stuff doesn't run.
-
-    return false;
-}
-
-bool StateDraggingWayland::handleDragEnter(DragEnterEvent *ev, DropArea *dropArea)
-{
-    auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
-    if (!mimeData || !q->m_windowBeingDragged)
-        return false; // Not for us, some other user drag.
-
-    if (q->m_windowBeingDragged->contains(dropArea)) {
-        ev->ignore();
-        return true;
-    }
-
-    dropArea->hover(q->m_windowBeingDragged.get(),
-                    dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
-
-    ev->accept();
-    return true;
-}
-
-bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
-{
-    KDDW_DEBUG(Q_FUNC_INFO);
-    dropArea->removeHover();
-    return true;
-}
-
-bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
-{
-    KDDW_DEBUG(Q_FUNC_INFO);
-    auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
-    if (!mimeData || !q->m_windowBeingDragged)
-        return false; // Not for us, some other user drag.
-
-    if (dropArea->drop(q->m_windowBeingDragged.get(),
-                       dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)))) {
-        ev->setDropAction(Qt::MoveAction);
-        ev->accept();
-        q->dropped.emit();
-    } else {
-        q->dragCanceled.emit();
-    }
-
-    dropArea->removeHover();
-    return true;
-}
-
-bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea)
-{
-    auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
-    if (!mimeData || !q->m_windowBeingDragged)
-        return false; // Not for us, some other user drag.
-
-    dropArea->hover(q->m_windowBeingDragged.get(),
-                    dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
-
-    return true;
-}
-
 DragController::DragController(QObject *parent)
     : MinimalStateMachine(parent)
 {
@@ -662,7 +559,11 @@ DragController::DragController(QObject *parent)
 
     m_stateNone = new StateNone(this);
     auto statepreDrag = new StatePreDrag(this);
+#ifdef KDDW_FRONTEND_QT
     auto stateDragging = isWayland() ? new StateDraggingWayland(this) : new StateDragging(this);
+#else
+    auto stateDragging = new StateDragging(this);
+#endif
     m_stateDraggingMDI = new StateInternalMDIDragging(this);
 
     m_stateNone->addTransition(mousePressed, statepreDrag);
