@@ -100,6 +100,8 @@ void Position::removePlaceholders(const Core::Layout *ms)
     auto layoutView = ms->view();
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(),
                                         [layoutView](const std::unique_ptr<ItemRef> &itemref) {
+                                            if (!itemref->item)
+                                                return true;
                                             return layoutView
                                                 && layoutView->equals(itemref->item->hostView());
                                         }),
@@ -219,7 +221,6 @@ LayoutSaver::Position Position::serialize() const
 
 ItemRef::ItemRef(const QMetaObject::Connection &conn, Core::Item *it)
     : item(it)
-    , guard(it)
     , connection(conn)
 {
     item->ref();
@@ -227,7 +228,7 @@ ItemRef::ItemRef(const QMetaObject::Connection &conn, Core::Item *it)
 
 ItemRef::~ItemRef()
 {
-    if (guard) {
+    if (item) {
         QObject::disconnect(connection);
         item->unref();
     }
@@ -235,5 +236,5 @@ ItemRef::~ItemRef()
 
 bool ItemRef::isInMainWindow() const
 {
-    return DockRegistry::self()->itemIsInMainWindow(item);
+    return item && DockRegistry::self()->itemIsInMainWindow(item);
 }

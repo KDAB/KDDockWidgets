@@ -44,8 +44,7 @@ struct ItemRef
 
     bool isInMainWindow() const;
 
-    Core::Item *const item;
-    const Core::ObjectGuard<Core::Item> guard;
+    const Core::ObjectGuard<Core::Item> item;
     const QMetaObject::Connection connection;
 
 private:
