@@ -16,6 +16,8 @@
 
 namespace KDDockWidgets::Core {
 
+class Controller;
+
 class DelayedCall
 {
 public:
@@ -29,14 +31,14 @@ public:
 class DelayedDelete : public DelayedCall
 {
 public:
-    explicit DelayedDelete(QObject *obj);
+    explicit DelayedDelete(Controller *);
     ~DelayedDelete() override;
 
     void call() override;
 
     KDDW_DELETE_COPY_CTOR(DelayedDelete)
 private:
-    ObjectGuard<QObject> m_object;
+    ObjectGuard<Controller> m_object;
 };
 
 }

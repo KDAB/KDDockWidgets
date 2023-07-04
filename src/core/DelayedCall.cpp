@@ -10,16 +10,15 @@
 */
 
 #include "DelayedCall_p.h"
-
-#include <QObject>
+#include "Controller.h"
 
 using namespace KDDockWidgets::Core;
 
 DelayedCall::~DelayedCall() = default;
 
 
-DelayedDelete::DelayedDelete(QObject *obj)
-    : m_object(obj)
+DelayedDelete::DelayedDelete(Controller *c)
+    : m_object(c)
 {
 }
 
