@@ -120,8 +120,6 @@ void TabBar::removeDockWidget(Core::DockWidget *dw)
         setCurrentIndex(newCurrentIndex);
     }
 
-    dw->disconnect(this);
-
     d->m_removeGuard = true;
     // The view might call setCurrenteIndex() before our d->m_dockWidgets reflectig the state.
     // d->m_removeGuard protects against that.
