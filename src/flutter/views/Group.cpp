@@ -47,10 +47,6 @@ Group::~Group()
 {
 }
 
-void Group::init()
-{
-}
-
 int Group::currentIndex() const
 {
     return 0;

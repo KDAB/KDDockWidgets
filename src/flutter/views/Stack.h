@@ -24,7 +24,6 @@ public:
     explicit Stack(Core::Stack *controller, Core::View *parent = nullptr);
 
     bool isPositionDraggable(QPoint p) const override;
-    void init() override;
     void setDocumentMode(bool) override;
 
 private:

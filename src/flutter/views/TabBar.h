@@ -55,9 +55,6 @@ public:
 
     void onMousePress(MouseEvent *) override;
 
-protected:
-    void init() override;
-
 private:
     Core::TabBar *const m_controller;
 };

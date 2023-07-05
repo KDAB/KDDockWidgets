@@ -34,10 +34,6 @@ TabBar::TabBar(Core::TabBar *controller, Core::View *parent)
 {
 }
 
-void TabBar::init()
-{
-}
-
 int TabBar::tabAt(QPoint) const
 {
     KDDW_WARN("Not implemented {}", Q_FUNC_INFO);

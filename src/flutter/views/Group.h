@@ -43,9 +43,6 @@ public:
 
 protected:
     int nonContentsHeight() const override;
-
-private:
-    void init() override;
 };
 
 }

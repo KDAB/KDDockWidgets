@@ -28,10 +28,6 @@ Stack::Stack(Core::Stack *controller, Core::View *parent)
 {
 }
 
-void Stack::init()
-{
-}
-
 void Stack::setDocumentMode(bool)
 {
 }
