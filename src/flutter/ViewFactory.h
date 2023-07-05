@@ -70,7 +70,6 @@ public:
     Core::View *createDropArea(Core::DropArea *, Core::View *parent) const override;
     Core::View *createMDILayout(Core::MDILayout *, Core::View *parent) const override;
     Icon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
-    QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
     Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *parent = 0) const override;

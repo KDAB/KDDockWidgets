@@ -27,8 +27,9 @@
 
 #if defined(Q_OBJECT) // TODOm4: Remove this ifdef and the undef
 #undef Q_OBJECT
-#define Q_OBJECT
 #endif
+
+#define Q_OBJECT
 
 namespace KDDockWidgets {
 

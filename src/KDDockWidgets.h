@@ -48,7 +48,7 @@ namespace KDDockWidgets::Flutter {
 }
 
 namespace KDDockWidgets {
-DOCKS_EXPORT
+QT_DOCKS_EXPORT
 Q_NAMESPACE
 
 namespace QtWidgets {

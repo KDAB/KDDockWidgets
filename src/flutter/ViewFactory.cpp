@@ -86,11 +86,6 @@ Core::View *ViewFactory::createSideBar(Core::SideBar *, Core::View *) const
     return {};
 }
 
-QAbstractButton *ViewFactory::createTitleBarButton(QWidget *, TitleBarButtonType) const
-{
-    return nullptr;
-}
-
 // iconForButtonType impl is the same for QtQuick and QtWidgets
 Icon ViewFactory::iconForButtonType(TitleBarButtonType, qreal) const
 {

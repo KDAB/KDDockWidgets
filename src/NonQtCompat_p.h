@@ -308,8 +308,34 @@ namespace KDDockWidgets::Core {
 using Object = QT_PREPEND_NAMESPACE(QObject);
 }
 
+#define QT_DOCKS_EXPORT DOCKS_EXPORT
+
 #else
 
 #include "core/Object_p.h"
+
+#ifndef Q_NAMESPACE
+#define Q_NAMESPACE
+#endif
+
+#ifdef Q_ENUM_NS // TODOm4: Remove the ifdef
+#undef Q_ENUM_NS
+#endif
+#define Q_ENUM_NS(name)
+
+#ifdef Q_DECLARE_METATYPE // TODOm4: Remove the ifdef
+#undef Q_DECLARE_METATYPE
+#endif
+#define Q_DECLARE_METATYPE(name)
+
+#ifndef Q_INVOKABLE
+#define Q_INVOKABLE
+#endif
+
+#ifndef Q_SLOTS
+#define Q_SLOTS
+#endif
+
+#define QT_DOCKS_EXPORT
 
 #endif
