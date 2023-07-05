@@ -10,8 +10,8 @@
 */
 
 #include "DragControllerWayland_p.h"
-#include "Logging_p.h"
-#include "ScopedValueRollback_p.h"
+#include "core/Logging_p.h"
+#include "core/ScopedValueRollback_p.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/DropArea.h"
 

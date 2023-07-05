@@ -28,7 +28,6 @@ set(KDDW_BACKEND_SRCS
     core/Draggable.cpp
     core/WindowBeingDragged.cpp
     core/DragController.cpp
-    core/DragControllerWayland_p.cpp
     core/WidgetResizeHandler.cpp
     core/Action.cpp
     core/DockRegistry.cpp
@@ -72,7 +71,7 @@ set(KDDW_BACKEND_SRCS
 
 # Sources shared by Qt frontends (QtWidgets and QtQuick)
 set(KDDW_QTCOMMON_SRCS qtcommon/Platform.cpp qtcommon/Window.cpp qtcommon/View.cpp qtcommon/Screen.cpp
-                       qtcommon/ViewWrapper.cpp
+                       qtcommon/ViewWrapper.cpp qtcommon/DragControllerWayland_p.cpp
 )
 
 set(KDDW_FRONTEND_QTWIDGETS_SRCS

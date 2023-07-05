@@ -31,7 +31,7 @@
 #include <QObject>
 
 #ifdef KDDW_FRONTEND_QT
-#include "DragControllerWayland_p.h"
+#include "../qtcommon/DragControllerWayland_p.h"
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "kddockwidgets/qtcommon/Platform.h"
 #include <QWidget>

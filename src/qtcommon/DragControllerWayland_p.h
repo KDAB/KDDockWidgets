@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "DragController_p.h"
+#include "core/DragController_p.h"
 
 #include <QMimeData>
 
