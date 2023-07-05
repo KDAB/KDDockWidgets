@@ -20,7 +20,6 @@
 #include "core/ViewGuard.h"
 
 #include <QPoint>
-#include <QAbstractNativeEventFilter>
 
 #if defined(Q_OS_WIN)
 #ifndef NOMINMAX
@@ -205,27 +204,6 @@ public:
 
 #endif // Q_OS_WIN
 
-class DOCKS_EXPORT CustomFrameHelper : public QObject, public QAbstractNativeEventFilter
-{
-    Q_OBJECT
-public:
-    typedef WidgetResizeHandler::NativeFeatures (*ShouldUseCustomFrame)(Core::Window::Ptr);
-    explicit CustomFrameHelper(ShouldUseCustomFrame shouldUseCustomFrameFunc,
-                               QObject *parent = nullptr);
-    ~CustomFrameHelper() override;
-
-public Q_SLOTS:
-    void applyCustomFrame(Core::Window::Ptr);
-
-protected:
-    bool nativeEventFilter(const QByteArray &eventType, void *message,
-                           Qt5Qt6Compat::qintptr *result) override;
-
-private:
-    bool m_inDtor = false;
-    ShouldUseCustomFrame m_shouldUseCustomFrameFunc = nullptr;
-    bool m_recursionGuard = false;
-};
 }
 
 #endif
