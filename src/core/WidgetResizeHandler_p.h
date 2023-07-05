@@ -26,6 +26,10 @@
 #define NOMINMAX
 #endif
 #include <windows.h>
+
+#ifdef KDDW_FRONTEND_QTWIDGETS
+#include <QAbstractNativeEventFilter>
+#endif
 #endif
 
 namespace KDDockWidgets {

@@ -12,8 +12,29 @@
 #include "CustomFrameHelper_p.h"
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
+#include "core/Utils_p.h"
+#include "core/Window.h"
+#include "qtcommon/Window.h"
+
+#include <QGuiApplication>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
+
+#ifdef KDDW_FRONTEND_QT_WINDOWS
+namespace KDDockWidgets {
+Window::Ptr windowForHandle(WId id)
+{
+    const Window::List windows = Platform::instance()->windows();
+    for (Core::Window::Ptr w : windows) {
+        if (w->isVisible() && w->handle() == id) {
+            return w;
+        }
+    }
+    return nullptr;
+}
+}
+#endif
 
 CustomFrameHelper::CustomFrameHelper(ShouldUseCustomFrame func, QObject *parent)
     : QObject(parent)

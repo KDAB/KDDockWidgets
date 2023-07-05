@@ -52,21 +52,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-#ifdef KDDW_FRONTEND_QT_WINDOWS
-namespace KDDockWidgets {
-Window::Ptr windowForHandle(WId id)
-{
-    const Window::List windows = Platform::instance()->windows();
-    for (Core::Window::Ptr w : windows) {
-        if (w->isVisible() && w->handle() == id) {
-            return w;
-        }
-    }
-    return nullptr;
-}
-}
-#endif
-
 #if defined(KDDW_FRONTEND_QTQUICK)
 #include "qtcommon/View.h"
 #endif
