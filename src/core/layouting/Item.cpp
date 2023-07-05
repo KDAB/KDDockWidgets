@@ -764,7 +764,7 @@ void Item::dumpLayout(int level)
 }
 
 Item::Item(View *hostWidget, ItemContainer *parent)
-    : QObject(parent)
+    : Core::Object(parent)
     , m_isContainer(false)
     , m_parent(parent)
     , m_hostWidget(hostWidget)
@@ -773,7 +773,7 @@ Item::Item(View *hostWidget, ItemContainer *parent)
 }
 
 Item::Item(bool isContainer, View *hostWidget, ItemContainer *parent)
-    : QObject(parent)
+    : Core::Object(parent)
     , m_isContainer(isContainer)
     , m_parent(parent)
     , m_hostWidget(hostWidget)

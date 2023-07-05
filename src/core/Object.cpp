@@ -21,6 +21,9 @@ Object::Object(Object *parent)
 
 Object::~Object()
 {
+    if (m_parent)
+        m_parent->removeChild(this);
+
     aboutToBeDeleted.emit();
 
     const auto children = m_children;
@@ -36,6 +39,8 @@ void Object::setParent(Object *parent)
 
     if (m_parent)
         m_parent->removeChild(this);
+
+    m_parent = parent;
 
     if (parent)
         parent->addChild(this);

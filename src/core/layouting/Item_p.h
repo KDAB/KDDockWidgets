@@ -203,7 +203,7 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
     bool isBeingInserted = false;
 };
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject
+class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public Core::Object
 {
     Q_OBJECT
 public:
