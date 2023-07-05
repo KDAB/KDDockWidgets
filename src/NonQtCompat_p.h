@@ -32,7 +32,6 @@
 #include <QPoint>
 #include <QRect>
 #include <QList>
-#include <QObject>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -295,26 +294,6 @@ public:
     bool containsPoint(QPoint, Qt::FillRule) const
     {
         return false;
-    }
-};
-
-// Only used by wayland, no rush in porting
-class Drag
-{
-public:
-    Drag(QObject *)
-    {
-    }
-    void setPixmap(Pixmap)
-    {
-    }
-    void setMimeData(QMimeData *)
-    {
-    }
-
-    Qt::DropAction exec()
-    {
-        return {};
     }
 };
 

@@ -22,7 +22,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "Qt5Qt6Compat_p.h"
 
-#include <QObject>
 #include <QSize>
 
 #ifdef Q_OS_WIN

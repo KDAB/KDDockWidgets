@@ -27,7 +27,7 @@ class DOCKS_EXPORT Window
 public:
     using Ptr = std::shared_ptr<Core::Window>;
     using List = QVector<Ptr>;
-    typedef void (*WindowScreenChangedCallback)(QObject *context, Ptr window);
+    typedef void (*WindowScreenChangedCallback)(Core::Object *context, Ptr window);
 
     virtual ~Window();
     virtual void setWindowState(WindowState) = 0;
@@ -154,7 +154,7 @@ public:
 
     /// @brief Registers a callback to be called when window changes screen
     /// Multiple callbacks can be registered
-    virtual void onScreenChanged(QObject *context, WindowScreenChangedCallback) = 0;
+    virtual void onScreenChanged(Core::Object *context, WindowScreenChangedCallback) = 0;
 
 private:
     bool containsView(Controller *) const;

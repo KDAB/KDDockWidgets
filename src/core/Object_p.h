@@ -18,7 +18,6 @@
 #include <vector>
 
 #include <QString>
-#include <QObject>
 
 #include <kdbindings/signal.h>
 
@@ -70,18 +69,6 @@ inline T object_cast(Core::Object *o)
 
 template<typename T>
 inline T object_cast(const Core::Object *o)
-{
-    return dynamic_cast<T>(o);
-}
-
-template<typename T>
-inline T object_cast(QObject *o)
-{
-    return dynamic_cast<T>(o);
-}
-
-template<typename T>
-inline T object_cast(const QObject *o)
 {
     return dynamic_cast<T>(o);
 }

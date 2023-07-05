@@ -47,7 +47,7 @@ public:
     QSize maxSize() const override;
     QPoint fromNativePixels(QPoint) const override;
     bool isFullScreen() const override;
-    void onScreenChanged(QObject *context, WindowScreenChangedCallback) override;
+    void onScreenChanged(Core::Object *context, WindowScreenChangedCallback) override;
 
 private:
     std::shared_ptr<Core::View> m_rootView;

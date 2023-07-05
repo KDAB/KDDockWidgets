@@ -30,8 +30,6 @@ using ObjectGuard = QT_PREPEND_NAMESPACE(QPointer<T>);
 #include "Controller_p.h"
 #include "core/layouting/Item_p.h"
 
-#include <QObject>
-
 namespace KDDockWidgets::Core {
 
 template<typename T>
@@ -59,7 +57,6 @@ public:
 
     ~ObjectGuard()
     {
-        // KDDW_WARN("~ObjectGuard {}", ( void * )this);
         clear();
     }
 
@@ -91,7 +88,6 @@ public:
     void clear()
     {
         if (obj) {
-            QObject::disconnect(conn2);
             conn = KDBindings::ScopedConnection();
             obj = nullptr;
         }
@@ -114,16 +110,11 @@ private:
             conn = item->aboutToBeDeleted.connect([this] {
                 obj = nullptr;
             });
-        } else if (auto qobj = dynamic_cast<QObject *>(o)) { // TODOm4: Remove
-            conn2 = QObject::connect(qobj, &QObject::destroyed, [this] {
-                obj = nullptr;
-            });
         }
     }
 
     T *obj = nullptr;
     KDBindings::ScopedConnection conn;
-    QMetaObject::Connection conn2;
 };
 
 }

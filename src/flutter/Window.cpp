@@ -164,7 +164,7 @@ Core::Screen::Ptr Window::screen() const
     return {};
 }
 
-void Window::onScreenChanged(QObject *, WindowScreenChangedCallback)
+void Window::onScreenChanged(Core::Object *, WindowScreenChangedCallback)
 {
     KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }

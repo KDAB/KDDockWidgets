@@ -55,7 +55,7 @@ void Object::removeChild(Object *child)
 {
     auto it = std::find(m_children.begin(), m_children.end(), child);
     if (it == m_children.cend()) {
-        KDDW_ERROR("QObject::removeChild: Could not find child");
+        KDDW_ERROR("Object::removeChild: Could not find child");
     } else {
         m_children.erase(it);
     }
