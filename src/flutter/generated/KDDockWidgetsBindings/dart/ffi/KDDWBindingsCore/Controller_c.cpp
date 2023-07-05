@@ -97,10 +97,6 @@ QSize Controller_wrapper::size() const
 {
     return ::KDDockWidgets::Core::Controller::size();
 }
-QString Controller_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::Controller::tr(s, c, n);
-}
 KDDockWidgets::Core::ViewType Controller_wrapper::type() const
 {
     return ::KDDockWidgets::Core::Controller::type();
@@ -220,11 +216,6 @@ void *c_KDDockWidgets__Core__Controller__size(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->size() };
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__Controller__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Controller_wrapper::tr(s, c, n) };
-}
 // type() const
 int c_KDDockWidgets__Core__Controller__type(void *thisObj)
 {
@@ -258,7 +249,7 @@ void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

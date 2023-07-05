@@ -18,13 +18,14 @@ import '../../LibraryLoader.dart';
 
 var _dylib = Library.instance().dylib;
 
-class Controller extends QObject {
+class Controller extends KDDWBindingsCore.Object {
   Controller.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
       : super.fromCppPointer(cppPointer, needsAutoDelete) {}
   Controller.init() : super.init() {}
   factory Controller.fromCache(var cppPointer, [needsAutoDelete = false]) {
-    if (QObject.isCached(cppPointer)) {
-      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+    if (KDDWBindingsCore.Object.isCached(cppPointer)) {
+      var instance =
+          KDDWBindingsCore.Object.s_dartInstanceByCppPtr[cppPointer.address];
       if (instance != null) return instance as Controller;
     }
     return Controller.fromCppPointer(cppPointer, needsAutoDelete);
@@ -35,7 +36,7 @@ class Controller extends QObject {
             'c_KDDockWidgets__Core__Controller__constructor_ViewType_View')
         .asFunction();
     thisCpp = func(type, arg__2 == null ? ffi.nullptr : arg__2.thisCpp);
-    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   } // close()
   bool close() {
@@ -126,15 +127,15 @@ class Controller extends QObject {
   setParentView_impl(KDDWBindingsCore.View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(824))
+            cFunctionSymbolName(814))
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
 
   static void setParentView_impl_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as Controller;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as Controller;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Controller::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
@@ -168,17 +169,6 @@ class Controller extends QObject {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
-  }
-
-  static // tr(const char * s, const char * c, int n)
-      QString tr(String? s, String? c, int n) {
-    final voidstar_Func_string_string_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__Core__Controller__tr_char_char_int')
-        .asFunction();
-    ffi.Pointer<void> result = func(
-        s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
-    return QString.fromCppPointer(result, true);
   } // type() const
 
   int type() {
@@ -232,7 +222,7 @@ class Controller extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 824:
+      case 814:
         return "c_KDDockWidgets__Core__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -240,7 +230,7 @@ class Controller extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 824:
+      case 814:
         return "setParentView_impl";
     }
     throw Error();
@@ -252,9 +242,9 @@ class Controller extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback')
         .asFunction();
-    final callback824 =
+    final callback814 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback824, 824);
+    registerCallback(thisCpp, callback814, 814);
   }
 }

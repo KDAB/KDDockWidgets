@@ -111,10 +111,6 @@ KDDockWidgets::Core::SideBar *DockRegistry_wrapper::sideBarForDockWidget(const K
 {
     return ::KDDockWidgets::DockRegistry::sideBarForDockWidget(arg__1);
 }
-QString DockRegistry_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::DockRegistry::tr(s, c, n);
-}
 void DockRegistry_wrapper::unregisterDockWidget(KDDockWidgets::Core::DockWidget *arg__1)
 {
     ::KDDockWidgets::DockRegistry::unregisterDockWidget(arg__1);
@@ -268,11 +264,6 @@ void *c_KDDockWidgets__DockRegistry__sideBarForDockWidget_DockWidget(void *thisO
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     return fromPtr(thisObj)->sideBarForDockWidget(arg__1);
-}
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__DockRegistry__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::tr(s, c, n) };
 }
 // unregisterDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 void c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget(void *thisObj, void *arg__1_)

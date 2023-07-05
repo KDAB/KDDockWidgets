@@ -19,10 +19,6 @@
 #include <vector>
 #include <memory.h>
 
-#if defined(DOCKS_DEVELOPER_MODE) && defined(KDDW_FRONTEND_FLUTTER) && !defined(DARTAGNAN_BINDINGS_RUN)
-#include "qcoro/core/qcorocore.h"
-#endif
-
 namespace KDDockWidgets {
 
 namespace Core {
@@ -211,7 +207,7 @@ public:
 
     /// @brief Waits for the specified view to receive the specified event
     /// Returns true if the view received said event until timeout was reached
-    virtual KDDW_QCORO_TASK tests_waitForEvent(QObject *w, Event::Type type, int timeout = 5000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForEvent(Core::Object *w, Event::Type type, int timeout = 5000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
                                                int timeout = 5000) const = 0;

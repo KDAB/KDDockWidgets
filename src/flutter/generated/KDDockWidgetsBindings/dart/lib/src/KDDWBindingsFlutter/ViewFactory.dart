@@ -293,17 +293,6 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
     return result.thisCpp;
   }
 
-  static // tr(const char * s, const char * c, int n)
-      QString tr(String? s, String? c, int n) {
-    final voidstar_Func_string_string_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__flutter__ViewFactory__tr_char_char_int')
-        .asFunction();
-    ffi.Pointer<void> result = func(
-        s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
-    return QString.fromCppPointer(result, true);
-  }
-
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(

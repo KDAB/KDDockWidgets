@@ -789,7 +789,7 @@ void DockWidget::Private::close()
 
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
     if (Core::Group *group = this->group()) {
-        q->QObject::setParent(nullptr);
+        q->setParent(nullptr);
         q->setParentView(nullptr);
         group->removeWidget(q);
 

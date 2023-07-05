@@ -23,8 +23,9 @@ class MainWindow extends KDDWBindingsCore.Controller {
       : super.fromCppPointer(cppPointer, needsAutoDelete) {}
   MainWindow.init() : super.init() {}
   factory MainWindow.fromCache(var cppPointer, [needsAutoDelete = false]) {
-    if (QObject.isCached(cppPointer)) {
-      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+    if (KDDWBindingsCore.Object.isCached(cppPointer)) {
+      var instance =
+          KDDWBindingsCore.Object.s_dartInstanceByCppPtr[cppPointer.address];
       if (instance != null) return instance as MainWindow;
     }
     return MainWindow.fromCppPointer(cppPointer, needsAutoDelete);
@@ -39,7 +40,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .asFunction();
     thisCpp = func(view == null ? ffi.nullptr : view.thisCpp,
         uniqueName?.toNativeUtf8() ?? ffi.nullptr, options);
-    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   } // addDockWidget(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
   addDockWidget(KDDWBindingsCore.DockWidget? dockWidget, int location,
@@ -228,8 +229,8 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   static void setParentView_impl_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as MainWindow;
     if (dartInstance == null) {
       print(
           "Dart instance not found for MainWindow::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
@@ -265,17 +266,6 @@ class MainWindow extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__MainWindow__toggleOverlayOnSideBar_DockWidget')
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp);
-  }
-
-  static // tr(const char * s, const char * c, int n)
-      QString tr(String? s, String? c, int n) {
-    final voidstar_Func_string_string_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__Core__MainWindow__tr_char_char_int')
-        .asFunction();
-    ffi.Pointer<void> result = func(
-        s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
-    return QString.fromCppPointer(result, true);
   } // uniqueName() const
 
   QString uniqueName() {
@@ -297,7 +287,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 824:
+      case 814:
         return "c_KDDockWidgets__Core__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -305,7 +295,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 824:
+      case 814:
         return "setParentView_impl";
     }
     throw Error();
@@ -317,9 +307,9 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback')
         .asFunction();
-    final callback824 =
+    final callback814 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback824, 824);
+    registerCallback(thisCpp, callback814, 814);
   }
 }

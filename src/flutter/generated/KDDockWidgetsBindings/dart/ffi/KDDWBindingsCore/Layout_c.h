@@ -20,7 +20,6 @@
 #include "core/DropArea.h"
 #include <qrect.h>
 #include <qpoint.h>
-#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

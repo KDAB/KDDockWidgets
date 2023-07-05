@@ -10,11 +10,11 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <TabBar.h>
-#include <qstring.h>
 #include "core/Stack.h"
 #include <core/DockWidget.h>
 #include <qpoint.h>
 #include <core/Group.h>
+#include <qstring.h>
 #include <qrect.h>
 #include <qsize.h>
 #include <core/View.h>
@@ -55,7 +55,6 @@ public:
     KDDockWidgets::Core::Stack *stack() const;
     bool tabsAreMovable() const;
     QString text(int index) const;
-    static QString tr(const char *s, const char *c, int n);
     typedef bool (*Callback_dragCanStart)(void *, QPoint *pressPos, QPoint *pos);
     Callback_dragCanStart m_dragCanStartCallback = nullptr;
     typedef bool (*Callback_isMDI)(void *);
@@ -120,8 +119,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__stack(void *th
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TabBar__tabsAreMovable(void *thisObj);
 // KDDockWidgets::Core::TabBar::text(int index) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__text_int(void *thisObj, int index);
-// KDDockWidgets::Core::TabBar::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__TabBar__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar_Finalizer(void *cppObj);

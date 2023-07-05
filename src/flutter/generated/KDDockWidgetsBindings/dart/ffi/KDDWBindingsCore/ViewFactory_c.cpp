@@ -197,10 +197,6 @@ KDDockWidgets::Core::View *ViewFactory_wrapper::createTitleBar_nocallback(KDDock
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-QString ViewFactory_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::ViewFactory::tr(s, c, n);
-}
 ViewFactory_wrapper::~ViewFactory_wrapper()
 {
 }
@@ -301,11 +297,6 @@ void *c_KDDockWidgets__Core__ViewFactory__createTitleBar_TitleBar_View(void *thi
     auto controller = reinterpret_cast<KDDockWidgets::Core::TitleBar *>(controller_);
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->createTitleBar_nocallback(controller,parent);} else {    return targetPtr->createTitleBar(controller,parent);} }();
-}
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__ViewFactory__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ViewFactory_wrapper::tr(s, c, n) };
 }
 void c_KDDockWidgets__Core__ViewFactory__destructor(void *thisObj)
 {

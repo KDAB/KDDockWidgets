@@ -10,7 +10,6 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <core/DropIndicatorOverlay.h>
-#include <qstring.h>
 #include "core/DropArea.h"
 #include <core/View.h>
 #include <core/Group.h>
@@ -46,7 +45,6 @@ public:
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setWindowBeingDragged(bool arg__1);
-    static QString tr(const char *s, const char *c, int n);
     virtual void updateVisibility();
     virtual void updateVisibility_nocallback();
     typedef bool (*Callback_dropIndicatorVisible)(void *, KDDockWidgets::DropLocation arg__1);
@@ -100,8 +98,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__s
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::DropIndicatorOverlay::setWindowBeingDragged(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__setWindowBeingDragged_bool(void *thisObj, bool arg__1);
-// KDDockWidgets::Core::DropIndicatorOverlay::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__DropIndicatorOverlay__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::DropIndicatorOverlay::updateVisibility()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__updateVisibility(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropIndicatorOverlay__destructor(void *thisObj);

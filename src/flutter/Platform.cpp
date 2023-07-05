@@ -381,7 +381,7 @@ KDDW_QCORO_TASK Platform::tests_waitForWindowActive(std::shared_ptr<Core::Window
     co_return co_await tests_wait(1000);
 }
 
-KDDW_QCORO_TASK Platform::tests_waitForEvent(QObject *, Event::Type, int) const
+KDDW_QCORO_TASK Platform::tests_waitForEvent(Core::Object *, Event::Type, int) const
 {
     co_return co_await tests_wait(1000);
 }
@@ -423,7 +423,7 @@ KDDW_QCORO_TASK Platform::tests_waitForDeleted(Core::Controller *obj, int timeou
     if (!obj)
         co_return true;
 
-    Core::ObjectGuard<QObject> guard = obj;
+    Core::ObjectGuard<Core::Controller> guard = obj;
     int elapsed = 0;
     const int step = 100;
 

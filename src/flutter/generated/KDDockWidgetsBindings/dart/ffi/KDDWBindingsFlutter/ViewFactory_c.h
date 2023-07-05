@@ -10,8 +10,8 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <ViewFactory.h>
-#include <qstring.h>
 #include <core/View.h>
+#include <qstring.h>
 #include <core/Group.h>
 #include "core/TitleBar.h"
 #include "core/Stack.h"
@@ -56,7 +56,6 @@ public:
     virtual KDDockWidgets::Core::View *createTabBar_nocallback(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::Core::View *parent = nullptr) const;
     virtual KDDockWidgets::Core::View *createTitleBar(KDDockWidgets::Core::TitleBar *arg__1, KDDockWidgets::Core::View *parent) const;
     virtual KDDockWidgets::Core::View *createTitleBar_nocallback(KDDockWidgets::Core::TitleBar *arg__1, KDDockWidgets::Core::View *parent) const;
-    static QString tr(const char *s, const char *c, int n);
     typedef KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent);
     Callback_createClassicIndicatorWindow m_createClassicIndicatorWindowCallback = nullptr;
     typedef KDDockWidgets::flutter::IndicatorWindow *(*Callback_createClassicIndicatorWindow_flutter)(void *, KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent);
@@ -111,8 +110,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__create
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_);
 // KDDockWidgets::flutter::ViewFactory::createTitleBar(KDDockWidgets::Core::TitleBar * arg__1, KDDockWidgets::Core::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__createTitleBar_TitleBar_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::flutter::ViewFactory::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *cppObj);

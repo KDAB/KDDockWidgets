@@ -10,12 +10,12 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <core/Controller.h>
-#include <qstring.h>
 #include <core/View.h>
 #include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>
-#include <qobject.h>
+#include <Object_p.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -39,7 +39,6 @@ public:
     void setVisible(bool arg__1);
     void show() const;
     QSize size() const;
-    static QString tr(const char *s, const char *c, int n);
     KDDockWidgets::Core::ViewType type() const;
     KDDockWidgets::Core::View *view() const;
     int width() const;
@@ -81,8 +80,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__setVisible_
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__show(void *thisObj);
 // KDDockWidgets::Core::Controller::size() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__size(void *thisObj);
-// KDDockWidgets::Core::Controller::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__Controller__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::Controller::type() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__type(void *thisObj);
 // KDDockWidgets::Core::Controller::view() const

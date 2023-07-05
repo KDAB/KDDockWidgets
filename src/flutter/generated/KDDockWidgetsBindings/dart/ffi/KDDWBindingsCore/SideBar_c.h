@@ -10,7 +10,6 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <SideBar.h>
-#include <qstring.h>
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
 #include <qsize.h>
@@ -35,7 +34,6 @@ public:
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void toggleOverlay(KDDockWidgets::Core::DockWidget *arg__1);
-    static QString tr(const char *s, const char *c, int n);
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
@@ -62,8 +60,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__removeDockWidg
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::SideBar::toggleOverlay(KDDockWidgets::Core::DockWidget * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::SideBar::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__SideBar__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar_Finalizer(void *cppObj);

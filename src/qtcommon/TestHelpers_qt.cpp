@@ -136,7 +136,7 @@ bool Platform_qt::tests_waitForWindowActive(Core::Window::Ptr window, int timeou
                           timeout);
 }
 
-bool Platform_qt::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout) const
+bool Platform_qt::tests_waitForEvent(Core::Object *w, QEvent::Type type, int timeout) const
 {
     Tests::EventFilter filter(type);
     w->installEventFilter(&filter);

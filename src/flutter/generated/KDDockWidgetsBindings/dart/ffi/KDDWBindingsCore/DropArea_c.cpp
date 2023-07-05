@@ -121,10 +121,6 @@ void DropArea_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::View *
 {
     ::KDDockWidgets::Core::DropArea::setParentView_impl(parent);
 }
-QString DropArea_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::DropArea::tr(s, c, n);
-}
 void DropArea_wrapper::updateFloatingActions()
 {
     ::KDDockWidgets::Core::DropArea::updateFloatingActions();
@@ -279,11 +275,6 @@ void c_KDDockWidgets__Core__DropArea__setParentView_impl_View(void *thisObj, voi
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__DropArea__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::tr(s, c, n) };
-}
 // updateFloatingActions()
 void c_KDDockWidgets__Core__DropArea__updateFloatingActions(void *thisObj)
 {
@@ -306,7 +297,7 @@ void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

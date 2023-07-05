@@ -320,10 +320,6 @@ KDDockWidgets::Core::TitleBar *Group_wrapper::titleBar() const
 {
     return ::KDDockWidgets::Core::Group::titleBar();
 }
-QString Group_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::Group::tr(s, c, n);
-}
 void Group_wrapper::unoverlay()
 {
     ::KDDockWidgets::Core::Group::unoverlay();
@@ -709,11 +705,6 @@ void *c_KDDockWidgets__Core__Group__titleBar(void *thisObj)
 {
     return fromPtr(thisObj)->titleBar();
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__Group__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::tr(s, c, n) };
-}
 // unoverlay()
 void c_KDDockWidgets__Core__Group__unoverlay(void *thisObj)
 {
@@ -747,16 +738,16 @@ void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1391:
+    case 1371:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_dragRect>(callback);
         break;
-    case 1393:
+    case 1373:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_focusedWidgetChangedCallback>(callback);
         break;
-    case 1408:
+    case 1388:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_isFocusedChangedCallback>(callback);
         break;
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

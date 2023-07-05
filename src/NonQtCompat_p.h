@@ -13,6 +13,10 @@
 
 // The goal of this file is to provide fallback types when QtGui isn't present
 
+#if defined(DOCKS_DEVELOPER_MODE) && defined(KDDW_FRONTEND_FLUTTER) && !defined(DARTAGNAN_BINDINGS_RUN)
+#include "qcoro/core/qcorocore.h"
+#endif
+
 #ifdef QT_GUI_LIB
 #include <QCloseEvent>
 #include <QMouseEvent>
@@ -64,19 +68,6 @@ inline T object_cast(const QObject *o)
 }
 
 #else
-
-
-template<typename T>
-inline T object_cast(QObject *o)
-{
-    return dynamic_cast<T>(o);
-}
-
-template<typename T>
-inline T object_cast(const QObject *o)
-{
-    return dynamic_cast<T>(o);
-}
 
 class Event
 {
@@ -329,3 +320,16 @@ public:
 #endif
 
 }
+
+#if defined(KDDW_FRONTEND_QT)
+// Qt uses QObject, while Flutter uses Object.h
+// Qt probably could also use Object.h, but for now reduce the churn for Qt users
+namespace KDDockWidgets::Core {
+using Object = QT_PREPEND_NAMESPACE(QObject);
+}
+
+#else
+
+#include "core/Object_p.h"
+
+#endif

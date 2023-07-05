@@ -10,8 +10,8 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <core/DockWidget.h>
-#include <qstring.h>
 #include <core/View.h>
+#include <qstring.h>
 #include <KDDockWidgets.h>
 #include <FloatingWindow.h>
 #include <qrect.h>
@@ -71,7 +71,6 @@ public:
     int tabIndex() const;
     QString title() const;
     KDDockWidgets::Core::TitleBar *titleBar() const;
-    static QString tr(const char *s, const char *c, int n);
     QString uniqueName() const;
     int userType() const;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
@@ -168,8 +167,6 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DockWidget__tabIndex(voi
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DockWidget__title(void *thisObj);
 // KDDockWidgets::Core::DockWidget::titleBar() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DockWidget__titleBar(void *thisObj);
-// KDDockWidgets::Core::DockWidget::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__DockWidget__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::DockWidget::uniqueName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DockWidget__uniqueName(void *thisObj);
 // KDDockWidgets::Core::DockWidget::userType() const

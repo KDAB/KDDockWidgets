@@ -188,10 +188,6 @@ KDDockWidgets::Core::TitleBar *FloatingWindow_wrapper::titleBar() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::titleBar();
 }
-QString FloatingWindow_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::FloatingWindow::tr(s, c, n);
-}
 void FloatingWindow_wrapper::updateTitleAndIcon()
 {
     ::KDDockWidgets::Core::FloatingWindow::updateTitleAndIcon();
@@ -396,11 +392,6 @@ void *c_KDDockWidgets__Core__FloatingWindow__titleBar(void *thisObj)
 {
     return fromPtr(thisObj)->titleBar();
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__FloatingWindow__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::tr(s, c, n) };
-}
 // updateTitleAndIcon()
 void c_KDDockWidgets__Core__FloatingWindow__updateTitleAndIcon(void *thisObj)
 {
@@ -424,16 +415,16 @@ void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1476:
+    case 1455:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 1479:
+    case 1458:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1495:
+    case 1474:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

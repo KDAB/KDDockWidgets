@@ -224,17 +224,6 @@ class DockRegistry extends QObject {
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
     return KDDWBindingsCore.SideBar.fromCppPointer(result, false);
-  }
-
-  static // tr(const char * s, const char * c, int n)
-      QString tr(String? s, String? c, int n) {
-    final voidstar_Func_string_string_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__DockRegistry__tr_char_char_int')
-        .asFunction();
-    ffi.Pointer<void> result = func(
-        s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
-    return QString.fromCppPointer(result, true);
   } // unregisterDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 
   unregisterDockWidget(KDDWBindingsCore.DockWidget? arg__1) {

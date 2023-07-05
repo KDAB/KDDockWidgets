@@ -23,8 +23,9 @@ class DropArea extends KDDWBindingsCore.Layout {
       : super.fromCppPointer(cppPointer, needsAutoDelete) {}
   DropArea.init() : super.init() {}
   factory DropArea.fromCache(var cppPointer, [needsAutoDelete = false]) {
-    if (QObject.isCached(cppPointer)) {
-      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+    if (KDDWBindingsCore.Object.isCached(cppPointer)) {
+      var instance =
+          KDDWBindingsCore.Object.s_dartInstanceByCppPtr[cppPointer.address];
       if (instance != null) return instance as DropArea;
     }
     return DropArea.fromCppPointer(cppPointer, needsAutoDelete);
@@ -40,7 +41,7 @@ class DropArea extends KDDWBindingsCore.Layout {
         .asFunction();
     thisCpp = func(parent == null ? ffi.nullptr : parent.thisCpp, options,
         isMDIWrapper ? 1 : 0);
-    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   } // addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
   addDockWidget(KDDWBindingsCore.DockWidget? dw, int location,
@@ -241,8 +242,8 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   static void setParentView_impl_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as DropArea;
     if (dartInstance == null) {
       print(
           "Dart instance not found for DropArea::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
@@ -251,17 +252,6 @@ class DropArea extends KDDWBindingsCore.Layout {
     dartInstance.setParentView_impl((parent == null || parent.address == 0)
         ? null
         : KDDWBindingsCore.View.fromCppPointer(parent));
-  }
-
-  static // tr(const char * s, const char * c, int n)
-      QString tr(String? s, String? c, int n) {
-    final voidstar_Func_string_string_int func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_string_string_ffi_Int32_FFI>>(
-            'c_static_KDDockWidgets__Core__DropArea__tr_char_char_int')
-        .asFunction();
-    ffi.Pointer<void> result = func(
-        s?.toNativeUtf8() ?? ffi.nullptr, c?.toNativeUtf8() ?? ffi.nullptr, n);
-    return QString.fromCppPointer(result, true);
   } // updateFloatingActions()
 
   updateFloatingActions() {
@@ -299,7 +289,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 824:
+      case 814:
         return "c_KDDockWidgets__Core__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -307,7 +297,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 824:
+      case 814:
         return "setParentView_impl";
     }
     throw Error();
@@ -319,9 +309,9 @@ class DropArea extends KDDWBindingsCore.Layout {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback')
         .asFunction();
-    final callback824 =
+    final callback814 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback824, 824);
+    registerCallback(thisCpp, callback814, 814);
   }
 }

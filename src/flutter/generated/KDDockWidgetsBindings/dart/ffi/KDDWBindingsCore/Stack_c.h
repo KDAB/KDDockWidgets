@@ -10,7 +10,6 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include "core/Stack.h"
-#include <qstring.h>
 #include <core/DockWidget.h>
 #include <TabBar.h>
 #include <core/Group.h>
@@ -45,7 +44,6 @@ public:
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Core::TabBar *tabBar() const;
     bool tabBarAutoHide() const;
-    static QString tr(const char *s, const char *c, int n);
     typedef bool (*Callback_isMDI)(void *);
     Callback_isMDI m_isMDICallback = nullptr;
     typedef bool (*Callback_isPositionDraggable)(void *, QPoint *p);
@@ -90,8 +88,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Stack__singleDockWidge
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Stack__tabBar(void *thisObj);
 // KDDockWidgets::Core::Stack::tabBarAutoHide() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Stack__tabBarAutoHide(void *thisObj);
-// KDDockWidgets::Core::Stack::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__Stack__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Stack__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Stack__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Stack_Finalizer(void *cppObj);

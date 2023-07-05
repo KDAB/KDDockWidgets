@@ -173,10 +173,6 @@ QString TabBar_wrapper::text(int index) const
 {
     return ::KDDockWidgets::Core::TabBar::text(index);
 }
-QString TabBar_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::TabBar::tr(s, c, n);
-}
 TabBar_wrapper::~TabBar_wrapper()
 {
 }
@@ -337,11 +333,6 @@ void *c_KDDockWidgets__Core__TabBar__text_int(void *thisObj, int index)
 {
     return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->text(index) };
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__TabBar__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::tr(s, c, n) };
-}
 void c_KDDockWidgets__Core__TabBar__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
@@ -350,19 +341,19 @@ void c_KDDockWidgets__Core__TabBar__registerVirtualMethodCallback(void *ptr, voi
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1089:
+    case 1076:
         wrapper->m_dragCanStartCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_dragCanStart>(callback);
         break;
-    case 1097:
+    case 1084:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 1099:
+    case 1086:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_isWindow>(callback);
         break;
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1115:
+    case 1102:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

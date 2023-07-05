@@ -47,7 +47,7 @@ enum class ViewType {
     LAST = RubberBand // Keep last
 };
 
-class DOCKS_EXPORT Controller : public QObject // TODOm4 remove QObject
+class DOCKS_EXPORT Controller : public Object
 {
     Q_OBJECT
 public:

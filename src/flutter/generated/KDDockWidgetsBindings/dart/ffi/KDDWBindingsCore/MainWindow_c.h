@@ -10,8 +10,8 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include "core/MainWindow.h"
-#include <qstring.h>
 #include <core/View.h>
+#include <qstring.h>
 #include <core/DockWidget.h>
 #include <KDDockWidgets.h>
 #include <SideBar.h>
@@ -54,7 +54,6 @@ public:
     void setUniqueName(const QString &uniqueName);
     KDDockWidgets::Core::SideBar *sideBarForDockWidget(const KDDockWidgets::Core::DockWidget *dw) const;
     void toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget *dw);
-    static QString tr(const char *s, const char *c, int n);
     QString uniqueName() const;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
@@ -114,8 +113,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__setUniqueNa
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__MainWindow__sideBarForDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::MainWindow::toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget * dw)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__toggleOverlayOnSideBar_DockWidget(void *thisObj, void *dw_);
-// KDDockWidgets::Core::MainWindow::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__MainWindow__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::MainWindow::uniqueName() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__MainWindow__uniqueName(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__destructor(void *thisObj);

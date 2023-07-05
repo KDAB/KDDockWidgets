@@ -9,6 +9,7 @@
         {
             "name": "KDDWBindingsCore",
             "types": [
+                "KDDockWidgets::Core::Object",
                 "KDDockWidgets::Core::Controller",
                 "KDDockWidgets::Core::TitleBar",
                 "KDDockWidgets::Core::TabBar",

@@ -10,11 +10,11 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include "core/TitleBar.h"
-#include <qstring.h>
 #include <FloatingWindow.h>
 #include <core/Group.h>
 #include <core/View.h>
 #include <core/DockWidget.h>
+#include <qstring.h>
 #include "core/MainWindow.h"
 #include <TabBar.h>
 #include <qsize.h>
@@ -70,7 +70,6 @@ public:
     QString title() const;
     bool titleBarIsFocusable() const;
     void toggleMaximized();
-    static QString tr(const char *s, const char *c, int n);
     void updateButtons();
     typedef bool (*Callback_isMDI)(void *);
     Callback_isMDI m_isMDICallback = nullptr;
@@ -162,8 +161,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__title(void *
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__titleBarIsFocusable(void *thisObj);
 // KDDockWidgets::Core::TitleBar::toggleMaximized()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__toggleMaximized(void *thisObj);
-// KDDockWidgets::Core::TitleBar::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__TitleBar__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::TitleBar::updateButtons()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__updateButtons(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__destructor(void *thisObj);

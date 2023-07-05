@@ -213,10 +213,6 @@ KDDockWidgets::Core::TitleBar *DockWidget_wrapper::titleBar() const
 {
     return ::KDDockWidgets::Core::DockWidget::titleBar();
 }
-QString DockWidget_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::DockWidget::tr(s, c, n);
-}
 QString DockWidget_wrapper::uniqueName() const
 {
     return ::KDDockWidgets::Core::DockWidget::uniqueName();
@@ -488,11 +484,6 @@ void *c_KDDockWidgets__Core__DockWidget__titleBar(void *thisObj)
 {
     return fromPtr(thisObj)->titleBar();
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__DockWidget__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::tr(s, c, n) };
-}
 // uniqueName() const
 void *c_KDDockWidgets__Core__DockWidget__uniqueName(void *thisObj)
 {
@@ -511,7 +502,7 @@ void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

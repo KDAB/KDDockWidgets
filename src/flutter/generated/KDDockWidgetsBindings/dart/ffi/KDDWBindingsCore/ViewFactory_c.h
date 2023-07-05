@@ -10,8 +10,8 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <ViewFactory.h>
-#include <qstring.h>
 #include <core/View.h>
+#include <qstring.h>
 #include <core/Group.h>
 #include "core/TitleBar.h"
 #include "core/Stack.h"
@@ -54,7 +54,6 @@ public:
     virtual KDDockWidgets::Core::View *createTabBar_nocallback(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::Core::View *parent = nullptr) const;
     virtual KDDockWidgets::Core::View *createTitleBar(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent) const;
     virtual KDDockWidgets::Core::View *createTitleBar_nocallback(KDDockWidgets::Core::TitleBar *controller, KDDockWidgets::Core::View *parent) const;
-    static QString tr(const char *s, const char *c, int n);
     typedef KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent);
     Callback_createClassicIndicatorWindow m_createClassicIndicatorWindowCallback = nullptr;
     typedef KDDockWidgets::Core::View *(*Callback_createDockWidget)(void *, const QString &uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags);
@@ -105,8 +104,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createSta
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createTabBar_TabBar_View(void *thisObj, void *tabBar_, void *parent_);
 // KDDockWidgets::Core::ViewFactory::createTitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ViewFactory__createTitleBar_TitleBar_View(void *thisObj, void *controller_, void *parent_);
-// KDDockWidgets::Core::ViewFactory::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__ViewFactory__tr_char_char_int(const char *s, const char *c, int n);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ViewFactory__destructor(void *thisObj);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ViewFactory_Finalizer(void *cppObj);

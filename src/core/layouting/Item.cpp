@@ -413,7 +413,7 @@ void Item::setParentContainer(ItemContainer *parent)
     m_parent = parent;
     connectParent(parent); // Reused by the ctor too
 
-    QObject::setParent(parent);
+    setParent(parent);
 }
 
 void Item::connectParent(ItemContainer *parent)

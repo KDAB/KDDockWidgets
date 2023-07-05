@@ -220,10 +220,6 @@ void TitleBar_wrapper::toggleMaximized()
 {
     ::KDDockWidgets::Core::TitleBar::toggleMaximized();
 }
-QString TitleBar_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::TitleBar::tr(s, c, n);
-}
 void TitleBar_wrapper::updateButtons()
 {
     ::KDDockWidgets::Core::TitleBar::updateButtons();
@@ -447,11 +443,6 @@ void c_KDDockWidgets__Core__TitleBar__toggleMaximized(void *thisObj)
 {
     fromPtr(thisObj)->toggleMaximized();
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__TitleBar__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::tr(s, c, n) };
-}
 // updateButtons()
 void c_KDDockWidgets__Core__TitleBar__updateButtons(void *thisObj)
 {
@@ -465,16 +456,16 @@ void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1038:
+    case 1026:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 1042:
+    case 1030:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1061:
+    case 1049:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

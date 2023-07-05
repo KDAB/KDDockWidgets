@@ -141,10 +141,6 @@ void MainWindow_wrapper::toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget 
 {
     ::KDDockWidgets::Core::MainWindow::toggleOverlayOnSideBar(dw);
 }
-QString MainWindow_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::MainWindow::tr(s, c, n);
-}
 QString MainWindow_wrapper::uniqueName() const
 {
     return ::KDDockWidgets::Core::MainWindow::uniqueName();
@@ -315,11 +311,6 @@ void c_KDDockWidgets__Core__MainWindow__toggleOverlayOnSideBar_DockWidget(void *
     auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
     fromPtr(thisObj)->toggleOverlayOnSideBar(dw);
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__MainWindow__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::MainWindow_wrapper::tr(s, c, n) };
-}
 // uniqueName() const
 void *c_KDDockWidgets__Core__MainWindow__uniqueName(void *thisObj)
 {
@@ -333,7 +324,7 @@ void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::MainWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -10,7 +10,6 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include "core/DropArea.h"
-#include <qstring.h>
 #include <core/View.h>
 #include <Item_p.h>
 #include <core/DropIndicatorOverlay.h>
@@ -19,8 +18,8 @@
 #include <core/Group.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include <FloatingWindow.h>
 #include "core/MainWindow.h"
+#include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -50,7 +49,6 @@ public:
     void removeHover();
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
-    static QString tr(const char *s, const char *c, int n);
     void updateFloatingActions();
     bool validateInputs(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group *relativeToFrame, KDDockWidgets::InitialOption option) const;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
@@ -101,8 +99,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__mdiDockWidge
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__removeHover(void *thisObj);
 // KDDockWidgets::Core::DropArea::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
-// KDDockWidgets::Core::DropArea::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__DropArea__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::DropArea::updateFloatingActions()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DropArea__updateFloatingActions(void *thisObj);
 // KDDockWidgets::Core::DropArea::validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const

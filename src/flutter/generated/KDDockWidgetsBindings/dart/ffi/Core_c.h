@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include <KDDockWidgets.h>
+#include <Object_p.h>
 
 extern "C" {
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core_Finalizer(void *cppObj);

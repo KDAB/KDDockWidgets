@@ -548,7 +548,7 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
     group->unoverlay();
 
     if (deleteFrame) {
-        overlayedDockWidget->QObject::setParent(nullptr);
+        overlayedDockWidget->setParent(nullptr);
         overlayedDockWidget->d->m_removingFromOverlay = true; // TODOm4: Remove soon
         overlayedDockWidget->setParentView(nullptr);
         overlayedDockWidget->d->m_removingFromOverlay = false;

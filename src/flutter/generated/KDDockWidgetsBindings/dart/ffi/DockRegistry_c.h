@@ -10,12 +10,12 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <DockRegistry.h>
-#include <qstring.h>
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
 #include <FloatingWindow.h>
 #include <core/Layout.h>
 #include <core/Group.h>
+#include <qstring.h>
 #include <Item_p.h>
 #include <SideBar.h>
 #include <qobject.h>
@@ -46,7 +46,6 @@ public:
     void registerMainWindow(KDDockWidgets::Core::MainWindow *arg__1);
     static KDDockWidgets::DockRegistry *self();
     KDDockWidgets::Core::SideBar *sideBarForDockWidget(const KDDockWidgets::Core::DockWidget *arg__1) const;
-    static QString tr(const char *s, const char *c, int n);
     void unregisterDockWidget(KDDockWidgets::Core::DockWidget *arg__1);
     void unregisterFloatingWindow(KDDockWidgets::Core::FloatingWindow *arg__1);
     void unregisterGroup(KDDockWidgets::Core::Group *arg__1);
@@ -97,8 +96,6 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__registerMainWin
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__DockRegistry__self();
 // KDDockWidgets::DockRegistry::sideBarForDockWidget(const KDDockWidgets::Core::DockWidget * arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__DockRegistry__sideBarForDockWidget_DockWidget(void *thisObj, void *arg__1_);
-// KDDockWidgets::DockRegistry::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__DockRegistry__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::DockRegistry::unregisterDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::unregisterFloatingWindow(KDDockWidgets::Core::FloatingWindow * arg__1)

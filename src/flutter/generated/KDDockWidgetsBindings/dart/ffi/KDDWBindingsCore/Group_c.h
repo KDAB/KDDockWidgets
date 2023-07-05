@@ -10,7 +10,6 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <core/Group.h>
-#include <qstring.h>
 #include <core/View.h>
 #include <core/DockWidget.h>
 #include <KDDockWidgets.h>
@@ -19,6 +18,7 @@
 #include <TabBar.h>
 #include <qpoint.h>
 #include "core/TitleBar.h"
+#include <qstring.h>
 #include "core/MainWindow.h"
 #include <Item_p.h>
 #include <qrect.h>
@@ -100,7 +100,6 @@ public:
     KDDockWidgets::Core::TabBar *tabBar() const;
     QString title() const;
     KDDockWidgets::Core::TitleBar *titleBar() const;
-    static QString tr(const char *s, const char *c, int n);
     void unoverlay();
     void updateFloatingActions();
     void updateTitleAndIcon();
@@ -246,8 +245,6 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__tabBar(void *th
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__title(void *thisObj);
 // KDDockWidgets::Core::Group::titleBar() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__titleBar(void *thisObj);
-// KDDockWidgets::Core::Group::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__Group__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::Group::unoverlay()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Group__unoverlay(void *thisObj);
 // KDDockWidgets::Core::Group::updateFloatingActions()

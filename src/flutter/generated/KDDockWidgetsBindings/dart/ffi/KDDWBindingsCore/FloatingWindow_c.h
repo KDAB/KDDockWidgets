@@ -10,7 +10,6 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <FloatingWindow.h>
-#include <qstring.h>
 #include <qrect.h>
 #include "core/MainWindow.h"
 #include <core/Group.h>
@@ -64,7 +63,6 @@ public:
     bool supportsMaximizeButton() const;
     bool supportsMinimizeButton() const;
     KDDockWidgets::Core::TitleBar *titleBar() const;
-    static QString tr(const char *s, const char *c, int n);
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
     int userType() const;
@@ -142,8 +140,6 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__support
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__supportsMinimizeButton(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::titleBar() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__titleBar(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::tr(const char * s, const char * c, int n)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__FloatingWindow__tr_char_char_int(const char *s, const char *c, int n);
 // KDDockWidgets::Core::FloatingWindow::updateTitleAndIcon()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__updateTitleAndIcon(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::updateTitleBarVisibility()

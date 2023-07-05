@@ -133,10 +133,6 @@ bool Stack_wrapper::tabBarAutoHide() const
 {
     return ::KDDockWidgets::Core::Stack::tabBarAutoHide();
 }
-QString Stack_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::Stack::tr(s, c, n);
-}
 Stack_wrapper::~Stack_wrapper()
 {
 }
@@ -238,11 +234,6 @@ bool c_KDDockWidgets__Core__Stack__tabBarAutoHide(void *thisObj)
 {
     return fromPtr(thisObj)->tabBarAutoHide();
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__Stack__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::tr(s, c, n) };
-}
 void c_KDDockWidgets__Core__Stack__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
@@ -251,19 +242,19 @@ void c_KDDockWidgets__Core__Stack__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1136:
+    case 1122:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isMDI>(callback);
         break;
-    case 1137:
+    case 1123:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isPositionDraggable>(callback);
         break;
-    case 1139:
+    case 1125:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isWindow>(callback);
         break;
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1150:
+    case 1136:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

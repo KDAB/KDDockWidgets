@@ -23,8 +23,9 @@ class Separator extends KDDWBindingsCore.Controller {
       : super.fromCppPointer(cppPointer, needsAutoDelete) {}
   Separator.init() : super.init() {}
   factory Separator.fromCache(var cppPointer, [needsAutoDelete = false]) {
-    if (QObject.isCached(cppPointer)) {
-      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+    if (KDDWBindingsCore.Object.isCached(cppPointer)) {
+      var instance =
+          KDDWBindingsCore.Object.s_dartInstanceByCppPtr[cppPointer.address];
       if (instance != null) return instance as Separator;
     }
     return Separator.fromCppPointer(cppPointer, needsAutoDelete);
@@ -35,7 +36,7 @@ class Separator extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Separator__constructor_View')
         .asFunction();
     thisCpp = func(host == null ? ffi.nullptr : host.thisCpp);
-    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   } // isBeingDragged() const
   bool isBeingDragged() {
@@ -148,8 +149,8 @@ class Separator extends KDDWBindingsCore.Controller {
 
   static void setParentView_impl_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as Separator;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as Separator;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Separator::setParentView_impl(KDDockWidgets::Core::View * parent)! (${thisCpp.address})");
@@ -178,7 +179,7 @@ class Separator extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 824:
+      case 814:
         return "c_KDDockWidgets__Core__Separator__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -186,7 +187,7 @@ class Separator extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 824:
+      case 814:
         return "setParentView_impl";
     }
     throw Error();
@@ -198,9 +199,9 @@ class Separator extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback')
         .asFunction();
-    final callback824 =
+    final callback814 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback824, 824);
+    registerCallback(thisCpp, callback814, 814);
   }
 }

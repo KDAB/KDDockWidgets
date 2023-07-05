@@ -77,10 +77,6 @@ void SideBar_wrapper::toggleOverlay(KDDockWidgets::Core::DockWidget *arg__1)
 {
     ::KDDockWidgets::Core::SideBar::toggleOverlay(arg__1);
 }
-QString SideBar_wrapper::tr(const char *s, const char *c, int n)
-{
-    return ::KDDockWidgets::Core::SideBar::tr(s, c, n);
-}
 SideBar_wrapper::~SideBar_wrapper()
 {
 }
@@ -155,11 +151,6 @@ void c_KDDockWidgets__Core__SideBar__toggleOverlay_DockWidget(void *thisObj, voi
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     fromPtr(thisObj)->toggleOverlay(arg__1);
 }
-// tr(const char * s, const char * c, int n)
-void *c_static_KDDockWidgets__Core__SideBar__tr_char_char_int(const char *s, const char *c, int n)
-{
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::SideBar_wrapper::tr(s, c, n) };
-}
 void c_KDDockWidgets__Core__SideBar__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
@@ -168,7 +159,7 @@ void c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback(void *ptr, vo
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 824:
+    case 814:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::SideBar_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

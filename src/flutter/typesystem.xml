@@ -45,6 +45,7 @@
         <enum-type name="DockWidgetOption" flags="DockWidgetOptions" />
 
         <namespace-type name="Core">
+            <object-type name="Object" />
             <value-type name="CreateViewOptions" />
             <object-type name="DelayedCall" />
             <object-type name="Platform" />
