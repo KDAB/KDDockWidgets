@@ -61,7 +61,7 @@
         {
             "name": "dev-flutter-asan",
             "displayName": "dev-flutter-asan",
-            "binaryDir": "${sourceDir}/build-dev-asan-flutter",
+            "binaryDir": "${sourceDir}/build-dev-flutter-asan",
             "cacheVariables": {
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'"
             },
