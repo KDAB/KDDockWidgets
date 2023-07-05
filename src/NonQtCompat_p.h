@@ -27,6 +27,7 @@
 #include <QPolygon>
 #include <QDrag>
 #include <QTimer>
+#include <QObject>
 #else
 #include <QPoint>
 #include <QRect>

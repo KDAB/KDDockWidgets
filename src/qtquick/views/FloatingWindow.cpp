@@ -190,12 +190,6 @@ QWindow *FloatingWindow::candidateParentWindow() const
 
 void FloatingWindow::init()
 {
-    /* for debug:
-      connect(m_quickWindow, &QQuickView::focusObjectChanged, this, [this] (QObject *object) {
-        qDebug() << "Focus object changed to " << object << this << m_quickWindow;
-    });*/
-
-
     if (QWindow *transientParent = candidateParentWindow()) {
         m_quickWindow->setTransientParent(candidateParentWindow());
         // This mimics the QWidget behaviour, where we not only have a transient parent but also

@@ -28,8 +28,6 @@
 #include "core/DockWidget_p.h"
 #include "core/ScopedValueRollback_p.h"
 
-#include <QObject>
-
 #ifdef KDDW_FRONTEND_QT
 #include "../qtcommon/DragControllerWayland_p.h"
 #ifdef KDDW_FRONTEND_QTWIDGETS
@@ -49,12 +47,12 @@ using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets::Core {
 ///@brief Custom mouse grabber, for platforms that don't support grabbing the mouse
-class FallbackMouseGrabber : public QObject,
+class FallbackMouseGrabber : public Core::Object,
                              public EventFilterInterface /// clazy:exclude=missing-qobject-macro
 {
 public:
-    explicit FallbackMouseGrabber(QObject *parent)
-        : QObject(parent)
+    explicit FallbackMouseGrabber(Core::Object *parent)
+        : Core::Object(parent)
     {
     }
 
@@ -103,7 +101,7 @@ FallbackMouseGrabber::~FallbackMouseGrabber()
 }
 
 State::State(MinimalStateMachine *parent)
-    : QObject(parent)
+    : Core::Object(parent)
     , m_machine(parent)
 {
 }
@@ -115,8 +113,8 @@ bool State::isCurrentState() const
     return m_machine->currentState() == this;
 }
 
-MinimalStateMachine::MinimalStateMachine(QObject *parent)
-    : QObject(parent)
+MinimalStateMachine::MinimalStateMachine(Core::Object *parent)
+    : Core::Object(parent)
 {
 }
 
@@ -552,7 +550,7 @@ bool StateInternalMDIDragging::handleMouseDoubleClick()
     return false;
 }
 
-DragController::DragController(QObject *parent)
+DragController::DragController(Core::Object *parent)
     : MinimalStateMachine(parent)
 {
     KDDW_TRACE("DragController CTOR");

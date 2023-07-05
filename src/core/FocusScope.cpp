@@ -29,9 +29,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-// Our Private inherits from QObject since FocusScope can't (Since Frame is already QObject)
-class FocusScope::Private : public QObject // clazy:exclude=missing-qobject-macro (breaks unity
-                                           // build with earlier cmake due to including .moc here.)
+class FocusScope::Private
 {
 public:
     Private(FocusScope *qq, View *thisView)
@@ -54,7 +52,7 @@ public:
             && m_lastFocusedInScope->is(ViewType::Stack);
     }
 
-    ~Private() override;
+    ~Private();
 
     void setIsFocused(bool);
     void onFocusedViewChanged(std::shared_ptr<View> view);

@@ -53,7 +53,7 @@ class TitleBar;
  *
  * @sa Config::setViewFactory()
  */
-class DOCKS_EXPORT ViewFactory : public QObject
+class DOCKS_EXPORT ViewFactory : public Core::Object
 {
     Q_OBJECT
 public:

@@ -35,7 +35,7 @@ class MinimalStateMachine;
 class DropArea;
 class Draggable;
 
-class State : public QObject
+class State : public Core::Object
 {
     Q_OBJECT
 public:
@@ -56,11 +56,11 @@ private:
     MinimalStateMachine *const m_machine;
 };
 
-class MinimalStateMachine : public QObject
+class MinimalStateMachine : public Core::Object
 {
     Q_OBJECT
 public:
-    explicit MinimalStateMachine(QObject *parent = nullptr);
+    explicit MinimalStateMachine(Core::Object *parent = nullptr);
 
     State *currentState() const;
     void setCurrentState(State *);
@@ -131,7 +131,7 @@ private:
     friend class StateDropped;
     friend class StateDraggingWayland;
 
-    DragController(QObject * = nullptr);
+    explicit DragController(Core::Object * = nullptr);
     std::shared_ptr<Core::View> qtTopLevelUnderCursor() const;
     Core::Draggable *draggableForView(Core::View *) const;
     bool onDnDEvent(Core::View *, Event *) override;

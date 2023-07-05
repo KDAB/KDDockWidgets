@@ -1078,7 +1078,7 @@ bool ItemBoxContainer::checkSanity()
         }
 
         if (item->parent() != this) {
-            KDDW_ERROR("Invalid QObject parent for item={}, is={}, expected={}", ( void * )item, ( void * )item->parent(), ( void * )this);
+            KDDW_ERROR("Invalid Object parent for item={}, is={}, expected={}", ( void * )item, ( void * )item->parent(), ( void * )this);
             return false;
         }
 

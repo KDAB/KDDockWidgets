@@ -35,7 +35,7 @@ namespace Core {
 class FloatingWindow;
 }
 
-class DOCKS_EXPORT WidgetResizeHandler : public QObject, public Core::EventFilterInterface
+class DOCKS_EXPORT WidgetResizeHandler : public Core::Object, public Core::EventFilterInterface
 {
     Q_OBJECT
 public:
@@ -113,7 +113,7 @@ public:
      * @param isTopLevelResizer If true, then this resize handler is for top-level widgets (aka
      * windows) if false, they are docked (like for example resizing docked MDI widgets, or the
      * sidebar overlay)
-     * @param target The target widget that will be resized. Also acts as parent QObject.
+     * @param target The target widget that will be resized. Also acts as parent Object.
      */
     explicit WidgetResizeHandler(EventFilterMode, WindowMode, Core::View *target);
     ~WidgetResizeHandler() override;

@@ -746,11 +746,11 @@ void DockWidget::Private::updateFloatAction()
     if (q->isFloating()) {
         floatAction->setEnabled(m_lastPosition->isValid());
         floatAction->setChecked(true);
-        floatAction->setToolTip(tr("Dock"));
+        floatAction->setToolTip(q->tr("Dock"));
     } else {
         floatAction->setEnabled(true);
         floatAction->setChecked(false);
-        floatAction->setToolTip(tr("Detach"));
+        floatAction->setToolTip(q->tr("Detach"));
     }
 }
 
@@ -1066,7 +1066,7 @@ void DockWidget::Private::setIsOpen(bool is)
 
 #ifdef KDDW_FRONTEND_QT
         // Transform into a FloatingWindow if this will be a regular floating dock widget.
-        QTimer::singleShot(0, this, &DockWidget::Private::maybeMorphIntoFloatingWindow);
+        QTimer::singleShot(0, q, [this] { maybeMorphIntoFloatingWindow(); });
 #endif
     }
 

@@ -14,7 +14,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include <QObject>
 #include <QVector>
 #include <QRect>
 #include <QSize>

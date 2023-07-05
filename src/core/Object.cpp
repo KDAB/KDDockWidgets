@@ -21,6 +21,8 @@ Object::Object(Object *parent)
 
 Object::~Object()
 {
+    aboutToBeDeleted.emit();
+
     const auto children = m_children;
     for (Object *child : children) {
         delete child;

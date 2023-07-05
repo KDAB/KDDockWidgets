@@ -18,7 +18,6 @@
 #include "kddockwidgets/core/EventFilterInterface.h"
 
 #include <QVector>
-#include <QObject>
 
 #include <unordered_map>
 
@@ -48,7 +47,7 @@ struct WindowBeingDragged;
 
 class MainWindowMDI;
 
-class DOCKS_EXPORT DockRegistry : public QObject, public Core::EventFilterInterface
+class DOCKS_EXPORT DockRegistry : public Core::Object, public Core::EventFilterInterface
 {
     Q_OBJECT
 
@@ -237,7 +236,7 @@ public:
 
 private:
     friend class Core::FocusScope;
-    explicit DockRegistry(QObject *parent = nullptr);
+    explicit DockRegistry(Core::Object *parent = nullptr);
     bool onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *);
     void onFocusedViewChanged(std::shared_ptr<Core::View> view);
     void maybeDelete();

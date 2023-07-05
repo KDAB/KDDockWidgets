@@ -106,8 +106,8 @@ private:
         clear();
         obj = o;
 
-        if (auto c = dynamic_cast<Core::Controller *>(o)) {
-            conn = c->dptr()->aboutToBeDeleted.connect([this] {
+        if (auto object = dynamic_cast<Core::Object *>(o)) {
+            conn = object->aboutToBeDeleted.connect([this] {
                 obj = nullptr;
             });
         } else if (auto item = dynamic_cast<Core::Item *>(o)) { // TODOm4: Remove

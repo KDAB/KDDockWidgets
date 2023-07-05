@@ -29,7 +29,6 @@ namespace Core {
 class SideBar;
 
 class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidget::Private
-    : public QObject /// clazy:exclude=missing-qobject-macro
 {
 public:
     /// RAII class to help updating actions exactly once, otherwise they can be triggered in the
@@ -56,7 +55,7 @@ public:
     Private(const QString &dockName, DockWidgetOptions options_,
             LayoutSaverOptions layoutSaverOptions_, DockWidget *qq);
 
-    ~Private() override;
+    ~Private();
 
     void init()
     {

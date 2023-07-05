@@ -39,8 +39,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-DockRegistry::DockRegistry(QObject *parent)
-    : QObject(parent)
+DockRegistry::DockRegistry(Core::Object *parent)
+    : Core::Object(parent)
     , d(new Private())
 {
     Platform::instance()->installGlobalEventFilter(this);
