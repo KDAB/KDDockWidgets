@@ -15,6 +15,7 @@
 
 #include <QCloseEvent>
 #include <QVBoxLayout>
+#include <QAction>
 
 /**
  * @file
@@ -94,10 +95,10 @@ QWidget *DockWidget::widget() const
 
 QAction *DockWidget::toggleAction() const
 {
-    return reinterpret_cast<QAction *>(m_dockWidget->toggleAction());
+    return dynamic_cast<QAction *>(m_dockWidget->toggleAction());
 }
 
 QAction *DockWidget::floatAction() const
 {
-    return reinterpret_cast<QAction *>(m_dockWidget->floatAction());
+    return dynamic_cast<QAction *>(m_dockWidget->floatAction());
 }

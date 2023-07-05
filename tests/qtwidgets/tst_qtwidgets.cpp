@@ -156,6 +156,7 @@ private Q_SLOTS:
     void tst_restoreWithIncompleteFactory();
     void tst_deleteDockWidget();
     void tst_standaloneTitleBar();
+    void tst_widgetAddQAction();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1712,6 +1713,16 @@ void TestQtWidgets::tst_standaloneTitleBar()
     QVERIFY(window.isVisible());
     titleBar.asTitleBarController()->onCloseClicked();
     QVERIFY(!window.isVisible());
+}
+
+void TestQtWidgets::tst_widgetAddQAction()
+{
+    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
+
+    QWidget w;
+    w.addAction(dock1->toggleAction());
+
+    delete dock1;
 }
 
 void TestQtWidgets::tstQGraphicsProxyWidget()
