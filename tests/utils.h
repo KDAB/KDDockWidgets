@@ -298,6 +298,16 @@ createSimpleNestedMainWindow(Core::DockWidget **centralDock,
     return window;
 }
 
+inline QString resourceFileName(const QString &name)
+{
+#ifdef KDDW_FRONTEND_QT
+    return QStringLiteral(":/%1").arg(name);
+#else
+    const QString srcDir = KDDW_SRC_DIR;
+    return QStringLiteral("%1/tests/%2").arg(srcDir, name);
+#endif
+}
+
 }
 
 }

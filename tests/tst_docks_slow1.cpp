@@ -203,7 +203,7 @@ KDDW_QCORO_TASK tst_startHidden2()
 KDDW_QCORO_TASK tst_invalidJSON()
 {
     auto func = [](QString layoutFileName, int numDockWidgets, QString expectedWarning, bool expectedResult) -> KDDW_QCORO_TASK {
-        const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
+        const QString absoluteLayoutFileName = resourceFileName(QStringLiteral("layouts/%1").arg(layoutFileName));
 
         EnsureTopLevelsDeleted e;
         auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None, "MyMainWindow1");

@@ -623,7 +623,7 @@ KDDW_QCORO_TASK tst_layoutEqually()
     dock3->setAffinities({ mainWindowId });
 
     LayoutSaver restorer;
-    restorer.restoreFromFile(":/layouts/layoutEquallyCrash.json");
+    restorer.restoreFromFile(resourceFileName("layouts/layoutEquallyCrash.json"));
 
     m->layoutEqually();
 
@@ -3349,7 +3349,7 @@ KDDW_QCORO_TASK tst_sizeConstraintWarning()
 
 KDDW_QCORO_TASK tst_stuckSeparator()
 {
-    const QString absoluteLayoutFileName = QStringLiteral(":/layouts/stuck-separator.json");
+    const QString absoluteLayoutFileName = resourceFileName(QStringLiteral("layouts/stuck-separator.json"));
 
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
@@ -5012,7 +5012,7 @@ KDDW_QCORO_TASK tst_restoreFlagsFromVersion16()
     auto dock1 = createDockWidget("1");
 
     LayoutSaver saver;
-    saver.restoreFromFile(":/layouts/1.6layoutWithoutFloatingWindowFlags.json");
+    saver.restoreFromFile(resourceFileName("layouts/1.6layoutWithoutFloatingWindowFlags.json"));
 
     auto floatingWindow = dock1->floatingWindow();
     CHECK(floatingWindow);
