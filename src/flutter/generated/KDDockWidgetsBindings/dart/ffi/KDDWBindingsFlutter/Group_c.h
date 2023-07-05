@@ -14,8 +14,8 @@
 #include <core/View.h>
 #include <qsize.h>
 #include <qrect.h>
-#include <qstring.h>
 #include <qpoint.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -43,6 +43,8 @@ public:
     virtual bool hasFocus_nocallback() const;
     virtual void hide();
     virtual void hide_nocallback();
+    virtual void init();
+    virtual void init_nocallback();
     virtual bool isActiveWindow() const;
     virtual bool isActiveWindow_nocallback() const;
     virtual bool isExplicitlyHidden() const;
@@ -161,6 +163,8 @@ public:
     Callback_hasFocus m_hasFocusCallback = nullptr;
     typedef void (*Callback_hide)(void *);
     Callback_hide m_hideCallback = nullptr;
+    typedef void (*Callback_init)(void *);
+    Callback_init m_initCallback = nullptr;
     typedef bool (*Callback_isActiveWindow)(void *);
     Callback_isActiveWindow m_isActiveWindowCallback = nullptr;
     typedef bool (*Callback_isExplicitlyHidden)(void *);
@@ -287,6 +291,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__grabMouse(voi
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__hasFocus(void *thisObj);
 // KDDockWidgets::flutter::Group::hide()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__hide(void *thisObj);
+// KDDockWidgets::flutter::Group::init()
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__init(void *thisObj);
 // KDDockWidgets::flutter::Group::isActiveWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isActiveWindow(void *thisObj);
 // KDDockWidgets::flutter::Group::isExplicitlyHidden() const

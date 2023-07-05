@@ -12,10 +12,10 @@
 #include <SideBar.h>
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
-#include <qsize.h>
-#include <core/View.h>
 #include <qrect.h>
 #include <qpoint.h>
+#include <core/View.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

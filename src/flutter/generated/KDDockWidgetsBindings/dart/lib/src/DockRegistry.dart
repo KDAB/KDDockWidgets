@@ -18,13 +18,14 @@ import '../LibraryLoader.dart';
 
 var _dylib = Library.instance().dylib;
 
-class DockRegistry extends QObject {
+class DockRegistry extends KDDWBindingsCore.Object {
   DockRegistry.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
       : super.fromCppPointer(cppPointer, needsAutoDelete) {}
   DockRegistry.init() : super.init() {}
   factory DockRegistry.fromCache(var cppPointer, [needsAutoDelete = false]) {
-    if (QObject.isCached(cppPointer)) {
-      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+    if (KDDWBindingsCore.Object.isCached(cppPointer)) {
+      var instance =
+          KDDWBindingsCore.Object.s_dartInstanceByCppPtr[cppPointer.address];
       if (instance != null) return instance as DockRegistry;
     }
     return DockRegistry.fromCppPointer(cppPointer, needsAutoDelete);

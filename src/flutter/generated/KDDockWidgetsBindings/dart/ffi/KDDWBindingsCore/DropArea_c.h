@@ -18,8 +18,8 @@
 #include <core/Group.h>
 #include <qsize.h>
 #include <qpoint.h>
-#include "core/MainWindow.h"
 #include <FloatingWindow.h>
+#include "core/MainWindow.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

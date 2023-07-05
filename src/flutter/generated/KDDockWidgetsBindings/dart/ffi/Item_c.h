@@ -16,7 +16,7 @@
 #include <qrect.h>
 #include <core/Group.h>
 #include <qstring.h>
-#include <qobject.h>
+#include <Object_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Item_wrapper : public ::KDDockWidgets::Core::Item

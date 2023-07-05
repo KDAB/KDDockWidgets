@@ -17,9 +17,9 @@
 #include <qstring.h>
 #include "core/MainWindow.h"
 #include <TabBar.h>
-#include <qsize.h>
 #include <qrect.h>
 #include <qpoint.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

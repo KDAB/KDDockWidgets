@@ -135,7 +135,7 @@ class SideBar extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 814:
+      case 721:
         return "c_KDDockWidgets__Core__SideBar__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -143,7 +143,7 @@ class SideBar extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 814:
+      case 721:
         return "setParentView_impl";
     }
     throw Error();
@@ -155,9 +155,9 @@ class SideBar extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback')
         .asFunction();
-    final callback814 =
+    final callback721 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback814, 814);
+    registerCallback(thisCpp, callback721, 721);
   }
 }

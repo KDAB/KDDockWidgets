@@ -18,7 +18,7 @@
 #include <qstring.h>
 #include <Item_p.h>
 #include <SideBar.h>
-#include <qobject.h>
+#include <Object_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockRegistry_wrapper : public ::KDDockWidgets::DockRegistry

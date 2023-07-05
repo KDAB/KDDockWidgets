@@ -14,8 +14,8 @@
 #include <qrect.h>
 #include <qpoint.h>
 #include <qsize.h>
-#include <Object_p.h>
 #include <qstring.h>
+#include <Object_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

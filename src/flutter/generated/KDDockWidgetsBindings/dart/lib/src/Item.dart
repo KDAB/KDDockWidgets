@@ -18,13 +18,14 @@ import '../LibraryLoader.dart';
 
 var _dylib = Library.instance().dylib;
 
-class Item extends QObject {
+class Item extends KDDWBindingsCore.Object {
   Item.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
       : super.fromCppPointer(cppPointer, needsAutoDelete) {}
   Item.init() : super.init() {}
   factory Item.fromCache(var cppPointer, [needsAutoDelete = false]) {
-    if (QObject.isCached(cppPointer)) {
-      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+    if (KDDWBindingsCore.Object.isCached(cppPointer)) {
+      var instance =
+          KDDWBindingsCore.Object.s_dartInstanceByCppPtr[cppPointer.address];
       if (instance != null) return instance as Item;
     }
     return Item.fromCppPointer(cppPointer, needsAutoDelete);
@@ -107,7 +108,7 @@ class Item extends QObject {
             'c_KDDockWidgets__Core__Item__constructor_View')
         .asFunction();
     thisCpp = func(hostWidget == null ? ffi.nullptr : hostWidget.thisCpp);
-    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   } // asGroupController() const
   KDDWBindingsCore.Group asGroupController() {
@@ -122,13 +123,14 @@ class Item extends QObject {
   bool checkSanity() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(718))
+            cFunctionSymbolName(644))
         .asFunction();
     return func(thisCpp) != 0;
   }
 
   static int checkSanity_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::checkSanity()! (${thisCpp.address})");
@@ -141,13 +143,14 @@ class Item extends QObject {
   dumpLayout({int level = 0}) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(724))
+            cFunctionSymbolName(645))
         .asFunction();
     func(thisCpp, level);
   }
 
   static void dumpLayout_calledFromC(ffi.Pointer<void> thisCpp, int level) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::dumpLayout(int level)! (${thisCpp.address})");
@@ -234,14 +237,15 @@ class Item extends QObject {
   bool isVisible({bool excludeBeingInserted = false}) {
     final bool_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(740))
+            cFunctionSymbolName(655))
         .asFunction();
     return func(thisCpp, excludeBeingInserted ? 1 : 0) != 0;
   }
 
   static int isVisible_calledFromC(
       ffi.Pointer<void> thisCpp, int excludeBeingInserted) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::isVisible(bool excludeBeingInserted) const! (${thisCpp.address})");
@@ -305,14 +309,15 @@ class Item extends QObject {
   QSize maxSizeHint() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(749))
+            cFunctionSymbolName(661))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
   }
 
   static ffi.Pointer<void> maxSizeHint_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::maxSizeHint() const! (${thisCpp.address})");
@@ -325,14 +330,15 @@ class Item extends QObject {
   QSize minSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(750))
+            cFunctionSymbolName(662))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return QSize.fromCppPointer(result, true);
   }
 
   static ffi.Pointer<void> minSize_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::minSize() const! (${thisCpp.address})");
@@ -428,14 +434,15 @@ class Item extends QObject {
   setGeometry_recursive(QRect rect) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(767))
+            cFunctionSymbolName(676))
         .asFunction();
     func(thisCpp, rect == null ? ffi.nullptr : rect.thisCpp);
   }
 
   static void setGeometry_recursive_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void> rect) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::setGeometry_recursive(QRect rect)! (${thisCpp.address})");
@@ -455,14 +462,15 @@ class Item extends QObject {
   setHostView(KDDWBindingsCore.View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(769))
+            cFunctionSymbolName(678))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
 
   static void setHostView_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::setHostView(KDDockWidgets::Core::View * arg__1)! (${thisCpp.address})");
@@ -476,13 +484,14 @@ class Item extends QObject {
   setIsVisible(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(770))
+            cFunctionSymbolName(679))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
 
   static void setIsVisible_calledFromC(ffi.Pointer<void> thisCpp, int arg__1) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::setIsVisible(bool arg__1)! (${thisCpp.address})");
@@ -559,13 +568,14 @@ class Item extends QObject {
   updateWidgetGeometries() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(784))
+            cFunctionSymbolName(691))
         .asFunction();
     func(thisCpp);
   }
 
   static void updateWidgetGeometries_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::updateWidgetGeometries()! (${thisCpp.address})");
@@ -577,13 +587,14 @@ class Item extends QObject {
   int visibleCount_recursive() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(785))
+            cFunctionSymbolName(692))
         .asFunction();
     return func(thisCpp);
   }
 
   static int visibleCount_recursive_calledFromC(ffi.Pointer<void> thisCpp) {
-    var dartInstance = QObject.s_dartInstanceByCppPtr[thisCpp.address] as Item;
+    var dartInstance =
+        KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] as Item;
     if (dartInstance == null) {
       print(
           "Dart instance not found for Item::visibleCount_recursive() const! (${thisCpp.address})");
@@ -627,25 +638,25 @@ class Item extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 718:
+      case 644:
         return "c_KDDockWidgets__Core__Item__checkSanity";
-      case 724:
+      case 645:
         return "c_KDDockWidgets__Core__Item__dumpLayout_int";
-      case 740:
+      case 655:
         return "c_KDDockWidgets__Core__Item__isVisible_bool";
-      case 749:
+      case 661:
         return "c_KDDockWidgets__Core__Item__maxSizeHint";
-      case 750:
+      case 662:
         return "c_KDDockWidgets__Core__Item__minSize";
-      case 767:
+      case 676:
         return "c_KDDockWidgets__Core__Item__setGeometry_recursive_QRect";
-      case 769:
+      case 678:
         return "c_KDDockWidgets__Core__Item__setHostView_View";
-      case 770:
+      case 679:
         return "c_KDDockWidgets__Core__Item__setIsVisible_bool";
-      case 784:
+      case 691:
         return "c_KDDockWidgets__Core__Item__updateWidgetGeometries";
-      case 785:
+      case 692:
         return "c_KDDockWidgets__Core__Item__visibleCount_recursive";
     }
     return super.cFunctionSymbolName(methodId);
@@ -653,25 +664,25 @@ class Item extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 718:
+      case 644:
         return "checkSanity";
-      case 724:
+      case 645:
         return "dumpLayout";
-      case 740:
+      case 655:
         return "isVisible";
-      case 749:
+      case 661:
         return "maxSizeHint";
-      case 750:
+      case 662:
         return "minSize";
-      case 767:
+      case 676:
         return "setGeometry_recursive";
-      case 769:
+      case 678:
         return "setHostView";
-      case 770:
+      case 679:
         return "setIsVisible";
-      case 784:
+      case 691:
         return "updateWidgetGeometries";
-      case 785:
+      case 692:
         return "visibleCount_recursive";
     }
     throw Error();
@@ -683,43 +694,43 @@ class Item extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Item__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept718 = 0;
-    final callback718 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        Item.checkSanity_calledFromC, callbackExcept718);
-    registerCallback(thisCpp, callback718, 718);
-    final callback724 =
+    const callbackExcept644 = 0;
+    final callback644 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        Item.checkSanity_calledFromC, callbackExcept644);
+    registerCallback(thisCpp, callback644, 644);
+    final callback645 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             Item.dumpLayout_calledFromC);
-    registerCallback(thisCpp, callback724, 724);
-    const callbackExcept740 = 0;
-    final callback740 =
+    registerCallback(thisCpp, callback645, 645);
+    const callbackExcept655 = 0;
+    final callback655 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int8_FFI>(
-            Item.isVisible_calledFromC, callbackExcept740);
-    registerCallback(thisCpp, callback740, 740);
-    final callback749 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+            Item.isVisible_calledFromC, callbackExcept655);
+    registerCallback(thisCpp, callback655, 655);
+    final callback661 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Item.maxSizeHint_calledFromC);
-    registerCallback(thisCpp, callback749, 749);
-    final callback750 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback661, 661);
+    final callback662 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Item.minSize_calledFromC);
-    registerCallback(thisCpp, callback750, 750);
-    final callback767 =
+    registerCallback(thisCpp, callback662, 662);
+    final callback676 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Item.setGeometry_recursive_calledFromC);
-    registerCallback(thisCpp, callback767, 767);
-    final callback769 =
+    registerCallback(thisCpp, callback676, 676);
+    final callback678 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Item.setHostView_calledFromC);
-    registerCallback(thisCpp, callback769, 769);
-    final callback770 =
+    registerCallback(thisCpp, callback678, 678);
+    final callback679 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             Item.setIsVisible_calledFromC);
-    registerCallback(thisCpp, callback770, 770);
-    final callback784 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback679, 679);
+    final callback691 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Item.updateWidgetGeometries_calledFromC);
-    registerCallback(thisCpp, callback784, 784);
-    const callbackExcept785 = 0;
-    final callback785 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        Item.visibleCount_recursive_calledFromC, callbackExcept785);
-    registerCallback(thisCpp, callback785, 785);
+    registerCallback(thisCpp, callback691, 691);
+    const callbackExcept692 = 0;
+    final callback692 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        Item.visibleCount_recursive_calledFromC, callbackExcept692);
+    registerCallback(thisCpp, callback692, 692);
   }
 }

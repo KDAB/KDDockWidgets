@@ -17,6 +17,6 @@ export 'src/KDDWBindingsFlutter/Stack.dart' show Stack;
 export 'src/KDDWBindingsFlutter/TabBar.dart' show TabBar;
 export 'src/KDDWBindingsFlutter/TitleBar.dart' show TitleBar;
 export 'src/KDDWBindingsFlutter/View.dart' show View;
-export 'src/KDDWBindingsFlutter/Platform.dart' show Platform;
 export 'src/KDDWBindingsFlutter/ViewFactory.dart' show ViewFactory;
+export 'src/KDDWBindingsFlutter/Platform.dart' show Platform;
 export 'src/KDDWBindingsFlutter/Window.dart' show Window;

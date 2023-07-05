@@ -18,8 +18,8 @@
 #include "core/DropArea.h"
 #include <core/Layout.h>
 #include <qrect.h>
-#include <qsize.h>
 #include <qpoint.h>
+#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

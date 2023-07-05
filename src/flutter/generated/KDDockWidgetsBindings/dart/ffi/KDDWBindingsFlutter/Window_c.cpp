@@ -352,52 +352,52 @@ void c_KDDockWidgets__flutter__Window__registerVirtualMethodCallback(void *ptr, 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 515:
+    case 479:
         wrapper->m_destroyCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_destroy>(callback);
         break;
-    case 516:
+    case 480:
         wrapper->m_frameGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_frameGeometry>(callback);
         break;
-    case 517:
+    case 481:
         wrapper->m_fromNativePixelsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_fromNativePixels>(callback);
         break;
-    case 518:
+    case 482:
         wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_geometry>(callback);
         break;
-    case 519:
+    case 483:
         wrapper->m_isActiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_isActive>(callback);
         break;
-    case 520:
+    case 484:
         wrapper->m_isFullScreenCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_isFullScreen>(callback);
         break;
-    case 521:
+    case 485:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_isVisible>(callback);
         break;
-    case 522:
+    case 486:
         wrapper->m_mapFromGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_mapFromGlobal>(callback);
         break;
-    case 523:
+    case 487:
         wrapper->m_mapToGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_mapToGlobal>(callback);
         break;
-    case 524:
+    case 488:
         wrapper->m_maxSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_maxSize>(callback);
         break;
-    case 525:
+    case 489:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_minSize>(callback);
         break;
-    case 526:
+    case 490:
         wrapper->m_resizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_resize>(callback);
         break;
-    case 527:
+    case 491:
         wrapper->m_setFramePositionCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_setFramePosition>(callback);
         break;
-    case 528:
+    case 492:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_setGeometry>(callback);
         break;
-    case 529:
+    case 493:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_setVisible>(callback);
         break;
-    case 530:
+    case 494:
         wrapper->m_supportsHonouringLayoutMinSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Window_wrapper::Callback_supportsHonouringLayoutMinSize>(callback);
         break;
     }

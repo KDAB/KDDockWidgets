@@ -18,13 +18,14 @@ import '../../LibraryLoader.dart';
 
 var _dylib = Library.instance().dylib;
 
-class ViewFactory extends QObject {
+class ViewFactory extends KDDWBindingsCore.Object {
   ViewFactory.fromCppPointer(var cppPointer, [var needsAutoDelete = false])
       : super.fromCppPointer(cppPointer, needsAutoDelete) {}
   ViewFactory.init() : super.init() {}
   factory ViewFactory.fromCache(var cppPointer, [needsAutoDelete = false]) {
-    if (QObject.isCached(cppPointer)) {
-      var instance = QObject.s_dartInstanceByCppPtr[cppPointer.address];
+    if (KDDWBindingsCore.Object.isCached(cppPointer)) {
+      var instance =
+          KDDWBindingsCore.Object.s_dartInstanceByCppPtr[cppPointer.address];
       if (instance != null) return instance as ViewFactory;
     }
     return ViewFactory.fromCppPointer(cppPointer, needsAutoDelete);
@@ -35,7 +36,7 @@ class ViewFactory extends QObject {
             'c_KDDockWidgets__Core__ViewFactory__constructor')
         .asFunction();
     thisCpp = func();
-    QObject.s_dartInstanceByCppPtr[thisCpp.address] = this;
+    KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
   } // createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
   KDDWBindingsCore.ClassicIndicatorWindowViewInterface
@@ -46,7 +47,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(607))
+            cFunctionSymbolName(622))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -60,8 +61,8 @@ class ViewFactory extends QObject {
       ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? arg__1,
       ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -84,7 +85,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(608))
+            cFunctionSymbolName(623))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -101,8 +102,8 @@ class ViewFactory extends QObject {
       int options,
       int layoutSaverOptions,
       int windowFlags) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createDockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions, Qt::WindowFlags windowFlags) const! (${thisCpp.address})");
@@ -122,7 +123,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(609))
+            cFunctionSymbolName(624))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -133,8 +134,8 @@ class ViewFactory extends QObject {
 
   static ffi.Pointer<void> createDropArea_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createDropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -158,7 +159,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(610))
+            cFunctionSymbolName(625))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -173,8 +174,8 @@ class ViewFactory extends QObject {
       ffi.Pointer<void>? controller,
       ffi.Pointer<void>? parent,
       int windowFlags) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createFloatingWindow(KDDockWidgets::Core::FloatingWindow * controller, KDDockWidgets::Core::MainWindow * parent, Qt::WindowFlags windowFlags) const! (${thisCpp.address})");
@@ -197,7 +198,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(611))
+            cFunctionSymbolName(626))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -208,8 +209,8 @@ class ViewFactory extends QObject {
 
   static ffi.Pointer<void> createGroup_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createGroup(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -228,7 +229,7 @@ class ViewFactory extends QObject {
   KDDWBindingsCore.View createRubberBand(KDDWBindingsCore.View? parent) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(612))
+            cFunctionSymbolName(627))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
@@ -237,8 +238,8 @@ class ViewFactory extends QObject {
 
   static ffi.Pointer<void> createRubberBand_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createRubberBand(KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -257,7 +258,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(613))
+            cFunctionSymbolName(628))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -270,8 +271,8 @@ class ViewFactory extends QObject {
       ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? arg__1,
       ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createSeparator(KDDockWidgets::Core::Separator * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -293,7 +294,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(614))
+            cFunctionSymbolName(629))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -304,8 +305,8 @@ class ViewFactory extends QObject {
 
   static ffi.Pointer<void> createSideBar_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? arg__1, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createSideBar(KDDockWidgets::Core::SideBar * arg__1, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -327,7 +328,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(615))
+            cFunctionSymbolName(630))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -338,8 +339,8 @@ class ViewFactory extends QObject {
 
   static ffi.Pointer<void> createStack_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? stack, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createStack(KDDockWidgets::Core::Stack * stack, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -361,7 +362,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(616))
+            cFunctionSymbolName(631))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -372,8 +373,8 @@ class ViewFactory extends QObject {
 
   static ffi.Pointer<void> createTabBar_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? tabBar, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createTabBar(KDDockWidgets::Core::TabBar * tabBar, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -395,7 +396,7 @@ class ViewFactory extends QObject {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(617))
+            cFunctionSymbolName(632))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -406,8 +407,8 @@ class ViewFactory extends QObject {
 
   static ffi.Pointer<void> createTitleBar_calledFromC(ffi.Pointer<void> thisCpp,
       ffi.Pointer<void>? controller, ffi.Pointer<void>? parent) {
-    var dartInstance =
-        QObject.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
+    var dartInstance = KDDWBindingsCore
+        .Object.s_dartInstanceByCppPtr[thisCpp.address] as ViewFactory;
     if (dartInstance == null) {
       print(
           "Dart instance not found for ViewFactory::createTitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent) const! (${thisCpp.address})");
@@ -433,27 +434,27 @@ class ViewFactory extends QObject {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 607:
+      case 622:
         return "c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View";
-      case 608:
+      case 623:
         return "c_KDDockWidgets__Core__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
-      case 609:
+      case 624:
         return "c_KDDockWidgets__Core__ViewFactory__createDropArea_DropArea_View";
-      case 610:
+      case 625:
         return "c_KDDockWidgets__Core__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags";
-      case 611:
+      case 626:
         return "c_KDDockWidgets__Core__ViewFactory__createGroup_Group_View";
-      case 612:
+      case 627:
         return "c_KDDockWidgets__Core__ViewFactory__createRubberBand_View";
-      case 613:
+      case 628:
         return "c_KDDockWidgets__Core__ViewFactory__createSeparator_Separator_View";
-      case 614:
+      case 629:
         return "c_KDDockWidgets__Core__ViewFactory__createSideBar_SideBar_View";
-      case 615:
+      case 630:
         return "c_KDDockWidgets__Core__ViewFactory__createStack_Stack_View";
-      case 616:
+      case 631:
         return "c_KDDockWidgets__Core__ViewFactory__createTabBar_TabBar_View";
-      case 617:
+      case 632:
         return "c_KDDockWidgets__Core__ViewFactory__createTitleBar_TitleBar_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -461,27 +462,27 @@ class ViewFactory extends QObject {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 607:
+      case 622:
         return "createClassicIndicatorWindow";
-      case 608:
+      case 623:
         return "createDockWidget";
-      case 609:
+      case 624:
         return "createDropArea";
-      case 610:
+      case 625:
         return "createFloatingWindow";
-      case 611:
+      case 626:
         return "createGroup";
-      case 612:
+      case 627:
         return "createRubberBand";
-      case 613:
+      case 628:
         return "createSeparator";
-      case 614:
+      case 629:
         return "createSideBar";
-      case 615:
+      case 630:
         return "createStack";
-      case 616:
+      case 631:
         return "createTabBar";
-      case 617:
+      case 632:
         return "createTitleBar";
     }
     throw Error();
@@ -493,49 +494,49 @@ class ViewFactory extends QObject {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback')
         .asFunction();
-    final callback607 = ffi.Pointer.fromFunction<
+    final callback622 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_voidstar_FFI>(
         KDDWBindingsCore.ViewFactory.createClassicIndicatorWindow_calledFromC);
-    registerCallback(thisCpp, callback607, 607);
-    final callback608 = ffi.Pointer.fromFunction<
+    registerCallback(thisCpp, callback622, 622);
+    final callback623 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
         KDDWBindingsCore.ViewFactory.createDockWidget_calledFromC);
-    registerCallback(thisCpp, callback608, 608);
-    final callback609 =
+    registerCallback(thisCpp, callback623, 623);
+    final callback624 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createDropArea_calledFromC);
-    registerCallback(thisCpp, callback609, 609);
-    final callback610 = ffi.Pointer.fromFunction<
+    registerCallback(thisCpp, callback624, 624);
+    final callback625 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>(
         KDDWBindingsCore.ViewFactory.createFloatingWindow_calledFromC);
-    registerCallback(thisCpp, callback610, 610);
-    final callback611 =
+    registerCallback(thisCpp, callback625, 625);
+    final callback626 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createGroup_calledFromC);
-    registerCallback(thisCpp, callback611, 611);
-    final callback612 =
+    registerCallback(thisCpp, callback626, 626);
+    final callback627 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback612, 612);
-    final callback613 =
+    registerCallback(thisCpp, callback627, 627);
+    final callback628 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createSeparator_calledFromC);
-    registerCallback(thisCpp, callback613, 613);
-    final callback614 =
+    registerCallback(thisCpp, callback628, 628);
+    final callback629 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createSideBar_calledFromC);
-    registerCallback(thisCpp, callback614, 614);
-    final callback615 =
+    registerCallback(thisCpp, callback629, 629);
+    final callback630 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createStack_calledFromC);
-    registerCallback(thisCpp, callback615, 615);
-    final callback616 =
+    registerCallback(thisCpp, callback630, 630);
+    final callback631 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createTabBar_calledFromC);
-    registerCallback(thisCpp, callback616, 616);
-    final callback617 =
+    registerCallback(thisCpp, callback631, 631);
+    final callback632 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsCore.ViewFactory.createTitleBar_calledFromC);
-    registerCallback(thisCpp, callback617, 617);
+    registerCallback(thisCpp, callback632, 632);
   }
 }
