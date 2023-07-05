@@ -80,7 +80,7 @@ public Q_SLOTS:
     void updateConstriants();
 
 private:
-    void init() override;
+    void init() override final;
     Stack *stackView() const;
     TabBar *tabBarView() const;
 

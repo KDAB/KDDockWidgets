@@ -51,7 +51,7 @@ Q_SIGNALS:
     void isFocusedChanged();
 
 protected:
-    void init() override;
+    void init() override final;
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
     QSize sizeHint() const override;

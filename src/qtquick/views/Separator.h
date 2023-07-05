@@ -33,7 +33,6 @@ class DOCKS_EXPORT Separator : public QtQuick::View
 public:
     explicit Separator(Core::Separator *controller, QQuickItem *parent = nullptr);
     bool isVertical() const;
-    void init() override;
 
 public:
     // Interface with QML:
@@ -46,6 +45,7 @@ Q_SIGNALS:
     void isVerticalChanged();
 
 private:
+    void init() override final;
     Core::Separator *const m_controller;
 };
 

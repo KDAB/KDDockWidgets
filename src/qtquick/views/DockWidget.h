@@ -128,7 +128,6 @@ Q_SIGNALS:
 
 protected:
     bool event(QEvent *e) override;
-    void init() override;
 
 private:
     class Private;

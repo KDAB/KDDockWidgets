@@ -90,7 +90,7 @@ Q_SIGNALS:
 
 protected:
     bool event(QEvent *ev) override;
-    void init() override;
+    void init() override final;
     void onHoverEvent(QHoverEvent *, QPoint globalPos) override;
 
 private:

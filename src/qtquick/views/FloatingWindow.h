@@ -57,7 +57,7 @@ private:
     int contentsMargins() const;
     int titleBarHeight() const;
     QWindow *candidateParentWindow() const;
-    void init() override;
+    void init() override final;
     QQuickView *const m_quickWindow;
     QQuickItem *m_visualItem = nullptr;
     Core::FloatingWindow *const m_controller;

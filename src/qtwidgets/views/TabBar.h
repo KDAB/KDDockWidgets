@@ -56,7 +56,7 @@ Q_SIGNALS:
     void dockWidgetRemoved(int index);
 
 protected:
-    void init() override;
+    void init() override final;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseDoubleClickEvent(QMouseEvent *e) override;

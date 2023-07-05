@@ -100,7 +100,7 @@ Q_SIGNALS:
     void numDockWidgetsChanged();
 
 protected:
-    void init() override;
+    void init() override final;
 
 private:
     QQuickItem *floatButton() const;

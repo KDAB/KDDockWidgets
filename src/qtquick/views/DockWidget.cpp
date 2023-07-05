@@ -60,22 +60,6 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
     , Core::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this, engine ? engine : plat()->qmlEngine()))
 {
-    init();
-    m_dockWidget->init();
-
-    m_dockWidget->d->isFloatingChanged.connect(&DockWidget::isFloatingChanged, this);
-    m_dockWidget->d->isFocusedChanged.connect(&DockWidget::isFocusedChanged, this);
-    m_dockWidget->d->titleChanged.connect(&DockWidget::titleChanged, this);
-    m_dockWidget->d->optionsChanged.connect(&DockWidget::optionsChanged, this);
-}
-
-DockWidget::~DockWidget()
-{
-    delete d;
-}
-
-void DockWidget::init()
-{
     // To mimic what QtWidgets does when creating a new QWidget.
     setVisible(false);
 
@@ -87,6 +71,18 @@ void DockWidget::init()
             Q_EMIT guestItemChanged();
         }
     });
+
+    m_dockWidget->init();
+
+    m_dockWidget->d->isFloatingChanged.connect(&DockWidget::isFloatingChanged, this);
+    m_dockWidget->d->isFocusedChanged.connect(&DockWidget::isFocusedChanged, this);
+    m_dockWidget->d->titleChanged.connect(&DockWidget::titleChanged, this);
+    m_dockWidget->d->optionsChanged.connect(&DockWidget::optionsChanged, this);
+}
+
+DockWidget::~DockWidget()
+{
+    delete d;
 }
 
 void DockWidget::setGuestItem(const QString &qmlFilename)
