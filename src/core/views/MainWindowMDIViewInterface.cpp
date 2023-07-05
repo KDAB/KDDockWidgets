@@ -21,7 +21,7 @@ MainWindowMDIViewInterface::MainWindowMDIViewInterface(MDILayout *layout)
 {
 }
 
-void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget, QPoint localPos,
+void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget, Point localPos,
                                                InitialOption addingOption)
 {
     DockWidget *dw = dockWidget ? dockWidget->dockWidget() : nullptr;
@@ -29,7 +29,7 @@ void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidg
 }
 
 void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget,
-                                               QPointF localPos, InitialOption addingOption)
+                                               PointF localPos, InitialOption addingOption)
 {
     addDockWidget(dockWidget, localPos.toPoint(), addingOption);
 }

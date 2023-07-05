@@ -185,7 +185,7 @@ public:
      * The position of the rect is in layout coordinates. 0,0 is the top-left of the layout
      * holding the widgets.
      */
-    QRect groupGeometry() const;
+    Rect groupGeometry() const;
 
     /**
      * @brief Returns the dock widget's options which control behaviour.
@@ -398,7 +398,7 @@ public:
 
     /// @brief returns the last size the widget has when overlayed
     /// Empty otherwise
-    QSize lastOverlayedSize() const;
+    Size lastOverlayedSize() const;
 
 
     /// @brief Returns a dock widget by its name
@@ -416,7 +416,7 @@ public:
     ///
     /// This is just convenience, equivalent to calling window()->setGeometry(rect), with the
     /// added bonus of remembering the requested geometry in case it's still hidden.
-    void setFloatingGeometry(QRect geo);
+    void setFloatingGeometry(Rect geo);
 
     ///@brief Allows the user to set a type on this dock widget
     /// The type is opaque and will not be interpreted by KDDockWidgets.
@@ -427,9 +427,9 @@ public:
 
     /// @brief Sets this dock widgets position to pos within the MDI layout
     /// This only applies if the main window is in MDI mode, which it is not by default
-    void setMDIPosition(QPoint pos);
+    void setMDIPosition(Point pos);
     /// @brief like setMDIPosition(), but for the size.
-    void setMDISize(QSize size);
+    void setMDISize(Size size);
     /// @brief like setMDIPosition(), but for the Z
     /// only implemented for QtQuick
     void setMDIZ(int z);
@@ -438,7 +438,7 @@ public:
     /// This only applies when using MainWindowOption_HasCentralWidget
     bool isPersistentCentralDockWidget() const;
 
-    void onResize(QSize newSize);
+    void onResize(Size newSize);
 
     /// @brief Sets the desired floating window flags, in case the defaults aren't desired.
     /// By default KDDW will use the flags specified in KDDockWidgets::Config to influence

@@ -23,13 +23,13 @@ class Screen : public Core::Screen
 public:
     ~Screen() override;
     QString name() const override;
-    QSize size() const override;
-    QRect geometry() const override;
+    Size size() const override;
+    Rect geometry() const override;
     qreal devicePixelRatio() const override;
-    QSize availableSize() const override;
-    QRect availableGeometry() const override;
-    QSize virtualSize() const override;
-    QRect virtualGeometry() const override;
+    Size availableSize() const override;
+    Rect availableGeometry() const override;
+    Size virtualSize() const override;
+    Rect virtualGeometry() const override;
     bool equals(std::shared_ptr<Core::Screen> other) const override;
 };
 

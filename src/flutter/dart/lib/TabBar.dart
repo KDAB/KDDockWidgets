@@ -65,7 +65,7 @@ class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
   }
 
   @override
-  int tabAt(QPoint localPos) {
+  int tabAt(Point localPos) {
     final localX = localPos.x().toDouble();
     final localY = localPos.y().toDouble();
 

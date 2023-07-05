@@ -36,7 +36,7 @@ Core::Window::Ptr Window::transientParent() const
     return nullptr;
 }
 
-void Window::setGeometry(QRect r)
+void Window::setGeometry(Rect r)
 {
     m_geometry = r;
 }
@@ -62,7 +62,7 @@ void Window::setWindowState(WindowState)
     KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }
 
-QRect Window::geometry() const
+Rect Window::geometry() const
 {
     return m_geometry;
 }
@@ -86,13 +86,13 @@ bool Window::equals(std::shared_ptr<Core::Window> w) const
     return window->handle() == handle();
 }
 
-void Window::setFramePosition(QPoint pt)
+void Window::setFramePosition(Point pt)
 {
     m_geometry.moveTopLeft(pt);
     m_rootView->setGeometry(m_geometry);
 }
 
-QRect Window::frameGeometry() const
+Rect Window::frameGeometry() const
 {
     // TODO: How to get this from flutter
     return m_geometry;
@@ -100,7 +100,7 @@ QRect Window::frameGeometry() const
 
 void Window::resize(int w, int h)
 {
-    QRect geo = geometry();
+    Rect geo = geometry();
     geo.setSize({ w, h });
     setGeometry(geo);
 }
@@ -117,13 +117,13 @@ WindowState Window::windowState() const
     return {};
 }
 
-QPoint Window::mapFromGlobal(QPoint) const
+Point Window::mapFromGlobal(Point) const
 {
     KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
-QPoint Window::mapToGlobal(QPoint) const
+Point Window::mapToGlobal(Point) const
 {
     KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
@@ -134,19 +134,19 @@ void Window::destroy()
     KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
 }
 
-QSize Window::minSize() const
+Size Window::minSize() const
 {
     KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
-QSize Window::maxSize() const
+Size Window::maxSize() const
 {
     KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};
 }
 
-QPoint Window::fromNativePixels(QPoint) const
+Point Window::fromNativePixels(Point) const
 {
     KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
     return {};

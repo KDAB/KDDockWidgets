@@ -29,7 +29,7 @@ ViewWrapper::~ViewWrapper()
 {
 }
 
-void ViewWrapper::setGeometry(QRect geo)
+void ViewWrapper::setGeometry(Rect geo)
 {
     m_wrappedView->setGeometry(geo);
 }
@@ -89,32 +89,32 @@ Qt::WindowFlags ViewWrapper::flags() const
     return m_wrappedView->flags();
 }
 
-QSize ViewWrapper::minSize() const
+Size ViewWrapper::minSize() const
 {
     return m_wrappedView->minSize();
 }
 
-QSize ViewWrapper::maxSizeHint() const
+Size ViewWrapper::maxSizeHint() const
 {
     return m_wrappedView->maxSizeHint();
 }
 
-QRect ViewWrapper::geometry() const
+Rect ViewWrapper::geometry() const
 {
     return m_wrappedView->geometry();
 }
 
-QRect ViewWrapper::normalGeometry() const
+Rect ViewWrapper::normalGeometry() const
 {
     return m_wrappedView->normalGeometry();
 }
 
-void ViewWrapper::setNormalGeometry(QRect geo)
+void ViewWrapper::setNormalGeometry(Rect geo)
 {
     m_wrappedView->setNormalGeometry(geo);
 }
 
-void ViewWrapper::setMaximumSize(QSize size)
+void ViewWrapper::setMaximumSize(Size size)
 {
     m_wrappedView->setMaximumSize(size);
 }
@@ -184,17 +184,17 @@ bool ViewWrapper::isRootView() const
     return m_wrappedView->isRootView();
 }
 
-QPoint ViewWrapper::mapToGlobal(QPoint local) const
+Point ViewWrapper::mapToGlobal(Point local) const
 {
     return m_wrappedView->mapToGlobal(local);
 }
 
-QPoint ViewWrapper::mapFromGlobal(QPoint global) const
+Point ViewWrapper::mapFromGlobal(Point global) const
 {
     return m_wrappedView->mapFromGlobal(global);
 }
 
-QPoint ViewWrapper::mapTo(View *view, QPoint pos) const
+Point ViewWrapper::mapTo(View *view, Point pos) const
 {
     return m_wrappedView->mapTo(view, pos);
 }
@@ -249,7 +249,7 @@ std::shared_ptr<Core::Window> ViewWrapper::window() const
     return m_wrappedView->window();
 }
 
-std::shared_ptr<Core::View> ViewWrapper::childViewAt(QPoint pos) const
+std::shared_ptr<Core::View> ViewWrapper::childViewAt(Point pos) const
 {
     return m_wrappedView->childViewAt(pos);
 }
@@ -309,7 +309,7 @@ QString ViewWrapper::viewName() const
     return m_wrappedView->viewName();
 }
 
-void ViewWrapper::setMinimumSize(QSize size)
+void ViewWrapper::setMinimumSize(Size size)
 {
     m_wrappedView->setMinimumSize(size);
 }

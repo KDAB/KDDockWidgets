@@ -114,7 +114,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::Group &f)
     f.id = json.value("id", QString());
     f.isNull = json.value("isNull", true);
     f.objectName = json.value("objectName", QString());
-    f.geometry = json.value("geometry", QRect());
+    f.geometry = json.value("geometry", Rect());
     f.options = json.value("options", QFlags<FrameOption>::Int {});
     f.currentTabIndex = json.value("currentTabIndex", 0);
     f.mainWindowUniqueName = json.value("mainWindowUniqueName", QString());
@@ -191,10 +191,10 @@ void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
     mw.options = static_cast<decltype(mw.options)>(json.value("options", 0));
     mw.multiSplitterLayout = json.value("multiSplitterLayout", LayoutSaver::MultiSplitter());
     mw.uniqueName = json.value("uniqueName", QString());
-    mw.geometry = json.value("geometry", QRect());
-    mw.normalGeometry = json.value("normalGeometry", QRect());
+    mw.geometry = json.value("geometry", Rect());
+    mw.normalGeometry = json.value("normalGeometry", Rect());
     mw.screenIndex = json.value("screenIndex", 0);
-    mw.screenSize = json.value("screenSize", QSize(800, 600));
+    mw.screenSize = json.value("screenSize", Size(800, 600));
     mw.isVisible = json.value("isVisible", false);
     mw.affinities = json.value("affinities", QStringList());
     mw.windowState = ( WindowState )json.value("windowState", 0);
@@ -242,10 +242,10 @@ void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
 {
     window.multiSplitterLayout = json.value("multiSplitterLayout", LayoutSaver::MultiSplitter());
     window.parentIndex = json.value("parentIndex", -1);
-    window.geometry = json.value("geometry", QRect());
-    window.normalGeometry = json.value("normalGeometry", QRect());
+    window.geometry = json.value("geometry", Rect());
+    window.normalGeometry = json.value("normalGeometry", Rect());
     window.screenIndex = json.value("screenIndex", 0);
-    window.screenSize = json.value("screenSize", QSize(800, 600));
+    window.screenSize = json.value("screenSize", Size(800, 600));
     window.isVisible = json.value("isVisible", false);
     window.flags = json.value("flags", int(FloatingWindowFlag::FromGlobalConfig));
     window.windowState = ( WindowState )json.value("windowState", 0);
@@ -269,7 +269,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::ScreenInfo &screenInfo)
 void from_json(const nlohmann::json &j, LayoutSaver::ScreenInfo &screenInfo)
 {
     screenInfo.index = j.value("index", 0);
-    screenInfo.geometry = j.value("geometry", QRect());
+    screenInfo.geometry = j.value("geometry", Rect());
     screenInfo.name = j.value("name", QString());
     screenInfo.devicePixelRatio = j.value("devicePixelRatio", 1.0);
 }
@@ -303,8 +303,8 @@ void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
 
 void from_json(const nlohmann::json &json, LayoutSaver::Position &pos)
 {
-    pos.lastFloatingGeometry = json.value("lastFloatingGeometry", QRect());
-    pos.lastOverlayedGeometries = json.value("lastOverlayedGeometries", std::unordered_map<KDDockWidgets::SideBarLocation, QRect>());
+    pos.lastFloatingGeometry = json.value("lastFloatingGeometry", Rect());
+    pos.lastOverlayedGeometries = json.value("lastOverlayedGeometries", std::unordered_map<KDDockWidgets::SideBarLocation, Rect>());
     pos.tabIndex = json.value("tabIndex", 0);
     pos.wasFloating = json.value("wasFloating", false);
     pos.placeholders = json.value("placeholders", LayoutSaver::Placeholder::List());
@@ -599,7 +599,7 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, Window::Ptr
     // Not simply calling QWidget::setGeometry() here.
     // For QtQuick we need to modify the QWindow's geometry.
 
-    QRect geometry = saved.geometry;
+    Rect geometry = saved.geometry;
     if (!isNormalWindowState(saved.windowState)) {
         // The window will be maximized. We first set its geometry to normal
         // Later it's maximized and will remember this value
@@ -1028,7 +1028,7 @@ static Core::Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
     return mw->view()->d->screen();
 }
 
-LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo,
+LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, Rect savedMainWindowGeo,
                                       int screenIndex)
 {
     auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
@@ -1059,7 +1059,7 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
     mainWindowChangedScreen = currentScreenIndex != screenIndex;
 }
 
-void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
+void LayoutSaver::ScalingInfo::translatePos(Point &pt) const
 {
     const int deltaX = pt.x() - savedMainWindowGeometry.x();
     const int deltaY = pt.y() - savedMainWindowGeometry.y();
@@ -1071,24 +1071,24 @@ void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
     pt.setY(int(std::ceil(savedMainWindowGeometry.y() + newDeltaY)));
 }
 
-void LayoutSaver::ScalingInfo::applyFactorsTo(QPoint &pt) const
+void LayoutSaver::ScalingInfo::applyFactorsTo(Point &pt) const
 {
     translatePos(pt);
 }
 
-void LayoutSaver::ScalingInfo::applyFactorsTo(QSize &sz) const
+void LayoutSaver::ScalingInfo::applyFactorsTo(Size &sz) const
 {
     sz.setWidth(int(widthFactor * sz.width()));
     sz.setHeight(int(heightFactor * sz.height()));
 }
 
-void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const
+void LayoutSaver::ScalingInfo::applyFactorsTo(Rect &rect) const
 {
     if (rect.isEmpty())
         return;
 
-    QPoint pos = rect.topLeft();
-    QSize size = rect.size();
+    Point pos = rect.topLeft();
+    Size size = rect.size();
 
     applyFactorsTo(/*by-ref*/ size);
 

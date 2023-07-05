@@ -147,15 +147,15 @@ QStringList WindowBeingDragged::affinities() const
     return m_floatingWindow ? m_floatingWindow->affinities() : QStringList();
 }
 
-QSize WindowBeingDragged::size() const
+Size WindowBeingDragged::size() const
 {
     if (m_floatingWindow)
         return m_floatingWindow->size();
 
-    return QSize();
+    return Size();
 }
 
-QSize WindowBeingDragged::minSize() const
+Size WindowBeingDragged::minSize() const
 {
     if (m_floatingWindow)
         return m_floatingWindow->layout()->layoutMinimumSize();
@@ -163,7 +163,7 @@ QSize WindowBeingDragged::minSize() const
     return {};
 }
 
-QSize WindowBeingDragged::maxSize() const
+Size WindowBeingDragged::maxSize() const
 {
     if (m_floatingWindow)
         return m_floatingWindow->layout()->layoutMaximumSizeHint();
@@ -303,7 +303,7 @@ QVector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
     return {};
 }
 
-QSize WindowBeingDraggedWayland::size() const
+Size WindowBeingDraggedWayland::size() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::size();
@@ -313,10 +313,10 @@ QSize WindowBeingDraggedWayland::size() const
         return m_dockWidget->size();
 
     KDDW_ERROR("Unknown size, shouldn't happen");
-    return QSize();
+    return Size();
 }
 
-QSize WindowBeingDraggedWayland::minSize() const
+Size WindowBeingDraggedWayland::minSize() const
 {
     if (m_floatingWindow) {
         return WindowBeingDragged::minSize();
@@ -330,7 +330,7 @@ QSize WindowBeingDraggedWayland::minSize() const
     return {};
 }
 
-QSize WindowBeingDraggedWayland::maxSize() const
+Size WindowBeingDraggedWayland::maxSize() const
 {
     if (m_floatingWindow) {
         return WindowBeingDragged::maxSize();

@@ -27,10 +27,10 @@ class DOCKS_EXPORT SegmentedDropIndicatorOverlay : public DropIndicatorOverlay
 public:
     explicit SegmentedDropIndicatorOverlay(Core::DropArea *dropArea);
     ~SegmentedDropIndicatorOverlay() override;
-    DropLocation hover_impl(QPoint globalPos) override;
+    DropLocation hover_impl(Point globalPos) override;
 
-    DropLocation dropLocationForPos(QPoint pos) const;
-    QPoint hoveredPt() const;
+    DropLocation dropLocationForPos(Point pos) const;
+    Point hoveredPt() const;
     const std::unordered_map<DropLocation, Polygon> &segments() const;
 
     static int s_segmentGirth;
@@ -40,12 +40,12 @@ public:
     static qreal s_draggedWindowOpacity;
 
 protected:
-    QPoint posForIndicator(DropLocation) const override;
+    Point posForIndicator(DropLocation) const override;
 
 private:
-    std::unordered_map<DropLocation, Polygon> segmentsForRect(QRect, bool inner, bool useOffset = false) const;
+    std::unordered_map<DropLocation, Polygon> segmentsForRect(Rect, bool inner, bool useOffset = false) const;
     void updateSegments();
-    QPoint m_hoveredPt = {};
+    Point m_hoveredPt = {};
     std::unordered_map<DropLocation, Polygon> m_segments;
 };
 

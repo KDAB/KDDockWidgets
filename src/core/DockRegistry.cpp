@@ -168,7 +168,7 @@ bool DockRegistry::isProbablyObscured(Core::Window::Ptr window,
     if (!window)
         return false;
 
-    const QRect geo = window->geometry();
+    const Rect geo = window->geometry();
     for (Core::FloatingWindow *fw : m_floatingWindows) {
         Window::Ptr fwWindow = fw->view()->window();
         if (fw == exclude || fwWindow->equals(window))

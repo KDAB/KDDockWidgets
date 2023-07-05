@@ -48,7 +48,7 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         // result: the bottom most one didn't have it's top separator at y=0
 
         EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
         auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
@@ -128,7 +128,7 @@ KDDW_QCORO_TASK tst_startHidden()
 {
     // A really simple test for InitialVisibilityOption::StartHidden
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {},
                                   /*show=*/false);
     m->addDockWidget(dock1, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
@@ -141,7 +141,7 @@ KDDW_QCORO_TASK tst_startHidden2()
 {
     EnsureTopLevelsDeleted e;
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {},
                                       {}, false);
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
@@ -171,7 +171,7 @@ KDDW_QCORO_TASK tst_startHidden2()
     }
 
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {},
                                       {}, false);
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
@@ -206,7 +206,7 @@ KDDW_QCORO_TASK tst_invalidJSON()
         const QString absoluteLayoutFileName = resourceFileName(QStringLiteral("layouts/%1").arg(layoutFileName));
 
         EnsureTopLevelsDeleted e;
-        auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None, "MyMainWindow1");
+        auto m1 = createMainWindow(Size(800, 500), MainWindowOption_None, "MyMainWindow1");
         for (int i = 0; i < numDockWidgets; ++i) {
             createDockWidget(QStringLiteral("dock-%1").arg(i),
                              Platform::instance()->tests_createView({ true }));

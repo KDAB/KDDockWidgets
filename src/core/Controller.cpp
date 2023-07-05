@@ -68,7 +68,7 @@ void Controller::setVisible(bool is)
         d->m_view->setVisible(is);
 }
 
-QRect Controller::rect() const
+Rect Controller::rect() const
 {
     if (d->m_view)
         return d->m_view->rect();
@@ -76,7 +76,7 @@ QRect Controller::rect() const
     return {};
 }
 
-QPoint Controller::mapToGlobal(QPoint localPt) const
+Point Controller::mapToGlobal(Point localPt) const
 {
     return d->m_view->mapToGlobal(localPt);
 }
@@ -91,17 +91,17 @@ int Controller::width() const
     return d->m_view->width();
 }
 
-QSize Controller::size() const
+Size Controller::size() const
 {
     return d->m_view->size();
 }
 
-QRect Controller::geometry() const
+Rect Controller::geometry() const
 {
     return d->m_view->geometry();
 }
 
-QPoint Controller::pos() const
+Point Controller::pos() const
 {
     return d->m_view->geometry().topLeft();
 }

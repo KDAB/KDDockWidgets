@@ -50,7 +50,7 @@ StackOptions Stack::options() const
     return d->m_options;
 }
 
-bool Stack::isPositionDraggable(QPoint p) const
+bool Stack::isPositionDraggable(Point p) const
 {
     return dynamic_cast<Core::StackViewInterface *>(view())->isPositionDraggable(p);
 }
@@ -119,9 +119,9 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
         }
     }
 
-    QRect r = d->m_group->view()->geometry();
+    Rect r = d->m_group->view()->geometry();
 
-    const QPoint globalPoint = view()->mapToGlobal(QPoint(0, 0));
+    const Point globalPoint = view()->mapToGlobal(Point(0, 0));
 
     auto floatingWindow = new FloatingWindow(d->m_group, {});
     r.moveTopLeft(globalPoint);
@@ -154,7 +154,7 @@ bool Stack::isMDI() const
     return d->m_group && d->m_group->isMDI();
 }
 
-bool Stack::onMouseDoubleClick(QPoint localPos)
+bool Stack::onMouseDoubleClick(Point localPos)
 {
     // User clicked the empty space of the tab widget and we don't have title bar
     // We float the entire group.

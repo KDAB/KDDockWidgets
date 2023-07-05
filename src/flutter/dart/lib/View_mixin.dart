@@ -69,7 +69,7 @@ mixin View_mixin {
     return GlobalStringKey("KDDockWidgets_View_mixin-${m_id}");
   }
 
-  QRect viewGeometry() {
+  Rect viewGeometry() {
     return kddwView.geometry();
   }
 
@@ -90,10 +90,10 @@ mixin View_mixin {
     }
 
     final bool leftIsPressed = event.buttons == kPrimaryButton;
-    final localPos = QPoint.ctor2(
+    final localPos = Point.ctor2(
         event.localPosition.dx.toInt(), event.localPosition.dy.toInt());
     final globalPos =
-        QPoint.ctor2(event.position.dx.toInt(), event.position.dy.toInt());
+        Point.ctor2(event.position.dx.toInt(), event.position.dy.toInt());
 
     asFlutterView().onMouseEvent(eventType, localPos, globalPos, leftIsPressed);
   }
@@ -230,19 +230,19 @@ mixin View_mixin {
   }
 
   @pragma("vm:entry-point")
-  QPoint mapToGlobal(QPoint localPt) {
+  Point mapToGlobal(Point localPt) {
     try {
       final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
       if (box == null) {
         print("mapToGlobal: Could not find render box for widget=$flutterWidget"
             "; context=${widgetKey.currentContext}; visible=${kddwView.isVisible()}");
         kddwView.dumpDebug();
-        return QPoint();
+        return Point();
       }
 
       final Offset global = box.localToGlobal(
           Offset(localPt.x().toDouble(), localPt.y().toDouble()));
-      return QPoint.ctor2(global.dx.toInt(), global.dy.toInt());
+      return Point.ctor2(global.dx.toInt(), global.dy.toInt());
     } on Exception catch (e) {
       print("Exception $e");
       throw e;
@@ -250,18 +250,18 @@ mixin View_mixin {
   }
 
   @pragma("vm:entry-point")
-  QPoint mapFromGlobal(QPoint globalPt) {
+  Point mapFromGlobal(Point globalPt) {
     try {
       final box = widgetKey.currentContext?.findRenderObject() as RenderBox?;
       if (box == null) {
         print(
             "mapFromGlobal: Could not find render box for widget=$flutterWidget"
             "; context=${widgetKey.currentContext}; visible=${kddwView.isVisible()}");
-        return QPoint();
+        return Point();
       }
       final Offset local = box.globalToLocal(
           Offset(globalPt.x().toDouble(), globalPt.y().toDouble()));
-      return QPoint.ctor2(local.dx.toInt(), local.dy.toInt());
+      return Point.ctor2(local.dx.toInt(), local.dy.toInt());
     } on Exception catch (e) {
       print("Exception $e");
       throw e;

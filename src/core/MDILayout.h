@@ -37,25 +37,25 @@ public:
     ~MDILayout() override;
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
-    void addDockWidget(Core::DockWidget *dw, QPoint localPt,
+    void addDockWidget(Core::DockWidget *dw, Point localPt,
                        InitialOption addingOption = {});
 
     /// @brief Moves a dock widget @p dw to point @p pos
-    void moveDockWidget(Core::DockWidget *dw, QPoint pos);
+    void moveDockWidget(Core::DockWidget *dw, Point pos);
 
     /// @brief Moves a dock widget @p f to point @p pos
     /// Convenience overload.
-    void moveDockWidget(Core::Group *f, QPoint pos);
+    void moveDockWidget(Core::Group *f, Point pos);
 
     /// @brief Sets the size of dock widget @p dw to @p size
-    void resizeDockWidget(Core::DockWidget *dw, QSize size);
+    void resizeDockWidget(Core::DockWidget *dw, Size size);
 
     /// @brief Sets the size of dock widget @p f to @p size
     /// Convenience overload.
-    void resizeDockWidget(Core::Group *f, QSize size);
+    void resizeDockWidget(Core::Group *f, Size size);
 
     /// @brief sets the size and position of the dock widget @p f
-    void setDockWidgetGeometry(Core::Group *f, QRect);
+    void setDockWidgetGeometry(Core::Group *f, Rect);
 
 private:
     Core::ItemFreeContainer *const m_rootItem;

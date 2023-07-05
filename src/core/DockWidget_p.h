@@ -20,8 +20,6 @@
 #include "NonQtCompat_p.h"
 
 #include <QString>
-#include <QSize>
-
 
 namespace KDDockWidgets {
 
@@ -110,7 +108,7 @@ public:
     Position::Ptr &lastPosition();
 
     void forceClose();
-    QPoint defaultCenterPosForFloating();
+    Point defaultCenterPosForFloating();
 
     void onWindowActivated(std::shared_ptr<View> rootView);
     void onWindowDeactivated(std::shared_ptr<View> rootView);
@@ -263,7 +261,7 @@ public:
     bool m_inClose = false;
     bool m_removingFromOverlay = false;
     bool m_wasRestored = false;
-    QSize m_lastOverlayedSize = QSize(0, 0);
+    Size m_lastOverlayedSize = Size(0, 0);
     int m_userType = 0;
     bool m_willUpdateActions = false;
     KDBindings::ScopedConnection m_windowActivatedConnection;

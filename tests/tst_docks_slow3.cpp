@@ -99,7 +99,7 @@ KDDW_QCORO_TASK tst_closeShowWhenNoCentralFrame()
     EnsureTopLevelsDeleted e;
     // Tests a crash I got when hiding and showing and no central group
 
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None); // Remove central group
     ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
@@ -244,7 +244,7 @@ KDDW_QCORO_TASK tst_close()
 
     // 2. Test that closing the single group of a main window doesn't close the main window itself
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None); // Remove central group
         ObjectGuard<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
@@ -257,7 +257,7 @@ KDDW_QCORO_TASK tst_close()
 
     // 2.1 Test closing the group instead
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None); // Remove central group
         ObjectGuard<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
@@ -271,7 +271,7 @@ KDDW_QCORO_TASK tst_close()
 
     // 2.2 Repeat, but with a central group
     {
-        auto m = createMainWindow(QSize(800, 500));
+        auto m = createMainWindow(Size(800, 500));
         ObjectGuard<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
@@ -294,7 +294,7 @@ KDDW_QCORO_TASK tst_positionWhenShown()
     auto dock1 = newDockWidget("1");
     dock1->open();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Wait for group to settle
-    const QPoint desiredPos = QPoint(100, 100);
+    const Point desiredPos = Point(100, 100);
     dock1->view()->window()->setFramePosition(desiredPos);
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Wait for group to settle
     CHECK_EQ(dock1->view()->window()->framePosition(), desiredPos);

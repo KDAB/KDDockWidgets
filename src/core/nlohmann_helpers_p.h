@@ -11,12 +11,44 @@
 #ifndef KDAB_NLOHMANN_JSON_QT_HELPERS_H
 #define KDAB_NLOHMANN_JSON_QT_HELPERS_H
 
+#include "Logging_p.h"
+#include "NonQtCompat_p.h"
+
 #include <nlohmann/json.hpp>
 
-#include "Logging_p.h"
+namespace KDDockWidgets {
 
-#include <QRect>
-#include <QSize>
+inline void to_json(nlohmann::json &j, const Size &size)
+{
+    j["width"] = size.width();
+    j["height"] = size.height();
+}
+
+inline void from_json(const nlohmann::json &j, Size &size)
+{
+    Size s;
+    size.setWidth(j.value("width", s.width()));
+    size.setHeight(j.value("height", s.height()));
+}
+
+inline void to_json(nlohmann::json &j, const Rect &rect)
+{
+    j["x"] = rect.x();
+    j["y"] = rect.y();
+    j["width"] = rect.width();
+    j["height"] = rect.height();
+}
+
+inline void from_json(const nlohmann::json &j, Rect &rect)
+{
+    Rect r;
+    rect.setX(j.value("x", r.x()));
+    rect.setY(j.value("y", r.y()));
+    rect.setWidth(j.value("width", r.width()));
+    rect.setHeight(j.value("height", r.height()));
+}
+
+}
 
 QT_BEGIN_NAMESPACE
 
@@ -48,36 +80,6 @@ inline void to_json(nlohmann::json &j, const QStringList &stringList)
     for (const auto &s : stringList) {
         j.push_back(s);
     }
-}
-
-inline void to_json(nlohmann::json &j, const QSize &size)
-{
-    j["width"] = size.width();
-    j["height"] = size.height();
-}
-
-inline void from_json(const nlohmann::json &j, QSize &size)
-{
-    QSize s;
-    size.setWidth(j.value("width", s.width()));
-    size.setHeight(j.value("height", s.height()));
-}
-
-inline void to_json(nlohmann::json &j, const QRect &rect)
-{
-    j["x"] = rect.x();
-    j["y"] = rect.y();
-    j["width"] = rect.width();
-    j["height"] = rect.height();
-}
-
-inline void from_json(const nlohmann::json &j, QRect &rect)
-{
-    QRect r;
-    rect.setX(j.value("x", r.x()));
-    rect.setY(j.value("y", r.y()));
-    rect.setWidth(j.value("width", r.width()));
-    rect.setHeight(j.value("height", r.height()));
 }
 
 QT_END_NAMESPACE

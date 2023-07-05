@@ -547,8 +547,8 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         }
     }
 
-    QRect r = m_group->view()->geometry();
-    r.moveTopLeft(m_group->mapToGlobal(QPoint(0, 0)));
+    Rect r = m_group->view()->geometry();
+    r.moveTopLeft(m_group->mapToGlobal(Point(0, 0)));
 
     auto floatingWindow = new Core::FloatingWindow(m_group, {});
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);

@@ -138,7 +138,7 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
   Offset _positionForInnerLocation(KDDWBindingsCore.Group? hoveredGroup) {
     if (hoveredGroup == null) return Offset.zero;
 
-    QRect groupGeo = hoveredGroup.geometry();
+    Rect groupGeo = hoveredGroup.geometry();
     var x = groupGeo.x().toDouble();
     var y = groupGeo.y().toDouble();
     var width = groupGeo.width().toDouble();

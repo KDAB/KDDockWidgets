@@ -36,7 +36,7 @@ public:
     ~ItemFreeContainer();
 
     /// @brief adds the item to the specified position
-    void addDockWidget(Item *item, QPoint localPt);
+    void addDockWidget(Item *item, Point localPt);
 
     void clear() override;
     void removeItem(Item *, bool hardRemove = true) override;

@@ -55,13 +55,13 @@ public:
     virtual QStringList affinities() const;
 
     ///@brief size of the window being dragged contents
-    virtual QSize size() const;
+    virtual Size size() const;
 
     /// @brief returns the min-size of the window being dragged contents
-    virtual QSize minSize() const;
+    virtual Size minSize() const;
 
     /// @brief returns the max-size of the window being dragged contents
-    virtual QSize maxSize() const;
+    virtual Size maxSize() const;
 
     /// @brief Returns a pixmap representing this Window. For purposes of QDrag. Wayland only.
     virtual Pixmap pixmap() const;
@@ -89,9 +89,9 @@ public:
     explicit WindowBeingDraggedWayland(Draggable *draggable);
     ~WindowBeingDraggedWayland() override;
 
-    QSize size() const override;
-    QSize minSize() const override;
-    QSize maxSize() const override;
+    Size size() const override;
+    Size minSize() const override;
+    Size maxSize() const override;
     Pixmap pixmap() const override;
     QStringList affinities() const override;
     QVector<DockWidget *> dockWidgets() const override;

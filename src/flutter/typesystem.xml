@@ -9,10 +9,6 @@
     <primitive-type name="qsizetype"/>
     <primitive-type name="qint64"/>
 
-    <object-type name="QSize" />
-    <object-type name="QRect" />
-    <object-type name="QPoint" />
-
     <object-type name="QString">
         <modify-function signature="swap(QString &amp;)" remove="all"/>
     </object-type>
@@ -43,6 +39,9 @@
         <enum-type name="DockWidgetOption" flags="DockWidgetOptions" />
 
         <namespace-type name="Core">
+            <object-type name="Size" />
+            <object-type name="Rect" />
+            <object-type name="Point" />
             <object-type name="Object" />
             <value-type name="CreateViewOptions" />
             <object-type name="DelayedCall" />

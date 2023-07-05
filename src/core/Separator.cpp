@@ -58,7 +58,7 @@ struct Separator::Private
     }
 
     Qt::Orientation orientation = Qt::Horizontal;
-    QRect geometry;
+    Rect geometry;
     int lazyPosition = 0;
     View *lazyResizeRubberBand = nullptr;
     Core::ItemBoxContainer *parentContainer = nullptr;
@@ -107,7 +107,7 @@ void Separator::move(int p)
     if (p == position())
         return;
 
-    QRect geo = d->geometry;
+    Rect geo = d->geometry;
     if (isVertical()) {
         geo.moveTop(p);
     } else {
@@ -126,11 +126,11 @@ void Separator::move(int p)
 
 int Separator::position() const
 {
-    const QPoint topLeft = d->geometry.topLeft();
+    const Point topLeft = d->geometry.topLeft();
     return isVertical() ? topLeft.y() : topLeft.x();
 }
 
-void Separator::setGeometry(QRect r)
+void Separator::setGeometry(Rect r)
 {
     if (r == d->geometry)
         return;
@@ -146,14 +146,14 @@ void Separator::setGeometry(QRect r)
 
 void Separator::setGeometry(int pos, int pos2, int length)
 {
-    QRect newGeo = d->geometry;
+    Rect newGeo = d->geometry;
     if (isVertical()) {
         // The separator itself is horizontal
-        newGeo.setSize(QSize(length, Core::Item::separatorThickness));
+        newGeo.setSize(Size(length, Core::Item::separatorThickness));
         newGeo.moveTo(pos2, pos);
     } else {
         // The separator itself is vertical
-        newGeo.setSize(QSize(Core::Item::separatorThickness, length));
+        newGeo.setSize(Size(Core::Item::separatorThickness, length));
         newGeo.moveTo(pos, pos2);
     }
 
@@ -174,7 +174,7 @@ void Separator::setLazyPosition(int pos)
 
     d->lazyPosition = pos;
 
-    QRect geo = v->geometry();
+    Rect geo = v->geometry();
     if (isVertical()) {
         geo.moveTop(pos);
     } else {
@@ -182,7 +182,7 @@ void Separator::setLazyPosition(int pos)
     }
 
     if (rubberBandIsTopLevel() && Platform::instance()->isQtWidgets())
-        geo.translate(d->m_hostView->mapToGlobal(QPoint(0, 0)));
+        geo.translate(d->m_hostView->mapToGlobal(Point(0, 0)));
     d->lazyResizeRubberBand->setGeometry(geo);
 }
 
@@ -227,7 +227,7 @@ void Separator::onMouseDoubleClick()
     d->parentContainer->requestEqualSize(this);
 }
 
-void Separator::onMouseMove(QPoint pos)
+void Separator::onMouseMove(Point pos)
 {
     if (!isBeingDragged())
         return;

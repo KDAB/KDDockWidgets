@@ -73,12 +73,12 @@ public:
      * @brief returns the layout's minimum size
      * @ref setLayoutMinimumSize
      */
-    QSize layoutMinimumSize() const;
+    Size layoutMinimumSize() const;
 
     /**
      * @brief returns the layout's maximum size hint
      */
-    QSize layoutMaximumSizeHint() const;
+    Size layoutMaximumSizeHint() const;
 
     /**
      * @brief returns the contents width.
@@ -101,7 +101,7 @@ public:
     /**
      * @brief Returns the size of the contents
      */
-    QSize layoutSize() const;
+    Size layoutSize() const;
 
     /// @brief Runs some sanity checks. Returns true if everything is OK
     bool checkSanity() const;
@@ -118,7 +118,7 @@ public:
      * QWidgets is async and we need it to be sync. As sometimes adding widgets will increase
      * the MultiSplitter size (due to widget's min-size constraints).
      */
-    void setLayoutSize(QSize);
+    void setLayoutSize(Size);
 
 
     /// @brief restores the dockwidget @p dw to its previous position
@@ -204,7 +204,7 @@ protected:
      * @brief setter for the minimum size
      * @ref minimumSize
      */
-    void setLayoutMinimumSize(QSize);
+    void setLayoutMinimumSize(Size);
 
     /**
      * @brief Removes unneeded placeholder items when adding new groups.
@@ -226,7 +226,7 @@ protected:
 
 private:
     Private *const d;
-    bool onResize(QSize newSize);
+    bool onResize(Size newSize);
 };
 
 }

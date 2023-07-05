@@ -29,18 +29,18 @@ class DOCKS_EXPORT NullDropIndicatorOverlay : public DropIndicatorOverlay
 public:
     explicit NullDropIndicatorOverlay(Core::DropArea *);
     ~NullDropIndicatorOverlay() override;
-    DropLocation hover_impl(QPoint) override
+    DropLocation hover_impl(Point) override
     {
         return {};
     }
 
-    DropLocation dropLocationForPos(QPoint) const
+    DropLocation dropLocationForPos(Point) const
     {
         return {};
     }
 
 protected:
-    QPoint posForIndicator(DropLocation) const override
+    Point posForIndicator(DropLocation) const override
     {
         return {};
     }

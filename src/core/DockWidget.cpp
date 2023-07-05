@@ -283,7 +283,7 @@ void DockWidget::setTitle(const QString &title)
     }
 }
 
-QRect DockWidget::groupGeometry() const
+Rect DockWidget::groupGeometry() const
 {
     if (Core::Group *f = d->group())
         return f->view()->geometry();
@@ -518,7 +518,7 @@ bool DockWidget::hasPreviousDockedLocation() const
     return d->m_lastPosition->isValid();
 }
 
-QSize DockWidget::lastOverlayedSize() const
+Size DockWidget::lastOverlayedSize() const
 {
     return d->m_lastOverlayedSize;
 }
@@ -543,7 +543,7 @@ bool DockWidget::skipsRestore() const
     return d->layoutSaverOptions & LayoutSaverOption::Skip;
 }
 
-void DockWidget::setFloatingGeometry(QRect geometry)
+void DockWidget::setFloatingGeometry(Rect geometry)
 {
     if (isOpen() && isFloating()) {
         view()->rootView()->setGeometry(geometry);
@@ -566,14 +566,14 @@ Core::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
         return fw; // Nothing to do
 
     if (q->view()->isRootView()) {
-        QRect geo = m_lastPosition->lastFloatingGeometry();
+        Rect geo = m_lastPosition->lastFloatingGeometry();
         if (geo.isNull()) {
             geo = q->geometry();
 
             if (!q->view()->hasAttribute(Qt::WA_PendingMoveEvent)) { // If user already moved it,
                                                                      // we don't
                 // interfere
-                const QPoint center = defaultCenterPosForFloating();
+                const Point center = defaultCenterPosForFloating();
                 if (!center.isNull())
                     geo.moveCenter(center);
             }
@@ -672,7 +672,7 @@ DockWidget::Private *DockWidget::dptr() const
 
 DockWidget::Private::~Private() = default;
 
-QPoint DockWidget::Private::defaultCenterPosForFloating()
+Point DockWidget::Private::defaultCenterPosForFloating()
 {
     MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
     // We don't care about multiple mainwindows yet. Or, let's just say that the first one is more
@@ -871,7 +871,7 @@ void DockWidget::Private::onParentChanged()
     actualTitleBarChanged.emit();
 }
 
-void DockWidget::onResize(QSize)
+void DockWidget::onResize(Size)
 {
     if (isOverlayed()) {
         if (auto group = d->group()) {
@@ -911,7 +911,7 @@ int DockWidget::userType() const
     return d->m_userType;
 }
 
-void DockWidget::setMDIPosition(QPoint pos)
+void DockWidget::setMDIPosition(Point pos)
 {
     if (MDILayout *layout = d->mdiLayout()) {
         if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
@@ -923,7 +923,7 @@ void DockWidget::setMDIPosition(QPoint pos)
     }
 }
 
-void DockWidget::setMDISize(QSize size)
+void DockWidget::setMDISize(Size size)
 {
     if (MDILayout *layout = d->mdiLayout()) {
         if (auto wrapperDW = d->mdiDockWidgetWrapper()) {

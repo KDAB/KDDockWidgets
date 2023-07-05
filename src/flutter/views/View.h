@@ -30,13 +30,13 @@ public:
 
     ~View() override;
 
-    QSize minSize() const override;
-    QSize maxSizeHint() const override;
-    QRect geometry() const override;
-    QRect normalGeometry() const override;
-    void setNormalGeometry(QRect geo);
-    void setGeometry(QRect geometry) override;
-    void setMaximumSize(QSize sz) override;
+    Size minSize() const override;
+    Size maxSizeHint() const override;
+    Rect geometry() const override;
+    Rect normalGeometry() const override;
+    void setNormalGeometry(Rect geo);
+    void setGeometry(Rect geometry) override;
+    void setMaximumSize(Size sz) override;
 
     bool isVisible() const override;
     void setVisible(bool visible) override;
@@ -58,9 +58,9 @@ public:
     void activateWindow() override;
     void raise() override;
     bool isRootView() const override;
-    QPoint mapToGlobal(QPoint localPt) const override;
-    QPoint mapFromGlobal(QPoint globalPt) const override;
-    QPoint mapTo(Core::View *parent, QPoint pos) const override;
+    Point mapToGlobal(Point localPt) const override;
+    Point mapFromGlobal(Point globalPt) const override;
+    Point mapTo(Core::View *parent, Point pos) const override;
     void setWindowOpacity(double v) override;
 
     /// Called when the flutter widget was resized by its own initiative (and not kddw)
@@ -87,7 +87,7 @@ public:
     bool isMaximized() const override;
 
     std::shared_ptr<Core::Window> window() const override;
-    std::shared_ptr<Core::View> childViewAt(QPoint p) const override;
+    std::shared_ptr<Core::View> childViewAt(Point p) const override;
     std::shared_ptr<Core::View> rootView() const override;
     std::shared_ptr<Core::View> parentView() const override;
     std::shared_ptr<Core::View> asWrapper() override;
@@ -101,7 +101,7 @@ public:
     bool hasFocus() const override;
     void setFocusPolicy(Qt::FocusPolicy policy) override;
     QString viewName() const override;
-    void setMinimumSize(QSize sz) override;
+    void setMinimumSize(Size sz) override;
     void render(QPainter *) override;
     void setCursor(Qt::CursorShape shape) override;
     void setMouseTracking(bool enable) override;
@@ -121,7 +121,7 @@ public:
     virtual bool isMounted() const;
 
     /// Called by flutter when a mouse event is received
-    void onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed);
+    void onMouseEvent(Event::Type eventType, Point localPos, Point globalPos, bool leftIsPressed);
 
     /// View can override if it's interested in events which the event filter rejected
     virtual void onMousePress(MouseEvent *)
@@ -134,9 +134,9 @@ public:
 private:
     View *m_parentView = nullptr;
     QString m_name;
-    QSize m_minSize;
-    QSize m_maxSize;
-    QRect m_geometry;
+    Size m_minSize;
+    Size m_maxSize;
+    Rect m_geometry;
     std::optional<bool> m_visible;
     bool m_inCtor = true;
     KDDW_DELETE_COPY_CTOR(View)

@@ -500,7 +500,7 @@ if(KDDockWidgets_EXAMPLES)
         )
     endif()
 
-    if(KDDW_FRONTEND_FLUTTER)
+    if(KDDW_FRONTEND_FLUTTER AND NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
         add_custom_target(
             kddw-flutter-example ALL
             DEPENDS ${CMAKE_SOURCE_DIR}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example

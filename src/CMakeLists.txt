@@ -435,14 +435,16 @@ if(KDDW_FRONTEND_FLUTTER)
             message(FATAL_ERROR "icudtl.dat not found!")
         endif()
 
-        # Build our dart code for the tests embedder
-        add_custom_command(
-            TARGET kddockwidgets
-            PRE_BUILD
-            COMMAND ${FLUTTER_EXE} build bundle --suppress-analytics
-            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
-            COMMENT "Running flutter build bundle flutter_tests_embedder"
-        )
+        if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
+            # Build our dart code for the tests embedder
+            add_custom_command(
+                TARGET kddockwidgets
+                PRE_BUILD
+                COMMAND ${FLUTTER_EXE} build bundle --suppress-analytics
+                WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
+                COMMENT "Running flutter build bundle flutter_tests_embedder"
+            )
+        endif()
 
         include_directories($ENV{FLUTTER_ENGINE_FOLDER})
         target_link_libraries(kddockwidgets PRIVATE glfw $ENV{FLUTTER_ENGINE_FOLDER}/${FLUTTER_ENGINE_LIBRARY})

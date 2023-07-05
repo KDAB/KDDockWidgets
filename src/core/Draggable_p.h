@@ -16,7 +16,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include <QVector>
-#include <QPoint>
 
 #include <memory>
 
@@ -62,7 +61,7 @@ public:
      * Because simply inheriting from Draggable doesn't mean you can click anywhere to drag.
      * @param p is the point where the mouse press occurred
      */
-    virtual bool isPositionDraggable(QPoint p) const
+    virtual bool isPositionDraggable(Point p) const
     {
         KDDW_UNUSED(p)
         return true;
@@ -73,7 +72,7 @@ public:
      * The default implementation just checks if the delta is bigger than
      * QApplication::startDragDistance().
      */
-    virtual bool dragCanStart(QPoint pressPos, QPoint globalPos) const;
+    virtual bool dragCanStart(Point pressPos, Point globalPos) const;
 
     /**
      * @brief Sets a widget resize handler
@@ -110,7 +109,7 @@ public:
      * is approx equal to the floating window's 0,0 the discrepancy isn't noticeable, but it can
      * be if there's more window margins
      */
-    virtual QPoint mapToWindow(QPoint pos) const
+    virtual Point mapToWindow(Point pos) const
     {
         return pos;
     }

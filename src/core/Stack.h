@@ -70,7 +70,7 @@ public:
     DockWidget *singleDockWidget() const override;
     bool isWindow() const override;
     bool isMDI() const override;
-    bool isPositionDraggable(QPoint p) const override;
+    bool isPositionDraggable(Point p) const override;
 
     StackOptions options() const;
 
@@ -81,7 +81,7 @@ public:
     KDBindings::Signal<bool> tabBarAutoHideChanged;
 
 public: // TODOm3
-    bool onMouseDoubleClick(QPoint localPos);
+    bool onMouseDoubleClick(Point localPos);
 
 private:
     class Private;

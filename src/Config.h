@@ -24,10 +24,6 @@
 
 #include <qglobal.h>
 
-QT_BEGIN_NAMESPACE
-class QSize;
-QT_END_NAMESPACE
-
 namespace KDDockWidgets {
 
 namespace Core {
@@ -344,14 +340,14 @@ public:
     ///@brief Sets the minimum size a dock widget can have.
     /// Widgets can still provide their own min-size and it will be respected, however it can never
     /// be smaller than this one.
-    void setAbsoluteWidgetMinSize(QSize size);
-    QSize absoluteWidgetMinSize() const;
+    void setAbsoluteWidgetMinSize(Size size);
+    Size absoluteWidgetMinSize() const;
 
     ///@brief Sets the maximum size a dock widget can have.
     /// Widgets can still provide their own max-size and it will be respected, however it can never
     /// be bigger than this one.
-    void setAbsoluteWidgetMaxSize(QSize size);
-    QSize absoluteWidgetMaxSize() const;
+    void setAbsoluteWidgetMaxSize(Size size);
+    Size absoluteWidgetMaxSize() const;
 
     ///@brief Disables our internal widget's paint events
     /// By default, KDDockWidget's internal widgets reimplement paintEvent(). Disabling them

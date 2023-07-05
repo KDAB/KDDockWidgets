@@ -121,7 +121,7 @@ KDDW_QCORO_TASK tst_viewGeometry()
     auto rootView = createViewAndWindow({});
     rootView->show();
 
-    const QRect initialGeo = QRect(200, 201, 500, 501);
+    const auto initialGeo = Rect(200, 201, 500, 501);
     rootView->setGeometry(initialGeo);
     CHECK_EQ(rootView->pos(), initialGeo.topLeft());
 
@@ -133,14 +133,14 @@ KDDW_QCORO_TASK tst_viewGeometry()
     CHECK_EQ(rootView->y(), initialGeo.y());
     CHECK_EQ(rootView->width(), initialGeo.width());
     CHECK_EQ(rootView->height(), initialGeo.height());
-    CHECK_EQ(rootView->rect(), QRect(QPoint(0, 0), initialGeo.size()));
+    CHECK_EQ(rootView->rect(), Rect(Point(0, 0), initialGeo.size()));
 
     // Now test with child view
     auto childView = createViewAndWindow({ true }, rootView);
     CHECK(rootView->isVisible());
     CHECK(childView->isVisible());
     CHECK(childView->controller()->isVisible());
-    const QRect newChildGeo(1, 2, 300, 301);
+    const Rect newChildGeo(1, 2, 300, 301);
     childView->setGeometry(newChildGeo);
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(500);
@@ -155,12 +155,12 @@ KDDW_QCORO_TASK tst_viewGeometry()
 
 KDDW_QCORO_TASK tst_viewMinSize()
 {
-    const QSize sizeHint = {};
-    const QSize minSize = { 201, 202 };
+    const Size sizeHint = {};
+    const Size minSize = { 201, 202 };
     auto rootView = createViewAndWindow({ true, sizeHint, minSize });
     CHECK_EQ(rootView->minSize(), minSize);
 
-    const QSize newMinSize = { 301, 302 };
+    const Size newMinSize = { 301, 302 };
     rootView->setMinimumSize(newMinSize);
     CHECK_EQ(rootView->minSize(), newMinSize);
 
@@ -169,13 +169,13 @@ KDDW_QCORO_TASK tst_viewMinSize()
 
 KDDW_QCORO_TASK tst_viewMaxSize()
 {
-    const QSize sizeHint = {};
-    const QSize minSize = { 201, 202 };
-    const QSize maxSize = { 500, 501 };
+    const Size sizeHint = {};
+    const Size minSize = { 201, 202 };
+    const Size maxSize = { 500, 501 };
     auto rootView = createViewAndWindow({ true, sizeHint, minSize, maxSize });
     CHECK_EQ(rootView->maxSizeHint(), maxSize);
 
-    const QSize newMaxSize = { 301, 302 };
+    const Size newMaxSize = { 301, 302 };
     rootView->setMaximumSize(newMaxSize);
     CHECK_EQ(rootView->maxSizeHint(), newMaxSize);
 

@@ -31,7 +31,7 @@ MDILayout::~MDILayout()
 {
 }
 
-void MDILayout::addDockWidget(Core::DockWidget *dw, QPoint localPt,
+void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
                               InitialOption addingOption)
 {
     if (!dw) {
@@ -64,7 +64,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, QPoint localPt,
     }
 }
 
-void MDILayout::setDockWidgetGeometry(Core::Group *group, QRect geometry)
+void MDILayout::setDockWidgetGeometry(Core::Group *group, Rect geometry)
 {
     if (!group)
         return;
@@ -78,12 +78,12 @@ void MDILayout::setDockWidgetGeometry(Core::Group *group, QRect geometry)
     item->setGeometry(geometry);
 }
 
-void MDILayout::moveDockWidget(Core::DockWidget *dw, QPoint pos)
+void MDILayout::moveDockWidget(Core::DockWidget *dw, Point pos)
 {
     moveDockWidget(dw->d->group(), pos);
 }
 
-void MDILayout::moveDockWidget(Core::Group *group, QPoint pos)
+void MDILayout::moveDockWidget(Core::Group *group, Point pos)
 {
     if (!group)
         return;
@@ -94,17 +94,17 @@ void MDILayout::moveDockWidget(Core::Group *group, QPoint pos)
         return;
     }
 
-    QRect geo = item->geometry();
+    Rect geo = item->geometry();
     geo.moveTopLeft(pos);
     item->setGeometry(geo);
 }
 
-void MDILayout::resizeDockWidget(Core::DockWidget *dw, QSize size)
+void MDILayout::resizeDockWidget(Core::DockWidget *dw, Size size)
 {
     resizeDockWidget(dw->d->group(), size);
 }
 
-void MDILayout::resizeDockWidget(Core::Group *group, QSize size)
+void MDILayout::resizeDockWidget(Core::Group *group, Size size)
 {
     if (!group)
         return;

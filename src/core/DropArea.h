@@ -58,9 +58,9 @@ public:
     ~DropArea();
 
     void removeHover();
-    DropLocation hover(WindowBeingDragged *draggedWindow, QPoint globalPos);
+    DropLocation hover(WindowBeingDragged *draggedWindow, Point globalPos);
     ///@brief Called when a user drops a widget via DND
-    bool drop(WindowBeingDragged *droppedWindow, QPoint globalPos);
+    bool drop(WindowBeingDragged *droppedWindow, Point globalPos);
     QList<Core::Group *> groups() const;
 
     Core::Item *centralFrame() const;
@@ -114,8 +114,8 @@ public:
      * Excludes the Separator thickness, result is actually smaller than what needed. In other
      * words, the result will be exactly the same as the geometry the widget will get.
      */
-    QRect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
-                      const Core::Item *relativeTo) const;
+    Rect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
+                     const Core::Item *relativeTo) const;
 
     bool deserialize(const LayoutSaver::MultiSplitter &) override;
 
@@ -167,14 +167,14 @@ private:
      * @brief Equivalent to @ref availableLengthForOrientation but returns for both orientations.
      * width is for Qt::Vertical.
      */
-    QSize availableSize() const;
+    Size availableSize() const;
 
     template<typename T>
     bool validateAffinity(T *, Core::Group *acceptingGroup = nullptr) const;
     bool drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGroup, DropLocation);
     bool drop(View *droppedwindow, KDDockWidgets::Location location,
               Core::Group *relativeTo);
-    Core::Group *groupContainingPos(QPoint globalPos) const;
+    Core::Group *groupContainingPos(Point globalPos) const;
     Core::Group *centralGroup() const;
     void updateFloatingActions();
 
