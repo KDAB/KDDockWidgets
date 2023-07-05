@@ -20,8 +20,8 @@
 #define KD_DOCKWIDGET_QUICK_H
 
 #include "kddockwidgets/core/views/DockWidgetViewInterface.h"
+#include "kddockwidgets/qtquick/Action.h"
 #include "View.h"
-#include "../Action.h"
 
 QT_BEGIN_NAMESPACE
 class QQmlEngine;
