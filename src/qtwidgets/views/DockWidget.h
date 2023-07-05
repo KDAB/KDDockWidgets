@@ -84,9 +84,6 @@ public:
     QAction *floatAction() const;
 
 protected:
-#ifndef PYTHON_BINDINGS
-    void init() override;
-#endif
     bool event(QEvent *) override;
     void resizeEvent(QResizeEvent *) override;
 

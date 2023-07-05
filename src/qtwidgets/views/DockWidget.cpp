@@ -50,23 +50,19 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
     , Core::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this))
 {
-    init();
-    m_dockWidget->init();
-}
-
-DockWidget::~DockWidget()
-{
-    delete d;
-}
-
-void DockWidget::init()
-{
     m_dockWidget->d->guestViewChanged.connect([this] {
         if (auto guest = widget()) {
             QWidget::setSizePolicy(guest->sizePolicy());
             d->layout->addWidget(guest);
         }
     });
+
+    m_dockWidget->init();
+}
+
+DockWidget::~DockWidget()
+{
+    delete d;
 }
 
 void DockWidget::setWidget(QWidget *widget)
