@@ -11,7 +11,18 @@
 
 import QtQuick 2.9
 
-Item {
+DropArea {
     id: root
+
     property QtObject dropAreaCpp: null
+
+    onPositionChanged: (drag) => {
+        dropAreaCpp.beginDrag(mapToGlobal(drag.x, drag.y), drag.source);
+    }
+    onExited: (drag) => {
+        dropAreaCpp.stop();
+    }
+    onDropped: (drag) => {
+        dropAreaCpp.drop(mapToGlobal(drag.x, drag.y), drag.source);
+    }
 }
