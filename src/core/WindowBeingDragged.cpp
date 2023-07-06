@@ -262,6 +262,7 @@ Pixmap WindowBeingDraggedWayland::pixmap() const
 #ifdef QT_GUI_LIB
     QPixmap pixmap(size());
     QPainter p(&pixmap);
+    pixmap.fill(Qt::transparent);
     p.setOpacity(0.7);
 
     if (m_floatingWindow) {
