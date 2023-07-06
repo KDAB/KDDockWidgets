@@ -17,6 +17,7 @@
 #include "core/ScopedValueRollback_p.h"
 #include "kddockwidgets/qtquick/Window.h"
 #include "qtquick/Platform.h"
+#include "core/Group.h"
 
 #include <QtQuick/private/qquickitem_p.h>
 #include <qpa/qplatformwindow.h>
@@ -778,9 +779,14 @@ void View::setMinimumSize(QSize sz)
     }
 }
 
-void View::render(QPainter *)
+void View::render(QPainter *painter)
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    if (QQuickWindow *w = QQuickItem::window()) {
+        const QImage image = w->grabWindow();
+
+        const QRect sourceRect { asGroupController()->dragRect().topLeft() * image.devicePixelRatio(), painter->window().size() * image.devicePixelRatio() };
+        painter->drawImage(painter->window(), image, sourceRect);
+    }
 }
 
 void View::setCursor(Qt::CursorShape shape)
