@@ -219,9 +219,8 @@ if(KDDW_FRONTEND_FLUTTER)
     endif()
 
     if(KDDockWidgets_DEVELOPER_MODE AND (APPLE OR WIN32))
-        message(
-            FATAL_ERROR
-                "The flutter frontend only supports developer-mode on Linux. You can still develop on Windows/macOS but wait for test results from KDAB CI."
+        message(FATAL_ERROR "The flutter frontend only supports developer-mode on Linux. "
+                            "You can still develop on Windows/macOS but wait for test results from KDAB CI."
         )
     endif()
 endif()
