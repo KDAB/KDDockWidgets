@@ -811,6 +811,18 @@ void View::onWindowStateChangeEvent(QWindowStateChangeEvent *)
     }
 }
 
+namespace KDDockWidgets {
+inline QString cleanQRCFilename(const QString &filename)
+{
+    // QFile doesn't understand qrc:/ only :/
+
+    if (filename.startsWith(QStringLiteral("qrc:/")))
+        return filename.right(filename.size() - 3);
+
+    return filename;
+}
+}
+
 QQuickItem *View::createQQuickItem(const QString &filename, QQuickItem *parent) const
 {
     auto p = parent;
@@ -828,7 +840,7 @@ QQuickItem *View::createQQuickItem(const QString &filename, QQuickItem *parent) 
         return nullptr;
     }
 
-    if (!QFile::exists(filename)) {
+    if (!QFile::exists(cleanQRCFilename(filename))) {
         qWarning() << Q_FUNC_INFO << "File not found" << filename;
         return nullptr;
     }

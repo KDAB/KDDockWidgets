@@ -10,11 +10,13 @@
 */
 
 #include "Separator.h"
-#include "kddockwidgets/core/Separator.h"
+#include "core/Separator.h"
 #include "core/Logging_p.h"
 #include "core/View_p.h"
 #include "core/layouting/Item_p.h"
-// #include "Rubberband_quick.h"
+
+#include "qtquick/ViewFactory.h"
+#include "qtquick/Platform.h"
 
 #include <QTimer>
 
@@ -29,7 +31,7 @@ Separator::Separator(Core::Separator *controller, QQuickItem *parent)
 
 void Separator::init()
 {
-    createQQuickItem(QStringLiteral(":/kddockwidgets/qtquick/views/qml/Separator.qml"), this);
+    createQQuickItem(plat()->viewFactory()->separatorFilename().toString(), this);
 
     // Only set on Separator::init(), so single-shot
     QTimer::singleShot(0, this, &Separator::isVerticalChanged);

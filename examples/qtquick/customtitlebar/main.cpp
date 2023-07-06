@@ -31,6 +31,12 @@ public:
     {
         return QUrl("qrc:/MyTitleBar.qml");
     }
+
+    // Optional, just for illustration purposes
+    QUrl separatorFilename() const override
+    {
+        return QUrl("qrc:/MySeparator.qml");
+    }
 };
 
 CustomViewFactory::~CustomViewFactory() = default;

@@ -72,11 +72,15 @@ public:
     Core::View *createDropArea(Core::DropArea *, Core::View *parent) const override;
     Core::View *createMDILayout(Core::MDILayout *, Core::View *parent) const override;
 
+    /// Called by QML
     Q_INVOKABLE virtual QUrl titleBarFilename() const;
     Q_INVOKABLE virtual QUrl tabbarFilename() const;
+
+    /// Called by C++
     virtual QUrl dockwidgetFilename() const;
     virtual QUrl groupFilename() const;
     virtual QUrl floatingWindowFilename() const;
+    virtual QUrl separatorFilename() const;
 
     KDDockWidgets::Core::Action *createAction(Core::DockWidget *, const char *debugName) const override;
 

@@ -196,6 +196,11 @@ QUrl ViewFactory::tabbarFilename() const
     return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/TabBar.qml"));
 }
 
+QUrl ViewFactory::separatorFilename() const
+{
+    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/Separator.qml"));
+}
+
 Core::View *
 ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicatorOverlay *,
                                                      Core::View *) const
