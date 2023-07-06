@@ -104,6 +104,7 @@ option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
 option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
 option(KDDockWidgets_FLUTTER_NO_BINDINGS "Don't build flutter bindings, only the flutter frontend" OFF)
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
+option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
@@ -331,6 +332,9 @@ macro(set_compiler_flags targetName)
 
         if(NOT MSVC)
             target_compile_options(${targetName} PRIVATE -Wall -Wextra)
+            if(KDDockWidgets_USE_LLD)
+                target_compile_options(${targetName} PRIVATE -fuse-ld=lld)
+            endif()
         endif()
 
         if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")

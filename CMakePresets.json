@@ -2,36 +2,39 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "dev",
-            "displayName": "dev",
+            "name": "dev-base",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-dev",
+            "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick",
+                "KDDockWidgets_USE_LLD": "ON"
             },
             "warnings": {
                 "uninitialized": true
             }
         },
         {
+            "name": "dev",
+            "displayName": "dev",
+            "binaryDir": "${sourceDir}/build-dev",
+            "inherits": [
+                "dev-base"
+            ]
+        },
+        {
             "name": "dev-asan",
             "displayName": "dev-asan",
             "description": "An ASAN/UBSAN build",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-asan",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "ECM_ENABLE_SANITIZERS": "'address;undefined'",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+                "ECM_ENABLE_SANITIZERS": "'address;undefined'"
             },
-            "warnings": {
-                "uninitialized": true
-            }
+            "inherits": [
+                "dev-base"
+            ]
         },
         {
             "name": "flutter",
@@ -52,7 +55,8 @@
             "binaryDir": "${sourceDir}/build-dev-flutter",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_DEVELOPER_MODE": "ON"
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "KDDockWidgets_USE_LLD": "ON"
             },
             "inherits": [
                 "flutter"
@@ -201,37 +205,33 @@
         {
             "name": "dev6",
             "displayName": "dev6",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev6",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QT6": "ON",
-                "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
-            }
+            },
+            "inherits": [
+                "dev-base"
+            ]
         },
         {
             "name": "dev-asan6",
             "displayName": "dev-asan6",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-asan6",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QT6": "ON",
-                "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "ECM_ENABLE_SANITIZERS": "'address;undefined'",
-                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+                "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
-            }
+            },
+            "inherits": [
+                "dev-base"
+            ]
         },
         {
             "name": "dev-clangcl",
@@ -306,9 +306,6 @@
                 "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
-            "warnings": {
-                "uninitialized": true
-            },
             "environment": {
                 "CC": "clang",
                 "CXX": "clang++",
@@ -328,9 +325,6 @@
                 "CMAKE_C_FLAGS_INIT": "-ftime-trace",
                 "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
-            },
-            "warnings": {
-                "uninitialized": true
             },
             "environment": {
                 "CC": "clang",
