@@ -27,7 +27,7 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
     auto item = createQQuickItem(QStringLiteral(":/kddockwidgets/qtquick/views/qml/DropArea.qml"), this);
     Q_ASSERT(item);
 
-    qvariant_cast<QObject*>(item->property("anchors"))->setProperty("fill", QVariant::fromValue(asQQuickItem(this)));
+    qvariant_cast<QObject *>(item->property("anchors"))->setProperty("fill", QVariant::fromValue(asQQuickItem(this)));
     item->setProperty("dropAreaCpp", QVariant::fromValue(this));
 }
 
@@ -39,14 +39,14 @@ DropArea::~DropArea()
 
 void DropArea::beginDrag(QPoint point, QObject *source)
 {
-    if (auto stateWayland = qobject_cast<Core::StateDraggingWayland*>(source)) {
+    if (auto stateWayland = qobject_cast<Core::StateDraggingWayland *>(source)) {
         m_dropArea->hover(stateWayland->q->windowBeingDragged(), point);
     }
 }
 
 void DropArea::drop(QPoint point, QObject *source)
 {
-    if (auto stateWayland = qobject_cast<Core::StateDraggingWayland*>(source)) {
+    if (auto stateWayland = qobject_cast<Core::StateDraggingWayland *>(source)) {
         m_dropArea->drop(stateWayland->q->windowBeingDragged(), point);
         stop();
     }

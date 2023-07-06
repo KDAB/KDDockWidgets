@@ -28,8 +28,8 @@ public:
     explicit DropArea(Core::DropArea *, Core::View *parent);
     ~DropArea();
 
-    Q_INVOKABLE void beginDrag(QPoint point, QObject* source);
-    Q_INVOKABLE void drop(QPoint point, QObject* source);
+    Q_INVOKABLE void beginDrag(QPoint point, QObject *source);
+    Q_INVOKABLE void drop(QPoint point, QObject *source);
     Q_INVOKABLE void stop();
 
 private:
