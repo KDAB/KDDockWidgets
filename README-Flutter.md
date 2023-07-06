@@ -11,7 +11,7 @@
 
 - CMake, Ninja
 
-- KDDW (git clone https://github.com/KDAB/KDDockWidgets.git)
+- KDDW (git clone <https://github.com/KDAB/KDDockWidgets.git>)
 
 ## Build instructions
 
