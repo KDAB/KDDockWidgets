@@ -241,7 +241,7 @@ namespace KDDockWidgets::flutter {
 class TestView_flutter : public flutter::View
 {
 public:
-    explicit TestView_flutter(Core::CreateViewOptions opts, QWidget *)
+    explicit TestView_flutter(Core::CreateViewOptions opts, Core::View *)
         : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
@@ -261,7 +261,7 @@ private:
 class FocusableTestView_flutter : public flutter::View
 {
 public:
-    explicit FocusableTestView_flutter(Core::CreateViewOptions opts, QWidget *)
+    explicit FocusableTestView_flutter(Core::CreateViewOptions opts, Core::View *)
         : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
         , m_opts(opts)
     {
@@ -281,7 +281,7 @@ private:
 class NonClosableTestView_flutter : public flutter::View
 {
 public:
-    explicit NonClosableTestView_flutter(QWidget *)
+    explicit NonClosableTestView_flutter(Core::View *)
         : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO parent*/)
     {
     }
