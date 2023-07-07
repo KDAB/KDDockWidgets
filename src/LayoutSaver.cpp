@@ -36,10 +36,9 @@
 #include "core/nlohmann_helpers_p.h"
 #include "core/layouting/Item_p.h"
 
-#include <qmath.h>
-
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 /**
  * Some implementation details:
@@ -1068,8 +1067,8 @@ void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
     const double newDeltaX = deltaX * widthFactor;
     const double newDeltaY = deltaY * heightFactor;
 
-    pt.setX(qCeil(savedMainWindowGeometry.x() + newDeltaX));
-    pt.setY(qCeil(savedMainWindowGeometry.y() + newDeltaY));
+    pt.setX(int(std::ceil(savedMainWindowGeometry.x() + newDeltaX)));
+    pt.setY(int(std::ceil(savedMainWindowGeometry.y() + newDeltaY)));
 }
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QPoint &pt) const
