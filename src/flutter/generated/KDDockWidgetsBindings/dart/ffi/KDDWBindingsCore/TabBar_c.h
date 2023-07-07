@@ -12,12 +12,10 @@
 #include <TabBar.h>
 #include "core/Stack.h"
 #include <core/DockWidget.h>
-#include <qpoint.h>
+#include <core/geometry_helpers_p.h>
 #include <core/Group.h>
 #include <qstring.h>
-#include <qrect.h>
 #include <core/View.h>
-#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -28,10 +26,10 @@ public:
     TabBar_wrapper(KDDockWidgets::Core::Stack *tabWidget = nullptr);
     KDDockWidgets::Core::DockWidget *currentDockWidget() const;
     int currentIndex() const;
-    KDDockWidgets::Core::DockWidget *dockWidgetAt(QPoint localPos) const;
+    KDDockWidgets::Core::DockWidget *dockWidgetAt(KDDockWidgets::Point localPos) const;
     KDDockWidgets::Core::DockWidget *dockWidgetAt(int index) const;
-    virtual bool dragCanStart(QPoint pressPos, QPoint pos) const;
-    virtual bool dragCanStart_nocallback(QPoint pressPos, QPoint pos) const;
+    virtual bool dragCanStart(KDDockWidgets::Point pressPos, KDDockWidgets::Point pos) const;
+    virtual bool dragCanStart_nocallback(KDDockWidgets::Point pressPos, KDDockWidgets::Point pos) const;
     KDDockWidgets::Core::Group *group() const;
     bool hasSingleDockWidget() const;
     int indexOfDockWidget(const KDDockWidgets::Core::DockWidget *dw) const;
@@ -41,9 +39,9 @@ public:
     virtual bool isWindow_nocallback() const;
     void moveTabTo(int from, int to);
     int numDockWidgets() const;
-    void onMouseDoubleClick(QPoint localPos);
-    void onMousePress(QPoint localPos);
-    QRect rectForTab(int index) const;
+    void onMouseDoubleClick(KDDockWidgets::Point localPos);
+    void onMousePress(KDDockWidgets::Point localPos);
+    KDDockWidgets::Rect rectForTab(int index) const;
     void removeDockWidget(KDDockWidgets::Core::DockWidget *dw);
     void renameTab(int index, const QString &arg__2);
     void setCurrentDockWidget(KDDockWidgets::Core::DockWidget *dw);
@@ -55,7 +53,7 @@ public:
     KDDockWidgets::Core::Stack *stack() const;
     bool tabsAreMovable() const;
     QString text(int index) const;
-    typedef bool (*Callback_dragCanStart)(void *, QPoint *pressPos, QPoint *pos);
+    typedef bool (*Callback_dragCanStart)(void *, KDDockWidgets::Point *pressPos, KDDockWidgets::Point *pos);
     Callback_dragCanStart m_dragCanStartCallback = nullptr;
     typedef bool (*Callback_isMDI)(void *);
     Callback_isMDI m_isMDICallback = nullptr;
@@ -75,12 +73,12 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__constructor_St
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__currentDockWidget(void *thisObj);
 // KDDockWidgets::Core::TabBar::currentIndex() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__TabBar__currentIndex(void *thisObj);
-// KDDockWidgets::Core::TabBar::dockWidgetAt(QPoint localPos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__dockWidgetAt_QPoint(void *thisObj, void *localPos_);
+// KDDockWidgets::Core::TabBar::dockWidgetAt(KDDockWidgets::Point localPos) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__dockWidgetAt_Point(void *thisObj, void *localPos_);
 // KDDockWidgets::Core::TabBar::dockWidgetAt(int index) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__dockWidgetAt_int(void *thisObj, int index);
-// KDDockWidgets::Core::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TabBar__dragCanStart_QPoint_QPoint(void *thisObj, void *pressPos_, void *pos_);
+// KDDockWidgets::Core::TabBar::dragCanStart(KDDockWidgets::Point pressPos, KDDockWidgets::Point pos) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TabBar__dragCanStart_Point_Point(void *thisObj, void *pressPos_, void *pos_);
 // KDDockWidgets::Core::TabBar::group() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__group(void *thisObj);
 // KDDockWidgets::Core::TabBar::hasSingleDockWidget() const
@@ -95,10 +93,10 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TabBar__isWindow(void *
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__moveTabTo_int_int(void *thisObj, int from, int to);
 // KDDockWidgets::Core::TabBar::numDockWidgets() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__TabBar__numDockWidgets(void *thisObj);
-// KDDockWidgets::Core::TabBar::onMouseDoubleClick(QPoint localPos)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_);
-// KDDockWidgets::Core::TabBar::onMousePress(QPoint localPos)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__onMousePress_QPoint(void *thisObj, void *localPos_);
+// KDDockWidgets::Core::TabBar::onMouseDoubleClick(KDDockWidgets::Point localPos)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point(void *thisObj, void *localPos_);
+// KDDockWidgets::Core::TabBar::onMousePress(KDDockWidgets::Point localPos)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TabBar__onMousePress_Point(void *thisObj, void *localPos_);
 // KDDockWidgets::Core::TabBar::rectForTab(int index) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TabBar__rectForTab_int(void *thisObj, int index);
 // KDDockWidgets::Core::TabBar::removeDockWidget(KDDockWidgets::Core::DockWidget * dw)

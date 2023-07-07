@@ -10,7 +10,7 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <KDDockWidgets.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class InitialOption_wrapper : public ::KDDockWidgets::InitialOption
@@ -20,8 +20,8 @@ public:
     InitialOption_wrapper();
     InitialOption_wrapper(KDDockWidgets::DefaultSizeMode mode);
     InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v);
-    InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v, QSize size);
-    InitialOption_wrapper(QSize size);
+    InitialOption_wrapper(KDDockWidgets::InitialVisibilityOption v, KDDockWidgets::Size size);
+    InitialOption_wrapper(KDDockWidgets::Size size);
     bool preservesCurrentTab() const;
     bool startsHidden() const;
 };
@@ -33,10 +33,10 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_DefaultSizeMode(int mode);
 // KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption(int v);
-// KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v, QSize size)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_QSize(int v, void *size_);
-// KDDockWidgets::InitialOption::InitialOption(QSize size)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_QSize(void *size_);
+// KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::InitialVisibilityOption v, KDDockWidgets::Size size)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_InitialVisibilityOption_Size(int v, void *size_);
+// KDDockWidgets::InitialOption::InitialOption(KDDockWidgets::Size size)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__InitialOption__constructor_Size(void *size_);
 // KDDockWidgets::InitialOption::preservesCurrentTab() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__InitialOption__preservesCurrentTab(void *thisObj);
 // KDDockWidgets::InitialOption::startsHidden() const

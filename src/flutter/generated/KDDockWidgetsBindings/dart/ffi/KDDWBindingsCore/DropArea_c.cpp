@@ -44,7 +44,7 @@ void DropArea_wrapper::addWidget(KDDockWidgets::Core::View *widget, KDDockWidget
 {
     ::KDDockWidgets::Core::DropArea::addWidget(widget, location, relativeTo, option);
 }
-QSize DropArea_wrapper::availableSize() const
+KDDockWidgets::Size DropArea_wrapper::availableSize() const
 {
     return ::KDDockWidgets::Core::DropArea::availableSize();
 }
@@ -76,7 +76,7 @@ KDDockWidgets::Core::DropIndicatorOverlay *DropArea_wrapper::dropIndicatorOverla
 {
     return ::KDDockWidgets::Core::DropArea::dropIndicatorOverlay();
 }
-KDDockWidgets::Core::Group *DropArea_wrapper::groupContainingPos(QPoint globalPos) const
+KDDockWidgets::Core::Group *DropArea_wrapper::groupContainingPos(KDDockWidgets::Point globalPos) const
 {
     return ::KDDockWidgets::Core::DropArea::groupContainingPos(globalPos);
 }
@@ -185,7 +185,7 @@ void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOptio
 // availableSize() const
 void *c_KDDockWidgets__Core__DropArea__availableSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->availableSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->availableSize() };
 }
 // centralFrame() const
 void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj)
@@ -226,11 +226,11 @@ void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj)
 {
     return fromPtr(thisObj)->dropIndicatorOverlay();
 }
-// groupContainingPos(QPoint globalPos) const
-void *c_KDDockWidgets__Core__DropArea__groupContainingPos_QPoint(void *thisObj, void *globalPos_)
+// groupContainingPos(KDDockWidgets::Point globalPos) const
+void *c_KDDockWidgets__Core__DropArea__groupContainingPos_Point(void *thisObj, void *globalPos_)
 {
     assert(globalPos_);
-    auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
+    auto &globalPos = *reinterpret_cast<KDDockWidgets::Point *>(globalPos_);
     return fromPtr(thisObj)->groupContainingPos(globalPos);
 }
 // hasSingleFloatingFrame() const
@@ -297,7 +297,7 @@ void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 721:
+    case 668:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

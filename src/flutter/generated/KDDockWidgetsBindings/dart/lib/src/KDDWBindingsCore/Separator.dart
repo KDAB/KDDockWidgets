@@ -87,12 +87,12 @@ class Separator extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Separator__onMouseDoubleClick')
         .asFunction();
     func(thisCpp);
-  } // onMouseMove(QPoint pos)
+  } // onMouseMove(KDDockWidgets::Point pos)
 
-  onMouseMove(QPoint pos) {
+  onMouseMove(Point pos) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Separator__onMouseMove_QPoint')
+            'c_KDDockWidgets__Core__Separator__onMouseMove_Point')
         .asFunction();
     func(thisCpp, pos == null ? ffi.nullptr : pos.thisCpp);
   } // onMousePress()
@@ -119,12 +119,12 @@ class Separator extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Separator__position')
         .asFunction();
     return func(thisCpp);
-  } // setGeometry(QRect r)
+  } // setGeometry(KDDockWidgets::Rect r)
 
-  setGeometry(QRect r) {
+  setGeometry(Rect r) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Separator__setGeometry_QRect')
+            'c_KDDockWidgets__Core__Separator__setGeometry_Rect')
         .asFunction();
     func(thisCpp, r == null ? ffi.nullptr : r.thisCpp);
   } // setGeometry(int pos, int pos2, int length)
@@ -179,7 +179,7 @@ class Separator extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 721:
+      case 668:
         return "c_KDDockWidgets__Core__Separator__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -187,7 +187,7 @@ class Separator extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 721:
+      case 668:
         return "setParentView_impl";
     }
     throw Error();
@@ -199,9 +199,9 @@ class Separator extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback')
         .asFunction();
-    final callback721 =
+    final callback668 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback721, 721);
+    registerCallback(thisCpp, callback668, 668);
   }
 }

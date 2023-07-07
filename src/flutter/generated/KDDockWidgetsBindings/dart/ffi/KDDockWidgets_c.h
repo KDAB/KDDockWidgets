@@ -10,6 +10,7 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include "KDDockWidgets_p.h"
+#include <core/geometry_helpers_p.h>
 
 extern "C" {
 // KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)

@@ -11,23 +11,23 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <Config.h>
 #include <ViewFactory.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Config_wrapper : public ::KDDockWidgets::Config
 {
 public:
     ~Config_wrapper();
-    QSize absoluteWidgetMaxSize() const;
-    QSize absoluteWidgetMinSize() const;
+    KDDockWidgets::Size absoluteWidgetMaxSize() const;
+    KDDockWidgets::Size absoluteWidgetMinSize() const;
     qreal draggedWindowOpacity() const;
     bool dropIndicatorsInhibited() const;
     int mdiPopupThreshold() const;
     void printDebug();
     static KDDockWidgets::Config &self();
     int separatorThickness() const;
-    void setAbsoluteWidgetMaxSize(QSize size);
-    void setAbsoluteWidgetMinSize(QSize size);
+    void setAbsoluteWidgetMaxSize(KDDockWidgets::Size size);
+    void setAbsoluteWidgetMinSize(KDDockWidgets::Size size);
     void setDraggedWindowOpacity(qreal opacity);
     void setDropIndicatorsInhibited(bool inhibit) const;
     void setMDIPopupThreshold(int arg__1);
@@ -57,10 +57,10 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__printDebug(void *this
 KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Config__self();
 // KDDockWidgets::Config::separatorThickness() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Config__separatorThickness(void *thisObj);
-// KDDockWidgets::Config::setAbsoluteWidgetMaxSize(QSize size)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_);
-// KDDockWidgets::Config::setAbsoluteWidgetMinSize(QSize size)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_);
+// KDDockWidgets::Config::setAbsoluteWidgetMaxSize(KDDockWidgets::Size size)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_Size(void *thisObj, void *size_);
+// KDDockWidgets::Config::setAbsoluteWidgetMinSize(KDDockWidgets::Size size)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_Size(void *thisObj, void *size_);
 // KDDockWidgets::Config::setDraggedWindowOpacity(qreal opacity)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity);
 // KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const

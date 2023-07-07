@@ -131,31 +131,31 @@ class Layout extends KDDWBindingsCore.Controller {
     return func(thisCpp);
   } // layoutMaximumSizeHint() const
 
-  QSize layoutMaximumSizeHint() {
+  Size layoutMaximumSizeHint() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Layout__layoutMaximumSizeHint')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
+    return Size.fromCppPointer(result, true);
   } // layoutMinimumSize() const
 
-  QSize layoutMinimumSize() {
+  Size layoutMinimumSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Layout__layoutMinimumSize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
+    return Size.fromCppPointer(result, true);
   } // layoutSize() const
 
-  QSize layoutSize() {
+  Size layoutSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Layout__layoutSize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
+    return Size.fromCppPointer(result, true);
   } // layoutWidth() const
 
   int layoutWidth() {
@@ -173,12 +173,12 @@ class Layout extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, honourNesting ? 1 : 0);
     return KDDWBindingsCore.MainWindow.fromCppPointer(result, false);
-  } // onResize(QSize newSize)
+  } // onResize(KDDockWidgets::Size newSize)
 
-  bool onResize(QSize newSize) {
+  bool onResize(Size newSize) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__onResize_QSize')
+            'c_KDDockWidgets__Core__Layout__onResize_Size')
         .asFunction();
     return func(thisCpp, newSize == null ? ffi.nullptr : newSize.thisCpp) != 0;
   } // placeholderCount() const
@@ -209,20 +209,20 @@ class Layout extends KDDWBindingsCore.Controller {
         .asFunction();
     func(thisCpp, dw == null ? ffi.nullptr : dw.thisCpp,
         arg__2 == null ? ffi.nullptr : arg__2.thisCpp, tabIndex);
-  } // setLayoutMinimumSize(QSize arg__1)
+  } // setLayoutMinimumSize(KDDockWidgets::Size arg__1)
 
-  setLayoutMinimumSize(QSize arg__1) {
+  setLayoutMinimumSize(Size arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_QSize')
+            'c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_Size')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // setLayoutSize(QSize arg__1)
+  } // setLayoutSize(KDDockWidgets::Size arg__1)
 
-  setLayoutSize(QSize arg__1) {
+  setLayoutSize(Size arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__setLayoutSize_QSize')
+            'c_KDDockWidgets__Core__Layout__setLayoutSize_Size')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -275,7 +275,7 @@ class Layout extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 721:
+      case 668:
         return "c_KDDockWidgets__Core__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -283,7 +283,7 @@ class Layout extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 721:
+      case 668:
         return "setParentView_impl";
     }
     throw Error();
@@ -295,9 +295,9 @@ class Layout extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback')
         .asFunction();
-    final callback721 =
+    final callback668 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback721, 721);
+    registerCallback(thisCpp, callback668, 668);
   }
 }

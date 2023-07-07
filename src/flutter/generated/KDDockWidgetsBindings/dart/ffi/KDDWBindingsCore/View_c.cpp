@@ -146,7 +146,7 @@ Qt::WindowFlags View_wrapper::flags_nocallback() const
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-QRect View_wrapper::geometry() const
+KDDockWidgets::Rect View_wrapper::geometry() const
 {
     if (m_geometryCallback) {
         const void *thisPtr = this;
@@ -156,7 +156,7 @@ QRect View_wrapper::geometry() const
         return {};
     }
 }
-QRect View_wrapper::geometry_nocallback() const
+KDDockWidgets::Rect View_wrapper::geometry_nocallback() const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
@@ -176,7 +176,7 @@ void View_wrapper::grabMouse_nocallback()
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-QSize View_wrapper::hardcodedMinimumSize()
+KDDockWidgets::Size View_wrapper::hardcodedMinimumSize()
 {
     return ::KDDockWidgets::Core::View::hardcodedMinimumSize();
 }
@@ -334,7 +334,7 @@ bool View_wrapper::isVisible_nocallback() const
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-QPoint View_wrapper::mapFromGlobal(QPoint arg__1) const
+KDDockWidgets::Point View_wrapper::mapFromGlobal(KDDockWidgets::Point arg__1) const
 {
     if (m_mapFromGlobalCallback) {
         const void *thisPtr = this;
@@ -344,12 +344,12 @@ QPoint View_wrapper::mapFromGlobal(QPoint arg__1) const
         return {};
     }
 }
-QPoint View_wrapper::mapFromGlobal_nocallback(QPoint arg__1) const
+KDDockWidgets::Point View_wrapper::mapFromGlobal_nocallback(KDDockWidgets::Point arg__1) const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-QPoint View_wrapper::mapTo(KDDockWidgets::Core::View *arg__1, QPoint arg__2) const
+KDDockWidgets::Point View_wrapper::mapTo(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Point arg__2) const
 {
     if (m_mapToCallback) {
         const void *thisPtr = this;
@@ -359,12 +359,12 @@ QPoint View_wrapper::mapTo(KDDockWidgets::Core::View *arg__1, QPoint arg__2) con
         return {};
     }
 }
-QPoint View_wrapper::mapTo_nocallback(KDDockWidgets::Core::View *arg__1, QPoint arg__2) const
+KDDockWidgets::Point View_wrapper::mapTo_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Point arg__2) const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-QPoint View_wrapper::mapToGlobal(QPoint arg__1) const
+KDDockWidgets::Point View_wrapper::mapToGlobal(KDDockWidgets::Point arg__1) const
 {
     if (m_mapToGlobalCallback) {
         const void *thisPtr = this;
@@ -374,12 +374,12 @@ QPoint View_wrapper::mapToGlobal(QPoint arg__1) const
         return {};
     }
 }
-QPoint View_wrapper::mapToGlobal_nocallback(QPoint arg__1) const
+KDDockWidgets::Point View_wrapper::mapToGlobal_nocallback(KDDockWidgets::Point arg__1) const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-QSize View_wrapper::maxSizeHint() const
+KDDockWidgets::Size View_wrapper::maxSizeHint() const
 {
     if (m_maxSizeHintCallback) {
         const void *thisPtr = this;
@@ -389,12 +389,12 @@ QSize View_wrapper::maxSizeHint() const
         return {};
     }
 }
-QSize View_wrapper::maxSizeHint_nocallback() const
+KDDockWidgets::Size View_wrapper::maxSizeHint_nocallback() const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-QSize View_wrapper::minSize() const
+KDDockWidgets::Size View_wrapper::minSize() const
 {
     if (m_minSizeCallback) {
         const void *thisPtr = this;
@@ -404,7 +404,7 @@ QSize View_wrapper::minSize() const
         return {};
     }
 }
-QSize View_wrapper::minSize_nocallback() const
+KDDockWidgets::Size View_wrapper::minSize_nocallback() const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
@@ -417,7 +417,7 @@ int View_wrapper::minimumWidth() const
 {
     return ::KDDockWidgets::Core::View::minimumWidth();
 }
-void View_wrapper::move(QPoint arg__1)
+void View_wrapper::move(KDDockWidgets::Point arg__1)
 {
     ::KDDockWidgets::Core::View::move(arg__1);
 }
@@ -436,7 +436,7 @@ void View_wrapper::move_nocallback(int x, int y)
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-QRect View_wrapper::normalGeometry() const
+KDDockWidgets::Rect View_wrapper::normalGeometry() const
 {
     if (m_normalGeometryCallback) {
         const void *thisPtr = this;
@@ -446,12 +446,12 @@ QRect View_wrapper::normalGeometry() const
         return {};
     }
 }
-QRect View_wrapper::normalGeometry_nocallback() const
+KDDockWidgets::Rect View_wrapper::normalGeometry_nocallback() const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-bool View_wrapper::onResize(QSize arg__1)
+bool View_wrapper::onResize(KDDockWidgets::Size arg__1)
 {
     return ::KDDockWidgets::Core::View::onResize(arg__1);
 }
@@ -468,7 +468,7 @@ bool View_wrapper::onResize_nocallback(int h, int w)
 {
     return ::KDDockWidgets::Core::View::onResize(h, w);
 }
-QPoint View_wrapper::pos() const
+KDDockWidgets::Point View_wrapper::pos() const
 {
     return ::KDDockWidgets::Core::View::pos();
 }
@@ -502,7 +502,7 @@ void View_wrapper::raiseAndActivate_nocallback()
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-QRect View_wrapper::rect() const
+KDDockWidgets::Rect View_wrapper::rect() const
 {
     return ::KDDockWidgets::Core::View::rect();
 }
@@ -536,7 +536,7 @@ void View_wrapper::releaseMouse_nocallback()
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-void View_wrapper::resize(QSize arg__1)
+void View_wrapper::resize(KDDockWidgets::Size arg__1)
 {
     ::KDDockWidgets::Core::View::resize(arg__1);
 }
@@ -589,7 +589,7 @@ void View_wrapper::setFixedWidth_nocallback(int arg__1)
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-void View_wrapper::setGeometry(QRect arg__1)
+void View_wrapper::setGeometry(KDDockWidgets::Rect arg__1)
 {
     if (m_setGeometryCallback) {
         const void *thisPtr = this;
@@ -599,7 +599,7 @@ void View_wrapper::setGeometry(QRect arg__1)
         return;
     }
 }
-void View_wrapper::setGeometry_nocallback(QRect arg__1)
+void View_wrapper::setGeometry_nocallback(KDDockWidgets::Rect arg__1)
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
@@ -619,7 +619,7 @@ void View_wrapper::setHeight_nocallback(int height)
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-void View_wrapper::setMaximumSize(QSize sz)
+void View_wrapper::setMaximumSize(KDDockWidgets::Size sz)
 {
     if (m_setMaximumSizeCallback) {
         const void *thisPtr = this;
@@ -629,12 +629,12 @@ void View_wrapper::setMaximumSize(QSize sz)
         return;
     }
 }
-void View_wrapper::setMaximumSize_nocallback(QSize sz)
+void View_wrapper::setMaximumSize_nocallback(KDDockWidgets::Size sz)
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-void View_wrapper::setMinimumSize(QSize arg__1)
+void View_wrapper::setMinimumSize(KDDockWidgets::Size arg__1)
 {
     if (m_setMinimumSizeCallback) {
         const void *thisPtr = this;
@@ -644,7 +644,7 @@ void View_wrapper::setMinimumSize(QSize arg__1)
         return;
     }
 }
-void View_wrapper::setMinimumSize_nocallback(QSize arg__1)
+void View_wrapper::setMinimumSize_nocallback(KDDockWidgets::Size arg__1)
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
@@ -679,7 +679,7 @@ void View_wrapper::setParent_nocallback(KDDockWidgets::Core::View *arg__1)
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-void View_wrapper::setSize(QSize arg__1)
+void View_wrapper::setSize(KDDockWidgets::Size arg__1)
 {
     ::KDDockWidgets::Core::View::setSize(arg__1);
 }
@@ -846,7 +846,7 @@ void View_wrapper::showNormal_nocallback()
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-QSize View_wrapper::size() const
+KDDockWidgets::Size View_wrapper::size() const
 {
     return ::KDDockWidgets::Core::View::size();
 }
@@ -1013,7 +1013,7 @@ int c_KDDockWidgets__Core__View__flags(void *thisObj)
 // geometry() const
 void *c_KDDockWidgets__Core__View__geometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
 }
 // grabMouse()
 void c_KDDockWidgets__Core__View__grabMouse(void *thisObj)
@@ -1023,7 +1023,7 @@ void c_KDDockWidgets__Core__View__grabMouse(void *thisObj)
 // hardcodedMinimumSize()
 void *c_static_KDDockWidgets__Core__View__hardcodedMinimumSize()
 {
-    return new Dartagnan::ValueWrapper<QSize> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::hardcodedMinimumSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::hardcodedMinimumSize() };
 }
 // hasFocus() const
 bool c_KDDockWidgets__Core__View__hasFocus(void *thisObj)
@@ -1085,37 +1085,37 @@ bool c_KDDockWidgets__Core__View__isVisible(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback();} else {    return targetPtr->isVisible();} }();
 }
-// mapFromGlobal(QPoint arg__1) const
-void *c_KDDockWidgets__Core__View__mapFromGlobal_QPoint(void *thisObj, void *arg__1_)
+// mapFromGlobal(KDDockWidgets::Point arg__1) const
+void *c_KDDockWidgets__Core__View__mapFromGlobal_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(arg__1);} else {    return targetPtr->mapFromGlobal(arg__1);} }() };
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(arg__1);} else {    return targetPtr->mapFromGlobal(arg__1);} }() };
 }
-// mapTo(KDDockWidgets::Core::View * arg__1, QPoint arg__2) const
-void *c_KDDockWidgets__Core__View__mapTo_View_QPoint(void *thisObj, void *arg__1_, void *arg__2_)
+// mapTo(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Point arg__2) const
+void *c_KDDockWidgets__Core__View__mapTo_View_Point(void *thisObj, void *arg__1_, void *arg__2_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     assert(arg__2_);
-    auto &arg__2 = *reinterpret_cast<QPoint *>(arg__2_);
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(arg__1,arg__2);} else {    return targetPtr->mapTo(arg__1,arg__2);} }() };
+    auto &arg__2 = *reinterpret_cast<KDDockWidgets::Point *>(arg__2_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(arg__1,arg__2);} else {    return targetPtr->mapTo(arg__1,arg__2);} }() };
 }
-// mapToGlobal(QPoint arg__1) const
-void *c_KDDockWidgets__Core__View__mapToGlobal_QPoint(void *thisObj, void *arg__1_)
+// mapToGlobal(KDDockWidgets::Point arg__1) const
+void *c_KDDockWidgets__Core__View__mapToGlobal_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(arg__1);} else {    return targetPtr->mapToGlobal(arg__1);} }() };
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(arg__1);} else {    return targetPtr->mapToGlobal(arg__1);} }() };
 }
 // maxSizeHint() const
 void *c_KDDockWidgets__Core__View__maxSizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
 }
 // minSize() const
 void *c_KDDockWidgets__Core__View__minSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
 }
 // minimumHeight() const
 int c_KDDockWidgets__Core__View__minimumHeight(void *thisObj)
@@ -1127,11 +1127,11 @@ int c_KDDockWidgets__Core__View__minimumWidth(void *thisObj)
 {
     return fromPtr(thisObj)->minimumWidth();
 }
-// move(QPoint arg__1)
-void c_KDDockWidgets__Core__View__move_QPoint(void *thisObj, void *arg__1_)
+// move(KDDockWidgets::Point arg__1)
+void c_KDDockWidgets__Core__View__move_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
     fromPtr(thisObj)->move(arg__1);
 }
 // move(int x, int y)
@@ -1142,13 +1142,13 @@ void c_KDDockWidgets__Core__View__move_int_int(void *thisObj, int x, int y)
 // normalGeometry() const
 void *c_KDDockWidgets__Core__View__normalGeometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
 }
-// onResize(QSize arg__1)
-bool c_KDDockWidgets__Core__View__onResize_QSize(void *thisObj, void *arg__1_)
+// onResize(KDDockWidgets::Size arg__1)
+bool c_KDDockWidgets__Core__View__onResize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     return fromPtr(thisObj)->onResize(arg__1);
 }
 // onResize(int h, int w)
@@ -1159,7 +1159,7 @@ bool c_KDDockWidgets__Core__View__onResize_int_int(void *thisObj, int h, int w)
 // pos() const
 void *c_KDDockWidgets__Core__View__pos(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->pos() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
 }
 // raise()
 void c_KDDockWidgets__Core__View__raise(void *thisObj)
@@ -1174,7 +1174,7 @@ void c_KDDockWidgets__Core__View__raiseAndActivate(void *thisObj)
 // rect() const
 void *c_KDDockWidgets__Core__View__rect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->rect() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
 }
 // releaseKeyboard()
 void c_KDDockWidgets__Core__View__releaseKeyboard(void *thisObj)
@@ -1186,11 +1186,11 @@ void c_KDDockWidgets__Core__View__releaseMouse(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->releaseMouse_nocallback();} else {    return targetPtr->releaseMouse();} }();
 }
-// resize(QSize arg__1)
-void c_KDDockWidgets__Core__View__resize_QSize(void *thisObj, void *arg__1_)
+// resize(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__View__resize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     fromPtr(thisObj)->resize(arg__1);
 }
 // resize(int w, int h)
@@ -1213,11 +1213,11 @@ void c_KDDockWidgets__Core__View__setFixedWidth_int(void *thisObj, int arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setFixedWidth_nocallback(arg__1);} else {    return targetPtr->setFixedWidth(arg__1);} }();
 }
-// setGeometry(QRect arg__1)
-void c_KDDockWidgets__Core__View__setGeometry_QRect(void *thisObj, void *arg__1_)
+// setGeometry(KDDockWidgets::Rect arg__1)
+void c_KDDockWidgets__Core__View__setGeometry_Rect(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setGeometry_nocallback(arg__1);} else {    return targetPtr->setGeometry(arg__1);} }();
 }
 // setHeight(int height)
@@ -1225,18 +1225,18 @@ void c_KDDockWidgets__Core__View__setHeight_int(void *thisObj, int height)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setHeight_nocallback(height);} else {    return targetPtr->setHeight(height);} }();
 }
-// setMaximumSize(QSize sz)
-void c_KDDockWidgets__Core__View__setMaximumSize_QSize(void *thisObj, void *sz_)
+// setMaximumSize(KDDockWidgets::Size sz)
+void c_KDDockWidgets__Core__View__setMaximumSize_Size(void *thisObj, void *sz_)
 {
     assert(sz_);
-    auto &sz = *reinterpret_cast<QSize *>(sz_);
+    auto &sz = *reinterpret_cast<KDDockWidgets::Size *>(sz_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMaximumSize_nocallback(sz);} else {    return targetPtr->setMaximumSize(sz);} }();
 }
-// setMinimumSize(QSize arg__1)
-void c_KDDockWidgets__Core__View__setMinimumSize_QSize(void *thisObj, void *arg__1_)
+// setMinimumSize(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__View__setMinimumSize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setMinimumSize_nocallback(arg__1);} else {    return targetPtr->setMinimumSize(arg__1);} }();
 }
 // setMouseTracking(bool arg__1)
@@ -1250,11 +1250,11 @@ void c_KDDockWidgets__Core__View__setParent_View(void *thisObj, void *arg__1_)
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setParent_nocallback(arg__1);} else {    return targetPtr->setParent(arg__1);} }();
 }
-// setSize(QSize arg__1)
-void c_KDDockWidgets__Core__View__setSize_QSize(void *thisObj, void *arg__1_)
+// setSize(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__View__setSize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     fromPtr(thisObj)->setSize(arg__1);
 }
 // setSize(int width, int height)
@@ -1317,7 +1317,7 @@ void c_KDDockWidgets__Core__View__showNormal(void *thisObj)
 // size() const
 void *c_KDDockWidgets__Core__View__size(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->size() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
 }
 // update()
 void c_KDDockWidgets__Core__View__update(void *thisObj)
@@ -1352,154 +1352,154 @@ void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 732:
+    case 679:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_activateWindow>(callback);
         break;
-    case 742:
+    case 689:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_close>(callback);
         break;
-    case 744:
+    case 691:
         wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_createPlatformWindow>(callback);
         break;
-    case 750:
+    case 697:
         wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_flags>(callback);
         break;
-    case 751:
+    case 698:
         wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_geometry>(callback);
         break;
-    case 752:
+    case 699:
         wrapper->m_grabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_grabMouse>(callback);
         break;
-    case 755:
+    case 702:
         wrapper->m_hasFocusCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_hasFocus>(callback);
         break;
-    case 757:
+    case 704:
         wrapper->m_hideCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_hide>(callback);
         break;
-    case 759:
+    case 706:
         wrapper->m_initCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_init>(callback);
         break;
-    case 761:
+    case 708:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isActiveWindow>(callback);
         break;
-    case 762:
+    case 709:
         wrapper->m_isExplicitlyHiddenCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isExplicitlyHidden>(callback);
         break;
-    case 763:
+    case 710:
         wrapper->m_isMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isMaximized>(callback);
         break;
-    case 764:
+    case 711:
         wrapper->m_isMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isMinimized>(callback);
         break;
-    case 765:
+    case 712:
         wrapper->m_isNullCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isNull>(callback);
         break;
-    case 766:
+    case 713:
         wrapper->m_isRootViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isRootView>(callback);
         break;
-    case 767:
+    case 714:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isVisible>(callback);
         break;
-    case 768:
+    case 715:
         wrapper->m_mapFromGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_mapFromGlobal>(callback);
         break;
-    case 769:
+    case 716:
         wrapper->m_mapToCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_mapTo>(callback);
         break;
-    case 770:
+    case 717:
         wrapper->m_mapToGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_mapToGlobal>(callback);
         break;
-    case 771:
+    case 718:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 772:
+    case 719:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_minSize>(callback);
         break;
-    case 776:
+    case 723:
         wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_move_2>(callback);
         break;
-    case 777:
+    case 724:
         wrapper->m_normalGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_normalGeometry>(callback);
         break;
-    case 779:
+    case 726:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_onResize_2>(callback);
         break;
-    case 781:
+    case 728:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_raise>(callback);
         break;
-    case 782:
+    case 729:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 784:
+    case 731:
         wrapper->m_releaseKeyboardCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_releaseKeyboard>(callback);
         break;
-    case 785:
+    case 732:
         wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_releaseMouse>(callback);
         break;
-    case 788:
+    case 735:
         wrapper->m_setCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setCursor>(callback);
         break;
-    case 789:
+    case 736:
         wrapper->m_setFixedHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setFixedHeight>(callback);
         break;
-    case 790:
+    case 737:
         wrapper->m_setFixedWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setFixedWidth>(callback);
         break;
-    case 791:
+    case 738:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setGeometry>(callback);
         break;
-    case 792:
+    case 739:
         wrapper->m_setHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setHeight>(callback);
         break;
-    case 793:
+    case 740:
         wrapper->m_setMaximumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setMaximumSize>(callback);
         break;
-    case 794:
+    case 741:
         wrapper->m_setMinimumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setMinimumSize>(callback);
         break;
-    case 795:
+    case 742:
         wrapper->m_setMouseTrackingCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setMouseTracking>(callback);
         break;
-    case 796:
+    case 743:
         wrapper->m_setParentCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setParent>(callback);
         break;
-    case 798:
+    case 745:
         wrapper->m_setSize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setSize_2>(callback);
         break;
-    case 799:
+    case 746:
         wrapper->m_setViewNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setViewName>(callback);
         break;
-    case 800:
+    case 747:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setVisible>(callback);
         break;
-    case 801:
+    case 748:
         wrapper->m_setWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setWidth>(callback);
         break;
-    case 802:
+    case 749:
         wrapper->m_setWindowOpacityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setWindowOpacity>(callback);
         break;
-    case 803:
+    case 750:
         wrapper->m_setWindowTitleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setWindowTitle>(callback);
         break;
-    case 804:
+    case 751:
         wrapper->m_setZOrderCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setZOrder>(callback);
         break;
-    case 805:
+    case 752:
         wrapper->m_showCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_show>(callback);
         break;
-    case 806:
+    case 753:
         wrapper->m_showMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_showMaximized>(callback);
         break;
-    case 807:
+    case 754:
         wrapper->m_showMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_showMinimized>(callback);
         break;
-    case 808:
+    case 755:
         wrapper->m_showNormalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_showNormal>(callback);
         break;
-    case 810:
+    case 757:
         wrapper->m_updateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_update>(callback);
         break;
-    case 811:
+    case 758:
         wrapper->m_viewNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_viewName>(callback);
         break;
     }

@@ -56,7 +56,7 @@ void DockWidget_wrapper::forceClose()
 {
     ::KDDockWidgets::Core::DockWidget::forceClose();
 }
-QRect DockWidget_wrapper::groupGeometry() const
+KDDockWidgets::Rect DockWidget_wrapper::groupGeometry() const
 {
     return ::KDDockWidgets::Core::DockWidget::groupGeometry();
 }
@@ -108,7 +108,7 @@ bool DockWidget_wrapper::isTabbed() const
 {
     return ::KDDockWidgets::Core::DockWidget::isTabbed();
 }
-QSize DockWidget_wrapper::lastOverlayedSize() const
+KDDockWidgets::Size DockWidget_wrapper::lastOverlayedSize() const
 {
     return ::KDDockWidgets::Core::DockWidget::lastOverlayedSize();
 }
@@ -124,7 +124,7 @@ void DockWidget_wrapper::moveToSideBar()
 {
     ::KDDockWidgets::Core::DockWidget::moveToSideBar();
 }
-void DockWidget_wrapper::onResize(QSize newSize)
+void DockWidget_wrapper::onResize(KDDockWidgets::Size newSize)
 {
     ::KDDockWidgets::Core::DockWidget::onResize(newSize);
 }
@@ -152,15 +152,15 @@ bool DockWidget_wrapper::setFloating(bool floats)
 {
     return ::KDDockWidgets::Core::DockWidget::setFloating(floats);
 }
-void DockWidget_wrapper::setFloatingGeometry(QRect geo)
+void DockWidget_wrapper::setFloatingGeometry(KDDockWidgets::Rect geo)
 {
     ::KDDockWidgets::Core::DockWidget::setFloatingGeometry(geo);
 }
-void DockWidget_wrapper::setMDIPosition(QPoint pos)
+void DockWidget_wrapper::setMDIPosition(KDDockWidgets::Point pos)
 {
     ::KDDockWidgets::Core::DockWidget::setMDIPosition(pos);
 }
-void DockWidget_wrapper::setMDISize(QSize size)
+void DockWidget_wrapper::setMDISize(KDDockWidgets::Size size)
 {
     ::KDDockWidgets::Core::DockWidget::setMDISize(size);
 }
@@ -290,7 +290,7 @@ void c_KDDockWidgets__Core__DockWidget__forceClose(void *thisObj)
 // groupGeometry() const
 void *c_KDDockWidgets__Core__DockWidget__groupGeometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->groupGeometry() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->groupGeometry() };
 }
 // hasPreviousDockedLocation() const
 bool c_KDDockWidgets__Core__DockWidget__hasPreviousDockedLocation(void *thisObj)
@@ -355,7 +355,7 @@ bool c_KDDockWidgets__Core__DockWidget__isTabbed(void *thisObj)
 // lastOverlayedSize() const
 void *c_KDDockWidgets__Core__DockWidget__lastOverlayedSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->lastOverlayedSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->lastOverlayedSize() };
 }
 // layoutSaverOptions() const
 int c_KDDockWidgets__Core__DockWidget__layoutSaverOptions(void *thisObj)
@@ -372,11 +372,11 @@ void c_KDDockWidgets__Core__DockWidget__moveToSideBar(void *thisObj)
 {
     fromPtr(thisObj)->moveToSideBar();
 }
-// onResize(QSize newSize)
-void c_KDDockWidgets__Core__DockWidget__onResize_QSize(void *thisObj, void *newSize_)
+// onResize(KDDockWidgets::Size newSize)
+void c_KDDockWidgets__Core__DockWidget__onResize_Size(void *thisObj, void *newSize_)
 {
     assert(newSize_);
-    auto &newSize = *reinterpret_cast<QSize *>(newSize_);
+    auto &newSize = *reinterpret_cast<KDDockWidgets::Size *>(newSize_);
     fromPtr(thisObj)->onResize(newSize);
 }
 // open()
@@ -410,25 +410,25 @@ bool c_KDDockWidgets__Core__DockWidget__setFloating_bool(void *thisObj, bool flo
 {
     return fromPtr(thisObj)->setFloating(floats);
 }
-// setFloatingGeometry(QRect geo)
-void c_KDDockWidgets__Core__DockWidget__setFloatingGeometry_QRect(void *thisObj, void *geo_)
+// setFloatingGeometry(KDDockWidgets::Rect geo)
+void c_KDDockWidgets__Core__DockWidget__setFloatingGeometry_Rect(void *thisObj, void *geo_)
 {
     assert(geo_);
-    auto &geo = *reinterpret_cast<QRect *>(geo_);
+    auto &geo = *reinterpret_cast<KDDockWidgets::Rect *>(geo_);
     fromPtr(thisObj)->setFloatingGeometry(geo);
 }
-// setMDIPosition(QPoint pos)
-void c_KDDockWidgets__Core__DockWidget__setMDIPosition_QPoint(void *thisObj, void *pos_)
+// setMDIPosition(KDDockWidgets::Point pos)
+void c_KDDockWidgets__Core__DockWidget__setMDIPosition_Point(void *thisObj, void *pos_)
 {
     assert(pos_);
-    auto &pos = *reinterpret_cast<QPoint *>(pos_);
+    auto &pos = *reinterpret_cast<KDDockWidgets::Point *>(pos_);
     fromPtr(thisObj)->setMDIPosition(pos);
 }
-// setMDISize(QSize size)
-void c_KDDockWidgets__Core__DockWidget__setMDISize_QSize(void *thisObj, void *size_)
+// setMDISize(KDDockWidgets::Size size)
+void c_KDDockWidgets__Core__DockWidget__setMDISize_Size(void *thisObj, void *size_)
 {
     assert(size_);
-    auto &size = *reinterpret_cast<QSize *>(size_);
+    auto &size = *reinterpret_cast<KDDockWidgets::Size *>(size_);
     fromPtr(thisObj)->setMDISize(size);
 }
 // setMDIZ(int z)
@@ -502,7 +502,7 @@ void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 721:
+    case 668:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

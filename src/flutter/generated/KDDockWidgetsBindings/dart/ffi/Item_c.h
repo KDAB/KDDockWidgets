@@ -11,9 +11,7 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <Item_p.h>
 #include <core/View.h>
-#include <qsize.h>
-#include <qpoint.h>
-#include <qrect.h>
+#include <core/geometry_helpers_p.h>
 #include <core/Group.h>
 #include <qstring.h>
 #include <Object_p.h>
@@ -29,7 +27,7 @@ public:
     virtual bool checkSanity_nocallback();
     virtual void dumpLayout(int level = 0);
     virtual void dumpLayout_nocallback(int level = 0);
-    QRect geometry() const;
+    KDDockWidgets::Rect geometry() const;
     KDDockWidgets::Core::View *guestView() const;
     int height() const;
     KDDockWidgets::Core::View *hostView() const;
@@ -40,35 +38,35 @@ public:
     bool isRoot() const;
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual bool isVisible_nocallback(bool excludeBeingInserted = false) const;
-    QPoint mapFromParent(QPoint arg__1) const;
-    QPoint mapFromRoot(QPoint arg__1) const;
-    QRect mapFromRoot(QRect arg__1) const;
-    QPoint mapToRoot(QPoint arg__1) const;
-    QRect mapToRoot(QRect arg__1) const;
-    virtual QSize maxSizeHint() const;
-    virtual QSize maxSizeHint_nocallback() const;
-    virtual QSize minSize() const;
-    virtual QSize minSize_nocallback() const;
-    QSize missingSize() const;
-    QPoint pos() const;
-    QRect rect() const;
+    KDDockWidgets::Point mapFromParent(KDDockWidgets::Point arg__1) const;
+    KDDockWidgets::Point mapFromRoot(KDDockWidgets::Point arg__1) const;
+    KDDockWidgets::Rect mapFromRoot(KDDockWidgets::Rect arg__1) const;
+    KDDockWidgets::Point mapToRoot(KDDockWidgets::Point arg__1) const;
+    KDDockWidgets::Rect mapToRoot(KDDockWidgets::Rect arg__1) const;
+    virtual KDDockWidgets::Size maxSizeHint() const;
+    virtual KDDockWidgets::Size maxSizeHint_nocallback() const;
+    virtual KDDockWidgets::Size minSize() const;
+    virtual KDDockWidgets::Size minSize_nocallback() const;
+    KDDockWidgets::Size missingSize() const;
+    KDDockWidgets::Point pos() const;
+    KDDockWidgets::Rect rect() const;
     void ref();
     int refCount() const;
     void restore(KDDockWidgets::Core::View *guestView);
     void setBeingInserted(bool arg__1);
-    void setGeometry(QRect rect);
-    virtual void setGeometry_recursive(QRect rect);
-    virtual void setGeometry_recursive_nocallback(QRect rect);
+    void setGeometry(KDDockWidgets::Rect rect);
+    virtual void setGeometry_recursive(KDDockWidgets::Rect rect);
+    virtual void setGeometry_recursive_nocallback(KDDockWidgets::Rect rect);
     void setGuestView(KDDockWidgets::Core::View *arg__1);
     virtual void setHostView(KDDockWidgets::Core::View *arg__1);
     virtual void setHostView_nocallback(KDDockWidgets::Core::View *arg__1);
     virtual void setIsVisible(bool arg__1);
     virtual void setIsVisible_nocallback(bool arg__1);
-    void setMaxSizeHint(QSize arg__1);
-    void setMinSize(QSize arg__1);
-    void setPos(QPoint arg__1);
-    void setSize(QSize arg__1);
-    QSize size() const;
+    void setMaxSizeHint(KDDockWidgets::Size arg__1);
+    void setMinSize(KDDockWidgets::Size arg__1);
+    void setPos(KDDockWidgets::Point arg__1);
+    void setSize(KDDockWidgets::Size arg__1);
+    KDDockWidgets::Size size() const;
     void turnIntoPlaceholder();
     void unref();
     virtual void updateWidgetGeometries();
@@ -84,11 +82,11 @@ public:
     Callback_dumpLayout m_dumpLayoutCallback = nullptr;
     typedef bool (*Callback_isVisible)(void *, bool excludeBeingInserted);
     Callback_isVisible m_isVisibleCallback = nullptr;
-    typedef QSize *(*Callback_maxSizeHint)(void *);
+    typedef KDDockWidgets::Size *(*Callback_maxSizeHint)(void *);
     Callback_maxSizeHint m_maxSizeHintCallback = nullptr;
-    typedef QSize *(*Callback_minSize)(void *);
+    typedef KDDockWidgets::Size *(*Callback_minSize)(void *);
     Callback_minSize m_minSizeCallback = nullptr;
-    typedef void (*Callback_setGeometry_recursive)(void *, QRect *rect);
+    typedef void (*Callback_setGeometry_recursive)(void *, KDDockWidgets::Rect *rect);
     Callback_setGeometry_recursive m_setGeometry_recursiveCallback = nullptr;
     typedef void (*Callback_setHostView)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_setHostView m_setHostViewCallback = nullptr;
@@ -129,16 +127,16 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isPlaceholder(voi
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isRoot(void *thisObj);
 // KDDockWidgets::Core::Item::isVisible(bool excludeBeingInserted) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Item__isVisible_bool(void *thisObj, bool excludeBeingInserted);
-// KDDockWidgets::Core::Item::mapFromParent(QPoint arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromParent_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::mapFromRoot(QPoint arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromRoot_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::mapFromRoot(QRect arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromRoot_QRect(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::mapToRoot(QPoint arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapToRoot_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::mapToRoot(QRect arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapToRoot_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapFromParent(KDDockWidgets::Point arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromParent_Point(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapFromRoot(KDDockWidgets::Point arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromRoot_Point(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapFromRoot(KDDockWidgets::Rect arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapFromRoot_Rect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapToRoot(KDDockWidgets::Point arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapToRoot_Point(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::mapToRoot(KDDockWidgets::Rect arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__mapToRoot_Rect(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Item::maxSizeHint() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__maxSizeHint(void *thisObj);
 // KDDockWidgets::Core::Item::minSize() const
@@ -157,24 +155,24 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Item__refCount(void *thi
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__restore_View(void *thisObj, void *guestView_);
 // KDDockWidgets::Core::Item::setBeingInserted(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
-// KDDockWidgets::Core::Item::setGeometry(QRect rect)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setGeometry_QRect(void *thisObj, void *rect_);
-// KDDockWidgets::Core::Item::setGeometry_recursive(QRect rect)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_);
+// KDDockWidgets::Core::Item::setGeometry(KDDockWidgets::Rect rect)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setGeometry_Rect(void *thisObj, void *rect_);
+// KDDockWidgets::Core::Item::setGeometry_recursive(KDDockWidgets::Rect rect)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setGeometry_recursive_Rect(void *thisObj, void *rect_);
 // KDDockWidgets::Core::Item::setGuestView(KDDockWidgets::Core::View * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setGuestView_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Item::setHostView(KDDockWidgets::Core::View * arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setHostView_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Item::setIsVisible(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setIsVisible_bool(void *thisObj, bool arg__1);
-// KDDockWidgets::Core::Item::setMaxSizeHint(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::setMinSize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setMinSize_QSize(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::setPos(QPoint arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setPos_QPoint(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::setSize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setSize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setMaxSizeHint(KDDockWidgets::Size arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setMaxSizeHint_Size(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setMinSize(KDDockWidgets::Size arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setMinSize_Size(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setPos(KDDockWidgets::Point arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setPos_Point(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Item::setSize(KDDockWidgets::Size arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Item__setSize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Item::size() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Item__size(void *thisObj);
 // KDDockWidgets::Core::Item::turnIntoPlaceholder()

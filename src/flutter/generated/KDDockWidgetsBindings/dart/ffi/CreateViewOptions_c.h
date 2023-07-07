@@ -10,7 +10,7 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <core/Platform.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class CreateViewOptions_wrapper : public ::KDDockWidgets::Core::CreateViewOptions
@@ -18,9 +18,9 @@ class CreateViewOptions_wrapper : public ::KDDockWidgets::Core::CreateViewOption
 public:
     ~CreateViewOptions_wrapper();
     CreateViewOptions_wrapper();
-    QSize getMaxSize() const;
-    QSize getMinSize() const;
-    QSize getSize() const;
+    KDDockWidgets::Size getMaxSize() const;
+    KDDockWidgets::Size getMinSize() const;
+    KDDockWidgets::Size getSize() const;
 };
 }
 extern "C" {

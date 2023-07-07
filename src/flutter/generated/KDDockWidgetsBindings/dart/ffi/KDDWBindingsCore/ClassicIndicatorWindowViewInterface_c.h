@@ -11,9 +11,7 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <qstring.h>
-#include <qpoint.h>
-#include <qsize.h>
-#include <qrect.h>
+#include <core/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -22,18 +20,18 @@ class ClassicIndicatorWindowViewInterface_wrapper : public ::KDDockWidgets::Core
 public:
     ~ClassicIndicatorWindowViewInterface_wrapper();
     ClassicIndicatorWindowViewInterface_wrapper();
-    virtual KDDockWidgets::DropLocation hover(QPoint arg__1);
-    virtual KDDockWidgets::DropLocation hover_nocallback(QPoint arg__1);
+    virtual KDDockWidgets::DropLocation hover(KDDockWidgets::Point arg__1);
+    virtual KDDockWidgets::DropLocation hover_nocallback(KDDockWidgets::Point arg__1);
     virtual bool isWindow() const;
     virtual bool isWindow_nocallback() const;
-    virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
-    virtual QPoint posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
+    virtual KDDockWidgets::Point posForIndicator(KDDockWidgets::DropLocation arg__1) const;
+    virtual KDDockWidgets::Point posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
     virtual void raise();
     virtual void raise_nocallback();
-    virtual void resize(QSize arg__1);
-    virtual void resize_nocallback(QSize arg__1);
-    virtual void setGeometry(QRect arg__1);
-    virtual void setGeometry_nocallback(QRect arg__1);
+    virtual void resize(KDDockWidgets::Size arg__1);
+    virtual void resize_nocallback(KDDockWidgets::Size arg__1);
+    virtual void setGeometry(KDDockWidgets::Rect arg__1);
+    virtual void setGeometry_nocallback(KDDockWidgets::Rect arg__1);
     virtual void setObjectName(const QString &arg__1);
     virtual void setObjectName_nocallback(const QString &arg__1);
     virtual void setVisible(bool arg__1);
@@ -42,17 +40,17 @@ public:
     virtual void updateIndicatorVisibility_nocallback();
     virtual void updatePositions();
     virtual void updatePositions_nocallback();
-    typedef KDDockWidgets::DropLocation (*Callback_hover)(void *, QPoint *arg__1);
+    typedef KDDockWidgets::DropLocation (*Callback_hover)(void *, KDDockWidgets::Point *arg__1);
     Callback_hover m_hoverCallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;
-    typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
+    typedef KDDockWidgets::Point *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
-    typedef void (*Callback_resize)(void *, QSize *arg__1);
+    typedef void (*Callback_resize)(void *, KDDockWidgets::Size *arg__1);
     Callback_resize m_resizeCallback = nullptr;
-    typedef void (*Callback_setGeometry)(void *, QRect *arg__1);
+    typedef void (*Callback_setGeometry)(void *, KDDockWidgets::Rect *arg__1);
     Callback_setGeometry m_setGeometryCallback = nullptr;
     typedef void (*Callback_setObjectName)(void *, const QString &arg__1);
     Callback_setObjectName m_setObjectNameCallback = nullptr;
@@ -68,18 +66,18 @@ public:
 extern "C" {
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::ClassicIndicatorWindowViewInterface()
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__constructor();
-// KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::hover(QPoint arg__1)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_QPoint(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::hover(KDDockWidgets::Point arg__1)
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::isWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__isWindow(void *thisObj);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::raise()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__raise(void *thisObj);
-// KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::resize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__resize_QSize(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setGeometry(QRect arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::resize(KDDockWidgets::Size arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__resize_Size(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setGeometry(KDDockWidgets::Rect arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_Rect(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setObjectName(const QString & arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setObjectName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setVisible(bool arg__1)

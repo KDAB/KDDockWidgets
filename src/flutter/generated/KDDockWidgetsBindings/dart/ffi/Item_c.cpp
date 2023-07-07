@@ -61,7 +61,7 @@ void Item_wrapper::dumpLayout_nocallback(int level)
 {
     ::KDDockWidgets::Core::Item::dumpLayout(level);
 }
-QRect Item_wrapper::geometry() const
+KDDockWidgets::Rect Item_wrapper::geometry() const
 {
     return ::KDDockWidgets::Core::Item::geometry();
 }
@@ -110,27 +110,27 @@ bool Item_wrapper::isVisible_nocallback(bool excludeBeingInserted) const
 {
     return ::KDDockWidgets::Core::Item::isVisible(excludeBeingInserted);
 }
-QPoint Item_wrapper::mapFromParent(QPoint arg__1) const
+KDDockWidgets::Point Item_wrapper::mapFromParent(KDDockWidgets::Point arg__1) const
 {
     return ::KDDockWidgets::Core::Item::mapFromParent(arg__1);
 }
-QPoint Item_wrapper::mapFromRoot(QPoint arg__1) const
+KDDockWidgets::Point Item_wrapper::mapFromRoot(KDDockWidgets::Point arg__1) const
 {
     return ::KDDockWidgets::Core::Item::mapFromRoot(arg__1);
 }
-QRect Item_wrapper::mapFromRoot(QRect arg__1) const
+KDDockWidgets::Rect Item_wrapper::mapFromRoot(KDDockWidgets::Rect arg__1) const
 {
     return ::KDDockWidgets::Core::Item::mapFromRoot(arg__1);
 }
-QPoint Item_wrapper::mapToRoot(QPoint arg__1) const
+KDDockWidgets::Point Item_wrapper::mapToRoot(KDDockWidgets::Point arg__1) const
 {
     return ::KDDockWidgets::Core::Item::mapToRoot(arg__1);
 }
-QRect Item_wrapper::mapToRoot(QRect arg__1) const
+KDDockWidgets::Rect Item_wrapper::mapToRoot(KDDockWidgets::Rect arg__1) const
 {
     return ::KDDockWidgets::Core::Item::mapToRoot(arg__1);
 }
-QSize Item_wrapper::maxSizeHint() const
+KDDockWidgets::Size Item_wrapper::maxSizeHint() const
 {
     if (m_maxSizeHintCallback) {
         const void *thisPtr = this;
@@ -139,11 +139,11 @@ QSize Item_wrapper::maxSizeHint() const
         return ::KDDockWidgets::Core::Item::maxSizeHint();
     }
 }
-QSize Item_wrapper::maxSizeHint_nocallback() const
+KDDockWidgets::Size Item_wrapper::maxSizeHint_nocallback() const
 {
     return ::KDDockWidgets::Core::Item::maxSizeHint();
 }
-QSize Item_wrapper::minSize() const
+KDDockWidgets::Size Item_wrapper::minSize() const
 {
     if (m_minSizeCallback) {
         const void *thisPtr = this;
@@ -152,19 +152,19 @@ QSize Item_wrapper::minSize() const
         return ::KDDockWidgets::Core::Item::minSize();
     }
 }
-QSize Item_wrapper::minSize_nocallback() const
+KDDockWidgets::Size Item_wrapper::minSize_nocallback() const
 {
     return ::KDDockWidgets::Core::Item::minSize();
 }
-QSize Item_wrapper::missingSize() const
+KDDockWidgets::Size Item_wrapper::missingSize() const
 {
     return ::KDDockWidgets::Core::Item::missingSize();
 }
-QPoint Item_wrapper::pos() const
+KDDockWidgets::Point Item_wrapper::pos() const
 {
     return ::KDDockWidgets::Core::Item::pos();
 }
-QRect Item_wrapper::rect() const
+KDDockWidgets::Rect Item_wrapper::rect() const
 {
     return ::KDDockWidgets::Core::Item::rect();
 }
@@ -184,11 +184,11 @@ void Item_wrapper::setBeingInserted(bool arg__1)
 {
     ::KDDockWidgets::Core::Item::setBeingInserted(arg__1);
 }
-void Item_wrapper::setGeometry(QRect rect)
+void Item_wrapper::setGeometry(KDDockWidgets::Rect rect)
 {
     ::KDDockWidgets::Core::Item::setGeometry(rect);
 }
-void Item_wrapper::setGeometry_recursive(QRect rect)
+void Item_wrapper::setGeometry_recursive(KDDockWidgets::Rect rect)
 {
     if (m_setGeometry_recursiveCallback) {
         const void *thisPtr = this;
@@ -197,7 +197,7 @@ void Item_wrapper::setGeometry_recursive(QRect rect)
         ::KDDockWidgets::Core::Item::setGeometry_recursive(rect);
     }
 }
-void Item_wrapper::setGeometry_recursive_nocallback(QRect rect)
+void Item_wrapper::setGeometry_recursive_nocallback(KDDockWidgets::Rect rect)
 {
     ::KDDockWidgets::Core::Item::setGeometry_recursive(rect);
 }
@@ -231,23 +231,23 @@ void Item_wrapper::setIsVisible_nocallback(bool arg__1)
 {
     ::KDDockWidgets::Core::Item::setIsVisible(arg__1);
 }
-void Item_wrapper::setMaxSizeHint(QSize arg__1)
+void Item_wrapper::setMaxSizeHint(KDDockWidgets::Size arg__1)
 {
     ::KDDockWidgets::Core::Item::setMaxSizeHint(arg__1);
 }
-void Item_wrapper::setMinSize(QSize arg__1)
+void Item_wrapper::setMinSize(KDDockWidgets::Size arg__1)
 {
     ::KDDockWidgets::Core::Item::setMinSize(arg__1);
 }
-void Item_wrapper::setPos(QPoint arg__1)
+void Item_wrapper::setPos(KDDockWidgets::Point arg__1)
 {
     ::KDDockWidgets::Core::Item::setPos(arg__1);
 }
-void Item_wrapper::setSize(QSize arg__1)
+void Item_wrapper::setSize(KDDockWidgets::Size arg__1)
 {
     ::KDDockWidgets::Core::Item::setSize(arg__1);
 }
-QSize Item_wrapper::size() const
+KDDockWidgets::Size Item_wrapper::size() const
 {
     return ::KDDockWidgets::Core::Item::size();
 }
@@ -339,7 +339,7 @@ void c_KDDockWidgets__Core__Item__dumpLayout_int(void *thisObj, int level)
 // geometry() const
 void *c_KDDockWidgets__Core__Item__geometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->geometry() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->geometry() };
 }
 // guestView() const
 void *c_KDDockWidgets__Core__Item__guestView(void *thisObj)
@@ -386,65 +386,65 @@ bool c_KDDockWidgets__Core__Item__isVisible_bool(void *thisObj, bool excludeBein
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback(excludeBeingInserted);} else {    return targetPtr->isVisible(excludeBeingInserted);} }();
 }
-// mapFromParent(QPoint arg__1) const
-void *c_KDDockWidgets__Core__Item__mapFromParent_QPoint(void *thisObj, void *arg__1_)
+// mapFromParent(KDDockWidgets::Point arg__1) const
+void *c_KDDockWidgets__Core__Item__mapFromParent_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapFromParent(arg__1) };
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapFromParent(arg__1) };
 }
-// mapFromRoot(QPoint arg__1) const
-void *c_KDDockWidgets__Core__Item__mapFromRoot_QPoint(void *thisObj, void *arg__1_)
+// mapFromRoot(KDDockWidgets::Point arg__1) const
+void *c_KDDockWidgets__Core__Item__mapFromRoot_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapFromRoot(arg__1) };
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapFromRoot(arg__1) };
 }
-// mapFromRoot(QRect arg__1) const
-void *c_KDDockWidgets__Core__Item__mapFromRoot_QRect(void *thisObj, void *arg__1_)
+// mapFromRoot(KDDockWidgets::Rect arg__1) const
+void *c_KDDockWidgets__Core__Item__mapFromRoot_Rect(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->mapFromRoot(arg__1) };
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->mapFromRoot(arg__1) };
 }
-// mapToRoot(QPoint arg__1) const
-void *c_KDDockWidgets__Core__Item__mapToRoot_QPoint(void *thisObj, void *arg__1_)
+// mapToRoot(KDDockWidgets::Point arg__1) const
+void *c_KDDockWidgets__Core__Item__mapToRoot_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapToRoot(arg__1) };
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapToRoot(arg__1) };
 }
-// mapToRoot(QRect arg__1) const
-void *c_KDDockWidgets__Core__Item__mapToRoot_QRect(void *thisObj, void *arg__1_)
+// mapToRoot(KDDockWidgets::Rect arg__1) const
+void *c_KDDockWidgets__Core__Item__mapToRoot_Rect(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->mapToRoot(arg__1) };
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->mapToRoot(arg__1) };
 }
 // maxSizeHint() const
 void *c_KDDockWidgets__Core__Item__maxSizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
 }
 // minSize() const
 void *c_KDDockWidgets__Core__Item__minSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
 }
 // missingSize() const
 void *c_KDDockWidgets__Core__Item__missingSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->missingSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->missingSize() };
 }
 // pos() const
 void *c_KDDockWidgets__Core__Item__pos(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->pos() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
 }
 // rect() const
 void *c_KDDockWidgets__Core__Item__rect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->rect() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
 }
 // ref()
 void c_KDDockWidgets__Core__Item__ref(void *thisObj)
@@ -467,18 +467,18 @@ void c_KDDockWidgets__Core__Item__setBeingInserted_bool(void *thisObj, bool arg_
 {
     fromPtr(thisObj)->setBeingInserted(arg__1);
 }
-// setGeometry(QRect rect)
-void c_KDDockWidgets__Core__Item__setGeometry_QRect(void *thisObj, void *rect_)
+// setGeometry(KDDockWidgets::Rect rect)
+void c_KDDockWidgets__Core__Item__setGeometry_Rect(void *thisObj, void *rect_)
 {
     assert(rect_);
-    auto &rect = *reinterpret_cast<QRect *>(rect_);
+    auto &rect = *reinterpret_cast<KDDockWidgets::Rect *>(rect_);
     fromPtr(thisObj)->setGeometry(rect);
 }
-// setGeometry_recursive(QRect rect)
-void c_KDDockWidgets__Core__Item__setGeometry_recursive_QRect(void *thisObj, void *rect_)
+// setGeometry_recursive(KDDockWidgets::Rect rect)
+void c_KDDockWidgets__Core__Item__setGeometry_recursive_Rect(void *thisObj, void *rect_)
 {
     assert(rect_);
-    auto &rect = *reinterpret_cast<QRect *>(rect_);
+    auto &rect = *reinterpret_cast<KDDockWidgets::Rect *>(rect_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setGeometry_recursive_nocallback(rect);} else {    return targetPtr->setGeometry_recursive(rect);} }();
 }
 // setGuestView(KDDockWidgets::Core::View * arg__1)
@@ -498,38 +498,38 @@ void c_KDDockWidgets__Core__Item__setIsVisible_bool(void *thisObj, bool arg__1)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setIsVisible_nocallback(arg__1);} else {    return targetPtr->setIsVisible(arg__1);} }();
 }
-// setMaxSizeHint(QSize arg__1)
-void c_KDDockWidgets__Core__Item__setMaxSizeHint_QSize(void *thisObj, void *arg__1_)
+// setMaxSizeHint(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__Item__setMaxSizeHint_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     fromPtr(thisObj)->setMaxSizeHint(arg__1);
 }
-// setMinSize(QSize arg__1)
-void c_KDDockWidgets__Core__Item__setMinSize_QSize(void *thisObj, void *arg__1_)
+// setMinSize(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__Item__setMinSize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     fromPtr(thisObj)->setMinSize(arg__1);
 }
-// setPos(QPoint arg__1)
-void c_KDDockWidgets__Core__Item__setPos_QPoint(void *thisObj, void *arg__1_)
+// setPos(KDDockWidgets::Point arg__1)
+void c_KDDockWidgets__Core__Item__setPos_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
     fromPtr(thisObj)->setPos(arg__1);
 }
-// setSize(QSize arg__1)
-void c_KDDockWidgets__Core__Item__setSize_QSize(void *thisObj, void *arg__1_)
+// setSize(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__Item__setSize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     fromPtr(thisObj)->setSize(arg__1);
 }
 // size() const
 void *c_KDDockWidgets__Core__Item__size(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->size() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
 }
 // turnIntoPlaceholder()
 void c_KDDockWidgets__Core__Item__turnIntoPlaceholder(void *thisObj)
@@ -610,34 +610,34 @@ void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 644:
+    case 591:
         wrapper->m_checkSanityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_checkSanity>(callback);
         break;
-    case 645:
+    case 592:
         wrapper->m_dumpLayoutCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_dumpLayout>(callback);
         break;
-    case 655:
+    case 602:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_isVisible>(callback);
         break;
-    case 661:
+    case 608:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 662:
+    case 609:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_minSize>(callback);
         break;
-    case 676:
+    case 623:
         wrapper->m_setGeometry_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setGeometry_recursive>(callback);
         break;
-    case 678:
+    case 625:
         wrapper->m_setHostViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setHostView>(callback);
         break;
-    case 679:
+    case 626:
         wrapper->m_setIsVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setIsVisible>(callback);
         break;
-    case 691:
+    case 638:
         wrapper->m_updateWidgetGeometriesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_updateWidgetGeometries>(callback);
         break;
-    case 692:
+    case 639:
         wrapper->m_visibleCount_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_visibleCount_recursive>(callback);
         break;
     }

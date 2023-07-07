@@ -44,7 +44,7 @@ bool MainWindow_wrapper::anySideBarIsVisible() const
 {
     return ::KDDockWidgets::Core::MainWindow::anySideBarIsVisible();
 }
-QRect MainWindow_wrapper::centralAreaGeometry() const
+KDDockWidgets::Rect MainWindow_wrapper::centralAreaGeometry() const
 {
     return ::KDDockWidgets::Core::MainWindow::centralAreaGeometry();
 }
@@ -195,7 +195,7 @@ bool c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible(void *thisObj)
 // centralAreaGeometry() const
 void *c_KDDockWidgets__Core__MainWindow__centralAreaGeometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromWrapperPtr(thisObj)->centralAreaGeometry() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromWrapperPtr(thisObj)->centralAreaGeometry() };
 }
 // clearSideBarOverlay(bool deleteFrame)
 void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteFrame)
@@ -324,7 +324,7 @@ void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 721:
+    case 668:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::MainWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

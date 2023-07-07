@@ -13,13 +13,11 @@
 #include <core/View.h>
 #include "core/MainWindow.h"
 #include <FloatingWindow.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 #include <core/DockWidget.h>
 #include <Item_p.h>
 #include <core/Group.h>
 #include "core/DropArea.h"
-#include <qrect.h>
-#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -39,16 +37,16 @@ public:
     bool isInMainWindow(bool honourNesting = false) const;
     KDDockWidgets::Core::Item *itemForFrame(const KDDockWidgets::Core::Group *group) const;
     int layoutHeight() const;
-    QSize layoutMaximumSizeHint() const;
-    QSize layoutMinimumSize() const;
-    QSize layoutSize() const;
+    KDDockWidgets::Size layoutMaximumSizeHint() const;
+    KDDockWidgets::Size layoutMinimumSize() const;
+    KDDockWidgets::Size layoutSize() const;
     int layoutWidth() const;
     KDDockWidgets::Core::MainWindow *mainWindow(bool honourNesting = false) const;
     int placeholderCount() const;
     void removeItem(KDDockWidgets::Core::Item *item);
     void restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, KDDockWidgets::Core::Item *arg__2, int tabIndex);
-    void setLayoutMinimumSize(QSize arg__1);
-    void setLayoutSize(QSize arg__1);
+    void setLayoutMinimumSize(KDDockWidgets::Size arg__1);
+    void setLayoutSize(KDDockWidgets::Size arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void updateSizeConstraints();
@@ -100,10 +98,10 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Layout__placeholderCount
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__removeItem_Item(void *thisObj, void *item_);
 // KDDockWidgets::Core::Layout::restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Core::Item * arg__2, int tabIndex)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex);
-// KDDockWidgets::Core::Layout::setLayoutMinimumSize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Layout::setLayoutSize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Layout::setLayoutMinimumSize(KDDockWidgets::Size arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_Size(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Layout::setLayoutSize(KDDockWidgets::Size arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutSize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Layout::updateSizeConstraints()

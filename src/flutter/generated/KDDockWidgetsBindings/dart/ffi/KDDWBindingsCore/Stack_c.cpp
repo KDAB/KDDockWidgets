@@ -57,7 +57,7 @@ bool Stack_wrapper::isMDI_nocallback() const
 {
     return ::KDDockWidgets::Core::Stack::isMDI();
 }
-bool Stack_wrapper::isPositionDraggable(QPoint p) const
+bool Stack_wrapper::isPositionDraggable(KDDockWidgets::Point p) const
 {
     if (m_isPositionDraggableCallback) {
         const void *thisPtr = this;
@@ -66,7 +66,7 @@ bool Stack_wrapper::isPositionDraggable(QPoint p) const
         return ::KDDockWidgets::Core::Stack::isPositionDraggable(p);
     }
 }
-bool Stack_wrapper::isPositionDraggable_nocallback(QPoint p) const
+bool Stack_wrapper::isPositionDraggable_nocallback(KDDockWidgets::Point p) const
 {
     return ::KDDockWidgets::Core::Stack::isPositionDraggable(p);
 }
@@ -87,7 +87,7 @@ int Stack_wrapper::numDockWidgets() const
 {
     return ::KDDockWidgets::Core::Stack::numDockWidgets();
 }
-bool Stack_wrapper::onMouseDoubleClick(QPoint localPos)
+bool Stack_wrapper::onMouseDoubleClick(KDDockWidgets::Point localPos)
 {
     return ::KDDockWidgets::Core::Stack::onMouseDoubleClick(localPos);
 }
@@ -179,11 +179,11 @@ bool c_KDDockWidgets__Core__Stack__isMDI(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
 }
-// isPositionDraggable(QPoint p) const
-bool c_KDDockWidgets__Core__Stack__isPositionDraggable_QPoint(void *thisObj, void *p_)
+// isPositionDraggable(KDDockWidgets::Point p) const
+bool c_KDDockWidgets__Core__Stack__isPositionDraggable_Point(void *thisObj, void *p_)
 {
     assert(p_);
-    auto &p = *reinterpret_cast<QPoint *>(p_);
+    auto &p = *reinterpret_cast<KDDockWidgets::Point *>(p_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isPositionDraggable_nocallback(p);} else {    return targetPtr->isPositionDraggable(p);} }();
 }
 // isWindow() const
@@ -196,11 +196,11 @@ int c_KDDockWidgets__Core__Stack__numDockWidgets(void *thisObj)
 {
     return fromPtr(thisObj)->numDockWidgets();
 }
-// onMouseDoubleClick(QPoint localPos)
-bool c_KDDockWidgets__Core__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_)
+// onMouseDoubleClick(KDDockWidgets::Point localPos)
+bool c_KDDockWidgets__Core__Stack__onMouseDoubleClick_Point(void *thisObj, void *localPos_)
 {
     assert(localPos_);
-    auto &localPos = *reinterpret_cast<QPoint *>(localPos_);
+    auto &localPos = *reinterpret_cast<KDDockWidgets::Point *>(localPos_);
     return fromPtr(thisObj)->onMouseDoubleClick(localPos);
 }
 // setDocumentMode(bool arg__1)
@@ -242,19 +242,19 @@ void c_KDDockWidgets__Core__Stack__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1029:
+    case 976:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isMDI>(callback);
         break;
-    case 1030:
+    case 977:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isPositionDraggable>(callback);
         break;
-    case 1032:
+    case 979:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isWindow>(callback);
         break;
-    case 721:
+    case 668:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1043:
+    case 990:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

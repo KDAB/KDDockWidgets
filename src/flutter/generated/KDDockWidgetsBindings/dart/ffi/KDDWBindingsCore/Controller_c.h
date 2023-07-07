@@ -11,9 +11,7 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <core/Controller.h>
 #include <core/View.h>
-#include <qrect.h>
-#include <qpoint.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 #include <qstring.h>
 #include <Object_p.h>
 
@@ -26,19 +24,19 @@ public:
     Controller_wrapper(KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View *arg__2);
     bool close();
     void destroyLater();
-    QRect geometry() const;
+    KDDockWidgets::Rect geometry() const;
     int height() const;
     bool inDtor() const;
     bool isVisible() const;
-    QPoint mapToGlobal(QPoint arg__1) const;
-    QPoint pos() const;
-    QRect rect() const;
+    KDDockWidgets::Point mapToGlobal(KDDockWidgets::Point arg__1) const;
+    KDDockWidgets::Point pos() const;
+    KDDockWidgets::Rect rect() const;
     void setParentView(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setVisible(bool arg__1);
     void show() const;
-    QSize size() const;
+    KDDockWidgets::Size size() const;
     KDDockWidgets::Core::ViewType type() const;
     KDDockWidgets::Core::View *view() const;
     int width() const;
@@ -64,8 +62,8 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__height(void 
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Controller__inDtor(void *thisObj);
 // KDDockWidgets::Core::Controller::isVisible() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj);
-// KDDockWidgets::Core::Controller::mapToGlobal(QPoint arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Controller::mapToGlobal(KDDockWidgets::Point arg__1) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__mapToGlobal_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Controller::pos() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__pos(void *thisObj);
 // KDDockWidgets::Core::Controller::rect() const

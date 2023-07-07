@@ -10,16 +10,14 @@
 */
 #include "KDDockWidgetsBindings_exports.h"
 #include <FloatingWindow.h>
-#include <qrect.h>
+#include <core/geometry_helpers_p.h>
 #include "core/MainWindow.h"
 #include <core/Group.h>
 #include <core/DockWidget.h>
 #include "core/DropArea.h"
 #include "core/TitleBar.h"
 #include <core/Layout.h>
-#include <qpoint.h>
 #include <KDDockWidgets.h>
-#include <qsize.h>
 #include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -28,8 +26,8 @@ class FloatingWindow_wrapper : public ::KDDockWidgets::Core::FloatingWindow
 {
 public:
     ~FloatingWindow_wrapper();
-    FloatingWindow_wrapper(KDDockWidgets::Core::Group *group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent = nullptr);
-    FloatingWindow_wrapper(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent = nullptr);
+    FloatingWindow_wrapper(KDDockWidgets::Core::Group *group, KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent = nullptr);
+    FloatingWindow_wrapper(KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent = nullptr);
     void addDockWidget(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption arg__4 = {});
     bool allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const;
     bool allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const;
@@ -38,12 +36,12 @@ public:
     bool anyNonClosable() const;
     bool anyNonDockable() const;
     bool beingDeleted() const;
-    QRect dragRect() const;
+    KDDockWidgets::Rect dragRect() const;
     KDDockWidgets::Core::DropArea *dropArea() const;
-    static void ensureRectIsOnScreen(QRect &geometry);
+    static void ensureRectIsOnScreen(KDDockWidgets::Rect &geometry);
     bool hasSingleDockWidget() const;
     bool hasSingleFrame() const;
-    bool isInDragArea(QPoint globalPoint) const;
+    bool isInDragArea(KDDockWidgets::Point globalPoint) const;
     virtual bool isMDI() const;
     virtual bool isMDI_nocallback() const;
     bool isUtilityWindow() const;
@@ -56,7 +54,7 @@ public:
     void scheduleDeleteLater();
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
-    void setSuggestedGeometry(QRect suggestedRect);
+    void setSuggestedGeometry(KDDockWidgets::Rect suggestedRect);
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
     virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Core::Group *singleFrame() const;
@@ -78,10 +76,10 @@ public:
 }
 }
 extern "C" {
-// KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Core::Group * group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_QRect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);
-// KDDockWidgets::Core::FloatingWindow::FloatingWindow(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_, void *parent_);
+// KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Core::Group * group, KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_Rect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);
+// KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_Rect_MainWindow(void *suggestedGeometry_, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::addDockWidget(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
 // KDDockWidgets::Core::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
@@ -102,14 +100,14 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__beingDe
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__dragRect(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::dropArea() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__dropArea(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::ensureRectIsOnScreen(QRect & geometry)
-KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_QRect(void *geometry_);
+// KDDockWidgets::Core::FloatingWindow::ensureRectIsOnScreen(KDDockWidgets::Rect & geometry)
+KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_Rect(void *geometry_);
 // KDDockWidgets::Core::FloatingWindow::hasSingleDockWidget() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__hasSingleDockWidget(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::hasSingleFrame() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::isInDragArea(QPoint globalPoint) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__isInDragArea_QPoint(void *thisObj, void *globalPoint_);
+// KDDockWidgets::Core::FloatingWindow::isInDragArea(KDDockWidgets::Point globalPoint) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__isInDragArea_Point(void *thisObj, void *globalPoint_);
 // KDDockWidgets::Core::FloatingWindow::isMDI() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__isMDI(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::isUtilityWindow() const
@@ -128,8 +126,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__multiS
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__scheduleDeleteLater(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::setParentView_impl(KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__setParentView_impl_View(void *thisObj, void *parent_);
-// KDDockWidgets::Core::FloatingWindow::setSuggestedGeometry(QRect suggestedRect)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_QRect(void *thisObj, void *suggestedRect_);
+// KDDockWidgets::Core::FloatingWindow::setSuggestedGeometry(KDDockWidgets::Rect suggestedRect)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_Rect(void *thisObj, void *suggestedRect_);
 // KDDockWidgets::Core::FloatingWindow::singleDockWidget() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__singleDockWidget(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::singleFrame() const

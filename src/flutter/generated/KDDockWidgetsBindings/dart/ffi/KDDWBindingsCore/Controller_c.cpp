@@ -40,7 +40,7 @@ void Controller_wrapper::destroyLater()
 {
     ::KDDockWidgets::Core::Controller::destroyLater();
 }
-QRect Controller_wrapper::geometry() const
+KDDockWidgets::Rect Controller_wrapper::geometry() const
 {
     return ::KDDockWidgets::Core::Controller::geometry();
 }
@@ -56,15 +56,15 @@ bool Controller_wrapper::isVisible() const
 {
     return ::KDDockWidgets::Core::Controller::isVisible();
 }
-QPoint Controller_wrapper::mapToGlobal(QPoint arg__1) const
+KDDockWidgets::Point Controller_wrapper::mapToGlobal(KDDockWidgets::Point arg__1) const
 {
     return ::KDDockWidgets::Core::Controller::mapToGlobal(arg__1);
 }
-QPoint Controller_wrapper::pos() const
+KDDockWidgets::Point Controller_wrapper::pos() const
 {
     return ::KDDockWidgets::Core::Controller::pos();
 }
-QRect Controller_wrapper::rect() const
+KDDockWidgets::Rect Controller_wrapper::rect() const
 {
     return ::KDDockWidgets::Core::Controller::rect();
 }
@@ -93,7 +93,7 @@ void Controller_wrapper::show() const
 {
     ::KDDockWidgets::Core::Controller::show();
 }
-QSize Controller_wrapper::size() const
+KDDockWidgets::Size Controller_wrapper::size() const
 {
     return ::KDDockWidgets::Core::Controller::size();
 }
@@ -155,7 +155,7 @@ void c_KDDockWidgets__Core__Controller__destroyLater(void *thisObj)
 // geometry() const
 void *c_KDDockWidgets__Core__Controller__geometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->geometry() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->geometry() };
 }
 // height() const
 int c_KDDockWidgets__Core__Controller__height(void *thisObj)
@@ -172,22 +172,22 @@ bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj)
 {
     return fromPtr(thisObj)->isVisible();
 }
-// mapToGlobal(QPoint arg__1) const
-void *c_KDDockWidgets__Core__Controller__mapToGlobal_QPoint(void *thisObj, void *arg__1_)
+// mapToGlobal(KDDockWidgets::Point arg__1) const
+void *c_KDDockWidgets__Core__Controller__mapToGlobal_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
-    return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->mapToGlobal(arg__1) };
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapToGlobal(arg__1) };
 }
 // pos() const
 void *c_KDDockWidgets__Core__Controller__pos(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QPoint> { fromPtr(thisObj)->pos() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
 }
 // rect() const
 void *c_KDDockWidgets__Core__Controller__rect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->rect() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
 }
 // setParentView(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__Controller__setParentView_View(void *thisObj, void *parent_)
@@ -214,7 +214,7 @@ void c_KDDockWidgets__Core__Controller__show(void *thisObj)
 // size() const
 void *c_KDDockWidgets__Core__Controller__size(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->size() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
 }
 // type() const
 int c_KDDockWidgets__Core__Controller__type(void *thisObj)
@@ -249,7 +249,7 @@ void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 721:
+    case 668:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

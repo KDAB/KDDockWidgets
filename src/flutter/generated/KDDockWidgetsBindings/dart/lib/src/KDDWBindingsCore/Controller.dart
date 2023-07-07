@@ -55,13 +55,13 @@ class Controller extends KDDWBindingsCore.Object {
     func(thisCpp);
   } // geometry() const
 
-  QRect geometry() {
+  Rect geometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Controller__geometry')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QRect.fromCppPointer(result, true);
+    return Rect.fromCppPointer(result, true);
   } // height() const
 
   int height() {
@@ -86,34 +86,34 @@ class Controller extends KDDWBindingsCore.Object {
             'c_KDDockWidgets__Core__Controller__isVisible')
         .asFunction();
     return func(thisCpp) != 0;
-  } // mapToGlobal(QPoint arg__1) const
+  } // mapToGlobal(KDDockWidgets::Point arg__1) const
 
-  QPoint mapToGlobal(QPoint arg__1) {
+  Point mapToGlobal(Point arg__1) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Controller__mapToGlobal_QPoint')
+            'c_KDDockWidgets__Core__Controller__mapToGlobal_Point')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-    return QPoint.fromCppPointer(result, true);
+    return Point.fromCppPointer(result, true);
   } // pos() const
 
-  QPoint pos() {
+  Point pos() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Controller__pos')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QPoint.fromCppPointer(result, true);
+    return Point.fromCppPointer(result, true);
   } // rect() const
 
-  QRect rect() {
+  Rect rect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Controller__rect')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QRect.fromCppPointer(result, true);
+    return Rect.fromCppPointer(result, true);
   } // setParentView(KDDockWidgets::Core::View * parent)
 
   setParentView(KDDWBindingsCore.View? parent) {
@@ -127,7 +127,7 @@ class Controller extends KDDWBindingsCore.Object {
   setParentView_impl(KDDWBindingsCore.View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(721))
+            cFunctionSymbolName(668))
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
@@ -162,13 +162,13 @@ class Controller extends KDDWBindingsCore.Object {
     func(thisCpp);
   } // size() const
 
-  QSize size() {
+  Size size() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Controller__size')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
+    return Size.fromCppPointer(result, true);
   } // type() const
 
   int type() {
@@ -222,7 +222,7 @@ class Controller extends KDDWBindingsCore.Object {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 721:
+      case 668:
         return "c_KDDockWidgets__Core__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -230,7 +230,7 @@ class Controller extends KDDWBindingsCore.Object {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 721:
+      case 668:
         return "setParentView_impl";
     }
     throw Error();
@@ -242,9 +242,9 @@ class Controller extends KDDWBindingsCore.Object {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback')
         .asFunction();
-    final callback721 =
+    final callback668 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback721, 721);
+    registerCallback(thisCpp, callback668, 668);
   }
 }
