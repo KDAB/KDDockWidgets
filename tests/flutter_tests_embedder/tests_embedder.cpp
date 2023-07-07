@@ -35,18 +35,19 @@
 #include <cassert>
 #include <chrono>
 #include <iostream>
+#include <filesystem>
 #include <stdlib.h>
 
 #include "GLFW/glfw3.h"
 #include "flutter_embedder.h"
-
-#include <QFileInfo>
 
 // This value is calculated after the window is created.
 static double g_pixelRatio = 1.0;
 static const size_t kInitialWindowWidth = 1600;
 static const size_t kInitialWindowHeight = 1400;
 static GLFWwindow *s_window = nullptr;
+
+namespace fs = std::filesystem;
 
 static_assert(FLUTTER_ENGINE_VERSION == 1,
               "This Flutter Embedder was authored against the stable Flutter "
@@ -194,9 +195,8 @@ TestsEmbedder::~TestsEmbedder()
 
 void TestsEmbedder::init(const QString &projectPath, const QString &icudtlPath)
 {
-    if (!QFileInfo::exists(projectPath) || !QFileInfo::exists(icudtlPath))
+    if (!fs::exists(projectPath.toStdString()) || !fs::exists(icudtlPath.toStdString()))
         qFatal("Either icudtl or project path not found");
-
 
     glfwSetErrorCallback(GLFW_ErrorCallback);
 
