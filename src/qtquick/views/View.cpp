@@ -779,12 +779,12 @@ void View::setMinimumSize(QSize sz)
     }
 }
 
-void View::render(QPainter * painter)
+void View::render(QPainter *painter)
 {
     if (QQuickWindow *w = QQuickItem::window()) {
         const QImage image = w->grabWindow();
 
-        const QRect sourceRect {asGroupController()->dragRect().topLeft() * image.devicePixelRatio(), painter->window().size() * image.devicePixelRatio()};
+        const QRect sourceRect { asGroupController()->dragRect().topLeft() * image.devicePixelRatio(), painter->window().size() * image.devicePixelRatio() };
         painter->drawImage(painter->window(), image, sourceRect);
     }
 }
