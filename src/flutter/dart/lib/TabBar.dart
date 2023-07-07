@@ -19,6 +19,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide View;
 import 'package:flutter/material.dart' as material show TabBar;
+import 'package:flutter/material.dart' as Geometry show Rect;
 
 class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
   late final KDDWBindingsCore.TabBar m_controller;
@@ -79,7 +80,7 @@ class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
       final tab = tabs[i];
       final tabWindowPos = tab.localToGlobal(Offset.zero);
 
-      final tabWindowRect = Rect.fromLTWH(
+      final tabWindowRect = Geometry.Rect.fromLTWH(
           tabWindowPos.dx, tabWindowPos.dy, tab.size.width, tab.size.height);
 
       if (tabWindowRect.contains(windowCoords)) return i;

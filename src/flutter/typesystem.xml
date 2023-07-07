@@ -38,10 +38,11 @@
         <enum-type name="LayoutSaverOption" flags="LayoutSaverOptions" />
         <enum-type name="DockWidgetOption" flags="DockWidgetOptions" />
 
+        <value-type name="Size" />
+        <value-type name="Rect" />
+        <value-type name="Point" />
+
         <namespace-type name="Core">
-            <object-type name="Size" />
-            <object-type name="Rect" />
-            <object-type name="Point" />
             <object-type name="Object" />
             <value-type name="CreateViewOptions" />
             <object-type name="DelayedCall" />

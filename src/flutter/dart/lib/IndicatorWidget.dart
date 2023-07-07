@@ -13,6 +13,7 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsCore.dart'
     as KDDWBindingsCore;
 import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as Geometry show Rect;
 import 'dart:ffi' as ffi;
 import 'IndicatorWindow.dart';
 import 'GlobalStringKey.dart';
@@ -189,8 +190,8 @@ class _IndicatorWidgetState extends State<IndicatorWidget> {
   }
 
   /// Returns this indicator's rect, in coordinates of parent (i.e. drop indicator overlay coordinates)
-  Rect geometry() {
-    return Rect.fromLTWH(x, y, length, length);
+  Geometry.Rect geometry() {
+    return Geometry.Rect.fromLTWH(x, y, length, length);
   }
 
   int hover(Offset pt) {
