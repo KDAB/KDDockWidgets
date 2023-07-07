@@ -30,11 +30,6 @@ class DOCKS_EXPORT MainWindowMDIViewInterface
 public:
     explicit MainWindowMDIViewInterface(MDILayout *);
 
-    ///@brief Constructor. See base class documentation
-    explicit MainWindowMDIViewInterface(const QString &uniqueName, QWidget *parent = nullptr,
-                                        Qt::WindowFlags flags = Qt::WindowFlags());
-
-
     ///@brief Docks @p dockWidget
     /// The widget will be placed at the specified position
     void addDockWidget(DockWidgetViewInterface *dockWidget, QPoint localPos,
