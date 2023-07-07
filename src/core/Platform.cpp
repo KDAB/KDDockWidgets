@@ -33,6 +33,9 @@
 
 #include "kdbindings/signal.h"
 
+#include <iostream>
+#include <fstream>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
@@ -244,4 +247,29 @@ void Platform::onMainWindowCreated(Core::MainWindow *)
 
 void Platform::onMainWindowDestroyed(Core::MainWindow *)
 {
+}
+
+QByteArray Platform::readFile(const QString &fileName, bool &ok) const
+{
+    ok = true;
+
+    std::ifstream file(fileName.toStdString(), std::ios::binary);
+    if (!file.is_open()) {
+        KDDW_ERROR("Failed to open {}", fileName);
+        ok = false;
+        return {};
+    }
+
+    QByteArray data;
+
+    file.seekg(0, std::ios::end);
+    std::streampos fileSize = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    data.resize(int(fileSize));
+
+    file.read(data.data(), fileSize);
+    file.close();
+
+    return data;
 }

@@ -15,6 +15,7 @@
 #include "kddockwidgets/core/EventFilterInterface.h"
 #include "core/Platform_p.h"
 #include "core/Utils_p.h"
+#include "core/Logging_p.h"
 #include "core/DelayedCall_p.h"
 #include "qtcommon/View.h"
 
@@ -24,6 +25,7 @@
 #include <QElapsedTimer>
 #include <QScreen>
 #include <QTimer>
+#include <QFile>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtCommon;
@@ -309,4 +311,16 @@ Screen::Ptr Platform_qt::primaryScreen() const
 void Platform_qt::runDelayed(int ms, Core::DelayedCall *c)
 {
     QTimer::singleShot(ms, [c] { c->call(); delete c; });
+}
+
+QByteArray Platform_qt::readFile(const QString &fileName, bool &ok) const
+{
+    QFile f(fileName);
+    ok = f.open(QIODevice::ReadOnly);
+    if (!ok) {
+        KDDW_ERROR("Failed to open {}, error={}", fileName, f.errorString());
+        return {};
+    }
+
+    return f.readAll();
 }

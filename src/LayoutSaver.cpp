@@ -37,7 +37,9 @@
 #include "core/layouting/Item_p.h"
 
 #include <qmath.h>
-#include <QFile>
+
+#include <iostream>
+#include <fstream>
 
 /**
  * Some implementation details:
@@ -367,28 +369,26 @@ bool LayoutSaver::saveToFile(const QString &jsonFilename)
 {
     const QByteArray data = serializeLayout();
 
-    QFile f(jsonFilename);
-    if (!f.open(QIODevice::WriteOnly)) {
-        KDDW_ERROR("Failed to open {}, error={}", jsonFilename, f.errorString());
+    std::ofstream file(jsonFilename.toStdString(), std::ios::binary);
+    if (!file.is_open()) {
+        KDDW_ERROR("Failed to open {}", jsonFilename);
         return false;
     }
 
-    f.write(data);
+    file.write(data.constData(), data.size());
+    file.close();
     return true;
 }
 
 bool LayoutSaver::restoreFromFile(const QString &jsonFilename)
 {
-    QFile f(jsonFilename);
-    if (!f.open(QIODevice::ReadOnly)) {
-        KDDW_ERROR("Failed to open {}, error={}", jsonFilename, f.errorString());
+    bool ok = false;
+    const QByteArray data = Platform::instance()->readFile(jsonFilename, /*by-ref*/ ok);
+
+    if (!ok)
         return false;
-    }
 
-    const QByteArray data = f.readAll();
-    const bool result = restoreLayout(data);
-
-    return result;
+    return restoreLayout(data);
 }
 
 QByteArray LayoutSaver::serializeLayout() const

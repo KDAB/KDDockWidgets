@@ -180,6 +180,11 @@ public:
     /// Sets the mouse cursor position in screen coordinates
     virtual void setCursorPos(QPoint) = 0;
 
+    /// Reads the specified and returns its content
+    /// The default implementation uses std::ifstream while the Qt implementation
+    /// uses QFile, as it needs to support QRC
+    virtual QByteArray readFile(const QString &, bool &ok) const;
+
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
