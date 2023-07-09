@@ -22,13 +22,13 @@
 #pragma once
 
 #include "View.h"
-#include "core/views/TabBarViewInterface.h"
+#include <kddockwidgets/core/views/TabBarViewInterface.h>
 
 #include <QAbstractListModel>
 #include <QPointer>
 #include <QHash>
 
-#include "kdbindings/signal.h"
+#include "../../3rdparty/kdbindings/signal.h"
 
 namespace KDDockWidgets {
 

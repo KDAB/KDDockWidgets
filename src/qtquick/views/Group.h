@@ -15,7 +15,7 @@
 #pragma once
 
 #include "View.h"
-#include "core/views/GroupViewInterface.h"
+#include "kddockwidgets/core/views/GroupViewInterface.h"
 #include "TitleBar.h"
 
 QT_BEGIN_NAMESPACE

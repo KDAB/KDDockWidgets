@@ -19,8 +19,8 @@
 #include <type_traits>
 #include <utility>
 
-#include <kdbindings/genindex_array.h>
-#include <kdbindings/utils.h>
+#include "genindex_array.h"
+#include "utils.h"
 
 /**
  * @brief The main namespace of the KDBindings library.

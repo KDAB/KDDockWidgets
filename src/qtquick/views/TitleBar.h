@@ -14,7 +14,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "core/views/TitleBarViewInterface.h"
+#include "kddockwidgets/core/views/TitleBarViewInterface.h"
 #include "View.h"
 
 namespace KDDockWidgets {
